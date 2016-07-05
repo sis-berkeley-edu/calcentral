@@ -332,7 +332,7 @@ hot_plate:
 background_jobs_check:
   time_between_pings: <%= 5.minutes %>
 
-youtube_splash_id: 'Yc3z0TIl_Fc'
+youtube_splash_id: '3Iz1NT9QKjI'
 
 oec:
   administrator_uid: ''
