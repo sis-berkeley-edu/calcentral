@@ -7,6 +7,11 @@ var angular = require('angular');
  * Status controller
  */
 angular.module('calcentral.controllers').controller('StatusController', function(activityFactory, apiService, badgesFactory, financesFactory, holdsFactory, $http, $scope, $q) {
+  $scope.finances = {
+    carsFinances: {},
+    csFinances: {}
+  };
+
   // Keep track on whether the status has been loaded or not
   var hasLoaded = false;
 
@@ -33,20 +38,57 @@ angular.module('calcentral.controllers').controller('StatusController', function
     }
   };
 
-  var loadFinances = function(data) {
-    if (!data.summary) {
+  var loadCarsFinances = function(data) {
+    if (data.summary) {
+      $scope.finances.carsFinances = data.summary;
+    }
+  };
+
+  var loadCsFinances = function(data) {
+    if (_.get(data, 'feed.summary')) {
+      $scope.finances.csFinances = data.feed.summary;
+    }
+  };
+
+  var parseFinances = function() {
+    $scope.totalPastDueAmount = 0;
+    $scope.minimumAmountDue = 0;
+    var cars = {
+      pastDue: 0,
+      minDue: 0
+    };
+    var cs = {
+      pastDue: 0,
+      minDue: 0
+    };
+
+    if (!$scope.finances.carsFinances && !$scope.finances.csFinances) {
       return;
     }
-
-    if (data.summary.totalPastDueAmount > 0) {
+    if ($scope.finances.carsFinances) {
+      cars = {
+        pastDue: $scope.finances.carsFinances.totalPastDueAmount,
+        minDue: $scope.finances.carsFinances.minimumAmountDue
+      };
+      $scope.totalPastDueAmount += cars.pastDue;
+      $scope.minimumAmountDue += cars.minDue;
+    }
+    if ($scope.finances.csFinances) {
+      cs = {
+        pastDue: $scope.finances.csFinances.pastDueAmount,
+        minDue: $scope.finances.csFinances.amountDueNow
+      };
+      $scope.totalPastDueAmount += cs.pastDue;
+      $scope.minimumAmountDue += cs.minDue;
+    }
+    if (cars.pastDue > 0 || cs.pastDue > 0) {
       $scope.count++;
       $scope.hasAlerts = true;
-    } else if (data.summary.minimumAmountDue > 0) {
+    } else if (cars.minDue > 0 || cs.minDue > 0) {
       $scope.count++;
       $scope.hasWarnings = true;
     }
-    $scope.totalPastDueAmount = data.summary.totalPastDueAmount;
-    $scope.minimumAmountDue = data.summary.minimumAmountDue;
+
     $scope.hasBillingData = ($scope.minimumAmountDue !== null);
   };
 
@@ -117,13 +159,18 @@ angular.module('calcentral.controllers').controller('StatusController', function
       // Only fetch financial data for delegates who have been given explicit permssion.
       var includeFinancial = (!apiService.user.profile.delegateActingAsUid || apiService.user.profile.delegateViewAsPrivileges.financial);
       if (includeFinancial) {
-        var getFinances = financesFactory.getFinances().success(loadFinances);
+        var getCarsFinances = financesFactory.getFinances().success(loadCarsFinances);
+        var getCsFinances = financesFactory.getCsFinances().success(loadCsFinances);
         var getFinaidActivityOld = activityFactory.getFinaidActivityOld().then(loadActivity);
-        statusGets.push(getFinances, getFinaidActivityOld);
+        statusGets.push(getCarsFinances, getCsFinances, getFinaidActivityOld);
       }
 
       // Make sure to hide the spinner when everything is loaded
-      $q.all(statusGets).then(finishLoading);
+      $q.all(statusGets).then(function() {
+        if (includeFinancial) {
+          parseFinances();
+        }
+      }).then(finishLoading);
     }
   });
 });
