@@ -1,4 +1,4 @@
-describe ServiceAlerts::Merged do
+describe ServiceAlerts::Merged, :testext => true do
   let(:feed) { ServiceAlerts::Merged.new.get_feed_internal }
 
   shared_examples 'a feed with a release note' do

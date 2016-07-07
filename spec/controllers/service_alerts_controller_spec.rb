@@ -1,4 +1,4 @@
-describe ServiceAlertsController do
+describe ServiceAlertsController, :testext => true do
 
   before do
     allow(ServiceAlerts::Alert).to receive(:get_latest).and_return(fake_alert)
