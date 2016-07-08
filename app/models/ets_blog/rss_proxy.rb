@@ -3,6 +3,7 @@ module EtsBlog
     include DatedFeed
     include Proxies::HttpClient
     include Proxies::MockableXml
+    include Proxies::Tls12
 
     # Tell HTTParty that the 'application/rss+xml' content type used by Drupal should be parsed as XML.
     class RssParser < HTTParty::Parser
@@ -17,7 +18,7 @@ module EtsBlog
 
     def get_feed_internal(path)
       logger.info "Fetching #{path}; fake=#{@fake}; cache expiration #{self.class.expires_in}"
-      response = get_response(path, {parser: RssParser})
+      response = get_response(path, request_options)
       entries = Array.wrap(response['rss']['channel']['item'])
       if entries.present?
         entry = entries.first
@@ -32,6 +33,10 @@ module EtsBlog
       else
         nil
       end
+    end
+
+    def request_options(opts = {})
+      {parser: RssParser}.deep_merge super(opts)
     end
 
     def mock_response

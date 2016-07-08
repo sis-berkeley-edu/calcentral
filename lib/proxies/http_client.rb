@@ -17,5 +17,10 @@ module Proxies
       end
     end
 
+    # For support of chained mix-ins.
+    def request_options(opts = {})
+      opts
+    end
+
   end
 end
