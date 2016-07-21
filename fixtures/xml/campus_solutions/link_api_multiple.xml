@@ -1,47 +1,63 @@
 <?xml version="1.0"?>
 <UC_LINK_RESOURCES>
   <Link>
-    <URL_ID>UC_CX_CHANGE_COURSE_LOAD</URL_ID>
-    <Description>Change of Course Load</Description>
+    <URL_ID>TEST_LINK</URL_ID>
+    <Description>Testing link</Description>
     <PROPERTIES type="array">
       <PROPERTY>
-        <NAME>DEV_NODE</NAME>
-        <value>bcs-web-dev-03.is.berkeley.edu:8443/psc/bcsdev/</value>
+        <NAME>CALCENTRAL</NAME>
+        <value>GENERIC</value>
       </PROPERTY>
       <PROPERTY>
-        <NAME>GROUP0</NAME>
-        <value>ADMISSIONS</value>
+        <NAME>NEW_WINDOW</NAME>
+        <value>Y</value>
       </PROPERTY>
       <PROPERTY>
-        <NAME>GROUP0</NAME>
-        <value>ADVISING</value>
-      </PROPERTY>
-      <PROPERTY>
-        <NAME>GROUP0</NAME>
-        <value>CALCENTRAL</value>
-      </PROPERTY>
-      <PROPERTY>
-        <NAME>IS_CS_LINK</NAME>
-        <value>TRUE</value>
+        <NAME>URI_TYPE</NAME>
+        <value>CN</value>
       </PROPERTY>
     </PROPERTIES>
-    <URL>https://bcs-web-dev-03.is.berkeley.edu:8443/psc/bcsdev/EMPLOYEE/HRMS/c/G3FRAME.G3SEARCH.GBL?pslnkid=G_ADD_DEFAULT_SRCRSELOAD_LINK&amp;amp;&amp;amp;G3FORM_FAMILY=SRCRSELOAD&amp;amp;G3FORM_TYPE=SRCRSELOAD&amp;amp;G3FORM_CONDITION=Default&amp;amp;G3FORM_TASK=ADD&amp;amp;PORTALPARAM_PTCNAV=G_ADD_DEFAULT_SRCRSELOAD_LINK&amp;amp;EOPP.SCNode=HRMS&amp;amp;EOPP.SCPortal=EMPLOYEE&amp;amp;EOPP.SCName=G_SRCRSELOAD_NAV_COLL&amp;amp;EOPP.SCLabel=&amp;amp;EOPP.SCPTcname=PT_PTPP_SCFNAV_BASEPAGE_SCR&amp;amp;FolderPath=PORTAL_ROOT_OBJECT.PORTAL_BASE_DATA.CO_NAVIGATION_COLLECTIONS.G_SRCRSELOAD_NAV_COLL.G_ADD_DEFAULT_SRCRSELOAD_LINK&amp;amp;IsFolder=false</URL>
+    <URL>https://bcs-web-dev-03.is.berkeley.edu:8443/psc/bcsdev/EMPLOYEE/HRMS/c/G3FRAME.G3SEARCH.GBL?EMPLID={EMPLID}</URL>
     <COMMENTS></COMMENTS>
   </Link>
   <Link>
-    <URL_ID>UC_CX_EFORMS_REVIEW_CENTER</URL_ID>
-    <Description>eForms Review Center</Description>
+    <URL_ID>UC_CX_TEST_CONCEPT</URL_ID>
+    <Description>Test URL</Description>
     <PROPERTIES type="array">
       <PROPERTY>
-        <NAME>GROUP0</NAME>
-        <value>ADMISSIONS</value>
+        <NAME>CALCENTRAL</NAME>
+        <value>APPOINTMENTS-ADV</value>
       </PROPERTY>
       <PROPERTY>
-        <NAME>GROUP1</NAME>
-        <value>CALCENTRAL</value>
+        <NAME>NEW_WINDOW</NAME>
+        <value>Y</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>URI_TYPE</NAME>
+        <value>CN</value>
       </PROPERTY>
     </PROPERTIES>
-    <URL>https://bcs-web-dev-03.is.berkeley.edu:8443/psc/bcsdev/EMPLOYEE/HRMS/c/G3ACTION_CENTER.G3ACTION_CENTER.GBL?FolderPath=PORTAL_ROOT_OBJECT.UC_CMPONENTS.UC_FORMS.G3EFORM3_FOLDER.G3ACTION_CENTER_GBL&amp;IsFolder=false&amp;IgnoreParamTempl=FolderPath%2cIsFolder</URL>
-    <COMMENTS></COMMENTS>
+    <URL>https://bcs-web-dev-03.is.berkeley.edu:8443/psc/bcsdev/EMPLOYEE/HRMS/c/UC_LINK_URL_MENU.UC_LINKAPI_URL_CMP.GBL?EMPLID={EMPLID}&amp;AID_YEAR={AID_YEAR}</URL>
+    <COMMENTS>Test URL - Or instructions for user here.</COMMENTS>
+  </Link>
+  <Link>
+    <URL_ID>UC_CX_TEST_LINK</URL_ID>
+    <Description>Testing URL for CalCentral</Description>
+    <PROPERTIES type="array">
+      <PROPERTY>
+        <NAME>CALCENTRAL</NAME>
+        <value>GENERIC</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>NEW_WINDOW</NAME>
+        <value>Y</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>URI_TYPE</NAME>
+        <value>CN</value>
+      </PROPERTY>
+    </PROPERTIES>
+    <URL>https://bcs-web-dev-03.is.berkeley.edu:8443/psc/bcsdev/path/to/endpoint?PLACEHOLDER={PLACEHOLDER}</URL>
+    <COMMENTS>Test URL for verifying that {PLACEHOLDER} is returned as part of the URL, and replaced by the caller (client).</COMMENTS>
   </Link>
 </UC_LINK_RESOURCES>

@@ -19,29 +19,51 @@ module CampusSolutions
       # Make sure response is well-structured.
       container = response.parsed_response
       return container if container['UC_LINK_RESOURCES'].blank? || container['UC_LINK_RESOURCES']['IS_FAULT'].present?
-      # Insert Links element array.
-      container['UC_LINK_RESOURCES']['Links'] = Array.wrap container['UC_LINK_RESOURCES']['Link']
+
+      # Lift any Link elements into a single Links element hash on UC_LINK_RESOURCES.
+      links = Array.wrap container['UC_LINK_RESOURCES'].delete('Link')
+      container['UC_LINK_RESOURCES']['Links'] = links.inject({}) do |map, link|
+        map[link['URL_ID']] = link
+        map
+      end
+
       container
     end
 
-    def get_url(urlId, options = {})
+    def get_url(url_id, placeholders = {})
       # get cached response
-      response = get
-      links = response[:feed][:ucLinkResources][:links]
-      link = links.find do |link|
-        link[:urlId] == urlId
-      end
-      if link && options.present?
-        options.each do |k, v|
-          link[:url] = link[:url].gsub("{#{k}}", v)
+      link_resources = get
+
+      if url_id
+        # Need this due to side-effect of the lift process in normalize_response.
+        link_id = url_id.downcase.camelize(:lower).to_sym
+        link = link_resources[:feed][:ucLinkResources][:links][link_id]
+
+        if link
+          if placeholders.present?
+            placeholders.each do |k, v|
+              link[:url] = link[:url].gsub("{#{k}}", v)
+            end
+          end
+
+          link[:properties].each do |property|
+            if property[:name] == 'NEW_WINDOW' && property[:value] == 'Y'
+              link[:show_new_window] = true
+            end
+          end
         end
       end
-      response[:feed] = { :link => link }
-      response
+
+      {
+        status: link_resources[:status],
+        feed: {
+          link: link
+        }
+      }
     end
 
-    def def url
-      "#{@settings.base_url}/UC_LINK_API.v1/get?PROPNAME=UC_CX_LINK"
+    def url
+      "#{@settings.base_url}/UC_LINK_API.v1/get?PROPNAME=CALCENTRAL"
     end
 
   end
