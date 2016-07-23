@@ -228,6 +228,7 @@ Calcentral::Application.routes.draw do
   # EDOs from integration hub
   get '/api/edos/academic_status' => 'hub_edo#academic_status', :via => :get, :defaults => { :format => 'json' }
   get '/api/edos/student' => 'hub_edo#student', :via => :get, :defaults => { :format => 'json' }
+  get '/api/edos/student_attributes' => 'hub_edo#student_attributes', :via => :get, :defaults => { :format => 'json' }
   get '/api/edos/work_experience' => 'hub_edo#work_experience', :via => :get, :defaults => { :format => 'json' }
 
   # All the other paths should use the bootstrap page

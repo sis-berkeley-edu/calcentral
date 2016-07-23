@@ -19,6 +19,8 @@ module Berkeley
     attr_reader :classes_end
     # The end of instruction is one week after classes end. The week between is RRR week. The week after is for final exams.
     attr_reader :instruction_end
+    # The end of the drop/add period, used for Cancellation for Non-Payment for Grad and Law students.
+    attr_reader :end_drop_add
     # BearFacts and related systems set "CT"/"Current Term" to Fall (and "FT"/"Future Term" to
     # the next year's Spring) as soon as the Spring term is over. Summer terms are special-cased as
     # "CS" or "FS", and lack some SIS support. This quirk becomes important when configuring
@@ -60,12 +62,18 @@ module Berkeley
         @classes_start = @start
         @classes_end = @end
         @instruction_end = @end
+        @end_drop_add = false
       else
         @is_summer = false
         session = term_feed['sessions'].first
         @classes_start = session['beginDate'].to_date.in_time_zone.to_datetime
         @instruction_end = session['endDate'].to_date.in_time_zone.to_datetime.end_of_day
         @classes_end = @instruction_end.advance(days: -7)
+        session['timePeriods'].each do |timePeriod|
+          if timePeriod['period']['code'] == '140'
+            @end_drop_add = timePeriod['endDate']
+          end
+        end
       end
       self
     end

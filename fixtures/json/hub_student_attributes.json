@@ -1,0 +1,141 @@
+{
+   "apiResponse":{
+      "source":"UCB-SIS-STUDENT",
+      "correlationId":"efec2be8-0198-495c-93f8-922a76dc2193",
+      "responseType":"http://bmeta.berkeley.edu/student/studentV0.xsd/students",
+      "response":{
+         "any":{
+            "students":[
+               {
+                  "identifiers":[
+                     {
+                        "type":"student-id",
+                        "id":"11667051",
+                        "disclose":false
+                     },
+                     {
+                        "type":"campus-uid",
+                        "id":"61889",
+                        "disclose":true
+                     },
+                     {
+                        "type":"Social Security Number",
+                        "id":"***-**-****",
+                        "disclose":false
+                     },
+                     {
+                        "type":"DB2",
+                        "id":"11667051",
+                        "disclose":false,
+                        "fromDate":"1902-02-01"
+                     }
+                  ],
+                  "affiliations":[
+                     {
+                        "type":{
+                           "code":"STUDENT",
+                           "description":""
+                        },
+                        "detail":"",
+                        "status":{
+                           "code":"ACT",
+                           "description":"Active"
+                        },
+                        "fromDate":"2016-03-19"
+                     },
+                     {
+                        "type":{
+                           "code":"UNDERGRAD",
+                           "description":"Undergraduate Student"
+                        },
+                        "detail":"Active",
+                        "status":{
+                           "code":"ACT",
+                           "description":"Active"
+                        },
+                        "fromDate":"2016-03-19"
+                     }
+                  ],
+                  "confidential":false,
+                  "studentAttributes":{
+                     "studentAttributes":[
+                        {
+                           "type":{
+                              "code":"AHI",
+                              "description":"American Hist & Inst Waiver"
+                           },
+                           "fromDate":"2001-01-01",
+                           "comments":""
+                        },
+                        {
+                           "type":{
+                              "code":"R5TA",
+                              "description":"5 Terms in Attendance"
+                           },
+                           "fromDate":"2016-03-21",
+                           "comments":""
+                        },
+                        {
+                           "type":{
+                              "code":"RL4",
+                              "description":"EOP Recalc based on FASFA"
+                           },
+                           "fromDate":"2016-03-21",
+                           "comments":""
+                        },
+                        {
+                           "type":{
+                              "code":"RL5",
+                              "description":"EOP Pool for GB"
+                           },
+                           "fromDate":"2016-03-21",
+                           "comments":""
+                        },
+                        {
+                           "type":{
+                              "code":"RPRI",
+                              "description":"Priority Enrollment"
+                           },
+                           "fromDate":"2016-03-21",
+                           "comments":""
+                        },
+                        {
+                           "type":{
+                              "code":"RVT",
+                              "description":"Veteran - Priority Enrollment"
+                           },
+                           "fromDate":"2016-03-21",
+                           "comments":""
+                        },
+                        {
+                           "type":{
+                              "code":"RZA",
+                              "description":"Active Athlete"
+                           },
+                           "fromDate":"2016-05-25",
+                           "comments":""
+                        },
+                        {
+                           "type":{
+                              "code":"VAC",
+                              "description":"American Cultures"
+                           },
+                           "fromDate":"2001-01-01",
+                           "comments":""
+                        },
+                        {
+                           "type":{
+                              "code":"VELW",
+                              "description":"Entry Level Writing"
+                           },
+                           "fromDate":"2001-01-01",
+                           "comments":""
+                        }
+                     ]
+                  }
+               }
+            ]
+         }
+      }
+   }
+}

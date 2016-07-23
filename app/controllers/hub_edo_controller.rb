@@ -18,6 +18,10 @@ class HubEdoController < ApplicationController
     json_passthrough HubEdos::MyStudent, options
   end
 
+  def student_attributes
+    json_passthrough HubEdos::MyStudentAttributes
+  end
+
   def work_experience
     # Delegates get an empty feed.
     return {
