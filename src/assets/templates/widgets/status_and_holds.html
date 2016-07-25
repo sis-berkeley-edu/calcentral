@@ -30,17 +30,19 @@
                       <span data-ng-bind="registration.explanation"></span>
                     </div>
                     <div data-ng-if="registration.summary !== 'Officially Registered' && !registration.isSummer">
-                      <span data-ng-if="registration.summary === 'Not Officially Registered'" data-ng-bind-html="$parent.regStatus.messages.notRegistered.descrLong"></span>
-                      <span data-ng-if="registration.summary === 'Not Enrolled' && api.user.profile.roles.undergrad" data-ng-bind-html="$parent.regStatus.messages.notEnrolledUndergrad.descrLong"></span>
-                      <span data-ng-if="registration.summary === 'Not Enrolled' && (api.user.profile.roles.grad || api.user.profile.roles.law)" data-ng-bind-html="$parent.regStatus.messages.notEnrolledGrad.descrLong"></span>
-                      <span data-ng-if="!$parent.regStatus.messages" data-ng-bind="registration.explanation"></span>
+                      <div data-ng-if="$parent.regStatus.messages">
+                        <span data-ng-if="registration.summary === 'Not Officially Registered'" data-ng-bind-html="$parent.regStatus.messages.notRegistered.descrLong"></span>
+                        <span data-ng-if="registration.summary === 'Not Enrolled' && api.user.profile.roles.undergrad" data-ng-bind-html="$parent.regStatus.messages.notEnrolledUndergrad.descrLong"></span>
+                        <span data-ng-if="registration.summary === 'Not Enrolled' && (api.user.profile.roles.grad || api.user.profile.roles.law)" data-ng-bind-html="$parent.regStatus.messages.notEnrolledGrad.descrLong"></span>
+                      </div>
+                      <span data-ng-if="!$parent.regStatus.messages || api.user.profile.roles.advisor" data-ng-bind="registration.explanation"></span>
                     </div>
                   </div>
                 </div>
               </li>
               <li class="cc-widget-list-hover"
                   data-ng-if="(api.user.profile.roles.undergrad && !registration.pastClassesStart) ||
-                  ((api.user.profile.roles.graduate || api.user.profile.roles.law) && !registration.pastAddDrop) &&
+                  ((api.user.profile.roles.graduate || api.user.profile.roles.law || api.user.profile.roles.advisor) && !registration.pastAddDrop) &&
                   !registration.isLegacy && !registration.isSummer"
                   data-ng-class="{'cc-widget-list-hover-opened':(registration.positiveIndicators.show)}"
                   data-cc-accessible-focus-directive
@@ -62,11 +64,13 @@
                   <div class="cc-status-holds-expanded-text" data-ng-show="registration.positiveIndicators.show">
                     <span data-ng-if="registration.positiveIndicators.R99 && registration.positiveIndicators.R99descr" data-ng-bind="registration.positiveIndicators.R99descr"></span>
                     <div data-ng-if="!registration.positveIndicators.R99">
-                      <span data-ng-if="!registration.pastFinancialDisbursement && api.user.profile.roles.undergrad" data-ng-bind-html="$parent.regStatus.messages.cnpNotificationUndergrad.descrLong"></span>
-                      <span data-ng-if="!registration.pastFinancialDisbursement && (api.user.profile.roles.grad || api.user.profile.roles.law)" data-ng-bind-html="$parent.regStatus.messages.cnpNotificationGrad.descrLong"></span>
-                      <span data-ng-if="registration.pastFinancialDisbursement && api.user.profile.roles.undergrad" data-ng-bind-html="$parent.regStatus.messages.cnpWarningUndergrad.descrLong"></span>
-                      <span data-ng-if="registration.pastFinancialDisbursement && (api.user.profile.roles.grad || api.user.profile.roles.law)" data-ng-bind-html="$parent.regStatus.messages.cnpWarningGrad.descrLong"></span>
-                      <span data-ng-if="!$parent.regStatus.messages">You may be subject to <a href="http://registrar.berkeley.edu/cnp">Cancel for Non-Payment.</a></span>
+                      <div data-ng-if="$parent.regStatus.messages">
+                        <span data-ng-if="!registration.pastFinancialDisbursement && api.user.profile.roles.undergrad" data-ng-bind-html="$parent.regStatus.messages.cnpNotificationUndergrad.descrLong"></span>
+                        <span data-ng-if="!registration.pastFinancialDisbursement && (api.user.profile.roles.grad || api.user.profile.roles.law)" data-ng-bind-html="$parent.regStatus.messages.cnpNotificationGrad.descrLong"></span>
+                        <span data-ng-if="registration.pastFinancialDisbursement && api.user.profile.roles.undergrad" data-ng-bind-html="$parent.regStatus.messages.cnpWarningUndergrad.descrLong"></span>
+                        <span data-ng-if="registration.pastFinancialDisbursement && (api.user.profile.roles.grad || api.user.profile.roles.law)" data-ng-bind-html="$parent.regStatus.messages.cnpWarningGrad.descrLong"></span>
+                      </div>
+                      <span data-ng-if="!$parent.regStatus.messages || api.user.profile.roles.advisor">You may be subject to <a href="http://registrar.berkeley.edu/cnp">Cancel for Non-Payment.</a></span>
                     </div>
                   </div>
                 </div>
