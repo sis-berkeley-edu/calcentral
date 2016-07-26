@@ -1,4 +1,4 @@
-<div data-ng-if="enrollmentInstruction.waitlistedClasses.length" class="cc-enrollment-card-margin-top">
+<div data-ng-if="enrollmentTerm.waitlistedClasses.length" class="cc-enrollment-card-margin-top">
   <div class="cc-flex cc-flex-space-between cc-flex-space-between-horizontal-5">
     <div>
       <strong>Waitlisted</strong>
@@ -9,16 +9,16 @@
     >
       <div
         data-cc-campus-solutions-link-item-directive
-        data-link="enrollmentInstruction.links.dropEnrolledClasses"
+        data-link="enrollmentTerm.links.dropEnrolledClasses"
         data-text="Drop"
         data-cache="enrollment"
-        data-ng-if="enrollmentInstruction.isClassScheduleAvailable"
+        data-ng-if="enrollmentTerm.isClassScheduleAvailable"
       ></div>
     </div>
   </div>
   <div
     class="cc-table"
-    data-ng-repeat="(groupedSectionKey, groupedSection) in enrollmentInstruction.waitlistedClassesGrouped"
+    data-ng-repeat="(groupedSectionKey, groupedSection) in enrollmentTerm.waitlistedClassesGrouped"
     data-ng-class="{'cc-enrollment-card-margin-top' : ($index > 0)}"
   >
     <table>
@@ -51,7 +51,7 @@
   <div class="cc-flex cc-flex-justify-end">
     <div>
       Total Units:
-      <strong data-ng-bind="enrollmentInstruction.waitlistedClassesTotalUnits | number:1"></strong>
+      <strong data-ng-bind="enrollmentTerm.waitlistedClassesTotalUnits | number:1"></strong>
     </div>
   </div>
 </div>

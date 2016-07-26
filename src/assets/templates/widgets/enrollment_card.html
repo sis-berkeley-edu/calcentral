@@ -1,33 +1,33 @@
-<div class="cc-enrollment-card" data-ng-controller="EnrollmentCardController" data-cc-spinner-directive="isLoading">
-  <div data-ng-if="enrollmentInstructions.length > 0">
-    <div class="cc-widget cc-widget-enrollment-card" data-ng-repeat="enrollmentInstruction in enrollmentInstructions" data-ng-if="enrollmentInstruction.enrollmentPeriod">
+<div class="cc-enrollment-card" data-ng-controller="EnrollmentCardController" data-cc-spinner-directive="enrollment.isLoading">
+  <div data-ng-if="enrollment.terms.length > 0">
+    <div class="cc-widget cc-widget-enrollment-card" data-ng-repeat="enrollmentTerm in enrollment.terms" data-ng-if="enrollmentTerm.enrollmentPeriod">
       <div class="cc-widget-title">
         <h2>
           Class Enrollment
-          <span class="cc-widget-title-sub" data-ng-bind="enrollmentInstruction.termDescr"></span>
+          <span class="cc-widget-title-sub" data-ng-bind="enrollmentTerm.termDescr"></span>
         </h2>
       </div>
       <div class="cc-widget-text cc-enrollment-card-advisors-container">
         <div data-ng-include="'widgets/enrollment/consult_advisor.html'"></div>
       </div>
       <div class="cc-widget-text cc-enrollment-card-head">
-        <div data-ng-if="!enrollmentInstruction.enrollmentPeriod[0]">
+        <div data-ng-if="!enrollmentTerm.enrollmentPeriod[0]">
           Please check back regularly for your assigned dates.
         </div>
         <div
           class="cc-flex cc-flex-space-between cc-text-light"
-          data-ng-class="{'cc-enrollment-card-margin-top':(!enrollmentInstruction.enrollmentPeriod[0])}">
+          data-ng-class="{'cc-enrollment-card-margin-top':(!enrollmentTerm.enrollmentPeriod[0])}">
           <div>
             <strong>Activity</strong>
           </div>
-          <div data-ng-if="enrollmentInstruction.enrollmentPeriod[0] && !isInstructionType(enrollmentInstruction, 'law')">
+          <div data-ng-if="enrollmentTerm.enrollmentPeriod[0] && !enrollmentTerm.isLawStudent">
             <strong>When</strong>
           </div>
         </div>
       </div>
       <ul class="cc-widget-list cc-widget-list-border-top">
         <li
-          data-ng-repeat="section in enrollmentInstruction.sections"
+          data-ng-repeat="section in enrollmentTerm.sections"
           class="cc-widget-list-hover cc-enrollment-card-section"
           data-ng-class="{'cc-widget-list-hover-opened':(section.show)}"
           data-cc-accessible-focus-directive

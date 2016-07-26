@@ -1,0 +1,125 @@
+{
+  "statusCode": 200,
+  "feed": {
+    "enrollmentTerm": {
+      "studentId": "0000012",
+      "term": "2168",
+      "termDescr": "2016 Fall",
+      "advisors": [
+        {
+          "id": "123456",
+          "name": "Dai Smith",
+          "emailAddress": "DaiSmith@yahoo.com",
+          "title": "Major Advisor",
+          "program": "College of Engineering"
+        },
+        {
+          "id": "1337",
+          "name": "Marsh Man",
+          "emailAddress": "man@marsh.com",
+          "title": "College Advisor",
+          "program": "College of Letters & Science"
+        }
+      ],
+      "links": {
+        "scheduleClasses": {
+          "name": "Schedule of Classes",
+          "isCsLink": true,
+          "url": "https://bcs-web-dev-03.is.berkeley.edu:8443/psc/bcsdev/EMPLOYEE/HRMS/c/UC_FA_AWD_MGT_FLU.UC_FA_AWD_MGT_FLU.GBL"
+        },
+        "courseCatalog": {
+          "name": "Course Catalog",
+          "isCsLink": true,
+          "url": "https://bcs-web-dev-03.is.berkeley.edu:8443/psc/bcsdev/EMPLOYEE/HRMS/c/UC_FA_AWD_MGT_FLU.UC_FA_AWD_MGT_FLU.GBL"
+        },
+        "chooseClasses": {
+          "name": "Choose your classes",
+          "isCsLink": true,
+          "url": "https://bcs-web-dev-03.is.berkeley.edu:8443/psc/bcsdev/EMPLOYEE/HRMS/c/UC_FA_AWD_MGT_FLU.UC_FA_AWD_MGT_FLU.GBL"
+        },
+        "updateEnrolledClasses": {
+          "name": "Update enrolled classes",
+          "isCsLink": true,
+          "url": "https://bcs-web-dev-03.is.berkeley.edu:8443/psc/bcsdev/EMPLOYEE/HRMS/c/UC_FA_AWD_MGT_FLU.UC_FA_AWD_MGT_FLU.GBL"
+        },
+        "dropWaitlistedClasses": {
+          "name": "Drop waitlisted classes",
+          "isCsLink": true,
+          "url": "https://bcs-web-dev-03.is.berkeley.edu:8443/psc/bcsdev/EMPLOYEE/HRMS/c/UC_FA_AWD_MGT_FLU.UC_FA_AWD_MGT_FLU.GBL"
+        },
+        "withdrawFromSemester": {
+          "name": "Withdraw from semester",
+          "isCsLink": true,
+          "url": "https://bcs-web-dev-03.is.berkeley.edu:8443/psc/bcsdev/EMPLOYEE/HRMS/c/UC_FA_AWD_MGT_FLU.UC_FA_AWD_MGT_FLU.GBL"
+        }
+      },
+      "enrollmentPeriod": [
+        {
+          "id": "phase1",
+          "name": "Phase I",
+          "date": {
+            "epoch": 1460962800,
+            "dateTime": "2016-04-18T00:00:00-08:00",
+            "dateString": "4/18"
+          }
+        },
+        {
+          "id": "phase2",
+          "name": "Phase II",
+          "date": {
+            "epoch": 1465110000,
+            "dateTime": "2016-06-05T00:00:00-08:00",
+            "dateString": "6/05"
+          }
+        },
+        {
+          "id": "adjust",
+          "name": "Adjust",
+          "date": {
+            "epoch": 1471244400,
+            "dateTime": "2016-08-15T00:00:00-08:00",
+            "dateString": "8/15"
+          }
+        }
+      ],
+      "scheduleOfClassesPeriod": {
+        "date": {
+          "epoch": 1459148400,
+          "dateTime": "2016-03-28T00:00:00-08:00",
+          "dateString": "3/28"
+        }
+      },
+      "enrolledClasses": [
+        {
+          "id": "12081",
+          "subjectCatalog": "ARCH11A",
+          "when": "Monday  Wednesday 9:00 AM-9:59 AM",
+          "units": "4"
+        },
+        {
+          "id": "19090",
+          "subjectCatalog": "MATHC103",
+          "when": "Tuesday  Thursday 12:30 PM-1:59 PM",
+          "units": "4"
+        }
+      ],
+      "waitlistedClasses": [
+        {
+          "id": "5636",
+          "subjectCatalog": "TAGALOG001",
+          "when": "Monday  Wednesday 10:00 AM-10:59 AM",
+          "units": "4"
+        }
+      ]
+    }
+  },
+  "feedName": "CampusSolutions::MyEnrollmentTerm",
+  "lastModified": {
+    "hash": "b2496bed80547289819e442821e83df043166ac3",
+    "timestamp": {
+      "epoch": 1438643912,
+      "dateTime": "2015-08-03T16:18:32-07:00",
+      "dateString": "8/03"
+    }
+  }
+}

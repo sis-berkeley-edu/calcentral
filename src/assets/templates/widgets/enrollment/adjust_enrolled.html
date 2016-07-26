@@ -7,59 +7,59 @@
 >
   <div
     data-cc-campus-solutions-link-item-directive
-    data-link="enrollmentInstruction.links.addEnrolledClasses"
+    data-link="enrollmentTerm.links.addEnrolledClasses"
     data-text="Add"
     data-cache="enrollment"
-    data-ng-if="enrollmentInstruction.isClassScheduleAvailable && !enrollmentInstruction.isGradeBaseAvailable"
+    data-ng-if="enrollmentTerm.isClassScheduleAvailable && !enrollmentTerm.isGradeBaseAvailable"
   ></div>
   <div
     data-cc-campus-solutions-link-item-directive
-    data-link="enrollmentInstruction.links.dropEnrolledClasses"
+    data-link="enrollmentTerm.links.dropEnrolledClasses"
     data-text="Drop"
     data-cache="enrollment"
-    data-ng-if="enrollmentInstruction.isClassScheduleAvailable && !enrollmentInstruction.isGradeBaseAvailable"
+    data-ng-if="enrollmentTerm.isClassScheduleAvailable && !enrollmentTerm.isGradeBaseAvailable"
   ></div>
   <div
     data-cc-campus-solutions-link-item-directive
-    data-link="enrollmentInstruction.links.swapEnrolledClasses"
+    data-link="enrollmentTerm.links.swapEnrolledClasses"
     data-text="Swap"
     data-cache="enrollment"
-    data-ng-if="enrollmentInstruction.isClassScheduleAvailable && !enrollmentInstruction.isGradeBaseAvailable"
+    data-ng-if="enrollmentTerm.isClassScheduleAvailable && !enrollmentTerm.isGradeBaseAvailable"
   ></div>
   <div
     data-cc-campus-solutions-link-item-directive
-    data-link="enrollmentInstruction.links.gradeBase"
+    data-link="enrollmentTerm.links.gradeBase"
     data-text="Options"
     data-cache="enrollment"
-    data-ng-if="enrollmentInstruction.isClassScheduleAvailable && !enrollmentInstruction.isGradeBaseAvailable"
+    data-ng-if="enrollmentTerm.isClassScheduleAvailable && !enrollmentTerm.isGradeBaseAvailable"
   ></div>
   <div
     data-cc-campus-solutions-link-item-directive
-    data-link="enrollmentInstruction.links.gradeBase"
+    data-link="enrollmentTerm.links.gradeBase"
     data-text="Change Grading Option"
     data-cache="enrollment"
-    data-ng-if="enrollmentInstruction.isGradeBaseAvailable && !isInstructionType(enrollmentInstruction, 'law')"
+    data-ng-if="enrollmentTerm.isGradeBaseAvailable && !enrollmentTerm.isLawStudent"
   ></div>
   <div
     data-cc-campus-solutions-link-item-directive
-    data-link="enrollmentInstruction.links.withdrawFromSemester"
+    data-link="enrollmentTerm.links.withdrawFromSemester"
     data-text="Withdraw"
-    data-ng-if="enrollmentInstruction.enrollmentPeriod[0] && !isInstructionType(enrollmentInstruction, 'law')"
+    data-ng-if="enrollmentTerm.enrollmentPeriod[0] && !enrollmentTerm.isLawStudent"
     data-cache="enrollment"
   ></div>
 </div>
 
 
-<div data-ng-if="!enrollmentInstruction.enrolledClasses.length">
+<div data-ng-if="!enrollmentTerm.enrolledClasses.length">
   You are currently not enrolled in any classes for
-  <span data-ng-bind="enrollmentInstruction.termDescr"></span>.
+  <span data-ng-bind="enrollmentTerm.termDescr"></span>.
 </div>
 
-<div data-ng-if="enrollmentInstruction.enrolledClasses.length">
+<div data-ng-if="enrollmentTerm.enrolledClasses.length">
   <div
     class="cc-table"
     data-ng-class="{'cc-enrollment-card-margin-top' : ($index > 0)}"
-    data-ng-repeat="(groupedSectionKey, groupedSection) in enrollmentInstruction.enrolledClassesGrouped"
+    data-ng-repeat="(groupedSectionKey, groupedSection) in enrollmentTerm.enrolledClassesGrouped"
   >
     <table>
       <thead>
@@ -91,7 +91,7 @@
   <div class="cc-flex cc-flex-justify-end">
     <div>
       Total Units:
-      <strong data-ng-bind="enrollmentInstruction.enrolledClassesTotalUnits | number:1"></strong>
+      <strong data-ng-bind="enrollmentTerm.enrolledClassesTotalUnits | number:1"></strong>
     </div>
   </div>
 </div>

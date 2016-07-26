@@ -1,65 +1,67 @@
 <div
   data-cc-enrollment-card-header-directive
   data-count="$index + 1"
-  data-date="{{(enrollmentInstruction.enrollmentPeriod[0] && api.user.profile.features.csAcademicPlanner) ? 'Prior to ' + (enrollmentInstruction.enrollmentPeriod[0].date.epoch * 1000 | date:'MMM d'): ''}}"
+  data-date="{{(enrollmentTerm.enrollmentPeriod[0] && api.user.profile.features.csAcademicPlanner) ? 'Prior to ' + (enrollmentTerm.enrollmentPeriod[0].date.epoch * 1000 | date:'MMM d'): ''}}"
   data-title="section.title"
 ></div>
 
 <div class="cc-enrollment-card-section-content" data-ng-if="section.show">
-  <div data-ng-if="!enrollmentInstruction.updatePlannerLink && !enrollmentInstruction.academicPlanner.classes.length">
-    Multi-year academic planner is unavailable at this time.
-  </div>
-
-  <div data-ng-if="api.user.profile.actAsOptions.canSeeCSLinks">
-    <div data-ng-if="enrollmentInstruction.updatePlannerLink && !enrollmentInstruction.academicPlanner.classes.length">
-      Build your multi-year
-      <a data-cc-campus-solutions-link-directive="enrollmentInstruction.updatePlannerLink.url"
-        data-cc-campus-solutions-link-directive-enabled="{{enrollmentInstruction.updatePlannerLink.isCsLink}}"
-        data-cc-campus-solutions-link-directive-text="backToText"
-        data-cc-campus-solutions-link-directive-cache="'enrollment'"
-        data-cc-outbound-enabled="{{!enrollmentInstruction.updatePlannerLink.isCsLink}}">
-        academic plan
-      </a>
+  <div data-cc-spinner-directive="enrollment.academicPlan.isLoading">
+    <div data-ng-if="!enrollment.academicPlan.updateLink && !enrollmentTerm.academicPlan.classes.length">
+      Multi-year academic planner is unavailable at this time.
     </div>
 
-    <div data-ng-if="enrollmentInstruction.updatePlannerLink && enrollmentInstruction.academicPlanner.classes.length">
-      <div class="cc-flex cc-flex-space-between">
-        <div>
-          <strong>Current Academic Plan for <span data-ng-bind="enrollmentInstruction.termDescr"></span></strong>
-        </div>
-
-        <div>
-          <a data-cc-campus-solutions-link-directive="enrollmentInstruction.updatePlannerLink.url"
-            data-cc-campus-solutions-link-directive-enabled="{{enrollmentInstruction.updatePlannerLink.isCsLink}}"
-            data-cc-campus-solutions-link-directive-text="backToText"
-            data-cc-campus-solutions-link-directive-cache="'enrollment'"
-            data-cc-outbound-enabled="{{!enrollmentInstruction.updatePlannerLink.isCsLink}}">
-            Update
-          </a>
-        </div>
+    <div data-ng-if="api.user.profile.actAsOptions.canSeeCSLinks">
+      <div data-ng-if="enrollment.academicPlan.updateLink && !enrollmentTerm.academicPlan.classes.length">
+        Build your multi-year
+        <a data-cc-campus-solutions-link-directive="enrollment.academicPlan.updateLink.url"
+          data-cc-campus-solutions-link-directive-enabled="{{enrollment.academicPlan.updateLink.isCsLink}}"
+          data-cc-campus-solutions-link-directive-text="backToText"
+          data-cc-campus-solutions-link-directive-cache="'enrollment'"
+          data-cc-outbound-enabled="{{!enrollment.academicPlan.updateLink.isCsLink}}">
+          academic plan
+        </a>
       </div>
 
-      <div class="cc-table cc-enrollment-card-margin-top">
-        <table>
-          <thead>
-            <th scope="col">Class</th>
-            <th scope="col">Title</th>
-            <th scope="col" class="cc-table-right">Units</th>
-          </thead>
-          <tbody>
-            <tr data-ng-repeat="class in enrollmentInstruction.academicPlanner.classes">
-              <td data-ng-bind="class.subjectCatalog"></td>
-              <td data-ng-bind="class.title"></td>
-              <td data-ng-bind="class.units" class="cc-table-right"></td>
-            </tr>
-          </tbody>
-        </table>
+      <div data-ng-if="enrollment.academicPlan.updateLink && enrollmentTerm.academicPlan.classes.length">
+        <div class="cc-flex cc-flex-space-between">
+          <div>
+            <strong>Current Academic Plan for <span data-ng-bind="enrollmentTerm.termDescr"></span></strong>
+          </div>
+
+          <div>
+            <a data-cc-campus-solutions-link-directive="enrollment.academicPlan.updateLink.url"
+              data-cc-campus-solutions-link-directive-enabled="{{enrollment.academicPlan.updateLink.isCsLink}}"
+              data-cc-campus-solutions-link-directive-text="backToText"
+              data-cc-campus-solutions-link-directive-cache="'enrollment'"
+              data-cc-outbound-enabled="{{!enrollment.academicPlan.updateLink.isCsLink}}">
+              Update
+            </a>
+          </div>
+        </div>
+
+        <div class="cc-table cc-enrollment-card-margin-top">
+          <table>
+            <thead>
+              <th scope="col">Class</th>
+              <th scope="col">Title</th>
+              <th scope="col" class="cc-table-right">Units</th>
+            </thead>
+            <tbody>
+              <tr data-ng-repeat="class in enrollmentTerm.academicPlan.classes">
+                <td data-ng-bind="class.subjectCatalog"></td>
+                <td data-ng-bind="class.title"></td>
+                <td data-ng-bind="class.units" class="cc-table-right"></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
-  </div>
 
-  <div
-    data-ng-if="!api.user.profile.actAsOptions.canSeeCSLinks"
-    data-ng-include="'widgets/enrollment/enrollment_hide_links.html'">
+    <div
+      data-ng-if="!api.user.profile.actAsOptions.canSeeCSLinks"
+      data-ng-include="'widgets/enrollment/enrollment_hide_links.html'">
+    </div>
   </div>
 </div>

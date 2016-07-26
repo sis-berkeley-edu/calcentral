@@ -1,16 +1,17 @@
 <div
   data-cc-enrollment-card-header-directive
   data-count="$index + 1"
-  data-date="{{enrollmentInstruction.enrollmentPeriod[0] ? (enrollmentInstruction.scheduleOfClassesPeriod.date.epoch * 1000 | date:'MMM d') : ''}}"
+  data-date="{{enrollmentTerm.enrollmentPeriod[0] ? (enrollmentTerm.scheduleOfClassesPeriod.date.epoch * 1000 | date:'MMM d') : ''}}"
   data-title="section.title"
 ></div>
 
 <div class="cc-enrollment-card-section-content" data-ng-if="section.show">
-  <div data-ng-if="enrollmentInstruction.isClassScheduleAvailable && !isAdvisingStudentLookup && api.user.profile.isDirectlyAuthenticated">
+  <div data-ng-if="enrollmentTerm.isClassScheduleAvailable && !isAdvisingStudentLookup && api.user.profile.isDirectlyAuthenticated">
     <p>
-      <a data-ng-href="/college_scheduler/{{enrollmentInstruction.careerCode}}/{{enrollmentInstruction.term}}"
-        data-cc-outbound-enabled="true">
-        Organize and preview your upcoming semester</a>
+      <a data-cc-outbound-enabled="true"
+        data-ng-href="/college_scheduler/{{enrollmentTerm.acadCareer}}/{{enrollmentTerm.term}}">
+        Organize and preview your upcoming semester
+      </a>
       based on your scheduling needs.
     </p>
     <p>
@@ -25,7 +26,7 @@
     data-ng-include="'widgets/enrollment/enrollment_hide_links.html'">
   </div>
 
-  <div data-ng-if="!enrollmentInstruction.isClassScheduleAvailable">
+  <div data-ng-if="!enrollmentTerm.isClassScheduleAvailable">
     Schedule of classes will be available soon. Please try again later.
   </div>
 </div>

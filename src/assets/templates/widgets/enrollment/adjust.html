@@ -1,7 +1,7 @@
 <div
   data-cc-enrollment-card-header-directive
   data-count="$index + 1"
-  data-date="{{enrollmentInstruction.enrollmentPeriod[0] && !isInstructionType(enrollmentInstruction, 'law') ? 'After ' + (enrollmentInstruction.enrollmentPeriod[0].date.epoch * 1000 | date:'MMM d'): ''}}"
+  data-date="{{enrollmentTerm.enrollmentPeriod[0] && !enrollmentTerm.isLawStudent ? 'After ' + (enrollmentTerm.enrollmentPeriod[0].date.epoch * 1000 | date:'MMM d'): ''}}"
   data-title="section.title"
 ></div>
 

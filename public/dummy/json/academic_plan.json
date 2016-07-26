@@ -1,0 +1,31 @@
+{
+  "statusCode": 200,
+  "feed": {
+    "studentId": "24437121",
+    "updateAcademicPlanner": {
+      "name": "Update",
+      "url": "https://bcs-web-dev-03.is.berkeley.edu:8443/psc/bcsdev/EMPLOYEE/HRMS/c/SCI_PLNR_FL.SCI_PLNR_FL.GBL?ucInstitution=UCB01",
+      "isCsLink": true
+    },
+    "academicplanner": [{
+      "term": "2168",
+      "termDescr": "2016 Fall",
+      "classes": [{
+        "id": "124039",
+        "subjectCatalog": "PSYCHC115B",
+        "title": null,
+        "units": 4.0
+      }],
+      "totalUnits": 4.0
+    }]
+  },
+  "lastModified": {
+    "hash": "613b4ea9661361558ba9b523e48b13fa90f92791",
+    "timestamp": {
+      "epoch": 1455848984,
+      "dateTime": "2016-02-18T18:29:44-08:00",
+      "dateString": "2/18"
+    }
+  },
+  "feedName": "CampusSolutions::MyAcademicPlan"
+}

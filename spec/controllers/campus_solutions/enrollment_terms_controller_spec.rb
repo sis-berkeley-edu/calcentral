@@ -1,4 +1,5 @@
-describe MyClassEnrollmentsController do
+describe CampusSolutions::EnrollmentTermsController do
+
   let(:user_id) { '12345' }
   before do
     allow(Settings.features).to receive(:cs_enrollment_card).and_return true
@@ -6,17 +7,17 @@ describe MyClassEnrollmentsController do
   end
 
   context 'enrollment terms feed' do
-    let(:feed) { :get_feed }
+    let(:feed) { :get }
     it_behaves_like 'an unauthenticated user'
 
     context 'authenticated user' do
-      it 'returns enrollment instructions feed' do
+      let(:feed_key) { 'enrollmentTerms' }
+      it_behaves_like 'a successful feed'
+      it 'has some field mapping info' do
         session['user_id'] = user_id
         get feed
         json = JSON.parse(response.body)
-        expect(json).to have_key('enrollmentTermInstructionTypes')
-        expect(json).to have_key('enrollmentTermInstructions')
-        expect(json).to have_key('enrollmentTermAcademicPlanner')
+        expect(json['feed']['enrollmentTerms'][0]['termId']).to eq '2162'
       end
     end
   end
@@ -32,7 +33,7 @@ describe MyClassEnrollmentsController do
         }
       end
       it 'allows access' do
-        get :get_feed
+        get :get
         assert_response :success
         json_response = JSON.parse(response.body)
         json_response.should be_present
@@ -45,7 +46,7 @@ describe MyClassEnrollmentsController do
         }
       end
       it 'denies all access' do
-        get :get_feed
+        get :get
         expect(response.status).to eq 403
         expect(response.body).to eq ' '
       end
