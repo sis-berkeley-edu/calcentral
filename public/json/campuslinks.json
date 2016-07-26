@@ -1281,6 +1281,24 @@
       ]
     },
     {
+      "name": "Change of Academic Plan (Major, minor, subplan, graduation date, designated emphasis, or degree)",
+      "description": "Form to change your Academic Plan which includes your major, minor, subplan, graduation date, designated emphasis, or degree",
+      "url": "https://bcsint.is.berkeley.edu/psc/bcsprd/EMPLOYEE/HRMS/c/G3FRAME.G3SEARCH.GBL?&G3FORM_FAMILY=SRCPPSTCK&G3FORM_TYPE=CPPSTACK&G3FORM_CONDITION=Default&G3FORM_TASK=ADD",
+      "roles": {
+        "student": true,
+        "applicant": true,
+        "staff": false,
+        "faculty": false,
+        "exStudent": false
+      },
+      "categories": [
+        {
+          "topcategory": "Student Forms",
+          "subcategory": "Forms"
+        }
+      ]
+    },
+    {
       "name": "Child Care",
       "description": "Campus child care services",
       "url": "http://www.housing.berkeley.edu/child/",
