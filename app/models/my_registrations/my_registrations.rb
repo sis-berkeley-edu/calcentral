@@ -22,6 +22,7 @@ module MyRegistrations
     end
 
     def get_terms
+      berkeley_term = Berkeley::Term.new
       berkeley_terms = Berkeley::Terms.fetch
       terms = {}
       # ':previous' and ':grading_in_progress' methods are not included here because Campus::Oracle does not keep information prior to the current term.
@@ -36,9 +37,9 @@ module MyRegistrations
             cs_feed = HubTerm::Proxy.new(temporal_position: temporal_position).get_term
             terms[term_method] = terms[term_method].merge(
               {
-                classesStart: term_start(cs_feed),
-                end: term_end(cs_feed),
-                endDropAdd: term_end_drop_add(cs_feed)
+                classesStart: berkeley_term.from_cs_api(cs_feed).classes_start,
+                end: berkeley_term.from_cs_api(cs_feed).end,
+                endDropAdd: berkeley_term.from_cs_api(cs_feed).end_drop_add
               }
             )
             terms[term_method] = set_term_flags(terms[term_method])
@@ -123,18 +124,6 @@ module MyRegistrations
       end
 
       HashConverter.camelize response
-    end
-
-    def term_start(cs_feed)
-      Berkeley::Term.new.from_cs_api(cs_feed).classes_start
-    end
-
-    def term_end(cs_feed)
-      Berkeley::Term.new.from_cs_api(cs_feed).end
-    end
-
-    def term_end_drop_add(cs_feed)
-      Berkeley::Term.new.from_cs_api(cs_feed).end_drop_add
     end
 
     def term_transition?

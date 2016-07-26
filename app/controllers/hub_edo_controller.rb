@@ -19,7 +19,8 @@ class HubEdoController < ApplicationController
   end
 
   def student_attributes
-    json_passthrough HubEdos::MyStudentAttributes
+    model = HubEdos::MyStudentAttributes.from_session session
+    render json: model.get_feed_internal
   end
 
   def work_experience
