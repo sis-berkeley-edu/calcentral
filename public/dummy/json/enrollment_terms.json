@@ -1,0 +1,23 @@
+{
+  "statusCode": 200,
+  "feed": {
+    "enrollmentTerms": [
+      {
+        "acadCareer": "UGRD",
+        "termId": "2162",
+        "termDescr": "2016 Spring"
+      },
+      {
+        "acadCareer": "GRAD",
+        "termId": "2165",
+        "termDescr": "2016 Summer"
+      },
+      {
+        "acadCareer": "GRAD",
+        "termId": "2168",
+        "termDescr": "2016 Fall"
+      }
+    ],
+    "studentId": "12701798"
+  }
+}

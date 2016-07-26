@@ -1,26 +1,26 @@
 <div
   data-cc-enrollment-card-header-directive
   data-count="$index + 1"
-  data-date="{{enrollmentInstruction.enrollmentPeriod[0] && !isInstructionType(enrollmentInstruction, 'law') ? (enrollmentInstruction.enrollmentPeriod[0].date.epoch * 1000 | date:'h:mm a') : ''}}"
-  data-date-important="{{enrollmentInstruction.enrollmentPeriod[0] && !isInstructionType(enrollmentInstruction, 'law') ? (enrollmentInstruction.enrollmentPeriod[0].date.epoch * 1000 | date:'EEE MMM d'): ''}}"
+  data-date="{{enrollmentTerm.enrollmentPeriod[0] && !enrollmentTerm.isLawStudent ? (enrollmentTerm.enrollmentPeriod[0].date.epoch * 1000 | date:'h:mm a') : ''}}"
+  data-date-important="{{enrollmentTerm.enrollmentPeriod[0] && !enrollmentTerm.isLawStudent ? (enrollmentTerm.enrollmentPeriod[0].date.epoch * 1000 | date:'EEE MMM d'): ''}}"
   data-title="section.title"
 ></div>
 
 <div class="cc-enrollment-card-section-content" data-ng-if="section.show">
-  <div data-ng-if="api.user.profile.actAsOptions.canSeeCSLinks && !isInstructionType(enrollmentInstruction, 'law')">
-    <div data-ng-if="enrollmentInstruction.isClassScheduleAvailable">
+  <div data-ng-if="api.user.profile.actAsOptions.canSeeCSLinks && !enrollmentTerm.isLawStudent">
+    <div data-ng-if="enrollmentTerm.isClassScheduleAvailable">
       <span
         data-cc-campus-solutions-link-item-directive
-        data-link="enrollmentInstruction.links.chooseClasses"
+        data-link="enrollmentTerm.links.chooseClasses"
         data-text="Choose classes"
         data-cache="enrollment"
       ></span> for the upcoming semester.<br>
     </div>
   </div>
-  <div data-ng-if="!enrollmentInstruction.isClassScheduleAvailable">
+  <div data-ng-if="!enrollmentTerm.isClassScheduleAvailable">
     Ability to enroll coming soon. Please try again later.
   </div>
-  <div data-ng-if="!isInstructionType(enrollmentInstruction, 'law')">
+  <div data-ng-if="!enrollmentTerm.isLawStudent">
     Learn more about <a href="http://registrar.berkeley.edu/Records/tbinfo.html">enrollment rules and information</a>.
   </div>
 
@@ -29,9 +29,8 @@
     data-ng-include="'widgets/enrollment/enrollment_hide_links.html'">
   </div>
 
-  <div data-ng-if="enrollmentInstruction.enrollmentPeriod.length">
-    <div data-ng-if="isInstructionType(enrollmentInstruction, 'law')"
-      class="cc-enrollment-card-margin-bottom">
+  <div data-ng-if="enrollmentTerm.enrollmentPeriod.length">
+    <div data-ng-if="enrollmentTerm.isLawStudent" class="cc-enrollment-card-margin-bottom">
       Below are your enrollment appointment start times. You will have continuous access to the system until the semester's add/drop deadline:
     </div>
     <h4 class="cc-enrollment-card-headersub-title">Enrollment Period</h4>
@@ -42,7 +41,7 @@
           <th scope="col">Day of the week</th>
           <th scope="col">Date and time</th>
         </thead>
-        <tr data-ng-repeat="period in enrollmentInstruction.enrollmentPeriod">
+        <tr data-ng-repeat="period in enrollmentTerm.enrollmentPeriod">
           <th scope="row">
             <span data-ng-bind="period.name" class="cc-text-light"></span>
           </th>

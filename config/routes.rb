@@ -25,7 +25,6 @@ Calcentral::Application.routes.draw do
   get '/api/my/activities' => 'my_activities#get_feed', :as => :my_activities, :defaults => { :format => 'json' }
   get '/api/my/badges' => 'my_badges#get_feed', :as => :my_badges, :defaults => { :format => 'json' }
   get '/api/my/academics' => 'my_academics#get_feed', :as => :my_academics, :defaults => { :format => 'json' }
-  get '/api/my/class_enrollments' => 'my_class_enrollments#get_feed', :via => :get, :defaults => { :format => 'json' }
   get '/api/my/eft_enrollment' => 'my_eft_enrollment#get_feed', :as => :my_eft_enrollment, :defaults => { :format => 'json' }
   get '/api/my/financials' => 'my_financials#get_feed', :as => :my_financials, :defaults => {:format => 'json'}
   get '/api/my/finaid' => 'my_finaid#get_feed', :as => :my_finaid, :defaults => {:format => 'json'}
@@ -144,9 +143,11 @@ Calcentral::Application.routes.draw do
   post '/delete_users/saved' => 'stored_users#delete_all_saved', via: :post, defaults: { format: 'json' }
 
   # Advisor endpoints
+  get '/api/advising/academic_plan/:student_uid' => 'advising_student#academic_plan', :defaults => { :format => 'json' }
   get '/api/advising/academics/:student_uid' => 'advising_student#academics', :defaults => { :format => 'json' }
   get '/api/advising/blocks/:student_uid' => 'advising_student#blocks', :defaults => { :format => 'json' }
-  get '/api/advising/class_enrollments/:student_uid' => 'advising_student#enrollment_instructions', :defaults => { :format => 'json'}
+  get '/api/advising/enrollment_term/:student_uid' => 'advising_student#enrollment_term', :defaults => { :format => 'json' }
+  get '/api/advising/enrollment_terms/:student_uid' => 'advising_student#enrollment_terms', :defaults => { :format => 'json' }
   get '/api/advising/academic_status/:student_uid' => 'advising_student#academic_status', :defaults => { :format => 'json' }
   get '/api/advising/registrations/:student_uid' => 'advising_student#registrations', :defaults => { :format => 'json' }
   get '/api/advising/resources/:student_uid' => 'advising_student#resources', :defaults => { :format => 'json' }
@@ -184,7 +185,10 @@ Calcentral::Application.routes.draw do
   get '/api/campus_solutions/financial_aid_funding_sources' => 'campus_solutions/financial_aid_funding_sources#get', :via => :get, :defaults => { :format => 'json' }
   get '/api/campus_solutions/financial_aid_funding_sources_term' => 'campus_solutions/financial_aid_funding_sources_term#get', :via => :get, :defaults => { :format => 'json' }
   get '/api/campus_solutions/holds' => 'campus_solutions/holds#get', :via => :get, :defaults => { :format => 'json' }
+  get '/api/campus_solutions/enrollment_term' => 'campus_solutions/enrollment_term#get', :via => :get, :defaults => { :format => 'json' }
+  get '/api/campus_solutions/enrollment_terms' => 'campus_solutions/enrollment_terms#get', :via => :get, :defaults => { :format => 'json' }
   get '/api/campus_solutions/enrollment_verification_messages' => 'campus_solutions/enrollment_verification_messages#get', :via => :get, :defaults => {:format => 'json'}
+  get '/api/campus_solutions/academic_plan' => 'campus_solutions/academic_plan#get', :via => :get, :defaults => { :format => 'json' }
   get '/api/campus_solutions/advising_resources' => 'campus_solutions/advising_resources#get', :via => :get, :defaults => { :format => 'json' }
   get '/api/campus_solutions/ferpa_deeplink' => 'campus_solutions/ferpa_deeplink#get', :via => :get, :defaults => { :format => 'json' }
   get '/api/campus_solutions/billing' => 'campus_solutions/billing#get', :via => :get, :defaults => { :format => 'json' }
