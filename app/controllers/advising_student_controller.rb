@@ -36,8 +36,8 @@ class AdvisingStudentController < ApplicationController
     render json: academic_plan_by_student_uid.get_feed_as_json
   end
 
-  def holds
-    render json: CampusSolutions::MyHolds.new(student_uid_param).get_feed_as_json
+  def academic_status
+    render json: HubEdos::AcademicStatus.new(user_id: student_uid_param).get
   end
 
   #TODO: Remove by Fall 2016

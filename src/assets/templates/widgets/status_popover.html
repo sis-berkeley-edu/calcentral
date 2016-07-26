@@ -26,13 +26,13 @@
       </div>
     </a>
   </li>
-  <li class="cc-popover-item" data-ng-if="api.user.profile.features.csHolds && (holds.serviceIndicators.length || holds.errored)">
+  <li class="cc-popover-item" data-ng-if="api.user.profile.features.csHolds && (holds.length || holds.errored)">
     <a href="/academics">
       <div class="cc-launcher-status-description">
         <i class="fa"
-           data-ng-class="{'fa-exclamation-circle cc-icon-red': holds.serviceIndicators.length,
+           data-ng-class="{'fa-exclamation-circle cc-icon-red': holds.length,
            'fa-exclamation-triangle cc-icon-gold': holds.errored}"></i>
-        <strong>Holds:</strong> <span data-ng-if="!holds.errored" data-ng-bind="holds.serviceIndicators.length"></span>
+        <strong>Holds:</strong> <span data-ng-if="!holds.errored" data-ng-bind="holds.length"></span>
         <span data-ng-if="holds.errored">Currently Unavailable</span>
       </div>
     </a>

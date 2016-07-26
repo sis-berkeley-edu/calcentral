@@ -6,7 +6,7 @@ var angular = require('angular');
 /**
  * Status controller
  */
-angular.module('calcentral.controllers').controller('StatusController', function(activityFactory, apiService, badgesFactory, financesFactory, holdsFactory, $http, $scope, $q) {
+angular.module('calcentral.controllers').controller('StatusController', function(academicStatusFactory, activityFactory, apiService, badgesFactory, financesFactory, $http, $scope, $q) {
   $scope.finances = {};
 
   // Keep track on whether the status has been loaded or not
@@ -108,8 +108,8 @@ angular.module('calcentral.controllers').controller('StatusController', function
       !(apiService.user.profile.roles.student || apiService.user.profile.roles.applicant)) {
       return;
     }
-    $scope.holds = _.get(data, 'data.feed');
-    var numberOfHolds = _.get($scope, 'holds.serviceIndicators.length');
+    $scope.holds = _.get(data, 'data.feed.student.holds');
+    var numberOfHolds = _.get($scope, 'holds.length');
     if (numberOfHolds) {
       $scope.count += numberOfHolds;
       $scope.hasAlerts = true;
@@ -152,7 +152,7 @@ angular.module('calcentral.controllers').controller('StatusController', function
 
       // Get all the necessary data from the different factories
       var getBadges = badgesFactory.getBadges().success(loadStudentInfo);
-      var getHolds = holdsFactory.getHolds().then(loadHolds);
+      var getHolds = academicStatusFactory.getAcademicStatus().then(loadHolds);
       var statusGets = [getBadges, getHolds];
 
       // Only fetch financial data for delegates who have been given explicit permssion.

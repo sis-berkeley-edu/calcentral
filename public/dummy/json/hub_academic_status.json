@@ -1,0 +1,315 @@
+{
+  "statusCode": 200,
+  "feed": {
+    "student": {
+        "academicStatuses": [
+          {
+            "cumulativeGPA": {
+              "average": 3.7999999999999998,
+              "source": "UCB",
+              "type": {
+                "code": "Cumulative"
+              }
+            },
+            "cumulativeUnits": [
+              {
+                "type": {
+                  "code": "Total"
+                },
+                "unitsOther": 0,
+                "unitsPassed": 73,
+                "unitsTaken": 8,
+                "unitsTest": 0,
+                "unitsTransferAccepted": 65,
+                "unitsTransferEarned": 81
+              },
+              {
+                "type": {
+                  "code": "For GPA"
+                },
+                "unitsPassed": 8,
+                "unitsTaken": 8,
+                "unitsTransferEarned": 0
+              },
+              {
+                "type": {
+                  "code": "Not For GPA"
+                },
+                "unitsPassed": 0,
+                "unitsTaken": 0,
+                "unitsTransferEarned": 0
+              }
+            ],
+            "currentRegistration": {
+              "academicCareer": {
+                "code": "UGRD",
+                "description": "Undergraduate"
+              },
+              "academicLevel": {
+                "level": {
+                  "code": "30",
+                  "description": "Junior"
+                }
+              },
+              "athlete": false,
+              "disabled": false,
+              "eligibleToRegister": true,
+              "intendsToGraduate": false,
+              "new": false,
+              "registered": false,
+              "term": {
+                "academicYear": "2017",
+                "id": "2172",
+                "name": "2017 Spring"
+              },
+              "termGPA": {
+                "average": 0,
+                "type": {
+                  "description": "Term GPA"
+                }
+              },
+              "termUnits": [
+                {
+                  "type": {
+                    "description": "Total"
+                  },
+                  "unitsEnrolled": 0,
+                  "unitsMax": 0,
+                  "unitsMin": 0,
+                  "unitsWaitlisted": 0
+                },
+                {
+                  "type": {
+                    "description": "For GPA"
+                  },
+                  "unitsEnrolled": 0,
+                  "unitsWaitlisted": 0
+                },
+                {
+                  "type": {
+                    "description": "Not For GPA"
+                  },
+                  "unitsEnrolled": 0,
+                  "unitsWaitlisted": 0
+                }
+              ]
+            },
+            "studentCareer": {
+              "academicCareer": {
+                "code": "UGRD",
+                "description": "Undergraduate"
+              },
+              "fromDate": "2016-01-12"
+            },
+            "studentPlans": [
+              {
+                "academicPlan": {
+                  "academicProgram": {
+                    "program": {
+                      "code": "UCLS",
+                      "description": "Undergrad Letters & Science"
+                    }
+                  },
+                  "plan": {
+                    "code": "25345U",
+                    "description": "English BA",
+                    "fromDate": "2016-01-12"
+                  },
+                  "type": {
+                    "code": "MAJ",
+                    "description": "Major - Regular Acad/Prfnl"
+                  }
+                },
+                "primary": true
+              },
+              {
+                "academicPlan": {
+                  "academicProgram": {
+                    "program": {
+                      "code": "UCLS",
+                      "description": "Undergrad Letters & Science"
+                    }
+                  },
+                  "plan": {
+                    "code": "25090U",
+                    "description": "Art BA",
+                    "fromDate": "2016-01-12"
+                  },
+                  "type": {
+                    "code": "MIN"
+                  }
+                }
+              }
+            ],
+            "termsInAttendance": 4
+          }
+        ],
+        "awardHonors": [],
+        "degrees": [
+          {
+            "academicDegree": {
+              "type": {
+                "code": "PD",
+                "description": "Doctor of Philosophy"
+              }
+            },
+            "academicPlans": {
+              "academicPlan": [
+                {
+                  "plan": {
+                    "code": "00345PHDG",
+                    "description": "English PhD"
+                  }
+                }
+              ]
+            },
+            "completionTerm": {
+              "name": "2010 Spring"
+            },
+            "dateAwarded": "2010-05-14",
+            "status": {
+              "code": "A"
+            },
+            "statusDate": "2015-12-12"
+          }
+        ],
+        "holds": [
+           {
+              "type":{
+                 "code":"V00",
+                 "description":"AA - Advising Holds"
+              },
+              "reason":{
+                 "code":"UNDSR",
+                 "description":"Undeclared Senior",
+                 "formalDescription":"You have exceeded 90 units without a major, please see your College advisor."
+              },
+              "impacts":[
+                 {
+                    "code":"IENR",
+                    "description":"No Initial Enroll, Add/Drop OK"
+                 }
+              ],
+              "fromTerm":{
+                 "id":"2182",
+                 "name":"2018 Spring",
+                 "category":{
+                    "code":"R",
+                    "description":"Regular Term"
+                 },
+                 "academicYear":"2018",
+                 "beginDate":"2018-01-09",
+                 "endDate":"2018-05-11"
+              },
+              "fromDate":"2016-03-23",
+              "reference":"",
+              "amountRequired":0,
+              "department":{
+                 "code":"UCBKL",
+                 "description":"Department"
+              },
+              "contact":{
+                 "code":"",
+                 "description":""
+              },
+              "comments":""
+           },
+           {
+              "type":{
+                 "code":"V00",
+                 "description":"AA - Advising Holds"
+              },
+              "reason":{
+                 "code":"GRDSR",
+                 "description":"Graduating Seniors",
+                 "formalDescription":""
+              },
+              "impacts":[
+                 {
+                    "code":"IENR",
+                    "description":"No Initial Enroll, Add/Drop OK"
+                 }
+              ],
+              "fromTerm":{
+                 "id":"2202",
+                 "name":"2020 Spring",
+                 "category":{
+                    "code":"R",
+                    "description":"Regular Term"
+                 },
+                 "academicYear":"2020",
+                 "beginDate":"2020-01-14",
+                 "endDate":"2020-05-15"
+              },
+              "reference":"",
+              "amountRequired":0,
+              "department":{
+                 "code":"UCBKL",
+                 "description":"Department"
+              },
+              "contact":{
+                 "code":"",
+                 "description":""
+              },
+              "comments":""
+           },
+           {
+              "type":{
+                 "code":"S01",
+                 "description":"Past Due Balance"
+              },
+              "reason":{
+                 "code":"CARS",
+                 "description":"Unpaid charges on account",
+                 "formalDescription":"Our records indicate you have past due charges on your billing account. These charges are for terms through Spring/Summer 2016. Make payment through Bear Facts > CARS > e-Bill. For assistance, contact Cal Student Central at 510-664-9181 or open a case at http://studentcentral.berkeley.edu/."
+              },
+              "impacts":[
+                 {
+                    "code":"GRADE",
+                    "description":"No Grade Access"
+                 },
+                 {
+                    "code":"TRAN",
+                    "description":"Transcript Hold"
+                 }
+              ],
+              "fromDate":"2016-07-02",
+              "reference":"",
+              "amountRequired":0,
+              "department":{
+                 "code":"UCBKL",
+                 "description":"Department"
+              },
+              "contact":{
+                 "code":"",
+                 "description":""
+              },
+              "comments":""
+           }
+        ],
+      "identifiers": [
+        {
+          "disclose": false,
+          "id": "11667051",
+          "type": "student-id"
+        },
+        {
+          "disclose": false,
+          "id": "61889",
+          "type": "campus-uid"
+        },
+        {
+          "disclose": false,
+          "id": "000-00-0000",
+          "type": "Social Security Number"
+        },
+        {
+          "disclose": false,
+          "fromDate": "1902-02-01",
+          "id": "11667051",
+          "type": "DB2"
+        }
+      ]
+    }
+  }
+}

@@ -1,6 +1,6 @@
 <div data-ng-controller="HoldsController" data-cc-spinner-directive="holdsInfo.isLoading">
   <div data-ng-if="!holds.errored">
-    <div class="cc-table" data-ng-if="holds.serviceIndicators.length">
+    <div class="cc-table" data-ng-if="holds.length">
       <table>
         <thead>
           <tr>
@@ -8,42 +8,39 @@
             <th scope="col" class="cc-table-right">Applied</th>
           </tr>
         </thead>
-        <tbody data-ng-repeat="indicator in holds.serviceIndicators">
+        <tbody data-ng-repeat="hold in holds">
           <tr
             class="cc-widget-table-hover"
-            data-ng-class="{'cc-widget-table-hover-opened':(indicator.show)}"
+            data-ng-class="{'cc-widget-table-hover-opened':(hold.show)}"
             data-cc-accessible-focus-directive
-            data-ng-click="api.widget.toggleShow($event, holds.serviceIndicators, indicator, 'Active Hold')"
+            data-ng-click="api.widget.toggleShow($event, holds, hold, 'Active Hold')"
           >
             <td>
               <i class="fa fa-exclamation-circle cc-icon-red"></i>
-              <span data-ng-bind="indicator.reasonDescr"></span>
+              <span data-ng-bind="hold.reason.description"></span>
             </td>
-            <td data-ng-if="indicator.startDate.epoch" data-ng-bind="indicator.startDate.epoch * 1000 | date:'MM/dd/yy'" class="cc-table-right"></td>
-            <td data-ng-if="!indicator.startDate.epoch" data-ng-bind="indicator.startTermDescr" class="cc-table-right"></td>
+            <td data-ng-if="hold.fromDate" data-ng-bind="hold.fromDate | date:'MM/dd/yy'" class="cc-table-right"></td>
+            <td data-ng-if="!hold.fromDate && hold.fromTerm.name" data-ng-bind="hold.fromTerm.name" class="cc-table-right"></td>
           </tr>
-          <tr data-ng-if="indicator.show">
+          <tr data-ng-if="hold.show">
             <td colspan="2">
-              <div class="cc-table-padding cc-text-pre-line" data-ng-if="indicator.instructions" data-ng-bind="indicator.instructions"></div>
+              <div class="cc-table-padding cc-text-pre-line" data-ng-if="hold.reason.formalDescription" data-ng-bind="hold.reason.formalDescription"></div>
               <div class="cc-table-padding">
-                <div data-ng-if="indicator.amount">
+                <div data-ng-if="hold.amountRequired">
                   <strong>Amount:</strong>
                   <span
-                    data-cc-amount-directive="indicator.amount"
+                    data-cc-amount-directive="hold.amountRequired"
                     data-cc-amount-directive-color="false"
                     data-cc-amount-directive-initial-space="false"
                   ></span>
                 </div>
-                <div data-ng-if="indicator.startTermDescr && indicator.startDate.epoch">
+                <div data-ng-if="hold.fromTerm.name">
                   <strong>Start Term:</strong>
-                  <span data-ng-bind="indicator.startTermDescr"></span>
+                  <span data-ng-bind="hold.fromTerm.name"></span>
                 </div>
-                <div>
+                <div data-ng-if="hold.contact.description">
                   <strong>Contact:</strong>
-                  <span data-ng-if="!indicator.contactEmail && !indicator.contactName">N/A</span>
-                  <span data-ng-if="!indicator.contactEmail && indicator.contactName" data-ng-bind="indicator.contactName"></span>
-                  <a data-ng-if="indicator.contactEmail && !indicator.contactName" data-ng-bind="indicator.contactEmail" data-ng-href="mailto:{{indicator.contactEmail}}"></a>
-                  <a data-ng-if="indicator.contactEmail && indicator.contactName" data-ng-bind="indicator.contactName" data-ng-href="mailto:{{indicator.contactEmail}}"></a>
+                  <span data-ng-bind="hold.contact.description"></span>
                 </div>
               </div>
             </td>
@@ -51,7 +48,7 @@
         </tbody>
       </table>
     </div>
-    <div data-ng-if="!holds.serviceIndicators.length">
+    <div data-ng-if="!holds.length">
       You have no active holds at this time.
     </div>
   </div>

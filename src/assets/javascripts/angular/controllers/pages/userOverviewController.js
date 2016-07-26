@@ -6,7 +6,7 @@ var _ = require('lodash');
 /**
  * Preview of user profile prior to viewing-as
  */
-angular.module('calcentral.controllers').controller('UserOverviewController', function(adminService, advisingFactory, holdsFactory, residencyMessageFactory, apiService, statusHoldsService, $route, $routeParams, $scope) {
+angular.module('calcentral.controllers').controller('UserOverviewController', function(adminService, advisingFactory, academicStatusFactory, residencyMessageFactory, apiService, statusHoldsService, $route, $routeParams, $scope) {
   $scope.academics = {
     isLoading: true,
     excludeLinksToRegistrar: true
@@ -118,10 +118,10 @@ angular.module('calcentral.controllers').controller('UserOverviewController', fu
   };
 
   var loadHolds = function() {
-    holdsFactory.getHolds({
+    academicStatusFactory.getAcademicStatus({
       uid: $routeParams.uid
     }).success(function(data) {
-      $scope.holds = _.get(data, 'data.feed');
+      $scope.holds = _.get(data, 'data.feed.student.holds');
     }).finally(function() {
       $scope.holdsInfo.isLoading = false;
     });

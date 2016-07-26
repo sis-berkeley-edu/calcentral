@@ -177,7 +177,120 @@
                 "statusDate": "2015-12-12"
               }
             ],
-            "holds": [],
+            "holds": [
+               {
+                  "type":{
+                     "code":"V00",
+                     "description":"AA - Advising Holds"
+                  },
+                  "reason":{
+                     "code":"UNDSR",
+                     "description":"Undeclared Senior",
+                     "formalDescription":"You have exceeded 90 units without a major, please see your College advisor."
+                  },
+                  "impacts":[
+                     {
+                        "code":"IENR",
+                        "description":"No Initial Enroll, Add/Drop OK"
+                     }
+                  ],
+                  "fromTerm":{
+                     "id":"2182",
+                     "name":"2018 Spring",
+                     "category":{
+                        "code":"R",
+                        "description":"Regular Term"
+                     },
+                     "academicYear":"2018",
+                     "beginDate":"2018-01-09",
+                     "endDate":"2018-05-11"
+                  },
+                  "fromDate":"2016-03-23",
+                  "reference":"",
+                  "amountRequired":0,
+                  "department":{
+                     "code":"UCBKL",
+                     "description":"Department"
+                  },
+                  "contact":{
+                     "code":"",
+                     "description":""
+                  },
+                  "comments":""
+               },
+               {
+                  "type":{
+                     "code":"V00",
+                     "description":"AA - Advising Holds"
+                  },
+                  "reason":{
+                     "code":"GRDSR",
+                     "description":"Graduating Seniors",
+                     "formalDescription":""
+                  },
+                  "impacts":[
+                     {
+                        "code":"IENR",
+                        "description":"No Initial Enroll, Add/Drop OK"
+                     }
+                  ],
+                  "fromTerm":{
+                     "id":"2202",
+                     "name":"2020 Spring",
+                     "category":{
+                        "code":"R",
+                        "description":"Regular Term"
+                     },
+                     "academicYear":"2020",
+                     "beginDate":"2020-01-14",
+                     "endDate":"2020-05-15"
+                  },
+                  "reference":"",
+                  "amountRequired":0,
+                  "department":{
+                     "code":"UCBKL",
+                     "description":"Department"
+                  },
+                  "contact":{
+                     "code":"",
+                     "description":""
+                  },
+                  "comments":""
+               },
+               {
+                  "type":{
+                     "code":"S01",
+                     "description":"Past Due Balance"
+                  },
+                  "reason":{
+                     "code":"CARS",
+                     "description":"Unpaid charges on account",
+                     "formalDescription":"Our records indicate you have past due charges on your billing account. These charges are for terms through Spring/Summer 2016. Make payment through Bear Facts > CARS > e-Bill. For assistance, contact Cal Student Central at 510-664-9181 or open a case at http://studentcentral.berkeley.edu/."
+                  },
+                  "impacts":[
+                     {
+                        "code":"GRADE",
+                        "description":"No Grade Access"
+                     },
+                     {
+                        "code":"TRAN",
+                        "description":"Transcript Hold"
+                     }
+                  ],
+                  "fromDate":"2016-07-02",
+                  "reference":"",
+                  "amountRequired":0,
+                  "department":{
+                     "code":"UCBKL",
+                     "description":"Department"
+                  },
+                  "contact":{
+                     "code":"",
+                     "description":""
+                  },
+                  "comments":""
+               }
+            ],
             "identifiers": [
               {
                 "disclose": false,
