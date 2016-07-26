@@ -87,7 +87,8 @@ module MyAcademics
 
     def get_enrollment_instruction_type_code(plan)
       type_codes = []
-      ENROLLMENT_INSTRUCTION_TYPES.each do |cpp_category, matchers|
+      ENROLLMENT_INSTRUCTION_TYPES.keys.each do |cpp_category|
+        matchers = ENROLLMENT_INSTRUCTION_TYPES[cpp_category]
         category_type_codes = matchers.select {|matcher| plan[cpp_category][:code] == matcher[:match]}
         type_codes.concat(category_type_codes)
       end
