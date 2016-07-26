@@ -6,7 +6,7 @@ var _ = require('lodash');
 /**
  * Footer controller
  */
-angular.module('calcentral.controllers').controller('FinancesLinksController', function(apiService, campusLinksFactory, financesLinksFactory, $scope) {
+angular.module('calcentral.controllers').controller('FinancesLinksController', function(apiService, campusLinksFactory, financesLinksFactory, csLinkFactory, $scope) {
   $scope.isLoading = true;
   $scope.campusLinks = {
     data: {},
@@ -101,12 +101,25 @@ angular.module('calcentral.controllers').controller('FinancesLinksController', f
     return;
   };
 
+  var loadCsLinks = function() {
+    csLinkFactory.getLink({
+      urlId: 'UC_CX_EMERGENCY_LOAN_FORM'
+    }).then(function(data) {
+      var link = _.get(data, 'data.feed.link');
+      if (link) {
+        link.backToText = 'Back to My Finances';
+      }
+      $scope.emergencyLoanLink = link;
+    });
+  };
+
   var initialize = function() {
     campusLinksFactory.getLinks({
       category: 'finances'
     }).then(parseCampusLinks)
       .then(loadEftEnrollment)
       .then(loadFppEnrollment)
+      .then(loadCsLinks)
       .finally(function() {
         $scope.isLoading = false;
       });

@@ -67,6 +67,17 @@
             <strong>View Form</strong>
           </a>
         </li>
+        <li data-ng-if="subcategory === 'Financial Assistance'">
+          <a
+            data-cc-campus-solutions-link-directive="emergencyLoanLink.url"
+            data-cc-campus-solutions-link-directive-enabled="{{emergencyLoanLink.isCsLink}}"
+            data-cc-campus-solutions-link-directive-text="emergencyLoanLink.backToText"
+            data-cc-campus-solutions-link-directive-cache="'finances'"
+            data-cc-outbound-enabled="emergencyLoanLink.show_new_window"
+            data-ng-attr-title="{{emergencyLoanLink.description}}" data-ng-if="emergencyLoanLink.url">
+            Apply for an Emergency Loan
+          </a>
+        </li>
       </ul>
     </div>
     <div class="cc-widget-text" data-ng-if="campuslinks.data.links.length === 0">There are no links available.</div>
