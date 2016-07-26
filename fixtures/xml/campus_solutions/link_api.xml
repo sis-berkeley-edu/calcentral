@@ -2,18 +2,22 @@
 <UC_LINK_RESOURCES>
   <Link>
     <URL_ID>UC_CX_TEST_LINK</URL_ID>
-    <Description>Test URL</Description>
+    <Description>Testing URL for CalCentral</Description>
     <PROPERTIES type="array">
+      <PROPERTY>
+        <NAME>CALCENTRAL</NAME>
+        <value>GENERIC</value>
+      </PROPERTY>
       <PROPERTY>
         <NAME>NEW_WINDOW</NAME>
         <value>Y</value>
       </PROPERTY>
       <PROPERTY>
-        <NAME>TESTLINK</NAME>
-        <value>TestValue</value>
+        <NAME>URI_TYPE</NAME>
+        <value>CN</value>
       </PROPERTY>
     </PROPERTIES>
-    <URL>https://bcs-web-dev-03.is.berkeley.edu:8443/psp/bcsdev/path/to/endpoint?PLACEHOLDER={PLACEHOLDER}</URL>
-    <COMMENTS>{PLACEHOLDER} should be returned as part of the URL, and replaced by the caller (client).</COMMENTS>
+    <URL>https://bcs-web-dev-03.is.berkeley.edu:8443/psc/bcsdev/path/to/endpoint?PLACEHOLDER={PLACEHOLDER}</URL>
+    <COMMENTS>Test URL for verifying that {PLACEHOLDER} is returned as part of the URL, and replaced by the caller (client).</COMMENTS>
   </Link>
 </UC_LINK_RESOURCES>
