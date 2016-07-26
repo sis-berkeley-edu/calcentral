@@ -29,13 +29,9 @@ module MyAcademics
     end
 
     def parse_hub_academic_status(response)
-      status = response[:feed] && response[:feed]['student'] && (response[:feed]['student']['academicStatuses'].try :first)
+      feed = response.delete :feed
+      status = feed && feed['student'] && (feed['student']['academicStatuses'].try :first)
       status if status.present?
-    end
-
-    def parse_hub_holds(response)
-      holds = response[:feed] && response[:feed]['student'] && (response[:feed]['student']['holds'])
-      holds if holds.present?
     end
 
     def course_info(campus_course)

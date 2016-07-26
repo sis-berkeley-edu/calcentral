@@ -6,15 +6,15 @@ var _ = require('lodash');
 /**
  * Holds controller
  */
-angular.module('calcentral.controllers').controller('HoldsController', function(academicStatusFactory, $scope, $route) {
+angular.module('calcentral.controllers').controller('HoldsController', function(holdsFactory, $scope, $route) {
   $scope.holdsInfo = {
     isLoading: true
   };
 
   var init = function(options) {
-    academicStatusFactory.getAcademicStatus(options).then(function(data) {
+    holdsFactory.getHolds(options).then(function(data) {
       $scope.holdsInfo.isLoading = false;
-      $scope.holds = _.get(data, 'data.feed.student.holds');
+      $scope.holds = _.get(data, 'data.feed');
     });
 
     if ($route.current.isAdvisingStudentLookup) {

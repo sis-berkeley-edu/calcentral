@@ -1,10 +1,6 @@
 class HubEdoController < ApplicationController
   before_filter :api_authenticate_401
 
-  def academic_status
-    json_passthrough HubEdos::MyAcademicStatus
-  end
-
   def student
     options = case
                 when current_user.authenticated_as_delegate?

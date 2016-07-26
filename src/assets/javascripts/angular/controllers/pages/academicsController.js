@@ -7,7 +7,7 @@ var angular = require('angular');
 /**
  * Academics controller
  */
-angular.module('calcentral.controllers').controller('AcademicsController', function(academicsFactory, academicsService, academicStatusFactory, apiService, badgesFactory, $q, $routeParams, $scope) {
+angular.module('calcentral.controllers').controller('AcademicsController', function(academicsFactory, academicsService, apiService, badgesFactory, holdsFactory, $q, $routeParams, $scope) {
   var title = 'My Academics';
   apiService.util.setTitle(title);
   $scope.backToText = title;
@@ -154,7 +154,7 @@ angular.module('calcentral.controllers').controller('AcademicsController', funct
   };
 
   var loadNumberOfHolds = function(data) {
-    $scope.numberOfHolds = _.get(data, 'feed.student.holds.length');
+    $scope.numberOfHolds = _.get(data, 'feed.serviceIndicators.length');
   };
 
   var parseAcademics = function(data) {
@@ -220,7 +220,7 @@ angular.module('calcentral.controllers').controller('AcademicsController', funct
       var requests = [getAcademics, getBadges];
       if ($scope.api.user.profile.features.csHolds &&
         ($scope.api.user.profile.roles.student || $scope.api.user.profile.roles.applicant)) {
-        var getNumberOfHolds = academicStatusFactory.getAcademicStatus().success(loadNumberOfHolds);
+        var getNumberOfHolds = holdsFactory.getHolds().success(loadNumberOfHolds);
         requests.push(getNumberOfHolds);
       }
       $q.all(requests).then(filterWidgets);

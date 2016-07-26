@@ -22,12 +22,12 @@ class AdvisingStudentController < ApplicationController
     render json: filtered_academics.to_json
   end
 
-  def academic_status
-    render json: HubEdos::AcademicStatus.new(user_id: student_uid_param).get
-  end
-
   def enrollment_instructions
     render json: MyAcademics::ClassEnrollments.new(student_uid_param).get_feed_as_json
+  end
+
+  def holds
+    render json: CampusSolutions::MyHolds.new(student_uid_param).get_feed_as_json
   end
 
   #TODO: Remove by Fall 2016

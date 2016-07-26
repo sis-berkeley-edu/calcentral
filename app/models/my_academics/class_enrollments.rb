@@ -64,9 +64,11 @@ module MyAcademics
 
     def user_has_holds?
       has_holds = false
-      response = get_academic_status
-      if (holds = AcademicsModule.parse_hub_holds(response))
-        has_holds = holds.to_a.length > 0
+      json_holds_feed = CampusSolutions::MyHolds.new(@uid).get_feed
+      holds_feed = safe_json(json_holds_feed)
+      if (holds_feed['statusCode'] == 200)
+        service_indicators = holds_feed.try(:[], 'feed').try(:[], 'serviceIndicators')
+        has_holds = service_indicators.to_a.length > 0
       end
       has_holds
     end
@@ -94,7 +96,7 @@ module MyAcademics
 
     def get_active_plans
       active_plans = []
-      response = get_academic_status
+      response = HubEdos::AcademicStatus.new(user_id: @uid).get
       if (status = AcademicsModule.parse_hub_academic_status(response))
         Array.wrap(status.try(:[], 'studentPlans')).each do |plan|
           active_plans << flatten_plan(plan)
@@ -120,10 +122,6 @@ module MyAcademics
         })
       end
       flat_plan
-    end
-
-    def get_academic_status
-      @academic_status ||= HubEdos::AcademicStatus.new({user_id: @uid}).get
     end
 
     def get_active_term_ids
