@@ -7,7 +7,7 @@ var _ = require('lodash');
  * Enrollment Card Controller
  * Main controller for the enrollment card on the My Academics page
  */
-angular.module('calcentral.controllers').controller('EnrollmentCardController', function(apiService, enrollmentFactory, holdsFactory, $route, $scope, $q) {
+angular.module('calcentral.controllers').controller('EnrollmentCardController', function(apiService, enrollmentFactory, academicStatusFactory, $route, $scope, $q) {
   var backToText = 'Class Enrollment';
   var sections = [
     {
@@ -181,9 +181,9 @@ angular.module('calcentral.controllers').controller('EnrollmentCardController', 
    * If they do have a hold, we need to show a message to the student.
    */
   var loadHolds = function() {
-    return holdsFactory.getHolds().then(function(data) {
+    return academicStatusFactory.getAcademicStatus().then(function(data) {
       $scope.enrollment.holds.isLoading = false;
-      $scope.enrollment.holds.hasHolds = !!_.get(data, 'data.feed.serviceIndicators.length');
+      $scope.enrollment.holds.hasHolds = !!_.get(data, 'data.feed.student.holds');
     });
   };
 
