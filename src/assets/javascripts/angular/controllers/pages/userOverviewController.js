@@ -160,7 +160,7 @@ angular.module('calcentral.controllers').controller('UserOverviewController', fu
     studentAttributesFactory.getStudentAttributes({
       uid: $routeParams.uid
     }).success(function(data) {
-      var studentAttributes = _.get(data, 'data.feed.student.studentAttributes.studentAttributes');
+      var studentAttributes = _.get(data, 'feed.student.studentAttributes.studentAttributes');
       // Strip all positive student indicators from student attributes feed.
       _.forEach(studentAttributes, function(attribute) {
         if (_.startsWith(attribute.type.code, '+')) {
