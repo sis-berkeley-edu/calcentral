@@ -437,6 +437,9 @@ campus_solutions_links:
     web_now_documents: ''
     eforms_center: ''
     eforms_work_list: ''
+  academics:
+    enrollment_verification_google: ''
+    enrollment_Verification: ''
 
 # A feature will be disabled if the corresponding feature-flag is false or nil.
 features:

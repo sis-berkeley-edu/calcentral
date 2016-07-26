@@ -1,0 +1,7 @@
+{
+   "feed":{
+      "name":"Enrollment Verification",
+      "url":"https://bcs-web-dev-03.is.berkeley.edu:8443/psc/bcsdev/EMPLOYEE/HRMS/c/SA_LEARNER_SERVICES.SS_ENRL_VER_REQ.GBL",
+      "isCsLink":true
+   }
+}
