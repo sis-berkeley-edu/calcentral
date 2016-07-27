@@ -15,10 +15,14 @@ module Berkeley
     attr_reader :start
     # The Fall/Spring semesters end two weeks after the end of formal classes.
     attr_reader :end
+    # The first day of instruction.  This date is used for Cancellation for Non-Payment logic to trigger the change from a
+    # CNP notification to a CNP warning, as well as the drop date for undergraduates.
     attr_reader :classes_start
     attr_reader :classes_end
     # The end of instruction is one week after classes end. The week between is RRR week. The week after is for final exams.
     attr_reader :instruction_end
+    # The end of the drop/add period, used for Cancellation for Non-Payment as the drop date for Grad and Law students.
+    attr_reader :end_drop_add
     # BearFacts and related systems set "CT"/"Current Term" to Fall (and "FT"/"Future Term" to
     # the next year's Spring) as soon as the Spring term is over. Summer terms are special-cased as
     # "CS" or "FS", and lack some SIS support. This quirk becomes important when configuring
@@ -39,6 +43,8 @@ module Berkeley
     end
 
     def from_cs_api(api_feed)
+      # The code used to identify end date of drop/add period in the Terms API.
+      end_drop_add_code = '140'
       @raw_source = api_feed
       # The HubTerm API returns an array of matching terms, one for each applicable academic career. For general
       # campus-wide reference, we pick the Undergraduate entry.
@@ -60,12 +66,18 @@ module Berkeley
         @classes_start = @start
         @classes_end = @end
         @instruction_end = @end
+        @end_drop_add = false
       else
         @is_summer = false
         session = term_feed['sessions'].first
         @classes_start = session['beginDate'].to_date.in_time_zone.to_datetime
         @instruction_end = session['endDate'].to_date.in_time_zone.to_datetime.end_of_day
         @classes_end = @instruction_end.advance(days: -7)
+        session['timePeriods'].each do |timePeriod|
+          if timePeriod['period']['code'] == end_drop_add_code
+            @end_drop_add = timePeriod['endDate']
+          end
+        end
       end
       self
     end

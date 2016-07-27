@@ -6,12 +6,22 @@
       data-cc-loading-process="Loading...">
     </div>
   </li>
-  <li class="cc-popover-item" data-ng-if="api.user.profile.roles.student && studentInfo.regStatus.needsAction && api.user.profile.features.regstatus">
+  <li class="cc-popover-item"
+    data-ng-repeat="registration in regStatus.registrations | orderBy:'-id'"
+    data-ng-if="api.user.profile.roles.student && api.user.profile.features.regstatus && !registration.isSummer &&
+      registration.summary !== 'Officially Registered' && registration.positiveIndicators.S09 && !registration.pastEndOfInstruction">
     <a href="/academics">
       <div class="cc-launcher-status-description">
         <i class="fa fa-exclamation-circle cc-icon-red"></i>
-        <strong>Registration Status:</strong> <span data-ng-bind="studentInfo.regStatus.summary"></span><br>
-        <span data-ng-bind-html="studentInfo.regStatus.explanation"></span>
+        <strong><span data-ng-bind="registration.name"></span>: </strong> <span data-ng-bind="registration.summary"></span><br>
+      </div>
+      <div class="cc-launcher-status-description" data-ng-if="!registration.positiveIndicators.R99">
+        <i class="cc-icon fa"
+           data-ng-class="{true:'fa-exclamation-circle cc-icon-red',false:'fa-exclamation-triangle cc-icon-yellow'}[registration.pastFinancialDisbursement]">
+        </i>
+        <span data-ng-if="!registration.pastFinancialDisbursement">Cancel for Non-Payment Notification</span>
+        <span data-ng-if="registration.pastFinancialDisbursement">Cancel for Non-Payment Warning</span>
+        <br>
       </div>
     </a>
   </li>

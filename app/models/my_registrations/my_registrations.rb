@@ -22,6 +22,7 @@ module MyRegistrations
     end
 
     def get_terms
+      berkeley_term = Berkeley::Term.new
       berkeley_terms = Berkeley::Terms.fetch
       terms = {}
       # ':previous' and ':grading_in_progress' methods are not included here because Campus::Oracle does not keep information prior to the current term.
@@ -30,12 +31,40 @@ module MyRegistrations
         term = berkeley_terms.send term_method
         if term
           terms[term_method] = {id: term.campus_solutions_id, name: term.to_english}
+          # For 'current' and 'next' terms, we need the date of start and end of instruction to determine CNP status
+          if (term_method == :current || term_method == :next)
+            temporal_position = term_method == :current ? HubTerm::Proxy::CURRENT_TERM : HubTerm::Proxy::NEXT_TERM
+            cs_feed = HubTerm::Proxy.new(temporal_position: temporal_position).get_term
+            terms[term_method] = terms[term_method].merge(
+              {
+                classesStart: berkeley_term.from_cs_api(cs_feed).classes_start,
+                end: berkeley_term.from_cs_api(cs_feed).end,
+                endDropAdd: berkeley_term.from_cs_api(cs_feed).end_drop_add
+              }
+            )
+            terms[term_method] = set_term_flags(terms[term_method])
+          end
         # Often ':future' will be nil, but during Spring terms, it should send back data for the upcoming Fall semester.
         else
           terms[term_method] = nil
         end
       end
       terms
+    end
+
+    def set_term_flags(term)
+      current_date = Settings.terms.fake_now || DateTime.now
+      term.merge({
+        # CNP logic dictates that grad/law students are dropped one day AFTER the add/drop deadline.
+        pastAddDrop: term[:endDropAdd] ? current_date > term[:endDropAdd] : nil,
+        # Undergrad students are dropped on the first day of instruction.
+        pastClassesStart: current_date >= term[:classesStart],
+        # All term registration statuses are hidden the day after the term ends.
+        pastEndOfInstruction: current_date > term[:end],
+        # Financial Aid disbursement is used in CNP notification.  This will be 8 days before start of instruction in Fall 2016,
+        # but this should be changed to 9 days before start of instruction post-Fall 2016.
+        pastFinancialDisbursement: current_date >= (term[:classesStart] - 8)
+        })
     end
 
     private

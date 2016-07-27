@@ -7,27 +7,76 @@
     <h3 class="cc-status-holds-status-header">Status</h3>
 
     <div data-cc-spinner-directive="regStatus.isLoading">
-      <div data-ng-if="statusHoldsBlocks.enabledSections.indexOf('Status') !== -1">
-        <div class="cc-status-holds-section" data-ng-repeat="registration in regStatus.registrations | orderBy:'-termId'">
-          <h4 data-ng-bind="registration.termName"></h4>
-          <ul class="cc-widget-list cc-status-holds-list" data-ng-if="api.user.profile.features.regstatus">
-            <li class="cc-widget-list-hover"
-                data-ng-class="{'cc-widget-list-hover-opened':(registration.show)}"
-                data-cc-accessible-focus-directive
-                data-ng-click="api.widget.toggleShow($event, null, registration, 'My Academics - Status and Holds')">
-              <div class="cc-status-holds-list-section">
-                <div class="cc-status-holds-list-item">
-                  <span data-ng-hide="registration.isSummer && registration.summary === 'Not Officially Registered'">
-                    <i class="cc-icon fa"
-                       data-ng-class="{true:'fa-check-circle cc-icon-green',false:'fa-exclamation-circle cc-icon-red'}[registration.summary=='Officially Registered']">
-                    </i>
-                  </span>
-                  <span data-ng-bind="registration.summary"></span>
+      <div data-ng-if="(statusHoldsBlocks.enabledSections.indexOf('Status') !== -1) && !api.user.profile.roles.concurrentEnrollmentStudent">
+        <div class="cc-status-holds-section" data-ng-repeat="registration in regStatus.registrations | orderBy:'-id'">
+          <div data-ng-if="registration.isLegacy || (registration.positiveIndicators.S09 && !registration.pastEndOfInstruction)">
+            <h4 data-ng-bind="registration.name"></h4>
+            <ul class="cc-widget-list cc-status-holds-list" data-ng-if="api.user.profile.features.regstatus">
+              <li class="cc-widget-list-hover"
+                  data-ng-class="{'cc-widget-list-hover-opened':(registration.show)}"
+                  data-cc-accessible-focus-directive
+                  data-ng-click="api.widget.toggleShow($event, null, registration, 'My Academics - Status and Holds')">
+                <div class="cc-status-holds-list-section">
+                  <div class="cc-status-holds-list-item">
+                    <span data-ng-hide="registration.isSummer && registration.summary === 'Not Officially Registered'">
+                      <i class="cc-icon fa"
+                         data-ng-class="{true:'fa-check-circle cc-icon-green',false:'fa-exclamation-circle cc-icon-red'}[registration.summary=='Officially Registered']">
+                      </i>
+                    </span>
+                    <span data-ng-bind="registration.summary"></span>
+                  </div>
+                  <div class="cc-status-holds-expanded-text" data-ng-show="registration.show">
+                    <div data-ng-if="registration.summary === 'Officially Registered' || registration.isSummer">
+                      <span data-ng-bind="registration.explanation"></span>
+                    </div>
+                    <div data-ng-if="registration.summary !== 'Officially Registered' && !registration.isSummer">
+                      <div data-ng-if="$parent.regStatus.messages">
+                        <span data-ng-if="registration.summary === 'Not Officially Registered'" data-ng-bind-html="$parent.regStatus.messages.notRegistered.descrlong"></span>
+                        <span data-ng-if="registration.summary === 'Not Enrolled' && api.user.profile.roles.undergrad" data-ng-bind-html="$parent.regStatus.messages.notEnrolledUndergrad.descrlong"></span>
+                        <span data-ng-if="registration.summary === 'Not Enrolled' && (api.user.profile.roles.grad || api.user.profile.roles.law)" data-ng-bind-html="$parent.regStatus.messages.notEnrolledGrad.descrlong"></span>
+                      </div>
+                      <span data-ng-if="!$parent.regStatus.messages || api.user.profile.roles.advisor" data-ng-bind="registration.explanation"></span>
+                    </div>
+                  </div>
                 </div>
-                <div class="cc-status-holds-expanded-text" data-ng-show="registration.show" data-ng-bind="registration.explanation"></div>
-              </div>
-            </li>
-          </ul>
+              </li>
+              <li class="cc-widget-list-hover"
+                  data-ng-if="(api.user.profile.roles.undergrad && !registration.pastClassesStart) ||
+                  ((api.user.profile.roles.graduate || api.user.profile.roles.law || api.user.profile.roles.advisor) && !registration.pastAddDrop) &&
+                  !registration.isLegacy && !registration.isSummer"
+                  data-ng-class="{'cc-widget-list-hover-opened':(registration.positiveIndicators.show)}"
+                  data-cc-accessible-focus-directive
+                  data-ng-click="api.widget.toggleShow($event, null, registration.positiveIndicators, 'My Academics - Status and Holds')">
+                <div class="cc-status-holds-list-section">
+                  <div class="cc-status-holds-list-item">
+                      <i class="cc-icon fa fa-check-circle cc-icon-green"
+                         data-ng-if="registration.positiveIndicators.R99">
+                      </i>
+                      <i class="cc-icon fa"
+                         data-ng-if="!registration.positiveIndicators.R99"
+                         data-ng-class="{true:'fa-exclamation-circle cc-icon-red',false:'fa-exclamation-triangle cc-icon-yellow'}[registration.pastFinancialDisbursement]">
+                      </i>
+                    </span>
+                    <span data-ng-if="registration.positiveIndicators.R99">Exception from Cancel for Non-Payment</span>
+                    <span data-ng-if="!registration.positiveIndicators.R99 && !registration.pastFinancialDisbursement">Cancel for Non-Payment Notification</span>
+                    <span data-ng-if="!registration.positiveIndicators.R99 && registration.pastFinancialDisbursement">Cancel for Non-Payment Warning</span>
+                  </div>
+                  <div class="cc-status-holds-expanded-text" data-ng-show="registration.positiveIndicators.show">
+                    <span data-ng-if="registration.positiveIndicators.R99 && registration.positiveIndicators.R99descr" data-ng-bind="registration.positiveIndicators.R99descr"></span>
+                    <div data-ng-if="!registration.positveIndicators.R99">
+                      <span data-ng-if="$parent.regStatus.messages">
+                        <span data-ng-if="!registration.pastFinancialDisbursement && api.user.profile.roles.undergrad" data-ng-bind-html="$parent.regStatus.messages.cnpNotificationUndergrad.descrlong"></span>
+                        <span data-ng-if="!registration.pastFinancialDisbursement && (api.user.profile.roles.grad || api.user.profile.roles.law)" data-ng-bind-html="$parent.regStatus.messages.cnpNotificationGrad.descrlong"></span>
+                        <span data-ng-if="registration.pastFinancialDisbursement && api.user.profile.roles.undergrad" data-ng-bind-html="$parent.regStatus.messages.cnpWarningUndergrad.descrlong"></span>
+                        <span data-ng-if="registration.pastFinancialDisbursement && (api.user.profile.roles.grad || api.user.profile.roles.law)" data-ng-bind-html="$parent.regStatus.messages.cnpWarningGrad.descrlong"></span>
+                      </span>
+                      <span data-ng-if="!$parent.regStatus.messages || api.user.profile.roles.advisor">You may be subject to <a href="http://registrar.berkeley.edu/cnp">Cancel for Non-Payment.</a></span>
+                    </div>
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
     </div>

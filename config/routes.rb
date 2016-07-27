@@ -152,6 +152,7 @@ Calcentral::Application.routes.draw do
   get '/api/advising/registrations/:student_uid' => 'advising_student#registrations', :defaults => { :format => 'json' }
   get '/api/advising/resources/:student_uid' => 'advising_student#resources', :defaults => { :format => 'json' }
   get '/api/advising/student/:student_uid' => 'advising_student#profile', :defaults => { :format => 'json' }
+  get '/api/advising/student_attributes/:student_uid' => 'advising_student#student_attributes', :defaults => { :format => 'json' }
   post '/advisor_act_as' => 'advisor_act_as#start'
   post '/stop_advisor_act_as' => 'advisor_act_as#stop'
 
@@ -228,6 +229,7 @@ Calcentral::Application.routes.draw do
   # EDOs from integration hub
   get '/api/edos/academic_status' => 'hub_edo#academic_status', :via => :get, :defaults => { :format => 'json' }
   get '/api/edos/student' => 'hub_edo#student', :via => :get, :defaults => { :format => 'json' }
+  get '/api/edos/student_attributes' => 'hub_edo#student_attributes', :via => :get, :defaults => { :format => 'json' }
   get '/api/edos/work_experience' => 'hub_edo#work_experience', :via => :get, :defaults => { :format => 'json' }
 
   # All the other paths should use the bootstrap page

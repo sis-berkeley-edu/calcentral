@@ -61,6 +61,10 @@ class AdvisingStudentController < ApplicationController
     render json: json
   end
 
+  def student_attributes
+    render json: HubEdos::StudentAttributes.new(user_id: student_uid_param).get
+  end
+
   private
 
   def filtered_academics

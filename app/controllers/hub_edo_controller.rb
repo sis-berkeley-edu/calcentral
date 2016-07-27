@@ -18,6 +18,11 @@ class HubEdoController < ApplicationController
     json_passthrough HubEdos::MyStudent, options
   end
 
+  def student_attributes
+    model = HubEdos::MyStudentAttributes.from_session session
+    render json: model.get_feed_internal
+  end
+
   def work_experience
     # Delegates get an empty feed.
     return {

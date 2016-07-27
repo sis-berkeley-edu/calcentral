@@ -6,7 +6,7 @@ var _ = require('lodash');
 /**
  * Preview of user profile prior to viewing-as
  */
-angular.module('calcentral.controllers').controller('UserOverviewController', function(adminService, advisingFactory, academicStatusFactory, residencyMessageFactory, apiService, statusHoldsService, $route, $routeParams, $scope) {
+angular.module('calcentral.controllers').controller('UserOverviewController', function(adminService, advisingFactory, academicStatusFactory, residencyMessageFactory, apiService, statusHoldsService, studentAttributesFactory, $route, $routeParams, $scope) {
   $scope.academics = {
     isLoading: true,
     excludeLinksToRegistrar: true
@@ -21,6 +21,7 @@ angular.module('calcentral.controllers').controller('UserOverviewController', fu
   $scope.regStatus = {
     terms: [],
     registrations: [],
+    positiveIndicators: [],
     isLoading: true
   };
   $scope.residency = {
@@ -134,11 +135,7 @@ angular.module('calcentral.controllers').controller('UserOverviewController', fu
       _.forOwn(data.terms, function(value, key) {
         if (key === 'current' || key === 'next') {
           if (value) {
-            $scope.regStatus.terms.push({
-              temporalPosition: key,
-              id: value.id,
-              name: value.name
-            });
+            $scope.regStatus.terms.push(value);
           }
         }
       });
@@ -146,8 +143,7 @@ angular.module('calcentral.controllers').controller('UserOverviewController', fu
         var regStatus = data.registrations[term.id];
 
         if (regStatus && regStatus[0]) {
-          _.set(regStatus[0], 'termName', term.name);
-          _.set(regStatus[0], 'termId', parseInt(term.id));
+          _.merge(regStatus[0], term);
           regStatus[0].isSummer = _.startsWith(term.name, 'Summer');
 
           if (regStatus[0].isLegacy) {
@@ -157,6 +153,22 @@ angular.module('calcentral.controllers').controller('UserOverviewController', fu
           }
         }
       });
+    });
+  };
+
+  var loadStudentAttributes = function() {
+    studentAttributesFactory.getStudentAttributes({
+      uid: $routeParams.uid
+    }).success(function(data) {
+      var studentAttributes = _.get(data, 'feed.student.studentAttributes.studentAttributes');
+      // Strip all positive student indicators from student attributes feed.
+      _.forEach(studentAttributes, function(attribute) {
+        if (_.startsWith(attribute.type.code, '+')) {
+          $scope.regStatus.positiveIndicators.push(attribute);
+        }
+      });
+
+      statusHoldsService.matchTermIndicators($scope.regStatus.positiveIndicators, $scope.regStatus.registrations);
     }).finally(function() {
       $scope.regStatus.isLoading = false;
     });
@@ -196,7 +208,8 @@ angular.module('calcentral.controllers').controller('UserOverviewController', fu
       .then(loadAcademics)
       .then(loadHolds)
       .then(loadBlocks)
-      .then(loadRegistrations);
+      .then(loadRegistrations)
+      .then(loadStudentAttributes);
     }
   });
 });

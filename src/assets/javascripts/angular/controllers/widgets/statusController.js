@@ -6,8 +6,14 @@ var angular = require('angular');
 /**
  * Status controller
  */
-angular.module('calcentral.controllers').controller('StatusController', function(academicStatusFactory, activityFactory, apiService, badgesFactory, financesFactory, $http, $scope, $q) {
+angular.module('calcentral.controllers').controller('StatusController', function(academicStatusFactory, activityFactory, apiService, statusHoldsService, badgesFactory, financesFactory, registrationsFactory, studentAttributesFactory, $http, $scope, $q) {
   $scope.finances = {};
+  $scope.regStatus = {
+    terms: [],
+    registrations: [],
+    positiveIndicators: [],
+    isLoading: true
+  };
 
   // Keep track on whether the status has been loaded or not
   var hasLoaded = false;
@@ -91,6 +97,55 @@ angular.module('calcentral.controllers').controller('StatusController', function
     }
   };
 
+  var parseRegistrations = function(data) {
+    _.forOwn(data.data.terms, function(value, key) {
+      if (key === 'current' || key === 'next') {
+        if (value) {
+          $scope.regStatus.terms.push(value);
+        }
+      }
+    });
+    _.forEach($scope.regStatus.terms, function(term) {
+      var regStatus = data.data.registrations[term.id];
+
+      if (regStatus && regStatus[0]) {
+        _.merge(regStatus[0], term);
+        regStatus[0].isSummer = _.startsWith(term.name, 'Summer');
+
+        if (regStatus[0].isLegacy) {
+          $scope.regStatus.registrations.push(statusHoldsService.parseLegacyTerm(regStatus[0]));
+        } else {
+          $scope.regStatus.registrations.push(statusHoldsService.parseCsTerm(regStatus[0]));
+        }
+      }
+    });
+
+    return;
+  };
+
+  var parseStudentAttributes = function(data) {
+    var studentAttributes = _.get(data, 'data.feed.student.studentAttributes.studentAttributes');
+    // Strip all positive student indicators from student attributes feed.
+    _.forEach(studentAttributes, function(attribute) {
+      if (_.startsWith(attribute.type.code, '+')) {
+        $scope.regStatus.positiveIndicators.push(attribute);
+      }
+    });
+  };
+
+  var parseRegistrationCounts = function() {
+    _.forEach($scope.regStatus.registrations, function(registration) {
+      if (!registration.isSummer && registration.summary !== 'Officially Registered') {
+        $scope.count++;
+        $scope.hasAlerts = true;
+      }
+      if (!registration.isSummer && !registration.positiveIndicators.R99 && registration.pastFinancialDisbursement) {
+        $scope.count++;
+        $scope.hasAlerts = true;
+      }
+    });
+  };
+
   var loadActivity = function(data) {
     if (data.activities) {
       $scope.countUndatedFinaid = data.activities.filter(function(element) {
@@ -153,7 +208,9 @@ angular.module('calcentral.controllers').controller('StatusController', function
       // Get all the necessary data from the different factories
       var getBadges = badgesFactory.getBadges().success(loadStudentInfo);
       var getHolds = academicStatusFactory.getAcademicStatus().then(loadHolds);
-      var statusGets = [getBadges, getHolds];
+      var getRegistrations = registrationsFactory.getRegistrations().then(parseRegistrations);
+      var getStudentAttributes = studentAttributesFactory.getStudentAttributes().then(parseStudentAttributes);
+      var statusGets = [getBadges, getHolds, getRegistrations, getStudentAttributes];
 
       // Only fetch financial data for delegates who have been given explicit permssion.
       var includeFinancial = (!apiService.user.profile.delegateActingAsUid || apiService.user.profile.delegateViewAsPrivileges.financial);
@@ -166,6 +223,8 @@ angular.module('calcentral.controllers').controller('StatusController', function
 
       // Make sure to hide the spinner when everything is loaded
       $q.all(statusGets).then(function() {
+        statusHoldsService.matchTermIndicators($scope.regStatus.positiveIndicators, $scope.regStatus.registrations);
+        parseRegistrationCounts();
         if (includeFinancial) {
           parseFinances();
         }

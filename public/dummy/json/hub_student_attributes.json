@@ -1,0 +1,138 @@
+{
+   "statusCode":200,
+   "feed":{
+      "student":{
+         "studentAttributes":{
+            "studentAttributes":[
+               {
+                  "type":{
+                     "code":"AHI",
+                     "description":"American Hist & Inst Waiver"
+                  },
+                  "fromDate":"2001-01-01",
+                  "comments":""
+               },
+               {
+                  "type":{
+                     "code":"R5TA",
+                     "description":"5 Terms in Attendance"
+                  },
+                  "fromDate":"2016-03-21",
+                  "comments":""
+               },
+               {
+                  "type":{
+                     "code":"RL4",
+                     "description":"EOP Recalc based on FASFA"
+                  },
+                  "fromDate":"2016-03-21",
+                  "comments":""
+               },
+               {
+                  "type":{
+                     "code":"RL5",
+                     "description":"EOP Pool for GB"
+                  },
+                  "fromDate":"2016-03-21",
+                  "comments":""
+               },
+               {
+                  "type":{
+                     "code":"RPRI",
+                     "description":"Priority Enrollment"
+                  },
+                  "fromDate":"2016-03-21",
+                  "comments":""
+               },
+               {
+                  "type":{
+                     "code":"RVT",
+                     "description":"Veteran - Priority Enrollment"
+                  },
+                  "fromDate":"2016-03-21",
+                  "comments":""
+               },
+               {
+                  "type":{
+                     "code":"RZA",
+                     "description":"Active Athlete"
+                  },
+                  "fromDate":"2016-05-25",
+                  "comments":""
+               },
+               {
+                  "type":{
+                     "code":"VAC",
+                     "description":"American Cultures"
+                  },
+                  "fromDate":"2001-01-01",
+                  "comments":""
+               },
+               {
+                  "type":{
+                     "code":"VELW",
+                     "description":"Entry Level Writing"
+                  },
+                  "fromDate":"2001-01-01",
+                  "comments":""
+               },
+               {
+                 "type": {
+                   "code": "+REG",
+                   "description": "Officially Registered"
+                 },
+                 "fromDate": "2016-08-17",
+                 "fromTerm":{
+                    "id":"2168",
+                    "name":"2016 Fall",
+                    "category":{
+                       "code":"R",
+                       "description":"Regular Term"
+                    },
+                    "academicYear":"2017",
+                    "beginDate":"2018-01-09",
+                    "endDate":"2018-05-11"
+                 }
+               },
+               {
+                 "type": {
+                   "code": "+S09",
+                   "description": "Tuition Calculated"
+                 },
+                 "fromDate": "2016-08-17",
+                 "fromTerm":{
+                    "id":"2168",
+                    "name":"2016 Fall",
+                    "category":{
+                       "code":"R",
+                       "description":"Regular Term"
+                    },
+                    "academicYear":"2017",
+                    "beginDate":"2018-01-09",
+                    "endDate":"2018-05-11"
+                 }
+               },
+               {
+                 "type": {
+                   "code": "+R99",
+                   "description": "You are protected from CNP."
+                 },
+                 "fromDate": "2016-08-17",
+                 "fromTerm":{
+                    "id":"2168",
+                    "name":"2016 Fall",
+                    "category":{
+                       "code":"R",
+                       "description":"Regular Term"
+                    },
+                    "academicYear":"2017",
+                    "beginDate":"2018-01-09",
+                    "endDate":"2018-05-11"
+                 }
+               }
+            ]
+         }
+      }
+   },
+   "studentNotFound":null
+}

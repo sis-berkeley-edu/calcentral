@@ -7,7 +7,7 @@ var angular = require('angular');
 /**
  * Academics controller
  */
-angular.module('calcentral.controllers').controller('AcademicsController', function(academicsFactory, academicsService, academicStatusFactory, apiService, badgesFactory, $q, $routeParams, $scope) {
+angular.module('calcentral.controllers').controller('AcademicsController', function(academicsFactory, academicsService, academicStatusFactory, apiService, badgesFactory, registrationsFactory, $q, $routeParams, $scope) {
   var title = 'My Academics';
   apiService.util.setTitle(title);
   $scope.backToText = title;
@@ -157,6 +157,11 @@ angular.module('calcentral.controllers').controller('AcademicsController', funct
     $scope.numberOfHolds = _.get(data, 'feed.student.holds.length');
   };
 
+  var loadRegistrations = function(data) {
+    var registrations = _.get(data, 'registrations');
+    $scope.hasRegstatus = _.isEmpty(registrations);
+  };
+
   var parseAcademics = function(data) {
     angular.extend($scope, data);
 
@@ -188,7 +193,6 @@ angular.module('calcentral.controllers').controller('AcademicsController', funct
   };
 
   var filterWidgets = function() {
-    $scope.hasRegStatus = !!($scope.studentInfo && $scope.studentInfo.regStatus && $scope.studentInfo.regStatus.code !== null);
     $scope.isAcademicInfoAvailable = !!($scope.hasRegstatus ||
                                        ($scope.semesters && $scope.semesters.length) ||
                                        ($scope.requirements && $scope.requirements.length));
@@ -216,8 +220,9 @@ angular.module('calcentral.controllers').controller('AcademicsController', funct
     if (isAuthenticated) {
       $scope.canViewAcademics = $scope.api.user.profile.hasAcademicsTab;
       var getAcademics = academicsFactory.getAcademics().success(parseAcademics);
+      var getRegistrations = registrationsFactory.getRegistrations().success(loadRegistrations);
       var getBadges = badgesFactory.getBadges().success(loadBadges);
-      var requests = [getAcademics, getBadges];
+      var requests = [getAcademics, getBadges, getRegistrations];
       if ($scope.api.user.profile.features.csHolds &&
         ($scope.api.user.profile.roles.student || $scope.api.user.profile.roles.applicant)) {
         var getNumberOfHolds = academicStatusFactory.getAcademicStatus().success(loadNumberOfHolds);
