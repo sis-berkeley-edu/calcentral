@@ -55,6 +55,7 @@ module MyAcademics
       else
         response[:empty] = true
       end
+      response.delete(:feed)
       response
     end
 
