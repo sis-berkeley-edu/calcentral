@@ -183,7 +183,7 @@ angular.module('calcentral.controllers').controller('EnrollmentCardController', 
   var loadHolds = function() {
     return academicStatusFactory.getAcademicStatus().then(function(data) {
       $scope.enrollment.holds.isLoading = false;
-      $scope.enrollment.holds.hasHolds = !!_.get(data, 'data.feed.student.holds');
+      $scope.enrollment.holds.hasHolds = !!(_.get(data, 'data.feed.student.holds')).length;
     });
   };
 
