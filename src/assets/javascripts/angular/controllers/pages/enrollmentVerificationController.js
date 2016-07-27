@@ -10,6 +10,14 @@ angular.module('calcentral.controllers').controller('EnrollmentVerificationContr
   var title = 'My Enrollment Verification';
   apiService.util.setTitle(title);
 
+  $scope.enrollmentCsDeeplink = {
+    title: 'Request Other Verifications',
+    backToText: 'My Academics'
+  };
+  $scope.enrollmentGoogleLink = {
+    url: 'http://goo.gl/forms/xcYYehIBFDbDE92y1',
+    title: 'Request Other Verifications'
+  };
   $scope.enrollmentMessages = {
     isLoading: true,
     hasMessages: false,
@@ -18,6 +26,10 @@ angular.module('calcentral.controllers').controller('EnrollmentVerificationContr
       requestOfficial: {},
       viewOnline: {}
     }
+  };
+  $scope.enrollmentVerificationServices = {
+    url: 'http://registrar.berkeley.edu/academic-records/verification-enrollment-degrees',
+    title: 'Learn more about enrollment verification services'
   };
 
   var parseMessages = function(data) {
@@ -37,9 +49,18 @@ angular.module('calcentral.controllers').controller('EnrollmentVerificationContr
     }
   };
 
+  var getDeeplink = function() {
+    enrollmentVerificationFactory.getEnrollmentVerificationDeeplink()
+      .then(function(data) {
+        var enrollmentCsDeeplink = _.get(data, 'data.feed');
+        _.merge($scope.enrollmentCsDeeplink, enrollmentCsDeeplink);
+      });
+  };
+
   var getMessages = function() {
     enrollmentVerificationFactory.getEnrollmentVerificationMessages()
       .then(parseMessages)
+      .then(getDeeplink)
       .finally(function() {
         $scope.enrollmentMessages.isLoading = false;
       });

@@ -192,6 +192,7 @@ Calcentral::Application.routes.draw do
   get '/api/campus_solutions/academic_plan' => 'campus_solutions/academic_plan#get', :via => :get, :defaults => { :format => 'json' }
   get '/api/campus_solutions/advising_resources' => 'campus_solutions/advising_resources#get', :via => :get, :defaults => { :format => 'json' }
   get '/api/campus_solutions/ferpa_deeplink' => 'campus_solutions/ferpa_deeplink#get', :via => :get, :defaults => { :format => 'json' }
+  get '/api/campus_solutions/enrollment_verification_deeplink' => 'campus_solutions/enrollment_verification_deeplink#get', :via => :get, :defaults => { :format => 'json' }
   get '/api/campus_solutions/billing' => 'campus_solutions/billing#get', :via => :get, :defaults => { :format => 'json' }
   get '/api/campus_solutions/slr_deeplink' => 'campus_solutions/slr_deeplink#get', :via => :get, :defaults => { :format => 'json' }
   get '/api/campus_solutions/fpp_enrollment' => 'campus_solutions/fpp_enrollment#get', :via => :get, :defaults => { :format => 'json' }
