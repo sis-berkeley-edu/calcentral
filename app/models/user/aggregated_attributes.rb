@@ -2,9 +2,6 @@ module User
   class AggregatedAttributes < UserSpecificModel
     include CampusSolutions::ProfileFeatureFlagged
 
-    # Conservative merge of roles from EDO
-    WHITELISTED_EDO_ROLES = [:student, :applicant, :advisor, :law]
-
     def initialize(uid, options={})
       super(uid, options)
     end
@@ -43,10 +40,9 @@ module User
       campus_roles = oracle_roles.merge ldap_roles
       if @sis_profile_visible
         edo_roles = (@edo_attributes && @edo_attributes[:roles]) || {}
-        edo_roles_to_merge = edo_roles.slice *WHITELISTED_EDO_ROLES
         # While we're in the split-brain stage, LDAP and Oracle are more trusted on ex-student status.
-        edo_roles_to_merge.delete(:student) if campus_roles[:exStudent]
-        campus_roles.merge edo_roles_to_merge
+        edo_roles.delete(:student) if campus_roles[:exStudent]
+        campus_roles.merge edo_roles
       else
         campus_roles
       end

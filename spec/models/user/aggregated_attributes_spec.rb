@@ -98,6 +98,27 @@ describe User::AggregatedAttributes do
         expect(subject[:roles][:recentStudent]).to be true
       end
     end
+    context 'graduate' do
+      let(:edo_attributes) do
+        {
+          person_name: preferred_name,
+          student_id: student_id,
+          campus_solutions_id: campus_solutions_id,
+          official_bmail_address: bmail_from_edo,
+          roles: {
+            student: false,
+            exStudent: false,
+            faculty: false,
+            staff: true,
+            graduate: true
+          }
+        }
+      end
+      let(:is_active_student) { true }
+      it 'picks up EDO role' do
+        expect(subject[:roles][:graduate]).to be true
+      end
+    end
     context 'broken Hub API' do
       let(:is_active_student) { true }
       let(:edo_attributes) do
