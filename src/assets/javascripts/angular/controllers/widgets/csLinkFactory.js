@@ -8,12 +8,13 @@ var _ = require('lodash');
  */
 angular.module('calcentral.factories').factory('csLinkFactory', function(apiService) {
   var csLinkUrl = '/api/campus_solutions/link';
+
   var getLink = function(options) {
-    csLinkUrl += '?urlId=' + options.urlId;
+    var url = csLinkUrl + '?urlId=' + options.urlId;
     _.forEach(options.placeholders, function(value, key) {
-      csLinkUrl += '&placeholders[' + key + ']=' + value;
+      url += '&placeholders[' + key + ']=' + value;
     });
-    return apiService.http.request(options, csLinkUrl);
+    return apiService.http.request(options, url);
   };
   return {
     getLink: getLink
