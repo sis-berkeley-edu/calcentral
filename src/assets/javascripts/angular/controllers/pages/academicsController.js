@@ -159,7 +159,7 @@ angular.module('calcentral.controllers').controller('AcademicsController', funct
 
   var loadRegistrations = function(data) {
     var registrations = _.get(data, 'registrations');
-    $scope.hasRegstatus = _.isEmpty(registrations);
+    $scope.hasRegStatus = !_.isEmpty(registrations);
   };
 
   var parseAcademics = function(data) {
@@ -193,7 +193,7 @@ angular.module('calcentral.controllers').controller('AcademicsController', funct
   };
 
   var filterWidgets = function() {
-    $scope.isAcademicInfoAvailable = !!($scope.hasRegstatus ||
+    $scope.isAcademicInfoAvailable = !!($scope.hasRegStatus ||
                                        ($scope.semesters && $scope.semesters.length) ||
                                        ($scope.requirements && $scope.requirements.length));
     // The university_requirements widget is also used on Advising Dashboard.
