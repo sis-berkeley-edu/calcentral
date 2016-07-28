@@ -38,7 +38,7 @@ describe CampusSolutions::LinkController do
 
         json_response = JSON.parse(response.body)
         expect(json_response["feed"]["link"]["urlId"]).to eq url_id
-        expect(json_response["feed"]["link"]["properties"].count).to eq 3
+        expect(json_response["feed"]["link"]["properties"]).not_to be
         # Verify placeholder is replaced by placeholders param entry.
         expect(json_response["feed"]["link"]["url"]).to include("PLACEHOLDER=#{placeholder_text}")
       end
