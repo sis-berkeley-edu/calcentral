@@ -68,8 +68,8 @@ angular.module('calcentral.services').service('statusHoldsService', function(use
         if (indicator.fromTerm.id === registration.id) {
           var indicatorCode = _.trimStart(indicator.type.code, '+');
           _.set(registration.positiveIndicators, indicatorCode, true);
-          if (indicator.type.description) {
-            _.set(registration.positiveIndicators, indicatorCode + 'descr', indicator.type.description);
+          if (indicator.reason.description) {
+            _.set(registration.positiveIndicators, indicatorCode + 'descr', indicator.reason.description);
           }
         }
       });
