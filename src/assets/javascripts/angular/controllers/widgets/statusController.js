@@ -135,11 +135,14 @@ angular.module('calcentral.controllers').controller('StatusController', function
 
   var parseRegistrationCounts = function() {
     _.forEach($scope.regStatus.registrations, function(registration) {
-      if (!registration.isSummer && registration.summary !== 'Officially Registered') {
+      if (registration.isSummer || !registration.positiveIndicators.S09) {
+        return;
+      }
+      if (registration.summary !== 'Officially Registered') {
         $scope.count++;
         $scope.hasAlerts = true;
       }
-      if (!registration.isSummer && !registration.positiveIndicators.R99 && registration.pastFinancialDisbursement) {
+      if (!registration.positiveIndicators.R99 && registration.pastFinancialDisbursement) {
         $scope.count++;
         $scope.hasAlerts = true;
       }
