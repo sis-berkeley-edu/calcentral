@@ -269,25 +269,6 @@ describe Berkeley::UserRoles do
       it_behaves_like 'a parser for roles', []
     end
 
-    context 'active instructor' do
-      let(:affiliations) do
-        [
-          {
-            :type => {
-              :code => 'INSTRUCTOR',
-              :description => 'Instructor'
-            },
-            :status => {
-              :code =>'ACT',
-              :description => 'Active'
-            },
-            :fromDate => '2014-05-15'
-          }
-        ]
-      end
-      it_behaves_like 'a parser for roles', [:faculty]
-    end
-
     context 'advisor affiliation' do
       let(:affiliations) do
         [
@@ -314,25 +295,6 @@ describe Berkeley::UserRoles do
         let(:status_description) { 'Inactive' }
         it_behaves_like 'a parser for roles', []
       end
-    end
-
-    context 'inactive instructor' do
-      let(:affiliations) do
-        [
-          {
-            :type => {
-              :code => 'INSTRUCTOR',
-              :description => 'Instructor'
-            },
-            :status => {
-              :code =>'INA',
-              :description => 'Inactive'
-            },
-            :fromDate => '2014-05-15'
-          }
-        ]
-      end
-      it_behaves_like 'a parser for roles', []
     end
 
     context 'no affiliations' do

@@ -550,10 +550,7 @@ describe User::Api do
     context 'role lookup errors' do
       let(:edo_attributes) do
         {
-          roles: {
-            body: 'An unknown server error occurred',
-            statusCode: 503
-          }
+          roles: {}
         }
       end
       include_examples 'handling bad behavior'

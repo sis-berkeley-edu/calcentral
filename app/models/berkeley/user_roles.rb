@@ -104,8 +104,9 @@ module Berkeley
           when 'GRADUATE'
             result[:student] = true
             result[:graduate] = true
-          when 'INSTRUCTOR'
-            result[:faculty] = true
+          # TODO CalCentral does not yet source the instructional-staff role from CS.
+          # when 'INSTRUCTOR'
+          #   result[:faculty] = true
           when 'ADVISOR'
             result[:advisor] = true
           when 'STUDENT'
