@@ -10,7 +10,7 @@ angular.module('calcentral.factories').factory('csLinkFactory', function(apiServ
   var csLinkUrl = '/api/campus_solutions/link';
 
   var getLink = function(options) {
-    var url = csLinkUrl += '?urlId=' + options.urlId;
+    var url = csLinkUrl + '?urlId=' + options.urlId;
     _.forEach(options.placeholders, function(value, key) {
       url += '&placeholders[' + key + ']=' + value;
     });

@@ -3551,24 +3551,6 @@
       ]
     },
     {
-      "name": "Veteran's Benefits",
-      "description": "Apply to gain veteran's educational benefits.",
-      "url": "https://bcsweb.is.berkeley.edu/psp/bcsprd/EMPLOYEE/HRMS/s/WEBLIB_PTAL.ISCRIPT1.FieldFormula.IScript_PTAL_DASHBOARD?tab=G3WORKCENTER\u0026FolderPath=PORTAL_ROOT_OBJECT.G3WORKCENTER_LINK\u0026IsFolder=false\u0026IgnoreParamTempl=FolderPath%2cIsFolder",
-      "roles": {
-        "student": true,
-        "applicant": true,
-        "staff": false,
-        "faculty": false,
-        "exStudent": false
-      },
-      "categories": [
-        {
-          "topcategory": "Student Forms",
-          "subcategory": "Forms"
-        }
-      ]
-    },
-    {
       "name": "Wisdom Café",
       "description": "Where Berkeley staff learn \u0026 share",
       "url": "http://wisdomcafe.berkeley.edu/",
