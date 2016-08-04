@@ -44,7 +44,8 @@ class AdvisingStudentController < ApplicationController
     links = json[:feed] && json[:feed][:ucAdvisingResources] && json[:feed][:ucAdvisingResources][:ucAdvisingLinks]
     if links
       # Advisors get only a subset of links
-      keys = [:ucServiceIndicator, :ucStudentAdvisor, :multiYearAcademicPlannerStudentSpecific, :schedulePlannerStudentSpecific]
+      keys = [:ucServiceIndicator, :ucStudentAdvisor, :multiYearAcademicPlannerStudentSpecific, :schedulePlannerStudentSpecific,
+              :studentAppointments, :studentAdvisorNotes, :studentWebnowDocuments]
       advising_links = links.select { |key| keys.include? key }
       json[:feed][:ucAdvisingResources][:ucAdvisingLinks] = advising_links
     end
