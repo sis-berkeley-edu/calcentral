@@ -3,7 +3,12 @@
     <div class="cc-widget cc-widget-enrollment-card" data-ng-repeat="enrollmentInstruction in enrollmentInstructions" data-ng-if="enrollmentInstruction.enrollmentPeriod">
       <div class="cc-widget-title">
         <h2>
-          Class Enrollment
+          <span data-ng-if="!isInstructionType(enrollmentInstruction, ['concurrent'])">
+            Class Enrollment
+          </span>
+          <span data-ng-if="isInstructionType(enrollmentInstruction, ['concurrent'])">
+            Concurrent Enrollment
+          </span>
           <span class="cc-widget-title-sub" data-ng-bind="enrollmentInstruction.termDescr"></span>
         </h2>
       </div>
