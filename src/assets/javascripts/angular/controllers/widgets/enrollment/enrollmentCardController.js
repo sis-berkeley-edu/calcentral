@@ -184,25 +184,6 @@ angular.module('calcentral.controllers').controller('EnrollmentCardController', 
     }
   };
 
-  /**
-   * Provides title for certain deep links based on the instruction type
-   */
-  $scope.typeSpecificLinkTitle = function(linkId, instructionTypeCode) {
-    var titles = {
-      'add': 'Add',
-      'drop': 'Drop',
-      'swap': 'Swap',
-      'options': 'Options',
-      'changeOptions': 'Change Grading Option',
-      'withdraw': 'Withdraw'
-    };
-    if (instructionTypeCode === 'concurrent') {
-      titles.drop = 'Drop a Class';
-      titles.options = 'Edit Class Options';
-    }
-    return titles[linkId];
-  };
-
   /*
    * Runs on load and when roles are updated
    */

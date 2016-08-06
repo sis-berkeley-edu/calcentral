@@ -11,7 +11,8 @@ angular.module('calcentral.directives').directive('ccCampusSolutionsLinkItemDire
     scope: {
       cache: '@',
       link: '=',
-      text: '@'
+      text: '@',
+      disabled: '@'
     }
   };
 });
