@@ -244,9 +244,11 @@ describe Rosters::Campus do
         expect(feed[:students][0][:grade_option]).to eq 'Letter'
         expect(feed[:students][0][:units]).to eq '4.0'
         expect(feed[:students][0][:waitlist_position]).to be_nil
+        expect(feed[:students][0][:academic_career]).to eq 'UGRD'
         expect(feed[:students][1][:grade_option]).to eq 'S/U'
         expect(feed[:students][1][:units]).to eq '3.0'
         expect(feed[:students][1][:waitlist_position]).to eq 9
+        expect(feed[:students][1][:academic_career]).to eq 'UGRD'
       end
       it 'should include majors and terms in attendance count' do
         feed = Rosters::Campus.new(user_id, course_id: campus_course_id).get_feed

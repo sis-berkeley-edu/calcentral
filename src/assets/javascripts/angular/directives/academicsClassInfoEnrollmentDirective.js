@@ -179,6 +179,7 @@ angular.module('calcentral.directives').directive('ccAcademicsClassInfoEnrollmen
           list = list.concat('Student ID: ' + student.student_id + '\n');
           list = list.concat('Last Name: ' + student.last_name + '\n');
           list = list.concat('First Name: ' + student.first_name + '\n');
+          list = list.concat('Academic Career: ' + student.academic_career + '\n');
           if (includeSectionsList) {
             list = list.concat('Sections: ' + sectionNameList(student.sections) + '\n');
           }

@@ -307,18 +307,25 @@ describe Rosters::Common do
         expect(enrollments[section_id_one][0][:enroll_status]).to eq 'E'
         expect(enrollments[section_id_one][0][:student_id]).to eq '22200666'
         expect(enrollments[section_id_one][0][:units]).to eq '4'
+        expect(enrollments[section_id_one][0][:academic_career]).to eq 'UGRD'
+
         expect(enrollments[section_id_one][1][:email]).to eq 'kellykapoor@berkeley.edu'
         expect(enrollments[section_id_one][1][:enroll_status]).to eq 'E'
         expect(enrollments[section_id_one][1][:student_id]).to eq '22200555'
         expect(enrollments[section_id_one][1][:units]).to eq '4'
+        expect(enrollments[section_id_one][1][:academic_career]).to eq 'UGRD'
+
         expect(enrollments[section_id_one][2][:email]).to eq 'kevinmalone@berkeley.edu'
         expect(enrollments[section_id_one][2][:enroll_status]).to eq 'W'
         expect(enrollments[section_id_one][2][:student_id]).to eq '22200444'
         expect(enrollments[section_id_one][2][:units]).to eq '4'
+        expect(enrollments[section_id_one][2][:academic_career]).to eq 'LAW'
+
         expect(enrollments[section_id_two][0][:email]).to eq 'kevinmalone@berkeley.edu'
         expect(enrollments[section_id_two][0][:enroll_status]).to eq 'W'
         expect(enrollments[section_id_two][0][:student_id]).to eq '22200444'
         expect(enrollments[section_id_two][0][:units]).to eq '4'
+        expect(enrollments[section_id_two][0][:academic_career]).to eq 'GRAD'
       end
 
       it 'converts grade option to string version' do
