@@ -1,11 +1,4 @@
 <ul class="cc-list-links">
-  <li data-ng-if="api.user.profile.features.csAcademicProgressReport && ucAdvisingResources.ucAdvisingLinks.ucAcademicProgressReport.url">
-    <div
-      data-cc-campus-solutions-link-item-directive
-      data-link="ucAdvisingResources.ucAdvisingLinks.ucAcademicProgressReport.url"
-      data-text="Academic Progress Report"
-    ></div>
-  </li>
   <li data-ng-if="ucAdvisingResources.ucAdvisingLinks.ucServiceIndicator.url">
     <div
       data-cc-campus-solutions-link-item-directive
@@ -21,7 +14,12 @@
     <div
       data-cc-campus-solutions-link-item-directive
       data-link="ucAdvisingResources.ucAdvisingLinks.ucReportingCenter"
-      data-text="Reporting Center"
+    ></div>
+  </li>
+  <li data-ng-if="api.user.profile.features.csAcademicProgressReport && ucAdvisingResources.ucAdvisingLinks.ucAcademicProgressReport.url">
+    <div
+      data-cc-campus-solutions-link-item-directive
+      data-link="ucAdvisingResources.ucAdvisingLinks.ucAcademicProgressReport"
     ></div>
   </li>
   <li data-ng-if="ucAdvisingResources.ucAdvisingLinks.eformsCenter.url">
@@ -42,22 +40,6 @@
       data-ng-bind="ucAdvisingResources.ucAdvisingLinks.webNowDocuments.name"
     ></a>
   </li>
-  <!-- This URL is mislabelled in the API, it's in fact the scheduler view link -->
-  <li data-ng-if="api.user.profile.features.csAdvisingSchedulerView && ucAdvisingResources.ucAdvisingLinks.classSearch.url">
-    <div
-      data-cc-campus-solutions-link-item-directive
-      data-link="ucAdvisingResources.ucAdvisingLinks.classSearch"
-      data-text="Schedule of Classes - Scheduler View"
-    ></div>
-  </li>
-  <!-- This URL is mislabelled in the API, it's in fact the class search link -->
-  <li data-ng-if="ucAdvisingResources.ucAdvisingLinks.scheduleClasses.url">
-    <div
-      data-cc-campus-solutions-link-item-directive
-      data-link="ucAdvisingResources.ucAdvisingLinks.scheduleClasses"
-      data-text="Schedule of Classes - Class Search"
-    ></div>
-  </li>
   <li data-ng-if="ucAdvisingResources.ucAdvisingLinks.multiYearAcademicPlannerGeneric.url">
     <a
       data-ng-href="{{ucAdvisingResources.ucAdvisingLinks.multiYearAcademicPlannerGeneric.url}}"
@@ -74,6 +56,22 @@
     <div
       data-cc-campus-solutions-link-item-directive
       data-link="ucAdvisingResources.ucAdvisingLinks.ucAppointmentSystem"
+    ></div>
+  </li>
+  <!-- This URL is mislabelled in the API, it's in fact the scheduler view link -->
+  <li data-ng-if="api.user.profile.features.csAdvisingSchedulerView && ucAdvisingResources.ucAdvisingLinks.classSearch.url">
+    <div
+      data-cc-campus-solutions-link-item-directive
+      data-link="ucAdvisingResources.ucAdvisingLinks.classSearch"
+      data-text="Schedule of Classes - Scheduler View"
+    ></div>
+  </li>
+  <!-- This URL is mislabelled in the API, it's in fact the class search link -->
+  <li data-ng-if="ucAdvisingResources.ucAdvisingLinks.scheduleClasses.url">
+    <div
+      data-cc-campus-solutions-link-item-directive
+      data-link="ucAdvisingResources.ucAdvisingLinks.scheduleClasses"
+      data-text="Schedule of Classes - Class Search"
     ></div>
   </li>
 </ul>
