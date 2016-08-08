@@ -90,6 +90,7 @@ module Rosters
               attrs[:enroll_status] = enrollment_row['enroll_status']
               attrs[:grade_option] = Berkeley::GradeOptions.grade_option_from_basis enrollment_row['grading_basis']
               attrs[:units] = enrollment_row['units'].to_s
+              attrs[:academic_career] = enrollment_row['academic_career']
               if enrollment_row['enroll_status'] == 'W'
                 attrs[:waitlist_position] = enrollment_row['waitlist_position'].to_i
               end
