@@ -9,7 +9,7 @@
     <div data-cc-spinner-directive="regStatus.isLoading">
       <div data-ng-if="(statusHoldsBlocks.enabledSections.indexOf('Status') !== -1) && !api.user.profile.roles.concurrentEnrollmentStudent">
         <div class="cc-status-holds-section" data-ng-repeat="registration in regStatus.registrations | orderBy:'-id'">
-          <div data-ng-if="registration.isLegacy || (registration.positiveIndicators.S09 && !registration.pastEndOfInstruction)">
+          <div data-ng-if="(registration.isLegacy || registration.positiveIndicators.S09) && !registration.pastEndOfInstruction">
             <h4 data-ng-bind="registration.name"></h4>
             <ul class="cc-widget-list cc-status-holds-list" data-ng-if="api.user.profile.features.regstatus">
               <li class="cc-widget-list-hover"
