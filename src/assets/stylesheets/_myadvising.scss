@@ -7,12 +7,12 @@
 
     // TODO: Apply standard for all CalCentral disabled links
     a[disabled="disabled"] {
-      color: $cc-color-lighter-medium-grey;
+      color: $cc-color-nobel;
       text-decoration: underline;
     }
   }
   .cc-widget-myadvising-list {
-    border-bottom: 1px solid $cc-color-widget-background;
+    border-bottom: 1px solid $cc-color-whisper;
     font-size: 13px;
     line-height: 1.5;
     margin-top: 0;

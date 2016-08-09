@@ -38,6 +38,7 @@ public/index-main.html
 public/index-junction.html
 public/bcourses_embedded.html
 public/rev-manifest.json
+public/styleguide
 
 # Ignore precompiled assets
 /public/assets

@@ -9,7 +9,6 @@ angular.module('calcentral.config').config(function($routeProvider, calcentralCo
   var providedServices = calcentralConfig.providedServices;
 
   // List all the routes
-
   if (providedServices.indexOf('calcentral') !== -1) {
     $routeProvider.when('/', {
       templateUrl: 'splash.html',
@@ -126,7 +125,8 @@ angular.module('calcentral.config').config(function($routeProvider, calcentralCo
       templateUrl: 'profile.html',
       controller: 'ProfileController',
       pageName: 'Profile'
-    }).when('/toolbox', {
+    }).
+    when('/toolbox', {
       templateUrl: 'toolbox.html',
       controller: 'MyToolboxController'
     }).

@@ -6,10 +6,10 @@
 @media #{$small-only} {
   // Fixes a background color bug on small screens in the header
   body {
-    background-color: $cc-color-header;
+    background-color: $cc-color-prussian-blue;
   }
   .cc-off-canvas-container {
-    background: $cc-color-navigation;
+    background: $cc-color-bahama-blue;
     overflow: hidden;
     width: 100%;
     .cc-navigation-bar ul {
@@ -51,12 +51,12 @@
   .cc-offcanvas-icon {
     display: block;
     button {
-      background: $cc-color-green-dark;
+      background: $cc-color-bahama-blue;
       border: 0;
       margin: 0;
       padding: 11px 11px 12px;
       &:hover, &:focus {
-        background: $cc-color-green-light;
+        background: $cc-color-jellybean;
         text-decoration: none;
       }
     }

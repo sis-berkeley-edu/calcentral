@@ -1,3 +1,22 @@
+// Icons
+//
+// Icons representing UC Berkeley and 3rd Party services
+//
+// sg-wrapper:
+// <div style="border: #000 solid 2px; color: #000; padding: 1rem;"><sg-wrapper-content/></div>
+//
+// Styleguide 3
+
+// Icon Base & Modifiers
+//
+// Styleguide 3.1
+
+// Base Icon - 16px Size
+//
+// markup:
+// <div class="cc-icon cc-icon-bcourses"></div>
+//
+// Styleguide 3.1.1
 .cc-icon {
   background-repeat: no-repeat;
   background-size: 16px;
@@ -5,72 +24,231 @@
   margin-top: 1px;
   width: 16px;
 }
+
+// 22 Pixel Icon Size
+//
+// markup:
+// <div class="cc-icon-22 cc-icon-bcourses"></div>
+//
+// Styleguide 3.1.2
 .cc-icon-22 {
   background-size: 22px;
   height: 22px;
   width: 22px;
 }
 
+// Inline Icon
+//
+// markup:
+// <p>The icon is <span class="cc-icon cc-icon-inline cc-icon-amazon"></span> inline</p>
+//
+// Styleguide 3.1.3
 .cc-icon-inline {
   display: inline-block;
 }
 
+// Icons
+//
+// Styleguide 3.2
+
+// Amazon Icon
+//
+// markup:
+// <div class="cc-icon-22 cc-icon-amazon"></div>
+//
+// Styleguide 3.2.1
 .cc-icon-amazon {
   background-image: url('../images/svg/icon_amazon_256x256.svg');
 }
+
+// bCourses Icon
+//
+// markup:
+// <div class="cc-icon-22 cc-icon-bcourses"></div>
+//
+// Styleguide 3.2.2
 .cc-icon-bcourses {
   background-image: url('../images/svg/icon_bcourses_256x256.svg');
 }
+
+// Calendar Icon
+//
+// markup:
+// <div class="cc-icon-22 cc-icon-calendar"></div>
+//
+// Styleguide 3.2.3
 .cc-icon-calendar {
   background-image: url('../images/svg/icon_calendar_256x256.svg');
 }
+
+// CalLink Icon
+//
+// markup:
+// <div class="cc-icon-22 cc-icon-callink"></div>
+//
+// Styleguide 3.2.4
 .cc-icon-callink {
   background-image: url('../images/svg/icon_callink_256x256.svg');
 }
+
+// CalStudent Store Icon
+//
+// markup:
+// <div class="cc-icon-22 cc-icon-calstudentstore"></div>
+//
+// Styleguide 3.2.5
 .cc-icon-calstudentstore {
   background-image: url('../images/svg/icon_cal_256x256.svg');
 }
+
+// Campus Solutions Icon
+//
+// markup:
+// <div class="cc-icon-22 cc-icon-campussolutions"></div>
+//
+// Styleguide 3.2.6
 .cc-icon-campussolutions {
   background-image: url('../images/svg/icon_campussolutions_256x256.svg');
 }
+
+// Chegg Icon
+//
+// markup:
+// <div class="cc-icon-22 cc-icon-chegg"></div>
+//
+// Styleguide 3.2.7
 .cc-icon-chegg {
   background-image: url('../images/svg/icon_chegg_256x256.svg');
 }
+
+// bDrive Icon
+//
+// markup:
+// <div class="cc-icon-22 cc-icon-drive"></div>
+//
+// Styleguide 3.2.8
 .cc-icon-drive {
   background-image: url('../images/svg/icon_drive_256x256.svg');
 }
+
+// Google Book Icon
+//
+// markup:
+// <div class="cc-icon-22 cc-icon-googlebook"></div>
+//
+// Styleguide 3.2.9
 .cc-icon-googlebook {
   background-image: url('../images/icon_googlebook_32x32.png');
 }
+
+// bMail Icon
+//
+// markup:
+// <div class="cc-icon-22 cc-icon-mail"></div>
+//
+// Styleguide 3.2.10
 .cc-icon-mail {
   background-image: url('../images/svg/icon_mail_256x256.svg');
 }
+
+// OskiCat Icon
+//
+// markup:
+// <div class="cc-icon-22 cc-icon-oskicat"></div>
+//
+// Styleguide 3.2.11
 .cc-icon-oskicat {
   background-image: url('../images/icon_oskicat_16x16.png');
 }
 
-// Fontawesome icons
+// Coloring for Font Awesome Icons
+//
+// Styleguide 3.3
+
+// Icon Color Red
+//
+// markup:
+// <i class="fa fa-exclamation-triangle cc-icon-red"></i>
+//
+// Styleguide 3.3.1
 .cc-icon-red {
-  color: $cc-color-red-dark !important;
+  color: $cc-color-harley-davidson-orange !important;
 }
+
+// Icon Color Gold
+//
+// markup:
+// <i class="fa fa-exclamation-triangle cc-icon-gold"></i>
+//
+// Styleguide 3.3.2
 .cc-icon-gold {
-  color: $cc-color-gold !important;
+  color: $cc-color-dark-tangerine !important;
 }
+
+// Icon Color Green
+//
+// markup:
+// <i class="fa fa-exclamation-triangle cc-icon-green"></i>
+//
+// Styleguide 3.3.3
 .cc-icon-green {
-  color: $cc-color-green-icon !important;
+  color: $cc-color-salem !important;
 }
+
+// Icon Color Grey
+//
+// markup:
+// <i class="fa fa-exclamation-triangle cc-icon-grey"></i>
+//
+// Styleguide 3.3.4
 .cc-icon-grey {
-  color: $cc-color-blue-grey !important;
+  color: $cc-color-bali-hai !important;
 }
+
+// Icon Color List Bullet Grey
+//
+// markup:
+// <i class="fa fa-exclamation-triangle cc-icon-list-bullet-grey"></i>
+//
+// Styleguide 3.3.5
 .cc-icon-list-bullet-grey {
-  color: $cc-color-list-block;
+  color: $cc-color-air-force-blue;
 }
+
+// Override Font Awesome Stop Icon
+//
+// Forces Font Awesome Stop icons to use standard CalCentral Darker Grey
+//
+// markup:
+// <i class="fa fa-exclamation-triangle cc-icon-list-bullet-grey"></i>
+//
+// Styleguide 3.3.6
 .fa-stop {
-  color: $cc-color-medium-grey !important;
+  color: $cc-color-night-rider !important;
 }
+
+// 3rd Party Icons
+//
+// Icons representing non-CalCentral websites or applications
+//
+// Styleguide 3.4
+
+// Facebook
+//
+// markup:
+// <div class="fa fa-facebook-square"></div>
+//
+// Styleguide 3.4.1
 .fa-facebook-square {
   color: $cc-color-facebook-icon-splash !important;
 }
+
+// Twitter
+//
+// markup:
+// <div class="fa fa-twitter-square"></div>
+//
+// Styleguide 3.4.2
 .fa-twitter-square {
   color: $cc-color-twitter-icon-splash !important;
 }

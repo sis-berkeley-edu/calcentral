@@ -1,86 +1,139 @@
-// CalCentral Specific
-$cc-color-alert: #f04124;
-$cc-color-alerts-law-background: #e7e7e7;
-$cc-color-alerts-law-border: #c7c7c7;
-$cc-color-berkeley-south-hall: #6c3302;
-$cc-color-button: #80c7de;
-$cc-color-button-action: #2787b6;
-$cc-color-button-action-hover: #1f7099;
-$cc-color-button-action-large-bottom: #1f7396;
-$cc-color-button-action-large-hover: #065a7d;
-$cc-color-button-action-large-top: #2889b2;
-$cc-color-button-border: #d2d2d2;
-$cc-color-button-disabled: #d6d6d6;
-$cc-color-button-disabled-background: #f6f6f6;
-$cc-color-button-grey: #bebebe;
-$cc-color-button-hover: #d5d5d5;
-$cc-color-button-regular: #e5e5e5;
-$cc-color-button-selected: #949494;
+// Colors
+//
+// Colors used throughout the entire calcentral portal.
+// Hex to color naming can be obtained from http://www.htmlcsscolor.com/
+//
+// sg-wrapper:
+// <div style="border: #000 solid 2px; color: #000;"><sg-wrapper-content/></div>
+//
+// Styleguide 1
+
+// Shades of Grey
+//
+// markup:
+// <div style="background: $cc-color-black; color:#fff; padding: 1rem;">&#36;cc-color-black: #000;</div>
+// <div style="background: $cc-color-night-rider; color:#fff; padding: 1rem;">&#36;cc-color-night-rider: #333;</div>
+// <div style="background: $cc-color-dim-gray; color:#fff; padding: 1rem;">&#36;cc-color-dim-gray: #666;</div>
+// <div style="background: $cc-color-nobel; color:#fff; padding: 1rem;">&#36;cc-color-nobel: #999;</div>
+// <div style="background: $cc-color-very-light-grey; color:#fff; padding: 1rem;">&#36;cc-color-very-light-grey: #ccc;</div>
+// <div style="background: $cc-color-whisper; padding: 1rem;">&#36;cc-color-whisper: #eee;</div>
+// <div style="background: $cc-color-white-smoke; padding: 1rem;">&#36;cc-color-white-smoke: #f6f6f6;</div>
+// <div style="background: $cc-color-white; padding: 1rem;">&#36;cc-color-white: #fff;</div>
+//
+// Styleguide 1.1
 $cc-color-black: #000;
-$cc-color-blue-dark: #002f58;
-$cc-color-blue-grey: #8098a5;
-$cc-color-blue-hover: #f2f9fe;
-$cc-color-dark-blue: #6e7a83;
-$cc-color-dark-grey: #2c2d2e;
-$cc-color-facebook-icon-splash: #3c599b;
-$cc-color-footer-dark-background: #474f56;
-$cc-color-footer-links: #8bc4ff;
-$cc-color-form-border: #dedede;
-$cc-color-header: #002e5b;
-$cc-color-header-icon-background: #4a6a8a;
-$cc-color-heading: #222;
-$cc-color-gold: #f1a91e;
-$cc-color-green: #0d863d;
-$cc-color-green-dark: #2a627b;
-$cc-color-green-icon: #007748;
-$cc-color-green-label: #b3c8b4;
-$cc-color-green-light: #42768e;
-$cc-color-green-plus: #51a351;
-$cc-color-launcher-border: #114d80;
-$cc-color-light-grey: #ddd;
-$cc-color-lighter-grey: #e6e6e6;
-$cc-color-lighter-medium-grey: #999;
-$cc-color-lightest-grey: #ededed;
-$cc-color-light-medium-grey: #6e6e6e;
-$cc-color-link: #2274a7;
-$cc-color-list-block: #61889d;
-$cc-color-list-border: #cacaca;
-$cc-color-main-background: #f6f6f6;
-$cc-color-medium-grey: #424242;
-$cc-color-navigation: #2b6281;
-$cc-color-navigation-hover-background: #61889e;
-$cc-color-navigation-sub: #427694;
-$cc-color-navigation-sub-header: #b9c8d0;
-$cc-color-placeholder: #aaa;
-$cc-color-popover-background: #e8e8e8;
-$cc-color-popover-border: #d6d6d6;
-$cc-color-popover-calendar: #f6f6f6;
-$cc-color-popover-calendar-week: #2d637f;
-$cc-color-popover-hover: #e6ebef;
-$cc-color-popover-icon: #afc5d2;
-$cc-color-popover-icon-hover: #0a3361;
-$cc-color-popover-text: #797979;
-$cc-color-popover-triangle: #cbcbcb;
-$cc-color-red: #cf1715;
-$cc-color-red-dark: #ac120e;
-$cc-color-red-light: #fce3e5;
-$cc-color-shadow-color: #ccc;
-$cc-color-spinner1: #ccc;
-$cc-color-spinner2: #444;
-$cc-color-spinner3: #888;
-$cc-color-super-light-grey: #fbfbfb;
-$cc-color-textbooks-section: #666;
-$cc-color-textbooks-details: #444;
-$cc-color-textbooks-title: #333;
-$cc-color-twitter-icon-splash: #69bcf0;
+$cc-color-night-rider: #333;
+$cc-color-dim-gray: #666;
+$cc-color-nobel: #999;
+$cc-color-very-light-grey: #ccc;
+$cc-color-whisper: #eee;
+$cc-color-white-smoke: #f6f6f6;
 $cc-color-white: #fff;
+
+// Transparent Greys
+//
+// markup:
+// <div style="background: $cc-color-black-transparent; padding: 1rem;">&#36;cc-color-black-transparent: rgba(0, 0, 0, .2);</div>
+// <div style="background: $cc-color-ironside-grey-transparent; padding: 1rem;">&#36;cc-color-ironside-grey-transparent: rgba(113, 112, 107, .1);</div>
+// <div style="background: $cc-color-white-translucent; padding: 1rem;">&#36;cc-color-white-translucent: rgba(255, 255, 255, .5);</div>
+// <div style="background: $cc-color-white-transparent; padding: 1rem;">&#36;cc-color-white-transparent: rgba(255, 255, 255, 0);</div>
+//
+// Styleguide 1.2
 $cc-color-black-transparent: rgba(0, 0, 0, .2);
-$cc-color-grey-transparent: rgba(113, 112, 107, .1);
+$cc-color-ironside-grey-transparent: rgba(113, 112, 107, .1);
 $cc-color-white-translucent: rgba(255, 255, 255, .5);
 $cc-color-white-transparent: rgba(255, 255, 255, 0);
-$cc-color-widget-background: #ebebeb;
-$cc-color-widget-list-blue-dark: #4d88c4;
-$cc-color-widget-list-blue-light: #77b7e2;
-$cc-color-widget-more-background: #f7f7f7;
-$cc-color-widget-section-label: #515151;
+
+// Blue / Grey Shades
+//
+// markup:
+// <div style="background: $cc-color-wedgewood; color: #fff; padding: 1rem;">&#36;cc-color-wedgewood: #4a6a8a;</div>
+// <div style="background: $cc-color-jellybean; color: #fff; padding: 1rem;">&#36;cc-color-jellybean: #427694;</div>
+// <div style="background: $cc-color-air-force-blue; color: #fff; padding: 1rem;">&#36;cc-color-air-force-blue: #61889e;</div>
+// <div style="background: $cc-color-bali-hai; color: #fff; padding: 1rem;">&#36;cc-color-bali-hai: #8098a5;</div>
+// <div style="background: $cc-color-spindle; color: #000; padding: 1rem;">&#36;cc-color-spindle: #afc5d2;</div>
+// <div style="background: $cc-color-solitude; color: #000; padding: 1rem;">&#36;cc-color-solitude: #e6ebef;</div>
+// <div style="background: $cc-color-trout; color: #fff; padding: 1rem;">&#36;cc-color-trout: #474f56;</div>
+// <div style="background: $cc-color-lynch; color: #fff; padding: 1rem;">&#36;cc-color-lynch: #6e7a83;</div>
+//
+// Styleguide 1.3
+$cc-color-wedgewood: #4a6a8a;
+$cc-color-jellybean: #427694;
+$cc-color-air-force-blue: #61889e;
+$cc-color-bali-hai: #8098a5;
+$cc-color-spindle: #afc5d2;
+$cc-color-solitude: #e6ebef;
+$cc-color-trout: #474f56;
+$cc-color-lynch: #6e7a83;
+
+// Blue Shades
+//
+// markup:
+// <div style="background: $cc-color-prussian-blue; color: #fff; padding: 1rem;">&#36;cc-color-prussian-blue: #002e5b;</div>
+// <div style="background: $cc-color-blue-lagoon; color: #fff; padding: 1rem;">&#36;cc-color-blue-lagoon: #065a7d;</div>
+// <div style="background: $cc-color-dark-cerulean; color: #fff; padding: 1rem;">&#36;cc-color-dark-cerulean: #025a86;</div>
+// <div style="background: $cc-color-bahama-blue; color: #fff; padding: 1rem;">&#36;cc-color-bahama-blue: #2b6281;</div>
+// <div style="background: $cc-color-lochmara; color: #fff; padding: 1rem;">&#36;cc-color-lochmara: #1f7099;</div>
+// <div style="background: $cc-color-curious-blue; color: #fff; padding: 1rem;">&#36;cc-color-curious-blue: #2683bc;</div>
+// <div style="background: $cc-color-havelock-blue; color: #fff; padding: 1rem;">&#36;cc-color-havelock-blue: #4d88c4;</div>
+// <div style="background: $cc-color-spray; color: #000; padding: 1rem;">&#36;cc-color-spray: #80c7de;</div>
+// <div style="background: $cc-color-french-pass; color: #000; padding: 1rem;">&#36;cc-color-french-pass: #a0d3e8;</div>
+// <div style="background: $cc-color-alice-blue; color: #000; padding: 1rem;">&#36;cc-color-alice-blue: #f2f9fe;</div>
+//
+// Styleguide 1.4
+$cc-color-prussian-blue: #002e5b;
+$cc-color-blue-lagoon: #065a7d;
+$cc-color-dark-cerulean: #025a86;
+$cc-color-bahama-blue: #2b6281;
+$cc-color-lochmara: #1f7099;
+$cc-color-curious-blue: #2683bc;
+$cc-color-havelock-blue: #4d88c4;
+$cc-color-spray: #80c7de;
+$cc-color-french-pass: #a0d3e8;
+$cc-color-alice-blue: #f2f9fe;
+
+// Alert Colors
+//
+// Foreground and background colors (red, yellow, green)
+//
+// markup:
+// <div style="background: $cc-color-venetian-red; color: #000; padding: 1rem;">&#36;cc-color-venetian-red: #c10006;</div>
+// <div style="background: $cc-color-harley-davidson-orange; color: #000; padding: 1rem;">&#36;cc-color-harley-davidson-orange: #cf1715;</div>
+// <div style="background: $cc-color-pale-pink; color: #000; padding: 1rem;">&#36;cc-color-pale-pink: #fce3e5;</div>
+// <div style="background: $cc-color-yellow; color: #000; padding: 1rem;">&#36;cc-color-yellow: #ff0;</div>
+// <div style="background: $cc-color-dark-tangerine; color: #000; padding: 1rem;">&#36;cc-color-dark-tangerine: #f1a91e;</div>
+// <div style="background: $cc-color-lucky; color: #000; padding: 1rem;">&#36;cc-color-lucky: #a79526;</div>
+// <div style="background: $cc-color-salem; color: #000; padding: 1rem;">&#36;cc-color-salem: #0d863d;</div>
+// <div style="background: $cc-color-zanah; color: #000; padding: 1rem;">&#36;cc-color-zanah: #b3c8b4;</div>
+//
+// Styleguide 1.5
+$cc-color-venetian-red: #c10006;
+$cc-color-harley-davidson-orange: #cf1715;
+$cc-color-pale-pink: #fce3e5;
 $cc-color-yellow: #ff0;
+$cc-color-dark-tangerine: #f1a91e;
+$cc-color-lucky: #a79526;
+$cc-color-salem: #0d863d;
+$cc-color-zanah: #b3c8b4;
+
+// Berkeley Branding Colors
+//
+// See http://brand.berkeley.edu/colors/
+//
+// markup:
+// <div style="background: $cc-color-berkeley-south-hall; color: #fff; padding: 1rem;">&#36;cc-color-berkeley-south-hall: #6c3302;</div>
+//
+// Styleguide 1.6
+$cc-color-berkeley-south-hall: #6c3302;
+
+// 3rd Party Icons
+//
+// Facebook and Twitter
+//
+// markup:
+// <div style="background: $cc-color-facebook-icon-splash; color: #000; padding: 1rem;">&#36;cc-color-facebook-icon-splash: #3c599b;</div>
+// <div style="background: $cc-color-twitter-icon-splash; color: #000; padding: 1rem;">&#36;cc-color-twitter-icon-splash: #69bcf0;</div>
+//
+// Styleguide 1.7
+$cc-color-facebook-icon-splash: #3c599b;
+$cc-color-twitter-icon-splash: #69bcf0;

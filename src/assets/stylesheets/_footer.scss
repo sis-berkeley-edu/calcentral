@@ -1,7 +1,7 @@
 // Footer
 body {
   footer {
-    background: $cc-color-main-background;
+    background: $cc-color-white-smoke;
     clear: both;
     line-height: 1.5;
     overflow: hidden;
@@ -59,13 +59,13 @@ body {
     }
 
     @media #{$small-only} {
-      background: $cc-color-footer-dark-background;
-      color: $cc-color-light-grey;
+      background: $cc-color-trout;
+      color: $cc-color-whisper;
       a {
-        color: $cc-color-footer-links;
+        color: $cc-color-french-pass;
       }
       .cc-footer-copyright {
-        color: $cc-color-light-grey;
+        color: $cc-color-whisper;
         float: right;
         margin: 0;
       }
@@ -74,7 +74,7 @@ body {
         float: left;
         a {
           border-left: 0;
-          border-right: 1px solid $cc-color-button-selected;
+          border-right: 1px solid $cc-color-nobel;
           font-weight: normal;
           padding-left: 2px;
           padding-right: 5px;

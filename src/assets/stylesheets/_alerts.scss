@@ -1,12 +1,12 @@
 .cc-alerts-bar {
-  background: $cc-color-dark-blue;
+  background: $cc-color-lynch;
   color: $cc-color-white;
   overflow: hidden;
   padding: 10px 15px;
   width: 100%;
 
   .cc-alerts-bar-more {
-    color: $cc-color-popover-icon;
+    color: $cc-color-spindle;
     margin-left: 10px;
   }
   .cc-alerts-bar-more-container {
@@ -28,8 +28,8 @@
 }
 
 .cc-alerts-law {
-  background: $cc-color-alerts-law-background;
-  border: 1px $cc-color-alerts-law-border solid;
+  background: $cc-color-whisper;
+  border: 1px $cc-color-very-light-grey solid;
   margin-bottom: 20px;
   padding: 15px;
   h3 {

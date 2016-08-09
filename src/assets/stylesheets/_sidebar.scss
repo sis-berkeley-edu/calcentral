@@ -1,11 +1,11 @@
 .cc-sidebar {
-  background: $cc-color-navigation-sub;
+  background: $cc-color-jellybean;
   margin-top: 1px;
   padding-left: 0;
   padding-right: 0;
   h3 {
-    border-top: 1px solid $cc-color-navigation-sub-header;
-    color: $cc-color-navigation-sub-header;
+    border-top: 1px solid $cc-color-spindle;
+    color: $cc-color-spindle;
     font-size: 16px;
     margin: 0;
     padding: 10px 15px 0;
@@ -15,7 +15,7 @@
   }
   li {
     &.active a, a:hover, a:focus {
-      background: $cc-color-navigation-hover-background;
+      background: $cc-color-air-force-blue;
       border-radius: 5px;
       color: $cc-color-white;
     }
@@ -23,7 +23,7 @@
       font-weight: bold;
     }
     > a {
-      color: $cc-color-lighter-grey;
+      color: $cc-color-whisper;
       display: block;
       margin: 1px 10px 0;
       padding: 2px 5px;

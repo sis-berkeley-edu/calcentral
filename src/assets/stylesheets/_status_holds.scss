@@ -40,10 +40,10 @@
     padding: 0;
 
     > li {
-      border-bottom: 1px solid $cc-color-widget-background;
+      border-bottom: 1px solid $cc-color-whisper;
       padding-right: 14px;
       &:last-child {
-        border-bottom: 1px solid $cc-color-widget-background;
+        border-bottom: 1px solid $cc-color-whisper;
       }
     }
     .cc-status-holds-expanded-text {

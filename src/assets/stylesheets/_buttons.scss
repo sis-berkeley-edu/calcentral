@@ -1,4 +1,20 @@
 // Buttons
+//
+// sg-wrapper:
+// <div class=""><sg-wrapper-content/></div>
+//
+// Styleguide 2
+
+// Base Button
+//
+// markup:
+// <button>This is a button</button>
+//
+// :hover    - Underlined with pointer cursor
+// :focus    - Underlined with pointer cursor
+// :active   - No shadow
+//
+// Styleguide 2.1
 button {
   box-shadow: none;
   font-family: $body-font-family;
@@ -11,8 +27,14 @@ button {
   }
 }
 
+// Button Class
+//
+// markup:
+// <button class="button">This is a button</button>
+//
+// Styleguide 2.2
 .button {
-  background-color: $cc-color-button;
+  background-color: $cc-color-spray;
   &.medium {
     font-size: 13px;
     font-weight: normal;
@@ -29,11 +51,20 @@ button {
   }
 }
 
+// CalCentral Button
+//
+// Colored grey by default
+//
+// markup:
+// <button class="cc-button">Learn More</button>
+// <button class="cc-button" disabled>This button is Disabled</button>
+//
+// Styleguide 2.3
 .cc-button {
-  background: linear-gradient($cc-color-white, $cc-color-button-regular), $cc-color-white;
-  border: 1px solid $cc-color-button-border;
+  background: linear-gradient($cc-color-white, $cc-color-whisper), $cc-color-white;
+  border: 1px solid $cc-color-very-light-grey;
   border-radius: 5px;
-  color: $cc-color-medium-grey;
+  color: $cc-color-night-rider;
   cursor: pointer;
   display: inline;
   font-size: 11px;
@@ -41,11 +72,61 @@ button {
   line-height: 1;
   padding: 6px 10px;
   &:focus, &:hover {
-    background: linear-gradient($cc-color-white, $cc-color-button-hover), $cc-color-button-hover;
-    color: $cc-color-medium-grey;
+    background: linear-gradient($cc-color-white, $cc-color-very-light-grey), $cc-color-very-light-grey;
+    color: $cc-color-night-rider;
     text-decoration: none;
   }
 }
+.cc-button[disabled] {
+  background: $cc-color-white-smoke !important;
+  border: 1px solid $cc-color-very-light-grey !important;
+  color: $cc-color-very-light-grey !important;
+  cursor: auto !important;
+  opacity: 1 !important;
+  &:focus, &:hover {
+    background: $cc-color-white-smoke !important;
+    color: $cc-color-very-light-grey !important;
+  }
+}
+
+// Blue Button
+//
+// Used with primary action buttons
+// Use in conjunction with `cc-button` style
+//
+// markup:
+// <a href="#" class="cc-button cc-button-blue">Learn More</a>
+// <a href="#" class="cc-button cc-button-blue" disabled>Learn More - Disabled</a>
+//
+// Styleguide 2.4
+.cc-button-blue {
+  background: $cc-color-curious-blue;
+  border: 1px solid transparent;
+  color: $cc-color-white;
+  &:focus, &:hover {
+    background: $cc-color-lochmara;
+    color: $cc-color-white;
+  }
+  &.cc-button-large {
+    background: linear-gradient($cc-color-curious-blue, $cc-color-lochmara), $cc-color-lochmara;
+    &:focus, &:hover {
+      background: linear-gradient($cc-color-curious-blue, $cc-color-blue-lagoon);
+    }
+  }
+}
+.cc-button-blue[disabled] {
+  background: $cc-color-bali-hai !important;
+  &:focus, &:hover {
+    background: $cc-color-bali-hai !important;
+  }
+}
+
+// Transparent Button
+//
+// markup:
+// <button class="cc-button-transparent">Learn More</button>
+//
+// Styleguide 2.5
 .cc-button-transparent {
   background: transparent;
   border: 0;
@@ -54,63 +135,62 @@ button {
   &:focus, &:hover {
     background: transparent;
     i {
-      color: $cc-color-lighter-medium-grey !important;
+      color: $cc-color-nobel !important;
     }
-  }
-}
-.cc-button-blue {
-  background: $cc-color-button-action;
-  border: 1px solid transparent;
-  color: $cc-color-white;
-  &:focus, &:hover {
-    background: $cc-color-button-action-hover;
-    color: $cc-color-white;
-  }
-  &.cc-button-large {
-    background: linear-gradient($cc-color-button-action-large-top, $cc-color-button-action-large-bottom), $cc-color-button-action-large-bottom;
-    &:focus, &:hover {
-      background: linear-gradient($cc-color-button-action-large-top, $cc-color-button-action-large-hover);
-    }
-  }
-}
-.cc-button[disabled] {
-  background: $cc-color-button-disabled-background !important;
-  border: 1px solid $cc-color-button-disabled !important;
-  color: $cc-color-button-disabled !important;
-  cursor: auto !important;
-  opacity: 1 !important;
-  &:focus, &:hover {
-    background: $cc-color-button-disabled-background !important;
-    color: $cc-color-button-disabled !important;
-  }
-}
-.cc-button-blue[disabled] {
-  background: $cc-color-blue-grey !important;
-  &:focus, &:hover {
-    background: $cc-color-blue-grey !important;
   }
 }
 
+// Large Button
+//
+// markup:
+// <button class="cc-button cc-button-blue cc-button-large">Sign In</button>
+//
+// Styleguide 2.6
 .cc-button-large {
   font-size: 16px;
   font-weight: normal;
   padding: 8px 10px;
 }
+
+// Selected Button
+//
+// markup:
+// <a class="cc-button cc-button-selected"><i class="fa fa-user"></i> Selected</a>
+// <a class="cc-button"><i class="fa fa-user"></i> Not Selected</a>
+//
+// Styleguide 2.7
 .cc-button-selected {
-  background: linear-gradient($cc-color-button-grey, $cc-color-button-selected), $cc-color-button-selected;
+  background: linear-gradient($cc-color-very-light-grey, $cc-color-nobel), $cc-color-nobel;
   color: $cc-color-white;
   z-index: 1;
   &:focus, &:hover {
-    background: linear-gradient($cc-color-button-grey, $cc-color-button-selected), $cc-color-button-selected;
+    background: linear-gradient($cc-color-very-light-grey, $cc-color-nobel), $cc-color-nobel;
     color: $cc-color-white;
   }
   i {
     color: $cc-color-white;
   }
 }
+
+// Button Plus Icon
+//
+// markup:
+// <i class="fa fa-plus cc-button-plus-icon"></i>
+//
+// Styleguide 2.8
 .cc-button-plus-icon {
-  color: $cc-color-green-plus;
+  color: $cc-color-salem;
 }
+
+// Button Link
+//
+// Used to style a button as a link. Recommended for Javascript actions
+// that do not result in a new page loading.
+//
+// markup:
+// <button class="cc-button-link">Show more</button>
+//
+// Styleguide 2.9
 .cc-button-link {
   padding: 0;
   &, &:hover, &:focus {
@@ -125,11 +205,21 @@ button {
   }
   &:disabled {
     background-color: inherit;
-    color: $cc-color-lighter-medium-grey;
+    color: $cc-color-nobel;
     pointer-events: none;
   }
 }
 
+// Button Group
+//
+// markup:
+// <ul class="cc-button-group">
+//   <li><a class="cc-button">Button 1</a></li>
+//   <li><a class="cc-button">Button 2</a></li>
+//   <li><a class="cc-button">Button 3</a></li>
+// </ul>
+//
+// Styleguide 2.10
 .cc-button-group {
   li {
     float: left;
@@ -158,6 +248,7 @@ button {
   }
 }
 
+// styleguide:ignore:start
 .cc-button-star {
   background: transparent;
   font-size: 10px;
@@ -181,6 +272,7 @@ button {
     }
   }
 }
+
 .cc-button-star-icon {
   color: $cc-color-white;
   font-size: 20px;
@@ -188,13 +280,14 @@ button {
     color: $cc-color-yellow;
   }
 }
+
 .cc-button-star-icon-outer {
-  color: $cc-color-light-medium-grey;
+  color: $cc-color-dim-gray;
   &:hover {
     color: $cc-color-black;
   }
   &.cc-button-star-saved {
-    color: $cc-color-light-medium-grey;
+    color: $cc-color-dim-gray;
   }
 }
 
@@ -203,18 +296,23 @@ button {
     width: 100%;
   }
 }
+
 .cc-even-2 {
   li {
     width: 50%;
   }
 }
+
 .cc-even-3 {
   li {
     width: 33.33333%;
   }
 }
+
 .cc-even-4 {
   li {
     width: 25%;
   }
 }
+
+// styleguide:ignore:end

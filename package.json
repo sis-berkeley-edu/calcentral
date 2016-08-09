@@ -61,9 +61,11 @@
     "lodash": "^4.11.1",
     "minimist": "^1.2.0",
     "moment": "^2.13.0",
+    "opn": "^5.1.0",
     "pikaday": "^1.4.0",
     "raven-js": "^2.3.0",
     "run-sequence": "^1.1.5",
+    "sc5-styleguide": "1.8.1",
     "streamqueue": "^1.1.1",
     "vinyl-source-stream": "^1.1.0",
     "watchify": "^3.7.0"

@@ -4,7 +4,7 @@
     margin-top: 20px;
   }
   h2, h3, h4 {
-    color: $cc-color-medium-grey;
+    color: $cc-color-night-rider;
   }
   h3 {
     margin-bottom: 5px;
@@ -86,7 +86,7 @@
     font-weight: normal;
   }
   .cc-academics-class-enrollment-header-separator {
-    border-left: 1px solid $cc-color-lightest-grey;
+    border-left: 1px solid $cc-color-whisper;
   }
   .cc-academics-class-enrollment-mobile-button-spacer {
     margin-bottom: 5px;
@@ -101,11 +101,11 @@
     }
   }
   .cc-academics-class-enrollment-table {
-    border: 2px solid $cc-color-lightest-grey;
+    border: 2px solid $cc-color-whisper;
     margin: 10px 0;
   }
   .cc-academics-class-enrollment-table-head {
-    background-color: $cc-color-light-medium-grey;
+    background-color: $cc-color-dim-gray;
     margin: 5px;
     th {
       color: $cc-color-white;
@@ -136,7 +136,7 @@
     text-align: center;
   }
   .cc-academics-class-info-grading {
-    border-top: 1px solid $cc-color-widget-background;
+    border-top: 1px solid $cc-color-whisper;
   }
   .cc-academics-class-info-grading-button-text {
     font-size: 16px;
@@ -163,23 +163,23 @@
   }
   .cc-academics-class-textbooks {
     &:not(:first-of-type) {
-      border-top: 1px solid $cc-color-list-border;
+      border-top: 1px solid $cc-color-very-light-grey;
       margin-top: 15px;
       padding-top: 15px;
     }
   }
   .cc-academics-column-labels {
-    color: $cc-color-light-medium-grey;
+    color: $cc-color-dim-gray;
     font-weight: bold;
   }
   .cc-academics-course-grading-centered {
     text-align: center;
   }
   .cc-academics-course-grading-footer {
-    border-top: 1px solid $cc-color-widget-background;
+    border-top: 1px solid $cc-color-whisper;
   }
   .cc-academics-course-grading-header {
-    border-bottom: 1px solid $cc-color-widget-background;
+    border-bottom: 1px solid $cc-color-whisper;
   }
   .cc-academics-course-grading-header-period {
     float: right;
@@ -190,20 +190,20 @@
     }
   }
   .cc-academics-course-standard-grading-header {
-    color: $cc-color-light-medium-grey;
+    color: $cc-color-dim-gray;
   }
   .cc-academics-course-title {
     padding-right: 8px;
   }
   .cc-academics-instructors {
-    color: $cc-color-green-light;
+    color: $cc-color-jellybean;
     list-style-type: square;
     li {
       margin-left: 20px;
     }
   }
   .cc-academics-instructors-grading-header {
-    border-top: 1px solid $cc-color-widget-background;
+    border-top: 1px solid $cc-color-whisper;
     margin-top: 15px;
     padding-top: 10px;
   }
@@ -218,13 +218,13 @@
     padding-top: 5px;
   }
   .cc-academics-link-disabled {
-    color: $cc-color-light-medium-grey;
+    color: $cc-color-dim-gray;
   }
   .cc-academics-nocontent-container {
     margin-top: 15px;
   }
   .cc-academics-even {
-    background: $cc-color-lightest-grey;
+    background: $cc-color-whisper;
   }
   .cc-academics-page-left {
     .row {
@@ -248,26 +248,26 @@
     }
     .cc-academics-next {
       &::before {
-        border-left: 4px solid $cc-color-link;
+        border-left: 4px solid $cc-color-curious-blue;
         right: -8px;
       }
     }
     .cc-academics-prev {
       &::before {
-        border-right: 4px solid $cc-color-link;
+        border-right: 4px solid $cc-color-curious-blue;
         left: -8px;
       }
     }
     .cc-academics-prev-next-disabled {
-      color: $cc-color-lighter-medium-grey;
+      color: $cc-color-nobel;
       &.cc-academics-next {
         &::before {
-          border-left: 4px solid $cc-color-lighter-medium-grey;
+          border-left: 4px solid $cc-color-nobel;
         }
       }
       &.cc-academics-prev {
         &::before {
-          border-right: 4px solid $cc-color-lighter-medium-grey;
+          border-right: 4px solid $cc-color-nobel;
         }
       }
     }
@@ -285,7 +285,7 @@
   .cc-academics-semester {
     width: 100%;
     > div {
-      border: 1px solid $cc-color-list-border;
+      border: 1px solid $cc-color-very-light-grey;
       padding: 10px;
     }
     h3 {
@@ -306,7 +306,7 @@
   .cc-academics-semester-current {
     font-size: 100%;
     > div {
-      background: $cc-color-blue-hover;
+      background: $cc-color-alice-blue;
     }
     h3 {
       font-size: 18px;
@@ -319,7 +319,7 @@
   }
   .cc-academics-semester-future {
     > div {
-      background: $cc-color-widget-more-background;
+      background: $cc-color-white-smoke;
     }
   }
   .cc-academics-semester-list {
@@ -341,12 +341,12 @@
     margin: 12px 15px 0;
   }
   .cc-academics-no-block-history {
-    color: $cc-color-light-medium-grey;
+    color: $cc-color-dim-gray;
     font-size: 14px;
     margin-top: 10px;
   }
   .cc-academics-subtitle {
-    background: $cc-color-dark-blue;
+    background: $cc-color-lynch;
     h3 {
       color: $cc-color-white;
       font-size: 13px;

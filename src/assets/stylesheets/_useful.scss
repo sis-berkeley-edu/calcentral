@@ -10,10 +10,10 @@
 
 // Useful classes
 .cc-alert {
-  color: $cc-color-red !important;
+  color: $cc-color-harley-davidson-orange !important;
 }
 .cc-alert-box {
-  background-color: $cc-color-alert;
+  background-color: $cc-color-harley-davidson-orange;
   color: $cc-color-white;
   padding: 15px;
 }
@@ -80,20 +80,20 @@
   }
 }
 .cc-non-anchored-link {
-  color: $cc-color-link;
+  color: $cc-color-curious-blue;
   cursor: pointer;
 }
 .cc-nowrap {
   white-space: nowrap;
 }
 .cc-required-field-indicator {
-  color: $cc-color-red;
+  color: $cc-color-harley-davidson-orange;
 }
 .cc-right {
   float: right;
 }
 .cc-strikethrough {
-  color: $cc-color-list-border !important;
+  color: $cc-color-very-light-grey !important;
   text-decoration: line-through !important;
 }
 .cc-uppercase {
@@ -125,14 +125,14 @@ $cc-spinner-uneven: 17px;
   &::before {
     animation: spin-normal 1s infinite steps(8);
     border-radius: 50%;
-    box-shadow: 0 (-$cc-spinner-uneven) $cc-color-spinner1, // Top
-      $cc-spinner-even (-$cc-spinner-even $cc-color-spinner1), // Top right
-      $cc-spinner-uneven 0 $cc-color-spinner3, // Right
-      $cc-spinner-even $cc-spinner-even $cc-color-spinner2, // Bottom right
+    box-shadow: 0 (-$cc-spinner-uneven) $cc-color-very-light-grey, // Top
+      $cc-spinner-even (-$cc-spinner-even $cc-color-very-light-grey), // Top right
+      $cc-spinner-uneven 0 $cc-color-nobel, // Right
+      $cc-spinner-even $cc-spinner-even $cc-color-night-rider, // Bottom right
       0 $cc-spinner-uneven $cc-color-black, // Bottom
-      (-$cc-spinner-even) $cc-spinner-even $cc-color-spinner1, // Bottom left
-      (-$cc-spinner-uneven) 0 $cc-color-spinner1, // Left
-      (-$cc-spinner-even) (-$cc-spinner-even) $cc-color-spinner1; // Top left
+      (-$cc-spinner-even) $cc-spinner-even $cc-color-very-light-grey, // Bottom left
+      (-$cc-spinner-uneven) 0 $cc-color-very-light-grey, // Left
+      (-$cc-spinner-even) (-$cc-spinner-even) $cc-color-very-light-grey; // Top left
     content: "";
     display: inline-block;
     height: 10px;
@@ -150,7 +150,7 @@ $cc-spinner-uneven: 17px;
 
 // Popover
 .cc-popover {
-  background: $cc-color-popover-background;
+  background: $cc-color-whisper;
   border-radius: 5px;
   box-shadow: 0 5px 10px $cc-color-black-transparent;
   padding: 0;
@@ -179,13 +179,13 @@ $cc-spinner-uneven: 17px;
   // This allows us to create an arrow for the popover
   // We also add a border by painting another arrow behind the first one
   &::after {
-    border-bottom: 10px solid $cc-color-popover-background;
+    border-bottom: 10px solid $cc-color-whisper;
     border-left: 10px solid transparent;
     border-right: 10px solid transparent;
     margin-left: -10px;
   }
   &::before {
-    border-bottom: 11px solid $cc-color-popover-triangle;
+    border-bottom: 11px solid $cc-color-very-light-grey;
     border-left: 11px solid transparent;
     border-right: 11px solid transparent;
     margin-left: -11px;

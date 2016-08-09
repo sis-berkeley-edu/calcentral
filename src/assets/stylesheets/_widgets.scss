@@ -33,7 +33,7 @@
   }
 }
 .cc-widget-border {
-  border-bottom: 1px solid $cc-color-widget-background;
+  border-bottom: 1px solid $cc-color-whisper;
 }
 .cc-widget-list {
   font-size: 12px;
@@ -42,7 +42,7 @@
   padding: 0 15px;
 
   > li {
-    border-bottom: 1px solid $cc-color-widget-background;
+    border-bottom: 1px solid $cc-color-whisper;
     &:last-child {
       border-bottom: 0;
     }
@@ -53,18 +53,18 @@
 }
 .cc-widget-list-border-top {
   > li:first-child {
-    border-top: 1px solid $cc-color-widget-background;
+    border-top: 1px solid $cc-color-whisper;
   }
 }
 .cc-widget-list-color {
-  border-left: 4px solid $cc-color-button-grey;
+  border-left: 4px solid $cc-color-very-light-grey;
   clear: both;
 
   li {
-    border-bottom: 1px solid $cc-color-widget-background;
+    border-bottom: 1px solid $cc-color-whisper;
     margin-right: 10px;
     &:first-child {
-      border-top: 1px solid $cc-color-widget-background;
+      border-top: 1px solid $cc-color-whisper;
       margin-top: 12px;
     }
     .cc-widget-tasks-form {
@@ -76,16 +76,16 @@
   }
 }
 .cc-widget-list-color-blue-dark {
-  border-left-color: $cc-color-widget-list-blue-dark;
+  border-left-color: $cc-color-havelock-blue;
 }
 .cc-widget-list-color-blue-light {
-  border-left-color: $cc-color-widget-list-blue-light;
+  border-left-color: $cc-color-french-pass;
 }
 .cc-widget-list-color-green {
-  border-left-color: $cc-color-green-label;
+  border-left-color: $cc-color-zanah;
 }
 .cc-widget-list-color-red {
-  border-left-color: $cc-color-red;
+  border-left-color: $cc-color-harley-davidson-orange;
 }
 .cc-widget-list-subtitle {
   font-size: 11px;
@@ -101,14 +101,14 @@
   width: 20px;
 }
 .cc-widget-list-selected {
-  background: $cc-color-widget-more-background;
+  background: $cc-color-white-smoke;
 }
 .cc-widget-list > li > a, .cc-widget-list .cc-widget-list-link, .cc-widget-list-hover, .cc-widget-table-hover {
   overflow: hidden;
   padding: 10px 0;
   position: relative;
   &:hover, &:focus {
-    background: $cc-color-blue-hover;
+    background: $cc-color-alice-blue;
     cursor: pointer;
     outline: 0;
     text-decoration: none;
@@ -120,7 +120,7 @@
 .cc-widget-list-hover:not(tr):not(.cc-widget-list-hover-notriangle) {
   &::before {
     border-bottom: 4px solid transparent;
-    border-right: 4px solid $cc-color-lighter-medium-grey;
+    border-right: 4px solid $cc-color-nobel;
     border-top: 4px solid transparent;
     content: "";
     height: 0;
@@ -147,7 +147,7 @@
   &::before {
     border-left: 4px solid transparent;
     border-right: 4px solid transparent;
-    border-top: 4px solid $cc-color-lighter-medium-grey;
+    border-top: 4px solid $cc-color-nobel;
     content: "";
     height: 0;
     position: absolute;
@@ -191,7 +191,7 @@
   }
 }
 .cc-widget-subtitle {
-  background: $cc-color-lighter-medium-grey;
+  background: $cc-color-nobel;
 
   h3 {
     color: $cc-color-white;
@@ -229,7 +229,7 @@
   .cc-toggle-triangle {
     &::after {
       border-bottom: 4px solid transparent;
-      border-right: 4px solid $cc-color-lighter-medium-grey;
+      border-right: 4px solid $cc-color-nobel;
       border-top: 4px solid transparent;
       right: 12px;
     }
@@ -254,7 +254,7 @@
     &::after {
       border-left: 4px solid transparent;
       border-right: 4px solid transparent;
-      border-top: 4px solid $cc-color-lighter-medium-grey;
+      border-top: 4px solid $cc-color-nobel;
       right: 10px;
     }
   }
@@ -275,11 +275,11 @@
   padding: 15px;
 }
 .cc-widget-title {
-  background: $cc-color-widget-background;
+  background: $cc-color-whisper;
   overflow: hidden;
 
   h2 {
-    color: $cc-color-medium-grey;
+    color: $cc-color-night-rider;
     font-family: Arial, sans-serif;
     margin: 2px 0;
     padding: 5px 15px;
@@ -303,7 +303,7 @@
   }
 }
 .cc-widget-title-sub {
-  color: $cc-color-lighter-medium-grey;
+  color: $cc-color-nobel;
   font-size: 13px;
   // Margin will only kick in when there is a float on the span
   margin-top: 5px;
@@ -312,12 +312,12 @@
 
 .cc-widget-interesting {
   .cc-widget-title {
-    background: $cc-color-dark-blue;
+    background: $cc-color-lynch;
     h2 {
       color: $cc-color-white;
     }
     .cc-widget-title-link {
-      color: $cc-color-popover-icon;
+      color: $cc-color-spindle;
     }
   }
 }

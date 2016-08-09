@@ -443,3 +443,19 @@ pg_dump calcentral -O -x --inserts --clean -f developer-seed-data.sql -t link_ca
 ```
 
 Copy the file into your source tree and get it merged into master.
+
+## Living Styleguide
+
+The SCSS files under src/assets/stylesheets contain a style of notation known as KSS, which are used to generate a
+living styleguide via [SC-5 Styleguide](http://styleguide.sc5.io/). See source at
+[Github](https://github.com/SC5/sc5-styleguide).
+
+To generate this styleguide run:
+```
+gulp styleguide
+```
+
+This will generate the styleguide in public/styleguide, which will open automatically in your browser at
+[http://localhost:3006/](http://localhost:3006/). Modifications to SCSS files under /src/assets/stylesheets are watched
+and reloaded into the guide on-the-fly.
+
