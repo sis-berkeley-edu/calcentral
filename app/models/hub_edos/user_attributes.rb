@@ -69,12 +69,13 @@ module HubEdos
       # CS Identifiers simply treat 'student-id' as a synonym for the Campus Solutions ID / EmplID, regardless
       # of whether the user has ever been a student. (In contrast, CalNet LDAP's 'berkeleyedustuid' attribute
       # only appears for current or former students.)
-      if (cs_id_hash = edo[:identifiers].select {|id| id[:type] == 'student-id'}.first)
+      identifiers = edo[:identifiers]
+      if identifiers.present? && (cs_id_hash = identifiers.select {|id| id[:type] == 'student-id'}.first)
         @campus_solutions_id ||= cs_id_hash[:id]
         result[:campus_solutions_id] = @campus_solutions_id
         result[:student_id] = @campus_solutions_id if result[:roles].slice(:student, :exStudent, :applicant).has_value?(true)
       else
-        logger.error "No 'student-id' found in CS Identifiers #{edo[:identifiers]} for UID #{@uid}"
+        logger.error "No 'student-id' found in CS Identifiers #{identifiers} for UID #{@uid}" if identifiers.present?
         result[:student_id] = result[:legacy_student_id]
       end
 
