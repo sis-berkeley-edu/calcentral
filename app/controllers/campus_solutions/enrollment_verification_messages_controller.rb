@@ -2,7 +2,7 @@ module CampusSolutions
   class EnrollmentVerificationMessagesController < CampusSolutionsController
 
     def get
-      json_passthrough(CampusSolutions::EnrollmentVerificationMessages)
+      json_passthrough CampusSolutions::EnrollmentVerificationMessages
     end
 
   end
