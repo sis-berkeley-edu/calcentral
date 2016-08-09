@@ -379,7 +379,7 @@
       '    <a href="http://www.twitter.com/etsberkeley" target="_blank" class="icon-twitter"><span class="screenreader-only">Twitter</span></a>',
       '  </div>',
       '  <div>',
-      '    <a href="http://asuc.org/honorcode/index.php" target="_blank">UC Berkeley Honor Code</a>',
+      '    <a href="http://teaching.berkeley.edu/berkeley-honor-code" target="_blank">UC Berkeley Honor Code</a>',
       '    <a href="http://www.wellness.asuc.org" target="_blank">Student Wellness Resources</a>',
       '  </div>',
       '</div>'
