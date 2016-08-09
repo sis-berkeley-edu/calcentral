@@ -69,7 +69,8 @@
           </tbody>
         </table>
       </div>
-      <div class="cc-table cc-table-top-border cc-clearfix" data-ng-if="ucAdvisingResources.ucAdvisingLinks">
+      <div class="cc-table cc-table-top-border cc-clearfix"
+      data-cc-spinner-directive="ucAdvisingResources.isLoading">
         <table class="cc-widget-profile-table">
           <tbody>
             <tr>
@@ -100,6 +101,23 @@
                   <a
                     data-ng-href="{{ucAdvisingResources.ucAdvisingLinks.schedulePlannerStudentSpecific.url}}"
                     data-ng-bind="ucAdvisingResources.ucAdvisingLinks.schedulePlannerStudentSpecific.name"></a>
+                </div>
+                <div data-ng-if="ucAdvisingResources.ucAdvisingLinks.studentAppointments.url">
+                  <div
+                    data-cc-campus-solutions-link-item-directive
+                    data-link="ucAdvisingResources.ucAdvisingLinks.studentAppointments"
+                  ></div>
+                </div>
+                <div data-ng-if="ucAdvisingResources.ucAdvisingLinks.studentAdvisorNotes.url">
+                  <div
+                    data-cc-campus-solutions-link-item-directive
+                    data-link="ucAdvisingResources.ucAdvisingLinks.studentAdvisorNotes"
+                  ></div>
+                </div>
+                <div data-ng-if="ucAdvisingResources.ucAdvisingLinks.studentWebnowDocuments.url">
+                  <a
+                    data-ng-href="{{ucAdvisingResources.ucAdvisingLinks.studentWebnowDocuments.url}}"
+                    data-ng-bind="ucAdvisingResources.ucAdvisingLinks.studentWebnowDocuments.name" data-ng-attr-title="{{ucAdvisingResources.ucAdvisingLinks.studentWebnowDocuments.title}}"></a>
                 </div>
               </td>
             </tr>

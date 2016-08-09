@@ -11,6 +11,9 @@ angular.module('calcentral.controllers').controller('UserOverviewController', fu
     isLoading: true,
     excludeLinksToRegistrar: true
   };
+  $scope.ucAdvisingResources = {
+    isLoading: true
+  };
   $scope.holdsInfo = {
     isLoading: true
   };
@@ -80,11 +83,13 @@ angular.module('calcentral.controllers').controller('UserOverviewController', fu
       $scope.targetUser.fullName = $scope.targetUser.defaultName;
       apiService.util.setTitle($scope.targetUser.defaultName);
       parseCalResidency();
+
       // Get links to advising resources
       advisingFactory.getAdvisingResources({
         uid: targetUserUid
       }).then(function(data) {
-        $scope.ucAdvisingResources = _.get(data, 'data.feed.ucAdvisingResources');
+        angular.extend($scope.ucAdvisingResources, _.get(data, 'data.feed.ucAdvisingResources'));
+        $scope.ucAdvisingResources.isLoading = false;
       });
     }).error(function(data, status) {
       $scope.targetUser.error = errorReport(status, data.error);

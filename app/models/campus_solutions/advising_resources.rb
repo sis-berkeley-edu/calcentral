@@ -42,25 +42,55 @@ module CampusSolutions
         add_cs_link links, :multi_year_academic_planner_generic, 'MULTI_YEAR_ACADEMIC_PLANNER_GENERIC', 'Multi-Year Planner'
         add_cs_link links, :multi_year_academic_planner, 'MULTI_YEAR_ACADEMIC_PLANNER_STUDENT_SPECIFIC', 'Multi-Year Planner', "?UCemplid=#{lookup_student_id}"
         add_cs_link links, :schedule_planner, 'SCHEDULE_PLANNER_STUDENT_SPECIFIC', 'Schedule Planner', "?EMPLID=#{lookup_student_id}"
-
+        
         # LINK-API CALLS
-        advisor_notes = CampusSolutions::Link.new.get_url('UC_CX_SCI_NOTE_FLU', {
+        advisor_notes_link = fetch_link('UC_CX_SCI_NOTE_FLU', {
           :EMPLID => "#{@campus_solutions_id}"
         })
-        advisor_notes_link = advisor_notes[:feed][:link]
         if advisor_notes_link
-          links['uc_advisor_notes'] = advisor_notes_link
+          links[:uc_advisor_notes] = advisor_notes_link
         end
 
-        appointment_system = CampusSolutions::Link.new.get_url('UC_CX_APPOINTMENT_ADV_SETUP', {
+        appointment_system_link = fetch_link('UC_CX_APPOINTMENT_ADV_SETUP', {
           :EMPLID => "#{@campus_solutions_id}"
         })
-        appointment_system_link = appointment_system[:feed][:link]
         if appointment_system_link
-          links['uc_appointment_system'] = appointment_system_link
+          links[:uc_appointment_system] = appointment_system_link
+        end
+
+        # STUDENT-SPECIFIC LINKS
+        if @student[:campus_solutions_id]
+          student_appointments_link = fetch_link('UC_CX_APPOINTMENT_STD_MY_APPTS', {
+            :EMPLID => @student[:campus_solutions_id]
+          })
+          if student_appointments_link
+            links[:student_appointments] = student_appointments_link
+          end
+
+          student_advisor_notes_link = fetch_link('UC_CX_SCI_NOTE_FLU', {
+            :EMPLID => @student[:campus_solutions_id]
+          })
+          if student_advisor_notes_link
+            links[:student_advisor_notes] = student_advisor_notes_link
+          end
+
+          student_webnow_documents_link = fetch_link('UC_CX_WEBNOW_STUDENT_URI', {
+            :EMPLID => @student[:campus_solutions_id]
+          })
+          if student_webnow_documents_link
+            links[:student_webnow_documents] = student_webnow_documents_link
+          end
         end
       end
       feed
+    end
+
+    def fetch_link(link_key, placeholders)
+      if (link_feed = CampusSolutions::Link.new.get_url(link_key, placeholders))
+        link = link_feed.try(:[], :feed).try(:[], :link)
+      end
+      logger.error "Could not retrieve CS link #{link_key} for AdvisingResources feed, uid = #{@uid}" unless link
+      link
     end
 
     def instance_key
