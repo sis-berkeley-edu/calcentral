@@ -82,9 +82,8 @@ angular.module('calcentral.directives').directive('ccCampusSolutionsLinkDirectiv
 
         // Links from the CS Link API may contain `comments` attributes, which
         // are renamed on CalCentral to `title` in order to support hover text.
-        var title = scope.link.title;
-        if (title) {
-          attrs.$set('title', title);
+        if (scope.link && scope.link.title) {
+          attrs.$set('title', scope.link.title);
         }
       });
     }

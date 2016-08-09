@@ -7,7 +7,7 @@ module CampusSolutions
     end
 
     def xml_filename
-      'link_api.xml'
+      'link_api_multiple.xml'
     end
 
     def build_feed(response)

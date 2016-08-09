@@ -1,0 +1,31 @@
+<div class="cc-widget cc-print-hide" data-ng-controller="StudentResourcesController">
+  <div class="cc-widget-title">
+    <h2>Student Resources</h2>
+  </div>
+  <div data-cc-spinner-directive="isLoading">
+    <div class="cc-widget-padding">
+      <h3>General Forms</h3>
+      <ul class="cc-list-bullets">
+        <li data-ng-if="studentResources.changeOfAcademicPlanAdd.url">
+          <div class="cc-nowrap">
+            <a class="cc-inline-block" data-ng-href="{{studentResources.changeOfAcademicPlanAdd.url}}" data-ng-bind="studentResources.changeOfAcademicPlanAdd.name" data-ng-attr-title="{{studentResources.changeOfAcademicPlanAdd.title}}"></a>
+            <div class="cc-inline-block" data-ng-if="studentResources.changeOfAcademicPlanView.url"> (<a data-ng-href="{{studentResources.changeOfAcademicPlanView.url}}" data-ng-bind="studentResources.changeOfAcademicPlanView.name" data-ng-attr-title="{{studentResources.changeOfAcademicPlanView.title}}"></a>)</div>
+          </div>
+          <span>Add, drop, or modify your major, minor, subplan, graduation term, designated emphasis, or degree.</span>
+        </li>
+        <li data-ng-if="studentResources.emergencyLoanFormAdd.url">
+          <div class="cc-nowrap">
+            <a class="cc-inline-block" data-ng-href="{{studentResources.emergencyLoanFormAdd.url}}" data-ng-bind="studentResources.emergencyLoanFormAdd.name" data-ng-attr-title="{{studentResources.emergencyLoanFormAdd.title}}"></a>
+            <div class="cc-inline-block" data-ng-if="studentResources.emergencyLoanFormView.url"> (<a data-ng-href="{{studentResources.emergencyLoanFormView.url}}" data-ng-bind="studentResources.emergencyLoanFormView.name" data-ng-attr-title="{{studentResources.emergencyLoanFormView.title}}"></a>)</div>
+          </div>
+        </li>
+        <li data-ng-if="studentResources.withdrawFromSemesterAdd.url">
+          <a data-ng-href="{{studentResources.withdrawFromSemesterAdd.url}}" data-ng-bind="studentResources.withdrawFromSemesterAdd.name" data-ng-attr-title="{{studentResources.withdrawFromSemesterAdd.title}}"></a>
+        </li>
+        <li data-ng-if="studentResources.veteransBenefitsAdd.url">
+          <a data-ng-href="{{studentResources.veteransBenefitsAdd.url}}" data-ng-bind="studentResources.veteransBenefitsAdd.name" data-ng-attr-title="{{studentResources.veteransBenefitsAdd.title}}"></a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
