@@ -127,6 +127,12 @@ angular.module('calcentral.controllers').controller('BillingController', functio
 
     billing.summary = setAmountStrings(billing.summary);
 
+    // Suppress all billing items with itemLineAmount: 0 and itemLineBalance: 0.
+    billing.activity = _.reject(billing.activity, {
+      itemLineAmount: 0,
+      itemBalance: 0
+    });
+
     billing.activity = _.map(billing.activity, function(object) {
       var billingItem = _.mapValues(object, function(value) {
         value = parseIncomingDates(value);
