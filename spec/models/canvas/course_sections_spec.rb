@@ -41,7 +41,7 @@ describe Canvas::CourseSections do
     context 'on request failure' do
       let(:failing_request) { {method: :get} }
       let(:response) { subject.sections_list }
-      it_should_behave_like 'an unpaged Canvas proxy handling request failure'
+      it_should_behave_like 'a paged Canvas proxy handling request failure'
     end
   end
 

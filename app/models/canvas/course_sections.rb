@@ -1,5 +1,6 @@
 module Canvas
   class CourseSections < Proxy
+    include PagedProxy
 
     def initialize(options = {})
       super(options)
@@ -7,7 +8,7 @@ module Canvas
     end
 
     def sections_list(force_write = false)
-      self.class.fetch_from_cache(@course_id, force_write) { wrapped_get request_path }
+      self.class.fetch_from_cache(@course_id, force_write) { paged_get request_path }
     end
 
     def official_section_identifiers(force_write = false)
