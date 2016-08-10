@@ -26,9 +26,8 @@ module HubEdos
     def build_feed(response)
       response = super(response)
       return response if response['student'].blank?
-      return response if response['student']['residency'].blank?
-
       residency = response['student']['residency']
+      return response if residency.blank? || residency['fromTerm'].blank?
 
       # Add residency.fromTerm.label to the response
       residency['fromTerm']['label'] = Berkeley::TermCodes.normalized_english(residency['fromTerm']['name'])
