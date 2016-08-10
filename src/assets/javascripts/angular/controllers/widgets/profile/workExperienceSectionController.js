@@ -232,7 +232,7 @@ angular.module('calcentral.controllers').controller('WorkExperienceSectionContro
       sequenceNbr: item.id,
       employmentDescr: item.employer,
       country: item.address.countryCode || 'USA',
-      phone: item.phone.number,
+      phone: _.get(item, 'phone.number'),
       startDt: item.fromDate || '',
       endDt: item.toDate || '',
       titleLong: item.jobTitle,
