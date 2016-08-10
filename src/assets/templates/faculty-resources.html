@@ -1,8 +1,16 @@
-<div class="cc-widget">
+<div class="cc-widget" data-ng-controller="FacultyResourcesController">
   <div class="cc-widget-title">
     <h2>Faculty Resources</h2>
   </div>
-  <div class="cc-widget-padding">
+  <div class="cc-widget-padding" data-cc-spinner-directive="facultyResources.isLoading">
+
+    <h3>Action Center</h3>
+    <ul class="cc-list-bullets">
+      <li data-ng-if="facultyResources.eformsReviewCenterLink.url">
+        <div data-cc-campus-solutions-link-item-directive data-link="facultyResources.eformsReviewCenterLink"></div>
+      </li>
+    </ul>
+
     <h3>Classes and Schedule</h3>
     <ul class="cc-list-bullets">
       <li><a href="http://schedule.berkeley.edu">Schedule of Classes</a></li>
