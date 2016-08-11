@@ -180,7 +180,7 @@ angular.module('calcentral.controllers').controller('UserOverviewController', fu
   };
 
   var parseCalResidency = function() {
-    var messageCode = $scope.residency.message.code;
+    var messageCode = _.get($scope, 'residency.message.code');
     if (messageCode) {
       var getResidencyMessage = function(options) {
         return residencyMessageFactory.getMessage(options);
