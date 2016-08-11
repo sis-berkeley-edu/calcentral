@@ -42,15 +42,8 @@ module CampusSolutions
         add_cs_link links, :multi_year_academic_planner_generic, 'MULTI_YEAR_ACADEMIC_PLANNER_GENERIC', 'Multi-Year Planner'
         add_cs_link links, :multi_year_academic_planner, 'MULTI_YEAR_ACADEMIC_PLANNER_STUDENT_SPECIFIC', 'Multi-Year Planner', "?UCemplid=#{lookup_student_id}"
         add_cs_link links, :schedule_planner, 'SCHEDULE_PLANNER_STUDENT_SPECIFIC', 'Schedule Planner', "?EMPLID=#{lookup_student_id}"
-        
-        # LINK-API CALLS
-        advisor_notes_link = fetch_link('UC_CX_SCI_NOTE_FLU', {
-          :EMPLID => "#{@campus_solutions_id}"
-        })
-        if advisor_notes_link
-          links[:uc_advisor_notes] = advisor_notes_link
-        end
 
+        # LINK-API CALLS
         appointment_system_link = fetch_link('UC_CX_APPOINTMENT_ADV_SETUP', {
           :EMPLID => "#{@campus_solutions_id}"
         })
