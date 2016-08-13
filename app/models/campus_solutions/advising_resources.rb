@@ -44,7 +44,7 @@ module CampusSolutions
         add_cs_link links, :schedule_planner, 'SCHEDULE_PLANNER_STUDENT_SPECIFIC', 'Schedule Planner', "?EMPLID=#{lookup_student_id}"
 
         # LINK-API CALLS
-        appointment_system_link = fetch_link('UC_CX_APPOINTMENT_ADV_SETUP', {
+        appointment_system_link = fetch_link('UC_CX_APPOINTMENT_ADV_MY_APPTS', {
           :EMPLID => "#{@campus_solutions_id}"
         })
         if appointment_system_link
@@ -53,7 +53,7 @@ module CampusSolutions
 
         # STUDENT-SPECIFIC LINKS
         if @student[:campus_solutions_id]
-          student_appointments_link = fetch_link('UC_CX_APPOINTMENT_STD_MY_APPTS', {
+          student_appointments_link = fetch_link('UC_CX_APPOINTMENT_ADV_VIEW_STD', {
             :EMPLID => @student[:campus_solutions_id]
           })
           if student_appointments_link
