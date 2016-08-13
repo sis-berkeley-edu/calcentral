@@ -32,14 +32,11 @@ module MyRegistrations
           terms[term_method] = {id: term.campus_solutions_id, name: term.to_english}
           # For 'current' and 'next' terms, we need the date of start and end of instruction to determine CNP status
           if (term_method == :current || term_method == :next)
-            temporal_position = term_method == :current ? HubTerm::Proxy::CURRENT_TERM : HubTerm::Proxy::NEXT_TERM
-            cs_feed = HubTerm::Proxy.new(temporal_position: temporal_position).get_term
-            berkeley_term = Berkeley::Term.new.from_cs_api(cs_feed)
             terms[term_method] = terms[term_method].merge(
               {
-                classesStart: berkeley_term.classes_start,
-                end: berkeley_term.end,
-                endDropAdd: berkeley_term.end_drop_add
+                classesStart: term.classes_start,
+                end: term.end,
+                endDropAdd: term.end_drop_add
               }
             )
             terms[term_method] = set_term_flags(terms[term_method])
