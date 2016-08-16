@@ -43,7 +43,7 @@
           <div class="cc-page-myfinances-amount" data-cc-amount-directive="billing.data.summary.accountBalanceString"></div>
         </div>
       </li>
-      <li data-ng-if="billing.data.summary.accountBalance > 0">
+      <li>
         <div class="cc-page-myfinances-account-summary-buttons cc-print-hide">
           <a class="cc-button"
             data-cc-outbound-enabled="true"
@@ -53,11 +53,12 @@
           </a>
         </div>
       </li>
-      <li data-ng-if="billing.data.summary.accountBalance <= 0">
+      <li>
         <a class="cc-page-myfinances-account-summary-item"
            data-cc-outbound-enabled="true"
            href="/higher_one/higher_one_url"
-           data-ng-if="api.user.profile.isDirectlyAuthenticated || api.user.profile.canActOnFinances">
+           data-ng-disabled="!api.user.profile.isDirectlyAuthenticated || !api.user.profile.canActOnFinances"
+           data-ng-class="{'cc-page-myfinances-account-summary-item-disabled':(!api.user.profile.isDirectlyAuthenticated || !api.user.profile.canActOnFinances)}">
            View Official Monthly Statement
         </a>
       </li>
