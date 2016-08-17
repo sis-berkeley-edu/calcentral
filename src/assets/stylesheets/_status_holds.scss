@@ -30,6 +30,9 @@
     }
     .cc-status-holds-expanded-text {
       margin-left: 10px;
+      p, span {
+        font-size: 13px;
+      }
     }
     .cc-status-holds-list-item {
       margin-bottom: 8px;

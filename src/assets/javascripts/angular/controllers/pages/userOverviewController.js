@@ -136,8 +136,8 @@ angular.module('calcentral.controllers').controller('UserOverviewController', fu
   var loadRegistrations = function() {
     advisingFactory.getStudentRegistrations({
       uid: $routeParams.uid
-    }).success(function(data) {
-      _.forOwn(data.terms, function(value, key) {
+    }).then(function(data) {
+      _.forOwn(data.data.terms, function(value, key) {
         if (key === 'current' || key === 'next') {
           if (value) {
             $scope.regStatus.terms.push(value);
@@ -145,7 +145,7 @@ angular.module('calcentral.controllers').controller('UserOverviewController', fu
         }
       });
       _.forEach($scope.regStatus.terms, function(term) {
-        var regStatus = data.registrations[term.id];
+        var regStatus = data.data.registrations[term.id];
 
         if (regStatus && regStatus[0]) {
           _.merge(regStatus[0], term);
@@ -158,7 +158,7 @@ angular.module('calcentral.controllers').controller('UserOverviewController', fu
           }
         }
       });
-    });
+    }).then(loadStudentAttributes);
   };
 
   var loadStudentAttributes = function() {
@@ -213,8 +213,7 @@ angular.module('calcentral.controllers').controller('UserOverviewController', fu
       .then(loadAcademics)
       .then(loadHolds)
       .then(loadBlocks)
-      .then(loadRegistrations)
-      .then(loadStudentAttributes);
+      .then(loadRegistrations);
     }
   });
 });
