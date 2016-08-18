@@ -32,6 +32,9 @@
     .cc-page-myfinances-account-summary-item {
       padding: 8px 20px 8px 15px;
     }
+    .cc-page-myfinances-account-summary-item-disabled {
+      color: $cc-color-light-medium-grey;
+    }
     .cc-page-myfinances-account-summary-subtitle {
       font-size: 11px;
       line-height: 13px;
