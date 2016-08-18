@@ -14,6 +14,12 @@ angular.module('calcentral.services').service('statusHoldsService', function(use
       explanation: null,
       positiveIndicators: {}
     });
+    var termUnits = _.get(term, 'termUnits');
+    var termUnitsTotal = _.find(termUnits, {
+      type: {
+        code: 'Total'
+      }
+    });
     if (term.registered === true) {
       term.summary = 'Officially Registered';
       term.explanation = term.isSummer ? 'You are officially registered for this term.' : 'You are officially registered and are entitled to access campus services.';
@@ -22,11 +28,11 @@ angular.module('calcentral.services').service('statusHoldsService', function(use
       term.summary = 'Not Officially Registered';
       term.explanation = term.isSummer ? 'You are not officially registered for this term.' : 'You are not entitled to access campus services until you are officially registered.  In order to be officially registered, you must pay your Tuition and Fees, and have no outstanding holds.';
     }
-    if (term.registered === false && userService.profile.roles.undergrad && term.pastClassesStart) {
+    if (termUnitsTotal.unitsEnrolled === 0 && userService.profile.roles.undergrad && term.pastClassesStart) {
       term.summary = 'Not Enrolled';
       term.explanation = term.isSummer ? 'You are not officially registered for this term.' : 'You are not enrolled in any classes for this term.';
     }
-    if (term.registered === false && (userService.profile.roles.graduate || userService.profile.roles.law) && term.pastAddDrop) {
+    if (termUnitsTotal.unitsEnrolled === 0 && (userService.profile.roles.graduate || userService.profile.roles.law) && term.pastAddDrop) {
       term.summary = 'Not Enrolled';
       term.explanation = term.isSummer ? 'You are not officially registered for this term.' : 'You are not enrolled in any classes for this term. Fees will not be assessed, and any expected fee remissions or fee payment credits cannot be applied until you are enrolled in classes.  For more information, please contact your departmental graduate advisor.';
     }

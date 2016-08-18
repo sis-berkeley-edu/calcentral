@@ -41,7 +41,7 @@
                 </div>
               </li>
               <li class="cc-widget-list-hover"
-                  data-ng-if="((api.user.profile.roles.undergrad && !registration.pastClassesStart) ||
+                  data-ng-if="((api.user.profile.roles.undergrad && !registration.pastClassesStart) || (api.user.profile.roles.undergrad && (registration.term.id === '2168') && !registration.pastFall2016Extension) ||
                   ((api.user.profile.roles.graduate || api.user.profile.roles.law || api.user.profile.roles.advisor) && !registration.pastAddDrop)) &&
                   !registration.isLegacy && !registration.isSummer && registration.summary !== 'Officially Registered'"
                   data-ng-class="{'cc-widget-list-hover-opened':(registration.positiveIndicators.show)}"
@@ -52,21 +52,33 @@
                       <i class="cc-icon fa fa-check-circle cc-icon-green"
                          data-ng-if="registration.positiveIndicators.R99">
                       </i>
+                      <i class="cc-icon fa fa-exclamation-triangle cc-icon-gold"
+                         data-ng-if="registration.positiveIndicators.ROP && !registration.positiveIndicators.R99">
+                      </i>
                       <i class="cc-icon fa"
-                         data-ng-if="!registration.positiveIndicators.R99"
+                         data-ng-if="!registration.positiveIndicators.ROP && !registration.positiveIndicators.R99"
                          data-ng-class="{true:'fa-exclamation-circle cc-icon-red',false:'fa-exclamation-triangle cc-icon-gold'}[registration.pastFinancialDisbursement]">
                       </i>
                     </span>
                     <span data-ng-if="registration.positiveIndicators.R99">Exception from Cancel for Non-Payment</span>
-                    <span data-ng-if="!registration.positiveIndicators.R99 && !registration.pastFinancialDisbursement">Cancel for Non-Payment Notification</span>
-                    <span data-ng-if="!registration.positiveIndicators.R99 && registration.pastFinancialDisbursement">Cancel for Non-Payment Warning</span>
+                    <span data-ng-if="registration.positiveIndicators.ROP && !registration.positiveIndicators.R99">Temporary Protection from Cancel for Non-Payment</span>
+                    <span data-ng-if="!registration.positiveIndicators.ROP && !registration.positiveIndicators.R99 && !registration.pastFinancialDisbursement">Cancel for Non-Payment Notification</span>
+                    <span data-ng-if="!registration.positiveIndicators.ROP && !registration.positiveIndicators.R99 && registration.pastFinancialDisbursement">Cancel for Non-Payment Warning</span>
                   </div>
                   <div class="cc-status-holds-expanded-text" data-ng-show="registration.positiveIndicators.show">
                     <span data-ng-if="registration.positiveIndicators.R99">
                       You have an exception from Cancellation for Non-Payment (CNP) for this term.  You will not be dropped from your classes for this term.
                       You remain financially responsible for all charges on your Student Account.  Please monitor your communications and tasks in CalCentral for updates.
                     </span>
-                    <div data-ng-if="!registration.positiveIndicators.R99">
+                    <span data-ng-if="registration.positiveIndicators.ROP && !registration.positiveIndicators.R99">
+                      The deadline to pay for this term has been extended.  To maintain enrollment in your current class schedule and avoid an administrative withdrawal, please pay
+                      at least 20% of your tuition and fees by August 30th.  Note that if you are dropped for non-payment you will be subject to the pro-rated fee schedule.
+                      <br>
+                      <br>
+                      To learn more about the consequences of withdrawal please visit <a href="http://registrar.berkeley.edu/registration/cancellation-withdrawal/refunds-after-withdrawl">refunds after
+                      withdrawal.</a>
+                    </span>
+                    <div data-ng-if="!registration.positiveIndicators.ROP && !registration.positiveIndicators.R99">
                       <span data-ng-if="$parent.regStatus.messages">
                         <span data-ng-if="!registration.pastFinancialDisbursement && api.user.profile.roles.undergrad" data-ng-bind-html="$parent.regStatus.messages.cnpNotificationUndergrad.descrlong"></span>
                         <span data-ng-if="!registration.pastFinancialDisbursement && (api.user.profile.roles.graduate || api.user.profile.roles.law)" data-ng-bind-html="$parent.regStatus.messages.cnpNotificationGrad.descrlong"></span>
