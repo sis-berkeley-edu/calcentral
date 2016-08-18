@@ -204,7 +204,7 @@ angular.module('calcentral.controllers').controller('AcademicsController', funct
                                  ($scope.numberOfHolds) ||
                                  ($scope.residency));
     $scope.showLegacyAdvising = !$scope.filteredForDelegate && $scope.api.user.profile.features.legacyAdvising && !$scope.api.user.profile.features.advising && $scope.isLSStudent;
-    $scope.showAdvising = !$scope.filteredForDelegate && apiService.user.profile.features.advising && apiService.user.profile.roles.student;
+    $scope.showAdvising = !$scope.filteredForDelegate && apiService.user.profile.features.advising && apiService.user.profile.roles.student && !apiService.user.profile.roles.law;
 
     if (!$scope.filteredForDelegate) {
       $scope.transcriptLink = 'http://registrar.berkeley.edu/academic-records/transcripts-diplomas';
