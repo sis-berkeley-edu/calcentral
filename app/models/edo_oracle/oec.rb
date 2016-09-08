@@ -77,7 +77,7 @@ module EdoOracle
         WHERE
           sec."term-id" = '#{term_id}'
           AND #{filter_clause}
-          AND sec."status-code" = 'A'
+          AND sec."status-code" IN ('A','S')
       SQL
     end
 
