@@ -11,7 +11,7 @@ module User
       group_roles = Berkeley::UserRoles.roles_from_ldap_groups(ldap_record[:berkeleyeduismemberof], !!affiliation_roles[:exStudent])
       roles = group_roles.merge affiliation_roles
       {
-        email_address: string_attribute(ldap_record, :mail),
+        email_address: string_attribute(ldap_record, :mail) || string_attribute(ldap_record, :berkeleyeduofficialemail),
         first_name: string_attribute(ldap_record, :berkeleyEduFirstName) || string_attribute(ldap_record, :givenname),
         last_name: string_attribute(ldap_record, :berkeleyEduLastName) || string_attribute(ldap_record, :sn),
         ldap_uid: string_attribute(ldap_record, :uid),
