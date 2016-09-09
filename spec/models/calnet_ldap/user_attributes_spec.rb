@@ -103,6 +103,13 @@ describe CalnetLdap::UserAttributes do
         expect(feed[:roles][:staff]).to eq true
       end
     end
+
+    context 'when LDAP query returns no mail attribute' do
+      before { ldap_result.delete :mail }
+      it 'falls back to berkeleyeduofficialemail' do
+        expect(feed[:email_address]).to eq 'oski_bearable@berkeley.edu'
+      end
+    end
   end
 
   context 'test user from real LDAP connection', testext: true do
