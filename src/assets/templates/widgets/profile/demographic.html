@@ -4,8 +4,6 @@
   data-cc-spinner-directive="demographicInformation.isLoading">
 
   <div data-ng-if="!demographicInformation.isErrored">
-    <!-- Editable soon -->
-    <div data-ng-include="'widgets/profile/editable_soon.html'" data-ng-if="!api.user.profile.advisorActingAsUid"></div>
     <!-- Gender -->
     <div data-ng-include="'widgets/profile/demographic_gender.html'" data-ng-if="!api.user.profile.advisorActingAsUid"></div>
     <!-- Ethnicity -->
