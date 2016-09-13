@@ -110,7 +110,7 @@ describe MyAcademics::CollegeAndLevel do
             :primary => true,
             :expectedGraduationTerm => {
               "id" => "2202",
-              "name" => "2020 Spring"
+              "name" => "Spring 2020"
             }
           },
           {
@@ -128,7 +128,7 @@ describe MyAcademics::CollegeAndLevel do
     end
 
     it 'includes the farthest graduation term available from all plans' do
-      expect(feed[:collegeAndLevel][:lastExpectedGraduationTerm]).to eq '2020 Spring'
+      expect(feed[:collegeAndLevel][:lastExpectedGraduationTerm]).to eq 'Spring 2020'
     end
 
     it 'specifies term name' do

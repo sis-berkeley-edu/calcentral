@@ -47,7 +47,7 @@ module MyAcademics
       if (status = parse_hub_academic_status result)
         result[:careers] = parse_hub_careers status
         result[:level] = parse_hub_level status
-        result[:termName] = parse_hub_term_name status
+        result[:termName] = parse_hub_term_name(status['currentRegistration'].try(:[], 'term')).try(:[], 'name')
         result[:termsInAttendance] = status['termsInAttendance'].to_s
         result.merge! parse_hub_plans status
       else
@@ -96,7 +96,7 @@ module MyAcademics
             plans << {
               code: plan_code,
               primary: plan_primary,
-              expectedGraduationTerm: student_plan['expectedGraduationTerm']
+              expectedGraduationTerm: parse_hub_term_name(student_plan['expectedGraduationTerm']),
             }
             grad_terms << student_plan['expectedGraduationTerm']
           end
@@ -107,12 +107,15 @@ module MyAcademics
         majors: majors,
         minors: minors,
         plans: plans,
-        lastExpectedGraduationTerm: last_grad_term.try(:[], 'name'),
+        lastExpectedGraduationTerm: parse_hub_term_name(last_grad_term).try(:[], 'name'),
       }
     end
 
-    def parse_hub_term_name(status)
-      Berkeley::TermCodes.normalized_english status['currentRegistration'].try(:[], 'term').try(:[], 'name')
+    def parse_hub_term_name(term)
+      if term
+        term['name'] = Berkeley::TermCodes.normalized_english term.try(:[], 'name')
+      end
+      term
     end
 
     def parse_bearfacts_feed(feed)
