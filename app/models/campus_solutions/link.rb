@@ -42,34 +42,40 @@ module CampusSolutions
         if entry
           link = entry.slice(:url, :urlId, :description, :comments)
 
-          if placeholders.present?
-            placeholders.each do |k, v|
+          placeholders.try(:each) do |k, v|
+            if v.blank?
+              logger.error "Could not set placeholder for #{k} on link with url_id #{link[:urlId]}"
+              link = nil
+              break
+            else
               link[:url] = link[:url].gsub("{#{k}}", v)
             end
           end
 
-          # promote properties we're interested in
-          entry[:properties].each do |property|
-            if property[:name] == 'NEW_WINDOW' && property[:value] == 'Y'
-              link[:showNewWindow] = true
+          if !link.blank?
+            # promote properties we're interested in
+            entry[:properties].each do |property|
+              if property[:name] == 'NEW_WINDOW' && property[:value] == 'Y'
+                link[:showNewWindow] = true
+              end
+              if property[:name] == 'UCFROM'
+                link[:ucFrom] = property[:value]
+              end
+              if property[:name] == 'UCFROMLINK'
+                link[:ucFromLink] = property[:value]
+              end
+              if property[:name] == 'UCFROMTEXT'
+                link[:ucFromText] = property[:value]
+              end
             end
-            if property[:name] == 'UCFROM'
-              link[:ucFrom] = property[:value]
-            end
-            if property[:name] == 'UCFROMLINK'
-              link[:ucFromLink] = property[:value]
-            end
-            if property[:name] == 'UCFROMTEXT'
-              link[:ucFromText] = property[:value]
-            end
-          end
 
-          # convert campus solutions property names to calcentral
-          link[:name] = link.delete(:description)
-          link[:title] = link.delete(:comments)
-          if !link[:showNewWindow]
-            link[:isCsLink] = true
-            link['IS_CS_LINK'] = true
+            # convert campus solutions property names to calcentral
+            link[:name] = link.delete(:description)
+            link[:title] = link.delete(:comments)
+            if !link[:showNewWindow]
+              link[:isCsLink] = true
+              link['IS_CS_LINK'] = true
+            end
           end
         end
       end

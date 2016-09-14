@@ -4,7 +4,6 @@ var angular = require('angular');
 var _ = require('lodash');
 
 angular.module('calcentral.controllers').controller('StudentResourcesController', function(studentResourcesFactory, userService, $scope) {
-  $scope.studentResources = {};
   $scope.isLoading = true;
 
   var loadStudentResources = function() {
@@ -13,7 +12,9 @@ angular.module('calcentral.controllers').controller('StudentResourcesController'
 
   var parseStudentResources = function(data) {
     var resources = _.get(data, 'data.feed.resources');
-    angular.extend($scope.studentResources, resources);
+    if (!_.isEmpty(resources)) {
+      $scope.studentResources = resources;
+    }
   };
 
   // Identify Law students to suppress withdrawal link
