@@ -63,7 +63,7 @@ module HubEdos
           extract_emails(edo, result)
           result[:statusCode] = 200
         else
-          logger.error "Could not get Student EDO data for UID #{@uid}"
+          logger.warn "Could not get Student EDO data for UID #{@uid}"
           result[:noStudentId] = true
         end
         result
@@ -72,7 +72,7 @@ module HubEdos
     end
 
     def has_role?(*roles)
-      if (edo = get_edo)
+      if lookup_campus_solutions_id.present? && (edo = get_edo)
         result = {}
         extract_roles(edo, result)
         if (user_role_map = result[:roles])
