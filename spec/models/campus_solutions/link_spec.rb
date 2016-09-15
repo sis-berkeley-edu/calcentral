@@ -17,6 +17,7 @@ describe CampusSolutions::Link do
 
     let(:link_set_response) { proxy.get }
     let(:link_get_url_response) { proxy.get_url(url_id) }
+    let(:link_get_url_with_bad_placeholder_response) { proxy.get_url(url_id, {:BAD_PLACEHOLDER => nil}) }
     let(:link_get_url_and_replace_placeholders_response) { proxy.get_url(url_id, placeholders) }
     let(:link_get_url_for_properties_response) { proxy.get_url(url_id_for_properties) }
 
@@ -66,7 +67,16 @@ describe CampusSolutions::Link do
       end
     end
 
-    context 'replaces any placeholders' do
+    context 'returns empty link when a placeholder value is blank' do
+      let(:filename) { 'link_api.xml' }
+
+      it_should_behave_like 'a proxy that gets data'
+      it 'returns data with the expected structure' do
+        expect(link_get_url_with_bad_placeholder_response[:feed][:link]).not_to be
+      end
+    end
+
+    context 'replaces matching placeholders' do
       let(:filename) { 'link_api_multiple.xml' }
 
       it_should_behave_like 'a proxy that gets data'

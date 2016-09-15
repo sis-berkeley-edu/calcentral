@@ -3,7 +3,10 @@
     <h2>Student Resources</h2>
   </div>
   <div data-cc-spinner-directive="isLoading">
-    <div class="cc-widget-padding">
+    <div class="cc-widget-padding" data-ng-if="!studentResources">
+      Resource links unavailable.
+    </div>
+    <div class="cc-widget-padding" data-ng-if="studentResources">
       <h3>General Forms</h3>
       <ul class="cc-list-bullets">
         <li data-ng-if="studentResources.changeOfAcademicPlanAdd.url">
