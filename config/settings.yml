@@ -498,6 +498,7 @@ features:
   cs_advisor_student_lookup: false
   cs_billing: false
   cs_degree_progress: false
+  cs_committees: false
   cs_delegated_access: false
   cs_enrollment_card: false
   cs_fin_aid: false

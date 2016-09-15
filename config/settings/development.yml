@@ -90,6 +90,7 @@ features:
   cs_advisor_student_lookup: true
   cs_billing: true
   cs_degree_progress: true
+  cs_committees: true
   cs_delegated_access: true
   cs_enrollment_card: true
   cs_fin_aid: true

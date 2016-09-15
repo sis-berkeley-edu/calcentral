@@ -1,0 +1,73 @@
+<div class="cc-widget cc-higher-degree-committee">
+  <div class="cc-widget-title">
+    <h2>
+      <data-ng-pluralize count="facultyCommittees.active.length + facultyCommittees.completed.length" when="
+          {
+            '0': 'Higher Degree Committee',
+            'one': 'Higher Degree Committee',
+            'other': 'Higher Degree Committees'
+          }">
+        </ng-pluralize>
+    </h2>
+  </div>
+  <!-- switch the toggle link depeding on state -->
+  <div data-ng-switch="facultyCommittees.activeToggle">
+    <div data-ng-switch-when="true" >
+      <div class="cc-button-link cc-widget-padding cc-higher-degree-committee-toggle-link" data-ng-click="facultyCommittees.activeToggle = false">View Completed Committees
+      </div>
+      <div class="cc-widget-subtitle cc-higher-degree-committee-subtitle">Active Committees</div>
+    </div>
+    <div data-ng-switch-when="false">
+      <div class="cc-button-link cc-widget-padding cc-higher-degree-committee-toggle-link" data-ng-click="facultyCommittees.activeToggle = true">View Active Committees
+      </div>
+      <div class="cc-widget-subtitle cc-higher-degree-committee-subtitle">Completed Committees</div>
+    </div>
+  </div>
+  <div class="cc-widget-padding">
+    <div class="cc-higher-degree-committees-section">
+      <ul class="cc-higher-degree-committees-list">
+        <!-- loop through active or completed committees depending on toggle -->
+        <ng-repeat data-ng-repeat="committee in (facultyCommittees.activeToggle? facultyCommittees.active : facultyCommittees.completed) | limitTo: committeesLimit">
+          <li class="cc-widget-list-hover " data-cc-accessible-focus-directive data-ng-class="{'cc-widget-list-hover-opened':(committee.show)}"
+            data-ng-click="api.widget.toggleShow($event, null, committee, 'My Academics - Higher Degree Committee')">
+            <div>
+              <!-- hide photo for none active commettees -->
+              <div data-ng-if="facultyCommittees.activeToggle" class="cc-left cc-higher-degree-committees-picture">
+                <div>
+                  <img data-cc-load-error-directive="committee" data-ng-if="committee.student.photo && !committee.loadError" data-ng-src="{{committee.student.photo}}"
+                    data-ng-attr-alt="Photo of {{commitee.student.name}}">
+                  <div data-ng-if="!committee.student.photo || committee.loadError" class="cc-image-responsive cc-higher-degree-committees-image-unavailable"
+                    title="Photo unavailable">
+                    <span class="cc-visuallyhidden">No Official Photo is Available</span>
+                  </div>
+                </div>
+              </div>
+              <div data-ng-class="{true:'cc-higher-degree-committees-content', false:''}[facultyCommittees.activeToggle]">
+                <div><strong><span data-ng-bind="committee.student.name"></span></strong></div>
+                <div><strong class="cc-button-link"><span data-ng-bind="committee.student.email"></span></strong></div>
+                <div class="cc-text-light" data-ng-bind="committee.header.program"></div>
+                <div class="cc-text-light" data-ng-bind="committee.header.type"></div>
+                <div class="cc-higher-degree-committees-list-item">
+                  <!-- hide for none active commettees -->
+                  <span data-ng-if="facultyCommittees.activeToggle">
+                  <i class="{{committees.header.statusIcon}}"></i>
+                </span>
+                  <span class="cc-text-light">
+                  <strong><span data-ng-bind="committee.header.statusTitle"></span></strong> <span data-ng-bind="committee.header.statusMessage"></span>
+                  </span>
+                  <div class="cc-text-light" data-ng-if="!facultyCommittees.activeToggle">
+                    <span>Your Service: </span><span data-ng-bind="committee.serviceRange"></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div data-ng-include="'widgets/academics/higher_degree_committee.html'"></div>
+          </li>
+        </ng-repeat>
+      </ul>
+      <div data-cc-show-more-directive data-cc-show-more-list="(facultyCommittees.activeToggle? facultyCommittees.active: facultyCommittees.completed)"
+        data-cc-show-more-limit="committeesLimit">
+      </div>
+    </div>
+  </div>
+</div>

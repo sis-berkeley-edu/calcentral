@@ -1,0 +1,19 @@
+<div>
+  <div class="cc-left cc-higher-degree-committees-picture">
+    <img data-cc-load-error-directive="member" data-ng-if="member.photo && !member.loadError" data-ng-src="{{member.photo}}"
+      data-ng-attr-alt="Photo of {{member.name}}">
+    <div data-ng-if="!member.photo || member.loadError" class="cc-image-responsive cc-higher-degree-committees-image-unavailable"
+      title="Photo unavailable">
+      <span class="cc-visuallyhidden">No Official Photo is Available</span>
+    </div>
+  </div>
+  <div class="cc-higher-degree-committees-content">
+    <div class="cc-higher-degree-committees-content-fullname">
+      <div><strong><span data-ng-bind="member.name"></span></strong></div>
+      <a data-ng-href="mailto:{{instructor.email}}">
+        <div><strong class="cc-button-link"><span data-ng-bind="member.email"></span></strong></div>
+      </a>
+      <div><strong>Primary Department:</strong> <span data-ng-bind="member.primaryDepartment"></span></div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,980 @@
+{
+  "studentCommittees": [
+    {
+      "committeeType": "Qualifying Examination",
+      "program": "Nutritional Sciences & Toxicology",
+      "statusTitle": "Exam Date:",
+      "statusIcon": "check",
+      "statusMessage": "Mar 21, 2017",
+      "committeeMembers": {
+        "chair": [
+          {
+          "name": "Manfred Lemass",
+          "email": "mlemass@inst.edu",
+          "primaryDepartment": "CNR",
+          "photo" : "/api/my/committees/photo/member/123456"
+          }
+        ],
+        "coChair":[
+          {
+          "name": "Manfred Lemass",
+          "email": "mlemass@inst.edu",
+          "primaryDepartment": "CNR"
+          }
+        ],
+        "additionalReps": [
+          {
+            "name": "Marco Tvedt",
+            "email": "mtvedt@inst.edu",
+            "primaryDepartment": "Chemistry",
+            "photo" : "/api/my/committees/photo/member/123456"
+          },
+          {
+            "name": "Carla Zemd",
+            "email": "czemd@inst.edu",
+            "primaryDepartment": "CNR",
+            "photo" : "/api/my/committees/photo/member/123456"
+          }
+        ],
+        "academicSenate": [
+          {
+          "name": "Paul Davidson",
+          "email": "pdavidson@inst.edu",
+          "primaryDepartment": "CNR",
+          "photo" : "/api/my/committees/photo/member/123456"
+          }
+        ]
+      }
+    },
+    {
+      "committeeType": "Qualifying Examination",
+      "program": "Nutritional Sciences & Toxicology",
+      "statusTitle": "Exam Date:",
+      "statusIcon": "exclamation-triangle",
+      "statusMessage": "Pending",
+      "committeeMembers": {
+        "chair": [
+          {
+            "name": "Manfred Lemass",
+            "email": "mlemass@inst.edu",
+            "primaryDepartment": "CNR",
+            "photo" : "/api/my/committees/photo/member/123456"
+          }
+        ],
+        "coChair":[
+          {
+            "name": "Manfred Lemass",
+            "email": "mlemass@inst.edu",
+            "primaryDepartment": "CNR"
+          }
+        ],
+        "additionalReps": [
+          {
+            "name": "Marco Tvedt",
+            "email": "mtvedt@inst.edu",
+            "primaryDepartment": "Chemistry",
+            "photo" : "/api/my/committees/photo/member/123456"
+          },
+          {
+            "name": "Carla Zemd",
+            "email": "czemd@inst.edu",
+            "primaryDepartment": "CNR",
+            "photo" : "/api/my/committees/photo/member/123456"
+          }
+        ],
+        "academicSenate": [
+          {
+            "name": "Paul Davidson",
+            "email": "pdavidson@inst.edu",
+            "primaryDepartment": "CNR",
+            "photo" : "/api/my/committees/photo/member/123456"
+          }
+        ]
+      }
+    },
+    {
+      "committeeType": "Doctoral Dissertation",
+      "program": "Nutritional Sciences & Toxicology",
+      "statusTitle": "Advancement To Candidacy:",
+      "statusIcon": "check",
+      "statusMessage": "Approved",
+      "committeeMembers": {
+        "chair": [
+          {
+            "name": "Manfred Lemass",
+            "email": "mlemass@inst.edu",
+            "primaryDepartment": "CNR",
+            "photo" : "/api/my/committees/photo/member/123456"
+          }
+        ],
+        "coChair":[
+          {
+            "name": "Manfred Lemass",
+            "email": "mlemass@inst.edu",
+            "primaryDepartment": "CNR"
+          }
+        ],
+        "additionalReps": [
+          {
+            "name": "Marco Tvedt",
+            "email": "mtvedt@inst.edu",
+            "primaryDepartment": "Chemistry",
+            "photo" : "/api/my/committees/photo/member/123456"
+          },
+          {
+            "name": "Carla Zemd",
+            "email": "czemd@inst.edu",
+            "primaryDepartment": "CNR",
+            "photo" : "/api/my/committees/photo/member/123456"
+          }
+        ],
+        "academicSenate": [
+          {
+            "name": "Paul Davidson",
+            "email": "pdavidson@inst.edu",
+            "primaryDepartment": "CNR",
+            "photo" : "/api/my/committees/photo/member/123456"
+          }
+        ]
+      }
+    }
+  ],
+  "facultyCommittees": {
+    "active": [
+      {
+        "student": {
+          "name": "Frank Cathers",
+          "email": "fcathers@inst.deu",
+          "photo" : "/api/my/committees/photo/student/123456"
+        },
+        "serviceRange": "May 3, 2016 - Nov 14, 2019",
+        "committeeType": "Master’s Thesis",
+        "program": "Nutritional Sciences & Toxicology",
+        "statusTitle": "Exam Date:",
+        "statusIcon": "check",
+        "statusMessage": "Mar 21, 2017",
+        "committeeMembers": {
+          "chair": [
+            {
+              "name": "Manfred Lemass",
+              "email": "mlemass@inst.edu",
+              "primaryDepartment": "CNR",
+              "photo" : "/api/my/committees/photo/member/123456"
+            }
+          ],
+          "coChair":[
+            {
+              "name": "Manfred Lemass",
+              "email": "mlemass@inst.edu",
+              "primaryDepartment": "CNR"
+            }
+          ],
+          "additionalReps": [
+            {
+              "name": "Marco Tvedt",
+              "email": "mtvedt@inst.edu",
+              "primaryDepartment": "Chemistry",
+              "photo" : "/api/my/committees/photo/member/123456"
+            },
+            {
+              "name": "Carla Zemd",
+              "email": "czemd@inst.edu",
+              "primaryDepartment": "CNR",
+              "photo" : "/api/my/committees/photo/member/123456"
+            }
+          ],
+          "academicSenate": [
+            {
+              "name": "Paul Davidson",
+              "email": "pdavidson@inst.edu",
+              "primaryDepartment": "CNR",
+              "photo" : "/api/my/committees/photo/member/123456"
+            }
+          ]
+        }
+      },
+      {
+        "student": {
+          "name": "Frank Cathers",
+          "email": "fcathers@inst.deu",
+          "photo" : "/api/my/committees/photo/student/123456"
+        },
+        "serviceRange": "May 3, 2016 - Nov 14, 2019",
+        "committeeType": "Master’s Thesis",
+        "program": "Nutritional Sciences & Toxicology",
+        "statusTitle": "Exam Date:",
+        "statusIcon": "check",
+        "statusMessage": "Mar 21, 2017",
+        "committeeMembers": {
+          "chair": [
+            {
+              "name": "Manfred Lemass",
+              "email": "mlemass@inst.edu",
+              "primaryDepartment": "CNR",
+              "photo" : "/api/my/committees/photo/member/123456"
+            }
+          ],
+          "coChair":[
+            {
+              "name": "Manfred Lemass",
+              "email": "mlemass@inst.edu",
+              "primaryDepartment": "CNR"
+            }
+          ],
+          "additionalReps": [
+            {
+              "name": "Marco Tvedt",
+              "email": "mtvedt@inst.edu",
+              "primaryDepartment": "Chemistry",
+              "photo" : "/api/my/committees/photo/member/123456"
+            },
+            {
+              "name": "Carla Zemd",
+              "email": "czemd@inst.edu",
+              "primaryDepartment": "CNR",
+              "photo" : "/api/my/committees/photo/member/123456"
+            }
+          ],
+          "academicSenate": [
+            {
+              "name": "Paul Davidson",
+              "email": "pdavidson@inst.edu",
+              "primaryDepartment": "CNR",
+              "photo" : "/api/my/committees/photo/member/123456"
+            }
+          ]
+        }
+      }
+    ],
+    "completed": [
+      {
+        "student": {
+          "name": "Frank Cathers",
+          "email": "fcathers@inst.deu",
+          "photo" : "/api/my/committees/photo/student/123456"
+        },
+        "serviceRange": "May 3, 2016 - Nov 14, 2019",
+        "committeeType": "Master’s Thesis",
+        "program": "Nutritional Sciences & Toxicology",
+        "statusTitle": "Exam Date:",
+        "statusIcon": "check",
+        "statusMessage": "Mar 21, 2017",
+        "committeeMembers": {
+          "chair": [
+            {
+              "name": "Manfred Lemass",
+              "email": "mlemass@inst.edu",
+              "primaryDepartment": "CNR",
+              "photo" : "/api/my/committees/photo/member/123456"
+            }
+          ],
+          "coChair":[
+            {
+              "name": "Manfred Lemass",
+              "email": "mlemass@inst.edu",
+              "primaryDepartment": "CNR"
+            }
+          ],
+          "additionalReps": [
+            {
+              "name": "Marco Tvedt",
+              "email": "mtvedt@inst.edu",
+              "primaryDepartment": "Chemistry",
+              "photo" : "/api/my/committees/photo/member/123456"
+            },
+            {
+              "name": "Carla Zemd",
+              "email": "czemd@inst.edu",
+              "primaryDepartment": "CNR",
+              "photo" : "/api/my/committees/photo/member/123456"
+            }
+          ],
+          "academicSenate": [
+            {
+              "name": "Paul Davidson",
+              "email": "pdavidson@inst.edu",
+              "primaryDepartment": "CNR",
+              "photo" : "/api/my/committees/photo/member/123456"
+            }
+          ]
+        }
+      },
+      {
+        "student": {
+          "name": "Frank Cathers",
+          "email": "fcathers@inst.deu",
+          "photo" : "/api/my/committees/photo/student/123456"
+        },
+        "serviceRange": "May 3, 2016 - Nov 14, 2019",
+        "committeeType": "Master’s Thesis",
+        "program": "Nutritional Sciences & Toxicology",
+        "statusTitle": "Exam Date:",
+        "statusIcon": "check",
+        "statusMessage": "Mar 21, 2017",
+        "committeeMembers": {
+          "chair": [
+            {
+              "name": "Manfred Lemass",
+              "email": "mlemass@inst.edu",
+              "primaryDepartment": "CNR",
+              "photo" : "/api/my/committees/photo/member/123456"
+            }
+          ],
+          "coChair":[
+            {
+              "name": "Manfred Lemass",
+              "email": "mlemass@inst.edu",
+              "primaryDepartment": "CNR"
+            }
+          ],
+          "additionalReps": [
+            {
+              "name": "Marco Tvedt",
+              "email": "mtvedt@inst.edu",
+              "primaryDepartment": "Chemistry",
+              "photo" : "/api/my/committees/photo/member/123456"
+            },
+            {
+              "name": "Carla Zemd",
+              "email": "czemd@inst.edu",
+              "primaryDepartment": "CNR",
+              "photo" : "/api/my/committees/photo/member/123456"
+            }
+          ],
+          "academicSenate": [
+            {
+              "name": "Paul Davidson",
+              "email": "pdavidson@inst.edu",
+              "primaryDepartment": "CNR",
+              "photo" : "/api/my/committees/photo/member/123456"
+            }
+          ]
+        }
+      },
+      {
+        "student": {
+          "name": "Frank Cathers",
+          "email": "fcathers@inst.deu",
+          "photo" : "/api/my/committees/photo/student/123456"
+        },
+        "serviceRange": "May 3, 2016 - Nov 14, 2019",
+        "committeeType": "Master’s Thesis",
+        "program": "Nutritional Sciences & Toxicology",
+        "statusTitle": "Exam Date:",
+        "statusIcon": "check",
+        "statusMessage": "Mar 21, 2017",
+        "committeeMembers": {
+          "chair": [
+            {
+              "name": "Manfred Lemass",
+              "email": "mlemass@inst.edu",
+              "primaryDepartment": "CNR",
+              "photo" : "/api/my/committees/photo/member/123456"
+            }
+          ],
+          "coChair":[
+            {
+              "name": "Manfred Lemass",
+              "email": "mlemass@inst.edu",
+              "primaryDepartment": "CNR"
+            }
+          ],
+          "additionalReps": [
+            {
+              "name": "Marco Tvedt",
+              "email": "mtvedt@inst.edu",
+              "primaryDepartment": "Chemistry",
+              "photo" : "/api/my/committees/photo/member/123456"
+            },
+            {
+              "name": "Carla Zemd",
+              "email": "czemd@inst.edu",
+              "primaryDepartment": "CNR",
+              "photo" : "/api/my/committees/photo/member/123456"
+            }
+          ],
+          "academicSenate": [
+            {
+              "name": "Paul Davidson",
+              "email": "pdavidson@inst.edu",
+              "primaryDepartment": "CNR",
+              "photo" : "/api/my/committees/photo/member/123456"
+            }
+          ]
+        }
+      },
+      {
+        "student": {
+          "name": "Frank Cathers",
+          "email": "fcathers@inst.deu",
+          "photo" : "/api/my/committees/photo/student/123456"
+        },
+        "serviceRange": "May 3, 2016 - Nov 14, 2019",
+        "committeeType": "Master’s Thesis",
+        "program": "Nutritional Sciences & Toxicology",
+        "statusTitle": "Exam Date:",
+        "statusIcon": "check",
+        "statusMessage": "Mar 21, 2017",
+        "committeeMembers": {
+          "chair": [
+            {
+              "name": "Manfred Lemass",
+              "email": "mlemass@inst.edu",
+              "primaryDepartment": "CNR",
+              "photo" : "/api/my/committees/photo/member/123456"
+            }
+          ],
+          "coChair":[
+            {
+              "name": "Manfred Lemass",
+              "email": "mlemass@inst.edu",
+              "primaryDepartment": "CNR"
+            }
+          ],
+          "additionalReps": [
+            {
+              "name": "Marco Tvedt",
+              "email": "mtvedt@inst.edu",
+              "primaryDepartment": "Chemistry",
+              "photo" : "/api/my/committees/photo/member/123456"
+            },
+            {
+              "name": "Carla Zemd",
+              "email": "czemd@inst.edu",
+              "primaryDepartment": "CNR",
+              "photo" : "/api/my/committees/photo/member/123456"
+            }
+          ],
+          "academicSenate": [
+            {
+              "name": "Paul Davidson",
+              "email": "pdavidson@inst.edu",
+              "primaryDepartment": "CNR",
+              "photo" : "/api/my/committees/photo/member/123456"
+            }
+          ]
+        }
+      },
+      {
+        "student": {
+          "name": "Frank Cathers",
+          "email": "fcathers@inst.deu",
+          "photo" : "/api/my/committees/photo/student/123456"
+        },
+        "serviceRange": "May 3, 2016 - Nov 14, 2019",
+        "committeeType": "Master’s Thesis",
+        "program": "Nutritional Sciences & Toxicology",
+        "statusTitle": "Exam Date:",
+        "statusIcon": "check",
+        "statusMessage": "Mar 21, 2017",
+        "committeeMembers": {
+          "chair": [
+            {
+              "name": "Manfred Lemass",
+              "email": "mlemass@inst.edu",
+              "primaryDepartment": "CNR",
+              "photo" : "/api/my/committees/photo/member/123456"
+            }
+          ],
+          "coChair":[
+            {
+              "name": "Manfred Lemass",
+              "email": "mlemass@inst.edu",
+              "primaryDepartment": "CNR"
+            }
+          ],
+          "additionalReps": [
+            {
+              "name": "Marco Tvedt",
+              "email": "mtvedt@inst.edu",
+              "primaryDepartment": "Chemistry",
+              "photo" : "/api/my/committees/photo/member/123456"
+            },
+            {
+              "name": "Carla Zemd",
+              "email": "czemd@inst.edu",
+              "primaryDepartment": "CNR",
+              "photo" : "/api/my/committees/photo/member/123456"
+            }
+          ],
+          "academicSenate": [
+            {
+              "name": "Paul Davidson",
+              "email": "pdavidson@inst.edu",
+              "primaryDepartment": "CNR",
+              "photo" : "/api/my/committees/photo/member/123456"
+            }
+          ]
+        }
+      },
+      {
+        "student": {
+          "name": "Frank Cathers",
+          "email": "fcathers@inst.deu",
+          "photo" : "/api/my/committees/photo/student/123456"
+        },
+        "serviceRange": "May 3, 2016 - Nov 14, 2019",
+        "committeeType": "Master’s Thesis",
+        "program": "Nutritional Sciences & Toxicology",
+        "statusTitle": "Exam Date:",
+        "statusIcon": "check",
+        "statusMessage": "Mar 21, 2017",
+        "committeeMembers": {
+          "chair": [
+            {
+              "name": "Manfred Lemass",
+              "email": "mlemass@inst.edu",
+              "primaryDepartment": "CNR",
+              "photo" : "/api/my/committees/photo/member/123456"
+            }
+          ],
+          "coChair":[
+            {
+              "name": "Manfred Lemass",
+              "email": "mlemass@inst.edu",
+              "primaryDepartment": "CNR"
+            }
+          ],
+          "additionalReps": [
+            {
+              "name": "Marco Tvedt",
+              "email": "mtvedt@inst.edu",
+              "primaryDepartment": "Chemistry",
+              "photo" : "/api/my/committees/photo/member/123456"
+            },
+            {
+              "name": "Carla Zemd",
+              "email": "czemd@inst.edu",
+              "primaryDepartment": "CNR",
+              "photo" : "/api/my/committees/photo/member/123456"
+            }
+          ],
+          "academicSenate": [
+            {
+              "name": "Paul Davidson",
+              "email": "pdavidson@inst.edu",
+              "primaryDepartment": "CNR",
+              "photo" : "/api/my/committees/photo/member/123456"
+            }
+          ]
+        }
+      },
+      {
+        "student": {
+          "name": "Frank Cathers",
+          "email": "fcathers@inst.deu",
+          "photo" : "/api/my/committees/photo/student/123456"
+        },
+        "serviceRange": "May 3, 2016 - Nov 14, 2019",
+        "committeeType": "Master’s Thesis",
+        "program": "Nutritional Sciences & Toxicology",
+        "statusTitle": "Exam Date:",
+        "statusIcon": "check",
+        "statusMessage": "Mar 21, 2017",
+        "committeeMembers": {
+          "chair": [
+            {
+              "name": "Manfred Lemass",
+              "email": "mlemass@inst.edu",
+              "primaryDepartment": "CNR",
+              "photo" : "/api/my/committees/photo/member/123456"
+            }
+          ],
+          "coChair":[
+            {
+              "name": "Manfred Lemass",
+              "email": "mlemass@inst.edu",
+              "primaryDepartment": "CNR"
+            }
+          ],
+          "additionalReps": [
+            {
+              "name": "Marco Tvedt",
+              "email": "mtvedt@inst.edu",
+              "primaryDepartment": "Chemistry",
+              "photo" : "/api/my/committees/photo/member/123456"
+            },
+            {
+              "name": "Carla Zemd",
+              "email": "czemd@inst.edu",
+              "primaryDepartment": "CNR",
+              "photo" : "/api/my/committees/photo/member/123456"
+            }
+          ],
+          "academicSenate": [
+            {
+              "name": "Paul Davidson",
+              "email": "pdavidson@inst.edu",
+              "primaryDepartment": "CNR",
+              "photo" : "/api/my/committees/photo/member/123456"
+            }
+          ]
+        }
+      },
+      {
+        "student": {
+          "name": "Frank Cathers",
+          "email": "fcathers@inst.deu",
+          "photo" : "/api/my/committees/photo/student/123456"
+        },
+        "serviceRange": "May 3, 2016 - Nov 14, 2019",
+        "committeeType": "Master’s Thesis",
+        "program": "Nutritional Sciences & Toxicology",
+        "statusTitle": "Exam Date:",
+        "statusIcon": "check",
+        "statusMessage": "Mar 21, 2017",
+        "committeeMembers": {
+          "chair": [
+            {
+              "name": "Manfred Lemass",
+              "email": "mlemass@inst.edu",
+              "primaryDepartment": "CNR",
+              "photo" : "/api/my/committees/photo/member/123456"
+            }
+          ],
+          "coChair":[
+            {
+              "name": "Manfred Lemass",
+              "email": "mlemass@inst.edu",
+              "primaryDepartment": "CNR"
+            }
+          ],
+          "additionalReps": [
+            {
+              "name": "Marco Tvedt",
+              "email": "mtvedt@inst.edu",
+              "primaryDepartment": "Chemistry",
+              "photo" : "/api/my/committees/photo/member/123456"
+            },
+            {
+              "name": "Carla Zemd",
+              "email": "czemd@inst.edu",
+              "primaryDepartment": "CNR",
+              "photo" : "/api/my/committees/photo/member/123456"
+            }
+          ],
+          "academicSenate": [
+            {
+              "name": "Paul Davidson",
+              "email": "pdavidson@inst.edu",
+              "primaryDepartment": "CNR",
+              "photo" : "/api/my/committees/photo/member/123456"
+            }
+          ]
+        }
+      },
+      {
+        "student": {
+          "name": "Frank Cathers",
+          "email": "fcathers@inst.deu",
+          "photo" : "/api/my/committees/photo/student/123456"
+        },
+        "serviceRange": "May 3, 2016 - Nov 14, 2019",
+        "committeeType": "Master’s Thesis",
+        "program": "Nutritional Sciences & Toxicology",
+        "statusTitle": "Exam Date:",
+        "statusIcon": "check",
+        "statusMessage": "Mar 21, 2017",
+        "committeeMembers": {
+          "chair": [
+            {
+              "name": "Manfred Lemass",
+              "email": "mlemass@inst.edu",
+              "primaryDepartment": "CNR",
+              "photo" : "/api/my/committees/photo/member/123456"
+            }
+          ],
+          "coChair":[
+            {
+              "name": "Manfred Lemass",
+              "email": "mlemass@inst.edu",
+              "primaryDepartment": "CNR"
+            }
+          ],
+          "additionalReps": [
+            {
+              "name": "Marco Tvedt",
+              "email": "mtvedt@inst.edu",
+              "primaryDepartment": "Chemistry",
+              "photo" : "/api/my/committees/photo/member/123456"
+            },
+            {
+              "name": "Carla Zemd",
+              "email": "czemd@inst.edu",
+              "primaryDepartment": "CNR",
+              "photo" : "/api/my/committees/photo/member/123456"
+            }
+          ],
+          "academicSenate": [
+            {
+              "name": "Paul Davidson",
+              "email": "pdavidson@inst.edu",
+              "primaryDepartment": "CNR",
+              "photo" : "/api/my/committees/photo/member/123456"
+            }
+          ]
+        }
+      },
+      {
+        "student": {
+          "name": "Frank Cathers",
+          "email": "fcathers@inst.deu",
+          "photo" : "/api/my/committees/photo/student/123456"
+        },
+        "serviceRange": "May 3, 2016 - Nov 14, 2019",
+        "committeeType": "Master’s Thesis",
+        "program": "Nutritional Sciences & Toxicology",
+        "statusTitle": "Exam Date:",
+        "statusIcon": "check",
+        "statusMessage": "Mar 21, 2017",
+        "committeeMembers": {
+          "chair": [
+            {
+              "name": "Manfred Lemass",
+              "email": "mlemass@inst.edu",
+              "primaryDepartment": "CNR",
+              "photo" : "/api/my/committees/photo/member/123456"
+            }
+          ],
+          "coChair":[
+            {
+              "name": "Manfred Lemass",
+              "email": "mlemass@inst.edu",
+              "primaryDepartment": "CNR"
+            }
+          ],
+          "additionalReps": [
+            {
+              "name": "Marco Tvedt",
+              "email": "mtvedt@inst.edu",
+              "primaryDepartment": "Chemistry",
+              "photo" : "/api/my/committees/photo/member/123456"
+            },
+            {
+              "name": "Carla Zemd",
+              "email": "czemd@inst.edu",
+              "primaryDepartment": "CNR",
+              "photo" : "/api/my/committees/photo/member/123456"
+            }
+          ],
+          "academicSenate": [
+            {
+              "name": "Paul Davidson",
+              "email": "pdavidson@inst.edu",
+              "primaryDepartment": "CNR",
+              "photo" : "/api/my/committees/photo/member/123456"
+            }
+          ]
+        }
+      },
+      {
+        "student": {
+          "name": "Frank Cathers",
+          "email": "fcathers@inst.deu",
+          "photo" : "/api/my/committees/photo/student/123456"
+        },
+        "serviceRange": "May 3, 2016 - Nov 14, 2019",
+        "committeeType": "Master’s Thesis",
+        "program": "Nutritional Sciences & Toxicology",
+        "statusTitle": "Exam Date:",
+        "statusIcon": "check",
+        "statusMessage": "Mar 21, 2017",
+        "committeeMembers": {
+          "chair": [
+            {
+              "name": "Manfred Lemass",
+              "email": "mlemass@inst.edu",
+              "primaryDepartment": "CNR",
+              "photo" : "/api/my/committees/photo/member/123456"
+            }
+          ],
+          "coChair":[
+            {
+              "name": "Manfred Lemass",
+              "email": "mlemass@inst.edu",
+              "primaryDepartment": "CNR"
+            }
+          ],
+          "additionalReps": [
+            {
+              "name": "Marco Tvedt",
+              "email": "mtvedt@inst.edu",
+              "primaryDepartment": "Chemistry",
+              "photo" : "/api/my/committees/photo/member/123456"
+            },
+            {
+              "name": "Carla Zemd",
+              "email": "czemd@inst.edu",
+              "primaryDepartment": "CNR",
+              "photo" : "/api/my/committees/photo/member/123456"
+            }
+          ],
+          "academicSenate": [
+            {
+              "name": "Paul Davidson",
+              "email": "pdavidson@inst.edu",
+              "primaryDepartment": "CNR",
+              "photo" : "/api/my/committees/photo/member/123456"
+            }
+          ]
+        }
+      },
+      {
+        "student": {
+          "name": "Frank Cathers",
+          "email": "fcathers@inst.deu",
+          "photo" : "/api/my/committees/photo/student/123456"
+        },
+        "serviceRange": "May 3, 2016 - Nov 14, 2019",
+        "committeeType": "Master’s Thesis",
+        "program": "Nutritional Sciences & Toxicology",
+        "statusTitle": "Exam Date:",
+        "statusIcon": "check",
+        "statusMessage": "Mar 21, 2017",
+        "committeeMembers": {
+          "chair": [
+            {
+              "name": "Manfred Lemass",
+              "email": "mlemass@inst.edu",
+              "primaryDepartment": "CNR",
+              "photo" : "/api/my/committees/photo/member/123456"
+            }
+          ],
+          "coChair":[
+            {
+              "name": "Manfred Lemass",
+              "email": "mlemass@inst.edu",
+              "primaryDepartment": "CNR"
+            }
+          ],
+          "additionalReps": [
+            {
+              "name": "Marco Tvedt",
+              "email": "mtvedt@inst.edu",
+              "primaryDepartment": "Chemistry",
+              "photo" : "/api/my/committees/photo/member/123456"
+            },
+            {
+              "name": "Carla Zemd",
+              "email": "czemd@inst.edu",
+              "primaryDepartment": "CNR",
+              "photo" : "/api/my/committees/photo/member/123456"
+            }
+          ],
+          "academicSenate": [
+            {
+              "name": "Paul Davidson",
+              "email": "pdavidson@inst.edu",
+              "primaryDepartment": "CNR",
+              "photo" : "/api/my/committees/photo/member/123456"
+            }
+          ]
+        }
+      },
+      {
+        "student": {
+          "name": "Frank Cathers",
+          "email": "fcathers@inst.deu",
+          "photo" : "/api/my/committees/photo/student/123456"
+        },
+        "serviceRange": "May 3, 2016 - Nov 14, 2019",
+        "committeeType": "Master’s Thesis",
+        "program": "Nutritional Sciences & Toxicology",
+        "statusTitle": "Exam Date:",
+        "statusIcon": "check",
+        "statusMessage": "Mar 21, 2017",
+        "committeeMembers": {
+          "chair": [
+            {
+              "name": "Manfred Lemass",
+              "email": "mlemass@inst.edu",
+              "primaryDepartment": "CNR",
+              "photo" : "/api/my/committees/photo/member/123456"
+            }
+          ],
+          "coChair":[
+            {
+              "name": "Manfred Lemass",
+              "email": "mlemass@inst.edu",
+              "primaryDepartment": "CNR"
+            }
+          ],
+          "additionalReps": [
+            {
+              "name": "Marco Tvedt",
+              "email": "mtvedt@inst.edu",
+              "primaryDepartment": "Chemistry",
+              "photo" : "/api/my/committees/photo/member/123456"
+            },
+            {
+              "name": "Carla Zemd",
+              "email": "czemd@inst.edu",
+              "primaryDepartment": "CNR",
+              "photo" : "/api/my/committees/photo/member/123456"
+            }
+          ],
+          "academicSenate": [
+            {
+              "name": "Paul Davidson",
+              "email": "pdavidson@inst.edu",
+              "primaryDepartment": "CNR",
+              "photo" : "/api/my/committees/photo/member/123456"
+            }
+          ]
+        }
+      },
+      {
+        "student": {
+          "name": "Frank Cathers",
+          "email": "fcathers@inst.deu",
+          "photo" : "/api/my/committees/photo/student/123456"
+        },
+        "serviceRange": "May 3, 2016 - Nov 14, 2019",
+        "committeeType": "Master’s Thesis",
+        "program": "Nutritional Sciences & Toxicology",
+        "statusTitle": "Exam Date:",
+        "statusIcon": "check",
+        "statusMessage": "Mar 21, 2017",
+        "committeeMembers": {
+          "chair": [
+            {
+              "name": "Manfred Lemass",
+              "email": "mlemass@inst.edu",
+              "primaryDepartment": "CNR",
+              "photo" : "/api/my/committees/photo/member/123456"
+            }
+          ],
+          "coChair":[
+            {
+              "name": "Manfred Lemass",
+              "email": "mlemass@inst.edu",
+              "primaryDepartment": "CNR"
+            }
+          ],
+          "additionalReps": [
+            {
+              "name": "Marco Tvedt",
+              "email": "mtvedt@inst.edu",
+              "primaryDepartment": "Chemistry",
+              "photo" : "/api/my/committees/photo/member/123456"
+            },
+            {
+              "name": "Carla Zemd",
+              "email": "czemd@inst.edu",
+              "primaryDepartment": "CNR",
+              "photo" : "/api/my/committees/photo/member/123456"
+            }
+          ],
+          "academicSenate": [
+            {
+              "name": "Paul Davidson",
+              "email": "pdavidson@inst.edu",
+              "primaryDepartment": "CNR",
+              "photo" : "/api/my/committees/photo/member/123456"
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

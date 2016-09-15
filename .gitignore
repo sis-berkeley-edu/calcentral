@@ -73,3 +73,9 @@ npm-debug.log
 
 # Vagrant
 .vagrant/
+
+# VScode IDE config
+.vscode
+
+# VScode Javascript config
+jsconfig.json

@@ -1,0 +1,72 @@
+
+  <!-- dropdown div with toggle variable used for multiple committee list -->
+  <!-- committee.show is set to true all times if single commitee with no list -->
+  <div data-ng-show="committee.show">
+    <div data-ng-if="committee.chairs.length > 0" class="cc-table cc-higher-degree-committees-chair-group">
+      <table>
+        <thead>
+          <tr>
+            <th>Chair</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr data-ng-repeat="member in committee.chairs">
+            <td>
+              <div data-ng-include="'widgets/academics/higher_degree_committee_member.html'"></div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div data-ng-if="committee.coChairs.length > 0" class="cc-table cc-higher-degree-committees-chair-group">
+      <table>
+        <thead>
+          <tr>
+            <th>Co-Chair</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr data-ng-repeat="member in committee.coChairs">
+            <td>
+              <div data-ng-include="'widgets/academics/higher_degree_committee_member.html'"></div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div data-ng-if="committee.reps.length > 0" class="cc-table cc-higher-degree-committees-reps-group">
+      <table>
+        <thead>
+          <tr>
+            <th>Additional Representatives</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr data-ng-repeat="member in committee.reps">
+            <td>
+              <div data-ng-include="'widgets/academics/higher_degree_committee_member.html'"></div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div data-ng-if="committee.senate.length > 0" class="cc-table cc-higher-degree-committees-reps-group">
+      <table>
+        <thead>
+          <tr>
+            <th>Academic Senate Representative</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr data-ng-repeat="member in committee.senate">
+            <td>
+              <div data-ng-include="'widgets/academics/higher_degree_committee_member.html'"></div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
