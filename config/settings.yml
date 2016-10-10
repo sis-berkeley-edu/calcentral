@@ -465,7 +465,6 @@ features:
   cs_academic_profile_prefers_legacy: true
   cs_academic_progress_report: false
   cs_advising_links: false
-  cs_advising_scheduler_view: false
   cs_advisor_student_lookup: false
   cs_billing: false
   cs_delegated_access: false

@@ -53,16 +53,6 @@
       data-link="csLinks.ucAppointmentSystem"
     ></div>
   </li>
-
-  <!-- This URL is mislabelled in the API, it's in fact the scheduler view link -->
-  <li data-ng-if="api.user.profile.features.csAdvisingSchedulerView && links.classSearch.url">
-    <div
-      data-cc-campus-solutions-link-item-directive
-      data-link="links.classSearch"
-      data-text="Schedule of Classes - Scheduler View"
-    ></div>
-  </li>
-
   <li data-ng-if="csLinks.ucClassSearch.url">
     <div
       data-cc-campus-solutions-link-item-directive
