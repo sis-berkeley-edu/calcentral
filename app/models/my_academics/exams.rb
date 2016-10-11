@@ -41,7 +41,7 @@ module MyAcademics
         course[:sections].select{|x| course[:role] == 'Student' && x[:is_primary_section]}.each do |section|
           parsed_course = {
             name: course[:course_code],
-            number: course[:courseCatalog].to_i,
+            number: course[:courseCatalog].gsub(/[^0-9]/, '').to_i,
             time: section[:schedules][:recurring].to_a.first.try(:[], :schedule),
             waitlisted: section[:waitlisted]
           }

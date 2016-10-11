@@ -10,7 +10,7 @@ describe MyAcademics::Exams do
   # a class with recurring times
   let(:ug_class_recurring) do
     {
-      :role => 'Student',:course_code => 'BIO ENG 131',:courseCatalog => '131',
+      :role => 'Student',:course_code => 'BIO ENG C131',:courseCatalog => '131',
       :sections => [
         {
           :is_primary_section => true,
@@ -389,7 +389,7 @@ describe MyAcademics::Exams do
         expect(fall_courses.length).to eq 5
         fall_courses.each do |course|
           expect(course[:name]).to be
-          expect(course[:number]).to be
+          expect(course[:number]).to_not eq 0
           expect(course[:exam_location]).to_not be
         end
 
