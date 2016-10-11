@@ -127,17 +127,11 @@ module MyAcademics
       ]
 
       campus_solutions_link_settings.each do |setting|
-        link = fetch_link(setting[:cs_link_key], setting[:cs_link_params])
+        link = AcademicsModule::fetch_link(setting[:cs_link_key], setting[:cs_link_params])
         cs_links[setting[:feed_key]] = link unless link.blank?
       end
 
       cs_links
-    end
-
-    def fetch_link(link_key, placeholders = {})
-      link = CampusSolutions::Link.new.get_url(link_key, placeholders).try(:[], :link)
-      logger.error "Could not retrieve CS link #{link_key} for Class Enrollments feed, uid = #{@uid}" unless link
-      link
     end
 
     private

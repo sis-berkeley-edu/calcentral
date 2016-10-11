@@ -73,18 +73,28 @@
     <div class="cc-academics-subtitle">
       <h3>Teaching</h3>
     </div>
+    <div class="cc-academics-course-grading-header cc-widget-padding show-for-medium-up">
+      <span><a data-ng-href="{{selectedTeachingSemester.gradingAssistanceLink}}">&#9632; Assistance with Grading</a></span>
+      <span data-ng-if="selectedTeachingSemester.gradingPeriodStart && selectedTeachingSemester.gradingPeriodEnd" class="cc-academics-course-grading-header-period">
+        <span class="cc-text-light">Final Grading Entry Period:</span>
+        Start: <strong>{{selectedTeachingSemester.gradingPeriodStart}}</strong> |
+        Due: <strong>{{selectedTeachingSemester.gradingPeriodEnd}}</strong>
+      </span>
+    </div>
     <div class="cc-widget-padding">
       <div class="cc-table">
         <table>
           <thead>
-            <th scope="col" class="cc-table-right-spacing">Course</th>
+            <th scope="col" class="cc-academics-course-number">Course</th>
             <th scope="col" class="show-for-medium-up">Class Number</th>
             <th scope="col">Title</th>
-            <th scope="col" class="show-for-medium-up">Sections</th>
+            <th scope="col" class="show-for-medium-up cc-academics-course-section">Sections</th>
+            <th scope="col" class="show-for-medium-up cc-academics-course-grading">Grading Links</th>
+            <th scope="col" class="show-for-medium-up cc-academics-course-grading">Grading Status</th>
           </thead>
           <tbody data-ng-if="selectedTeachingSemester.classes.length" data-ng-repeat="course in selectedTeachingSemester.classes">
             <tr data-ng-class-even="'cc-academics-even'">
-              <td class="cc-table-right-spacing cc-academics-course-number">
+              <td class="cc-academics-course-number">
                 <div data-ng-repeat="listing in course.listings">
                   <a data-ng-href="{{course.url}}"
                      data-ng-bind="listing.course_code">
@@ -100,15 +110,51 @@
                 <div data-ng-if="course.multiplePrimaries">Multiple</div>
               </td>
               <td data-ng-bind="course.title"></td>
-              <td class="show-for-medium-up">
+              <td class="show-for-medium-up cc-academics-course-section">
                 <div data-ng-repeat="scheduledSection in course.scheduledSections">
                   <span data-ng-bind="scheduledSection.count"></span> <span data-ng-bind="scheduledSection.format"></span>
                 </div>
+              </td>
+              <td data-ng-if="course.sections[0].gradingLink" class="show-for-medium-up cc-academics-course-grading-link">
+                <a data-ng-href="{{course.sections[0].gradingLink}}">Course Grades</a>
+              </td>
+              <td data-ng-if="!course.sections[0].gradingLink" class="show-for-medium-up cc-academics-course-grading-link">
+                &mdash;
+              </td>
+              <td class="show-for-medium-up cc-academics-course-grading-icon" data-ng-switch="course.sections[0].ccGradingStatus">
+                <i data-ng-switch-when="periodNotStarted" class="fa fa-ban"></i>
+                <i data-ng-switch-when="periodStarted" class="fa fa-file-o"></i>
+                <i data-ng-switch-when="gradesSubmitted" class="fa fa-check cc-icon-green"></i>
+                <i data-ng-switch-when="gradesOverdue" class="fa fa-exclamation-circle cc-icon-red"></i>
               </td>
             </tr>
           </tbody>
         </table>
       </div>
+    </div>
+    <div class="cc-academics-course-grading-footer cc-widget-padding show-for-medium-up">
+      <h3>Grading Status Legend</h3>
+      <div class="cc-table">
+        <table>
+          <tr>
+            <td>
+              <span><i class="fa fa-ban"></i></span>
+              <span>Roster not available</span>
+            </td>
+            <td>
+              <span><i class="fa fa-file-o"></i></span>
+              <span>Grade entry period started and grades not yet submitted</span>
+            </td>
+            <td>
+              <span><i class="fa fa-check cc-icon-green"></i></span>
+              <span>Grades submitted</span>
+            </td>
+            <td>
+              <span><i class="fa fa-exclamation-circle cc-icon-red"></i></span>
+              <span>Final grade entry period ended and grades overdue</span>
+            </td>
+          </tr>
+        </table>
     </div>
   </div>
 </div>
