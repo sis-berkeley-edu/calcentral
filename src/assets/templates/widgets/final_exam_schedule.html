@@ -6,7 +6,7 @@
     <div data-ng-repeat="semester in examSchedule">
       <hr data-ng-if="!$first">
       <h3 data-ng-bind="semester.name"></h3>
-      <div class="cc-widget-exam-schedule-text" data-ng-if="!isUndergraduate">Please check your syllabus for your final exams for your graduate classes.</div>
+      <div class="cc-widget-exam-schedule-text" data-ng-if="!semester.cs_data_available && !isUndergraduate">Please check your syllabus for your final exams for your graduate classes.</div>
       <div class="cc-widget-exam-schedule-text" data-ng-if="!semester.cs_data_available && semester.exams">Dates and times are subject to change. Please check your syllabus for the official exam day and time for each class.</div>
       <div class="cc-widget-exam-schedule-text" data-ng-if="!semester.exams && isUndergraduate">No exam schedules listed.</div>
       <div data-ng-repeat="(exam_slot, exam) in semester.exams">
