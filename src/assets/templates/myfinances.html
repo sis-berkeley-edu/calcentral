@@ -6,8 +6,8 @@
     </div>
 
     <div class="medium-6 large-4 columns" data-ng-if="!api.user.profile.isApplicantOnly">
-      <div data-ng-include="'cars_summary.html'" data-ng-if="api.user.profile.isLegacyStudent"></div>
       <div data-ng-include="'widgets/billing_summary.html'" data-ng-if="api.user.profile.features.csBilling && api.user.profile.campusSolutionsID"></div>
+      <div data-ng-include="'cars_summary.html'" data-ng-if="api.user.profile.isLegacyStudent"></div>
       <div data-ng-include="'cal1card.html'"></div>
     </div>
 
