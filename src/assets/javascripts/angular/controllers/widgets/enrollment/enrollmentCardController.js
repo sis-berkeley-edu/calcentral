@@ -133,6 +133,11 @@ angular.module('calcentral.controllers').controller('EnrollmentCardController', 
       instruction = groupByCareer(instruction);
       return instruction;
     });
+
+    /**
+     * Sort items by `term` in descending order, so that latest term is first.
+     */
+    enrollmentInstructions = _.reverse(_.sortBy(enrollmentInstructions, ['term']));
     $scope.enrollmentInstructions = enrollmentInstructions;
   };
 
