@@ -25,7 +25,7 @@
       <div data-ng-if="!myAdvising.errored">
 
         <div data-ng-if="!showAdvisorsList()">
-          <div data-ng-if="myAdvising.roles.haasFullTimeMba">
+          <div data-ng-if="myAdvising.roles.haasFullTimeMba && !myAdvising.roles.haasMbaPublicHealth && !myAdvising.roles.haasMbaJurisDoctor">
             <a href="http://www.haas.berkeley.edu/MBA/contacts/index.html">
               Contact the Full-time MBA Program Office
             </a>
