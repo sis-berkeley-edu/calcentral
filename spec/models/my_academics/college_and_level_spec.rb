@@ -700,6 +700,51 @@ describe MyAcademics::CollegeAndLevel do
     end
   end
 
+  context 'when filtering inactive academic status data' do
+    let(:undergrad_student_plan_specialization) do
+      hub_edo_academic_status_student_plan({
+        career_code: 'UGRD',
+        career_description: 'Undergraduate',
+        program_code: 'UCLS',
+        program_description: 'Undergrad Letters & Science',
+        plan_code: '25971U',
+        plan_description: 'MCB-Cell & Dev Biology BA',
+        is_primary: false,
+        status_in_plan_status_code: 'X',
+        status_in_plan_status_description: 'Invalid Status'
+      })
+    end
+
+    context 'when filtering out inactive academic statuses' do
+      let(:hub_academic_statuses) { [hub_academic_status, hub_academic_status_secondary] }
+      let(:active_statuses) { subject.active_academic_statuses(hub_academic_statuses) }
+      let(:hub_academic_status_secondary) do
+        {
+          "cumulativeGPA" => {},
+          "cumulativeUnits" => [],
+          "currentRegistration" => {},
+          "studentCareer" => {},
+          "studentPlans" => []
+        }
+      end
+      it 'returns academic statuses that have active plans present' do
+        expect(active_statuses.count).to eq 1
+        expect(active_statuses[0]['studentCareer']['academicCareer']['code']).to eq 'UGRD'
+      end
+    end
+
+    context 'when filtering out inactive plans from statuses' do
+      let(:filtered_academic_statuses) { subject.filter_inactive_status_plans(hub_academic_statuses) }
+      it 'removes inactive plans from each status' do
+        expect(filtered_academic_statuses[0]['studentPlans'].count).to eq 2
+        expect(filtered_academic_statuses[0]['studentPlans'][0]['statusInPlan']['status']['code']).to eq 'AC'
+        expect(filtered_academic_statuses[0]['studentPlans'][1]['statusInPlan']['status']['code']).to eq 'AC'
+        expect(filtered_academic_statuses[0]['studentPlans'][0]['academicPlan']['plan']['code']).to eq '25345U'
+        expect(filtered_academic_statuses[0]['studentPlans'][1]['academicPlan']['plan']['code']).to eq '25090U'
+      end
+    end
+  end
+
   context 'when determining the student plan role code' do
     let(:plan) { { career: { code: 'GRAD' }, plan: { code: '70141MBAG' } } }
 

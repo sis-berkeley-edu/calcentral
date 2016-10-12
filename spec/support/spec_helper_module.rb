@@ -1,5 +1,5 @@
 module SpecHelperModule
-  #Wish i could suppress the two logging suppressors
+
   def suppress_rails_logging
     original_logger = Rails.logger
     begin
@@ -23,7 +23,11 @@ module SpecHelperModule
     value_defaults = {
       is_primary: true,
       type_code: 'MAJ',
-      type_description: 'Major - Regular Acad/Prfnl'
+      type_description: 'Major - Regular Acad/Prfnl',
+      status_in_plan_action_code: 'MATR',
+      status_in_plan_action_description: 'Matriculation',
+      status_in_plan_status_code: 'AC',
+      status_in_plan_status_description: 'Active in Program'
     }
     cpp_hash.reverse_merge!(value_defaults)
     adminOwners = cpp_hash[:admin_owners].to_a.collect do |owner|
@@ -59,7 +63,21 @@ module SpecHelperModule
           "administrativeOwners" => adminOwners
         },
       },
-      "primary" => cpp_hash[:is_primary]
+      "primary" => cpp_hash[:is_primary],
+      "statusInPlan" => {
+        "action" => {
+          "code" => cpp_hash[:status_in_plan_action_code],
+          "description" => cpp_hash[:status_in_plan_action_description]
+        },
+        "reason" => {
+          "code" => cpp_hash[:status_in_plan_reason_code],
+          "description" => cpp_hash[:status_in_plan_reason_description]
+        },
+        "status" => {
+          "code" => cpp_hash[:status_in_plan_status_code],
+          "description" => cpp_hash[:status_in_plan_status_description]
+        }
+      }
     }
     if (cpp_hash[:expected_grad_term_id] && cpp_hash[:expected_grad_term_name])
       plan.merge!({
