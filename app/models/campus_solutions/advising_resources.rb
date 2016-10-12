@@ -37,8 +37,8 @@ module CampusSolutions
 
       # The following links are hard-coded, for now. Ideally they would be served by CS API but there is an urgent need
       # thus we manage the content via CalCentral settings.
-      add_cs_link links, :web_now_documents, 'WEB_NOW_DOCUMENTS', 'WebNow Documents'
-      add_cs_link links, :schedule_planner, 'SCHEDULE_PLANNER_STUDENT_SPECIFIC', 'Schedule Planner', "?EMPLID=#{student_empl_id}"
+      add_cs_link links, :web_now_documents, 'WEB_NOW_DOCUMENTS', 'WebNow Documents', '', 'View uploaded student documents in the Image Now dashboard.'
+      add_cs_link links, :schedule_planner, 'SCHEDULE_PLANNER_STUDENT_SPECIFIC', 'Schedule Planner', "?EMPLID=#{student_empl_id}", "View this student's planned schedule for this term."
 
       # LINK-API CALLS
       cs_links = {}
@@ -97,13 +97,14 @@ module CampusSolutions
 
     private
 
-    def add_cs_link(links, config_key, link_key, name, params_string = '')
+    def add_cs_link(links, config_key, link_key, name, params_string = '', title = '')
       value = Settings.campus_solutions_links.advising.send config_key
       if value
         links[link_key] = {
           'NAME' => name,
           'URL' => value + params_string,
-          'IS_CS_LINK' => true
+          'IS_CS_LINK' => true,
+          'TITLE' => title
         }
       end
     end
