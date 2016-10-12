@@ -343,7 +343,14 @@ describe User::Api do
 
   describe 'My Finances tab' do
     let(:delegate_students) { {} }
+    let(:has_student_history) { false }
+    before {
+      allow(User::HasStudentHistory).to receive(:new).and_return(model = double)
+      allow(model).to receive(:has_student_history?).and_return has_student_history
+    }
+
     subject { User::Api.new(uid).get_feed[:hasFinancialsTab] }
+
     context 'active student' do
       let(:ldap_attributes) { {roles: { :student => true, :exStudent => false, :faculty => false, :staff => false }} }
       let(:edo_attributes) { {roles: { student: true } } }
@@ -362,6 +369,12 @@ describe User::Api do
     context 'former student' do
       let(:ldap_attributes) { {roles: { :student => false, :exStudent => true, :faculty => false, :staff => false }} }
       let(:edo_attributes) { {roles: {}} }
+      it { should be true }
+    end
+    context 'has student history' do
+      let(:ldap_attributes) { {roles: { :student => false, :exStudent => false, :faculty => false, :staff => false }} }
+      let(:edo_attributes) { {roles: {}} }
+      let(:has_student_history) { true }
       it { should be true }
     end
   end
