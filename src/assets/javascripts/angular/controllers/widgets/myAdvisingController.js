@@ -6,7 +6,7 @@ var _ = require('lodash');
 /**
  * My Advising controller
  */
-angular.module('calcentral.controllers').controller('MyAdvisingController', function(academicsFactory, myAdvisingFactory, $scope) {
+angular.module('calcentral.controllers').controller('MyAdvisingController', function(academicsFactory, advisingFactory, myAdvisingFactory, $route, $routeParams, $scope) {
   $scope.myAdvising = {
     feedsLoading: {
       myAdvising: true,
@@ -37,7 +37,11 @@ angular.module('calcentral.controllers').controller('MyAdvisingController', func
   };
 
   var loadFeeds = function() {
-    academicsFactory.getAcademics().then(function(data) {
+    var academicsSource = $route.current.isAdvisingStudentLookup ? advisingFactory.getStudentAcademics : academicsFactory.getAcademics;
+    var options = {
+      uid: $routeParams.uid
+    };
+    academicsSource(options).then(function(data) {
       angular.extend($scope.myAdvising.roles, _.get(data, 'data.collegeAndLevel.roles'));
       $scope.myAdvising.feedsLoading.academicsRoles = false;
     });
