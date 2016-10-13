@@ -5,10 +5,10 @@
       data-link="csLinks.ucServiceIndicators"
     ></div>
   </li>
-  <li data-ng-if="csLinks.ucStudentAdvisor.url">
+  <li data-ng-if="csLinks.ucAdvisingAssignments.url">
     <div
       data-cc-campus-solutions-link-item-directive
-      data-link="csLinks.ucStudentAdvisor"
+      data-link="csLinks.ucAdvisingAssignments"
     ></div>
   </li>
   <li data-ng-if="csLinks.ucReportingCenter.url">
@@ -42,10 +42,11 @@
     ></div>
   </li>
   <li data-ng-if="csLinks.ucMultiYearAcademicPlannerGeneric.url">
-    <div
-      data-cc-campus-solutions-link-item-directive
-      data-link="csLinks.ucMultiYearAcademicPlannerGeneric"
-    ></div>
+    <a
+      data-ng-href="{{csLinks.ucMultiYearAcademicPlannerGeneric.url}}"
+      data-ng-bind="csLinks.ucMultiYearAcademicPlannerGeneric.name"
+      data-ng-attr-title="{{csLinks.ucMultiYearAcademicPlannerGeneric.title}}"
+    ></a>
   </li>
   <li data-ng-if="csLinks.ucAppointmentSystem.url">
     <div
