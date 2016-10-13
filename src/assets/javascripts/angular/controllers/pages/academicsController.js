@@ -207,7 +207,7 @@ angular.module('calcentral.controllers').controller('AcademicsController', funct
       };
     } else {
       $scope.requestTranscript = {
-        link: 'https://telebears.berkeley.edu/tranreq/',
+        link: 'http://registrar.berkeley.edu/academic-records/transcripts-diplomas',
         title: 'Request Transcript'
       };
     }
