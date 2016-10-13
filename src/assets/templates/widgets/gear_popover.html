@@ -27,7 +27,8 @@
     <div>
       <div class="cc-launcher-status-loading"
         data-cc-loading-directive="statusLoading"
-        data-cc-loading-process="Loading...">
+        data-cc-loading-process="Loading..."
+        data-ng-if="statusLoading">
       </div>
       <div data-ng-if="!statusLoading && !api.user.profile.delegateActingAsUid && !api.user.profile.advisorActingAsUid && (count !== 0 || hasBillingData || hasRegistrationData)">
         <div class="cc-popover-title">

@@ -195,8 +195,10 @@ angular.module('calcentral.controllers').controller('StatusController', function
       $scope.hasAlerts = false;
       $scope.hasWarnings = false;
 
-      // We use this to show the spinner
-      $scope.statusLoading = 'Process';
+      // We use this to show the spinner.
+      if (!apiService.user.profile.delegateActingAsUid && !apiService.user.profile.advisorActingAsUid) {
+        $scope.statusLoading = 'Process';
+      }
 
       // Will contain loadError flag if image cannot be fetched.
       $scope.photo = {};
