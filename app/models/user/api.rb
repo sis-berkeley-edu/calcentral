@@ -102,8 +102,8 @@ module User
       roles[:student] || roles[:faculty] || roles[:applicant] || has_instructor_history || has_student_history
     end
 
-    def has_financials_tab?(roles)
-      !!(roles[:student] || roles[:exStudent] || roles[:applicant])
+    def has_financials_tab?(roles, has_student_history)
+      roles[:student] || roles[:exStudent] || roles[:applicant] || has_student_history
     end
 
     def has_toolbox_tab?(policy, roles)
@@ -169,7 +169,7 @@ module User
         hasDashboardTab: true,
         hasAcademicsTab: can_view_academics,
         canViewGrades: can_view_academics || !!roles[:advisor],
-        hasFinancialsTab: has_financials_tab?(roles),
+        hasFinancialsTab: has_financials_tab?(roles, has_student_history),
         hasToolboxTab: has_toolbox_tab?(current_user_policy, roles),
         inEducationAbroadProgram: @user_attributes[:educationAbroad],
         googleEmail: google_mail,
