@@ -43,8 +43,8 @@ module CampusSolutions
           link = entry.slice(:url, :urlId, :description, :hoverOverText)
 
           placeholders.try(:each) do |k, v|
-            if v.blank?
-              logger.warn "Could not set placeholder for #{k} on link with url_id #{link[:urlId]}"
+            if v.nil?
+              logger.debug "Could not set placeholder for #{k} on link with url_id #{link[:urlId]}"
               link = nil
               break
             else
@@ -52,7 +52,7 @@ module CampusSolutions
             end
           end
 
-          if !link.blank?
+          if !link.nil?
             # promote properties we're interested in
             entry[:properties].each do |property|
               if property[:name] == 'NEW_WINDOW' && property[:value] == 'Y'

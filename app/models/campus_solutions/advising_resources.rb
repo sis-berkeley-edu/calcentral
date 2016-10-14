@@ -60,7 +60,8 @@ module CampusSolutions
         { feed_key: :student_advisor_notes, cs_link_key: 'UC_CX_SCI_NOTE_FLU', cs_link_params: { :EMPLID => student_empl_id } },
         { feed_key: :student_appointments, cs_link_key: 'UC_CX_APPOINTMENT_ADV_VIEW_STD', cs_link_params: { :EMPLID => student_empl_id } },
         { feed_key: :student_multi_year_academic_planner, cs_link_key: 'UC_CX_PLANNER_ADV_STDNT', cs_link_params: { :EMPLID => student_empl_id } },
-        { feed_key: :student_service_indicators, cs_link_key: 'UC_CX_SERVICE_IND_STDNT', cs_link_params: { :EMPLID => student_empl_id } },
+        # This entry is hacked with an empty ACAD_CAREER parameter in order to work correctly on Campus Solutions.
+        { feed_key: :student_service_indicators, cs_link_key: 'UC_CX_SERVICE_IND_STDNT', cs_link_params: { :EMPLID => student_empl_id, :ACAD_CAREER => '' } },
         { feed_key: :student_webnow_documents, cs_link_key: 'UC_CX_WEBNOW_STUDENT_URI', cs_link_params: { :EMPLID => student_empl_id } },
       ]
 
@@ -77,7 +78,7 @@ module CampusSolutions
 
     def fetch_link(link_key, placeholders = {})
       link = CampusSolutions::Link.new.get_url(link_key, placeholders).try(:[], :link)
-      logger.error "Could not retrieve CS link #{link_key} for AdvisingResources feed, uid = #{@uid}" unless link
+      logger.debug "Could not retrieve CS link #{link_key} for AdvisingResources feed, uid = #{@uid}" unless link
       link
     end
 
