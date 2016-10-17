@@ -64,7 +64,7 @@ describe MyAcademics::Residency do
     context 'when residency message code params are not recognized' do
       before do
         allow(fake_residency_message_proxy).to receive(:get).and_return(
-          {:feed=> {:root=> {}}}
+          {:feed=> {:root=> nil}}
         )
       end
 

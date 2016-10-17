@@ -46,7 +46,7 @@ module Berkeley
       end
       if message_code.nil?
         logger.warn "Cannot determine message code for residency '#{residency_status}', SLR '#{slr_status}', tuition exception '#{tuition_exception}'"
-        {}
+        nil
       else
         message_code
       end

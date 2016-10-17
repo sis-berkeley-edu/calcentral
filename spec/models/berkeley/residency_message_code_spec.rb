@@ -116,14 +116,14 @@ describe Berkeley::ResidencyMessageCode do
         let(:slr_status) {'D'}
         let(:residency_status) { 'NON' }
         let(:tuition_exception) { 'R8' }
-        it {should be_blank}
+        it {should be_nil}
       end
 
       describe 'for resident when a tuition_exception requires NON' do
         let(:slr_status) {'Y'}
         let(:residency_status) { 'RES' }
         let(:tuition_exception) { 'RA' }
-        it {should be_blank}
+        it {should be_nil}
       end
     end
   end
