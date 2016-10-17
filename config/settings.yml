@@ -166,6 +166,9 @@ eft_proxy:
   base_url: 'https://eftstudent-qa.berkeley.edu/api/'
   token: 'secret'
 
+mailgun_proxy:
+  domain: 'example.mailgun.com'
+
 regstatus_proxy:
   fake: false
   app_id: ''

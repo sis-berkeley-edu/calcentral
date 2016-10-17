@@ -45,15 +45,38 @@ describe CanvasMailingListsController do
   end
 
   describe '#create' do
-    let(:make_request) { post :create, canvas_course_id: course_id, list_name: 'digression_analysis-sp15' }
+    let(:make_request) { post :create, canvas_course_id: course_id, listName: 'digression_analysis-sp15', listType: list_type }
+    let(:list_type) { nil }
     include_examples 'authorization and error handling'
 
-    it 'returns a fake pending mailing list' do
-      allow(MailingLists::SiteMailingList).to receive(:create).and_return fake_mailing_list('canvas_site_mailing_list_pending.json')
+    context 'no list type specified' do
+      it 'returns a Calmail list' do
+        expect(MailingLists::CalmailList).to receive(:create).and_return fake_mailing_list('canvas_site_mailing_list_pending.json')
 
-      make_request
-      expect(response.status).to eq 200
-      expect(response.body).to include '"state":"pending"'
+        make_request
+        expect(response.status).to eq 200
+        expect(response.body).to include '"state":"pending"'
+      end
+    end
+
+    context 'Mailgun list specified' do
+      let(:list_type) { 'MailgunList' }
+
+      it 'returns a Mailgun list' do
+        expect(MailingLists::MailgunList).to receive(:create).and_return fake_mailing_list('canvas_site_mailing_list_pending.json')
+
+        make_request
+        expect(response.status).to eq 200
+      end
+    end
+
+    context 'unknown list type specified' do
+      let(:list_type) { 'typo' }
+
+      it 'returns an error' do
+        make_request
+        expect(response.status).to eq 400
+      end
     end
   end
 

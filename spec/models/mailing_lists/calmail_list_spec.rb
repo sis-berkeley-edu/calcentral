@@ -1,72 +1,13 @@
-# encoding: UTF-8
-
-describe MailingLists::SiteMailingList do
+describe MailingLists::CalmailList do
   let(:canvas_site_id) { '1121' }
   let(:fake_course_data) { Canvas::Course.new(canvas_course_id: canvas_site_id, fake: true).course[:body] }
   before { allow_any_instance_of(Canvas::Course).to receive(:course).and_return(statusCode: 200, body: fake_course_data) }
   before { allow_any_instance_of(Calmail::CheckNamespace).to receive(:name_available?).and_return(response: true) }
 
   let(:response) { JSON.parse list.to_json}
+  let(:list_domain) { Settings.calmail_proxy.domain }
 
-  context 'a newly initialized list' do
-    let(:list) { described_class.new(canvas_site_id: canvas_site_id) }
-
-    it 'is valid' do
-      expect(response).not_to include 'errorMessages'
-    end
-
-    it 'returns Canvas site data' do
-      expect(response['canvasSite']['canvasCourseId']).to eq fake_course_data['id'].to_s
-      expect(response['canvasSite']['url']).to include fake_course_data['id'].to_s
-      expect(response['canvasSite']['courseCode']).to eq fake_course_data['course_code']
-      expect(response['canvasSite']['sisCourseId']).to eq fake_course_data['sis_course_id']
-      expect(response['canvasSite']['name']).to eq fake_course_data['name']
-    end
-
-    it 'initializes as unregistered' do
-      expect(response['mailingList']['state']).to eq 'unregistered'
-      expect(response['mailingList']['domain']).to eq Settings.calmail_proxy.domain
-      expect(response['mailingList']).not_to include('creationUrl')
-      expect(response['mailingList']).not_to include('timeLastPopulated')
-    end
-
-    it 'returns error on attempt to populate before save' do
-      list.populate
-      expect(response['errorMessages']).to include("Mailing list \"#{list.list_name}\" must be created before being populated.")
-      expect(response['mailingList']).not_to include('timeLastPopulated')
-    end
-
-    describe 'normalizing list names' do
-      it 'normalizes caps and spaces' do
-        fake_course_data['name'] = 'CHEM 1A LEC 003'
-        expect(response['mailingList']['name']).to eq 'chem_1a_lec_003-fa13'
-      end
-
-      it 'normalizes punctuation' do
-        fake_course_data['name'] = 'The "Wild"-"Wild" West?'
-        expect(response['mailingList']['name']).to eq 'the_wild_wild_west-fa13'
-      end
-
-      it 'removes invalid leading and trailing characters' do
-        fake_course_data['name'] = '{{design}}'
-        expect(response['mailingList']['name']).to eq 'design-fa13'
-      end
-
-      it 'normalizes diacritics' do
-        fake_course_data['name'] = 'Conversation intermédiaire'
-        expect(response['mailingList']['name']).to eq 'conversation_intermediaire-fa13'
-      end
-    end
-
-    context 'nonexistent Canvas site' do
-      before { allow_any_instance_of(Canvas::Course).to receive(:course).and_return(statusCode: 404, error: [{message: 'The specified resource was not found.'}]) }
-
-      it 'returns error data' do
-        expect(response).not_to include :mailingList
-        expect(response['errorMessages']).to include("No bCourses site with ID \"#{canvas_site_id}\" was found.")
-      end
-    end
-  end
+  include_examples 'a newly initialized mailing list'
 
   context 'creating a list' do
     let(:create_list) { described_class.create(canvas_site_id: canvas_site_id) }
@@ -80,17 +21,6 @@ describe MailingLists::SiteMailingList do
       expect(response['mailingList']['creationUrl']).to be_present
     end
 
-    context 'invalid list name' do
-      let(:create_list) { described_class.create(canvas_site_id: canvas_site_id, list_name: '$crooge McDuck and the 1%') }
-
-      it 'does not create a list with an invalid name' do
-        count = described_class.count
-        create_list
-        expect(described_class.count).to eq count
-        expect(response['errorMessages']).to include('List name may contain only lowercase, numeric, underscore and hyphen characters.')
-      end
-    end
-
     context 'list name already exists in Calmail' do
       before { allow_any_instance_of(Calmail::CheckNamespace).to receive(:name_available?).and_return(response: false) }
 
@@ -102,29 +32,7 @@ describe MailingLists::SiteMailingList do
       end
     end
 
-    context 'list name already exists in database' do
-      let(:list_name) { random_string(15) }
-      let(:create_list) { described_class.create(canvas_site_id: canvas_site_id, list_name: list_name) }
-      before { described_class.create(canvas_site_id: random_id, list_name: list_name)  }
-
-      it 'does not create list and returns error' do
-        count = described_class.count
-        create_list
-        expect(described_class.count).to eq count
-        expect(response['errorMessages']).to include("List name \"#{list_name}\" has already been reserved.")
-      end
-    end
-
-    context 'course id already exists in database' do
-      before { described_class.create(canvas_site_id: canvas_site_id)  }
-
-      it 'does not create new record and returns error' do
-        count = described_class.count
-        create_list
-        expect(described_class.count).to eq count
-        expect(response['errorMessages']).to include("Canvas site ID \"#{canvas_site_id}\" has already reserved a mailing list.")
-      end
-    end
+    include_examples 'mailing list creation errors'
   end
 
   context 'an existing list record' do
@@ -170,9 +78,27 @@ describe MailingLists::SiteMailingList do
         let(:fake_add_proxy) { Calmail::AddListMember.new(fake: true) }
         let(:fake_remove_proxy) { Calmail::RemoveListMember.new(fake: true) }
 
-        let(:oliver) { {'login_id' => '12345', 'first_name' => 'Oliver', 'last_name' => 'Heyer', 'email_address' => 'oheyer@berkeley.edu'}  }
-        let(:ray) { {'login_id' => '67890', 'first_name' => 'Ray', 'last_name' => 'Davis', 'email_address' => 'raydavis@berkeley.edu'}  }
-        let(:paul) { {'login_id' => '65536', 'first_name' => 'Paul', 'last_name' => 'Kerschen', 'email_address' => 'kerschen@berkeley.edu'}  }
+        let(:oliver) do {
+          'login_id' => '12345',
+          'first_name' => 'Oliver',
+          'last_name' => 'Heyer',
+          'email_address' => 'oheyer@berkeley.edu',
+          'enrollments' => [{'role' => 'TeacherEnrollment'}]
+        } end
+        let(:ray) do {
+          'login_id' => '67890',
+          'first_name' => 'Ray',
+          'last_name' => 'Davis',
+          'email_address' => 'raydavis@berkeley.edu',
+          'enrollments' => [{'role' => 'StudentEnrollment'}]
+        } end
+        let(:paul) do {
+          'login_id' => '65536',
+          'first_name' => 'Paul',
+          'last_name' => 'Kerschen',
+          'email_address' => 'kerschen@berkeley.edu',
+          'enrollments' => [{'role' => 'StudentEnrollment'}]
+        } end
 
         def basic_attributes(user)
           %w(first_name last_name email_address).inject({}) { |attrs, key| attrs.merge(key.to_sym => user[key]) }
