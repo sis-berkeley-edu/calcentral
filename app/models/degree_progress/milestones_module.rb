@@ -1,43 +1,12 @@
-module MyAcademics
-  class DegreeProgress < UserSpecificModel
-    include Cache::CachedFeed
-    include Cache::JsonifiedFeed
-    include Cache::UserCacheExpiry
-    include CampusSolutions::DegreeProgressFeatureFlagged
+module DegreeProgress
+  module MilestonesModule
 
     CAREER_LAW = 'LAW'
     ACAD_PROG_CODE_LACAD = 'LACAD'
-    LINKS_CONFIG = [
-      { feed_key: :advancement_form_submit, cs_link_key: 'UC_CX_GT_AAQEAPPLIC_ADD' },
-      { feed_key: :advancement_form_view, cs_link_key: 'UC_CX_GT_AAQEAPPLIC_VIEW' }
-    ]
 
-    def get_feed_internal
-      return {} unless is_feature_enabled
-      response = CampusSolutions::DegreeProgress.new(user_id: @uid).get
+    def process(response)
       degree_progress = response.try(:[], :feed).try(:[], :ucAaProgress).try(:[], :progresses)
-      response[:feed] = HashConverter.camelize({
-        degree_progress: massage_progresses(degree_progress),
-        links: get_links
-      })
-      response
-    end
-
-    def get_links
-      links = {}
-      LINKS_CONFIG.each do |setting|
-        link = fetch_link setting[:cs_link_key]
-        links[setting[:feed_key]] = link unless link.blank?
-      end
-      links
-    end
-
-    def fetch_link(link_key)
-      if (link_feed = CampusSolutions::Link.new.get_url link_key)
-        link = link_feed.try(:[], :link)
-      end
-      logger.error "Could not retrieve CS link #{link_key} for Degree Progress feed, uid = #{@uid}" unless link
-      link
+      massage_progresses(degree_progress)
     end
 
     def massage_progresses(degree_progress)
@@ -68,10 +37,10 @@ module MyAcademics
 
     def normalize(requirements)
       requirements.map! do |requirement|
-        name = Berkeley::GradMilestones.get_description(requirement[:code])
+        name = Berkeley::DegreeProgress.get_description(requirement[:code])
         if name
           requirement[:name] = name
-          requirement[:status] = Berkeley::GradMilestones.get_status(requirement[:status])
+          requirement[:status] = Berkeley::DegreeProgress.get_status(requirement[:status])
           requirement
         end
       end
@@ -92,7 +61,7 @@ module MyAcademics
 
       if merge_candidates.length > 1
         first = find_first merge_candidates
-        first[:name] = Berkeley::GradMilestones.get_merged_description
+        first[:name] = Berkeley::DegreeProgress.get_merged_description
         merged_requirements.unshift(first)
       elsif merge_candidates.length === 1
         merged_requirements.unshift(merge_candidates.first)

@@ -1,7 +1,7 @@
-describe CampusSolutions::DegreeProgress do
+describe CampusSolutions::DegreeProgress::GraduateMilestones do
 
   let(:user_id) { '12345' }
-  let(:proxy) { CampusSolutions::DegreeProgress.new(fake: true, user_id: user_id) }
+  let(:proxy) { described_class.new(fake: true, user_id: user_id) }
 
   describe '#get' do
     subject { proxy.get }

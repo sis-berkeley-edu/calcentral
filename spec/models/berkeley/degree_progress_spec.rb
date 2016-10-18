@@ -1,4 +1,4 @@
-describe Berkeley::GradMilestones do
+describe Berkeley::DegreeProgress do
 
   describe '#get_status' do
     subject { described_class.get_status(status_code) }
