@@ -49,6 +49,9 @@ calmail_proxy:
 calnet_crosswalk_proxy:
   fake: true
 
+mailgun_proxy:
+  fake: true
+
 # To avoid "Illegal key size" errors on systems which we can't modify (e.g., Travis),
 # lower the security of the encryption algorithm.
 oauth2:

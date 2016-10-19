@@ -35,6 +35,9 @@ textbooks_proxy:
 google_proxy:
   fake: true
 
+mailgun_proxy:
+  fake: true
+
 myfinaid_proxy:
   fake: true
 

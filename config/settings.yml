@@ -167,7 +167,10 @@ eft_proxy:
   token: 'secret'
 
 mailgun_proxy:
-  domain: 'example.mailgun.com'
+  fake: false
+  base_url: 'https://api.mailgun.net/v3'
+  domain: 'bcourses-mail.berkeley.edu'
+  api_key: 'secret'
 
 regstatus_proxy:
   fake: false
