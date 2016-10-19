@@ -11,10 +11,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151222002724) do
+ActiveRecord::Schema.define(version: 20161017235830) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "canvas_site_mailing_list_members", force: true do |t|
+    t.integer  "mailing_list_id",                 null: false
+    t.string   "first_name"
+    t.string   "last_name"
+    t.string   "email_address",                   null: false
+    t.boolean  "can_send",        default: false, null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "canvas_site_mailing_list_members", ["mailing_list_id", "email_address"], name: "mailing_list_membership_index", unique: true, using: :btree
 
   create_table "canvas_site_mailing_lists", force: true do |t|
     t.string   "canvas_site_id"
@@ -26,6 +38,7 @@ ActiveRecord::Schema.define(version: 20151222002724) do
     t.integer  "members_count"
     t.integer  "populate_add_errors"
     t.integer  "populate_remove_errors"
+    t.string   "type"
   end
 
   add_index "canvas_site_mailing_lists", ["canvas_site_id"], name: "index_canvas_site_mailing_lists_on_canvas_site_id", unique: true, using: :btree

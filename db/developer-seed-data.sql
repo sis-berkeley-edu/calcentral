@@ -14,6 +14,8 @@ DROP INDEX public.index_user_auths_on_uid;
 DROP INDEX public.index_summer_sub_terms_on_year_and_sub_term_code;
 DROP INDEX public.index_service_alerts_on_display_and_created_at;
 DROP INDEX public.index_fin_aid_years_on_current_year;
+DROP INDEX public.index_canvas_site_mailing_lists_on_canvas_site_id;
+DROP INDEX public.mailing_list_membership_index;
 ALTER TABLE ONLY public.user_roles DROP CONSTRAINT user_roles_pkey;
 ALTER TABLE ONLY public.user_auths DROP CONSTRAINT user_auths_pkey;
 ALTER TABLE ONLY public.summer_sub_terms DROP CONSTRAINT summer_sub_terms_pkey;
@@ -25,6 +27,8 @@ ALTER TABLE ONLY public.links DROP CONSTRAINT links_pkey;
 ALTER TABLE ONLY public.link_sections DROP CONSTRAINT link_sections_pkey;
 ALTER TABLE ONLY public.link_categories DROP CONSTRAINT link_categories_pkey;
 ALTER TABLE ONLY public.fin_aid_years DROP CONSTRAINT fin_aid_years_pkey;
+ALTER TABLE ONLY public.canvas_site_mailing_lists DROP CONSTRAINT canvas_site_mailing_lists_pkey;
+ALTER TABLE ONLY public.canvas_site_mailing_list_members DROP CONSTRAINT canvas_site_mailing_list_members_pkey;
 ALTER TABLE public.user_roles ALTER COLUMN id DROP DEFAULT;
 ALTER TABLE public.user_auths ALTER COLUMN id DROP DEFAULT;
 ALTER TABLE public.summer_sub_terms ALTER COLUMN id DROP DEFAULT;
@@ -34,6 +38,8 @@ ALTER TABLE public.links ALTER COLUMN id DROP DEFAULT;
 ALTER TABLE public.link_sections ALTER COLUMN id DROP DEFAULT;
 ALTER TABLE public.link_categories ALTER COLUMN id DROP DEFAULT;
 ALTER TABLE public.fin_aid_years ALTER COLUMN id DROP DEFAULT;
+ALTER TABLE public.canvas_site_mailing_lists ALTER COLUMN id DROP DEFAULT;
+ALTER TABLE public.canvas_site_mailing_list_members ALTER COLUMN id DROP DEFAULT;
 DROP SEQUENCE public.user_roles_id_seq;
 DROP TABLE public.user_roles;
 DROP SEQUENCE public.user_auths_id_seq;
@@ -55,11 +61,84 @@ DROP SEQUENCE public.link_categories_id_seq;
 DROP TABLE public.link_categories;
 DROP SEQUENCE public.fin_aid_years_id_seq;
 DROP TABLE public.fin_aid_years;
+DROP SEQUENCE public.canvas_site_mailing_lists_id_seq;
+DROP TABLE public.canvas_site_mailing_lists;
+DROP SEQUENCE public.canvas_site_mailing_list_members_id_seq;
+DROP TABLE public.canvas_site_mailing_list_members;
 SET search_path = public, pg_catalog;
 
 SET default_tablespace = '';
 
 SET default_with_oids = false;
+
+--
+-- Name: canvas_site_mailing_list_members; Type: TABLE; Schema: public; Owner: -; Tablespace:
+--
+
+CREATE TABLE canvas_site_mailing_list_members (
+  id integer NOT NULL,
+  mailing_list_id integer NOT NULL,
+  first_name character varying(255),
+  last_name character varying(255),
+  email_address character varying(255) NOT NULL,
+  can_send boolean DEFAULT false NOT NULL,
+  created_at timestamp without time zone,
+  updated_at timestamp without time zone
+);
+
+--
+-- Name: canvas_site_mailing_list_members_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE canvas_site_mailing_list_members_id_seq
+START WITH 1
+INCREMENT BY 1
+NO MINVALUE
+NO MAXVALUE
+CACHE 1;
+
+
+--
+-- Name: canvas_site_mailing_list_members_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE canvas_site_mailing_list_members_id_seq OWNED BY canvas_site_mailing_list_members.id;
+
+--
+-- Name: canvas_site_mailing_lists; Type: TABLE; Schema: public; Owner: -; Tablespace:
+--
+
+CREATE TABLE canvas_site_mailing_lists (
+  id integer NOT NULL,
+  canvas_site_id character varying(255),
+  list_name character varying(255),
+  state character varying(255),
+  populated_at timestamp without time zone,
+  created_at timestamp without time zone,
+  updated_at timestamp without time zone,
+  members_count integer,
+  populate_add_errors integer,
+  populate_remove_errors integer,
+  type character varying(255)
+);
+
+--
+-- Name: canvas_site_mailing_lists_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE canvas_site_mailing_lists_id_seq
+START WITH 1
+INCREMENT BY 1
+NO MINVALUE
+NO MAXVALUE
+CACHE 1;
+
+--
+-- Name: canvas_site_mailing_lists_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE canvas_site_mailing_lists_id_seq OWNED BY canvas_site_mailing_lists.id;
+
 
 --
 -- Name: fin_aid_years; Type: TABLE; Schema: public; Owner: -; Tablespace:
@@ -393,6 +472,20 @@ CREATE SEQUENCE user_roles_id_seq
 --
 
 ALTER SEQUENCE user_roles_id_seq OWNED BY user_roles.id;
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY canvas_site_mailing_list_members ALTER COLUMN id SET DEFAULT nextval('canvas_site_mailing_list_members_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY canvas_site_mailing_lists ALTER COLUMN id SET DEFAULT nextval('canvas_site_mailing_lists_id_seq'::regclass);
 
 
 --
@@ -1962,6 +2055,21 @@ SELECT pg_catalog.setval('user_roles_id_seq', 3, true);
 
 
 --
+-- Name: canvas_site_mailing_list_members_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
+--
+
+ALTER TABLE ONLY canvas_site_mailing_list_members
+  ADD CONSTRAINT canvas_site_mailing_list_members_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: canvas_site_mailing_lists_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
+--
+
+ALTER TABLE ONLY canvas_site_mailing_lists
+  ADD CONSTRAINT canvas_site_mailing_lists_pkey PRIMARY KEY (id);
+
+--
 -- Name: fin_aid_years_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
 --
 
@@ -2034,6 +2142,13 @@ ALTER TABLE ONLY user_roles
 
 
 --
+-- Name: index_canvas_site_mailing_lists_on_canvas_site_id; Type: INDEX; Schema: public; Owner: -; Tablespace:
+--
+
+CREATE UNIQUE INDEX index_canvas_site_mailing_lists_on_canvas_site_id ON canvas_site_mailing_lists USING btree (canvas_site_id);
+
+
+--
 -- Name: index_fin_aid_years_on_current_year; Type: INDEX; Schema: public; Owner: -; Tablespace:
 --
 
@@ -2073,6 +2188,13 @@ CREATE INDEX index_summer_sub_terms_on_year_and_sub_term_code ON summer_sub_term
 --
 
 CREATE UNIQUE INDEX index_user_auths_on_uid ON user_auths USING btree (uid);
+
+
+--
+-- Name: mailing_list_membership_index; Type: INDEX; Schema: public; Owner: -; Tablespace:
+--
+
+CREATE UNIQUE INDEX mailing_list_membership_index ON canvas_site_mailing_list_members USING btree (mailing_list_id, email_address);
 
 
 --

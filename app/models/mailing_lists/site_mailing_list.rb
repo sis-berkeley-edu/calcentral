@@ -31,10 +31,6 @@ module MailingLists
     after_initialize :get_canvas_site, if: :new_record?
     after_initialize :init_unregistered, if: :new_record?
 
-    before_create { self.state = 'pending' }
-
-    after_find { check_for_creation if self.state == 'pending' }
-
     def populate
       if self.state != 'created'
         self.request_failure = "Mailing list \"#{self.list_name}\" must be created before being populated."
@@ -42,7 +38,7 @@ module MailingLists
       end
 
       course_users = Canvas::CourseUsers.new(course_id: self.canvas_site_id).course_users[:body]
-      list_members = get_member_addresses
+      list_members = get_list_members
 
       if !course_users
         self.request_failure = "Could not retrieve current site roster for \"#{self.list_name}\"."
@@ -67,11 +63,12 @@ module MailingLists
         }
         feed[:mailingList] = {
           name: self.list_name,
-          domain: Settings.calmail_proxy.domain,
+          domain: self.class.domain,
           state: self.state
         }
-        feed[:mailingList][:creationUrl] = build_creation_url if self.state == 'pending'
-        feed[:mailingList][:administrationUrl] = build_administration_url if self.state == 'created'
+
+        add_list_urls feed
+
         if self.populated_at.present?
           feed[:mailingList][:membersCount] = self.members_count
           feed[:mailingList][:timeLastPopulated] = format_date(self.populated_at.to_datetime)
@@ -90,35 +87,8 @@ module MailingLists
       self.population_results[:add][:failure].any? || self.population_results[:remove][:failure].any?
     end
 
-    def build_administration_url
-      Settings.calmail_proxy.base_url.sub(
-        /api1\Z/,
-        "list/listinfo/#{self.list_name}%40#{Settings.calmail_proxy.domain}"
-      )
-    end
-
-    def build_creation_url
-      params = {
-        domain_name: Settings.calmail_proxy.domain,
-        listname: self.list_name,
-        owner_address: Settings.calmail_proxy.owner_address,
-        advertised: 0,
-        subscribe_policy: 3,
-        moderate: 1,
-        generic_nonmember_action: 1
-      }
-      Settings.calmail_proxy.base_url.sub(/api1\Z/, "list/domain_create_list2?#{params.to_query}")
-    end
-
     def catch_request_failure
       errors[:base] << self.request_failure if self.request_failure
-    end
-
-    def check_for_creation
-      if name_available? == false
-        self.state = 'created'
-        save
-      end
     end
 
     def generate_list_name
@@ -143,12 +113,6 @@ module MailingLists
       end
     end
 
-    def get_member_addresses
-      if (list_members = Calmail::ListMembers.new.list_members self.list_name)
-        list_members[:response] && list_members[:response][:addresses]
-      end
-    end
-
     def init_unregistered
       self.state = 'unregistered'
       get_canvas_site
@@ -158,15 +122,24 @@ module MailingLists
       end
     end
 
-    def name_available?
-      return if list_name.blank?
-      if (check_namespace = Calmail::CheckNamespace.new.name_available? self.list_name) &&
-          (check_namespace[:response] == true || check_namespace[:response] == false)
-        check_namespace[:response]
-      else
-        self.request_failure = 'There was an error connecting to Calmail.'
-        nil
-      end
+    def initialize_population_results
+      self.population_results = {
+        add: {
+          total: 0,
+          success: 0,
+          failure: []
+        },
+        remove: {
+          total: 0,
+          success: 0,
+          failure: []
+        },
+        update: {
+          total: 0,
+          success: 0,
+          failure: []
+        }
+      }
     end
 
     def parse_term(term)
@@ -182,12 +155,14 @@ module MailingLists
         if success
           messages << population_results_to_english(
             [population_results[:add][:success], 'added', true],
-            [population_results[:remove][:success], 'removed', true]
+            [population_results[:remove][:success], 'removed', true],
+            [population_results[:update][:success], 'updated', true]
           )
         else
           messages << population_results_to_english(
             [population_results[:add][:failure].count, 'added', false],
-            [population_results[:remove][:failure].count, 'removed', false]
+            [population_results[:remove][:failure].count, 'removed', false],
+            [population_results[:update][:failure].count, 'updated', false]
           )
         end
       elsif self.populate_add_errors.nonzero? || self.populate_remove_errors.nonzero?
@@ -208,8 +183,9 @@ module MailingLists
         count, action, success = component
         next if count.zero?
         message = "#{count} "
-        message << (action == 'added' ? 'new' : 'former')
-        message << ' member'
+        message << 'new ' if action == 'added'
+        message << 'former ' if action == 'removed'
+        message << 'member'
         message << 's' if count > 1
         if success
           message << (count > 1 ? ' were ' : ' was ')
@@ -222,37 +198,42 @@ module MailingLists
       english_components.join('; ').concat('.') if english_components.any?
     end
 
-    def update_memberships(course_users, list_addresses)
-      self.population_results = {
-        add: {
-          total: 0,
-          success: 0,
-          failure: []
-        },
-        remove: {
-          total: 0,
-          success: 0,
-          failure: []
-        }
-      }
-      list_address_set = list_addresses.to_set
-      addresses_to_remove = list_address_set.clone
+    def update_memberships(course_users, list_members)
+      # List members are keyed by email addresses; keep track of any needed removals in a separate set.
+      addresses_to_remove = list_members.keys.to_set
+
+      # Note UIDs for users with send permission, defined for now as having a teacher role in the course site.
+      sender_uids = Set.new
+      course_users.each { |user| sender_uids << user['login_id'] if Canvas::CourseUser.is_course_teacher?(user) }
 
       logger.info "Starting population of mailing list #{self.list_name} for course site #{self.canvas_site_id}."
+      initialize_population_results
 
-      add_member_proxy = Calmail::AddListMember.new
+      population_results[:initial_count] = list_members.count
 
       course_users.map{ |user| user['login_id'] }.each_slice(1000) do |uid_slice|
         user_slice = User::BasicAttributes.attributes_for_uids uid_slice
         user_slice.each do |user|
+          user[:can_send] = sender_uids.include?(user[:ldap_uid])
           if (user_address = user[:email_address])
             user_address.downcase!
             addresses_to_remove.delete user_address
-            unless list_address_set.include? user_address
+            if list_members.has_key? user_address
+              # Address is in the list; check if any data needs updating.
+              if update_required?(list_members[user_address], user)
+                population_results[:update][:total] += 1
+                logger.debug "Updating address #{user_address}"
+                if update_member(list_members[user_address], user)
+                  population_results[:update][:success] += 1
+                else
+                  population_results[:update][:failure] << user_address
+                end
+              end
+            else
+              # Address is not currently in the list; add it.
               population_results[:add][:total] += 1
               logger.debug "Adding address #{user_address}"
-              proxy_response = add_member_proxy.add_member(self.list_name, user_address, "#{user[:first_name]} #{user[:last_name]}")
-              if proxy_response[:response] && proxy_response[:response][:added]
+              if add_member(user_address, user[:first_name], user[:last_name], user[:can_send])
                 population_results[:add][:success] += 1
               else
                 population_results[:add][:failure] << user_address
@@ -264,41 +245,18 @@ module MailingLists
         end
       end
 
-      remove_member_proxy = Calmail::RemoveListMember.new
       population_results[:remove][:total] = addresses_to_remove.count
 
       addresses_to_remove.each do |address|
         logger.debug "Removing address #{address}"
-        proxy_response = remove_member_proxy.remove_member(self.list_name, address)
-        if proxy_response[:response] && proxy_response[:response][:removed]
+        if remove_member address
           population_results[:remove][:success] += 1
         else
           population_results[:remove][:failure] << address
         end
       end
 
-      # The Calmail API may successfully update memberships without returning a success response, so do
-      # a post-update check on any failures to see if they were real failures.
-      if any_population_failures? && (addresses_after_update = get_member_addresses)
-        address_set = addresses_after_update.to_set
-        population_results[:add][:failure].reject! { |address| address_set.include? address }
-        population_results[:remove][:failure].reject! { |address| !address_set.include? address }
-        population_results[:add][:success] = population_results[:add][:total] - population_results[:add][:failure].count
-        population_results[:remove][:success] = population_results[:remove][:total] - population_results[:remove][:failure].count
-        self.members_count = address_set.count
-      else
-        self.members_count = list_address_set.count + population_results[:add][:success] - population_results[:remove][:success]
-      end
-
-      logger.info "Added #{population_results[:add][:success]} of #{population_results[:add][:total]} new site members."
-      if population_results[:add][:failure].any?
-        logger.error "Failed to add #{population_results[:add][:failure].count} addresses to #{self.list_name}: #{population_results[:add][:failure].join(' , ')}"
-      end
-
-      logger.info "Removed #{population_results[:remove][:success]} of #{population_results[:remove][:total]} former site members."
-      if population_results[:remove][:failure].any?
-        logger.error "Failed to remove #{population_results[:remove][:failure].count} addresses from #{self.list_name}: #{population_results[:remove][:failure].join(' , ')}"
-      end
+      log_population_results
 
       logger.info "Finished population of mailing list #{self.list_name}."
       self.populate_add_errors = population_results[:add][:failure].count
@@ -306,6 +264,5 @@ module MailingLists
       self.populated_at = DateTime.now
       save
     end
-
   end
 end
