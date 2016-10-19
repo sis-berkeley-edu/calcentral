@@ -30,7 +30,7 @@ describe MyAcademics::Exams do
           is_primary_section: false,
           final_exams: [],
           schedules: {
-            recurring:[
+            recurring: [
               {
                 buildingName: 'Etcheverry',
                 roomNumber: '1111',
@@ -53,15 +53,16 @@ describe MyAcademics::Exams do
         {
           is_primary_section: true,
           final_exams: [],
-          schedules: {
-            recurring:[
-              {
-                buildingName: 'Pimentel',
-                roomNumber: '1',
-                schedule: 'MWF 2:00P-2:59P'
-              }
-            ]
-          }
+          schedules:
+            {
+              recurring: [
+                {
+                  buildingName: 'Pimentel',
+                  roomNumber: '1',
+                  schedule: 'MWF 2:00P-2:59P'
+                }
+              ]
+            }
         }
       ]
     }
@@ -99,13 +100,13 @@ describe MyAcademics::Exams do
       role: 'Student',
       course_code: 'EWMBA 107',
       courseCatalog: '107',
-      sections:[
+      sections: [
         {
-          is_primary_section:true,
+          is_primary_section: true,
           final_exams: [],
           schedules:
             {
-              recurring:[]
+              recurring: []
             }
         }
       ]
@@ -118,13 +119,13 @@ describe MyAcademics::Exams do
       role: 'Student',
       course_code: 'EWMBA 299',
       courseCatalog: '299',
-      sections:[
+      sections: [
         {
-          is_primary_section:true,
+          is_primary_section: true,
           final_exams: [],
           schedules:
             {
-              recurring:[]
+              recurring: []
             }
         }
       ]
@@ -139,13 +140,112 @@ describe MyAcademics::Exams do
       courseCatalog: '201B',
       sections: [
         {
-          is_primary_section:true,
+          is_primary_section: true,
           final_exams: [],
           schedules:
             {
-              recurring:[
+              recurring: [
                 {
                   schedule: 'Sa 2:00P-6:00P'
+                }
+              ]
+            }
+        }
+      ]
+    }
+  end
+
+  let(:fall_teaching_recurring) do
+    {
+      role: 'Student',
+      courseCode: 'BIO ENG',
+      courseCatalog: '131',
+      sections: [
+        {
+          is_primary_section: true,
+          final_exams: [],
+          schedules:
+            {
+              recurring: [
+                {
+                  buildingName: 'Dwinelle',
+                  roomNumber: '155',
+                  schedule: 'MWF 2:00P-2:59P'
+                }
+              ]
+            }
+        },
+        {
+          is_primary_section: false,
+          final_exams: [],
+          schedules:
+            {
+              recurring: [
+                {
+                  buildingName: 'Etcheverry',
+                  roomNumber: '1111',
+                  schedule: 'W 4:00P-5:29P'
+                }
+              ]
+            }
+        }
+      ]
+    }
+  end
+
+  let(:spring_teaching_recurring) do
+    {
+      role: 'Student',
+      courseCode: 'BIO ENG',
+      courseCatalog: '131',
+      sections: [
+        {
+          is_primary_section: true,
+          final_exams: [],
+          schedules: {
+            recurring: [
+              {
+                buildingName: 'Dwinelle',
+                roomNumber: '155',
+                schedule: 'MWF 2:00P-2:59P'
+              }
+            ]
+          }
+        },
+        {
+          is_primary_section: false,
+          final_exams: [],
+          schedules: {
+            recurring: [
+              {
+                buildingName: 'Etcheverry',
+                roomNumber: '1111',
+                schedule: 'W 4:00P-5:29P'
+              }
+            ]
+          }
+        }
+      ]
+    }
+  end
+
+
+  let(:teaching_no_recurring) do
+    {
+      role: 'Student',
+      courseCode: 'BIO ENG',
+      courseCatalog: '131',
+      sections: [
+        {
+          is_primary_section: true,
+          final_exams: [],
+          schedules:
+            {
+              recurring: [
+                {
+                  buildingName: 'Dwinelle',
+                  roomNumber: '155',
+                  schedule: nil
                 }
               ]
             }
@@ -217,7 +317,10 @@ describe MyAcademics::Exams do
   # after parsed academic data, cs still has no exams
   let(:no_cs_exam_class) do
     {
-      name: 'CHEM 3B', number: 3, time: 'MWF 2:00P-2:59P', waitlisted: nil,
+      name: 'CHEM 3B',
+      number: 3,
+      time: 'MWF 2:00P-2:59P',
+      waitlisted: nil,
       exam_location: 'No exam.',
       exam_date: nil,
       exam_time: nil,
@@ -231,8 +334,8 @@ describe MyAcademics::Exams do
       location: 'Kroeber 221',
       exam_type: 'Y',
       exam_date: Time.parse('2016-12-12 00:00:00 UTC'),
-      exam_start_time:Time.parse('1900-01-01 19:00:00 UTC'),
-      exam_end_time:Time.parse('1900-01-01 22:00:00 UTC'),
+      exam_start_time: Time.parse('1900-01-01 19:00:00 UTC'),
+      exam_end_time: Time.parse('1900-01-01 22:00:00 UTC'),
     }
   end
 
@@ -243,7 +346,7 @@ describe MyAcademics::Exams do
       exam_type: 'A',
       exam_date: nil,
       exam_start_time: nil,
-      exam_end_time:nil,
+      exam_end_time: nil
     }
   end
 
@@ -272,7 +375,10 @@ describe MyAcademics::Exams do
 
   let(:fall_2016_semester) do
     {
-      name: 'Fall 2016', termCode: 'D', termYear: '2016', timeBucket: 'future', slug: 'fall-2016',
+      name: 'Fall 2016',
+      termCode: 'D',
+      timeBucket: 'future',
+      slug: 'fall-2016',
       classes: fall_2016_classes
     }
   end
@@ -297,7 +403,6 @@ describe MyAcademics::Exams do
     {
       name: 'Spring 2016',
       termCode: 'B',
-      termYear: '2016',
       timeBucket: 'current',
       slug: 'spring-2016',
       classes: [
@@ -312,20 +417,38 @@ describe MyAcademics::Exams do
     {
       3 => [
         {
-          name: 'CHEM 3B', number: 3, time: 'MWF 2:00P-2:59P', waitlisted: nil,
-          exam_location: '', exam_date: 'Mon 12/12', exam_time: '3-6P', exam_slot: 3
+          name: 'CHEM 3B',
+          number: 3,
+          time: 'MWF 2:00P-2:59P',
+          waitlisted: nil,
+          exam_location: '',
+          exam_date: 'Mon 12/12',
+          exam_time: '3-6P',
+          exam_slot: 3
         }
       ],
       8 => [
         {
-          name: 'COMPSCI 61B', number: 61, time: 'MWF 3:00P-3:59P', waitlisted: true,
-          exam_location: '', exam_date: 'Tue 12/13', exam_time: '7-10P', exam_slot: 8
+          name: 'COMPSCI 61B',
+          number: 61,
+          time: 'MWF 3:00P-3:59P',
+          waitlisted: true,
+          exam_location: '',
+          exam_date: 'Tue 12/13',
+          exam_time: '7-10P',
+          exam_slot: 8
         }
       ],
       15 => [
         {
-          name: 'BIO ENG 131', number: 131, time: 'MWF 2:00P-2:59P', waitlisted: nil,
-          exam_location: '', exam_date: 'Thu 12/15', exam_time: '3-6P', exam_slot: 15
+          name: 'BIO ENG 131',
+          number: 131,
+          time: 'MWF 2:00P-2:59P',
+          waitlisted: nil,
+          exam_location: '',
+          exam_date: 'Thu 12/15',
+          exam_time: '3-6P',
+          exam_slot: 15
         }
       ]
     }
@@ -367,8 +490,7 @@ describe MyAcademics::Exams do
     {
       cs_data_available: false,
       name: 'Fall 2016',
-      term: 'D',
-      term_year: '2016',
+      termCode: 'D',
       timeBucket: 'future',
       slug: 'fall-2016',
       courses: [
@@ -386,8 +508,7 @@ describe MyAcademics::Exams do
     {
       cs_data_available: true,
       name: 'Spring 2016',
-      term: 'B',
-      term_year: '2016',
+      termCode: 'B',
       timeBucket: 'current',
       slug: 'spring-2016',
       courses: [
@@ -407,19 +528,51 @@ describe MyAcademics::Exams do
     ]
   end
 
+  let(:teaching) do
+    [
+      {
+        name: 'Fall 2016',
+        termCode: 'D',
+        timeBucket: 'future',
+        slug: 'fall-2016',
+        classes: [
+          fall_teaching_recurring,
+          teaching_no_recurring
+        ]
+      },
+      {
+        name: 'Spring 2016',
+        termCode: 'B',
+        termYear: '2016',
+        timeBucket: 'current',
+        slug: 'spring-2016',
+        classes: [
+          spring_teaching_recurring,
+          teaching_no_recurring
+        ]
+      }
+
+    ]
+  end
+
   let(:feed) do
     {
       collegeAndLevel:
         {
-          careers:['Undergraduate'],
-          isCurrent:true
+          careers: ['Undergraduate'],
+          isCurrent: true
         },
-      semesters: semesters
+      semesters: semesters,
+      teachingSemesters: teaching
     }
   end
 
   subject do
     MyAcademics::Exams.new uid
+  end
+
+  let(:final_exam_conversion) do
+    Berkeley::FinalExamSchedule.fetch
   end
 
   let(:feed_after_parse_academic_data) do
@@ -475,7 +628,7 @@ describe MyAcademics::Exams do
       end
 
       it 'should assign exams correctly' do
-        result = subject.assign_exams feed_after_parse_academic_data
+        result = subject.assign_exams(feed_after_parse_academic_data, final_exam_conversion)
         expect(result.length).to eq 2
 
         # Note: These are not properly sorted because we've invoked assign_exams() directly, skipping logic in merge().
@@ -519,7 +672,9 @@ describe MyAcademics::Exams do
     context 'with semesters and classes and cs exams' do
       let(:ug_class_recurring) do
         {
-          role: 'Student', course_code: 'BIO ENG 131', courseCatalog: '131',
+          role: 'Student',
+          course_code: 'BIO ENG 131',
+          courseCatalog: '131',
           sections: [
             {
               is_primary_section: true,
@@ -540,7 +695,9 @@ describe MyAcademics::Exams do
 
       let(:no_recurring_ug_class) do
         {
-          role: 'Student', course_code: 'EWMBA 107', courseCatalog: '107',
+          role: 'Student',
+          course_code: 'EWMBA 107',
+          courseCatalog: '107',
           sections:[
             {
               is_primary_section:true,
@@ -556,7 +713,9 @@ describe MyAcademics::Exams do
 
       let(:recurring_grad_class) do
         {
-          role: 'Student', course_code: 'EWMBA 201B', courseCatalog: '201B',
+          role: 'Student',
+          course_code: 'EWMBA 201B',
+          courseCatalog: '201B',
           sections: [
             {
               is_primary_section:true,
@@ -614,8 +773,7 @@ describe MyAcademics::Exams do
           {
             cs_data_available: true,
             name: 'Fall 2016',
-            term: 'D',
-            term_year: '2016',
+            termCode: 'D',
             timeBucket: 'future',
             courses: [ no_cs_exam_class ]
           }
@@ -623,7 +781,7 @@ describe MyAcademics::Exams do
       end
 
       it 'should assign exams correctly' do
-        result = subject.assign_exams(feed_after_parse_academic_data)
+        result = subject.assign_exams(feed_after_parse_academic_data, final_exam_conversion)
         expect(result[0][:exams].length).to eq 1
         result[0][:exams].each do |exam_slot, data|
           expect(exam_slot).to eq 'none'
@@ -644,11 +802,10 @@ describe MyAcademics::Exams do
     end
 
     it 'should determine the exam key correctly' do
-      final_exam_schedule = Berkeley::FinalExamSchedule.fetch
-      expect(subject.determine_exam_key(fall_2016_semester_after_parsed, ug_class_time, final_exam_schedule)).to eq 'D-M-2:00P'
-      expect(subject.determine_exam_key(fall_2016_semester_after_parsed, ug_course_exception, final_exam_schedule)).to eq 'D-CHEM 3B'
-      expect(subject.determine_exam_key(fall_2016_semester_after_parsed, ug_class_no_time, final_exam_schedule)).to eq nil
-      expect(subject.determine_exam_key(spring_2016_semester_after_parsed, cs_class, final_exam_schedule)).to eq 'B-CHEM 3B'
+      expect(subject.determine_exam_key(fall_2016_semester_after_parsed, ug_class_time, final_exam_conversion)).to eq 'D-M-2:00P'
+      expect(subject.determine_exam_key(fall_2016_semester_after_parsed, ug_course_exception, final_exam_conversion)).to eq 'D-CHEM 3B'
+      expect(subject.determine_exam_key(fall_2016_semester_after_parsed, ug_class_no_time, final_exam_conversion)).to eq nil
+      expect(subject.determine_exam_key(spring_2016_semester_after_parsed, cs_class, final_exam_conversion)).to eq 'B-CHEM 3B'
     end
 
     it 'should determine the cs exam date correctly' do
@@ -678,6 +835,148 @@ describe MyAcademics::Exams do
       expect(subject.choose_cs_exam_location(alternate_exam)).to eq 'Final exam information not available. Please consult instructors.'
       expect(subject.choose_cs_exam_location(no_exam)).to eq 'Location TBD'
     end
+  end
 
+  context 'as an instructor' do
+    context 'without cs exams in interim' do
+      it 'should show exams properly' do
+        fall_recurring_class_exam = feed_after_merge[:teachingSemesters][0][:classes][0][:sections][0][:estimated_final_exam][0]
+        recurring_class_not_primary_exam = feed_after_merge[:teachingSemesters][0][:classes][0][:sections][0][:estimated_final_exam][1]
+        spring_recurring_class_exam = feed_after_merge[:teachingSemesters][1][:classes][0][:sections][0][:estimated_final_exam][0]
+
+        expect(fall_recurring_class_exam).to be
+        expect(fall_recurring_class_exam[:exam_location]).to eq 'Scheduled Final Exam'
+        expect(fall_recurring_class_exam[:exam_date]).to eq 'Thu 12/15'
+        expect(fall_recurring_class_exam[:exam_time]).to eq '3-6P'
+        expect(recurring_class_not_primary_exam).to_not be
+        expect(spring_recurring_class_exam[:exam_location]).to eq 'Scheduled Final Exam'
+        expect(spring_recurring_class_exam[:exam_date]).to eq 'Tue 5/10'
+        expect(spring_recurring_class_exam[:exam_time]).to eq '11:30-2:30P'
+      end
+    end
+
+    context 'with cs exams' do
+      let(:fall_teaching_recurring) do
+        {
+          role: 'Student',
+          courseCode: 'BIO ENG 131',
+          courseCatalog: '131',
+          sections: [
+            {
+              is_primary_section: true,
+              final_exams: [all_exam],
+              schedules: {
+                recurring: [
+                  {
+                    buildingName:'LeConte',
+                    roomNumber: '251',
+                    schedule: 'MWF 2:00P-2:59P'
+                  }
+                ]
+              }
+            },
+            {
+              is_primary_section: false,
+              final_exams: [],
+              schedules: {
+                recurring: [
+                  {
+                    buildingName: 'Etcheverry',
+                    roomNumber: '1111',
+                    schedule: 'W 4:00P-5:29P'
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      end
+
+      let(:spring_teaching_recurring) do
+        {
+          role: 'Student',
+          courseCode: 'BIO ENG 131',
+          courseCatalog: '131',
+          sections: [
+            {
+              is_primary_section: true,
+              final_exams: [all_exam],
+              schedules: {
+                recurring: [
+                  {
+                    buildingName: 'LeConte',
+                    roomNumber:'251',
+                    schedule:'MWF 2:00P-2:59P'
+                  }
+                ]
+              }
+            },
+            {
+              is_primary_section: false,
+              final_exams: [],
+              schedules: {
+                recurring: [
+                  {
+                    buildingName: 'Etcheverry',
+                    roomNumber: '1111',
+                    schedule: 'W 4:00P-5:29P'
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      end
+
+      let(:teaching_no_recurring) do
+        {
+          role: 'Student',
+          courseCode: 'BIO ENG 131',
+          courseCatalog: '131',
+          sections: [
+            {
+              is_primary_section: true,
+              final_exams: [no_exam],
+              schedules: {
+                recurring: [
+                  {
+                    buildingName:'LeConte',
+                    roomNumber:'251',
+                    schedule: nil
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      end
+      it 'should show exams properly' do
+        fall_recurring_class_exam = feed_after_merge[:teachingSemesters][0][:classes][0][:sections][0][:estimated_final_exam][0]
+        recurring_class_not_primary_exam = feed_after_merge[:teachingSemesters][0][:classes][0][:sections][0][:estimated_final_exam][1]
+        fall_not_recurring_class_exam = feed_after_merge[:teachingSemesters][0][:classes][1][:sections][0][:estimated_final_exam][0]
+        spring_recurring_class_exam = feed_after_merge[:teachingSemesters][1][:classes][0][:sections][0][:estimated_final_exam][0]
+        spring_not_recurring_class_exam = feed_after_merge[:teachingSemesters][1][:classes][1][:sections][0][:estimated_final_exam][0]
+
+        expect(fall_recurring_class_exam).to be
+        expect(fall_recurring_class_exam[:exam_location]).to eq 'Scheduled Final Exam'
+        expect(fall_recurring_class_exam[:exam_date]).to eq 'Thu 12/15'
+        expect(fall_recurring_class_exam[:exam_time]).to eq '3-6P'
+        expect(recurring_class_not_primary_exam).to_not be
+        expect(fall_not_recurring_class_exam).to be
+        expect(fall_not_recurring_class_exam[:exam_location]).to eq 'Location TBD'
+        expect(fall_not_recurring_class_exam[:exam_date]).to eq nil
+        expect(fall_not_recurring_class_exam[:exam_time]).to eq nil
+
+        expect(spring_recurring_class_exam).to be
+        expect(spring_recurring_class_exam[:exam_location]).to eq 'Kroeber 221'
+        expect(spring_recurring_class_exam[:exam_date]).to eq 'Mon 12/12'
+        expect(spring_recurring_class_exam[:exam_time]).to eq '07:00PM-10:00PM'
+
+        expect(spring_not_recurring_class_exam).to be
+        expect(spring_not_recurring_class_exam[:exam_location]).to eq 'Location TBD'
+        expect(spring_not_recurring_class_exam[:exam_date]).to eq nil
+        expect(spring_not_recurring_class_exam[:exam_time]).to eq nil
+      end
+    end
   end
 end

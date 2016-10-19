@@ -8,14 +8,23 @@ module MyAcademics
 
     # Merges the final result into the academics feed
     def merge(data = {})
-      if is_feature_enabled && (academics_data = parse_academic_data data[:semesters])
-        assign_exams academics_data
-        # Sort by semester, current first
-        data[:examSchedule] = academics_data.sort_by { |semester| semester[:timeBucket] == 'current' ? 0 : 1 }
+      if is_feature_enabled
+        final_exam_conversion = Berkeley::FinalExamSchedule.fetch
+        # for students
+        if (academics_data = parse_academic_data data[:semesters])
+          assign_exams(academics_data, final_exam_conversion)
+          # Sort by semester, current first
+          data[:examSchedule] = academics_data.sort_by { |semester| semester[:timeBucket] == 'current' ? 0 : 1 }
+        end
+
+        # for instructors
+        if (teaching_data = data[:teachingSemesters])
+          assign_exam_to_instructor(teaching_data, final_exam_conversion)
+        end
       end
     end
 
-    # Parses the my academics semesters feed, and prepares data to be populated
+    # Parses the my academics feed, and prepares data to be populated
     def parse_academic_data(data)
       final_exam_schedule = []
 
@@ -27,8 +36,7 @@ module MyAcademics
         final_exam_schedule << {
           cs_data_available: cs_data_available,
           name: semester[:name],
-          term: semester[:termCode],
-          term_year: semester[:termYear],
+          termCode: semester[:termCode],
           courses: courses,
           timeBucket: semester[:timeBucket],
           slug: semester[:slug]
@@ -65,26 +73,54 @@ module MyAcademics
     end
 
     # Assigns exams to academics_data if there is no cs data available based on conversion table
-    def assign_exams(academics_data)
-      if (final_exam_schedule = Berkeley::FinalExamSchedule.fetch)
-        academics_data.each do |semester|
-          semester[:courses].each do |course|
-            unless semester[:cs_data_available]
-              if (exam_key = determine_exam_key(semester, course, final_exam_schedule))
-                if (exam = final_exam_schedule[exam_key])
-                  course[:exam_location] = '' # not assigned a location yet
-                  course[:exam_time] = exam[:exam_time]
-                  course[:exam_slot] = exam[:exam_slot].to_i
-                  course[:exam_date] = determine_exam_date(semester, exam[:exam_day])
-                end
+    def assign_exams(academics_data, final_exam_conversion)
+      academics_data.each do |semester|
+        semester[:courses].each do |course|
+          unless semester[:cs_data_available]
+            if (exam_key = determine_exam_key(semester, course, final_exam_conversion))
+              if (exam = final_exam_conversion[exam_key])
+                course[:exam_location] = '' # not assigned a location yet
+                course[:exam_time] = exam[:exam_time]
+                course[:exam_slot] = exam[:exam_slot].to_i
+                course[:exam_date] = determine_exam_date(semester, exam[:exam_day])
               end
             end
           end
-          sort_exams semester
+        end
+        sort_exams semester
+      end
+    end
+
+    def assign_exam_to_instructor(data, final_exam_conversion)
+      data.reject{|x| x[:termCode] == 'C' || x[:timeBucket] == 'past'}.each do |semester|
+        semester[:classes].each do |course|
+          course[:sections].select{|x| x[:is_primary_section]}.each do |section|
+            parsed_course = {
+              name: course[:courseCode],
+              number: course[:courseCode].gsub(/[^0-9]/, '').to_i,
+              time: section[:schedules][:recurring].to_a.first.try(:[], :schedule),
+            }
+            exam_key = determine_exam_key(semester, parsed_course, final_exam_conversion)
+            if determine_cs_data_available(semester) && section[:final_exams].any?
+              exam = section[:final_exams].first
+              section[:estimated_final_exam] = [{
+                exam_location: choose_cs_exam_location(exam),
+                exam_time: parse_cs_exam_time(exam),
+                exam_date: parse_cs_exam_date(exam)
+              }]
+            elsif exam_key
+              section[:estimated_final_exam] = [{
+                exam_location: 'Scheduled Final Exam',
+                exam_time: final_exam_conversion[exam_key][:exam_time],
+                exam_date: determine_exam_date(semester, final_exam_conversion[exam_key][:exam_day])
+              }]
+            end
+          end
         end
       end
     end
 
+    # Groups exams by exam_slot for conflicts, then sorts by exam_slot for each semester
     def sort_exams(semester)
       semester[:exams] = semester[:courses].reject { |course| course[:exam_slot].nil? }
       if semester[:cs_data_available]
@@ -151,11 +187,11 @@ module MyAcademics
     end
 
     # Determines what the exam key would be when parsing final exam conversion
-    def determine_exam_key(semester, course, final_exam_schedule)
+    def determine_exam_key(semester, course, final_exam_conversion)
       # if the course has its own time, use that
-      term = semester[:term]
+      term = semester[:termCode]
       key_by_name = "#{term}-#{course[:name]}"
-      if final_exam_schedule[key_by_name]
+      if final_exam_conversion[key_by_name]
         key_by_name
 
       # otherwise it's a undergrad course, so check its time

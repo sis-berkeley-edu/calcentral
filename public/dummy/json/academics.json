@@ -568,6 +568,401 @@
       "slug": "fall-2016",
       "termCode": "D",
       "termYear": "2016",
+      "timeBucket": "current",
+      "campusSolutionsTerm": true,
+      "gradingInProgress": null,
+      "classes": [
+        {
+          "role": "Instructor",
+          "sections": [
+            {
+              "ccn": "10707",
+              "instruction_format": "LEC",
+              "is_primary_section": true,
+              "section_label": "LEC 003",
+              "section_number": "003",
+              "units": null,
+              "enroll_limit": 115,
+              "waitlist_limit": 0,
+              "instructors": [
+                {
+                  "name": "Tiffany Rasmussen",
+                  "role": "PI",
+                  "uid": "921283"
+                }
+              ],
+              "estimated_final_exam": [
+                {
+                  "time": "MWF 4:00P-4:59P",
+                  "exam_location": "Scheduled Final Exam",
+                  "exam_time": "8-11A",
+                  "exam_date": "Th 12/15"
+                }
+              ],
+              "schedules": {
+                "oneTime": [],
+                "recurring": [
+                  {
+                    "buildingName": "Cheit",
+                    "roomNumber": "C230",
+                    "schedule": "TuTh 9:30A-10:59A"
+                  }
+                ]
+              },
+              "slug": "lec-003",
+              "url": "/academics/teaching-semester/fall-2016/class/ugba-102a/lec-003",
+              "courseCode": "UGBA 102A",
+              "siteIds": [
+                "1452406"
+              ]
+            },
+            {
+              "ccn": "10708",
+              "instruction_format": "LEC",
+              "is_primary_section": true,
+              "section_label": "LEC 004",
+              "section_number": "004",
+              "units": null,
+              "enroll_limit": 0,
+              "waitlist_limit": 0,
+              "estimated_final_exam": [
+                {
+                  "time": "MWF 4:00P-4:59P",
+                  "exam_location": "Scheduled Final Exam",
+                  "exam_time": "8-11A",
+                  "exam_date": "Th 12/15"
+                }
+              ],
+              "instructors": [
+                {
+                  "name": "Tiffany Rasmussen",
+                  "role": "PI",
+                  "uid": "921283"
+                }
+              ],
+              "schedules": {
+                "oneTime": [],
+                "recurring": []
+              },
+              "slug": "lec-004",
+              "url": "/academics/teaching-semester/fall-2016/class/ugba-102a/lec-004",
+              "courseCode": "UGBA 102A",
+              "siteIds": [
+                "1452406"
+              ]
+            },
+            {
+              "ccn": "10685",
+              "instruction_format": "DIS",
+              "is_primary_section": false,
+              "section_label": "DIS 301",
+              "section_number": "301",
+              "associated_primary_id": "10707.0",
+              "enroll_limit": 0,
+              "waitlist_limit": 0,
+              "instructors": [],
+              "schedules": {
+                "oneTime": [],
+                "recurring": [
+                  {
+                    "buildingName": "Cheit",
+                    "roomNumber": "C220",
+                    "schedule": "F 8:00A-8:59A"
+                  }
+                ]
+              },
+              "associatedWithPrimary": null,
+              "courseCode": "UGBA 102A"
+            },
+            {
+              "ccn": "10666",
+              "instruction_format": "DIS",
+              "is_primary_section": false,
+              "section_label": "DIS 302",
+              "section_number": "302",
+              "associated_primary_id": "10707.0",
+              "enroll_limit": 0,
+              "waitlist_limit": 0,
+              "instructors": [],
+              "schedules": {
+                "oneTime": [],
+                "recurring": [
+                  {
+                    "buildingName": "Cheit",
+                    "roomNumber": "C220",
+                    "schedule": "F 9:00A-9:59A"
+                  }
+                ]
+              },
+              "associatedWithPrimary": null,
+              "courseCode": "UGBA 102A"
+            },
+            {
+              "ccn": "10667",
+              "instruction_format": "DIS",
+              "is_primary_section": false,
+              "section_label": "DIS 401",
+              "section_number": "401",
+              "associated_primary_id": "10708.0",
+              "enroll_limit": 0,
+              "waitlist_limit": 0,
+              "instructors": [],
+              "schedules": {
+                "oneTime": [],
+                "recurring": [
+                  {
+                    "buildingName": "Cheit",
+                    "roomNumber": "C220",
+                    "schedule": "F 12:00P-12:59P"
+                  }
+                ]
+              },
+              "associatedWithPrimary": null,
+              "courseCode": "UGBA 102A"
+            },
+            {
+              "ccn": "10668",
+              "instruction_format": "DIS",
+              "is_primary_section": false,
+              "section_label": "DIS 402",
+              "section_number": "402",
+              "associated_primary_id": "10708.0",
+              "enroll_limit": 0,
+              "waitlist_limit": 0,
+              "instructors": [],
+              "schedules": {
+                "oneTime": [],
+                "recurring": []
+              },
+              "associatedWithPrimary": null,
+              "courseCode": "UGBA 102A"
+            }
+          ],
+          "slug": "ugba-102a",
+          "listings": [
+            {
+              "course_code": "UGBA 102A",
+              "dept": "UGBA",
+              "courseCatalog": "102A",
+              "course_id": "ugba-102a-2016-D"
+            }
+          ],
+          "title": "Introduction to Financial Accounting",
+          "url": "/academics/teaching-semester/fall-2016/class/ugba-102a",
+          "enrollLimit": 115,
+          "waitlistLimit": 0,
+          "multiplePrimaries": true,
+          "scheduledSectionCount": 6,
+          "scheduledSections": [
+            {
+              "format": "lecture",
+              "count": 2
+            },
+            {
+              "format": "discussion",
+              "count": 4
+            }
+          ],
+          "course_code": "UGBA 102A",
+          "dept": "UGBA",
+          "courseCatalog": "102A",
+          "course_id": "ugba-102a-2016-D",
+          "class_sites": [
+            {
+              "emitter": "bCourses",
+              "id": "1452406",
+              "name": "UGBA 102A",
+              "shortDescription": "Introduction to Financial Accounting",
+              "site_url": "https://bcourses.berkeley.edu/courses/1452406",
+              "siteType": "course",
+              "sections": [
+                {
+                  "ccn": "10707"
+                },
+                {
+                  "ccn": "10708"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "role": "Instructor",
+          "sections": [
+            {
+              "ccn": "10702",
+              "instruction_format": "LEC",
+              "is_primary_section": true,
+              "section_label": "LEC 001",
+              "section_number": "001",
+              "units": null,
+              "enroll_limit": 12,
+              "waitlist_limit": 0,
+              "instructors": [
+                {
+                  "name": "Tiffany Rasmussen",
+                  "role": "PI",
+                  "uid": "921283"
+                }
+              ],
+              "schedules": {
+                "oneTime": [],
+                "recurring": [
+                  {
+                    "buildingName": "Cheit",
+                    "roomNumber": "C210",
+                    "schedule": "TuTh 12:30P-1:59P"
+                  }
+                ]
+              },
+              "courseCode": "UGBA 126"
+            },
+            {
+              "ccn": "10703",
+              "instruction_format": "DIS",
+              "is_primary_section": false,
+              "section_label": "DIS 101",
+              "section_number": "101",
+              "associated_primary_id": "10702.0",
+              "enroll_limit": 0,
+              "waitlist_limit": 0,
+              "instructors": [],
+              "schedules": {
+                "oneTime": [],
+                "recurring": [
+                  {
+                    "buildingName": "Cheit",
+                    "roomNumber": "C330",
+                    "schedule": "F 8:00A-9:59A"
+                  }
+                ]
+              },
+              "courseCode": "UGBA 126"
+            }
+          ],
+          "slug": "ugba-126",
+          "listings": [
+            {
+              "course_code": "UGBA 126",
+              "dept": "UGBA",
+              "courseCatalog": "126",
+              "course_id": "ugba-126-2016-D"
+            }
+          ],
+          "title": "Auditing",
+          "url": "/academics/teaching-semester/fall-2016/class/ugba-126",
+          "enrollLimit": 12,
+          "waitlistLimit": 0,
+          "scheduledSectionCount": 2,
+          "scheduledSections": [
+            {
+              "format": "lecture",
+              "count": 1
+            },
+            {
+              "format": "discussion",
+              "count": 1
+            }
+          ],
+          "course_code": "UGBA 126",
+          "dept": "UGBA",
+          "courseCatalog": "126",
+          "course_id": "ugba-126-2016-D",
+          "class_sites": [
+            {
+              "emitter": "bCourses",
+              "id": "1452407",
+              "name": "UGBA 126 - LEC 001",
+              "shortDescription": "Auditing",
+              "site_url": "https://bcourses.berkeley.edu/courses/1452407",
+              "siteType": "course",
+              "sections": [
+                {
+                  "ccn": "10702"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "role": "Instructor",
+          "sections": [
+            {
+              "ccn": "32961",
+              "instruction_format": "LEC",
+              "is_primary_section": true,
+              "section_label": "LEC 002",
+              "section_number": "002",
+              "units": null,
+              "enroll_limit": 21,
+              "waitlist_limit": 0,
+              "instructors": [
+                {
+                  "name": "Tiffany Rasmussen",
+                  "role": "PI",
+                  "uid": "921283"
+                }
+              ],
+              "schedules": {
+                "oneTime": [],
+                "recurring": [
+                  {
+                    "buildingName": "Cheit",
+                    "roomNumber": "C330",
+                    "schedule": "TuTh 2:00P-3:29P"
+                  }
+                ]
+              },
+              "courseCode": "UGBA 127"
+            }
+          ],
+          "slug": "ugba-127",
+          "listings": [
+            {
+              "course_code": "UGBA 127",
+              "dept": "UGBA",
+              "courseCatalog": "127",
+              "course_id": "ugba-127-2016-D"
+            }
+          ],
+          "title": "Special Topics in Accounting",
+          "url": "/academics/teaching-semester/fall-2016/class/ugba-127",
+          "enrollLimit": 21,
+          "waitlistLimit": 0,
+          "scheduledSectionCount": 1,
+          "scheduledSections": [
+            {
+              "format": "lecture",
+              "count": 1
+            }
+          ],
+          "course_code": "UGBA 127",
+          "dept": "UGBA",
+          "courseCatalog": "127",
+          "course_id": "ugba-127-2016-D",
+          "class_sites": [
+            {
+              "emitter": "bCourses",
+              "id": "1452408",
+              "name": "UGBA 127 - LEC 002",
+              "shortDescription": "Ethics in Accounting",
+              "site_url": "https://bcourses.berkeley.edu/courses/1452408",
+              "siteType": "course",
+              "sections": [
+                {
+                  "ccn": "32961"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Fall 2016",
+      "slug": "fall-2016",
+      "termCode": "D",
+      "termYear": "2016",
       "campusSolutionsTerm": true,
       "classes": [
         {
