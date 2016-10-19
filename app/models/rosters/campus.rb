@@ -59,11 +59,11 @@ module Rosters
             section_enrollments_open = section_enrollment_limit - section_enrolled_count
             section_waitlisted_open = section_waitlist_limit - section_waitlisted_count
             if (section_enrollments_open < 0)
-              logger.error "Section Enrollment limit exceeded in Section ID #{section[:ccn]}; Enrollment Count: #{section_enrolled_count}; Limit: #{section_enrollment_limit}"
+              logger.debug "Section Enrollment limit exceeded in Section ID #{section[:ccn]}; Enrollment Count: #{section_enrolled_count}; Limit: #{section_enrollment_limit}"
               section_enrollments_open = 0
             end
             if (section_waitlisted_open < 0)
-              logger.error "Section Waitlist limit exceeded in Section ID #{section[:ccn]}; Waitlist Count: #{section_waitlisted_count}; Limit: #{section_waitlist_limit}"
+              logger.debug "Section Waitlist limit exceeded in Section ID #{section[:ccn]}; Waitlist Count: #{section_waitlisted_count}; Limit: #{section_waitlist_limit}"
               section_waitlisted_open = 0
             end
           else
