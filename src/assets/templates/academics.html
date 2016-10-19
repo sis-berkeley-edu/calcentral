@@ -16,6 +16,7 @@
       data-ng-if="api.user.profile.hasStudentHistory || api.user.profile.roles.student || api.user.profile.roles.applicant">
       <div data-ng-include src="'academics_student_profile.html'"></div>
       <div data-ng-include src="'academics_status_holds_blocks.html'" data-ng-if="showStatusAndBlocks"></div>
+      <div data-ng-include src="'widgets/academics/academic_records.html'"></div>
     </div>
 
     <div

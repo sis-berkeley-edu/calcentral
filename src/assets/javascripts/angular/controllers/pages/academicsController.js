@@ -194,18 +194,6 @@ angular.module('calcentral.controllers').controller('AcademicsController', funct
     $scope.showLegacyAdvising = !$scope.filteredForDelegate && $scope.api.user.profile.features.legacyAdvising && $scope.isLSStudent;
     $scope.showAdvising = !$scope.filteredForDelegate && apiService.user.profile.features.advising && apiService.user.profile.roles.student && isMbaJdOrNotLaw();
     $scope.showProfileMessage = (!$scope.isAcademicInfoAvailable || !$scope.collegeAndLevel || _.isEmpty($scope.collegeAndLevel.careers));
-
-    if (userService.profile.roles.law) {
-      $scope.requestTranscript = {
-        link: 'http://www.law.berkeley.edu/php-programs/registrar/forms/transcriptrequestform.php',
-        title: 'Request Law Transcript'
-      };
-    } else {
-      $scope.requestTranscript = {
-        link: 'http://registrar.berkeley.edu/academic-records/transcripts-diplomas',
-        title: 'Request Transcript'
-      };
-    }
   };
 
   /**

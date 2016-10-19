@@ -1,0 +1,17 @@
+<div class="cc-widget" data-ng-controller="AcademicRecordsController">
+  <div class="cc-widget-title">
+    <h2>Academic Records</h2>
+  </div>
+  <div>
+    <div class="cc-list-link-container" data-cc-spinner-directive="officialTranscript.isLoading">
+      <ul class="cc-list-links">
+        <li>
+          <a data-ng-class="{'cc-academics-link-disabled':(api.user.profile.delegateActingAsUid)}"
+            data-ng-click="makePostRequest()"
+            data-ng-disabled="api.user.profile.delegateActingAsUid"
+            data-ng-attr-title="{{officialTranscript.postUrlHover}}">Request Transcript</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
