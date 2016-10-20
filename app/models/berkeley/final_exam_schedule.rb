@@ -1,46 +1,50 @@
 module Berkeley
   class FinalExamSchedule
     extend Cache::Cacheable
-    # Support class for my_academics/exams.rb
+    include ClassLogger
 
-    # Takes the final exam csvs and outputs a reasonable format for exams.rb to parse
     def self.fetch
       fetch_from_cache do
-        semesters_csv =  {
-          B: 'public/csv/sp_final_exam_schedule.csv', # http://schedule.berkeley.edu/examsp.html
-          D: 'public/csv/fa_final_exam_schedule.csv' # http://schedule.berkeley.edu/examsf.html
-        }
-        course_to_exam = Hash.new
-
-        semesters_csv.each do |semester, semester_csv|
-          process_semester(semester, semester_csv, course_to_exam)
+        course_to_exam = {}
+        Settings.final_exam_schedule.each do |settings|
+          if (csv_per_term = settings.marshal_dump[:csv_per_term])
+            csv_per_term.marshal_dump.each do |term_code, path|
+              logger.warn "Loading #{settings.year}#{term_code} final exam schedule from #{path}"
+              course_to_exam.merge! parse_csv(settings.year, term_code, path)
+            end
+          end
         end
         course_to_exam
       end
     end
 
     # processes each semester from the CSV, assigning each key to the hash.
-    def self.process_semester(semester, csv, course_to_exam)
+    def self.parse_csv(year, term_code, csv)
+      result = {}
       CSV.foreach(csv,{:headers=>true}) do |row|
         exam = {
+          year: year,
+          term_code: term_code,
           exam_day: row['Day'],
           exam_time: row['Time'],
           exam_slot: row['Exam Group']
         }
         times, days, courses = row['Class Times'], row['Class Days'], row['Course Exceptions']
 
-        # add the days to the mapping, e.g key: B-M-10:00A
-        sem = semester.to_s
-        if days
-          days.split(/(?=[A-Z])/).each do |day|
-            # for each day and time, create a key from the semester code, day, and time, e.g B-M-8:00A
-            times.split(' ').each {|time| course_to_exam[sem + '-' + day + '-' + time] = exam} if times
-            course_to_exam[sem + '-' + day] = exam if !times # weekends
+        days && days.split(/(?=[A-Z])/).each do |day|
+          if times
+            times.split(' ').each do |time|
+              result["#{term_code}-#{day}-#{time}"] = exam
+            end
+          else
+            # Weekends
+            result["#{term_code}-#{day}"] = exam unless times
           end
         end
-        # creates a key from the course code, e.g B-CHEM 1A
-        courses.split(', ').each { |course| course_to_exam[sem + '-' + course] = exam } if courses
+        # Key per course code, e.g B-CHEM 1A
+        courses && courses.split(', ').each { |course| result["#{term_code}-#{course}"] = exam }
       end
+      result
     end
 
   end
