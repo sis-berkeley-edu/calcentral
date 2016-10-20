@@ -48,8 +48,8 @@ describe CampusSolutions::AdvisingResourcesController do
       end
 
       context 'links from YAML settings' do
-        let(:key) { 'schedulePlannerStudentSpecific' }
-        let(:expected_name) { 'Schedule Planner' }
+        let(:key) { 'webNowDocuments' }
+        let(:expected_name) { 'WebNow Documents' }
 
         it_behaves_like 'a feed with advising resources'
 
