@@ -1,6 +1,7 @@
 module EdoOracle
   module Adapters
     module Common
+      include ClassLogger
 
       def adapt_course_cntl_num(row)
         row['course_cntl_num'] = row['section_id'].to_s
@@ -21,8 +22,10 @@ module EdoOracle
                                    when 'TNIC'  then '2'  # Teaching but Not in Charge, equivalent of Teaching but not Instructor of Record (2)
                                    when 'ICNT'  then '3'  # In Charge but Not Teaching, equivalent of Not teaching but Instructor of Record (3). Instructors coded as 3 must be accompanied by another "teaching" instructor coded as 2.
                                    when 'INVT'  then '4'  # Teaching with Invalid Title, equivalent of No Valid Teaching Title Code (4)
-                                   when 'PROXY' then '5'  # Head GSI, or similar, who assists the instructor(s) in charge with grading (5)
-                                   else raise ArgumentError, "Unable to convert to 'instructor_func'. No such role code: '#{code}'"
+                                   when 'APRX'  then '5'  # Head GSI, or similar, who assists the instructor(s) in charge with grading (5)
+                                   else
+                                     logger.error "Attention, action required! This code needs conversion logic for EDO db 'role_code' value: #{code}"
+                                     nil
                                  end
       end
 

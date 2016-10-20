@@ -63,8 +63,12 @@ describe EdoOracle::Adapters::Oec do
       let(:instructor_func) { '4' }
     end
     include_examples 'role code to instructor func' do
-      let(:role_code) { 'PROXY' }
+      let(:role_code) { 'APRX' }
       let(:instructor_func) { '5' }
+    end
+    include_examples 'role code to instructor func' do
+      let(:role_code) { 'FOO' }
+      let(:instructor_func) { nil }
     end
     include_examples 'role code to instructor func' do
       let(:role_code) { nil }
