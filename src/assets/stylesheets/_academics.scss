@@ -171,6 +171,9 @@
   .cc-academics-enrollment-verification-link {
     padding: 15px 15px 0;
   }
+  .cc-academics-request-transcript-link {
+    padding: 2px 15px 0;
+  }
   .cc-academics-instructors {
     color: $cc-color-green-light;
     list-style-type: square;
@@ -258,6 +261,10 @@
         font-size: 11px !important;
         line-height: 1.4;
       }
+    }
+    h4 {
+      font-size: 12px;
+      margin: 3px 0 0 6px;
     }
   }
   .cc-academics-semester-current {
