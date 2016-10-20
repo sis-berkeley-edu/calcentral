@@ -43,6 +43,14 @@ class AdvisingStudentController < ApplicationController
     render json: StudentSuccess::Merged.new(user_id: student_uid_param).get_feed
   end
 
+  def degree_progress_graduate
+    render json: DegreeProgress::GraduateMilestones.new(student_uid_param).get_feed_as_json
+  end
+
+  def degree_progress_undergrad
+    render json: DegreeProgress::UndergradRequirements.new(student_uid_param).get_feed_as_json
+  end
+
   def resources
     json = CampusSolutions::AdvisingResources.new(user_id: session['user_id'], student_uid: student_uid_param).get
     links = json[:feed] && json[:feed][:ucAdvisingResources] && json[:feed][:ucAdvisingResources][:ucAdvisingLinks]
@@ -58,10 +66,6 @@ class AdvisingStudentController < ApplicationController
 
   def student_attributes
     render json: HubEdos::StudentAttributes.new(user_id: student_uid_param).get
-  end
-
-  def degree_progress_graduate
-    render json: DegreeProgress::GraduateMilestones.new(student_uid_param).get_feed_as_json
   end
 
   private

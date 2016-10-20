@@ -18,8 +18,10 @@ angular.module('calcentral.factories').factory('advisingFactory', function(apiSe
   // var urlAdvisingRegistrations = 'dummy/json/advising_registrations.json';
   var urlAdvisingStudentSuccess = '/api/advising/student_success/';
   // var urlAdvisingStudentSuccess = '/dummy/json/advising_student_success.json';
-  var urlAdvisingDegreeProgress = '/api/advising/degree_progress/grad/';
+  var urlAdvisingDegreeProgressGraduate = '/api/advising/degree_progress/grad/';
   // var urlAdvisingDegreeProgress = '/dummy/json/degree_progress_graduate.json';
+  var urlAdvisingDegreeProgressUndergrad = '/api/advising/degree_progress/ugrd/';
+  // var urlAdvisingDegreeProgressUndergrad = '/dummy/json/degree_progress_undergrad.json';
 
   var getResources = function(options) {
     return apiService.http.request(options, urlResources);
@@ -45,8 +47,12 @@ angular.module('calcentral.factories').factory('advisingFactory', function(apiSe
     return apiService.http.request(options, urlAdvisingStudentSuccess + options.uid);
   };
 
-  var getDegreeProgress = function(options) {
-    return apiService.http.request(options, urlAdvisingDegreeProgress + options.uid);
+  var getDegreeProgressGraduate = function(options) {
+    return apiService.http.request(options, urlAdvisingDegreeProgressGraduate + options.uid);
+  };
+
+  var getDegreeProgressUndergrad = function(options) {
+    return apiService.http.request(options, urlAdvisingDegreeProgressUndergrad + options.uid);
   };
 
   return {
@@ -56,6 +62,7 @@ angular.module('calcentral.factories').factory('advisingFactory', function(apiSe
     getStudentAcademics: getStudentAcademics,
     getStudentRegistrations: getStudentRegistrations,
     getStudentSuccess: getStudentSuccess,
-    getDegreeProgress: getDegreeProgress
+    getDegreeProgressGraduate: getDegreeProgressGraduate,
+    getDegreeProgressUndergrad: getDegreeProgressUndergrad
   };
 });

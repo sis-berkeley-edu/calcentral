@@ -2,23 +2,25 @@
   <div class="cc-widget-title">
     <h2>Degree Progress</h2>
   </div>
-  <div class="cc-widget-padding" data-cc-spinner-directive="degreeProgress.isLoading">
-    <ul class="cc-list-links">
-      <li data-ng-if="degreeProgress.links.advancementFormSubmit.url">
+  <div class="cc-widget-padding" data-cc-spinner-directive="degreeProgressGraduate.isLoading">
+    <div data-ng-if="degreeProgressGraduate.errored">There was an error retrieving degree progress data.</div>
+    <div data-ng-if="!degreeProgressGraduate.errored && !degreeProgressGraduate.progresses.length">No degree progress data is available.</div>
+    <ul data-ng-if="!degreeProgressGraduate.errored && degreeProgressGraduate.progresses" class="cc-list-links">
+      <li data-ng-if="degreeProgressGraduate.links.advancementFormSubmit.url">
         <div
           data-cc-campus-solutions-link-item-directive
-          data-link="degreeProgress.links.advancementFormSubmit"
+          data-link="degreeProgressGraduate.links.advancementFormSubmit"
         ></div>
       </li>
-      <li data-ng-if="degreeProgress.links.advancementFormView.url">
+      <li data-ng-if="degreeProgressGraduate.links.advancementFormView.url">
         <div
           data-cc-campus-solutions-link-item-directive
-          data-link="degreeProgress.links.advancementFormView"
+          data-link="degreeProgressGraduate.links.advancementFormView"
         ></div>
       </li>
     </ul>
     <ul>
-      <li data-ng-repeat="plan in degreeProgress.progresses">
+      <li data-ng-repeat="plan in degreeProgressGraduate.progresses">
         <h3 data-ng-bind="plan.acadPlanDescr + ' &mdash; Graduate Division Milestones'"></h3>
         <div data-ng-repeat="requirement in plan.requirements">
           <h4 data-ng-bind="requirement.name"></h4>

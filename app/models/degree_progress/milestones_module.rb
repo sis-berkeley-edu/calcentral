@@ -37,11 +37,11 @@ module DegreeProgress
 
     def normalize(requirements)
       requirements.map! do |requirement|
-        name = Berkeley::DegreeProgress.get_description(requirement[:code])
+        name = Berkeley::DegreeProgressGraduate.get_description(requirement[:code])
         if name
           requirement[:name] = name
-          requirement[:status_descr] = Berkeley::DegreeProgress.get_status(requirement[:status])
-          requirement[:form_notification] = Berkeley::DegreeProgress.get_form_notification(requirement[:code], requirement[:status])
+          requirement[:status_descr] = Berkeley::DegreeProgressGraduate.get_status(requirement[:status])
+          requirement[:form_notification] = Berkeley::DegreeProgressGraduate.get_form_notification(requirement[:code], requirement[:status])
           requirement
         end
       end
@@ -62,8 +62,8 @@ module DegreeProgress
 
       if merge_candidates.length > 1
         first = find_first merge_candidates
-        first[:name] = Berkeley::DegreeProgress.get_merged_description
-        first[:form_notification] = Berkeley::DegreeProgress.get_merged_form_notification
+        first[:name] = Berkeley::DegreeProgressGraduate.get_merged_description
+        first[:form_notification] = Berkeley::DegreeProgressGraduate.get_merged_form_notification
         result.unshift(first)
       elsif merge_candidates.length === 1
         result.unshift(merge_candidates.first)

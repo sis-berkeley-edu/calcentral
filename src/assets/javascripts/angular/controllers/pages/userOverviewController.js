@@ -52,7 +52,10 @@ angular.module('calcentral.controllers').controller('UserOverviewController', fu
     },
     isLoading: true
   };
-  $scope.degreeProgress = {
+  $scope.degreeProgressGraduate = {
+    isLoading: true
+  };
+  $scope.degreeProgressUndergrad = {
     isLoading: true
   };
 
@@ -198,13 +201,24 @@ angular.module('calcentral.controllers').controller('UserOverviewController', fu
   };
 
   var loadDegreeProgressGraduate = function() {
-    advisingFactory.getDegreeProgress({
+    advisingFactory.getDegreeProgressGraduate({
       uid: $routeParams.uid
     }).success(function(data) {
-      $scope.degreeProgress.progresses = _.get(data, 'feed.degreeProgress');
-      $scope.degreeProgress.errored = _.get(data, 'data.errored');
+      $scope.degreeProgressGraduate.progresses = _.get(data, 'feed.degreeProgress');
+      $scope.degreeProgressGraduate.errored = _.get(data, 'errored');
     }).finally(function() {
-      $scope.degreeProgress.isLoading = false;
+      $scope.degreeProgressGraduate.isLoading = false;
+    });
+  };
+
+  var loadDegreeProgressUndergrad = function() {
+    advisingFactory.getDegreeProgressUndergrad({
+      uid: $routeParams.uid
+    }).success(function(data) {
+      $scope.degreeProgressUndergrad.progresses = _.get(data, 'feed.degreeProgress.progresses');
+      $scope.degreeProgressUndergrad.errored = _.get(data, 'errored');
+    }).finally(function() {
+      $scope.degreeProgressUndergrad.isLoading = false;
     });
   };
 
@@ -267,6 +281,7 @@ angular.module('calcentral.controllers').controller('UserOverviewController', fu
       .then(loadHolds)
       .then(loadRegistrations)
       .then(loadDegreeProgressGraduate)
+      .then(loadDegreeProgressUndergrad)
       .then(getRegMessages);
     }
   });

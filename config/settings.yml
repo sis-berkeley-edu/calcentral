@@ -500,6 +500,7 @@ features:
   cs_committees: false
   cs_degree_progress_grad_advising: false
   cs_degree_progress_grad_student: false
+  cs_degree_progress_ugrd_advising: false
   cs_delegated_access: false
   cs_enrollment_card: false
   cs_fin_aid: false
