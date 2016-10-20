@@ -1,5 +1,5 @@
 module Berkeley
-  class GradMilestones
+  class DegreeProgress
 
     def self.get_status(status_code)
       statuses[status_code.strip.upcase] unless status_code.blank?
