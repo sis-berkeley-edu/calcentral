@@ -1,40 +1,41 @@
 describe Berkeley::FinalExamSchedule do
 
-  # {
-  #   B-M-8:00A=>{:exam_day=>"Monday",:exam_time=>"8-11A",:exam_slot=>1},
-  #   B-CHEM 1A=>{:exam_day=>"Wednesday",:exam_time=>"8-11A",:exam_slot=>9},
-  #   ...
-  # } Each key is the term_code - one_day - start_time, which maps to a exam slot, time, and day
-  #   If the course is an exception, the key is term_code - course_code
-  let(:final_exam_logic) do
+  let(:schedule) do
     Berkeley::FinalExamSchedule.fetch
   end
 
   context 'as a student' do
     it 'should parse the csvs correctly' do
-      # hardcoded expectances, if one of these fails, make sure csv and test is updated
-      expect(final_exam_logic['B-M-8:00A'][:exam_day]).to eq 'Monday'
-      expect(final_exam_logic['B-M-8:00A'][:exam_time]).to eq '8-11A'
-      expect(final_exam_logic['B-M-8:00A'][:exam_slot]).to eq '1'
-      expect(final_exam_logic['B-W-8:00A'][:exam_day]).to eq 'Monday'
-      expect(final_exam_logic['B-W-8:00A'][:exam_time]).to eq '8-11A'
-      expect(final_exam_logic['B-W-8:00A'][:exam_slot]).to eq '1'
-      expect(final_exam_logic['B-CHEM 1A'][:exam_day]).to eq 'Wednesday'
-      expect(final_exam_logic['B-CHEM 1A'][:exam_time]).to eq '8-11A'
-      expect(final_exam_logic['B-CHEM 1A'][:exam_slot]).to eq '9'
-      expect(final_exam_logic['B-F-7:00P'][:exam_day]).to eq 'Friday'
-      expect(final_exam_logic['B-F-7:00P'][:exam_time]).to eq '3-6P'
-      expect(final_exam_logic['B-F-7:00P'][:exam_slot]).to eq '19'
-
-      expect(final_exam_logic['D-W-8:00A'][:exam_day]).to eq 'Monday'
-      expect(final_exam_logic['D-W-8:00A'][:exam_time]).to eq '7-10P'
-      expect(final_exam_logic['D-W-8:00A'][:exam_slot]).to eq '4'
-      expect(final_exam_logic['D-FRENCH 2'][:exam_day]).to eq 'Wednesday'
-      expect(final_exam_logic['D-FRENCH 2'][:exam_time]).to eq '11:30-2:30P'
-      expect(final_exam_logic['D-FRENCH 2'][:exam_slot]).to eq '10'
-      expect(final_exam_logic['D-Sa'][:exam_day]).to eq 'Wednesday'
-      expect(final_exam_logic['D-Sa'][:exam_time]).to eq '3-6P'
-      expect(final_exam_logic['D-Sa'][:exam_slot]).to eq '11'
+      # Fall
+      b_m = schedule['B-M-8:00A']
+      expect(b_m[:exam_day]).to eq 'Monday'
+      expect(b_m[:exam_time]).to eq '8-11A'
+      expect(b_m[:exam_slot]).to eq '1'
+      b_w = schedule['B-W-8:00A']
+      expect(b_w[:exam_day]).to eq 'Monday'
+      expect(b_w[:exam_time]).to eq '8-11A'
+      expect(b_w[:exam_slot]).to eq '1'
+      b_chem = schedule['B-CHEM 1A']
+      expect(b_chem[:exam_day]).to eq 'Wednesday'
+      expect(b_chem[:exam_time]).to eq '8-11A'
+      expect(b_chem[:exam_slot]).to eq '9'
+      b_f = schedule['B-F-7:00P']
+      expect(b_f[:exam_day]).to eq 'Friday'
+      expect(b_f[:exam_time]).to eq '3-6P'
+      expect(b_f[:exam_slot]).to eq '19'
+      # Spring
+      d_w = schedule['D-W-8:00A']
+      expect(d_w[:exam_day]).to eq 'Monday'
+      expect(d_w[:exam_time]).to eq '7-10P'
+      expect(d_w[:exam_slot]).to eq '4'
+      d_french = schedule['D-FRENCH 2']
+      expect(d_french[:exam_day]).to eq 'Wednesday'
+      expect(d_french[:exam_time]).to eq '11:30-2:30P'
+      expect(d_french[:exam_slot]).to eq '10'
+      d_sa = schedule['D-Sa']
+      expect(d_sa[:exam_day]).to eq 'Wednesday'
+      expect(d_sa[:exam_time]).to eq '3-6P'
+      expect(d_sa[:exam_slot]).to eq '11'
     end
   end
 

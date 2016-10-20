@@ -277,6 +277,7 @@ cache:
     CampusOracle::CourseSections: NEXT_08_00
     CampusOracle::UserAttributes: NEXT_08_00
     CampusOracle::UserCourses::All: NEXT_08_00
+    Berkeley::FinalExamSchedule: <%= 24.hours %>
 
     EdoOracle::UserCourses::All: <%= 8.hours %>
 
@@ -453,6 +454,21 @@ campus_solutions_links:
   academics:
     enrollment_verification_google: ''
     enrollment_Verification: ''
+
+final_exam_schedule: [
+  {
+    year: 2016,
+    csv_per_term: {
+      D: 'public/csv/final_exam_schedule/2016D.csv' # from http://schedule.berkeley.edu/examsf.html
+    }
+  },
+  {
+    year: 2017,
+    csv_per_term: {
+      B: 'public/csv/final_exam_schedule/2017B.csv' # from http://schedule.berkeley.edu/examsp.html
+    }
+  }
+]
 
 # A feature will be disabled if the corresponding feature-flag is false or nil.
 features:
