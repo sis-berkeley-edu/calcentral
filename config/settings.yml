@@ -358,6 +358,9 @@ background_jobs_check:
 
 youtube_splash_id: '3Iz1NT9QKjI'
 
+canvas_mailing_lists:
+  timestamp_tolerance: 60
+
 oec:
   administrator_uid: ''
   enrollments_batch_size: 120000
