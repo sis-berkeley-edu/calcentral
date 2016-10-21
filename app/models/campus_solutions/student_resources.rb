@@ -42,7 +42,7 @@ module CampusSolutions
 
     def fetch_link(link_key, placeholders = {})
       link = CampusSolutions::Link.new.get_url(link_key, placeholders).try(:[], :link)
-      logger.error "Could not retrieve CS link #{link_key} for Student Resources feed, uid = #{@uid}" unless link
+      logger.debug "Could not retrieve CS link #{link_key} for Student Resources feed, uid = #{@uid}" unless link
       link
     end
 
