@@ -19,8 +19,13 @@ module CampusSolutions
         { feed_key: :change_of_academic_plan_view, cs_link_key: 'UC_CX_GT_CPPSTACK_VIEW' },
         { feed_key: :emergency_loan_form_add, cs_link_key: 'UC_CX_GT_FAEMRLAON_ADD' },
         { feed_key: :emergency_loan_form_view, cs_link_key: 'UC_CX_GT_FAEMRLAON_VIEW' },
-        { feed_key: :withdraw_from_semester_add, cs_link_key: 'UC_CX_SRWITHDRL_ADD' },
+        { feed_key: :higher_degrees_committee_form, cs_link_key: 'UC_CX_GT_AAQEAPPLIC_ADD' },
+        { feed_key: :special_enrollment_petition, cs_link_key: 'UC_CX_GT_SRSEP_ADD' },
+        { feed_key: :submit_degree_candidacy_form, cs_link_key: 'UC_CX_GT_SRDCR_ADD' },
+        { feed_key: :update_pending_forms, cs_link_key: 'UC_CX_GT_STUDENT_UPDATE' },
         { feed_key: :veterans_benefits_add, cs_link_key: 'UC_CX_GT_SRVAONCE_ADD' },
+        { feed_key: :view_submitted_forms, cs_link_key: 'UC_CX_GT_STUDENT_VIEW'},
+        { feed_key: :withdraw_from_semester_add, cs_link_key: 'UC_CX_SRWITHDRL_ADD' }
       ]
 
       campus_solutions_link_settings.each do |setting|
@@ -41,9 +46,7 @@ module CampusSolutions
     end
 
     def fetch_link(link_key, placeholders = {})
-      link = CampusSolutions::Link.new.get_url(link_key, placeholders).try(:[], :link)
-      logger.debug "Could not retrieve CS link #{link_key} for Student Resources feed, uid = #{@uid}" unless link
-      link
+      CampusSolutions::Link.new.get_url(link_key, placeholders).try(:[], :link)
     end
 
   end

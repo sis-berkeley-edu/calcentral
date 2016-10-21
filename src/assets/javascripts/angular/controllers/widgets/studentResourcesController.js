@@ -17,9 +17,10 @@ angular.module('calcentral.controllers').controller('StudentResourcesController'
     }
   };
 
-  // Identify Law students to suppress withdrawal link
   var setStudentRole = function() {
     $scope.isLawStudent = userService.profile.roles.law;
+    $scope.isGraduateStudent = userService.profile.roles.graduate;
+    $scope.isUndergraduate = userService.profile.roles.undergrad;
   };
 
   var loadInformation = function() {
