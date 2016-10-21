@@ -87,4 +87,15 @@ class AuthenticationStatePolicy
     real_auth.is_superuser? || has_advisor_role
   end
 
+  def graduate_student?
+    return false unless @user.real_user_auth.active?
+    attributes = User::AggregatedAttributes.new(@user.user_id).get_feed
+    attributes.try(:[], :roles).try(:[], :graduate)
+  end
+
+  def law_student?
+    return false unless @user.real_user_auth.active?
+    attributes = User::AggregatedAttributes.new(@user.user_id).get_feed
+    attributes.try(:[], :roles).try(:[], :law)
+  end
 end

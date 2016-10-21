@@ -118,8 +118,13 @@ module CampusSolutionsHelperModule
     it_behaves_like 'a proxy that observes a feature flag'
   end
 
-  shared_examples 'a proxy that properly observes the degree progress feature flag' do
-    let(:flag) { :cs_degree_progress }
+  shared_examples 'a proxy that properly observes the graduate degree progress for advisor feature flag' do
+    let(:flag) { :cs_degree_progress_grad_advising }
+    it_behaves_like 'a proxy that observes a feature flag'
+  end
+
+  shared_examples 'a proxy that properly observes the graduate degree progress for student feature flag' do
+    let(:flag) { :cs_degree_progress_grad_student }
     it_behaves_like 'a proxy that observes a feature flag'
   end
 

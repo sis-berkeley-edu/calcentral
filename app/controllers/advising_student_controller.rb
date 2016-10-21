@@ -60,6 +60,10 @@ class AdvisingStudentController < ApplicationController
     render json: HubEdos::StudentAttributes.new(user_id: student_uid_param).get
   end
 
+  def degree_progress_graduate
+    render json: DegreeProgress::GraduateMilestones.new(student_uid_param).get_feed_as_json
+  end
+
   private
 
   def authorize_for_student

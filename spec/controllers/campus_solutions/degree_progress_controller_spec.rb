@@ -3,6 +3,10 @@ describe CampusSolutions::DegreeProgressController do
   context '#get' do
     let(:feed) { :get }
 
+    before do
+      allow_any_instance_of(AuthenticationStatePolicy).to receive(:graduate_student?).and_return(true)
+    end
+
     it_behaves_like 'an unauthenticated user'
 
     context 'authenticated user' do

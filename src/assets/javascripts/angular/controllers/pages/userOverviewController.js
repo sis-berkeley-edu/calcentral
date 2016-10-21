@@ -52,6 +52,9 @@ angular.module('calcentral.controllers').controller('UserOverviewController', fu
     },
     isLoading: true
   };
+  $scope.degreeProgress = {
+    isLoading: true
+  };
 
   $scope.$watchGroup(['regStatus.registrations[0].summary', 'api.user.profile.features.csHolds'], function(newValues) {
     var enabledSections = [];
@@ -194,6 +197,17 @@ angular.module('calcentral.controllers').controller('UserOverviewController', fu
     });
   };
 
+  var loadDegreeProgressGraduate = function() {
+    advisingFactory.getDegreeProgress({
+      uid: $routeParams.uid
+    }).success(function(data) {
+      $scope.degreeProgress.progresses = _.get(data, 'feed.degreeProgress');
+      $scope.degreeProgress.errored = _.get(data, 'data.errored');
+    }).finally(function() {
+      $scope.degreeProgress.isLoading = false;
+    });
+  };
+
   var parseTermGpa = function() {
     var termGpa = [];
     _.forEach($scope.studentSuccess.termGpa, function(term) {
@@ -252,6 +266,7 @@ angular.module('calcentral.controllers').controller('UserOverviewController', fu
       .then(loadStudentSuccess)
       .then(loadHolds)
       .then(loadRegistrations)
+      .then(loadDegreeProgressGraduate)
       .then(getRegMessages);
     }
   });

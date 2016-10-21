@@ -1,7 +1,5 @@
 shared_examples 'a proxy that returns graduate milestone data' do
 
-  it_behaves_like 'a proxy that properly observes the degree progress feature flag'
-
   it 'returns data with the expected structure' do
     expect(subject[:feed][:degreeProgress]).to be
     expect(subject[:feed][:degreeProgress].first[:acadCareer]).to be
@@ -25,9 +23,18 @@ shared_examples 'a proxy that returns graduate milestone data' do
   end
 
   it 'replaces codes with descriptive names' do
+    expect(subject[:feed][:degreeProgress][0][:requirements][0][:name]).to eql('Advancement to Candidacy Plan II')
+    expect(subject[:feed][:degreeProgress][0][:requirements][0][:statusDescr]).to eql('Not Satisfied')
     expect(subject[:feed][:degreeProgress][1][:requirements][0][:name]).to eql('Advancement to Candidacy Plan I or Plan II')
-    expect(subject[:feed][:degreeProgress][1][:requirements][0][:status]).to be nil
+    expect(subject[:feed][:degreeProgress][1][:requirements][0][:statusDescr]).to be nil
     expect(subject[:feed][:degreeProgress][2][:requirements][0][:name]).to eql('Approval for Qualifying Exam')
-    expect(subject[:feed][:degreeProgress][2][:requirements][0][:status]).to eql('Completed')
+    expect(subject[:feed][:degreeProgress][2][:requirements][0][:statusDescr]).to eql('Completed')
+  end
+
+  it 'attaches a notification if the milestone is incomplete and requires a form' do
+    puts subject[:feed][:degreeProgress].pretty_inspect
+    expect(subject[:feed][:degreeProgress][0][:requirements][0][:formNotification]).to eql('(Form Required)')
+    expect(subject[:feed][:degreeProgress][1][:requirements][0][:formNotification]).to eql('(Plan 1 Requires a Form)')
+    expect(subject[:feed][:degreeProgress][2][:requirements][0][:formNotification]).to be nil
   end
 end

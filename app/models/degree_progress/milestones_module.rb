@@ -40,7 +40,8 @@ module DegreeProgress
         name = Berkeley::DegreeProgress.get_description(requirement[:code])
         if name
           requirement[:name] = name
-          requirement[:status] = Berkeley::DegreeProgress.get_status(requirement[:status])
+          requirement[:status_descr] = Berkeley::DegreeProgress.get_status(requirement[:status])
+          requirement[:form_notification] = Berkeley::DegreeProgress.get_form_notification(requirement[:code], requirement[:status])
           requirement
         end
       end
@@ -49,24 +50,25 @@ module DegreeProgress
 
     def merge(requirements)
       merge_candidates = []
-      merged_requirements = []
+      result = []
 
       requirements.each do |requirement|
         if is_merge_candidate requirement
           merge_candidates.push requirement
         else
-          merged_requirements.push requirement
+          result.push requirement
         end
       end
 
       if merge_candidates.length > 1
         first = find_first merge_candidates
         first[:name] = Berkeley::DegreeProgress.get_merged_description
-        merged_requirements.unshift(first)
+        first[:form_notification] = Berkeley::DegreeProgress.get_merged_form_notification
+        result.unshift(first)
       elsif merge_candidates.length === 1
-        merged_requirements.unshift(merge_candidates.first)
+        result.unshift(merge_candidates.first)
       end
-      merged_requirements
+      result
     end
 
     def is_merge_candidate(requirement)
