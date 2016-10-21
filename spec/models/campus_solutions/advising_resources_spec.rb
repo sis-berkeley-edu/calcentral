@@ -5,8 +5,8 @@ describe CampusSolutions::AdvisingResources do
     it_should_behave_like 'a simple proxy that returns errors'
     it_behaves_like 'a proxy that got data successfully'
     it 'returns data with the expected structure' do
-      # links come from AdvisingResources
-      expect(subject[:feed][:links].count).to eq 9
+      # links come from AdvisingResources API and/or from Settings.campus_solutions_links.advising
+      expect(subject[:feed][:links].count).to eq 8
       # cs_links come from models/campus_solutions/link.rb
       expect(subject[:feed][:csLinks].count).to be >= 5
     end
