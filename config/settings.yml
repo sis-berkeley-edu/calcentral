@@ -473,6 +473,12 @@ final_exam_schedule: [
   }
 ]
 
+# This is a temporary setting for grading period which will be set manually for Fall 2016 semester.
+grading_period:
+  start: ''
+  end: ''
+  assistance_link: ''
+
 # A feature will be disabled if the corresponding feature-flag is false or nil.
 features:
   advising: false

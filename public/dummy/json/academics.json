@@ -571,6 +571,9 @@
       "timeBucket": "current",
       "campusSolutionsTerm": true,
       "gradingInProgress": null,
+      "gradingAssistanceLink": "#",
+      "gradingPeriodStart": "Dec 12",
+      "gradingPeriodEnd": "Jan 6",
       "classes": [
         {
           "role": "Instructor",
@@ -579,6 +582,9 @@
               "ccn": "10707",
               "instruction_format": "LEC",
               "is_primary_section": true,
+              "gradingLink": "https://bcs-web-dev-03.is.berkeley.edu:8443/psc/bcsdev/EMPLOYEE/HRMS/c/SA_LEARNING_MANAGEMENT.SS_GRADE_RSTR.GBL?INSTRUCTOR_ID=9898989&INSTITUTION={INSTITUTION}&amp;STRM=8216&CLASS_NBR={CLASS_NBR}",
+              "ccGradingStatus": "gradesOverdue",
+              "csGradingStatus": "RDY",
               "section_label": "LEC 003",
               "section_number": "003",
               "units": null,
@@ -620,6 +626,9 @@
               "ccn": "10708",
               "instruction_format": "LEC",
               "is_primary_section": true,
+              "gradingLink": "https://bcs-web-dev-03.is.berkeley.edu:8443/psc/bcsdev/EMPLOYEE/HRMS/c/SA_LEARNING_MANAGEMENT.SS_GRADE_RSTR.GBL?INSTRUCTOR_ID=9898989&INSTITUTION={INSTITUTION}&amp;STRM=8216&CLASS_NBR={CLASS_NBR}",
+              "ccGradingStatus": "gradesOverdue",
+              "csGradingStatus": "RDY",
               "section_label": "LEC 004",
               "section_number": "004",
               "units": null,
@@ -655,6 +664,9 @@
               "ccn": "10685",
               "instruction_format": "DIS",
               "is_primary_section": false,
+              "gradingLink": null,
+              "ccGradingStatus": null,
+              "csGradingStatus": null,
               "section_label": "DIS 301",
               "section_number": "301",
               "associated_primary_id": "10707.0",
@@ -678,6 +690,9 @@
               "ccn": "10666",
               "instruction_format": "DIS",
               "is_primary_section": false,
+              "gradingLink": null,
+              "ccGradingStatus": null,
+              "csGradingStatus": null,
               "section_label": "DIS 302",
               "section_number": "302",
               "associated_primary_id": "10707.0",
@@ -701,6 +716,9 @@
               "ccn": "10667",
               "instruction_format": "DIS",
               "is_primary_section": false,
+              "gradingLink": null,
+              "ccGradingStatus": null,
+              "csGradingStatus": null,
               "section_label": "DIS 401",
               "section_number": "401",
               "associated_primary_id": "10708.0",
@@ -724,6 +742,9 @@
               "ccn": "10668",
               "instruction_format": "DIS",
               "is_primary_section": false,
+              "gradingLink": null,
+              "ccGradingStatus": null,
+              "csGradingStatus": null,
               "section_label": "DIS 402",
               "section_number": "402",
               "associated_primary_id": "10708.0",
@@ -793,6 +814,9 @@
               "ccn": "10702",
               "instruction_format": "LEC",
               "is_primary_section": true,
+              "gradingLink": "https://bcs-web-dev-03.is.berkeley.edu:8443/psc/bcsdev/EMPLOYEE/HRMS/c/SA_LEARNING_MANAGEMENT.SS_GRADE_RSTR.GBL?INSTRUCTOR_ID=9898989&INSTITUTION={INSTITUTION}&amp;STRM=8216&CLASS_NBR={CLASS_NBR}",
+              "ccGradingStatus": "gradesOverdue",
+              "csGradingStatus": "RDY",
               "section_label": "LEC 001",
               "section_number": "001",
               "units": null,
@@ -821,6 +845,9 @@
               "ccn": "10703",
               "instruction_format": "DIS",
               "is_primary_section": false,
+              "gradingLink": null,
+              "ccGradingStatus": null,
+              "csGradingStatus": null,
               "section_label": "DIS 101",
               "section_number": "101",
               "associated_primary_id": "10702.0",
@@ -891,6 +918,9 @@
               "ccn": "32961",
               "instruction_format": "LEC",
               "is_primary_section": true,
+              "gradingLink": "https://bcs-web-dev-03.is.berkeley.edu:8443/psc/bcsdev/EMPLOYEE/HRMS/c/SA_LEARNING_MANAGEMENT.SS_GRADE_RSTR.GBL?INSTRUCTOR_ID=9898989&INSTITUTION={INSTITUTION}&amp;STRM=8216&CLASS_NBR={CLASS_NBR}",
+              "ccGradingStatus": "gradesOverdue",
+              "csGradingStatus": "RDY",
               "section_label": "LEC 002",
               "section_number": "002",
               "units": null,
@@ -964,6 +994,9 @@
       "termCode": "D",
       "termYear": "2016",
       "campusSolutionsTerm": true,
+      "gradingAssistanceLink": "#",
+      "gradingPeriodStart": "",
+      "gradingPeriodEnd": "",
       "classes": [
         {
           "role": "GSI",
@@ -1026,6 +1059,9 @@
               "section_label": "LEC 002",
               "section_number": "002",
               "is_primary_section": true,
+              "gradingLink": "https://bcs-web-dev-03.is.berkeley.edu:8443/psc/bcsdev/EMPLOYEE/HRMS/c/SA_LEARNING_MANAGEMENT.SS_GRADE_RSTR.GBL?INSTRUCTOR_ID=9898989&INSTITUTION={INSTITUTION}&amp;STRM=8216&CLASS_NBR={CLASS_NBR}",
+              "ccGradingStatus": "gradesOverdue",
+              "csGradingStatus": "RDY",
               "schedules": {
                 "oneTime": [],
                 "recurring": [
@@ -1053,6 +1089,9 @@
               "section_label": "LAB 201",
               "section_number": "201",
               "is_primary_section": false,
+              "gradingLink": null,
+              "ccGradingStatus": null,
+              "csGradingStatus": null,
               "instructors": [
                 {
                   "name": "Mary Salinger",
@@ -1080,6 +1119,9 @@
               "instruction_format": "DIS",
               "section_number": "008",
               "is_primary_section": false,
+              "gradingLink": null,
+              "ccGradingStatus": null,
+              "csGradingStatus": null,
               "schedules": {
                 "oneTime": [],
                 "recurring": []
@@ -1107,6 +1149,9 @@
               "section_number": "002",
               "scheduledWithCcn": "27606",
               "is_primary_section": true,
+              "gradingLink": "https://bcs-web-dev-03.is.berkeley.edu:8443/psc/bcsdev/EMPLOYEE/HRMS/c/SA_LEARNING_MANAGEMENT.SS_GRADE_RSTR.GBL?INSTRUCTOR_ID=9898989&INSTITUTION={INSTITUTION}&amp;STRM=8216&CLASS_NBR={CLASS_NBR}",
+              "ccGradingStatus": "gradesOverdue",
+              "csGradingStatus": "RDY",
               "schedules": {
                 "oneTime": [],
                 "recurring": [
@@ -1135,6 +1180,9 @@
               "section_number": "201",
               "scheduledWithCcn": "29713",
               "is_primary_section": false,
+              "gradingLink": null,
+              "ccGradingStatus": null,
+              "csGradingStatus": null,
               "instructors": [
                 {
                   "name": "Mary Salinger",
@@ -1162,6 +1210,9 @@
               "enroll_limit": 40,
               "waitlist_limit": 5,
               "is_primary_section": false,
+              "gradingLink": null,
+              "ccGradingStatus": null,
+              "csGradingStatus": null,
               "schedules": {
                 "oneTime": [],
                 "recurring": []
@@ -1191,6 +1242,9 @@
       "termCode": "C",
       "termYear": "2016",
       "campusSolutionsTerm": false,
+      "gradingAssistanceLink": "#",
+      "gradingPeriodStart": "",
+      "gradingPeriodEnd": "",
       "classes": [
         {
           "role": "Instructor",
@@ -1219,6 +1273,9 @@
               "enroll_limit": 150,
               "waitlist_limit": 10,
               "is_primary_section": false,
+              "gradingLink": null,
+              "ccGradingStatus": null,
+              "csGradingStatus": null,
               "instructors": [
                 {
                   "name": "Mary Salinger",
