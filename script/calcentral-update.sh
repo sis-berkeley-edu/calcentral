@@ -10,13 +10,13 @@ cd $( dirname "${BASH_SOURCE[0]}" )/..
 
 # Enable rvm and use the correct Ruby version and gem set.
 [[ -s "${HOME}/.rvm/scripts/rvm" ]] && source "${HOME}/.rvm/scripts/rvm"
-source "${PWD}/.rvmrc"
+source .rvmrc
 
 export RAILS_ENV=${RAILS_ENV:-production}
 export LOGGER_STDOUT=only
 
 # JVM args per CalCentral convention
-source "${PWD}/script/standard-calcentral-JVM-OPTS-profile"
+source script/standard-calcentral-JVM-OPTS-profile
 
 echo "------------------------------------------"
 echo "$(date): Redeploying CalCentral on app nodes..."
