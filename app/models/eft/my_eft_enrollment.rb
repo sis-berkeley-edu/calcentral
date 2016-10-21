@@ -20,19 +20,19 @@ module Eft
       "Failed to connect with EFT system"
     end
 
-    def lookup_student_id
-      if @uid
-        @campus_solutions_id = CalnetCrosswalk::ByUid.new(user_id: @uid).lookup_campus_solutions_id
-      end
+    def campus_solutions_id
+      @campus_solutions_id ||= CalnetCrosswalk::ByUid.new(user_id: @uid).lookup_campus_solutions_id
     end
 
     def get_feed_internal
-      return {} if @campus_solutions_id.nil? || !Settings.features.cs_billing
+      if campus_solutions_id.nil?
+        logger.warn "No Campus Solutions ID found for UID #{@uid}"
+        return {}
+      end
       get_parsed_response
     end
 
     def get_parsed_response
-      lookup_student_id
       url = "#{@settings.base_url}eft_status?studentId=#{@campus_solutions_id}"
       logger.info "get_parsed_response: Fake = #{@fake}; Making request to #{url} on behalf of user #{@uid}; cache expiration #{self.class.expires_in}"
       response = get_response(

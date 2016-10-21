@@ -79,7 +79,7 @@ angular.module('calcentral.controllers').controller('FinancesLinksController', f
    **/
   var parseEftEnrollment = function(data) {
     angular.merge($scope.eft, data);
-    if ($scope.eft.data.statusCode === 404 || $scope.eft.data.data.eftStatus === 'inactive') {
+    if (_.get($scope.eft, 'data.statusCode') === 404 || _.get($scope.eft, 'data.data.eftStatus') === 'inactive') {
       $scope.eft.studentActive = false;
     }
   };

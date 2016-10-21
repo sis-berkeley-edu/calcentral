@@ -11,17 +11,6 @@ describe Eft::MyEftEnrollment do
         subject.get_feed_as_json
       end
     end
-
-    context 'disabled feature flag' do
-      subject { fake_model }
-      before do
-        Settings.features.stub(:cs_billing).and_return(false)
-      end
-      it 'returns an empty feed' do
-        feed = subject.get_feed_as_json
-        expect(feed).to eq '{}'
-      end
-    end
   end
 
   describe '#get_parsed_response' do
