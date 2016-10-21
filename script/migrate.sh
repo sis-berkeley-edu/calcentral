@@ -24,14 +24,16 @@ fi
 
 export RAILS_ENV=${RAILS_ENV:-production}
 export LOGGER_STDOUT=only
-export JRUBY_OPTS="--dev"
+
+# JVM args per CalCentral convention
+source "${PWD}/script/standard-calcentral-JVM-OPTS-profile"
 
 LOG_DIR=${CALCENTRAL_LOG_DIR:=$(pwd)"/log"}
 export CALCENTRAL_LOG_DIR=${LOG_DIR}
 
 # Enable rvm and use the correct Ruby version and gem set.
 [[ -s "${HOME}/.rvm/scripts/rvm" ]] && source "${HOME}/.rvm/scripts/rvm"
-source .rvmrc
+source "${PWD}/.rvmrc"
 
 echo | ${LOGIT}
 echo "------------------------------------------" | ${LOGIT}

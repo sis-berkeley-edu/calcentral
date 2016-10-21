@@ -1,27 +1,39 @@
 #!/bin/bash
-# Script to manage Webcast LTI tool settings in Canvas. This is intended to be run from cron.
 
-# Make sure the normal shell environment is in place, since it may not be when running as a cron job.
+######################################################
+#
+# Manage Webcast LTI tool settings in Canvas
+#
+# Make sure the normal shell environment is in place,
+# since it may not be when running as a cron job.
+#
+######################################################
+
 source "${HOME}/.bash_profile"
 
 cd $( dirname "${BASH_SOURCE[0]}" )/..
 
-LOG=`date +"${PWD}/log/webcast_%Y-%m-%d.log"`
+LOG=$(date +"${PWD}/log/webcast_%Y-%m-%d.log")
 LOGIT="tee -a ${LOG}"
 
 # Enable rvm and use the correct Ruby version and gem set.
-[[ -s "${HOME}/.rvm/scripts/rvm" ]] && . "${HOME}/.rvm/scripts/rvm"
-source .rvmrc
+[[ -s "${HOME}/.rvm/scripts/rvm" ]] && source "${HOME}/.rvm/scripts/rvm"
+source "${PWD}/.rvmrc"
 
 export RAILS_ENV=${RAILS_ENV:-production}
 export LOGGER_STDOUT=only
 export LOGGER_LEVEL=INFO
 
-echo | $LOGIT
-echo "------------------------------------------" | $LOGIT
-echo "`date`: Webcast LTI app visibility check started on app node: `hostname -s`..." | $LOGIT
+# JVM args per CalCentral convention
+source "${PWD}/script/standard-calcentral-JVM-OPTS-profile"
+
+echo | ${LOGIT}
+echo "------------------------------------------" | ${LOGIT}
+echo "$(date): Webcast LTI app visibility check started on app node: $(hostname -s)..." | ${LOGIT}
 
 cd deploy
-bundle exec rake canvas:webcast_lti_refresh | $LOGIT
+bundle exec rake canvas:webcast_lti_refresh | ${LOGIT}
 
-echo "`date`: Webcast LTI app visibility check  is done" | $LOGIT
+echo "$(date): Webcast LTI app visibility check  is done" | ${LOGIT}
+
+exit 0

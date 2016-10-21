@@ -1,0 +1,20 @@
+#!/bin/bash
+
+######################################################
+#
+# CalCentral scripts wanting the standard JVM args
+# should 'source' this file prior to starting JRuby
+# and/or Java processes.
+#
+######################################################
+
+DEFAULT_JVM_OPTS="-Xmn500m -Xms3000m -Xmx3000m -XX:+CMSParallelRemarkEnabled -XX:+CMSScavengeBeforeRemark -XX:+PrintGCCause -XX:+PrintGCDateStamps -XX:+PrintGCDetails -XX:+ScavengeBeforeFullGC -XX:+UseCMSInitiatingOccupancyOnly -XX:+UseCodeCacheFlushing -XX:+UseConcMarkSweepGC -XX:CMSInitiatingOccupancyFraction=70 -XX:MaxMetaspaceSize=1024m -XX:ReservedCodeCacheSize=256m"
+
+# Standard JVM args for JRuby with override option available
+export JRUBY_OPTS=${CALCENTRAL_JRUBY_OPTS:="--dev -Xcext.enabled=true -Xcompile.invokedynamic=false ${DEFAULT_JVM_OPTS}"}
+
+# Standard JVM args with override option available
+export JVM_OPTS=${CALCENTRAL_JVM_OPTS:=${DEFAULT_JVM_OPTS}}
+
+# Standard JVM args escaped used, for example, by: torquebox run --jvm-options ...
+export ESCAPED_JVM_OPTS="$(echo "${JVM_OPTS}" | sed 's/^-/\\-/g' | sed 's/ \-/ \\-/g')"

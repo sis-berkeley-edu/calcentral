@@ -40,5 +40,4 @@ do
   done
 done
 
-# Protect against process-not-found exit statuses
 exit 0
