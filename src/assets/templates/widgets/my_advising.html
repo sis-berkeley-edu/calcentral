@@ -2,7 +2,7 @@
   <div class="cc-widget-title">
     <h2 class="cc-left">Advising</h2>
     <a class="cc-button cc-right cc-widget-title-button"
-      data-ng-if="api.user.profile.features.csAdvisingLinks"
+      data-ng-if="api.user.profile.features.csAdvisingLinks && myAdvising.links && myAdvising.roles.ugrdUrbanStudies"
       data-cc-campus-solutions-link-directive="myAdvising.links.newAppointment.url"
       data-cc-campus-solutions-link-directive-enabled="{{myAdvising.links.newAppointment.isCsLink}}"
       data-cc-campus-solutions-link-directive-text="myAdvising.links.newAppointment.backToText"
@@ -122,7 +122,10 @@
           </ul>
         </div>
 
-        <div class="cc-widget-myadvising-section" data-ng-if="api.user.profile.features.csAdvisingLinks && myAdvising.links">
+        <div class="cc-widget-myadvising-section"
+          data-ng-if="api.user.profile.features.csAdvisingLinks
+            && myAdvising.links
+            && myAdvising.roles.ugrdUrbanStudies">
           <h3 class="cc-widget-myadvising-header">Appointments</h3>
           <div class="cc-widget-myadvising-link">
             <div
