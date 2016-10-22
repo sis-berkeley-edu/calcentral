@@ -1,14 +1,7 @@
 #!/bin/bash
+# Script delegates to oec.rake tasks.
 
-######################################################
-#
-# Online Course Evaluations (OEC) tasks
-#
-# Make sure the normal shell environment is in place,
-# since it may not be when running as a cron job.
-#
-######################################################
-
+# Make sure the normal shell environment is in place, since it may not be when running as a cron job.
 PROFILE="${HOME}/.bash_profile"
 test -f "${PROFILE}" && source "${PROFILE}"
 
@@ -29,15 +22,13 @@ if [[ " ${TASK_OPTIONS[*]} " == *" ${TASK} "* ]]
 then
   echo | ${LOGIT}
   # Enable rvm and use the correct Ruby version and gem set.
-  [[ -s "${HOME}/.rvm/scripts/rvm" ]] && source "${HOME}/.rvm/scripts/rvm"
-  source "${PWD}/.rvmrc"
+  [[ -s "${HOME}/.rvm/scripts/rvm" ]] && . "${HOME}/.rvm/scripts/rvm"
+  source .rvmrc
 
   export RAILS_ENV=${RAILS_ENV:-production}
   export LOGGER_STDOUT=only
   export LOGGER_LEVEL=INFO
-
-  # JVM args per CalCentral convention
-  source "${PWD}/script/standard-calcentral-JVM-OPTS-profile"
+  export JRUBY_OPTS="--dev"
 
   echo "[$(date +"%F %H:%M:%S")] [INFO] Begin oec:${TASK} on $(hostname -s)" | ${LOGIT}
 
@@ -60,5 +51,4 @@ echo | ${LOGIT}
 echo "------------------------------------------" | ${LOGIT}
 
 cd "${WORKING_DIR}"
-
 exit 0
