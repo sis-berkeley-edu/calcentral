@@ -7,6 +7,17 @@ module Advising
     include Cache::UserCacheExpiry
     include DatedFeed
 
+    RELATIONSHIP_ORDER = [
+      'GSAO', # Graduate Student Affairs Offcr
+      'HGA',  # Head Graduate Advisor
+      'CHR',  # Department Chair
+      'GEA',  # Graduate Equity Advisor
+      'GRAD', # Grad Div Representative
+      'COLL', # College Advisor
+      'MAJ',  # Major Advisor
+      'MIN',  # Minor Advisor
+    ]
+
     def get_feed_internal
       advising_feed = {
         feed: {},
@@ -41,8 +52,21 @@ module Advising
 
     def merge_advisors(advising_feed)
       merge_proxy_feed(advising_feed, CampusSolutions::AdvisorStudentRelationship) do |proxy_feed|
-        advising_feed[:feed][:advisors] = proxy_feed.fetch(:ucAaStudentAdvisor, {}).fetch(:studentAdvisor, nil)
+        advisor_list = proxy_feed.fetch(:ucAaStudentAdvisor, {}).fetch(:studentAdvisor, nil)
+        advising_feed[:feed][:advisors] = sort_advisors(advisor_list)
       end
+    end
+
+    def sort_advisors(advisors)
+      return if advisors.nil?
+      sorted_advisors = []
+      grouped_advisors = advisors.group_by { |advisor| advisor[:assignedAdvisorTypeCode] }
+      RELATIONSHIP_ORDER.each do |type|
+        matched_advisors = grouped_advisors.delete(type).to_a
+        sorted_advisors.concat(matched_advisors)
+      end
+      remaining_advisors = grouped_advisors.values.flatten
+      sorted_advisors.concat(remaining_advisors)
     end
 
     def merge_appointments(advising_feed)
@@ -75,7 +99,7 @@ module Advising
 
     def fetch_link(link_key, placeholders = {})
       link = CampusSolutions::Link.new.get_url(link_key, placeholders).try(:[], :link)
-      logger.error "Could not retrieve CS link #{link_key} for MyAdvising feed, uid = #{@uid}" unless link
+      logger.debug "Could not retrieve CS link #{link_key} for MyAdvising feed, uid = #{@uid}" unless link
       link
     end
 
