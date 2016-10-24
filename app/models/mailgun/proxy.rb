@@ -4,24 +4,28 @@ module Mailgun
 
     def initialize(options = {})
       super(Settings.mailgun_proxy, options)
+      @connection = get_connection
       initialize_mocks if @fake
+    end
+
+    def get_connection
+      Faraday.new do |c|
+        c.request :multipart
+        c.request :url_encoded
+        c.adapter :net_http
+        c.basic_auth 'api', @settings.api_key
+      end
     end
 
     def request(options = {})
       url = request_url
+      request_method = options.delete :method
+      body_options = options.delete(:body) || {}
+
       logger.info "Fake = #{@fake}; Making request to #{url}"
 
-      body_options = options.delete(:body) || {}
-      request_options = {
-        basic_auth: {
-          username: 'api',
-          password: @settings.api_key
-        },
-        body: body_options,
-      }.merge(options)
-
-      response = get_response(url, request_options)
-      logger.debug "Remote server status #{response.code}, Body = #{response.body}"
+      response = @connection.send request_method, url, body_options
+      logger.debug "Remote server status #{response.status}, Body = #{response.body}"
       response
     end
 

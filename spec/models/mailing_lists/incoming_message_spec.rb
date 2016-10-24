@@ -3,19 +3,14 @@ describe MailingLists::IncomingMessage do
   let(:message_opts) do
     {
       id: '<DLOAsW7ZwDP1yvQOabwgZ1AvXNGoGpJgRoV4HoVq9tjQKyD1f1w@mail.gmail.com>',
-        sender: sender,
-        recipient: recipient,
-        subject: 'A message of teaching and learning',
-        body: {
+      sender: sender,
+      recipient: recipient,
+      subject: 'A message of teaching and learning',
+      body: {
         html: '<html><body>Instructional content goes here.<br><br><br>Paul Kerschen<br>Programming and Design Group<br>Educational Technology Services, UC Berkeley</body></html>',
         plain: "Instructional content goes here.\r\n\r\n\r\nPaul Kerschen\r\nProgramming and Design Group\r\nEducational Technology Services, UC Berkeley",
       },
-        attachments: {
-        count: 1,
-        data: {
-          1 => 'fake attachment'
-        }
-      }
+      attachments: {}
     }
   end
 

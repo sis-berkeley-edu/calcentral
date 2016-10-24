@@ -12,8 +12,6 @@ describe Mailgun::SendMessage do
       )
     end
 
-    it_behaves_like 'a polite HTTP client'
-
     it 'reports success' do
       expect(subject[:response][:statusCode]).to eq 200
       expect(subject[:response][:sending]).to be_truthy
@@ -25,9 +23,8 @@ describe Mailgun::SendMessage do
       let(:body) { '{"message": "I would prefer not to send email."}' }
       before { proxy.set_response(status: status, body: body) }
 
-      include_context 'expecting logs from server errors'
-
       it 'reports failure' do
+        expect(Rails.logger).to receive(:error).with(/Error sending message/)
         expect(subject[:response][:statusCode]).to eq 503
         expect(subject[:response][:sending]).to be_falsey
         expect(subject[:exception]).to be_truthy
