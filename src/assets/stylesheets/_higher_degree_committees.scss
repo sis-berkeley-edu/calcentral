@@ -1,0 +1,64 @@
+.cc-higher-degree-committee {
+
+  .cc-grad-student-committees-chair-group {
+    margin-top: 5px;
+  }
+
+  .cc-higher-degree-committee-toggle-link {
+    cursor: pointer;
+    font-weight: bold;
+    padding-bottom: 10px;
+    padding-top: 10px;
+  }
+
+  .cc-higher-degree-committee-subtitle {
+    color: $cc-color-white;
+    font-size: 12px;
+    font-weight: normal;
+    margin: 0;
+    padding: 2px 15px;
+  }
+
+  .cc-higher-degree-committees-reps-group {
+    margin-top: 5px;
+  }
+
+  .cc-higher-degree-committees-content {
+    margin-left: 92px;
+    padding-bottom: 10px;
+  }
+
+  .cc-higher-degree-committees-fullname {
+    font-size: 16px;
+  }
+
+  .cc-higher-degree-committees-list-item {
+    margin-bottom: 8px;
+  }
+
+  .cc-higher-degree-committees-picture {
+    padding: 0 10px 10px 0;
+
+    img {
+      height: 96px;
+      width: 72px;
+    }
+  }
+
+  .cc-higher-degree-committees-section {
+    margin-bottom: 16px;
+  }
+
+  .cc-higher-degree-committees-list {
+    li {
+      border-bottom: 1px solid $cc-color-widget-background;
+    }
+  }
+
+  .cc-higher-degree-committees-image-unavailable {
+    background-image: url('../images/svg/photo_unavailable_official_72x96.svg');
+    height: 96px;
+    margin: 0 auto;
+    width: 72px;
+  }
+}

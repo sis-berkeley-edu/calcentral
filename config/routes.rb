@@ -42,6 +42,9 @@ Calcentral::Application.routes.draw do
   get '/api/my/updated_feeds' => 'is_updated#list', :defaults => {:format => 'json'}
   get '/api/service_alerts' => 'service_alerts#get_feed', :as => :service_alerts, :defaults => { :format => 'json' }
   get '/api/media/:term_yr/:term_cd/:dept_name/:catalog_id' => 'mediacasts#get_media', :defaults => { :format => 'json' }
+  get '/api/my/committees' => 'my_committees#get_feed', :defaults => { :format => 'json' }
+  get '/api/my/committees/photo/member/:member_id' => 'my_committees#member_photo', :defaults => { :format => 'jpeg' }
+  get '/api/my/committees/photo/student/:student_id' => 'my_committees#student_photo', :defaults => { :format => 'jpeg' }
 
   # Google API writing endpoints
   post '/api/my/event' => 'my_events#create', via: :post, defaults: { format: 'json' }

@@ -1,0 +1,37 @@
+<div class="cc-widget cc-higher-degree-committee">
+  <div class="cc-widget-title">
+    <h2>
+      <data-ng-pluralize
+        count="studentCommittees.length"
+        when="
+          {
+            '0': 'Higher Degree Committee',
+            'one': 'Higher Degree Committee',
+            'other': 'Higher Degree Committees'
+          }">
+      </ng-pluralize>
+    </h2>
+  </div>
+  <div class="cc-widget-padding" data-cc-spinner-directive="committees.isLoading" >
+    <div class="cc-higher-degree-committees-section">
+      <ul class="cc-higher-degree-committees-list">
+        <div ng-repeat="committee in studentCommittees">
+          <li class="cc-widget-list-hover "  data-cc-accessible-focus-directive
+            data-ng-class="{'cc-widget-list-hover-opened':(committee.show)}"
+            data-ng-click="api.widget.toggleShow($event, null, committee, 'My Academics - Higher Degree Committee')">
+          <div>
+            <h3 data-ng-bind="committee.header.type"></h3>
+            <h4 data-ng-bind="committee.header.program"></h4>
+            <div class="cc-higher-degree-committees-list-item">
+              <span>
+                <i class="{{committee.header.statusIcon}}"></i>
+              </span>
+              <span><strong><span data-ng-bind="committee.header.statusTitle"></span></strong> <span data-ng-bind="committee.header.statusMessage"></span></span>
+            </div>
+            <div data-ng-include="'widgets/academics/higher_degree_committee.html'"></div>
+          </div>
+          </li>
+        </div>
+      </ul>
+    </div>
+  </div>
