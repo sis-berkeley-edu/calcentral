@@ -208,7 +208,7 @@ describe MyAcademics::CollegeAndLevel do
   context 'when providing student plan role codes' do
     it 'returns all possible student plan role codes' do
       role_codes = subject.class.student_plan_role_codes
-      expect(role_codes.count).to eq 9
+      expect(role_codes.count).to eq 10
       expect(role_codes).to include('fpf')
       expect(role_codes).to include('law')
       expect(role_codes).to include('concurrent')
@@ -218,6 +218,7 @@ describe MyAcademics::CollegeAndLevel do
       expect(role_codes).to include('haasMastersFinEng')
       expect(role_codes).to include('haasMbaPublicHealth')
       expect(role_codes).to include('haasMbaJurisDoctor')
+      expect(role_codes).to include('ugrdUrbanStudies')
     end
   end
 
@@ -360,7 +361,7 @@ describe MyAcademics::CollegeAndLevel do
       end
 
       it 'translates roles' do
-        expect(feed[:collegeAndLevel][:roles].keys.count).to eq 9
+        expect(feed[:collegeAndLevel][:roles].keys.count).to eq 10
         expect(feed[:collegeAndLevel][:roles]['fpf']).to eq false
         expect(feed[:collegeAndLevel][:roles]['law']).to eq false
         expect(feed[:collegeAndLevel][:roles]['concurrent']).to eq false
@@ -370,6 +371,7 @@ describe MyAcademics::CollegeAndLevel do
         expect(feed[:collegeAndLevel][:roles]['haasMastersFinEng']).to eq false
         expect(feed[:collegeAndLevel][:roles]['haasMbaPublicHealth']).to eq false
         expect(feed[:collegeAndLevel][:roles]['haasMbaJurisDoctor']).to eq false
+        expect(feed[:collegeAndLevel][:roles]['ugrdUrbanStudies']).to eq false
       end
 
       it 'translates holds' do
@@ -467,7 +469,7 @@ describe MyAcademics::CollegeAndLevel do
       end
 
       it 'translates roles' do
-        expect(feed[:collegeAndLevel][:roles].keys.count).to eq 9
+        expect(feed[:collegeAndLevel][:roles].keys.count).to eq 10
         expect(feed[:collegeAndLevel][:roles]['fpf']).to eq false
         expect(feed[:collegeAndLevel][:roles]['law']).to eq true
         expect(feed[:collegeAndLevel][:roles]['concurrent']).to eq false
@@ -477,6 +479,7 @@ describe MyAcademics::CollegeAndLevel do
         expect(feed[:collegeAndLevel][:roles]['haasMastersFinEng']).to eq false
         expect(feed[:collegeAndLevel][:roles]['haasMbaPublicHealth']).to eq false
         expect(feed[:collegeAndLevel][:roles]['haasMbaJurisDoctor']).to eq false
+        expect(feed[:collegeAndLevel][:roles]['ugrdUrbanStudies']).to eq false
       end
     end
 

@@ -13,7 +13,8 @@ module MyAcademics
         {student_plan_role_code: 'haasExecMba', match: '70364MBAG', types: []},
         {student_plan_role_code: 'haasMastersFinEng', match: '701F1MFEG', types: []},
         {student_plan_role_code: 'haasMbaPublicHealth', match: '70141BAPHG', types: []},
-        {student_plan_role_code: 'haasMbaJurisDoctor', match: '70141BAJDG', types: []}
+        {student_plan_role_code: 'haasMbaJurisDoctor', match: '70141BAJDG', types: []},
+        {student_plan_role_code: 'ugrdUrbanStudies', match: '19912U', types: []},
       ],
       career: [
         {student_plan_role_code: 'law', match: 'LAW', types: [:enrollment]},
