@@ -1,6 +1,9 @@
 <div class="cc-widget cc-widget-profile" data-ng-controller="AcademicProfileController">
   <div class="cc-widget-title">
-    <h2>Profile</h2>
+    <h2 class="cc-left">Profile</h2>
+    <button class="cc-button cc-right cc-widget-title-button" data-ng-click="printPage()" data-ng-if="isAcademicSummary">
+      <i class="fa fa-print"></i> Print
+    </button>
   </div>
 
   <div class="cc-widget-padding cc-flex-space-between-vertical-15">
@@ -28,7 +31,7 @@
             You are not currently considered an active student.
           </div>
         </div>
-        <div data-ng-if="(api.user.profile.roles.student || api.user.profile.roles.applicant) && !api.user.profile.roles.concurrentEnrollmentStudent">
+        <div data-ng-if="(api.user.profile.roles.student || api.user.profile.roles.applicant) && !api.user.profile.roles.concurrentEnrollmentStudent && !isAcademicSummary">
           <div data-ng-if="!isProfileCurrent">
             <div data-ng-if="transitionTerm.registered" class="cc-widget-profile-message-text">
               You are registered for the <span data-ng-bind="transitionTerm.termName"></span> term, but complete profile information is not available.
@@ -82,7 +85,7 @@
       <h3 data-ng-if="!isProfileCurrent && api.user.profile.roles.student && collegeAndLevel.termName">Academic status as of <span data-ng-bind="collegeAndLevel.termName"></span></h3>
       <div data-ng-if="showProfileMessage" class="cc-table-top-border"></div>
 
-      <div class="cc-left cc-widget-profile-picture" data-ng-if="!api.user.profile.delegateActingAsUid">
+      <div class="cc-left cc-widget-profile-picture" data-ng-class="{'cc-print-hide': isAcademicSummary}" data-ng-if="!api.user.profile.delegateActingAsUid">
         <div data-ng-if="!profilePicture.loadError">
           <img data-cc-load-error-directive="profilePicture" alt="{{api.user.profile.fullName}}'s Profile Picture" data-ng-src="/api/my/photo" width="72" height="96">
         </div>
@@ -90,7 +93,7 @@
           <i class="fa fa-user"></i>
         </div>
       </div>
-      <div class="cc-left cc-widget-profile-picture" data-ng-if="api.user.profile.delegateActingAsUid">
+      <div class="cc-left cc-widget-profile-picture" data-ng-class="{'cc-print-hide': isAcademicSummary}" data-ng-if="api.user.profile.delegateActingAsUid">
         <div data-ng-include="'widgets/delegate_student_img.html'"></div>
       </div>
 
@@ -118,12 +121,15 @@
           <tbody>
             <tr>
               <th width="92px">GPA</th>
-              <td>
+              <td data-ng-if="!isAcademicSummary">
                 <button class="cc-button-link" data-ng-click="academics.showGPA = true" data-ng-show="!academics.showGPA">Show GPA</button>
                 <div data-ng-show="academics.showGPA">
-                  <span data-ng-bind="gpaUnits.cumulativeGpaFloat"></span> GPA
+                  <strong data-ng-bind="gpaUnits.cumulativeGpaFloat"></strong>
                   (<button class="cc-button-link" data-ng-click="academics.showGPA = false">Hide</button>)
                 </div>
+              </td>
+              <td data-ng-if="isAcademicSummary">
+                <strong data-ng-bind="gpaUnits.cumulativeGpaFloat"></strong>
               </td>
             </tr>
           </tbody>
