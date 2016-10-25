@@ -57,7 +57,7 @@ describe MailingLists::IncomingMessage do
       expect_any_instance_of(Mailgun::SendMessage).to receive(:post).with(bounce_matcher).and_return(
         response: {sending: true}
       )
-      expect(subject.dispatch).to be_truthy
+      expect(subject.relay).to be_truthy
     end
   end
 
@@ -68,7 +68,7 @@ describe MailingLists::IncomingMessage do
       )
     end
     it 'reports proxy failure' do
-      expect(subject.dispatch).to be_falsey
+      expect(subject.relay).to be_falsey
     end
   end
 
@@ -103,7 +103,7 @@ describe MailingLists::IncomingMessage do
           monty = list.members.find_by email_address: 'monty@berkeley.edu'
           expect(MailingLists::OutgoingMessage).to receive(:new).with(list, monty, message_opts)
            .and_return double(send_message: {response: {sending: true}})
-          expect(subject.dispatch).to be_truthy
+          expect(subject.relay).to be_truthy
         end
         include_examples 'proxy failure handling'
       end
@@ -113,8 +113,8 @@ describe MailingLists::IncomingMessage do
   context 'bad args on initialization' do
     let(:message_opts) { {arrant: :nonsense} }
     it 'reports failure' do
-      expect(Rails.logger).to receive(:error).with /Could not dispatch/
-      expect(subject.dispatch).to be_falsey
+      expect(Rails.logger).to receive(:error).with /Could not relay/
+      expect(subject.relay).to be_falsey
     end
   end
 end

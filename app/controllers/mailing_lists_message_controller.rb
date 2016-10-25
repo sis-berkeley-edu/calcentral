@@ -5,7 +5,7 @@ class MailingListsMessageController < ApplicationController
   # POST /api/mailing_lists/message
   # Handle a received message.
 
-  def dispatch
+  def relay
     # See https://documentation.mailgun.com/api-sending.html#retrieving-stored-messages for Mailgun's message parameters.
     message_attrs = {
       # Capitalized params are unaltered headers from the original message.
@@ -23,8 +23,8 @@ class MailingListsMessageController < ApplicationController
       attachments: extract_attachments
     }
 
-    dispatched = MailingLists::IncomingMessage.new(message_attrs).dispatch
-    render json: {success: dispatched}
+    relayed = MailingLists::IncomingMessage.new(message_attrs).relay
+    render json: {success: relayed}
   end
 
   private
