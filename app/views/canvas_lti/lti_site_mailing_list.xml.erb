@@ -8,18 +8,18 @@
     http://www.imsglobal.org/xsd/imsbasiclti_v1p0 http://www.imsglobal.org/xsd/lti/ltiv1p0/imsbasiclti_v1p0.xsd
     http://www.imsglobal.org/xsd/imslticm_v1p0 http://www.imsglobal.org/xsd/lti/ltiv1p0/imslticm_v1p0.xsd
     http://www.imsglobal.org/xsd/imslticp_v1p0 http://www.imsglobal.org/xsd/lti/ltiv1p0/imslticp_v1p0.xsd">
-    <blti:title>Mailing Lists</blti:title>
-    <blti:description>Create and manage mailing lists for all course sites</blti:description>
+    <blti:title>Mailing List</blti:title>
+    <blti:description>Create and manage a mailing list for a course site</blti:description>
     <blti:icon>NO ICO</blti:icon>
     <blti:launch_url><%= @launch_url_for_app %></blti:launch_url>
     <blti:extensions platform="canvas.instructure.com">
-      <lticm:property name="tool_id">calcentral_site_mailing_lists</lticm:property>
+      <lticm:property name="tool_id">calcentral_site_mailing_list</lticm:property>
       <lticm:property name="privacy_level">public</lticm:property>
-      <lticm:options name="account_navigation">
+      <lticm:options name="course_navigation">
         <lticm:property name="url"><%= @launch_url_for_app %></lticm:property>
-        <lticm:property name="text">Mailing Lists</lticm:property>
+        <lticm:property name="text">Mailing List</lticm:property>
         <lticm:property name="visibility">admins</lticm:property>
-        <lticm:property name="default">enabled</lticm:property>
+        <lticm:property name="default">disabled</lticm:property>
         <lticm:property name="enabled">true</lticm:property>
       </lticm:options>
     </blti:extensions>

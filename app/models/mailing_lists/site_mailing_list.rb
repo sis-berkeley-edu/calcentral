@@ -98,15 +98,17 @@ module MailingLists
     end
 
     def generate_list_name
-      # 'CHEM 1A LEC 003' => 'chem_1a_lec_003-sp15'
+      # 'CHEM 1A LEC 003' => 'chem-1a-lec-003-sp15'
       # {{design}} => 'design-sp15'
-      # 'The "Wild"-"Wild" West?' => 'the_wild_wild_west-sp15'
-      # 'Conversation intermédiaire' => 'conversation_intermediaire-sp15'
-      # 'Global Health: Disaster Preparedness and Response' => 'global_health_disaster_preparedness_and_respo-sp15'
+      # 'The "Wild"-"Wild" West?' => 'the-wild-wild-west-sp15'
+      # 'Conversation intermédiaire' => 'conversation-intermediaire-sp15'
+      # 'Global Health: Disaster Preparedness and Response' => 'global-health-disaster-preparedness-and-respo-sp15'
       if @canvas_site
-        normalized_name = I18n.transliterate(@canvas_site['name']).downcase.split(/[^a-z0-9]+/).reject(&:blank?).join('_').slice(0, 45)
+        normalized_name = I18n.transliterate(@canvas_site['name']).downcase.split(/[^a-z0-9]+/).reject(&:blank?).join('-').slice(0, 45)
         if (term = Canvas::Terms.sis_term_id_to_term @canvas_site['term']['sis_term_id'])
           normalized_name << "-#{Berkeley::TermCodes.to_abbreviation(term[:term_yr], term[:term_cd])}"
+        else
+          normalized_name << '-list'
         end
         normalized_name
       end

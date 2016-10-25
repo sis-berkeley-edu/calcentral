@@ -11,6 +11,10 @@ module Canvas
       (is_canvas_user? && is_canvas_course_user? && is_canvas_course_teacher?) || is_canvas_account_admin?
     end
 
+    def can_manage_mailing_list?
+      is_canvas_course_teacher_or_assistant? || is_canvas_course_reader? || is_canvas_account_admin?
+    end
+
     def can_view_course?
       is_canvas_course_user? || is_canvas_account_admin?
     end
@@ -41,6 +45,10 @@ module Canvas
 
     def is_canvas_account_admin?
       Canvas::Admins.new.admin_user?(@user.user_id)
+    end
+
+    def is_canvas_course_reader?
+      is_canvas_user? && Canvas::CourseUser.is_course_reader?(canvas_course_user)
     end
 
     def is_canvas_course_teacher_or_assistant?

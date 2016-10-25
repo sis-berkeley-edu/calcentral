@@ -40,6 +40,7 @@ describe Canvas::CoursePolicy do
   end
   let(:course_teacher_hash)   { course_user_hash.merge({'enrollments' => [{'type' => 'TeacherEnrollment', 'role' => 'TeacherEnrollment'}]}) }
   let(:course_ta_hash)        { course_user_hash.merge({'enrollments' => [{'type' => 'TaEnrollment', 'role' => 'TaEnrollment'}]}) }
+  let(:course_reader_hash)  { course_user_hash.merge({'enrollments' => [{'type' => 'Reader', 'role' => 'Reader'}]}) }
   let(:course_observer_hash)  { course_user_hash.merge({'enrollments' => [{'type' => 'ObserverEnrollment', 'role' => 'ObserverEnrollment'}]}) }
   let(:course_designer_hash)  { course_user_hash.merge({'enrollments' => [{'type' => 'DesignerEnrollment', 'role' => 'DesignerEnrollment'}]}) }
   let(:user_is_admin) { false }
@@ -235,6 +236,42 @@ describe Canvas::CoursePolicy do
     end
   end
 
+  describe '#can_manage_mailing_list?' do
+    subject { Canvas::CoursePolicy.new(user, course).can_manage_mailing_list? }
+    context 'student' do
+      it { should be_falsey }
+    end
+    context 'teacher' do
+      let(:invariable_course_user_hash) { course_teacher_hash }
+      it { should be_truthy }
+    end
+    context 'ta' do
+      let(:invariable_course_user_hash) { course_ta_hash }
+      it { should be_truthy }
+    end
+    context 'reader' do
+      let(:invariable_course_user_hash) { course_reader_hash }
+      it { should be_truthy }
+    end
+    context 'designer' do
+      let(:invariable_course_user_hash) { course_designer_hash }
+      it { should be_falsey }
+    end
+    context 'observer' do
+      let(:invariable_course_user_hash) { course_observer_hash }
+      it { should be_falsey }
+    end
+    context 'admin' do
+      let(:invariable_course_user_hash) { nil }
+      let(:user_is_admin) { true }
+      it { should be_truthy }
+    end
+    context 'non-member' do
+      let(:invariable_course_user_hash) { nil }
+      it { should be_falsey }
+    end
+  end
+
   describe '#is_canvas_user?' do
     it_should_behave_like 'a canvas user requirement' do
       let(:authorization_method) { subject.is_canvas_user? }
@@ -245,6 +282,26 @@ describe Canvas::CoursePolicy do
         expect(subject.is_canvas_course_user?).to be true
         expect(subject.can_view_webcast_sign_up?).to be false
       end
+    end
+  end
+
+  describe '#is_canvas_course_reader?' do
+    subject { Canvas::CoursePolicy.new(user, course).is_canvas_course_reader? }
+
+    before { allow(Canvas::CourseUser).to receive(:is_course_reader?).and_return is_reader }
+    let(:is_reader) { false }
+
+    it_should_behave_like 'a canvas user requirement' do
+      let(:authorization_method) { subject }
+    end
+
+    context 'canvas user is not a reader' do
+      it { should be_falsey }
+    end
+
+    context 'canvas user is a reader' do
+      let(:is_reader) { true }
+      it { should be_truthy }
     end
   end
 

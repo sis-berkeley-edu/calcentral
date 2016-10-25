@@ -44,6 +44,11 @@ module CanvasLti
           xml_name: 'lti_course_grade_export',
           app_name: 'Download E-Grades',
           account: official_courses_account_id
+        },
+        'site_mailing_list' => {
+          xml_name: 'lti_site_mailing_list',
+          app_name: 'Mailing List',
+          account: official_courses_account_id
         }
       }
     end
