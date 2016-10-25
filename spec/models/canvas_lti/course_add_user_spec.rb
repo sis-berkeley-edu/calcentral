@@ -6,8 +6,6 @@ describe CanvasLti::CourseAddUser do
   let(:common_uid) { rand(99999).to_s }
   let(:current_student_uid) { "#{common_uid}1" }
   let(:current_employee_former_student_uid) { "#{common_uid}2" }
-  let(:former_employee_former_student_uid) { "#{common_uid}3" }
-  let(:user_with_expired_calnet_account_uid) { "#{common_uid}4" }
 
   let(:current_student) do
     {
@@ -33,36 +31,10 @@ describe CanvasLti::CourseAddUser do
     }
   end
 
-  let (:former_employee_former_student) do
-    {
-      'ldap_uid'=>former_employee_former_student_uid,
-      'first_name'=>common_first_name,
-      'last_name'=>common_last_name,
-      'email_address'=>"#{common_email}@example.com",
-      'student_id'=>rand(999999),
-      'affiliations'=>'EMPLOYEE-STATUS-EXPIRED,STUDENT-STATUS-EXPIRED',
-      'person_type'=>'G'
-    }
-  end
-
-  let(:user_with_expired_calnet_account) do
-    {
-      'ldap_uid'=>user_with_expired_calnet_account_uid,
-      'first_name'=>common_first_name,
-      'last_name'=>common_last_name,
-      'email_address'=>"#{common_email}@berkeley.edu",
-      'student_id'=>rand(999999),
-      'affiliations'=>'STUDENT-TYPE-REGISTERED',
-      'person_type'=>'Z'
-    }
-  end
-
   let (:people_array) do
     [
       current_student,
-      current_employee_former_student,
-      former_employee_former_student,
-      user_with_expired_calnet_account
+      current_employee_former_student
     ]
   end
 
@@ -139,13 +111,6 @@ describe CanvasLti::CourseAddUser do
           expect(person).not_to include('student_id')
         end
       end
-
-      it 'includes only current affiliations' do
-        expect(subject.select{ |n| n[:ldapUid] == current_student_uid }).to be_present
-        expect(subject.select{ |n| n[:ldapUid] == current_employee_former_student_uid }).to be_present
-        expect(subject.select{ |n| n[:ldapUid] == former_employee_former_student_uid }).to be_empty
-        expect(subject.select{ |n| n[:ldapUid] == user_with_expired_calnet_account_uid }).to be_empty
-      end
     end
 
     context 'when searching by name' do
@@ -171,7 +136,7 @@ describe CanvasLti::CourseAddUser do
     end
 
     context 'when searching by LDAP uid' do
-      before { allow(CampusOracle::Queries).to receive(:find_people_by_uid).with(common_uid).and_return(people_array) }
+      before { allow(CampusOracle::Queries).to receive(:find_active_uid).with(common_uid).and_return(people_array) }
       subject { CanvasLti::CourseAddUser.search_users(common_uid, 'ldap_user_id') }
       it_should_behave_like 'a filtered result set'
     end

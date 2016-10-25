@@ -33,15 +33,12 @@ module CanvasLti
         when 'email'
           people = CampusOracle::Queries.find_people_by_email(search_text, SEARCH_LIMIT)
         when 'ldap_user_id'
-          people = CampusOracle::Queries.find_people_by_uid(search_text)
+          people = CampusOracle::Queries.find_active_uid(search_text)
       end
-      people.collect! do |person|
-        if person['affiliations'].present? && person['affiliations'].include?('-TYPE-') && (person['person_type'] != 'Z')
-          person.delete('student_id')
-          HashConverter.camelize(person)
-        end
+      people.collect do |person|
+        person.delete('student_id')
+        HashConverter.camelize(person)
       end
-      people.compact
     end
 
     def course_sections_list

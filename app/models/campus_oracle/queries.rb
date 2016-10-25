@@ -87,6 +87,7 @@ module CampusOracle
                   count(*) over() result_count
           from calcentral_person_info_vw pi
           where lower( concat(concat(trim(pi.last_name), ','), trim(pi.first_name)) ) like '#{clean_search_string.downcase}%'
+            and (affiliations LIKE '%-TYPE-%') and (person_type != 'Z')
           order by trim(pi.last_name)
         ) outr #{limit_clause}
         SQL
@@ -116,24 +117,9 @@ module CampusOracle
                   count(*) over() result_count
           from calcentral_person_info_vw pi
           where lower(pi.email_address) like '%#{clean_search_string.downcase}%'
+            and (affiliations LIKE '%-TYPE-%') and (person_type != 'Z')
           order by trim(pi.last_name)
         ) outr #{limit_clause}
-        SQL
-        result = connection.select_all(sql)
-      }
-      stringify_ints! result
-    end
-
-    def self.find_people_by_student_id(student_id_string)
-      raise ArgumentError, "Argument must be a string" if student_id_string.class != String
-      raise ArgumentError, "Argument is not an integer string" unless is_integer_string?(student_id_string)
-      result = []
-      use_pooled_connection {
-        sql = <<-SQL
-      select pi.ldap_uid, trim(pi.first_name) as first_name, trim(pi.last_name) as last_name, pi.email_address, pi.student_id, pi.affiliations, 1.0 row_number, 1.0 result_count
-      from calcentral_person_info_vw pi
-      where pi.student_id = #{student_id_string}
-      and rownum <= 1
         SQL
         result = connection.select_all(sql)
       }
@@ -150,6 +136,24 @@ module CampusOracle
         pi.person_type, 1.0 row_number, 1.0 result_count
       from calcentral_person_info_vw pi
       where pi.ldap_uid = #{user_id_string}
+      and rownum <= 1
+        SQL
+        result = connection.select_all(sql)
+      }
+      stringify_ints! result
+    end
+
+    def self.find_active_uid(user_id_string)
+      raise ArgumentError, "Argument must be a string" if user_id_string.class != String
+      raise ArgumentError, "Argument is not an integer string" unless is_integer_string?(user_id_string)
+      result = []
+      use_pooled_connection {
+        sql = <<-SQL
+      select pi.ldap_uid, trim(pi.first_name) as first_name, trim(pi.last_name) as last_name, pi.email_address, pi.student_id, pi.affiliations,
+        pi.person_type, 1.0 row_number, 1.0 result_count
+      from calcentral_person_info_vw pi
+      where pi.ldap_uid = #{user_id_string}
+        and (affiliations LIKE '%-TYPE-%') and (person_type != 'Z')
       and rownum <= 1
         SQL
         result = connection.select_all(sql)
