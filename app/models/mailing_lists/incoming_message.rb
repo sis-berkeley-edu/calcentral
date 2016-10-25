@@ -9,9 +9,9 @@ module MailingLists
       @recipient_address = Mail::Address.new @opts[:recipient]
     end
 
-    def dispatch
+    def relay
       if !@sender_address.address || !@recipient_address.address
-        logger.error "Could not dispatch mailing list message with bad properties: #{@opts}"
+        logger.error "Could not relay mailing list message with bad properties: #{@opts}"
         return false
       end
 

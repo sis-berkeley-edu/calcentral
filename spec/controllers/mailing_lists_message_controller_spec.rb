@@ -1,6 +1,6 @@
 describe MailingListsMessageController do
   let(:message_params) { JSON.parse File.read(Rails.root.join('fixtures', 'json', 'mailgun_incoming_message.json')) }
-  let(:make_request) { post :dispatch, message_params }
+  let(:make_request) { post :relay, message_params }
 
   shared_examples 'verification failed' do
     it 'returns empty 401' do
@@ -49,7 +49,7 @@ describe MailingListsMessageController do
         Settings.mailgun_proxy.api_key,
         message_params.values_at('timestamp', 'token').join
       )
-      expect_any_instance_of(MailingLists::IncomingMessage).to receive(:dispatch).and_return true
+      expect_any_instance_of(MailingLists::IncomingMessage).to receive(:relay).and_return true
     end
 
     it 'forwards to model and returns success' do
@@ -69,10 +69,10 @@ describe MailingListsMessageController do
     end
 
     it 'forbids repeated signatures' do
-      post :dispatch, message_params
+      post :relay, message_params
       expect(response.status).to eq 200
 
-      post :dispatch, message_params
+      post :relay, message_params
       expect(response.status).to eq 401
     end
 

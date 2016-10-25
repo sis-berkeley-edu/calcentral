@@ -242,7 +242,7 @@ Calcentral::Application.routes.draw do
   get '/api/edos/work_experience' => 'hub_edo#work_experience', :via => :get, :defaults => { :format => 'json' }
 
   # Incoming email messages
-  post '/api/mailing_lists/message' => 'mailing_lists_message#dispatch', :defaults => { :format => 'json' }
+  post '/api/mailing_lists/message' => 'mailing_lists_message#relay', :defaults => { :format => 'json' }
 
   # All the other paths should use the bootstrap page
   # We need this because we use html5mode=true
