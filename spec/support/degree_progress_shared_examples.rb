@@ -38,3 +38,47 @@ shared_examples 'a proxy that returns graduate milestone data' do
     expect(subject[:feed][:degreeProgress][2][:requirements][0][:formNotification]).to be nil
   end
 end
+
+shared_examples 'a proxy that returns undergraduate milestone data' do
+
+  it_behaves_like 'a proxy that properly observes the undergrad degree progress for student feature flag'
+
+  it 'returns data with the expected structure' do
+    data = subject[:feed][:degreeProgress]
+    expect(data).to be
+    expect(data[:acadCareer]).to be
+
+    plan_level_data = data[:progresses]
+    expect(plan_level_data).to be
+    expect(plan_level_data.first[:acadPlan]).to be
+    expect(plan_level_data.first[:requirements]).to be
+    expect(plan_level_data.first[:requirements].first[:name]).to be
+    expect(plan_level_data.first[:requirements].first[:status]).to be
+    expect(plan_level_data.first[:requirements].first[:code]).to be
+  end
+
+  it 'filters out requirements that we don\'t want to display' do
+    plan_level_data = subject[:feed][:degreeProgress][:progresses]
+    expect(plan_level_data.first[:requirements].length).to eql(4)
+  end
+
+  it 'sorts the requirements in the correct order' do
+    plan_level_data = subject[:feed][:degreeProgress][:progresses]
+    expect(plan_level_data.first[:requirements][0][:code]).to eql('000000001')
+    expect(plan_level_data.first[:requirements][1][:code]).to eql('000000002')
+    expect(plan_level_data.first[:requirements][2][:code]).to eql('000000018')
+    expect(plan_level_data.first[:requirements][3][:code]).to eql('000000003')
+  end
+
+  it 'replaces codes with descriptive names' do
+    plan_level_data = subject[:feed][:degreeProgress][:progresses]
+    expect(plan_level_data.first[:requirements][0][:name]).to eq('Entry Level Writing')
+    expect(plan_level_data.first[:requirements][0][:status]).to eq('Completed')
+    expect(plan_level_data.first[:requirements][1][:name]).to eq('American History')
+    expect(plan_level_data.first[:requirements][1][:status]).to eq('Incomplete')
+    expect(plan_level_data.first[:requirements][2][:name]).to eq('American Institutions')
+    expect(plan_level_data.first[:requirements][2][:status]).to eq('Completed')
+    expect(plan_level_data.first[:requirements][3][:name]).to eq('American Cultures')
+    expect(plan_level_data.first[:requirements][3][:status]).to eq('Incomplete')
+  end
+end

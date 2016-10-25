@@ -143,4 +143,20 @@ describe AdvisingStudentController do
     end
   end
 
+  describe '#degree_progress_undergrad' do
+    let(:session_user_id) { random_id }
+
+    subject { get :degree_progress_undergrad, student_uid: student_uid }
+
+    context 'student' do
+      let(:session_user_is_advisor) { true }
+      let(:student) { true }
+      it 'should succeed' do
+        expect(subject.status).to eq 200
+        data = JSON.parse subject.body
+        expect(data).to be
+      end
+    end
+  end
+
 end
