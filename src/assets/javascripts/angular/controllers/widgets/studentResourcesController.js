@@ -6,14 +6,32 @@ var _ = require('lodash');
 angular.module('calcentral.controllers').controller('StudentResourcesController', function(studentResourcesFactory, userService, $scope) {
   $scope.isLoading = true;
 
+  var backToText = 'My Dashboard';
+
   var loadStudentResources = function() {
     return studentResourcesFactory.getStudentResources();
+  };
+
+  /**
+   * Add the back to text (used for Campus Solutions) to the link
+   */
+  var addBackToTextLink = function(link) {
+    link.backToText = backToText;
+    return link;
+  };
+
+  /**
+   * Add the back to text
+   */
+  var addBackToText = function(resources) {
+    _.map(resources, addBackToTextLink);
+    return resources;
   };
 
   var parseStudentResources = function(data) {
     var resources = _.get(data, 'data.feed.resources');
     if (!_.isEmpty(resources)) {
-      $scope.studentResources = resources;
+      $scope.studentResources = addBackToText(resources);
     }
   };
 

@@ -75,7 +75,7 @@ module CampusSolutions
         add_cs_link links, :schedule_planner, 'SCHEDULE_PLANNER_STUDENT_SPECIFIC', 'Schedule Planner', "?EMPLID=#{student_empl_id}", "View this student's planned schedule for this term."
 
         advising_student_link_settings = [
-          { feed_key: :student_academic_progress_report, cs_link_key: 'UC_CX_APR_RPT_SDTNT', cs_link_params: { :EMPLID => student_empl_id } },
+          { feed_key: :student_academic_progress_report, cs_link_key: 'UC_CX_APR_RPT_STDNT', cs_link_params: { :EMPLID => student_empl_id } },
           { feed_key: :student_administrative_transcripts, cs_link_key: 'UC_CX_ADM_TRANSCRIPT_STDNT', cs_link_params: { :EMPLID => student_empl_id } },
           { feed_key: :student_advising_assignments, cs_link_key: 'UC_CX_STUDENT_ADVISOR_STDNT', cs_link_params: { :EMPLID => student_empl_id } },
           { feed_key: :student_advisor_notes, cs_link_key: 'UC_CX_SCI_NOTE_FLU', cs_link_params: { :EMPLID => student_empl_id } },
