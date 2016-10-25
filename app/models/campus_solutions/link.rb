@@ -39,12 +39,14 @@ module CampusSolutions
         link_id = url_id.downcase.camelize(:lower).to_sym
         entry = link_resources[:feed][:ucLinkResources][:links][link_id]
 
-        if entry
+        if entry.nil?
+          logger.debug "Could not retrieve CS link by id #{url_id}, with parameters #{placeholders}"
+        else
           link = entry.slice(:url, :urlId, :description, :hoverOverText)
 
           placeholders.try(:each) do |k, v|
             if v.nil?
-              logger.debug "Could not set placeholder for #{k} on link with url_id #{link[:urlId]}"
+              logger.debug "Could not set placeholder for #{k} on link id #{url_id}"
               link = nil
               break
             else

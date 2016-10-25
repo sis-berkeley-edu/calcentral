@@ -17,6 +17,7 @@ describe CampusSolutions::Link do
     let(:link_set_response) { proxy.get }
     let(:link_get_url_response) { proxy.get_url(url_id) }
     let(:link_get_url_with_bad_placeholder_response) { proxy.get_url(url_id, {:BAD_PLACEHOLDER => nil}) }
+    let(:link_get_url_with_bad_url_id_response) { proxy.get_url('BAD_URL_ID', {:BAD_PLACEHOLDER => nil}) }
     let(:link_get_url_and_replace_placeholders_response) { proxy.get_url(url_id, placeholders) }
     let(:link_get_url_for_properties_response) { proxy.get_url(url_id) }
 
@@ -63,6 +64,15 @@ describe CampusSolutions::Link do
         expect(link_get_url_response[:link][:urlId]).to eq url_id
         # Verify that {placeholder} text is present
         expect(link_get_url_response[:link][:url]).to include("EMPLID={EMPLID}")
+      end
+    end
+
+    context 'no matching url_id' do
+      let(:filename) { 'link_api.xml' }
+
+      it_should_behave_like 'a proxy that gets data'
+      it 'returns data with the expected structure' do
+        expect(link_get_url_with_bad_url_id_response[:link]).not_to be
       end
     end
 
