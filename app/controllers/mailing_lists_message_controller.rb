@@ -1,5 +1,6 @@
 class MailingListsMessageController < ApplicationController
 
+  skip_before_action :verify_authenticity_token
   before_filter :verify_message
 
   # POST /api/mailing_lists/message
