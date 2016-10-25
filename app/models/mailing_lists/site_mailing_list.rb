@@ -31,6 +31,9 @@ module MailingLists
     after_initialize :get_canvas_site, if: :new_record?
     after_initialize :init_unregistered, if: :new_record?
 
+    # Subclasses override.
+    def self.domain; end
+
     def populate
       if self.state != 'created'
         self.request_failure = "Mailing list \"#{self.list_name}\" must be created before being populated."
@@ -82,6 +85,9 @@ module MailingLists
     end
 
     private
+
+    # Subclasses may override if they have external administration URLs.
+    def add_list_urls(feed); end
 
     def any_population_failures?
       self.population_results[:add][:failure].any? || self.population_results[:remove][:failure].any?
@@ -140,6 +146,11 @@ module MailingLists
           failure: []
         }
       }
+    end
+
+    def name_available?
+      return if list_name.blank?
+      MailingLists::SiteMailingList.find_by(list_name: self.list_name).nil?
     end
 
     def parse_term(term)
