@@ -9,7 +9,7 @@ describe 'My Academics Status and Holds', :testui => true do
 
       test_users = UserUtils.load_test_users.select { |user| user['status'] }
       test_output_heading = ['UID', 'Affiliations', 'Student', 'Ex-Student', 'Reg Statuses', 'Has Popover', 'Resident',
-                             'Residency Message', 'Active Hold', 'Hold Reasons']
+                             'Active Hold', 'Hold Reasons']
       test_output = UserUtils.initialize_output_csv(self, test_output_heading)
 
       registered_users = []
@@ -35,7 +35,6 @@ describe 'My Academics Status and Holds', :testui => true do
         term_statuses = []
         has_status_heading = nil
         api_res_status = nil
-        api_residency_msg = nil
         has_hold = nil
         has_t_calc = false
         has_cs_bal_due = nil
@@ -300,7 +299,7 @@ describe 'My Academics Status and Holds', :testui => true do
           logger.error "#{e.message + "\n"} #{e.backtrace.join("\n ")}"
         ensure
           test_output_row = [uid, affiliations * ', ', is_student, is_ex_student, term_statuses * ', ', has_status_heading,
-                             api_res_status, api_residency_msg, has_hold, hold_reasons * ', ']
+                             api_res_status, has_hold, hold_reasons * ', ']
           UserUtils.add_csv_row(test_output, test_output_row)
         end
       end

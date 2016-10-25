@@ -104,23 +104,6 @@ class ApiMyAcademicsPage
     transition_term['isProfileCurrent']
   end
 
-  # UNDERGRAD REQUIREMENTS
-
-  def requirements
-    @parsed['requirements'] && @parsed['requirements'].inject({}) { |map, reqt| map[reqt['name']] = reqt; map }
-  end
-
-  def requirement_status(requirement)
-    case requirements[requirement]['status']
-      when 'met'
-        'Completed'
-      when 'exempt'
-        'Exempt'
-      else
-        'Incomplete'
-    end
-  end
-
   # FINAL EXAMS
 
   def exam_schedules

@@ -11,7 +11,7 @@ describe 'My Academics teaching semesters UI', :testui => true do
       test_users = UserUtils.load_test_users
       testable_users = []
       test_output_heading = ['UID', 'Semester', 'Course Title', 'Listing Code', 'Cross-listings', 'Schedule Format', 'Primary?',
-                             'Schedule Building', 'Schedule Room', 'Schedule Time', 'Instructor']
+                             'Recurring Schedule', 'One-Time Schedule', 'Instructor']
       test_output = UserUtils.initialize_output_csv(self, test_output_heading)
 
       test_users.each do |user|

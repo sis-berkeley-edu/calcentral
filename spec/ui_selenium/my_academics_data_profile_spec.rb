@@ -1,4 +1,4 @@
-describe 'My Academics profile and university requirements cards', :testui => true do
+describe 'My Academics profile card', :testui => true do
 
   if ENV["UI_TEST"] && Settings.ui_selenium.layer != 'production'
 
@@ -9,14 +9,13 @@ describe 'My Academics profile and university requirements cards', :testui => tr
       test_users = UserUtils.load_test_users.select { |user| user['profile'] }
       testable_users = []
       test_output_heading = ['UID', 'Term Transition', 'Colleges', 'Majors', 'Careers', 'Units', 'GPA', 'Level',
-                             'Level No AP', 'Writing', 'History', 'Institutions', 'Cultures']
+                             'Level No AP']
       test_output = UserUtils.initialize_output_csv(self, test_output_heading)
 
       splash_page = CalCentralPages::SplashPage.new driver
       status_api_page = ApiMyStatusPage.new driver
       academics_api_page= ApiMyAcademicsPageSemesters.new driver
       profile_card = CalCentralPages::MyAcademicsProfileCard.new driver
-      reqts_card = CalCentralPages::MyAcademicsUniversityReqtsCard.new driver
 
       test_users.each do |user|
         uid = user['uid']
@@ -29,10 +28,6 @@ describe 'My Academics profile and university requirements cards', :testui => tr
         api_gpa = nil
         api_level = nil
         api_level_no_ap = nil
-        api_writing_reqt = nil
-        api_history_reqt = nil
-        api_institutions_reqt = nil
-        api_cultures_reqt = nil
 
         begin
           splash_page.load_page
@@ -115,100 +110,45 @@ describe 'My Academics profile and university requirements cards', :testui => tr
               end
             end
 
-            # UNDERGRAD REQUIREMENTS
-
-            if academics_api_page.has_no_standing? || (!academics_api_page.careers.include? 'Undergraduate') || academics_api_page.requirements.nil?
-
-              has_reqts_card = reqts_card.reqts_table?
-              it ("show no 'University Requirements' UI for UID #{uid}") { expect(has_reqts_card).to be false }
-
-            elsif academics_api_page.requirements.empty?
-
-              has_no_reqts_msg = reqts_card.no_reqts_msg?
-              it ("show a 'no requirements' message for UID #{uid}") { expect(has_no_reqts_msg).to be true }
-
-            else
-
-              api_writing_reqt = academics_api_page.requirement_status 'UC Entry Level Writing'
-
-              if api_writing_reqt == 'Completed' || api_writing_reqt == 'Exempt'
-                my_academics_writing_met = reqts_card.writing_reqt_met
-                it ("show 'UC Entry Level Writing' '#{api_writing_reqt}' for UID #{uid}") { expect(my_academics_writing_met).to eql(api_writing_reqt) }
-              else
-                my_academics_writing_unmet = reqts_card.writing_reqt_unmet_element.text
-                writing_unmet_link_works = WebDriverUtils.verify_external_link(driver, reqts_card.writing_reqt_unmet_element, 'Home | Office of the Registrar')
-                it ("show 'UC Entry Level Writing' 'Incomplete' for UID #{uid}") { expect(my_academics_writing_unmet).to include(api_writing_reqt) }
-                it ("offers a link to degree requirements for UID #{uid}") { expect(writing_unmet_link_works).to be true }
-              end
-
-              api_history_reqt = academics_api_page.requirement_status 'American History'
-
-              if api_history_reqt == 'Completed' || api_history_reqt == 'Exempt'
-                my_academics_history_met = reqts_card.history_reqt_met
-                it ("show 'American History' '#{api_history_reqt}' for UID #{uid}") { expect(my_academics_history_met).to eql(api_history_reqt) }
-              else
-                my_academics_history_unmet = reqts_card.history_reqt_unmet_element.text
-                history_unmet_link_works = WebDriverUtils.verify_external_link(driver, reqts_card.history_reqt_unmet_element, 'Home | Office of the Registrar')
-                it ("show 'American History' 'Incomplete' for UID #{uid}") { expect(my_academics_history_unmet).to include(api_history_reqt) }
-                it ("offer a link to degree requirements for UID #{uid}") { expect(history_unmet_link_works).to be true }
-              end
-
-              api_institutions_reqt = academics_api_page.requirement_status 'American Institutions'
-
-              if api_institutions_reqt == 'Completed' || api_institutions_reqt == 'Exempt'
-                my_academics_institutions_met = reqts_card.institutions_reqt_met
-                it("show 'American Institutions' '#{api_institutions_reqt}' for UID #{uid}") { expect(my_academics_institutions_met).to eql(api_institutions_reqt) }
-              else
-                my_academics_institutions_unmet = reqts_card.institutions_reqt_unmet_element.text
-                institutions_unmet_link_works = WebDriverUtils.verify_external_link(driver, reqts_card.institutions_reqt_unmet_element, 'Home | Office of the Registrar')
-                it ("show 'American Institutions' 'Incomplete' for UID #{uid}") { expect(my_academics_institutions_unmet).to include(api_institutions_reqt) }
-                it ("offer a link to degree requirements for UID #{uid}") { expect(institutions_unmet_link_works).to be true }
-              end
-
-              api_cultures_reqt = academics_api_page.requirement_status 'American Cultures'
-
-              if api_cultures_reqt == 'Completed' || api_cultures_reqt == 'Exempt'
-                my_academics_cultures_met = reqts_card.cultures_reqt_met
-                it ("show 'American Cultures' '#{api_cultures_reqt}' for UID #{uid}") { expect(my_academics_cultures_met).to eql(api_cultures_reqt) }
-              else
-                my_academics_cultures_unmet = reqts_card.cultures_reqt_unmet_element.text
-                cultures_unmet_link_works = WebDriverUtils.verify_external_link(driver, reqts_card.cultures_reqt_unmet_element, 'Home | Office of the Registrar')
-                it ("show 'American Cultures' 'Incomplete' for UID #{uid}") { expect(my_academics_cultures_unmet).to include(api_cultures_reqt) }
-                it ("offer a link to degree requirements for UID #{uid}") { expect(cultures_unmet_link_works).to be true }
-              end
-            end
-
             # STUDENT STATUS MESSAGING VARIATIONS
 
             if academics_api_page.has_no_standing?
 
+              has_reg_no_standing_msg = profile_card.reg_no_standing_msg?
+              has_non_reg_msg = profile_card.non_reg_student_msg?
+              has_new_student_msg = profile_card.new_student_msg?
+              has_concur_student_msg = profile_card.concur_student_msg?
+              has_ex_student_msg = profile_card.ex_student_msg?
+
               if status_api_page.is_student?
                 if status_api_page.is_registered?
-                  has_reg_no_standing_msg = profile_card.reg_no_standing_msg?
                   it ("show a registered but not fully active message to UID #{uid}") { expect(has_reg_no_standing_msg).to be true }
                 else
                   if academics_api_page.units_attempted == 0
-                    has_non_reg_msg = profile_card.non_reg_student_msg?
-                    has_new_student_msg = profile_card.new_student_msg?
                     it ("show a 'not registered' message to UID #{uid}") { expect(has_non_reg_msg).to be true }
                     it ("show a new student message to UID #{uid}") { expect(has_new_student_msg).to be true }
                   else
-                    has_non_reg_msg = profile_card.non_reg_student_msg?
                     it ("show a 'not registered' message to UID #{uid}") { expect(has_non_reg_msg).to be true }
                   end
                 end
 
               elsif status_api_page.is_concurrent_enroll_student?
-                has_concur_student_msg = profile_card.concur_student_msg?
                 has_uc_ext_link = WebDriverUtils.verify_external_link(driver, profile_card.uc_ext_link_element, 'Concurrent Enrollment | Student Services | UC Berkeley Extension')
                 has_eap_link = WebDriverUtils.verify_external_link(driver, profile_card.eap_link_element, 'Exchange Students | Berkeley International Office')
                 it ("show a concurrent enrollment student message to UID #{uid}") { expect(has_concur_student_msg).to be true }
                 it ("show a concurrent enrollment UC Extension link to UID #{uid}") { expect(has_uc_ext_link).to be true }
                 it ("show a concurrent enrollment EAP link to UID #{uid}") { expect(has_eap_link).to be true }
 
-              else
-                has_ex_student_msg = profile_card.ex_student_msg?
+              elsif status_api_page.is_ex_student?
                 it ("show an ex-student message to UID #{uid}") { expect(has_ex_student_msg).to be true }
+              else
+                it "shows no messages to UID #{uid}" do
+                  expect(has_reg_no_standing_msg).to be false
+                  expect(has_non_reg_msg).to be false
+                  expect(has_new_student_msg).to be false
+                  expect(has_concur_student_msg).to be false
+                  expect(has_ex_student_msg).to be false
+                end
               end
 
             else
@@ -241,8 +181,7 @@ describe 'My Academics profile and university requirements cards', :testui => tr
           logger.error "#{e.message + "\n"} #{e.backtrace.join("\n ")}"
         ensure
           test_output_row = [uid, term_transition, api_colleges * '; ', api_majors * '; ', api_careers * '; ',
-                             api_units, api_gpa, api_level, api_level_no_ap, api_writing_reqt, api_history_reqt,
-                             api_institutions_reqt, api_cultures_reqt]
+                             api_units, api_gpa, api_level, api_level_no_ap]
           UserUtils.add_csv_row(test_output, test_output_row)
         end
       end
