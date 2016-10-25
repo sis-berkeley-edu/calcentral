@@ -107,11 +107,11 @@ describe MailingListsMessageController do
           attachments: {
             count: 2,
             cid_map: {
-              '<EC2CE1CA-4686-4412-88C7-EC9A2176D97F>' => 'attachment-1'
+              'EC2CE1CA-4686-4412-88C7-EC9A2176D97F' => 'attachment-1'
             },
             data: {
-              1 => attachment_1,
-              2 => attachment_2
+              'attachment-1' => attachment_1,
+              'attachment-2' => attachment_2
             }
           }
         )).and_call_original

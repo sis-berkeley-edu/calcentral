@@ -34,12 +34,18 @@ class MailingListsMessageController < ApplicationController
     if params['attachment-count']
       attachments[:count] = params['attachment-count'].to_i
       attachments[:data] = {}
-      attachments[:cid_map] = JSON.parse(params['content-id-map']) if params['content-id-map']
+
+      if params['content-id-map']
+        attachments[:cid_map] = {}
+        JSON.parse(params['content-id-map']).each do |cid, attachment_name|
+          stripped_cid = cid.tr('<>', '')
+          attachments[:cid_map][stripped_cid] = attachment_name
+        end
+      end
 
       params.each do |key, value|
-        if (match_data = key.match /\Aattachment-(\d+)\Z/)
-          attachment_number = match_data[1].to_i
-          attachments[:data][attachment_number] = value
+        if key.match /\Aattachment-\d+\Z/
+          attachments[:data][key] = value
         end
       end
     end

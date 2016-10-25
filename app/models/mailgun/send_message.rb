@@ -8,7 +8,7 @@ module Mailgun
           method: :post,
           body: message_opts
         })
-        if response.code == 200
+        if response.status == 200
           {
             statusCode: 200,
             sending: true
