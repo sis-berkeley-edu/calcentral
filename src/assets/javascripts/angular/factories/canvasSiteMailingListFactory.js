@@ -18,9 +18,10 @@ angular.module('calcentral.factories').factory('canvasSiteMailingListFactory', f
     return $http.post('/api/academics/canvas/mailing_lists/' + canvasCourseId + '/populate');
   };
 
-  var registerSiteMailingList = function(canvasCourseId, listName) {
+  var registerSiteMailingList = function(canvasCourseId, list) {
     return $http.post('/api/academics/canvas/mailing_lists/' + canvasCourseId + '/create', {
-      listName: listName
+      listName: list.listName,
+      listType: list.listType
     });
   };
 

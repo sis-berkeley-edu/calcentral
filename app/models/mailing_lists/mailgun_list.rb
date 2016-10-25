@@ -9,10 +9,6 @@ module MailingLists
       Settings.mailgun_proxy.domain
     end
 
-    def add_list_urls(feed)
-      # No-op; Mailgun lists have no external administration URLs.
-    end
-
     def add_member(address, first_name, last_name, can_send)
       MailingLists::Member.create!(
         email_address: address,
@@ -47,10 +43,6 @@ module MailingLists
       if population_results[:update][:failure].any?
         logger.error "Failed to update #{population_results[:update][:failure].count} addresses in #{self.list_name}: #{population_results[:update][:failure].join ', '}"
       end
-    end
-
-    def name_available?
-      MailingLists::SiteMailingList.find_by(list_name: self.list_name).nil?
     end
 
     def remove_member(address)

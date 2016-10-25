@@ -33,6 +33,11 @@ angular.module('calcentral.controllers').controller('CanvasSiteMailingListContro
       setCodeAndTerm($scope.canvasSite);
     }
 
+    if (!$scope.listRegistered) {
+      // For Fall 2016, the list admin tool should continue to default to CalMail.
+      $scope.mailingList.listType = 'CalmailList';
+    }
+
     if ($scope.listCreated) {
       setListLastPopulated(data.mailingList);
     }
@@ -112,7 +117,7 @@ angular.module('calcentral.controllers').controller('CanvasSiteMailingListContro
 
   $scope.registerMailingList = function() {
     $scope.isProcessing = true;
-    return canvasSiteMailingListFactory.registerSiteMailingList($scope.canvasSite.canvasCourseId, $scope.mailingList.name).success(function(data) {
+    return canvasSiteMailingListFactory.registerSiteMailingList($scope.canvasSite.canvasCourseId, $scope.mailingList).success(function(data) {
       setStateFromData(data);
     }).error(function() {
       $scope.displayError = 'failure';
