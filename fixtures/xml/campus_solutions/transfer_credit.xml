@@ -1,0 +1,34 @@
+<ROOT>
+  <UC_TRANSFER_CREDITS>
+    <TRANSFER_CREDIT>
+      <UC_TRANSFER_CRSE_SCH>
+        <ITEMS type="array">
+          <ITEM>
+            <INSTITUTION>LOS ANGELES CITY COLL</INSTITUTION>
+            <UCB_UNITS type="float">27.0</UCB_UNITS>
+          </ITEM>
+          <ITEM>
+            <INSTITUTION>LOS ANGELES VALLEY COLL</INSTITUTION>
+            <UCB_UNITS type="float">42.0</UCB_UNITS>
+          </ITEM>
+          <ITEM>
+            <INSTITUTION>MOORPARK COLL</INSTITUTION>
+            <UCB_UNITS type="float">3.0</UCB_UNITS>
+          </ITEM>
+          <ITEM>
+            <INSTITUTION>PASADENA CITY COLL</INSTITUTION>
+            <UCB_UNITS type="float">27.0</UCB_UNITS>
+          </ITEM>
+        </ITEMS>
+        <UNITS_ADJUST type="float">29.0</UNITS_ADJUST>
+        <UNITS_NON_ADJUSTED type="float">70.0</UNITS_NON_ADJUSTED>
+      </UC_TRANSFER_CRSE_SCH>
+      <UC_TEST_COMPONENT>
+        <AP_UNITS type="float">5.2</AP_UNITS>
+        <IB_UNITS type="float" />
+        <ALEVEL_UNITS type="float" />
+        <TOTAL_TEST_UNITS type="float">5.2</TOTAL_TEST_UNITS>
+      </UC_TEST_COMPONENT>
+    </TRANSFER_CREDIT>
+  </UC_TRANSFER_CREDITS>
+</ROOT>

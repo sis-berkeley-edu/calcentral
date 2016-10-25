@@ -1,27 +1,78 @@
-<div data-ng-controller="TransferCreditController" data-cc-spinner-directive="transferCredit.isLoading" class="cc-transfer-credit">
-  <div class="cc-widget" data-ng-if="transferCredit.hasCredit">
+<div data-cc-spinner-directive="academics.isLoading" class="cc-transfer-credit">
+  <div data-ng-if="transferCredit.ucTransferCrseSch.items.length || transferCredit.ucTestComponent.totalTestUnits > 0" class="cc-widget">
     <div class="cc-widget-title">
       <h2>Transfer Credit</h2>
     </div>
-    <div class="cc-flex cc-flex-space-between cc-text-light cc-widget-text cc-widget-transfercredit-headings">
-      <div>
-        <strong>Type</strong>
-      </div>
-      <div>
-        <strong>Units</strong>
-      </div>
+    <div class="cc-table">
+      <table class="cc-table-padding cc-transfer-credit-table">
+        <thead>
+          <tr class="cc-table-subheader">
+            <th scope="col">
+              <h3>Type</h3>
+            </th>
+            <th scope="col"></th>
+            <th class="cc-table-right cc-transfer-credit-table-right-padding" scope="col">
+              <h3>Units</h3>
+            </th>
+          </tr>
+        </thead>
+        <tbody class="cc-widget-table-hover"
+          data-ng-class="{'cc-widget-table-hover-opened':(transferCredit.ucTransferCrseSch.show)}"
+          data-cc-accessible-focus-directive
+          data-ng-click="api.widget.toggleShow($event, null, transferCredit.ucTransferCrseSch, 'Transfer Credit')">
+          <tr class="cc-transfer-credit-table-parent-row">
+            <td colspan="1">Transfer Units</td>
+            <td class="cc-table-right cc-toggle-triangle cc-transfer-credit-table-right-padding" colspan="2">
+              <span data-ng-bind="transferCredit.ucTransferCrseSch.unitsNonAdjusted | number:1"></span>
+              <span data-ng-if="transferCredit.ucTransferCrseSch.unitsTotal && (transferCredit.ucTransferCrseSch.unitsTotal !== transferCredit.ucTransferCrseSch.unitsNonAdjusted)" data-ng-bind-template="(Non-Adjusted: {{transferCredit.ucTransferCrseSch.unitsTotal | number:1}})"></span>
+            </td>
+          </tr>
+          <tr data-ng-show="transferCredit.ucTransferCrseSch.show" data-ng-repeat="item in transferCredit.ucTransferCrseSch.items">
+            <td colspan="2">
+              <span data-ng-bind="item.institution"></span>
+            </td>
+            <td class="cc-table-right cc-transfer-credit-table-right-padding" colspan="1">
+              <span data-ng-bind="item.ucbUnits | number:1"></span>
+            </td>
+          </tr>
+        </tbody>
+        <tbody class="cc-widget-table-hover"
+          data-ng-class="{'cc-widget-table-hover-opened':(transferCredit.ucTestComponent.show)}"
+          data-cc-accessible-focus-directive
+          data-ng-click="api.widget.toggleShow($event, null, transferCredit.ucTestComponent, 'Transfer Credit')">
+          <tr><td class="cc-transfer-credit-table-border" colspan="3"></td></tr>
+          <tr class="cc-transfer-credit-table-parent-row">
+            <td colspan="2">Test Units</td>
+            <td class="cc-table-right cc-toggle-triangle cc-transfer-credit-table-right-padding" colspan="1">
+              <span data-ng-bind="transferCredit.ucTestComponent.totalTestUnits | number:1"></span>
+            </td>
+          </tr>
+          <tr data-ng-if="transferCredit.ucTestComponent.apUnits" data-ng-show="transferCredit.ucTestComponent.show">
+            <td colspan="2">
+              <span>Advanced Placement (AP)</span>
+            </td>
+            <td class="cc-table-right cc-transfer-credit-table-right-padding" colspan="1">
+              <span data-ng-bind="transferCredit.ucTestComponent.apUnits | number:1"></span>
+            </td>
+          </tr>
+          <tr data-ng-if="transferCredit.ucTestComponent.ibUnits" data-ng-show="transferCredit.ucTestComponent.show">
+            <td colspan="2">
+              <span>International Baccalaureate (IB)</span>
+            </td>
+            <td class="cc-table-right cc-transfer-credit-table-right-padding" colspan="1">
+              <span data-ng-bind="transferCredit.ucTestComponent.ibUnits | number:1"></span>
+            </td>
+          </tr>
+          <tr data-ng-if="transferCredit.ucTestComponent.alevelUnits" data-ng-show="transferCredit.ucTestComponent.show">
+            <td colspan="2">
+              <span>GCE Advanced-Level (A-level)</span>
+            </td>
+            <td class="cc-table-right cc-transfer-credit-table-right-padding" colspan="1">
+              <span data-ng-bind="transferCredit.ucTestComponent.alevelUnits | number:1"></span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
-    <ul class="cc-widget-list cc-widget-transfercredit-units">
-      <li class="cc-widget-vertical-padding">Transfer Units
-        <div class="cc-right">
-          <span data-ng-bind="transferCredit.cumulativeUnits.unitsTransferAccepted"></span>
-          <span data-ng-if="transferCredit.cumulativeUnits.unitsTransferAccepted < transferCredit.cumulativeUnits.unitsTransferEarned">
-            (Non-Adjusted: <span data-ng-bind="transferCredit.cumulativeUnits.unitsTransferEarned"></span>)
-          </span>
-        </div>
-      </li>
-      <li class="cc-widget-vertical-padding">Test Units <span class="cc-right" data-ng-bind="transferCredit.cumulativeUnits.unitsTest"></span></li>
-      <li class="cc-widget-vertical-padding">Other Units <span class="cc-right" data-ng-bind="transferCredit.cumulativeUnits.unitsOther"></span></li>
-    </ul>
   </div>
 </div>

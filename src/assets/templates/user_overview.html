@@ -16,6 +16,7 @@
     <div class="medium-4 columns cc-column-3">
       <div data-ng-include="'widgets/final_exam_schedule.html'" data-ng-if="examSchedule.length && api.user.profile.features.finalExamSchedule"></div>
       <div data-ng-include="'widgets/enrollment_card.html'" data-ng-if="api.user.profile.features.csEnrollmentCard"></div>
+      <div data-ng-include="'widgets/transfer_credit.html'"></div>
       <div data-ng-include="'widgets/my_advising.html'"></div>
     </div>
   </div>

@@ -1,6 +1,6 @@
 describe MyAcademics::FilteredForAdvisor do
   before do
-    MyAcademics::Merged.providers.each do |provider_class|
+    MyAcademics::FilteredForAdvisor.providers.each do |provider_class|
       provider = double
       allow(provider).to receive(:merge) do |feed|
         feed[provider_class.to_s] = true
