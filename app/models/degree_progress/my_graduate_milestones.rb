@@ -5,7 +5,7 @@ module DegreeProgress
     include Cache::CachedFeed
     include Cache::JsonifiedFeed
     include Cache::UserCacheExpiry
-    include CampusSolutions::DegreeProgressFeatureFlagged
+    include CampusSolutions::DegreeProgressGradStudentFeatureFlagged
     include MilestonesModule
 
     LINKS_CONFIG = [
@@ -14,7 +14,7 @@ module DegreeProgress
     ]
 
     def get_feed_internal
-      return {} unless is_feature_enabled
+      return {} unless is_feature_enabled && authorized?
       response = CampusSolutions::DegreeProgress::GraduateMilestones.new(user_id: @uid).get
       response[:feed] = HashConverter.camelize({
         degree_progress: process(response),
@@ -38,6 +38,10 @@ module DegreeProgress
       end
       logger.error "Could not retrieve CS link #{link_key} for Degree Progress feed, uid = #{@uid}" unless link
       link
+    end
+
+    def authorized?
+      authentication_state.policy.can_view_as? || authentication_state.policy.graduate_student? || authentication_state.policy.law_student?
     end
   end
 end

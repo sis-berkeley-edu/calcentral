@@ -277,7 +277,10 @@ verify_cs 'cs_advisor_student_lookup' "${yml_features_cs_advisor_student_lookup}
 verify_cs 'cs_profile_emergency_contacts' "${yml_features_cs_profile_emergency_contacts}" \
   "/UcApiEmergencyContactGet.v1/?EMPLID=${CAMPUS_SOLUTIONS_ID}"
 
-verify_cs 'cs_degree_progress' "${yml_features_cs_degree_progress}" \
+verify_cs 'cs_degree_progress_grad_advising' "${yml_features_cs_degree_progress_grad_advising}" \
+  "/UC_AA_PROGRESS_GET.v1/UC_AA_PROGRESS_GET?EMPLID=${CAMPUS_SOLUTIONS_ID}"
+
+verify_cs 'cs_degree_progress_grad_student' "${yml_features_cs_degree_progress_grad_student}" \
   "/UC_AA_PROGRESS_GET.v1/UC_AA_PROGRESS_GET?EMPLID=${CAMPUS_SOLUTIONS_ID}"
 
 verify_hub 'always_enabled' true \

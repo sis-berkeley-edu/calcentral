@@ -13,6 +13,14 @@ module Berkeley
       'Advancement to Candidacy Plan I or Plan II'
     end
 
+    def self.get_form_notification(milestone_code, status_code)
+      form_notifications[milestone_code.strip.upcase] unless (status_code === 'Y' || milestone_code.blank?)
+    end
+
+    def self.get_merged_form_notification
+      '(Plan 1 Requires a Form)'
+    end
+
     def self.milestones
       @milestones ||= {
         'AAGADVMAS1' => 'Advancement to Candidacy Plan I',
@@ -30,7 +38,16 @@ module Berkeley
     def self.statuses
       @statuses ||= {
         'Y' => 'Completed',
-        'N' => 'Not Satisfied'
+        'N' => 'Not Satisfied',
+        'P' => 'Partially Passed'
+      }
+    end
+
+    def self.form_notifications
+      @form_notifications ||= {
+        'AAGADVMAS1' => '(Form Required)',
+        'AAGADVMAS2' => '(Form Required)',
+        'AAGQEAPRV' => '(Form Required)'
       }
     end
   end

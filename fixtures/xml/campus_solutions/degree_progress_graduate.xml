@@ -12,8 +12,8 @@
         <REQUIREMENT>
           <NAME>Advancement to Candidacy Mas2</NAME>
           <NUMBER>10</NUMBER>
-          <STATUS>Y</STATUS>
-          <DATE>2016-12-22</DATE>
+          <STATUS>N</STATUS>
+          <DATE></DATE>
           <CODE>AAGADVMAS2</CODE>
         </REQUIREMENT>
         <REQUIREMENT>
@@ -80,7 +80,7 @@
         <REQUIREMENT>
           <NAME>Qualifying Exam Results</NAME>
           <NUMBER>20</NUMBER>
-          <STATUS>Partially Passed</STATUS>
+          <STATUS>P</STATUS>
           <DATE>2016-12-26</DATE>
           <CODE>AAGQERESLT</CODE>
         </REQUIREMENT>

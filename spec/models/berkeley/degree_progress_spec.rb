@@ -41,4 +41,34 @@ describe Berkeley::DegreeProgress do
       it {should eq 'Dissertation File Date'}
     end
   end
+
+  describe '#get_form_notification' do
+    subject { described_class.get_form_notification(milestone_code, status_code) }
+
+    context 'when milestone_code is nil' do
+      let(:milestone_code) {nil}
+      let(:status_code) {'N'}
+      it {should be nil}
+    end
+    context 'when milestone_code is garbage' do
+      let(:milestone_code) {'garbage'}
+      let(:status_code) {'N'}
+      it {should be nil}
+    end
+    context 'when milestone is completed' do
+      let(:milestone_code) {'AAGADVMAS1'}
+      let(:status_code) {'Y'}
+      it {should be nil}
+    end
+    context 'when milestone_code exists in @statuses' do
+      let(:milestone_code) {'AAGADVMAS1'}
+      let(:status_code) {'N'}
+      it {should eq '(Form Required)'}
+    end
+    context 'when milestone_code exists in @statuses but is lowercase' do
+      let(:milestone_code) {'aagqeaprv'}
+      let(:status_code) {'N'}
+      it {should eq '(Form Required)'}
+    end
+  end
 end
