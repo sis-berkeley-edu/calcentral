@@ -50,7 +50,7 @@ describe 'My Finances Campus Solutions student financials', :testui => true do
           @dashboard_page.my_dashboard_link_element.when_visible WebDriverUtils.page_load_timeout
           has_finances_tab = @dashboard_page.my_finances_link?
 
-          if (%w(STUDENT, UNDERGRAD, GRADUATE, ADMIT_UX) & @student_api.affiliation_types).any? ||
+          if (%w(STUDENT UNDERGRAD GRADUATE ADMIT_UX) & @student_api.affiliation_types).any? ||
               @status_api.is_applicant? || @status_api.is_student? ||  @status_api.has_student_history?
             it("shows a My Finances tab for UID #{uid}") { expect(has_finances_tab).to be true }
           else
