@@ -70,31 +70,31 @@ module CalCentralPages
     def click_add_job
       click_cancel if cancel_element.visible?
       add_element.when_visible WebDriverUtils.page_event_timeout
-      click_element add_element
+      click_element_js add_element
     end
 
     def click_edit(index)
       click_cancel if cancel_element.visible?
       employment_edit_elements[index].when_visible WebDriverUtils.page_event_timeout
-      click_element employment_edit_elements[index]
+      click_element_js employment_edit_elements[index]
     end
 
     def click_save
       save_element.when_visible WebDriverUtils.page_event_timeout
-      click_element save_element
+      click_element_js save_element
       # Wait for transaction to complete
       sleep WebDriverUtils.page_event_timeout
     end
 
     def click_cancel
       cancel_element.when_visible WebDriverUtils.page_event_timeout
-      click_element cancel_element
+      click_element_js cancel_element
       add_element.when_visible WebDriverUtils.page_event_timeout
     end
 
     def click_delete_job
       delete_element.when_visible WebDriverUtils.page_event_timeout
-      click_element delete_element
+      click_element_js delete_element
     end
 
     def inputs_max(inputs)
@@ -131,7 +131,7 @@ module CalCentralPages
       clear_and_type(start_date_input_element, job_data[:start_date])
       clear_and_type(end_date_input_element, job_data[:end_date])
       clear_and_type(title_input_element, job_data[:title])
-      click_element fraction_radio(job_data) unless job_data[:fraction].blank?
+      click_element_js fraction_radio(job_data) unless job_data[:fraction].blank?
       clear_and_type(hours_per_week_input_element, job_data[:hours])
       self.currency_select = job_data[:currency]
       clear_and_type(pay_rate_input_element, job_data[:rate])

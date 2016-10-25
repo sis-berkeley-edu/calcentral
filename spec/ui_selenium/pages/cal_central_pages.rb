@@ -156,6 +156,7 @@ module CalCentralPages
 
   def basic_auth(uid)
     logger.info('Logging in using basic auth')
+    scroll_to_bottom
     WebDriverUtils.wait_for_page_and_click toggle_footer_link_element
     WebDriverUtils.wait_for_element_and_type(basic_auth_uid_input_element, uid)
     WebDriverUtils.wait_for_element_and_type(basic_auth_password_input_element, UserUtils.basic_auth_pass)
@@ -187,4 +188,13 @@ module CalCentralPages
     end
   end
 
+  def click_element_js(element)
+    wait_until(WebDriverUtils.page_event_timeout) { element.exists?; element.visible? }
+    execute_script('arguments[0].click();', element)
+  end
+
+  def scroll_to_bottom
+    execute_script('window.scrollTo(0, document.body.scrollHeight);')
+    sleep 1
+  end
 end

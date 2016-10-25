@@ -49,23 +49,10 @@ module CalCentralPages
     end
 
     # TODO: remove this when WebDriver issue is fixed: https://github.com/SeleniumHQ/selenium/issues/1156
-    def click_element(element)
-      wait_until(WebDriverUtils.page_event_timeout) { element.exists?; element.visible? }
-      execute_script('arguments[0].click();', element)
-    end
-
-    # TODO: remove this when WebDriver issue is fixed: https://github.com/SeleniumHQ/selenium/issues/1156
     def clear_and_type(element, text)
-      click_element element
+      click_element_js element
       element.clear
       element.send_keys text unless text.blank?
-    end
-
-    # TODO: remove this when WebDriver issue is fixed: https://github.com/SeleniumHQ/selenium/issues/1156
-    def scroll_to_bottom
-      # Scroll to the bottom of the page in case the page element is not in view
-      execute_script('window.scrollTo(0, document.body.scrollHeight);')
-      sleep 1
     end
 
   end

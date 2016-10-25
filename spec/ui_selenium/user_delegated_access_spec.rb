@@ -29,7 +29,6 @@ describe 'Delegated access', :testui => true do
       @status_card = CalCentralPages::MyAcademicsStatusAndHoldsCard.new @driver
       @semester_card = CalCentralPages::MyAcademicsSemestersCard.new @driver
       @final_exams_card = CalCentralPages::MyAcademicsFinalExamsCard.new @driver
-      @uni_reqts_card = CalCentralPages::MyAcademicsUniversityReqtsCard.new @driver
       @final_grades_card = CalCentralPages::MyAcademicsFinalGradesCard.new @driver
       @gpa_calc_card = CalCentralPages::MyAcademicsGPACalcCard.new @driver
       @classes_card = CalCentralPages::MyAcademicsClassesCard.new @driver
@@ -243,10 +242,6 @@ describe 'Delegated access', :testui => true do
                     if @academics_api.has_exam_schedules
                       it ("shows delegate UID #{uid} no final exams for UID #{student_uid}") { expect(shows_exams).to be false }
                     end
-
-                    # University Requirements
-                    shows_uni_reqts = @uni_reqts_card.reqts_table?
-                    it ("shows delegate UID #{uid} no university requirements for UID #{student_uid}") { expect(shows_uni_reqts).to be false }
 
                     # My Academics student semester cards
 

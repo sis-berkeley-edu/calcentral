@@ -29,6 +29,8 @@ describe 'My Dashboard bConnected live updates', :testui => true do
       # On email badge, get initial count of unread emails
       @dashboard = CalCentralPages::MyDashboardPage.new(@driver)
       @dashboard.email_count_element.when_visible(timeout=WebDriverUtils.page_load_timeout)
+      # Pause a moment to let the count update
+      sleep WebDriverUtils.page_event_timeout
       @initial_mail_count = @dashboard.email_count.to_i
       logger.info("Unread email count is #{@initial_mail_count.to_s}")
 

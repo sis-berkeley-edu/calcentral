@@ -10,11 +10,12 @@ describe 'My Finances Campus Solutions student financials', :testui => true do
       test_users = UserUtils.load_test_users.select { |user| user['financesData'] }
       testable_users = []
       test_output_heading = ['UID', 'Finances Tab', 'Acct Bal', 'Amt Due Now', 'Past Due', 'Future Activity',
-                             'Charges', 'Payments', 'Awards', 'Has Partial Payment']
+                             'Charges', 'Payments', 'Awards', 'Waivers', 'Has Partial Payment']
       test_output = UserUtils.initialize_output_csv(self, test_output_heading)
 
       @splash_page = CalCentralPages::SplashPage.new driver
       @status_api = ApiMyStatusPage.new driver
+      @student_api = ApiEdosStudentPage.new driver
       @my_finances_landing = CalCentralPages::MyFinancesPages::MyFinancesLandingPage.new driver
       @my_finances_billing = CalCentralPages::MyFinancesPages::MyFinancesBillingPage.new driver
       @dashboard_page = CalCentralPages::MyDashboardPage.new driver
@@ -37,6 +38,7 @@ describe 'My Finances Campus Solutions student financials', :testui => true do
           @splash_page.load_page
           @splash_page.basic_auth uid
           @status_api.get_json driver
+          @student_api.get_json driver
 
           # Get data from billing API
           fin_api = ApiCSBillingPage.new driver
@@ -44,7 +46,18 @@ describe 'My Finances Campus Solutions student financials', :testui => true do
           fin_legacy_api = ApiMyFinancialsPage.new driver
           fin_legacy_api.get_json driver
 
-          if (has_finances_tab = @status_api.has_finances_tab?)
+          @dashboard_page.load_page
+          @dashboard_page.my_dashboard_link_element.when_visible WebDriverUtils.page_load_timeout
+          has_finances_tab = @dashboard_page.my_finances_link?
+
+          if (%w(STUDENT, UNDERGRAD, GRADUATE, ADMIT_UX) & @student_api.affiliation_types).any? ||
+              @status_api.is_applicant? || @status_api.is_student? ||  @status_api.has_student_history?
+            it("shows a My Finances tab for UID #{uid}") { expect(has_finances_tab).to be true }
+          else
+            it("shows no My Finances tab for UID #{uid}") { expect(has_finances_tab).to be false }
+          end
+
+          if has_finances_tab
 
             if fin_api.error?
 
@@ -348,7 +361,55 @@ describe 'My Finances Campus Solutions student financials', :testui => true do
                 end
               end
 
-            # TODO - other transaction types (deposits, refunds)
+              # Waivers
+              waivers = fin_api.transactions_by_type(fin_api.activity_filtered, 'W')
+              waivers_count = waivers.length
+              logger.info "There are #{waivers_count} waivers"
+              if waivers.any?
+                waiver = waivers.last
+                waiver_date = WebDriverUtils.ui_date_input_format fin_api.effective_date_as_date(waiver)
+
+                logger.debug "Checking waiver on #{waiver_date}"
+
+                @my_finances_billing.search('Date Range', nil, waiver_date, waiver_date, fin_api.description(waiver))
+                if @my_finances_billing.visible_transaction_count == 1
+                  @my_finances_billing.toggle_first_trans_detail
+
+                  ui_waiver_date = @my_finances_billing.item_date
+                  it("shows the waiver date for UID #{uid}") { expect(ui_waiver_date).to eql(fin_api.formatted_date fin_api.effective_date(waiver)) }
+
+                  ui_waiver_desc = @my_finances_billing.item_desc
+                  it("shows the waiver description for UID #{uid}") { expect(ui_waiver_desc).to eql(fin_api.description(waiver)) }
+
+                  ui_waiver_amt = @my_finances_billing.strip_currency @my_finances_billing.item_amt
+                  it("shows the waiver amount for UID #{uid}") { expect(ui_waiver_amt).to eql(fin_api.amt_to_s fin_api.line_amount(waiver)) }
+
+                  ui_waiver_type = @my_finances_billing.item_type
+                  it("shows the transaction type of the waiver for UID #{uid}") { expect(ui_waiver_type).to eql(fin_api.type waiver) }
+
+                  ui_waiver_due_date = @my_finances_billing.item_due_date?
+                  it("shows no waiver due date for UID #{uid}") { expect(ui_waiver_due_date).to be false }
+
+                  # Detail
+
+                  ui_waiver_has_status = @my_finances_billing.item_detail_status?
+                  it("shows no waiver status for UID #{uid}") { expect(ui_waiver_has_status).to be false }
+
+                  ui_waiver_has_orig_amt = @my_finances_billing.item_detail_orig_amt?
+                  it("shows no waiver original amount for UID #{uid}") { expect(ui_waiver_has_orig_amt).to be false }
+
+                  ui_waiver_term = @my_finances_billing.item_detail_term
+                  it("shows the waiver term for UID #{uid}") { expect(ui_waiver_term).to eql(fin_api.term_desc(waiver)) }
+
+                  ui_waiver_detail_type = @my_finances_billing.item_detail_type
+                  it("shows the transaction type in the waiver detail view for UID #{uid}") { expect(ui_waiver_detail_type).to eql(fin_api.type waiver) }
+
+                else
+                  logger.warn "Found more than one waiver with the same description on #{waiver_date}, skipping"
+                end
+              end
+
+              # TODO - other transaction types (deposits, refunds)
 
             # STATUS POPOVER
 
@@ -391,7 +452,7 @@ describe 'My Finances Campus Solutions student financials', :testui => true do
           logger.error "#{e.message + "\n"} #{e.backtrace.join("\n ")}"
         ensure
           test_output_row = [uid, has_finances_tab, acct_bal, amt_due_now, has_past_due_amt, has_future_activity,
-                             charge_count, payment_count, awards_count, has_partial_payment]
+                             charge_count, payment_count, awards_count, waivers_count, has_partial_payment]
           UserUtils.add_csv_row(test_output, test_output_row)
         end
       end
