@@ -6,7 +6,7 @@ module MailingLists
 
     self.table_name = 'canvas_site_mailing_lists'
 
-    attr_accessible :canvas_site_id, :list_name, :state, :members_count, :populated_at, :populate_add_errors, :populate_remove_errors
+    attr_accessible :canvas_site_id, :list_name, :canvas_site_name, :state, :members_count, :populated_at, :populate_add_errors, :populate_remove_errors
     attr_accessor :request_failure
     attr_accessor :population_results
 
@@ -59,7 +59,7 @@ module MailingLists
         feed[:canvasSite] = {
           canvasCourseId: self.canvas_site_id,
           sisCourseId: @canvas_site['sis_course_id'],
-          name: @canvas_site['name'],
+          name: self.canvas_site_name,
           courseCode: @canvas_site['course_code'],
           url: "#{Settings.canvas_proxy.url_root}/courses/#{@canvas_site['id']}",
           term: parse_term(@canvas_site['term'])
@@ -114,7 +114,10 @@ module MailingLists
 
     def get_canvas_site
       return if self.canvas_site_id.blank? || @canvas_site
-      unless (@canvas_site = Canvas::Course.new(canvas_course_id: self.canvas_site_id).course[:body])
+      if (@canvas_site = Canvas::Course.new(canvas_course_id: self.canvas_site_id).course[:body])
+        self.canvas_site_name = @canvas_site['name'].strip
+        save if (self.persisted? && self.changed?)
+      else
         self.request_failure = "No bCourses site with ID \"#{self.canvas_site_id}\" was found."
       end
     end

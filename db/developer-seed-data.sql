@@ -111,6 +111,7 @@ ALTER SEQUENCE canvas_site_mailing_list_members_id_seq OWNED BY canvas_site_mail
 CREATE TABLE canvas_site_mailing_lists (
   id integer NOT NULL,
   canvas_site_id character varying(255),
+  canvas_site_name character varying(255),
   list_name character varying(255),
   state character varying(255),
   populated_at timestamp without time zone,

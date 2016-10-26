@@ -57,6 +57,7 @@ module MailingLists
       address = Mail::Address.new
       address.address = ['no-reply', @mailing_list.class.domain].join '@'
       address.display_name = [@member.first_name, @member.last_name].join ' '
+      address.display_name << " (#{@mailing_list.canvas_site_name})" if @mailing_list.canvas_site_name
       payload['from'] = address.to_s
     end
 
@@ -69,6 +70,7 @@ module MailingLists
         payload['to'] << member.email_address
         payload['recipient-variables'][member.email_address] = {}
       end
+      payload['recipient-variables'] = payload['recipient-variables'].to_json
     end
 
     def to_upload_io(attachment_data)
