@@ -20,7 +20,7 @@ angular.module('calcentral.factories').factory('canvasSiteMailingListFactory', f
 
   var registerSiteMailingList = function(canvasCourseId, list) {
     return $http.post('/api/academics/canvas/mailing_lists/' + canvasCourseId + '/create', {
-      listName: list.listName,
+      listName: list.name,
       listType: list.listType
     });
   };
