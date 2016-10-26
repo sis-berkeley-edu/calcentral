@@ -12,6 +12,9 @@ module CalnetLdap
     # TODO Ask CalNet for suggested maximum number of search values.
     BATCH_QUERY_MAXIMUM = 20
 
+    # String based searches must be limited to avoid looping over thousands of results.
+    NAME_SEARCH_SIZE_LIMIT = '30'
+
     def initialize
       @ldap = Net::LDAP.new({
         host: Settings.ldap.host,
@@ -50,8 +53,8 @@ module CalnetLdap
 
     def search_by_filter(filter, include_guest_users=false)
       results = []
-      results.concat search(base: PEOPLE_DN, filter: filter)
-      results.concat search(base: GUEST_DN, filter: filter) if include_guest_users
+      results.concat search(base: PEOPLE_DN, filter: filter, size: NAME_SEARCH_SIZE_LIMIT)
+      results.concat search(base: GUEST_DN, filter: filter, size: NAME_SEARCH_SIZE_LIMIT) if include_guest_users
       results
     end
 
