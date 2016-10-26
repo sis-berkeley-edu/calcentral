@@ -6,17 +6,11 @@ var _ = require('lodash');
 /**
  * My Advising controller
  */
-angular.module('calcentral.controllers').controller('MyAdvisingController', function(academicsFactory, advisingFactory, myAdvisingFactory, $route, $routeParams, $scope) {
+angular.module('calcentral.controllers').controller('MyAdvisingController', function(academicsFactory, advisingFactory, myAdvisingFactory, $route, $routeParams, $scope, $q) {
   $scope.myAdvising = {
-    feedsLoading: {
-      myAdvising: true,
-      academicsRoles: true
-    },
+    isLoading: true,
+    backToText: 'My Academics',
     roles: {}
-  };
-
-  $scope.myAdvising.isLoading = function() {
-    return $scope.myAdvising.feedsLoading.myAdvising && $scope.myAdvising.feedsLoading.academicsRoles;
   };
 
   var isHaasStudent = function() {
@@ -41,14 +35,17 @@ angular.module('calcentral.controllers').controller('MyAdvisingController', func
     var options = {
       uid: $routeParams.uid
     };
-    academicsSource(options).then(function(data) {
+
+    var getAcademics = academicsSource(options).then(function(data) {
       angular.extend($scope.myAdvising.roles, _.get(data, 'data.collegeAndLevel.roles'));
-      $scope.myAdvising.feedsLoading.academicsRoles = false;
     });
-    myAdvisingFactory.getStudentAdvisingInfo().then(function(data) {
+    var getAdvisingInfo = myAdvisingFactory.getStudentAdvisingInfo().then(function(data) {
       angular.extend($scope.myAdvising, _.get(data, 'data.feed'));
       $scope.myAdvising.errored = _.get(data, 'data.errored');
-      $scope.myAdvising.feedsLoading.myAdvising = false;
+    });
+
+    $q.all([getAcademics, getAdvisingInfo]).then(function() {
+      $scope.myAdvising.isLoading = false;
     });
   };
 

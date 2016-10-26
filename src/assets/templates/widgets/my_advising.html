@@ -5,7 +5,7 @@
       data-ng-if="api.user.profile.features.csAdvisingLinks && myAdvising.links && myAdvising.roles.ugrdUrbanStudies"
       data-cc-campus-solutions-link-directive="myAdvising.links.newAppointment.url"
       data-cc-campus-solutions-link-directive-enabled="{{myAdvising.links.newAppointment.isCsLink}}"
-      data-cc-campus-solutions-link-directive-text="myAdvising.links.newAppointment.backToText"
+      data-cc-campus-solutions-link-directive-text="myAdvising.backToText"
       data-cc-campus-solutions-link-directive-cache="'myAdvising'"
       data-cc-outbound-enabled="false"
       data-ng-disabled="!myAdvising.links.newAppointment.url || !api.user.profile.isDirectlyAuthenticated || isAdvisingStudentLookup"
@@ -15,7 +15,7 @@
     </a>
   </div>
 
-  <div data-cc-spinner-directive="myAdvising.isLoading()">
+  <div data-cc-spinner-directive="myAdvising.isLoading">
     <div class="cc-widget-padding">
 
       <div data-ng-if="myAdvising.errored">
@@ -128,13 +128,16 @@
             && myAdvising.roles.ugrdUrbanStudies">
           <h3 class="cc-widget-myadvising-header">Appointments</h3>
           <div class="cc-widget-myadvising-link">
-            <div
-              data-cc-campus-solutions-link-item-directive
-              data-link="myAdvising.links.manageAppointments.url"
-              data-text="Access and Manage My Appointments"
-              data-ng-if="myAdvising.links.manageAppointments.url"
-              data-disabled="{{!myAdvising.links.manageAppointments.url || !api.user.profile.isDirectlyAuthenticated || isAdvisingStudentLookup}}"
-            ></div>
+            <a
+              data-ng-disabled="{{!myAdvising.links.manageAppointments.url || !api.user.profile.isDirectlyAuthenticated || isAdvisingStudentLookup}}"
+              data-cc-campus-solutions-link-directive="myAdvising.links.manageAppointments.url"
+              data-cc-campus-solutions-link-directive-enabled="{{myAdvising.links.manageAppointments.isCsLink}}"
+              data-cc-campus-solutions-link-directive-text="myAdvising.backToText"
+              data-cc-campus-solutions-link-directive-cache="'myAdvising'"
+              data-cc-outbound-enabled="false"
+            >
+              Access and Manage My Appointments
+            </a>
           </div>
         </div>
       </div>
