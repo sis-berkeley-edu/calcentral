@@ -718,24 +718,6 @@ describe MyAcademics::CollegeAndLevel do
       })
     end
 
-    context 'when filtering out inactive academic statuses' do
-      let(:hub_academic_statuses) { [hub_academic_status, hub_academic_status_secondary] }
-      let(:active_statuses) { subject.active_academic_statuses(hub_academic_statuses) }
-      let(:hub_academic_status_secondary) do
-        {
-          "cumulativeGPA" => {},
-          "cumulativeUnits" => [],
-          "currentRegistration" => {},
-          "studentCareer" => {},
-          "studentPlans" => []
-        }
-      end
-      it 'returns academic statuses that have active plans present' do
-        expect(active_statuses.count).to eq 1
-        expect(active_statuses[0]['studentCareer']['academicCareer']['code']).to eq 'UGRD'
-      end
-    end
-
     context 'when filtering out inactive plans from statuses' do
       let(:filtered_academic_statuses) { subject.filter_inactive_status_plans(hub_academic_statuses) }
       it 'removes inactive plans from each status' do

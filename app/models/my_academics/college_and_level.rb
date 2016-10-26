@@ -124,9 +124,8 @@ module MyAcademics
       }
 
       filtered_statuses = filter_inactive_status_plans(statuses)
-      active_statuses = active_academic_statuses(filtered_statuses)
 
-      active_statuses.each do |status|
+      filtered_statuses.each do |status|
         Array.wrap(status.try(:[], 'studentPlans')).each do |plan|
           flattened_plan = flatten_plan(plan)
           plan_set[:plans] << flattened_plan
@@ -166,13 +165,6 @@ module MyAcademics
         end
       end
       statuses
-    end
-
-    def active_academic_statuses(statuses)
-      active_statuses = statuses.select do |status|
-        status.try(:[], 'studentPlans').try(:count).to_i > 0
-      end
-      active_statuses
     end
 
     def parse_hub_term_name(term)
