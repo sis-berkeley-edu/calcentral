@@ -1,6 +1,7 @@
 describe MailingLists::OutgoingMessage do
 
   let(:list) do
+    allow_any_instance_of(Canvas::Course).to receive(:course).and_return({body: {'name' => 'Design Analysis of Nuclear Reactors'}})
     MailingLists::MailgunList.create!(
       canvas_site_id: random_id,
       list_name: 'design_analysis_of_nuclear_reactors-sp17'
@@ -52,15 +53,14 @@ describe MailingLists::OutgoingMessage do
 
   let(:request_matcher) do
     satisfy do |params|
-      expect(params).to include({
-        'Message-Id' => '<DLOAsW7ZwDP1yvQOabwgZ1AvXNGoGpJgRoV4HoVq9tjQKyD1f1w@mail.gmail.com>',
-        'from' => 'Montgomery Burns <no-reply@bcourses-mail.berkeley.edu>',
-        'to' => %w(monty@berkeley.edu smithers@berkeley.edu),
-        'subject' => 'A message of teaching and learning',
-        'h:Reply-To' => 'Montgomery Burns <monty@berkeley.edu>',
-        'html' => message_opts[:body][:html],
-        'text' => message_opts[:body][:plain]
-      })
+      expect(params['Message-Id']).to eq '<DLOAsW7ZwDP1yvQOabwgZ1AvXNGoGpJgRoV4HoVq9tjQKyD1f1w@mail.gmail.com>'
+      expect(params['from']).to eq '"Montgomery Burns (Design Analysis of Nuclear Reactors)" <no-reply@bcourses-mail.berkeley.edu>'
+      expect(params['to']).to match_array %w(monty@berkeley.edu smithers@berkeley.edu)
+      expect(params['subject']).to eq 'A message of teaching and learning'
+      expect(params['h:Reply-To']).to eq 'Montgomery Burns <monty@berkeley.edu>'
+      expect(JSON.parse params['recipient-variables']).to eq({'monty@berkeley.edu' => {}, 'smithers@berkeley.edu' => {}})
+      expect(params['html']).to eq message_opts[:body][:html]
+      expect(params['text']).to eq message_opts[:body][:plain]
     end
   end
 

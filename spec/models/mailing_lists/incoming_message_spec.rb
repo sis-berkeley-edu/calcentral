@@ -97,15 +97,24 @@ describe MailingLists::IncomingMessage do
         include_examples 'proxy failure handling'
       end
 
-      context 'member with sending privileges' do
-        let(:sender) { 'Montgomery Burns <monty@berkeley.edu>' }
+      shared_examples 'successful forwarding' do
         it 'forwards to list' do
           monty = list.members.find_by email_address: 'monty@berkeley.edu'
           expect(MailingLists::OutgoingMessage).to receive(:new).with(list, monty, message_opts)
            .and_return double(send_message: {response: {sending: true}})
           expect(subject.relay).to be_truthy
         end
+      end
+
+      context 'member with sending privileges' do
+        let(:sender) { 'Montgomery Burns <monty@berkeley.edu>' }
+        include_examples 'successful forwarding'
         include_examples 'proxy failure handling'
+
+        context 'recipient with environment-specific suffix' do
+          before { recipient.sub! '@', '-cc-sis-dev@' }
+          include_examples 'successful forwarding'
+        end
       end
     end
   end

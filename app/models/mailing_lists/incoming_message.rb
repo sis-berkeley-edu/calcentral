@@ -29,8 +29,10 @@ module MailingLists
     private
 
     def find_mailing_list
-      if @recipient_address
-        MailingLists::SiteMailingList.find_by list_name: @recipient_address.local
+      if @recipient_address && @recipient_address.local.present?
+        # Remove any suffix used to route to a specific CalCentral environment.
+        list_name = @recipient_address.local.sub(/-cc-[a-z\-]{2,8}\Z/, '')
+        MailingLists::SiteMailingList.find_by list_name: list_name
       end
     end
 
@@ -67,7 +69,7 @@ module MailingLists
     end
 
     def bounce(reason)
-      message_text = "#{reason.squish}\n\n-------------\nFrom: #{@opts[:from]}\nTo: #{@opts[:to]}\nSubject: #{@opts[:subject]}\n#{@opts[:body][:plain]}"
+      message_text = "#{reason.squish}\n\n-------------\nFrom: #{@opts[:from]}\nTo: #{@opts[:to]}\nSubject: #{@opts[:subject]}\n\n#{@opts[:body][:plain]}"
       response = Mailgun::SendMessage.new.post(
         from: 'bCourses Mailing Lists <no-reply@bcourses-mail.berkeley.edu>',
         to: @opts[:sender],
