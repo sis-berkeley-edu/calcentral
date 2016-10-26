@@ -21,9 +21,15 @@ module MailingLists
 
       set_attachments payload
       set_from payload
-      set_recipients payload
 
-      Mailgun::SendMessage.new.post payload
+      # Mailgun limits batch sending to 1000 members at a time.
+      response = nil
+      @mailing_list.members.each_slice(1000) do |members|
+        recipient_fields = get_recipient_fields members
+        response = Mailgun::SendMessage.new.post payload.merge(recipient_fields)
+        break unless response.try(:[], :response).try(:[], :sending)
+      end
+      response
     end
 
     private
@@ -63,14 +69,17 @@ module MailingLists
 
     # The empty hashes under 'recipient-variables' tell Mailgun not to include all member addresses in the 'To:' field.
     # See https://documentation.mailgun.com/user_manual.html#batch-sending
-    def set_recipients(payload)
-      payload['to'] = []
-      payload['recipient-variables'] = {}
-      @mailing_list.members.each do |member|
-        payload['to'] << member.email_address
-        payload['recipient-variables'][member.email_address] = {}
+    def get_recipient_fields(members)
+      to = []
+      recipient_variables = {}
+      members.each do |member|
+        to << member.email_address
+        recipient_variables[member.email_address] = {}
       end
-      payload['recipient-variables'] = payload['recipient-variables'].to_json
+      {
+        'to' => to,
+        'recipient-variables' => recipient_variables.to_json
+      }
     end
 
     def to_upload_io(attachment_data)
