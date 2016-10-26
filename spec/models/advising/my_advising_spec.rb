@@ -311,10 +311,8 @@ describe Advising::MyAdvising do
           XML
         })
       end
-      it 'reports failure' do
-        allow(Rails.logger).to receive(:debug).and_return(false)
-        expect(Rails.logger).to receive(:debug).with(/Could not retrieve CS link/).twice
-        expect(subject[:feed][:links]).not_to be
+      it 'returns nothing' do
+        expect(subject[:feed][:links]).to eq nil
       end
     end
   end
