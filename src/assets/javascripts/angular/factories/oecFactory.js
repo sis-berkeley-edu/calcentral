@@ -7,15 +7,15 @@ var angular = require('angular');
  */
 angular.module('calcentral.factories').factory('oecFactory', function($http) {
   var getOecTasks = function() {
-    return $http.get('/api/oec_tasks');
+    return $http.get('/api/oec/tasks');
   };
 
   var oecTaskStatus = function(oecTaskId) {
-    return $http.get('/api/oec_tasks/status/' + oecTaskId);
+    return $http.get('/api/oec/tasks/status/' + oecTaskId);
   };
 
   var runOecTask = function(taskName, parameters) {
-    return $http.post('/api/oec_tasks/' + taskName, parameters);
+    return $http.post('/api/oec/tasks/' + taskName, parameters);
   };
 
   return {

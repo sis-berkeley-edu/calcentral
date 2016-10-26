@@ -6,7 +6,7 @@ module Oec
       {
         name: 'TermSetupTask',
         friendlyName: 'Term setup',
-        htmlDescription: 'Create a Google Drive folder under a new term code (e.g., <strong>2015-D</strong>) and populate it with initial folders and files.',
+        htmlDescription: 'Create a Google Drive folder under a new term code (e.g., <strong>2017-D</strong>) and populate it with initial folders and files.',
         acceptsDepartmentOptions: false
       },
       {

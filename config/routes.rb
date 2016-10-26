@@ -99,9 +99,13 @@ Calcentral::Application.routes.draw do
   post '/api/academics/canvas/mailing_lists/:canvas_course_id/delete' => 'canvas_mailing_lists#destroy', :defaults => { :format => 'json' }
 
   # OEC endpoints
-  get '/api/oec_tasks' => 'oec_tasks#index', :defaults => { :format => 'json' }
-  post '/api/oec_tasks/:task_name' => 'oec_tasks#run', :defaults => { :format => 'json' }
-  get '/api/oec_tasks/status/:task_id' => 'oec_tasks#task_status',  :defaults => { :format => 'json' }
+  get '/api/oec/google/request_authorization'=> 'oec_google_auth#refresh_tokens', :defaults => { :format => 'json' }
+  get '/api/oec/google/handle_callback' => 'oec_google_auth#handle_callback', :defaults => { :format => 'json' }
+  get '/api/oec/google/current_scope' => 'oec_google_auth#current_scope', :defaults => { :format => 'json' }
+  get '/api/oec/google/remove_authorization' => 'oec_google_auth#remove_authorization', :via => :post
+  get '/api/oec/tasks' => 'oec_tasks#index', :defaults => { :format => 'json' }
+  post '/api/oec/tasks/:task_name' => 'oec_tasks#run', :defaults => { :format => 'json' }
+  get '/api/oec/tasks/status/:task_id' => 'oec_tasks#task_status',  :defaults => { :format => 'json' }
 
   # System utility endpoints
   get '/api/cache/clear' => 'cache#clear', :defaults => { :format => 'json' }
@@ -116,7 +120,7 @@ Calcentral::Application.routes.draw do
   get '/api/smoke_test_routes' => 'routes_list#smoke_test_routes', :as => :all_routes, :defaults => { :format => 'json' }
 
   # Oauth endpoints: Google
-  get '/api/google/request_authorization'=> 'google_auth#request_authorization'
+  get '/api/google/request_authorization'=> 'google_auth#refresh_tokens'
   get '/api/google/handle_callback' => 'google_auth#handle_callback'
   get '/api/google/current_scope' => 'google_auth#current_scope'
   post '/api/google/remove_authorization' => 'google_auth#remove_authorization', :via => :post
