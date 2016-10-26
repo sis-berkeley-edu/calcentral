@@ -17,12 +17,16 @@ describe Advising::MyAdvising do
       end
       proxies
     end
+    let(:cs_advisor_student_action_items_proxy) { fake_proxies[CampusSolutions::AdvisorStudentActionItems] }
+    let(:cs_advisor_student_relationship_proxy) { fake_proxies[CampusSolutions::AdvisorStudentRelationship] }
+    let(:cs_advisor_student_appointment_calendar_proxy) { fake_proxies[CampusSolutions::AdvisorStudentAppointmentCalendar] }
+    let(:cs_link_proxy) { fake_proxies[CampusSolutions::Link] }
 
     let(:manage_appts_link) { 'https://bcs-web-dev-03.is.berkeley.edu:8443/psc/bcsdev/EMPLOYEE/HRMS/c/SCI_APPT_STUSS.SCI_APPT_MY_APPTS.GBL'}
     let(:new_appt_link) { 'https://bcs-web-dev-03.is.berkeley.edu:8443/psc/bcsdev/EMPLOYEE/HRMS/c/SCI_APPT_STUSS.SCI_APPT_SS_FLU.GBL'}
 
     before do
-      fake_proxies[CampusSolutions::Link].set_response({
+      cs_link_proxy.set_response({
         status: 200,
         body: <<-XML
           <UC_LINK_RESOURCES>
@@ -99,96 +103,10 @@ describe Advising::MyAdvising do
     end
 
     context 'graduate advisor relationships' do
-      let(:graduate_advisor_relationships_xml) do
-        <<-XML
-          <UC_AA_STUDENT_ADVISOR>
-            <STUDENT_ADVISOR type="array">
-              <STUDENT_ADVISOR>
-                <ASSIGNED_ADVISOR_TYPE_CODE>CHR</ASSIGNED_ADVISOR_TYPE_CODE>
-                <ASSIGNED_ADVISOR_TYPE>Department Chair</ASSIGNED_ADVISOR_TYPE>
-                <ASSIGNED_ADVISOR_PROGRAM>Electrical Eng &amp; Comp Sci MS</ASSIGNED_ADVISOR_PROGRAM>
-                <ASSIGNED_ADVISOR_NAME>Dwight Schrute</ASSIGNED_ADVISOR_NAME>
-                <ASSIGNED_ADVISOR_LOCATION/>
-                <ASSIGNED_ADVISOR_EMAIL>dschrute@example.com</ASSIGNED_ADVISOR_EMAIL>
-                <DEBUG>
-                  <ASSIGNED_ADVISOR_ID>3030123456</ASSIGNED_ADVISOR_ID>
-                </DEBUG>
-              </STUDENT_ADVISOR>
-              <STUDENT_ADVISOR>
-                <ASSIGNED_ADVISOR_TYPE_CODE>GRAD</ASSIGNED_ADVISOR_TYPE_CODE>
-                <ASSIGNED_ADVISOR_TYPE>Grad Div Representative</ASSIGNED_ADVISOR_TYPE>
-                <ASSIGNED_ADVISOR_PROGRAM>Electrical Eng &amp; Comp Sci MS</ASSIGNED_ADVISOR_PROGRAM>
-                <ASSIGNED_ADVISOR_NAME>Janet Levinson-Gould</ASSIGNED_ADVISOR_NAME>
-                <ASSIGNED_ADVISOR_LOCATION/>
-                <ASSIGNED_ADVISOR_EMAIL>jlgould@example.com</ASSIGNED_ADVISOR_EMAIL>
-                <DEBUG>
-                  <ASSIGNED_ADVISOR_ID>3030123457</ASSIGNED_ADVISOR_ID>
-                </DEBUG>
-              </STUDENT_ADVISOR>
-              <STUDENT_ADVISOR>
-                <ASSIGNED_ADVISOR_TYPE_CODE>GSAO</ASSIGNED_ADVISOR_TYPE_CODE>
-                <ASSIGNED_ADVISOR_TYPE>Graduate Student Affairs Offcr</ASSIGNED_ADVISOR_TYPE>
-                <ASSIGNED_ADVISOR_PROGRAM>Electrical Eng &amp; Comp Sci MS</ASSIGNED_ADVISOR_PROGRAM>
-                <ASSIGNED_ADVISOR_NAME>Jason Miller</ASSIGNED_ADVISOR_NAME>
-                <ASSIGNED_ADVISOR_LOCATION/>
-                <ASSIGNED_ADVISOR_EMAIL>jcmiller@example.com</ASSIGNED_ADVISOR_EMAIL>
-                <DEBUG>
-                  <ASSIGNED_ADVISOR_ID>3030123458</ASSIGNED_ADVISOR_ID>
-                </DEBUG>
-              </STUDENT_ADVISOR>
-              <STUDENT_ADVISOR>
-                <ASSIGNED_ADVISOR_TYPE_CODE>GSAO</ASSIGNED_ADVISOR_TYPE_CODE>
-                <ASSIGNED_ADVISOR_TYPE>Graduate Student Affairs Offcr</ASSIGNED_ADVISOR_TYPE>
-                <ASSIGNED_ADVISOR_PROGRAM>Electrical Eng &amp; Comp Sci MS</ASSIGNED_ADVISOR_PROGRAM>
-                <ASSIGNED_ADVISOR_NAME>Alan Parsons</ASSIGNED_ADVISOR_NAME>
-                <ASSIGNED_ADVISOR_LOCATION/>
-                <ASSIGNED_ADVISOR_EMAIL>aparsons@example.com</ASSIGNED_ADVISOR_EMAIL>
-                <DEBUG>
-                  <ASSIGNED_ADVISOR_ID>3030123459</ASSIGNED_ADVISOR_ID>
-                </DEBUG>
-              </STUDENT_ADVISOR>
-              <STUDENT_ADVISOR>
-                <ASSIGNED_ADVISOR_TYPE_CODE>GSI</ASSIGNED_ADVISOR_TYPE_CODE>
-                <ASSIGNED_ADVISOR_TYPE>GSI Advisor</ASSIGNED_ADVISOR_TYPE>
-                <ASSIGNED_ADVISOR_PROGRAM>Electrical Eng &amp; Comp Sci MS</ASSIGNED_ADVISOR_PROGRAM>
-                <ASSIGNED_ADVISOR_NAME>Jim Halpert</ASSIGNED_ADVISOR_NAME>
-                <ASSIGNED_ADVISOR_LOCATION/>
-                <ASSIGNED_ADVISOR_EMAIL>jhalpert@example.com</ASSIGNED_ADVISOR_EMAIL>
-                <DEBUG>
-                  <ASSIGNED_ADVISOR_ID>3030123460</ASSIGNED_ADVISOR_ID>
-                </DEBUG>
-              </STUDENT_ADVISOR>
-              <STUDENT_ADVISOR>
-                <ASSIGNED_ADVISOR_TYPE_CODE>HGA</ASSIGNED_ADVISOR_TYPE_CODE>
-                <ASSIGNED_ADVISOR_TYPE>Head Graduate Advisor</ASSIGNED_ADVISOR_TYPE>
-                <ASSIGNED_ADVISOR_PROGRAM>Electrical Eng &amp; Comp Sci MS</ASSIGNED_ADVISOR_PROGRAM>
-                <ASSIGNED_ADVISOR_NAME>Kelly Kapoor</ASSIGNED_ADVISOR_NAME>
-                <ASSIGNED_ADVISOR_LOCATION/>
-                <ASSIGNED_ADVISOR_EMAIL>kkapoor@example.com</ASSIGNED_ADVISOR_EMAIL>
-                <DEBUG>
-                  <ASSIGNED_ADVISOR_ID>3030123461</ASSIGNED_ADVISOR_ID>
-                </DEBUG>
-              </STUDENT_ADVISOR>
-              <STUDENT_ADVISOR>
-                <ASSIGNED_ADVISOR_TYPE_CODE>GEA</ASSIGNED_ADVISOR_TYPE_CODE>
-                <ASSIGNED_ADVISOR_TYPE>Graduate Equity Advisor</ASSIGNED_ADVISOR_TYPE>
-                <ASSIGNED_ADVISOR_PROGRAM>Electrical Eng &amp; Comp Sci MS</ASSIGNED_ADVISOR_PROGRAM>
-                <ASSIGNED_ADVISOR_NAME>Oscar Martinez</ASSIGNED_ADVISOR_NAME>
-                <ASSIGNED_ADVISOR_LOCATION/>
-                <ASSIGNED_ADVISOR_EMAIL>oscar.m.martinez@example.com</ASSIGNED_ADVISOR_EMAIL>
-                <DEBUG>
-                  <ASSIGNED_ADVISOR_ID>3030123462</ASSIGNED_ADVISOR_ID>
-                </DEBUG>
-              </STUDENT_ADVISOR>
-            </STUDENT_ADVISOR>
-          </UC_AA_STUDENT_ADVISOR>
-        XML
-      end
-
       before do
-        fake_proxies[CampusSolutions::AdvisorStudentRelationship].set_response({
+        cs_advisor_student_relationship_proxy.set_response({
           status: 200,
-          body: graduate_advisor_relationships_xml
+          body: cs_advisor_student_relationship_proxy.read_file('fixtures', 'xml', 'campus_solutions', 'advisor_student_relationship_graduate.xml')
         })
       end
 
@@ -205,63 +123,10 @@ describe Advising::MyAdvising do
     end
 
     context 'undergraduate advisor relationships' do
-      let(:undergraduate_advisor_relationships_xml) do
-        <<-XML
-          <UC_AA_STUDENT_ADVISOR>
-            <STUDENT_ADVISOR type="array">
-              <STUDENT_ADVISOR>
-                <ASSIGNED_ADVISOR_TYPE_CODE>MAJ</ASSIGNED_ADVISOR_TYPE_CODE>
-                <ASSIGNED_ADVISOR_TYPE>Major Advisor</ASSIGNED_ADVISOR_TYPE>
-                <ASSIGNED_ADVISOR_PROGRAM>Electrical Eng &amp; Comp Sci MS</ASSIGNED_ADVISOR_PROGRAM>
-                <ASSIGNED_ADVISOR_NAME>Creed Braton</ASSIGNED_ADVISOR_NAME>
-                <ASSIGNED_ADVISOR_LOCATION/>
-                <ASSIGNED_ADVISOR_EMAIL>wcschneider@example.com</ASSIGNED_ADVISOR_EMAIL>
-                <DEBUG>
-                  <ASSIGNED_ADVISOR_ID>3030123463</ASSIGNED_ADVISOR_ID>
-                </DEBUG>
-              </STUDENT_ADVISOR>
-              <STUDENT_ADVISOR>
-                <ASSIGNED_ADVISOR_TYPE_CODE>UKNW</ASSIGNED_ADVISOR_TYPE_CODE>
-                <ASSIGNED_ADVISOR_TYPE>Unknown Advisor Type</ASSIGNED_ADVISOR_TYPE>
-                <ASSIGNED_ADVISOR_PROGRAM>Electrical Eng &amp; Comp Sci MS</ASSIGNED_ADVISOR_PROGRAM>
-                <ASSIGNED_ADVISOR_NAME>Pam Beesly</ASSIGNED_ADVISOR_NAME>
-                <ASSIGNED_ADVISOR_LOCATION/>
-                <ASSIGNED_ADVISOR_EMAIL>dontcallmepammy@example.com</ASSIGNED_ADVISOR_EMAIL>
-                <DEBUG>
-                  <ASSIGNED_ADVISOR_ID>3030123462</ASSIGNED_ADVISOR_ID>
-                </DEBUG>
-              </STUDENT_ADVISOR>
-              <STUDENT_ADVISOR>
-                <ASSIGNED_ADVISOR_TYPE_CODE>MIN</ASSIGNED_ADVISOR_TYPE_CODE>
-                <ASSIGNED_ADVISOR_TYPE>Minor Advisor</ASSIGNED_ADVISOR_TYPE>
-                <ASSIGNED_ADVISOR_PROGRAM>Electrical Eng &amp; Comp Sci MS</ASSIGNED_ADVISOR_PROGRAM>
-                <ASSIGNED_ADVISOR_NAME>Phyllis Vance</ASSIGNED_ADVISOR_NAME>
-                <ASSIGNED_ADVISOR_LOCATION/>
-                <ASSIGNED_ADVISOR_EMAIL>pvance@example.com</ASSIGNED_ADVISOR_EMAIL>
-                <DEBUG>
-                  <ASSIGNED_ADVISOR_ID>3030123464</ASSIGNED_ADVISOR_ID>
-                </DEBUG>
-              </STUDENT_ADVISOR>
-              <STUDENT_ADVISOR>
-                <ASSIGNED_ADVISOR_TYPE_CODE>COLL</ASSIGNED_ADVISOR_TYPE_CODE>
-                <ASSIGNED_ADVISOR_TYPE>College Advisor</ASSIGNED_ADVISOR_TYPE>
-                <ASSIGNED_ADVISOR_PROGRAM>Electrical Eng &amp; Comp Sci MS</ASSIGNED_ADVISOR_PROGRAM>
-                <ASSIGNED_ADVISOR_NAME>Stanley Hudson</ASSIGNED_ADVISOR_NAME>
-                <ASSIGNED_ADVISOR_LOCATION/>
-                <ASSIGNED_ADVISOR_EMAIL>stanleyh@example.com</ASSIGNED_ADVISOR_EMAIL>
-                <DEBUG>
-                  <ASSIGNED_ADVISOR_ID>3030123465</ASSIGNED_ADVISOR_ID>
-                </DEBUG>
-              </STUDENT_ADVISOR>
-            </STUDENT_ADVISOR>
-          </UC_AA_STUDENT_ADVISOR>
-        XML
-      end
-
       before do
-        fake_proxies[CampusSolutions::AdvisorStudentRelationship].set_response({
+        cs_advisor_student_relationship_proxy.set_response({
           status: 200,
-          body: undergraduate_advisor_relationships_xml
+          body: cs_advisor_student_relationship_proxy.read_file('fixtures', 'xml', 'campus_solutions', 'advisor_student_relationship_undergraduate.xml')
         })
       end
 
@@ -284,21 +149,21 @@ describe Advising::MyAdvising do
 
     context 'proxy returns an error' do
       before do
-        allow(fake_proxies[CampusSolutions::AdvisorStudentAppointmentCalendar]).to receive(:get).and_return(errored: true)
+        allow(cs_advisor_student_appointment_calendar_proxy).to receive(:get).and_return(errored: true)
       end
       it_should_behave_like 'a good and proper error report'
     end
 
     context 'proxy fails to look up student ID' do
       before do
-        allow(fake_proxies[CampusSolutions::AdvisorStudentActionItems]).to receive(:get).and_return(noStudentId: true)
+        allow(cs_advisor_student_action_items_proxy).to receive(:get).and_return(noStudentId: true)
       end
       it_should_behave_like 'a good and proper error report'
     end
 
     context 'missing links' do
       before do
-        fake_proxies[CampusSolutions::Link].set_response({
+        cs_link_proxy.set_response({
           status: 200,
           body: <<-XML
             <UC_LINK_RESOURCES>
