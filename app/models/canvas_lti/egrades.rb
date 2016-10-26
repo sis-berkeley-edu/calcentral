@@ -19,27 +19,32 @@ module CanvasLti
 
     def official_student_grades_csv(term_cd, term_yr, ccn, type)
       raise ArgumentError, 'type argument must be \'final\' or \'current\'' unless GRADE_TYPES.include?(type)
-      official_students = official_student_grades(term_cd, term_yr, ccn)
-      CSV.generate do |csv|
-        csv << %w(student_id grade comment)
-        official_students.each do |student|
-          comment = (student[:pnp_flag] == 'Y') ? 'Opted for P/NP Grade' : ''
-          student_id = student[:student_id]
+      # Campus Solutions expects Windows-style line endings.
+      csv_string = CSV.generate(row_sep: "\r\n") do |csv|
+        csv << ['ID', 'Name', 'Grade', 'Grading Basis', 'Comments']
+        official_student_grades(term_cd, term_yr, ccn).each do |student|
           grade = student["#{type}_grade".to_sym].to_s
-          csv << [student_id, grade, comment]
+          basis = student[:grading_basis] || ''
+          comment = (student[:pnp_flag] == 'Y') ? 'Opted for P/NP Grade' : ''
+          csv << [student[:student_id], student[:name], grade, basis, comment]
         end
       end
+      # Prepend a space so that Excel does not tragically misinterpret the opening 'ID' column as a SYLK header.
+      csv_string.prepend ' '
     end
 
     def official_student_grades(term_cd, term_yr, ccn)
-      enrolled_students = CanvasLti::SisAdapter.get_enrolled_students(ccn, term_yr, term_cd)
-      campus_attributes = enrolled_students.index_by {|s| s['ldap_uid']}
-      official_students = canvas_course_student_grades.select {|student| campus_attributes[student[:sis_login_id]] }
-      official_students.each do |student|
-        campus_data = campus_attributes[student[:sis_login_id]]
-        student[:pnp_flag] = campus_data['pnp_flag']
-        student[:student_id] = campus_data['student_id']
+      enrollments_by_uid = CanvasLti::SisAdapter.get_enrolled_students(ccn, term_yr, term_cd).index_by {|s| s['ldap_uid']}
+      official_grades = []
+      canvas_course_student_grades.each do |canvas_grades|
+        next unless (enrollment = enrollments_by_uid[canvas_grades[:sis_login_id]])
+        official_grades << canvas_grades.merge(
+          grading_basis: enrollment['grading_basis'],
+          pnp_flag: enrollment['pnp_flag'],
+          student_id: enrollment['student_id']
+        )
       end
+      official_grades
     end
 
     def resolve_issues(enable_grading_scheme = false, unmute_assignments = false)
@@ -49,25 +54,20 @@ module CanvasLti
         logger.warn("Enabled default grading scheme for Canvas Course ID #{@canvas_course_id}")
       end
       if unmute_assignments
-        unmute_course_assignments(@canvas_course_id)
+        unmute_course_assignments
       end
     end
 
     def canvas_course_student_grades(force = false)
       self.class.fetch_from_cache("course-students-#{@canvas_course_id}", force) do
-        course_students = []
-        users_response = Canvas::CourseUsers.new(course_id: @canvas_course_id, paging_callback: self).course_users(cache: false)
-        if (course_users = users_response[:body])
-          course_users.each do |course_user|
-            user_grade = student_grade(course_user['enrollments'])
-            course_students << {
-              :sis_login_id => course_user['sis_login_id'],
-              :final_grade => user_grade[:final_grade],
-              :current_grade => user_grade[:current_grade],
-            }
-          end
+        proxy = Canvas::CourseUsers.new(course_id: @canvas_course_id, paging_callback: self)
+        course_users = proxy.course_users(cache: false)[:body] || []
+        course_users.map do |course_user|
+          student_grade(course_user['enrollments']).slice(:current_grade, :final_grade).merge(
+            name: course_user['sortable_name'],
+            sis_login_id: course_user['sis_login_id']
+          )
         end
-        course_students
       end
     end
 
@@ -122,8 +122,8 @@ module CanvasLti
       end
     end
 
-    def unmute_course_assignments(canvas_course_id)
-      worker = Canvas::CourseAssignments.new(:course_id => @canvas_course_id)
+    def unmute_course_assignments
+      worker = Canvas::CourseAssignments.new(course_id: @canvas_course_id)
       muted_assignments = worker.muted_assignments
       logger.warn "Unmuting #{muted_assignments.count} assignments for Canvas course ID #{@canvas_course_id}"
       muted_assignments.each do |assignment|
