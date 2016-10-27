@@ -89,18 +89,16 @@ describe MailingLists::OutgoingMessage do
         message_opts[:attachments] = {
           count: 2,
           data: {
-            'attachment-1' => {
-              'filename' => 'sample_student_72x96.jpg',
-              'name' => 'attachment-1',
-              'tempfile' => File.new(Rails.root.join 'public', 'dummy', 'images', 'sample_student_72x96.jpg'),
-              'type' => 'image/jpg'
-            },
-            'attachment-2' => {
-              'filename' => 'academic_dates.json',
-              'name' => 'attachment-2',
-              'tempfile' => File.new(Rails.root.join 'public', 'dummy', 'json', 'academic_dates.json'),
-              'type' => 'application/json'
-            }
+            'attachment-1' => ActionDispatch::Http::UploadedFile.new(
+              filename: 'sample_student_72x96.jpg',
+              tempfile: File.new(Rails.root.join 'public', 'dummy', 'images', 'sample_student_72x96.jpg'),
+              type: 'image/jpg'
+            ),
+            'attachment-2' => ActionDispatch::Http::UploadedFile.new(
+              filename: 'academic_dates.json',
+              tempfile: File.new(Rails.root.join 'public', 'dummy', 'json', 'academic_dates.json'),
+              type: 'application/json'
+            )
           }
         }
       end
@@ -130,12 +128,11 @@ describe MailingLists::OutgoingMessage do
             'EC2CE1CA-4686-4412-88C7-EC9A2176D97F' => 'attachment-1'
           },
           data: {
-            'attachment-1' => {
-              'filename' => 'sample_student_72x96.jpg',
-              'name' => 'attachment-1',
-              'tempfile' => File.new(Rails.root.join 'public', 'dummy', 'images', 'sample_student_72x96.jpg'),
-              'type' => 'image/jpg'
-            }
+            'attachment-1' => ActionDispatch::Http::UploadedFile.new(
+              filename: 'sample_student_72x96.jpg',
+              tempfile: File.new(Rails.root.join 'public', 'dummy', 'images', 'sample_student_72x96.jpg'),
+              type: 'image/jpg'
+            )
           }
         }
         message_opts[:body][:html] = '<html><body>Keep this man away from the reactor: <img src="cid:EC2CE1CA-4686-4412-88C7-EC9A2176D97F"><br><br></body></html>'
