@@ -3,24 +3,6 @@ describe CanvasLti::Egrades do
   let(:canvas_course_section_id)  { 1312012 }
   subject { CanvasLti::Egrades.new(canvas_course_id: canvas_course_id) }
 
-  let(:official_student_grades_list) do
-    [
-      {:sis_login_id => '872584', :final_grade => 'F', :current_grade => 'C', :pnp_flag => 'N', :student_id => '2004491'},
-      {:sis_login_id => '4000123', :final_grade => 'B', :current_grade => 'B', :pnp_flag => 'N', :student_id => '24000123'},
-      {:sis_login_id => '872527', :final_grade => 'A+', :current_grade => 'A+', :pnp_flag => 'Y', :student_id => '2004445'},
-      {:sis_login_id => '872529', :final_grade => 'D-', :current_grade => 'C', :pnp_flag => 'N', :student_id => '2004421'},
-    ]
-  end
-
-  let(:canvas_course_student_grades_list) do
-    [
-      {:sis_login_id => '872584', :final_grade => 'F', :current_grade => 'C'},
-      {:sis_login_id => '4000123', :final_grade => 'B', :current_grade => 'B'},
-      {:sis_login_id => '872527', :final_grade => 'A+', :current_grade => 'A+'},
-      {:sis_login_id => '872529', :final_grade => 'D-', :current_grade => 'C'},
-    ]
-  end
-
   let(:course_assignments) {
     [
       {
@@ -50,66 +32,97 @@ describe CanvasLti::Egrades do
   it_should_behave_like 'a background job worker'
 
   context 'when serving official student grades csv' do
+    let(:official_student_grades_list) do
+      [
+        {sis_login_id: '872584', final_grade: 'F', current_grade: 'C', pnp_flag: 'N', grading_basis: 'GRD', student_id: '2004491', name: 'Gregory, Matt'},
+        {sis_login_id: '4000123', final_grade: 'B', current_grade: 'B', pnp_flag: 'N', grading_basis: 'GRD', student_id: '24000123', name: 'Lyons, Marcus'},
+        {sis_login_id: '872527', final_grade: 'P', current_grade: 'P', pnp_flag: 'Y', grading_basis: 'PNP', student_id: '2004445', name: 'Tarpey, Luke'},
+        {sis_login_id: '872529', final_grade: 'D-', current_grade: 'C', pnp_flag: 'N', grading_basis: 'GRD', student_id: '2004421', name: 'MacDougall, Johnny'}
+      ]
+    end
+
     before { allow(subject).to receive(:official_student_grades).with('C', '2014', '7309').and_return(official_student_grades_list) }
     it 'raises error when called with invalid type argument' do
       expect { subject.official_student_grades_csv('C', '2014', '7309', 'finished') }.to raise_error(ArgumentError, 'type argument must be \'final\' or \'current\'')
     end
 
-    it 'returns current grades' do
-      official_grades_csv_string = subject.official_student_grades_csv('C', '2014', '7309', 'current')
-      expect(official_grades_csv_string).to be_an_instance_of String
-      official_grades_csv = CSV.parse(official_grades_csv_string, {headers: true})
-      expect(official_grades_csv.count).to eq 4
-      official_grades_csv.each do |grade|
-        expect(grade).to be_an_instance_of CSV::Row
-        expect(grade['student_id']).to be_an_instance_of String
-        expect(grade['grade']).to be_an_instance_of String
-        expect(grade['comment']).to be_an_instance_of String
+    let(:official_grades_csv_string) { subject.official_student_grades_csv('C', '2014', '7309', grade_type) }
+    let(:official_grades_csv) { CSV.parse official_grades_csv_string.strip, headers: true }
+
+    context 'current grades' do
+      let(:grade_type) { 'current' }
+
+      it 'outputs CSV with CR/LF line breaks' do
+        expect(official_grades_csv_string.split "\r\n").to have(5).items
       end
-      expect(official_grades_csv[0]['student_id']).to eq '2004491'
-      expect(official_grades_csv[0]['grade']).to eq 'C'
-      expect(official_grades_csv[0]['comment']).to eq ''
 
-      expect(official_grades_csv[2]['student_id']).to eq '2004445'
-      expect(official_grades_csv[2]['grade']).to eq 'A+'
-      expect(official_grades_csv[2]['comment']).to eq 'Opted for P/NP Grade'
+      it 'prepends a space' do
+        expect(official_grades_csv_string).to start_with ' '
+      end
 
-      expect(official_grades_csv[3]['student_id']).to eq '2004421'
-      expect(official_grades_csv[3]['grade']).to eq 'C'
-      expect(official_grades_csv[3]['comment']).to eq ''
+      it 'returns current grades' do
+        expect(official_grades_csv.count).to eq 4
+        expect(official_grades_csv[0]['ID']).to eq '2004491'
+        expect(official_grades_csv[0]['Name']).to eq 'Gregory, Matt'
+        expect(official_grades_csv[0]['Grade']).to eq 'C'
+        expect(official_grades_csv[0]['Grading Basis']).to eq 'GRD'
+        expect(official_grades_csv[0]['Comments']).to eq ''
+
+        expect(official_grades_csv[2]['ID']).to eq '2004445'
+        expect(official_grades_csv[2]['Name']).to eq 'Tarpey, Luke'
+        expect(official_grades_csv[2]['Grade']).to eq 'P'
+        expect(official_grades_csv[2]['Grading Basis']).to eq 'PNP'
+        expect(official_grades_csv[2]['Comments']).to eq 'Opted for P/NP Grade'
+
+        expect(official_grades_csv[3]['ID']).to eq '2004421'
+        expect(official_grades_csv[3]['Name']).to eq 'MacDougall, Johnny'
+        expect(official_grades_csv[3]['Grade']).to eq 'C'
+        expect(official_grades_csv[3]['Grading Basis']).to eq 'GRD'
+        expect(official_grades_csv[3]['Comments']).to eq ''
+      end
     end
 
-    it 'returns final grades' do
-      official_grades_csv_string = subject.official_student_grades_csv('C', '2014', '7309', 'final')
-      expect(official_grades_csv_string).to be_an_instance_of String
-      official_grades_csv = CSV.parse(official_grades_csv_string, {headers: true})
-      expect(official_grades_csv.count).to eq 4
-      official_grades_csv.each do |grade|
-        expect(grade).to be_an_instance_of CSV::Row
-        expect(grade['student_id']).to be_an_instance_of String
-        expect(grade['grade']).to be_an_instance_of String
-        expect(grade['comment']).to be_an_instance_of String
+    context 'final grades' do
+      let(:grade_type) { 'final' }
+
+      it 'returns final grades' do
+        expect(official_grades_csv.count).to eq 4
+        expect(official_grades_csv[0]['ID']).to eq '2004491'
+        expect(official_grades_csv[0]['Name']).to eq 'Gregory, Matt'
+        expect(official_grades_csv[0]['Grade']).to eq 'F'
+        expect(official_grades_csv[0]['Grading Basis']).to eq 'GRD'
+        expect(official_grades_csv[0]['Comments']).to eq ''
+
+        expect(official_grades_csv[2]['ID']).to eq '2004445'
+        expect(official_grades_csv[2]['Name']).to eq 'Tarpey, Luke'
+        expect(official_grades_csv[2]['Grade']).to eq 'P'
+        expect(official_grades_csv[2]['Grading Basis']).to eq 'PNP'
+        expect(official_grades_csv[2]['Comments']).to eq 'Opted for P/NP Grade'
+
+        expect(official_grades_csv[3]['ID']).to eq '2004421'
+        expect(official_grades_csv[3]['Name']).to eq 'MacDougall, Johnny'
+        expect(official_grades_csv[3]['Grade']).to eq 'D-'
+        expect(official_grades_csv[3]['Grading Basis']).to eq 'GRD'
+        expect(official_grades_csv[3]['Comments']).to eq ''
       end
-      expect(official_grades_csv[0]['student_id']).to eq '2004491'
-      expect(official_grades_csv[0]['grade']).to eq 'F'
-      expect(official_grades_csv[0]['comment']).to eq ''
-
-      expect(official_grades_csv[2]['student_id']).to eq '2004445'
-      expect(official_grades_csv[2]['grade']).to eq 'A+'
-      expect(official_grades_csv[2]['comment']).to eq 'Opted for P/NP Grade'
-
-      expect(official_grades_csv[3]['student_id']).to eq '2004421'
-      expect(official_grades_csv[3]['grade']).to eq 'D-'
-      expect(official_grades_csv[3]['comment']).to eq ''
     end
   end
 
   context 'when serving official student grades' do
     let(:primary_section_enrollees) do
       [
-        {'ldap_uid'=>'872584', 'enroll_status'=>'E', 'pnp_flag' => 'N', 'first_name'=>'Angela', 'last_name'=>'Martin', 'student_email_address'=>'amartin@berkeley.edu', 'student_id'=>'2004491', 'affiliations'=>'STUDENT-STATUS-EXPIRED'},
-        {'ldap_uid'=>'872527', 'enroll_status'=>'E', 'pnp_flag' => 'N', 'first_name'=>'Kelly', 'last_name'=>'Kapoor', 'student_email_address'=>'kellylovesryan@berkeley.edu', 'student_id'=>'2004445', 'affiliations'=>'STUDENT-TYPE-REGISTERED'},
-        {'ldap_uid'=>'872529', 'enroll_status'=>'E', 'pnp_flag' => 'Y', 'first_name'=>'Darryl', 'last_name'=>'Philbin', 'student_email_address'=>'darrylp@berkeley.edu', 'student_id'=>'2004421', 'affiliations'=>'STUDENT-TYPE-REGISTERED'},
+        {'ldap_uid'=>'872584', 'enroll_status'=>'E', 'pnp_flag' => 'N', 'student_id'=>'2004491', 'grading_basis' => 'GRD'},
+        {'ldap_uid'=>'872527', 'enroll_status'=>'E', 'pnp_flag' => 'N', 'student_id'=>'2004445', 'grading_basis' => 'GRD'},
+        {'ldap_uid'=>'872529', 'enroll_status'=>'E', 'pnp_flag' => 'Y', 'student_id'=>'2004421', 'grading_basis' => 'PNP'},
+      ]
+    end
+
+    let(:canvas_course_student_grades_list) do
+      [
+        {:sis_login_id => '872584', :final_grade => 'F', :current_grade => 'C'},
+        {:sis_login_id => '4000123', :final_grade => 'B', :current_grade => 'B'},
+        {:sis_login_id => '872527', :final_grade => 'A+', :current_grade => 'A+'},
+        {:sis_login_id => '872529', :final_grade => 'D-', :current_grade => 'C'},
       ]
     end
 
@@ -397,7 +410,7 @@ describe CanvasLti::Egrades do
       expect_any_instance_of(Canvas::CourseAssignments).to receive(:unmute_assignment).exactly(1).times.with(19082)
       expect_any_instance_of(Canvas::CourseAssignments).to receive(:unmute_assignment).exactly(1).times.with(19083)
       expect_any_instance_of(Canvas::CourseAssignments).to receive(:unmute_assignment).exactly(1).times.with(19084)
-      result = subject.unmute_course_assignments(canvas_course_id)
+      subject.unmute_course_assignments
     end
   end
 

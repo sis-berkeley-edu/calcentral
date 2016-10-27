@@ -38,10 +38,7 @@ class CanvasCourseGradeExportController < ApplicationController
 
   # GET /api/academics/canvas/egrade_export/download/:canvas_course_id.csv
   def download_egrades_csv
-    raise Errors::BadRequestError, "term_cd required" unless params['term_cd']
-    raise Errors::BadRequestError, "term_yr required" unless params['term_yr']
-    raise Errors::BadRequestError, "ccn required" unless params['ccn']
-    raise Errors::BadRequestError, "type required" unless params['type']
+    %w(term_cd term_yr ccn type).each { |field| raise Errors::BadRequestError, "#{field} required" unless params[field] }
     raise Errors::BadRequestError, "invalid value for 'type' parameter" unless CanvasLti::Egrades::GRADE_TYPES.include?(params['type'])
     official_student_grades = egrades.official_student_grades_csv(params['term_cd'], params['term_yr'], params['ccn'], params['type'])
     term_season = {
