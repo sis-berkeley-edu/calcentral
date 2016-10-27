@@ -87,9 +87,13 @@ campus_solutions_links:
     concurrent_submitted_class_applications: 'http://example.com/concurrent_submitted_class_applications/'
 
 grading_period:
-  start: 2016-12-12 0:0:0
-  end: 2017-01-06 23:59:59
   assistance_link: '#'
+  general:
+    start: 2016-12-12 0:0:0
+    end: 2017-01-06 23:59:59
+  law:
+    start: 2016-11-01 0:0:0
+    end: 2017-01-06 23:59:59
 
 features:
   advising: true
