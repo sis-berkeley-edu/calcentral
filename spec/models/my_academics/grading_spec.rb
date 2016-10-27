@@ -10,8 +10,8 @@ describe 'MyAcademics::Grading' do
 
   context 'when grading period from settings is set' do
     before do
-      allow(Settings.grading_period).to receive(:start).and_return '2016-12-12 0:0:0'
-      allow(Settings.grading_period).to receive(:end).and_return '2016-12-12 23:59:59'
+      allow(Settings.grading_period.general).to receive(:start).and_return '2016-12-12 0:0:0'
+      allow(Settings.grading_period.general).to receive(:end).and_return '2016-12-12 23:59:59'
     end
     it 'it succeeds on grading period validation' do
       expect(subject.valid_grading_period?).to eq true
@@ -20,8 +20,8 @@ describe 'MyAcademics::Grading' do
 
   context 'when grading period start is bad format' do
     before do
-      allow(Settings.grading_period).to receive(:start).and_return 'notadate'
-      allow(Settings.grading_period).to receive(:end).and_return '2016-12-12 23:59:59'
+      allow(Settings.grading_period.general).to receive(:start).and_return 'notadate'
+      allow(Settings.grading_period.general).to receive(:end).and_return '2016-12-12 23:59:59'
     end
     it 'it fails on grading period validation' do
       expect(subject.valid_grading_period?).to eq false
@@ -30,8 +30,8 @@ describe 'MyAcademics::Grading' do
 
   context 'when grading period end is bad format' do
     before do
-      allow(Settings.grading_period).to receive(:start).and_return '2016-12-12 0:0:0'
-      allow(Settings.grading_period).to receive(:end).and_return 'notadate'
+      allow(Settings.grading_period.general).to receive(:start).and_return '2016-12-12 0:0:0'
+      allow(Settings.grading_period.general).to receive(:end).and_return 'notadate'
     end
     it 'it fails on grading period validation' do
       expect(subject.valid_grading_period?).to eq false
@@ -40,8 +40,8 @@ describe 'MyAcademics::Grading' do
 
   context 'when grading period start is not set' do
     before do
-      allow(Settings.grading_period).to receive(:start).and_return ''
-      allow(Settings.grading_period).to receive(:end).and_return '2016-12-12 23:59:59'
+      allow(Settings.grading_period.general).to receive(:start).and_return ''
+      allow(Settings.grading_period.general).to receive(:end).and_return '2016-12-12 23:59:59'
     end
     it 'it fails on grading period validation' do
       expect(subject.valid_grading_period?).to eq false
@@ -50,8 +50,8 @@ describe 'MyAcademics::Grading' do
 
   context 'when grading period end is not set' do
     before do
-      allow(Settings.grading_period).to receive(:start).and_return '2016-12-12 0:0:0'
-      allow(Settings.grading_period).to receive(:end).and_return ''
+      allow(Settings.grading_period.general).to receive(:start).and_return '2016-12-12 0:0:0'
+      allow(Settings.grading_period.general).to receive(:end).and_return ''
     end
     it 'it fails on grading period validation' do
       expect(subject.valid_grading_period?).to eq false
@@ -60,8 +60,8 @@ describe 'MyAcademics::Grading' do
 
   context 'when grading period end is before start' do
     before do
-      allow(Settings.grading_period).to receive(:start).and_return '2016-12-12 23:59:59'
-      allow(Settings.grading_period).to receive(:end).and_return '2016-12-12 0:0:0'
+      allow(Settings.grading_period.general).to receive(:start).and_return '2016-12-12 23:59:59'
+      allow(Settings.grading_period.general).to receive(:end).and_return '2016-12-12 0:0:0'
     end
     it 'it fails on grading period validation' do
       expect(subject.valid_grading_period?).to eq false
@@ -79,8 +79,8 @@ describe 'MyAcademics::Grading' do
 
   context 'when current date is before grading period' do
     before do
-      allow(Settings.grading_period).to receive(:start).and_return '2016-12-12 0:0:0'
-      allow(Settings.grading_period).to receive(:end).and_return '2016-12-12 23:59:59'
+      allow(Settings.grading_period.general).to receive(:start).and_return '2016-12-12 0:0:0'
+      allow(Settings.grading_period.general).to receive(:end).and_return '2016-12-12 23:59:59'
       allow(DateTime).to receive(:now).and_return '2016-1-1 0:0:0'.to_datetime
     end
     it 'it should return correct grading period status' do
@@ -90,8 +90,8 @@ describe 'MyAcademics::Grading' do
 
   context 'when current date is in grading period' do
     before do
-      allow(Settings.grading_period).to receive(:start).and_return '2016-12-12 0:0:0'
-      allow(Settings.grading_period).to receive(:end).and_return '2016-12-12 23:59:59'
+      allow(Settings.grading_period.general).to receive(:start).and_return '2016-12-12 0:0:0'
+      allow(Settings.grading_period.general).to receive(:end).and_return '2016-12-12 23:59:59'
       allow(DateTime).to receive(:now).and_return '2016-12-12 7:7:7'.to_datetime
     end
     it 'it should return correct grading period status' do
@@ -101,8 +101,8 @@ describe 'MyAcademics::Grading' do
 
   context 'when current date is after grading period' do
     before do
-      allow(Settings.grading_period).to receive(:start).and_return '2016-12-12 0:0:0'
-      allow(Settings.grading_period).to receive(:end).and_return '2016-12-12 23:59:59'
+      allow(Settings.grading_period.general).to receive(:start).and_return '2016-12-12 0:0:0'
+      allow(Settings.grading_period.general).to receive(:end).and_return '2016-12-12 23:59:59'
       allow(DateTime).to receive(:now).and_return '2017-1-1 0:0:0'.to_datetime
     end
     it 'it should return correct grading period status' do
@@ -143,7 +143,7 @@ describe 'MyAcademics::Grading' do
   context 'when mapping CC grading status to grading link' do
     let(:fake_grading_url) { 'http://fake.grading.com' }
     before do
-      allow(subject).to receive(:fetch_link).and_return(fake_grading_url)
+      allow(MyAcademics::AcademicsModule).to receive(:fetch_link).and_return(fake_grading_url)
       allow(subject).to receive(:get_grading_period_status).and_return(:gradingPeriodNotSet)
     end
 
@@ -178,7 +178,7 @@ describe 'MyAcademics::Grading' do
       allow(Settings.terms).to receive(:legacy_cutoff).and_return 'summer-2014'
       allow(Settings.features).to receive(:hub_term_api).and_return false
       allow(CampusSolutions::Grading).to receive(:new).and_return(grading_proxy)
-      allow(subject).to receive(:fetch_link).and_return(fake_grading_url)
+      allow(MyAcademics::AcademicsModule).to receive(:fetch_link).and_return(fake_grading_url)
       allow(subject).to receive(:get_grading_period_status).and_return(:gradingPeriodNotSet)
     end
 

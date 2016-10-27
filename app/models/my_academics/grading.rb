@@ -1,6 +1,5 @@
 module MyAcademics
   class Grading < UserSpecificModel
-    include AcademicsModule
 
     def merge(data)
       teaching_semesters = data[:teachingSemesters]
@@ -67,7 +66,7 @@ module MyAcademics
     def add_assistance_link(semester)
       semester.merge!(
         {
-          gradingAssistanceLink:  Settings.grading_period.assistance_link
+          gradingAssistanceLink:  role_grading_period.assistance_link
         })
     end
 
@@ -76,8 +75,8 @@ module MyAcademics
       if term_code == '2168' && valid_grading_period?
         semester.merge!(
           {
-            gradingPeriodStart: Settings.grading_period.start.to_date.strftime("%b %d"),
-            gradingPeriodEnd: Settings.grading_period.end.to_date.strftime("%b %d")
+            gradingPeriodStart: role_grading_period.start.to_date.strftime("%b %d"),
+            gradingPeriodEnd: role_grading_period.end.to_date.strftime("%b %d")
           })
       else
         semester.merge!(
@@ -109,7 +108,7 @@ module MyAcademics
 
     def get_grading_link(ccn, term_code, cc_grading_status)
       return nil unless ccn && term_code
-      grading_link = fetch_link('UC_CX_SSS_GRADE_ROSTER', { STRM: term_code, CLASS_NBR: ccn })
+      grading_link = AcademicsModule::fetch_link('UC_CX_SSS_GRADE_ROSTER', { STRM: term_code, CLASS_NBR: ccn })
       grading_period_status = get_grading_period_status
       mapping = grading_link_mapping(grading_link)
       mapping[cc_grading_status][grading_period_status]
@@ -163,8 +162,8 @@ module MyAcademics
 
     def get_grading_period_status
       return :gradingPeriodNotSet unless valid_grading_period?
-      return :beforeGradingPeriod if DateTime.now < Settings.grading_period.start
-      return :afterGradingPeriod if DateTime.now > Settings.grading_period.end
+      return :beforeGradingPeriod if DateTime.now < DateTime.parse(role_grading_period.start.to_s)
+      return :afterGradingPeriod if DateTime.now > DateTime.parse(role_grading_period.end.to_s)
       :inGradingPeriod
     end
 
@@ -184,12 +183,12 @@ module MyAcademics
     end
 
     def period_dates_not_set?
-      Settings.grading_period.start.blank? || Settings.grading_period.end.blank?
+      role_grading_period.start.blank? || role_grading_period.end.blank?
     end
 
     def period_start_bad_format?
       begin
-        DateTime.parse(Settings.grading_period.start.to_s)
+        DateTime.parse(role_grading_period.start.to_s)
       rescue
         logger.error "Bad Format For Grading Period Start in Settings for Class #{self.class.name} feed, uid = #{@uid}"
         return true
@@ -199,7 +198,7 @@ module MyAcademics
 
     def period_end_bad_format?
       begin
-        DateTime.parse(Settings.grading_period.end.to_s)
+        DateTime.parse(role_grading_period.end.to_s)
       rescue
         logger.error "Bad Format For Grading Period End in Settings for Class #{self.class.name} feed, uid = #{@uid}"
         return true
@@ -208,11 +207,16 @@ module MyAcademics
     end
 
     def period_dates_bad_order?
-      if DateTime.parse(Settings.grading_period.start.to_s) >= DateTime.parse(Settings.grading_period.end.to_s)
+      if DateTime.parse(role_grading_period.start.to_s) >= DateTime.parse(role_grading_period.end.to_s)
         logger.error "Grading Period Start After End in Settings for Class #{self.class.name} feed, uid = #{@uid}"
         return true
       end
       false
+    end
+
+    def role_grading_period
+      return Settings.grading_period.law if authentication_state.policy.law_student?
+      Settings.grading_period.general
     end
 
   end
