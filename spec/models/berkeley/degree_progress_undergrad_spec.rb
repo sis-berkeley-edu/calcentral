@@ -39,7 +39,7 @@ describe Berkeley::DegreeProgressUndergrad do
       end
     end
     context 'when requirement_code exists in @requirements' do
-      let(:requirement_code) {"0000001"}
+      let(:requirement_code) {'0000001'}
       it {should eq 'Entry Level Writing'}
     end
   end
@@ -57,7 +57,7 @@ describe Berkeley::DegreeProgressUndergrad do
       end
     end
     context 'when requirement_code exists in @requirements' do
-      let(:requirement_code) {"00002"}
+      let(:requirement_code) {'00002'}
       it {should eq 1}
     end
   end
