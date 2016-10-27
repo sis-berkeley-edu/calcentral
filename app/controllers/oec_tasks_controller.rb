@@ -13,7 +13,7 @@ class OecTasksController < ApplicationController
     authorize current_user, :can_administer_oec?
   end
 
-  # GET /api/oec_tasks
+  # GET /api/oec/tasks
 
   def index
     render json: {
@@ -24,7 +24,7 @@ class OecTasksController < ApplicationController
     }
   end
 
-  # POST /api/oec_tasks/:task_name
+  # POST /api/oec/tasks/:task_name
 
   def run
     task_class = "Oec::#{params['task_name']}".constantize
@@ -37,7 +37,7 @@ class OecTasksController < ApplicationController
     }
   end
 
-  # GET /api/oec_tasks/status/:task_id
+  # GET /api/oec/tasks/status/:task_id
 
   def task_status
     task_status = Oec::Task.fetch_from_cache params['task_id']

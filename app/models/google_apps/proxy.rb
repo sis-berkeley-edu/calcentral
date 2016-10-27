@@ -8,7 +8,9 @@ module GoogleApps
 
     attr_accessor :authorization, :json_filename
 
-    APP_ID = "Google"
+    APP_ID = 'Google'
+
+    OEC_APP_ID = 'OEC'
 
     def initialize(options = {})
       super(Settings.google_proxy, options)
