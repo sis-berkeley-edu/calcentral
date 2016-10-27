@@ -1,0 +1,49 @@
+<UC_AA_ACAD_PLANNER>
+  <EMPLID>26632289</EMPLID>
+  <ACAD_PLANS type="array">
+    <ACAD_PLAN>
+      <PLAN_DESCR>Bioengineering BS</PLAN_DESCR>
+      <TERMS type="array">
+        <TERM>
+          <TERM_ID>2172</TERM_ID>
+          <TERM_DESCR>Spring 2017</TERM_DESCR>
+          <PLANNED_CLASSES type="array">
+            <CLASS>
+              <SUBJECT_AREA>
+                <CODE>ENGLISH</CODE>
+              </SUBJECT_AREA>
+              <CATALOG_NUMBER>
+                <FORMATTED>C107</FORMATTED>
+              </CATALOG_NUMBER>
+              <UNITS>3.0</UNITS>
+            </CLASS>
+            <CLASS>
+              <SUBJECT_AREA>
+                <CODE>ELECTRICAL ENGINEERING</CODE>
+              </SUBJECT_AREA>
+              <CATALOG_NUMBER>
+                <FORMATTED>EE20</FORMATTED>
+              </CATALOG_NUMBER>
+              <UNITS>4.0</UNITS>
+            </CLASS>
+          </PLANNED_CLASSES>
+        </TERM>
+        <TERM>
+          <TERM_ID>2168</TERM_ID>
+          <TERM_DESCR>Fall 2016</TERM_DESCR>
+          <PLANNED_CLASSES type="array">
+            <CLASS>
+              <SUBJECT_AREA>
+                <CODE>ENGLISH</CODE>
+              </SUBJECT_AREA>
+              <CATALOG_NUMBER>
+                <FORMATTED>C108</FORMATTED>
+              </CATALOG_NUMBER>
+              <UNITS>3.0</UNITS>
+            </CLASS>
+          </PLANNED_CLASSES>
+        </TERM>
+      </TERMS>
+    </ACAD_PLAN>
+  </ACAD_PLANS>
+</UC_AA_ACAD_PLANNER>

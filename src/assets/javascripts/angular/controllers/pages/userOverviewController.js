@@ -15,6 +15,9 @@ angular.module('calcentral.controllers').controller('UserOverviewController', fu
   $scope.ucAdvisingResources = {
     isLoading: true
   };
+  $scope.planSemestersInfo = {
+    isLoading: true
+  };
   $scope.holdsInfo = {
     isLoading: true
   };
@@ -139,10 +142,18 @@ angular.module('calcentral.controllers').controller('UserOverviewController', fu
       uid: $routeParams.uid
     }).success(function(data) {
       angular.extend($scope, data);
+      _.forEach($scope.planSemesters, function(semester) {
+        angular.extend(
+          semester,
+          {
+            show: ['current', 'previous', 'next'].indexOf(semester.timeBucket) > -1
+          });
+      });
     }).error(function(data, status) {
       $scope.academics.error = errorReport(status, data.error);
     }).finally(function() {
       $scope.academics.isLoading = false;
+      $scope.planSemestersInfo.isLoading = false;
     });
   };
 
