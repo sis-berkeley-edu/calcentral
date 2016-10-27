@@ -13,6 +13,7 @@ class Ability
         can :manage, [
           Calendar::User, Calendar::QueuedEntry, Calendar::LoggedEntry, Calendar::Job,
           Finaid::FinAidYear,
+          MailingLists::Member,
           MailingLists::SiteMailingList,
           Oec::CourseCode,
           ServiceAlerts::Alert,
@@ -72,7 +73,7 @@ RailsAdmin.config do |config|
     Calendar::User Calendar::QueuedEntry Calendar::LoggedEntry Calendar::Job
     Finaid::FinAidYear
     Links::Link Links::LinkCategory Links::LinkSection Links::UserRole
-    MailingLists::SiteMailingList
+    MailingLists::Member MailingLists::SiteMailingList
     Oec::CourseCode
     ServiceAlerts::Alert
     User::Auth
@@ -226,8 +227,12 @@ RailsAdmin.config do |config|
     end
   end
 
+  config.model 'MailingLists::Member' do
+    label 'Mailing List Memberships'
+  end
+
   config.model 'MailingLists::SiteMailingList' do
-    label 'Site Mailing List'
+    label 'Mailing Lists'
   end
 
   config.model 'Oec::CourseCode' do
