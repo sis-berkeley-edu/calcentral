@@ -4,7 +4,6 @@ describe MyAcademics::Merged do
       MyAcademics::CollegeAndLevel,
       MyAcademics::TransitionTerm,
       MyAcademics::GpaUnits,
-      MyAcademics::Requirements,
       MyAcademics::Semesters,
       MyAcademics::Teaching,
       MyAcademics::Exams,

@@ -8,12 +8,10 @@
     </div>
     <div class="medium-4 columns cc-column-2">
       <div data-ng-include="'widgets/student_success/student_success.html'" data-ng-if="api.user.profile.features.advisingStudentSuccess"></div>
+      <div data-ng-include src="'academics_semesters.html'" data-ng-if="semesters.length"></div>
+      <div data-ng-include="'widgets/status_and_holds.html'"></div>
       <div data-ng-include src="'widgets/academics/degree_progress_graduate.html'" data-ng-if="api.user.profile.features.csDegreeProgressGradAdvising && (targetUser.roles.graduate || targetUser.roles.law)"></div>
       <div data-ng-include src="'widgets/academics/degree_progress_undergrad.html'" data-ng-if="api.user.profile.features.csDegreeProgressUgrdAdvising && targetUser.roles.undergrad"></div>
-      <div data-ng-include src="'academics_semesters.html'" data-ng-if="semesters.length"></div>
-      <div data-ng-include src="'widgets/academics/degree_progress_undergrad.html'" data-ng-if="api.user.profile.features.csDegreeProgress && (targetUser.roles.undergrad)"></div>
-      <div data-ng-include="'widgets/student_university_requirements.html'" data-ng-if="targetUser.isLoading || !targetUser.campusSolutionsStudent && targetUser.roles.undergrad"></div>
-      <div data-ng-include="'widgets/status_and_holds.html'"></div>
     </div>
     <div class="medium-4 columns cc-column-3">
       <div data-ng-include="'widgets/final_exam_schedule.html'" data-ng-if="examSchedule.length && api.user.profile.features.finalExamSchedule"></div>

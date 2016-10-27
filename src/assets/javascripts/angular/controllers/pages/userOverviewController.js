@@ -123,8 +123,6 @@ angular.module('calcentral.controllers').controller('UserOverviewController', fu
       uid: $routeParams.uid
     }).success(function(data) {
       angular.extend($scope, data);
-      // We use aliases in scope because the user overview page has cards that are shared with My Academics, etc.
-      $scope.academics.universityRequirements = $scope.requirements;
     }).error(function(data, status) {
       $scope.academics.error = errorReport(status, data.error);
     }).finally(function() {

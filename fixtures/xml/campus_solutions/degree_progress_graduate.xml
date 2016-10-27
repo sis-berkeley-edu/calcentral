@@ -4,10 +4,9 @@
   <PROGRESSES type="array">
     <PROGRESS>
       <ACAD_CAREER>LAW</ACAD_CAREER>
-      <ACAD_PLAN_CODE>842C1JSDG</ACAD_PLAN_CODE>
-      <ACAD_PLAN_DESCR>Doctor of Science of Law JSD</ACAD_PLAN_DESCR>
+      <ACAD_PLAN>Doctor of Science of Law JSD</ACAD_PLAN>
       <ACAD_PROG_CODE>LACAD</ACAD_PROG_CODE>
-      <ACAD_PROG_DESCR>Law Academic Programs</ACAD_PROG_DESCR>
+      <ACAD_PROG>Law Academic Programs</ACAD_PROG>
       <REQUIREMENTS type="array">
         <REQUIREMENT>
           <NAME>Advancement to Candidacy Mas2</NAME>
@@ -27,18 +26,16 @@
     </PROGRESS>
     <PROGRESS>
       <ACAD_CAREER>LAW</ACAD_CAREER>
-      <ACAD_PLAN_CODE>GARBAGELAW</ACAD_PLAN_CODE>
-      <ACAD_PLAN_DESCR>Not A LACAD Plan</ACAD_PLAN_DESCR>
+      <ACAD_PLAN>Doctor of Science of Law JSD</ACAD_PLAN>
       <ACAD_PROG_CODE>NONLACAD</ACAD_PROG_CODE>
-      <ACAD_PROG_DESCR>Law Academic Programs</ACAD_PROG_DESCR>
+      <ACAD_PROG>Not A LACAD Plan</ACAD_PROG>
       <REQUIREMENTS type="array"></REQUIREMENTS>
     </PROGRESS>
     <PROGRESS>
       <CAREER>GRAD</CAREER>
-      <ACAD_PLAN_CODE>00666MAG</ACAD_PLAN_CODE>
-      <ACAD_PLAN_DESCR>Physics MA</ACAD_PLAN_DESCR>
+      <ACAD_PLAN>Physics MA</ACAD_PLAN>
       <ACAD_PROG_CODE>GACAD</ACAD_PROG_CODE>
-      <ACAD_PROG_DESCR>Graduate Academic Programs</ACAD_PROG_DESCR>
+      <ACAD_PROG>Graduate Academic Programs</ACAD_PROG>
       <REQUIREMENTS type="array">
         <REQUIREMENT>
           <NAME>Advancement to Candidacy Mas1</NAME>
@@ -65,10 +62,9 @@
     </PROGRESS>
     <PROGRESS>
       <CAREER>GRAD</CAREER>
-      <ACAD_PLAN_CODE>00666PHDG</ACAD_PLAN_CODE>
-      <ACAD_PLAN_DESCR>Physics PhD</ACAD_PLAN_DESCR>
+      <ACAD_PLAN>Physics PhD</ACAD_PLAN>
       <ACAD_PROG_CODE>GACAD</ACAD_PROG_CODE>
-      <ACAD_PROG_DESCR>Graduate Academic Programs</ACAD_PROG_DESCR>
+      <ACAD_PROG>Graduate Academic Programs</ACAD_PROG>
       <REQUIREMENTS type="array">
         <REQUIREMENT>
           <NAME>Approval for Qualifying Exam</NAME>

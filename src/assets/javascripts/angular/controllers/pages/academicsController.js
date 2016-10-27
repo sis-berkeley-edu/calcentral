@@ -190,10 +190,7 @@ angular.module('calcentral.controllers').controller('AcademicsController', funct
 
   var filterWidgets = function() {
     $scope.isAcademicInfoAvailable = !!($scope.hasRegStatus ||
-                                       ($scope.semesters && $scope.semesters.length) ||
-                                       ($scope.requirements && $scope.requirements.length));
-    // The university_requirements widget is also used on Advising Dashboard.
-    $scope.academics.universityRequirements = $scope.requirements;
+                                       ($scope.semesters && $scope.semesters.length));
     $scope.showStatusAndBlocks = !$scope.filteredForDelegate &&
                                  ($scope.hasRegStatus ||
                                  ($scope.numberOfHolds));

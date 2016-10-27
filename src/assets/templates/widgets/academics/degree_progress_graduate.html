@@ -21,7 +21,7 @@
     </ul>
     <ul>
       <li data-ng-repeat="plan in degreeProgressGraduate.progresses">
-        <h3 data-ng-bind="plan.acadPlanDescr + ' &mdash; Graduate Division Milestones'"></h3>
+        <h3 data-ng-bind="plan.acadPlan + ' &mdash; Graduate Division Milestones'"></h3>
         <div data-ng-repeat="requirement in plan.requirements">
           <h4 data-ng-bind="requirement.name"></h4>
           <span data-ng-bind="requirement.statusDescr"></span>&nbsp;<span data-ng-bind="requirement.date"></span>&nbsp;<span data-ng-bind="requirement.formNotification">
