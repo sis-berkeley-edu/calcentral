@@ -37,16 +37,13 @@ module MailingLists
     def set_attachments(payload)
       return unless @opts[:attachments][:data]
 
-      @opts[:attachments][:data].each_value do |attachment_data|
-        attachment_data['filename'] ||= ''
-        attachment_data['type'] ||= 'application/octet-stream'
-      end
-
       if @opts[:attachments][:cid_map]
         payload['inline'] = @opts[:attachments][:cid_map].map do |cid, key|
           if (attachment_data = @opts[:attachments][:data].delete key)
-            # Mailgun expects inline attachments to be specified by filename, not content-id.
-            %w(html plain).each { |key| payload[key].try :gsub!, cid, attachment_data['filename'] }
+            if attachment_data.original_filename
+              # Mailgun expects inline attachments to be specified by filename, not content-id.
+              %w(html plain).each { |key| payload[key].try :gsub!, cid, attachment_data.original_filename }
+            end
             to_upload_io attachment_data
           end
         end
@@ -82,10 +79,13 @@ module MailingLists
       }
     end
 
-    def to_upload_io(attachment_data)
-      Faraday::UploadIO.new(attachment_data['tempfile'], attachment_data['type'], attachment_data['filename'])
+    def to_upload_io(attachment)
+      tempfile = attachment.tempfile || ''
+      type = attachment.content_type || 'application/octet-stream'
+      filename = attachment.original_filename || ''
+      Faraday::UploadIO.new(tempfile, type, filename)
     rescue => e
-      logger.error "Could not create UploadIO instance from attachment data #{attachment_data}: #{e.class}: #{e.message}\n #{e.backtrace.join("\n ")}"
+      logger.error "Could not create UploadIO instance from attachment data #{attachment}: #{e.class}: #{e.message}\n #{e.backtrace.join("\n ")}"
       nil
     end
 

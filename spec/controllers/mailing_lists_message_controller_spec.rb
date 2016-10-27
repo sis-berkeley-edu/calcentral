@@ -78,22 +78,18 @@ describe MailingListsMessageController do
 
     context 'message with attachments' do
       let(:attachment_1) do
-        {
-          'filename' => 'reactor_design.jpeg',
-          'head' => "Content-Disposition: form-data; name=\"attachment-1\"; filename=\"reactor_design.jpeg\"\r\nContent-Type: image/jpeg\r\nContent-Length: 6970\r\n",
-          'name' => 'attachment-1',
-          'tempfile' => 'fake file 1',
-          'type' => 'image/jpeg'
-        }
+        ActionDispatch::Http::UploadedFile.new(
+          filename: 'sample_student_72x96.jpg',
+          tempfile: File.new(Rails.root.join 'public', 'dummy', 'images', 'sample_student_72x96.jpg'),
+          type: 'image/jpg'
+        )
       end
       let(:attachment_2) do
-        {
-          'filename' => 'reactor_notes.pdf',
-          'head' => "Content-Disposition: form-data; name=\"attachment-2\"; filename=\"reactor_notes.rtf\"\r\nContent-Type: application/pdf\r\nContent-Length: 14702\r\n",
-          'name' => 'attachment-2',
-          'tempfile' => 'fake file 2',
-          'type' => 'application/pdf'
-        }
+        ActionDispatch::Http::UploadedFile.new(
+          filename: 'academic_dates.json',
+          tempfile: File.new(Rails.root.join 'public', 'dummy', 'json', 'academic_dates.json'),
+          type: 'application/json'
+        )
       end
       before do
         message_params['attachment-1'] = attachment_1
