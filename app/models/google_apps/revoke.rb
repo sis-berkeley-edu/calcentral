@@ -4,11 +4,19 @@ module GoogleApps
     include ClassLogger
 
     def revoke
+      unless (access_token = @authorization.access_token)
+        logger.error "Nil access_token for #{@uid}; revoking Google OAuth privileges is not possible."
+        return false
+      end
       # Google::APIClient does not implement the token revocation endpoint, so we get it via a regular HTTParty request.
       response = get_response(
         'https://accounts.google.com/o/oauth2/revoke',
-        query: {token: @authorization.access_token},
-        on_error: {rescue_status: :all}
+        query: {
+          token: access_token
+        },
+        on_error: {
+          rescue_status: :all
+        }
       )
       if response.code == 200
         logger.warn "Successfully revoked Google access token for user #{@uid}"

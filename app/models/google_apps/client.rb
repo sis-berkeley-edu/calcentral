@@ -7,7 +7,12 @@ module GoogleApps
 
     class << self
       def client
-        @client ||= Google::APIClient.new(options={:application_name => "CalCentral", :application_version => "v1", :auto_refresh_token => true, :retries => 3})
+        @client ||= Google::APIClient.new(options={
+          application_name: 'CalCentral',
+          application_version: 'v1',
+          auto_refresh_token: true,
+          retries: 3
+        })
       end
 
       def discover_resource_method(api, api_version, resource, method)
@@ -19,12 +24,12 @@ module GoogleApps
         end
       end
 
-      def new_fake_auth
-        new_auth("fake_access_token")
+      def new_fake_auth(app_id)
+        new_auth(app_id, 'fake_access_token')
       end
 
-      def new_client_auth(token_hash)
-        new_auth(token_hash["access_token"], token_hash)
+      def new_client_auth(app_id, options={})
+        new_auth(app_id, options[:access_token], options)
       end
 
       def generate_request_hash(page_params)
@@ -47,16 +52,17 @@ module GoogleApps
 
       private
 
-      def new_auth(access_token, options={})
+      def new_auth(app_id, access_token, options={})
+        settings = GoogleApps::Proxy.config_of app_id
         authorization = client.authorization.dup
-        authorization.client_id = Settings.google_proxy.client_id
-        authorization.client_secret = Settings.google_proxy.client_secret
+        authorization.client_id = settings.client_id
+        authorization.client_secret = settings.client_secret
         authorization.access_token = access_token
-        ## Not setting these in explicit fake mode will prevent the api_client from attempting to refresh tokens.
-        if options && options["refresh_token"] && options["expiration_time"]
-          authorization.refresh_token = options["refresh_token"]
+        # Not setting these in explicit fake mode will prevent the api_client from attempting to refresh tokens.
+        if options && options[:refresh_token] && options[:expiration_time]
+          authorization.refresh_token = options[:refresh_token]
           authorization.expires_in = 3600
-          authorization.issued_at = Time.at(options["expiration_time"] - 3600)
+          authorization.issued_at = Time.at(options[:expiration_time] - 3600)
         end
         authorization
       end
@@ -70,6 +76,5 @@ module GoogleApps
         client.discovered_api(api, api_version)
       end
     end
-
   end
 end

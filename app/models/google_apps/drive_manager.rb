@@ -3,7 +3,8 @@ module GoogleApps
 
     include ClassLogger
 
-    def initialize(uid, options = {})
+    def initialize(app_id, uid, options = {})
+      @app_id = app_id
       @uid = uid
       @options = options
     end
@@ -190,21 +191,19 @@ module GoogleApps
 
     def get_google_api
       if @client.nil?
-        credential_store = GoogleApps::CredentialStore.new(@uid, @options)
         @client = GoogleApps::Client.client
-        storage = Google::APIClient::Storage.new credential_store
+        store = GoogleApps::CredentialStore.new(@app_id, @uid, @options)
+        storage = Google::APIClient::Storage.new store
         auth = storage.authorize
-        credentials = credential_store.load_credentials
         if auth.nil? || (auth.expired? && auth.refresh_token.nil?)
           logger.warn "OAuth2 object #{auth.nil? ? 'is nil' : 'is expired'}"
-          flow = Google::APIClient::InstalledAppFlow.new({ :client_id => credentials[:client_id],
-                                                           :client_secret => credentials[:client_secret],
-                                                           :scope => credentials[:scope] })
+          flow = Google::APIClient::InstalledAppFlow.new credentials
           auth = flow.authorize storage
         end
         @client.authorization = auth
-        token_hash = @client.authorization.fetch_access_token!
-        credential_store.write_credentials(credentials.merge token_hash)
+        tokens = @client.authorization.fetch_access_token!
+        tokens.merge! refresh_token: @client.authorization.refresh_token
+        store.write_credentials tokens
       end
       @client
     end

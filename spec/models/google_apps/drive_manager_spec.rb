@@ -1,10 +1,10 @@
 describe GoogleApps::DriveManager do
 
-  context '#real', testext: true, :order => :defined do
+  context '#real', testext: true, order: :defined do
 
     before(:all) do
       settings = Settings.oec.google.marshal_dump
-      @drive = GoogleApps::DriveManager.new Settings.oec.google.uid, settings
+      @drive = GoogleApps::DriveManager.new(GoogleApps::Proxy::OEC_APP_ID, Settings.oec.google.uid, settings)
       now = DateTime.now.strftime('%m/%d/%Y at %I:%M%p')
       title = "#{described_class} tested on #{now}"
       csv_file = 'fixtures/oec/courses.csv'

@@ -19,8 +19,8 @@ module GoogleApps
       end
     end
 
-    def initialize(uid, options = {})
-      super uid, options
+    def initialize(app_id, uid, opts={})
+      super(app_id, uid, opts)
       auth = get_google_api.authorization
       # See https://github.com/gimite/google-drive-ruby
       @session = GoogleDrive::Session.login_with_oauth auth.access_token
