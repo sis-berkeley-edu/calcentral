@@ -3,10 +3,9 @@ shared_examples 'a proxy that returns graduate milestone data' do
   it 'returns data with the expected structure' do
     expect(subject[:feed][:degreeProgress]).to be
     expect(subject[:feed][:degreeProgress].first[:acadCareer]).to be
-    expect(subject[:feed][:degreeProgress].first[:acadPlanCode]).to be
-    expect(subject[:feed][:degreeProgress].first[:acadPlanDescr]).to be
+    expect(subject[:feed][:degreeProgress].first[:acadPlan]).to be
     expect(subject[:feed][:degreeProgress].first[:acadProgCode]).to be
-    expect(subject[:feed][:degreeProgress].first[:acadProgDescr]).to be
+    expect(subject[:feed][:degreeProgress].first[:acadProg]).to be
     expect(subject[:feed][:degreeProgress].first[:requirements]).to be
   end
 
