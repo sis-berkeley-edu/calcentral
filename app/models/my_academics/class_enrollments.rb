@@ -18,13 +18,19 @@ module MyAcademics
 
     # Groups student plans into groups based on roles (e.g. 'default', 'fpf', 'concurrent')
     def grouped_student_plan_roles
-      grouped_roles = {}
+      grouped_roles = {
+        :data => {},
+        :metadata => {
+          :includes_fpf => false
+        }
+      }
       active_plans.each do |plan|
         role_code = plan[:enrollmentRole]
         career_code = plan[:career][:code]
         role_key = [role_code, career_code]
-        grouped_roles[role_key] = { role: role_code, career_code: career_code, academic_plans: [] } if grouped_roles[role_key].blank?
-        grouped_roles[role_key][:academic_plans] << plan
+        grouped_roles[:data][role_key] = { role: role_code, career_code: career_code, academic_plans: [] } if grouped_roles[:data][role_key].blank?
+        grouped_roles[:data][role_key][:academic_plans] << plan
+        grouped_roles[:metadata][:includes_fpf] = true if role_code == 'fpf'
       end
       grouped_roles
     end
@@ -36,36 +42,56 @@ module MyAcademics
       grouped_roles = grouped_student_plan_roles
       career_term_plan_roles = []
 
-      grouped_roles.keys.each do |role_key|
-        student_plan_role = grouped_roles[role_key]
+      grouped_roles[:data].keys.each do |role_key|
+        student_plan_role = grouped_roles[:data][role_key]
         career_terms.each do |career_term|
           if (student_plan_role[:career_code] == career_term[:acadCareer])
             career_term_plan_roles << student_plan_role.merge({term: career_term.slice(:termId, :termDescr)})
           end
         end
       end
-      limit_to_single_fpf_career_term_plan_role(career_term_plan_roles)
+      if grouped_roles[:metadata][:includes_fpf]
+        return limit_to_single_fpf_career_term_plan_role(career_term_plan_roles)
+      end
+      career_term_plan_roles
     end
 
     # Hack to ensure that FPF role is only applied to the first applicable career term plan
-    # See SISRP-25837
+    # Logic only valid for Fall 2016 to Spring 2017 transition
+    # See SISRP-25837 / SISRP-26815
     def limit_to_single_fpf_career_term_plan_role(career_term_plan_roles)
-      fpf_detected = false
+      career_term_plan_roles_grouped_by_role = career_term_plan_roles.group_by { |plan_role| plan_role[:role] }
+      career_term_plan_roles_grouped_by_term = career_term_plan_roles.group_by { |plan_role| plan_role[:term][:termId] }
+
+      # Obtain terms with FPF roles
+      fpf_term_ids = career_term_plan_roles_grouped_by_role['fpf'].to_a.collect {|plan_role| plan_role[:term].try(:[], :termId) }.uniq.sort
+
+      # segregate plans from first term containing FPF plan, and other remaining terms
+      other_term_plan_roles = career_term_plan_roles_grouped_by_term.slice!(fpf_term_ids.first).values.flatten
+
+      first_fpf_term_plan_roles = career_term_plan_roles_grouped_by_term
+
+      # Isolate earliest FPF career_term_plan_role
+      first_fpf_role = first_fpf_term_plan_roles.values[0].to_a.select { |plan_role| plan_role[:role] == 'fpf' }.first
+
+      # force remaining roles to be default
       default_role = 'default'
-      career_term_plan_roles.collect do |plan_role|
+      other_term_plan_roles.collect do |plan_role|
         if plan_role[:role] == 'fpf'
-          if fpf_detected == true
-            plan_role[:role] = default_role
-            plan_role[:academic_plans].each do |plan|
-              plan[:role] = default_role
-            end
-          else
-            fpf_detected = true
+          plan_role[:role] = default_role
+          plan_role[:academic_plans].each do |plan|
+            plan[:role] = default_role
           end
         end
-        plan_role
       end
-      career_term_plan_roles
+
+      converted_remaining_plan_roles = filter_duplicate_plan_roles(other_term_plan_roles.to_a)
+      [first_fpf_role] + converted_remaining_plan_roles
+    end
+
+    # Removes duplicate plan roles within the same term
+    def filter_duplicate_plan_roles(career_term_plan_roles)
+      career_term_plan_roles.inject({}) { |map, plan_role| map[[plan_role[:term][:termId], plan_role[:role]]] = plan_role; map}.values
     end
 
     def get_enrollment_term_academic_planner
