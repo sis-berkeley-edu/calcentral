@@ -1,5 +1,6 @@
 module DegreeProgress
   module MilestonesModule
+    include DatedFeed
 
     CAREER_LAW = 'LAW'
     ACAD_PROG_CODE_LACAD = 'LACAD'
@@ -41,6 +42,7 @@ module DegreeProgress
         if name
           requirement[:name] = name
           requirement[:status_descr] = Berkeley::DegreeProgressGraduate.get_status(requirement[:status])
+          requirement[:date_formatted] = format_date(strptime_in_time_zone(requirement[:date], '%F'), '%m/%d/%Y') unless requirement[:date].blank?
           requirement[:form_notification] = Berkeley::DegreeProgressGraduate.get_form_notification(requirement[:code], requirement[:status])
           requirement
         end

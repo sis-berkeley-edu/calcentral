@@ -30,8 +30,22 @@ shared_examples 'a proxy that returns graduate milestone data' do
     expect(subject[:feed][:degreeProgress][2][:requirements][0][:statusDescr]).to eql('Completed')
   end
 
+  it 'formats dates' do
+    expect(subject[:feed][:degreeProgress][0][:requirements][0][:dateFormatted]).not_to be
+    expect(subject[:feed][:degreeProgress][1][:requirements][0][:dateFormatted]).not_to be
+    expect(subject[:feed][:degreeProgress][2][:requirements][0][:dateFormatted]).to be
+    expect(subject[:feed][:degreeProgress][2][:requirements][0][:dateFormatted][:dateString]).to be
+    expect(subject[:feed][:degreeProgress][2][:requirements][0][:dateFormatted][:dateString]).to eql('12/22/2016')
+    expect(subject[:feed][:degreeProgress][2][:requirements][1][:dateFormatted]).to be
+    expect(subject[:feed][:degreeProgress][2][:requirements][1][:dateFormatted][:dateString]).to be
+    expect(subject[:feed][:degreeProgress][2][:requirements][1][:dateFormatted][:dateString]).to eql('12/26/2016')
+    expect(subject[:feed][:degreeProgress][2][:requirements][2][:dateFormatted]).to be
+    expect(subject[:feed][:degreeProgress][2][:requirements][2][:dateFormatted][:dateString]).to be
+    expect(subject[:feed][:degreeProgress][2][:requirements][2][:dateFormatted][:dateString]).to eql('12/31/2016')
+    expect(subject[:feed][:degreeProgress][2][:requirements][3][:dateFormatted]).not_to be
+  end
+
   it 'attaches a notification if the milestone is incomplete and requires a form' do
-    puts subject[:feed][:degreeProgress].pretty_inspect
     expect(subject[:feed][:degreeProgress][0][:requirements][0][:formNotification]).to eql('(Form Required)')
     expect(subject[:feed][:degreeProgress][1][:requirements][0][:formNotification]).to eql('(Plan 1 Requires a Form)')
     expect(subject[:feed][:degreeProgress][2][:requirements][0][:formNotification]).to be nil
