@@ -4,19 +4,16 @@ module GoogleApps
   class Oauth2TokensGrant
     include ClassLogger
 
-    def initialize(user_id, app_id, client_id, client_secret, client_redirect_uri)
-      unless client_id && client_secret
-        raise ArgumentError, 'Google API client requires client_id and client_secret'
-      end
+    def initialize(user_id, app_id, client_redirect_uri)
       @user_id = user_id
       @app_id = app_id
-      @client_id = client_id
-      @client_secret = client_secret
       @client_redirect_uri = client_redirect_uri
     end
 
-    def refresh_oauth2_tokens_url(scope, params)
+    def refresh_oauth2_tokens_url(params)
       expire
+      settings = GoogleApps::CredentialStore.settings_of @app_id
+      scope = settings[:scope]
       if (scope_override = params['scope']).present?
         additional_scope = scope_override.is_a?(Array) ? scope_override.join(' ') : scope_override
         scope += " #{additional_scope}"
@@ -42,14 +39,13 @@ module GoogleApps
         client.code = params['code']
         client.fetch_access_token!
         logger.warn "Saving #{@app_id} access token for user #{@user_id}"
-        expiration_time = client.expires_in.blank? ? 0 : (client.issued_at.to_i + client.expires_in)
-        User::Oauth2Data.new_or_update(
-          @user_id,
-          @app_id,
-          client.access_token.to_s,
-          client.refresh_token,
-          expiration_time
-        )
+        credentials = {
+          expiration_time: client.expires_in.blank? ? 0 : (client.issued_at.to_i + client.expires_in),
+          access_token: client.access_token.to_s,
+          refresh_token: client.refresh_token
+        }
+        store = GoogleApps::CredentialStore.new(@app_id, @user_id, @opts)
+        store.write_credentials credentials
         if @app_id == GoogleApps::Proxy::APP_ID
           User::Oauth2Data.update_google_email! @user_id
         end
@@ -88,8 +84,9 @@ module GoogleApps
       unless opts[:omit_domain_restriction]
         client.authorization_uri = URI 'https://accounts.google.com/o/oauth2/auth?hd=berkeley.edu'
       end
-      client.client_id = @client_id
-      client.client_secret = @client_secret
+      settings = GoogleApps::CredentialStore.settings_of @app_id
+      client.client_id = settings[:client_id]
+      client.client_secret = settings[:client_secret]
       client.redirect_uri = @client_redirect_uri
       final_redirect = opts[:final_redirect] || ''
       client.state = Base64.encode64 final_redirect

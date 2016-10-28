@@ -23,7 +23,7 @@ module User
           oauth2_data.attributes.each { |key, value| hash[key] = value }
         end
       }
-      hash
+      hash.symbolize_keys
     end
 
     def self.remove(uid, app_id)

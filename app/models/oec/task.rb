@@ -25,6 +25,7 @@ module Oec
       term_code = ENV['term_code']
       raise ArgumentError, 'term_code required' unless term_code
       {
+        app_id: GoogleApps::Proxy::OEC_APP_ID,
         term_code: term_code,
         allow_past_term: ENV['allow_past_term'].present?,
         local_write: ENV['local_write'].present?,

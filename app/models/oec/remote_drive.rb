@@ -4,7 +4,7 @@ module Oec
     HUMAN_URL = 'https://drive.google.com/drive/my-drive'
 
     def initialize
-      super(Settings.oec.google.uid, Settings.oec.google.marshal_dump)
+      super(GoogleApps::Proxy::OEC_APP_ID, Settings.oec.google.uid, Settings.oec.google.marshal_dump)
     end
 
     def check_conflicts_and_copy_file(file, dest_folder, opts={})

@@ -3,7 +3,6 @@ module GoogleApps
   include ClassLogger
 
   class Proxy < BaseProxy
-
     include Proxies::Mockable
 
     attr_accessor :authorization, :json_filename
@@ -12,23 +11,21 @@ module GoogleApps
 
     OEC_APP_ID = 'OEC'
 
-    def initialize(options = {})
-      super(Settings.google_proxy, options)
-
-      if @fake
-        @authorization = GoogleApps::Client.new_fake_auth
-      elsif options[:user_id]
-        token_settings = User::Oauth2Data.get(@uid, APP_ID)
-        @authorization = GoogleApps::Client.new_client_auth token_settings || {"access_token" => ''}
-      else
-        auth_related_entries = [:access_token, :refresh_token, :expiration_time]
-        token_settings = options.select { |k, v| auth_related_entries.include? k }.stringify_keys!
-        @authorization = GoogleApps::Client.new_client_auth token_settings
+    def self.config_of(app_id = nil)
+      case app_id
+        when OEC_APP_ID then Settings.oec.google
+        when APP_ID then Settings.google_proxy
+        else nil
       end
+    end
 
+    def initialize(options = {})
+      @app_id = options[:app_id] || APP_ID
+      super(Proxy.config_of(@app_id), options)
+
+      @authorization = load_authorization options
       @fake_options = options[:fake_options] || {}
       @current_token = @authorization.access_token
-
       @start = Time.now.to_f
     end
 
@@ -43,8 +40,8 @@ module GoogleApps
         num_requests = 0
 
         begin
-          if !page_token.blank?
-            page_params[:params]["pageToken"] = page_token
+          unless page_token.blank?
+            page_params[:params]['pageToken'] = page_token
             logger.debug "Making page request with pageToken = #{page_token}"
           end
 
@@ -54,7 +51,7 @@ module GoogleApps
           num_requests += 1
 
           if result_page.nil? || result_page.error?
-            logger.warn "request stopped on error: #{result_page ? result_page.response.inspect : "nil"}"
+            logger.warn "request stopped on error: #{result_page ? result_page.response.inspect : 'nil'}"
             break
           end
         end while (page_token and under_page_limit_ceiling)
@@ -93,16 +90,29 @@ module GoogleApps
 
     protected
 
-    def stringify_body(bodyParam)
-      if bodyParam.is_a?(Hash)
-        parsed_body = bodyParam.to_json.to_s
+    def stringify_body(body_param)
+      if body_param.is_a?(Hash)
+        parsed_body = body_param.to_json.to_s
       else
-        parsed_body = bodyParam.to_s
+        parsed_body = body_param.to_s
       end
       parsed_body
     end
 
     private
+
+    def load_authorization(options={})
+      if @fake
+        GoogleApps::Client.new_fake_auth @app_id
+      elsif options[:user_id]
+        token_settings = User::Oauth2Data.get(@uid, @app_id)
+        GoogleApps::Client.new_client_auth(@app_id, token_settings || { access_token: '' })
+      else
+        auth_related_entries = [:access_token, :refresh_token, :expiration_time]
+        token_settings = options.select { |k, v| auth_related_entries.include? k }.symbolize_keys!
+        GoogleApps::Client.new_client_auth(@app_id, token_settings)
+      end
+    end
 
     def request_transaction(page_params, num_requests)
       @params = page_params
@@ -122,7 +132,7 @@ module GoogleApps
       elsif result_page.status >= 400
         logger.error "Got an error response from Google. Status #{result_page.status}, Body #{result_page.body}"
       end
-      page_token = get_next_page_token result_page if result_page
+      page_token = result_page ? get_next_page_token(result_page) : nil
       under_page_limit_ceiling = under_page_limit?(num_requests+1, page_params[:page_limiter])
 
       if result_page && result_page.error?
@@ -134,10 +144,10 @@ module GoogleApps
       [page_token, under_page_limit_ceiling, result_page]
     end
 
-    def revoke_invalid_token!(request_response)
-      if @uid && request_response.response.status == 401 && request_response.error_message == 'Invalid Credentials'
+    def revoke_invalid_token!(response)
+      if @uid && response.response.status == 401 && response.error_message == 'Invalid Credentials'
         logger.warn "Deleting Google access token for #{@uid} due to 401 Unauthorized (Invalid Credentials) from Google"
-        User::Oauth2Data.remove(@uid, APP_ID)
+        User::Oauth2Data.remove(@uid, @app_id)
       end
     end
 
@@ -157,15 +167,19 @@ module GoogleApps
       }
     end
 
-    def self.access_granted?(user_id)
-      Settings.google_proxy.fake || (User::Oauth2Data.get(user_id, APP_ID)["access_token"].present?)
+    def self.access_granted?(user_id, app_id = APP_ID)
+      Proxy.config_of(app_id).fake || User::Oauth2Data.get(user_id, app_id)[:access_token].present?
     end
 
     def update_access_tokens!
       if @current_token && @uid && @authorization.access_token != @current_token
         logger.info "Will update token for #{@uid} from #{@current_token} => #{@authorization.access_token}"
-        User::Oauth2Data.new_or_update(@uid, APP_ID, @authorization.access_token,
-                                 @authorization.refresh_token, @authorization.expires_at.to_i)
+        User::Oauth2Data.new_or_update(
+          @uid,
+          @app_id,
+          @authorization.access_token,
+          @authorization.refresh_token,
+          @authorization.expires_at.to_i)
       end
     end
 

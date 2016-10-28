@@ -11,13 +11,12 @@ class OecGoogleAuthController < GoogleAuthController
 
   private
 
-  def google
-    @google ||= GoogleApps::Oauth2TokensGrant.new(
-      opts[:uid],
-      GoogleApps::Proxy::OEC_APP_ID,
-      opts[:client_id],
-      opts[:client_secret],
-      client_redirect_uri)
+  def user_id
+    opts[:uid]
+  end
+
+  def app_id
+    GoogleApps::Proxy::OEC_APP_ID
   end
 
   def opts

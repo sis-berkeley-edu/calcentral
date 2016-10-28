@@ -1,10 +1,10 @@
 describe GoogleApps::SheetsManager do
 
-  context '#real', testext: true, :order => :defined do
+  context '#real', testext: true, order: :defined do
 
     before(:all) do
       settings = Settings.oec.google.marshal_dump
-      @sheet_manager = GoogleApps::SheetsManager.new settings[:uid], settings
+      @sheet_manager = GoogleApps::SheetsManager.new(GoogleApps::Proxy::OEC_APP_ID, settings[:uid], settings)
       now = DateTime.now.strftime('%m/%d/%Y at %I:%M%p')
       @folder = @sheet_manager.create_folder "#{GoogleApps::SheetsManager.name} test, #{now}"
       @spreadsheet_title = "Sheet from CSV, #{now}"

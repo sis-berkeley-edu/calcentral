@@ -5,13 +5,14 @@ class GoogleAuthController < ApplicationController
   respond_to :json
 
   def refresh_tokens
-    url = google.refresh_oauth2_tokens_url(opts[:scope], params)
+    url = google.refresh_oauth2_tokens_url params
     redirect_to url
   end
 
   def handle_callback
     google.process_callback(params, opts)
-    url = (final_redirect = params['state']) ? Base64.decode64(final_redirect) : url_for_path('/')
+    final_redirect = params['state']
+    url = final_redirect ? Base64.decode64(final_redirect) : url_for_path('/')
     redirect_to url
   end
 
@@ -40,16 +41,15 @@ class GoogleAuthController < ApplicationController
   private
 
   def google
-    @google ||= GoogleApps::Oauth2TokensGrant.new(
-      user_id,
-      GoogleApps::Proxy::APP_ID,
-      opts[:client_id],
-      opts[:client_secret],
-      client_redirect_uri)
+    @google ||= GoogleApps::Oauth2TokensGrant.new(user_id, app_id, client_redirect_uri)
   end
 
   def user_id
     session['user_id']
+  end
+
+  def app_id
+    GoogleApps::Proxy::APP_ID
   end
 
   def opts

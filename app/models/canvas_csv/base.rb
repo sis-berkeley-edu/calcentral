@@ -89,7 +89,7 @@ module CanvasCsv
     end
 
     def sheets_manager
-      @sheets_manager ||=  @reporter_uid.present? ? GoogleApps::SheetsManager.new(@reporter_uid) : nil
+      @sheets_manager ||=  @reporter_uid.present? ? GoogleApps::SheetsManager.new(GoogleApps::Proxy::APP_ID, @reporter_uid) : nil
     end
 
     def reports_folder
