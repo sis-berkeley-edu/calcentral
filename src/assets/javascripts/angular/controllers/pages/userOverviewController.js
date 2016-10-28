@@ -73,6 +73,39 @@ angular.module('calcentral.controllers').controller('UserOverviewController', fu
     $scope.statusHoldsBlocks.enabledSections = enabledSections;
   });
 
+  var backToText = 'Student Overview';
+
+  /**
+   * Add the back to text (used for Campus Solutions) to the link
+   */
+  var addBackToTextLink = function(link) {
+    link.backToText = backToText;
+    return link;
+  };
+
+  /**
+   * Add the back to text
+   */
+  var addBackToText = function(resources) {
+    _.mapValues(resources, addBackToTextLink);
+  };
+
+  var parseAdvisingResources = function(data) {
+    var resources = $scope.ucAdvisingResources;
+
+    angular.extend(resources, _.get(data, 'data.feed'));
+
+    if (_.get(resources, 'links')) {
+      addBackToText(resources.links);
+    }
+
+    if (_.get(resources, 'csLinks')) {
+      addBackToText(resources.csLinks);
+    }
+
+    resources.isLoading = false;
+  };
+
   var defaultErrorDescription = function(status) {
     if (status === 403) {
       return 'You are not authorized to view this user\'s data.';
@@ -106,10 +139,7 @@ angular.module('calcentral.controllers').controller('UserOverviewController', fu
       // Get links to advising resources
       advisingFactory.getAdvisingResources({
         uid: targetUserUid
-      }).then(function(data) {
-        angular.extend($scope.ucAdvisingResources, _.get(data, 'data.feed'));
-        $scope.ucAdvisingResources.isLoading = false;
-      });
+      }).then(parseAdvisingResources);
     }).error(function(data, status) {
       $scope.targetUser.error = errorReport(status, data.error);
     }).finally(function() {

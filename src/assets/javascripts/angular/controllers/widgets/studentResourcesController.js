@@ -8,10 +8,6 @@ angular.module('calcentral.controllers').controller('StudentResourcesController'
 
   var backToText = 'My Dashboard';
 
-  var loadStudentResources = function() {
-    return studentResourcesFactory.getStudentResources();
-  };
-
   /**
    * Add the back to text (used for Campus Solutions) to the link
    */
@@ -24,8 +20,12 @@ angular.module('calcentral.controllers').controller('StudentResourcesController'
    * Add the back to text
    */
   var addBackToText = function(resources) {
-    _.map(resources, addBackToTextLink);
+    _.mapValues(resources, addBackToTextLink);
     return resources;
+  };
+
+  var loadStudentResources = function() {
+    return studentResourcesFactory.getStudentResources();
   };
 
   var parseStudentResources = function(data) {
