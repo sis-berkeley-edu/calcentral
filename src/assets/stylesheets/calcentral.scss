@@ -57,7 +57,6 @@
 @import "ls_advising";
 @import "myadvising";
 @import "profile";
-@import "transfer_credit";
 @import "status_holds";
 @import "enrollment_verification";
 @import "degree_progress";
@@ -120,6 +119,7 @@
 
 // Advising User Overview
 @import "student_success";
+@import "transfer_credit";
 
 // Delegated Access
 @import "delegate_welcome";

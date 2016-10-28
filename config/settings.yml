@@ -514,7 +514,6 @@ features:
   cs_profile_languages: false
   cs_profile_work_experience: false
   cs_sir: true
-  cs_transfer_credit: false
   enrollment_verification: false
   enrollment_verification_deeplink: false
   final_exam_schedule: false

@@ -220,6 +220,7 @@
 
   .cc-toggle-triangle {
     &::after {
+      border-bottom: 4px solid transparent;
       border-right: 4px solid $cc-color-lighter-medium-grey;
       border-top: 4px solid transparent;
       right: 12px;
@@ -230,6 +231,7 @@
   &:focus {
     .cc-toggle-triangle {
       &::after {
+        border-bottom: 4px solid transparent;
         border-right: 4px solid $body-font-color;
         border-top: 4px solid transparent;
       }
@@ -242,6 +244,7 @@
 
   .cc-toggle-triangle {
     &::after {
+      border-left: 4px solid transparent;
       border-right: 4px solid transparent;
       border-top: 4px solid $cc-color-lighter-medium-grey;
       right: 10px;
