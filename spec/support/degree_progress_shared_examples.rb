@@ -49,7 +49,6 @@ shared_examples 'a proxy that returns undergraduate milestone data' do
 
     plan_level_data = data[:progresses]
     expect(plan_level_data).to be
-    expect(plan_level_data.first[:acadPlan]).to be
     expect(plan_level_data.first[:requirements]).to be
     expect(plan_level_data.first[:requirements].first[:name]).to be
     expect(plan_level_data.first[:requirements].first[:status]).to be
@@ -76,8 +75,8 @@ shared_examples 'a proxy that returns undergraduate milestone data' do
     expect(plan_level_data.first[:requirements][1][:name]).to eq('American History')
     expect(plan_level_data.first[:requirements][1][:status]).to eq('Incomplete')
     expect(plan_level_data.first[:requirements][2][:name]).to eq('American Institutions')
-    expect(plan_level_data.first[:requirements][2][:status]).to eq('Completed')
+    expect(plan_level_data.first[:requirements][2][:status]).to eq('Incomplete')
     expect(plan_level_data.first[:requirements][3][:name]).to eq('American Cultures')
-    expect(plan_level_data.first[:requirements][3][:status]).to eq('Incomplete')
+    expect(plan_level_data.first[:requirements][3][:status]).to eq('Completed')
   end
 end

@@ -3,122 +3,11 @@
   <ACAD_CAREER>UGRD</ACAD_CAREER>
   <PROGRESSES type="array">
     <PROGRESS>
-      <ACAD_PLAN>Dance &amp; Perf Studies BA</ACAD_PLAN>
       <REQUIREMENTS type="array">
         <REQUIREMENT>
           <NAME/>
           <STATUS>FAIL</STATUS>
           <CODE/>
-        </REQUIREMENT>
-        <REQUIREMENT>
-          <NAME/>
-          <STATUS>FAIL</STATUS>
-          <CODE/>
-        </REQUIREMENT>
-        <REQUIREMENT>
-          <NAME>Lower Division (R-0468)</NAME>
-          <STATUS>FAIL</STATUS>
-          <CODE>000000468</CODE>
-        </REQUIREMENT>
-        <REQUIREMENT>
-          <NAME>Lower Division (R-0468)</NAME>
-          <STATUS>FAIL</STATUS>
-          <CODE>000000468</CODE>
-        </REQUIREMENT>
-        <REQUIREMENT>
-          <NAME>Lower Division (R-0468)</NAME>
-          <STATUS>COMP</STATUS>
-          <CODE>000000468</CODE>
-        </REQUIREMENT>
-        <REQUIREMENT>
-          <NAME>Upper Division (R-0469)</NAME>
-          <STATUS>FAIL</STATUS>
-          <CODE>000000469</CODE>
-        </REQUIREMENT>
-        <REQUIREMENT>
-          <NAME>Upper Division (R-0469)</NAME>
-          <STATUS>FAIL</STATUS>
-          <CODE>000000469</CODE>
-        </REQUIREMENT>
-        <REQUIREMENT>
-          <NAME>Upper Division (R-0469)</NAME>
-          <STATUS>FAIL</STATUS>
-          <CODE>000000469</CODE>
-        </REQUIREMENT>
-        <REQUIREMENT>
-          <NAME>Upper Division (R-0469)</NAME>
-          <STATUS>FAIL</STATUS>
-          <CODE>000000469</CODE>
-        </REQUIREMENT>
-        <REQUIREMENT>
-          <NAME>Upper Division (R-0469)</NAME>
-          <STATUS>FAIL</STATUS>
-          <CODE>000000469</CODE>
-        </REQUIREMENT>
-        <REQUIREMENT>
-          <NAME>Upper Division (R-0469)</NAME>
-          <STATUS>FAIL</STATUS>
-          <CODE>000000469</CODE>
-        </REQUIREMENT>
-        <REQUIREMENT>
-          <NAME>Performance Studies (R-0470)</NAME>
-          <STATUS>FAIL</STATUS>
-          <CODE>000000470</CODE>
-        </REQUIREMENT>
-        <REQUIREMENT>
-          <NAME>Performance Studies (R-0470)</NAME>
-          <STATUS>FAIL</STATUS>
-          <CODE>000000470</CODE>
-        </REQUIREMENT>
-        <REQUIREMENT>
-          <NAME>Performance Studies (R-0470)</NAME>
-          <STATUS>FAIL</STATUS>
-          <CODE>000000470</CODE>
-        </REQUIREMENT>
-        <REQUIREMENT>
-          <NAME>Performance Studies (R-0470)</NAME>
-          <STATUS>FAIL</STATUS>
-          <CODE>000000470</CODE>
-        </REQUIREMENT>
-        <REQUIREMENT>
-          <NAME>Performance Studies (R-0470)</NAME>
-          <STATUS>FAIL</STATUS>
-          <CODE>000000470</CODE>
-        </REQUIREMENT>
-        <REQUIREMENT>
-          <NAME>Major Requirements (R-0471)</NAME>
-          <STATUS>FAIL</STATUS>
-          <CODE>000000471</CODE>
-        </REQUIREMENT>
-        <REQUIREMENT>
-          <NAME>Major Requirements (R-0471)</NAME>
-          <STATUS>FAIL</STATUS>
-          <CODE>000000471</CODE>
-        </REQUIREMENT>
-        <REQUIREMENT>
-          <NAME>Major Requirements (R-0471)</NAME>
-          <STATUS>COMP</STATUS>
-          <CODE>000000471</CODE>
-        </REQUIREMENT>
-        <REQUIREMENT>
-          <NAME>Major GPA (R-0475)</NAME>
-          <STATUS>COMP</STATUS>
-          <CODE>000000475</CODE>
-        </REQUIREMENT>
-        <REQUIREMENT>
-          <NAME>Major GPA (R-0475)</NAME>
-          <STATUS>COMP</STATUS>
-          <CODE>000000475</CODE>
-        </REQUIREMENT>
-      </REQUIREMENTS>
-    </PROGRESS>
-    <PROGRESS>
-      <ACAD_PLAN>English BA</ACAD_PLAN>
-      <REQUIREMENTS type="array">
-        <REQUIREMENT>
-          <NAME>American Cultures (R-0003)</NAME>
-          <STATUS>FAIL</STATUS>
-          <CODE>000000003</CODE>
         </REQUIREMENT>
         <REQUIREMENT>
           <NAME>American History (R-0002)</NAME>
@@ -126,179 +15,39 @@
           <CODE>000000002</CODE>
         </REQUIREMENT>
         <REQUIREMENT>
-          <NAME>American Institutions (R-0018)</NAME>
+          <NAME>American Cultures (R-0003)</NAME>
           <STATUS>COMP</STATUS>
+          <CODE>000000003</CODE>
+        </REQUIREMENT>
+        <REQUIREMENT>
+          <NAME>University GPA (R-0004)</NAME>
+          <STATUS>COMP</STATUS>
+          <CODE>000000004</CODE>
+        </REQUIREMENT>
+        <REQUIREMENT>
+          <NAME>Career Level Limits (R-0005)</NAME>
+          <STATUS>COMP</STATUS>
+          <CODE>000000005</CODE>
+        </REQUIREMENT>
+        <REQUIREMENT>
+          <NAME>American Institutions (R-0018)</NAME>
+          <STATUS>FAIL</STATUS>
           <CODE>000000018</CODE>
+        </REQUIREMENT>
+        <REQUIREMENT>
+          <NAME>Minimum Total Units (R-0131)</NAME>
+          <STATUS>FAIL</STATUS>
+          <CODE>000000131</CODE>
+        </REQUIREMENT>
+        <REQUIREMENT>
+          <NAME>Senior Residence (R-0132)</NAME>
+          <STATUS>COMP</STATUS>
+          <CODE>000000132</CODE>
         </REQUIREMENT>
         <REQUIREMENT>
           <NAME>Entry Level Writing (R-0001)</NAME>
           <STATUS>COMP</STATUS>
           <CODE>000000001</CODE>
-        </REQUIREMENT>
-        <REQUIREMENT>
-          <NAME>Upper Division (R-0796)</NAME>
-          <STATUS>FAIL</STATUS>
-          <CODE>000000796</CODE>
-        </REQUIREMENT>
-        <REQUIREMENT>
-          <NAME>Upper Division (R-0796)</NAME>
-          <STATUS>FAIL</STATUS>
-          <CODE>000000796</CODE>
-        </REQUIREMENT>
-        <REQUIREMENT>
-          <NAME>Upper Division (R-0796)</NAME>
-          <STATUS>FAIL</STATUS>
-          <CODE>000000796</CODE>
-        </REQUIREMENT>
-        <REQUIREMENT>
-          <NAME>Upper Division (R-0796)</NAME>
-          <STATUS>FAIL</STATUS>
-          <CODE>000000796</CODE>
-        </REQUIREMENT>
-        <REQUIREMENT>
-          <NAME>Upper Division (R-0796)</NAME>
-          <STATUS>FAIL</STATUS>
-          <CODE>000000796</CODE>
-        </REQUIREMENT>
-        <REQUIREMENT>
-          <NAME>Upper Division (R-0796)</NAME>
-          <STATUS>COMP</STATUS>
-          <CODE>000000796</CODE>
-        </REQUIREMENT>
-        <REQUIREMENT>
-          <NAME>Upper Division (R-0796)</NAME>
-          <STATUS>FAIL</STATUS>
-          <CODE>000000796</CODE>
-        </REQUIREMENT>
-        <REQUIREMENT>
-          <NAME>Upper Division (R-0796)</NAME>
-          <STATUS>COMP</STATUS>
-          <CODE>000000796</CODE>
-        </REQUIREMENT>
-        <REQUIREMENT>
-          <NAME>Verify Upper Division</NAME>
-          <STATUS>FAIL</STATUS>
-          <CODE>000000799</CODE>
-        </REQUIREMENT>
-        <REQUIREMENT>
-          <NAME>Verify Upper Division</NAME>
-          <STATUS>FAIL</STATUS>
-          <CODE>000000799</CODE>
-        </REQUIREMENT>
-        <REQUIREMENT>
-          <NAME>Honors Eligibility (R-0800)</NAME>
-          <STATUS>FAIL</STATUS>
-          <CODE>000000800</CODE>
-        </REQUIREMENT>
-        <REQUIREMENT>
-          <NAME>Honors Eligibility (R-0800)</NAME>
-          <STATUS>COMP</STATUS>
-          <CODE>000000800</CODE>
-        </REQUIREMENT>
-        <REQUIREMENT>
-          <NAME>Honors Eligibility (R-0800)</NAME>
-          <STATUS>FAIL</STATUS>
-          <CODE>000000800</CODE>
-        </REQUIREMENT>
-        <REQUIREMENT>
-          <NAME>Honors Eligibility (R-0800)</NAME>
-          <STATUS>FAIL</STATUS>
-          <CODE>000000800</CODE>
-        </REQUIREMENT>
-        <REQUIREMENT>
-          <NAME>Major GPA (R-0801)</NAME>
-          <STATUS>COMP</STATUS>
-          <CODE>000000801</CODE>
-        </REQUIREMENT>
-        <REQUIREMENT>
-          <NAME>Major GPA (R-0801)</NAME>
-          <STATUS>COMP</STATUS>
-          <CODE>000000801</CODE>
-        </REQUIREMENT>
-      </REQUIREMENTS>
-    </PROGRESS>
-    <PROGRESS>
-      <ACAD_PLAN>Theater &amp; Perf Studies BA</ACAD_PLAN>
-      <REQUIREMENTS type="array">
-        <REQUIREMENT>
-          <NAME/>
-          <STATUS>FAIL</STATUS>
-          <CODE/>
-        </REQUIREMENT>
-        <REQUIREMENT>
-          <NAME/>
-          <STATUS>FAIL</STATUS>
-          <CODE/>
-        </REQUIREMENT>
-        <REQUIREMENT>
-          <NAME>Lower Division (R-0716)</NAME>
-          <STATUS>FAIL</STATUS>
-          <CODE>000000716</CODE>
-        </REQUIREMENT>
-        <REQUIREMENT>
-          <NAME>Lower Division (R-0716)</NAME>
-          <STATUS>FAIL</STATUS>
-          <CODE>000000716</CODE>
-        </REQUIREMENT>
-        <REQUIREMENT>
-          <NAME>Lower Division (R-0716)</NAME>
-          <STATUS>FAIL</STATUS>
-          <CODE>000000716</CODE>
-        </REQUIREMENT>
-        <REQUIREMENT>
-          <NAME>Upper Division (R-0719)</NAME>
-          <STATUS>FAIL</STATUS>
-          <CODE>000000719</CODE>
-        </REQUIREMENT>
-        <REQUIREMENT>
-          <NAME>Upper Division (R-0719)</NAME>
-          <STATUS>FAIL</STATUS>
-          <CODE>000000719</CODE>
-        </REQUIREMENT>
-        <REQUIREMENT>
-          <NAME>Upper Division (R-0719)</NAME>
-          <STATUS>FAIL</STATUS>
-          <CODE>000000719</CODE>
-        </REQUIREMENT>
-        <REQUIREMENT>
-          <NAME>Upper Division (R-0719)</NAME>
-          <STATUS>FAIL</STATUS>
-          <CODE>000000719</CODE>
-        </REQUIREMENT>
-        <REQUIREMENT>
-          <NAME>Upper Division (R-0719)</NAME>
-          <STATUS>FAIL</STATUS>
-          <CODE>000000719</CODE>
-        </REQUIREMENT>
-        <REQUIREMENT>
-          <NAME>Upper Division (R-0719)</NAME>
-          <STATUS>FAIL</STATUS>
-          <CODE>000000719</CODE>
-        </REQUIREMENT>
-        <REQUIREMENT>
-          <NAME>Upper Division (R-0719)</NAME>
-          <STATUS>FAIL</STATUS>
-          <CODE>000000719</CODE>
-        </REQUIREMENT>
-        <REQUIREMENT>
-          <NAME>Upper Division (R-0719)</NAME>
-          <STATUS>FAIL</STATUS>
-          <CODE>000000719</CODE>
-        </REQUIREMENT>
-        <REQUIREMENT>
-          <NAME>Upper Division (R-0719)</NAME>
-          <STATUS>COMP</STATUS>
-          <CODE>000000719</CODE>
-        </REQUIREMENT>
-        <REQUIREMENT>
-          <NAME>Major GPA (R-1671)</NAME>
-          <STATUS>COMP</STATUS>
-          <CODE>000001671</CODE>
-        </REQUIREMENT>
-        <REQUIREMENT>
-          <NAME>Major GPA (R-1671)</NAME>
-          <STATUS>COMP</STATUS>
-          <CODE>000001671</CODE>
         </REQUIREMENT>
       </REQUIREMENTS>
     </PROGRESS>
