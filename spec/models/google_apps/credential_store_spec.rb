@@ -105,13 +105,11 @@ describe GoogleApps::CredentialStore do
       User::Oauth2Data.remove(uid, app_id)
     end
 
-    it 'should find no match in oauth2_data' do
-      expiration_time = random_id.to_i
-      c = GoogleApps::CredentialStore.new(app_id, uid, expiration_time: expiration_time).load_credentials
+    it 'should load credentials written by Store' do
+      c = GoogleApps::CredentialStore.new(app_id, uid).load_credentials
       expect(c).to_not be_nil
       expect(c[:access_token]).to eq options[:access_token]
       expect(c[:refresh_token]).to eq options[:refresh_token]
-      expect(c[:expiration_time]).to eq expiration_time
       expect(c[:expires_in]).to eq 3600
       expect(c[:client_id]).to eq settings[:client_id]
       expect(c[:client_secret]).to eq settings[:client_secret]

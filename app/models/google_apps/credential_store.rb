@@ -28,6 +28,7 @@ module GoogleApps
     def write_credentials(auth = nil)
       return nil if auth.nil?
       if auth.is_a? Hash
+        auth.symbolize_keys!
         logger.debug "OAuth tokens in hash (app_id: #{@app_id}; uid: #{@uid})"
         opts = @opts.merge auth.symbolize_keys
         write(auth[:access_token], auth[:refresh_token], opts)
