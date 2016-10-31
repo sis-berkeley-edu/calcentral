@@ -8,8 +8,7 @@ describe 'My Academics profile card', :testui => true do
       driver = WebDriverUtils.launch_browser
       test_users = UserUtils.load_test_users.select { |user| user['profile'] }
       testable_users = []
-      test_output_heading = ['UID', 'Term Transition', 'Colleges', 'Majors', 'Careers', 'Units', 'GPA', 'Level',
-                             'Level No AP']
+      test_output_heading = ['UID', 'Term Transition', 'Colleges', 'Majors', 'Careers', 'Units', 'GPA', 'Level']
       test_output = UserUtils.initialize_output_csv(self, test_output_heading)
 
       splash_page = CalCentralPages::SplashPage.new driver
@@ -27,7 +26,6 @@ describe 'My Academics profile card', :testui => true do
         api_units = nil
         api_gpa = nil
         api_level = nil
-        api_level_no_ap = nil
 
         begin
           splash_page.load_page
@@ -84,11 +82,9 @@ describe 'My Academics profile card', :testui => true do
               api_colleges = academics_api_page.colleges
               api_majors = academics_api_page.majors
               api_careers = academics_api_page.careers
-              api_level = academics_api_page.level
               my_academics_colleges = profile_card.all_colleges
               my_academics_majors = profile_card.all_majors
               my_academics_careers = profile_card.all_careers
-              my_academics_level = profile_card.level
 
               it ("show the colleges for UID #{uid}") { expect(my_academics_colleges).to eql(api_colleges) }
               it ("show the majors for UID #{uid}") { expect(my_academics_majors).to eql(api_majors) }
@@ -98,15 +94,14 @@ describe 'My Academics profile card', :testui => true do
                 it ("do not show 'College of Letters & Science' for grad student UID #{uid}") { expect(my_academics_colleges).not_to include('College of Letters & Science') }
               end
 
-              # LEVEL - AP and NON-AP
-              it ("show the level for UID #{uid}") { expect(my_academics_level).to eql(api_level) }
-              api_level_no_ap = academics_api_page.non_ap_level
-              if api_level_no_ap.nil?
-                has_level_no_ap = profile_card.level_non_ap?
-                it ("show no level without AP credit for grad UID #{uid}") { expect(has_level_no_ap).to be false }
+              # LEVEL
+              api_level = academics_api_page.level
+              if api_level.nil?
+                has_level = profile_card.level?
+                it ("show no level for UID #{uid}") { expect(has_level).to be false }
               else
-                my_academics_level_no_ap = profile_card.level_non_ap
-                it ("show the level without AP credit for undergrad UID #{uid}") { expect(my_academics_level_no_ap).to eql(api_level_no_ap) }
+                my_academics_level = profile_card.level
+                it ("show the level for UID #{uid}") { expect(my_academics_level).to eql(api_level) }
               end
             end
 
@@ -181,7 +176,7 @@ describe 'My Academics profile card', :testui => true do
           logger.error "#{e.message + "\n"} #{e.backtrace.join("\n ")}"
         ensure
           test_output_row = [uid, term_transition, api_colleges * '; ', api_majors * '; ', api_careers * '; ',
-                             api_units, api_gpa, api_level, api_level_no_ap]
+                             api_units, api_gpa, api_level]
           UserUtils.add_csv_row(test_output, test_output_row)
         end
       end
