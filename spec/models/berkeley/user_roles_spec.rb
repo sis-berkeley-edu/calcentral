@@ -306,15 +306,9 @@ describe Berkeley::UserRoles do
   describe '#roles_from_ldap_affiliations' do
     let(:ldap_record) do
       {
-        berkeleyeduaffiliations: affiliations,
-        berkeleyeduaffexpdate: affiliate_exp_dates,
-        berkeleyeduempexpdate: employee_exp_dates,
-        berkeleyedustuexpdate: student_exp_dates
+        berkeleyeduaffiliations: affiliations
       }
     end
-    let(:affiliate_exp_dates) { [] }
-    let(:employee_exp_dates) { [] }
-    let(:student_exp_dates) { [] }
     subject { Berkeley::UserRoles.roles_from_ldap_affiliations(ldap_record) }
     context 'current student' do
       let(:affiliations) { ['STUDENT-TYPE-REGISTERED'] }
@@ -337,42 +331,19 @@ describe Berkeley::UserRoles do
       it_behaves_like 'a parser for roles', [:staff, :student, :registered]
     end
     context 'academic employee and ex-student' do
-      let(:affiliations) { ['EMPLOYEE-TYPE-ACADEMIC', 'STUDENT-STATUS-EXPIRED'] }
+      let(:affiliations) { ['EMPLOYEE-TYPE-ACADEMIC', 'FORMER-STUDENT'] }
       it_behaves_like 'a parser for roles', [:exStudent, :faculty]
     end
-    context 'ex-student in LDAP grace period' do
-      let(:affiliations) { ['STUDENT-STATUS-EXPIRED', 'STUDENT-TYPE-REGISTERED'] }
-      let(:student_exp_dates) { ['20140901145959Z'] }
-      it_behaves_like 'a parser for roles', [:student, :registered]
-    end
-    context 'returned ex-student with future expiration' do
-      let(:affiliations) { ['STUDENT-STATUS-EXPIRED', 'STUDENT-TYPE-REGISTERED'] }
-      let(:student_exp_dates) { [DateTime.now.advance(hours: 1).utc.strftime('%Y%m%d%H%M%SZ')] }
-      it_behaves_like 'a parser for roles', [:student, :registered]
-    end
-    context 'returned ex-student with unspecified expiration' do
-      let(:affiliations) { ['STUDENT-STATUS-EXPIRED', 'STUDENT-TYPE-REGISTERED'] }
-      it_behaves_like 'a parser for roles', [:student, :registered]
-    end
-    context 'recidivist ex-employee' do
-      let(:affiliations) { ['EMPLOYEE-STATUS-EXPIRED', 'EMPLOYEE-TYPE-STAFF'] }
-      let(:employee_exp_dates) { ['20150901145959Z'] }
+    context 'ex-employee' do
+      let(:affiliations) { ['FORMER-EMPLOYEE'] }
       it_behaves_like 'a parser for roles', []
     end
-    context 'returned ex-employee with future expiration' do
-      let(:affiliations) { ['EMPLOYEE-STATUS-EXPIRED', 'EMPLOYEE-TYPE-STAFF'] }
-      let(:employee_exp_dates) { [DateTime.now.advance(hours: 1).utc.strftime('%Y%m%d%H%M%SZ')] }
-      it_behaves_like 'a parser for roles', [:staff]
-    end
-    context 'ex-concurrent-enrollment in LDAP grace period' do
-      let(:affiliations) { ['AFFILIATE-STATUS-EXPIRED', 'AFFILIATE-TYPE-CONCURR ENROLL'] }
-      let(:affiliate_exp_dates) { ['20140901145959Z'] }
-      it_behaves_like 'a parser for roles', []
-    end
-    context 'returned ex-concurrent-enrollment with future expiration' do
-      let(:affiliations) { ['AFFILIATE-STATUS-EXPIRED', 'AFFILIATE-TYPE-CONCURR ENROLL'] }
-      let(:affiliate_exp_dates) { [DateTime.now.advance(hours: 1).utc.strftime('%Y%m%d%H%M%SZ')] }
-      it_behaves_like 'a parser for roles', [:concurrentEnrollmentStudent]
+    # TODO Remove this after the new CalNet scheme lands in production.
+    context 'legacy historical affiliations' do
+      context 'academic employee and ex-student' do
+        let(:affiliations) { ['EMPLOYEE-TYPE-ACADEMIC', 'STUDENT-STATUS-EXPIRED'] }
+        it_behaves_like 'a parser for roles', [:exStudent, :faculty]
+      end
     end
   end
 

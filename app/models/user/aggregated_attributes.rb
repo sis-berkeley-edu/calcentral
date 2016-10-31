@@ -44,8 +44,8 @@ module User
       campus_roles = oracle_roles.merge ldap_roles
       if @sis_profile_visible
         edo_roles = (@edo_attributes && @edo_attributes[:roles]) || {}
-        # While we're in the split-brain stage, LDAP and Oracle are more trusted on ex-student status.
-        edo_roles.delete(:student) if campus_roles[:exStudent]
+        # Do not introduce conflicts if CS is more up-to-date on active student status.
+        campus_roles.except!(:exStudent, :recentStudent) if edo_roles[:student]
         campus_roles.merge edo_roles
       else
         campus_roles
