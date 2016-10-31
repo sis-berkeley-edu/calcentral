@@ -8,7 +8,7 @@ module CalCentralPages
     div(:name, :xpath => '//div/strong[@data-ng-bind="api.user.profile.fullName"]')
     button(:show_gpa, :xpath => '//button[text()="Show GPA"]')
     button(:hide_gpa, :xpath => '//button[text()="Hide"]')
-    span(:gpa, :xpath => '//span[@data-ng-bind="gpaUnits.cumulativeGpaFloat"]')
+    div(:gpa, :xpath => '//strong[@data-ng-bind="gpaUnits.cumulativeGpaFloat"]')
     elements(:college, :div, :xpath => '//div[@data-ng-bind="major.college"]')
     elements(:major, :div, :xpath => '//strong[@data-ng-bind="major.major"]')
     elements(:career, :td, :xpath => '//div[@data-ng-repeat="career in collegeAndLevel.careers"]/strong')

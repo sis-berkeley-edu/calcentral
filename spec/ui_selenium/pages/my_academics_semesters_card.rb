@@ -11,8 +11,8 @@ module CalCentralPages
     elements(:no_enrollment_semester_h3, :h3, :xpath => '//h3[contains(@data-ng-if,"!semester.hasEnrollmentData || !semester.slug")]')
     link(:request_transcripts_link, :xpath => '//a[contains(.,"Request Transcripts")]')
     link(:enroll_verif_link, :xpath => '//a[contains(.,"Request your enrollment verification")]')
-    button(:show_more, :xpath => '//button[@data-ng-if="pastSemestersCount > 1"]/span[text()="Show More"]')
-    button(:show_less, :xpath => '//button[@data-ng-if="pastSemestersCount > 1"]/span[text()="Show Less"]')
+    button(:show_more, :xpath => '//button[contains(@data-ng-if, "pastSemestersCount > 1")]/span[text()="Show More"]')
+    button(:show_less, :xpath => '//button[contains(@data-ng-if, "pastSemestersCount > 1")]/span[text()="Show Less"]')
 
     elements(:addl_credit_title, :td, :xpath => '//td[@data-ng-bind="additionalCredit.title"]')
     elements(:addl_credit_units, :td, :xpath => '//td[@data-ng-bind="additionalCredit.units | number:1"]')
