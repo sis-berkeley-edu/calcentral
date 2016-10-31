@@ -73,7 +73,7 @@ describe MailingLists::MailgunList do
             first_name: user['first_name'],
             last_name: user['last_name'],
             email_address: user['email_address'],
-            can_send: (user['enrollments'][0]['role'] == 'TeacherEnrollment')
+            can_send: Canvas::CourseUser.has_instructing_role?(user)
           )
         end
       end
@@ -110,12 +110,47 @@ describe MailingLists::MailgunList do
           expect(list.members.count).to eq 3
         end
 
-        it 'enables sending permission for teacher role only' do
-          list.populate
+        shared_examples 'a member with sending permissions' do |can_send|
+          before { oliver['enrollments'][0]['role'] = role }
+          it 'correctly sets sending permissions' do
+            list.populate
+            expect(list.members.find_by(email_address: 'oheyer@berkeley.edu').can_send).to eq can_send
+          end
+        end
 
-          expect(list.members.find_by(email_address: 'oheyer@berkeley.edu').can_send).to eq true
-          expect(list.members.find_by(email_address: 'raydavis@berkeley.edu').can_send).to eq false
-          expect(list.members.find_by(email_address: 'kerschen@berkeley.edu').can_send).to eq false
+        context 'teacher role' do
+          let(:role) { 'TeacherEnrollment' }
+          it_should_behave_like 'a member with sending permissions', true
+        end
+
+        context 'student role' do
+          let(:role) { 'StudentEnrollment' }
+          it_should_behave_like 'a member with sending permissions', false
+        end
+
+        context 'TA role' do
+          let(:role) { 'TaEnrollment' }
+          it_should_behave_like 'a member with sending permissions', true
+        end
+
+        context 'lead TA role' do
+          let(:role) { 'Lead TA' }
+          it_should_behave_like 'a member with sending permissions', true
+        end
+
+        context 'reader role' do
+          let(:role) { 'Reader' }
+          it_should_behave_like 'a member with sending permissions', true
+        end
+
+        context 'owner role' do
+          let(:role) { 'Owner' }
+          it_should_behave_like 'a member with sending permissions', false
+         end
+
+        context 'member role' do
+          let(:role) { 'Member' }
+          it_should_behave_like 'a member with sending permissions', false
         end
       end
 
