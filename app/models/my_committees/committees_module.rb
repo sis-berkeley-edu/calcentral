@@ -15,6 +15,7 @@ module MyCommittees::CommitteesModule
   end
 
   def parse_cs_committee (cs_committee)
+    return nil unless cs_committee.present?
     {
       committeeType:  cs_committee[:studentMilestoneDescr],
       program:        cs_committee[:studentAcadPlan],
