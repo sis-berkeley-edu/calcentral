@@ -218,7 +218,7 @@ module MailingLists
 
       # Note UIDs for users with send permission, defined for now as having a teacher role in the course site.
       sender_uids = Set.new
-      course_users.each { |user| sender_uids << user['login_id'] if Canvas::CourseUser.is_course_teacher?(user) }
+      course_users.each { |user| sender_uids << user['login_id'] if Canvas::CourseUser.has_instructing_role?(user) }
 
       logger.info "Starting population of mailing list #{self.list_name} for course site #{self.canvas_site_id}."
       initialize_population_results
