@@ -253,8 +253,8 @@ angular.module('calcentral.controllers').controller('UserOverviewController', fu
   var parseTermGpa = function() {
     var termGpa = [];
     _.forEach($scope.studentSuccess.termGpa, function(term) {
-      if (term.termCumGpa) {
-        termGpa.push(term.termCumGpa);
+      if (term.termGpa) {
+        termGpa.push(term.termGpa);
       }
     });
     if (termGpa.length < 2) {

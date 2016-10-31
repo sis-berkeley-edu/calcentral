@@ -1,7 +1,7 @@
 <div class="cc-student-success-subtitle">
   <h3>
     Units
-    <span data-ng-if="!gpaUnits.isLegacy" data-ng-bind-template="(Cumulative {{gpaUnits.totalUnits | number:1}})"></span>
+    <span data-ng-if="!gpaUnits.isLegacy && gpaUnits.totalUnits" data-ng-bind-template="(Cumulative {{gpaUnits.totalUnits | number:1}})"></span>
   </h3>
 </div>
 <div class="cc-table cc-student-success-subsection">
