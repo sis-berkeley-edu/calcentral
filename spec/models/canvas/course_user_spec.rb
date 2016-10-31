@@ -141,6 +141,7 @@ describe Canvas::CourseUser do
     context 'if canvas user argument is blank' do
       it 'returns false' do
         expect(subject.class.is_course_teacher?(nil)).to be_falsey
+        expect(subject.class.has_instructing_role?(nil)).to be_falsey
       end
     end
 
@@ -148,6 +149,7 @@ describe Canvas::CourseUser do
       before { canvas_course_user['enrollments'][1]['role'] = 'TeacherEnrollment' }
       it 'returns true' do
         expect(subject.class.is_course_teacher?(canvas_course_user)).to be_truthy
+        expect(subject.class.has_instructing_role?(canvas_course_user)).to be_truthy
       end
     end
   end
@@ -159,12 +161,36 @@ describe Canvas::CourseUser do
       end
     end
 
-    context 'if canvas user has teacher role' do
+    context 'if canvas user has teaching assistant role' do
       before { canvas_course_user['enrollments'][1]['role'] = 'TaEnrollment' }
       it 'returns true' do
         expect(subject.class.is_course_teachers_assistant?(canvas_course_user)).to be_truthy
+        expect(subject.class.has_instructing_role?(canvas_course_user)).to be_truthy
       end
     end
   end
 
+  context 'when checking if user is course reader' do
+    context 'if canvas user argument is blank' do
+      it 'returns false' do
+        expect(subject.class.is_course_reader?(nil)).to be_falsey
+      end
+    end
+
+    context 'if canvas user has student role' do
+      before { canvas_course_user['enrollments'][1]['role'] = 'StudentEnrollment' }
+      it 'returns false' do
+        expect(subject.class.is_course_reader?(canvas_course_user)).to be_falsey
+        expect(subject.class.has_instructing_role?(canvas_course_user)).to be_falsey
+      end
+    end
+
+    context 'if canvas user has reader role' do
+      before { canvas_course_user['enrollments'][1]['role'] = 'Reader' }
+      it 'returns false' do
+        expect(subject.class.is_course_reader?(canvas_course_user)).to be_truthy
+        expect(subject.class.has_instructing_role?(canvas_course_user)).to be_truthy
+      end
+    end
+  end
 end
