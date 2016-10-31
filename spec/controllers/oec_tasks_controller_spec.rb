@@ -1,8 +1,15 @@
 describe OecTasksController do
 
+  let(:oauth_tokens) {
+    {
+      access_token: random_string(10),
+      refresh_token: random_string(10)
+    }
+  }
   before do
     session['user_id'] = random_id
     allow_any_instance_of(AuthenticationStatePolicy).to receive(:can_administer_oec?).and_return true
+    allow(User::Oauth2Data).to receive(:get).with(anything, GoogleApps::Proxy::OEC_APP_ID).and_return oauth_tokens
   end
 
   shared_examples 'authorization and error handling' do
@@ -77,6 +84,15 @@ describe OecTasksController do
       it 'should return error before task is initialized' do
         make_request
         expect(Oec::ApiTaskWrapper).not_to receive(:new)
+        expect(response.status).to eq 500
+      end
+    end
+
+    context 'unknown task name' do
+      let(:oauth_tokens) { {} }
+      it 'should return error when no OAuth tokens are found' do
+        make_request
+        expect(Oec::ApiTaskWrapper).not_to receive :new
         expect(response.status).to eq 500
       end
     end

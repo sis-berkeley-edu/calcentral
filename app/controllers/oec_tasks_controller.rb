@@ -11,6 +11,7 @@ class OecTasksController < ApplicationController
 
   def authorize_oec_administration
     authorize current_user, :can_administer_oec?
+    google_oauth_token_check
   end
 
   # GET /api/oec/tasks
@@ -45,6 +46,16 @@ class OecTasksController < ApplicationController
     render json: {
       oecTaskStatus: task_status
     }
+  end
+
+  private
+
+  def google_oauth_token_check
+    uid = Settings.oec.google.uid
+    tokens = User::Oauth2Data.get(uid, GoogleApps::Proxy::OEC_APP_ID)
+    if tokens.empty? || tokens[:access_token].blank? || tokens[:refresh_token].blank?
+      raise StandardError.new "OEC features are unavailable because no Google OAuth tokens are registered with UID #{uid}. Please report this problem."
+    end
   end
 
 end

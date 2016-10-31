@@ -27,6 +27,7 @@ angular.module('calcentral.controllers').controller('OecController', function(ap
       } else {
         $scope.displayError = 'failure';
       }
+      $scope.errorMessage = data.error;
     });
   };
 
