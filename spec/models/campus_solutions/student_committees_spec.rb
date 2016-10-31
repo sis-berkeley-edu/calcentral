@@ -21,9 +21,4 @@ describe CampusSolutions::StudentCommittees do
     end
   end
 
-  context 'real proxy', testext: true do
-    let(:proxy) { CampusSolutions::StudentCommittees.new(fake: false, user_id: user_id) }
-    it_should_behave_like 'a proxy that gets data'
-  end
-
 end
