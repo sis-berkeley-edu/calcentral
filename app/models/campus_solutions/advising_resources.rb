@@ -86,7 +86,8 @@ module CampusSolutions
           # This entry is hacked with an empty ACAD_CAREER parameter in order to work correctly on Campus Solutions.
           { feed_key: :student_service_indicators, cs_link_key: 'UC_CX_SERVICE_IND_STDNT', cs_link_params: { :EMPLID => student_empl_id, :ACAD_CAREER => '' } },
           { feed_key: :student_webnow_documents, cs_link_key: 'UC_CX_WEBNOW_STUDENT_URI', cs_link_params: { :EMPLID => student_empl_id } },
-          { feed_key: :student_what_if_report, cs_link_key: 'UC_CX_WHIF_RPT_STDNT', cs_link_params: { :EMPLID => student_empl_id } }
+          { feed_key: :student_what_if_report, cs_link_key: 'UC_CX_WHIF_RPT_STDNT', cs_link_params: { :EMPLID => student_empl_id } },
+          { feed_key: :student_transfer_credit_report, cs_link_key: 'UC_CX_XFER_CREDIT_REPORT_STDNT', cs_link_params: { :EMPLID => student_empl_id } }
         ]
 
         advising_student_link_settings.each do |setting|

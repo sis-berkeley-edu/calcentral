@@ -131,8 +131,13 @@
                     data-link="ucAdvisingResources.csLinks.studentMultiYearAcademicPlanner"
                   ></div>
                 </div>
-
                 <div data-ng-if="ucAdvisingResources.csLinks.studentAdvisorNotes.url">
+                  <div
+                    data-cc-campus-solutions-link-item-directive
+                    data-link="ucAdvisingResources.csLinks.studentTransferCreditReport"
+                  ></div>
+                </div>
+                <div data-ng-if="ucAdvisingResources.csLinks.studentTransferCreditReport.url">
                   <div
                     data-cc-campus-solutions-link-item-directive
                     data-link="ucAdvisingResources.csLinks.studentAdvisorNotes"
@@ -144,7 +149,6 @@
                     data-link="ucAdvisingResources.links.schedulePlannerStudentSpecific"
                   ></div>
                 </div>
-
                 <div data-ng-if="ucAdvisingResources.csLinks.studentWebnowDocuments.url">
                   <a
                     data-ng-href="{{ucAdvisingResources.csLinks.studentWebnowDocuments.url}}"
