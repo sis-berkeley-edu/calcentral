@@ -81,7 +81,11 @@ describe MailingLists::MailgunList do
       before do
         allow(Canvas::CourseUsers).to receive(:new).and_return course_users
         expect(course_users).to receive(:course_users).exactly(1).times.and_return(statusCode: 200, body: canvas_site_members)
-        expect(User::BasicAttributes).to receive(:attributes_for_uids).exactly(1).times.and_return(canvas_site_members.map { |user| basic_attributes user })
+        expect(User::BasicAttributes).to receive(:attributes_for_uids).exactly(1).times.and_return campus_member_attributes
+      end
+
+      let(:campus_member_attributes) do
+        canvas_site_members.map { |user| basic_attributes user }
       end
 
       def expect_empty_population_results(list, action)
@@ -108,6 +112,41 @@ describe MailingLists::MailgunList do
           expect(response['populationResults']['success']).to eq true
           expect(response['populationResults']['messages']).to eq ['3 new members were added.']
           expect(list.members.count).to eq 3
+        end
+
+        context 'different email addresses from SIS and Canvas' do
+          let(:canvas_site_members) do
+            [
+              oliver.merge('email_address' => 'oheyer@compuserve.com'),
+              ray.merge('email_address' => 'raydavis@altavista.digital.com'),
+              paul.merge('email_address' => 'kerschen@lycos.com')
+            ]
+          end
+          let(:campus_member_attributes) do
+            canvas_site_members.map do |user|
+              basic_attributes(user).merge(email_address: user['email_address'].sub(/@.*/, '@berkeley.edu'))
+            end
+          end
+          let(:member_addresses) { list.members.reload.map { |member| member.email_address} }
+
+          before do
+            allow(Settings.canvas_mailing_lists).to receive(:prefer_canvas_email_addresses).and_return canvas_email_preferred
+            list.populate
+          end
+
+          context 'Canvas email addresses not preferred' do
+            let(:canvas_email_preferred) { false }
+            it 'should use SIS addresses' do
+              expect(member_addresses).to match_array %w(oheyer@berkeley.edu raydavis@berkeley.edu kerschen@berkeley.edu)
+            end
+          end
+
+          context 'Canvas email addresses preferred' do
+            let(:canvas_email_preferred) { true }
+            it 'should use Canvas addresses' do
+              expect(member_addresses).to match_array %w(oheyer@compuserve.com raydavis@altavista.digital.com kerschen@lycos.com)
+            end
+          end
         end
 
         shared_examples 'a member with sending permissions' do |can_send|
