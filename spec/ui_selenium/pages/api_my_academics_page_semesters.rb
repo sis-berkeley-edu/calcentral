@@ -60,16 +60,6 @@ class ApiMyAcademicsPageSemesters < ApiMyAcademicsPage
     semester['classes']
   end
 
-  def courses_by_transcripts(semester)
-    courses = []
-    semester_courses(semester).each do |course|
-      unless course_transcripts(course).nil?
-        course_transcripts(course).each { courses << course }
-      end
-    end
-    courses
-  end
-
   # Semester cards list courses once per primary section OR once per transcript record (if transcripts exist)
   def semester_card_courses(semester, courses)
     if has_enrollment_data?(semester)
@@ -500,6 +490,72 @@ class ApiMyAcademicsPageSemesters < ApiMyAcademicsPage
     descriptions = []
     semester_courses.each { |course| descriptions.concat(course_site_descrips(course)) }
     descriptions
+  end
+
+  # FINAL EXAMS
+
+  # Current or future semesters can have exams, but not Summer
+  def exam_semesters
+    ([current_semester(all_student_semesters)] + future_semesters(all_student_semesters)).delete_if { |semester| semester && semester_name(semester).include?('Summer') }
+  end
+
+  def exam_schedules
+    @parsed['examSchedule']
+  end
+
+  def term_exam_schedule(term)
+    exam_schedules && exam_schedules.find { |schedule| schedule['name'] == semester_name(term) }
+  end
+
+  def exam_schedule_term_name(term)
+    term_exam_schedule(term)['name']
+  end
+
+  def term_cs_data_available?(term)
+    term_exam_schedule(term)['cs_data_available']
+  end
+
+  def term_exam_courses(term)
+    term_exam_schedule(term) && term_exam_schedule(term)['courses']
+  end
+
+  def term_exam_course_codes(term)
+    term_exam_courses(term).map { |course| course['name'] }
+  end
+
+  def term_exams(term)
+    # Collect the data from all the semester exams
+    term_exams = []
+    term_exam_courses(term).each do |course|
+      course_exam = []
+      course_exam << semester_name(term)
+      course_exam << course['exam_date'].to_s
+      course_exam << course['exam_time'].to_s
+      # Add a wait list indicator if applicable
+      wait_list_courses = wait_list_courses(semester_courses term)
+      wait_list_course_codes(wait_list_courses).include?(course['name']) ?
+          course_exam << "#{course['name']}(waitlisted)" :
+          course_exam << course['name']
+      course_exam << course['exam_location']
+      course_exam << course['exam_slot']
+      term_exams << course_exam
+    end
+    # Sort the exams by time slot if they have time slots
+    exams_without_slots = term_exams.select { |exam| exam[5]== 'none' }
+    term_exams.delete_if { |exam| exam[5] == 'none' }
+    term_exams = term_exams.sort { |a, b| a[5] <=> b[5] }
+    # Exams without time slots come after those with time slots
+    term_exams = term_exams + exams_without_slots
+    # Remove the time slots since they do not surface in the UI
+    term_exams.each { |exam| exam.pop }
+    term_exams
+  end
+
+  def has_conflicts?(term)
+    # Collect the non-empty exam dates and times and check if any dupes exist
+    dates_and_times = []
+    term_exams(term).each { |exam| dates_and_times << [exam[1], exam[2]] unless (exam[1].blank? || exam[2].blank?) }
+    dates_and_times.uniq!.present?
   end
 
 end

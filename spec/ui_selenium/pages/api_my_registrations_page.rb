@@ -25,6 +25,10 @@ class ApiMyRegistrationsPage
     terms && terms['future']
   end
 
+  def term_end_date(term)
+    term['end'] && Date.parse(term['end']).to_date
+  end
+
   def active_reg_status_terms
     [future_term, next_term, current_term].compact
   end
@@ -59,11 +63,7 @@ class ApiMyRegistrationsPage
   end
 
   def registered?(term, index)
-    if term_name(term) == 'Summer 2016'
-      reg_status(term_id(term), index) && term_registrations(term_id(term))[index]['roles']['registered']
-    else
-      term_registrations(term_id(term))[index]['registered']
-    end
+    term_registrations(term_id(term))[index]['registered']
   end
 
   def current_term_reg_status

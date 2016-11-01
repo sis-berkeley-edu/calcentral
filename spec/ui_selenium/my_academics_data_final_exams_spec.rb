@@ -1,118 +1,140 @@
 describe 'My Academics Final Exams card', :testui => true do
 
-  if ENV["UI_TEST"] && Settings.ui_selenium.layer == 'local'
+  if ENV['UI_TEST'] && Settings.ui_selenium.layer == 'local'
 
     include ClassLogger
 
     begin
-      driver = WebDriverUtils.launch_browser
-      test_users = UserUtils.load_test_users
+      @driver = WebDriverUtils.launch_browser
+      @splash_page = CalCentralPages::SplashPage.new @driver
+      @exams_card = CalCentralPages::MyAcademicsPage::MyAcademicsFinalExamsCard.new @driver
+      @student_api = ApiEdosStudentPage.new @driver
+      @academics_api = ApiMyAcademicsPageSemesters.new @driver
+      @registrations_api = ApiMyRegistrationsPage.new @driver
+
+      test_users = UserUtils.load_test_users.select { |user| user['finalExams'] }
       testable_users = []
-      test_output_heading = ['UID', 'Has Exams', 'Exam Dates', 'Exam Times', 'Exam Courses', 'Exam Locations']
+      test_output_heading = %w(UID Term Date Time Course Location)
       test_output = UserUtils.initialize_output_csv(self, test_output_heading)
 
       test_users.each do |user|
-        if user['finalExams']
-          uid = user['uid']
-          logger.info("UID is #{uid}")
-          has_exams = false
-          api_exam_dates = []
-          api_exam_times = []
-          api_exam_courses = []
-          api_exam_locations = []
+        uid = user['uid']
+        logger.info "UID is #{uid}"
 
-          begin
-            splash_page = CalCentralPages::SplashPage.new driver
-            splash_page.load_page
-            splash_page.basic_auth uid
-            status_api = ApiMyStatusPage.new driver
-            status_api.get_json driver
-            academics_api = ApiMyAcademicsPage.new driver
-            academics_api.get_json driver
-            if status_api.is_student?
-              classes_api = ApiMyClassesPage.new driver
-              classes_api.get_json driver
-              current_term = classes_api.current_term
-              my_academics_page = CalCentralPages::MyAcademicsPage::MyAcademicsFinalExamsCard.new driver
-              my_academics_page.load_page
-              my_academics_page.page_heading_element.when_visible WebDriverUtils.academics_timeout
-              if academics_api.has_exam_schedules
-                has_exams = true
-                testable_users << uid
+        has_exams_card = nil
 
-                # EXAM SCHEDULES ON MY ACADEMICS LANDING PAGE
-                api_exam_dates = academics_api.all_exam_dates
-                api_exam_times = academics_api.all_exam_times
-                api_exam_courses = academics_api.all_exam_courses
-                api_exam_locations = academics_api.all_exam_locations
-                acad_exam_dates = my_academics_page.all_exam_dates
-                acad_exam_times = my_academics_page.all_exam_times
-                acad_exam_courses = my_academics_page.all_exam_courses
-                acad_exam_locations = my_academics_page.all_exam_locations
-                it "shows the right exam dates on My Academics for UID #{uid}" do
-                  expect(acad_exam_dates).to eql(api_exam_dates)
-                end
-                it "shows the right exam times on My Academics for UID #{uid}" do
-                  expect(acad_exam_times).to eql(api_exam_times)
-                end
-                it "shows the right exam courses on My Academics for UID #{uid}" do
-                  expect(acad_exam_courses).to eql(api_exam_courses)
-                end
-                it "shows the right exam locations on My Academics for UID #{uid}" do
-                  expect(acad_exam_locations).to eql(api_exam_locations)
+        begin
+          @splash_page.load_page
+          @splash_page.basic_auth uid
+
+          # Get data from API endpoints
+          @student_api.get_json @driver
+          @academics_api.get_json @driver
+          @registrations_api.get_json @driver
+
+          # Check if the user has a Final Exams card
+          @exams_card.load_page
+          has_exams_card = WebDriverUtils.verify_block { @exams_card.final_exams_card_heading_element.when_present WebDriverUtils.page_load_timeout }
+
+          if @academics_api.exam_semesters.any?
+
+            it("shows a Final Exams card for UID #{uid}") { expect(has_exams_card).to be true }
+
+            if @academics_api.exam_schedules && @academics_api.exam_schedules.any?
+
+              testable_users << uid
+
+              @academics_api.exam_semesters.each do |term|
+                term_name = @academics_api.exam_schedule_term_name term
+                logger.info "Checking exams for #{term_name}"
+
+                it("shows no summer exam data for UID #{uid}") { expect(term_name).not_to include('Summer') }
+
+                # COURSES AND EXAMS
+                courses = @academics_api.semester_courses term
+                api_course_codes = @academics_api.semester_card_course_codes(@academics_api.all_student_semesters, term, courses)
+                api_exam_course_codes = @academics_api.term_exam_course_codes term
+                it("shows all the expected courses for UID #{uid} in #{term_name}") { expect(api_course_codes).to eql(api_exam_course_codes) }
+
+                api_exams = @academics_api.term_exams term
+                ui_exams = @exams_card.term_exams term_name
+                it("shows the expected final exams for UID #{uid} in #{term_name}") { expect(ui_exams).to eql(api_exams) }
+
+                # EXAM CONFLICTS
+                has_conflict = @academics_api.has_conflicts? term
+                has_conflict_alert = @exams_card.exam_conflict(term_name).any?
+                logger.warn "UID #{uid} has an exam conflict in #{term_name}" if has_conflict
+
+                has_conflict ?
+                    (it("shows an exam conflict alert for UID #{uid} in #{term_name}") { expect(has_conflict_alert).to be true }) :
+                    (it("shows no exam conflict alert for UID #{uid} in #{term_name}") { expect(has_conflict_alert).to be false })
+
+                # EXAM DATA SOURCE
+                has_cs_data = @academics_api.term_cs_data_available? term
+                has_disclaimer = WebDriverUtils.verify_block { @exams_card.disclaimer(@driver, term_name) }
+
+                if term == @academics_api.current_semester(@academics_api.all_student_semesters)
+
+                  # Eight weeks prior to the end of semester, the exam data source changes
+                  end_date = @registrations_api.term_end_date @registrations_api.current_term
+                  today = DateTime.now.to_date
+
+                  if end_date - today < 56
+                    it("shows CS exam data for UID #{uid} in #{term_name}") { expect(has_cs_data).to be true }
+                    it("shows no disclaimer for UID #{uid} in #{term_name}") { expect(has_disclaimer).to be false }
+                  else
+                    it("shows CSV exam data for UID #{uid} in #{term_name}") { expect(has_cs_data).to be false }
+                    it("shows a disclaimer for UID #{uid} in #{term_name}") { expect(has_disclaimer).to be true }
+                  end
+
+                else
+                  it("shows CSV exam data for UID #{uid} in #{term_name}") { expect(has_cs_data).to be false }
+                  it("shows a disclaimer for UID #{uid} in #{term_name}") { expect(has_disclaimer).to be true }
                 end
 
-                # IF LINKED LOCATIONS EXIST, VERIFY THAT ONE OF LINKS OPENS GOOGLE MAPS IN NEW WINDOW
-                exam_location_links = my_academics_page.exam_location_links_elements
-                unless exam_location_links.empty?
-                  link_works = WebDriverUtils.verify_external_link(driver, exam_location_links.first, 'Google Maps')
-                  it "offers a Google Maps link on My Academics for UID #{uid}" do
-                    expect(link_works).to be true
+                # SANITY TESTS
+                ui_exams.each do |exam|
+                  date = exam[1]
+                  location = exam[4]
+
+                  if has_cs_data
+                    if date.blank?
+                      it("shows either 'No exam' or 'Location TBD' for an unscheduled #{ui_exams[3]} exam for UID #{uid} in #{term_name}") { expect(['No exam.', 'Location TBD']).to include(location) }
+                    else
+                      it("does not show 'No exam' for a scheduled #{ui_exams[3]} exam for UID #{uid} in #{term_name}") { expect(location).to_not include('No exam') }
+                    end
+                  else
+                    it("shows nothing for location for a #{ui_exams[3]} exam where CS data is not yet available for UID #{uid} in #{term_name}") { expect(location).to be_blank }
+                  end
+
+                  if location.present? && !['No exam.', 'Location TBD'].include?(location)
+                    it("shows a #{ui_exams[3]} exam date if a scheduled exam location exists for UID #{uid} in #{term_name}") { expect(date).to_not be_blank }
                   end
                 end
 
-                # EXAM SCHEDULES ON SEMESTER PAGE
-                my_academics_page.click_student_semester_link current_term
-                my_academics_page.final_exams_card_heading_element.when_visible WebDriverUtils.page_load_timeout
-                semester_exam_dates = my_academics_page.all_exam_dates
-                semester_exam_times = my_academics_page.all_exam_times
-                semester_exam_courses = my_academics_page.all_exam_courses
-                semester_exam_locations = my_academics_page.all_exam_locations
-                it "shows the right exam dates on the semester page for UID #{uid}" do
-                  expect(semester_exam_dates).to eql(api_exam_dates)
-                end
-                it "shows the right exam times on the semester page for UID #{uid}" do
-                  expect(semester_exam_times).to eql(api_exam_times)
-                end
-                it "shows the right exam courses on the semester page for UID #{uid}" do
-                  expect(semester_exam_courses).to eql(api_exam_courses)
-                end
-                it "shows the right exam locations on the semester page for UID #{uid}" do
-                  expect(semester_exam_locations).to eql(api_exam_locations)
-                end
-
-              else
-                has_finals_card = my_academics_page.final_exams_card_heading_element.visible?
-                it "shows no final exams card for UID #{uid}" do
-                  expect(has_finals_card).to be false
+                api_exams.each do |exam|
+                  test_output_row = [uid, exam[0], exam[1], exam[2], exam[3], exam[4]]
+                  UserUtils.add_csv_row(test_output, test_output_row)
                 end
               end
             end
-          rescue => e
-            logger.error e.message + "\n" + e.backtrace.join("\n")
-          ensure
-            test_output_row = [uid, has_exams, api_exam_dates * ', ', api_exam_times * ', ', api_exam_courses * ', ', api_exam_locations * ', ']
-            UserUtils.add_csv_row(test_output, test_output_row)
+          else
+
+            it("shows no final exams card for UID #{uid}") { expect(has_exams_card).to be false }
+
           end
+        rescue => e
+          it("caused an unexpected error in the test for UID #{uid}") { fail }
+          logger.error "#{e.message}'\n' #{ e.backtrace.join("\n")}"
         end
       end
-      it 'has final exams info for at least one of the test UIDs' do
-        expect(testable_users.any?).to be true
-      end
+
+      it('has final exams info for at least one of the test UIDs') { expect(testable_users.any?).to be true }
+
     rescue => e
-      logger.error e.message + "\n" + e.backtrace.join("\n")
+      logger.error "#{e.message}'\n' #{ e.backtrace.join("\n")}"
     ensure
-      WebDriverUtils.quit_browser driver
+      WebDriverUtils.quit_browser @driver
     end
   end
 end
