@@ -104,45 +104,6 @@ class ApiMyAcademicsPage
     transition_term['isProfileCurrent']
   end
 
-  # FINAL EXAMS
-
-  def exam_schedules
-    @parsed['examSchedule']
-  end
-
-  def has_exam_schedules
-    (exam_schedules.nil? || exam_schedules.empty?) ? false : true
-  end
-
-  def exam_epochs
-    exam_schedules.map { |schedule| schedule['date']['epoch'].to_s }
-  end
-
-  def all_exam_dates
-    exam_epochs.map { |epoch| academics_date epoch }
-  end
-
-  def all_exam_times
-    exam_schedules.map { |exam| exam['time'] }
-  end
-
-  def all_exam_courses
-    exam_schedules.map { |schedule| schedule['course_code'] }
-  end
-
-  def exam_locations(exam)
-    locations = exam['locations']
-    raw_locations = []
-    locations.each { |location| raw_locations.push(location['raw'].gsub("  ", " ").strip) }
-    raw_locations
-  end
-
-  def all_exam_locations
-    all_locations = []
-    exam_schedules.each { |exam| all_locations.concat(exam_locations(exam)) }
-    all_locations.sort
-  end
-
   # OTHER SITE MEMBERSHIPS
 
   def other_site_memberships
