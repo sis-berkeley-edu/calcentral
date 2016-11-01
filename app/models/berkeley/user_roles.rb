@@ -1,13 +1,15 @@
 module Berkeley
   module UserRoles
     extend self
+    include ClassLogger
 
     def roles_from_affiliations(affiliations)
       affiliations ||= []
       {
         :student => affiliations.index {|a| (a.start_with? 'STUDENT-TYPE-')}.present?,
         :registered => affiliations.include?('STUDENT-TYPE-REGISTERED'),
-        :exStudent => affiliations.include?('STUDENT-STATUS-EXPIRED'),
+        # TODO Remove '-STATUS-EXPIRED' logic once CalNet transition is complete.
+        :exStudent => (affiliations & ['STUDENT-STATUS-EXPIRED', 'FORMER-STUDENT']).present?,
         :faculty => affiliations.include?('EMPLOYEE-TYPE-ACADEMIC'),
         :staff => affiliations.include?('EMPLOYEE-TYPE-STAFF'),
         :guest => affiliations.include?('GUEST-TYPE-COLLABORATOR'),
@@ -18,35 +20,23 @@ module Berkeley
     def roles_from_ldap_affiliations(ldap_record)
       affiliations = ldap_record[:berkeleyeduaffiliations].to_a
 
-      # Conflicting combinations of the following affiliations can be resolved by the corresponding
-      # 'expdate' attribute. If the 'expdate' is in the past, then the expired '-STATUS-' affiliation
-      # wins; if the 'expdate' is in the future or unset, then the active '-TYPE-' affiliation wins.
-      {
-        'STUDENT' => 'stu',
-        'EMPLOYEE' => 'emp',
-        'AFFILIATE' => 'aff',
-        'GUEST' => 'aff'
-      }.each do |aff_substring, expdate_substring|
+      # CalNet should no longer provide conflicting affiliations as normal business. If conflicts
+      # do appear, we log them and more-or-less arbitrarily choose the "active" version rather than
+      # the "no-longer-active" version.
+      [
+        'STUDENT',
+        'EMPLOYEE',
+        'AFFILIATE',
+        'GUEST'
+      ].each do |aff_substring|
         active_aff = affiliations.select {|aff| aff.start_with? "#{aff_substring}-TYPE-"}
-        expired_aff = affiliations.select {|aff| aff.start_with? "#{aff_substring}-STATUS-"}
+        expired_aff = affiliations.select {|aff| aff == "FORMER-#{aff_substring}" ||
+          aff.start_with?("#{aff_substring}-STATUS-")}
         if active_aff.present? && expired_aff.present?
-          # During the SIS transition, we've been asked to skip the usual expiry date approach to
-          # conflict resolution for the special case of STUDENT affiliations.
-          if aff_substring == 'STUDENT'
-            affiliations = affiliations - expired_aff
-          else
-            exp_date = ldap_record["berkeleyedu#{expdate_substring}expdate".to_sym].first
-            if exp_date.blank? || DateTime.parse(exp_date) > DateTime.now
-              affiliations = affiliations - expired_aff
-            else
-              affiliations = affiliations -  active_aff
-            end
-          end
+          logger.warn "UID #{ldap_record[:uid]} has conflicting CalNet affiliations #{affiliations}"
+          affiliations = affiliations - expired_aff
         end
       end
-
-      # TODO: CONFIRM: The combination of 'STUDENT-TYPE-NOT REGISTERED' and 'STUDENT-TYPE-REGISTERED' should be treated as registered.
-      # (That's how Bear Facts seems to handle it, anyway.)
 
       roles_from_affiliations affiliations
     end
