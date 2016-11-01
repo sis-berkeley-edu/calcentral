@@ -144,10 +144,14 @@
                   ></div>
                 </div>
                 <div data-ng-if="ucAdvisingResources.links.schedulePlannerStudentSpecific.url">
-                  <div
-                    data-cc-campus-solutions-link-item-directive
-                    data-link="ucAdvisingResources.links.schedulePlannerStudentSpecific"
-                  ></div>
+                  <a
+                    data-ng-bind="ucAdvisingResources.links.schedulePlannerStudentSpecific.name"
+                    data-cc-campus-solutions-link-directive="ucAdvisingResources.links.schedulePlannerStudentSpecific.url"
+                    data-cc-campus-solutions-link-directive-enabled="{{false}}"
+                    data-cc-campus-solutions-link-directive-text="ucAdvisingResources.links.schedulePlannerStudentSpecific.backToText"
+                    data-cc-campus-solutions-link-directive-cache="cache"
+                    data-cc-outbound-enabled="{{true}}"
+                  ></a>
                 </div>
                 <div data-ng-if="ucAdvisingResources.csLinks.studentWebnowDocuments.url">
                   <a
