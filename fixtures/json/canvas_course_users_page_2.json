@@ -9,6 +9,7 @@
     "sis_login_id": "870001",
     "sis_import_id": 6168758,
     "login_id": "870001",
+    "email": "walter_upchurch@berkeley.edu",
     "enrollments": [
       {
         "associated_user_id": null,
@@ -55,6 +56,7 @@
     "sis_login_id": "870002",
     "sis_import_id": 5995310,
     "login_id": "870002",
+    "email": "walter_upchurch@berkeley.edu",
     "enrollments": [
       {
         "associated_user_id": null,
@@ -101,6 +103,7 @@
     "sis_login_id": "870003",
     "sis_import_id": 6205188,
     "login_id": "870003",
+    "email": "walter_upchurch@berkeley.edu",
     "enrollments": [
       {
         "associated_user_id": null,
@@ -147,6 +150,7 @@
     "sis_login_id": "870004",
     "sis_import_id": 6169732,
     "login_id": "870004",
+    "email": "walter_upchurch@berkeley.edu",
     "enrollments": [
       {
         "associated_user_id": null,
@@ -193,6 +197,7 @@
     "sis_login_id": "870005",
     "sis_import_id": 6198014,
     "login_id": "870005",
+    "email": "walter_upchurch@berkeley.edu",
     "enrollments": [
       {
         "associated_user_id": null,
