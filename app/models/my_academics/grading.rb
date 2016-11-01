@@ -124,15 +124,22 @@ module MyAcademics
     end
 
     def find_ccn_grading_statuses(grading_statuses, ccn, term_code)
-      return nil unless ccn && term_code
-      rosters = grading_statuses.try(:[], :classGradingStatus).try(:find) do |grading_status|
+      return nil unless ccn && term_code && grading_statuses
+      status_array  = grading_statuses.try(:[], :classGradingStatus)
+      # if feed returned single status it will not be wrapped in array
+      # need to wrap in array for code to iterate correctly
+      status_array =  status_array.blank? || status_array.kind_of?(Array) ? status_array : [] << status_array
+      rosters = status_array.try(:find) do |grading_status|
         grading_status[:strm] == term_code && grading_status[:classNbr] == ccn
       end.try(:[],:roster)
       find_fin_grade_in_rosters(rosters)
     end
 
     def find_fin_grade_in_rosters(rosters)
-      rosters.try(:find) do |r|
+      # if feed returned single roster it will not be wrapped in array
+      # need to wrap in array for code to iterate correctly
+      roster_array = rosters.blank? || rosters.kind_of?(Array) ? rosters : [] << rosters
+      roster_array.try(:find) do |r|
         r[:gradeRosterTypeCode].present? && r[:gradeRosterTypeCode] == 'FIN'
       end.try(:[],:gradingStatusCode)
     end
@@ -155,8 +162,8 @@ module MyAcademics
     end
 
     def unexpected_cs_status?(cs_grading_status)
-      return false if !!%w{GRD RDY APPR POST}.find { |s| s == cs_grading_status }
-      logger.error "Unexpected CS Grading Status Received #{cs_grading_status} for Class #{self.class.name} feed, uid = #{@uid}"
+      return false if !!%w{GRD RDY APPR POST}.find { |s| s == cs_grading_status } || cs_grading_status.blank?
+      logger.debug "Unexpected CS Grading Status Received #{cs_grading_status} for Class #{self.class.name} feed, uid = #{@uid}"
       true
     end
 
