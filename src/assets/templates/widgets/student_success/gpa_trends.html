@@ -5,7 +5,7 @@
       GPA Trends
       <span data-ng-if="gpaUnits.cumulativeGpa" data-ng-bind-template="(Cumulative {{gpaUnits.cumulativeGpa | number:2}})"></span>
     </h3>
-    <data-cc-line-chart-directive class="cc-student-success-chart-container" data-options="studentSuccess.gpaChart" data-data="highCharts.dataSeries"></data-cc-line-chart-directive>
+    <data-cc-line-chart-directive data-ng-if="studentSuccess.showChart" class="cc-student-success-chart-container" data-options="studentSuccess.gpaChart" data-data="highCharts.dataSeries"></data-cc-line-chart-directive>
   </div>
 </div>
 <div class="cc-table cc-student-success-subsection">
