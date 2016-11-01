@@ -89,7 +89,6 @@ module CampusSolutions
         link[:title] = link.delete(:hoverOverText) || ''
         if !link[:showNewWindow]
           link[:isCsLink] = true
-          link['IS_CS_LINK'] = true
         end
       end
       link

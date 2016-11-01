@@ -2,7 +2,6 @@
   "feed": {
     "resources": {
       "emergencyLoanFormAdd": {
-        "iSCsLink": true,
         "isCsLink": true,
         "name": "Apply for an Emergency Loan",
         "title": "Complete this form to apply for an emergency loan.",
@@ -13,7 +12,6 @@
         "urlId": "UC_CX_GT_FAEMRLAON_ADD"
       },
       "emergencyLoanFormView": {
-        "iSCsLink": true,
         "isCsLink": true,
         "name": "Submitted Emergency Loan Forms",
         "title": "View your submitted emergency loan forms.",
@@ -24,7 +22,6 @@
         "urlId": "UC_CX_GT_FAEMRLAON_VIEW"
       },
       "specialEnrollmentPetition": {
-        "iSCsLink": true,
         "isCsLink": true,
         "name": "Special Enrollment Petition",
         "title": "Special Enrollment Petition form",
@@ -35,7 +32,6 @@
         "urlId": "UC_CX_GT_SRSEP_ADD"
       },
       "updatePendingForms": {
-        "iSCsLink": true,
         "isCsLink": true,
         "name": "Update Pending Forms",
         "title": "Modify and update your pending forms",
@@ -46,7 +42,6 @@
         "urlId": "UC_CX_GT_STUDENT_UPDATE"
       },
       "viewSubmittedForms": {
-        "iSCsLink": true,
         "isCsLink": true,
         "name": "View Submitted Forms",
         "title": "View the status of the forms you have submitted.",
@@ -57,7 +52,6 @@
         "urlId": "UC_CX_GT_STUDENT_VIEW"
       },
       "withdrawFromSemesterAdd": {
-        "iSCsLink": true,
         "isCsLink": true,
         "name": "Add a Withdrawal Request",
         "title": "Complete this form to withdraw from UC Berkeley.",
@@ -68,7 +62,6 @@
         "urlId": "UC_CX_SRWITHDRL_ADD"
       },
       "higherDegreesCommitteeForm": {
-        "iSCsLink": true,
         "isCsLink": true,
         "name": "Higher Degree Committees Form",
         "title": "Advance to Candidacy, apply for the qualifying exam, or modify your Committee.",
