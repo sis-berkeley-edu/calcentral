@@ -50,6 +50,7 @@ angular.module('calcentral.controllers').controller('UserOverviewController', fu
         visible: false
       }
     },
+    showChart: true,
     isLoading: true
   };
   $scope.degreeProgressGraduate = {
@@ -258,6 +259,7 @@ angular.module('calcentral.controllers').controller('UserOverviewController', fu
       }
     });
     if (termGpa.length < 2) {
+      $scope.studentSuccess.showChart = false;
       return;
     }
     // The last element of the data series must also contain custom marker information to show the GPA.
