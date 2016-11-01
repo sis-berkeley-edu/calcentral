@@ -115,10 +115,10 @@
                   <span data-ng-bind="scheduledSection.count"></span> <span data-ng-bind="scheduledSection.format"></span>
                 </div>
               </td>
-              <td data-ng-if="course.sections[0].gradingLink" class="show-for-medium-up cc-academics-course-grading-link">
-                <a data-ng-href="{{course.sections[0].gradingLink}}">Course Grades</a>
+              <td data-ng-if="course.sections[0].gradingLink.url" class="show-for-medium-up cc-academics-course-grading-link">
+                <a data-ng-href="{{course.sections[0].gradingLink.url}}">Course Grades</a>
               </td>
-              <td data-ng-if="!course.sections[0].gradingLink" class="show-for-medium-up cc-academics-course-grading-link">
+              <td data-ng-if="!course.sections[0].gradingLink.url" class="show-for-medium-up cc-academics-course-grading-link">
                 &mdash;
               </td>
               <td class="show-for-medium-up cc-academics-course-grading-icon" data-ng-switch="course.sections[0].ccGradingStatus">
@@ -139,7 +139,7 @@
           <tr>
             <td>
               <span><i class="fa fa-ban"></i></span>
-              <span>Roster not available</span>
+              <span>Grade entry period not started or no access</span>
             </td>
             <td>
               <span><i class="fa fa-file-o"></i></span>
