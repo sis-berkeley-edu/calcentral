@@ -179,13 +179,13 @@ describe 'My Finances Campus Solutions billing details page', :testui => true do
         end
 
         it 'can be sorted by description ascending alphabetically' do
-          descrip_asc = @my_finances_billing.visible_transaction_descrips.sort
+          descrip_asc = @my_finances_billing.visible_transaction_descrips.sort_by &:downcase
           @my_finances_billing.sort_by_descrip_asc
           @my_finances_billing.wait_until(timeout) { @my_finances_billing.visible_transaction_descrips == descrip_asc }
         end
 
         it 'can be sorted by description descending alphabetically' do
-          descrip_desc = @my_finances_billing.visible_transaction_descrips.sort { |x, y| y <=> x }
+          descrip_desc = @my_finances_billing.visible_transaction_descrips.sort { |x, y| y.downcase <=> x.downcase }
           @my_finances_billing.sort_by_descrip_desc
           @my_finances_billing.wait_until(timeout) { @my_finances_billing.visible_transaction_descrips == descrip_desc }
         end
