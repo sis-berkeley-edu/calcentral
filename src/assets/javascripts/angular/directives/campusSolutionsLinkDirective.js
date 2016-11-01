@@ -64,11 +64,12 @@ angular.module('calcentral.directives').directive('ccCampusSolutionsLinkDirectiv
         if (!value) {
           return;
         }
-        if (/^http/.test(value) && scope.$eval(attrs.ccCampusSolutionsLinkDirectiveEnabled) !== false) {
+        var csBannerEnabled = scope.$eval(attrs.ccCampusSolutionsLinkDirectiveEnabled);
+        if (/^http/.test(value) && csBannerEnabled === true) {
           value = fixLastQuestionMark(value);
           value = updateQueryStringParameter(value, 'ucFrom', 'CalCentral');
-          var link = getCalCentralLink(scope.$eval(attrs.ccCampusSolutionsLinkDirectiveCache));
-          value = updateQueryStringParameter(value, 'ucFromLink', link);
+          var calCentrallink = getCalCentralLink(scope.$eval(attrs.ccCampusSolutionsLinkDirectiveCache));
+          value = updateQueryStringParameter(value, 'ucFromLink', calCentrallink);
           var textAttribute = attrs.ccCampusSolutionsLinkDirectiveText;
           if (textAttribute) {
             var text = $parse(textAttribute)(scope);
@@ -89,3 +90,4 @@ angular.module('calcentral.directives').directive('ccCampusSolutionsLinkDirectiv
     }
   };
 });
+
