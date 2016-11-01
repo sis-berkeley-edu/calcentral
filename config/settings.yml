@@ -359,6 +359,7 @@ background_jobs_check:
 youtube_splash_id: '3Iz1NT9QKjI'
 
 canvas_mailing_lists:
+  prefer_canvas_email_addresses: false
   timestamp_tolerance: 60
 
 oec:
