@@ -4,10 +4,7 @@ describe User::Api do
   let(:preferred_name) { 'Sid Vicious' }
   let(:edo_roles) do
     {
-      student: true,
-      exStudent: false,
-      faculty: false,
-      staff: false
+      student: true
     }
   end
   let(:edo_attributes) do
@@ -75,7 +72,7 @@ describe User::Api do
     end
     context 'advisor user' do
       let(:edo_roles) do
-        {student: false, exStudent: false, faculty: false, advisor: true}
+        {advisor: true}
       end
       it 'allows viewing grades' do
         api = User::Api.new(uid).get_feed
@@ -302,6 +299,15 @@ describe User::Api do
     end
     context 'former student' do
       let(:is_active_student) { false }
+      let(:edo_attributes) do
+        {
+          person_name: preferred_name,
+          campus_solutions_id: '12345678', # 8-digit ID means legacy
+          is_legacy_student: true,
+          roles: {
+          }
+        }
+      end
       it 'relies on LDAP and Oracle' do
         expect(subject[:officialBmailAddress]).to eq 'bar@bar.edu'
       end
@@ -551,7 +557,7 @@ describe User::Api do
       include_examples 'handling bad behavior'
     end
 
-    context 'when ex-student is incorrectly reported active' do
+    context 'when ex-student is reported by CS as now again active' do
       let(:uid) { '2040' }
       let(:edo_attributes) do
         {
@@ -560,9 +566,9 @@ describe User::Api do
           }
         }
       end
-      it 'should give precedence to campus Oracle on ex-student status' do
-        expect(feed[:roles][:exStudent]).to eq true
-        expect(feed[:roles][:student]).to eq false
+      it 'should give precedence to CS' do
+        expect(feed[:roles][:exStudent]).to be_falsey
+        expect(feed[:roles][:student]).to eq true
       end
     end
   end
