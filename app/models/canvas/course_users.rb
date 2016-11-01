@@ -10,7 +10,7 @@ module Canvas
 
     def course_users(options = {})
       optional_cache(options, key: "#{@course_id}/#{@user_id}", default: true) do
-        paged_get(request_path, include: ['enrollments']) do |response|
+        paged_get(request_path, include: %w(email enrollments)) do |response|
           if @paging_callback.present?
             parsed_link_header = LinkHeader.parse(response['link'])
             last_link = parsed_link_header.find_link(['rel', 'last']).href

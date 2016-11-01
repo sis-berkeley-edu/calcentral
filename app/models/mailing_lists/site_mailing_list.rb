@@ -226,8 +226,17 @@ module MailingLists
       population_results[:initial_count] = list_members.count
 
       course_users.map{ |user| user['login_id'] }.each_slice(1000) do |uid_slice|
-        user_slice = User::BasicAttributes.attributes_for_uids uid_slice
-        user_slice.each do |user|
+        User::BasicAttributes.attributes_for_uids(uid_slice).each do |user|
+
+          # In general we want to use official berkeley.edu email addresses sourced from User::BasicAttributes.
+          # However, we may wish to override with Canvas-sourced email addresses for testing purposes.
+          if Settings.canvas_mailing_lists.prefer_canvas_email_addresses
+            if (canvas_user = course_users.find { |course_user| course_user['login_id'] == user[:ldap_uid] })
+              logger.info "Setting email address for UID #{user[:ldap_uid]} to Canvas-sourced address #{canvas_user['email_address']}"
+              user[:email_address] = canvas_user['email_address']
+            end
+          end
+
           user[:can_send] = sender_uids.include?(user[:ldap_uid])
           if (user_address = user[:email_address])
             user_address.downcase!

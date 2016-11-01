@@ -6,6 +6,7 @@
     "short_name": "Ted Andrew Greenwald",
     "sis_user_id": "UID:4000123",
     "sis_login_id": "4000123",
+    "email": "ted_andrew_greenwald@berkeley.edu",
     "login_id": "4000123",
     "enrollments": [
       {
@@ -41,6 +42,7 @@
     "sis_user_id": "UID:4000169",
     "sis_login_id": "4000169",
     "login_id": "4000169",
+    "email": "harold_arnold_dacus@berkeley.edu",
     "enrollments": [
       {
         "associated_user_id": null,
@@ -67,6 +69,7 @@
     "sis_user_id": "UID:4000309",
     "sis_login_id": "4000309",
     "login_id": "4000309",
+    "email": "michael_david_ward@berkeley.edu",
     "enrollments": [
       {
         "associated_user_id": null,
@@ -101,6 +104,7 @@
     "sis_user_id": "UID:4000189",
     "sis_login_id": "4000189",
     "login_id": "4000189",
+    "email": "melissa_w_gafford@berkeley.edu",
     "enrollments": [
       {
         "associated_user_id": null,
@@ -135,6 +139,7 @@
     "sis_user_id": "UID:4000199",
     "sis_login_id": "4000199",
     "login_id": "4000199",
+    "email": "robert_vannatta@berkeley.edu",
     "enrollments": [
       {
         "associated_user_id": null,
@@ -169,6 +174,7 @@
     "sis_user_id": "20629333",
     "sis_login_id": "4000272",
     "login_id": "4000272",
+    "email": "laura_clarice_eisenberg@berkeley.edu",
     "enrollments": [
       {
         "associated_user_id": null,
