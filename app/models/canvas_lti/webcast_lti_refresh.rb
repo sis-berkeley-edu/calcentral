@@ -46,6 +46,9 @@ module CanvasLti
         end
       end
       modified_tab
+    rescue => e
+      logger.error "Failed to update tab on Canvas course site #{canvas_course_id}. Course Capture related sections:\n#{sections}.\nDetails: #{e.message}\n#{e.backtrace.join "\n\t"}"
+      nil
     end
 
     def show_course_site_tab(canvas_course_id, tab, external_tools)
