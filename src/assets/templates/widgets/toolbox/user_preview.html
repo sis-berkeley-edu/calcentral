@@ -146,11 +146,7 @@
                 <div data-ng-if="ucAdvisingResources.links.schedulePlannerStudentSpecific.url">
                   <a
                     data-ng-bind="ucAdvisingResources.links.schedulePlannerStudentSpecific.name"
-                    data-cc-campus-solutions-link-directive="ucAdvisingResources.links.schedulePlannerStudentSpecific.url"
-                    data-cc-campus-solutions-link-directive-enabled="{{false}}"
-                    data-cc-campus-solutions-link-directive-text="ucAdvisingResources.links.schedulePlannerStudentSpecific.backToText"
-                    data-cc-campus-solutions-link-directive-cache="cache"
-                    data-cc-outbound-enabled="{{true}}"
+                    data-ng-href="{{ucAdvisingResources.links.schedulePlannerStudentSpecific.url}}"
                   ></a>
                 </div>
                 <div data-ng-if="ucAdvisingResources.csLinks.studentWebnowDocuments.url">
