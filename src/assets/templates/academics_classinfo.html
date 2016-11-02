@@ -235,7 +235,7 @@
               <th data-cc-sortable-column-directive="waitlist_limit"
                 data-column-heading="{{groupedTableHeading('Wait List', 'Capacity', false)}}" class="show-for-medium-up"></th>
             </thead>
-            <tbody data-ng-repeat="section in sortedSections = (sections | orderBy:tableSort.column:tableSort.reverse)"
+            <tbody data-ng-repeat="section in sortedSections = (sections | orderBy:tableSort.column:tableSort.reverse) track by section.ccn"
                    data-ng-class-even="'cc-academics-even'"
                    data-ng-if="sections.length">
               <tr class="cc-academics-class-enrollment-table-row">
@@ -247,10 +247,10 @@
                 </td>
                 <td data-ng-bind="section.ccn"></td>
                 <td class="show-for-large-up">
-                  <div data-ng-repeat="date in section.dates" data-ng-bind="date"></div>
+                  <div data-ng-repeat="date in section.dates track by $index" data-ng-bind="date"></div>
                 </td>
                 <td class="show-for-large-up">
-                  <div data-ng-repeat="location in section.locations" data-ng-bind="location"></div>
+                  <div data-ng-repeat="location in section.locations track by $index" data-ng-bind="location"></div>
                 </td>
                 <td data-ng-bind="section.enroll_count"></td>
                 <td data-ng-bind="section.enroll_open"></td>
