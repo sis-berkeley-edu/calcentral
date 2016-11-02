@@ -1,74 +1,108 @@
 describe GoogleApps::DriveManager do
 
-  context '#real', testext: true, order: :defined do
+  subject(:drive) { GoogleApps::DriveManager.new(random_id, random_id) }
 
-    before(:all) do
-      settings = Settings.oec.google.marshal_dump
-      @drive = GoogleApps::DriveManager.new(GoogleApps::Proxy::OEC_APP_ID, Settings.oec.google.uid, settings)
-      now = DateTime.now.strftime('%m/%d/%Y at %I:%M%p')
-      title = "#{described_class} tested on #{now}"
-      csv_file = 'fixtures/oec/courses.csv'
-      text_file = 'fixtures/jms_recordings/ist_jms.txt'
-      @folder = @drive.create_folder title
-      @csv_filename = "CSV file, #{now}"
-      @csv_file = @drive.upload_file(@csv_filename, 'CSV file description', @folder.id, 'text/csv', csv_file)
-      @text_filename = "Text file, #{now}"
-      @text_file = @drive.upload_file(@text_filename, 'Text file description', @folder.id, 'text/plain', text_file)
+  context 'unauthorized' do
+    before do
+      expect(GoogleApps::CredentialStore).to receive(:new).once.and_return (store = double)
+      expect(Google::APIClient::Storage).to receive(:new).with(store).once.and_return (storage = double)
+      expect(storage).to receive(:authorize).once.and_return nil
     end
 
-    after(:all) do
-      @drive.trash_item(@folder, permanently_delete: true) if @folder
+    it 'should abort when OAuth2 tokens are not found' do
+      expect{ drive.find_folders }.to raise_error /Failed to refresh Google OAuth tokens/
+    end
+  end
+
+  context 'authorized' do
+    let(:google_response_status) { 200 }
+    let(:google_response) { double(status: google_response_status) }
+    let(:google_api) { double(execute: google_response) }
+    let(:drive_api) { double(files: double(list: double)) }
+
+    before do
+      allow(drive).to receive(:google_api).and_return google_api
+      allow(drive).to receive(:drive_api).and_return drive_api
+      allow(drive).to receive(:log_response)
     end
 
-    it 'should find folder by name' do
-      result = @drive.find_folders_by_title @folder.title
-      expect(result).to_not be_nil
-      expect(result).to have(1).item
-      expect(result[0].id).to eq @folder.id
-      expect(result[0].title).to eq @folder.title
+    context 'Google Drive operations' do
+      context 'trash item' do
+        let(:is_error) { false }
+        let(:item) { double(id: double) }
+        before do
+          expect(google_response).to receive(:error?).and_return is_error
+        end
+
+        context 'error' do
+          let(:is_error) { true }
+
+          it 'should raise error when Google reports error' do
+            expect(drive_api.files).to receive(:trash)
+            expect{ drive.trash_item item }.to raise_error
+          end
+        end
+        context 'delete or trash' do
+          let(:data) { double }
+          before do
+            expect(google_response).to receive(:data).and_return data
+          end
+
+          it 'should permanently delete' do
+            expect(drive_api.files).to receive(:delete)
+            expect(drive.trash_item(item, permanently_delete: true)).to eq data
+          end
+          it 'should not permanently delete' do
+            expect(drive_api.files).to receive(:trash)
+            expect(drive.trash_item item).to eq data
+          end
+        end
+      end
+      context 'find folder by name' do
+        let(:folder_title) { random_string(10) }
+        let(:operation_type) { :list }
+        context 'status 404' do
+          let(:google_response_status) { 404 }
+          it 'should return empty list' do
+            expect(drive.find_folders_by_title folder_title).to eq []
+          end
+        end
+        context 'status 500' do
+          let(:google_response_status) { 500 }
+          it 'should raise error' do
+            expect{ drive.find_folders_by_title folder_title }.to raise_error
+          end
+        end
+        context 'status 200' do
+          before do
+            rows.each do |row|
+              expect(google_response).to receive(:data).once.ordered.and_return row
+            end
+          end
+          context 'no results' do
+            let(:rows) {
+              [
+                double(items: [], next_page_token: nil)
+              ]
+            }
+            it 'should find folders' do
+              expect(drive.find_folders_by_title folder_title).to eq []
+            end
+          end
+          context 'results' do
+            let(:rows) {
+              [
+                double(items: [ double, double ], next_page_token: random_id),
+                double(items: [ double, double ], next_page_token: random_id),
+                double(items: [ double ], next_page_token: nil)
+              ]
+            }
+            it 'should find folders' do
+              expect(drive.find_folders_by_title folder_title).to have(5).items
+            end
+          end
+        end
+      end
     end
-
-    it 'should find all files in folder' do
-      items = @drive.get_items_in_folder @folder.id
-      expect(items).to have(2).items
-      expect([items[0].title, items[1].title]).to contain_exactly(@csv_filename, @text_filename)
-    end
-
-    it 'should find all CSV files in folder' do
-      items = @drive.get_items_in_folder(@folder.id, 'text/csv')
-      expect(items).to have(1).item
-      expect(items[0].title).to eq @csv_filename
-    end
-
-    it 'should copy CSV file to a new folder without modifying original' do
-      copy = @drive.copy_item_to_folder(@csv_file, 'root')
-
-      copied_items = @drive.find_items_by_title(@csv_filename, parent_id: 'root')
-      expect(copied_items).to have(1).item
-      expect(copied_items[0].id).to eq copy.id
-      expect(copied_items[0].title).to eq @csv_filename
-
-      original_items = @drive.find_items_by_title(@csv_filename, parent_id: @folder.id)
-      expect(original_items).to have(1).item
-      expect(original_items[0].title).to eq @csv_filename
-
-      @drive.trash_item(copy, permanently_delete: true)
-    end
-
-    it 'should find CSV file' do
-      items = @drive.find_items_by_title(@csv_filename, parent_id: @folder.id)
-      expect(items).to_not be_nil
-      expect(items).to have(1).item
-      item = items[0]
-      expect(item).to_not be_nil
-      expect(item.title).to eq @csv_filename
-      expect(item.mimeType).to eq 'text/csv'
-      expect(item.description).to_not be_nil
-      @drive.trash_item(item, permanently_delete: true)
-      # Verify not found after trashing
-      items = @drive.find_items_by_title(@csv_filename, parent_id: @folder.id)
-      expect(items).to be_empty
-    end
-
   end
 end

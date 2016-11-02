@@ -21,7 +21,7 @@ module GoogleApps
 
     def initialize(app_id, uid, opts={})
       super(app_id, uid, opts)
-      auth = get_google_api.authorization
+      auth = google_api.authorization
       # See https://github.com/gimite/google-drive-ruby
       @session = GoogleDrive::Session.login_with_oauth auth.access_token
     end
@@ -123,8 +123,6 @@ module GoogleApps
     end
 
     def upload_to_spreadsheet(sheets_doc_title, path_or_io, parent_id, worksheet_title = nil)
-      client = get_google_api
-      drive_api = client.discovered_api('drive', 'v2')
       media = Google::APIClient::UploadIO.new(path_or_io, 'text/csv')
       metadata = { :title => sheets_doc_title }
       file = drive_api.files.insert.request_schema.new metadata
