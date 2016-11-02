@@ -53,7 +53,7 @@ class SearchUsersController < ApplicationController
     else
       require_advisor current_user.user_id
       {
-        roles: [:applicant, :student, :recentStudent]
+        roles: [:applicant, :student, :exStudent]
       }
     end
   end

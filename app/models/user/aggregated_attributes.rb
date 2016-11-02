@@ -45,7 +45,7 @@ module User
       if @sis_profile_visible
         edo_roles = (@edo_attributes && @edo_attributes[:roles]) || {}
         # Do not introduce conflicts if CS is more up-to-date on active student status.
-        campus_roles.except!(:exStudent, :recentStudent) if edo_roles[:student]
+        campus_roles.except!(:exStudent) if edo_roles[:student]
         campus_roles.merge edo_roles
       else
         campus_roles

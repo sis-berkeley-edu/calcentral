@@ -41,9 +41,7 @@ module Berkeley
       roles_from_affiliations affiliations
     end
 
-    def roles_from_ldap_groups(ldap_groups, expired_student)
-      # TODO: Confirm that there is no CalGroup membership marker for 'STUDENT-TYPE-NOT REGISTERED'.
-      # TODO: What is the difference between 'edu:berkeley:official:affiliates:concurrent' and 'edu:berkeley:official:students:concurrent'?
+    def roles_from_ldap_groups(ldap_groups)
       return {} if ldap_groups.nil? || ldap_groups.empty?
 
       # Active-but-not-registered students have exactly the same list of memberships as registered students.
@@ -54,15 +52,6 @@ module Berkeley
         "#{group_prefix}:graduate,#{group_suffix}" => :graduate,
         "#{group_prefix}:undergrad,#{group_suffix}" => :undergrad
       })
-      # We check for 'recentStudent' status if and only if (1) the more reliable LDAP affiliations tell us that this user
-      # is an ex_student and (2) the user was not identified as an active student in the logic above.
-      if expired_student && [:student, :undergrad, :graduate].none? { |s| roles[s] }
-        roles.merge! find_matching_roles(ldap_groups, {
-          "#{group_prefix}:students-grad-grace,#{group_suffix}" => :recentStudent,
-          "#{group_prefix}:students-ug-grace,#{group_suffix}" => :recentStudent,
-          "#{group_prefix}:summer-grace,#{group_suffix}" => :recentStudent
-        })
-      end
       roles
     end
 

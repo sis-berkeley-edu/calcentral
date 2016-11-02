@@ -45,11 +45,11 @@ describe User::SearchUsersByName do
     end
     context 'filter by role' do
       let(:name) { random_name }
-      let(:roles) { [:student, :recentStudent] }
+      let(:roles) { [:student, :exStudent] }
       let(:uid) { random_id }
       before {
         allow(CalnetLdap::Client).to receive(:new).and_return (client = double)
-        ldap_records = [:faculty, :student, :staff, :recentStudent, :exStudent]
+        ldap_records = [:faculty, :student, :staff, :exStudent]
         allow(client).to receive(:search_by_name).with(name, true).and_return ldap_records
         ldap_records.each_index do |idx|
           # To avoid a complex spec, each ldap_record translate very nicely into a user role and UID.
@@ -63,7 +63,7 @@ describe User::SearchUsersByName do
         expect(subject).to have(2).items
         expect(subject[0]).to include(roles: { student: true })
         expect(subject[0][:ldapUid]).to eq '2'
-        expect(subject[1]).to include(roles: { recentStudent: true })
+        expect(subject[1]).to include(roles: { exStudent: true })
         expect(subject[1][:ldapUid]).to eq '4'
       end
     end
