@@ -232,8 +232,8 @@ module MailingLists
           # However, we may wish to override with Canvas-sourced email addresses for testing purposes.
           if Settings.canvas_mailing_lists.prefer_canvas_email_addresses
             if (canvas_user = course_users.find { |course_user| course_user['login_id'] == user[:ldap_uid] })
-              logger.info "Setting email address for UID #{user[:ldap_uid]} to Canvas-sourced address #{canvas_user['email_address']}"
-              user[:email_address] = canvas_user['email_address']
+              logger.info "Setting email address for UID #{user[:ldap_uid]} to Canvas-sourced address #{canvas_user['email']}"
+              user[:email_address] = canvas_user['email']
             end
           end
 

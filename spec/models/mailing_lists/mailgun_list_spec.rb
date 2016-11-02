@@ -39,21 +39,21 @@ describe MailingLists::MailgunList do
         'login_id' => '12345',
         'first_name' => 'Oliver',
         'last_name' => 'Heyer',
-        'email_address' => 'oheyer@berkeley.edu',
+        'email' => 'oheyer@berkeley.edu',
         'enrollments' => [{'role' => 'TeacherEnrollment'}]
       } end
       let(:ray) do {
         'login_id' => '67890',
         'first_name' => 'Ray',
         'last_name' => 'Davis',
-        'email_address' => 'raydavis@berkeley.edu',
+        'email' => 'raydavis@berkeley.edu',
         'enrollments' => [{'role' => 'StudentEnrollment'}]
       } end
       let(:paul) do {
         'login_id' => '65536',
         'first_name' => 'Paul',
         'last_name' => 'Kerschen',
-        'email_address' => 'kerschen@berkeley.edu',
+        'email' => 'kerschen@berkeley.edu',
         'enrollments' => [{'role' => 'StudentEnrollment'}]
       } end
 
@@ -62,7 +62,7 @@ describe MailingLists::MailgunList do
           ldap_uid: user['login_id'],
           first_name: user['first_name'],
           last_name: user['last_name'],
-          email_address: user['email_address']
+          email_address: user['email']
         }
       end
 
@@ -72,7 +72,7 @@ describe MailingLists::MailgunList do
             mailing_list_id: list.id,
             first_name: user['first_name'],
             last_name: user['last_name'],
-            email_address: user['email_address'],
+            email_address: user['email'],
             can_send: Canvas::CourseUser.has_instructing_role?(user)
           )
         end
@@ -117,14 +117,14 @@ describe MailingLists::MailgunList do
         context 'different email addresses from SIS and Canvas' do
           let(:canvas_site_members) do
             [
-              oliver.merge('email_address' => 'oheyer@compuserve.com'),
-              ray.merge('email_address' => 'raydavis@altavista.digital.com'),
-              paul.merge('email_address' => 'kerschen@lycos.com')
+              oliver.merge('email' => 'oheyer@compuserve.com'),
+              ray.merge('email' => 'raydavis@altavista.digital.com'),
+              paul.merge('email' => 'kerschen@lycos.com')
             ]
           end
           let(:campus_member_attributes) do
             canvas_site_members.map do |user|
-              basic_attributes(user).merge(email_address: user['email_address'].sub(/@.*/, '@berkeley.edu'))
+              basic_attributes(user).merge(email_address: user['email'].sub(/@.*/, '@berkeley.edu'))
             end
           end
           let(:member_addresses) { list.members.reload.map { |member| member.email_address} }
