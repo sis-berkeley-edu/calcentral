@@ -348,8 +348,7 @@ describe Berkeley::UserRoles do
   end
 
   describe '#roles_from_ldap_groups' do
-    let(:ex_student) { false }
-    subject { Berkeley::UserRoles.roles_from_ldap_groups(groups, ex_student) }
+    subject { Berkeley::UserRoles.roles_from_ldap_groups(groups) }
     context 'current undergrad' do
       let(:groups) do
         [
@@ -367,34 +366,6 @@ describe Berkeley::UserRoles do
         ]
       end
       it_behaves_like 'a parser for roles', [:student, :graduate]
-    end
-    context 'graduate student was recently an undergrad so we omit recentStudent role' do
-      let(:groups) do
-        [
-          'cn=edu:berkeley:official:students:students-ug-grace,ou=campus groups,dc=berkeley,dc=edu',
-          'cn=edu:berkeley:official:students:graduate,ou=campus groups,dc=berkeley,dc=edu'
-        ]
-      end
-      it_behaves_like 'a parser for roles', [:graduate]
-    end
-    context 'no recentStudent check if exStudent is false' do
-      let(:groups) do
-        [
-          'cn=edu:berkeley:official:students:students-ug-grace,ou=campus groups,dc=berkeley,dc=edu',
-          'cn=edu:berkeley:ignore:this:garbage,ou=campus groups,dc=berkeley,dc=edu'
-        ]
-      end
-      it_behaves_like 'a parser for roles', []
-    end
-    context 'recentStudent is an exStudent who is still in the grace period' do
-      let(:ex_student) { true }
-      let(:groups) do
-        [
-          'cn=edu:berkeley:official:students:students-ug-grace,ou=campus groups,dc=berkeley,dc=edu',
-          'cn=edu:berkeley:ignore:this:garbage,ou=campus groups,dc=berkeley,dc=edu'
-        ]
-      end
-      it_behaves_like 'a parser for roles', [:recentStudent]
     end
   end
 

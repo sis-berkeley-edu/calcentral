@@ -14,13 +14,13 @@ describe AdvisorAuthorization do
   describe '#authorize_advisor_view_as' do
     let(:student_uid) { random_id }
     let(:is_student) { false }
-    let(:is_recent_student) { false }
+    let(:was_student) { false }
     before {
       feed = {
         roles:
           {
             student: is_student,
-            recentStudent: is_recent_student
+            exStudent: was_student
           }
       }
       allow(User::AggregatedAttributes).to receive(:new).with(student_uid).and_return double(get_feed: feed)
@@ -46,9 +46,9 @@ describe AdvisorAuthorization do
         expect{ subject }.to_not raise_error
       end
     end
-    context 'advisor looking up recentStudent' do
+    context 'advisor looking up exStudent' do
       let(:is_advisor) { true }
-      let(:is_recent_student) { true }
+      let(:was_student) { true }
       it 'should pass' do
         expect{ subject }.to_not raise_error
       end

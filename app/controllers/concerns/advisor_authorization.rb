@@ -12,11 +12,11 @@ module AdvisorAuthorization
     # It therefore needs to pull from a cached feed.
     opts = {
       id: student_uid,
-      roles: [:applicant, :student, :recentStudent]
+      roles: [:applicant, :student, :exStudent]
     }
     filtered_user = User::SearchUsersByUid.new(opts).search_users_by_uid
     unless filtered_user
-      raise Pundit::NotAuthorizedError.new "User with UID #{student_uid} does not appear to be a current, recent, or incoming student."
+      raise Pundit::NotAuthorizedError.new "User with UID #{student_uid} does not appear to be a current, past, or incoming student."
     end
   end
 

@@ -8,7 +8,7 @@ module User
 
     def parse(ldap_record)
       affiliation_roles = Berkeley::UserRoles.roles_from_ldap_affiliations ldap_record
-      group_roles = Berkeley::UserRoles.roles_from_ldap_groups(ldap_record[:berkeleyeduismemberof], !!affiliation_roles[:exStudent])
+      group_roles = Berkeley::UserRoles.roles_from_ldap_groups(ldap_record[:berkeleyeduismemberof])
       roles = group_roles.merge affiliation_roles
       {
         email_address: string_attribute(ldap_record, :mail) || string_attribute(ldap_record, :berkeleyeduofficialemail),

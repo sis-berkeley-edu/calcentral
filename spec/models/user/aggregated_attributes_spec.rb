@@ -20,7 +20,7 @@ describe User::AggregatedAttributes do
   let(:ldap_attributes) do
     {
       roles: {
-        recentStudent: true
+        exStudent: true
       }
     }
   end
@@ -42,7 +42,7 @@ describe User::AggregatedAttributes do
         expect(subject[:campusSolutionsId]).to eq campus_solutions_id
         expect(subject[:studentId]).to eq campus_solutions_id
         expect(subject[:ldapUid]).to eq uid
-        expect(subject[:roles][:recentStudent]).to be_falsey
+        expect(subject[:roles][:exStudent]).to be_falsey
         expect(subject[:unknown]).to be_falsey
       end
     end
@@ -57,7 +57,6 @@ describe User::AggregatedAttributes do
         roles: {
           student: is_active_student,
           exStudent: !is_active_student,
-          recentStudent: !is_active_student,
           faculty: false,
           staff: true
         }
@@ -68,7 +67,6 @@ describe User::AggregatedAttributes do
       it 'should prefer EDO' do
         expect(subject[:officialBmailAddress]).to eq bmail_from_edo
         expect(subject[:roles][:student]).to be true
-        expect(subject[:roles][:recentStudent]).to be_falsey
         expect(subject[:roles][:exStudent]).to be_falsey
         expect(subject[:unknown]).to be_falsey
       end
@@ -78,7 +76,6 @@ describe User::AggregatedAttributes do
       it 'should still prefer EDO when EDO claims active student status' do
         expect(subject[:officialBmailAddress]).to eq bmail_from_edo
         expect(subject[:roles][:student]).to be true
-        expect(subject[:roles][:recentStudent]).to be_falsey
         expect(subject[:roles][:exStudent]).to be_falsey
         expect(subject[:unknown]).to be_falsey
       end
@@ -99,7 +96,6 @@ describe User::AggregatedAttributes do
         it 'fills in former student status and other attributes from LDAP' do
           expect(subject[:officialBmailAddress]).to eq bmail_from_ldap
           expect(subject[:roles][:student]).to be false
-          expect(subject[:roles][:recentStudent]).to be true
           expect(subject[:roles][:exStudent]).to be true
           expect(subject[:roles][:advisor]).to be true
           expect(subject[:unknown]).to be_falsey
@@ -123,7 +119,7 @@ describe User::AggregatedAttributes do
       let(:is_active_student) { false }
       it 'should prefer EDO' do
         expect(subject[:officialBmailAddress]).to eq bmail_from_edo
-        expect(subject[:roles][:recentStudent]).to be true
+        expect(subject[:roles][:applicant]).to be true
         expect(subject[:unknown]).to be_falsey
       end
     end
@@ -172,7 +168,7 @@ describe User::AggregatedAttributes do
       it 'relies on LDAP and Oracle' do
         expect(subject[:officialBmailAddress]).to eq bmail_from_ldap
         expect(subject[:roles][:student]).to be true
-        expect(subject[:roles][:recentStudent]).to be false
+        expect(subject[:roles][:exStudent]).to be false
         expect(subject[:ldapUid]).to eq uid
       end
     end
