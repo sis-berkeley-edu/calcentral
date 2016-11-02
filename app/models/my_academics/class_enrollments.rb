@@ -24,7 +24,7 @@ module MyAcademics
           :includes_fpf => false
         }
       }
-      active_plans.each do |plan|
+      active_plans.to_a.each do |plan|
         role_code = plan[:enrollmentRole]
         career_code = plan[:career][:code]
         role_key = [role_code, career_code]
