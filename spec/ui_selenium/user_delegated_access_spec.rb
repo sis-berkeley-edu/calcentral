@@ -238,10 +238,8 @@ describe 'Delegated access', :testui => true do
                     it ("shows delegate UID #{uid} no holds for UID #{student_uid}") { expect(shows_holds).to be false }
 
                     # Final Exams
-                    shows_exams = @final_exams_card.all_exam_courses.any?
-                    if @academics_api.has_exam_schedules
-                      it ("shows delegate UID #{uid} no final exams for UID #{student_uid}") { expect(shows_exams).to be false }
-                    end
+                    shows_exams = @final_exams_card.final_exams_card_heading?
+                    it ("shows delegate UID #{uid} no final exams for UID #{student_uid}") { expect(shows_exams).to be false }
 
                     # My Academics student semester cards
 
