@@ -9,11 +9,11 @@
       <ACAD_PROG>Law Academic Programs</ACAD_PROG>
       <REQUIREMENTS type="array">
         <REQUIREMENT>
-          <NAME>Advancement to Candidacy Mas2</NAME>
+          <NAME>Advancement to Candidacy Mas1</NAME>
           <NUMBER>10</NUMBER>
           <STATUS>N</STATUS>
           <DATE></DATE>
-          <CODE>AAGADVMAS2</CODE>
+          <CODE>AAGADVMAS1</CODE>
         </REQUIREMENT>
         <REQUIREMENT>
           <NAME>Capstone</NAME>

@@ -22,7 +22,7 @@ shared_examples 'a proxy that returns graduate milestone data' do
   end
 
   it 'replaces codes with descriptive names' do
-    expect(subject[:feed][:degreeProgress][0][:requirements][0][:name]).to eql('Advancement to Candidacy Plan II')
+    expect(subject[:feed][:degreeProgress][0][:requirements][0][:name]).to eql('Advancement to Candidacy Plan I')
     expect(subject[:feed][:degreeProgress][0][:requirements][0][:statusDescr]).to eql('Not Satisfied')
     expect(subject[:feed][:degreeProgress][1][:requirements][0][:name]).to eql('Advancement to Candidacy Plan I or Plan II')
     expect(subject[:feed][:degreeProgress][1][:requirements][0][:statusDescr]).to be nil
