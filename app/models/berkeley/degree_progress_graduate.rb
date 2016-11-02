@@ -37,16 +37,18 @@ module Berkeley
 
     def self.statuses
       @statuses ||= {
-        'Y' => 'Completed',
+        'F' => 'Failed',
+        'I' => 'In Progress',
         'N' => 'Not Satisfied',
-        'P' => 'Partially Passed'
+        'P' => 'Passed',
+        'S' => 'Partially Passed',
+        'Y' => 'Completed'
       }
     end
 
     def self.form_notifications
       @form_notifications ||= {
         'AAGADVMAS1' => '(Form Required)',
-        'AAGADVMAS2' => '(Form Required)',
         'AAGQEAPRV' => '(Form Required)'
       }
     end
