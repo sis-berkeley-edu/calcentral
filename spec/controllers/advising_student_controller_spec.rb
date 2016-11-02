@@ -78,7 +78,11 @@ describe AdvisingStudentController do
       end
       context 'ex-student' do
         let(:ex_student) { true }
-        it_behaves_like 'an endpoint refusing a request'
+        it_behaves_like 'an endpoint receiving a valid request'
+        it 'should provide a filtered academics feed' do
+          feed = JSON.parse(body = subject.body)
+          expect(feed['collegeAndLevel']).to eq true
+        end
       end
       context 'applicant' do
         let(:applicant) { true }
