@@ -86,7 +86,6 @@ features:
   class_info_enrollment_tab: true
   course_manage_official_sections: true
   cs_academic_planner: true
-  cs_academic_progress_report: true
   cs_advisor_student_lookup: true
   cs_billing: true
   cs_committees: true
