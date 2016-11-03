@@ -14,10 +14,14 @@ LOGIT="tee -a ${LOG}"
 [[ -s "${HOME}/.rvm/scripts/rvm" ]] && source "${HOME}/.rvm/scripts/rvm"
 source .rvmrc
 
+# Write heap-dump file to disk when HeapDumpOnOutOfMemoryError; mkdir will not complain if directory exists.
+HEAP_DUMP_DIR="${HOME}/.calcentral_config/javadump/"
+mkdir -p "${HEAP_DUMP_DIR}"
+
 export RAILS_ENV=${RAILS_ENV:-production}
 export LOGGER_STDOUT=only
 export LOGGER_LEVEL=INFO
-export JRUBY_OPTS="--dev -J-Xmn512m -J-Xms2048m -J-Xmx2048m -J-XX:+HeapDumpOnOutOfMemoryError -J-XX:HeapDumpPath=${HOME}/.calcentral_config"
+export JRUBY_OPTS="--dev -J-Xmn512m -J-Xms2048m -J-Xmx2048m -J-XX:+HeapDumpOnOutOfMemoryError -J-XX:HeapDumpPath=${HEAP_DUMP_DIR}"
 
 echo | ${LOGIT}
 echo "------------------------------------------" | ${LOGIT}
