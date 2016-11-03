@@ -65,8 +65,8 @@ module Advising
         matched_advisors = grouped_advisors.delete(type).to_a
         sorted_advisors.concat(matched_advisors)
       end
-      remaining_advisors = grouped_advisors.values.flatten
-      sorted_advisors.concat(remaining_advisors)
+      sorted_advisors.concat(grouped_advisors.values.flatten) unless student_is_graduate?
+      sorted_advisors
     end
 
     def merge_appointments(advising_feed)
@@ -107,5 +107,11 @@ module Advising
       item[key] = format_date Time.zone.parse(item[key]).to_datetime
     end
 
+    def student_is_graduate?
+      college_and_level = MyAcademics::CollegeAndLevel.new(@uid)
+      plans = college_and_level.hub_college_and_level[:plans]
+      career_codes = plans.to_a.collect {|plan| plan[:career].try(:[], :code) }
+      career_codes.include?('GRAD')
+    end
   end
 end
