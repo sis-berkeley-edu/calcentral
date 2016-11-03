@@ -152,7 +152,7 @@
                     <strong>Status:</strong>
                     <span data-ng-bind="item.itemStatus"></span>
                   </div>
-                  <div class="hide-for-medium-up" data-ng-if="item.itemDueDate && item.itemStatus === 'Unpaid'">
+                  <div data-ng-class="{'hide-for-medium-up': item.itemDueFlag}" data-ng-if="item.itemDueDate && ((item.itemStatus === 'Unpaid' || item.itemType === 'Charge') || item.itemDueFlag)">
                     <strong>Due Date:</strong>
                     <span data-ng-bind="item.itemDueDate | date:'MM/dd/yy'"></span>
                   </div>
