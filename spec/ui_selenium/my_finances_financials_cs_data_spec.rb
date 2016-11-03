@@ -192,12 +192,13 @@ describe 'My Finances Campus Solutions student financials', :testui => true do
                     ui_charge_type = @my_finances_billing.item_type
                     it("shows the transaction type of the charge for UID #{uid}") { expect(ui_charge_type).to eql(fin_api.type charge) }
 
-                    if fin_api.status(charge) == 'Paid' || fin_api.due_date(charge).nil?
+                    # Some charges have no associated due date - e.g., a refund posted as a charge
+                    if fin_api.due_date(charge).nil?
                       ui_charge_due_date = @my_finances_billing.item_due_date?
-                      it("shows no paid charge due date for UID #{uid}") { expect(ui_charge_due_date).to be false }
+                      it("shows no charge due date for UID #{uid}") { expect(ui_charge_due_date).to be false }
                     else
                       ui_charge_due_date = @my_finances_billing.item_due_date
-                      it("shows the unpaid charge due date for UID #{uid}") { expect(ui_charge_due_date).to eql(fin_api.formatted_date fin_api.due_date(charge)) }
+                      it("shows the charge due date for UID #{uid}") { expect(ui_charge_due_date).to eql(fin_api.formatted_date fin_api.due_date(charge)) }
                     end
 
                     ui_charge_due_future = @my_finances_billing.item_due_future_icon_element.visible?
