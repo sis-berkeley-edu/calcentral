@@ -66,7 +66,8 @@ module MyAcademics
     def add_assistance_link(semester)
       semester.merge!(
         {
-          gradingAssistanceLink:  role_grading_period.assistance_link
+          gradingAssistanceLink:  Settings.grading_period.general.assistance_link,
+          gradingAssistanceLinkLaw:  Settings.grading_period.law.assistance_link
         })
     end
 
