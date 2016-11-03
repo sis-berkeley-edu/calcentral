@@ -27,7 +27,7 @@ module MyCommittees
       cs_committees.try(:each) do |cs_committee|
         committees_result << parse_cs_committee(cs_committee)
       end
-      committees_result
+      committees_result.compact
     end
 
   end
