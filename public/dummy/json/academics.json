@@ -572,6 +572,7 @@
       "campusSolutionsTerm": true,
       "gradingInProgress": null,
       "gradingAssistanceLink": "#",
+      "gradingAssistanceLinkLaw": "#",
       "gradingPeriodStart": "Dec 12",
       "gradingPeriodEnd": "Jan 6",
       "classes": [
@@ -995,6 +996,7 @@
       "termYear": "2016",
       "campusSolutionsTerm": true,
       "gradingAssistanceLink": "#",
+      "gradingAssistanceLinkLaw": "#",
       "gradingPeriodStart": "",
       "gradingPeriodEnd": "",
       "classes": [
@@ -1243,6 +1245,7 @@
       "termYear": "2016",
       "campusSolutionsTerm": false,
       "gradingAssistanceLink": "#",
+      "gradingAssistanceLinkLaw": "#",
       "gradingPeriodStart": "",
       "gradingPeriodEnd": "",
       "classes": [
