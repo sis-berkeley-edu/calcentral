@@ -74,12 +74,17 @@
       <h3>Teaching</h3>
     </div>
     <div class="cc-academics-course-grading-header cc-widget-padding show-for-medium-up">
-      <span><a data-ng-href="{{selectedTeachingSemester.gradingAssistanceLink}}">&#9632; Assistance with Grading</a></span>
-      <span data-ng-if="selectedTeachingSemester.gradingPeriodStart && selectedTeachingSemester.gradingPeriodEnd" class="cc-academics-course-grading-header-period">
-        <span class="cc-text-light">Final Grading Entry Period:</span>
-        Start: <strong>{{selectedTeachingSemester.gradingPeriodStart}}</strong> |
-        Due: <strong>{{selectedTeachingSemester.gradingPeriodEnd}}</strong>
-      </span>
+      <div>
+        <span><a data-ng-href="{{selectedTeachingSemester.gradingAssistanceLink}}">&#9632; Assistance with Grading: General</a></span>
+        <span data-ng-if="selectedTeachingSemester.gradingPeriodStart && selectedTeachingSemester.gradingPeriodEnd" class="cc-academics-course-grading-header-period">
+          <span class="cc-text-light">Final Grading Entry Period:</span>
+          Start: <strong>{{selectedTeachingSemester.gradingPeriodStart}}</strong> |
+          Due: <strong>{{selectedTeachingSemester.gradingPeriodEnd}}</strong>
+        </span>
+      </div>
+      <div>
+        <a data-ng-href="{{selectedTeachingSemester.gradingAssistanceLinkLaw}}">&#9632; Assistance with Grading: Law</a>
+      </div>
     </div>
     <div class="cc-widget-padding">
       <div class="cc-table">
@@ -139,7 +144,10 @@
           <tr>
             <td>
               <span><i class="fa fa-ban"></i></span>
-              <span>Grade entry period not started or no access</span>
+              <span>
+                Grade entry period not started or no access <br>
+                Law classes: Instructor may need to submit raw scores
+              </span>
             </td>
             <td>
               <span><i class="fa fa-file-o"></i></span>
