@@ -10,7 +10,8 @@ module MyCommittees
 
     def get_feed
       result = {
-        studentCommittees: []
+        studentCommittees: [],
+        committeeRequestChangeLink: fetch_link('UC_CX_GT_AAQEAPPLIC_ADD')
       }
       feed = CampusSolutions::StudentCommittees.new(user_id: @uid).get[:feed]
 
