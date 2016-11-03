@@ -104,13 +104,13 @@ module MyAcademics
             careers << career
           end
         end
-      end.uniq.compact
+      end.uniq.reject { |level| level.to_s.empty? }
     end
 
     def parse_hub_level(statuses)
       level = statuses.collect do |status|
         status['currentRegistration'].try(:[], 'academicLevel').try(:[], 'level').try(:[], 'description')
-      end.uniq.compact.to_sentence
+      end.uniq.reject { |level| level.to_s.empty? }.to_sentence
       level.blank? ? nil : level
     end
 
