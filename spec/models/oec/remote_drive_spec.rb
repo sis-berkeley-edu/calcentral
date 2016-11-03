@@ -6,6 +6,13 @@ describe Oec::RemoteDrive do
   let(:now) { DateTime.now }
 
   context '#real', testext: true, :order => :defined do
+    before(:all) do
+      # Google OAuth2
+      refresh_token = Settings.oec.google.testext.refresh_token
+      raise ArgumentError, 'testext.local.yml is missing config: oec.google.testext.refresh_token' if refresh_token.blank?
+      store = GoogleApps::CredentialStore.new(GoogleApps::Proxy::OEC_APP_ID, Settings.oec.google.uid)
+      store.write('expired-access-token', refresh_token)
+    end
 
     context 'find no match' do
       it 'should return nil when term not found' do

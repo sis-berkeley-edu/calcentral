@@ -3,8 +3,8 @@ describe GoogleApps::CredentialStore do
   let(:app_id) { GoogleApps::Proxy::APP_ID }
   let(:uid) { random_id }
   let(:settings) { GoogleApps::CredentialStore.settings_of app_id }
-  let(:access_token) { random_string(10) }
-  let(:refresh_token) { random_string(10) }
+  let(:access_token) { random_string 10 }
+  let(:refresh_token) { random_string 10 }
   let(:oauth2_tokens) {
     {
       access_token: access_token,
@@ -88,32 +88,6 @@ describe GoogleApps::CredentialStore do
           expect{ store.write_credentials({}) }.to raise_error
         end
       end
-    end
-  end
-
-  context '#real', testext: true, order: :defined do
-    let(:options) { oauth2_tokens.merge issued_at: 1440628381, expires_in: 3600, app_data: 'johndoe@berkeley.edu' }
-
-    before do
-      existing_data = User::Oauth2Data.get(uid, app_id)
-      raise 'The random and very large id matches real data. Abort!' if existing_data.any?
-      # Values in options hash will be written to the database
-      GoogleApps::CredentialStore.new(app_id, uid).write_credentials options
-    end
-
-    after do
-      User::Oauth2Data.remove(uid, app_id)
-    end
-
-    it 'should load credentials written by Store' do
-      c = GoogleApps::CredentialStore.new(app_id, uid).load_credentials
-      expect(c).to_not be_nil
-      expect(c[:access_token]).to eq options[:access_token]
-      expect(c[:refresh_token]).to eq options[:refresh_token]
-      expect(c[:expires_in]).to eq 3600
-      expect(c[:client_id]).to eq settings[:client_id]
-      expect(c[:client_secret]).to eq settings[:client_secret]
-      expect(c[:scope]).to eq settings[:scope]
     end
   end
 end

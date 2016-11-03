@@ -60,6 +60,18 @@ cache:
 calnet_crosswalk_proxy:
   fake: true
 
+# Bamboo (testext) only:
+# - OEC-related spec relies on oec.google.testext.refresh_token
+# - UID is arbitrary
+# - See google_proxy configs on Bamboo for guidance
+oec:
+  google:
+    uid: '1'
+    client_id: ''
+    client_secret: ''
+    testext:
+      refresh_token: ''
+
 features:
   advising: true
   advising_student_success: true
