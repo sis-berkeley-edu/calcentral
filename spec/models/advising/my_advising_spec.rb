@@ -25,6 +25,10 @@ describe Advising::MyAdvising do
     let(:manage_appts_link) { 'https://bcs-web-dev-03.is.berkeley.edu:8443/psc/bcsdev/EMPLOYEE/HRMS/c/SCI_APPT_STUSS.SCI_APPT_MY_APPTS.GBL'}
     let(:new_appt_link) { 'https://bcs-web-dev-03.is.berkeley.edu:8443/psc/bcsdev/EMPLOYEE/HRMS/c/SCI_APPT_STUSS.SCI_APPT_SS_FLU.GBL'}
 
+    let(:hub_college_and_level_plans) { [] }
+    let(:hub_college_and_level) { {:plans => hub_college_and_level_plans} }
+    let(:fake_college_and_level) { double(:hub_college_and_level => hub_college_and_level) }
+
     before do
       cs_link_proxy.set_response({
         status: 200,
@@ -43,6 +47,7 @@ describe Advising::MyAdvising do
           </UC_LINK_RESOURCES>
         XML
       })
+      allow(MyAcademics::CollegeAndLevel).to receive(:new).and_return(fake_college_and_level)
     end
 
     context 'well-behaved proxies' do
@@ -103,6 +108,12 @@ describe Advising::MyAdvising do
     end
 
     context 'graduate advisor relationships' do
+      let(:hub_college_and_level_plans) {
+        [
+          {:career => {:code => 'GRAD'}},
+          {:career => {:code => 'LAW'}}
+        ]
+      }
       before do
         cs_advisor_student_relationship_proxy.set_response({
           status: 200,
@@ -111,18 +122,29 @@ describe Advising::MyAdvising do
       end
 
       it 'provides advisors in the expected order' do
-        expect(subject[:feed][:advisors]).to have(7).items
+        expect(subject[:feed][:advisors]).to have(6).items
         expect(subject[:feed][:advisors][0][:assignedAdvisorName]).to eq 'Jason Miller'
         expect(subject[:feed][:advisors][1][:assignedAdvisorName]).to eq 'Alan Parsons'
         expect(subject[:feed][:advisors][2][:assignedAdvisorName]).to eq 'Kelly Kapoor'
         expect(subject[:feed][:advisors][3][:assignedAdvisorName]).to eq 'Dwight Schrute'
         expect(subject[:feed][:advisors][4][:assignedAdvisorName]).to eq 'Oscar Martinez'
         expect(subject[:feed][:advisors][5][:assignedAdvisorName]).to eq 'Janet Levinson-Gould'
-        expect(subject[:feed][:advisors][6][:assignedAdvisorName]).to eq 'Jim Halpert'
+      end
+
+      it 'excludes the GSI Advisor assignment' do
+        subject[:feed][:advisors].each do |advisor|
+          expect(advisor[:assignedAdvisorName]).to_not eq 'Jim Halpert'
+        end
       end
     end
 
     context 'undergraduate advisor relationships' do
+      let(:hub_college_and_level_plans) {
+        [
+          {:career => {:code => 'UGRD'}},
+          {:career => {:code => 'LAW'}}
+        ]
+      }
       before do
         cs_advisor_student_relationship_proxy.set_response({
           status: 200,
@@ -135,6 +157,9 @@ describe Advising::MyAdvising do
         expect(subject[:feed][:advisors][0][:assignedAdvisorName]).to eq 'Stanley Hudson'
         expect(subject[:feed][:advisors][1][:assignedAdvisorName]).to eq 'Creed Braton'
         expect(subject[:feed][:advisors][2][:assignedAdvisorName]).to eq 'Phyllis Vance'
+      end
+
+      it 'does not exclude unknown advisor types' do
         expect(subject[:feed][:advisors][3][:assignedAdvisorName]).to eq 'Pam Beesly'
       end
     end
