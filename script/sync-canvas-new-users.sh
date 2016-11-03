@@ -7,17 +7,17 @@ source "${HOME}/.bash_profile"
 
 cd $( dirname "${BASH_SOURCE[0]}" )/..
 
-LOG=$(date +"$PWD/log/canvas_new_user_sync_%Y-%m-%d.log")
-LOGIT="tee -a $LOG"
+LOG=$(date +"${PWD}/log/canvas_new_user_sync_%Y-%m-%d.log")
+LOGIT="tee -a ${LOG}"
 
 # Enable rvm and use the correct Ruby version and gem set.
-[[ -s "${HOME}/.rvm/scripts/rvm" ]] && . "${HOME}/.rvm/scripts/rvm"
+[[ -s "${HOME}/.rvm/scripts/rvm" ]] && source "${HOME}/.rvm/scripts/rvm"
 source .rvmrc
 
 export RAILS_ENV=${RAILS_ENV:-production}
 export LOGGER_STDOUT=only
 export LOGGER_LEVEL=INFO
-export JRUBY_OPTS="--dev -J-Xmn512m -J-Xms2048m -J-Xmx2048m -J-XX:+HeapDumpOnOutOfMemoryError"
+export JRUBY_OPTS="--dev -J-Xmn512m -J-Xms2048m -J-Xmx2048m -J-XX:+HeapDumpOnOutOfMemoryError -J-XX:HeapDumpPath=${HOME}/.calcentral_config"
 
 echo | ${LOGIT}
 echo "------------------------------------------" | ${LOGIT}
