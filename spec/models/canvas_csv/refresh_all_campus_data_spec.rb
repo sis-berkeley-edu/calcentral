@@ -91,9 +91,18 @@ describe CanvasCsv::RefreshAllCampusData do
       end
 
       context 'when canvas sections csv is empty' do
-        before { allow_any_instance_of(Canvas::Report::Sections).to receive(:get_csv).and_return(empty_sections_report_csv) }
-        it 'does not perform any processing' do
-          expect(CanvasCsv::SiteMembershipsMaintainer).to_not receive(:process)
+        before { allow_any_instance_of(Canvas::Report::Sections).to receive(:get_csv).and_return csv }
+        context 'empty' do
+          let(:csv) { empty_sections_report_csv }
+          it 'does not perform any processing' do
+            expect(CanvasCsv::SiteMembershipsMaintainer).to_not receive(:process)
+          end
+        end
+        context 'nil' do
+          let(:csv) { nil }
+          it 'does not perform any processing' do
+            expect(CanvasCsv::SiteMembershipsMaintainer).to_not receive(:process)
+          end
         end
       end
     end

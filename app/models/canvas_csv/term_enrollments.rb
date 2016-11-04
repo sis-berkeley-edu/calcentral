@@ -45,7 +45,7 @@ module CanvasCsv
     # Populates the enrollments CSV for the specified term
     def populate_term_csv_file(term, enrollments_csv)
       canvas_sections_csv = Canvas::Report::Sections.new.get_csv(term)
-      return if canvas_sections_csv.empty?
+      return if canvas_sections_csv.nil? || canvas_sections_csv.empty?
       canvas_section_ids = canvas_sections_csv.collect { |row| row['canvas_section_id'] }
       canvas_section_ids.each do |canvas_section_id|
         canvas_section_enrollments = Canvas::SectionEnrollments.new(section_id: canvas_section_id).list_enrollments
