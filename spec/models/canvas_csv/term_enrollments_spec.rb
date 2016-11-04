@@ -185,12 +185,25 @@ describe CanvasCsv::TermEnrollments do
   end
 
   describe '#populate_term_csv_file' do
+    let(:path_to_csv) { "#{export_dir}/canvas-#{today}-TERM_2014-D-term-enrollments-export.csv" }
     context 'when sections report is empty' do
-      before { allow_any_instance_of(Canvas::Report::Sections).to receive(:get_csv).and_return(empty_sections_report_csv) }
-      it 'should escape execution' do
-        enrollments_csv = subject.make_enrollment_export_csv("#{export_dir}/canvas-#{today}-TERM_2014-D-term-enrollments-export.csv")
+      before do
+        allow(Canvas::Report::Sections).to receive(:get_csv).and_return csv
         expect_any_instance_of(Canvas::SectionEnrollments).to_not receive(:new)
-        subject.populate_term_csv_file(current_sis_term_ids[0], enrollments_csv)
+      end
+      context 'empty' do
+        let(:csv) { empty_sections_report_csv }
+        it 'should escape execution' do
+          enrollments_csv = subject.make_enrollment_export_csv path_to_csv
+          subject.populate_term_csv_file(current_sis_term_ids[0], enrollments_csv)
+        end
+      end
+      context 'nil' do
+        let(:csv) { nil }
+        it 'should escape execution' do
+          enrollments_csv = subject.make_enrollment_export_csv path_to_csv
+          subject.populate_term_csv_file(current_sis_term_ids[0], enrollments_csv)
+        end
       end
     end
 

@@ -52,7 +52,7 @@ module CanvasCsv
 
     def refresh_existing_term_sections(term, enrollments_csv, known_users, users_csv, cached_enrollments_provider, sis_user_id_changes)
       canvas_sections_csv = Canvas::Report::Sections.new.get_csv(term)
-      return if canvas_sections_csv.empty?
+      return if canvas_sections_csv.nil? || canvas_sections_csv.empty?
       # Instructure doesn't guarantee anything about sections-CSV ordering, but we need to group sections
       # together by course site.
       course_id_to_csv_rows = canvas_sections_csv.group_by {|row| row['course_id']}
