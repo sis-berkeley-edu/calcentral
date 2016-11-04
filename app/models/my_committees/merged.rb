@@ -31,40 +31,31 @@ module MyCommittees
 
 
     def can_user_see_student_photo?(student_id)
-      committees = get_feed_internal
-      if committees[:facultyCommittees]
-        # Only show pictures for active committees
-        is_id_in_student_photo_urls?(student_id,committees[:facultyCommittees][:active])
-      else
-        false
-      end
+      committees = get_feed
+      # Only show pictures for active committees
+      is_id_in_student_photo_urls?(student_id,committees[:facultyCommittees].try(:[],:active))
     end
 
     def can_user_see_member_photo?(member_id)
-      committees = get_feed_internal
-      if committees[:studentCommittees].present? &&
-        committees[:facultyCommittees].present?
-        is_id_in_member_photo_urls?(member_id,committees)
-      else
-        false
-      end
+      committees = get_feed
+      is_id_in_member_photo_urls?(member_id,committees)
     end
 
     def is_id_in_student_photo_urls?(student_id, faculty_committees)
-      faculty_committees.find { |afc| afc[:student][:photo].to_s == "/api/my/committees/photo/student/#{ student_id }" }
+      !!faculty_committees.find { |afc| afc[:student][:photo].to_s == "/api/my/committees/photo/student/#{ student_id }" }
     end
 
     def is_id_in_member_photo_urls?(member_id, committees)
       is_id_in_committees_photo_url?(member_id, committees[:studentCommittees]) ||
-        is_id_in_committees_photo_url?(member_id, committees[:facultyCommittees][:active])
+        is_id_in_committees_photo_url?(member_id, committees[:facultyCommittees].try(:[],:active))
     end
 
     def is_id_in_committees_photo_url?(member_id, committees)
-      committees.find do |com|
+      !!committees.find do |com|
         members = com[:committeeMembers]
         photo_url = "/api/my/committees/photo/member/#{ member_id }"
-        [:chair, :academicSenate, :coChair, :additionalReps].find do |chairType|
-          members[chairType].find {|mem| mem[:photo].to_s == photo_url }
+        !![:chair, :academicSenate, :coChair, :additionalReps].find do |chairType|
+          !!members[chairType].find {|mem| mem[:photo].to_s == photo_url }
         end
       end
     end

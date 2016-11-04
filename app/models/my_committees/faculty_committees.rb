@@ -33,7 +33,7 @@ module MyCommittees
             serviceRange: parse_cs_faculty_committee_svc(cs_committee)
           )
           # Add the committee to the corresponding array based on completed flag
-          if cs_committee[:studentMilestoneComplete] && cs_committee[:studentMilestoneComplete] != 'N'
+          if cs_committee[:studentMilestoneComplete] && cs_committee[:studentMilestoneCompleteDate].present?
             committees_result[:active] << faculty_committee
           else
             committees_result[:completed] << faculty_committee
