@@ -32,7 +32,7 @@ class MyCommitteesController < ApplicationController
 
   def serve_photo (person_photo)
     if person_photo.nil?
-      render :nothing => true, :status => 401
+      render :nothing => true, :status => 200
     elsif (data = person_photo[:data])
       send_data(
         data,
