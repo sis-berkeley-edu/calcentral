@@ -24,9 +24,10 @@ module MyCommittees
     end
 
     def parse_cs_student_committees (cs_committees)
+      cs_committees.compact!
       committees_result = []
       cs_committees.try(:each) do |cs_committee|
-        committees_result << parse_cs_committee(cs_committee)
+        committees_result << parse_cs_committee(cs_committee, false)
       end
       committees_result.compact
     end

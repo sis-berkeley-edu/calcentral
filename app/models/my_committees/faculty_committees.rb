@@ -20,23 +20,24 @@ module MyCommittees
     end
 
     def parse_cs_faculty_committees (cs_committees)
+      cs_committees.compact!
       committees_result = {
         active: [],
         completed: []
       }
       cs_committees.try(:each) do |cs_committee|
-        faculty_committee = parse_cs_committee(cs_committee)
+        is_completed = cs_committee[:studentMilestoneCompleteDate].present?
+        faculty_committee = parse_cs_committee(cs_committee, is_completed)
         if cs_committee.present?
           # Add additional pieces of data needed faculty committees
           faculty_committee.merge!(
             student: parse_cs_committee_student(cs_committee),
             serviceRange: parse_cs_faculty_committee_svc(cs_committee)
           )
-          # Add the committee to the corresponding array based on completed flag
-          if cs_committee[:studentMilestoneComplete] && cs_committee[:studentMilestoneCompleteDate].present?
-            committees_result[:active] << faculty_committee
-          else
+          if is_completed
             committees_result[:completed] << faculty_committee
+          else
+            committees_result[:active] << faculty_committee
           end
         end
       end
