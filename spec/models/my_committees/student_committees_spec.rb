@@ -8,6 +8,7 @@ describe MyCommittees::StudentCommittees do
   context 'fake data' do
     before do
       allow(CampusSolutions::StudentCommittees).to receive(:new).and_return fake_student_committees_proxy
+      allow(DateTime).to receive(:now).and_return DateTime.parse('2016-11-04')
     end
     it 'contains the expected student data for non qualifying exam' do
       committees = feed[:studentCommittees]

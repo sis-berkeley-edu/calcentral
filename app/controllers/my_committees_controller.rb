@@ -10,8 +10,7 @@ class MyCommitteesController < ApplicationController
   def student_photo
     student_id = Integer(params['student_id'], 10)
     my_committees = MyCommittees::Merged.from_session(session)
-    access_test = my_committees.can_user_see_student_photo?(student_id)
-    if access_test
+    if my_committees.get_feed_as_json.include? "student/#{student_id}"
       student_photo = my_committees.photo_data_or_file(student_id)
       serve_photo(student_photo)
     else
@@ -22,7 +21,7 @@ class MyCommitteesController < ApplicationController
   def member_photo
     member_id = Integer(params['member_id'], 10)
     my_committees = MyCommittees::Merged.from_session(session)
-    if my_committees.can_user_see_member_photo?(member_id)
+    if  my_committees.get_feed_as_json.include? "member/#{member_id}"
       member_photo = my_committees.photo_data_or_file(member_id)
       serve_photo(member_photo)
     else
