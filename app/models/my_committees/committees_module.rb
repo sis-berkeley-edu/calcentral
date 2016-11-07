@@ -14,7 +14,7 @@ module MyCommittees::CommitteesModule
     }
   end
 
-  def parse_cs_committee (cs_committee)
+  def parse_cs_committee (cs_committee, include_inactive)
     return nil unless cs_committee.present?
     {
       committeeType:  cs_committee[:studentMilestoneDescr],
@@ -22,7 +22,7 @@ module MyCommittees::CommitteesModule
       statusIcon: committee_status_icon(cs_committee),
       statusTitle: committee_status_title(cs_committee),
       statusMessage: committee_status_message(cs_committee),
-      committeeMembers: parse_cs_committee_members(cs_committee)
+      committeeMembers: parse_cs_committee_members(cs_committee, include_inactive)
     }
   end
 
@@ -79,9 +79,10 @@ module MyCommittees::CommitteesModule
     end
   end
 
-  def parse_cs_committee_members (cs_committee)
+  def parse_cs_committee_members (cs_committee, include_inactive)
     committee_members_result = get_empty_committee_members
-    cs_committee[:committeeMembers].try(:each) do |cs_committee_member|
+    cs_committee_members = filter_members(cs_committee[:committeeMembers], include_inactive)
+    cs_committee_members.try(:each) do |cs_committee_member|
       if cs_committee_member && cs_committee_member[:memberRole]
         # Assign the key of committee member based on role code in cs data
         role_key = get_cs_committee_role_key(cs_committee_member[:memberRole])
@@ -89,6 +90,21 @@ module MyCommittees::CommitteesModule
       end
     end
     committee_members_result
+  end
+
+  def filter_members(cs_committee_members, include_inactive)
+    return cs_committee_members if include_inactive
+      cs_committee_members.try(:select) do |member|
+        is_member_active?(member[:memberEndDate])
+    end
+  end
+
+  def is_member_active?(member_end_date)
+    begin
+      return DateTime.parse(member_end_date) >= DateTime.now
+    rescue
+      return true
+    end
   end
 
   def get_cs_committee_role_key (role_name)

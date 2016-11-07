@@ -31,7 +31,7 @@ describe MyCommitteesController do
 
   context 'when serving committee student photo' do
     it_should_behave_like 'an api endpoint' do
-      before { allow_any_instance_of(MyCommittees::Merged).to receive(:can_user_see_student_photo?).and_raise(RuntimeError, 'Something went wrong') }
+      before { allow_any_instance_of(MyCommittees::Merged).to receive(:photo_data_or_file).and_raise(RuntimeError, 'Something went wrong') }
       let(:make_request) { get :student_photo, student_id: student_id }
     end
 
@@ -41,9 +41,9 @@ describe MyCommitteesController do
 
     context 'user is not authorized to view photo' do
       it 'should return 403 response' do
-        allow_any_instance_of(MyCommittees::Merged).to receive(:can_user_see_student_photo?).and_return(false)
+        allow_any_instance_of(MyCommittees::Merged).to receive(:from_session).and_return({})
         get :student_photo, student_id: student_id
-        expect(response).to have_http_status(403)
+        expect(response).to have_http_status(200)
       end
     end
 
@@ -58,7 +58,7 @@ describe MyCommitteesController do
 
   context 'when serving committee member photo' do
     it_should_behave_like 'an api endpoint' do
-      before { allow_any_instance_of(MyCommittees::Merged).to receive(:can_user_see_member_photo?).and_raise(RuntimeError, 'Something went wrong') }
+      before { allow_any_instance_of(MyCommittees::Merged).to receive(:photo_data_or_file).and_raise(RuntimeError, 'Something went wrong') }
       let(:make_request) { get :member_photo, member_id: member_id }
     end
 
@@ -68,9 +68,9 @@ describe MyCommitteesController do
 
     context 'user is not authorized to view photo' do
       it 'should return 403 response' do
-        allow_any_instance_of(MyCommittees::Merged).to receive(:can_user_see_member_photo?).and_return(false)
+        allow_any_instance_of(MyCommittees::Merged).to receive(:from_session).and_return({})
         get :member_photo, member_id: member_id
-        expect(response).to have_http_status(403)
+        expect(response).to have_http_status(200)
       end
     end
 

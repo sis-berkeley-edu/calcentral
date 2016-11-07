@@ -16,11 +16,13 @@
       <div class="cc-button-link cc-widget-padding cc-higher-degree-committee-toggle-link" data-ng-click="facultyCommittees.activeToggle = false">View Completed Committees
       </div>
       <div class="cc-widget-subtitle cc-higher-degree-committee-subtitle">Active Committees</div>
+      <div class="cc-widget-padding" data-ng-if="facultyCommittees.active.length == 0">There are no active committees</div>
     </div>
     <div data-ng-switch-when="false">
       <div class="cc-button-link cc-widget-padding cc-higher-degree-committee-toggle-link" data-ng-click="facultyCommittees.activeToggle = true">View Active Committees
       </div>
       <div class="cc-widget-subtitle cc-higher-degree-committee-subtitle">Completed Committees</div>
+      <div class="cc-widget-padding" data-ng-if="facultyCommittees.completed.length == 0">There are no completed committees</div>
     </div>
   </div>
   <div class="cc-widget-padding">
