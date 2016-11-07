@@ -60,10 +60,6 @@ class WebDriverUtils
     Settings.ui_selenium.page_load_timeout
   end
 
-  def self.campus_solutions_timeout
-    Settings.ui_selenium.campus_solutions_timeout
-  end
-
   def self.academics_timeout
     Settings.ui_selenium.academics_timeout
   end

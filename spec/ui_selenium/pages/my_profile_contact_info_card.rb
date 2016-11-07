@@ -19,7 +19,7 @@ module CalCentralPages
     button(:delete_phone_button, :xpath => '//div[@data-ng-controller="ProfilePhoneController"]//button[contains(.,"Delete phone number")]')
 
     form(:add_phone_form, :name => 'cc_page_widget_profile_phone')
-    select_list(:phone_type, :id => 'cc-page-widget-profile-phone-type')
+    select_list(:phone_type_select, :id => 'cc-page-widget-profile-phone-type')
     text_area(:phone_number_input, :id => 'cc-page-widget-profile-phone-number')
     text_area(:phone_ext_input, :id => 'cc-page-widget-profile-phone-extension')
     checkbox(:phone_preferred_cbx, :id => 'cc-page-widget-profile-phone-preferred')
@@ -64,34 +64,32 @@ module CalCentralPages
     end
 
     def click_add_phone
-      cancel_phone_button if cancel_phone_button_element.visible?
-      WebDriverUtils.wait_for_element_and_click add_phone_button_element
+      click_element_js cancel_phone_button_element if cancel_phone_button_element.visible?
+      click_element_js add_phone_button_element
     end
 
     def click_edit_phone(index)
-      cancel_phone_button if cancel_phone_button_element.visible?
-      WebDriverUtils.wait_for_element_and_click phone_edit_button_elements[index]
+      click_element_js cancel_phone_button_element if cancel_phone_button_element.visible?
+      click_element_js phone_edit_button_elements[index]
     end
 
     def click_save_phone
-      WebDriverUtils.wait_for_element_and_click save_phone_button_element
+      click_element_js save_phone_button_element
     end
 
     def click_cancel_phone
-      WebDriverUtils.wait_for_element_and_click cancel_phone_button_element
+      click_element_js cancel_phone_button_element
     end
 
     def click_delete_phone
-      WebDriverUtils.wait_for_element_and_click delete_phone_button_element
+      click_element_js delete_phone_button_element
     end
 
     def enter_phone(type, number, ext, pref)
       logger.info "Entering phone of type #{type}, number #{number}, extension #{ext}"
       WebDriverUtils.wait_for_element_and_type(phone_number_input_element, number) unless number.nil?
       WebDriverUtils.wait_for_element_and_type(phone_ext_input_element, ext) unless ext.nil?
-      if phone_type? && !type.nil?
-        WebDriverUtils.wait_for_element_and_select(phone_type_element, type)
-      end
+      WebDriverUtils.wait_for_element_and_select(phone_type_element, type) if (phone_type_select? && phone_type_select != type)
       if phone_preferred_cbx?
         pref ? check_phone_preferred_cbx : uncheck_phone_preferred_cbx
       end
@@ -136,7 +134,7 @@ module CalCentralPages
     # Preferred flag defaults to false
     def verify_phone(phone, pref = false)
       add_phone_form_element.when_not_present WebDriverUtils.page_event_timeout
-      sleep WebDriverUtils.campus_solutions_timeout
+      sleep 1
       wait_until(WebDriverUtils.page_load_timeout, "Phone type '#{phone['type']}' is not present") do
         phone_types.include? phone['type']
       end
@@ -174,12 +172,13 @@ module CalCentralPages
     button(:delete_email_button, :xpath => '//button[text()="Delete email"]')
 
     form(:email_form, :name => 'cc_page_widget_profile_email')
-    select_list(:email_type, :id => 'cc-page-widget-profile-email-type')
+    select_list(:email_type_select, :id => 'cc-page-widget-profile-email-type')
     text_area(:email_input, :id => 'cc-page-widget-profile-email-address')
     checkbox(:email_preferred_cbx, :id => 'cc-page-widget-profile-email-preferred')
     span(:email_validation_error, :xpath => '//div[@data-ng-controller="ProfileEmailController"]//span[@data-ng-bind="errorMessage"]')
 
     def email_types
+      sleep 3
       email_type_elements.map { |email| email.text.delete ' Email' }
     end
 
@@ -189,6 +188,7 @@ module CalCentralPages
 
     def email_addresses
       addresses = []
+      sleep 3
       email_address_elements.each { |address| addresses << address.text }
       addresses
     end
@@ -198,23 +198,21 @@ module CalCentralPages
     end
 
     def click_add_email
-      cancel_email_button if cancel_email_button_element.visible?
-      sleep 2
-      WebDriverUtils.wait_for_element_and_click add_email_button_element
+      click_cancel_email if cancel_email_button_element.visible?
+      click_element_js add_email_button_element
     end
 
     def click_edit_email
       cancel_email_button if cancel_email_button_element.visible?
-      sleep 2
-      WebDriverUtils.wait_for_element_and_click edit_email_button_element
+      click_element_js edit_email_button_element
     end
 
     def click_save_email
-      WebDriverUtils.wait_for_element_and_click save_email_button_element
+      click_element_js save_email_button_element
     end
 
     def click_cancel_email
-      WebDriverUtils.wait_for_element_and_click cancel_email_button_element
+      click_element_js cancel_email_button_element
     end
 
     def enter_email(address, pref)
@@ -240,7 +238,7 @@ module CalCentralPages
     def delete_email
       if edit_email_button?
         click_edit_email
-        WebDriverUtils.wait_for_element_and_click delete_email_button_element
+        click_element_js delete_email_button_element
         add_email_button_element.when_visible WebDriverUtils.page_load_timeout
       end
     end
@@ -259,6 +257,7 @@ module CalCentralPages
     button(:cancel_address_button, :xpath => '//div[@data-ng-controller="ProfileAddressController"]//button[contains(.,"Cancel")]')
     button(:delete_address_button, :xpath => '//button[text()="Delete address"]')
 
+    select_list(:address_type_select, :id => 'cc-page-widget-profile-address-type')
     select_list(:country_select, :id => 'cc-page-widget-profile-address-country')
     span(:address_validation_error, :xpath => '//div[@data-ng-controller="ProfileAddressController"]//span[@data-ng-bind="errorMessage"]')
 
@@ -268,6 +267,10 @@ module CalCentralPages
       types
     end
 
+    def unused_address_types
+      address_type_select_element.options.map &:text
+    end
+
     def all_formatted_addresses
       addresses = []
       address_formatted_elements.each { |address| addresses << address.text }
@@ -275,7 +278,6 @@ module CalCentralPages
     end
 
     def formatted_address(index)
-      logger.debug "Looking for a formatted address at index position #{index}"
       address_formatted_elements[index].text
     end
 
@@ -285,24 +287,24 @@ module CalCentralPages
 
     def click_add_address
       click_cancel_address if cancel_address_button_element.visible?
-      WebDriverUtils.wait_for_element_and_click add_address_button_element
+      click_element_js add_address_button_element
     end
 
     def click_edit_address(index)
       click_cancel_address if cancel_address_button_element.visible?
       wait_until(WebDriverUtils.page_load_timeout) { address_edit_button_elements.any? }
       scroll_to_bottom
-      WebDriverUtils.wait_for_element_and_click address_edit_button_elements[index]
+      click_element_js address_edit_button_elements[index]
     end
 
     def click_save_address
       scroll_to_bottom
-      WebDriverUtils.wait_for_element_and_click save_address_button_element
+      click_element_js save_address_button_element
     end
 
     def click_cancel_address
       scroll_to_bottom
-      WebDriverUtils.wait_for_element_and_click cancel_address_button_element
+      click_element_js cancel_address_button_element
       cancel_address_button_element.when_not_visible WebDriverUtils.page_event_timeout rescue Selenium::WebDriver::Error::StaleElementReferenceError
     end
 
@@ -328,7 +330,7 @@ module CalCentralPages
     end
 
     def load_country_form(address)
-      WebDriverUtils.wait_for_element_and_select(country_select_element, address['country'])
+      WebDriverUtils.wait_for_element_and_select(country_select_element, address['country']) unless country_select == address['country']
       wait_for_address_form address
       scroll_to_bottom
     end
@@ -341,7 +343,8 @@ module CalCentralPages
       end
       unless selections.nil?
         selections.each do |select|
-          WebDriverUtils.wait_for_element_and_select(select_list_element(:id => "cc-page-widget-profile-field-#{select['index']}"), select['option'])
+          select_element = select_list_element(:id => "cc-page-widget-profile-field-#{select['index']}")
+          WebDriverUtils.wait_for_element_and_select(select_element, select['option']) unless select_element.selected?(select['option'])
         end
       end
     end
@@ -358,7 +361,7 @@ module CalCentralPages
         selections.each do |select|
           select_element = select_list_element(:id => "cc-page-widget-profile-field-#{select['index']}")
           default_option = select_element.options.find { |option| option.text.include? 'Choose' }
-          select_element.select default_option.text
+          select_element.select default_option.text unless select_element.selected?(default_option.text)
         end
       end
     end
@@ -381,9 +384,9 @@ module CalCentralPages
     end
 
     def verify_address(address, index, inputs, selections)
-      wait_until(WebDriverUtils.campus_solutions_timeout, 'Timed out waiting for the new address to appear') do
-        logger.debug "There are #{all_formatted_addresses.length} saved addresses visible"
+      wait_until(WebDriverUtils.page_load_timeout, 'Timed out waiting for the new address to appear') do
         all_formatted_addresses.length == 2
+        sleep 1
         all_formatted_addresses.find { |item| item.include? trimmed_input(inputs[0]) } rescue Selenium::WebDriver::Error::StaleElementReferenceError
       end
       logger.debug "Address displayed is \n#{formatted_address(index)}"

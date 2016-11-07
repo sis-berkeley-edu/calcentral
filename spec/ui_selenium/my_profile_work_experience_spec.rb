@@ -67,13 +67,19 @@ describe 'Profile work experience card', :testui => true, :order => :defined do
         jobs_to_test_adds = work_experience['jobs'].select { |j| j['test'] == 'adding' }
         jobs_to_test_adds.each do |job_to_add|
 
-          it "allows the user to add employer #{jobs_to_test_adds.index job_to_add}" do
-            job_data = @work_experience_card.job_data job_to_add
-            jobs_added = @work_experience_card.add_new_job(jobs_added, job_to_add)
-            index = @work_experience_card.get_job_index(jobs_added, job_to_add)
-            @work_experience_card.verify_job(job_data, index, inputs_max)
-          end
+          # A WebDriver bug prevents interaction with selects, so only the default selections can be tested for now
+          if job_to_add['country'] == 'United States' && job_to_add['currency'] == 'USD - US Dollar' && job_to_add['payFrequency'] == 'Month'
 
+            it "allows the user to add employer #{jobs_to_test_adds.index job_to_add}" do
+              job_data = @work_experience_card.job_data job_to_add
+              jobs_added = @work_experience_card.add_new_job(jobs_added, job_to_add)
+              index = @work_experience_card.get_job_index(jobs_added, job_to_add)
+              @work_experience_card.verify_job(job_data, index, inputs_max)
+            end
+
+          else
+            it('cannot be tested since the test data file contains a non-US address, non-US currency, or non-Monthly pay frequency') { fail }
+          end
         end
       end
 
@@ -83,13 +89,19 @@ describe 'Profile work experience card', :testui => true, :order => :defined do
         jobs_to_test_edits = work_experience['jobs'].select { |j| j['test'] == 'editing' }
         jobs_to_test_edits.each do |edited_job|
 
-          it "allows the user to edit employer #{jobs_to_test_edits.index edited_job}" do
-            job_data = @work_experience_card.job_data edited_job
-            jobs_added = @work_experience_card.edit_job(jobs_added, jobs_added.first, edited_job)
-            index = @work_experience_card.get_job_index(jobs_added, edited_job)
-            @work_experience_card.verify_job(job_data, index, inputs_max)
-          end
+          # A WebDriver bug prevents interaction with selects, so only the default selections can be tested for now
+          if edited_job['country'] == 'United States' && edited_job['currency'] == 'USD - US Dollar' && edited_job['payFrequency'] == 'Month'
 
+            it "allows the user to edit employer #{jobs_to_test_edits.index edited_job}" do
+              job_data = @work_experience_card.job_data edited_job
+              jobs_added = @work_experience_card.edit_job(jobs_added, jobs_added.first, edited_job)
+              index = @work_experience_card.get_job_index(jobs_added, edited_job)
+              @work_experience_card.verify_job(job_data, index, inputs_max)
+            end
+
+          else
+            it('cannot be tested since the test data file contains a non-US address, non-US currency, or non-Monthly pay frequency') { fail }
+          end
         end
       end
     end
