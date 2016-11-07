@@ -276,6 +276,18 @@ describe MyAcademics::CollegeAndLevel do
   end
 
   context 'when sourced from Hub academic status' do
+    context 'failed response' do
+      let(:failure_response) { {:errored=>true, :statusCode=>503, :body=>"An unknown server error occurred"} }
+      before do
+        allow_any_instance_of(HubEdos::AcademicStatus).to receive(:get).and_return(failure_response)
+      end
+      it 'reports failure' do
+        expect(feed[:collegeAndLevel][:statusCode]).to eq 503
+        expect(feed[:collegeAndLevel][:empty]).to eq true
+        expect(feed[:collegeAndLevel][:errored]).to eq true
+        expect(feed[:collegeAndLevel][:body]).to eq "An unknown server error occurred"
+      end
+    end
     context 'undergrad with single academic status' do
       it 'reports success' do
         expect(feed[:collegeAndLevel][:statusCode]).to eq 200
