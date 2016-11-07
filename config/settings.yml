@@ -403,7 +403,6 @@ ui_selenium:
   google_task_timeout: 12
   page_event_timeout: 10
   page_load_timeout: 20
-  campus_solutions_timeout: 6
   live_update_timeout_delta: 180
   academics_timeout: 20
   canvas_update_timeout: 60
