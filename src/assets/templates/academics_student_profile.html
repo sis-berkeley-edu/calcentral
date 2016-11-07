@@ -29,22 +29,6 @@
           </div>
         </div>
         <div data-ng-if="(api.user.profile.roles.student || api.user.profile.roles.applicant) && !api.user.profile.roles.concurrentEnrollmentStudent && !isAcademicSummary">
-          <div data-ng-if="!isProfileCurrent">
-            <div data-ng-if="transitionTerm.registered" class="cc-widget-profile-message-text">
-              You are registered for the <span data-ng-bind="transitionTerm.termName"></span> term, but complete profile information is not available.
-            </div>
-            <div data-ng-if="!transitionTerm.registered" class="cc-widget-profile-message-text">
-              You are not officially registered for the <span data-ng-bind="transitionTerm.termName"></span> term.
-            </div>
-          </div>
-          <div data-ng-if="!transitionTerm">
-            <div data-ng-if="api.user.profile.roles.registered" class="cc-widget-profile-message-text">
-              You are registered as a student, but complete profile information is not available.
-            </div>
-            <div data-ng-if="!api.user.profile.roles.registered" class="cc-widget-profile-message-text">
-              You are not registered as a student for the <span data-ng-bind="collegeAndLevel.termName"></span> term.
-            </div>
-          </div>
           <div class="cc-academics-nocontent-container" data-ng-if="!isAcademicInfoAvailable">
             <div class="cc-widget-profile-message-text">
               <span data-ng-if="api.user.profile.roles.registered || (transitionTerm && transitionTerm.registered)">
