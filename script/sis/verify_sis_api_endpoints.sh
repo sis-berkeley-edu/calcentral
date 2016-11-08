@@ -285,7 +285,7 @@ verify_cs 'cs_degree_progress_grad_student' "${yml_features_cs_degree_progress_g
   "/UC_AA_PROGRESS_GET.v1/UC_AA_PROGRESS_GET?EMPLID=${CAMPUS_SOLUTIONS_ID}"
 
 verify_cs 'cs_degree_progress_ugrd_advising' "${yml_features_cs_degree_progress_ugrd_advising}" \
-  "/UC_AA_PROGRESS_GET.v1/UC_AA_PROGRESS_GET?EMPLID=${CAMPUS_SOLUTIONS_ID}"
+  "/UC_AA_PROGRESS_UGRD_GET.v1/UC_AA_PROGRESS_UGRD_GET?EMPLID=${CAMPUS_SOLUTIONS_ID}"
 
 verify_cs 'cs_committees' "${yml_features_cs_committees}" \
   "/UC_SR_STUDENT_COMMITTEE.v1/UC_SR_STUDENT_COMMITTEE_GET?EMPLID=${CAMPUS_SOLUTIONS_ID}" \
