@@ -121,7 +121,12 @@
                 </div>
               </td>
               <td data-ng-if="course.sections[0].gradingLink.url" class="show-for-medium-up cc-academics-course-grading-link">
-                <a data-ng-href="{{course.sections[0].gradingLink.url}}">Course Grades</a>
+                <a
+                data-cc-campus-solutions-link-directive="course.sections[0].gradingLink.url"
+                data-cc-campus-solutions-link-directive-enabled="{{course.sections[0].gradingLink.isCsLink}}"
+                data-cc-campus-solutions-link-directive-text="course.sections[0].gradingLink.ucFromText"
+                data-cc-outbound-enabled="false"
+                data-ng-disabled="!course.sections[0].gradingLink.url">Course Grades</a>
               </td>
               <td data-ng-if="!course.sections[0].gradingLink.url" class="show-for-medium-up cc-academics-course-grading-link">
                 &mdash;
