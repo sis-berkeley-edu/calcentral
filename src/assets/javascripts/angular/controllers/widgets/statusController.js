@@ -115,7 +115,7 @@ angular.module('calcentral.controllers').controller('StatusController', function
 
   var parseRegistrationCounts = function() {
     _.forEach($scope.regStatus.registrations, function(registration) {
-      if (registration.isSummer || !registration.positiveIndicators.S09 || registration.academicCareer.code === 'UCBX') {
+      if (!registration.isShown) {
         return;
       }
       // Count for registration status
@@ -221,6 +221,7 @@ angular.module('calcentral.controllers').controller('StatusController', function
       // Make sure to hide the spinner when everything is loaded
       $q.all(statusGets).then(function() {
         statusHoldsService.matchTermIndicators($scope.regStatus.positiveIndicators, $scope.regStatus.registrations);
+        statusHoldsService.checkShownRegistrations($scope.regStatus.registrations);
         parseRegistrationCounts();
         if (includeFinancial) {
           parseFinances();
