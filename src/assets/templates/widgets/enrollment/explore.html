@@ -7,16 +7,15 @@
 
 <div class="cc-enrollment-card-section-content" data-ng-if="section.show">
   <div data-ng-if="api.user.profile.actAsOptions.canSeeCSLinks">
-    <ul class="cc-list-links"
-      data-ng-if="enrollmentInstruction.isClassScheduleAvailable && isInstructionType(enrollmentInstruction, ['default'])">
+
+    <ul class="cc-list-links" data-ng-if="!isInstructionType(enrollmentInstruction, ['fpf'])">
       <li>
-        <div
-          data-cc-campus-solutions-link-item-directive
-          data-link="enrollmentInstruction.links.scheduleClasses"
-          data-cache="enrollment"
-        ></div>
+        <a href="http://classes.berkeley.edu/">
+          Academic Guide Class Schedule
+        </a>
       </li>
     </ul>
+
     <ul class="cc-list-links" data-ng-if="isInstructionType(enrollmentInstruction, ['concurrent'])">
       <li>
         <a href="http://schedule.berkeley.edu/">
@@ -25,12 +24,12 @@
       </li>
       <li>
         <a href="http://guide.berkeley.edu/">
-          Course Catalog
+          Berkeley Academic Guide
         </a>
       </li>
       <li>
         <a href="https://calstudentstore.berkeley.edu/textbook">
-          Class Textbook Lookup
+          Class Textbooks: ASUC Bookstore
         </a>
       </li>
       <li>
@@ -39,6 +38,7 @@
         </a>
       </li>
     </ul>
+
     <ul class="cc-list-links" data-ng-if="isInstructionType(enrollmentInstruction, ['fpf'])">
       <li>
         <a href="http://fpf.berkeley.edu/your-courses">
@@ -52,35 +52,12 @@
       </li>
     </ul>
     <ul class="cc-list-links" data-ng-if="isInstructionType(enrollmentInstruction, ['default'])">
-      <li>
-        <a href="http://guide.berkeley.edu/">
-          Berkeley Academic Guide
-        </a>
-      </li>
-      <li>
-        <a href="http://lsdiscovery.berkeley.edu/">
-          Discovery Courses
-        </a>
-      </li>
-      <li>
-        <a href="http://bigideascourses.berkeley.edu/">
-          Big Ideas Courses
-        </a>
-      </li>
-      <li>
-        <a href="http://fss.berkeley.edu/">
-          Freshman &amp; Sophomore Seminars
-        </a>
-      </li>
-      <li>
-        <a href="http://www.decal.org/">
-          DeCal
-        </a>
-      </li>
-      <li>
-        <a href="http://www.berkeleyconnect.berkeley.edu/">
-          Berkeley Connect
-        </a>
+      <li data-ng-if="enrollmentInstruction.isClassScheduleAvailable">
+        <div
+          data-cc-campus-solutions-link-item-directive
+          data-link="enrollmentInstruction.links.scheduleClasses"
+          data-cache="enrollment"
+        ></div>
       </li>
       <li>
         <a href="https://calstudentstore.berkeley.edu/textbook">Class Textbooks: ASUC Bookstore</a>
