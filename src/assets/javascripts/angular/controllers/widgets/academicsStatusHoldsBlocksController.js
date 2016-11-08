@@ -96,6 +96,7 @@ angular.module('calcentral.controllers').controller('AcademicsStatusHoldsBlocksC
     });
 
     statusHoldsService.matchTermIndicators($scope.regStatus.positiveIndicators, $scope.regStatus.registrations);
+    $scope.hasShownRegistrations = statusHoldsService.checkShownRegistrations($scope.regStatus.registrations);
   };
 
   var getMessages = function() {

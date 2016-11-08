@@ -1,8 +1,8 @@
 <ul class="cc-popover-items" data-ng-click="api.popover.clickThrough('Status')">
   <li class="cc-popover-item"
     data-ng-repeat="registration in regStatus.registrations | orderBy:'-id'"
-    data-ng-if="api.user.profile.roles.student && api.user.profile.features.regstatus && !registration.isSummer &&
-      registration.summary !== 'Officially Registered' && registration.positiveIndicators.S09 && !registration.pastEndOfInstruction && registration.academicCareer.code !== 'UCBX'">
+    data-ng-if="api.user.profile.roles.student && api.user.profile.features.regstatus && registration.isShown &&
+      registration.summary !== 'Officially Registered'">
     <a href="/academics">
       <div class="cc-launcher-status-description">
         <i class="fa fa-exclamation-circle cc-icon-red"></i>

@@ -136,7 +136,19 @@ angular.module('calcentral.services').service('statusHoldsService', function() {
     }
   };
 
+  var checkShownRegistrations = function(registrations) {
+    var hasShown = false;
+    _.forEach(registrations, function(registration) {
+      if ((registration.isLegacy || registration.positiveIndicators.S09) && !registration.pastEndOfInstruction && (registration.academicCareer.code !== 'UCBX')) {
+        registration.isShown = true;
+        hasShown = true;
+      }
+    });
+    return hasShown;
+  };
+
   return {
+    checkShownRegistrations: checkShownRegistrations,
     getRegStatusMessages: getRegStatusMessages,
     matchTermIndicators: matchTermIndicators,
     parseCsTerm: parseCsTerm,
