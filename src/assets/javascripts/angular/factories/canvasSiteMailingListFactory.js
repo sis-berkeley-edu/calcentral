@@ -3,32 +3,19 @@
 var angular = require('angular');
 
 /**
- * Canvas Site Mailing List Factory - Interface for 'Manage a bCourses Site Mailing List' tool API endpoints
+ * Canvas Site Mailing List Factory; API endpoint for the course-level bCourses tool to create a single mailing list.
  */
 angular.module('calcentral.factories').factory('canvasSiteMailingListFactory', function($http) {
-  var deleteSiteMailingList = function(canvasCourseId) {
-    return $http.post('/api/academics/canvas/mailing_lists/' + canvasCourseId + '/delete');
+  var createMailingList = function(canvasCourseId) {
+    return $http.post('/api/academics/canvas/mailing_list/' + canvasCourseId + '/create');
   };
 
-  var getSiteMailingList = function(canvasCourseId) {
-    return $http.get('/api/academics/canvas/mailing_lists/' + canvasCourseId);
-  };
-
-  var populateSiteMailingList = function(canvasCourseId) {
-    return $http.post('/api/academics/canvas/mailing_lists/' + canvasCourseId + '/populate');
-  };
-
-  var registerSiteMailingList = function(canvasCourseId, list) {
-    return $http.post('/api/academics/canvas/mailing_lists/' + canvasCourseId + '/create', {
-      listName: list.name,
-      listType: list.listType
-    });
+  var getMailingList = function(canvasCourseId) {
+    return $http.get('/api/academics/canvas/mailing_list/' + canvasCourseId);
   };
 
   return {
-    deleteSiteMailingList: deleteSiteMailingList,
-    getSiteMailingList: getSiteMailingList,
-    populateSiteMailingList: populateSiteMailingList,
-    registerSiteMailingList: registerSiteMailingList
+    createMailingList: createMailingList,
+    getMailingList: getMailingList
   };
 });

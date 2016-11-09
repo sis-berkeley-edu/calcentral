@@ -31,12 +31,12 @@ shared_examples 'a newly initialized mailing list' do
   describe 'normalizing list names' do
     it 'normalizes caps and spaces' do
       fake_course_data['name'] = 'CHEM 1A LEC 003'
-      expect(response['mailingList']['name']).to eq 'chem_1a_lec_003-fa13'
+      expect(response['mailingList']['name']).to eq 'chem-1a-lec-003-fa13'
     end
 
     it 'normalizes punctuation' do
       fake_course_data['name'] = 'The "Wild"-"Wild" West?'
-      expect(response['mailingList']['name']).to eq 'the_wild_wild_west-fa13'
+      expect(response['mailingList']['name']).to eq 'the-wild-wild-west-fa13'
     end
 
     it 'removes invalid leading and trailing characters' do
@@ -46,7 +46,7 @@ shared_examples 'a newly initialized mailing list' do
 
     it 'normalizes diacritics' do
       fake_course_data['name'] = 'Conversation intermédiaire'
-      expect(response['mailingList']['name']).to eq 'conversation_intermediaire-fa13'
+      expect(response['mailingList']['name']).to eq 'conversation-intermediaire-fa13'
     end
   end
 

@@ -1,3 +1,7 @@
+# This mailing lists controller (plural) allows admins to administer mailing lists across a Canvas
+# instance, as distinct from CanvasMailingListController (singular), which allows instructors and
+# course admins to administer a single mailing list for a single course site.
+
 class CanvasMailingListsController < ApplicationController
   include AllowLti
   include DisallowAdvisorViewAs

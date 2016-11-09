@@ -128,9 +128,15 @@ angular.module('calcentral.config').config(function($routeProvider) {
     isBcourses: true,
     isEmbedded: true
   }).
-  when('/canvas/embedded/site_mailing_lists', {
+  when('/canvas/embedded/site_mailing_list', {
     templateUrl: 'canvas_embedded/site_mailing_list.html',
     controller: 'CanvasSiteMailingListController',
+    isBcourses: true,
+    isEmbedded: true
+  }).
+  when('/canvas/embedded/site_mailing_lists', {
+    templateUrl: 'canvas_embedded/site_mailing_lists.html',
+    controller: 'CanvasSiteMailingListsController',
     isBcourses: true,
     isEmbedded: true
   }).
@@ -204,9 +210,14 @@ angular.module('calcentral.config').config(function($routeProvider) {
     controller: 'CanvasCourseGradeExportController',
     isBcourses: true
   }).
-  when('/canvas/site_mailing_list', {
+  when('/canvas/site_mailing_list/:canvasCourseId', {
     templateUrl: 'canvas_embedded/site_mailing_list.html',
     controller: 'CanvasSiteMailingListController',
+    isBcourses: true
+  }).
+  when('/canvas/site_mailing_lists', {
+    templateUrl: 'canvas_embedded/site_mailing_lists.html',
+    controller: 'CanvasSiteMailingListsController',
     isBcourses: true
   }).
   when('/canvas/user_provision', {
