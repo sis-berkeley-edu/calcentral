@@ -109,7 +109,7 @@ module MyAcademics
 
     def get_grading_link(ccn, term_code, cc_grading_status)
       return nil unless ccn && term_code
-      grading_link = AcademicsModule::fetch_link('UC_CX_SSS_GRADE_ROSTER', { STRM: term_code, CLASS_NBR: ccn })
+      grading_link = AcademicsModule::fetch_link('UC_CX_SSS_GRADE_ROSTER', { STRM: term_code, CLASS_NBR: ccn, INSTITUTION: 'UCB01' })
       grading_period_status = get_grading_period_status
       mapping = grading_link_mapping(grading_link)
       mapping[cc_grading_status][grading_period_status]
