@@ -7,8 +7,7 @@ var _ = require('lodash');
  * Enrollment Card Controller
  * Main controller for the enrollment card on the My Academics and Student Overview pages
  */
-angular.module('calcentral.controllers').controller('EnrollmentCardController', function(apiService, enrollmentFactory, $route, $scope) {
-  var backToText = 'Class Enrollment';
+angular.module('calcentral.controllers').controller('EnrollmentCardController', function(apiService, enrollmentFactory, linkService, $route, $scope) {
   var sections = [
     {
       id: 'plan',
@@ -113,10 +112,11 @@ angular.module('calcentral.controllers').controller('EnrollmentCardController', 
       return enrollmentInstruction;
     }
 
-    enrollmentInstruction.links = _.mapValues(enrollmentInstruction.links, function(link) {
-      link.backToText = backToText;
-      return link;
-    });
+    var backToText = 'My Academics';
+    if ($route.current.isAdvisingStudentLookup) {
+      backToText = 'Student Overview';
+    }
+    enrollmentInstruction.links = linkService.addBackToTextToResources(enrollmentInstruction.links, backToText);
 
     return enrollmentInstruction;
   };

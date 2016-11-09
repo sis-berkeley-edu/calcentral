@@ -6,7 +6,7 @@ var _ = require('lodash');
 /**
  * Preview of user profile prior to viewing-as
  */
-angular.module('calcentral.controllers').controller('UserOverviewController', function(academicsService, adminService, advisingFactory, academicStatusFactory, apiService, enrollmentVerificationFactory, statusHoldsService, studentAttributesFactory, $route, $routeParams, $scope) {
+angular.module('calcentral.controllers').controller('UserOverviewController', function(academicsService, adminService, advisingFactory, academicStatusFactory, apiService, enrollmentVerificationFactory, linkService, statusHoldsService, studentAttributesFactory, $route, $routeParams, $scope) {
   $scope.expectedGradTerm = academicsService.expectedGradTerm;
   $scope.academics = {
     isLoading: true,
@@ -76,32 +76,17 @@ angular.module('calcentral.controllers').controller('UserOverviewController', fu
 
   var backToText = 'Student Overview';
 
-  /**
-   * Add the back to text (used for Campus Solutions) to the link
-   */
-  var addBackToTextLink = function(link) {
-    link.backToText = backToText;
-    return link;
-  };
-
-  /**
-   * Add the back to text
-   */
-  var addBackToText = function(resources) {
-    _.mapValues(resources, addBackToTextLink);
-  };
-
   var parseAdvisingResources = function(data) {
     var resources = $scope.ucAdvisingResources;
 
     angular.extend(resources, _.get(data, 'data.feed'));
 
     if (_.get(resources, 'links')) {
-      addBackToText(resources.links);
+      linkService.addBackToTextToResources(resources.links, backToText);
     }
 
     if (_.get(resources, 'csLinks')) {
-      addBackToText(resources.csLinks);
+      linkService.addBackToTextToResources(resources.csLinks, backToText);
     }
 
     resources.isLoading = false;
