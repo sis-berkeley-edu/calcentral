@@ -36,6 +36,40 @@
       </table>
     </div>
 
+    <div data-ng-if="committee.inside.length > 0" class="cc-table cc-higher-degree-committees-reps-group">
+      <table>
+        <thead>
+          <tr>
+            <th>Inside Member</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr data-ng-repeat="member in committee.inside">
+            <td>
+              <div data-ng-include="'widgets/academics/higher_degree_committee_member.html'"></div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div data-ng-if="committee.outside.length > 0" class="cc-table cc-higher-degree-committees-reps-group">
+      <table>
+        <thead>
+          <tr>
+            <th>Outside Member</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr data-ng-repeat="member in committee.outside">
+            <td>
+              <div data-ng-include="'widgets/academics/higher_degree_committee_member.html'"></div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
     <div data-ng-if="committee.reps.length > 0" class="cc-table cc-higher-degree-committees-reps-group">
       <table>
         <thead>

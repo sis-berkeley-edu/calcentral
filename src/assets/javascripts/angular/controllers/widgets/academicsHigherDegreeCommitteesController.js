@@ -57,6 +57,14 @@ angular.module('calcentral.controllers').controller('AcademicsHigherDegreeCommit
     return committeeData.committeeMembers.coChair;
   };
 
+  var getCommitteeInsideMembers = function(committeeData) {
+    return committeeData.committeeMembers.insideMembers;
+  };
+
+  var getCommitteeOutsideMembers = function(committeeData) {
+    return committeeData.committeeMembers.outsideMembers;
+  };
+
   var getCommitteeAdditionalReps = function(committeeData) {
     return committeeData.committeeMembers.additionalReps;
   };
@@ -80,7 +88,9 @@ angular.module('calcentral.controllers').controller('AcademicsHigherDegreeCommit
           header: getCommitteeHeader(committee),
           chairs: decorateCommittees(getCommitteeChair(committee)),
           coChairs: decorateCommittees(getCommitteeCoChair(committee)),
-          reps: getCommitteeAdditionalReps(committee),
+          inside: decorateCommittees(getCommitteeInsideMembers(committee)),
+          outside: decorateCommittees(getCommitteeOutsideMembers(committee)),
+          reps: decorateCommittees(getCommitteeAdditionalReps(committee)),
           senate: decorateCommittees(getCommitteeSenate(committee)),
           show: false,
           loadError: false
