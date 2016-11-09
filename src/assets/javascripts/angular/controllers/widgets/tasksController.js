@@ -1,11 +1,13 @@
 'use strict';
 
 var angular = require('angular');
+var _ = require('lodash');
 
 /**
  * Tasks controller
  */
-angular.module('calcentral.controllers').controller('TasksController', function(apiService, tasksFactory, $http, $interval, $filter, $scope) {
+angular.module('calcentral.controllers').controller('TasksController', function(apiService, linkService, tasksFactory, $http, $interval, $filter, $scope) {
+  var backToText = 'My Dashboard';
   // Initial mode for Tasks view
   $scope.currentTaskMode = 'scheduled';
   $scope.taskModes = ['scheduled', 'unscheduled', 'completed'];
@@ -63,6 +65,9 @@ angular.module('calcentral.controllers').controller('TasksController', function(
     return tasksFactory.getTasks(options).then(function(data) {
       apiService.updatedFeeds.feedLoaded(data);
       angular.extend($scope, data);
+      if (_.get($scope, 'tasks')) {
+        linkService.addBackToTextToResources($scope.tasks, backToText);
+      }
       if ($scope.tasks) {
         $scope.updateTaskLists();
       }
