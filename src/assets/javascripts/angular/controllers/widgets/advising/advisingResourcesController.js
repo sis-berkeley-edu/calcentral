@@ -7,7 +7,7 @@ var angular = require('angular');
  * Advising Resources Controller
  * Show Campus Solutions links and favorite reports
  */
-angular.module('calcentral.controllers').controller('AdvisingResourcesController', function(advisingFactory, apiService, $scope) {
+angular.module('calcentral.controllers').controller('AdvisingResourcesController', function(advisingFactory, apiService, linkService, $scope) {
   $scope.advisingResources = {
     isLoading: true
   };
@@ -15,30 +15,20 @@ angular.module('calcentral.controllers').controller('AdvisingResourcesController
   var backToText = 'My Dashboard';
 
   /**
-   * Add the back to text (used for Campus Solutions) to the link
-   */
-  var addBackToTextLink = function(link) {
-    link.backToText = backToText;
-    return link;
-  };
-
-  /**
    * Add the back to text
    */
   var addBackToText = function(resources) {
     if (_.get(resources, 'ucAdvisingResources.ucAdvisingFavoriteReports.length')) {
-      _.mapValues(resources.ucAdvisingResources.ucAdvisingFavoriteReports, addBackToTextLink);
+      linkService.addBackToTextToResources(resources.ucAdvisingResources.ucAdvisingFavoriteReports, backToText);
     }
 
     if (_.get(resources, '.links')) {
-      _.mapValues(resources.links, addBackToTextLink);
+      linkService.addBackToTextToResources(resources.links, backToText);
     }
 
     if (_.get(resources, 'csLinks')) {
-      _.mapValues(resources.csLinks, addBackToTextLink);
+      linkService.addBackToTextToResources(resources.csLinks, backToText);
     }
-
-    return resources;
   };
 
   /**
