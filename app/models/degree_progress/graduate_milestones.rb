@@ -11,7 +11,7 @@ module DegreeProgress
     def get_feed_internal
       return {} unless is_feature_enabled
       response = CampusSolutions::DegreeProgress::GraduateMilestones.new(user_id: @uid).get
-      if response[:errored]
+      if response[:errored] || response[:noStudentId]
         response[:feed] = {}
       else
         response[:feed] = HashConverter.camelize({
