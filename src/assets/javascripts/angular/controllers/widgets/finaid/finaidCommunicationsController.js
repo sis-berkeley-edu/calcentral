@@ -6,15 +6,17 @@ var _ = require('lodash');
 /**
  * Finaid Communications controller
  */
-angular.module('calcentral.controllers').controller('FinaidCommunicationsController', function($q, $scope, activityFactory, finaidFactory, finaidService, tasksFactory) {
+angular.module('calcentral.controllers').controller('FinaidCommunicationsController', function($q, $scope, activityFactory, finaidFactory, finaidService, linkService, tasksFactory) {
+  var backToText = 'Financial Aid and Scholarships';
   $scope.communicationsInfo = {
-    isLoading: true,
     aidYear: '',
-    taskStatus: '!completed',
+    backToText: backToText,
+    isLoading: true,
     counts: {
       completed: 0,
       uncompleted: 0
-    }
+    },
+    taskStatus: '!completed'
   };
 
   $scope.toggleCompletedTasks = function() {
@@ -29,6 +31,14 @@ angular.module('calcentral.controllers').controller('FinaidCommunicationsControl
     };
     return activityFactory.getFinaidActivity(options).then(function(data) {
       angular.extend($scope, data);
+      if (_.get($scope, 'list')) {
+        linkService.addBackToTextToResources($scope.list, backToText);
+        _.forEach($scope.list, function(value) {
+          if (_.get(value, 'elements')) {
+            linkService.addBackToTextToResources(value.elements, backToText);
+          }
+        });
+      }
       $scope.activityInfo.isLoading = false;
     });
   };
