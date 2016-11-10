@@ -10,39 +10,67 @@
       "committeeMembers": {
         "chair": [
           {
-          "name": "Manfred Lemass",
-          "email": "mlemass@inst.edu",
-          "primaryDepartment": "CNR",
-          "photo" : "/api/my/committees/photo/member/123456"
+            "name": "Manfred Lemass",
+            "email": "mlemass@inst.edu",
+            "primaryDepartment": "CNR",
+            "photo": "/api/my/committees/photo/member/123456"
           }
         ],
-        "coChair":[
+        "coChair": [
           {
-          "name": "Manfred Lemass",
-          "email": "mlemass@inst.edu",
-          "primaryDepartment": "CNR"
+            "name": "Manfred Lemass",
+            "email": "mlemass@inst.edu",
+            "primaryDepartment": "CNR"
           }
         ],
         "additionalReps": [
           {
             "name": "Marco Tvedt",
             "email": "mtvedt@inst.edu",
-            "primaryDepartment": "Chemistry",
-            "photo" : "/api/my/committees/photo/member/123456"
+            "primaryDepartment": "Non Berkeley",
+            "photo": "/api/my/committees/photo/member/123456"
           },
           {
             "name": "Carla Zemd",
             "email": "czemd@inst.edu",
+            "primaryDepartment": "Non Berkeley",
+            "photo": "/api/my/committees/photo/member/123456"
+          }
+        ],
+        "insideMembers": [
+          {
+            "name": "Alex Moore",
+            "email": "amoore@inst.edu",
+            "primaryDepartment": "Chemistry",
+            "photo": "/api/my/committees/photo/member/123456"
+          },
+          {
+            "name": "Lisa Less",
+            "email": "lless@inst.edu",
             "primaryDepartment": "CNR",
-            "photo" : "/api/my/committees/photo/member/123456"
+            "photo": "/api/my/committees/photo/member/123456"
+          }
+        ],
+        "outsideMembers": [
+          {
+            "name": "John high",
+            "email": "jhigh@inst.edu",
+            "primaryDepartment": "Chemistry",
+            "photo": "/api/my/committees/photo/member/123456"
+          },
+          {
+            "name": "Jan Lowe",
+            "email": "jlow@inst.edu",
+            "primaryDepartment": "CNR",
+            "photo": "/api/my/committees/photo/member/123456"
           }
         ],
         "academicSenate": [
           {
-          "name": "Paul Davidson",
-          "email": "pdavidson@inst.edu",
-          "primaryDepartment": "CNR",
-          "photo" : "/api/my/committees/photo/member/123456"
+            "name": "Paul Davidson",
+            "email": "pdavidson@inst.edu",
+            "primaryDepartment": "CNR",
+            "photo": "/api/my/committees/photo/member/123456"
           }
         ]
       }
@@ -59,10 +87,10 @@
             "name": "Manfred Lemass",
             "email": "mlemass@inst.edu",
             "primaryDepartment": "CNR",
-            "photo" : "/api/my/committees/photo/member/123456"
+            "photo": "/api/my/committees/photo/member/123456"
           }
         ],
-        "coChair":[
+        "coChair": [
           {
             "name": "Manfred Lemass",
             "email": "mlemass@inst.edu",
@@ -74,13 +102,41 @@
             "name": "Marco Tvedt",
             "email": "mtvedt@inst.edu",
             "primaryDepartment": "Chemistry",
-            "photo" : "/api/my/committees/photo/member/123456"
+            "photo": "/api/my/committees/photo/member/123456"
           },
           {
             "name": "Carla Zemd",
             "email": "czemd@inst.edu",
             "primaryDepartment": "CNR",
-            "photo" : "/api/my/committees/photo/member/123456"
+            "photo": "/api/my/committees/photo/member/123456"
+          }
+        ],
+        "insideMembers": [
+          {
+            "name": "Alex Moore",
+            "email": "amoore@inst.edu",
+            "primaryDepartment": "Chemistry",
+            "photo": "/api/my/committees/photo/member/123456"
+          },
+          {
+            "name": "Lisa Less",
+            "email": "lless@inst.edu",
+            "primaryDepartment": "CNR",
+            "photo": "/api/my/committees/photo/member/123456"
+          }
+        ],
+        "outsideMembers": [
+          {
+            "name": "John high",
+            "email": "jhigh@inst.edu",
+            "primaryDepartment": "Chemistry",
+            "photo": "/api/my/committees/photo/member/123456"
+          },
+          {
+            "name": "Jan Lowe",
+            "email": "jlow@inst.edu",
+            "primaryDepartment": "CNR",
+            "photo": "/api/my/committees/photo/member/123456"
           }
         ],
         "academicSenate": [
@@ -88,7 +144,7 @@
             "name": "Paul Davidson",
             "email": "pdavidson@inst.edu",
             "primaryDepartment": "CNR",
-            "photo" : "/api/my/committees/photo/member/123456"
+            "photo": "/api/my/committees/photo/member/123456"
           }
         ]
       }
@@ -105,10 +161,10 @@
             "name": "Manfred Lemass",
             "email": "mlemass@inst.edu",
             "primaryDepartment": "CNR",
-            "photo" : "/api/my/committees/photo/member/123456"
+            "photo": "/api/my/committees/photo/member/123456"
           }
         ],
-        "coChair":[
+        "coChair": [
           {
             "name": "Manfred Lemass",
             "email": "mlemass@inst.edu",
@@ -120,13 +176,41 @@
             "name": "Marco Tvedt",
             "email": "mtvedt@inst.edu",
             "primaryDepartment": "Chemistry",
-            "photo" : "/api/my/committees/photo/member/123456"
+            "photo": "/api/my/committees/photo/member/123456"
           },
           {
             "name": "Carla Zemd",
             "email": "czemd@inst.edu",
             "primaryDepartment": "CNR",
-            "photo" : "/api/my/committees/photo/member/123456"
+            "photo": "/api/my/committees/photo/member/123456"
+          }
+        ],
+        "insideMembers": [
+          {
+            "name": "Alex Moore",
+            "email": "amoore@inst.edu",
+            "primaryDepartment": "Chemistry",
+            "photo": "/api/my/committees/photo/member/123456"
+          },
+          {
+            "name": "Lisa Less",
+            "email": "lless@inst.edu",
+            "primaryDepartment": "CNR",
+            "photo": "/api/my/committees/photo/member/123456"
+          }
+        ],
+        "outsideMembers": [
+          {
+            "name": "John high",
+            "email": "jhigh@inst.edu",
+            "primaryDepartment": "Chemistry",
+            "photo": "/api/my/committees/photo/member/123456"
+          },
+          {
+            "name": "Jan Lowe",
+            "email": "jlow@inst.edu",
+            "primaryDepartment": "CNR",
+            "photo": "/api/my/committees/photo/member/123456"
           }
         ],
         "academicSenate": [
@@ -134,7 +218,7 @@
             "name": "Paul Davidson",
             "email": "pdavidson@inst.edu",
             "primaryDepartment": "CNR",
-            "photo" : "/api/my/committees/photo/member/123456"
+            "photo": "/api/my/committees/photo/member/123456"
           }
         ]
       }
@@ -146,7 +230,7 @@
         "student": {
           "name": "Frank Cathers",
           "email": "fcathers@inst.deu",
-          "photo" : "/api/my/committees/photo/student/123456"
+          "photo": "/api/my/committees/photo/student/123456"
         },
         "serviceRange": "May 3, 2016 - Nov 14, 2019",
         "committeeType": "Master’s Thesis",
@@ -160,10 +244,10 @@
               "name": "Manfred Lemass",
               "email": "mlemass@inst.edu",
               "primaryDepartment": "CNR",
-              "photo" : "/api/my/committees/photo/member/123456"
+              "photo": "/api/my/committees/photo/member/123456"
             }
           ],
-          "coChair":[
+          "coChair": [
             {
               "name": "Manfred Lemass",
               "email": "mlemass@inst.edu",
@@ -175,13 +259,41 @@
               "name": "Marco Tvedt",
               "email": "mtvedt@inst.edu",
               "primaryDepartment": "Chemistry",
-              "photo" : "/api/my/committees/photo/member/123456"
+              "photo": "/api/my/committees/photo/member/123456"
             },
             {
               "name": "Carla Zemd",
               "email": "czemd@inst.edu",
               "primaryDepartment": "CNR",
-              "photo" : "/api/my/committees/photo/member/123456"
+              "photo": "/api/my/committees/photo/member/123456"
+            }
+          ],
+          "insideMembers": [
+            {
+              "name": "Alex Moore",
+              "email": "amoore@inst.edu",
+              "primaryDepartment": "Chemistry",
+              "photo": "/api/my/committees/photo/member/123456"
+            },
+            {
+              "name": "Lisa Less",
+              "email": "lless@inst.edu",
+              "primaryDepartment": "CNR",
+              "photo": "/api/my/committees/photo/member/123456"
+            }
+          ],
+          "outsideMembers": [
+            {
+              "name": "John high",
+              "email": "jhigh@inst.edu",
+              "primaryDepartment": "Chemistry",
+              "photo": "/api/my/committees/photo/member/123456"
+            },
+            {
+              "name": "Jan Lowe",
+              "email": "jlow@inst.edu",
+              "primaryDepartment": "CNR",
+              "photo": "/api/my/committees/photo/member/123456"
             }
           ],
           "academicSenate": [
@@ -189,7 +301,7 @@
               "name": "Paul Davidson",
               "email": "pdavidson@inst.edu",
               "primaryDepartment": "CNR",
-              "photo" : "/api/my/committees/photo/member/123456"
+              "photo": "/api/my/committees/photo/member/123456"
             }
           ]
         }
@@ -198,7 +310,7 @@
         "student": {
           "name": "Frank Cathers",
           "email": "fcathers@inst.deu",
-          "photo" : "/api/my/committees/photo/student/123456"
+          "photo": "/api/my/committees/photo/student/123456"
         },
         "serviceRange": "May 3, 2016 - Nov 14, 2019",
         "committeeType": "Master’s Thesis",
@@ -212,10 +324,10 @@
               "name": "Manfred Lemass",
               "email": "mlemass@inst.edu",
               "primaryDepartment": "CNR",
-              "photo" : "/api/my/committees/photo/member/123456"
+              "photo": "/api/my/committees/photo/member/123456"
             }
           ],
-          "coChair":[
+          "coChair": [
             {
               "name": "Manfred Lemass",
               "email": "mlemass@inst.edu",
@@ -227,13 +339,41 @@
               "name": "Marco Tvedt",
               "email": "mtvedt@inst.edu",
               "primaryDepartment": "Chemistry",
-              "photo" : "/api/my/committees/photo/member/123456"
+              "photo": "/api/my/committees/photo/member/123456"
             },
             {
               "name": "Carla Zemd",
               "email": "czemd@inst.edu",
               "primaryDepartment": "CNR",
-              "photo" : "/api/my/committees/photo/member/123456"
+              "photo": "/api/my/committees/photo/member/123456"
+            }
+          ],
+          "insideMembers": [
+            {
+              "name": "Alex Moore",
+              "email": "amoore@inst.edu",
+              "primaryDepartment": "Chemistry",
+              "photo": "/api/my/committees/photo/member/123456"
+            },
+            {
+              "name": "Lisa Less",
+              "email": "lless@inst.edu",
+              "primaryDepartment": "CNR",
+              "photo": "/api/my/committees/photo/member/123456"
+            }
+          ],
+          "outsideMembers": [
+            {
+              "name": "John high",
+              "email": "jhigh@inst.edu",
+              "primaryDepartment": "Chemistry",
+              "photo": "/api/my/committees/photo/member/123456"
+            },
+            {
+              "name": "Jan Lowe",
+              "email": "jlow@inst.edu",
+              "primaryDepartment": "CNR",
+              "photo": "/api/my/committees/photo/member/123456"
             }
           ],
           "academicSenate": [
@@ -241,7 +381,7 @@
               "name": "Paul Davidson",
               "email": "pdavidson@inst.edu",
               "primaryDepartment": "CNR",
-              "photo" : "/api/my/committees/photo/member/123456"
+              "photo": "/api/my/committees/photo/member/123456"
             }
           ]
         }
@@ -252,7 +392,7 @@
         "student": {
           "name": "Frank Cathers",
           "email": "fcathers@inst.deu",
-          "photo" : "/api/my/committees/photo/student/123456"
+          "photo": "/api/my/committees/photo/student/123456"
         },
         "serviceRange": "May 3, 2016 - Nov 14, 2019",
         "committeeType": "Master’s Thesis",
@@ -266,10 +406,10 @@
               "name": "Manfred Lemass",
               "email": "mlemass@inst.edu",
               "primaryDepartment": "CNR",
-              "photo" : "/api/my/committees/photo/member/123456"
+              "photo": "/api/my/committees/photo/member/123456"
             }
           ],
-          "coChair":[
+          "coChair": [
             {
               "name": "Manfred Lemass",
               "email": "mlemass@inst.edu",
@@ -281,13 +421,41 @@
               "name": "Marco Tvedt",
               "email": "mtvedt@inst.edu",
               "primaryDepartment": "Chemistry",
-              "photo" : "/api/my/committees/photo/member/123456"
+              "photo": "/api/my/committees/photo/member/123456"
             },
             {
               "name": "Carla Zemd",
               "email": "czemd@inst.edu",
               "primaryDepartment": "CNR",
-              "photo" : "/api/my/committees/photo/member/123456"
+              "photo": "/api/my/committees/photo/member/123456"
+            }
+          ],
+          "insideMembers": [
+            {
+              "name": "Alex Moore",
+              "email": "amoore@inst.edu",
+              "primaryDepartment": "Chemistry",
+              "photo": "/api/my/committees/photo/member/123456"
+            },
+            {
+              "name": "Lisa Less",
+              "email": "lless@inst.edu",
+              "primaryDepartment": "CNR",
+              "photo": "/api/my/committees/photo/member/123456"
+            }
+          ],
+          "outsideMembers": [
+            {
+              "name": "John high",
+              "email": "jhigh@inst.edu",
+              "primaryDepartment": "Chemistry",
+              "photo": "/api/my/committees/photo/member/123456"
+            },
+            {
+              "name": "Jan Lowe",
+              "email": "jlow@inst.edu",
+              "primaryDepartment": "CNR",
+              "photo": "/api/my/committees/photo/member/123456"
             }
           ],
           "academicSenate": [
@@ -295,7 +463,7 @@
               "name": "Paul Davidson",
               "email": "pdavidson@inst.edu",
               "primaryDepartment": "CNR",
-              "photo" : "/api/my/committees/photo/member/123456"
+              "photo": "/api/my/committees/photo/member/123456"
             }
           ]
         }
@@ -304,7 +472,7 @@
         "student": {
           "name": "Frank Cathers",
           "email": "fcathers@inst.deu",
-          "photo" : "/api/my/committees/photo/student/123456"
+          "photo": "/api/my/committees/photo/student/123456"
         },
         "serviceRange": "May 3, 2016 - Nov 14, 2019",
         "committeeType": "Master’s Thesis",
@@ -318,10 +486,10 @@
               "name": "Manfred Lemass",
               "email": "mlemass@inst.edu",
               "primaryDepartment": "CNR",
-              "photo" : "/api/my/committees/photo/member/123456"
+              "photo": "/api/my/committees/photo/member/123456"
             }
           ],
-          "coChair":[
+          "coChair": [
             {
               "name": "Manfred Lemass",
               "email": "mlemass@inst.edu",
@@ -333,13 +501,41 @@
               "name": "Marco Tvedt",
               "email": "mtvedt@inst.edu",
               "primaryDepartment": "Chemistry",
-              "photo" : "/api/my/committees/photo/member/123456"
+              "photo": "/api/my/committees/photo/member/123456"
             },
             {
               "name": "Carla Zemd",
               "email": "czemd@inst.edu",
               "primaryDepartment": "CNR",
-              "photo" : "/api/my/committees/photo/member/123456"
+              "photo": "/api/my/committees/photo/member/123456"
+            }
+          ],
+          "insideMembers": [
+            {
+              "name": "Alex Moore",
+              "email": "amoore@inst.edu",
+              "primaryDepartment": "Chemistry",
+              "photo": "/api/my/committees/photo/member/123456"
+            },
+            {
+              "name": "Lisa Less",
+              "email": "lless@inst.edu",
+              "primaryDepartment": "CNR",
+              "photo": "/api/my/committees/photo/member/123456"
+            }
+          ],
+          "outsideMembers": [
+            {
+              "name": "John high",
+              "email": "jhigh@inst.edu",
+              "primaryDepartment": "Chemistry",
+              "photo": "/api/my/committees/photo/member/123456"
+            },
+            {
+              "name": "Jan Lowe",
+              "email": "jlow@inst.edu",
+              "primaryDepartment": "CNR",
+              "photo": "/api/my/committees/photo/member/123456"
             }
           ],
           "academicSenate": [
@@ -347,7 +543,7 @@
               "name": "Paul Davidson",
               "email": "pdavidson@inst.edu",
               "primaryDepartment": "CNR",
-              "photo" : "/api/my/committees/photo/member/123456"
+              "photo": "/api/my/committees/photo/member/123456"
             }
           ]
         }
@@ -356,7 +552,7 @@
         "student": {
           "name": "Frank Cathers",
           "email": "fcathers@inst.deu",
-          "photo" : "/api/my/committees/photo/student/123456"
+          "photo": "/api/my/committees/photo/student/123456"
         },
         "serviceRange": "May 3, 2016 - Nov 14, 2019",
         "committeeType": "Master’s Thesis",
@@ -370,10 +566,10 @@
               "name": "Manfred Lemass",
               "email": "mlemass@inst.edu",
               "primaryDepartment": "CNR",
-              "photo" : "/api/my/committees/photo/member/123456"
+              "photo": "/api/my/committees/photo/member/123456"
             }
           ],
-          "coChair":[
+          "coChair": [
             {
               "name": "Manfred Lemass",
               "email": "mlemass@inst.edu",
@@ -385,13 +581,41 @@
               "name": "Marco Tvedt",
               "email": "mtvedt@inst.edu",
               "primaryDepartment": "Chemistry",
-              "photo" : "/api/my/committees/photo/member/123456"
+              "photo": "/api/my/committees/photo/member/123456"
             },
             {
               "name": "Carla Zemd",
               "email": "czemd@inst.edu",
               "primaryDepartment": "CNR",
-              "photo" : "/api/my/committees/photo/member/123456"
+              "photo": "/api/my/committees/photo/member/123456"
+            }
+          ],
+          "insideMemberss": [
+            {
+              "name": "Alex Moore",
+              "email": "amoore@inst.edu",
+              "primaryDepartment": "Chemistry",
+              "photo": "/api/my/committees/photo/member/123456"
+            },
+            {
+              "name": "Lisa Less",
+              "email": "lless@inst.edu",
+              "primaryDepartment": "CNR",
+              "photo": "/api/my/committees/photo/member/123456"
+            }
+          ],
+          "outsideMembers": [
+            {
+              "name": "John high",
+              "email": "jhigh@inst.edu",
+              "primaryDepartment": "Chemistry",
+              "photo": "/api/my/committees/photo/member/123456"
+            },
+            {
+              "name": "Jan Lowe",
+              "email": "jlow@inst.edu",
+              "primaryDepartment": "CNR",
+              "photo": "/api/my/committees/photo/member/123456"
             }
           ],
           "academicSenate": [
@@ -399,7 +623,7 @@
               "name": "Paul Davidson",
               "email": "pdavidson@inst.edu",
               "primaryDepartment": "CNR",
-              "photo" : "/api/my/committees/photo/member/123456"
+              "photo": "/api/my/committees/photo/member/123456"
             }
           ]
         }
@@ -408,7 +632,7 @@
         "student": {
           "name": "Frank Cathers",
           "email": "fcathers@inst.deu",
-          "photo" : "/api/my/committees/photo/student/123456"
+          "photo": "/api/my/committees/photo/student/123456"
         },
         "serviceRange": "May 3, 2016 - Nov 14, 2019",
         "committeeType": "Master’s Thesis",
@@ -422,10 +646,10 @@
               "name": "Manfred Lemass",
               "email": "mlemass@inst.edu",
               "primaryDepartment": "CNR",
-              "photo" : "/api/my/committees/photo/member/123456"
+              "photo": "/api/my/committees/photo/member/123456"
             }
           ],
-          "coChair":[
+          "coChair": [
             {
               "name": "Manfred Lemass",
               "email": "mlemass@inst.edu",
@@ -437,13 +661,13 @@
               "name": "Marco Tvedt",
               "email": "mtvedt@inst.edu",
               "primaryDepartment": "Chemistry",
-              "photo" : "/api/my/committees/photo/member/123456"
+              "photo": "/api/my/committees/photo/member/123456"
             },
             {
               "name": "Carla Zemd",
               "email": "czemd@inst.edu",
               "primaryDepartment": "CNR",
-              "photo" : "/api/my/committees/photo/member/123456"
+              "photo": "/api/my/committees/photo/member/123456"
             }
           ],
           "academicSenate": [
@@ -451,7 +675,7 @@
               "name": "Paul Davidson",
               "email": "pdavidson@inst.edu",
               "primaryDepartment": "CNR",
-              "photo" : "/api/my/committees/photo/member/123456"
+              "photo": "/api/my/committees/photo/member/123456"
             }
           ]
         }
@@ -460,7 +684,7 @@
         "student": {
           "name": "Frank Cathers",
           "email": "fcathers@inst.deu",
-          "photo" : "/api/my/committees/photo/student/123456"
+          "photo": "/api/my/committees/photo/student/123456"
         },
         "serviceRange": "May 3, 2016 - Nov 14, 2019",
         "committeeType": "Master’s Thesis",
@@ -474,10 +698,10 @@
               "name": "Manfred Lemass",
               "email": "mlemass@inst.edu",
               "primaryDepartment": "CNR",
-              "photo" : "/api/my/committees/photo/member/123456"
+              "photo": "/api/my/committees/photo/member/123456"
             }
           ],
-          "coChair":[
+          "coChair": [
             {
               "name": "Manfred Lemass",
               "email": "mlemass@inst.edu",
@@ -489,13 +713,13 @@
               "name": "Marco Tvedt",
               "email": "mtvedt@inst.edu",
               "primaryDepartment": "Chemistry",
-              "photo" : "/api/my/committees/photo/member/123456"
+              "photo": "/api/my/committees/photo/member/123456"
             },
             {
               "name": "Carla Zemd",
               "email": "czemd@inst.edu",
               "primaryDepartment": "CNR",
-              "photo" : "/api/my/committees/photo/member/123456"
+              "photo": "/api/my/committees/photo/member/123456"
             }
           ],
           "academicSenate": [
@@ -503,7 +727,7 @@
               "name": "Paul Davidson",
               "email": "pdavidson@inst.edu",
               "primaryDepartment": "CNR",
-              "photo" : "/api/my/committees/photo/member/123456"
+              "photo": "/api/my/committees/photo/member/123456"
             }
           ]
         }
@@ -512,7 +736,7 @@
         "student": {
           "name": "Frank Cathers",
           "email": "fcathers@inst.deu",
-          "photo" : "/api/my/committees/photo/student/123456"
+          "photo": "/api/my/committees/photo/student/123456"
         },
         "serviceRange": "May 3, 2016 - Nov 14, 2019",
         "committeeType": "Master’s Thesis",
@@ -526,10 +750,10 @@
               "name": "Manfred Lemass",
               "email": "mlemass@inst.edu",
               "primaryDepartment": "CNR",
-              "photo" : "/api/my/committees/photo/member/123456"
+              "photo": "/api/my/committees/photo/member/123456"
             }
           ],
-          "coChair":[
+          "coChair": [
             {
               "name": "Manfred Lemass",
               "email": "mlemass@inst.edu",
@@ -541,13 +765,13 @@
               "name": "Marco Tvedt",
               "email": "mtvedt@inst.edu",
               "primaryDepartment": "Chemistry",
-              "photo" : "/api/my/committees/photo/member/123456"
+              "photo": "/api/my/committees/photo/member/123456"
             },
             {
               "name": "Carla Zemd",
               "email": "czemd@inst.edu",
               "primaryDepartment": "CNR",
-              "photo" : "/api/my/committees/photo/member/123456"
+              "photo": "/api/my/committees/photo/member/123456"
             }
           ],
           "academicSenate": [
@@ -555,7 +779,7 @@
               "name": "Paul Davidson",
               "email": "pdavidson@inst.edu",
               "primaryDepartment": "CNR",
-              "photo" : "/api/my/committees/photo/member/123456"
+              "photo": "/api/my/committees/photo/member/123456"
             }
           ]
         }
@@ -564,7 +788,7 @@
         "student": {
           "name": "Frank Cathers",
           "email": "fcathers@inst.deu",
-          "photo" : "/api/my/committees/photo/student/123456"
+          "photo": "/api/my/committees/photo/student/123456"
         },
         "serviceRange": "May 3, 2016 - Nov 14, 2019",
         "committeeType": "Master’s Thesis",
@@ -578,10 +802,10 @@
               "name": "Manfred Lemass",
               "email": "mlemass@inst.edu",
               "primaryDepartment": "CNR",
-              "photo" : "/api/my/committees/photo/member/123456"
+              "photo": "/api/my/committees/photo/member/123456"
             }
           ],
-          "coChair":[
+          "coChair": [
             {
               "name": "Manfred Lemass",
               "email": "mlemass@inst.edu",
@@ -593,13 +817,13 @@
               "name": "Marco Tvedt",
               "email": "mtvedt@inst.edu",
               "primaryDepartment": "Chemistry",
-              "photo" : "/api/my/committees/photo/member/123456"
+              "photo": "/api/my/committees/photo/member/123456"
             },
             {
               "name": "Carla Zemd",
               "email": "czemd@inst.edu",
               "primaryDepartment": "CNR",
-              "photo" : "/api/my/committees/photo/member/123456"
+              "photo": "/api/my/committees/photo/member/123456"
             }
           ],
           "academicSenate": [
@@ -607,7 +831,7 @@
               "name": "Paul Davidson",
               "email": "pdavidson@inst.edu",
               "primaryDepartment": "CNR",
-              "photo" : "/api/my/committees/photo/member/123456"
+              "photo": "/api/my/committees/photo/member/123456"
             }
           ]
         }
@@ -616,7 +840,7 @@
         "student": {
           "name": "Frank Cathers",
           "email": "fcathers@inst.deu",
-          "photo" : "/api/my/committees/photo/student/123456"
+          "photo": "/api/my/committees/photo/student/123456"
         },
         "serviceRange": "May 3, 2016 - Nov 14, 2019",
         "committeeType": "Master’s Thesis",
@@ -630,10 +854,10 @@
               "name": "Manfred Lemass",
               "email": "mlemass@inst.edu",
               "primaryDepartment": "CNR",
-              "photo" : "/api/my/committees/photo/member/123456"
+              "photo": "/api/my/committees/photo/member/123456"
             }
           ],
-          "coChair":[
+          "coChair": [
             {
               "name": "Manfred Lemass",
               "email": "mlemass@inst.edu",
@@ -645,13 +869,13 @@
               "name": "Marco Tvedt",
               "email": "mtvedt@inst.edu",
               "primaryDepartment": "Chemistry",
-              "photo" : "/api/my/committees/photo/member/123456"
+              "photo": "/api/my/committees/photo/member/123456"
             },
             {
               "name": "Carla Zemd",
               "email": "czemd@inst.edu",
               "primaryDepartment": "CNR",
-              "photo" : "/api/my/committees/photo/member/123456"
+              "photo": "/api/my/committees/photo/member/123456"
             }
           ],
           "academicSenate": [
@@ -659,7 +883,7 @@
               "name": "Paul Davidson",
               "email": "pdavidson@inst.edu",
               "primaryDepartment": "CNR",
-              "photo" : "/api/my/committees/photo/member/123456"
+              "photo": "/api/my/committees/photo/member/123456"
             }
           ]
         }
@@ -668,7 +892,7 @@
         "student": {
           "name": "Frank Cathers",
           "email": "fcathers@inst.deu",
-          "photo" : "/api/my/committees/photo/student/123456"
+          "photo": "/api/my/committees/photo/student/123456"
         },
         "serviceRange": "May 3, 2016 - Nov 14, 2019",
         "committeeType": "Master’s Thesis",
@@ -682,10 +906,10 @@
               "name": "Manfred Lemass",
               "email": "mlemass@inst.edu",
               "primaryDepartment": "CNR",
-              "photo" : "/api/my/committees/photo/member/123456"
+              "photo": "/api/my/committees/photo/member/123456"
             }
           ],
-          "coChair":[
+          "coChair": [
             {
               "name": "Manfred Lemass",
               "email": "mlemass@inst.edu",
@@ -697,13 +921,13 @@
               "name": "Marco Tvedt",
               "email": "mtvedt@inst.edu",
               "primaryDepartment": "Chemistry",
-              "photo" : "/api/my/committees/photo/member/123456"
+              "photo": "/api/my/committees/photo/member/123456"
             },
             {
               "name": "Carla Zemd",
               "email": "czemd@inst.edu",
               "primaryDepartment": "CNR",
-              "photo" : "/api/my/committees/photo/member/123456"
+              "photo": "/api/my/committees/photo/member/123456"
             }
           ],
           "academicSenate": [
@@ -711,7 +935,7 @@
               "name": "Paul Davidson",
               "email": "pdavidson@inst.edu",
               "primaryDepartment": "CNR",
-              "photo" : "/api/my/committees/photo/member/123456"
+              "photo": "/api/my/committees/photo/member/123456"
             }
           ]
         }
@@ -720,7 +944,7 @@
         "student": {
           "name": "Frank Cathers",
           "email": "fcathers@inst.deu",
-          "photo" : "/api/my/committees/photo/student/123456"
+          "photo": "/api/my/committees/photo/student/123456"
         },
         "serviceRange": "May 3, 2016 - Nov 14, 2019",
         "committeeType": "Master’s Thesis",
@@ -734,10 +958,10 @@
               "name": "Manfred Lemass",
               "email": "mlemass@inst.edu",
               "primaryDepartment": "CNR",
-              "photo" : "/api/my/committees/photo/member/123456"
+              "photo": "/api/my/committees/photo/member/123456"
             }
           ],
-          "coChair":[
+          "coChair": [
             {
               "name": "Manfred Lemass",
               "email": "mlemass@inst.edu",
@@ -749,13 +973,13 @@
               "name": "Marco Tvedt",
               "email": "mtvedt@inst.edu",
               "primaryDepartment": "Chemistry",
-              "photo" : "/api/my/committees/photo/member/123456"
+              "photo": "/api/my/committees/photo/member/123456"
             },
             {
               "name": "Carla Zemd",
               "email": "czemd@inst.edu",
               "primaryDepartment": "CNR",
-              "photo" : "/api/my/committees/photo/member/123456"
+              "photo": "/api/my/committees/photo/member/123456"
             }
           ],
           "academicSenate": [
@@ -763,7 +987,7 @@
               "name": "Paul Davidson",
               "email": "pdavidson@inst.edu",
               "primaryDepartment": "CNR",
-              "photo" : "/api/my/committees/photo/member/123456"
+              "photo": "/api/my/committees/photo/member/123456"
             }
           ]
         }
@@ -772,7 +996,7 @@
         "student": {
           "name": "Frank Cathers",
           "email": "fcathers@inst.deu",
-          "photo" : "/api/my/committees/photo/student/123456"
+          "photo": "/api/my/committees/photo/student/123456"
         },
         "serviceRange": "May 3, 2016 - Nov 14, 2019",
         "committeeType": "Master’s Thesis",
@@ -786,10 +1010,10 @@
               "name": "Manfred Lemass",
               "email": "mlemass@inst.edu",
               "primaryDepartment": "CNR",
-              "photo" : "/api/my/committees/photo/member/123456"
+              "photo": "/api/my/committees/photo/member/123456"
             }
           ],
-          "coChair":[
+          "coChair": [
             {
               "name": "Manfred Lemass",
               "email": "mlemass@inst.edu",
@@ -801,13 +1025,13 @@
               "name": "Marco Tvedt",
               "email": "mtvedt@inst.edu",
               "primaryDepartment": "Chemistry",
-              "photo" : "/api/my/committees/photo/member/123456"
+              "photo": "/api/my/committees/photo/member/123456"
             },
             {
               "name": "Carla Zemd",
               "email": "czemd@inst.edu",
               "primaryDepartment": "CNR",
-              "photo" : "/api/my/committees/photo/member/123456"
+              "photo": "/api/my/committees/photo/member/123456"
             }
           ],
           "academicSenate": [
@@ -815,7 +1039,7 @@
               "name": "Paul Davidson",
               "email": "pdavidson@inst.edu",
               "primaryDepartment": "CNR",
-              "photo" : "/api/my/committees/photo/member/123456"
+              "photo": "/api/my/committees/photo/member/123456"
             }
           ]
         }
@@ -824,7 +1048,7 @@
         "student": {
           "name": "Frank Cathers",
           "email": "fcathers@inst.deu",
-          "photo" : "/api/my/committees/photo/student/123456"
+          "photo": "/api/my/committees/photo/student/123456"
         },
         "serviceRange": "May 3, 2016 - Nov 14, 2019",
         "committeeType": "Master’s Thesis",
@@ -838,10 +1062,10 @@
               "name": "Manfred Lemass",
               "email": "mlemass@inst.edu",
               "primaryDepartment": "CNR",
-              "photo" : "/api/my/committees/photo/member/123456"
+              "photo": "/api/my/committees/photo/member/123456"
             }
           ],
-          "coChair":[
+          "coChair": [
             {
               "name": "Manfred Lemass",
               "email": "mlemass@inst.edu",
@@ -853,13 +1077,13 @@
               "name": "Marco Tvedt",
               "email": "mtvedt@inst.edu",
               "primaryDepartment": "Chemistry",
-              "photo" : "/api/my/committees/photo/member/123456"
+              "photo": "/api/my/committees/photo/member/123456"
             },
             {
               "name": "Carla Zemd",
               "email": "czemd@inst.edu",
               "primaryDepartment": "CNR",
-              "photo" : "/api/my/committees/photo/member/123456"
+              "photo": "/api/my/committees/photo/member/123456"
             }
           ],
           "academicSenate": [
@@ -867,7 +1091,7 @@
               "name": "Paul Davidson",
               "email": "pdavidson@inst.edu",
               "primaryDepartment": "CNR",
-              "photo" : "/api/my/committees/photo/member/123456"
+              "photo": "/api/my/committees/photo/member/123456"
             }
           ]
         }
@@ -876,7 +1100,7 @@
         "student": {
           "name": "Frank Cathers",
           "email": "fcathers@inst.deu",
-          "photo" : "/api/my/committees/photo/student/123456"
+          "photo": "/api/my/committees/photo/student/123456"
         },
         "serviceRange": "May 3, 2016 - Nov 14, 2019",
         "committeeType": "Master’s Thesis",
@@ -890,10 +1114,10 @@
               "name": "Manfred Lemass",
               "email": "mlemass@inst.edu",
               "primaryDepartment": "CNR",
-              "photo" : "/api/my/committees/photo/member/123456"
+              "photo": "/api/my/committees/photo/member/123456"
             }
           ],
-          "coChair":[
+          "coChair": [
             {
               "name": "Manfred Lemass",
               "email": "mlemass@inst.edu",
@@ -905,13 +1129,13 @@
               "name": "Marco Tvedt",
               "email": "mtvedt@inst.edu",
               "primaryDepartment": "Chemistry",
-              "photo" : "/api/my/committees/photo/member/123456"
+              "photo": "/api/my/committees/photo/member/123456"
             },
             {
               "name": "Carla Zemd",
               "email": "czemd@inst.edu",
               "primaryDepartment": "CNR",
-              "photo" : "/api/my/committees/photo/member/123456"
+              "photo": "/api/my/committees/photo/member/123456"
             }
           ],
           "academicSenate": [
@@ -919,7 +1143,7 @@
               "name": "Paul Davidson",
               "email": "pdavidson@inst.edu",
               "primaryDepartment": "CNR",
-              "photo" : "/api/my/committees/photo/member/123456"
+              "photo": "/api/my/committees/photo/member/123456"
             }
           ]
         }
@@ -928,7 +1152,7 @@
         "student": {
           "name": "Frank Cathers",
           "email": "fcathers@inst.deu",
-          "photo" : "/api/my/committees/photo/student/123456"
+          "photo": "/api/my/committees/photo/student/123456"
         },
         "serviceRange": "May 3, 2016 - Nov 14, 2019",
         "committeeType": "Master’s Thesis",
@@ -942,10 +1166,10 @@
               "name": "Manfred Lemass",
               "email": "mlemass@inst.edu",
               "primaryDepartment": "CNR",
-              "photo" : "/api/my/committees/photo/member/123456"
+              "photo": "/api/my/committees/photo/member/123456"
             }
           ],
-          "coChair":[
+          "coChair": [
             {
               "name": "Manfred Lemass",
               "email": "mlemass@inst.edu",
@@ -957,13 +1181,13 @@
               "name": "Marco Tvedt",
               "email": "mtvedt@inst.edu",
               "primaryDepartment": "Chemistry",
-              "photo" : "/api/my/committees/photo/member/123456"
+              "photo": "/api/my/committees/photo/member/123456"
             },
             {
               "name": "Carla Zemd",
               "email": "czemd@inst.edu",
               "primaryDepartment": "CNR",
-              "photo" : "/api/my/committees/photo/member/123456"
+              "photo": "/api/my/committees/photo/member/123456"
             }
           ],
           "academicSenate": [
@@ -971,7 +1195,7 @@
               "name": "Paul Davidson",
               "email": "pdavidson@inst.edu",
               "primaryDepartment": "CNR",
-              "photo" : "/api/my/committees/photo/member/123456"
+              "photo": "/api/my/committees/photo/member/123456"
             }
           ]
         }

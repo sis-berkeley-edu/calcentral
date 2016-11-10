@@ -9,6 +9,8 @@ module MyCommittees::CommitteesModule
     {
       chair: [],
       coChair: [],
+      insideMembers: [],
+      outsideMembers: [],
       additionalReps: [],
       academicSenate: []
     }
@@ -111,9 +113,13 @@ module MyCommittees::CommitteesModule
     case role_name
       when 'CHAI'
         :chair
-      when 'COCH', 'INSD'
+      when 'COCH'
         :coChair
-      when 'ACSN', 'OUTS', 'ACAD'
+      when 'INSD'
+        :insideMembers
+      when 'OUTS'
+        :outsideMembers
+      when 'ACSN', 'ACAD'
         :academicSenate
       when 'ADDL'
         :additionalReps

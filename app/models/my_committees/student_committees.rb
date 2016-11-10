@@ -16,9 +16,7 @@ module MyCommittees
       feed = CampusSolutions::StudentCommittees.new(user_id: @uid).get[:feed]
 
       if feed && (cs_committees = feed[:ucSrStudentCommittee][:studentCommittees])
-        # Only process and return active committees
-        active_committees = cs_committees.select{|c| c.present? && c[:studentMilestoneCompleteDate].blank?}
-        result[:studentCommittees] = parse_cs_student_committees active_committees
+        result[:studentCommittees] = parse_cs_student_committees cs_committees
       end
       result
     end
