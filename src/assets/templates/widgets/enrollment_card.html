@@ -1,45 +1,71 @@
 <div class="cc-enrollment-card" data-ng-controller="EnrollmentCardController" data-cc-spinner-directive="isLoading">
-  <div data-ng-if="enrollmentInstructions.length > 0">
-    <div class="cc-widget cc-widget-enrollment-card" data-ng-repeat="enrollmentInstruction in enrollmentInstructions" data-ng-if="enrollmentInstruction.enrollmentPeriod">
+
+  <div data-ng-if="enrollmentInstructionDecks.length > 0">
+
+    <div class="cc-widget cc-widget-enrollment-card" data-ng-repeat="enrollmentDeck in enrollmentInstructionDecks">
+
       <div class="cc-widget-title">
         <h2>
-          <span data-ng-if="!isInstructionType(enrollmentInstruction, ['concurrent'])">
+          <span data-ng-if="!isInstructionType(enrollmentDeck.cards[enrollmentDeck.selectedCardIndex], ['concurrent'])">
             Class Enrollment
           </span>
-          <span data-ng-if="isInstructionType(enrollmentInstruction, ['concurrent'])">
+          <span data-ng-if="isInstructionType(enrollmentDeck.cards[enrollmentDeck.selectedCardIndex], ['concurrent'])">
             Concurrent Enrollment
           </span>
-          <span class="cc-widget-title-sub" data-ng-bind="enrollmentInstruction.termDescr"></span>
+          <span class="cc-widget-title-sub" data-ng-bind="enrollmentDeck.cards[enrollmentDeck.selectedCardIndex].termDescr"></span>
         </h2>
       </div>
-      <div class="cc-widget-text cc-enrollment-card-advisors-container">
-        <div data-ng-include="'widgets/enrollment/consult_advisor.html'"></div>
+
+      <div class="cc-enrollment-card-text-tabs-container cc-widget-text">
+        Term:
+        <span data-ng-repeat="term in enrollmentDeck.terms">
+          <input type="radio" id="cc-enrollment-card-deck{{$parent.$index}}-term{{$index}}" name="term" class="cc-visuallyhidden"
+            aria-selected="{{enrollmentDeck.selectedCardIndex==$index}}"
+            data-ng-click="switchTerm($index, enrollmentDeck)"
+            role="tab">
+          <label for="cc-enrollment-card-deck{{$parent.$index}}-term{{$index}}" class="cc-enrollment-card-text-tabs-item" aria-disabled="false"
+            data-ng-class="{'cc-enrollment-card-text-tabs-active':(enrollmentDeck.selectedCardIndex==$index)}"
+            data-ng-bind="term.termName">
+          </label>
+          <span data-ng-if="!$last">|</span>
+        </span>
       </div>
-      <div class="cc-widget-text cc-enrollment-card-head">
-        <div data-ng-if="!enrollmentInstruction.enrollmentPeriod[0]">
-          Please check back regularly for your assigned dates.
-        </div>
-        <div
-          class="cc-flex cc-flex-space-between cc-text-light"
-          data-ng-class="{'cc-enrollment-card-margin-top':(!enrollmentInstruction.enrollmentPeriod[0])}">
-          <div>
-            <strong>Activity</strong>
+
+      <div data-ng-if="enrollmentDeck.cards.length > 0">
+        <div data-ng-repeat="enrollmentInstruction in enrollmentDeck.cards"
+          data-ng-if="enrollmentDeck.selectedCardIndex==$index && enrollmentInstruction.enrollmentPeriod">
+
+          <div class="cc-widget-text cc-enrollment-card-advisors-container">
+            <div data-ng-include="'widgets/enrollment/consult_advisor.html'"></div>
           </div>
-          <div data-ng-if="enrollmentInstruction.enrollmentPeriod[0] && !isInstructionType(enrollmentInstruction, ['law', 'concurrent'])">
-            <strong>When</strong>
+          <div class="cc-widget-text cc-enrollment-card-head">
+            <div data-ng-if="!enrollmentInstruction.enrollmentPeriod[0]">
+              Please check back regularly for your assigned dates.
+            </div>
+            <div
+              class="cc-flex cc-flex-space-between cc-text-light"
+              data-ng-class="{'cc-enrollment-card-margin-top':(!enrollmentInstruction.enrollmentPeriod[0])}">
+              <div>
+                <strong>Activity</strong>
+              </div>
+              <div data-ng-if="enrollmentInstruction.enrollmentPeriod[0] && !isInstructionType(enrollmentInstruction, ['law', 'concurrent'])">
+                <strong>When</strong>
+              </div>
+            </div>
           </div>
+          <ul class="cc-widget-list cc-widget-list-border-top">
+            <li
+              data-ng-repeat="section in enrollmentInstruction.sections"
+              class="cc-widget-list-hover cc-enrollment-card-section"
+              data-ng-class="{'cc-widget-list-hover-opened':(section.show),'cc-widget-list-hover-notriangle':(isInstructionType(enrollmentInstruction, ['concurrent']))}"
+              data-cc-accessible-focus-directive
+              data-ng-click="toggleSection($event, section, enrollmentInstruction)"
+              data-ng-include="'widgets/enrollment/' + section.id + '.html'"
+            ></li>
+          </ul>
         </div>
       </div>
-      <ul class="cc-widget-list cc-widget-list-border-top">
-        <li
-          data-ng-repeat="section in enrollmentInstruction.sections"
-          class="cc-widget-list-hover cc-enrollment-card-section"
-          data-ng-class="{'cc-widget-list-hover-opened':(section.show),'cc-widget-list-hover-notriangle':(isInstructionType(enrollmentInstruction, ['concurrent']))}"
-          data-cc-accessible-focus-directive
-          data-ng-click="toggleSection($event, section, enrollmentInstruction)"
-          data-ng-include="'widgets/enrollment/' + section.id + '.html'"
-        ></li>
-      </ul>
+
     </div>
   </div>
 </div>

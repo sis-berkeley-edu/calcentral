@@ -24,6 +24,12 @@ describe Berkeley::TermCodes do
         term_cd: 'D'
       })
     end
+
+    it 'should indicate if EDO term id indicates a summer term' do
+      expect(Berkeley::TermCodes.edo_id_is_summer?('2172')).to eq false
+      expect(Berkeley::TermCodes.edo_id_is_summer?('2175')).to eq true
+      expect(Berkeley::TermCodes.edo_id_is_summer?('2178')).to eq false
+    end
   end
 
   it "should convert code and year into nice English" do

@@ -14,7 +14,7 @@ describe MyClassEnrollmentsController do
         session['user_id'] = user_id
         get feed
         json = JSON.parse(response.body)
-        expect(json).to have_key('enrollmentTermInstructionTypes')
+        expect(json).to have_key('enrollmentTermInstructionTypeDecks')
         expect(json).to have_key('enrollmentTermInstructions')
         expect(json).to have_key('enrollmentTermAcademicPlanner')
       end

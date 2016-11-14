@@ -170,14 +170,14 @@ describe MyAcademics::ClassEnrollments do
       let(:cs_enrollment_career_terms) { [{ termId: '2168', termDescr: '2016 Fall', acadCareer: 'UGRD' }] }
       let(:user_is_student) { true }
       let(:feed) { subject.get_feed }
-      it 'include enrollment instruction types' do
-        types = feed[:enrollmentTermInstructionTypes]
+      it 'include enrollment instruction type decks' do
+        types = feed[:enrollmentTermInstructionTypeDecks]
         expect(types.count).to eq 1
-        expect(types[0][:role]).to eq 'default'
-        expect(types[0][:careerCode]).to eq 'UGRD'
-        expect(types[0][:academicPlans].count).to eq 1
-        expect(types[0][:term][:termId]).to eq '2168'
-        expect(types[0][:term][:termDescr]).to eq '2016 Fall'
+        expect(types[0][:cards][0][:role]).to eq 'default'
+        expect(types[0][:cards][0][:careerCode]).to eq 'UGRD'
+        expect(types[0][:cards][0][:academicPlans].count).to eq 1
+        expect(types[0][:cards][0][:term][:termId]).to eq '2168'
+        expect(types[0][:cards][0][:term][:termDescr]).to eq '2016 Fall'
       end
       it 'includes enrollment instructions for each active term' do
         instructions = feed[:enrollmentTermInstructions]
@@ -246,6 +246,107 @@ describe MyAcademics::ClassEnrollments do
     end
     it 'includes metadata for included plans' do
       expect(student_plan_roles[:metadata][:includes_fpf]).to eq false
+    end
+  end
+
+  context 'when providing career term role decks' do
+    let(:college_and_level_plans) { [undergrad_computer_science_plan, law_jsp_plan, graduate_electrical_engineering_plan] }
+    let(:decks) { subject.get_career_term_role_decks }
+    context 'when more than one role in any term' do
+      let(:cs_enrollment_career_terms) do
+        [
+          { termId: '2168', termDescr: '2016 Fall', acadCareer: 'UGRD' },
+          { termId: '2172', termDescr: '2017 Spring', acadCareer: 'GRAD' },
+          { termId: '2172', termDescr: '2017 Spring', acadCareer: 'LAW' },
+        ]
+      end
+      it 'groups roles into decks by design' do
+        expect(decks).to be_an_instance_of Array
+        expect(decks.length).to eq 2
+        expect(decks[0][:cards].length).to eq 2
+        expect(decks[1][:cards].length).to eq 1
+        expect(decks[0][:cards][0][:role]).to eq 'default'
+        expect(decks[0][:cards][0][:term][:termId]).to eq '2168'
+        expect(decks[0][:cards][1][:role]).to eq 'default'
+        expect(decks[0][:cards][1][:term][:termId]).to eq '2172'
+        expect(decks[1][:cards][0][:role]).to eq 'law'
+        expect(decks[1][:cards][0][:term][:termId]).to eq '2172'
+      end
+    end
+    context 'when no more than one role exists in any term' do
+      let(:cs_enrollment_career_terms) do
+        [
+          { termId: '2168', termDescr: '2016 Fall', acadCareer: 'UGRD' },
+          { termId: '2172', termDescr: '2017 Spring', acadCareer: 'GRAD' },
+          { termId: '2175', termDescr: '2017 Summer', acadCareer: 'GRAD' },
+        ]
+      end
+      it 'groups roles into single deck' do
+        expect(decks).to be_an_instance_of Array
+        expect(decks.length).to eq 1
+        expect(decks[0][:cards].length).to eq 3
+        expect(decks[0][:cards][0][:role]).to eq 'default'
+        expect(decks[0][:cards][0][:term][:termId]).to eq '2168'
+        expect(decks[0][:cards][1][:role]).to eq 'default'
+        expect(decks[0][:cards][1][:term][:termId]).to eq '2172'
+        expect(decks[0][:cards][2][:role]).to eq 'default'
+        expect(decks[0][:cards][2][:term][:termId]).to eq '2175'
+      end
+    end
+    context 'when no plans present for student' do
+      let(:college_and_level_plans) { [] }
+      it 'returns empty array' do
+        expect(decks).to be_an_instance_of Array
+        expect(decks.length).to eq 0
+      end
+    end
+  end
+
+  context 'when determining if a career term role set has multiple career-term roles within any term' do
+    let(:ugrd_2168_career_term_role) {
+      {
+        :role=>"default",
+        :career_code=>"UGRD",
+        :academic_plans=>[],
+        :term=>{
+          :termId=>"2168",
+          :termDescr=>"2016 Fall"
+        }
+      }
+    }
+    let(:grad_2172_career_term_role) {
+      {
+        :role=>"default",
+        :career_code=>"GRAD",
+        :academic_plans=>[],
+        :term=>{
+          :termId=>"2172",
+          :termDescr=>"2017 Spring"
+        }
+      }
+    }
+    let(:law_2172_career_term_role) {
+      {
+        :role=>"law",
+        :career_code=>"LAW",
+        :academic_plans=>[],
+        :term=>{
+          :termId=>"2172",
+          :termDescr=>"2017 Spring"
+        }
+      }
+    }
+    context 'when career term role set has multiple career-term roles within a term' do
+      let(:career_term_roles_set) { [ugrd_2168_career_term_role, grad_2172_career_term_role, law_2172_career_term_role] }
+      it 'returns true' do
+        expect(subject.has_multiple_career_term_roles_in_any_term?(career_term_roles_set)).to eq true
+      end
+    end
+    context 'when career term role set does not have multiple career-term roles within a term' do
+      let(:career_term_roles_set) { [ugrd_2168_career_term_role, grad_2172_career_term_role] }
+      it 'returns false' do
+        expect(subject.has_multiple_career_term_roles_in_any_term?(career_term_roles_set)).to eq false
+      end
     end
   end
 
@@ -413,47 +514,64 @@ describe MyAcademics::ClassEnrollments do
   end
 
   context 'when providing active career term data' do
+    let(:active_career_terms) { subject.get_active_career_terms }
+    let(:active_term_ids) { subject.get_active_term_ids }
     context 'when active terms are not returned' do
       let(:cs_enrollment_career_terms) { [] }
       it 'returns empty array' do
-        expect(subject.get_active_career_terms).to eq []
+        expect(active_career_terms).to eq []
       end
     end
 
     context 'when active terms are returned in non-chronological order' do
       let(:cs_enrollment_career_terms) { [cs_career_term_ugrd_fall_2016, cs_career_term_ugrd_spring_2017, cs_career_term_ugrd_summer_2016] }
       it 'returns active terms in order of term ID' do
-        result = subject.get_active_career_terms
-        expect(result.count).to eq 3
-        expect result[0][:termId] = '2165'
-        expect result[1][:termId] = '2168'
-        expect result[2][:termId] = '2172'
+        expect(active_career_terms.count).to eq 3
+        expect(active_career_terms[0][:termId]).to eq '2165'
+        expect(active_career_terms[1][:termId]).to eq '2168'
+        expect(active_career_terms[2][:termId]).to eq '2172'
+      end
+
+      it 'includes normalized english term name' do
+        expect(active_career_terms[0][:termName]).to eq 'Summer 2016'
+        expect(active_career_terms[1][:termName]).to eq 'Fall 2016'
+        expect(active_career_terms[2][:termName]).to eq 'Spring 2017'
+      end
+
+      it 'indicates if term is summer' do
+        expect(active_career_terms[0][:termIsSummer]).to eq true
+        expect(active_career_terms[1][:termIsSummer]).to eq false
+        expect(active_career_terms[2][:termIsSummer]).to eq false
       end
     end
 
     context 'when active terms are returned' do
       context 'when providing career terms' do
         it 'returns active terms for each career' do
-          results = subject.get_active_career_terms
-          expect(results.count).to eq 3
-          expect results[0][:termId] = '2165'
-          expect results[0][:termDescr] = '2016 Summer'
-          expect results[0][:acadCareer] = 'UGRD'
-          expect results[1][:termId] = '2168'
-          expect results[1][:termDescr] = '2016 Fall'
-          expect results[1][:acadCareer] = 'GRAD'
-          expect results[2][:termId] = '2168'
-          expect results[2][:termDescr] = '2016 Fall'
-          expect results[2][:acadCareer] = 'LAW'
+          expect(active_career_terms.count).to eq 3
+          expect(active_career_terms[0][:termId]).to eq '2165'
+          expect(active_career_terms[0][:termDescr]).to eq '2016 Summer'
+          expect(active_career_terms[0][:termName]).to eq 'Summer 2016'
+          expect(active_career_terms[0][:termIsSummer]).to eq true
+          expect(active_career_terms[0][:acadCareer]).to eq 'UGRD'
+          expect(active_career_terms[1][:termId]).to eq '2168'
+          expect(active_career_terms[1][:termDescr]).to eq '2016 Fall'
+          expect(active_career_terms[1][:termName]).to eq 'Fall 2016'
+          expect(active_career_terms[1][:termIsSummer]).to eq false
+          expect(active_career_terms[1][:acadCareer]).to eq 'GRAD'
+          expect(active_career_terms[2][:termId]).to eq '2168'
+          expect(active_career_terms[2][:termDescr]).to eq '2016 Fall'
+          expect(active_career_terms[2][:termName]).to eq 'Fall 2016'
+          expect(active_career_terms[2][:termIsSummer]).to eq false
+          expect(active_career_terms[2][:acadCareer]).to eq 'LAW'
         end
       end
 
       context 'when providing unique term ids' do
         it 'provides unique term codes for active career terms' do
-          result = subject.get_active_term_ids
-          expect(result.count).to eq 2
-          expect(result[0]).to eq '2165'
-          expect(result[1]).to eq '2168'
+          expect(active_term_ids.count).to eq 2
+          expect(active_term_ids[0]).to eq '2165'
+          expect(active_term_ids[1]).to eq '2168'
         end
       end
     end
@@ -462,13 +580,13 @@ describe MyAcademics::ClassEnrollments do
       let(:cs_enrollment_career_terms) { [] }
       context 'when providing career terms' do
         it 'returns no active career terms' do
-          expect(subject.get_active_career_terms).to eq []
+          expect(active_career_terms).to eq []
         end
       end
 
       context 'when providing unique terms' do
         it 'provides empty array for active term ids' do
-          expect(subject.get_active_term_ids).to eq []
+          expect(active_term_ids).to eq []
         end
       end
     end

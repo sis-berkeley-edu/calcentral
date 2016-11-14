@@ -8,6 +8,8 @@ var _ = require('lodash');
  * Main controller for the enrollment card on the My Academics and Student Overview pages
  */
 angular.module('calcentral.controllers').controller('EnrollmentCardController', function(apiService, enrollmentFactory, linkService, $route, $scope) {
+  $scope.accessibilityAnnounce = apiService.util.accessibilityAnnounce;
+
   var sections = [
     {
       id: 'plan',
@@ -125,28 +127,26 @@ angular.module('calcentral.controllers').controller('EnrollmentCardController', 
    * Associates term based enrollment instructions and academic plans
    * with enrollment instruction types
    */
-  var parseEnrollmentInstructions = function(data) {
-    var enrollmentInstructions = _.get(data, 'enrollmentInstructions');
-    enrollmentInstructions = _.map(enrollmentInstructions, function(enrollmentInstruction) {
-      var instruction = mapLinks(enrollmentInstruction);
-      instruction = setSections(instruction);
-      instruction = groupByCareer(instruction);
-      return instruction;
+  var parseEnrollmentInstructionDecks = function(data) {
+    var enrollmentInstructionDecks = _.get(data, 'enrollmentInstructionDecks');
+    enrollmentInstructionDecks = _.map(enrollmentInstructionDecks, function(deck) {
+      deck.cards = _.map(deck.cards, function(enrollmentInstruction) {
+        var instruction = mapLinks(enrollmentInstruction);
+        instruction = setSections(instruction);
+        instruction = groupByCareer(instruction);
+        return instruction;
+      });
+      return deck;
     });
-
-    /**
-     * Sort items by `term` in descending order, so that latest term is first.
-     */
-    enrollmentInstructions = _.reverse(_.sortBy(enrollmentInstructions, ['term']));
-    $scope.enrollmentInstructions = enrollmentInstructions;
+    $scope.enrollmentInstructionDecks = enrollmentInstructionDecks;
   };
 
   /**
    * Load the enrollment data and fire off subsequent events
    */
   var loadEnrollmentData = function() {
-    enrollmentFactory.getEnrollmentInstructions()
-      .then(parseEnrollmentInstructions)
+    enrollmentFactory.getEnrollmentInstructionDecks()
+      .then(parseEnrollmentInstructionDecks)
       .then(stopMainSpinner);
   };
 
@@ -166,6 +166,15 @@ angular.module('calcentral.controllers').controller('EnrollmentCardController', 
 
   var stopMainSpinner = function() {
     $scope.isLoading = false;
+  };
+
+  /**
+   * Changes the card currently displayed within a class enrollment card deck
+   */
+  $scope.switchTerm = function(index, enrollmentDeck) {
+    enrollmentDeck.selectedCardIndex = index;
+    var selectedCard = enrollmentDeck.cards[enrollmentDeck.selectedCardIndex];
+    $scope.accessibilityAnnounce('Loaded enrollment instructions for ' + _.get(selectedCard, 'term.termName', 'selected term'));
   };
 
   /**

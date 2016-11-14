@@ -35,6 +35,10 @@ module Berkeley
       self.from_edo_id(edo_term_id).values_at(:term_yr, :term_cd).join '-'
     end
 
+    def edo_id_is_summer?(edo_term_id)
+      return self.from_edo_id(edo_term_id)[:term_cd] == 'C'
+    end
+
     def slug_to_edo_id(slug)
       code = self.from_slug slug
       self.to_edo_id(code[:term_yr], code[:term_cd])

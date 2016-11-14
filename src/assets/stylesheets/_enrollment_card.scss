@@ -1,4 +1,23 @@
 .cc-enrollment-card {
+  .cc-enrollment-card-text-tabs-container {
+    font-size: 14px;
+    padding: 15px 15px 0 25px;
+    .cc-enrollment-card-text-tabs-item {
+      color: $cc-color-link;
+      text-decoration: none;
+      &:hover {
+        cursor: pointer;
+      }
+      &:hover, &:focus {
+        text-decoration: underline;
+      }
+    }
+    .cc-enrollment-card-text-tabs-active {
+      color: $cc-color-dark-grey;
+      font-weight: bold;
+    }
+  }
+
   .cc-enrollment-card-advisors-consult {
     margin: 0 10px;
   }
