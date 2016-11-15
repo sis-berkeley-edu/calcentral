@@ -143,6 +143,7 @@ module HubEdos
         if result[:roles].slice(:student, :exStudent, :applicant).has_value?(true)
           result[:student_id] = @campus_solutions_id
         end
+        result[:roles][:confidential] = true if edo[:confidential]
       else
         logger.error "No 'affiliations' found in CS attributes #{edo} for UID #{@uid}, CS ID #{@campus_solutions_id}"
       end

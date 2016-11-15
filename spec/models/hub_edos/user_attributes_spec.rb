@@ -2,6 +2,7 @@
 describe HubEdos::UserAttributes do
 
   let(:user_id) { '61889' }
+  let(:confidential_student) { false }
   let(:fake_contact_proxy) { HubEdos::Contacts.new(fake: true, user_id: user_id) }
   before { allow(HubEdos::Contacts).to receive(:new).and_return fake_contact_proxy }
 
@@ -29,10 +30,11 @@ describe HubEdos::UserAttributes do
   describe 'student_id depends on role' do
     before do
       allow_any_instance_of(HubEdos::Contacts).to receive(:get).and_return(
-       {feed: {'student' => {
-         'identifiers' => {'id' => '11667051', 'type' => 'student-id'},
-         'affiliations' => affiliations
-       }}}
+        {feed: {'student' => {
+          'identifiers' => [{'id' => '11667051', 'type' => 'student-id'}],
+          'affiliations' => affiliations,
+          'confidential' => confidential_student
+        }}}
       )
     end
     context 'non-student with Campus Solutions ID' do
@@ -54,6 +56,15 @@ describe HubEdos::UserAttributes do
       end
       it 'does set student_id' do
         expect(subject[:student_id]).to eq subject[:campus_solutions_id]
+      end
+      it 'does not set a confidential role value if the flag is false' do
+        expect(subject[:roles].keys).not_to include(:confidential)
+      end
+      context 'with confidential flag' do
+        let(:confidential_student) { true }
+        it 'includes a confidential role' do
+          expect(subject[:roles][:confidential]).to eq true
+        end
       end
     end
   end
