@@ -6,13 +6,15 @@ describe AdvisingStudentController do
   let(:student) { false }
   let(:ex_student) { false }
   let(:applicant) { false }
+  let(:confidential) { false }
   let(:student_uid) { random_id }
   let(:student_attributes) {
     {
       roles: {
         student: student,
         exStudent: ex_student,
-        applicant: applicant
+        applicant: applicant,
+        confidential: confidential
       }
     }
   }
@@ -92,6 +94,11 @@ describe AdvisingStudentController do
           expect(feed['collegeAndLevel']).to eq true
         end
       end
+      context 'confidential' do
+        let(:student) { true }
+        let(:confidential) { true }
+        it_behaves_like 'an endpoint refusing a request'
+      end
     end
   end
 
@@ -117,6 +124,11 @@ describe AdvisingStudentController do
         student_attributes[:roles].each do |key, value|
           expect(roles[key.to_s]).to be value
         end
+      end
+
+      context 'confidential' do
+        let(:confidential) { true }
+        it_behaves_like 'an endpoint refusing a request'
       end
     end
   end

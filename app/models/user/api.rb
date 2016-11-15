@@ -12,7 +12,7 @@ module User
       use_pooled_connection {
         @calcentral_user_data ||= User::Data.where(:uid => @uid).first
       }
-      @user_attributes ||= User::AggregatedAttributes.new(@uid, @options).get_feed
+      @user_attributes ||= User::AggregatedAttributes.new(@uid).get_feed
       @first_login_at ||= @calcentral_user_data ? @calcentral_user_data.first_login_at : nil
       @override_name ||= @calcentral_user_data ? @calcentral_user_data.preferred_name : nil
       @delegate_students = get_delegate_students

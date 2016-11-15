@@ -67,10 +67,8 @@ class AuthenticationStatePolicy
     real_auth.is_superuser? || real_auth.is_viewer?
   end
 
-  def can_view_as_for_all_uids?
-    @user.directly_authenticated? &&
-      (real_auth = @user.real_user_auth).active? &&
-      (real_auth.is_superuser? || real_auth.is_viewer?)
+  def can_view_confidential?
+    @user.real_user_auth.is_superuser? && @user.real_user_auth.active?
   end
 
   def can_view_webcast_sign_up?
@@ -81,9 +79,10 @@ class AuthenticationStatePolicy
 
   def can_view_other_user_photo?
     real_auth = @user.real_user_auth
-    return false unless real_auth.active?
-    attributes = User::AggregatedAttributes.new(@user.user_id).get_feed
-    has_advisor_role = attributes.try(:[], :roles).try(:[], :advisor)
-    real_auth.is_superuser? || has_advisor_role
+    if real_auth.is_superuser? && real_auth.active?
+      true
+    else
+      User::SearchUsersByUid.new(id: @user.user_id, roles: [:advisor]).search_users_by_uid.present?
+    end
   end
 end

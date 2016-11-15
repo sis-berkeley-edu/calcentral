@@ -122,6 +122,27 @@ class ApplicationController < ActionController::Base
     render_403 error
   end
 
+  def fetch_another_users_attributes(uid)
+    User::SearchUsersByUid.new(user_search_constraints.merge id: uid).search_users_by_uid
+  end
+
+  # Set limits on who can reach personal data of another user.
+  def user_search_constraints
+    if current_user.policy.can_view_as?
+      if current_user.policy.can_view_confidential?
+        {except: []}
+      else
+        {except: [:confidential]}
+      end
+    else
+      require_advisor current_user.user_id
+      {
+        roles: [:applicant, :student, :exStudent],
+        except: [:confidential]
+      }
+    end
+  end
+
   def render_403(error)
     # Subclasses might render JSON including error message.
     render :nothing => true, :status => 403

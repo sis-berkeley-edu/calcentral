@@ -1,12 +1,14 @@
 module User
   class AggregatedAttributes < UserSpecificModel
+    include Cache::CachedFeed
+    include Cache::UserCacheExpiry
     include CampusSolutions::ProfileFeatureFlagged
 
     def initialize(uid, options={})
       super(uid, options)
     end
 
-    def get_feed
+    def get_feed_internal
       @ldap_attributes = CalnetLdap::UserAttributes.new(user_id: @uid).get_feed
       @oracle_attributes = CampusOracle::UserAttributes.new(user_id: @uid).get_feed
       @edo_attributes = HubEdos::UserAttributes.new(user_id: @uid).get if is_cs_profile_feature_enabled

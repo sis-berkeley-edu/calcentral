@@ -1,7 +1,5 @@
 module User
   class SearchUsersByUid
-    extend Cache::Cacheable
-    include User::Parser
 
     def initialize(options={})
       @options = options
@@ -9,10 +7,10 @@ module User
 
     def search_users_by_uid
       # TODO Try reading User::Api cache first.
-      user = self.class.fetch_from_cache @options[:id] do
-        User::AggregatedAttributes.new(@options[:id]).get_feed
-      end
-      user if !user[:unknown] && has_role(user, @options[:roles])
+      user = User::AggregatedAttributes.new(@options[:id]).get_feed
+      user if !user[:unknown] &&
+        (@options[:roles].blank? || @options[:roles].find { |role| user[:roles][role] }) &&
+        (@options[:except].blank? || !(@options[:except].find { |role| user[:roles][role] }))
     end
 
   end

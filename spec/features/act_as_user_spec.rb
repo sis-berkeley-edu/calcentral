@@ -182,14 +182,15 @@ feature 'act_as_user' do
   end
 
   context 'with an invalid user' do
+    let(:invalid_uid) { random_id }
     before do
-      fake_uid_proxy = CalnetCrosswalk::ByUid.new
-      allow(fake_uid_proxy).to receive(:lookup_ldap_uid).and_return(nil)
-      allow(CalnetCrosswalk::ByUid).to receive(:new).and_return(fake_uid_proxy)
+      fake_uid_finder = User::AggregatedAttributes.new(invalid_uid)
+      allow(fake_uid_finder).to receive(:get_feed).and_return({unknown: true})
+      allow(User::AggregatedAttributes).to receive(:new).and_call_original
+      allow(User::AggregatedAttributes).to receive(:new).with(invalid_uid).and_return(fake_uid_finder)
     end
     scenario 'make sure you cannot act as an invalid user' do
       allow(Cache::UserCacheWarmer).to receive(:warm).and_return nil
-      invalid_uid = '89923458987947'
       login_with_cas '238382'
       suppress_rails_logging {
         act_as_user invalid_uid

@@ -10,14 +10,14 @@ class SearchUsersController < ApplicationController
   DEFAULT_LIMIT_SEARCH_RESULTS = 50
 
   def by_id
-    opts = user_search_options
+    opts = user_search_constraints
     id = params.require 'id'
     users = User::SearchUsers.new(opts.merge id: id).search_users
     render json: { users: prepare_to_render(users) }.to_json
   end
 
   def by_id_or_name
-    opts = user_search_options
+    opts = user_search_constraints
     id_or_name = params.require 'input'
     users = id_or_name =~ /\A\d+\z/ ?
       User::SearchUsers.new(opts.merge id: id_or_name).search_users :
@@ -45,17 +45,6 @@ class SearchUsersController < ApplicationController
     return DEFAULT_LIMIT_SEARCH_RESULTS unless (arg = params[:limit])
     raise Errors::BadRequestError, "The 'limit' param must be a number greater than zero. Invalid: #{arg}" if (limit = arg.to_i) <= 0
     limit
-  end
-
-  def user_search_options
-    if can_view_as_for_all_uids? current_user
-      {}
-    else
-      require_advisor current_user.user_id
-      {
-        roles: [:applicant, :student, :exStudent]
-      }
-    end
   end
 
 end

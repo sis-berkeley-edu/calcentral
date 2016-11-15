@@ -10,15 +10,7 @@ module ViewAsAuthorization
   end
 
   def authorize_query_stored_users(current_user)
-    return if can_view_as_for_all_uids? current_user
+    return if current_user.directly_authenticated? && current_user.policy.can_view_as?
     require_advisor current_user.user_id
   end
-
-  private
-
-  def can_view_as_for_all_uids?(user)
-    raise Pundit::NotAuthorizedError.new('User information was not found in session.') unless user && user.policy
-    user.policy.can_view_as_for_all_uids?
-  end
-
 end

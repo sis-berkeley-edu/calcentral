@@ -15,6 +15,9 @@ describe ActAsController do
 
   describe '#start' do
     let(:target_uid) {'978966'}
+    let(:target_roles) do
+      {student: true}
+    end
     let(:real_user_id) {'1021845'}
     let(:real_active) {true}
     before do
@@ -23,6 +26,9 @@ describe ActAsController do
         is_superuser?: real_superuser,
         is_viewer?: real_viewer,
         active?: real_active
+      ))
+      allow(User::AggregatedAttributes).to receive(:new).with(target_uid).and_return (double(
+        get_feed: {roles: target_roles}
       ))
     end
     shared_examples 'successful view-as' do
@@ -40,11 +46,26 @@ describe ActAsController do
       let(:real_superuser) {true}
       let(:real_viewer) {false}
       it_behaves_like 'successful view-as'
+      context 'with confidential student' do
+        let(:target_roles) do
+          {student: true, confidential: true}
+        end
+        it_behaves_like 'successful view-as'
+      end
     end
     context 'viewer' do
       let(:real_superuser) {false}
       let(:real_viewer) {true}
       it_behaves_like 'successful view-as'
+      context 'with confidential student' do
+        let(:target_roles) do
+          {student: true, confidential: true}
+        end
+        it 'is denied' do
+          session['user_id'] = real_user_id
+          it_fails
+        end
+      end
     end
     context 'possible Canvas masquerader' do
       let(:real_superuser) {true}
@@ -62,6 +83,11 @@ describe ActAsController do
     context 'normal user' do
       let(:real_superuser) {false}
       let(:real_viewer) {false}
+      before do
+        allow(User::AggregatedAttributes).to receive(:new).with(real_user_id).and_return (double(
+          get_feed: {roles: {}}
+        ))
+      end
       it 'is denied' do
         session['user_id'] = real_user_id
         it_fails
