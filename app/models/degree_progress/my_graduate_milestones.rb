@@ -14,7 +14,7 @@ module DegreeProgress
     ]
 
     def get_feed_internal
-      return {} unless is_feature_enabled && authorized?
+      return {} unless is_feature_enabled && target_audience?
       response = CampusSolutions::DegreeProgress::GraduateMilestones.new(user_id: @uid).get
       response[:feed] = HashConverter.camelize({
         degree_progress: process(response),
@@ -40,8 +40,8 @@ module DegreeProgress
       link
     end
 
-    def authorized?
-      authentication_state.policy.can_view_as? || authentication_state.policy.graduate_student? || authentication_state.policy.law_student?
+    def target_audience?
+      User::SearchUsersByUid.new(id: @uid, roles: [:graduate, :law]).search_users_by_uid.present?
     end
   end
 end
