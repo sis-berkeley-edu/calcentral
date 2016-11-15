@@ -14,7 +14,7 @@ describe 'MyAcademics::Grading' do
       allow(Settings.grading_period.general).to receive(:end).and_return '2016-12-12 23:59:59'
     end
     it 'it succeeds on grading period validation' do
-      expect(subject.valid_grading_period?).to eq true
+      expect(subject.valid_grading_period?(false)).to eq true
     end
   end
 
@@ -24,7 +24,7 @@ describe 'MyAcademics::Grading' do
       allow(Settings.grading_period.general).to receive(:end).and_return '2016-12-12 23:59:59'
     end
     it 'it fails on grading period validation' do
-      expect(subject.valid_grading_period?).to eq false
+      expect(subject.valid_grading_period?(false)).to eq false
     end
   end
 
@@ -34,7 +34,7 @@ describe 'MyAcademics::Grading' do
       allow(Settings.grading_period.general).to receive(:end).and_return 'notadate'
     end
     it 'it fails on grading period validation' do
-      expect(subject.valid_grading_period?).to eq false
+      expect(subject.valid_grading_period?(false)).to eq false
     end
   end
 
@@ -44,7 +44,7 @@ describe 'MyAcademics::Grading' do
       allow(Settings.grading_period.general).to receive(:end).and_return '2016-12-12 23:59:59'
     end
     it 'it fails on grading period validation' do
-      expect(subject.valid_grading_period?).to eq false
+      expect(subject.valid_grading_period?(false)).to eq false
     end
   end
 
@@ -54,7 +54,7 @@ describe 'MyAcademics::Grading' do
       allow(Settings.grading_period.general).to receive(:end).and_return ''
     end
     it 'it fails on grading period validation' do
-      expect(subject.valid_grading_period?).to eq false
+      expect(subject.valid_grading_period?(false)).to eq false
     end
   end
 
@@ -64,7 +64,7 @@ describe 'MyAcademics::Grading' do
       allow(Settings.grading_period.general).to receive(:end).and_return '2016-12-12 0:0:0'
     end
     it 'it fails on grading period validation' do
-      expect(subject.valid_grading_period?).to eq false
+      expect(subject.valid_grading_period?(false)).to eq false
     end
   end
 
@@ -73,7 +73,7 @@ describe 'MyAcademics::Grading' do
       allow(subject).to receive(:valid_grading_period?).and_return false
     end
     it 'it should return correct grading period status' do
-      expect(subject.get_grading_period_status).to eq :gradingPeriodNotSet
+      expect(subject.get_grading_period_status(false)).to eq :gradingPeriodNotSet
     end
   end
 
@@ -84,7 +84,7 @@ describe 'MyAcademics::Grading' do
       allow(DateTime).to receive(:now).and_return '2016-1-1 0:0:0'.to_datetime
     end
     it 'it should return correct grading period status' do
-      expect(subject.get_grading_period_status).to eq :beforeGradingPeriod
+      expect(subject.get_grading_period_status(false)).to eq :beforeGradingPeriod
     end
   end
 
@@ -95,7 +95,20 @@ describe 'MyAcademics::Grading' do
       allow(DateTime).to receive(:now).and_return '2016-12-12 7:7:7'.to_datetime
     end
     it 'it should return correct grading period status' do
-      expect(subject.get_grading_period_status).to eq :inGradingPeriod
+      expect(subject.get_grading_period_status(false)).to eq :inGradingPeriod
+    end
+  end
+
+  context 'when current date is in grading period for Law' do
+    before do
+      allow(Settings.grading_period.general).to receive(:start).and_return 'notadate'
+      allow(Settings.grading_period.general).to receive(:end).and_return 'notadate'
+      allow(Settings.grading_period.law).to receive(:start).and_return '2016-12-12 0:0:0'
+      allow(Settings.grading_period.law).to receive(:end).and_return '2016-12-12 23:59:59'
+      allow(DateTime).to receive(:now).and_return '2016-12-12 7:7:7'.to_datetime
+    end
+    it 'it should return correct grading period status' do
+      expect(subject.get_grading_period_status(true)).to eq :inGradingPeriod
     end
   end
 
@@ -106,7 +119,7 @@ describe 'MyAcademics::Grading' do
       allow(DateTime).to receive(:now).and_return '2017-1-1 0:0:0'.to_datetime
     end
     it 'it should return correct grading period status' do
-      expect(subject.get_grading_period_status).to eq :afterGradingPeriod
+      expect(subject.get_grading_period_status(false)).to eq :afterGradingPeriod
     end
   end
 
@@ -148,23 +161,23 @@ describe 'MyAcademics::Grading' do
     end
 
     it 'it should return nil for missing ccn in sections' do
-      expect(subject.get_grading_link(ccn = nil , term_code ='2168', cc_grading_status = :noCsData)).to eq nil
+      expect(subject.get_grading_link(ccn = nil , term_code ='2168', cc_grading_status = :noCsData, is_law = false)).to eq nil
     end
 
     it 'it should return nil for missing term_code in sections' do
-      expect(subject.get_grading_link(ccn = '123456' , term_code = nil, cc_grading_status = :noCsData)).to eq nil
+      expect(subject.get_grading_link(ccn = '123456' , term_code = nil, cc_grading_status = :noCsData, is_law = false)).to eq nil
     end
 
     it 'it should return expected for given set grading period and no CS data' do
-      expect(subject.get_grading_link(ccn = '12666' , term_code = '2168', cc_grading_status = :noCsData)).to eq nil
+      expect(subject.get_grading_link(ccn = '12666' , term_code = '2168', cc_grading_status = :noCsData, is_law = false)).to eq nil
     end
 
     it 'it should return expected result with no set grading period and no CS data' do
-      expect(subject.get_grading_link(ccn = '12666' , term_code = '2168', cc_grading_status = :noCsData)).to eq nil
+      expect(subject.get_grading_link(ccn = '12666' , term_code = '2168', cc_grading_status = :noCsData, is_law = false)).to eq nil
     end
 
     it 'it should return expected result with no set grading period and CS status' do
-      expect(subject.get_grading_link(ccn = '12666' , term_code = '2168', cc_grading_status = :POST)).to eq fake_grading_url
+      expect(subject.get_grading_link(ccn = '12666' , term_code = '2168', cc_grading_status = :POST, is_law = false)).to eq fake_grading_url
     end
   end
 

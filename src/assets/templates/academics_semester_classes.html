@@ -1,9 +1,7 @@
 <div class="cc-widget">
   <div class="cc-widget-title">
     <h2 class="cc-left"><span data-ng-bind="widgetSemesterName"></span> Classes</h2>
-    <a class="cc-academics-classes-booklist-link cc-right"
-       data-ng-href="/academics/booklist/{{selectedSemester.slug}}"
-       data-ng-if="selectedSemester.hasEnrollmentData && selectedSemester.timeBucket !== 'past'">Book List</a>
+    <a class="cc-academics-classes-booklist-link cc-right" data-ng-href="/academics/booklist/{{selectedSemester.slug}}" data-ng-if="selectedSemester.hasEnrollmentData && selectedSemester.timeBucket !== 'past'">Book List</a>
   </div>
   <div data-ng-if="selectedStudentSemester || ((selectedSemester.timeBucket === 'current') && !selectedTeachingSemester)">
     <div class="cc-academics-subtitle">
@@ -22,8 +20,7 @@
           <tbody data-ng-repeat="course in enrolledCourses" data-ng-class-even="'cc-academics-even'">
             <tr>
               <td class="cc-table-right-spacing cc-academics-course-number">
-                <a data-ng-href="{{course.url}}"
-                   data-ng-bind="course.course_code">
+                <a data-ng-href="{{course.url}}" data-ng-bind="course.course_code">
                 </a>
                 <div data-ng-repeat="section in course.sections">
                   <span data-ng-bind="section.section_label"></span>
@@ -51,8 +48,7 @@
             <tbody data-ng-repeat="course in waitlistedCourses">
               <tr data-ng-repeat="section in course.sections">
                 <td>
-                  <a data-ng-href="{{course.url}}"
-                     data-ng-bind="course.course_code">
+                  <a data-ng-href="{{course.url}}" data-ng-bind="course.course_code">
                   </a>
                   <span data-ng-bind="section.section_label"></span>
                 </td>
@@ -73,33 +69,18 @@
     <div class="cc-academics-subtitle">
       <h3>Teaching</h3>
     </div>
-    <div class="cc-academics-course-grading-header cc-widget-padding show-for-medium-up">
-      <div>
-        <span><a data-ng-href="{{selectedTeachingSemester.gradingAssistanceLink}}">&#9632; Assistance with Grading: General</a></span>
-        <span data-ng-if="selectedTeachingSemester.gradingPeriodStart && selectedTeachingSemester.gradingPeriodEnd" class="cc-academics-course-grading-header-period">
-          <span class="cc-text-light">Final Grading Entry Period:</span>
-          Start: <strong>{{selectedTeachingSemester.gradingPeriodStart}}</strong> |
-          Due: <strong>{{selectedTeachingSemester.gradingPeriodEnd}}</strong>
-        </span>
-      </div>
-      <div>
-        <a data-ng-href="{{selectedTeachingSemester.gradingAssistanceLinkLaw}}">&#9632; Assistance with Grading: Law</a>
-      </div>
-    </div>
     <div class="cc-widget-padding">
       <div class="cc-table">
         <table>
           <thead>
-            <th scope="col" class="cc-academics-course-number">Course</th>
+            <th scope="col" class="cc-table-right-spacing">Course</th>
             <th scope="col" class="show-for-medium-up">Class Number</th>
             <th scope="col">Title</th>
-            <th scope="col" class="show-for-medium-up cc-academics-course-section">Sections</th>
-            <th scope="col" class="show-for-medium-up cc-academics-course-grading">Grading Links</th>
-            <th scope="col" class="show-for-medium-up cc-academics-course-grading">Grading Status</th>
+            <th scope="col" class="show-for-medium-up">Sections</th>
           </thead>
           <tbody data-ng-if="selectedTeachingSemester.classes.length" data-ng-repeat="course in selectedTeachingSemester.classes">
             <tr data-ng-class-even="'cc-academics-even'">
-              <td class="cc-academics-course-number">
+              <td class="cc-table-right-spacing cc-academics-course-number">
                 <div data-ng-repeat="listing in course.listings">
                   <a data-ng-href="{{course.url}}"
                      data-ng-bind="listing.course_code">
@@ -115,27 +96,79 @@
                 <div data-ng-if="course.multiplePrimaries">Multiple</div>
               </td>
               <td data-ng-bind="course.title"></td>
-              <td class="show-for-medium-up cc-academics-course-section">
+              <td class="show-for-medium-up">
                 <div data-ng-repeat="scheduledSection in course.scheduledSections">
                   <span data-ng-bind="scheduledSection.count"></span> <span data-ng-bind="scheduledSection.format"></span>
                 </div>
               </td>
-              <td data-ng-if="course.sections[0].gradingLink.url" class="show-for-medium-up cc-academics-course-grading-link">
-                <a
-                data-cc-campus-solutions-link-directive="course.sections[0].gradingLink.url"
-                data-cc-campus-solutions-link-directive-enabled="{{course.sections[0].gradingLink.isCsLink}}"
-                data-cc-campus-solutions-link-directive-text="course.sections[0].gradingLink.ucFromText"
-                data-cc-outbound-enabled="false"
-                data-ng-disabled="!course.sections[0].gradingLink.url">Course Grades</a>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div data-ng-if="selectedTeachingSemester && (selectedTeachingSemester.gradingAssistanceLink || selectedTeachingSemester.gradingAssistanceLinkLaw)">
+    <div class="cc-academics-subtitle">
+      <h3>Grading</h3>
+    </div>
+    <div class="cc-academics-course-grading-header cc-widget-padding show-for-medium-up">
+      <div data-ng-if="selectedTeachingSemester.gradingAssistanceLink">
+        <span><a data-ng-href="{{selectedTeachingSemester.gradingAssistanceLink}}">&#9632; Assistance with Grading: General</a></span>
+        <span data-ng-if="selectedTeachingSemester.gradingPeriodStart && selectedTeachingSemester.gradingPeriodEnd" class="cc-academics-course-grading-header-period">
+          <span class="cc-text-light">Final Grading Entry Period:</span> Start: <strong>{{selectedTeachingSemester.gradingPeriodStart}}</strong> | Due: <strong>{{selectedTeachingSemester.gradingPeriodEnd}}</strong>
+        </span>
+      </div>
+      <div data-ng-if="selectedTeachingSemester.gradingAssistanceLinkLaw">
+        <span><a data-ng-href="{{selectedTeachingSemester.gradingAssistanceLinkLaw}}">&#9632; Assistance with Grading: Law</a></span>
+        <span data-ng-if="selectedTeachingSemester.gradingPeriodStartLaw && selectedTeachingSemester.gradingPeriodEndLaw" class="cc-academics-course-grading-header-period">
+          <span class="cc-text-light">Final Grading Entry Period (Law):</span> Start: <strong>{{selectedTeachingSemester.gradingPeriodStartLaw}}</strong> | Due: <strong>{{selectedTeachingSemester.gradingPeriodEndLaw}}</strong>
+        </span>
+      </div>
+    </div>
+    <div class="cc-widget-padding">
+      <div class="cc-table">
+        <table>
+          <thead>
+            <th scope="col" class="cc-academics-course-number">Course</th>
+            <th scope="col" class="show-for-medium-up">Class Number</th>
+            <th scope="col">Title</th>
+            <th scope="col" class="show-for-medium-up cc-academics-course-section">Section</th>
+            <th scope="col" class="show-for-medium-up cc-academics-course-grading">Grading Links</th>
+            <th scope="col" class="show-for-medium-up cc-academics-course-grading">Grading Status</th>
+          </thead>
+          <tbody data-ng-if="selectedTeachingSemester.classes.length" data-ng-repeat="course in selectedTeachingSemester.classes">
+            <tr data-ng-repeat="section in course.sections">
+              <td data-ng-if="section.is_primary_section" class="cc-academics-course-number"  >
+                <div data-ng-repeat="listing in course.listings">
+                  <a data-ng-href="{{course.url}}" data-ng-bind="listing.course_code">
+                  </a>
+                </div>
+                <div class="show-for-small-only">
+                  <span data-ng-bind="section.section_label"></span>
+                </div>
               </td>
-              <td data-ng-if="!course.sections[0].gradingLink.url" class="show-for-medium-up cc-academics-course-grading-link">
+              <td data-ng-if="section.is_primary_section" class="show-for-medium-up"  >
+                <div data-ng-bind="section.ccn"></div>
+              </td>
+              <td data-ng-if="section.is_primary_section" data-ng-bind="course.title"  ></td>
+              <td data-ng-if="section.is_primary_section" class="show-for-medium-up cc-academics-course-section"  >
+                <div data-ng-bind="section.section_label"></div>
+              </td>
+              <td data-ng-if="section.is_primary_section && section.gradingLink.url" class="show-for-medium-up cc-academics-course-grading-link" >
+                <a data-cc-campus-solutions-link-directive="section.gradingLink.url" data-cc-campus-solutions-link-directive-enabled="{{section.gradingLink.isCsLink}}"
+                  data-cc-campus-solutions-link-directive-text="section.gradingLink.ucFromText" data-cc-outbound-enabled="false"
+                  data-ng-disabled="!section.gradingLink.url">Course Grades</a>
+              </td>
+              <td data-ng-if="section.is_primary_section && !section.gradingLink.url" class="show-for-medium-up cc-academics-course-grading-link"  >
                 &mdash;
               </td>
-              <td class="show-for-medium-up cc-academics-course-grading-icon" data-ng-switch="course.sections[0].ccGradingStatus">
+              <td data-ng-if="section.is_primary_section" class="show-for-medium-up cc-academics-course-grading-icon" data-ng-switch="section.ccGradingStatus" >
                 <i data-ng-switch-when="periodNotStarted" class="fa fa-ban"></i>
                 <i data-ng-switch-when="periodStarted" class="fa fa-file-o"></i>
                 <i data-ng-switch-when="gradesSubmitted" class="fa fa-check cc-icon-green"></i>
                 <i data-ng-switch-when="gradesOverdue" class="fa fa-exclamation-circle cc-icon-red"></i>
+                <i data-ng-switch-when="" class="fa fa-ban"></i>
               </td>
             </tr>
           </tbody>
@@ -150,17 +183,20 @@
             <td>
               <span><i class="fa fa-ban"></i></span>
               <span>
-                Grade entry period not started or no access <br>
-                Law classes: Instructor may need to submit raw scores
+                Grade entry period not started or no access
+                <span data-ng-if="selectedTeachingSemester.gradingAssistanceLinkLaw">
+                  <br>
+                  Law classes: Instructor may need to submit raw scores
+                </span>
               </span>
             </td>
             <td>
               <span><i class="fa fa-file-o"></i></span>
-              <span>Grade entry period started and grades not yet submitted</span>
+              <span>Grade entry period started and grades not yet approved</span>
             </td>
             <td>
               <span><i class="fa fa-check cc-icon-green"></i></span>
-              <span>Grades submitted</span>
+              <span>Grades approved</span>
             </td>
             <td>
               <span><i class="fa fa-exclamation-circle cc-icon-red"></i></span>
@@ -168,6 +204,6 @@
             </td>
           </tr>
         </table>
+      </div>
     </div>
   </div>
-</div>
