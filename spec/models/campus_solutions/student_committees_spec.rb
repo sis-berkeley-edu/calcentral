@@ -1,6 +1,7 @@
 describe CampusSolutions::StudentCommittees do
 
-  let(:user_id) { '11417698' }
+  let(:user_id) { random_id }
+  let(:user_cs_id) { random_id }
 
   shared_examples 'a proxy that gets data' do
     subject { proxy.get }
@@ -13,6 +14,10 @@ describe CampusSolutions::StudentCommittees do
   end
 
   context 'mock proxy' do
+    before do
+      allow(CalnetCrosswalk::ByUid).to receive(:new).with(user_id: user_id).and_return(
+        double(lookup_campus_solutions_id: user_cs_id))
+    end
     let(:proxy) { CampusSolutions::StudentCommittees.new(fake: true, user_id: user_id) }
     subject { proxy.get }
     it_should_behave_like 'a proxy that gets data'
