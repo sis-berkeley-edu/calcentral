@@ -2,18 +2,20 @@ describe DegreeProgress::MyGraduateMilestones do
 
   let(:model) { described_class.new(user_id) }
   let(:user_id) { '12345' }
+  let(:user_attributes) do
+    {
+      roles: {student: true, graduate: graduate_student, law: law_student}
+    }
+  end
 
   before do
-    allow_any_instance_of(AuthenticationStatePolicy).to receive(:can_view_as?).and_return(can_view_as)
-    allow_any_instance_of(AuthenticationStatePolicy).to receive(:graduate_student?).and_return(graduate_student)
-    allow_any_instance_of(AuthenticationStatePolicy).to receive(:law_student?).and_return(law_student)
+    allow(User::AggregatedAttributes).to receive(:new).with(user_id).and_return double(get_feed: user_attributes)
   end
 
   describe '#get_feed_internal' do
     subject { model.get_feed_internal }
 
     context 'when user is a graduate student' do
-      let(:can_view_as) { false }
       let(:graduate_student) { true }
       let(:law_student) { false }
 
@@ -28,7 +30,6 @@ describe DegreeProgress::MyGraduateMilestones do
     end
 
     context 'when user is a law student' do
-      let(:can_view_as) { false }
       let(:graduate_student) { false }
       let(:law_student) { true }
 
@@ -42,23 +43,7 @@ describe DegreeProgress::MyGraduateMilestones do
       end
     end
 
-    context 'when user has view-as privilege' do
-      let(:can_view_as) { true }
-      let(:graduate_student) { false }
-      let(:law_student) { false }
-
-      it_behaves_like 'a proxy that returns graduate milestone data'
-      it_behaves_like 'a proxy that properly observes the graduate degree progress for student feature flag'
-
-      it 'includes links in the response' do
-        expect(subject[:feed][:links]).to be
-        expect(subject[:feed][:links][:advancementFormSubmit]).to be
-        expect(subject[:feed][:links][:advancementFormView]).to be
-      end
-    end
-
-    context 'when user is not authorized' do
-      let(:can_view_as) { false }
+    context 'when user is neither Graduate nor Law' do
       let(:graduate_student) { false }
       let(:law_student) { false }
 

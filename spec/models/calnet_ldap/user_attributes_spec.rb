@@ -36,6 +36,7 @@ describe CalnetLdap::UserAttributes do
       expect(feed[:roles][:student]).to eq true
       expect(feed[:roles][:registered]).to eq false
       expect(feed[:roles][:exStudent]).to eq false
+      expect(feed[:roles][:confidential]).to be_falsey
       expect(feed[:student_id]).to eq '11667051'
     end
 
@@ -85,6 +86,18 @@ describe CalnetLdap::UserAttributes do
       end
       it 'returns empty roles hash' do
         expect(feed[:roles].select {|role, val| val}).to be_blank
+      end
+      context 'flagged confidential' do
+        let(:ldap_result) do
+          {
+            mail: ['oski@berkeley.edu'],
+            uid: ['61889'],
+            berkeleyeduconfidentialflag: ['true']
+          }
+        end
+        it 'includes the confidential role' do
+          expect(feed[:roles][:confidential]).to eq true
+        end
       end
     end
 

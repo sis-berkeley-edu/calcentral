@@ -10,6 +10,7 @@ module User
       affiliation_roles = Berkeley::UserRoles.roles_from_ldap_affiliations ldap_record
       group_roles = Berkeley::UserRoles.roles_from_ldap_groups(ldap_record[:berkeleyeduismemberof])
       roles = group_roles.merge affiliation_roles
+      roles[:confidential] = true if string_attribute(ldap_record, :berkeleyeduconfidentialflag) == 'true'
       {
         email_address: string_attribute(ldap_record, :mail) || string_attribute(ldap_record, :berkeleyeduofficialemail),
         first_name: string_attribute(ldap_record, :berkeleyEduFirstName) || string_attribute(ldap_record, :givenname),

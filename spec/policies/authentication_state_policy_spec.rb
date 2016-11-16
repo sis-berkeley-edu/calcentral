@@ -176,6 +176,30 @@ describe AuthenticationStatePolicy do
     end
   end
 
+  describe '#can_view_confidential?' do
+    context 'superuser as self' do
+      let(:user_id) {superuser_uid}
+      its(:can_view_confidential?) { is_expected.to be true }
+    end
+    context 'inactive superuser' do
+      let(:user_id) {inactive_superuser_uid}
+      its(:can_view_confidential?) { is_expected.to be false }
+    end
+    context 'viewer as self' do
+      let(:user_id) {viewer_uid}
+      its(:can_view_confidential?) { is_expected.to be false }
+    end
+    context 'author as self' do
+      let(:user_id) {author_uid}
+      its(:can_view_confidential?) { is_expected.to be false }
+    end
+    context 'in embedded app' do
+      let(:user_id) {superuser_uid}
+      let(:lti_authenticated_only) {true}
+      its(:can_view_confidential?) { is_expected.to be false }
+    end
+  end
+
   describe '#can_administrate_canvas?' do
     let(:user_id) {average_joe_uid}
     it 'returns true when user is a canvas root account administrator' do
@@ -184,52 +208,6 @@ describe AuthenticationStatePolicy do
     end
     it 'returns false when user is not a canvas root account administrator' do
       expect(subject.can_administrate_canvas?).to be false
-    end
-  end
-
-  describe '#can_view_as_for_all_uids?' do
-    let(:advisor) { false }
-    let(:staff) { false }
-    before {
-      user_attributes = {
-        roles:
-          {
-            advisor: advisor,
-            staff: staff,
-            student: false,
-            exStudent: false,
-            faculty: false
-          }
-      }
-      allow(HubEdos::UserAttributes).to receive(:new).and_return double get: user_attributes
-    }
-    context 'average staff person' do
-      let(:staff) { true }
-      let(:user_id) {average_joe_uid}
-      its(:can_view_as_for_all_uids?) { is_expected.to be false }
-    end
-    context 'superuser' do
-      let(:user_id) {superuser_uid}
-      its(:can_view_as_for_all_uids?) { is_expected.to be true }
-    end
-    context 'inactive superuser' do
-      let(:user_id) {inactive_superuser_uid}
-      its(:can_view_as_for_all_uids?) { is_expected.to be false }
-    end
-    context 'advisor' do
-      let(:advisor) { true }
-      let(:user_id) {average_joe_uid}
-      its(:can_view_as_for_all_uids?) { is_expected.to be false }
-    end
-    context 'inactive advisor' do
-      let(:advisor) { true }
-      let(:user_id) {inactive_average_joe_uid}
-      its(:can_view_as_for_all_uids?) { is_expected.to be false }
-    end
-    context 'superuser already in view-as mode cannot view-as' do
-      let(:user_id) {superuser_uid}
-      let(:original_user_id) {random_id}
-      its(:can_view_as_for_all_uids?) { is_expected.to be false }
     end
   end
 

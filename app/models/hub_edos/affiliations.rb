@@ -12,7 +12,7 @@ module HubEdos
     end
 
     def whitelist_fields
-      %w(affiliations identifiers)
+      %w(affiliations identifiers confidential)
     end
 
   end

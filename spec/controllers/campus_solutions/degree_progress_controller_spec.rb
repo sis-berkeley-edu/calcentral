@@ -4,7 +4,7 @@ describe CampusSolutions::DegreeProgressController do
     let(:feed) { :get }
 
     before do
-      allow_any_instance_of(AuthenticationStatePolicy).to receive(:graduate_student?).and_return(true)
+      allow_any_instance_of(User::AggregatedAttributes).to receive(:get_feed).and_return({roles: {graduate: true}})
     end
 
     it_behaves_like 'an unauthenticated user'

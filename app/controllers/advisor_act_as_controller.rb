@@ -8,6 +8,6 @@ class AdvisorActAsController < ActAsController
   end
 
   def act_as_authorization(uid_param)
-    authorize_advisor_view_as current_user.real_user_id, uid_param
+    authorize_advisor_access_to_student current_user.real_user_id, uid_param
   end
 end

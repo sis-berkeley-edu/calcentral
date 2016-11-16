@@ -72,7 +72,7 @@ class AdvisingStudentController < ApplicationController
 
   def authorize_for_student
     raise NotAuthorizedError.new('The student lookup feature is disabled') unless is_feature_enabled
-    authorize_advisor_student_overview current_user.user_id, student_uid_param
+    authorize_advisor_access_to_student current_user.user_id, student_uid_param
   end
 
   def student_uid_param

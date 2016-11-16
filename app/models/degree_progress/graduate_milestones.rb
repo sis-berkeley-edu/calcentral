@@ -1,6 +1,7 @@
 module DegreeProgress
   class GraduateMilestones < UserSpecificModel
     # This model provides an advisor-specific version of milestone data for GRAD and LAW career.
+    # TODO Could be replaced by adding FilterJsonOutput to a shared cached feed.
 
     include Cache::CachedFeed
     include Cache::JsonifiedFeed
