@@ -12,7 +12,7 @@
 
   <!-- Name -->
   <div class="cc-page-widget-profile-section">
-    <div class="cc-page-widget-profile-section-label">Name</div>
+    <div class="cc-page-widget-profile-section-label cc-page-widget-profile-section-label-medium">Name</div>
     <div class="cc-page-widget-profile-section-content">
       <div data-ng-bind="api.user.profile.fullName"></div>
     </div>
@@ -23,7 +23,7 @@
   <div data-ng-include="'widgets/profile/basic_user_id.html'"></div>
   <!-- Email -->
   <div class="cc-page-widget-profile-section">
-    <div class="cc-page-widget-profile-section-label">Email</div>
+    <div class="cc-page-widget-profile-section-label cc-page-widget-profile-section-label-medium">Email</div>
     <div class="cc-page-widget-profile-section-content">
       <div data-ng-if="!api.user.profile.officialBmailAddress && !api.user.profile.primaryEmailAddress" class="cc-page-widget-profile-section-not-available">
         Not available
