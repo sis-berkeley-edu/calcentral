@@ -14,6 +14,8 @@
     <div data-ng-include="'widgets/profile/basic_student_id.html'"></div>
     <!-- User ID -->
     <div data-ng-include="'widgets/profile/basic_user_id.html'"></div>
+    <!-- Status -->
+    <div data-ng-include="'widgets/profile/basic_confidential.html'" data-ng-if="api.user.profile.roles.confidential"></div>
   </div>
 
   <div
