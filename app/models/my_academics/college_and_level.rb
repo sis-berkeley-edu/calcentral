@@ -118,6 +118,7 @@ module MyAcademics
       plan_set = {
         majors: [],
         minors: [],
+        designatedEmphases: [],
         plans: [],
         lastExpectedGraduationTerm: { code: nil, name: nil },
         roles: role_booleans
@@ -130,20 +131,7 @@ module MyAcademics
           flattened_plan = flatten_plan(plan)
           plan_set[:plans] << flattened_plan
 
-          # Catch Majors / Minors
-          college_plan = {college: flattened_plan[:college]}
-          case flattened_plan[:type].try(:[], :category)
-            when 'Major'
-              plan_set[:majors] << college_plan.merge({
-                major: flattened_plan[:plan].try(:[], :description),
-                subPlan: flattened_plan[:subPlan].try(:[], :description)
-              })
-            when 'Minor'
-              plan_set[:minors] << college_plan.merge({
-                minor: flattened_plan[:plan].try(:[], :description),
-                subPlan: flattened_plan[:subPlan].try(:[], :description)
-              })
-          end
+          group_plans_by_type(plan_set, flattened_plan)
 
           # Update Roles
           current_role = flattened_plan.try(:[], :role)
@@ -158,6 +146,27 @@ module MyAcademics
         end
       end
       plan_set
+    end
+
+    def group_plans_by_type(plan_set, plan)
+      college_plan = {college: plan[:college]}
+      case plan[:type].try(:[], :category)
+        when 'Major'
+          plan_set[:majors] << college_plan.merge({
+            major: plan[:plan].try(:[], :description),
+            subPlan: plan[:subPlan].try(:[], :description)
+          })
+        when 'Minor'
+          plan_set[:minors] << college_plan.merge({
+            minor: plan[:plan].try(:[], :description),
+            subPlan: plan[:subPlan].try(:[], :description)
+          })
+        when 'Designated Emphasis'
+          plan_set[:designatedEmphases] << college_plan.merge({
+            designatedEmphasis: plan[:plan].try(:[], :description),
+            subPlan: plan[:subPlan].try(:[], :description)
+          })
+      end
     end
 
     def filter_inactive_status_plans(statuses)
@@ -340,6 +349,8 @@ module MyAcademics
           category = 'Major'
         when 'MIN'
           category = 'Minor'
+        when 'DE'
+          category = 'Designated Emphasis'
       end
       {
         code: type['code'],

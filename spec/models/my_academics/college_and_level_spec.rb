@@ -76,7 +76,8 @@ describe MyAcademics::CollegeAndLevel do
   let(:student_plans) { [
     undergrad_student_plan_major,
     undergrad_student_plan_specialization,
-    undergrad_student_plan_minor
+    undergrad_student_plan_minor,
+    grad_student_plan_designated_emphasis
   ] }
   let(:undergrad_student_plan_major) do
     hub_edo_academic_status_student_plan({
@@ -117,6 +118,21 @@ describe MyAcademics::CollegeAndLevel do
       plan_description: 'Art BA',
       type_code: 'MIN',
       type_description: 'Major - UG Specialization',
+      admin_owners: [{org_code: 'MCELLBI', org_description: 'Molecular & Cell Biology', percentage: 100}],
+      is_primary: false
+    })
+  end
+
+  let(:grad_student_plan_designated_emphasis) do
+    hub_edo_academic_status_student_plan({
+      career_code: 'GRAD',
+      career_description: 'Graduate',
+      program_code: 'GACAD',
+      program_description: 'Graduate Academic Programs',
+      plan_code: '00E017G',
+      plan_description: 'Women, Gender and Sexuality DE',
+      type_code: 'DE',
+      type_description: 'Designated Emphasis',
       admin_owners: [{org_code: 'MCELLBI', org_description: 'Molecular & Cell Biology', percentage: 100}],
       is_primary: false
     })
@@ -340,7 +356,7 @@ describe MyAcademics::CollegeAndLevel do
       end
 
       it 'translates plans' do
-        expect(feed[:collegeAndLevel][:plans].count).to eq 3
+        expect(feed[:collegeAndLevel][:plans].count).to eq 4
 
         expect(feed[:collegeAndLevel][:plans][0][:career][:code]).to eq 'UGRD'
         expect(feed[:collegeAndLevel][:plans][0][:program][:code]).to eq 'UCLS'
@@ -375,6 +391,17 @@ describe MyAcademics::CollegeAndLevel do
         expect(feed[:collegeAndLevel][:plans][2][:type][:code]).to eq 'MIN'
         expect(feed[:collegeAndLevel][:plans][2][:type][:category]).to eq 'Minor'
         expect(feed[:collegeAndLevel][:plans][2][:college]).to eq 'Undergrad Letters & Science'
+
+        expect(feed[:collegeAndLevel][:plans][3][:career][:code]).to eq 'GRAD'
+        expect(feed[:collegeAndLevel][:plans][3][:program][:code]).to eq 'GACAD'
+        expect(feed[:collegeAndLevel][:plans][3][:plan][:code]).to eq '00E017G'
+        expect(feed[:collegeAndLevel][:plans][3][:expectedGraduationTerm]).to eq nil
+        expect(feed[:collegeAndLevel][:plans][3][:role]).to eq 'default'
+        expect(feed[:collegeAndLevel][:plans][3][:enrollmentRole]).to eq 'default'
+        expect(feed[:collegeAndLevel][:plans][3][:primary]).to eq false
+        expect(feed[:collegeAndLevel][:plans][3][:type][:code]).to eq 'DE'
+        expect(feed[:collegeAndLevel][:plans][3][:type][:category]).to eq 'Designated Emphasis'
+        expect(feed[:collegeAndLevel][:plans][3][:college]).to eq 'Graduate Academic Programs'
       end
 
       it 'translates sub-plans' do
@@ -746,11 +773,13 @@ describe MyAcademics::CollegeAndLevel do
     context 'when filtering out inactive plans from statuses' do
       let(:filtered_academic_statuses) { subject.filter_inactive_status_plans(hub_academic_statuses) }
       it 'removes inactive plans from each status' do
-        expect(filtered_academic_statuses[0]['studentPlans'].count).to eq 2
+        expect(filtered_academic_statuses[0]['studentPlans'].count).to eq 3
         expect(filtered_academic_statuses[0]['studentPlans'][0]['statusInPlan']['status']['code']).to eq 'AC'
         expect(filtered_academic_statuses[0]['studentPlans'][1]['statusInPlan']['status']['code']).to eq 'AC'
+        expect(filtered_academic_statuses[0]['studentPlans'][2]['statusInPlan']['status']['code']).to eq 'AC'
         expect(filtered_academic_statuses[0]['studentPlans'][0]['academicPlan']['plan']['code']).to eq '25345U'
         expect(filtered_academic_statuses[0]['studentPlans'][1]['academicPlan']['plan']['code']).to eq '25090U'
+        expect(filtered_academic_statuses[0]['studentPlans'][2]['academicPlan']['plan']['code']).to eq '00E017G'
       end
     end
   end
