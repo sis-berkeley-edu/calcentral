@@ -1,6 +1,6 @@
 describe MyCommitteesController do
 
-  let(:uid) {random_id}
+  let(:uid) {'12345'}
   let(:student_id) {'12345' }
   let(:member_id) {'12345' }
 
