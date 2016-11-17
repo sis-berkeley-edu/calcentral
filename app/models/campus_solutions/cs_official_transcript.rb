@@ -1,5 +1,5 @@
 module CampusSolutions
-  class CsOfficialTranscript < CachedProxy
+  class CsOfficialTranscript < Proxy
 
     include CampusSolutionsIdRequired
 

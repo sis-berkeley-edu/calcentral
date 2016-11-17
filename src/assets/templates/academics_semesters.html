@@ -11,17 +11,6 @@
   <div class="cc-academics-enrollment-verification-link" data-ng-if="api.user.profile.features.enrollmentVerification && (api.user.profile.isDirectlyAuthenticated || api.user.profile.actingAsUid) && !(isAdvisingStudentLookup || isAcademicSummary)">
     <a href="academics/enrollment_verification">Request Enrollment Verification</a>
   </div>
-  <div class="cc-academics-request-transcript-link" data-ng-if="!isAcademicSummary">
-    <a data-ng-if="!api.user.profile.delegateActingAsUid && !isAdvisingStudentLookup"
-      data-ng-href="{{requestTranscript.link}}"
-      data-ng-attr-title="{{requestTranscript.title}}">
-      Request Transcript
-    </a>
-    <a class="cc-academics-link-disabled"
-      data-ng-if="api.user.profile.delegateActingAsUid">
-      Request Transcript
-    </a>
-  </div>
 
   <div class="cc-widget-padding cc-flex-space-between-vertical-15">
     <div class="cc-table cc-academics-semester cc-academics-semester-{{semester.timeBucket}}" data-ng-repeat="semester in semesters | limitTo:pastSemestersLimit">
