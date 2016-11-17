@@ -75,6 +75,10 @@ angular.module('calcentral.controllers').controller('AcademicsController', funct
         'path': 'roster'
       });
     }
+    $scope.classInfoCategories.push({
+          'title': 'Grading',
+          'path': 'grading'
+        });
     if ($routeParams.category) {
       $scope.currentCategory = _.find($scope.classInfoCategories, {
         'path': $routeParams.category

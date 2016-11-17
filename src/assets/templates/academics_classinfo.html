@@ -296,4 +296,23 @@
       <div data-ng-include src="'canvas_embedded/roster.html'"></div>
     </div>
   </div>
+
+  <div data-ng-switch-when="Grading" role="tabpanel" aria-live="polite" class="cc-clearfix cc-column-3">
+    <div class="cc-widget">
+      <div class="cc-widget-title">
+        <h2>Grading</h2>
+      </div>
+      <div class="cc-widget-padding">
+        <div data-ng-if="selectedTeachingSemester.gradingAssistanceLink">
+          <span><a data-ng-href="{{selectedTeachingSemester.gradingAssistanceLink}}">&#9632; Assistance with Grading: General</a></span>
+        </div>
+        <div data-ng-if="selectedTeachingSemester.gradingAssistanceLinkLaw">
+          <span><a data-ng-href="{{selectedTeachingSemester.gradingAssistanceLinkLaw}}">&#9632; Assistance with Grading: Law</a></span>
+        </div>
+      </div>
+      <div class="cc-widget-padding cc-academics-class-info-grading">
+          Links for final grades are on the <a data-ng-href="/academics/semester/{{selectedSemester.slug}}"><span data-ng-bind-template="{{selectedSemester.name}} page"></span></a>
+      </div>
+    </div>
+  </div>
 </div>
