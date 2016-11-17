@@ -76,9 +76,11 @@ module MyAcademics
       end
       if (statuses = parse_hub_academic_statuses academic_status)
         status = statuses.first
+        registration_term = status['currentRegistration'].try(:[], 'term')
         academic_status[:careers] = parse_hub_careers statuses
         academic_status[:level] = parse_hub_level statuses
-        academic_status[:termName] = parse_hub_term_name(status['currentRegistration'].try(:[], 'term')).try(:[], 'name')
+        academic_status[:termName] = parse_hub_term_name(registration_term).try(:[], 'name')
+        academic_status[:termId] = registration_term.try(:[], 'id')
         academic_status[:termsInAttendance] = status['termsInAttendance'].to_s
         academic_status.merge! parse_hub_plans statuses
       else

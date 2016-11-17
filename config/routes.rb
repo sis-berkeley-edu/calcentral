@@ -238,7 +238,8 @@ Calcentral::Application.routes.draw do
   delete '/api/campus_solutions/work_experience/:sequenceNbr' => 'campus_solutions/work_experience#delete', :via => :delete, :defaults => { :format => 'json' }
 
   # Redirect to College Scheduler
-  get '/college_scheduler/:acad_career/:term_id' => 'campus_solutions/college_scheduler#get'
+  get '/college_scheduler/student/:acad_career/:term_id' => 'campus_solutions/college_scheduler#get'
+  get '/college_scheduler/advisor/:acad_career/:term_id/:student_user_id' => 'campus_solutions/college_scheduler#get_advisor'
 
   # Redirect to HigherOne
   get '/higher_one/higher_one_url' => 'campus_solutions/higher_one_url#redirect'

@@ -149,6 +149,18 @@ angular.module('calcentral.controllers').controller('UserOverviewController', fu
             show: ['current', 'previous', 'next'].indexOf(semester.timeBucket) > -1
           });
       });
+
+      // prepare schedule planner link data
+      var studentPlans = _.get($scope, 'collegeAndLevel.plans');
+      var uniqueCareerCodes = academicsService.getUniqueCareerCodes(studentPlans);
+      var currentRegistrationTermId = _.get($scope, 'collegeAndLevel.termId');
+      if (uniqueCareerCodes.length > 0 && currentRegistrationTermId) {
+        $scope.schedulePlanner = {
+          careerCode: _.first(uniqueCareerCodes),
+          termId: currentRegistrationTermId,
+          studentUid: $routeParams.uid
+        };
+      }
     }).error(function(data, status) {
       $scope.academics.error = errorReport(status, data.error);
     }).finally(function() {
