@@ -74,25 +74,6 @@
         </table>
       </div>
     </div>
-    <div class="cc-table cc-academics-semester cc-academics-semester-past" data-ng-if="additionalCredits && (pastSemestersLimit === 'Infinity' || semesters.length < pastSemestersLimit)">
-      <div>
-        <h3>Additional Course Credit</h3>
-        <table>
-          <thead>
-            <tr>
-              <th width="80%" scope="col">Class</th>
-              <th width="20%" scope="col" class="cc-table-right cc-table-right-spacing">Un.</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr data-ng-repeat="additionalCredit in additionalCredits">
-              <td data-ng-bind="additionalCredit.title"></td>
-              <td data-ng-bind="additionalCredit.units | number:1" class="cc-table-right cc-table-right-spacing"></td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
     <div data-ng-if="pastSemestersCount > 1 && !isAcademicSummary" data-cc-show-infinite-directive data-cc-show-infinite-limit="pastSemestersLimit"></div>
   </div>
 </div>
