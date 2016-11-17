@@ -9,22 +9,23 @@ module MyCommittees
     end
 
     def get_feed
-      result = {}
+      result = {
+        facultyCommittees: {
+          active: [],
+          completed: []
+        }
+      }
       feed = CampusSolutions::FacultyCommittees.new(user_id: @uid).get[:feed]
       if feed && (cs_committees = feed[:ucSrFacultyCommittee].try(:[], :facultyCommittees))
         # Service range will be parsed from nested member data with match on emplid
         @emplid = feed[:ucSrFacultyCommittee].try(:[], :emplid)
-        result[:facultyCommittees] = parse_cs_faculty_committees cs_committees
+        result[:facultyCommittees] = parse_cs_faculty_committees(cs_committees , result[:facultyCommittees])
       end
       result
     end
 
-    def parse_cs_faculty_committees (cs_committees)
+    def parse_cs_faculty_committees (cs_committees, committees_result)
       cs_committees.compact!
-      committees_result = {
-        active: [],
-        completed: []
-      }
       cs_committees.try(:each) do |cs_committee|
         is_completed = cs_committee[:studentMilestoneCompleteDate].present?
         faculty_committee = parse_cs_committee(cs_committee, is_completed)
