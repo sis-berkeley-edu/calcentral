@@ -101,6 +101,8 @@ describe MyAcademics::CollegeAndLevel do
       plan_description: 'MCB-Cell & Dev Biology BA',
       type_code: 'SP',
       type_description: 'Major - UG Specialization',
+      sub_plan_code: '25966SA02U',
+      sub_plan_description: 'Biological Chemistry',
       admin_owners: [{org_code: 'MCELLBI', org_description: 'Molecular & Cell Biology', percentage: 100}],
       is_primary: false
     })
@@ -319,18 +321,21 @@ describe MyAcademics::CollegeAndLevel do
       it 'translates minors' do
         expect(feed[:collegeAndLevel][:minors].first).to eq({
           college: 'Undergrad Letters & Science',
-          minor: 'Art BA'
+          minor: 'Art BA',
+          subPlan: nil
         })
       end
 
       it 'translates majors' do
         expect(feed[:collegeAndLevel][:majors][0]).to eq({
           college: 'Undergrad Letters & Science',
-          major: 'English BA'
+          major: 'English BA',
+          subPlan: nil
         })
         expect(feed[:collegeAndLevel][:majors][1]).to eq({
           college: 'Undergrad Letters & Science',
-          major: 'MCB-Cell & Dev Biology BA'
+          major: 'MCB-Cell & Dev Biology BA',
+          subPlan: 'Biological Chemistry'
         })
       end
 
@@ -370,6 +375,12 @@ describe MyAcademics::CollegeAndLevel do
         expect(feed[:collegeAndLevel][:plans][2][:type][:code]).to eq 'MIN'
         expect(feed[:collegeAndLevel][:plans][2][:type][:category]).to eq 'Minor'
         expect(feed[:collegeAndLevel][:plans][2][:college]).to eq 'Undergrad Letters & Science'
+      end
+
+      it 'translates sub-plans' do
+        expect(feed[:collegeAndLevel][:plans][1][:subPlan]).to be
+        expect(feed[:collegeAndLevel][:plans][1][:subPlan][:code]).to eq '25966SA02U'
+        expect(feed[:collegeAndLevel][:plans][1][:subPlan][:description]).to eq 'Biological Chemistry'
       end
 
       it 'translates roles' do
@@ -448,11 +459,13 @@ describe MyAcademics::CollegeAndLevel do
       it 'translates majors' do
         expect(feed[:collegeAndLevel][:majors][0]).to eq({
           college: 'Law Professional Programs',
-          major: 'Law JD-MPP CDP'
+          major: 'Law JD-MPP CDP',
+          subPlan: nil
         })
         expect(feed[:collegeAndLevel][:majors][1]).to eq({
           college: 'Graduate Professional Programs',
-          major: 'Public Policy MPP-JD CDP'
+          major: 'Public Policy MPP-JD CDP',
+          subPlan: nil
         })
       end
 
