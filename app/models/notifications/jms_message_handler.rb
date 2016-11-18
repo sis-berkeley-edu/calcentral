@@ -2,8 +2,6 @@ module Notifications
   class JmsMessageHandler
 
     PROCESSOR_CLASSES = [
-      Notifications::FinalGradesEventProcessor,
-      Notifications::RegStatusEventProcessor,
       Notifications::SisExpiryProcessor
     ]
 

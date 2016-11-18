@@ -1,41 +1,5 @@
 module Notifications
   class RegStatusTranslator
-    include DatedFeed
-
-    def accept?(event)
-      event && event['topic'] == "Bearfacts:RegStatus"
-    end
-
-    def translate(notification)
-      data = notification.data
-      uid = notification.uid
-      event = data['event']
-      timestamp = notification.occurred_at.to_datetime
-      reg_status = data['reg_status']
-
-      Rails.logger.info "#{self.class.name} translating: #{notification}; accept? #{accept?(event)}; timestamp = #{timestamp}; uid = #{uid}; reg_status = #{reg_status}"
-
-      return false unless accept?(event) && timestamp && uid && reg_status
-
-      explanation = status_explanation reg_status['reg_status_cd']
-      status = status reg_status['reg_status_cd']
-
-      title = "Registration status updated to: #{status}"
-      summary = "#{explanation} If you have a question about your registration status change, please contact the Office of the Registrar. orweb@berkeley.edu"
-
-      {
-        :id => notification.id,
-        :title => title,
-        :summary => summary,
-        :source => 'Bear Facts',
-        :type => 'alert',
-        :date => format_date(timestamp),
-        :url => 'https://bearfacts.berkeley.edu/bearfacts/',
-        :sourceUrl => 'https://bearfacts.berkeley.edu/bearfacts/',
-        :emitter => 'Bear Facts',
-        :isRegstatusActivity => true
-      }
-    end
 
     def translate_for_feed(reg_status)
       {
