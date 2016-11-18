@@ -31,8 +31,6 @@ angular.module('calcentral.controllers').controller('CarsController', function(a
   $scope.activityLimit = 100;
 
   $scope.csActivity = {
-    // We want to show this text only during the transition period, so we'll remove this for GL7.
-    fallText: null,
     hasCsActivity: false,
     isLoadingCs: true
   };
@@ -288,10 +286,6 @@ angular.module('calcentral.controllers').controller('CarsController', function(a
       }
       if (data.feed.activity && data.feed.activity.length) {
         $scope.csActivity.hasCsActivity = true;
-      }
-      // Toggles the "Fall 2016" text needed for transition period, remove this for GL7.
-      if (data.feed.summary.currentTerm === 'Summer 2016' || data.feed.summary.currentTerm === 'Fall 2016') {
-        $scope.csActivity.fallText = 'Fall 2016';
       }
     });
   };

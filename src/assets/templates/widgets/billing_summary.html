@@ -2,7 +2,6 @@
   <div class="cc-widget-title">
     <h2 class="cc-left">
       Billing Summary
-      <span class="cc-widget-title-sub cc-text-uppercase" data-ng-if="billing.fallSubheader" data-ng-bind="billing.fallSubheader"></span>
     </h2>
     <a data-ng-if="!billingDetails && billing.data.activity" class="cc-right cc-widget-title-link" href="/billing/details">
       <strong>Details</strong>
@@ -49,7 +48,7 @@
             data-cc-outbound-enabled="true"
             href="/higher_one/higher_one_url"
             data-ng-disabled="!api.user.profile.isDirectlyAuthenticated && !api.user.profile.canActOnFinances">
-            Make Payment <span data-ng-if="billing.fallSubheader" data-ng-bind-template="for {{billing.fallSubheader}}"></span>
+            Make Payment
           </a>
         </div>
       </li>
@@ -64,8 +63,8 @@
       </li>
     </ul>
     <div data-cc-spinner-directive="billing.isLoadingCars">
-      <div class="cc-page-myfinances-billing-summary-footnote cc-text-center" data-ng-if="billingDetails && billing.hasCarsActivity && billing.fallSubheader && api.user.profile.isLegacyStudent">
-        <a href="/finances/details">View transactions prior to <span data-ng-bind="billing.fallSubheader"></span>.</a>
+      <div class="cc-page-myfinances-billing-summary-footnote cc-text-center" data-ng-if="billingDetails && billing.hasCarsActivity">
+        <a href="/finances/details">View transactions prior to Fall 2016.</a>
       </div>
     </div>
   </div>

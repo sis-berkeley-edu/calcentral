@@ -1,9 +1,9 @@
 <div class="cc-page-myfinances" data-ng-if="api.user.profile.features.csBilling">
-  <div class="row collapse" data-cc-spinner-directive="billingTerm.isLoading">
+  <div class="row collapse">
 
     <div class="column">
       <h1 class="cc-heading-page-title cc-print-hide">
-        <a href="/finances">My Finances</a> &raquo; Details <span data-ng-if="billingTerm.fallText" data-ng-bind-template="({{billingTerm.fallText}})"></span>
+        <a href="/finances">My Finances</a> &raquo; Details
       </h1>
       <h1 class="cc-heading-page-title cc-hidden cc-print-show">
         My Finances for <span data-ng-bind="api.user.profile.fullName"></span>

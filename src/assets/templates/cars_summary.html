@@ -10,10 +10,6 @@
   </div>
 
   <div data-cc-spinner-directive>
-    <div data-ng-if="api.user.profile.features.csBilling" class="cc-page-myfinances-account-summary-alert">
-      <i class="fa fa-exclamation-triangle cc-icon-gold"></i>
-      <strong>Alert: </strong>If you had an unpaid balance on your CARS account, that balance has been transferred to your new Fall 2016 account. Submit online payments by clicking the "Make Payment for Fall 2016" button above.
-    </div>
     <ul class="cc-widget-list cc-page-myfinances-account-summary-list" data-ng-show="myfinances.summary">
       <li class="cc-page-myfinances-account-summary-item cc-clearfix-container cc-page-myfinances-dpp" data-ng-if="myfinances.summary.isOnDPP">
         <div class="small-12 columns">
@@ -102,8 +98,8 @@
       You are seeing this message because CalCentral does not have CARS billing data for your account. If you are a new student, your account may not have been assessed charges yet. Please try again later. Current or former students should contact us for further assistance using the Feedback link below.
     </p>
     <div data-cc-spinner-directive="csActivity.isLoadingCs">
-      <div class="cc-page-myfinances-billing-summary-footnote cc-text-center" data-ng-if="api.user.profile.features.csBilling && carsDetails && csActivity.hasCsActivity && csActivity.fallText">
-        <a href="/billing/details">View <span data-ng-bind="csActivity.fallText"></span> activity.</a>
+      <div class="cc-page-myfinances-billing-summary-footnote cc-text-center" data-ng-if="api.user.profile.features.csBilling && carsDetails && csActivity.hasCsActivity">
+        <a href="/billing/details">View current activity.</a>
       </div>
     </div>
   </div>
