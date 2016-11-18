@@ -1,0 +1,16 @@
+<div class="cc-table cc-table-top-border cc-clearfix" data-ng-if="plans.length">
+  <table class="cc-widget-profile-table">
+    <tbody>
+    <tr>
+      <th data-ng-pluralize count="plans.length" when="options.labels"></th>
+      <td>
+        <div data-ng-repeat="plan in plans">
+          <div class="cc-text-light" data-ng-if="plan.college" data-ng-bind="plan.college"></div>
+          <div><strong data-ng-bind="plan.{{type}}"></strong></div>
+          <div class="cc-widget-profile-indent" data-ng-bind="plan.subPlan"></div>
+        </div>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
