@@ -166,6 +166,654 @@
       ]
     }
   ],
+  "planSemesters": [
+    {
+      "name": "Fall 2007",
+      "slug": "fall-2007",
+      "termCode": "D",
+      "termYear": "2007",
+      "timeBucket": "past",
+      "campusSolutionsTerm": true,
+      "summaryFromTranscript": false,
+      "hasEnrolledClasses": false,
+      "plannedUnits": "0.0",
+      "enrolledUnits": "19.0",
+      "waitlistedUnits": "0.0"
+    },
+    {
+      "name": "Fall 2008",
+      "slug": "fall-2008",
+      "termCode": "D",
+      "termYear": "2008",
+      "timeBucket": "past",
+      "campusSolutionsTerm": true,
+      "notation": "Education Abroad",
+      "enrolledClasses": [
+        {
+          "title": "SPORTS \u0026 EDUCATION",
+          "dept": "EDUC",
+          "courseCatalog": "75AC",
+          "course_code": "EDUC 75AC",
+          "sections": [],
+          "transcript": [
+            {
+              "units": "3.0",
+              "grade": "B"
+            }
+          ]
+        },
+        {
+          "title": "INTRO TO OCEANS",
+          "dept": "INTEGBI",
+          "courseCatalog": "C82",
+          "course_code": "INTEGBI C82",
+          "sections": [],
+          "transcript": [
+            {
+              "units": "2.0",
+              "grade": "P"
+            }
+          ]
+        },
+        {
+          "title": "DESCRIPTIVE INTRO",
+          "dept": "L \u0026 S",
+          "courseCatalog": "C70V",
+          "course_code": "L \u0026 S C70V",
+          "sections": [],
+          "transcript": [
+            {
+              "units": "3.0",
+              "grade": "B-"
+            }
+          ]
+        },
+        {
+          "title": "MYTH, MEMORY, HIST",
+          "dept": "NATAMST",
+          "courseCatalog": "90",
+          "course_code": "NATAMST 90",
+          "sections": [],
+          "transcript": [
+            {
+              "units": "4.0",
+              "grade": "C+"
+            }
+          ]
+        },
+        {
+          "title": "PE ACTIVITIES",
+          "dept": "PHYS ED",
+          "courseCatalog": "11",
+          "course_code": "PHYS ED 11",
+          "sections": [],
+          "transcript": [
+            {
+              "units": "0.5",
+              "grade": "A"
+            }
+          ]
+        },
+        {
+          "title": "PE ACTIVITIES",
+          "dept": "PHYS ED",
+          "courseCatalog": "11",
+          "course_code": "PHYS ED 11",
+          "sections": [],
+          "transcript": [
+            {
+              "units": "0.5",
+              "grade": "A"
+            }
+          ]
+        },
+        {
+          "title": "PE ACTIVITIES",
+          "dept": "PHYS ED",
+          "courseCatalog": "11",
+          "course_code": "PHYS ED 11",
+          "sections": [],
+          "transcript": [
+            {
+              "units": "0.5",
+              "grade": "A"
+            }
+          ]
+        },
+        {
+          "title": "PE ACTIVITIES",
+          "dept": "PHYS ED",
+          "courseCatalog": "11",
+          "course_code": "PHYS ED 11",
+          "sections": [],
+          "transcript": [
+            {
+              "units": "0.5",
+              "grade": "A"
+            }
+          ]
+        }
+      ],
+      "hasEnrollmentData": false,
+      "summaryFromTranscript": true,
+      "hasEnrolledClasses": false,
+      "hasClassTranscript": true,
+      "plannedUnits": "0.0",
+      "enrolledUnits": "19.0",
+      "waitlistedUnits": "0.0"
+    },
+    {
+      "name": "Spring 2009",
+      "slug": "spring-2009",
+      "termCode": "B",
+      "termYear": "2009",
+      "timeBucket": "previous",
+      "campusSolutionsTerm": true,
+      "enrolledClasses": [
+        {
+          "title": "DIRECTED GROUP STDY",
+          "dept": "AFRICAM",
+          "courseCatalog": "98",
+          "course_code": "AFRICAM 98",
+          "sections": [],
+          "transcript": [
+            {
+              "units": "1.0",
+              "grade": "P"
+            }
+          ]
+        },
+        {
+          "title": "INTRO TO ECONOMICS",
+          "dept": "ECON",
+          "courseCatalog": "1",
+          "course_code": "ECON 1",
+          "sections": [],
+          "transcript": [
+            {
+              "units": "4.0",
+              "grade": "C-"
+            }
+          ]
+        },
+        {
+          "title": "GEN SEX RAC GLO POL",
+          "dept": "GWS",
+          "courseCatalog": "14",
+          "course_code": "GWS 14",
+          "sections": [],
+          "transcript": [
+            {
+              "units": "4.0",
+              "grade": "C"
+            }
+          ]
+        },
+        {
+          "title": "DIRECTED GROUP STDY",
+          "dept": "INTEGBI",
+          "courseCatalog": "98",
+          "course_code": "INTEGBI 98",
+          "sections": [],
+          "transcript": [
+            {
+              "units": "2.0",
+              "grade": "P"
+            }
+          ]
+        },
+        {
+          "title": "PE ACTIVITIES",
+          "dept": "PHYS ED",
+          "courseCatalog": "11",
+          "course_code": "PHYS ED 11",
+          "sections": [],
+          "transcript": [
+            {
+              "units": "0.5",
+              "grade": "A"
+            }
+          ]
+        },
+        {
+          "title": "PE ACTIVITIES",
+          "dept": "PHYS ED",
+          "courseCatalog": "11",
+          "course_code": "PHYS ED 11",
+          "sections": [],
+          "transcript": [
+            {
+              "units": "0.5",
+              "grade": "A"
+            }
+          ]
+        },
+        {
+          "title": "PE ACTIVITIES",
+          "dept": "PHYS ED",
+          "courseCatalog": "11",
+          "course_code": "PHYS ED 11",
+          "sections": [],
+          "transcript": [
+            {
+              "units": "0.5",
+              "grade": "A"
+            }
+          ]
+        },
+        {
+          "title": "PE ACTIVITIES",
+          "dept": "PHYS ED",
+          "courseCatalog": "11",
+          "course_code": "PHYS ED 11",
+          "sections": [],
+          "transcript": [
+            {
+              "units": "0.5",
+              "grade": "A"
+            }
+          ]
+        }
+      ],
+      "hasEnrollmentData": false,
+      "summaryFromTranscript": true,
+      "hasEnrolledClasses": false,
+      "hasClassTranscript": true,
+      "plannedUnits": "0.0",
+      "enrolledUnits": "19.0",
+      "waitlistedUnits": "0.0"
+    },
+    {
+      "name": "Fall 2016",
+      "slug": "fall-2016",
+      "termCode": "D",
+      "termYear": "2016",
+      "timeBucket": "current",
+      "enrolledClasses": [
+        {
+          "role": "Student",
+          "sections": [
+            {
+              "ccn": "07311",
+              "enroll_limit": "35",
+              "instruction_format": "DIS",
+              "instructors": [],
+              "is_primary_section": true,
+              "schedules": {
+                "oneTime": [],
+                "recurring": []
+              },
+              "section_label": "DIS 005",
+              "section_number": "005",
+              "waitlisted": true,
+              "units": "2.0",
+              "waitlistPosition": "3"
+            },
+            {
+              "ccn": "34458",
+              "instruction_format": "LEC",
+              "is_primary_section": true,
+              "section_label": "LEC 001",
+              "section_number": "001",
+              "units": "2.0",
+              "grading_basis": "GRD",
+              "instructors": [
+                {
+                  "name": "James Robinson",
+                  "role": "PI",
+                  "uid": "3893"
+                }
+              ],
+              "schedules": {
+                "oneTime": [],
+                "recurring": [
+                  {
+                    "buildingName": "Lewis",
+                    "roomNumber": "100",
+                    "schedule": "M 10:00A-11:59A"
+                  }
+                ]
+              },
+              "final_exams": [
+                {
+                  "exam_type": "Y",
+                  "location": null,
+                  "exam_date": null,
+                  "exam_start_time": null,
+                  "exam_end_time": null
+                }
+              ],
+              "gradeOption": "Letter"
+            },
+            {
+              "ccn": "34459",
+              "instruction_format": "DIS",
+              "is_primary_section": false,
+              "section_label": "DIS 101",
+              "section_number": "101",
+              "associated_primary_id": "34458.0",
+              "instructors": [],
+              "schedules": {
+                "oneTime": [],
+                "recurring": [
+                  {
+                    "buildingName": "LeConte",
+                    "roomNumber": "2",
+                    "schedule": "F 11:00A-11:59A"
+                  }
+                ]
+              },
+              "final_exams": []
+            }
+          ],
+          "slug": "pb_hlth-200j",
+          "title": "Health Policy and Management Breadth Course",
+          "url": "/academics/semester/fall-2016/class/pb_hlth-200j",
+          "course_code": "PB HLTH 200J",
+          "dept": "PB HLTH",
+          "courseCatalog": "200J",
+          "course_id": "pb_hlth-200j-2016-D"
+        },
+        {
+          "role": "Student",
+          "sections": [
+            {
+              "ccn": "34462",
+              "instruction_format": "LEC",
+              "is_primary_section": true,
+              "section_label": "LEC 1",
+              "section_number": "1",
+              "units": "2.0",
+              "grading_basis": "GRD",
+              "instructors": [
+                {
+                  "name": "Ralph A. CATALANO",
+                  "role": "PI",
+                  "uid": "7620"
+                }
+              ],
+              "schedules": {
+                "oneTime": [],
+                "recurring": [
+                  {
+                    "buildingName": "Lewis",
+                    "roomNumber": "100",
+                    "schedule": "W 10:00A-11:59A"
+                  }
+                ]
+              },
+              "final_exams": [],
+              "gradeOption": "Letter"
+            },
+            {
+              "ccn": "34463",
+              "instruction_format": "DIS",
+              "is_primary_section": false,
+              "section_label": "DIS 102",
+              "section_number": "102",
+              "associated_primary_id": "34462.0",
+              "instructors": [],
+              "schedules": {
+                "oneTime": [],
+                "recurring": []
+              },
+              "final_exams": []
+            }
+          ],
+          "slug": "pb_hlth-200l",
+          "title": "Health and Social Behavior Breadth",
+          "url": "/academics/semester/fall-2016/class/pb_hlth-200l",
+          "course_code": "PB HLTH 200L",
+          "dept": "PB HLTH",
+          "courseCatalog": "200L",
+          "course_id": "pb_hlth-200l-2016-D"
+        },
+        {
+          "role": "Student",
+          "sections": [
+            {
+              "ccn": "29690",
+              "instruction_format": "LEC",
+              "is_primary_section": true,
+              "section_label": "LEC 001",
+              "section_number": "001",
+              "units": "3.0",
+              "grading_basis": "GRD",
+              "instructors": [
+                {
+                  "name": "Cheri A. PIES",
+                  "role": "PI",
+                  "uid": "125356"
+                }
+              ],
+              "schedules": {
+                "oneTime": [],
+                "recurring": [
+                  {
+                    "buildingName": "Barker",
+                    "roomNumber": "110",
+                    "schedule": "W 2:00P-4:59P"
+                  }
+                ]
+              },
+              "final_exams": [],
+              "gradeOption": "Letter"
+            }
+          ],
+          "slug": "pb_hlth-210",
+          "title": "Maternal and Child Health Specialty Area Core Course",
+          "url": "/academics/semester/fall-2016/class/pb_hlth-210",
+          "course_code": "PB HLTH 210",
+          "dept": "PB HLTH",
+          "courseCatalog": "210",
+          "course_id": "pb_hlth-210-2016-D"
+        },
+        {
+          "role": "Student",
+          "sections": [
+            {
+              "ccn": "29777",
+              "instruction_format": "LEC",
+              "is_primary_section": true,
+              "section_label": "LEC 001",
+              "section_number": "001",
+              "units": "3.0",
+              "grading_basis": "SUS",
+              "instructors": [
+                {
+                  "name": "Kim HARLEY",
+                  "role": "PI",
+                  "uid": "77677"
+                }
+              ],
+              "schedules": {
+                "oneTime": [],
+                "recurring": [
+                  {
+                    "buildingName": "Morgan",
+                    "roomNumber": "138",
+                    "schedule": "W 12:00P-1:59P"
+                  }
+                ]
+              },
+              "final_exams": [],
+              "gradeOption": "S/U"
+            },
+            {
+              "ccn": "32696",
+              "instruction_format": "DIS",
+              "is_primary_section": false,
+              "section_label": "DIS 101",
+              "section_number": "101",
+              "associated_primary_id": "29777.0",
+              "instructors": [],
+              "schedules": {
+                "oneTime": [],
+                "recurring": [
+                  {
+                    "buildingName": "Latimer",
+                    "roomNumber": "121",
+                    "schedule": "M 12:00P-1:59P"
+                  }
+                ]
+              },
+              "final_exams": []
+            }
+          ],
+          "slug": "pb_hlth-210e",
+          "title": "Practicum in MCH Data Analysis I",
+          "url": "/academics/semester/fall-2016/class/pb_hlth-210e",
+          "course_code": "PB HLTH 210E",
+          "dept": "PB HLTH",
+          "courseCatalog": "210E",
+          "course_id": "pb_hlth-210e-2016-D"
+        },
+        {
+          "role": "Student",
+          "sections": [
+            {
+              "ccn": "29757",
+              "instruction_format": "LEC",
+              "is_primary_section": true,
+              "section_label": "LEC 001",
+              "section_number": "001",
+              "units": "3.0",
+              "grading_basis": "GRD",
+              "instructors": [
+                {
+                  "name": "Ndola Prata",
+                  "role": "PI",
+                  "uid": "111162"
+                }
+              ],
+              "schedules": {
+                "oneTime": [],
+                "recurring": [
+                  {
+                    "buildingName": "Barker",
+                    "roomNumber": "110",
+                    "schedule": "TuTh 2:00P-3:29P"
+                  }
+                ]
+              },
+              "final_exams": [
+                {
+                  "exam_type": "Y",
+                  "location": null,
+                  "exam_date": null,
+                  "exam_start_time": null,
+                  "exam_end_time": null
+                }
+              ],
+              "gradeOption": "Letter"
+            }
+          ],
+          "slug": "pb_hlth-213a",
+          "title": "Family Planning, Population Change, and Health",
+          "url": "/academics/semester/fall-2016/class/pb_hlth-213a",
+          "course_code": "PB HLTH 213A",
+          "dept": "PB HLTH",
+          "courseCatalog": "213A",
+          "course_id": "pb_hlth-213a-2016-D"
+        },
+        {
+          "role": "Student",
+          "sections": [
+            {
+              "ccn": "32214",
+              "instruction_format": "SEM",
+              "is_primary_section": true,
+              "section_label": "SEM 003",
+              "section_number": "003",
+              "units": "4.0",
+              "grading_basis": "GRD",
+              "instructors": [
+                {
+                  "name": "Maureen LAHIFF",
+                  "role": "PI",
+                  "uid": "8648"
+                }
+              ],
+              "schedules": {
+                "oneTime": [],
+                "recurring": [
+                  {
+                    "buildingName": "Cory",
+                    "roomNumber": "289",
+                    "schedule": "MW 5:00P-6:29P"
+                  }
+                ]
+              },
+              "final_exams": [],
+              "gradeOption": "Letter"
+            }
+          ],
+          "slug": "pb_hlth-290",
+          "title": "Health Issues Seminars",
+          "url": "/academics/semester/fall-2016/class/pb_hlth-290",
+          "course_code": "PB HLTH 290",
+          "dept": "PB HLTH",
+          "courseCatalog": "290",
+          "course_id": "pb_hlth-290-2016-D"
+        },
+        {
+          "role": "Student",
+          "sections": [
+            {
+              "ccn": "29833",
+              "instruction_format": "SEM",
+              "is_primary_section": true,
+              "section_label": "SEM 002",
+              "section_number": "002",
+              "units": "2.0",
+              "grading_basis": "GRD",
+              "instructors": [
+                {
+                  "name": "Sylvia Guendelman",
+                  "role": "PI",
+                  "uid": "1818"
+                }
+              ],
+              "schedules": {
+                "oneTime": [],
+                "recurring": [
+                  {
+                    "buildingName": "Morgan",
+                    "roomNumber": "138",
+                    "schedule": "Tu 12:00P-1:59P"
+                  }
+                ]
+              },
+              "final_exams": [],
+              "gradeOption": "Letter"
+            }
+          ],
+          "slug": "pb_hlth-293",
+          "title": "Doctoral Seminar",
+          "url": "/academics/semester/fall-2016/class/pb_hlth-293",
+          "course_code": "PB HLTH 293",
+          "dept": "PB HLTH",
+          "courseCatalog": "293",
+          "course_id": "pb_hlth-293-2016-D"
+        }
+      ],
+      "hasEnrollmentData": true,
+      "summaryFromTranscript": false,
+      "hasEnrolledClasses": true,
+      "hasWaitlisted": true,
+      "plannedUnits": "3.0",
+      "enrolledUnits": "19.0",
+      "waitlistedUnits": "2.0",
+      "plannedClasses": [
+        {
+          "subjectArea": "ENGLISH",
+          "CatalogNumber": "C108",
+          "units": "3.0"
+        }
+      ]
+    }
+  ],
+  "updatePlanUrl" : "https://bcs-web-dev-03.is.berkeley.edu:8443/psc/bcsdev/EMPLOYEE/HRMS/c/SCI_PLNR_FL.SCI_PLNR_FL.GBL?ucInstitution=UCB01",
   "lastModified":{
     "hash":"ffabb092eb078bba9c5717705bfb543166b3305e",
     "timestamp":{

@@ -1,0 +1,145 @@
+<div class="cc-widget">
+  <div class="cc-widget-title">
+    <h2 class="cc-left">Academic Plan</h2>
+  </div>
+  <div class="cc-widget-padding" data-ng-if="updatePlanUrl">
+    <h3>
+      <a class="cc-academics-semester-title-link" data-ng-href="{{updatePlanUrl}}">Update multi-year planner</a>
+    </h3>
+  </div>
+
+  <div class="cc-flex-space-between-vertical-15">
+    <ul class="cc-widget-list cc-widget-list-border-top">
+        <li
+          data-ng-repeat="semester in planSemesters"
+          class="cc-academics-semester-list cc-widget-list-hover cc-enrollment-card-section cc-table"
+          data-ng-class="{'cc-widget-list-hover-opened':(semester.show)}"
+          data-cc-accessible-focus-directive
+          data-ng-click="api.widget.toggleShow($event,  null, semester, 'Student Overview - Academic Plan')">
+          <div>
+            <h3 class="cc-left">
+              <span data-ng-bind="semester.name"></span> <span data-ng-bind="semester.notation" class="cc-text-red"></span>
+            </h3>
+            <br>
+            <div data-ng-show="semester.show">
+              <div class="cc-widget-text" data-ng-if="!semester.plannedClasses.length && !semester.hasEnrolledClasses && !semester.summaryFromTranscript">
+                No Plan Provided
+                <span data-ng-bind="semester.name"></span>.
+              </div>
+              <div data-ng-if="semester.plannedClasses.length">
+                <table>
+                  <thead>
+                    <tr>
+                      <th width="60%" scope="col">Planned</th>
+                      <th width="40%" scope="col" title="Units">Units</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr data-ng-repeat="class in semester.plannedClasses">
+                      <td data-ng-bind-template="{{class.subjectArea}} {{class.catalogNumber}}"></td>
+                      <td data-ng-bind="class.units | number:1"></td>
+                    </tr>
+                  </tbody>
+                </table>
+                <table>
+                  <tr>
+                      <td width="60%" scope="col" class="cc-table-right">Total Units: </td>
+                      <td width="25%" scope="col"><strong><span data-ng-bind="semester.plannedUnits | number:1"></span></strong></td>
+                      <td width="15%" scope="col"></td>
+                  </tr>
+                </table>
+                <br>
+              </div>
+              <div data-ng-if="semester.hasEnrolledClasses || semester.summaryFromTranscript">
+                <table data-ng-if="semester.summaryFromTranscript && semester.hasClassTranscript">
+                  <thead>
+                    <tr>
+                      <th width="60%" scope="col">Enrolled</th>
+                      <th width="25%" scope="col" title="Units">Units</th>
+                      <th data-ng-if="api.user.profile.canViewGrades" width="15%" scope="col" title="Grades">Grade</th>
+                    </tr>
+                  </thead>
+                  <tbody data-ng-repeat="class in semester.enrolledClasses">
+                    <tr data-ng-if="class.transcript" data-ng-repeat="transcript in class.transcript">
+                      <td data-ng-bind="class.course_code"></td>
+                      <td data-ng-bind="transcript.units | number:1"></td>
+                      <td data-ng-bind="transcript.grade" data-ng-if="api.user.profile.canViewGrades"></td>
+                    </tr>
+                  </tbody>
+                </table>
+                <table data-ng-if="semester.summaryFromTranscript && !semester.hasClassTranscript">
+                  <thead>
+                    <tr>
+                      <th width="60%" scope="col">Enrolled</th>
+                      <th width="25%" scope="col" title="Units">Units</th>
+                      <th data-ng-if="api.user.profile.canViewGrades" width="15%" scope="col"></th>
+                    </tr>
+                  </thead>
+                  <tbody data-ng-repeat="class in semester.enrolledClasses">
+                    <tr data-ng-if="!class.transcript && section.is_primary_section" data-ng-repeat="section in class.sections">
+                      <td data-ng-bind="class.course_code"></td>
+                      <td data-ng-bind="section.units | number:1" ></td>
+                      <td></td>
+                    </tr>
+                  </tbody>
+                </table>
+                <table data-ng-if="!semester.summaryFromTranscript">
+                  <thead>
+                    <tr>
+                      <th width="60%" scope="col">Enrolled</th>
+                      <th width="25%" scope="col" title="Units">Units</th>
+                      <th data-ng-if="api.user.profile.canViewGrades" width="15%" scope="col"></th>
+                    </tr>
+                  </thead>
+                  <tbody data-ng-repeat="class in semester.enrolledClasses">
+                    <tr data-ng-repeat="section in class.sections" data-ng-if="section.is_primary_section && !section.waitlisted">
+                      <td data-ng-if="class.multiplePrimaries" data-ng-bind-template="{{class.course_code}} {{section.section_label}}"></td>
+                      <td data-ng-if="!class.multiplePrimaries" data-ng-bind="class.course_code"></td>
+                      <td data-ng-bind="section.units | number:1"></td>
+                      <td></td>
+                    </tr>
+                  </tbody>
+                </table>
+                <table>
+                  <tr>
+                      <td width="60%" scope="col" class="cc-table-right">Total Units: </td>
+                      <td width="25%" scope="col"><strong><span data-ng-bind="semester.enrolledUnits | number:1"></strong></td>
+                      <td width="15%" scope="col"></td>
+                  </tr>
+                </table>
+                <br>
+              </div>
+              <div data-ng-if="semester.hasWaitlisted">
+                <table>
+                  <thead>
+                    <tr>
+                      <th width="60%" scope="col">Waitlisted</th>
+                      <th width="25%" scope="col" title="Units">Units</th>
+                      <th data-ng-if="api.user.profile.canViewGrades" width="15%" scope="col" title="Position">Position</th>
+                    </tr>
+                  </thead>
+                  <tbody data-ng-if="!semester.summaryFromTranscript" data-ng-repeat="class in semester.enrolledClasses">
+                    <tr data-ng-repeat="section in class.sections" data-ng-if="section.waitlisted">
+                      <td data-ng-if="class.multiplePrimaries" data-ng-bind-template="{{class.course_code}} {{section.section_label}}"></td>
+                      <td data-ng-if="!class.multiplePrimaries" data-ng-bind="class.course_code"></td>
+                      <td data-ng-bind="section.units | number:1"></td>
+                      <td data-ng-bind="section.waitlistPosition" class="cc-table-right"></td>
+                    </tr>
+                  </tbody>
+                </table>
+                <table>
+                  <tr>
+                      <td width="60%" scope="col" class="cc-table-right">Total Units: </td>
+                      <td width="25%" scope="col"><strong><span data-ng-bind="semester.waitlistedUnits | number:1"></strong></td>
+                      <td width="15%" scope="col"></td>
+                  </tr>
+                </table>
+                <br>
+              </div>
+            </div>
+          </div>
+        </li>
+      </div>
+    </ul>
+</div>
+

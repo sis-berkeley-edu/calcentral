@@ -306,6 +306,18 @@
       background: $cc-color-widget-more-background;
     }
   }
+  .cc-academics-semester-list {
+    .cc-widget-list-hover:not(tr):not(.cc-widget-list-hover-notriangle) {
+      &::before {
+        top: 20px;
+      }
+      &:hover, &:focus {
+        &::before {
+          top: 20px;
+        }
+      }
+    }
+  }
   .cc-academics-semester-title-link {
     margin-top: 7px;
   }

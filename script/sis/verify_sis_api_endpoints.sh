@@ -220,6 +220,7 @@ verify_cs 'always_enabled' true \
   "/UC_SR_TRNSCPT_DATA.v1/Get?EMPLID=${CAMPUS_SOLUTIONS_ID}" \
   "/UC_SR_TRANSFER_CREDIT.v1/get?EMPLID=${CAMPUS_SOLUTIONS_ID}" \
   "/UC_SR_FACULTY_GRADING.v1/Get?EMPLID=${CAMPUS_SOLUTIONS_ID}"
+  "/UC_AA_ACAD_PLANNER.v1/get?EMPLID=${CAMPUS_SOLUTIONS_ID}"
 
 verify_cs 'advising_student_success' "${yml_features_advising_student_success}" \
   "/UC_AA_STDNT_GPA_TERMS.v1/get?EMPLID=${CAMPUS_SOLUTIONS_ID}" \

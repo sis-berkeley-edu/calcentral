@@ -12,7 +12,8 @@ module MyAcademics
         GpaUnits,
         Semesters,
         TransferCredit,
-        Exams
+        Exams,
+        AcademicPlan
       ]
     end
 
