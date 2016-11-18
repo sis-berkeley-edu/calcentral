@@ -135,11 +135,13 @@ module MyAcademics
           case flattened_plan[:type].try(:[], :category)
             when 'Major'
               plan_set[:majors] << college_plan.merge({
-                major: flattened_plan[:plan].try(:[], :description)
+                major: flattened_plan[:plan].try(:[], :description),
+                subPlan: flattened_plan[:subPlan].try(:[], :description)
               })
             when 'Minor'
               plan_set[:minors] << college_plan.merge({
-                minor: flattened_plan[:plan].try(:[], :description)
+                minor: flattened_plan[:plan].try(:[], :description),
+                subPlan: flattened_plan[:subPlan].try(:[], :description)
               })
           end
 
@@ -265,6 +267,7 @@ module MyAcademics
         career: {},
         program: {},
         plan: {},
+        subPlan: {}
       }
       if (academic_plan = hub_plan['academicPlan'])
         # Get CPP
@@ -286,6 +289,14 @@ module MyAcademics
           code: plan.try(:[], 'code'),
           description: plan.try(:[], 'description')
         })
+
+        if (academic_sub_plan = hub_plan['academicSubPlan'])
+          sub_plan = academic_sub_plan.try(:[], 'subPlan')
+          flat_plan[:subPlan].merge!({
+            code: sub_plan.try(:[], 'code'),
+            description: sub_plan.try(:[], 'description')
+          })
+        end
 
         if (hub_plan['expectedGraduationTerm'])
           expected_grad_term_name = hub_plan['expectedGraduationTerm'].try(:[], 'name')
