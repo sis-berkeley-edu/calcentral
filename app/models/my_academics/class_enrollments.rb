@@ -8,7 +8,7 @@ module MyAcademics
     def get_feed_internal
       return {} unless is_feature_enabled && user_is_student?
       HashConverter.camelize({
-        enrollmentTermInstructionTypes: get_career_term_roles,
+        enrollmentTermInstructionTypeDecks: get_career_term_role_decks,
         enrollmentTermInstructions: get_enrollment_term_instructions,
         enrollmentTermAcademicPlanner: get_enrollment_term_academic_planner,
         hasHolds: user_has_holds?,
@@ -35,10 +35,25 @@ module MyAcademics
       grouped_roles
     end
 
+    def get_career_term_role_decks
+      career_term_roles = get_career_term_roles
+      return [] if career_term_roles.empty?
+      if has_multiple_career_term_roles_in_any_term?(career_term_roles)
+        return career_term_roles.group_by {|ctr| ctr[:role] }.values.collect {|card_array| {cards: card_array} }
+      end
+      [{cards: career_term_roles}]
+    end
+
+    def has_multiple_career_term_roles_in_any_term?(career_term_roles)
+      grouped_by_term = career_term_roles.group_by { |ctr| ctr[:term][:termId] }
+      !!grouped_by_term.keys.find do |term_key|
+        grouped_by_term[term_key].length > 1
+      end
+    end
+
     # Returns unique couplings of current career-terms and current student plan roles
     def get_career_term_roles
       career_terms = get_active_career_terms
-
       grouped_roles = grouped_student_plan_roles
       career_term_plan_roles = []
 
@@ -46,7 +61,7 @@ module MyAcademics
         student_plan_role = grouped_roles[:data][role_key]
         career_terms.each do |career_term|
           if (student_plan_role[:career_code] == career_term[:acadCareer])
-            career_term_plan_roles << student_plan_role.merge({term: career_term.slice(:termId, :termDescr)})
+            career_term_plan_roles << student_plan_role.merge({term: career_term.slice(:termId, :termDescr, :termName, :termIsSummer)})
           end
         end
       end
@@ -138,7 +153,12 @@ module MyAcademics
     def get_active_career_terms
       get_career_terms = Proc.new do
         terms = CampusSolutions::EnrollmentTerms.new({user_id: @uid}).get
-        Array.wrap(terms.try(:[], :feed).try(:[], :enrollmentTerms)).sort_by { |term| term.try(:[], :termId) }
+        terms = Array.wrap(terms.try(:[], :feed).try(:[], :enrollmentTerms)).sort_by { |term| term.try(:[], :termId) }
+        terms.collect do |term|
+          term[:termName] = Berkeley::TermCodes.normalized_english(term[:termDescr])
+          term[:termIsSummer] = Berkeley::TermCodes.edo_id_is_summer?(term[:termId])
+          term
+        end
       end
       @career_terms ||= get_career_terms.call
     end
