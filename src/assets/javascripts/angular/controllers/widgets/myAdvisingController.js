@@ -6,7 +6,7 @@ var _ = require('lodash');
 /**
  * My Advising controller
  */
-angular.module('calcentral.controllers').controller('MyAdvisingController', function(academicsFactory, advisingFactory, myAdvisingFactory, $route, $routeParams, $scope, $q) {
+angular.module('calcentral.controllers').controller('MyAdvisingController', function(academicsFactory, advisingFactory, myAdvisingFactory, userService, $route, $routeParams, $scope, $q) {
   $scope.myAdvising = {
     isLoading: true,
     backToText: 'My Academics',
@@ -26,10 +26,6 @@ angular.module('calcentral.controllers').controller('MyAdvisingController', func
     return false;
   };
 
-  $scope.showAdvisorsList = function() {
-    return !isHaasStudent() ? true : false;
-  };
-
   var loadFeeds = function() {
     var academicsSource = $route.current.isAdvisingStudentLookup ? advisingFactory.getStudentAcademics : academicsFactory.getAcademics;
     var options = {
@@ -47,6 +43,23 @@ angular.module('calcentral.controllers').controller('MyAdvisingController', func
     $q.all([getAcademics, getAdvisingInfo]).then(function() {
       $scope.myAdvising.isLoading = false;
     });
+  };
+
+  $scope.showAdvisorsList = function() {
+    return !isHaasStudent();
+  };
+
+  $scope.showAppointmentLinks = function() {
+    if ($scope.myAdvising.links) {
+      if (userService.profile.features.csAdvisingLinks) {
+        return true;
+      } else {
+        if ($scope.myAdvising.roles.ugrdUrbanStudies) {
+          return true;
+        }
+      }
+    }
+    return false;
   };
 
   loadFeeds();
