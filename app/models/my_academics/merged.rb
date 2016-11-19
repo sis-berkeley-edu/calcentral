@@ -15,6 +15,7 @@ module MyAcademics
         TransitionTerm,
         GpaUnits,
         Semesters,
+        TransferCredit,
         Teaching,
         Exams,
         CanvasSites,
