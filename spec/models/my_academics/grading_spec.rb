@@ -1,7 +1,6 @@
-describe 'MyAcademics::Grading' do
+describe MyAcademics::Grading do
 
   let(:uid) { '123456' }
-  let(:feed) { {}.tap { |feed| described_class.new(uid).merge feed } }
   let(:fake) { true }
 
   subject do

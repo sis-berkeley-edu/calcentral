@@ -595,7 +595,22 @@
                 {
                   "name": "Tiffany Rasmussen",
                   "role": "PI",
-                  "uid": "921283"
+                  "uid": "921283",
+                  "csGradeAccessCode": "G",
+                  "csDelegatRole": "PI",
+                  "ccGradingAccees": "approveGrades",
+                  "ccDelegateRole": "Instr. of Record",
+                  "ccDelegateRoleOrder": "1"
+                },
+                {
+                  "name": "Tiffany Rasmussen",
+                  "role": "APRX",
+                  "uid": "921283",
+                  "csGradeAccessCode": "G",
+                  "csDelegatRole": "APRX",
+                  "ccGradingAccees": "enterGrades",
+                  "ccDelegateRole": "Proxy",
+                  "ccDelegateRoleOrder": "2"
                 }
               ],
               "estimated_final_exam": [
@@ -647,7 +662,12 @@
                 {
                   "name": "Tiffany Rasmussen",
                   "role": "PI",
-                  "uid": "921283"
+                  "uid": "921283",
+                  "csGradeAccessCode": "G",
+                  "csDelegatRole": "PI",
+                  "ccHasGradingAccees": true,
+                  "ccDelegateRole": "Instr. of Record",
+                  "ccDelegateRoleOrder": "1"
                 }
               ],
               "schedules": {

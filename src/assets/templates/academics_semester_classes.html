@@ -141,8 +141,7 @@
             <tr data-ng-repeat="section in course.sections">
               <td data-ng-if="section.is_primary_section" class="cc-academics-course-number"  >
                 <div data-ng-repeat="listing in course.listings">
-                  <a data-ng-href="{{course.url}}" data-ng-bind="listing.course_code">
-                  </a>
+                  <span data-ng-bind="listing.course_code"></span>
                 </div>
                 <div class="show-for-small-only">
                   <span data-ng-bind="section.section_label"></span>
@@ -168,7 +167,7 @@
                 <i data-ng-switch-when="periodStarted" class="fa fa-file-o"></i>
                 <i data-ng-switch-when="gradesSubmitted" class="fa fa-check cc-icon-green"></i>
                 <i data-ng-switch-when="gradesOverdue" class="fa fa-exclamation-circle cc-icon-red"></i>
-                <i data-ng-switch-when="" class="fa fa-ban"></i>
+                <i data-ng-switch-default class="fa fa-ban"></i>
               </td>
             </tr>
           </tbody>
