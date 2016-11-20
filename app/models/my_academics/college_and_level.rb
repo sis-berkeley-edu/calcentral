@@ -84,6 +84,9 @@ module MyAcademics
       else
         academic_status[:empty] = true
       end
+      if (degrees = parse_hub_degrees academic_status)
+        academic_status[:degrees] = degrees
+      end
       academic_status.delete(:feed)
       academic_status
     end
@@ -146,6 +149,16 @@ module MyAcademics
         end
       end
       plan_set
+    end
+
+    def parse_hub_degrees(response)
+      if (degrees = response.try(:[], :feed).try(:[], 'student').try(:[], 'degrees'))
+        awarded_degrees = degrees.select do |degree|
+          status = degree.try(:[], 'status').try(:[], 'code')
+          status === 'Awarded'
+        end
+        awarded_degrees unless awarded_degrees.empty?
+      end
     end
 
     def group_plans_by_type(plan_set, plan)
