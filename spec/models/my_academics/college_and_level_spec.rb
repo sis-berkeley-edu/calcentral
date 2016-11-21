@@ -20,7 +20,8 @@ describe MyAcademics::CollegeAndLevel do
     {
       "student" => {
         "academicStatuses" => hub_academic_statuses,
-        "holds" => hub_holds
+        "holds" => hub_holds,
+        "degrees" => hub_degrees
       }
     }
   end
@@ -53,6 +54,70 @@ describe MyAcademics::CollegeAndLevel do
       },
       "studentPlans" => student_plans,
       "termsInAttendance" => 2
+    }
+  end
+
+  let(:hub_degrees) { [hub_degree_awarded, hub_degree_not_awarded] }
+  let(:hub_degree_awarded) do
+    {
+      'academicDegree' => {
+        'type' => {
+          'code' => 'MA',
+          'description' => 'Master of Arts'
+        }
+      },
+      'completionTerm' => {
+        'id' => '2128',
+        'name' => '2012 Fall',
+        'category' => {
+          'code' => 'R',
+          'description' => 'Regular Term'
+        },
+        'academicYear' => '2013',
+        'beginDate' => '2012-08-16',
+        'endDate' => '2012-12-14'
+      },
+      'academicPlans' => [
+        {
+          'plan' => {
+            'code' => '79249MAG',
+            'description' => 'Education MA'
+          }
+        }
+      ],
+      'honors' => {},
+      'dateAwarded' => '2012-12-14',
+      'status' => {
+        'code' => 'Awarded'
+      },
+      'statusDate' => '2015-12-12'
+    }
+  end
+  let(:hub_degree_not_awarded) do
+    {
+      :academicDegree => {
+        :type => {
+          :code => 'PD',
+          :description => 'Doctor of Philosophy'
+        }
+      },
+      :completionTerm => {
+        :name => '2010 Spring'
+      },
+      :academicPlans => [
+        {
+          :plan => {
+            :code => '00345PHDG',
+            :description => 'English PhD'
+          }
+        }
+      ],
+        :honors => {},
+        :dateAwarded => '2010-05-14',
+        :status => {
+        :code => 'Not Awarded'
+      },
+      :statusDate => '2015-12-12'
     }
   end
 
@@ -426,6 +491,36 @@ describe MyAcademics::CollegeAndLevel do
 
       it 'translates holds' do
         expect(feed[:collegeAndLevel][:holds][:hasHolds]).to eq true
+      end
+
+      it 'translates degrees' do
+        expect(feed[:collegeAndLevel][:degrees].count).to eq 1
+
+        expect(feed[:collegeAndLevel][:degrees][0]['academicDegree']).to be
+        expect(feed[:collegeAndLevel][:degrees][0]['academicDegree']['type']).to be
+        expect(feed[:collegeAndLevel][:degrees][0]['academicDegree']['type']['code']).to eq 'MA'
+        expect(feed[:collegeAndLevel][:degrees][0]['academicDegree']['type']['description']).to eq 'Master of Arts'
+
+        expect(feed[:collegeAndLevel][:degrees][0]['completionTerm']).to be
+        expect(feed[:collegeAndLevel][:degrees][0]['completionTerm']['id']).to eq '2128'
+        expect(feed[:collegeAndLevel][:degrees][0]['completionTerm']['name']).to eq '2012 Fall'
+        expect(feed[:collegeAndLevel][:degrees][0]['completionTerm']['category']).to be
+        expect(feed[:collegeAndLevel][:degrees][0]['completionTerm']['category']['code']).to eq 'R'
+        expect(feed[:collegeAndLevel][:degrees][0]['completionTerm']['category']['description']).to eq 'Regular Term'
+        expect(feed[:collegeAndLevel][:degrees][0]['completionTerm']['academicYear']).to eq '2013'
+        expect(feed[:collegeAndLevel][:degrees][0]['completionTerm']['beginDate']).to eq '2012-08-16'
+        expect(feed[:collegeAndLevel][:degrees][0]['completionTerm']['endDate']).to eq '2012-12-14'
+
+        expect(feed[:collegeAndLevel][:degrees][0]['academicPlans'].count).to eq 1
+        expect(feed[:collegeAndLevel][:degrees][0]['academicPlans'][0]['plan']).to be
+        expect(feed[:collegeAndLevel][:degrees][0]['academicPlans'][0]['plan']['code']).to eq '79249MAG'
+        expect(feed[:collegeAndLevel][:degrees][0]['academicPlans'][0]['plan']['description']).to eq 'Education MA'
+
+        expect(feed[:collegeAndLevel][:degrees][0]['honors']).to be
+        expect(feed[:collegeAndLevel][:degrees][0]['dateAwarded']).to eq '2012-12-14'
+        expect(feed[:collegeAndLevel][:degrees][0]['status']).to be
+        expect(feed[:collegeAndLevel][:degrees][0]['status']['code']).to eq 'Awarded'
+        expect(feed[:collegeAndLevel][:degrees][0]['statusDate']).to eq '2015-12-12'
       end
     end
 

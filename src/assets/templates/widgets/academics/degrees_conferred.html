@@ -1,0 +1,16 @@
+<div class="cc-table cc-table-top-border cc-clearfix" data-ng-if="collegeAndLevel.degrees">
+  <table>
+    <tbody>
+    <tr>
+      <th width="92px" data-ng-pluralize count="collegeAndLevel.degrees.length" when="{'1': 'Degree Conferred', 'other': 'Degrees Conferred'}"></th>
+      <td class="cc-flex-space-between-vertical-15">
+        <div data-ng-repeat="degree in collegeAndLevel.degrees">
+          <div data-ng-repeat="academicPlan in degree.academicPlans">
+            <strong data-ng-bind="academicPlan.plan.description"></strong>&nbsp;awarded on&nbsp;<strong data-ng-bind="degree.dateAwarded | date:'MMM dd, yyyy'"></strong>
+          </div>
+        </div>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
