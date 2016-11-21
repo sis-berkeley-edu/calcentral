@@ -12,8 +12,6 @@ angular.module('calcentral.controllers').controller('BillingController', functio
     isErrored: false,
     isLoading: true,
     isLoadingCars: true,
-    // We want to show this subheader only during the transition period, so we'll remove this for GL7.
-    fallSubheader: null,
     sort: {
       column: 'itemEffectiveDate',
       descending: true
@@ -118,11 +116,6 @@ angular.module('calcentral.controllers').controller('BillingController', functio
     if (!billing || !billing.summary) {
       $scope.billing.isErrored = true;
       return;
-    }
-
-    // Toggles the "Fall 2016" subheader needed for transition period, remove this for GL7.
-    if (billing.summary.currentTerm === 'Summer 2016' || billing.summary.currentTerm === 'Fall 2016') {
-      $scope.billing.fallSubheader = 'Fall 2016';
     }
 
     billing.summary = setAmountStrings(billing.summary);

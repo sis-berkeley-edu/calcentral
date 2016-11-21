@@ -9,7 +9,7 @@ module CalCentralPages
       include CalCentralPages
       include MyFinancesPages
 
-      div(:spinner, :xpath => '//div[@data-cc-spinner-directive="billingTerm.isLoading"][@aria-busy="true"]')
+      div(:spinner, :xpath => '//div[@data-cc-spinner-directive="billing.isLoading"][@aria-live="polite"][@aria-busy="false"]')
       div(:error_msg, :xpath => '//div[contains(.,"There was a problem reaching campus services.  Please try again later.")]')
 
       link(:sort_by_date, :xpath => '//th[@data-ng-click="changeSorting(\'itemEffectiveDate\')"]')
