@@ -38,12 +38,9 @@ module CampusSolutions
       # Use this for CS Link API urls.
       cs_links = {}
 
-      # Hard-coded link in settings.yml.campus_solutions_links.advising for use
-      # until available from CS Link API.
-      add_cs_link links, :web_now_documents, 'WEB_NOW_DOCUMENTS', 'WebNow Documents', '', 'View uploaded student documents in the Image Now dashboard.'
-
       advising_link_settings = [
         # advisors see these on advisor-specific views
+        { feed_key: :web_now_documents, cs_link_key: 'UC_CX_WEBNOW_ADVISOR_URI' },
         { feed_key: :uc_administrative_transcript, cs_link_key: 'UC_CX_ADM_TRANSCRIPT' },
         { feed_key: :uc_advising_assignments, cs_link_key: 'UC_CX_STUDENT_ADVISOR' },
         # hide this until after 7.2, thanks :)
