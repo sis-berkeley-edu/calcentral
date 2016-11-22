@@ -182,7 +182,7 @@
   }
   .cc-academics-course-grading-icon {
     text-align: center;
-    width: 50px;
+    width: 100px;
   }
   .cc-academics-course-grading-link {
     text-align: center;
@@ -192,7 +192,7 @@
     width: 100px;
   }
   .cc-academics-course-section {
-    width: 120px;
+    width: 100px;
   }
   .cc-academics-instructors {
     color: $cc-color-green-light;
@@ -200,6 +200,21 @@
     li {
       margin-left: 20px;
     }
+  }
+  .cc-academics-instructors-grading-header {
+    border-bottom: 1px solid $cc-color-widget-background;
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+  }
+  .cc-academics-instructors-grading-header-legend {
+    float: right;
+  }
+  .cc-academics-instructors-grading-status {
+    text-align: center;
+  }
+  .cc-academics-instructors-grading-th {
+    padding-bottom: 5px;
+    padding-top: 5px;
   }
   .cc-academics-link-disabled {
     color: $cc-color-light-medium-grey;

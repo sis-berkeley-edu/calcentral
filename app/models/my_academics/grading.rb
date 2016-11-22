@@ -128,14 +128,20 @@ module MyAcademics
       is_law = semester_class.try(:[],:dept) == 'LAW'
       semester_class.try(:[],:sections).try(:each) do |section|
         ccn = section[:ccn]
-
+        has_grading_access = has_grading_access?(section)
         cs_grading_status = parse_cs_grading_status(get_cs_status(ccn, term_code))
         section.merge!(
           {
             csGradingStatus: section[:is_primary_section] ? cs_grading_status : nil,
-            ccGradingStatus: section[:is_primary_section] ? parse_cc_grading_status(cs_grading_status, is_law): nil,
-            gradingLink: section[:is_primary_section] ? get_grading_link(ccn, term_code, cs_grading_status, is_law) : nil
+            ccGradingStatus: section[:is_primary_section] && has_grading_access ? parse_cc_grading_status(cs_grading_status, is_law): nil,
+            gradingLink: section[:is_primary_section] && has_grading_access ? get_grading_link(ccn, term_code, cs_grading_status, is_law) : nil
           })
+      end
+    end
+
+    def has_grading_access?(section)
+      !!section[:instructors].try(:find) do |instructor|
+        instructor[:uid] == @uid && instructor[:ccGradingAccees] != :noGradeAccess
       end
     end
 

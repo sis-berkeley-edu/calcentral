@@ -8,7 +8,8 @@ module MyAcademics
     def self.providers
       # Provider ordering is significant! Semesters/Teaching must be merged before course sites.
       # CollegeAndLevel must be merged before TransitionTerm.
-      # Grading must be merged after Teaching.
+      # FacultyDelegate must be after Teaching.
+      # Grading must be merged after Teaching and FacultyDelegate.
       # All current providers draw from separately cached sources.
       [
         CollegeAndLevel,
@@ -19,6 +20,7 @@ module MyAcademics
         Teaching,
         Exams,
         CanvasSites,
+        FacultyDelegate,
         Grading
       ]
     end
