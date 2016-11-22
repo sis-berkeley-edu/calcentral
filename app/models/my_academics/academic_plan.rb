@@ -97,7 +97,7 @@ module MyAcademics
         cls.try(:[], :sections).try(:each) do |section|
           if section[:waitlisted] && section[:is_primary_section]
             waitlisted_units += section[:units].to_f
-          elsif section[:is_primary_section]
+          elsif section[:is_primary_section] && !semester[:summaryFromTranscript]
             enrolled_units += section[:units].to_f
           end
         end
