@@ -31,29 +31,12 @@ describe CampusSolutions::AdvisingResourcesController do
       end
 
       context 'links from the CS advising resources API' do
-        let(:key) { 'webNowDocuments' }
-        let(:expected_name) { 'WebNow Documents' }
+        let(:key) { 'ucAcademicRequirements' }
+        let(:expected_name) { 'Academic Requirements' }
 
         it_behaves_like 'a feed with advising resources'
 
         it 'returns feed with links' do
-          get feed
-          json = JSON.parse response.body
-          links = json['feed']['links']
-
-          expect(link = links[key]).to_not be_nil
-          expect(link['isCsLink']).to be true
-          expect(link['name']).to eq expected_name
-        end
-      end
-
-      context 'links from YAML settings' do
-        let(:key) { 'webNowDocuments' }
-        let(:expected_name) { 'WebNow Documents' }
-
-        it_behaves_like 'a feed with advising resources'
-
-        it 'returns feed with CS links' do
           get feed
           json = JSON.parse response.body
           links = json['feed']['links']
