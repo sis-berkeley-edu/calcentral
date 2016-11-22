@@ -46,8 +46,7 @@ module CampusSolutions
         # advisors see these on advisor-specific views
         { feed_key: :uc_administrative_transcript, cs_link_key: 'UC_CX_ADM_TRANSCRIPT' },
         { feed_key: :uc_advising_assignments, cs_link_key: 'UC_CX_STUDENT_ADVISOR' },
-        # hide this until after 7.2, thanks :)
-        # { feed_key: :uc_appointment_system, cs_link_key: 'UC_CX_APPOINTMENT_ADV_MY_APPTS' },
+        { feed_key: :uc_appointment_system, cs_link_key: 'UC_CX_APPOINTMENT_ADV_MY_APPTS' },
         { feed_key: :uc_class_search, cs_link_key: 'UC_CX_CLASS_SEARCH' },
         { feed_key: :uc_eforms_action_center, cs_link_key: 'UC_CX_GT_ACTION_CENTER' },
         { feed_key: :uc_eforms_work_center, cs_link_key: 'UC_CX_GT_WORK_CENTER' },
