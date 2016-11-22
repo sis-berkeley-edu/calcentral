@@ -101,19 +101,21 @@ module Oec
       klass.from_csv(csv, dept_code: dept_code).each do |row|
         begin
           row = Oec::Worksheet.capitalize_keys row
-          id = extract_id row
-          validate(dept_code, id[:ccn]) do |errors|
-            report(errors, id, :annotation, false, %w(A B GSI CHEM MCB))
-            report(errors, id, :ldap_uid, false, (1..99999999))
-            report(errors, row, 'EVALUATION_TYPE', false, %w(F G LANG SEMI LECT WRIT 1 1A 2 2A 3 3A 4 4A))
-            report(errors, row, 'MODULAR_COURSE', false, %w(Y N y n))
-            report(errors, row, 'START_DATE', true)
-            report(errors, row, 'END_DATE', true)
+          if (id = extract_id row)
+            validate(dept_code, id[:ccn]) do |errors|
+              report(errors, id, :annotation, false, %w(A B GSI CHEM MCB))
+              report(errors, id, :ldap_uid, false, (1..99999999))
+              report(errors, row, 'EVALUATION_TYPE', false, %w(F G LANG SEMI LECT WRIT 1 1A 2 2A 3 3A 4 4A))
+              report(errors, row, 'MODULAR_COURSE', false, %w(Y N y n))
+              report(errors, row, 'START_DATE', true)
+              report(errors, row, 'END_DATE', true)
+            end
+            hash[id] = row
+          else
+            log :warn, "#{folder_titles}: No course identifier found in row:\n#{row}"
           end
-          hash[id] = row
         rescue => e
-          log :error, "\nThis row with bad data in #{folder_titles} will be ignored: \n#{row}."
-          log :error, "We will NOT abort; the error is NOT fatal: #{e.message}"
+          log :error, "#{folder_titles}: Failed to parse a row due to '#{e.message}'.\nThe offending data:\n#{row}"
         end
       end
       hash
@@ -133,7 +135,8 @@ module Oec
     end
 
     def extract_id(row)
-      id = row['COURSE_ID'].split '-'
+      return nil unless (course_id = row['COURSE_ID'])
+      id = course_id.split '-'
       ccn_plus_tag = id[2].split '_'
       hash = { term_yr: id[0], term_cd: id[1], ccn: ccn_plus_tag[0] }
       hash[:annotation] = ccn_plus_tag[1] if ccn_plus_tag.length == 2
