@@ -139,6 +139,9 @@ angular.module('calcentral.controllers').controller('BillingController', functio
       makeDatesSearchable(billingItem);
       makeDollarAmountsSearchable(billingItem);
       setAmountStrings(billingItem);
+      if (billingItem.itemType && billingItem.itemType === 'W') {
+        billingItem.itemType = 'Adjustment';
+      }
     });
 
     $scope.billing.data = billing;
