@@ -3,7 +3,7 @@
 var angular = require('angular');
 var _ = require('lodash');
 
-angular.module('calcentral.controllers').controller('AcademicRecordsController', function(academicRecordsFactory, apiService, csLinkFactory, $scope) {
+angular.module('calcentral.controllers').controller('AcademicRecordsController', function(academicRecordsFactory, apiService, csLinkFactory, userService, $scope) {
 
   $scope.officialTranscript = {
     postParams: {},
@@ -59,7 +59,10 @@ angular.module('calcentral.controllers').controller('AcademicRecordsController',
 
   var fetchLawUnofficialTranscriptLink = function() {
     csLinkFactory.getLink({
-      urlId: 'UC_CX_RQST_UNOFF_LAW_TRANSCRPT'
+      urlId: 'UC_CX_RQST_UNOFF_LAW_TRANSCRPT',
+      placeholders: {
+        EMPLID: userService.profile.sid
+      }
     })
     .then(function(data) {
       $scope.lawUnofficialTranscriptLink = _.get(data, 'data.link');
