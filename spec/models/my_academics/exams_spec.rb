@@ -158,7 +158,7 @@ describe MyAcademics::Exams do
   let(:fall_teaching_recurring) do
     {
       role: 'Student',
-      courseCode: 'BIO ENG',
+      course_code: 'BIO ENG',
       courseCatalog: '131',
       sections: [
         {
@@ -196,7 +196,7 @@ describe MyAcademics::Exams do
   let(:spring_teaching_recurring) do
     {
       role: 'Student',
-      courseCode: 'BIO ENG',
+      course_code: 'BIO ENG',
       courseCatalog: '131',
       sections: [
         {
@@ -233,7 +233,7 @@ describe MyAcademics::Exams do
   let(:teaching_no_recurring) do
     {
       role: 'Student',
-      courseCode: 'BIO ENG',
+      course_code: 'BIO ENG',
       courseCatalog: '131',
       sections: [
         {
@@ -859,7 +859,7 @@ describe MyAcademics::Exams do
       let(:fall_teaching_recurring) do
         {
           role: 'Student',
-          courseCode: 'BIO ENG 131',
+          course_code: 'BIO ENG 131',
           courseCatalog: '131',
           sections: [
             {
@@ -895,7 +895,7 @@ describe MyAcademics::Exams do
       let(:spring_teaching_recurring) do
         {
           role: 'Student',
-          courseCode: 'BIO ENG 131',
+          course_code: 'BIO ENG 131',
           courseCatalog: '131',
           sections: [
             {
@@ -931,7 +931,7 @@ describe MyAcademics::Exams do
       let(:teaching_no_recurring) do
         {
           role: 'Student',
-          courseCode: 'BIO ENG 131',
+          course_code: 'BIO ENG 131',
           courseCatalog: '131',
           sections: [
             {

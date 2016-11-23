@@ -19,7 +19,7 @@ module MyAcademics
 
         # for instructors
         if (teaching_data = data[:teachingSemesters])
-          assign_exam_to_instructor(teaching_data, final_exam_conversion)
+          parse_courses_for_instructor(teaching_data, final_exam_conversion)
         end
       end
     end
@@ -91,13 +91,13 @@ module MyAcademics
       end
     end
 
-    def assign_exam_to_instructor(data, final_exam_conversion)
+    def parse_courses_for_instructor(data, final_exam_conversion)
       data.reject{|x| x[:termCode] == 'C' || x[:timeBucket] == 'past'}.each do |semester|
         semester[:classes].each do |course|
           course[:sections].select{|x| x[:is_primary_section]}.each do |section|
             parsed_course = {
-              name: course[:courseCode],
-              number: course[:courseCode].gsub(/[^0-9]/, '').to_i,
+              name: course[:course_code],
+              number: course[:course_code].gsub(/[^0-9]/, '').to_i,
               time: section[:schedules][:recurring].to_a.first.try(:[], :schedule),
             }
             exam_key = determine_exam_key(semester, parsed_course, final_exam_conversion)
