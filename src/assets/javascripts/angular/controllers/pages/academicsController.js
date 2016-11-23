@@ -198,6 +198,7 @@ angular.module('calcentral.controllers').controller('AcademicsController', funct
     $scope.showLegacyAdvising = !$scope.filteredForDelegate && $scope.api.user.profile.features.legacyAdvising && $scope.isLSStudent;
     $scope.showAdvising = !$scope.filteredForDelegate && apiService.user.profile.features.advising && apiService.user.profile.roles.student && isMbaJdOrNotLaw();
     $scope.showProfileMessage = (!$scope.isAcademicInfoAvailable || !$scope.collegeAndLevel || _.isEmpty($scope.collegeAndLevel.careers));
+    $scope.showResidency = hasResidency();
   };
 
   /**
@@ -209,6 +210,10 @@ angular.module('calcentral.controllers').controller('AcademicsController', funct
       return true;
     }
     return false;
+  };
+
+  var hasResidency = function() {
+    return (!$scope.collegeAndLevel.roles.haasMastersFinEng && !$scope.collegeAndLevel.roles.haasExecMba && !$scope.collegeAndLevel.roles.haasEveningWeekendMba);
   };
 
   // Wait until user profile is fully loaded before hitting academics data
