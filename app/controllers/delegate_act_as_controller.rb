@@ -8,15 +8,12 @@ class DelegateActAsController < ActAsController
   def act_as_authorization(uid_param)
     acting_user_id = current_user.real_user_id
     # Expire cache prior to view-as session to guarantee most up-to-date privileges.
-    CampusSolutions::DelegateStudentsExpiry.expire @uid
-    response = CampusSolutions::DelegateStudents.new(user_id: acting_user_id).get
-    if response[:feed] && (students = response[:feed][:students])
-      student = students.detect { |s| uid_param == s[:uid] }
-      authorized = student && [:financial, :viewEnrollments, :viewGrades].any? { |k| student[:privileges][k] }
-      raise Pundit::NotAuthorizedError.new("User #{acting_user_id} is unauthorized to delegate-view-as student: #{student.as_json}") unless authorized
-      logger.warn "User #{acting_user_id} is authorized to delegate-view-as #{uid_param} with privileges: #{student[:privileges]}"
+    CampusSolutions::DelegateStudentsExpiry.expire acting_user_id
+    privileges = current_user.delegation_privileges_for uid_param
+    if privileges.present?
+      logger.warn "User #{acting_user_id} is authorized to delegate-view-as #{uid_param} with privileges: #{privileges}"
     else
-      raise Pundit::NotAuthorizedError.new "User #{acting_user_id} does not have delegate affiliation"
+      raise Pundit::NotAuthorizedError.new("User #{acting_user_id} is unauthorized to delegate-view-as student UID #{uid_param}")
     end
   end
 

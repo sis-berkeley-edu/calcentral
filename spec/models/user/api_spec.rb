@@ -124,7 +124,7 @@ describe User::Api do
             students: [
               {
                 campusSolutionsId: campus_solutions_id,
-                uid: random_id,
+                uid: uid,
                 privileges: {
                   financial: privilege_financial,
                   viewEnrollments: privilege_view_enrollments,
@@ -148,10 +148,6 @@ describe User::Api do
       context 'view-as session' do
         let(:original_delegate_user_id) { random_id }
         let(:ldap_attributes) { {roles: {student: true}} }
-        before {
-          proxy = double lookup_campus_solutions_id: campus_solutions_id
-          expect(CalnetCrosswalk::ByUid).to receive(:new).with(user_id: uid).once.and_return proxy
-        }
         context 'tabs per privileges' do
           let(:privilege_view_grades) { true }
           it 'should show My Academics tab' do
@@ -162,9 +158,7 @@ describe User::Api do
             expect(api[:canViewGrades]).to be true
             expect(api[:hasFinancialsTab]).to be false
             expect(api[:showSisProfileUI]).to be false
-            privileges = api[:delegateViewAsPrivileges]
-            expect(privileges).to be_a Hash
-            expect(privileges).to include financial: false, viewEnrollments: false, viewGrades: true, phone: false
+            expect(api[:delegateViewAsPrivileges]).to eq(viewGrades: true)
             expect(api[:isDirectlyAuthenticated]).to be false
             expect(api[:canActOnFinances]).to be false
           end
@@ -184,7 +178,7 @@ describe User::Api do
             expect(api[:hasAcademicsTab]).to be false
             expect(api[:canViewGrades]).to be false
             expect(api[:hasFinancialsTab]).to be true
-            expect(api[:delegateViewAsPrivileges]).to include financial: true, viewEnrollments: false, viewGrades: false, phone: false
+            expect(api[:delegateViewAsPrivileges]).to eq(financial: true)
             expect(api[:isDirectlyAuthenticated]).to be false
             expect(api[:canActOnFinances]).to be true
           end

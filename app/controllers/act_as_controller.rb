@@ -10,8 +10,8 @@ class ActAsController < ApplicationController
 
   def start
     uid_param = params['uid']
-    act_as_authorization uid_param
     return redirect_to root_path unless valid_params? uid_param
+    act_as_authorization uid_param
     logger.warn "Start: #{current_user.real_user_id} act as #{uid_param}"
     session[@act_as_session_key] = session['user_id'] unless session[@act_as_session_key]
     session['user_id'] = User::AuthenticationValidator.new(uid_param).validated_user_id
@@ -39,6 +39,11 @@ class ActAsController < ApplicationController
 
   def act_as_authorization(uid_param)
     authorize current_user, :can_view_as?
+    # Ensure uid is available to the viewer.
+    if fetch_another_users_attributes(uid_param).blank?
+      logger.warn "User #{current_user.real_user_id} FAILED to login to #{uid_param}, UID not found"
+      raise Pundit::NotAuthorizedError.new "User with UID #{uid_param} not found."
+    end
   end
 
   def after_successful_start(session, params)
@@ -71,12 +76,6 @@ class ActAsController < ApplicationController
     if act_as_uid.to_i == current_user.real_user_id.to_i
       logger.warn "User #{current_user.user_id} FAILED to login to #{act_as_uid}, cannot view-as oneself"
       raise Pundit::NotAuthorizedError.new "You cannot View as your own ID."
-    end
-
-    # Ensure uid is available to the viewer.
-    if fetch_another_users_attributes(act_as_uid).blank?
-      logger.warn "User #{current_user.real_user_id} FAILED to login to #{act_as_uid}, act_as_uid not found"
-      return false
     end
 
     true

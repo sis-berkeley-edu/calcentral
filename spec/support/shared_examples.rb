@@ -107,14 +107,13 @@ shared_context 'delegated access' do
     session['user_id'] = uid
     original_uid = random_id
     session[SessionKey.original_delegate_user_id] = original_uid
-    allow(CalnetCrosswalk::ByUid).to receive(:new).and_return (crosswalk = double)
-    allow(crosswalk).to receive(:lookup_campus_solutions_id).and_return campus_solutions_id
     allow(CampusSolutions::DelegateStudents).to receive(:new).and_return (cs_proxy = double)
     allow(cs_proxy).to receive(:get).and_return(
       {
         feed: {
           students: [
             {
+              uid: uid,
               campusSolutionsId: campus_solutions_id,
               privileges: privileges
             }
