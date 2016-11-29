@@ -24,8 +24,8 @@
           <tr class="cc-transfer-credit-table-parent-row">
             <td colspan="1">Transfer Units</td>
             <td class="cc-table-right cc-toggle-triangle cc-transfer-credit-table-right-padding" colspan="2">
-              <span data-ng-bind="transferCredit.ucTransferCrseSch.unitsNonAdjusted | number:1"></span>
-              <span data-ng-if="transferCredit.ucTransferCrseSch.unitsTotal && (transferCredit.ucTransferCrseSch.unitsTotal !== transferCredit.ucTransferCrseSch.unitsNonAdjusted)" data-ng-bind-template="(Non-Adjusted: {{transferCredit.ucTransferCrseSch.unitsTotal | number:1}})"></span>
+              <span data-ng-bind="transferCredit.ucTransferCrseSch.unitsNonAdjusted | number:3"></span>
+              <span data-ng-if="transferCredit.ucTransferCrseSch.unitsTotal && (transferCredit.ucTransferCrseSch.unitsTotal !== transferCredit.ucTransferCrseSch.unitsNonAdjusted)" data-ng-bind-template="(Non-Adjusted: {{transferCredit.ucTransferCrseSch.unitsTotal | number:3}})"></span>
             </td>
           </tr>
           <tr data-ng-show="transferCredit.ucTransferCrseSch.show" data-ng-repeat="item in transferCredit.ucTransferCrseSch.items">
@@ -33,7 +33,7 @@
               <span data-ng-bind="item.institution"></span>
             </td>
             <td class="cc-table-right cc-transfer-credit-table-right-padding" colspan="1">
-              <span data-ng-bind="item.ucbUnits | number:1"></span>
+              <span data-ng-bind="item.ucbUnits | number:3"></span>
             </td>
           </tr>
         </tbody>
@@ -46,7 +46,7 @@
           <tr class="cc-transfer-credit-table-parent-row">
             <td colspan="2">Test Units</td>
             <td class="cc-table-right cc-toggle-triangle cc-transfer-credit-table-right-padding" colspan="1">
-              <span data-ng-bind="transferCredit.ucTestComponent.totalTestUnits | number:1"></span>
+              <span data-ng-bind="transferCredit.ucTestComponent.totalTestUnits | number:3"></span>
             </td>
           </tr>
           <tr data-ng-if="transferCredit.ucTestComponent.apUnits" data-ng-show="transferCredit.ucTestComponent.show">
@@ -54,7 +54,7 @@
               <span>Advanced Placement (AP)</span>
             </td>
             <td class="cc-table-right cc-transfer-credit-table-right-padding" colspan="1">
-              <span data-ng-bind="transferCredit.ucTestComponent.apUnits | number:1"></span>
+              <span data-ng-bind="transferCredit.ucTestComponent.apUnits | number:3"></span>
             </td>
           </tr>
           <tr data-ng-if="transferCredit.ucTestComponent.ibUnits" data-ng-show="transferCredit.ucTestComponent.show">
@@ -62,7 +62,7 @@
               <span>International Baccalaureate (IB)</span>
             </td>
             <td class="cc-table-right cc-transfer-credit-table-right-padding" colspan="1">
-              <span data-ng-bind="transferCredit.ucTestComponent.ibUnits | number:1"></span>
+              <span data-ng-bind="transferCredit.ucTestComponent.ibUnits | number:3"></span>
             </td>
           </tr>
           <tr data-ng-if="transferCredit.ucTestComponent.alevelUnits" data-ng-show="transferCredit.ucTestComponent.show">
@@ -70,7 +70,7 @@
               <span>GCE Advanced-Level (A-level)</span>
             </td>
             <td class="cc-table-right cc-transfer-credit-table-right-padding" colspan="1">
-              <span data-ng-bind="transferCredit.ucTestComponent.alevelUnits | number:1"></span>
+              <span data-ng-bind="transferCredit.ucTestComponent.alevelUnits | number:3"></span>
             </td>
           </tr>
         </tbody>
