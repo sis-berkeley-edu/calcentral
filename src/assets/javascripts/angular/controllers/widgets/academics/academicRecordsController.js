@@ -3,13 +3,14 @@
 var angular = require('angular');
 var _ = require('lodash');
 
-angular.module('calcentral.controllers').controller('AcademicRecordsController', function(academicRecordsFactory, apiService, csLinkFactory, userService, $scope) {
+angular.module('calcentral.controllers').controller('AcademicRecordsController', function(academicRecordsFactory, apiService, csLinkFactory, userService, $scope, $window) {
 
   $scope.officialTranscript = {
     postParams: {},
     postUrl: '',
     postUrlHover: 'Request Transcript',
-    isLoading: true
+    isLoading: true,
+    defaultRequestLink: 'http://registrar.berkeley.edu/academic-records/transcripts-diplomas'
   };
   $scope.lawTranscriptLink = {
     link: 'http://www.law.berkeley.edu/php-programs/registrar/forms/transcriptrequestform.php',
@@ -42,7 +43,7 @@ angular.module('calcentral.controllers').controller('AcademicRecordsController',
     html.documentElement.appendChild(head);
     html.documentElement.appendChild(body);
     var parser = new XMLSerializer();
-    var newWindow = window.open('');
+    var newWindow = $window.open('');
     newWindow.document.write(parser.serializeToString(html));
     newWindow.document.getElementsByName('transcriptRequestForm')[0].submit();
   };
@@ -80,8 +81,12 @@ angular.module('calcentral.controllers').controller('AcademicRecordsController',
       });
   };
 
-  $scope.makePostRequest = function() {
-    postRequest($scope.officialTranscript.postUrl, $scope.officialTranscript.postParams);
+  $scope.requestTranscript = function() {
+    if (userService.profile.features.transcriptRequestLinkCredSolutions) {
+      postRequest($scope.officialTranscript.postUrl, $scope.officialTranscript.postParams);
+    } else {
+      $window.open($scope.officialTranscript.defaultRequestLink, '_blank');
+    }
   };
 
   loadTranscriptData();
