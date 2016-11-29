@@ -111,7 +111,7 @@
               });
 
               // Add the 'Create a Site' button to the Dashboard page
-              waitUntilAvailable('#right-side .rs-margin-lr', false, function($container) {
+              waitUntilAvailable('#right-side div:nth-last-child(1)', false, function($container) {
                 $('#start_new_course').remove();
                 $container.prepend($createSiteButton);
               });
