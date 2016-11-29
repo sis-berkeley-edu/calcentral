@@ -524,5 +524,6 @@ features:
   reauthentication: true
   regstatus: true
   textbooks: false
+  transcript_request_link_cred_solutions: false
   videos: false
   webcast_sign_up_on_calcentral: false
