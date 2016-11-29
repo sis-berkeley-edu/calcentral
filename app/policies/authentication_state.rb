@@ -97,18 +97,25 @@ class AuthenticationState
     original_uid.present? && user_id.present? && (original_uid != user_id)
   end
 
+  def delegation_privileges_for(target_uid)
+    acting_user_id = real_user_id
+    response = CampusSolutions::DelegateStudents.new(user_id: acting_user_id).get
+    if response[:feed] && (students = response[:feed][:students])
+      if (student = students.detect { |s| target_uid == s[:uid] }) && student[:privileges].present?
+        student[:privileges].select {|privilege, value| value}
+      else
+        {}
+      end
+    else
+      {}
+    end
+  end
+
   private
 
   def get_delegated_privileges
     return {} unless authenticated_as_delegate?
-    response = CampusSolutions::DelegateStudents.new(user_id: original_delegate_user_id).get
-    if response[:feed] && (students = response[:feed][:students])
-      campus_solutions_id = CalnetCrosswalk::ByUid.new(user_id: user_id).lookup_campus_solutions_id
-      student = students.detect { |s| campus_solutions_id == s[:campusSolutionsId] }
-      (student && student[:privileges] && student[:privileges]) || {}
-    else
-      {}
-    end
+    delegation_privileges_for user_id
   end
 
 end
