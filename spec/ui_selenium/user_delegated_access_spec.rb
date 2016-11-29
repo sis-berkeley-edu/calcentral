@@ -247,13 +247,11 @@ describe 'Delegated access', :testui => true do
                     if student_semesters.any?
 
                       api_semesters = @academics_api.all_student_semesters
-                      api_semesters_count = api_semesters.length
-                      api_semesters_count += 1 if @academics_api.addl_credits
 
                       @semester_card.show_more if @semester_card.show_more_element.visible?
                       ui_semesters_count = @semester_card.semester_card_elements.length
 
-                      it ("shows delegate UID #{uid} all the semester cards for UID #{student_uid}") { expect(ui_semesters_count).to eql(api_semesters_count) }
+                      it ("shows delegate UID #{uid} all the semester cards for UID #{student_uid}") { expect(ui_semesters_count).to eql(api_semesters.length) }
 
                       api_semesters.each do |semester|
                         @semester_card.load_page
@@ -349,14 +347,6 @@ describe 'Delegated access', :testui => true do
                   if privileges['financial']
 
                     @finances_page.load_page
-
-                    # Billing Summary
-                    sees_billing_summary = WebDriverUtils.verify_block { @finances_page.account_bal_element.when_visible timeout }
-                    sees_payment_button = @finances_page.make_payment_link?
-                    if @financials_api.has_cars_data?
-                      it ("shows delegate UID #{uid} the billing summary for UID #{student_uid}") { expect(sees_billing_summary).to be true }
-                      it ("shows delegate UID #{uid} the 'Make a Payment' button for UID #{student_uid}") { expect(sees_payment_button).to be true }
-                    end
 
                     # Cal 1 Card
                     sees_cal_1_card = WebDriverUtils.verify_block { @finances_page.debit_account_header_element.when_visible WebDriverUtils.page_event_timeout }

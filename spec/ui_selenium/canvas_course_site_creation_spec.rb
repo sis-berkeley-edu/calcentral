@@ -35,7 +35,7 @@ describe 'bCourses course site creation', :testui => true do
           logger.info "Creating a course site for #{course_code} in #{course_term} using the '#{course['workflow']}' workflow"
 
           @site_creation_page.choose_course_site(@driver, course, instructor, @canvas_page, @create_course_site_page)
-          @create_course_site_page.search_for_course(@driver, course, instructor)
+          @create_course_site_page.search_for_course(course, instructor)
 
           unless links_tested
 

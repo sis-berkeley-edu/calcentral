@@ -10,7 +10,7 @@ describe 'My Finances Campus Solutions student financials', :testui => true do
       test_users = UserUtils.load_test_users.select { |user| user['financesData'] }
       testable_users = []
       test_output_heading = ['UID', 'Finances Tab', 'Acct Bal', 'Amt Due Now', 'Past Due', 'Future Activity',
-                             'Charges', 'Payments', 'Awards', 'Waivers', 'Has Partial Payment']
+                             'Charges', 'Payments', 'Awards', 'Adjustments', 'Has Partial Payment']
       test_output = UserUtils.initialize_output_csv(self, test_output_heading)
 
       @splash_page = CalCentralPages::SplashPage.new driver
@@ -362,51 +362,51 @@ describe 'My Finances Campus Solutions student financials', :testui => true do
                 end
               end
 
-              # Waivers
-              waivers = fin_api.transactions_by_type(fin_api.activity_filtered, 'W')
-              waivers_count = waivers.length
-              logger.info "There are #{waivers_count} waivers"
-              if waivers.any?
-                waiver = waivers.last
-                waiver_date = WebDriverUtils.ui_date_input_format fin_api.effective_date_as_date(waiver)
+              # Adjustments
+              adjustments = fin_api.transactions_by_type(fin_api.activity_filtered, 'W')
+              adjustments_count = adjustments.length
+              logger.info "There are #{adjustments_count} adjustments"
+              if adjustments.any?
+                adjustment = adjustments.last
+                adjustment_date = WebDriverUtils.ui_date_input_format fin_api.effective_date_as_date(adjustment)
 
-                logger.debug "Checking waiver on #{waiver_date}"
+                logger.debug "Checking adjustment on #{adjustment_date}"
 
-                @my_finances_billing.search('Date Range', nil, waiver_date, waiver_date, fin_api.description(waiver))
+                @my_finances_billing.search('Date Range', nil, adjustment_date, adjustment_date, fin_api.description(adjustment))
                 if @my_finances_billing.visible_transaction_count == 1
                   @my_finances_billing.toggle_first_trans_detail
 
-                  ui_waiver_date = @my_finances_billing.item_date
-                  it("shows the waiver date for UID #{uid}") { expect(ui_waiver_date).to eql(fin_api.formatted_date fin_api.effective_date(waiver)) }
+                  ui_adjustment_date = @my_finances_billing.item_date
+                  it("shows the adjustment date for UID #{uid}") { expect(ui_adjustment_date).to eql(fin_api.formatted_date fin_api.effective_date(adjustment)) }
 
-                  ui_waiver_desc = @my_finances_billing.item_desc
-                  it("shows the waiver description for UID #{uid}") { expect(ui_waiver_desc).to eql(fin_api.description(waiver)) }
+                  ui_adjustment_desc = @my_finances_billing.item_desc
+                  it("shows the adjustment description for UID #{uid}") { expect(ui_adjustment_desc).to eql(fin_api.description(adjustment)) }
 
-                  ui_waiver_amt = @my_finances_billing.strip_currency @my_finances_billing.item_amt
-                  it("shows the waiver amount for UID #{uid}") { expect(ui_waiver_amt).to eql(fin_api.amt_to_s fin_api.line_amount(waiver)) }
+                  ui_adjustment_amt = @my_finances_billing.strip_currency @my_finances_billing.item_amt
+                  it("shows the adjustment amount for UID #{uid}") { expect(ui_adjustment_amt).to eql(fin_api.amt_to_s fin_api.line_amount(adjustment)) }
 
-                  ui_waiver_type = @my_finances_billing.item_type
-                  it("shows the transaction type of the waiver for UID #{uid}") { expect(ui_waiver_type).to eql(fin_api.type waiver) }
+                  ui_adjustment_type = @my_finances_billing.item_type
+                  it("shows the transaction type of the adjustment for UID #{uid}") { expect(ui_adjustment_type).to eql('Adjustment') }
 
-                  ui_waiver_due_date = @my_finances_billing.item_due_date?
-                  it("shows no waiver due date for UID #{uid}") { expect(ui_waiver_due_date).to be false }
+                  ui_adjustment_due_date = @my_finances_billing.item_due_date?
+                  it("shows no adjustment due date for UID #{uid}") { expect(ui_adjustment_due_date).to be false }
 
                   # Detail
 
-                  ui_waiver_has_status = @my_finances_billing.item_detail_status?
-                  it("shows no waiver status for UID #{uid}") { expect(ui_waiver_has_status).to be false }
+                  ui_adjustment_has_status = @my_finances_billing.item_detail_status?
+                  it("shows no adjustment status for UID #{uid}") { expect(ui_adjustment_has_status).to be false }
 
-                  ui_waiver_has_orig_amt = @my_finances_billing.item_detail_orig_amt?
-                  it("shows no waiver original amount for UID #{uid}") { expect(ui_waiver_has_orig_amt).to be false }
+                  ui_adjustment_has_orig_amt = @my_finances_billing.item_detail_orig_amt?
+                  it("shows no adjustment original amount for UID #{uid}") { expect(ui_adjustment_has_orig_amt).to be false }
 
-                  ui_waiver_term = @my_finances_billing.item_detail_term
-                  it("shows the waiver term for UID #{uid}") { expect(ui_waiver_term).to eql(fin_api.term_desc(waiver)) }
+                  ui_adjustment_term = @my_finances_billing.item_detail_term
+                  it("shows the adjustment term for UID #{uid}") { expect(ui_adjustment_term).to eql(fin_api.term_desc(adjustment)) }
 
-                  ui_waiver_detail_type = @my_finances_billing.item_detail_type
-                  it("shows the transaction type in the waiver detail view for UID #{uid}") { expect(ui_waiver_detail_type).to eql(fin_api.type waiver) }
+                  ui_adjustment_detail_type = @my_finances_billing.item_detail_type
+                  it("shows the transaction type in the adjustment detail view for UID #{uid}") { expect(ui_adjustment_detail_type).to eql('Adjustment') }
 
                 else
-                  logger.warn "Found more than one waiver with the same description on #{waiver_date}, skipping"
+                  logger.warn "Found more than one adjustment with the same description on #{adjustment_date}, skipping"
                 end
               end
 
@@ -453,7 +453,7 @@ describe 'My Finances Campus Solutions student financials', :testui => true do
           logger.error "#{e.message + "\n"} #{e.backtrace.join("\n ")}"
         ensure
           test_output_row = [uid, has_finances_tab, acct_bal, amt_due_now, has_past_due_amt, has_future_activity,
-                             charge_count, payment_count, awards_count, waivers_count, has_partial_payment]
+                             charge_count, payment_count, awards_count, adjustments_count, has_partial_payment]
           UserUtils.add_csv_row(test_output, test_output_row)
         end
       end

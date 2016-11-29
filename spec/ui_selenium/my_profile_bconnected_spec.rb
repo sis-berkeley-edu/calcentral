@@ -68,28 +68,5 @@ describe 'Profile bConnected', :testui => true do
       end
 
     end
-
-    context 'as a student with current student enrollment' do
-
-      context 'when connected' do
-        before(:example) do
-          @splash_page = CalCentralPages::SplashPage.new @driver
-          @cal_net = CalNetAuthPage.new @driver
-          dashboard_page = @splash_page.log_into_dashboard(@driver, @cal_net, UserUtils.oski_username, UserUtils.oski_password)
-          basic_info_card = dashboard_page.click_profile_link @driver
-          @bconnected_card = basic_info_card.click_bconnected @driver
-          @bconnected_card.disconnect_bconnected
-          google = GooglePage.new @driver
-          google.connect_calcentral_to_google(UserUtils.oski_gmail_username, UserUtils.oski_gmail_password)
-        end
-        it 'shows a "class calendar" option' do
-          @bconnected_card.load_page
-          @bconnected_card.connected_as_element.when_visible(timeout=WebDriverUtils.page_load_timeout)
-          expect(@bconnected_card.calendar_opt_in_element.enabled?).to be true
-          expect(@bconnected_card.calendar_opt_in_element.checked?).to be false
-        end
-      end
-
-    end
   end
 end

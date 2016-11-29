@@ -410,10 +410,6 @@ ui_selenium:
   canvas_password: secret
   canvas_id: secret
   test_user_password: secret
-  oski_username: secret
-  oski_password: secret
-  oski_gmail_username: secret
-  oski_gmail_password: secret
   ets_qa_ldap_username: secret
   ets_qa_ldap_password: secret
   ets_qa_gmail_username: secret

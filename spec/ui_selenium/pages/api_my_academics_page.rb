@@ -6,6 +6,7 @@ class ApiMyAcademicsPage
   def get_json(driver)
     logger.info 'Parsing JSON from /api/my/academics'
     navigate_to "#{WebDriverUtils.base_url}/api/my/academics"
+    wait_until(WebDriverUtils.academics_timeout) { driver.find_element(:xpath, '//pre') }
     @parsed = JSON.parse driver.find_element(:xpath, '//pre').text
   end
 
