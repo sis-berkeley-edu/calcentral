@@ -54,7 +54,7 @@ describe 'My Academics Final Exams card', :testui => true do
                 courses = @academics_api.semester_courses term
                 api_course_codes = @academics_api.semester_card_course_codes(@academics_api.all_student_semesters, term, courses)
                 api_exam_course_codes = @academics_api.term_exam_course_codes term
-                it("shows all the expected courses for UID #{uid} in #{term_name}") { expect(api_course_codes).to eql(api_exam_course_codes) }
+                it("shows all the expected courses for UID #{uid} in #{term_name}") { expect(api_exam_course_codes).to eql(api_course_codes) }
 
                 api_exams = @academics_api.term_exams term
                 ui_exams = @exams_card.term_exams term_name

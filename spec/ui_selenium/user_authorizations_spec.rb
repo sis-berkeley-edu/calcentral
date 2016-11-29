@@ -26,7 +26,7 @@ describe 'User authorization', :testui => true, :order => :defined do
           @toolbox_page.clear_all_recent_users
           @toolbox_page.view_as_user('61889')
           cal_net_auth_page = CalNetAuthPage.new(@driver)
-          cal_net_auth_page.login(UserUtils.oski_username, UserUtils.oski_password)
+          cal_net_auth_page.login('test-300848', UserUtils.test_password)
           cal_net_auth_page.wait_until(timeout) { cal_net_auth_page.logout_conf_heading_element.visible? }
           splash_page.load_page
           splash_page.basic_auth UserUtils.admin_uid
@@ -57,7 +57,7 @@ describe 'User authorization', :testui => true, :order => :defined do
         end
         it 'logs the admin out of CalCentral' do
           cal_net_auth_page = CalNetAuthPage.new(@driver)
-          cal_net_auth_page.login(UserUtils.oski_username, UserUtils.oski_password)
+          cal_net_auth_page.login('test-300848', UserUtils.test_password)
           cal_net_auth_page.wait_until(timeout) { cal_net_auth_page.logout_conf_heading_element.visible? }
         end
       end
@@ -88,7 +88,7 @@ describe 'User authorization', :testui => true, :order => :defined do
         before(:example) do
           splash_page = CalCentralPages::SplashPage.new(@driver)
           splash_page.load_page
-          splash_page.basic_auth '61889'
+          splash_page.basic_auth '300848'
           @toolbox_page = CalCentralPages::MyToolboxPage.new(@driver)
           @toolbox_page.load_page
         end
@@ -132,7 +132,7 @@ describe 'User authorization', :testui => true, :order => :defined do
         before(:example) do
           splash_page = CalCentralPages::SplashPage.new(@driver)
           splash_page.load_page
-          splash_page.basic_auth '61889'
+          splash_page.basic_auth '300848'
           @toolbox_page = CalCentralPages::MyToolboxPage.new(@driver)
           @toolbox_page.load_page
         end
@@ -154,7 +154,7 @@ describe 'User authorization', :testui => true, :order => :defined do
         context 'enters unauthorized re-auth credentials' do
           it 'blocks access to CC admin' do
             cal_net_auth_page = CalNetAuthPage.new(@driver)
-            cal_net_auth_page.login(UserUtils.oski_username, UserUtils.oski_password)
+            cal_net_auth_page.login('test-300848', UserUtils.test_password)
             cal_net_auth_page.wait_until(timeout) { cal_net_auth_page.password.blank? }
             dashboard_page = CalCentralPages::MyDashboardPage.new(@driver)
             dashboard_page.load_page
@@ -177,13 +177,13 @@ describe 'User authorization', :testui => true, :order => :defined do
         before(:example) do
           splash_page = CalCentralPages::SplashPage.new(@driver)
           splash_page.load_page
-          splash_page.basic_auth '61889'
+          splash_page.basic_auth '300848'
           @driver.get("#{WebDriverUtils.base_url}/ccadmin")
         end
         context 'enters unauthorized re-auth credentials' do
           it 'redirects the user to My Dashboard' do
             cal_net_auth_page = CalNetAuthPage.new(@driver)
-            cal_net_auth_page.login(UserUtils.oski_username, UserUtils.oski_password)
+            cal_net_auth_page.login('test-300848', UserUtils.test_password)
             dashboard_page = CalCentralPages::MyDashboardPage.new(@driver)
             dashboard_page.notifications_heading_element.when_visible
           end

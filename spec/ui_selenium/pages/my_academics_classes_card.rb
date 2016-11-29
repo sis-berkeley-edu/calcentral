@@ -21,8 +21,8 @@ module CalCentralPages
     elements(:waitlist_positions, :td, :xpath => '//h3[text()="Wait Lists"]/following-sibling::div//strong[@data-ng-bind="section.waitlistPosition"]')
     elements(:waitlist_class_size, :td, :xpath => '//h3[text()="Wait Lists"]/following-sibling::div//strong[@data-ng-bind="section.enroll_limit"]')
 
-    elements(:teaching_course_code, :link, :xpath => '//tbody[@data-ng-repeat="course in selectedTeachingSemester.classes"]//a[@data-ng-bind="listing.course_code"]')
-    elements(:teaching_course_title, :td, :xpath => '//tbody[@data-ng-repeat="course in selectedTeachingSemester.classes"]//td[@data-ng-bind="course.title"]')
+    elements(:teaching_course_code, :link, :xpath => '//h3[text()="Teaching"]/../following-sibling::div//a[@data-ng-bind="listing.course_code"]')
+    elements(:teaching_course_title, :td, :xpath => '//h3[text()="Teaching"]/../following-sibling::div//td[@data-ng-bind="course.title"]')
     elements(:teaching_course_section, :div, :xpath => '//div[@data-ng-repeat="scheduledSection in course.scheduledSections"]')
 
     def all_enrolled_course_codes

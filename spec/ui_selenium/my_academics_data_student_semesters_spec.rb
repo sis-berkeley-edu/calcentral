@@ -347,33 +347,6 @@ describe 'My Academics student semesters UI', :testui => true do
                     end
                   end
                 end
-
-                # ADDITIONAL CREDIT
-
-                unless academics_api_page.addl_credits.nil?
-
-                  my_academics.show_more if my_academics.show_more_element.visible?
-
-                  api_addl_titles = academics_api_page.addl_credits_titles
-                  api_addl_units = academics_api_page.addl_credits_units
-
-                  academics_page_addl_titles = my_academics.addl_credit_titles
-                  academics_page_addl_units = my_academics.addl_credit_units
-
-                  it "shows the Additional Credit titles for UID #{uid}" do
-                    expect(academics_page_addl_titles).to eql(api_addl_titles)
-                  end
-                  it "shows the Additional Credit units for UID #{uid}" do
-                    expect(academics_page_addl_units).to eql(api_addl_units)
-                  end
-
-                  api_addl_titles.each do |title|
-                    i = api_addl_titles.index title
-                    test_output_row = [uid, nil, nil, nil, api_addl_titles[i], nil, nil, nil, nil, api_addl_units[i], nil, nil, nil]
-                    UserUtils.add_csv_row(test_output, test_output_row)
-                  end
-
-                end
               end
             end
           rescue => e

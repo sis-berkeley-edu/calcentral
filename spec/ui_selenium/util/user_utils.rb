@@ -8,22 +8,6 @@ class UserUtils
     Settings.developer_auth.password
   end
 
-  def self.oski_username
-    Settings.ui_selenium.oski_username
-  end
-
-  def self.oski_password
-    Settings.ui_selenium.oski_password
-  end
-
-  def self.oski_gmail_username
-    Settings.ui_selenium.oski_gmail_username
-  end
-
-  def self.oski_gmail_password
-    Settings.ui_selenium.oski_gmail_password
-  end
-
   def self.test_password
     Settings.ui_selenium.test_user_password
   end

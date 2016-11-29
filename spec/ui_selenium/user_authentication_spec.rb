@@ -20,7 +20,7 @@ describe 'User authentication', :testui => true do
         splash_page = CalCentralPages::SplashPage.new(@driver)
         splash_page.load_page
         splash_page.click_sign_in_button
-        @cal_net_auth_page.login(UserUtils.oski_username, UserUtils.oski_password)
+        @cal_net_auth_page.login('test-300848', UserUtils.test_password)
         my_dashboard_page = CalCentralPages::MyDashboardPage.new(@driver)
         my_dashboard_page.wait_until(timeout=WebDriverUtils.page_load_timeout) { my_dashboard_page.current_url == "#{WebDriverUtils.base_url}/dashboard" }
       end
@@ -32,7 +32,7 @@ describe 'User authentication', :testui => true do
       it 'can take the user to My Dashboard' do
         my_dashboard_page = CalCentralPages::MyDashboardPage.new(@driver)
         my_dashboard_page.load_page
-        @cal_net_auth_page.login(UserUtils.oski_username, UserUtils.oski_password)
+        @cal_net_auth_page.login('test-300848', UserUtils.test_password)
         expect(my_dashboard_page.current_url).to eql("#{WebDriverUtils.base_url}/dashboard")
       end
 
@@ -41,7 +41,7 @@ describe 'User authentication', :testui => true do
         it 'can take the user to My Academics' do
           my_academics_page = CalCentralPages::MyAcademicsPage.new(@driver)
           my_academics_page.load_page
-          @cal_net_auth_page.login(UserUtils.oski_username, UserUtils.oski_password)
+          @cal_net_auth_page.login('test-300848', UserUtils.test_password)
           expect(my_academics_page.current_url).to eql("#{WebDriverUtils.base_url}/academics")
         end
 
@@ -49,7 +49,7 @@ describe 'User authentication', :testui => true do
           splash_page = CalCentralPages::SplashPage.new(@driver)
           splash_page.load_page
           splash_page.click_sign_in_button
-          @cal_net_auth_page.login(UserUtils.oski_username, UserUtils.oski_password)
+          @cal_net_auth_page.login('test-300848', UserUtils.test_password)
           academics_api = ApiMyAcademicsPageSemesters.new(@driver)
           academics_api.get_json @driver
           semester = academics_api.all_student_semesters[0]
@@ -63,7 +63,7 @@ describe 'User authentication', :testui => true do
         it 'can take the user to a semester page' do
           @my_academics_page = CalCentralPages::MyAcademicsPage.new(@driver)
           @my_academics_page.load_semester_page @semester_page_path
-          @cal_net_auth_page.login(UserUtils.oski_username, UserUtils.oski_password)
+          @cal_net_auth_page.login('test-300848', UserUtils.test_password)
           expect(@my_academics_page.current_url).to eql("#{WebDriverUtils.base_url}/academics/semester/#{@semester_page_path}")
         end
 
@@ -71,7 +71,7 @@ describe 'User authentication', :testui => true do
           splash_page = CalCentralPages::SplashPage.new(@driver)
           splash_page.load_page
           splash_page.click_sign_in_button
-          @cal_net_auth_page.login(UserUtils.oski_username, UserUtils.oski_password)
+          @cal_net_auth_page.login('test-300848', UserUtils.test_password)
           academics_api = ApiMyAcademicsPageSemesters.new(@driver)
           academics_api.get_json(@driver)
           semester = academics_api.all_student_semesters[0]
@@ -86,7 +86,7 @@ describe 'User authentication', :testui => true do
         it 'can take the user to a class page' do
           @my_academics_page = CalCentralPages::MyAcademicsPage.new(@driver)
           @my_academics_page.load_class_page @class_page_path
-          @cal_net_auth_page.login(UserUtils.oski_username, UserUtils.oski_password)
+          @cal_net_auth_page.login('test-300848', UserUtils.test_password)
           expect(@my_academics_page.current_url).to eql("#{WebDriverUtils.base_url}#{@class_page_path}")
         end
 
@@ -95,28 +95,28 @@ describe 'User authentication', :testui => true do
       it 'can take the user to My Finances' do
         my_finances_page = CalCentralPages::MyFinancesPages::MyFinancesLandingPage.new(@driver)
         my_finances_page.load_page
-        @cal_net_auth_page.login(UserUtils.oski_username, UserUtils.oski_password)
+        @cal_net_auth_page.login('test-300848', UserUtils.test_password)
         expect(my_finances_page.current_url).to eql("#{WebDriverUtils.base_url}/finances")
       end
 
       it 'can take the user to the finances details page' do
         my_finances_details_page = CalCentralPages::MyFinancesPages::MyFinancesDetailsPage.new(@driver)
         my_finances_details_page.load_page
-        @cal_net_auth_page.login(UserUtils.oski_username, UserUtils.oski_password)
+        @cal_net_auth_page.login('test-300848', UserUtils.test_password)
         expect(my_finances_details_page.current_url).to eql("#{WebDriverUtils.base_url}/finances/details")
       end
 
       it 'can take the user to My Campus' do
         my_campus_page = CalCentralPages::MyCampusPage.new(@driver)
         my_campus_page.load_page
-        @cal_net_auth_page.login(UserUtils.oski_username, UserUtils.oski_password)
+        @cal_net_auth_page.login('test-300848', UserUtils.test_password)
         expect(my_campus_page.current_url).to eql("#{WebDriverUtils.base_url}/campus")
       end
 
       it 'can take the user to the Profile page' do
         profile_page = CalCentralPages::MyProfileBasicInfoCard.new(@driver)
         profile_page.load_page
-        @cal_net_auth_page.login(UserUtils.oski_username, UserUtils.oski_password)
+        @cal_net_auth_page.login('test-300848', UserUtils.test_password)
         expect(profile_page.current_url).to eql("#{WebDriverUtils.base_url}/profile")
       end
 

@@ -31,39 +31,39 @@ module CalCentralPages
     # Residency
 
     def res_status_summary_element(index)
-      span_element(:xpath => "//div[@data-ng-if='residency.official.description']//li[#{index + 1}]//span[@data-ng-bind='residency.official.description']")
+      span_element(:xpath => "//h4[text()='California Residency']/following-sibling::ul/li[#{index + 1}]//span[@data-ng-bind='residency.official.description']")
     end
 
     def res_status_collapsed_element(index)
-      list_item_element(:xpath => "//div[@data-ng-if='residency.official.description']//li[#{index + 1}][@class='cc-widget-list-hover']")
+      list_item_element(:xpath => "//h4[text()='California Residency']/following-sibling::ul//li[#{index + 1}][@class='cc-widget-list-hover']")
     end
 
     def res_status_expanded_element(index)
-      list_item_element(:xpath => "//div[@data-ng-if='residency.official.description']//li[#{index + 1}][@class='cc-widget-list-hover cc-widget-list-hover-opened']")
+      list_item_element(:xpath => "//h4[text()='California Residency']/following-sibling::ul//li[#{index + 1}][@class='cc-widget-list-hover cc-widget-list-hover-opened']")
     end
 
     def res_msg_element(index)
-      div_element(:xpath => "//div[@data-ng-if='residency.official.description']//li[#{index + 1}]//div[@data-ng-bind-html='residency.message.description']")
+      div_element(:xpath => "//h4[text()='California Residency']/following-sibling::ul//li[#{index + 1}]//div[@data-ng-bind-html='residency.message.description']")
     end
 
     def res_from_term_element(index)
-      span_element(:xpath => "//div[@data-ng-if='residency.official.description']/ul/li[#{index + 1}]//span[@data-ng-bind='residency.fromTerm.label']")
+      span_element(:xpath => "//h4[text()='California Residency']/following-sibling::ul/li[#{index + 1}]//span[@data-ng-bind='residency.fromTerm.label']")
     end
 
     def res_slr_link_element(index)
-      link_element(:xpath => "//div[@data-ng-if='residency.official.description']/ul/li[#{index + 1}]//a[contains(text(),'Statement of Legal Residence')]")
+      link_element(:xpath => "//h4[text()='California Residency']/following-sibling::ul/li[#{index + 1}]//a[contains(text(),'Statement of Legal Residence')]")
     end
 
     def res_status_icon_green_element(index)
-      image_element(:xpath => "//div[@data-ng-if='residency.official.description']//li[#{index + 1}]//i[@class='cc-icon fa fa-check-circle cc-icon-green ng-scope']")
+      image_element(:xpath => "//h4[text()='California Residency']/following-sibling::ul/li[#{index + 1}]//i[@class='cc-icon fa fa-check-circle cc-icon-green ng-scope']")
     end
 
     def res_status_icon_gold_element(index)
-      image_element(:xpath => "//div[@data-ng-if='residency.official.description']//li[#{index + 1}]//i[@class='cc-icon fa fa-warning cc-icon-gold ng-scope']")
+      image_element(:xpath => "//h4[text()='California Residency']/following-sibling::ul/li[#{index + 1}]//i[@class='cc-icon fa fa-warning cc-icon-gold ng-scope']")
     end
 
     def res_status_icon_red_element(index)
-      image_element(:xpath => "//div[@data-ng-if='residency.official.description']//li[#{index + 1}]//i[@class='cc-icon fa fa-exclamation-circle cc-icon-red ng-scope']")
+      image_element(:xpath => "//h4[text()='California Residency']/following-sibling::ul/li[#{index + 1}]//i[@class='cc-icon fa fa-exclamation-circle cc-icon-red ng-scope']")
     end
 
     def show_res_status_detail(index)

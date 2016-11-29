@@ -38,12 +38,12 @@ module CalCentralPages
       page_heading_element.when_visible WebDriverUtils.page_load_timeout
     end
 
-    def choose_term(driver, course)
+    def choose_term(course)
       button_element(:xpath => "//label[contains(.,'#{course['term']}')]/preceding-sibling::input").when_visible WebDriverUtils.page_event_timeout
-      driver.find_element(xpath: "//label[contains(.,'#{course['term']}')]/preceding-sibling::input").click
+      click_element_js button_element(:xpath => "//label[contains(.,'#{course['term']}')]/preceding-sibling::input")
     end
 
-    def search_for_course(driver, course, instructor)
+    def search_for_course(course, instructor)
       logger.debug "Searching for #{course['courseCode']} in #{course['term']}"
       create_site_workflow = course['workflow']
       if create_site_workflow == 'uid'
@@ -52,17 +52,19 @@ module CalCentralPages
         switch_mode unless switch_to_ccn?
         WebDriverUtils.wait_for_element_and_type(instructor_uid_element, uid)
         WebDriverUtils.wait_for_element_and_click as_instructor_button_element
-        choose_term(driver, course)
+        choose_term course
       elsif create_site_workflow == 'ccn'
         logger.debug 'Searching by CCN list'
         switch_mode unless switch_to_instructor?
-        choose_term(driver, course)
+        choose_term course
+        sleep 1
         ccn_list = course['sections'].map { |section| section['ccn'] }
+        logger.debug "CCN list is '#{ccn_list}'"
         WebDriverUtils.wait_for_element_and_type(ccn_list_element, ccn_list.join(', '))
         click_element_js review_ccns_button_element
       else
         logger.debug 'Searching as the instructor'
-        choose_term(driver, course)
+        choose_term course
       end
     end
 

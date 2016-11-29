@@ -105,8 +105,8 @@ module CalCentralPages
     def all_section_instructors(driver, section_labels)
       instructors = []
       section_labels.each do |section|
-        instructor_elements = driver.find_elements(:xpath => "//h3[text()='#{section}']/following-sibling::ul//a[@data-ng-bind='instructor.name']")
-        instructor_elements.each { |instructor| instructors.push((instructor.text).gsub("\n- opens in new window", '')) }
+        instructor_elements = driver.find_elements(:xpath => "//h3[text()='#{section}']/../../../following-sibling::tbody//a")
+        instructor_elements.each { |instructor| instructors.push((instructor.text).gsub("\n- opens in new window", '')[2..-1]) }
       end
       instructors
     end
