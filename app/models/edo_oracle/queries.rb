@@ -278,7 +278,7 @@ module EdoOracle
           TRIM(crs."transcriptTitle") AS course_title_short
         FROM SISEDO.API_CROSSLISTINGSV00_VW xlist
         JOIN SISEDO.API_COURSEV00_VW crs ON
-          (xlist."cms-version-independent-id" = crs."cms-version-independent-id")
+          (xlist."cms-id" = crs."cms-id")
         WHERE xlist."displayName" = '#{course_code}'
       SQL
       result.first if result
