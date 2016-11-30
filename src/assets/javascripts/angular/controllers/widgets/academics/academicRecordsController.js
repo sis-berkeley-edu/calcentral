@@ -8,13 +8,13 @@ angular.module('calcentral.controllers').controller('AcademicRecordsController',
   $scope.officialTranscript = {
     postParams: {},
     postUrl: '',
-    postUrlHover: 'Request Transcript',
+    postUrlHover: 'Request your Official Transcript',
     isLoading: true,
     defaultRequestLink: 'http://registrar.berkeley.edu/academic-records/transcripts-diplomas'
   };
   $scope.lawTranscriptLink = {
     link: 'http://www.law.berkeley.edu/php-programs/registrar/forms/transcriptrequestform.php',
-    title: 'Request Law Transcript'
+    title: 'Request your official Law Transcript'
   };
   $scope.lawUnofficialTranscriptLink = {};
 
