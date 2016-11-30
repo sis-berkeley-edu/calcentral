@@ -220,7 +220,7 @@ verify_cs 'always_enabled' true \
   "/UC_SR_TRNSCPT_DATA.v1/Get?EMPLID=${CAMPUS_SOLUTIONS_ID}" \
   "/UC_SR_TRANSFER_CREDIT.v1/get?EMPLID=${CAMPUS_SOLUTIONS_ID}" \
   "/UC_SR_FACULTY_GRADING.v1/Get?EMPLID=${CAMPUS_SOLUTIONS_ID}" \
-  "/UC_AA_ACAD_PLANNER.v1/get?EMPLID=${CAMPUS_SOLUTIONS_ID}" \
+  "/UC_AA_ACAD_PLANNER_GET.v1/UC_AA_ACAD_PLANNER_GET?EMPLID=${CAMPUS_SOLUTIONS_ID}" \
   "/UC_SR_FACULTY_DELEGATE.v1/Get?STRM=2168&CLASS_NBR=33343"
 
 verify_cs 'advising_student_success' "${yml_features_advising_student_success}" \
