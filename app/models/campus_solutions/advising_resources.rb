@@ -73,7 +73,6 @@ module CampusSolutions
           { feed_key: :student_administrative_transcripts, cs_link_key: 'UC_CX_ADM_TRANSCRIPT_STDNT', cs_link_params: { :EMPLID => student_empl_id } },
           { feed_key: :student_advising_assignments, cs_link_key: 'UC_CX_STUDENT_ADVISOR_STDNT', cs_link_params: { :EMPLID => student_empl_id } },
           { feed_key: :student_advisor_notes, cs_link_key: 'UC_CX_SCI_NOTE_FLU', cs_link_params: { :EMPLID => student_empl_id } },
-          { feed_key: :student_appointments, cs_link_key: 'UC_CX_APPOINTMENT_ADV_VIEW_STD', cs_link_params: { :EMPLID => student_empl_id } },
           { feed_key: :student_manage_milestones, cs_link_key: 'UC_CX_AA_MILESTONE_STDNT', cs_link_params: { :EMPLID => student_empl_id } },
           { feed_key: :student_multi_year_academic_planner, cs_link_key: 'UC_CX_PLANNER_ADV_STDNT', cs_link_params: { :EMPLID => student_empl_id } },
           # TODO refactor the model to acquire the student's `academicStatus.studentCareer.academicCareer.code`, based on effective (most recent) date - `academicStatus.studentCareer.fromDate`.
