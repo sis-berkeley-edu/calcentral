@@ -189,7 +189,10 @@ module EdoOracle
 
       def merge_cross_listed_titles(course)
         if (course[:catid].start_with? 'C') && !course[:name]
-          if (title_results = EdoOracle::Queries.get_cross_listed_course_title course[:course_code])
+          title_results = self.class.fetch_from_cache "cross_listed_title-#{course[:course_code]}" do
+            EdoOracle::Queries.get_cross_listed_course_title course[:course_code]
+          end
+          if title_results.present?
             course[:name] = title_results['course_title'] || title_results['course_title_short']
           end
         end

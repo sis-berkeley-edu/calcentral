@@ -279,6 +279,7 @@ cache:
     CampusOracle::UserCourses::All: NEXT_08_00
     Berkeley::FinalExamSchedule: <%= 24.hours %>
 
+    EdoOracle::CourseSections: <%= 8.hours %>
     EdoOracle::UserCourses::All: <%= 8.hours %>
 
     Canvas::MergedUserSites: <%= 30.minutes %>
