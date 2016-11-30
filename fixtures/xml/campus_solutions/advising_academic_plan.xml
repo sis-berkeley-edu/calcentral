@@ -3,7 +3,7 @@
   <ACAD_PLANS type="array">
     <ACAD_PLAN>
       <PLAN_DESCR>Bioengineering BS</PLAN_DESCR>
-      <TERMS type="array">
+      <TERMS>
         <TERM>
           <TERM_ID>2172</TERM_ID>
           <TERM_DESCR>Spring 2017</TERM_DESCR>

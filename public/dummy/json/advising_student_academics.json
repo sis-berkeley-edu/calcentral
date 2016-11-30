@@ -806,8 +806,12 @@
       "waitlistedUnits": "2.0",
       "plannedClasses": [
         {
-          "subjectArea": "ENGLISH",
-          "CatalogNumber": "C108",
+          "subjectArea": {
+            "code": "ENGLISH"
+          },
+          "CatalogNumber": {
+            "formatted": "C108"
+          },
           "units": "3.0"
         }
       ]

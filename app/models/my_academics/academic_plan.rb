@@ -57,7 +57,9 @@ module MyAcademics
     end
 
     def find_classes_in_plan(term_id, plan)
-      plan_term = plan.try(:[],:terms).try(:find) do |plan_term|
+      terms_array = plan.try(:[],:terms).try(:[],:term)
+      terms_array =  terms_array.blank? || terms_array.kind_of?(Array) ? terms_array : [] << terms_array
+      plan_term = terms_array.try(:find) do |plan_term|
         plan_term[:termId] == term_id
       end
       parse_plan_term_classes(plan_term)
@@ -142,7 +144,9 @@ module MyAcademics
     def parse_all_plan_terms(plans)
       plan_term_codes = []
       plans[:feed].try(:[], :acadPlans).try(:each) do |plan|
-        plan.try(:[],:terms).try(:each) do |plan_term|
+        terms_array = plan.try(:[],:terms).try(:[],:term)
+        terms_array =  terms_array.blank? || terms_array.kind_of?(Array) ? terms_array : [] << terms_array
+        terms_array.try(:each) do |plan_term|
           plan_term_codes << plan_term[:termId]
         end
       end
