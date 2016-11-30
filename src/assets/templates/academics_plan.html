@@ -36,7 +36,7 @@
                   </thead>
                   <tbody>
                     <tr data-ng-repeat="class in semester.plannedClasses">
-                      <td data-ng-bind-template="{{class.subjectArea}} {{class.catalogNumber}}"></td>
+                      <td data-ng-bind-template="{{class.subjectArea.code}} {{class.catalogNumber.formatted}}"></td>
                       <td data-ng-bind="class.units | number:1"></td>
                     </tr>
                   </tbody>

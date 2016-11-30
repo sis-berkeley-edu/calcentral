@@ -17,7 +17,7 @@ module CampusSolutions
     end
 
     def url
-      "#{@settings.base_url}/UC_AA_ACAD_PLANNER.v1/get?EMPLID=#{@campus_solutions_id}"
+      "#{@settings.base_url}/UC_AA_ACAD_PLANNER_GET.v1/UC_AA_ACAD_PLANNER_GET?EMPLID=#{@campus_solutions_id}"
     end
 
   end
