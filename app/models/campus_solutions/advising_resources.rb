@@ -40,6 +40,7 @@ module CampusSolutions
 
       advising_link_settings = [
         # advisors see these on advisor-specific views
+        { feed_key: :uc_academic_progress_report, cs_link_key: 'UC_CX_APR_RPT'},
         { feed_key: :web_now_documents, cs_link_key: 'UC_CX_WEBNOW_ADVISOR_URI' },
         { feed_key: :uc_administrative_transcript, cs_link_key: 'UC_CX_ADM_TRANSCRIPT' },
         { feed_key: :uc_advising_assignments, cs_link_key: 'UC_CX_STUDENT_ADVISOR' },
@@ -51,7 +52,8 @@ module CampusSolutions
         { feed_key: :uc_multi_year_academic_planner_generic, cs_link_key: 'UC_CX_PLANNER_ADV' },
         { feed_key: :uc_reporting_center, cs_link_key: 'UC_CX_REPORTING_CENTER' },
         { feed_key: :uc_service_indicators, cs_link_key: 'UC_CX_SERVICE_IND_DATA' },
-        { feed_key: :uc_transfer_credit_report, cs_link_key: 'UC_CX_CSU_DA_TRN_CDT' }
+        { feed_key: :uc_transfer_credit_report, cs_link_key: 'UC_CX_CSU_DA_TRN_CDT' },
+        { feed_key: :uc_what_if_reports, cs_link_key: 'UC_CX_WHIF_RPT'}
       ]
 
       advising_link_settings.each do |setting|
