@@ -51,7 +51,7 @@ module CampusSolutions
         { feed_key: :uc_multi_year_academic_planner_generic, cs_link_key: 'UC_CX_PLANNER_ADV' },
         { feed_key: :uc_reporting_center, cs_link_key: 'UC_CX_REPORTING_CENTER' },
         { feed_key: :uc_service_indicators, cs_link_key: 'UC_CX_SERVICE_IND_DATA' },
-        { feed_key: :uc_transfer_credit_report, cs_link_key: 'UC_CX_XFER_CREDIT_REPORT' }
+        { feed_key: :uc_transfer_credit_report, cs_link_key: 'UC_CX_CSU_DA_TRN_CDT' }
       ]
 
       advising_link_settings.each do |setting|
