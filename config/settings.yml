@@ -483,6 +483,7 @@ grading_period:
 # A feature will be disabled if the corresponding feature-flag is false or nil.
 features:
   advising: false
+  advising_academic_planner: false
   advising_student_success: false
   audio: false
   authentication_validator: false
