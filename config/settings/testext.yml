@@ -74,6 +74,7 @@ oec:
 
 features:
   advising: true
+  advising_academic_planner: true
   advising_student_success: true
   audio: true
   bearfacts: true
