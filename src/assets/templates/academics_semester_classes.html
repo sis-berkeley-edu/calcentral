@@ -114,13 +114,21 @@
     </div>
     <div class="cc-academics-course-grading-header cc-widget-padding show-for-medium-up">
       <div data-ng-if="selectedTeachingSemester.gradingAssistanceLink">
-        <span><a data-ng-href="{{selectedTeachingSemester.gradingAssistanceLink}}">&#9632; Assistance with Grading: General</a></span>
+        <span>
+          <a data-ng-href="{{selectedTeachingSemester.gradingAssistanceLink}}" title="Assistance with grading for general classes">
+            &#9632; Assistance with Grading: General
+          </a>
+        </span>
         <span data-ng-if="selectedTeachingSemester.gradingPeriodStart && selectedTeachingSemester.gradingPeriodEnd" class="cc-academics-course-grading-header-period">
           <span class="cc-text-light">Final Grading Entry Period:</span> Start: <strong>{{selectedTeachingSemester.gradingPeriodStart}}</strong> | Due: <strong>{{selectedTeachingSemester.gradingPeriodEnd}}</strong>
         </span>
       </div>
       <div data-ng-if="selectedTeachingSemester.gradingAssistanceLinkLaw">
-        <span><a data-ng-href="{{selectedTeachingSemester.gradingAssistanceLinkLaw}}">&#9632; Assistance with Grading: Law</a></span>
+        <span>
+          <a data-ng-href="{{selectedTeachingSemester.gradingAssistanceLinkLaw}}" title="Assistance with grading for Law classes">
+            &#9632; Assistance with Grading: Law
+          </a>
+        </span>
         <span data-ng-if="selectedTeachingSemester.gradingPeriodStartLaw && selectedTeachingSemester.gradingPeriodEndLaw" class="cc-academics-course-grading-header-period">
           <span class="cc-text-light">Final Grading Entry Period (Law):</span> Start: <strong>{{selectedTeachingSemester.gradingPeriodStartLaw}}</strong> | Due: <strong>{{selectedTeachingSemester.gradingPeriodEndLaw}}</strong>
         </span>
@@ -155,11 +163,16 @@
                 <div data-ng-bind="section.section_label"></div>
               </td>
               <td data-ng-if="section.is_primary_section && section.gradingLink.url" class="show-for-medium-up cc-academics-course-grading-link" >
-                <a data-cc-campus-solutions-link-directive="section.gradingLink.url" data-cc-campus-solutions-link-directive-enabled="{{section.gradingLink.isCsLink}}"
-                  data-cc-campus-solutions-link-directive-text="section.gradingLink.ucFromText" data-cc-outbound-enabled="false"
-                  data-ng-disabled="!section.gradingLink.url">Course Grades</a>
+                <a data-cc-campus-solutions-link-directive="section.gradingLink.url"
+                  data-cc-campus-solutions-link-directive-enabled="{{section.gradingLink.isCsLink}}"
+                  data-cc-campus-solutions-link-directive-text="backToText"
+                  data-cc-outbound-enabled="false"
+                  data-ng-disabled="!section.gradingLink.url"
+                  data-ng-attr-title="{{section.gradingLink.title}}">
+                  Course Grades
+                </a>
               </td>
-              <td data-ng-if="section.is_primary_section && !section.gradingLink.url" class="show-for-medium-up cc-academics-course-grading-link"  >
+              <td data-ng-if="section.is_primary_section && !section.gradingLink.url" class="show-for-medium-up cc-academics-course-grading-link">
                 &mdash;
               </td>
               <td data-ng-if="section.is_primary_section" class="show-for-medium-up cc-academics-course-grading-icon" data-ng-switch="section.ccGradingStatus" >
