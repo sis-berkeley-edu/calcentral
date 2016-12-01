@@ -313,7 +313,7 @@ angular.module('calcentral.directives').directive('ccAcademicsClassInfoEnrollmen
       scope.showPosition = scope.$eval(attrs.showPosition);
       scope.studentRole = (attrs.title === 'Wait List') ? 'waitlisted' : 'enrolled';
       scope.tableSort = {
-        'column': (scope.showPosition ? 'waitlist_position' : 'last_name'),
+        'column': (scope.showPosition ? 'waitlist_position' : ['last_name', 'first_name']),
         'reverse': false
       };
       scope.title = attrs.title;
