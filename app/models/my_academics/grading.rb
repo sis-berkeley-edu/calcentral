@@ -27,6 +27,12 @@ module MyAcademics
           inGradingPeriod: grading_link,
           afterGradingPeriod: grading_link,
           gradingPeriodNotSet: grading_link
+        },
+        APPR: {
+          beforeGradingPeriod: grading_link,
+          inGradingPeriod: grading_link,
+          afterGradingPeriod: grading_link,
+          gradingPeriodNotSet: grading_link
         }
       }
     end
@@ -46,10 +52,16 @@ module MyAcademics
           gradingPeriodNotSet: :periodStarted,
         },
         POST: {
-          beforeGradingPeriod:  :gradesSubmitted,
-          inGradingPeriod:  :gradesSubmitted,
-          afterGradingPeriod:  :gradesSubmitted,
-          gradingPeriodNotSet:  :gradesSubmitted,
+          beforeGradingPeriod:  :gradesPosted,
+          inGradingPeriod:  :gradesPosted,
+          afterGradingPeriod:  :gradesPosted,
+          gradingPeriodNotSet:  :gradesPosted,
+        },
+        APPR: {
+          beforeGradingPeriod:  :gradesApproved,
+          inGradingPeriod:  :gradesApproved,
+          afterGradingPeriod:  :gradesApproved,
+          gradingPeriodNotSet:  :gradesApproved,
         }
       }
     end
@@ -188,8 +200,10 @@ module MyAcademics
       case cs_grading_status
         when 'GRD', 'RDY'
           :GRD
-        when 'POST', 'APPR'
+        when 'POST'
           :POST
+        when 'APPR'
+          :APPR
         else
           :noCsData
       end

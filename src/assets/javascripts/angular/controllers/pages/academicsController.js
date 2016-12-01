@@ -7,12 +7,16 @@ var angular = require('angular');
 /**
  * Academics controller
  */
-angular.module('calcentral.controllers').controller('AcademicsController', function(academicsFactory, academicsService, academicStatusFactory, apiService, badgesFactory, registrationsFactory, userService, $q, $routeParams, $scope) {
+angular.module('calcentral.controllers').controller('AcademicsController', function(academicsFactory, academicsService, academicStatusFactory, apiService, badgesFactory, registrationsFactory, userService, $q, $routeParams, $scope, $location) {
   var title = 'My Academics';
   apiService.util.setTitle(title);
   $scope.backToText = title;
   $scope.academics = {
     isLoading: true
+  };
+
+  $scope.gotoGrading = function(slug) {
+    $location.path('/academics/semester/' + slug);
   };
 
   var checkPageExists = function(page) {

@@ -138,6 +138,11 @@
   .cc-academics-class-info-grading {
     border-top: 1px solid $cc-color-widget-background;
   }
+  .cc-academics-class-info-grading-button-text {
+    font-size: 16px;
+    font-weight: normal;
+    margin: 5px;
+  }
   .cc-academics-class-primary-row {
     font-weight: bold;
   }
@@ -201,9 +206,9 @@
     }
   }
   .cc-academics-instructors-grading-header {
-    border-bottom: 1px solid $cc-color-widget-background;
-    margin-bottom: 10px;
-    padding-bottom: 10px;
+    border-top: 1px solid $cc-color-widget-background;
+    margin-top: 15px;
+    padding-top: 10px;
   }
   .cc-academics-instructors-grading-header-legend {
     float: right;
