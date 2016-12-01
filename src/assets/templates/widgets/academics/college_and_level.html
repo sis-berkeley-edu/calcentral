@@ -1,6 +1,34 @@
-<div data-cc-academic-plans-directive data-plans="collegeAndLevel.majors" data-options="{labels: {'1': 'Major', 'other': 'Majors'}}" data-type="major"> </div>
-<div data-cc-academic-plans-directive data-plans="collegeAndLevel.minors" data-options="{labels: {'1': 'Minor', 'other': 'Minors'}}" data-type="minors"> </div>
-<div data-cc-academic-plans-directive data-plans="collegeAndLevel.designatedEmphases" data-options="{labels: {'1': 'Designated Emphasis', 'other': 'Designated Emphases'}}" data-type="designatedEmphasis"> </div>
+<div class="cc-table cc-table-top-border cc-clearfix" data-ng-if="collegeAndLevel.majors.length">
+  <table class="cc-widget-profile-table">
+    <tbody>
+    <tr>
+      <th data-ng-pluralize count="collegeAndLevel.majors.length" when="{'1': 'Major', 'other': 'Majors'}"></th>
+      <td>
+        <div data-ng-repeat="major in collegeAndLevel.majors">
+          <div class="cc-text-light" data-ng-if="major.college" data-ng-bind="major.college"></div>
+          <div><strong data-ng-bind="major.major"></strong></div>
+        </div>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="cc-table cc-table-top-border cc-clearfix" data-ng-if="collegeAndLevel.minors.length">
+  <table class="cc-widget-profile-table">
+    <tbody>
+    <tr>
+      <th data-ng-pluralize count="collegeAndLevel.minors.length" when="{'1': 'Minor', 'other': 'Minors'}"></th>
+      <td>
+        <div data-ng-repeat="minor in collegeAndLevel.minors">
+          <div class="cc-text-light" data-ng-if="minor.college" data-ng-bind="minor.college"></div>
+          <div><strong data-ng-bind="minor.minor"></strong></div>
+        </div>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
 
 <div class="cc-table cc-table-top-border cc-clearfix" data-ng-if="collegeAndLevel.careers.length">
   <table class="cc-widget-profile-table">

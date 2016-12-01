@@ -84,9 +84,6 @@ module MyAcademics
       else
         academic_status[:empty] = true
       end
-      if (degrees = parse_hub_degrees academic_status)
-        academic_status[:degrees] = degrees
-      end
       academic_status.delete(:feed)
       academic_status
     end
@@ -121,7 +118,6 @@ module MyAcademics
       plan_set = {
         majors: [],
         minors: [],
-        designatedEmphases: [],
         plans: [],
         lastExpectedGraduationTerm: { code: nil, name: nil },
         roles: role_booleans
@@ -134,7 +130,18 @@ module MyAcademics
           flattened_plan = flatten_plan(plan)
           plan_set[:plans] << flattened_plan
 
-          group_plans_by_type(plan_set, flattened_plan)
+          # Catch Majors / Minors
+          college_plan = {college: flattened_plan[:college]}
+          case flattened_plan[:type].try(:[], :category)
+            when 'Major'
+              plan_set[:majors] << college_plan.merge({
+                major: flattened_plan[:plan].try(:[], :description)
+              })
+            when 'Minor'
+              plan_set[:minors] << college_plan.merge({
+                minor: flattened_plan[:plan].try(:[], :description)
+              })
+          end
 
           # Update Roles
           current_role = flattened_plan.try(:[], :role)
@@ -149,37 +156,6 @@ module MyAcademics
         end
       end
       plan_set
-    end
-
-    def parse_hub_degrees(response)
-      if (degrees = response.try(:[], :feed).try(:[], 'student').try(:[], 'degrees'))
-        awarded_degrees = degrees.select do |degree|
-          status = degree.try(:[], 'status').try(:[], 'code')
-          status === 'Awarded'
-        end
-        awarded_degrees unless awarded_degrees.empty?
-      end
-    end
-
-    def group_plans_by_type(plan_set, plan)
-      college_plan = {college: plan[:college]}
-      case plan[:type].try(:[], :category)
-        when 'Major'
-          plan_set[:majors] << college_plan.merge({
-            major: plan[:plan].try(:[], :description),
-            subPlan: plan[:subPlan].try(:[], :description)
-          })
-        when 'Minor'
-          plan_set[:minors] << college_plan.merge({
-            minor: plan[:plan].try(:[], :description),
-            subPlan: plan[:subPlan].try(:[], :description)
-          })
-        when 'Designated Emphasis'
-          plan_set[:designatedEmphases] << college_plan.merge({
-            designatedEmphasis: plan[:plan].try(:[], :description),
-            subPlan: plan[:subPlan].try(:[], :description)
-          })
-      end
     end
 
     def filter_inactive_status_plans(statuses)
@@ -289,7 +265,6 @@ module MyAcademics
         career: {},
         program: {},
         plan: {},
-        subPlan: {}
       }
       if (academic_plan = hub_plan['academicPlan'])
         # Get CPP
@@ -311,14 +286,6 @@ module MyAcademics
           code: plan.try(:[], 'code'),
           description: plan.try(:[], 'description')
         })
-
-        if (academic_sub_plan = hub_plan['academicSubPlan'])
-          sub_plan = academic_sub_plan.try(:[], 'subPlan')
-          flat_plan[:subPlan].merge!({
-            code: sub_plan.try(:[], 'code'),
-            description: sub_plan.try(:[], 'description')
-          })
-        end
 
         if (hub_plan['expectedGraduationTerm'])
           expected_grad_term_name = hub_plan['expectedGraduationTerm'].try(:[], 'name')
@@ -362,8 +329,6 @@ module MyAcademics
           category = 'Major'
         when 'MIN'
           category = 'Minor'
-        when 'DE'
-          category = 'Designated Emphasis'
       end
       {
         code: type['code'],

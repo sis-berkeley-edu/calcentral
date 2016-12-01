@@ -20,8 +20,7 @@ describe MyAcademics::CollegeAndLevel do
     {
       "student" => {
         "academicStatuses" => hub_academic_statuses,
-        "holds" => hub_holds,
-        "degrees" => hub_degrees
+        "holds" => hub_holds
       }
     }
   end
@@ -57,70 +56,6 @@ describe MyAcademics::CollegeAndLevel do
     }
   end
 
-  let(:hub_degrees) { [hub_degree_awarded, hub_degree_not_awarded] }
-  let(:hub_degree_awarded) do
-    {
-      'academicDegree' => {
-        'type' => {
-          'code' => 'MA',
-          'description' => 'Master of Arts'
-        }
-      },
-      'completionTerm' => {
-        'id' => '2128',
-        'name' => '2012 Fall',
-        'category' => {
-          'code' => 'R',
-          'description' => 'Regular Term'
-        },
-        'academicYear' => '2013',
-        'beginDate' => '2012-08-16',
-        'endDate' => '2012-12-14'
-      },
-      'academicPlans' => [
-        {
-          'plan' => {
-            'code' => '79249MAG',
-            'description' => 'Education MA'
-          }
-        }
-      ],
-      'honors' => {},
-      'dateAwarded' => '2012-12-14',
-      'status' => {
-        'code' => 'Awarded'
-      },
-      'statusDate' => '2015-12-12'
-    }
-  end
-  let(:hub_degree_not_awarded) do
-    {
-      :academicDegree => {
-        :type => {
-          :code => 'PD',
-          :description => 'Doctor of Philosophy'
-        }
-      },
-      :completionTerm => {
-        :name => '2010 Spring'
-      },
-      :academicPlans => [
-        {
-          :plan => {
-            :code => '00345PHDG',
-            :description => 'English PhD'
-          }
-        }
-      ],
-        :honors => {},
-        :dateAwarded => '2010-05-14',
-        :status => {
-        :code => 'Not Awarded'
-      },
-      :statusDate => '2015-12-12'
-    }
-  end
-
   # Hub Academic Status - Current Registrations
   let(:current_registration) do
     {
@@ -141,8 +76,7 @@ describe MyAcademics::CollegeAndLevel do
   let(:student_plans) { [
     undergrad_student_plan_major,
     undergrad_student_plan_specialization,
-    undergrad_student_plan_minor,
-    grad_student_plan_designated_emphasis
+    undergrad_student_plan_minor
   ] }
   let(:undergrad_student_plan_major) do
     hub_edo_academic_status_student_plan({
@@ -167,8 +101,6 @@ describe MyAcademics::CollegeAndLevel do
       plan_description: 'MCB-Cell & Dev Biology BA',
       type_code: 'SP',
       type_description: 'Major - UG Specialization',
-      sub_plan_code: '25966SA02U',
-      sub_plan_description: 'Biological Chemistry',
       admin_owners: [{org_code: 'MCELLBI', org_description: 'Molecular & Cell Biology', percentage: 100}],
       is_primary: false
     })
@@ -183,21 +115,6 @@ describe MyAcademics::CollegeAndLevel do
       plan_description: 'Art BA',
       type_code: 'MIN',
       type_description: 'Major - UG Specialization',
-      admin_owners: [{org_code: 'MCELLBI', org_description: 'Molecular & Cell Biology', percentage: 100}],
-      is_primary: false
-    })
-  end
-
-  let(:grad_student_plan_designated_emphasis) do
-    hub_edo_academic_status_student_plan({
-      career_code: 'GRAD',
-      career_description: 'Graduate',
-      program_code: 'GACAD',
-      program_description: 'Graduate Academic Programs',
-      plan_code: '00E017G',
-      plan_description: 'Women, Gender and Sexuality DE',
-      type_code: 'DE',
-      type_description: 'Designated Emphasis',
       admin_owners: [{org_code: 'MCELLBI', org_description: 'Molecular & Cell Biology', percentage: 100}],
       is_primary: false
     })
@@ -402,26 +319,23 @@ describe MyAcademics::CollegeAndLevel do
       it 'translates minors' do
         expect(feed[:collegeAndLevel][:minors].first).to eq({
           college: 'Undergrad Letters & Science',
-          minor: 'Art BA',
-          subPlan: nil
+          minor: 'Art BA'
         })
       end
 
       it 'translates majors' do
         expect(feed[:collegeAndLevel][:majors][0]).to eq({
           college: 'Undergrad Letters & Science',
-          major: 'English BA',
-          subPlan: nil
+          major: 'English BA'
         })
         expect(feed[:collegeAndLevel][:majors][1]).to eq({
           college: 'Undergrad Letters & Science',
-          major: 'MCB-Cell & Dev Biology BA',
-          subPlan: 'Biological Chemistry'
+          major: 'MCB-Cell & Dev Biology BA'
         })
       end
 
       it 'translates plans' do
-        expect(feed[:collegeAndLevel][:plans].count).to eq 4
+        expect(feed[:collegeAndLevel][:plans].count).to eq 3
 
         expect(feed[:collegeAndLevel][:plans][0][:career][:code]).to eq 'UGRD'
         expect(feed[:collegeAndLevel][:plans][0][:program][:code]).to eq 'UCLS'
@@ -456,23 +370,6 @@ describe MyAcademics::CollegeAndLevel do
         expect(feed[:collegeAndLevel][:plans][2][:type][:code]).to eq 'MIN'
         expect(feed[:collegeAndLevel][:plans][2][:type][:category]).to eq 'Minor'
         expect(feed[:collegeAndLevel][:plans][2][:college]).to eq 'Undergrad Letters & Science'
-
-        expect(feed[:collegeAndLevel][:plans][3][:career][:code]).to eq 'GRAD'
-        expect(feed[:collegeAndLevel][:plans][3][:program][:code]).to eq 'GACAD'
-        expect(feed[:collegeAndLevel][:plans][3][:plan][:code]).to eq '00E017G'
-        expect(feed[:collegeAndLevel][:plans][3][:expectedGraduationTerm]).to eq nil
-        expect(feed[:collegeAndLevel][:plans][3][:role]).to eq 'default'
-        expect(feed[:collegeAndLevel][:plans][3][:enrollmentRole]).to eq 'default'
-        expect(feed[:collegeAndLevel][:plans][3][:primary]).to eq false
-        expect(feed[:collegeAndLevel][:plans][3][:type][:code]).to eq 'DE'
-        expect(feed[:collegeAndLevel][:plans][3][:type][:category]).to eq 'Designated Emphasis'
-        expect(feed[:collegeAndLevel][:plans][3][:college]).to eq 'Graduate Academic Programs'
-      end
-
-      it 'translates sub-plans' do
-        expect(feed[:collegeAndLevel][:plans][1][:subPlan]).to be
-        expect(feed[:collegeAndLevel][:plans][1][:subPlan][:code]).to eq '25966SA02U'
-        expect(feed[:collegeAndLevel][:plans][1][:subPlan][:description]).to eq 'Biological Chemistry'
       end
 
       it 'translates roles' do
@@ -491,36 +388,6 @@ describe MyAcademics::CollegeAndLevel do
 
       it 'translates holds' do
         expect(feed[:collegeAndLevel][:holds][:hasHolds]).to eq true
-      end
-
-      it 'translates degrees' do
-        expect(feed[:collegeAndLevel][:degrees].count).to eq 1
-
-        expect(feed[:collegeAndLevel][:degrees][0]['academicDegree']).to be
-        expect(feed[:collegeAndLevel][:degrees][0]['academicDegree']['type']).to be
-        expect(feed[:collegeAndLevel][:degrees][0]['academicDegree']['type']['code']).to eq 'MA'
-        expect(feed[:collegeAndLevel][:degrees][0]['academicDegree']['type']['description']).to eq 'Master of Arts'
-
-        expect(feed[:collegeAndLevel][:degrees][0]['completionTerm']).to be
-        expect(feed[:collegeAndLevel][:degrees][0]['completionTerm']['id']).to eq '2128'
-        expect(feed[:collegeAndLevel][:degrees][0]['completionTerm']['name']).to eq '2012 Fall'
-        expect(feed[:collegeAndLevel][:degrees][0]['completionTerm']['category']).to be
-        expect(feed[:collegeAndLevel][:degrees][0]['completionTerm']['category']['code']).to eq 'R'
-        expect(feed[:collegeAndLevel][:degrees][0]['completionTerm']['category']['description']).to eq 'Regular Term'
-        expect(feed[:collegeAndLevel][:degrees][0]['completionTerm']['academicYear']).to eq '2013'
-        expect(feed[:collegeAndLevel][:degrees][0]['completionTerm']['beginDate']).to eq '2012-08-16'
-        expect(feed[:collegeAndLevel][:degrees][0]['completionTerm']['endDate']).to eq '2012-12-14'
-
-        expect(feed[:collegeAndLevel][:degrees][0]['academicPlans'].count).to eq 1
-        expect(feed[:collegeAndLevel][:degrees][0]['academicPlans'][0]['plan']).to be
-        expect(feed[:collegeAndLevel][:degrees][0]['academicPlans'][0]['plan']['code']).to eq '79249MAG'
-        expect(feed[:collegeAndLevel][:degrees][0]['academicPlans'][0]['plan']['description']).to eq 'Education MA'
-
-        expect(feed[:collegeAndLevel][:degrees][0]['honors']).to be
-        expect(feed[:collegeAndLevel][:degrees][0]['dateAwarded']).to eq '2012-12-14'
-        expect(feed[:collegeAndLevel][:degrees][0]['status']).to be
-        expect(feed[:collegeAndLevel][:degrees][0]['status']['code']).to eq 'Awarded'
-        expect(feed[:collegeAndLevel][:degrees][0]['statusDate']).to eq '2015-12-12'
       end
     end
 
@@ -581,13 +448,11 @@ describe MyAcademics::CollegeAndLevel do
       it 'translates majors' do
         expect(feed[:collegeAndLevel][:majors][0]).to eq({
           college: 'Law Professional Programs',
-          major: 'Law JD-MPP CDP',
-          subPlan: nil
+          major: 'Law JD-MPP CDP'
         })
         expect(feed[:collegeAndLevel][:majors][1]).to eq({
           college: 'Graduate Professional Programs',
-          major: 'Public Policy MPP-JD CDP',
-          subPlan: nil
+          major: 'Public Policy MPP-JD CDP'
         })
       end
 
@@ -868,13 +733,11 @@ describe MyAcademics::CollegeAndLevel do
     context 'when filtering out inactive plans from statuses' do
       let(:filtered_academic_statuses) { subject.filter_inactive_status_plans(hub_academic_statuses) }
       it 'removes inactive plans from each status' do
-        expect(filtered_academic_statuses[0]['studentPlans'].count).to eq 3
+        expect(filtered_academic_statuses[0]['studentPlans'].count).to eq 2
         expect(filtered_academic_statuses[0]['studentPlans'][0]['statusInPlan']['status']['code']).to eq 'AC'
         expect(filtered_academic_statuses[0]['studentPlans'][1]['statusInPlan']['status']['code']).to eq 'AC'
-        expect(filtered_academic_statuses[0]['studentPlans'][2]['statusInPlan']['status']['code']).to eq 'AC'
         expect(filtered_academic_statuses[0]['studentPlans'][0]['academicPlan']['plan']['code']).to eq '25345U'
         expect(filtered_academic_statuses[0]['studentPlans'][1]['academicPlan']['plan']['code']).to eq '25090U'
-        expect(filtered_academic_statuses[0]['studentPlans'][2]['academicPlan']['plan']['code']).to eq '00E017G'
       end
     end
   end

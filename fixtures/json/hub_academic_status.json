@@ -146,20 +146,6 @@
                         "description": "Major - Regular Acad/Prfnl"
                       }
                     },
-                    "statusInPlan": {
-                      "status": {
-                        "code": "AC",
-                        "description": "Active in Program"
-                      },
-                      "action": {
-                        "code": "PLNC",
-                        "description": "Plan Change"
-                      },
-                      "reason": {
-                        "code": "CONV",
-                        "description": "Conversion"
-                      }
-                    },
                     "primary": true,
                     "expectedGraduationTerm": {
                        "id": "2202",
@@ -207,20 +193,6 @@
                         "description": "Major - UG Specialization"
                       }
                     },
-                    "statusInPlan": {
-                      "status": {
-                        "code": "AC",
-                        "description": "Active in Program"
-                      },
-                      "action": {
-                        "code": "PLNC",
-                        "description": "Plan Change"
-                      },
-                      "reason": {
-                        "code": "CONV",
-                        "description": "Conversion"
-                      }
-                    },
                     "primary": true
                   },
                   {
@@ -239,20 +211,6 @@
                       "type": {
                         "code": "MIN"
                       }
-                    },
-                    "statusInPlan": {
-                      "status": {
-                        "code": "AC",
-                        "description": "Active in Program"
-                      },
-                      "action": {
-                        "code": "PLNC",
-                        "description": "Plan Change"
-                      },
-                      "reason": {
-                        "code": "CONV",
-                        "description": "Conversion"
-                      }
                     }
                   }
                 ],
@@ -269,56 +227,24 @@
                     "description": "Doctor of Philosophy"
                   }
                 },
+                "academicPlans": {
+                  "academicPlan": [
+                    {
+                      "plan": {
+                        "code": "00345PHDG",
+                        "description": "English PhD"
+                      }
+                    }
+                  ]
+                },
                 "completionTerm": {
                   "name": "2010 Spring"
                 },
-                "academicPlans": [
-                  {
-                    "plan": {
-                      "code": "00345PHDG",
-                      "description": "English PhD"
-                    }
-                  }
-                ],
-                "honors": {},
                 "dateAwarded": "2010-05-14",
                 "status": {
                   "code": "A"
                 },
                 "statusDate": "2015-12-12"
-              },
-              {
-                "academicDegree": {
-                  "type": {
-                    "code": "MA",
-                    "description": "Master of Arts"
-                  }
-                },
-                "completionTerm": {
-                  "id": "2158",
-                  "name": "2015 Fall",
-                  "category": {
-                    "code": "R",
-                    "description": "Regular Term"
-                  },
-                  "academicYear": "2016",
-                  "beginDate": "2015-08-19",
-                  "endDate": "2015-12-18"
-                },
-                "academicPlans": [
-                  {
-                    "plan": {
-                      "code": "79249MAG",
-                      "description": "Education MA"
-                    }
-                  }
-                ],
-                "honors": {},
-                "dateAwarded": "2015-12-18",
-                "status": {
-                  "code": "Awarded"
-                },
-                "statusDate": "2016-03-12"
               }
             ],
             "holds": [
