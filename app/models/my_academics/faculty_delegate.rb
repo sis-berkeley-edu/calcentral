@@ -2,15 +2,14 @@ module MyAcademics
   class FacultyDelegate < UserSpecificModel
 
     def merge(data)
-      semesters = is_user_student? ? data[:semesters] : data[:teachingSemesters]
+      teaching_semesters = data[:teachingSemesters]
+      if teaching_semesters
+        add_grd_access_to_semesters(teaching_semesters)
+      end
+      semesters = data[:semesters]
       if semesters
         add_grd_access_to_semesters(semesters)
       end
-    end
-
-
-    def is_user_student?
-      User::SearchUsersByUid.new(id: @uid, roles: [:student]).search_users_by_uid.present?
     end
 
     def add_grd_access_to_semesters(teaching_semesters)
