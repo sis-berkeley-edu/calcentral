@@ -65,49 +65,6 @@
       </div>
     </div>
   </div>
-  <div data-ng-if="selectedTeachingSemester">
-    <div class="cc-academics-subtitle">
-      <h3>Teaching</h3>
-    </div>
-    <div class="cc-widget-padding">
-      <div class="cc-table">
-        <table>
-          <thead>
-            <th scope="col" class="cc-table-right-spacing">Course</th>
-            <th scope="col" class="show-for-medium-up">Class Number</th>
-            <th scope="col">Title</th>
-            <th scope="col" class="show-for-medium-up">Sections</th>
-          </thead>
-          <tbody data-ng-if="selectedTeachingSemester.classes.length" data-ng-repeat="course in selectedTeachingSemester.classes">
-            <tr data-ng-class-even="'cc-academics-even'">
-              <td class="cc-table-right-spacing cc-academics-course-number">
-                <div data-ng-repeat="listing in course.listings">
-                  <a data-ng-href="{{course.url}}"
-                     data-ng-bind="listing.course_code">
-                  </a>
-                </div>
-                <div class="show-for-small-only">
-                  <span data-ng-bind="course.scheduledSectionCount"></span>
-                  <span data-ng-pluralize count="course.scheduledSectionCount" when="{'1': 'section', 'other': 'sections'}">sections</span>
-                </div>
-              </td>
-              <td class="show-for-medium-up">
-                <div data-ng-if="!course.multiplePrimaries" data-ng-bind="course.sections[0].ccn"></div>
-                <div data-ng-if="course.multiplePrimaries">Multiple</div>
-              </td>
-              <td data-ng-bind="course.title"></td>
-              <td class="show-for-medium-up">
-                <div data-ng-repeat="scheduledSection in course.scheduledSections">
-                  <span data-ng-bind="scheduledSection.count"></span> <span data-ng-bind="scheduledSection.format"></span>
-                </div>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </div>
-
   <div data-ng-if="selectedTeachingSemester && (selectedTeachingSemester.gradingAssistanceLink || selectedTeachingSemester.gradingAssistanceLinkLaw)">
     <div class="cc-academics-subtitle">
       <h3>Grading</h3>
@@ -172,7 +129,7 @@
                   data-cc-outbound-enabled="false"
                   data-ng-disabled="!section.gradingLink.url"
                   data-ng-attr-title="{{section.gradingLink.title}}">
-                  Course Grades
+                  Enter Grades
                 </a>
               </td>
               <td data-ng-if="section.is_primary_section && !section.gradingLink.url" class="show-for-medium-up cc-academics-course-grading-link">
@@ -181,7 +138,8 @@
               <td data-ng-if="section.is_primary_section" class="show-for-medium-up cc-academics-course-grading-icon" data-ng-switch="section.ccGradingStatus" >
                 <i data-ng-switch-when="periodNotStarted" class="fa fa-ban"></i>
                 <i data-ng-switch-when="periodStarted" class="fa fa-file-o"></i>
-                <i data-ng-switch-when="gradesSubmitted" class="fa fa-check cc-icon-green"></i>
+                <i data-ng-switch-when="gradesApproved" class="fa fa-check cc-icon-green"></i>
+                <i data-ng-switch-when="gradesPosted" class="fa fa-check-circle cc-icon-green"></i>
                 <i data-ng-switch-when="gradesOverdue" class="fa fa-exclamation-circle cc-icon-red"></i>
                 <i data-ng-switch-default class="fa fa-ban"></i>
               </td>
@@ -211,7 +169,9 @@
             </td>
             <td>
               <span><i class="fa fa-check cc-icon-green"></i></span>
-              <span>Grades approved</span>
+              <span>Grades approved</span><br>
+              <span><i class="fa fa-check-circle cc-icon-green"></i></span>
+              <span> Grades posted</span>
             </td>
             <td>
               <span><i class="fa fa-exclamation-circle cc-icon-red"></i></span>
@@ -222,3 +182,46 @@
       </div>
     </div>
   </div>
+  <div data-ng-if="selectedTeachingSemester">
+    <div class="cc-academics-subtitle">
+      <h3>Teaching</h3>
+    </div>
+    <div class="cc-widget-padding">
+      <div class="cc-table">
+        <table>
+          <thead>
+            <th scope="col" class="cc-table-right-spacing">Course</th>
+            <th scope="col" class="show-for-medium-up">Class Number</th>
+            <th scope="col">Title</th>
+            <th scope="col" class="show-for-medium-up">Sections</th>
+          </thead>
+          <tbody data-ng-if="selectedTeachingSemester.classes.length" data-ng-repeat="course in selectedTeachingSemester.classes">
+            <tr data-ng-class-even="'cc-academics-even'">
+              <td class="cc-table-right-spacing cc-academics-course-number">
+                <div data-ng-repeat="listing in course.listings">
+                  <a data-ng-href="{{course.url}}"
+                     data-ng-bind="listing.course_code">
+                  </a>
+                </div>
+                <div class="show-for-small-only">
+                  <span data-ng-bind="course.scheduledSectionCount"></span>
+                  <span data-ng-pluralize count="course.scheduledSectionCount" when="{'1': 'section', 'other': 'sections'}">sections</span>
+                </div>
+              </td>
+              <td class="show-for-medium-up">
+                <div data-ng-if="!course.multiplePrimaries" data-ng-bind="course.sections[0].ccn"></div>
+                <div data-ng-if="course.multiplePrimaries">Multiple</div>
+              </td>
+              <td data-ng-bind="course.title"></td>
+              <td class="show-for-medium-up">
+                <div data-ng-repeat="scheduledSection in course.scheduledSections">
+                  <span data-ng-bind="scheduledSection.count"></span> <span data-ng-bind="scheduledSection.format"></span>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+

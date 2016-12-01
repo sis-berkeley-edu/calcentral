@@ -153,11 +153,6 @@
           <h2 data-ng-pluralize count="selectedCourseCountInstructors" when="{'1': 'Instructor', 'other': 'Instructors'}">Instructors</h2>
         </div>
         <div class="cc-widget-padding">
-          <div data-ng-if="!api.user.profile.roles.student" class="cc-academics-instructors-grading-header">
-            <h3>Grading Legend</h3>
-            <span><i class="fa fa-list-ul"></i><span> Enter Grades</span></span>
-            <span class="cc-academics-instructors-grading-header-legend"><i class="fa fa-check"></i><span> Enter and approve grades</span></span>
-          </div>
           <div data-ng-repeat="section in selectedCourse.sections" data-ng-if="!section.scheduledWithCcn">
             <div class="cc-table">
               <table width="100%">
@@ -188,6 +183,11 @@
                 </tbody>
               </table>
             </div>
+          </div>
+           <div data-ng-if="!api.user.profile.roles.student" class="cc-academics-instructors-grading-header">
+            <h3>Grading Legend</h3>
+            <span><i class="fa fa-list-ul"></i><span> Can enter grades</span></span>
+            <span class="cc-academics-instructors-grading-header-legend"><i class="fa fa-check"></i><span> Can enter and approve grades</span></span>
           </div>
         </div>
       </div>
@@ -327,15 +327,25 @@
         <h2>Grading</h2>
       </div>
       <div class="cc-widget-padding">
+        <div>
+          <span><h2>Entering Final Grades</h2></span>
+          <span>For {{selectedSemester.name}}, final grades will be entered via the new <strong>Course Grades</strong> on the <strong>{{selectedSemester.name}}</strong> page.</span>
+        </div>
+        <br>
+        <div>
+          <button class="cc-button cc-button-blue" data-ng-click="gotoGrading(selectedSemester.slug)">
+            <span class="cc-academics-class-info-grading-button-text">Go to Grading Links</span>
+          </button>
+        </div>
+      </div>
+      <div class="cc-widget-padding cc-academics-class-info-grading">
+         <span><h2>More Info</h2></span>
         <div data-ng-if="selectedTeachingSemester.gradingAssistanceLink">
           <span><a data-ng-href="{{selectedTeachingSemester.gradingAssistanceLink}}">&#9632; Assistance with Grading: General</a></span>
         </div>
         <div data-ng-if="selectedTeachingSemester.gradingAssistanceLinkLaw">
           <span><a data-ng-href="{{selectedTeachingSemester.gradingAssistanceLinkLaw}}">&#9632; Assistance with Grading: Law</a></span>
         </div>
-      </div>
-      <div class="cc-widget-padding cc-academics-class-info-grading">
-          Links for final grades are on the <a data-ng-href="/academics/semester/{{selectedSemester.slug}}"><span data-ng-bind-template="{{selectedSemester.name}} page"></span></a>
       </div>
     </div>
   </div>
