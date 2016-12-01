@@ -208,6 +208,7 @@ angular.module('calcentral.controllers').controller('UserOverviewController', fu
       });
 
       statusHoldsService.matchTermIndicators($scope.regStatus.positiveIndicators, $scope.regStatus.registrations);
+      $scope.hasShownRegistrations = statusHoldsService.checkShownRegistrations($scope.regStatus.registrations);
     }).finally(function() {
       $scope.regStatus.isLoading = false;
     });
