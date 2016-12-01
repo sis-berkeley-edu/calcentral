@@ -197,7 +197,7 @@ describe MyAcademics::Grading do
     it 'it should return expected values merged into section' do
       subject.merge(feed)
       expect(feed[:teachingSemesters][0][:classes][0][:sections][0][:gradingLink]).to eq fake_grading_url
-      expect(feed[:teachingSemesters][0][:classes][0][:sections][0][:ccGradingStatus]).to eq :gradesSubmitted
+      expect(feed[:teachingSemesters][0][:classes][0][:sections][0][:ccGradingStatus]).to eq :gradesPosted
       expect(feed[:teachingSemesters][0][:classes][0][:sections][0][:csGradingStatus]).to eq :POST
 
       expect(feed[:teachingSemesters][0][:classes][0][:sections][1][:gradingLink]).to eq nil
