@@ -1,11 +1,10 @@
 <div class="cc-clearfix-container">
   <div class="cc-left">
     <span data-ng-bind="item.title"></span>
-    <span data-ng-bind="item.subTitle" class="cc-text-light"></span>
+    <span data-ng-bind="itemSubTitle" class="cc-text-light"></span>
   </div>
   <div
     class="cc-right"
-    data-ng-class="{'cc-text-light': (fadeTotal)}"
     data-cc-amount-directive="item.amount"
     data-cc-amount-directive-color="false"
   ></div>
