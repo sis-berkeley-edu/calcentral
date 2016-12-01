@@ -16,7 +16,7 @@
       <div data-ng-include="'widgets/final_exam_schedule.html'" data-ng-if="examSchedule.length && api.user.profile.features.finalExamSchedule"></div>
       <div data-ng-include="'widgets/transfer_credit.html'"></div>
       <div data-ng-include="'widgets/my_advising.html'"></div>
-      <div data-ng-include src="'academics_plan.html'" data-ng-if="planSemesters.length"></div>
+      <div data-ng-include src="'academics_plan.html'" data-ng-if="planSemesters.length && api.user.profile.features.advisingAcademicPlanner"></div>
     </div>
   </div>
 </div>
