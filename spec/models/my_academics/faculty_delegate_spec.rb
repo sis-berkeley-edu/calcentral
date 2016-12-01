@@ -90,6 +90,7 @@ describe MyAcademics::FacultyDelegate do
 
     before do
       allow(CampusSolutions::FacultyDelegate).to receive(:new).and_return(delegate_proxy)
+      allow_any_instance_of(MyAcademics::FacultyDelegate).to receive(:is_user_student?).and_return(false)
       allow(CalnetCrosswalk::ByUid).to receive(:new).with(user_id: uid).and_return(
         double(lookup_campus_solutions_id: '25738808'))
       allow(CalnetCrosswalk::ByUid).to receive(:new).with(user_id: '904715').and_return(

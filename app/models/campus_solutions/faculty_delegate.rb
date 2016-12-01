@@ -1,5 +1,5 @@
 module CampusSolutions
-  class FacultyDelegate < Proxy
+  class FacultyDelegate < CachedProxy
 
     def initialize(options = {})
       super options

@@ -155,11 +155,15 @@ module MyAcademics
 
     def get_cs_status(ccn, term_code)
       cnn_status = nil
-      if (grading_feed = CampusSolutions::Grading.new(user_id: @uid).get)
+      if (grading_feed = get_grading_data)
         grading_statuses = grading_feed[:feed].try(:[],:ucSrClassGrading).try(:[],:classGradingStatuses)
         cnn_status = find_ccn_grading_statuses(grading_statuses, ccn, term_code)
       end
       cnn_status
+    end
+
+    def get_grading_data
+      @grading_feed ||= CampusSolutions::Grading.new(user_id: @uid).get
     end
 
     def find_ccn_grading_statuses(grading_statuses, ccn, term_code)
