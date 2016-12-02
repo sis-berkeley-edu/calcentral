@@ -21,7 +21,6 @@ describe 'Delegated access', :testui => true do
       @academics_api = ApiMyAcademicsPageSemesters.new @driver
       @financials_api = ApiMyFinancialsPage.new @driver
       @cal1card_api = ApiMyCal1CardPage.new @driver
-      @my_fin_aid_api = ApiMyFinAidPage.new @driver
       @cs_fin_aid_years_api = ApiCSAidYearsPage.new @driver
 
       # Academics UI
@@ -170,7 +169,6 @@ describe 'Delegated access', :testui => true do
                 @status_api.get_json @driver
                 @financials_api.get_json @driver
                 @cal1card_api.get_json @driver
-                @my_fin_aid_api.get_json @driver
                 @cs_fin_aid_years_api.get_json @driver
 
                 is_student = @status_api.is_student?
