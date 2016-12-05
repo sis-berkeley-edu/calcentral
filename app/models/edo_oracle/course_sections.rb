@@ -55,6 +55,7 @@ module EdoOracle
         {
           name: instructor['person_name'],
           role: instructor['role_code'],
+          gradeRosterAccess: instructor['grade_roster_access'],
           uid: instructor['ldap_uid']
         }
       end

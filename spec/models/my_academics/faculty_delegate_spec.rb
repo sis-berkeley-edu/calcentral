@@ -1,7 +1,4 @@
 describe MyAcademics::FacultyDelegate do
-
-  let(:term_id) { random_id }
-  let(:course_id) { random_id }
   let(:fake) { true }
 
   let(:semesters_data) {
@@ -23,10 +20,14 @@ describe MyAcademics::FacultyDelegate do
                 units: '3.0',
                 instructors: [
                   {
-                    uid: '238382'
+                    uid: '238382',
+                    role: 'PI',
+                    gradeRosterAccess: 'A'
                   },
                   {
-                    uid: '904715'
+                    uid: '904715',
+                    role: 'APRX',
+                    gradeRosterAccess: 'G'
                   }
                 ]
               },
@@ -81,32 +82,23 @@ describe MyAcademics::FacultyDelegate do
   }
 
   subject do
-    semesters_data.tap {|x|MyAcademics::FacultyDelegate.new(term_id: term_id, course_id: course_id).merge(x)}
+    semesters_data.tap {|x| MyAcademics::FacultyDelegate.new(user_id: uid).merge(x)}
   end
 
   context 'when grading returns statuses for a teaching semester' do
     let(:uid) { '238382' }
-    let(:delegate_proxy) { CampusSolutions::FacultyDelegate.new(term_id: term_id, course_id: course_id, fake: fake) }
-
-    before do
-      allow(CampusSolutions::FacultyDelegate).to receive(:new).and_return(delegate_proxy)
-      allow(CalnetCrosswalk::ByUid).to receive(:new).with(user_id: uid).and_return(
-        double(lookup_campus_solutions_id: '25738808'))
-      allow(CalnetCrosswalk::ByUid).to receive(:new).with(user_id: '904715').and_return(
-        double(lookup_campus_solutions_id: '10113922'))
-    end
 
     it 'it should return expected values merged into section' do
       instructor_data = subject[:teachingSemesters][0][:classes][0][:sections][0]
       expect(instructor_data[:instructors][0][:csGradeAccessCode]).to eq 'A'
-      expect(instructor_data[:instructors][0][:csDelegatRole]).to eq :PI
-      expect(instructor_data[:instructors][0][:ccGradingAccees]).to eq :approveGrades
+      expect(instructor_data[:instructors][0][:csDelegateRole]).to eq :PI
+      expect(instructor_data[:instructors][0][:ccGradingAccess]).to eq :approveGrades
       expect(instructor_data[:instructors][0][:ccDelegateRole]).to eq 'Instr. of Record'
       expect(instructor_data[:instructors][0][:ccDelegateRoleOrder]).to eq 1
 
       expect(instructor_data[:instructors][1][:csGradeAccessCode]).to eq 'G'
-      expect(instructor_data[:instructors][1][:csDelegatRole]).to eq :APRX
-      expect(instructor_data[:instructors][1][:ccGradingAccees]).to eq :enterGrades
+      expect(instructor_data[:instructors][1][:csDelegateRole]).to eq :APRX
+      expect(instructor_data[:instructors][1][:ccGradingAccess]).to eq :enterGrades
       expect(instructor_data[:instructors][1][:ccDelegateRole]).to eq 'Proxy'
       expect(instructor_data[:instructors][1][:ccDelegateRoleOrder]).to eq 3
     end
