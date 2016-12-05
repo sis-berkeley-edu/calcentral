@@ -597,8 +597,8 @@
                   "role": "PI",
                   "uid": "921283",
                   "csGradeAccessCode": "G",
-                  "csDelegatRole": "PI",
-                  "ccGradingAccees": "approveGrades",
+                  "csDelegateRole": "PI",
+                  "ccGradingAccess": "approveGrades",
                   "ccDelegateRole": "Instr. of Record",
                   "ccDelegateRoleOrder": "1"
                 },
@@ -607,8 +607,8 @@
                   "role": "APRX",
                   "uid": "921283",
                   "csGradeAccessCode": "G",
-                  "csDelegatRole": "APRX",
-                  "ccGradingAccees": "enterGrades",
+                  "csDelegateRole": "APRX",
+                  "ccGradingAccess": "enterGrades",
                   "ccDelegateRole": "Proxy",
                   "ccDelegateRoleOrder": "2"
                 }
@@ -664,7 +664,7 @@
                   "role": "PI",
                   "uid": "921283",
                   "csGradeAccessCode": "G",
-                  "csDelegatRole": "PI",
+                  "csDelegateRole": "PI",
                   "ccHasGradingAccees": true,
                   "ccDelegateRole": "Instr. of Record",
                   "ccDelegateRoleOrder": "1"

@@ -14,41 +14,38 @@ module MyAcademics
 
     def add_grd_access_to_semesters(teaching_semesters)
       teaching_semesters.try(:each) do |semester|
-        term_code = Berkeley::TermCodes.slug_to_edo_id(semester[:slug])
-        add_grd_access_to_classes(semester[:classes], term_code)
+        add_grd_access_to_classes(semester[:classes])
       end
     end
 
-    def add_grd_access_to_classes(semester_classes, term_code)
+    def add_grd_access_to_classes(semester_classes)
       semester_classes.try(:each) do |semester_class|
-        add_grd_access_to_class(semester_class, term_code)
+        add_grd_access_to_class(semester_class)
       end
     end
 
-    def add_grd_access_to_class(semester_class, term_code)
+    def add_grd_access_to_class(semester_class)
       semester_class.try(:[],:sections).try(:each) do |section|
         ccn = section[:ccn]
-        cs_delegate_data = CampusSolutions::FacultyDelegate.new(term_id: term_code, course_id: ccn).get
-        add_grd_access_to_section(section, cs_delegate_data)
+        add_grd_access_to_section(section)
       end
     end
 
-    def add_grd_access_to_section(section, cs_delegate_data)
+    def add_grd_access_to_section(section)
       section_key = section[:is_primary_section] ? :primarySection : :notPrimarySection
       section.try(:[],:instructors).try(:each) do |instructor|
-        add_grd_access_to_instructor(instructor, cs_delegate_data, section_key)
+        add_grd_access_to_instructor(instructor, section_key)
       end
     end
 
-    def add_grd_access_to_instructor(instructor, cs_delegate_data, section_key)
-      instructor_delegate_data = parse_cs_delegate_data(cs_delegate_data, instructor[:uid])
-      cs_grading_role =  parse_cs_grading_role(instructor_delegate_data.try(:[],:instrRoleCode))
-      cs_grading_access =  instructor_delegate_data.try(:[],:gradeRstrAccess)
+    def add_grd_access_to_instructor(instructor, section_key)
+      cs_grading_role = parse_cs_grading_role(instructor.try(:[], :role))
+      cs_grading_access = instructor.try(:[], :gradeRosterAccess)
       instructor.merge!(
         {
           csGradeAccessCode: cs_grading_access,
-          csDelegatRole: cs_grading_role,
-          ccGradingAccees: parse_cc_grading_access(cs_grading_access),
+          csDelegateRole: cs_grading_role,
+          ccGradingAccess: parse_cc_grading_access(cs_grading_access),
           ccDelegateRole: grading_access_role_mapping[section_key][cs_grading_role][:ccDelegateRole],
           ccDelegateRoleOrder: grading_access_role_mapping[section_key][cs_grading_role][:ccDelegateRoleOrder]
         })
@@ -129,13 +126,5 @@ module MyAcademics
       }
     end
 
-    def parse_cs_delegate_data(cs_delegate_date, instructor_uid)
-      instructor_emplid = CalnetCrosswalk::ByUid.new(user_id: instructor_uid ).lookup_campus_solutions_id
-      delegate_array = cs_delegate_date.try(:[],:feed).try(:[],:ucSrFacultyDelegates).try(:[],:ucSrFacultyDelegate)
-      delegate_array =  delegate_array.blank? || delegate_array.kind_of?(Array) ? delegate_array : [] << delegate_array
-      delegate_array.try(:find) do |delegate|
-        delegate[:emplid].present? && delegate[:emplid] == instructor_emplid
-      end
-    end
   end
 end
