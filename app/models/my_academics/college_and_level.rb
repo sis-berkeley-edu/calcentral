@@ -4,34 +4,6 @@ module MyAcademics
     include ClassLogger
     include User::Student
 
-    # Student Plan Roles represent the type of student based on their student plans
-    STUDENT_PLAN_ROLES = {
-      plan: [
-        {student_plan_role_code: 'fpf', match: '25000FPFU', types: [:enrollment]},
-        {student_plan_role_code: 'haasFullTimeMba', match: '70141MBAG', types: []},
-        {student_plan_role_code: 'haasEveningWeekendMba', match: '701E1MBAG', types: []},
-        {student_plan_role_code: 'haasExecMba', match: '70364MBAG', types: []},
-        {student_plan_role_code: 'haasMastersFinEng', match: '701F1MFEG', types: []},
-        {student_plan_role_code: 'haasMbaPublicHealth', match: '70141BAPHG', types: []},
-        {student_plan_role_code: 'haasMbaJurisDoctor', match: '70141BAJDG', types: []},
-        {student_plan_role_code: 'ugrdUrbanStudies', match: '19912U', types: []},
-      ],
-      career: [
-        {student_plan_role_code: 'law', match: 'LAW', types: [:enrollment]},
-        {student_plan_role_code: 'concurrent', match: 'UCBX', types: [:enrollment]}
-      ]
-    }
-
-    def self.student_plan_role_codes
-      role_codes = []
-      STUDENT_PLAN_ROLES.each do |role_category, matchers|
-        matchers.each do |matcher|
-          role_codes << matcher[:student_plan_role_code]
-        end
-      end
-      role_codes
-    end
-
     def merge(data)
       college_and_level = hub_college_and_level
       if college_and_level[:empty] && !current_term.is_summer
@@ -74,6 +46,8 @@ module MyAcademics
       if (holds = parse_hub_holds academic_status)
         academic_status[:holds] = holds
       end
+      academic_status[:roles] = parse_hub_roles academic_status
+
       if (statuses = parse_hub_academic_statuses academic_status)
         status = statuses.first
         registration_term = status['currentRegistration'].try(:[], 'term')
@@ -102,6 +76,10 @@ module MyAcademics
       holds
     end
 
+    def parse_hub_roles(response)
+      response.try(:[], :feed).try(:[], 'student').try(:[], 'roles')
+    end
+
     def parse_hub_careers(statuses)
       [].tap do |careers|
         statuses.each do |status|
@@ -125,8 +103,7 @@ module MyAcademics
         minors: [],
         designatedEmphases: [],
         plans: [],
-        lastExpectedGraduationTerm: { code: nil, name: nil },
-        roles: role_booleans
+        lastExpectedGraduationTerm: { code: nil, name: nil }
       }
 
       filtered_statuses = filter_inactive_status_plans(statuses)
@@ -137,12 +114,6 @@ module MyAcademics
           plan_set[:plans] << flattened_plan
 
           group_plans_by_type(plan_set, flattened_plan)
-
-          # Update Roles
-          current_role = flattened_plan.try(:[], :role)
-          if plan_set[:roles].has_key?(current_role)
-            plan_set[:roles][current_role] = true
-          end
 
           # Catch Last Expected Graduation Date
           if (plan_set[:lastExpectedGraduationTerm].try(:[], :code).to_i < flattened_plan[:expectedGraduationTerm].try(:[], :code).to_i)
@@ -283,7 +254,7 @@ module MyAcademics
     end
 
     def get_academic_status
-      @academic_status ||= HubEdos::AcademicStatus.new({user_id: @uid}).get
+      @academic_status ||= HubEdos::MyAcademicStatus.new(@uid).get_feed
     end
 
     def flatten_plan(hub_plan)
@@ -329,8 +300,8 @@ module MyAcademics
             name: Berkeley::TermCodes.normalized_english(expected_grad_term_name)
           }
         end
-        flat_plan[:role] = get_student_plan_role_code(flat_plan)
-        flat_plan[:enrollmentRole] = get_student_plan_role_code(flat_plan, :enrollment)
+        flat_plan[:role] = hub_plan['role']
+        flat_plan[:enrollmentRole] = hub_plan['enrollmentRole']
         flat_plan[:primary] = !!hub_plan['primary']
         flat_plan[:type] = categorize_plan_type(academic_plan['type'])
 
@@ -338,24 +309,6 @@ module MyAcademics
         flat_plan[:college] = academic_plan['academicProgram'].try(:[], 'program').try(:[], 'description')
       end
       flat_plan
-    end
-
-    def role_booleans
-      self.class.student_plan_role_codes.inject({}) { |map, role_code| map[role_code] = false; map }
-    end
-
-    # Designates CalCentral specific plan role (e.g. 'default', 'law', 'fpf', etc.)
-    def get_student_plan_role_code(plan, type = nil)
-      role_codes = []
-      STUDENT_PLAN_ROLES.each do |cpp_category, matchers|
-        category_role_codes = matchers.select do |matcher|
-          category_code_match = plan[cpp_category][:code] == matcher[:match]
-          type_match = type.nil? || matcher[:types].include?(type.to_sym)
-          category_code_match && type_match
-        end
-        role_codes.concat(category_role_codes)
-      end
-      role_codes.empty? ? 'default' : role_codes.first[:student_plan_role_code]
     end
 
     def categorize_plan_type(type)

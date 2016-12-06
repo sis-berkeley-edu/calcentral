@@ -1,7 +1,5 @@
 module HubEdos
   class AcademicStatus < Student
-    include HubEdos::CachedProxy
-    include Cache::UserCacheExpiry
 
     def url
       "#{@settings.base_url}/#{@campus_solutions_id}/academic-status"
@@ -14,6 +12,5 @@ module HubEdos
     def whitelist_fields
       %w(academicStatuses awardHonors degrees holds)
     end
-
   end
 end
