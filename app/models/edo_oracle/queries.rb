@@ -231,7 +231,8 @@ module EdoOracle
           TRIM(instr."familyName") AS last_name,
           instr."campus-uid" AS ldap_uid,
           instr."role-code" AS role_code,
-          instr."role-descr" AS role_description
+          instr."role-descr" AS role_description,
+          instr."gradeRosterAccess" AS grade_roster_access
         FROM
           SISEDO.ASSIGNEDINSTRUCTORV00_VW instr
         JOIN SISEDO.CLASSSECTIONV00_VW sec ON (
