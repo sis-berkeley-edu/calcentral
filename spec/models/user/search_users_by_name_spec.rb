@@ -29,8 +29,8 @@ describe User::SearchUsersByName do
 
     context 'search all permutations of name' do
       before do
-        expect(Net::LDAP::Filter).to receive(:eq).with('displayname', 'man* jo*')
-        expect(Net::LDAP::Filter).to receive(:eq).with('displayname', 'jo* man*')
+        expect(Net::LDAP::Filter).to receive(:eq).with('displayname', '*man* jo*')
+        expect(Net::LDAP::Filter).to receive(:eq).with('displayname', '*jo* man*')
         expect(Net::LDAP).to receive(:new).and_return (ldap = double)
         expect(ldap).to receive(:search).exactly(2).times.and_return []
       end

@@ -44,7 +44,10 @@ module CalnetLdap
       else
         parent_filter = nil
         tokens.permutation.to_a.each do |args|
-          filter = Net::LDAP::Filter.eq 'displayname', "#{args.join '* '}*"
+          # The prefixed wildcard is to work around in-the-way salutations (e.g., "Mr.").
+          # The suffixed wildcard is to catch a subset of name variations (e.g., "Don" and "Donald") and to work around
+          # in-the-way name suffixes (e.g., "Esq.").
+          filter = Net::LDAP::Filter.eq 'displayname', "*#{args.join '* '}*"
           parent_filter = parent_filter.nil? ? filter : Net::LDAP::Filter.intersect(parent_filter, filter)
         end
         search_by_filter parent_filter, include_guest_users
