@@ -97,8 +97,8 @@ describe CalnetLdap::Client do
   context 'search by name with mock LDAP' do
     let(:expected_ldap_searches) { nil }
     before do
-      allow(Net::LDAP::Filter).to receive(:eq).with('displayname', 'John* Doe*')
-      allow(Net::LDAP::Filter).to receive(:eq).with('displayname', 'Doe* John*')
+      allow(Net::LDAP::Filter).to receive(:eq).with('displayname', '*John* Doe*')
+      allow(Net::LDAP::Filter).to receive(:eq).with('displayname', '*Doe* John*')
       expect(Net::LDAP).to receive(:new).and_return (ldap = double)
       expect(ldap).to receive(:search).exactly(expected_ldap_searches).times.and_return [ double ]
     end
