@@ -638,27 +638,52 @@ describe CanvasCsv::ProvideCourseSite do
       expect(result[1][:classes]).to eq []
     end
 
-    it 'should get properly formatted candidate course list from fake Oracle MV', :if => CampusOracle::Connection.test_data? do
-      allow_any_instance_of(Bearfacts::Proxy).to receive(:lookup_student_id).and_return(nil)
-      terms_feed = CanvasCsv::ProvideCourseSite.new('238382').candidate_courses_list
-      expect(terms_feed.length).to eq 1
-      expect(terms_feed[0][:name]).to eq 'Fall 2013'
-      feed = terms_feed[0][:classes]
-      expect(feed.length).to eq 2
-      bio1a = feed.select {|course| course[:course_code] == 'BIOLOGY 1A'}[0]
-      expect(bio1a.empty?).to be_falsey
-      expect(bio1a[:sections].first[:courseCode]).to eq bio1a[:course_code]
-      expect(bio1a[:title]).to eq 'General Biology Lecture'
-      expect(bio1a[:role]).to eq 'Instructor'
-      expect(bio1a[:dept]).to eq 'BIOLOGY'
-      expect(bio1a[:sections].length).to eq 3
-      expect(bio1a[:sections][0][:is_primary_section]).to be_truthy
-      expect(bio1a[:sections][1][:is_primary_section]).to be_falsey
-      expect(bio1a[:sections][2][:is_primary_section]).to be_falsey
+    context 'course data from fake Oracle MV', :if => CampusOracle::Connection.test_data? do
+      before do
+        allow_any_instance_of(Bearfacts::Proxy).to receive(:lookup_student_id).and_return nil
+      end
+      let(:candidate_courses_list) { CanvasCsv::ProvideCourseSite.new('238382').candidate_courses_list }
 
-      cogsci = feed.select {|course| course[:course_code] == 'COG SCI C147'}[0]
-      expect(cogsci.empty?).to be_falsey
-      expect(cogsci[:title]).to eq 'Language Disorders'
+      it 'should properly format the candidate courses list' do
+        expect(candidate_courses_list.length).to eq 1
+        expect(candidate_courses_list.first[:name]).to eq 'Fall 2013'
+        courses_for_term = candidate_courses_list.first[:classes]
+        expect(courses_for_term).to have(2).items
+        bio1a = courses_for_term.find {|course| course[:course_code] == 'BIOLOGY 1A'}
+        expect(bio1a[:sections].first[:courseCode]).to eq bio1a[:course_code]
+        expect(bio1a[:title]).to eq 'General Biology Lecture'
+        expect(bio1a[:role]).to eq 'Instructor'
+        expect(bio1a[:dept]).to eq 'BIOLOGY'
+        expect(bio1a[:sections]).to have(3).items
+        expect(bio1a[:sections][0][:is_primary_section]).to be_truthy
+        expect(bio1a[:sections][1][:is_primary_section]).to be_falsey
+        expect(bio1a[:sections][2][:is_primary_section]).to be_falsey
+
+        cogsci = courses_for_term.find {|course| course[:course_code] == 'COG SCI C147'}
+        expect(cogsci[:title]).to eq 'Language Disorders'
+      end
+
+      it 'should associate sections with existing Canvas sites' do
+        canvas_site_id = random_id
+        allow_any_instance_of(Canvas::MergedUserSites).to receive(:get_feed).and_return({
+          courses: [{
+            id: canvas_site_id,
+            site_url: "http://bcourses.berkeley.edu/courses/#{canvas_site_id}",
+            name: 'COG SCI C147',
+            shortDescription: 'Language Disorders',
+            term_yr: '2013',
+            term_cd: 'D',
+            emitter: Canvas::Proxy::APP_NAME,
+            sections: [{
+              ccn: '16171'
+            }]
+          }],
+          groups: []
+        })
+        cogsci = candidate_courses_list.first[:classes].find {|course| course[:course_code] == 'COG SCI C147'}
+        expect(cogsci[:class_sites]).to have(1).item
+        expect(cogsci[:class_sites].first[:id]).to eq canvas_site_id
+      end
     end
   end
 

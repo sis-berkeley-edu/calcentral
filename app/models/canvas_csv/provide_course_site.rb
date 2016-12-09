@@ -250,13 +250,14 @@ module CanvasCsv
     def candidate_courses_list
       raise RuntimeError, 'User ID not found for candidate' if @uid.blank?
       unless @candidate_courses_list
-        # Get all sections for which this user is an instructor, sorted in a useful fashion.
-        # Since this mostly matches what's shown by MyAcademics::Teaching for a given semester,
-        # we can simply re-use the academics feed (so long as course site provisioning is restricted to
-        # semesters supported by My Academics).
+        # Get all sections for which this user is an instructor, as well as any currently associated course
+        # sites, sorted in a useful fashion. Since this mostly matches what's shown by My Academics for a
+        # given semester, we can simply re-use the appropriate MyAcademics feed providers (so long as course site
+        # provisioning is restricted to semesters supported by My Academics).
         semesters = []
         academics_feed = {}
         MyAcademics::Teaching.new(@uid).merge academics_feed
+        MyAcademics::CanvasSites.new(@uid).merge academics_feed
         if (teaching_semesters = academics_feed[:teachingSemesters])
           current_terms.each do |term|
             if (teaching_semester = teaching_semesters.find {|semester| semester[:slug] == term[:slug]})
