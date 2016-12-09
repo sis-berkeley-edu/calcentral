@@ -42,7 +42,7 @@ module Notifications
           instructors.each do |instructor|
             uids.push instructor['ldap_uid'].to_i
           end
-          logger.error "No Instructor UIDs found for section #{section_id}, term #{term_id}"
+          logger.error "No Instructor UIDs found for section #{section_id}, term #{term_id}" unless (uids.length > 0)
         end
       else
         logger.error "Could not parse Instructor UIDs from event #{event}"
