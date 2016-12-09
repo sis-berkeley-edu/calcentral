@@ -32,18 +32,6 @@ class UserUtils
     Settings.ui_selenium.admin_uid
   end
 
-  def self.canvas_username
-    Settings.ui_selenium.canvas_username
-  end
-
-  def self.canvas_password
-    Settings.ui_selenium.canvas_password
-  end
-
-  def self.canvas_id
-    Settings.ui_selenium.canvas_id
-  end
-
   def self.initialize_output_csv(spec, column_headers)
     if Settings.ui_selenium.layer == 'local'
       output_dir = Rails.root.join('tmp', 'ui_selenium_ouput')
@@ -74,11 +62,6 @@ class UserUtils
   def self.load_profile_test_data
     test_data_file = File.join(CalcentralConfig.local_dir, "profile.json")
     JSON.parse(File.read(test_data_file))['users']
-  end
-
-  def self.load_canvas_courses
-    test_data_file = File.join(CalcentralConfig.local_dir, 'canvasCourses.json')
-    JSON.parse(File.read(test_data_file))['courses']
   end
 
   def self.clear_cache(driver, splash_page, my_dashboard_page)

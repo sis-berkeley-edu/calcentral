@@ -40,18 +40,6 @@ class WebDriverUtils
     Settings.ui_selenium.cal_net_url
   end
 
-  def self.canvas_base_url
-    Settings.ui_selenium.canvas_base_url
-  end
-
-  def self.canvas_qa_sub_account
-    Settings.ui_selenium.canvas_qa_sub_account
-  end
-
-  def self.canvas_create_site_id
-    Settings.ui_selenium.canvas_create_site_id
-  end
-
   def self.google_auth_url
     Settings.ui_selenium.google_auth_url
   end
@@ -70,10 +58,6 @@ class WebDriverUtils
 
   def self.page_event_timeout
     Settings.ui_selenium.page_event_timeout
-  end
-
-  def self.canvas_update_timeout
-    Settings.ui_selenium.canvas_update_timeout
   end
 
   def self.mail_live_update_timeout
