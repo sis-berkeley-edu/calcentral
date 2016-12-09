@@ -29,9 +29,6 @@ if ENV["UI_TEST"]
 
   require_relative '../ui_selenium/pages/cal_net_auth_page'
   require_relative '../ui_selenium/pages/google_page'
-  require_relative '../ui_selenium/pages/canvas_page'
-
-  Dir[Rails.root.join('spec', 'ui_selenium', 'pages', "canvas**.rb")].each { |f| require f }
 
   Dir[Rails.root.join('spec', 'ui_selenium', 'pages', "**card.rb")].each { |f| require f }
 
