@@ -126,11 +126,11 @@ module MyAcademics
     end
 
     def use_enrollment_grades?(semester)
-      semester[:timeBucket] == 'current' || semester[:gradingInProgress]
+      semester[:timeBucket] == 'current' || semester[:gradingInProgress] || semester[:campusSolutionsTerm]
     end
 
     def use_transcript_grades?(semester)
-      semester[:timeBucket] == 'past' && !semester[:gradingInProgress]
+      semester[:timeBucket] == 'past' && !semester[:gradingInProgress] && !semester[:campusSolutionsTerm]
     end
 
   end
