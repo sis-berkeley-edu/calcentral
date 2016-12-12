@@ -416,8 +416,8 @@ describe EdoOracle::UserCourses::Base do
         ]
       end
       before do
-        instructor_assignments.each do |course_id, instructors|
-          allow(EdoOracle::CourseSections).to receive(:new).with('2168', course_id).and_return double(get_section_data: {instructors: instructors})
+        instructor_assignments.each do |section_id, instructors|
+          allow(EdoOracle::CourseSections).to receive(:new).with('2168', section_id).and_return double(get_section_data: {instructors: instructors})
         end
         expect(User::BasicAttributes).to receive(:attributes_for_uids).with(array_including('2040', '61889', '242881')).and_return instructor_attributes
         EdoOracle::UserCourses::Base.new(user_id: random_id).merge_detailed_section_data feed

@@ -2,14 +2,14 @@ module EdoOracle
   class CourseSections < BaseProxy
     include ClassLogger
 
-    def initialize(term_id, course_id)
+    def initialize(term_id, section_id)
       super(Settings.edodb)
       @term_id = term_id
-      @course_id = course_id
+      @section_id = section_id
     end
 
     def get_section_data
-      self.class.fetch_from_cache "#{@course_id}-#{@term_id}" do
+      self.class.fetch_from_cache "#{@section_id}-#{@term_id}" do
         {
           instructors: get_section_instructors,
           schedules: get_section_schedules,
@@ -25,7 +25,7 @@ module EdoOracle
         oneTime: [],
         recurring: []
       }
-      EdoOracle::Queries.get_section_meetings(@term_id, @course_id).each do |meeting|
+      EdoOracle::Queries.get_section_meetings(@term_id, @section_id).each do |meeting|
         if meeting && meeting['meeting_days'].present? && (location = translate_location meeting)
           if meeting['meeting_start_date'] == meeting['meeting_end_date']
             schedules[:oneTime] << location.merge(one_time_session meeting)
@@ -38,7 +38,7 @@ module EdoOracle
     end
 
     def get_section_final_exam
-      final_exams = EdoOracle::Queries.get_section_final_exam(@term_id, @course_id).map do |exam|
+      final_exams = EdoOracle::Queries.get_section_final_exam(@term_id, @section_id).map do |exam|
         {
           exam_type: exam['exam_type'],
           location: exam['location'],
@@ -51,7 +51,7 @@ module EdoOracle
     end
 
     def get_section_instructors
-      instructors = EdoOracle::Queries.get_section_instructors(@term_id, @course_id).map do |instructor|
+      instructors = EdoOracle::Queries.get_section_instructors(@term_id, @section_id).map do |instructor|
         {
           name: instructor['person_name'],
           role: instructor['role_code'],
@@ -136,7 +136,7 @@ module EdoOracle
       # 9:00A, 11:30A, 3:14P
       Time.parse(time).strftime('%-l:%M%p').sub(/M\Z/, '')
     rescue ArgumentError
-      logger.error "Bad time value for course #{@course_id}, term #{@term_id}: #{time}"
+      logger.error "Bad time value for course #{@section_id}, term #{@term_id}: #{time}"
       ''
     end
 

@@ -1,8 +1,8 @@
 describe EdoOracle::CourseSections do
 
   let(:term_id) { '2168' }
-  let(:course_id) { random_id }
-  let(:proxy) { described_class.new term_id, course_id }
+  let(:section_id) { random_id }
+  let(:proxy) { described_class.new term_id, section_id }
   subject { proxy.get_section_data }
 
   context 'translate location' do
@@ -60,9 +60,9 @@ describe EdoOracle::CourseSections do
 
   context 'working EDO connection' do
     before do
-      expect(EdoOracle::Queries).to receive(:get_section_meetings).with(term_id, course_id).and_return meetings
-      expect(EdoOracle::Queries).to receive(:get_section_final_exam).with(term_id, course_id).and_return final_exams
-      expect(EdoOracle::Queries).to receive(:get_section_instructors).with(term_id, course_id).and_return instructors
+      expect(EdoOracle::Queries).to receive(:get_section_meetings).with(term_id, section_id).and_return meetings
+      expect(EdoOracle::Queries).to receive(:get_section_final_exam).with(term_id, section_id).and_return final_exams
+      expect(EdoOracle::Queries).to receive(:get_section_instructors).with(term_id, section_id).and_return instructors
     end
 
     context 'no instructors or meetings found' do
