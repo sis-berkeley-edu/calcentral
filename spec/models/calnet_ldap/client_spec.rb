@@ -94,6 +94,16 @@ describe CalnetLdap::Client do
     expect(results).to eq nil
   end
 
+  it 'tries to find a specific UID in all population groups' do
+    uid = random_id
+    expect(subject).to receive(:search).exactly(1).times.with(hash_including base: CalnetLdap::Client::PEOPLE_DN).and_return []
+    expect(subject).to receive(:search).exactly(1).times.with(hash_including base: CalnetLdap::Client::GUEST_DN).and_return []
+    expect(subject).to receive(:search).exactly(1).times.with(hash_including base: CalnetLdap::Client::ADVCON_DN).and_return []
+    expect(subject).to receive(:search).exactly(1).times.with(hash_including base: CalnetLdap::Client::EXPIRED_DN).and_return [{uid: [uid]}]
+    result = subject.search_by_uid uid
+    expect(result[:uid]).to eq([uid])
+  end
+
   context 'search by name with mock LDAP' do
     let(:expected_ldap_searches) { nil }
     before do
