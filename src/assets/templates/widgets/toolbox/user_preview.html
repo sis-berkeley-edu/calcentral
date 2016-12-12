@@ -139,11 +139,12 @@
                     data-link="ucAdvisingResources.csLinks.studentAdvisorNotes"
                   ></div>
                 </div>
-                <div data-ng-if="ucAdvisingResources.links.schedulePlannerStudentSpecific.url">
+                <div data-ng-if="schedulePlanner">
                   <a
-                    data-ng-bind="ucAdvisingResources.links.schedulePlannerStudentSpecific.name"
-                    data-ng-href="{{ucAdvisingResources.links.schedulePlannerStudentSpecific.url}}"
-                  ></a>
+                    data-ng-href="/college_scheduler/advisor/{{schedulePlanner.careerCode}}/{{schedulePlanner.termId}}/{{schedulePlanner.studentUid}}"
+                    data-cc-outbound-enabled="true">
+                    Schedule Planner
+                  </a>
                 </div>
                 <div data-ng-if="ucAdvisingResources.csLinks.studentWebnowDocuments.url">
                   <a

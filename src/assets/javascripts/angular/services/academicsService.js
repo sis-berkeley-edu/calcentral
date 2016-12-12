@@ -110,6 +110,18 @@ angular.module('calcentral.services').service('academicsService', function() {
   };
 
   /**
+   * Returns unique set of career codes extracted from collection of student plans
+   * @param  {Array} studentPlans  iHub Academic Status student plans
+   * @return {Array}               career codes
+   */
+  var getUniqueCareerCodes = function(studentPlans) {
+    var careerCodes = _.map(studentPlans, function(plan) {
+      return _.get(plan, 'career.code');
+    });
+    return _.uniq(careerCodes);
+  };
+
+  /**
    * Returns actual or waitlisted class sections
    * @param {Array} courses courses from the 'semesters' node of the academics feed
    * @param {Boolean} findWaitlisted Boolean indicating return of waitlisted courses only
@@ -286,6 +298,7 @@ angular.module('calcentral.services').service('academicsService', function() {
     filterBySectionSlug: filterBySectionSlug,
     findSemester: findSemester,
     getAllClasses: getAllClasses,
+    getUniqueCareerCodes: getUniqueCareerCodes,
     getClassesSections: getClassesSections,
     getPreviousClasses: getPreviousClasses,
     hasTeachingClasses: hasTeachingClasses,

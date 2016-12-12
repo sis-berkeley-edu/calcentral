@@ -8,7 +8,7 @@
 <div class="cc-enrollment-card-section-content" data-ng-if="section.show">
   <div data-ng-if="enrollmentInstruction.isClassScheduleAvailable && !isAdvisingStudentLookup && api.user.profile.isDirectlyAuthenticated">
     <p>
-      <a data-ng-href="/college_scheduler/{{enrollmentInstruction.careerCode}}/{{enrollmentInstruction.term.termId}}"
+      <a data-ng-href="/college_scheduler/student/{{enrollmentInstruction.careerCode}}/{{enrollmentInstruction.term.termId}}"
         data-cc-outbound-enabled="true">
         Organize and preview your upcoming semester</a>
       based on your scheduling needs.

@@ -334,6 +334,7 @@ describe MyAcademics::CollegeAndLevel do
           expect(feed[:collegeAndLevel][:empty]).to eq true
           expect(feed[:collegeAndLevel][:isCurrent]).to eq true
           expect(feed[:collegeAndLevel][:termName]).to eq 'Fall 2013'
+          expect(feed[:collegeAndLevel][:termId]).to eq nil
         end
       end
       context 'when current term is not summer' do
@@ -352,6 +353,7 @@ describe MyAcademics::CollegeAndLevel do
             expect(feed[:collegeAndLevel][:empty]).to eq true
             expect(feed[:collegeAndLevel][:isCurrent]).to eq true
             expect(feed[:collegeAndLevel][:termName]).to eq 'Fall 2013'
+            expect(feed[:collegeAndLevel][:termId]).to eq nil
           end
         end
       end
@@ -397,6 +399,10 @@ describe MyAcademics::CollegeAndLevel do
 
       it 'specifies term name' do
         expect(feed[:collegeAndLevel][:termName]).to eq 'Fall 2016'
+      end
+
+      it 'specifies term id' do
+        expect(feed[:collegeAndLevel][:termId]).to eq '2168'
       end
 
       it 'translates minors' do
@@ -578,6 +584,10 @@ describe MyAcademics::CollegeAndLevel do
         expect(feed[:collegeAndLevel][:termName]).to eq 'Spring 2014'
       end
 
+      it 'specifies term id' do
+        expect(feed[:collegeAndLevel][:termId]).to eq '2142'
+      end
+
       it 'translates majors' do
         expect(feed[:collegeAndLevel][:majors][0]).to eq({
           college: 'Law Professional Programs',
@@ -658,6 +668,7 @@ describe MyAcademics::CollegeAndLevel do
         expect(feed[:collegeAndLevel][:majors]).to be_present
         expect(feed[:collegeAndLevel][:level]).to be nil
         expect(feed[:collegeAndLevel][:termName]).to be nil
+        expect(feed[:collegeAndLevel][:termId]).to be nil
       end
     end
   end
@@ -751,6 +762,7 @@ describe MyAcademics::CollegeAndLevel do
         MyAcademics::CollegeAndLevel.new(uid).merge(feed)
         expect(feed[:collegeAndLevel][:empty]).to be_truthy
         expect(feed[:collegeAndLevel][:termName]).to eq 'Fall 2013'
+        expect(feed[:collegeAndLevel][:termId]).to eq nil
       end
     end
 
