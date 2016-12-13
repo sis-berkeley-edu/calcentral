@@ -28,7 +28,7 @@ module MyAcademics
           afterGradingPeriod: grading_link,
           gradingPeriodNotSet: grading_link
         },
-        APPR: {
+        RDY: {
           beforeGradingPeriod: grading_link,
           inGradingPeriod: grading_link,
           afterGradingPeriod: grading_link,
@@ -57,7 +57,7 @@ module MyAcademics
           afterGradingPeriod:  :gradesPosted,
           gradingPeriodNotSet:  :gradesPosted,
         },
-        APPR: {
+        RDY: {
           beforeGradingPeriod:  :gradesApproved,
           inGradingPeriod:  :gradesApproved,
           afterGradingPeriod:  :gradesApproved,
@@ -202,12 +202,12 @@ module MyAcademics
     def parse_cs_grading_status(cs_grading_status)
       return :noCsData if unexpected_cs_status?(cs_grading_status)
       case cs_grading_status
-        when 'GRD', 'RDY'
+        when 'GRD'
           :GRD
         when 'POST'
           :POST
-        when 'APPR'
-          :APPR
+        when 'RDY'
+          :RDY
         else
           :noCsData
       end
