@@ -25,11 +25,12 @@ module CampusSolutions
     def url
       if @student_uid.present? && student_campus_solutions_id = CalnetCrosswalk::ByUid.new(user_id: @student_uid).lookup_campus_solutions_id
         emplid = student_campus_solutions_id
-        advisor_id_param = "&ADVISORID=#{@campus_solutions_id}"
+        advisor_id = @campus_solutions_id
       else
         emplid = @campus_solutions_id
+        advisor_id = ''
       end
-      "#{@settings.base_url}/UC_SR_COLLEGE_SCHDLR_URL.v1/get?EMPLID=#{emplid}&STRM=#{@term_id}&ACAD_CAREER=#{@acad_career}&INSTITUTION=UCB01#{advisor_id_param}"
+      "#{@settings.base_url}/UC_SR_COLLEGE_SCHDLR_URL.v1/get?EMPLID=#{emplid}&STRM=#{@term_id}&ACAD_CAREER=#{@acad_career}&INSTITUTION=UCB01&ADVISORID=#{advisor_id}"
     end
 
   end

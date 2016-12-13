@@ -30,10 +30,10 @@ describe CampusSolutions::CollegeSchedulerUrl do
       let(:expected_api_request_url) do
         proxy.settings.base_url + [
           "/UC_SR_COLLEGE_SCHDLR_URL.v1/get?",
-          "EMPLID=#{student_campus_solutions_id}&",
-          "STRM=#{options[:term_id]}&",
-          "ACAD_CAREER=#{options[:acad_career]}&",
-          "INSTITUTION=UCB01",
+          "EMPLID=#{student_campus_solutions_id}",
+          "&STRM=#{options[:term_id]}",
+          "&ACAD_CAREER=#{options[:acad_career]}",
+          "&INSTITUTION=UCB01",
           "&ADVISORID=#{advisor_campus_solutions_id}"
         ].join('')
       end
