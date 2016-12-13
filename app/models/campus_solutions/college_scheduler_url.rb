@@ -22,7 +22,7 @@ module CampusSolutions
     end
 
     def url
-      "#{@settings.base_url}/UC_SR_COLLEGE_SCHDLR_URL.v1/get?EMPLID=#{@campus_solutions_id}&STRM=#{@term_id}&ACAD_CAREER=#{@acad_career}&INSTITUTION=UCB01"
+      "#{@settings.base_url}/UC_SR_COLLEGE_SCHDLR_URL.v1/get?EMPLID=#{@campus_solutions_id}&STRM=#{@term_id}&ACAD_CAREER=#{@acad_career}&INSTITUTION=UCB01&ADVISORID="
     end
 
   end
