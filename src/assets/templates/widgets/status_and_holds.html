@@ -60,7 +60,7 @@
                          data-ng-class="{true:'fa-exclamation-circle cc-icon-red',false:'fa-exclamation-triangle cc-icon-gold'}[registration.pastFinancialDisbursement]">
                       </i>
                     </span>
-                    <span data-ng-if="registration.positiveIndicators.R99">Exception from Cancel for Non-Payment</span>
+                    <span data-ng-if="registration.positiveIndicators.R99">You Will Not Be Canceled for Non-Payment</span>
                     <span data-ng-if="registration.positiveIndicators.ROP && !registration.positiveIndicators.R99">Temporary Protection from Cancel for Non-Payment</span>
                     <span data-ng-if="!registration.positiveIndicators.ROP && !registration.positiveIndicators.R99 && !registration.pastFinancialDisbursement">Cancel for Non-Payment Notification</span>
                     <span data-ng-if="!registration.positiveIndicators.ROP && !registration.positiveIndicators.R99 && registration.pastFinancialDisbursement">Cancel for Non-Payment Warning</span>
