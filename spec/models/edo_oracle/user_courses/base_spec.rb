@@ -489,8 +489,11 @@ describe EdoOracle::UserCourses::Base do
       'dept_name' => 'MEC ENG/I,RES',
       'term_id' => '2168',
       'course_title' => course_title,
-      'course_title_short' => 'KOLLAPS'
+      'course_title_short' => 'KOLLAPS',
+      'session_id' => session_id
     }}
+    let(:course_title) { nil }
+    let(:session_id) { '1' }
     subject { EdoOracle::UserCourses::Base.new(user_id: random_id).row_to_feed_item(row, {}) }
     context 'course has a nice long title' do
       let(:course_title) { 'Failure Analysis of Load-Bearing Structures' }
@@ -502,6 +505,17 @@ describe EdoOracle::UserCourses::Base do
       let(:course_title) { nil }
       it 'falls back to short title' do
         expect(subject[:name]).to eq 'KOLLAPS'
+      end
+    end
+    context 'course has regular academic session id' do
+      it 'has nil session code' do
+        expect(subject[:session_code]).to eq nil
+      end
+    end
+    context 'course has summer session id' do
+      let(:session_id) { '6W2' }
+      it 'has converted session code' do
+        expect(subject[:session_code]).to eq 'D'
       end
     end
   end

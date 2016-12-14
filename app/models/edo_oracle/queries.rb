@@ -14,6 +14,7 @@ module EdoOracle
     SECTION_COLUMNS = <<-SQL
       sec."id" AS section_id,
       sec."term-id" AS term_id,
+      sec."session-id" AS session_id,
       TRIM(crs."title") AS course_title,
       TRIM(crs."transcriptTitle") AS course_title_short,
       crs."subjectArea" AS dept_name,

@@ -32,10 +32,31 @@
           </thead>
           <tbody data-ng-if="!semester.summaryFromTranscript" data-ng-repeat="class in semester.classes">
             <tr data-ng-repeat="section in class.sections" data-ng-if="section.is_primary_section && !section.waitlisted">
-              <td data-ng-if="class.multiplePrimaries && section.url && !(isAdvisingStudentLookup || isAcademicSummary)"><a data-ng-href="{{section.url}}" data-ng-bind-template="{{class.course_code}} {{section.section_label}}"></a></td>
-              <td data-ng-if="class.multiplePrimaries && (!section.url || isAdvisingStudentLookup || isAcademicSummary)" data-ng-bind-template="{{class.course_code}} {{section.section_label}}"></td>
-              <td data-ng-if="!class.multiplePrimaries && class.url && !(isAdvisingStudentLookup || isAcademicSummary)"><a data-ng-href="{{class.url}}" data-ng-bind="class.course_code"></a></td>
-              <td data-ng-if="!class.multiplePrimaries && (!class.url || isAdvisingStudentLookup || isAcademicSummary)" data-ng-bind="class.course_code"></td>
+              <td>
+                <span data-ng-if="class.multiplePrimaries && section.url && !(isAdvisingStudentLookup || isAcademicSummary)">
+                  <a data-ng-href="{{section.url}}">
+                    <span data-ng-bind-template="{{class.course_code}} {{section.section_label}}"></span>
+                    <span data-ng-if="class.session_code" data-ng-bind-template="(Session {{class.session_code}})" class="cc-nowrap"></span>
+                  </a>
+                </span>
+
+                <span data-ng-if="class.multiplePrimaries && (!section.url || isAdvisingStudentLookup || isAcademicSummary)">
+                  <span data-ng-bind-template="{{class.course_code}} {{section.section_label}}"></span>
+                  <span data-ng-if="class.session_code" data-ng-bind-template="(Session {{class.session_code}})" class="cc-nowrap"></span>
+                </span>
+
+                <span data-ng-if="!class.multiplePrimaries && class.url && !(isAdvisingStudentLookup || isAcademicSummary)">
+                  <a data-ng-href="{{class.url}}">
+                    <span data-ng-bind="class.course_code"></span>
+                    <span data-ng-if="class.session_code" data-ng-bind-template="(Session {{class.session_code}})" class="cc-nowrap"></span>
+                  </a>
+                </span>
+
+                <span data-ng-if="!class.multiplePrimaries && (!class.url || isAdvisingStudentLookup || isAcademicSummary)">
+                  <span data-ng-bind="class.course_code"></span>
+                  <span data-ng-if="class.session_code" data-ng-bind-template="(Session {{class.session_code}})" class="cc-nowrap"></span>
+                </span>
+              </td>
               <td data-ng-bind="class.title"></td>
               <td data-ng-bind="section.units | number:1" class="cc-table-right"></td>
             </tr>

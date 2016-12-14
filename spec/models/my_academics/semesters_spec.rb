@@ -39,6 +39,7 @@ describe MyAcademics::Semesters do
       course_code: "#{dept.upcase} #{catid}",
       term_yr: term_yr,
       term_cd: term_cd,
+      session_code: [nil, 'A', 'B', 'C', 'D', 'E'].sample,
       dept: dept.upcase,
       catid: catid,
       course_catalog: catid,
@@ -155,7 +156,7 @@ describe MyAcademics::Semesters do
           expect(course[:title]).to eq matching_enrollment[:name]
           expect(course[:courseCatalog]).to eq matching_enrollment[:course_catalog]
           expect(course[:url]).to include matching_enrollment[:slug]
-          [:course_code, :dept, :dept_desc, :role, :slug].each do |key|
+          [:course_code, :dept, :dept_desc, :role, :slug, :session_code].each do |key|
             expect(course[key]).to eq matching_enrollment[key]
           end
         end
@@ -499,7 +500,7 @@ describe MyAcademics::Semesters do
           expect(course[:sections].count).to eq matching_enrollment[:sections].count
           expect(course[:title]).to eq matching_enrollment[:name]
           expect(course[:courseCatalog]).to eq matching_enrollment[:course_catalog]
-          [:course_code, :dept, :dept_desc, :role, :slug].each do |key|
+          [:course_code, :dept, :dept_desc, :role, :slug, :session_code].each do |key|
             expect(course[key]).to eq matching_enrollment[key]
           end
         end

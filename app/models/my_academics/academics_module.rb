@@ -34,14 +34,14 @@ module MyAcademics
     end
 
     def course_info(campus_course)
-      campus_course.slice(:role, :sections, :slug).merge({
+      campus_course.slice(:role, :sections, :slug, :session_code).merge({
         title: campus_course[:name],
         url: class_to_url(campus_course)
       }).merge course_listing(campus_course)
     end
 
     def course_info_with_multiple_listings(campus_course)
-      campus_course.slice(:role, :sections, :slug).merge({
+      campus_course.slice(:role, :sections, :slug, :session_code).merge({
         listings: [ course_listing(campus_course) ],
         title: campus_course[:name],
         url: class_to_url(campus_course)

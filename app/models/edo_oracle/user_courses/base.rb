@@ -88,7 +88,8 @@ module EdoOracle
           nil
         else
           term_data = Berkeley::TermCodes.from_edo_id(row['term_id']).merge({
-            term_id: row['term_id']
+            term_id: row['term_id'],
+            session_code: Berkeley::TermCodes::SUMMER_SESSIONS[row['session_id']]
           })
           course_name = row['course_title'].present? ? row['course_title'] : row['course_title_short']
           course_data = {

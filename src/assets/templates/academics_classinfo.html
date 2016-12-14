@@ -83,6 +83,10 @@
                   <th scope="row">Grading</th>
                   <td data-ng-bind="section.gradeOption"></td>
                 </tr>
+                <tr data-ng-if="selectedCourse.session_code">
+                  <th scope="row">Session</th>
+                  <td data-ng-bind="selectedCourse.session_code"></td>
+                </tr>
               </tbody>
             </table>
           </div>

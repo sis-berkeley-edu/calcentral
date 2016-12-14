@@ -72,7 +72,7 @@ describe EdoOracle::Queries, :ignore => true do
     it 'fetches expected data' do
       results = EdoOracle::Queries.get_enrolled_sections(uid, [term])
       expect(results.count).to eq 5
-      expected_keys = %w(section_id term_id course_title course_title_short dept_name primary section_num instruction_format primary_associated_section_id course_display_name section_display_name catalog_id catalog_root catalog_prefix catalog_suffix enroll_limit enroll_status waitlist_position units grade grading_basis)
+      expected_keys = %w(section_id term_id session_id course_title course_title_short dept_name primary section_num instruction_format primary_associated_section_id course_display_name section_display_name catalog_id catalog_root catalog_prefix catalog_suffix enroll_limit enroll_status waitlist_position units grade grading_basis)
       results.each do |result|
         expect(result['term_id']).to eq '2102'
         expect(result).to have_keys(expected_keys)
@@ -100,7 +100,7 @@ describe EdoOracle::Queries, :ignore => true do
     it 'returns a set of secondary sections' do
       results = EdoOracle::Queries.get_associated_secondary_sections(fall_term_id, '31586')
       expect(results).to be_present
-      expected_keys = %w(course_title course_title_short dept_name catalog_id primary section_num instruction_format primary_associated_section_id catalog_root catalog_prefix catalog_suffix)
+      expected_keys = %w(session_id course_title course_title_short dept_name catalog_id primary section_num instruction_format primary_associated_section_id catalog_root catalog_prefix catalog_suffix)
       results.each do |result|
         expect(result).to have_keys(expected_keys)
         expect(result['section_display_name']).to eq 'ESPM 155AC'
