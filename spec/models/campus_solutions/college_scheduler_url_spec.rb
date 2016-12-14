@@ -43,7 +43,13 @@ describe CampusSolutions::CollegeSchedulerUrl do
         allow(CalnetCrosswalk::ByUid).to receive(:new).with(user_id: advisor_user_id).and_return(stubbed_advisor_crosswalk_by_uid)
       end
       it 'includes the advisor emplid in the CS API request' do
-        expect(proxy).to receive(:get_response).with(expected_api_request_url, {:basic_auth=>{:username=>"secret", :password=>"secret"}}).and_call_original
+        expected_basic_auth_credentials = {
+          basic_auth: {
+            username: Settings.campus_solutions_proxy.username,
+            password: Settings.campus_solutions_proxy.password
+          }
+        }
+        expect(proxy).to receive(:get_response).with(expected_api_request_url, expected_basic_auth_credentials).and_call_original
         proxy.get
       end
     end
