@@ -24,7 +24,7 @@ class AdvisingStudentController < ApplicationController
   end
 
   def academic_status
-    render json: HubEdos::AcademicStatus.new(user_id: student_uid_param).get
+    render json: HubEdos::MyAcademicStatus.new(student_uid_param).get_feed
   end
 
   def enrollment_instructions
