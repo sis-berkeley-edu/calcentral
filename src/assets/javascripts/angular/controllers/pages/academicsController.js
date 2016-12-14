@@ -202,7 +202,7 @@ angular.module('calcentral.controllers').controller('AcademicsController', funct
     $scope.showLegacyAdvising = !$scope.filteredForDelegate && $scope.api.user.profile.features.legacyAdvising && $scope.isLSStudent;
     $scope.showAdvising = !$scope.filteredForDelegate && apiService.user.profile.features.advising && apiService.user.profile.roles.student && isMbaJdOrNotLaw();
     $scope.showProfileMessage = (!$scope.isAcademicInfoAvailable || !$scope.collegeAndLevel || _.isEmpty($scope.collegeAndLevel.careers));
-    $scope.showResidency = apiService.user.profile.roles.student && hasResidency();
+    $scope.showResidency = apiService.user.profile.roles.student && !$scope.collegeAndLevel.roles.summerVisitor && hasResidency();
   };
 
   /**
