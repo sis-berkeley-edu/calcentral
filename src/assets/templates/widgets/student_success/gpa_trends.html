@@ -3,7 +3,7 @@
   <div data-ng-if="studentSuccess.termGpa.length >= 2">
     <h3>
       GPA Trends
-      <span data-ng-if="gpaUnits.cumulativeGpa" data-ng-bind-template="(Cumulative {{gpaUnits.cumulativeGpa | number:2}})"></span>
+      <span data-ng-if="gpaUnits.cumulativeGpa" data-ng-bind-template="(Cumulative {{gpaUnits.cumulativeGpa | number:3}})"></span>
     </h3>
     <data-cc-line-chart-directive data-ng-if="studentSuccess.showChart" class="cc-student-success-chart-container" data-options="studentSuccess.gpaChart" data-data="highCharts.dataSeries"></data-cc-line-chart-directive>
   </div>
@@ -22,7 +22,7 @@
         <td class="cc-table-right" colspan="2">
           <i data-ng-if="term.termGpa && term.termGpa < 2" class="fa fa-exclamation-circle cc-icon-red"></i>
           <span data-ng-if="!term.termGpa">&mdash;</span>
-          <span data-ng-if="term.termGpa" data-ng-class="{'cc-student-success-sub-gpa': (term.termGpa < 2)}" data-ng-bind="term.termGpa | number:1"></span>
+          <span data-ng-if="term.termGpa" data-ng-class="{'cc-student-success-sub-gpa': (term.termGpa < 2)}" data-ng-bind="term.termGpa | number:3"></span>
         </td>
       </tr>
     </tbody>
