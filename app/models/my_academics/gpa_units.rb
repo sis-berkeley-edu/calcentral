@@ -17,7 +17,7 @@ module MyAcademics
     end
 
     def hub_gpa_units
-      response = HubEdos::AcademicStatus.new(user_id: @uid).get
+      response = HubEdos::MyAcademicStatus.new(@uid).get_feed
       result = {}
       unit_total = 0
       unit_sum = 0

@@ -2,7 +2,7 @@ class HubEdoController < ApplicationController
   before_filter :api_authenticate_401
 
   def academic_status
-    json_proxy_passthrough HubEdos::AcademicStatus
+    json_passthrough HubEdos::MyAcademicStatus
   end
 
   def student

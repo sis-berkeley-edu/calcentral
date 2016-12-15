@@ -21,7 +21,20 @@ describe MyAcademics::CollegeAndLevel do
       "student" => {
         "academicStatuses" => hub_academic_statuses,
         "holds" => hub_holds,
-        "degrees" => hub_degrees
+        "degrees" => hub_degrees,
+        "roles" => {
+          'fpf' => false,
+          'law' => false,
+          'concurrent' => false,
+          'haasFullTimeMba' => false,
+          'haasEveningWeekendMba' => false,
+          'haasExecMba' => false,
+          'haasMastersFinEng' => false,
+          'haasMbaPublicHealth' => false,
+          'haasMbaJurisDoctor' => false,
+          'ugrdUrbanStudies' => false,
+          'summerVisitor' => false
+        }
       }
     }
   end
@@ -152,6 +165,8 @@ describe MyAcademics::CollegeAndLevel do
       program_description: 'Undergrad Letters & Science',
       plan_code: '25345U',
       plan_description: 'English BA',
+      role: 'default',
+      enrollmentRole: 'default',
       admin_owners: [{org_code: 'ENGLISH', org_description: 'English', percentage: 100}],
       expected_grad_term_id: '2202',
       expected_grad_term_name: '2020 Spring'
@@ -165,6 +180,8 @@ describe MyAcademics::CollegeAndLevel do
       program_description: 'Undergrad Letters & Science',
       plan_code: '25971U',
       plan_description: 'MCB-Cell & Dev Biology BA',
+      role: 'default',
+      enrollmentRole: 'default',
       type_code: 'SP',
       type_description: 'Major - UG Specialization',
       sub_plan_code: '25966SA02U',
@@ -181,6 +198,8 @@ describe MyAcademics::CollegeAndLevel do
       program_description: 'Undergrad Letters & Science',
       plan_code: '25090U',
       plan_description: 'Art BA',
+      role: 'default',
+      enrollmentRole: 'default',
       type_code: 'MIN',
       type_description: 'Major - UG Specialization',
       admin_owners: [{org_code: 'MCELLBI', org_description: 'Molecular & Cell Biology', percentage: 100}],
@@ -196,6 +215,8 @@ describe MyAcademics::CollegeAndLevel do
       program_description: 'Graduate Academic Programs',
       plan_code: '00E017G',
       plan_description: 'Women, Gender and Sexuality DE',
+      role: 'default',
+      enrollmentRole: 'default',
       type_code: 'DE',
       type_description: 'Designated Emphasis',
       admin_owners: [{org_code: 'MCELLBI', org_description: 'Molecular & Cell Biology', percentage: 100}],
@@ -210,6 +231,8 @@ describe MyAcademics::CollegeAndLevel do
       program_description: 'Graduate Professional Programs',
       plan_code: '82790PPJDG',
       plan_description: 'Public Policy MPP-JD CDP',
+      role: 'default',
+      enrollmentRole: 'default',
       admin_owners: [
         {org_code: 'LAW', org_description: 'School of Law', percentage: 50},
         {org_code: 'PUBPOL', org_description: 'Goldman School Public Policy', percentage: 50},
@@ -224,6 +247,8 @@ describe MyAcademics::CollegeAndLevel do
       program_description: 'Law Professional Programs',
       plan_code: '84501JDPPG',
       plan_description: 'Law JD-MPP CDP',
+      role: 'law',
+      enrollmentRole: 'law',
       admin_owners: [
         {org_code: 'LAW', org_description: 'School of Law', percentage: 50},
         {org_code: 'PUBPOL', org_description: 'Goldman School Public Policy', percentage: 50},
@@ -252,6 +277,8 @@ describe MyAcademics::CollegeAndLevel do
       program_description: 'Graduate Professional Programs',
       plan_code: '70141BAPHG',
       plan_description: 'Business Admin MBA-MPH CDP',
+      role: 'haasMbaPublicHealth',
+      enrollmentRole: 'default',
       admin_owners: [
         {org_code: 'BUS', org_description: 'Haas School of Business', percentage: 50},
         {org_code: 'PUBHEALTH', org_description: 'School of Public Health', percentage: 50},
@@ -261,48 +288,7 @@ describe MyAcademics::CollegeAndLevel do
 
   before do
     allow_any_instance_of(CalnetCrosswalk::ByUid).to receive(:lookup_campus_solutions_id).and_return campus_solutions_id
-    allow_any_instance_of(HubEdos::AcademicStatus).to receive(:get).and_return hub_academic_status_response
-  end
-
-  context 'when defining student plan roles' do
-    it 'includes plans and career matchers' do
-      expect(subject.class::STUDENT_PLAN_ROLES[:plan].count).to_not eq 0
-      expect(subject.class::STUDENT_PLAN_ROLES[:career].count).to_not eq 0
-    end
-
-    it 'defines type code and match string for each matcher' do
-      subject.class::STUDENT_PLAN_ROLES.values_at(:plan, :career).flatten.each do |matcher|
-        expect(matcher).to have_key(:student_plan_role_code)
-        expect(matcher).to have_key(:match)
-      end
-    end
-
-    it 'includes types array' do
-      subject.class::STUDENT_PLAN_ROLES.values_at(:plan, :career).flatten.each do |matcher|
-        expect(matcher).to have_key(:types)
-        expect(matcher[:types]).to be_an Array
-        matcher[:types].each do |type|
-          expect(type).to be_a Symbol
-        end
-      end
-    end
-  end
-
-  context 'when providing student plan role codes' do
-    it 'returns all possible student plan role codes' do
-      role_codes = subject.class.student_plan_role_codes
-      expect(role_codes.count).to eq 10
-      expect(role_codes).to include('fpf')
-      expect(role_codes).to include('law')
-      expect(role_codes).to include('concurrent')
-      expect(role_codes).to include('haasFullTimeMba')
-      expect(role_codes).to include('haasEveningWeekendMba')
-      expect(role_codes).to include('haasExecMba')
-      expect(role_codes).to include('haasMastersFinEng')
-      expect(role_codes).to include('haasMbaPublicHealth')
-      expect(role_codes).to include('haasMbaJurisDoctor')
-      expect(role_codes).to include('ugrdUrbanStudies')
-    end
+    allow_any_instance_of(HubEdos::MyAcademicStatus).to receive(:get_feed).and_return hub_academic_status_response
   end
 
   context 'data sourcing' do
@@ -364,7 +350,7 @@ describe MyAcademics::CollegeAndLevel do
     context 'failed response' do
       let(:failure_response) { {:errored=>true, :statusCode=>503, :body=>"An unknown server error occurred"} }
       before do
-        allow_any_instance_of(HubEdos::AcademicStatus).to receive(:get).and_return(failure_response)
+        allow_any_instance_of(HubEdos::MyAcademicStatus).to receive(:get_feed).and_return(failure_response)
       end
       it 'reports failure' do
         expect(feed[:collegeAndLevel][:statusCode]).to eq 503
@@ -374,6 +360,8 @@ describe MyAcademics::CollegeAndLevel do
       end
     end
     context 'undergrad with single academic status' do
+      let(:has_law_role) { false }
+
       it 'reports success' do
         expect(feed[:collegeAndLevel][:statusCode]).to eq 200
       end
@@ -482,17 +470,7 @@ describe MyAcademics::CollegeAndLevel do
       end
 
       it 'translates roles' do
-        expect(feed[:collegeAndLevel][:roles].keys.count).to eq 10
-        expect(feed[:collegeAndLevel][:roles]['fpf']).to eq false
-        expect(feed[:collegeAndLevel][:roles]['law']).to eq false
-        expect(feed[:collegeAndLevel][:roles]['concurrent']).to eq false
-        expect(feed[:collegeAndLevel][:roles]['haasFullTimeMba']).to eq false
-        expect(feed[:collegeAndLevel][:roles]['haasEveningWeekendMba']).to eq false
-        expect(feed[:collegeAndLevel][:roles]['haasExecMba']).to eq false
-        expect(feed[:collegeAndLevel][:roles]['haasMastersFinEng']).to eq false
-        expect(feed[:collegeAndLevel][:roles]['haasMbaPublicHealth']).to eq false
-        expect(feed[:collegeAndLevel][:roles]['haasMbaJurisDoctor']).to eq false
-        expect(feed[:collegeAndLevel][:roles]['ugrdUrbanStudies']).to eq false
+        expect(feed[:collegeAndLevel][:roles]).to be
       end
 
       it 'translates holds' do
@@ -568,6 +546,8 @@ describe MyAcademics::CollegeAndLevel do
       let(:student_plans) { [law_jd_mpp_cdp_plan] }
       let(:student_plans_secondary) { [graduate_master_public_policy_plan] }
 
+      let(:has_law_role) { true }
+
       it 'reports success' do
         expect(feed[:collegeAndLevel][:statusCode]).to eq 200
       end
@@ -613,6 +593,7 @@ describe MyAcademics::CollegeAndLevel do
         expect(feed[:collegeAndLevel][:plans][0][:type][:code]).to eq 'MAJ'
         expect(feed[:collegeAndLevel][:plans][0][:type][:category]).to eq 'Major'
         expect(feed[:collegeAndLevel][:plans][0][:college]).to eq 'Law Professional Programs'
+
         expect(feed[:collegeAndLevel][:plans][1][:career][:code]).to eq 'GRAD'
         expect(feed[:collegeAndLevel][:plans][1][:program][:code]).to eq 'GPRFL'
         expect(feed[:collegeAndLevel][:plans][1][:plan][:code]).to eq '82790PPJDG'
@@ -626,17 +607,7 @@ describe MyAcademics::CollegeAndLevel do
       end
 
       it 'translates roles' do
-        expect(feed[:collegeAndLevel][:roles].keys.count).to eq 10
-        expect(feed[:collegeAndLevel][:roles]['fpf']).to eq false
-        expect(feed[:collegeAndLevel][:roles]['law']).to eq true
-        expect(feed[:collegeAndLevel][:roles]['concurrent']).to eq false
-        expect(feed[:collegeAndLevel][:roles]['haasFullTimeMba']).to eq false
-        expect(feed[:collegeAndLevel][:roles]['haasEveningWeekendMba']).to eq false
-        expect(feed[:collegeAndLevel][:roles]['haasExecMba']).to eq false
-        expect(feed[:collegeAndLevel][:roles]['haasMastersFinEng']).to eq false
-        expect(feed[:collegeAndLevel][:roles]['haasMbaPublicHealth']).to eq false
-        expect(feed[:collegeAndLevel][:roles]['haasMbaJurisDoctor']).to eq false
-        expect(feed[:collegeAndLevel][:roles]['ugrdUrbanStudies']).to eq false
+        expect(feed[:collegeAndLevel][:roles]).to be
       end
     end
 
@@ -676,7 +647,7 @@ describe MyAcademics::CollegeAndLevel do
   context 'when sourced from Bearfacts' do
     let(:campus_solutions_id) { legacy_campus_solutions_id }
     before do
-      allow_any_instance_of(HubEdos::AcademicStatus).to receive(:get).and_return({})
+      allow_any_instance_of(HubEdos::MyAcademicStatus).to receive(:get_feed).and_return({})
       allow(subject).to receive(:current_term).and_return(fake_spring_term)
     end
 
@@ -871,6 +842,8 @@ describe MyAcademics::CollegeAndLevel do
         program_description: 'Undergrad Letters & Science',
         plan_code: '25971U',
         plan_description: 'MCB-Cell & Dev Biology BA',
+        role: 'default',
+        enrollmentRole: 'default',
         is_primary: false,
         status_in_plan_status_code: 'X',
         status_in_plan_status_description: 'Invalid Status'
@@ -887,93 +860,6 @@ describe MyAcademics::CollegeAndLevel do
         expect(filtered_academic_statuses[0]['studentPlans'][0]['academicPlan']['plan']['code']).to eq '25345U'
         expect(filtered_academic_statuses[0]['studentPlans'][1]['academicPlan']['plan']['code']).to eq '25090U'
         expect(filtered_academic_statuses[0]['studentPlans'][2]['academicPlan']['plan']['code']).to eq '00E017G'
-      end
-    end
-  end
-
-  context 'when determining the student plan role code' do
-    let(:plan) { { career: { code: 'GRAD' }, plan: { code: '70141MBAG' } } }
-
-    context 'when role type not specified' do
-      let(:plan_role_code) { subject.get_student_plan_role_code(plan) }
-
-      it 'identifies a default plan in undergrad career' do
-        plan[:career][:code] = 'UGRD'
-        plan[:plan][:code] = '25699U'
-        expect(plan_role_code).to eq 'default'
-      end
-
-      it 'identifies a default plan in graduate career' do
-        plan[:career][:code] = 'GRAD'
-        plan[:plan][:code] = '16290PHDG'
-        expect(plan_role_code).to eq 'default'
-      end
-
-      it 'identifies a berkeley law career plan' do
-        plan[:career][:code] = 'LAW'
-        plan[:plan][:code] = '842C1JSDG'
-        expect(plan_role_code).to eq 'law'
-      end
-
-      it 'identifies a concurrent enrollment plan' do
-        plan[:career][:code] = 'UCBX'
-        plan[:plan][:code] = '30XCECCENX'
-        expect(plan_role_code).to eq 'concurrent'
-      end
-
-      it 'identifies a fall program for freshmen plan' do
-        plan[:career][:code] = 'UGRD'
-        plan[:plan][:code] = '25000FPFU'
-        expect(plan_role_code).to eq 'fpf'
-      end
-
-      it 'identifies a Haas Business School Fulltime MBA plan' do
-        plan[:career][:code] = 'GRAD'
-        plan[:plan][:code] = '70141MBAG'
-        expect(plan_role_code).to eq 'haasFullTimeMba'
-      end
-
-      it 'identifies a Haas Business School Evening and Weekend MBA plan' do
-        plan[:career][:code] = 'GRAD'
-        plan[:plan][:code] = '701E1MBAG'
-        expect(plan_role_code).to eq 'haasEveningWeekendMba'
-      end
-
-      it 'identifies a Haas Business School Executive MBA plan' do
-        plan[:career][:code] = 'GRAD'
-        plan[:plan][:code] = '70364MBAG'
-        expect(plan_role_code).to eq 'haasExecMba'
-      end
-
-      it 'identifies a Haas Business School Masters of Financial Engineering plan' do
-        plan[:career][:code] = 'GRAD'
-        plan[:plan][:code] = '701F1MFEG'
-        expect(plan_role_code).to eq 'haasMastersFinEng'
-      end
-
-      it 'identifies a Haas Business School Business Admin MBA-MPH plan' do
-        plan[:career][:code] = 'GRAD'
-        plan[:plan][:code] = '70141BAPHG'
-        expect(plan_role_code).to eq 'haasMbaPublicHealth'
-      end
-
-      it 'identifies a Haas Business School Business Admin MBA-JD plan' do
-        plan[:career][:code] = 'GRAD'
-        plan[:plan][:code] = '70141BAJDG'
-        expect(plan_role_code).to eq 'haasMbaJurisDoctor'
-      end
-    end
-
-    context 'when enrollment role type specified' do
-      let(:role_type) { :enrollment }
-      let(:plan_role_code) { subject.get_student_plan_role_code(plan, role_type) }
-
-      it 'identifies Haas Business School plans as default' do
-        haas_plan_codes = ['70141MBAG', '701E1MBAG', '70364MBAG', '701F1MFEG', '70141BAPHG', '70141BAJDG']
-        haas_plan_codes.each do |haas_plan_code|
-          plan_hash = { career: { code: 'GRAD' }, plan: { code: haas_plan_code } }
-          expect(plan_role_code).to eq 'default'
-        end
       end
     end
   end
