@@ -14,7 +14,7 @@ module Berkeley
       {
         role_code: 'summerVisitor',
         match: %w(99000U 99000INTU 99000G 99000INTG 99V03U 99V04U 99V05U 99V09U 99V03G 99V05G 99V06G 99V07G 99V08G 99V10G 99V06U 99V07U 99V08U 99V10U 99V02G 99V04G 99V09G),
-        types: []
+        types: [:enrollment]
       },
     ]
 

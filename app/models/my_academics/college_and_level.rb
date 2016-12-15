@@ -300,8 +300,8 @@ module MyAcademics
             name: Berkeley::TermCodes.normalized_english(expected_grad_term_name)
           }
         end
-        flat_plan[:role] = hub_plan['role']
-        flat_plan[:enrollmentRole] = hub_plan['enrollmentRole']
+        flat_plan[:role] = hub_plan[:role]
+        flat_plan[:enrollmentRole] = hub_plan[:enrollmentRole]
         flat_plan[:primary] = !!hub_plan['primary']
         flat_plan[:type] = categorize_plan_type(academic_plan['type'])
 
