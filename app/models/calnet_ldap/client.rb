@@ -7,6 +7,8 @@ module CalnetLdap
 
     PEOPLE_DN = 'ou=people,dc=berkeley,dc=edu'
     GUEST_DN = 'ou=guests,dc=berkeley,dc=edu'
+    ADVCON_DN = 'ou=advcon people,dc=berkeley,dc=edu'
+    EXPIRED_DN = 'ou=expired people,dc=berkeley,dc=edu'
     TIMESTAMP_FORMAT = '%Y%m%d%H%M%SZ'
 
     # TODO Ask CalNet for suggested maximum number of search values.
@@ -64,9 +66,9 @@ module CalnetLdap
     def search_by_uid(uid)
       filter = uids_filter([uid])
       results = search(base: PEOPLE_DN, filter: filter)
-      if results.empty?
-        results = search(base: GUEST_DN, filter: filter)
-      end
+      results = search(base: GUEST_DN, filter: filter) if results.empty?
+      results = search(base: ADVCON_DN, filter: filter) if results.empty?
+      results = search(base: EXPIRED_DN, filter: filter) if results.empty?
       results.first
     end
 
