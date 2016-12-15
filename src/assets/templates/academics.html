@@ -32,13 +32,13 @@
     <div class="medium-6 large-4 columns cc-column-3">
       <div data-ng-include="'widgets/enrollment_card.html'" data-ng-if="api.user.profile.features.csEnrollmentCard"></div>
 
-      <div data-ng-include="'widgets/final_exam_schedule.html'" data-ng-if="api.user.profile.roles.student && !api.user.profile.delegateActingAsUid && api.user.profile.features.finalExamSchedule"></div>
+      <div data-ng-include="'widgets/final_exam_schedule.html'" data-ng-if="canViewFinalExamSchedule && api.user.profile.features.finalExamSchedule"></div>
 
-      <div data-ng-include="'academics_ls_advising.html'" data-ng-if="showLegacyAdvising"></div>
+      <div data-ng-include="'academics_ls_advising.html'" data-ng-if="showLegacyAdvising && !collegeAndLevel.roles.summerVisitor"></div>
 
-      <div data-ng-include="'widgets/my_advising.html'" data-ng-if="showAdvising"></div>
+      <div data-ng-include="'widgets/my_advising.html'" data-ng-if="showAdvising && !collegeAndLevel.roles.summerVisitor"></div>
 
-      <div data-ng-include="'widgets/transfer_credit.html'"></div>
+      <div data-ng-include="'widgets/transfer_credit.html'" data-ng-if="!collegeAndLevel.roles.summerVisitor"></div>
     </div>
   </div>
 </div>

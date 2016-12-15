@@ -173,6 +173,8 @@ angular.module('calcentral.controllers').controller('AcademicsController', funct
     $scope.isUndergraduate = _.includes(_.get($scope.collegeAndLevel, 'careers'), 'Undergraduate');
     $scope.isProfileCurrent = !$scope.transitionTerm || $scope.transitionTerm.isProfileCurrent;
     $scope.hasTeachingClasses = academicsService.hasTeachingClasses(data.teachingSemesters);
+    $scope.canViewFinalExamSchedule = $scope.api.user.profile.roles.student && !$scope.api.user.profile.delegateActingAsUid && !$scope.collegeAndLevel.roles.summerVisitor;
+
 
     // Get selected semester from URL params and extract data from semesters array
     var semesterSlug = ($routeParams.semesterSlug || $routeParams.teachingSemesterSlug);
@@ -227,9 +229,11 @@ angular.module('calcentral.controllers').controller('AcademicsController', funct
       var getAcademics = academicsFactory.getAcademics().success(parseAcademics);
       var getRegistrations = registrationsFactory.getRegistrations().success(loadRegistrations);
       var requests = [getAcademics, getRegistrations];
+      var getNumberOfHolds;
+
       if ($scope.api.user.profile.features.csHolds &&
         ($scope.api.user.profile.roles.student || $scope.api.user.profile.roles.applicant)) {
-        var getNumberOfHolds = academicStatusFactory.getAcademicStatus().success(loadNumberOfHolds);
+        getNumberOfHolds = academicStatusFactory.getAcademicStatus().success(loadNumberOfHolds);
         requests.push(getNumberOfHolds);
       }
       $q.all(requests).then(filterWidgets);
