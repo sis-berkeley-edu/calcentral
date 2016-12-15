@@ -20,8 +20,11 @@
   <div data-ng-if="!enrollmentInstruction.isClassScheduleAvailable">
     Ability to enroll coming soon. Please try again later.
   </div>
-  <div data-ng-if="!isInstructionType(enrollmentInstruction, ['law'])">
+  <div data-ng-if="!isInstructionType(enrollmentInstruction, ['law', 'summerVisitor'])">
     Learn more about <a href="http://registrar.berkeley.edu/Records/tbinfo.html">enrollment rules and information</a>.
+  </div>
+  <div data-ng-if="isInstructionType(enrollmentInstruction, ['summerVisitor'])">
+    Learn more about <a href="http://summer.berkeley.edu/student-services">enrollment rules and information</a>.
   </div>
 
   <div
