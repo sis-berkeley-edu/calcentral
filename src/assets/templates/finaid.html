@@ -15,7 +15,7 @@
 
     <div data-ng-if="canSeeFinaidData">
       <div class="medium-6 large-4 columns">
-        <div data-ng-include="'widgets/finaid_summary.html'"></div>
+        <div data-ng-include="'widgets/finaid_summary.html'" data-ng-if="!academicStatus.roles.summerVisitor"></div>
         <div data-ng-include="'widgets/finaid_communications.html'"></div>
         <div data-ng-include="'widgets/finaid_profile.html'"></div>
       </div>

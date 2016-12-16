@@ -11,7 +11,7 @@
     </div>
 
     <div class="medium-6 large-4 cc-column-2 columns">
-      <div data-ng-include="'widgets/finaid_summary.html'" data-ng-if="api.user.profile.features.csFinAid"></div>
+      <div data-ng-include="'widgets/finaid_summary.html'" data-ng-if="api.user.profile.features.csFinAid && !academicStatus.roles.summerVisitor"></div>
       <div data-ng-include="'widgets/finaid_activity.html'" data-ng-if="!api.user.profile.isApplicantOnly"></div>
     </div>
 
