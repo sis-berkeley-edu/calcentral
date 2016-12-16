@@ -3,6 +3,7 @@ module CalnetCrosswalk
 
     include ClassLogger
     include Proxies::Mockable
+    include Proxies::Tls12
 
     APP_ID = 'calnetcrosswalk'
     APP_NAME = 'Calnet Crosswalk'
@@ -68,11 +69,11 @@ module CalnetCrosswalk
       internal_response
     end
 
-    def request_options
-      {
+    def request_options(opts = {})
+      super(opts).merge({
         digest_auth: {username: @settings.username, password: @settings.password},
         on_error: {rescue_status: 404}
-      }
+      })
     end
 
     def lookup_campus_solutions_id
