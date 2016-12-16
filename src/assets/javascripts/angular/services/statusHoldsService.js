@@ -15,15 +15,12 @@ angular.module('calcentral.services').service('statusHoldsService', function() {
       positiveIndicators: {}
     });
 
-    var termUnits = _.get(term, 'termUnits');
-    var totalUnits = _.find(termUnits, {
+    var totalTermUnits = _.find(_.get(term, 'termUnits'), {
       type: {
         description: 'Total'
       }
     });
-    var termUnitsTotal = totalUnits ? totalUnits : {
-      unitsEnrolled: 0
-    };
+    var careerCode = _.get(term, 'academicCareer.code');
 
     if (term.registered === true) {
       term.summary = 'Officially Registered';
@@ -31,15 +28,14 @@ angular.module('calcentral.services').service('statusHoldsService', function() {
     }
     if (term.registered === false) {
       term.summary = 'Not Officially Registered';
-      term.explanation = term.isSummer ? 'You are not officially registered for this term.' : 'You are not entitled to access campus services until you are officially registered.  In order to be officially registered, you must pay your Tuition and Fees, and have no outstanding holds.';
+      term.explanation = 'You are not entitled to access campus services until you are officially registered.  In order to be officially registered, you must pay your Tuition and Fees, and have no outstanding holds.';
     }
-    if (termUnitsTotal.unitsEnrolled === 0 && (term.academicCareer && term.academicCareer.code === 'UGRD')) {
+    if (!totalTermUnits.unitsEnrolled && !totalTermUnits.unitsTaken) {
       term.summary = 'Not Enrolled';
-      term.explanation = term.isSummer ? 'You are not officially registered for this term.' : 'You are not enrolled in any classes for this term.';
+      term.explanation = (careerCode === 'UGRD') ? 'You are not enrolled in any classes for this term.' : 'You are not enrolled in any classes for this term. Fees will not be assessed, and any expected fee remissions or fee payment credits cannot be applied until you are enrolled in classes.  For more information, please contact your departmental graduate advisor.';
     }
-    if (termUnitsTotal.unitsEnrolled === 0 && (term.academicCareer && term.academicCareer.code !== 'UGRD')) {
-      term.summary = 'Not Enrolled';
-      term.explanation = term.isSummer ? 'You are not officially registered for this term.' : 'You are not enrolled in any classes for this term. Fees will not be assessed, and any expected fee remissions or fee payment credits cannot be applied until you are enrolled in classes.  For more information, please contact your departmental graduate advisor.';
+    if (term.registered !== true && term.isSummer) {
+      term.explanation = 'You are not officially registered for this term.';
     }
     return term;
   };
