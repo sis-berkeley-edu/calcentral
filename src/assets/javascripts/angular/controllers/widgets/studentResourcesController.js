@@ -23,6 +23,7 @@ angular.module('calcentral.controllers').controller('StudentResourcesController'
     $scope.isLawStudent = userService.profile.roles.law;
     $scope.isGraduateStudent = userService.profile.roles.graduate;
     $scope.isUndergraduate = userService.profile.roles.undergrad;
+    $scope.isSummerVisitor = $scope.academicStatus.roles.summerVisitor;
   };
 
   var loadInformation = function() {

@@ -175,7 +175,6 @@ angular.module('calcentral.controllers').controller('AcademicsController', funct
     $scope.hasTeachingClasses = academicsService.hasTeachingClasses(data.teachingSemesters);
     $scope.canViewFinalExamSchedule = $scope.api.user.profile.roles.student && !$scope.api.user.profile.delegateActingAsUid && !$scope.collegeAndLevel.roles.summerVisitor;
 
-
     // Get selected semester from URL params and extract data from semesters array
     var semesterSlug = ($routeParams.semesterSlug || $routeParams.teachingSemesterSlug);
     if (semesterSlug) {
