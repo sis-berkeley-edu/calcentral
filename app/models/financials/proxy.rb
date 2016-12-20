@@ -14,9 +14,29 @@ module Financials
       logger.info "Fake = #{@fake}; Making request to #{request_url} on behalf of user #{@uid}; cache expiration #{self.class.expires_in}"
       get_response(
         request_url,
-        digest_auth: {username: @settings.username, password: @settings.password},
-        on_error: {rescue_status: 404}
+        request_options
       )
+    end
+
+    def request_options
+      opts = {
+        on_error: {
+          rescue_status: 404
+        }
+      }
+      # Temporary toggle while upstream environments transition from digest_auth to app_id/app_key.
+      if @settings.app_id.present? && @settings.app_key.present?
+        opts[:headers] = {
+          'app_id' => @settings.app_id,
+          'app_key' => @settings.app_key
+        }
+      elsif @settings.username.present? && @settings.password.present?
+        opts[:digest_auth] = {
+          username: @settings.username,
+          password: @settings.password
+        }
+      end
+      opts
     end
 
     private
