@@ -9,7 +9,8 @@
         "applicant": true,
         "staff": true,
         "faculty": true,
-        "exStudent": true
+        "exStudent": true,
+        "summerVisitor": true
       },
       "categories": [
         {
@@ -27,7 +28,8 @@
         "applicant": true,
         "staff": true,
         "faculty": true,
-        "exStudent": true
+        "exStudent": true,
+        "summerVisitor": true
       },
       "categories": [
         {
@@ -45,7 +47,8 @@
         "applicant": true,
         "staff": true,
         "faculty": true,
-        "exStudent": true
+        "exStudent": true,
+        "summerVisitor": true
       },
       "categories": [
         {
@@ -63,7 +66,8 @@
         "applicant": true,
         "staff": true,
         "faculty": true,
-        "exStudent": true
+        "exStudent": true,
+        "summerVisitor": true
       },
       "categories": [
         {
@@ -81,7 +85,8 @@
         "applicant": true,
         "staff": true,
         "faculty": true,
-        "exStudent": true
+        "exStudent": true,
+        "summerVisitor": true
       },
       "categories": [
         {
@@ -99,7 +104,8 @@
         "applicant": false,
         "staff": false,
         "faculty": true,
-        "exStudent": false
+        "exStudent": false,
+        "summerVisitor": false
       },
       "categories": [
         {
@@ -117,7 +123,8 @@
         "applicant": true,
         "staff": true,
         "faculty": true,
-        "exStudent": true
+        "exStudent": true,
+        "summerVisitor": true
       },
       "categories": [
         {
@@ -135,7 +142,8 @@
         "applicant": true,
         "staff": true,
         "faculty": true,
-        "exStudent": true
+        "exStudent": true,
+        "summerVisitor": true
       },
       "categories": [
         {
@@ -153,7 +161,8 @@
         "applicant": true,
         "staff": false,
         "faculty": false,
-        "exStudent": true
+        "exStudent": true,
+        "summerVisitor": true
       },
       "categories": [
         {
@@ -171,7 +180,8 @@
         "applicant": true,
         "staff": false,
         "faculty": false,
-        "exStudent": true
+        "exStudent": true,
+        "summerVisitor": true
       },
       "categories": [
         {
@@ -189,7 +199,8 @@
         "applicant": false,
         "staff": true,
         "faculty": true,
-        "exStudent": false
+        "exStudent": false,
+        "summerVisitor": false
       },
       "categories": [
         {
@@ -207,7 +218,8 @@
         "applicant": false,
         "staff": true,
         "faculty": true,
-        "exStudent": false
+        "exStudent": false,
+        "summerVisitor": false
       },
       "categories": [
         {
@@ -225,7 +237,8 @@
         "applicant": true,
         "staff": true,
         "faculty": true,
-        "exStudent": true
+        "exStudent": true,
+        "summerVisitor": true
       },
       "categories": [
         {
@@ -243,7 +256,8 @@
         "applicant": true,
         "staff": true,
         "faculty": true,
-        "exStudent": true
+        "exStudent": true,
+        "summerVisitor": true
       },
       "categories": [
         {
@@ -261,7 +275,8 @@
         "applicant": true,
         "staff": true,
         "faculty": true,
-        "exStudent": true
+        "exStudent": true,
+        "summerVisitor": true
       },
       "categories": [
         {
@@ -287,7 +302,8 @@
         "applicant": false,
         "staff": true,
         "faculty": true,
-        "exStudent": false
+        "exStudent": false,
+        "summerVisitor": false
       },
       "categories": [
         {
@@ -305,7 +321,8 @@
         "applicant": true,
         "staff": true,
         "faculty": true,
-        "exStudent": true
+        "exStudent": true,
+        "summerVisitor": true
       },
       "categories": [
         {
@@ -323,7 +340,8 @@
         "applicant": false,
         "staff": true,
         "faculty": true,
-        "exStudent": false
+        "exStudent": false,
+        "summerVisitor": false
       },
       "categories": [
         {
@@ -341,7 +359,8 @@
         "applicant": true,
         "staff": true,
         "faculty": true,
-        "exStudent": true
+        "exStudent": true,
+        "summerVisitor": true
       },
       "categories": [
         {
@@ -359,7 +378,8 @@
         "applicant": true,
         "staff": true,
         "faculty": true,
-        "exStudent": true
+        "exStudent": true,
+        "summerVisitor": true
       },
       "categories": [
         {
@@ -377,7 +397,8 @@
         "applicant": true,
         "staff": true,
         "faculty": true,
-        "exStudent": true
+        "exStudent": true,
+        "summerVisitor": true
       },
       "categories": [
         {
@@ -395,7 +416,8 @@
         "applicant": false,
         "staff": true,
         "faculty": true,
-        "exStudent": false
+        "exStudent": false,
+        "summerVisitor": false
       },
       "categories": [
         {
@@ -413,7 +435,8 @@
         "applicant": true,
         "staff": false,
         "faculty": false,
-        "exStudent": true
+        "exStudent": true,
+        "summerVisitor": false
       },
       "categories": [
         {
@@ -431,7 +454,8 @@
         "applicant": false,
         "staff": true,
         "faculty": true,
-        "exStudent": false
+        "exStudent": false,
+        "summerVisitor": false
       },
       "categories": [
         {
@@ -449,7 +473,8 @@
         "applicant": true,
         "staff": true,
         "faculty": true,
-        "exStudent": true
+        "exStudent": true,
+        "summerVisitor": true
       },
       "categories": [
         {
@@ -467,7 +492,8 @@
         "applicant": true,
         "staff": true,
         "faculty": true,
-        "exStudent": true
+        "exStudent": true,
+        "summerVisitor": true
       },
       "categories": [
         {
@@ -485,7 +511,8 @@
         "applicant": true,
         "staff": true,
         "faculty": true,
-        "exStudent": true
+        "exStudent": true,
+        "summerVisitor": true
       },
       "categories": [
         {
@@ -503,7 +530,8 @@
         "applicant": true,
         "staff": false,
         "faculty": false,
-        "exStudent": true
+        "exStudent": true,
+        "summerVisitor": true
       },
       "categories": [
         {
@@ -521,7 +549,8 @@
         "applicant": false,
         "staff": true,
         "faculty": false,
-        "exStudent": false
+        "exStudent": false,
+        "summerVisitor": false
       },
       "categories": [
         {
@@ -539,7 +568,8 @@
         "applicant": false,
         "staff": true,
         "faculty": true,
-        "exStudent": false
+        "exStudent": false,
+        "summerVisitor": false
       },
       "categories": [
         {
@@ -557,7 +587,8 @@
         "applicant": true,
         "staff": false,
         "faculty": false,
-        "exStudent": true
+        "exStudent": true,
+        "summerVisitor": true
       },
       "categories": [
         {
@@ -575,7 +606,8 @@
         "applicant": false,
         "staff": true,
         "faculty": true,
-        "exStudent": false
+        "exStudent": false,
+        "summerVisitor": false
       },
       "categories": [
         {
@@ -593,7 +625,8 @@
         "applicant": false,
         "staff": true,
         "faculty": true,
-        "exStudent": false
+        "exStudent": false,
+        "summerVisitor": false
       },
       "categories": [
         {
@@ -611,7 +644,8 @@
         "applicant": true,
         "staff": true,
         "faculty": true,
-        "exStudent": true
+        "exStudent": true,
+        "summerVisitor": true
       },
       "categories": [
         {
@@ -629,7 +663,8 @@
         "applicant": true,
         "staff": false,
         "faculty": true,
-        "exStudent": true
+        "exStudent": true,
+        "summerVisitor": true
       },
       "categories": [
         {
@@ -647,7 +682,8 @@
         "applicant": true,
         "staff": true,
         "faculty": true,
-        "exStudent": true
+        "exStudent": true,
+        "summerVisitor": true
       },
       "categories": [
         {
@@ -665,7 +701,8 @@
         "applicant": true,
         "staff": true,
         "faculty": true,
-        "exStudent": true
+        "exStudent": true,
+        "summerVisitor": true
       },
       "categories": [
         {
@@ -687,7 +724,8 @@
         "applicant": false,
         "staff": true,
         "faculty": true,
-        "exStudent": false
+        "exStudent": false,
+        "summerVisitor": false
       },
       "categories": [
         {
@@ -705,7 +743,8 @@
         "applicant": true,
         "staff": true,
         "faculty": true,
-        "exStudent": true
+        "exStudent": true,
+        "summerVisitor": true
       },
       "categories": [
         {
@@ -723,7 +762,8 @@
         "applicant": true,
         "staff": true,
         "faculty": true,
-        "exStudent": true
+        "exStudent": true,
+        "summerVisitor": true
       },
       "categories": [
         {
@@ -741,7 +781,8 @@
         "applicant": true,
         "staff": true,
         "faculty": true,
-        "exStudent": true
+        "exStudent": true,
+        "summerVisitor": true
       },
       "categories": [
         {
@@ -759,7 +800,8 @@
         "applicant": true,
         "staff": false,
         "faculty": false,
-        "exStudent": true
+        "exStudent": true,
+        "summerVisitor": true
       },
       "categories": [
         {
@@ -781,7 +823,8 @@
         "applicant": true,
         "staff": false,
         "faculty": false,
-        "exStudent": true
+        "exStudent": true,
+        "summerVisitor": true
       },
       "categories": [
         {
@@ -799,7 +842,8 @@
         "applicant": true,
         "staff": false,
         "faculty": false,
-        "exStudent": true
+        "exStudent": true,
+        "summerVisitor": true
       },
       "categories": [
         {
@@ -817,7 +861,8 @@
         "applicant": true,
         "staff": true,
         "faculty": true,
-        "exStudent": true
+        "exStudent": true,
+        "summerVisitor": true
       },
       "categories": [
         {
@@ -835,7 +880,8 @@
         "applicant": true,
         "staff": true,
         "faculty": true,
-        "exStudent": true
+        "exStudent": true,
+        "summerVisitor": true
       },
       "categories": [
         {
@@ -853,7 +899,8 @@
         "applicant": false,
         "staff": true,
         "faculty": false,
-        "exStudent": false
+        "exStudent": false,
+        "summerVisitor": false
       },
       "categories": [
         {
@@ -871,7 +918,8 @@
         "applicant": true,
         "staff": true,
         "faculty": true,
-        "exStudent": true
+        "exStudent": true,
+        "summerVisitor": true
       },
       "categories": [
         {
@@ -889,7 +937,8 @@
         "applicant": true,
         "staff": true,
         "faculty": true,
-        "exStudent": true
+        "exStudent": true,
+        "summerVisitor": true
       },
       "categories": [
         {
@@ -907,7 +956,8 @@
         "applicant": false,
         "staff": true,
         "faculty": false,
-        "exStudent": false
+        "exStudent": false,
+        "summerVisitor": false
       },
       "categories": [
         {
@@ -925,7 +975,8 @@
         "applicant": true,
         "staff": true,
         "faculty": true,
-        "exStudent": true
+        "exStudent": true,
+        "summerVisitor": true
       },
       "categories": [
         {
@@ -943,7 +994,8 @@
         "applicant": false,
         "staff": true,
         "faculty": true,
-        "exStudent": false
+        "exStudent": false,
+        "summerVisitor": false
       },
       "categories": [
         {
@@ -961,7 +1013,8 @@
         "applicant": true,
         "staff": false,
         "faculty": false,
-        "exStudent": true
+        "exStudent": true,
+        "summerVisitor": true
       },
       "categories": [
         {
@@ -979,7 +1032,8 @@
         "applicant": true,
         "staff": false,
         "faculty": false,
-        "exStudent": true
+        "exStudent": true,
+        "summerVisitor": true
       },
       "categories": [
         {
@@ -1001,7 +1055,8 @@
         "applicant": true,
         "staff": true,
         "faculty": true,
-        "exStudent": true
+        "exStudent": true,
+        "summerVisitor": true
       },
       "categories": [
         {
@@ -1019,7 +1074,8 @@
         "applicant": false,
         "staff": true,
         "faculty": true,
-        "exStudent": false
+        "exStudent": false,
+        "summerVisitor": false
       },
       "categories": [
         {
@@ -1037,7 +1093,8 @@
         "applicant": true,
         "staff": true,
         "faculty": true,
-        "exStudent": true
+        "exStudent": true,
+        "summerVisitor": true
       },
       "categories": [
         {
@@ -1055,7 +1112,8 @@
         "applicant": true,
         "staff": false,
         "faculty": true,
-        "exStudent": true
+        "exStudent": true,
+        "summerVisitor": true
       },
       "categories": [
         {
@@ -1073,7 +1131,8 @@
         "applicant": false,
         "staff": true,
         "faculty": false,
-        "exStudent": false
+        "exStudent": false,
+        "summerVisitor": false
       },
       "categories": [
         {
@@ -1091,7 +1150,8 @@
         "applicant": true,
         "staff": true,
         "faculty": true,
-        "exStudent": true
+        "exStudent": true,
+        "summerVisitor": true
       },
       "categories": [
         {
@@ -1109,7 +1169,8 @@
         "applicant": true,
         "staff": true,
         "faculty": true,
-        "exStudent": true
+        "exStudent": true,
+        "summerVisitor": true
       },
       "categories": [
         {
@@ -1127,7 +1188,8 @@
         "applicant": true,
         "staff": true,
         "faculty": true,
-        "exStudent": true
+        "exStudent": true,
+        "summerVisitor": true
       },
       "categories": [
         {
@@ -1145,7 +1207,8 @@
         "applicant": false,
         "staff": true,
         "faculty": true,
-        "exStudent": false
+        "exStudent": false,
+        "summerVisitor": false
       },
       "categories": [
         {
@@ -1163,7 +1226,8 @@
         "applicant": true,
         "staff": true,
         "faculty": true,
-        "exStudent": true
+        "exStudent": true,
+        "summerVisitor": true
       },
       "categories": [
         {
@@ -1181,7 +1245,8 @@
         "applicant": true,
         "staff": true,
         "faculty": true,
-        "exStudent": true
+        "exStudent": true,
+        "summerVisitor": true
       },
       "categories": [
         {
@@ -1199,7 +1264,8 @@
         "applicant": true,
         "staff": false,
         "faculty": false,
-        "exStudent": true
+        "exStudent": true,
+        "summerVisitor": true
       },
       "categories": [
         {
@@ -1217,7 +1283,8 @@
         "applicant": true,
         "staff": false,
         "faculty": false,
-        "exStudent": true
+        "exStudent": true,
+        "summerVisitor": true
       },
       "categories": [
         {
@@ -1235,7 +1302,8 @@
         "applicant": true,
         "staff": false,
         "faculty": false,
-        "exStudent": true
+        "exStudent": true,
+        "summerVisitor": true
       },
       "categories": [
         {
@@ -1253,7 +1321,8 @@
         "applicant": true,
         "staff": false,
         "faculty": false,
-        "exStudent": true
+        "exStudent": true,
+        "summerVisitor": true
       },
       "categories": [
         {
@@ -1271,7 +1340,8 @@
         "applicant": false,
         "staff": true,
         "faculty": true,
-        "exStudent": false
+        "exStudent": false,
+        "summerVisitor": false
       },
       "categories": [
         {
@@ -1289,7 +1359,8 @@
         "applicant": true,
         "staff": true,
         "faculty": true,
-        "exStudent": true
+        "exStudent": true,
+        "summerVisitor": true
       },
       "categories": [
         {
@@ -1315,7 +1386,8 @@
         "applicant": true,
         "staff": false,
         "faculty": false,
-        "exStudent": true
+        "exStudent": true,
+        "summerVisitor": true
       },
       "categories": [
         {
@@ -1333,7 +1405,8 @@
         "applicant": true,
         "staff": false,
         "faculty": false,
-        "exStudent": true
+        "exStudent": true,
+        "summerVisitor": true
       },
       "categories": [
         {
@@ -1351,7 +1424,8 @@
         "applicant": false,
         "staff": false,
         "faculty": true,
-        "exStudent": false
+        "exStudent": false,
+        "summerVisitor": false
       },
       "categories": [
         {
@@ -1369,7 +1443,8 @@
         "applicant": true,
         "staff": true,
         "faculty": true,
-        "exStudent": true
+        "exStudent": true,
+        "summerVisitor": true
       },
       "categories": [
         {
@@ -1387,7 +1462,8 @@
         "applicant": true,
         "staff": true,
         "faculty": true,
-        "exStudent": true
+        "exStudent": true,
+        "summerVisitor": true
       },
       "categories": [
         {
@@ -1405,7 +1481,8 @@
         "applicant": true,
         "staff": false,
         "faculty": false,
-        "exStudent": true
+        "exStudent": true,
+        "summerVisitor": false
       },
       "categories": [
         {
@@ -1423,7 +1500,8 @@
         "applicant": true,
         "staff": true,
         "faculty": true,
-        "exStudent": true
+        "exStudent": true,
+        "summerVisitor": true
       },
       "categories": [
         {
@@ -1445,7 +1523,8 @@
         "applicant": false,
         "staff": false,
         "faculty": true,
-        "exStudent": false
+        "exStudent": false,
+        "summerVisitor": false
       },
       "categories": [
         {
@@ -1463,7 +1542,8 @@
         "applicant": true,
         "staff": true,
         "faculty": true,
-        "exStudent": true
+        "exStudent": true,
+        "summerVisitor": true
       },
       "categories": [
         {
@@ -1481,7 +1561,8 @@
         "applicant": true,
         "staff": false,
         "faculty": false,
-        "exStudent": true
+        "exStudent": true,
+        "summerVisitor": true
       },
       "categories": [
         {
@@ -1499,7 +1580,8 @@
         "applicant": true,
         "staff": true,
         "faculty": true,
-        "exStudent": true
+        "exStudent": true,
+        "summerVisitor": true
       },
       "categories": [
         {
@@ -1521,7 +1603,8 @@
         "applicant": true,
         "staff": false,
         "faculty": false,
-        "exStudent": true
+        "exStudent": true,
+        "summerVisitor": true
       },
       "categories": [
         {
@@ -1539,7 +1622,8 @@
         "applicant": true,
         "staff": false,
         "faculty": false,
-        "exStudent": true
+        "exStudent": true,
+        "summerVisitor": false
       },
       "categories": [
         {
@@ -1557,7 +1641,8 @@
         "applicant": true,
         "staff": true,
         "faculty": true,
-        "exStudent": true
+        "exStudent": true,
+        "summerVisitor": true
       },
       "categories": [
         {
@@ -1575,7 +1660,8 @@
         "applicant": true,
         "staff": false,
         "faculty": false,
-        "exStudent": true
+        "exStudent": true,
+        "summerVisitor": true
       },
       "categories": [
         {
@@ -1593,7 +1679,8 @@
         "applicant": true,
         "staff": true,
         "faculty": true,
-        "exStudent": true
+        "exStudent": true,
+        "summerVisitor": true
       },
       "categories": [
         {
@@ -1615,7 +1702,8 @@
         "applicant": true,
         "staff": true,
         "faculty": true,
-        "exStudent": true
+        "exStudent": true,
+        "summerVisitor": true
       },
       "categories": [
         {
@@ -1633,7 +1721,8 @@
         "applicant": true,
         "staff": true,
         "faculty": true,
-        "exStudent": true
+        "exStudent": true,
+        "summerVisitor": true
       },
       "categories": [
         {
@@ -1651,7 +1740,8 @@
         "applicant": true,
         "staff": false,
         "faculty": false,
-        "exStudent": true
+        "exStudent": true,
+        "summerVisitor": true
       },
       "categories": [
         {
@@ -1669,7 +1759,8 @@
         "applicant": true,
         "staff": true,
         "faculty": true,
-        "exStudent": true
+        "exStudent": true,
+        "summerVisitor": true
       },
       "categories": [
         {
@@ -1687,7 +1778,8 @@
         "applicant": false,
         "staff": true,
         "faculty": true,
-        "exStudent": false
+        "exStudent": false,
+        "summerVisitor": false
       },
       "categories": [
         {
@@ -1705,7 +1797,8 @@
         "applicant": true,
         "staff": true,
         "faculty": true,
-        "exStudent": true
+        "exStudent": true,
+        "summerVisitor": true
       },
       "categories": [
         {
@@ -1723,7 +1816,8 @@
         "applicant": true,
         "staff": true,
         "faculty": true,
-        "exStudent": true
+        "exStudent": true,
+        "summerVisitor": true
       },
       "categories": [
         {
@@ -1741,7 +1835,8 @@
         "applicant": true,
         "staff": true,
         "faculty": true,
-        "exStudent": true
+        "exStudent": true,
+        "summerVisitor": true
       },
       "categories": [
         {
@@ -1759,7 +1854,8 @@
         "applicant": false,
         "staff": false,
         "faculty": true,
-        "exStudent": false
+        "exStudent": false,
+        "summerVisitor": false
       },
       "categories": [
         {
@@ -1777,7 +1873,8 @@
         "applicant": true,
         "staff": false,
         "faculty": false,
-        "exStudent": true
+        "exStudent": true,
+        "summerVisitor": false
       },
       "categories": [
         {
@@ -1795,7 +1892,8 @@
         "applicant": true,
         "staff": false,
         "faculty": false,
-        "exStudent": true
+        "exStudent": true,
+        "summerVisitor": false
       },
       "categories": [
         {
@@ -1813,7 +1911,8 @@
         "applicant": true,
         "staff": false,
         "faculty": false,
-        "exStudent": true
+        "exStudent": true,
+        "summerVisitor": false
       },
       "categories": [
         {
@@ -1831,7 +1930,8 @@
         "applicant": true,
         "staff": false,
         "faculty": false,
-        "exStudent": true
+        "exStudent": true,
+        "summerVisitor": false
       },
       "categories": [
         {
@@ -1849,7 +1949,8 @@
         "applicant": true,
         "staff": false,
         "faculty": false,
-        "exStudent": true
+        "exStudent": true,
+        "summerVisitor": true
       },
       "categories": [
         {
@@ -1867,7 +1968,8 @@
         "applicant": true,
         "staff": true,
         "faculty": true,
-        "exStudent": true
+        "exStudent": true,
+        "summerVisitor": true
       },
       "categories": [
         {
@@ -1889,7 +1991,8 @@
         "applicant": true,
         "staff": true,
         "faculty": true,
-        "exStudent": true
+        "exStudent": true,
+        "summerVisitor": true
       },
       "categories": [
         {
@@ -1907,7 +2010,8 @@
         "applicant": true,
         "staff": false,
         "faculty": false,
-        "exStudent": true
+        "exStudent": true,
+        "summerVisitor": true
       },
       "categories": [
         {
@@ -1925,7 +2029,8 @@
         "applicant": true,
         "staff": true,
         "faculty": true,
-        "exStudent": true
+        "exStudent": true,
+        "summerVisitor": true
       },
       "categories": [
         {
@@ -1943,7 +2048,8 @@
         "applicant": true,
         "staff": false,
         "faculty": false,
-        "exStudent": true
+        "exStudent": true,
+        "summerVisitor": false
       },
       "categories": [
         {
@@ -1961,7 +2067,8 @@
         "applicant": true,
         "staff": false,
         "faculty": false,
-        "exStudent": true
+        "exStudent": true,
+        "summerVisitor": true
       },
       "categories": [
         {
@@ -1979,7 +2086,8 @@
         "applicant": true,
         "staff": false,
         "faculty": false,
-        "exStudent": true
+        "exStudent": true,
+        "summerVisitor": false
       },
       "categories": [
         {
@@ -1997,7 +2105,8 @@
         "applicant": true,
         "staff": false,
         "faculty": false,
-        "exStudent": true
+        "exStudent": true,
+        "summerVisitor": true
       },
       "categories": [
         {
@@ -2015,7 +2124,8 @@
         "applicant": false,
         "staff": true,
         "faculty": true,
-        "exStudent": false
+        "exStudent": false,
+        "summerVisitor": false
       },
       "categories": [
         {
@@ -2033,7 +2143,8 @@
         "applicant": false,
         "staff": true,
         "faculty": true,
-        "exStudent": false
+        "exStudent": false,
+        "summerVisitor": false
       },
       "categories": [
         {
@@ -2051,7 +2162,8 @@
         "applicant": false,
         "staff": true,
         "faculty": false,
-        "exStudent": false
+        "exStudent": false,
+        "summerVisitor": false
       },
       "categories": [
         {
@@ -2069,7 +2181,8 @@
         "applicant": true,
         "staff": false,
         "faculty": false,
-        "exStudent": true
+        "exStudent": true,
+        "summerVisitor": true
       },
       "categories": [
         {
@@ -2087,7 +2200,8 @@
         "applicant": true,
         "staff": true,
         "faculty": true,
-        "exStudent": true
+        "exStudent": true,
+        "summerVisitor": true
       },
       "categories": [
         {
@@ -2105,7 +2219,8 @@
         "applicant": true,
         "staff": true,
         "faculty": true,
-        "exStudent": true
+        "exStudent": true,
+        "summerVisitor": true
       },
       "categories": [
         {
@@ -2123,7 +2238,8 @@
         "applicant": true,
         "staff": true,
         "faculty": true,
-        "exStudent": true
+        "exStudent": true,
+        "summerVisitor": true
       },
       "categories": [
         {
@@ -2141,7 +2257,8 @@
         "applicant": true,
         "staff": true,
         "faculty": true,
-        "exStudent": true
+        "exStudent": true,
+        "summerVisitor": true
       },
       "categories": [
         {
@@ -2163,7 +2280,8 @@
         "applicant": true,
         "staff": true,
         "faculty": true,
-        "exStudent": true
+        "exStudent": true,
+        "summerVisitor": true
       },
       "categories": [
         {
@@ -2181,7 +2299,8 @@
         "applicant": true,
         "staff": true,
         "faculty": false,
-        "exStudent": true
+        "exStudent": true,
+        "summerVisitor": true
       },
       "categories": [
         {
@@ -2199,7 +2318,8 @@
         "applicant": true,
         "staff": false,
         "faculty": false,
-        "exStudent": true
+        "exStudent": true,
+        "summerVisitor": true
       },
       "categories": [
         {
@@ -2217,7 +2337,8 @@
         "applicant": false,
         "staff": true,
         "faculty": true,
-        "exStudent": false
+        "exStudent": false,
+        "summerVisitor": false
       },
       "categories": [
         {
@@ -2235,7 +2356,8 @@
         "applicant": true,
         "staff": true,
         "faculty": true,
-        "exStudent": true
+        "exStudent": true,
+        "summerVisitor": true
       },
       "categories": [
         {
@@ -2257,7 +2379,8 @@
         "applicant": true,
         "staff": false,
         "faculty": false,
-        "exStudent": true
+        "exStudent": true,
+        "summerVisitor": false
       },
       "categories": [
         {
@@ -2275,7 +2398,8 @@
         "applicant": false,
         "staff": true,
         "faculty": true,
-        "exStudent": false
+        "exStudent": false,
+        "summerVisitor": false
       },
       "categories": [
         {
@@ -2293,7 +2417,8 @@
         "applicant": true,
         "staff": false,
         "faculty": false,
-        "exStudent": true
+        "exStudent": true,
+        "summerVisitor": false
       },
       "categories": [
         {
@@ -2311,7 +2436,8 @@
         "applicant": true,
         "staff": false,
         "faculty": false,
-        "exStudent": true
+        "exStudent": true,
+        "summerVisitor": true
       },
       "categories": [
         {
@@ -2329,7 +2455,8 @@
         "applicant": true,
         "staff": false,
         "faculty": false,
-        "exStudent": true
+        "exStudent": true,
+        "summerVisitor": false
       },
       "categories": [
         {
@@ -2347,7 +2474,8 @@
         "applicant": false,
         "staff": false,
         "faculty": true,
-        "exStudent": false
+        "exStudent": false,
+        "summerVisitor": false
       },
       "categories": [
         {
@@ -2365,7 +2493,8 @@
         "applicant": true,
         "staff": true,
         "faculty": true,
-        "exStudent": true
+        "exStudent": true,
+        "summerVisitor": true
       },
       "categories": [
         {
@@ -2383,7 +2512,8 @@
         "applicant": true,
         "staff": false,
         "faculty": false,
-        "exStudent": true
+        "exStudent": true,
+        "summerVisitor": true
       },
       "categories": [
         {
@@ -2401,7 +2531,8 @@
         "applicant": true,
         "staff": true,
         "faculty": true,
-        "exStudent": true
+        "exStudent": true,
+        "summerVisitor": true
       },
       "categories": [
         {
@@ -2419,7 +2550,8 @@
         "applicant": true,
         "staff": true,
         "faculty": true,
-        "exStudent": true
+        "exStudent": true,
+        "summerVisitor": true
       },
       "categories": [
         {
@@ -2437,7 +2569,8 @@
         "applicant": true,
         "staff": false,
         "faculty": false,
-        "exStudent": true
+        "exStudent": true,
+        "summerVisitor": true
       },
       "categories": [
         {
@@ -2455,7 +2588,8 @@
         "applicant": true,
         "staff": true,
         "faculty": true,
-        "exStudent": true
+        "exStudent": true,
+        "summerVisitor": true
       },
       "categories": [
         {
@@ -2473,7 +2607,8 @@
         "applicant": false,
         "staff": true,
         "faculty": false,
-        "exStudent": false
+        "exStudent": false,
+        "summerVisitor": false
       },
       "categories": [
         {
@@ -2491,7 +2626,8 @@
         "applicant": true,
         "staff": true,
         "faculty": true,
-        "exStudent": true
+        "exStudent": true,
+        "summerVisitor": true
       },
       "categories": [
         {
@@ -2509,7 +2645,8 @@
         "applicant": true,
         "staff": false,
         "faculty": false,
-        "exStudent": true
+        "exStudent": true,
+        "summerVisitor": true
       },
       "categories": [
         {
@@ -2527,7 +2664,8 @@
         "applicant": false,
         "staff": true,
         "faculty": true,
-        "exStudent": false
+        "exStudent": false,
+        "summerVisitor": false
       },
       "categories": [
         {
@@ -2545,7 +2683,8 @@
         "applicant": false,
         "staff": true,
         "faculty": true,
-        "exStudent": false
+        "exStudent": false,
+        "summerVisitor": false
       },
       "categories": [
         {
@@ -2563,7 +2702,8 @@
         "applicant": false,
         "staff": true,
         "faculty": true,
-        "exStudent": false
+        "exStudent": false,
+        "summerVisitor": false
       },
       "categories": [
         {
@@ -2581,7 +2721,8 @@
         "applicant": false,
         "staff": true,
         "faculty": true,
-        "exStudent": false
+        "exStudent": false,
+        "summerVisitor": false
       },
       "categories": [
         {
@@ -2599,7 +2740,8 @@
         "applicant": true,
         "staff": false,
         "faculty": false,
-        "exStudent": true
+        "exStudent": true,
+        "summerVisitor": true
       },
       "categories": [
         {
@@ -2617,7 +2759,8 @@
         "applicant": true,
         "staff": true,
         "faculty": true,
-        "exStudent": true
+        "exStudent": true,
+        "summerVisitor": true
       },
       "categories": [
         {
@@ -2635,7 +2778,8 @@
         "applicant": true,
         "staff": true,
         "faculty": true,
-        "exStudent": true
+        "exStudent": true,
+        "summerVisitor": true
       },
       "categories": [
         {
@@ -2653,7 +2797,8 @@
         "applicant": true,
         "staff": true,
         "faculty": true,
-        "exStudent": true
+        "exStudent": true,
+        "summerVisitor": true
       },
       "categories": [
         {
@@ -2671,7 +2816,8 @@
         "applicant": false,
         "staff": true,
         "faculty": true,
-        "exStudent": false
+        "exStudent": false,
+        "summerVisitor": false
       },
       "categories": [
         {
@@ -2689,7 +2835,8 @@
         "applicant": true,
         "staff": true,
         "faculty": true,
-        "exStudent": true
+        "exStudent": true,
+        "summerVisitor": true
       },
       "categories": [
         {
@@ -2707,7 +2854,8 @@
         "applicant": true,
         "staff": true,
         "faculty": true,
-        "exStudent": true
+        "exStudent": true,
+        "summerVisitor": true
       },
       "categories": [
         {
@@ -2725,7 +2873,8 @@
         "applicant": true,
         "staff": false,
         "faculty": true,
-        "exStudent": true
+        "exStudent": true,
+        "summerVisitor": true
       },
       "categories": [
         {
@@ -2743,7 +2892,8 @@
         "applicant": true,
         "staff": false,
         "faculty": false,
-        "exStudent": true
+        "exStudent": true,
+        "summerVisitor": true
       },
       "categories": [
         {
@@ -2761,7 +2911,8 @@
         "applicant": true,
         "staff": false,
         "faculty": false,
-        "exStudent": true
+        "exStudent": true,
+        "summerVisitor": true
       },
       "categories": [
         {
@@ -2783,7 +2934,8 @@
         "applicant": true,
         "staff": false,
         "faculty": false,
-        "exStudent": true
+        "exStudent": true,
+        "summerVisitor": true
       },
       "categories": [
         {
@@ -2801,7 +2953,8 @@
         "applicant": false,
         "staff": true,
         "faculty": true,
-        "exStudent": false
+        "exStudent": false,
+        "summerVisitor": false
       },
       "categories": [
         {
@@ -2819,7 +2972,8 @@
         "applicant": false,
         "staff": true,
         "faculty": true,
-        "exStudent": false
+        "exStudent": false,
+        "summerVisitor": false
       },
       "categories": [
         {
@@ -2837,7 +2991,8 @@
         "applicant": true,
         "staff": true,
         "faculty": true,
-        "exStudent": true
+        "exStudent": true,
+        "summerVisitor": true
       },
       "categories": [
         {
@@ -2855,7 +3010,8 @@
         "applicant": false,
         "staff": true,
         "faculty": true,
-        "exStudent": false
+        "exStudent": false,
+        "summerVisitor": false
       },
       "categories": [
         {
@@ -2873,7 +3029,8 @@
         "applicant": true,
         "staff": true,
         "faculty": true,
-        "exStudent": true
+        "exStudent": true,
+        "summerVisitor": true
       },
       "categories": [
         {
@@ -2891,12 +3048,13 @@
         "applicant": true,
         "staff": false,
         "faculty": false,
-        "exStudent": true
+        "exStudent": true,
+        "summerVisitor": true
       },
       "categories": [
         {
           "topcategory": "Finances",
-          "subcategory": "Summer Programs"
+          "subcategory": "Summer Sessions"
         }
       ]
     },
@@ -2909,7 +3067,8 @@
         "applicant": true,
         "staff": true,
         "faculty": true,
-        "exStudent": true
+        "exStudent": true,
+        "summerVisitor": true
       },
       "categories": [
         {
@@ -2931,7 +3090,8 @@
         "applicant": true,
         "staff": true,
         "faculty": true,
-        "exStudent": true
+        "exStudent": true,
+        "summerVisitor": true
       },
       "categories": [
         {
@@ -2953,7 +3113,8 @@
         "applicant": false,
         "staff": true,
         "faculty": true,
-        "exStudent": false
+        "exStudent": false,
+        "summerVisitor": false
       },
       "categories": [
         {
@@ -2971,7 +3132,8 @@
         "applicant": false,
         "staff": true,
         "faculty": true,
-        "exStudent": false
+        "exStudent": false,
+        "summerVisitor": false
       },
       "categories": [
         {
@@ -2989,7 +3151,8 @@
         "applicant": true,
         "staff": false,
         "faculty": false,
-        "exStudent": true
+        "exStudent": true,
+        "summerVisitor": false
       },
       "categories": [
         {
@@ -3007,7 +3170,8 @@
         "applicant": true,
         "staff": true,
         "faculty": true,
-        "exStudent": true
+        "exStudent": true,
+        "summerVisitor": true
       },
       "categories": [
         {
@@ -3025,7 +3189,8 @@
         "applicant": true,
         "staff": false,
         "faculty": false,
-        "exStudent": true
+        "exStudent": true,
+        "summerVisitor": true
       },
       "categories": [
         {
@@ -3043,7 +3208,8 @@
         "applicant": true,
         "staff": false,
         "faculty": false,
-        "exStudent": true
+        "exStudent": true,
+        "summerVisitor": true
       },
       "categories": [
         {
@@ -3061,7 +3227,8 @@
         "applicant": true,
         "staff": false,
         "faculty": false,
-        "exStudent": true
+        "exStudent": true,
+        "summerVisitor": true
       },
       "categories": [
         {
@@ -3079,7 +3246,8 @@
         "applicant": true,
         "staff": true,
         "faculty": true,
-        "exStudent": true
+        "exStudent": true,
+        "summerVisitor": true
       },
       "categories": [
         {
@@ -3097,7 +3265,8 @@
         "applicant": false,
         "staff": true,
         "faculty": true,
-        "exStudent": false
+        "exStudent": false,
+        "summerVisitor": true
       },
       "categories": [
         {
@@ -3107,7 +3276,7 @@
       ]
     },
     {
-      "name": "Summer Session",
+      "name": "Summer Sessions",
       "description": "Various programs and courses offered during summer for Berkeley students",
       "url": "http://summer.berkeley.edu/",
       "roles": {
@@ -3115,12 +3284,51 @@
         "applicant": true,
         "staff": false,
         "faculty": false,
-        "exStudent": true
+        "exStudent": true,
+        "summerVisitor": true
       },
       "categories": [
         {
           "topcategory": "Finances",
-          "subcategory": "Summer Programs"
+          "subcategory": "Summer Sessions"
+        }
+      ]
+    },
+    {
+      "name": "Summer Fees",
+      "description": "Listing of fees for the summer session",
+      "url": "http://summer.berkeley.edu/application/fees",
+      "roles": {
+        "student": true,
+        "applicant": true,
+        "staff": false,
+        "faculty": false,
+        "exStudent": true,
+        "summerVisitor": true
+      },
+      "categories": [
+        {
+          "topcategory": "Finances",
+          "subcategory": "Summer Sessions"
+        }
+      ]
+    },
+    {
+      "name": "Canceling and Withdrawing",
+      "description": "Dropping all classes for the summer session",
+      "url": "http://summer.berkeley.edu/enrollment-changes/dropping-all-your-courses",
+      "roles": {
+        "student": true,
+        "applicant": true,
+        "staff": false,
+        "faculty": false,
+        "exStudent": true,
+        "summerVisitor": true
+      },
+      "categories": [
+        {
+          "topcategory": "Finances",
+          "subcategory": "Summer Sessions"
         }
       ]
     },
@@ -3133,7 +3341,8 @@
         "applicant": true,
         "staff": true,
         "faculty": true,
-        "exStudent": true
+        "exStudent": true,
+        "summerVisitor": true
       },
       "categories": [
         {
@@ -3155,7 +3364,8 @@
         "applicant": false,
         "staff": false,
         "faculty": true,
-        "exStudent": false
+        "exStudent": false,
+        "summerVisitor": false
       },
       "categories": [
         {
@@ -3173,7 +3383,8 @@
         "applicant": true,
         "staff": false,
         "faculty": false,
-        "exStudent": true
+        "exStudent": true,
+        "summerVisitor": true
       },
       "categories": [
         {
@@ -3191,7 +3402,8 @@
         "applicant": true,
         "staff": true,
         "faculty": true,
-        "exStudent": true
+        "exStudent": true,
+        "summerVisitor": true
       },
       "categories": [
         {
@@ -3209,7 +3421,8 @@
         "applicant": true,
         "staff": true,
         "faculty": true,
-        "exStudent": true
+        "exStudent": true,
+        "summerVisitor": true
       },
       "categories": [
         {
@@ -3227,7 +3440,8 @@
         "applicant": true,
         "staff": true,
         "faculty": true,
-        "exStudent": true
+        "exStudent": true,
+        "summerVisitor": true
       },
       "categories": [
         {
@@ -3245,7 +3459,8 @@
         "applicant": true,
         "staff": true,
         "faculty": false,
-        "exStudent": true
+        "exStudent": true,
+        "summerVisitor": true
       },
       "categories": [
         {
@@ -3263,7 +3478,8 @@
         "applicant": true,
         "staff": false,
         "faculty": false,
-        "exStudent": true
+        "exStudent": true,
+        "summerVisitor": true
       },
       "categories": [
         {
@@ -3281,7 +3497,8 @@
         "applicant": false,
         "staff": true,
         "faculty": true,
-        "exStudent": false
+        "exStudent": false,
+        "summerVisitor": false
       },
       "categories": [
         {
@@ -3299,7 +3516,8 @@
         "applicant": true,
         "staff": false,
         "faculty": false,
-        "exStudent": true
+        "exStudent": true,
+        "summerVisitor": true
       },
       "categories": [
         {
@@ -3317,7 +3535,8 @@
         "applicant": true,
         "staff": true,
         "faculty": true,
-        "exStudent": true
+        "exStudent": true,
+        "summerVisitor": true
       },
       "categories": [
         {
@@ -3335,7 +3554,8 @@
         "applicant": true,
         "staff": false,
         "faculty": false,
-        "exStudent": true
+        "exStudent": true,
+        "summerVisitor": true
       },
       "categories": [
         {
@@ -3353,7 +3573,8 @@
         "applicant": true,
         "staff": true,
         "faculty": true,
-        "exStudent": true
+        "exStudent": true,
+        "summerVisitor": true
       },
       "categories": [
         {
@@ -3371,7 +3592,8 @@
         "applicant": true,
         "staff": false,
         "faculty": false,
-        "exStudent": true
+        "exStudent": true,
+        "summerVisitor": true
       },
       "categories": [
         {
@@ -3389,7 +3611,8 @@
         "applicant": true,
         "staff": true,
         "faculty": true,
-        "exStudent": true
+        "exStudent": true,
+        "summerVisitor": true
       },
       "categories": [
         {
@@ -3415,7 +3638,8 @@
         "applicant": false,
         "staff": true,
         "faculty": true,
-        "exStudent": false
+        "exStudent": false,
+        "summerVisitor": false
       },
       "categories": [
         {
@@ -3433,7 +3657,8 @@
         "applicant": true,
         "staff": false,
         "faculty": false,
-        "exStudent": true
+        "exStudent": true,
+        "summerVisitor": true
       },
       "categories": [
         {
@@ -3451,7 +3676,8 @@
         "applicant": true,
         "staff": true,
         "faculty": true,
-        "exStudent": true
+        "exStudent": true,
+        "summerVisitor": true
       },
       "categories": [
         {
@@ -3469,7 +3695,8 @@
         "applicant": true,
         "staff": true,
         "faculty": true,
-        "exStudent": true
+        "exStudent": true,
+        "summerVisitor": true
       },
       "categories": [
         {
@@ -3487,7 +3714,8 @@
         "applicant": true,
         "staff": false,
         "faculty": false,
-        "exStudent": true
+        "exStudent": true,
+        "summerVisitor": true
       },
       "categories": [
         {
@@ -3505,7 +3733,8 @@
         "applicant": true,
         "staff": true,
         "faculty": true,
-        "exStudent": true
+        "exStudent": true,
+        "summerVisitor": true
       },
       "categories": [
         {
@@ -3523,7 +3752,8 @@
         "applicant": false,
         "staff": true,
         "faculty": true,
-        "exStudent": false
+        "exStudent": false,
+        "summerVisitor": false
       },
       "categories": [
         {
@@ -3541,7 +3771,8 @@
         "applicant": true,
         "staff": false,
         "faculty": false,
-        "exStudent": true
+        "exStudent": true,
+        "summerVisitor": true
       },
       "categories": [
         {
@@ -3559,7 +3790,8 @@
         "applicant": true,
         "staff": false,
         "faculty": false,
-        "exStudent": true
+        "exStudent": true,
+        "summerVisitor": false
       },
       "categories": [
         {
@@ -3581,7 +3813,8 @@
         "applicant": true,
         "staff": false,
         "faculty": false,
-        "exStudent": true
+        "exStudent": true,
+        "summerVisitor": true
       },
       "categories": [
         {

@@ -4,14 +4,13 @@
   </div>
   <div data-cc-spinner-directive="isLoading">
     <div class="cc-list-link-container" data-ng-repeat="subcategory in campusLinks.data.subcategories">
-      <h3 data-ng-bind="subcategory"></h3>
+      <h3 data-ng-bind="subcategory" data-ng-if="!suppressSubcategory(subcategory)"></h3>
       <ul class="cc-list-links">
         <li data-ng-if="subcategory === 'Billing & Payments' && !api.user.profile.delegateActingAsUid && api.user.profile.roles.student &&
           (api.user.profile.roles.undergrad || api.user.profile.roles.graduate || api.user.profile.roles.law)">
           <a data-ng-href="/profile/delegate" data-ng-attr-title="{{$parent.delegateAccess.title}}">Delegate Access</a>
         </li>
-        <li data-ng-if="subcategory === 'Billing & Payments' && api.user.profile.roles.student &&
-          (api.user.profile.roles.undergrad || api.user.profile.roles.graduate || api.user.profile.roles.law)">
+        <li data-ng-if="subcategory === 'Billing & Payments' && canViewEftLink">
           <a data-ng-href="{{$parent.eft.eftLink.url}}"
             data-ng-attr-title="{{$parent.eft.eftLink.title}}">Electronic Funds Transfer / EFT </a>
           <span class="cc-text-green-plus cc-list-links-nested-dash cc-list-links-text"
@@ -34,7 +33,7 @@
             <strong>Manage Account</strong>
           </a>
         </li>
-        <li data-ng-repeat-start="link in campusLinks.data.links | campusLinksSubcategoryFilter:subcategory">
+        <li data-ng-repeat-start="link in campusLinks.data.links | campusLinksSubcategoryFilter:subcategory" data-ng-if="canView(link)">
           <a data-ng-href="{{link.url}}"
             data-ng-click="api.analytics.trackExternalLink('Campus links', subcategory, link.url)"
             data-ng-attr-title="{{link.description}}"
@@ -67,7 +66,7 @@
             <strong>View Form</strong>
           </a>
         </li>
-        <li data-ng-if="subcategory === 'Financial Assistance' && emergencyLoanLink.url">
+        <li data-ng-if="subcategory === 'Financial Assistance' && emergencyLoanLink.url && canViewEmergencyLoanLink">
           <a data-ng-attr-href="{{emergencyLoanLink.url}}" data-ng-attr-title="{{emergencyLoanLink.description}}" data-cc-outbound-enabled="emergencyLoanLink.showNewWindow">Apply for an Emergency Loan</a>
         </li>
       </ul>

@@ -20,6 +20,7 @@ module Links
       applicant = Links::UserRole.find_or_create_by(name: 'Applicant') {|ur| ur.slug = 'applicant'}
       staff = Links::UserRole.find_or_create_by(name: 'Staff') {|ur| ur.slug = 'staff'}
       faculty = Links::UserRole.find_or_create_by(name: 'Faculty') {|ur| ur.slug = 'faculty'}
+      summer_visitor = Links::UserRole.find_or_create_by(name: 'SummerVisitor') {|ur| ur.slug = 'summerVisitor'}
 
       begin
         file = File.open("#{Rails.root}#{filename}")
@@ -69,6 +70,9 @@ module Links
             end
             if link_node["roles"]["staff"]
               roles << staff.id
+            end
+            if link_node["roles"]["summerVisitor"]
+              roles << summer_visitor.id
             end
           end
 

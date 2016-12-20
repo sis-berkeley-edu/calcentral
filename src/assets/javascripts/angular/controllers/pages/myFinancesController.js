@@ -19,7 +19,7 @@ angular.module('calcentral.controllers').controller('MyFinancesController', func
 
   $scope.$on('calcentral.api.user.isAuthenticated', function(event, isAuthenticated) {
     if (isAuthenticated && apiService.user.profile.hasFinancialsTab) {
-      academicStatusFactory.getAcademicStatus($scope).then(parseAcademicStatusRoles);
+      academicStatusFactory.getAcademicStatus().then(parseAcademicStatusRoles);
     }
   });
 });

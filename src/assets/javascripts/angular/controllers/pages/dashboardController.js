@@ -18,7 +18,7 @@ angular.module('calcentral.controllers').controller('DashboardController', funct
   var init = function() {
     if (apiService.user.profile.hasDashboardTab) {
       apiService.util.setTitle('Dashboard');
-      academicStatusFactory.getAcademicStatus($scope).then(parseAcademicStatusRoles);
+      academicStatusFactory.getAcademicStatus().then(parseAcademicStatusRoles);
     } else {
       userService.redirectToHome();
     }
