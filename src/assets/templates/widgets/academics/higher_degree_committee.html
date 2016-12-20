@@ -36,6 +36,23 @@
       </table>
     </div>
 
+    <div data-ng-if="committee.senate.length > 0" class="cc-table cc-higher-degree-committees-reps-group">
+      <table>
+        <thead>
+          <tr>
+            <th>Academic Senate Representative</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr data-ng-repeat="member in committee.senate">
+            <td>
+              <div data-ng-include="'widgets/academics/higher_degree_committee_member.html'"></div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
     <div data-ng-if="committee.inside.length > 0" class="cc-table cc-higher-degree-committees-reps-group">
       <table>
         <thead>
@@ -87,20 +104,4 @@
       </table>
     </div>
 
-    <div data-ng-if="committee.senate.length > 0" class="cc-table cc-higher-degree-committees-reps-group">
-      <table>
-        <thead>
-          <tr>
-            <th>Academic Senate Representative</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr data-ng-repeat="member in committee.senate">
-            <td>
-              <div data-ng-include="'widgets/academics/higher_degree_committee_member.html'"></div>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
   </div>
