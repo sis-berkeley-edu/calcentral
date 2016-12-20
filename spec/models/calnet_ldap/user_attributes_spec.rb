@@ -117,6 +117,22 @@ describe CalnetLdap::UserAttributes do
       end
     end
 
+    context 'when only the Alumni affiliation appears' do
+      let(:ldap_result) do
+        {
+          berkeleyeduaffiliations: %w(AFFILIATE-TYPE-ADVCON-ALUMNUS AFFILIATE-TYPE-ADVCON-ATTENDEE),
+          berkeleyedustuexpdate: ['20140901145959Z'],
+          uid: ['61889']
+        }
+      end
+      it 'is an ex-student' do
+        expect(feed[:roles][:student]).to be_falsey
+        expect(feed[:roles][:registered]).to be_falsey
+        expect(feed[:roles][:exStudent]).to eq true
+        expect(feed[:roles][:staff]).to be_falsey
+      end
+    end
+
     context 'when LDAP query returns no mail attribute' do
       before { ldap_result.delete :mail }
       it 'falls back to berkeleyeduofficialemail' do

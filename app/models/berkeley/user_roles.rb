@@ -9,7 +9,7 @@ module Berkeley
         :student => affiliations.index {|a| (a.start_with? 'STUDENT-TYPE-')}.present?,
         :registered => affiliations.include?('STUDENT-TYPE-REGISTERED'),
         # TODO Remove '-STATUS-EXPIRED' logic once CalNet transition is complete.
-        :exStudent => (affiliations & ['STUDENT-STATUS-EXPIRED', 'FORMER-STUDENT']).present?,
+        :exStudent => (affiliations & ['STUDENT-STATUS-EXPIRED', 'FORMER-STUDENT', 'AFFILIATE-TYPE-ADVCON-ALUMNUS']).present?,
         :faculty => affiliations.include?('EMPLOYEE-TYPE-ACADEMIC'),
         :staff => affiliations.include?('EMPLOYEE-TYPE-STAFF'),
         :guest => affiliations.include?('GUEST-TYPE-COLLABORATOR'),
