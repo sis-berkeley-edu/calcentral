@@ -78,7 +78,8 @@ angular.module('calcentral.services').factory('profileMenuService', function(api
           featureFlag: 'csFinAid',
           roles: {
             applicant: true,
-            student: true
+            student: true,
+            summerVisitor: false
           }
         }
       ]
@@ -101,7 +102,8 @@ angular.module('calcentral.services').factory('profileMenuService', function(api
           featureFlag: 'csProfileWorkExperience',
           roles: {
             applicant: true,
-            student: true
+            student: true,
+            summerVisitor: false
           }
         }
       ]
@@ -140,15 +142,26 @@ angular.module('calcentral.services').factory('profileMenuService', function(api
     });
   };
 
-  var filterRolesInCategory = function(categories) {
+  var hasWhitelistedRole = function(categoryRoles) {
     var userRoles = apiService.user.profile.roles;
+    return _.some(categoryRoles, function(value, key) {
+      return userRoles[key] === value;
+    });
+  };
+
+  var hasBlacklistedRole = function(categoryRoles) {
+    var academicRoles = apiService.academics.roles;
+    return _.some(academicRoles, function(hasRole, role) {
+      return hasRole && categoryRoles[role] === false;
+    });
+  };
+
+  var filterRolesInCategory = function(categories) {
     return _.filter(categories, function(category) {
       if (!category.roles) {
         return true;
       } else {
-        return _.some(category.roles, function(value, key) {
-          return userRoles[key] === value;
-        });
+        return hasWhitelistedRole(category.roles) && !hasBlacklistedRole(category.roles);
       }
     });
   };
@@ -228,8 +241,13 @@ angular.module('calcentral.services').factory('profileMenuService', function(api
     });
   };
 
+  var getAcademics = function() {
+    return apiService.academics.fetch();
+  };
+
   var getNavigation = function() {
     return apiService.user.fetch()
+      .then(getAcademics)
       .then(initialNavigation)
       .then(filterRoles)
       .then(filterFeatureFlags)
