@@ -91,7 +91,8 @@ angular.module('calcentral.factories').factory('enrollmentFactory', function(api
     var relevantCards = _.reject(deckTerms, function(term) {
       return term.isSummer;
     });
-    return _.last(relevantCards).index;
+    var selectedCard = _.last(relevantCards);
+    return selectedCard ? selectedCard.index : 0;
   };
 
   var getEnrollmentInstructionDecks = function(options) {

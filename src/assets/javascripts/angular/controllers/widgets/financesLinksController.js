@@ -11,7 +11,6 @@ angular.module('calcentral.controllers').controller('FinancesLinksController', f
 
   $scope.canViewEftLink = false;
   $scope.canViewEmergencyLoanLink = false;
-  $scope.userRoles = [];
 
   $scope.campusLinks = {
     data: {},
@@ -115,34 +114,17 @@ angular.module('calcentral.controllers').controller('FinancesLinksController', f
     });
   };
 
-  var canView = function(campusLink) {
-    var blacklist = _.keys(_.omitBy(campusLink.roles, _.identity));
-    return _.intersection(blacklist, $scope.userRoles).length === 0;
-  };
-
-  var suppressSubcategory = function(subcategory) {
-    if (subcategory === 'Financial Assistance') {
-      return $scope.academicStatus.roles.summerVisitor;
-    }
-  };
-
   var loadAcademicStatus = function(roles) {
     if (!_.isEmpty(roles)) {
-      var userRoles = _.keys(_.pickBy($scope.api.user.profile.roles, _.identity));
-      var academicRoles = _.keys(_.pickBy($scope.academicStatus.roles, _.identity));
-      $scope.userRoles = _.concat(userRoles, academicRoles);
-
       $scope.canViewEftLink = $scope.api.user.profile.roles.student &&
         ($scope.api.user.profile.roles.undergrad || $scope.api.user.profile.roles.graduate || $scope.api.user.profile.roles.law) &&
-        !$scope.academicStatus.roles.summerVisitor;
-      $scope.canViewEmergencyLoanLink = !$scope.academicStatus.roles.summerVisitor;
+        !roles.summerVisitor;
+      $scope.canViewEmergencyLoanLink = !roles.summerVisitor;
     }
   };
 
   var initialize = function() {
     $scope.$watch('academicStatus.roles', loadAcademicStatus, true);
-    $scope.canView = canView;
-    $scope.suppressSubcategory = suppressSubcategory;
 
     campusLinksFactory.getLinks({
       category: 'finances'

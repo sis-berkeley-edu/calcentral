@@ -1,5 +1,6 @@
 'use strict';
 
+var _ = require('lodash');
 var angular = require('angular');
 
 /**
@@ -31,20 +32,22 @@ angular.module('calcentral.factories').factory('campusLinksFactory', function(ap
     }
   };
 
-  /**
-   * Depending on the roles, determine whether the current user should be able to view the link
-   * @param {Object} link Link object
-   * @return {Boolean} Whether the user should be able to view the link
-   */
-  var canViewLink = function(link) {
-    for (var i in link.roles) {
-      if (link.roles.hasOwnProperty(i) &&
-          link.roles[i] === true &&
-          link.roles[i] === apiService.user.profile.roles[i]) {
-        return true;
-      }
-    }
-    return false;
+  var hasWhitelistedRole = function(linkRoles) {
+    var userRoles = apiService.user.profile.roles;
+    return _.some(linkRoles, function(value, key) {
+      return userRoles[key] === value;
+    });
+  };
+
+  var hasBlacklistedRole = function(linkRoles) {
+    var academicRoles = apiService.academics.roles;
+    return _.some(academicRoles, function(hasRole, role) {
+      return hasRole && linkRoles[role] === false;
+    });
+  };
+
+  var userCanView = function(link) {
+    return hasWhitelistedRole(link.roles) && !hasBlacklistedRole(link.roles);
   };
 
   /**
@@ -74,14 +77,14 @@ angular.module('calcentral.factories').factory('campusLinksFactory', function(ap
       topcategories: {}
     };
     angular.forEach(links, function(link) {
-      var canUserViewLink = canViewLink(link);
-      if (canUserViewLink) {
+      if (userCanView(link)) {
         addToTopCategories(link, response.topcategories);
-      }
-      if (canUserViewLink && isLinkInCategory(link, currentTopCategory)) {
-        response.links.push(link);
-        for (var i = 0; i < link.subCategories.length; i++) {
-          addToSubcategories(link.subCategories[i], response.subcategories);
+
+        if (isLinkInCategory(link, currentTopCategory)) {
+          response.links.push(link);
+          for (var i = 0; i < link.subCategories.length; i++) {
+            addToSubcategories(link.subCategories[i], response.subcategories);
+          }
         }
       }
     });
@@ -129,18 +132,26 @@ angular.module('calcentral.factories').factory('campusLinksFactory', function(ap
     return data;
   };
 
+  var getCampusLinks = function() {
+    return $http.get(linkDataUrl, {
+      cache: true
+    });
+  };
+
+  var getAcademicStatusRoles = function() {
+    return apiService.academics.fetch();
+  };
+
+  var getUserRoles = function() {
+    return apiService.user.fetch();
+  };
+
   var getLinks = function(options) {
     apiService.http.clearCache(options, linkDataUrl);
 
-    // We need to make sure to load the user data first since that contains the roles information
-    return apiService.user.fetch()
-      // Load the campus links
-      .then(function() {
-        return $http.get(linkDataUrl, {
-          cache: true
-        });
-      })
-      // Parse the campus links
+    return getUserRoles()
+      .then(getAcademicStatusRoles)
+      .then(getCampusLinks)
       .then(function(response) {
         return parseCampusLinks(response, options.category);
       });
