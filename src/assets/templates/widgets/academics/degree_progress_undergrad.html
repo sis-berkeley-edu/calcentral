@@ -2,11 +2,10 @@
   <div class="cc-widget-title">
     <h2>Degree Progress</h2>
   </div>
-  <div class="cc-widget-padding" data-cc-spinner-directive="degreeProgressUndergrad.isLoading">
-    <div data-ng-if="degreeProgressUndergrad.errored">There was an error retrieving degree progress data.</div>
-    <div data-ng-if="!degreeProgressUndergrad.errored && !degreeProgressUndergrad.progresses.length">No degree progress data is available.</div>
-    <ul data-ng-if="!degreeProgressUndergrad.errored && degreeProgressUndergrad.progresses">
-      <li data-ng-repeat="plan in degreeProgressUndergrad.progresses">
+  <div class="cc-widget-padding">
+    <div data-ng-if="degreeProgress.undergraduate.errored">There was an error retrieving undergraduate degree progress data.</div>
+    <ul data-ng-if="!degreeProgress.undergraduate.errored && degreeProgress.undergraduate.progresses">
+      <li data-ng-repeat="plan in degreeProgress.undergraduate.progresses">
         <h3>University Requirements</h3>
         <div class="cc-table">
           <table>
