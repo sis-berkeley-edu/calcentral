@@ -56,10 +56,9 @@ angular.module('calcentral.controllers').controller('UserOverviewController', fu
     showChart: true,
     isLoading: true
   };
-  $scope.degreeProgressGraduate = {
-    isLoading: true
-  };
-  $scope.degreeProgressUndergrad = {
+  $scope.degreeProgress = {
+    graduate: {},
+    undergraduate: {},
     isLoading: true
   };
 
@@ -238,25 +237,21 @@ angular.module('calcentral.controllers').controller('UserOverviewController', fu
     });
   };
 
-  var loadDegreeProgressGraduate = function() {
+  var loadDegreeProgresses = function() {
     advisingFactory.getDegreeProgressGraduate({
       uid: $routeParams.uid
-    }).success(function(data) {
-      $scope.degreeProgressGraduate.progresses = _.get(data, 'feed.degreeProgress');
-      $scope.degreeProgressGraduate.errored = _.get(data, 'errored');
-    }).finally(function() {
-      $scope.degreeProgressGraduate.isLoading = false;
-    });
-  };
-
-  var loadDegreeProgressUndergrad = function() {
-    advisingFactory.getDegreeProgressUndergrad({
-      uid: $routeParams.uid
-    }).success(function(data) {
-      $scope.degreeProgressUndergrad.progresses = _.get(data, 'feed.degreeProgress.progresses');
-      $scope.degreeProgressUndergrad.errored = _.get(data, 'errored');
-    }).finally(function() {
-      $scope.degreeProgressUndergrad.isLoading = false;
+    }).then(function(data) {
+      $scope.degreeProgress.graduate.progresses = _.get(data, 'data.feed.degreeProgress');
+      $scope.degreeProgress.graduate.errored = _.get(data, 'errored');
+    }).then(function() {
+      advisingFactory.getDegreeProgressUndergrad({
+        uid: $routeParams.uid
+      }).then(function(data) {
+        $scope.degreeProgress.undergraduate.progresses = _.get(data, 'data.feed.degreeProgress.progresses');
+        $scope.degreeProgress.undergraduate.errored = _.get(data, 'errored');
+      }).finally(function() {
+        $scope.degreeProgress.isLoading = false;
+      });
     });
   };
 
@@ -319,8 +314,7 @@ angular.module('calcentral.controllers').controller('UserOverviewController', fu
       .then(loadStudentSuccess)
       .then(loadHolds)
       .then(loadRegistrations)
-      .then(loadDegreeProgressGraduate)
-      .then(loadDegreeProgressUndergrad)
+      .then(loadDegreeProgresses)
       .then(getRegMessages);
     }
   });

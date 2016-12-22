@@ -2,25 +2,24 @@
   <div class="cc-widget-title">
     <h2>Degree Progress</h2>
   </div>
-  <div class="cc-widget-padding" data-cc-spinner-directive="degreeProgressGraduate.isLoading">
-    <div data-ng-if="degreeProgressGraduate.errored">There was an error retrieving degree progress data.</div>
-    <div data-ng-if="!degreeProgressGraduate.errored && !degreeProgressGraduate.progresses.length">No degree progress data is available.</div>
-    <ul data-ng-if="!degreeProgressGraduate.errored && degreeProgressGraduate.progresses" class="cc-list-links">
-      <li data-ng-if="degreeProgressGraduate.links.advancementFormSubmit.url">
+  <div class="cc-widget-padding">
+    <div data-ng-if="degreeProgress.graduate.errored">There was an error retrieving graduate degree progress data.</div>
+    <ul data-ng-if="!degreeProgress.graduate.errored && degreeProgress.graduate.progresses" class="cc-list-links">
+      <li data-ng-if="degreeProgress.graduate.links.advancementFormSubmit.url">
         <div
           data-cc-campus-solutions-link-item-directive
-          data-link="degreeProgressGraduate.links.advancementFormSubmit"
+          data-link="degreeProgress.graduate.links.advancementFormSubmit"
         ></div>
       </li>
-      <li data-ng-if="degreeProgressGraduate.links.advancementFormView.url">
+      <li data-ng-if="degreeProgress.graduate.links.advancementFormView.url">
         <div
           data-cc-campus-solutions-link-item-directive
-          data-link="degreeProgressGraduate.links.advancementFormView"
+          data-link="degreeProgress.graduate.links.advancementFormView"
         ></div>
       </li>
     </ul>
     <ul>
-      <li data-ng-repeat="plan in degreeProgressGraduate.progresses">
+      <li data-ng-repeat="plan in degreeProgress.graduate.progresses">
         <h3 data-ng-bind="plan.acadPlan ? plan.acadPlan + ' &mdash; Graduate Division Milestones' : 'Graduate Division Milestones'"></h3>
         <div data-ng-repeat="requirement in plan.requirements">
           <h4 data-ng-bind="requirement.name"></h4>
