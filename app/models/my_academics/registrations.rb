@@ -22,7 +22,6 @@ module MyAcademics
     end
 
     def get_terms
-      berkeley_terms = Berkeley::Terms.fetch
       terms = {}
       # ':previous' and ':grading_in_progress' methods are not included here because Campus::Oracle does not keep information prior to the current term.
       # These methods should be added in Spring 2017, once CS will start sending back Fall 2016 data.
@@ -67,6 +66,10 @@ module MyAcademics
     end
 
     private
+
+    def berkeley_terms
+      @berkeley_terms ||= Berkeley::Terms.fetch
+    end
 
     # Match registration terms with Berkeley::Terms-defined terms.
     def match_terms(registrations, terms)
@@ -126,7 +129,7 @@ module MyAcademics
     end
 
     def term_transition?
-      Berkeley::Terms.fetch.in_term_transition?
+      berkeley_terms.in_term_transition?
     end
 
   end
