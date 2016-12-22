@@ -6,20 +6,25 @@ var angular = require('angular');
 /**
  * My Finances controller
  */
-angular.module('calcentral.controllers').controller('MyFinancesController', function($scope, apiService, academicStatusFactory) {
+angular.module('calcentral.controllers').controller('MyFinancesController', function($scope, apiService) {
   apiService.util.setTitle('My Finances');
 
   $scope.academicStatus = {
     roles: {}
   };
 
-  var parseAcademicStatusRoles = function(data) {
-    _.extend($scope.academicStatus.roles, _.get(data, 'data.feed.student.roles'));
+  var parseAcademicStatusRoles = function() {
+    _.extend($scope.academicStatus.roles, apiService.academics.roles);
+  };
+
+  var getAcademics = function() {
+    return apiService.academics.fetch();
   };
 
   $scope.$on('calcentral.api.user.isAuthenticated', function(event, isAuthenticated) {
     if (isAuthenticated && apiService.user.profile.hasFinancialsTab) {
-      academicStatusFactory.getAcademicStatus().then(parseAcademicStatusRoles);
+      getAcademics()
+        .then(parseAcademicStatusRoles);
     }
   });
 });

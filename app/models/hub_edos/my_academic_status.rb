@@ -29,6 +29,8 @@ module HubEdos
       roles
     end
 
+    # Beware: roles may be used as a whitelist (to show certain info), a blacklist (to hide certain info),
+    #  or as some combination of the two in custom logic.
     def assign_roles(status)
       career_code = status.try(:[], 'studentCareer').try(:[], 'academicCareer').try(:[], 'code')
 

@@ -6,7 +6,7 @@ var _ = require('lodash');
 /**
  * Footer controller
  */
-angular.module('calcentral.controllers').controller('FinancesLinksController', function(apiService, academicStatusFactory, campusLinksFactory, csLinkFactory, financesLinksFactory, $scope) {
+angular.module('calcentral.controllers').controller('FinancesLinksController', function(apiService, campusLinksFactory, csLinkFactory, financesLinksFactory, $scope) {
   $scope.isLoading = true;
 
   $scope.canViewEftLink = false;
