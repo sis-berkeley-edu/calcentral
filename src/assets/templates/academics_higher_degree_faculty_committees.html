@@ -1,4 +1,4 @@
 <div data-ng-controller="AcademicsHigherDegreeCommitteesController">
-  <div data-ng-if="facultyCommittees.active.length + facultyCommittees.completed.length > 0"
+  <div data-ng-if="(facultyCommittees.active.length + facultyCommittees.completed.length > 0) || committees.isLoading"
     data-ng-include="'widgets/higher_degree_faculty_committees.html'"></div>
 </div>
