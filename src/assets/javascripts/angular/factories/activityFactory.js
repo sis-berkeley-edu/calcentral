@@ -244,6 +244,6 @@ angular.module('calcentral.factories').factory('activityFactory', function(apiSe
 
   return {
     getActivity: getActivity,
-    getFinaidActivity: getFinaidActivity,
+    getFinaidActivity: getFinaidActivity
   };
 });
