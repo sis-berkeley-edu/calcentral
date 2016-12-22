@@ -61,7 +61,10 @@
                   </thead>
                   <tbody data-ng-repeat="class in semester.enrolledClasses">
                     <tr data-ng-if="class.transcript" data-ng-repeat="transcript in class.transcript">
-                      <td data-ng-bind="class.course_code"></td>
+                      <td>
+                        <span data-ng-bind="class.course_code"></span>
+                        <span data-ng-if="class.session_code" data-ng-bind-template="(Session {{class.session_code}})"></span>
+                      </td>
                       <td data-ng-bind="transcript.units | number:1"></td>
                       <td data-ng-bind="transcript.grade" data-ng-if="api.user.profile.canViewGrades"></td>
                     </tr>
@@ -77,7 +80,10 @@
                   </thead>
                   <tbody data-ng-repeat="class in semester.enrolledClasses">
                     <tr data-ng-if="!class.transcript && section.is_primary_section" data-ng-repeat="section in class.sections">
-                      <td data-ng-bind="class.course_code"></td>
+                      <td>
+                        <span data-ng-bind="class.course_code"></span>
+                        <span data-ng-if="class.session_code" data-ng-bind-template="(Session {{class.session_code}})"></span>
+                      </td>
                       <td data-ng-bind="section.units | number:1" ></td>
                       <td></td>
                     </tr>
@@ -93,8 +99,11 @@
                   </thead>
                   <tbody data-ng-repeat="class in semester.enrolledClasses">
                     <tr data-ng-repeat="section in class.sections" data-ng-if="section.is_primary_section && !section.waitlisted">
-                      <td data-ng-if="class.multiplePrimaries" data-ng-bind-template="{{class.course_code}} {{section.section_label}}"></td>
-                      <td data-ng-if="!class.multiplePrimaries" data-ng-bind="class.course_code"></td>
+                      <td>
+                        <span data-ng-bind="class.course_code"></span>
+                        <span data-ng-if="class.multiplePrimaries && section.section_label" data-ng-bind="section.section_label"></span>
+                        <span data-ng-if="class.session_code" data-ng-bind-template="(Session {{class.session_code}})"></span>
+                      </td>
                       <td data-ng-bind="section.units | number:1"></td>
                       <td></td>
                     </tr>
@@ -120,8 +129,11 @@
                   </thead>
                   <tbody data-ng-if="!semester.summaryFromTranscript" data-ng-repeat="class in semester.enrolledClasses">
                     <tr data-ng-repeat="section in class.sections" data-ng-if="section.waitlisted">
-                      <td data-ng-if="class.multiplePrimaries" data-ng-bind-template="{{class.course_code}} {{section.section_label}}"></td>
-                      <td data-ng-if="!class.multiplePrimaries" data-ng-bind="class.course_code"></td>
+                      <td>
+                        <span data-ng-bind="class.course_code"></span>
+                        <span data-ng-if="class.multiplePrimaries && section.section_label" data-ng-bind="section.section_label"></span>
+                        <span data-ng-if="class.session_code" data-ng-bind-template="(Session {{class.session_code}})"></span>
+                      </td>
                       <td data-ng-bind="section.units | number:1"></td>
                       <td data-ng-bind="section.waitlistPosition" class="cc-table-right"></td>
                     </tr>

@@ -18,7 +18,7 @@
       <div data-ng-include="'widgets/enrollment_card.html'" data-ng-if="api.user.profile.features.csEnrollmentCard && !api.user.profile.features.advisingAcademicPlanner"></div>
       <div data-ng-include="'widgets/transfer_credit.html'"></div>
       <div data-ng-include="'widgets/my_advising.html'"></div>
-      <div data-ng-include src="'academics_plan.html'" data-ng-if="planSemesters.length && api.user.profile.features.advisingAcademicPlanner"></div>
+      <div data-ng-include src="'widgets/academic_plan.html'" data-ng-if="planSemesters.length && api.user.profile.features.advisingAcademicPlanner"></div>
     </div>
   </div>
 </div>

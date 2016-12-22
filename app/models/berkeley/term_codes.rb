@@ -2,6 +2,14 @@ module Berkeley
   module TermCodes
     extend self
 
+    SUMMER_SESSIONS = {
+      '6W1' => 'A',
+      '10W' => 'B',
+      '8W' => 'C',
+      '6W2' => 'D',
+      '3W' => 'E'
+    }
+
     def codes
       # UC Berkeley only offers Spring, Summer, and Fall courses. Before 1982, however, it was on the
       # same quarterly system as other UC campuses.

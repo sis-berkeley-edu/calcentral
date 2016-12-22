@@ -145,6 +145,7 @@ describe MyAcademics::Teaching do
                 waitlist_limit: 5
               }
             ],
+            session_code: nil,
             role: 'Instructor',
             enroll_limit: 50,
             waitlist_limit: 10
@@ -174,6 +175,7 @@ describe MyAcademics::Teaching do
                 cross_listing_hash: '2138-12345-LEC-001'
               }
             ],
+            session_code: nil,
             role: 'Instructor',
             enroll_limit: 30,
             waitlist_limit: 0
@@ -203,6 +205,7 @@ describe MyAcademics::Teaching do
                 cross_listing_hash: '2138-12345-LEC-001'
               }
             ],
+            session_code: nil,
             role: 'Instructor',
             enroll_limit: 30,
             waitlist_limit: 0
@@ -233,6 +236,7 @@ describe MyAcademics::Teaching do
                 waitlist_limit: 5,
               }
             ],
+            session_code: nil,
             role: 'Instructor'
           },
           {
@@ -259,6 +263,7 @@ describe MyAcademics::Teaching do
                 waitlist_limit: 0
               }
             ],
+            session_code: nil,
             role: 'Instructor',
             enroll_limit: 30,
             waitlist_limit: 0
