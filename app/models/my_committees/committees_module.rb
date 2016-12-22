@@ -1,6 +1,8 @@
 module MyCommittees::CommitteesModule
   extend self
 
+  COMMITTEE_TYPE_EXAM = 'QE'
+
   def initialize(uid)
     @uid = uid
   end
@@ -58,7 +60,7 @@ module MyCommittees::CommitteesModule
   end
 
   def committee_status_title (cs_committee)
-    if cs_committee[:committeeType].to_s == 'OUA_FNLZN'
+    if cs_committee[:committeeType].to_s == COMMITTEE_TYPE_EXAM
       'Exam Date:'
     else
       'Advancement To Candidacy:'
@@ -66,14 +68,14 @@ module MyCommittees::CommitteesModule
   end
 
   def committee_status_message (cs_committee)
-    if cs_committee[:committeeType].to_s == 'OUA_FNLZN'
+    if cs_committee[:committeeType].to_s == COMMITTEE_TYPE_EXAM
       return cs_committee[:studentQeExamDate].present? ? format_date(cs_committee[:studentQeExamDate]) : 'Pending'
     end
     'Approved'
   end
 
   def committee_status_icon (cs_committee)
-    if cs_committee[:committeeType].to_s == 'OUA_FNLZN' &&
+    if cs_committee[:committeeType].to_s == COMMITTEE_TYPE_EXAM &&
       cs_committee[:studentQeExamDate].blank?
       'exclamation-triangle'
     else
