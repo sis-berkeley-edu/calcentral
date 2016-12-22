@@ -22,7 +22,6 @@ class RoutesListController < ApplicationController
       /api/my/cal1card
       /api/my/campuslinks
       /api/my/classes
-      /api/my/finaid
       /api/my/financials
       /api/my/groups
       /api/my/photo

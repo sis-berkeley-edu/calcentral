@@ -9,7 +9,6 @@ var _ = require('lodash');
 angular.module('calcentral.factories').factory('activityFactory', function(apiService) {
   // var activityUrl = '/dummy/json/activities.json';
   var activityUrl = '/api/my/activities';
-  var finaidOldUrl = '/api/my/finaid';
 
   /**
    * Filter out only the finaid activities with a specific aid year
@@ -249,16 +248,8 @@ angular.module('calcentral.factories').factory('activityFactory', function(apiSe
     return getActivityAll(options, activityUrl);
   };
 
-  /**
-   * Get Finaid activity / messages from before 2016
-   */
-  var getFinaidActivityOld = function(options) {
-    return getActivityAll(options, finaidOldUrl);
-  };
-
   return {
     getActivity: getActivity,
     getFinaidActivity: getFinaidActivity,
-    getFinaidActivityOld: getFinaidActivityOld
   };
 });

@@ -38,9 +38,6 @@ google_proxy:
 mailgun_proxy:
   fake: true
 
-myfinaid_proxy:
-  fake: true
-
 cal1card_proxy:
   fake: true
 

@@ -1,4 +1,5 @@
 module Finaid
+  # TODO : DROP THIS TABLE ONE RELEASE AFTER REMOVAL OF LEGACY FINAID SUPPORT.
   class FinAidYear < ActiveRecord::Base
     include ActiveRecordHelper, ClassLogger
     extend Cache::Cacheable
