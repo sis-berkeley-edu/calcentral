@@ -31,10 +31,10 @@
         <div data-ng-if="(api.user.profile.roles.student || api.user.profile.roles.applicant) && !api.user.profile.roles.concurrentEnrollmentStudent && !isAcademicSummary">
           <div class="cc-academics-nocontent-container" data-ng-if="!isAcademicInfoAvailable">
             <div class="cc-widget-profile-message-text">
-              <span data-ng-if="api.user.profile.roles.registered || (transitionTerm && transitionTerm.registered)">
+              <span data-ng-if="api.user.profile.roles.registered">
                 More information will display here when available.
               </span>
-              <span data-ng-if="!api.user.profile.roles.registered && !(transitionTerm && transitionTerm.registered)">
+              <span data-ng-if="!api.user.profile.roles.registered">
                 More information will display here when your academic status changes.
               </span>
               Check back for:
@@ -51,7 +51,7 @@
     </div>
 
     <div>
-      <h3 data-ng-if="!isProfileCurrent && api.user.profile.roles.student && collegeAndLevel.termName">Academic status as of <span data-ng-bind="collegeAndLevel.termName"></span></h3>
+      <h3 data-ng-if="!collegeAndLevel.isCurrent && api.user.profile.roles.student && collegeAndLevel.termName">Academic status as of <span data-ng-bind="collegeAndLevel.termName"></span></h3>
       <div data-ng-if="showProfileMessage" class="cc-table-top-border"></div>
 
       <div class="cc-left cc-widget-profile-picture" data-ng-class="{'cc-print-hide': isAcademicSummary}" data-ng-if="!api.user.profile.delegateActingAsUid">

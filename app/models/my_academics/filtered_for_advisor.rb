@@ -8,7 +8,6 @@ module MyAcademics
     def self.providers
       [
         CollegeAndLevel,
-        TransitionTerm,
         GpaUnits,
         Semesters,
         TransferCredit,

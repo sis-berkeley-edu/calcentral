@@ -171,7 +171,6 @@ angular.module('calcentral.controllers').controller('AcademicsController', funct
 
     $scope.isLSStudent = academicsService.isLSStudent($scope.collegeAndLevel);
     $scope.isUndergraduate = _.includes(_.get($scope.collegeAndLevel, 'careers'), 'Undergraduate');
-    $scope.isProfileCurrent = !$scope.transitionTerm || $scope.transitionTerm.isProfileCurrent;
     $scope.hasTeachingClasses = academicsService.hasTeachingClasses(data.teachingSemesters);
     $scope.canViewFinalExamSchedule = $scope.api.user.profile.roles.student && !$scope.api.user.profile.delegateActingAsUid && !$scope.collegeAndLevel.roles.summerVisitor;
 

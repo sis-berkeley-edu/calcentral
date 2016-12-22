@@ -104,9 +104,6 @@ angular.module('calcentral.factories').factory('activityFactory', function(apiSe
     var createSources = function(original) {
       var sources = [];
       original.map(function(item) {
-        if (!apiService.user.profile.features.regstatus && item.isRegstatusActivity) {
-          return false;
-        }
         if (item.source && typeof(item.source) !== 'string') {
           item.source.map(function(source) {
             pushUnique(sources, source);
@@ -146,9 +143,6 @@ angular.module('calcentral.factories').factory('activityFactory', function(apiSe
           // The multiElementArray stores arrays of multiElementSource for
           // items captured by the filter below.
           if (!value.date) {
-            return false;
-          }
-          if (!apiService.user.profile.features.regstatus && value.isRegstatusActivity) {
             return false;
           }
           var multiElementSource = originalSource.filter(function(subValue, subIndex) {

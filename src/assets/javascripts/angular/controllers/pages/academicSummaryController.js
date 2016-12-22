@@ -14,9 +14,8 @@ angular.module('calcentral.controllers').controller('AcademicSummaryController',
     angular.extend($scope, data);
 
     $scope.pastSemestersLimit = 'Infinity';
-    $scope.isProfileCurrent = !$scope.transitionTerm || $scope.transitionTerm.isProfileCurrent;
     // The isEmpty check will be true if collegeAndLevel.errored or collegeAndLevel.empty.
-    $scope.showProfileMessage = (!$scope.isProfileCurrent || !$scope.collegeAndLevel || _.isEmpty($scope.collegeAndLevel.careers));
+    $scope.showProfileMessage = (!$scope.collegeAndLevel || _.isEmpty($scope.collegeAndLevel.careers) || !$scope.collegeAndLevel.isCurrent);
 
     // cumulativeGpa is passed as a string to maintain two significant digits
     $scope.gpaUnits.cumulativeGpaFloat = $scope.gpaUnits.cumulativeGpa;

@@ -19,7 +19,6 @@ module MyAcademics
         college_and_level[:isCurrent] = true
       else
         # The key name is a bit misleading, since the profile might be for a future term.
-        # TODO Use this in place of the overly complex 'isProfileCurrent' front-end logic.
         college_and_level[:isCurrent] = !profile_in_past?(college_and_level)
       end
       data[:collegeAndLevel] = college_and_level

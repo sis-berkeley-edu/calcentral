@@ -2,7 +2,6 @@ describe MyAcademics::Merged do
   let(:provider_classes) do
     [
       MyAcademics::CollegeAndLevel,
-      MyAcademics::TransitionTerm,
       MyAcademics::GpaUnits,
       MyAcademics::Semesters,
       MyAcademics::Teaching,
