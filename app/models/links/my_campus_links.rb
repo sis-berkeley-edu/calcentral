@@ -71,7 +71,8 @@ module Links
         'applicant' => false,
         'staff' => false,
         'faculty' => false,
-        'exStudent' => false
+        'exStudent' => false,
+        'summerVisitor' => false
       }
       link.user_roles.each { |link_role| roles[link_role.slug] = true }
       roles

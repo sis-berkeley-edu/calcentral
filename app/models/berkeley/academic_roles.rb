@@ -2,6 +2,7 @@ module Berkeley
   module AcademicRoles
     extend self
 
+    # Role(s) assigned to a user if they are in an academic plan associated with that role.
     ACADEMIC_PLAN_ROLES = [
       {role_code: 'fpf', match: ['25000FPFU'], types: [:enrollment]},
       {role_code: 'haasFullTimeMba', match: ['70141MBAG'], types: []},
@@ -14,10 +15,11 @@ module Berkeley
       {
         role_code: 'summerVisitor',
         match: %w(99000U 99000INTU 99000G 99000INTG 99V03U 99V04U 99V05U 99V09U 99V03G 99V05G 99V06G 99V07G 99V08G 99V10G 99V06U 99V07U 99V08U 99V10U 99V02G 99V04G 99V09G),
-        types: []
+        types: [:enrollment]
       },
     ]
 
+    # Role(s) assigned to a user if they are in a career associated with that role.
     ACADEMIC_CAREER_ROLES = [
       {role_code: 'law', match: ['LAW'], types: [:enrollment]},
       {role_code: 'concurrent', match: ['UCBX'], types: [:enrollment]}

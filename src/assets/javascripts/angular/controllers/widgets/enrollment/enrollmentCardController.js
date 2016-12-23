@@ -73,6 +73,26 @@ angular.module('calcentral.controllers').controller('EnrollmentCardController', 
       show: true
     }
   ];
+  var sectionsSummerVisitor = [
+    {
+      id: 'explore',
+      title: 'Schedule of Classes'
+    },
+    {
+      id: 'schedule',
+      title: 'Schedule Planner'
+    },
+    {
+      id: 'decide',
+      title: 'Class Enrollment',
+      show: true
+    },
+    {
+      id: 'adjust',
+      title: 'Class Adjustment',
+      show: true
+    }
+  ];
 
   /**
    * Groups enrolled and waitlisted classes by career description
@@ -97,6 +117,10 @@ angular.module('calcentral.controllers').controller('EnrollmentCardController', 
       }
       case 'concurrent': {
         enrollmentInstruction.sections = angular.copy(sectionsConcurrent);
+        break;
+      }
+      case 'summerVisitor': {
+        enrollmentInstruction.sections = angular.copy(sectionsSummerVisitor);
         break;
       }
       default: {

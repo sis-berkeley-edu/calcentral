@@ -21,7 +21,7 @@
             </div>
           </li>
 
-          <li data-ng-if="studentResources.emergencyLoanFormAdd.url">
+          <li data-ng-if="studentResources.emergencyLoanFormAdd.url && !isSummerVisitor">
             <div
               data-cc-campus-solutions-link-item-directive
               data-link="studentResources.emergencyLoanFormAdd"
@@ -88,7 +88,7 @@
               data-link="studentResources.updatePendingForms"
             ></div>
           </li>
-          <li data-ng-if="studentResources.emergencyLoanFormView.url">
+          <li data-ng-if="studentResources.emergencyLoanFormView.url && !isSummerVisitor">
             <div
               data-cc-campus-solutions-link-item-directive
               data-link="studentResources.emergencyLoanFormView"

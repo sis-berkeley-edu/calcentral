@@ -173,6 +173,7 @@ angular.module('calcentral.controllers').controller('AcademicsController', funct
     $scope.isUndergraduate = _.includes(_.get($scope.collegeAndLevel, 'careers'), 'Undergraduate');
     $scope.isProfileCurrent = !$scope.transitionTerm || $scope.transitionTerm.isProfileCurrent;
     $scope.hasTeachingClasses = academicsService.hasTeachingClasses(data.teachingSemesters);
+    $scope.canViewFinalExamSchedule = $scope.api.user.profile.roles.student && !$scope.api.user.profile.delegateActingAsUid && !$scope.collegeAndLevel.roles.summerVisitor;
 
     // Get selected semester from URL params and extract data from semesters array
     var semesterSlug = ($routeParams.semesterSlug || $routeParams.teachingSemesterSlug);
@@ -202,7 +203,7 @@ angular.module('calcentral.controllers').controller('AcademicsController', funct
     $scope.showLegacyAdvising = !$scope.filteredForDelegate && $scope.api.user.profile.features.legacyAdvising && $scope.isLSStudent;
     $scope.showAdvising = !$scope.filteredForDelegate && apiService.user.profile.features.advising && apiService.user.profile.roles.student && isMbaJdOrNotLaw();
     $scope.showProfileMessage = (!$scope.isAcademicInfoAvailable || !$scope.collegeAndLevel || _.isEmpty($scope.collegeAndLevel.careers));
-    $scope.showResidency = apiService.user.profile.roles.student && hasResidency();
+    $scope.showResidency = apiService.user.profile.roles.student && !$scope.collegeAndLevel.roles.summerVisitor && hasResidency();
   };
 
   /**
@@ -227,9 +228,11 @@ angular.module('calcentral.controllers').controller('AcademicsController', funct
       var getAcademics = academicsFactory.getAcademics().success(parseAcademics);
       var getRegistrations = registrationsFactory.getRegistrations().success(loadRegistrations);
       var requests = [getAcademics, getRegistrations];
+      var getNumberOfHolds;
+
       if ($scope.api.user.profile.features.csHolds &&
         ($scope.api.user.profile.roles.student || $scope.api.user.profile.roles.applicant)) {
-        var getNumberOfHolds = academicStatusFactory.getAcademicStatus().success(loadNumberOfHolds);
+        getNumberOfHolds = academicStatusFactory.getAcademicStatus().success(loadNumberOfHolds);
         requests.push(getNumberOfHolds);
       }
       $q.all(requests).then(filterWidgets);

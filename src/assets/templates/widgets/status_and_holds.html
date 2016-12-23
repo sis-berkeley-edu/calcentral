@@ -96,9 +96,9 @@
       </div>
     </div>
 
-    <div data-cc-spinner-directive="residency.isLoading">
+    <div data-cc-spinner-directive="residency.isLoading" data-ng-if="showResidency">
       <div class="cc-status-holds-section">
-        <div data-ng-if="residency.official.description && showResidency">
+        <div data-ng-if="residency.official.description">
           <h4>California Residency</h4>
           <ul class="cc-widget-list cc-status-holds-list">
             <li class="cc-widget-list-hover"

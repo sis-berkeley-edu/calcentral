@@ -8,12 +8,16 @@ var _ = require('lodash');
  */
 angular.module('calcentral.controllers').controller('FinancesLinksController', function(apiService, campusLinksFactory, csLinkFactory, financesLinksFactory, $scope) {
   $scope.isLoading = true;
+
+  $scope.canViewEftLink = false;
+  $scope.canViewEmergencyLoanLink = false;
+
   $scope.campusLinks = {
     data: {},
     linkOrder: ['Payment Options', 'Tuition and Fees', 'Billing FAQ', 'FAFSA', 'Dream Act Application', 'Financial Aid & Scholarships Office',
                 'MyFinAid (aid prior to Fall 2016)', 'Cost of Attendance', 'Graduate Financial Support', 'Work-Study', 'Financial Literacy',
                 'National Student Loan Database System', 'Loan Repayment Calculator', 'Federal Student Loans', 'Student Advocates Office',
-                'Berkeley International Office', 'Have a loan?', 'Withdrawing or Canceling?', 'Schedule & Deadlines', 'Summer Session', 'Cal Student Central']
+                'Berkeley International Office', 'Have a loan?', 'Withdrawing or Canceling?', 'Summer Fees', 'Canceling and Withdrawing', 'Schedule & Deadlines', 'Summer Sessions', 'Cal Student Central']
   };
   $scope.delegateAccess = {
     title: 'Authorize others to access your billing information'
@@ -64,12 +68,12 @@ angular.module('calcentral.controllers').controller('FinancesLinksController', f
       var matchedLink = matchLinks(campusLinks, $scope.campusLinks.linkOrder[i]);
       orderedLinks.push(matchedLink);
     }
-    $scope.campusLinks.data.links = orderedLinks;
+    return _.filter(orderedLinks);
   };
 
   var parseCampusLinks = function(data) {
     angular.extend($scope.campusLinks.data, data);
-    sortCampusLinks($scope.campusLinks.data.links);
+    $scope.campusLinks.data.links = sortCampusLinks(data.links);
   };
 
   /**
@@ -110,7 +114,18 @@ angular.module('calcentral.controllers').controller('FinancesLinksController', f
     });
   };
 
+  var loadAcademicStatus = function(roles) {
+    if (!_.isEmpty(roles)) {
+      $scope.canViewEftLink = $scope.api.user.profile.roles.student &&
+        ($scope.api.user.profile.roles.undergrad || $scope.api.user.profile.roles.graduate || $scope.api.user.profile.roles.law) &&
+        !roles.summerVisitor;
+      $scope.canViewEmergencyLoanLink = !roles.summerVisitor;
+    }
+  };
+
   var initialize = function() {
+    $scope.$watch('academicStatus.roles', loadAcademicStatus, true);
+
     campusLinksFactory.getLinks({
       category: 'finances'
     }).then(parseCampusLinks)

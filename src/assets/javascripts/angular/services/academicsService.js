@@ -4,7 +4,12 @@
 var _ = require('lodash');
 var angular = require('angular');
 
-angular.module('calcentral.services').service('academicsService', function() {
+angular.module('calcentral.services').service('academicsService', function($http, $route, $routeParams) {
+  // var urlAcademicStatus = '/dummy/json/hub_academic_status.json';
+  var urlAcademicStatus = '/api/edos/academic_status';
+  var urlAdvisingAcademicStatus = '/api/advising/academic_status/';
+  var roles = {};
+
   // Selects the semester of most pressing interest. Choose the current semester if available.
   // Otherwise choose the next semester in the future, if available.
   // Otherwise,choose the most recent semester.
@@ -290,8 +295,23 @@ angular.module('calcentral.services').service('academicsService', function() {
     }
   };
 
+  var handleAcademicStatus = function(data) {
+    angular.extend(roles, data.feed.student.roles);
+  };
+
+  var fetch = function() {
+    var url = $route.current.isAdvisingStudentLookup ? urlAdvisingAcademicStatus + $routeParams.uid : urlAcademicStatus;
+    return $http.get(url, {
+      cache: true
+    }).then(function(xhr) {
+      return handleAcademicStatus(xhr.data);
+    });
+  };
+
   // Expose methods
   return {
+    fetch: fetch,
+    roles: roles,
     chooseDefaultSemester: chooseDefaultSemester,
     countSectionItem: countSectionItem,
     expectedGradTerm: expectedGradTerm,
