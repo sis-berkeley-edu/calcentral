@@ -178,12 +178,6 @@ regstatus_proxy:
   app_key: ''
   base_url: 'https://apis.berkeley.edu/cxf/asws/regstatus'
 
-myfinaid_proxy:
-  fake: false
-  app_id: ''
-  app_key: ''
-  base_url: "https://apis-qa.berkeley.edu/myfinaid"
-
 financials_proxy:
   fake: false
   base_url: 'https://apis.berkeley.edu/uat/cfv'

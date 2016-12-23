@@ -31,7 +31,6 @@ Calcentral::Application.routes.draw do
   get '/api/my/residency' => 'my_academics#residency', :via => :get, :defaults => { :format => 'json' }
   get '/api/my/eft_enrollment' => 'my_eft_enrollment#get_feed', :as => :my_eft_enrollment, :defaults => { :format => 'json' }
   get '/api/my/financials' => 'my_financials#get_feed', :as => :my_financials, :defaults => {:format => 'json'}
-  get '/api/my/finaid' => 'my_finaid#get_feed', :as => :my_finaid, :defaults => {:format => 'json'}
   get '/api/my/cal1card' => 'my_cal1card#get_feed', :as => :my_cal1card, :defaults => {:format => 'json'}
   # TODO This legacy advising endpoint will not remain long.
   get '/api/my/advising' => 'my_advising#get_legacy_feed', :as => :my_advising, :defaults => {:format => 'json'}

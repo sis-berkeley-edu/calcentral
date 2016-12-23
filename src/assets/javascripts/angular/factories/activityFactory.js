@@ -9,7 +9,6 @@ var _ = require('lodash');
 angular.module('calcentral.factories').factory('activityFactory', function(apiService) {
   // var activityUrl = '/dummy/json/activities.json';
   var activityUrl = '/api/my/activities';
-  var finaidOldUrl = '/api/my/finaid';
 
   /**
    * Filter out only the finaid activities with a specific aid year
@@ -105,9 +104,6 @@ angular.module('calcentral.factories').factory('activityFactory', function(apiSe
     var createSources = function(original) {
       var sources = [];
       original.map(function(item) {
-        if (!apiService.user.profile.features.regstatus && item.isRegstatusActivity) {
-          return false;
-        }
         if (item.source && typeof(item.source) !== 'string') {
           item.source.map(function(source) {
             pushUnique(sources, source);
@@ -147,9 +143,6 @@ angular.module('calcentral.factories').factory('activityFactory', function(apiSe
           // The multiElementArray stores arrays of multiElementSource for
           // items captured by the filter below.
           if (!value.date) {
-            return false;
-          }
-          if (!apiService.user.profile.features.regstatus && value.isRegstatusActivity) {
             return false;
           }
           var multiElementSource = originalSource.filter(function(subValue, subIndex) {
@@ -249,16 +242,8 @@ angular.module('calcentral.factories').factory('activityFactory', function(apiSe
     return getActivityAll(options, activityUrl);
   };
 
-  /**
-   * Get Finaid activity / messages from before 2016
-   */
-  var getFinaidActivityOld = function(options) {
-    return getActivityAll(options, finaidOldUrl);
-  };
-
   return {
     getActivity: getActivity,
-    getFinaidActivity: getFinaidActivity,
-    getFinaidActivityOld: getFinaidActivityOld
+    getFinaidActivity: getFinaidActivity
   };
 });

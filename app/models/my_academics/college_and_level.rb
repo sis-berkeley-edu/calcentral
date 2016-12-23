@@ -6,12 +6,6 @@ module MyAcademics
 
     def merge(data)
       college_and_level = hub_college_and_level
-      if college_and_level[:empty] && !current_term.is_summer
-        legacy_college_and_level = bearfacts_college_and_level
-        if !legacy_college_and_level[:empty]
-          college_and_level = legacy_college_and_level
-        end
-      end
 
       # If we have no profile at all, consider the no-profile to be active for the current term.
       if college_and_level[:empty]
@@ -19,25 +13,9 @@ module MyAcademics
         college_and_level[:isCurrent] = true
       else
         # The key name is a bit misleading, since the profile might be for a future term.
-        # TODO Use this in place of the overly complex 'isProfileCurrent' front-end logic.
         college_and_level[:isCurrent] = !profile_in_past?(college_and_level)
       end
       data[:collegeAndLevel] = college_and_level
-    end
-
-    def bearfacts_college_and_level
-      response = Bearfacts::Profile.new(user_id: @uid).get
-      # response is a pointer to an obj in memory and should not be modified, other functions may need to use it later
-      result = response.clone
-      feed = result.delete :feed
-      # The Bear Facts API can return empty profiles if the user is no longer (or not yet) considered an active student.
-      # Partial profiles can be returned for incoming students around the start of the term.
-      if (feed.nil? || feed['studentProfile']['studentGeneralProfile'].blank? || feed['studentProfile']['ugGradFlag'].blank?)
-        result[:empty] = true
-      else
-        result.merge! parse_bearfacts_feed(feed)
-      end
-      result
     end
 
     def hub_college_and_level
@@ -169,88 +147,6 @@ module MyAcademics
         term['name'] = Berkeley::TermCodes.normalized_english term.try(:[], 'name')
       end
       term
-    end
-
-    def parse_bearfacts_feed(feed)
-      careers = []
-      ug_grad_flag = feed['studentProfile']['ugGradFlag'].to_text
-      case ug_grad_flag.upcase
-        when 'U'
-          careers << 'Undergraduate'
-        when 'G'
-          careers << 'Graduate'
-        else
-          logger.error("Unknown ugGradFlag '#{ug_grad_flag}' for user #{@uid}")
-          return {}
-      end
-
-      general_profile = feed['studentProfile']['studentGeneralProfile']
-
-      level = general_profile['corpEducLevel'].to_text.titleize
-      nonAPLevel = general_profile['nonAPLevel'].to_text.titleize
-      futureTBLevel = general_profile['futureTBLevel'].to_text.titleize
-
-      majors = []
-      primary_college_abbv = general_profile['collegePrimary'].to_text
-      primary_college = Berkeley::Colleges.get(primary_college_abbv)
-      primary_major = Berkeley::Majors.get(general_profile['majorPrimary'].to_text)
-
-      # this code block is not very DRY, but that makes it easier to understand the wacky requirements. See CLC-2017 for background.
-      if primary_college_abbv.in?(['GRAD DIV', 'LAW', 'CONCURNT'])
-        if primary_major == 'Double' || primary_major == 'Triple'
-          majors << {
-            college: (general_profile['collegeSecond'].blank? ? primary_college : Berkeley::Colleges.get(general_profile['collegeSecond'].to_text)),
-            major: Berkeley::Majors.get(general_profile['majorSecond'].to_text)
-          }
-          majors << {
-            college: Berkeley::Colleges.get(general_profile['collegeThird'].to_text),
-            major: Berkeley::Majors.get(general_profile['majorThird'].to_text)
-          }
-          if primary_major == 'Triple'
-            majors << {
-              college: Berkeley::Colleges.get(general_profile['collegeFourth'].to_text),
-              major: Berkeley::Majors.get(general_profile['majorFourth'].to_text)
-            }
-          end
-        else
-          majors << {
-            college: primary_college,
-            major: primary_major
-          }
-        end
-      else
-        if primary_major == 'Double' || primary_major == 'Triple'
-          majors << {
-            college: primary_college,
-            major: Berkeley::Majors.get(general_profile['majorSecond'].to_text)
-          }
-          majors << {
-            college: '',
-            major: Berkeley::Majors.get(general_profile['majorThird'].to_text)
-          }
-          if primary_major == 'Triple'
-            majors << {
-              college: '',
-              major: Berkeley::Majors.get(general_profile['majorFourth'].to_text)
-            }
-          end
-        else
-          majors << {
-            college: primary_college,
-            major: primary_major
-          }
-        end
-      end
-      term_name = "#{feed['studentProfile']['termName'].to_text} #{feed['studentProfile']['termYear'].to_text}"
-      feed = {
-        careers: careers,
-        level: level,
-        futureTelebearsLevel: futureTBLevel,
-        majors: majors,
-        termName: term_name
-      }
-      feed[:nonApLevel] = nonAPLevel if nonAPLevel.present? && nonAPLevel != level
-      feed
     end
 
     def get_academic_status

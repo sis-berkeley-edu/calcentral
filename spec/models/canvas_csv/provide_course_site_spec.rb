@@ -639,9 +639,6 @@ describe CanvasCsv::ProvideCourseSite do
     end
 
     context 'course data from fake Oracle MV', :if => CampusOracle::Connection.test_data? do
-      before do
-        allow_any_instance_of(Bearfacts::Proxy).to receive(:lookup_student_id).and_return nil
-      end
       let(:candidate_courses_list) { CanvasCsv::ProvideCourseSite.new('238382').candidate_courses_list }
 
       it 'should properly format the candidate courses list' do

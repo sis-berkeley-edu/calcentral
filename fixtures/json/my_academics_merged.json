@@ -14,11 +14,6 @@
     "termName": "Fall 2016",
     "isCurrent": true
   },
-  "transitionTerm": {
-    "registered": false,
-    "termName": "Summer 2016",
-    "isProfileCurrent": true
-  },
   "gpaUnits": {
     "cumulativeGpa": "3.198",
     "totalUnits": 130.3,

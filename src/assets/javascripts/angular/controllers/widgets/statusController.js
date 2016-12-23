@@ -139,18 +139,6 @@ angular.module('calcentral.controllers').controller('StatusController', function
     });
   };
 
-  var loadActivity = function(data) {
-    if (data.activities) {
-      $scope.countUndatedFinaid = data.activities.filter(function(element) {
-        return element.date === '' && element.emitter === 'Financial Aid' && element.type === 'alert';
-      }).length;
-      if ($scope.countUndatedFinaid) {
-        $scope.count += $scope.countUndatedFinaid;
-        $scope.hasAlerts = true;
-      }
-    }
-  };
-
   var loadHolds = function(data) {
     if (!apiService.user.profile.features.csHolds ||
       !(apiService.user.profile.roles.student || apiService.user.profile.roles.applicant)) {
@@ -214,8 +202,7 @@ angular.module('calcentral.controllers').controller('StatusController', function
       if (includeFinancial) {
         var getCarsFinances = financesFactory.getFinances().success(loadCarsFinances);
         var getCsFinances = financesFactory.getCsFinances().success(loadCsFinances);
-        var getFinaidActivityOld = activityFactory.getFinaidActivityOld().then(loadActivity);
-        statusGets.push(getCarsFinances, getCsFinances, getFinaidActivityOld);
+        statusGets.push(getCarsFinances, getCsFinances);
       }
 
       // Make sure to hide the spinner when everything is loaded
