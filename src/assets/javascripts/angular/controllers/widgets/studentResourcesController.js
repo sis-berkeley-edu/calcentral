@@ -3,7 +3,7 @@
 var angular = require('angular');
 var _ = require('lodash');
 
-angular.module('calcentral.controllers').controller('StudentResourcesController', function(apiService, linkService, studentResourcesFactory, $scope) {
+angular.module('calcentral.controllers').controller('StudentResourcesController', function(apiService, linkService, academicStatusFactory, studentResourcesFactory, $scope) {
   $scope.isLoading = true;
 
   var backToText = 'My Dashboard';
@@ -23,21 +23,23 @@ angular.module('calcentral.controllers').controller('StudentResourcesController'
     $scope.isLawStudent = apiService.user.profile.roles.law;
     $scope.isGraduateStudent = apiService.user.profile.roles.graduate;
     $scope.isUndergraduate = apiService.user.profile.roles.undergrad;
-    $scope.isSummerVisitor = apiService.academics.roles.summerVisitor;
   };
 
-  var getAcademics = function() {
-    return apiService.academics.fetch();
+  var loadAcademicRoles = function() {
+    return academicStatusFactory.getAcademicRoles()
+      .then(function(data) {
+        $scope.isSummerVisitor = data.roles.summerVisitor;
+      });
   };
 
   var loadInformation = function() {
-    getAcademics()
-    .then(loadStudentResources)
-    .then(parseStudentResources)
-    .then(setStudentRole)
-    .then(function() {
-      $scope.isLoading = false;
-    });
+    loadAcademicRoles()
+      .then(loadStudentResources)
+      .then(parseStudentResources)
+      .then(setStudentRole)
+      .then(function() {
+        $scope.isLoading = false;
+      });
   };
 
   loadInformation();

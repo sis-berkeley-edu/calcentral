@@ -1,5 +1,6 @@
 'use strict';
 
+var _ = require('lodash');
 var angular = require('angular');
 
 /**
@@ -10,12 +11,41 @@ angular.module('calcentral.factories').factory('academicStatusFactory', function
   var urlAcademicStatus = '/api/edos/academic_status';
   var urlAdvisingAcademicStatus = '/api/advising/academic_status/';
 
-  var getAcademicStatus = function(options) {
+  var parseAcademicRoles = function(data) {
+    var roles = _.get(data, 'data.feed.student.roles');
+    var isError = _.get(data, 'data.errored');
+    return {
+      roles: roles || {},
+      isError: isError
+    };
+  };
+
+  var parseHolds = function(data) {
+    var holds = _.get(data, 'data.feed.student.holds');
+    var isError = _.get(data, 'data.errored');
+    return {
+      holds: holds || [],
+      isError: isError
+    };
+  };
+
+  var fetch = function(options) {
     var url = $route.current.isAdvisingStudentLookup ? urlAdvisingAcademicStatus + $routeParams.uid : urlAcademicStatus;
     return apiService.http.request(options, url);
   };
 
+  var getAcademicRoles = function(options) {
+    return fetch(options)
+      .then(parseAcademicRoles);
+  };
+
+  var getHolds = function(options) {
+    return fetch(options)
+      .then(parseHolds);
+  };
+
   return {
-    getAcademicStatus: getAcademicStatus
+    getAcademicRoles: getAcademicRoles,
+    getHolds: getHolds
   };
 });

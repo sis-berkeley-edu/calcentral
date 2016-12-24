@@ -172,13 +172,16 @@ angular.module('calcentral.controllers').controller('UserOverviewController', fu
   };
 
   var loadHolds = function() {
-    academicStatusFactory.getAcademicStatus({
+    var options = {
       uid: $routeParams.uid
-    }).success(function(data) {
-      $scope.holds = _.get(data, 'data.feed.student.holds');
-    }).finally(function() {
-      $scope.holdsInfo.isLoading = false;
-    });
+    };
+    return academicStatusFactory.getHolds(options)
+      .then(function(data) {
+        $scope.holds = data.holds;
+      })
+      .finally(function() {
+        $scope.holdsInfo.isLoading = false;
+      });
   };
 
   var loadRegistrations = function() {

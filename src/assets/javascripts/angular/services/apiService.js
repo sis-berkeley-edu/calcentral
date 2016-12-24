@@ -3,7 +3,6 @@
 var angular = require('angular');
 
 angular.module('calcentral.services').service('apiService', function(
-  academicsService,
   analyticsService,
   authService,
   apiEventService,
@@ -21,7 +20,6 @@ angular.module('calcentral.services').service('apiService', function(
   widgetService) {
   // API
   var api = {
-    academics: academicsService,
     analytics: analyticsService,
     auth: authService,
     events: apiEventService,
