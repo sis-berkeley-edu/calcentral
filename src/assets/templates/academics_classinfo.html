@@ -101,7 +101,8 @@
               <div class="small-9 columns">
                 <div data-ng-repeat="schedule in section.schedules.recurring" data-ng-if="section.schedules.recurring" class="cc-academics-schedule-room">
                   <span data-ng-bind="schedule.schedule"></span> |
-                  <span data-ng-bind="schedule.roomNumber"></span> <span data-ng-bind="schedule.buildingName"></span> <br>
+                  <span data-ng-if="schedule.roomNumber" data-ng-bind="schedule.roomNumber"></span> <span data-ng-if="schedule.buildingName" data-ng-bind="schedule.buildingName"></span>
+                  <span data-ng-if="!schedule.roomNumber && !schedule.buildingName">Classroom Not Assigned</span> <br>
                 </div>
               </div>
             </div>
