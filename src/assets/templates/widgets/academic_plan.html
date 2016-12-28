@@ -2,9 +2,13 @@
   <div class="cc-widget-title">
     <h2 class="cc-left">Academic Plan</h2>
   </div>
-  <div class="cc-widget-padding" data-ng-if="updatePlanUrl">
+  <div class="cc-widget-padding" data-ng-if="updatePlanUrl.url">
     <h3>
-      <a class="cc-academics-semester-title-link" data-ng-href="{{updatePlanUrl}}">Update multi-year planner</a>
+      <div data-cc-campus-solutions-link-item-directive
+        data-link="updatePlanUrl"
+        data-text="Update Multi-Year Planner"
+        data-cache="advisingAcademics"
+        data-ng-click="expireAcademicsCache()"></div>
     </h3>
   </div>
 
@@ -154,4 +158,3 @@
       </div>
     </ul>
 </div>
-

@@ -1,11 +1,12 @@
 module MyAcademics
   class AcademicPlan < UserSpecificModel
     include AdvisingAcademicPlannerFeatureFlagged
+    include User::Student
 
     def merge(data)
       if is_feature_enabled
-        update_url_proxy = CampusSolutions::AcademicPlan.new(user_id: @uid).get
-        data[:updatePlanUrl] = update_url_proxy.try(:[], :feed).try(:[], :updateAcademicPlanner).try(:[], :url)
+        update_url_proxy = CampusSolutions::Link.new.get_url('UC_CX_PLANNER_ADV_STDNT', {:EMPLID => campus_solutions_id}).try(:[], :link)
+        data[:updatePlanUrl] = update_url_proxy
         data[:planSemesters] = get_plan_semesters(data[:semesters])
       end
     end

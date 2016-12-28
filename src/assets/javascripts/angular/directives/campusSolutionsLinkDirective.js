@@ -11,7 +11,7 @@ var angular = require('angular');
  *   data-cc-campus-solutions-link-directive="testUrl" // CS URL
  *   data-cc-campus-solutions-link-directive-enabled="{{item.isCsLink}}" // Default is true, if set to false, we don't execute this directive
  *   data-cc-campus-solutions-link-directive-text="backToText" // For the 'Back to ...'' text in CS
- *   data-cc-campus-solutions-link-directive-cache="'finaid'" // Will add an addition querystring to the back to link to expire the cache (e.g. 'finaid' or 'profile')
+ *   data-cc-campus-solutions-link-directive-cache="finaid" // Will add an addition querystring to the back to link to expire the cache (e.g. 'finaid' or 'profile' - see bootsrap_controller.rb)
  */
 angular.module('calcentral.directives').directive('ccCampusSolutionsLinkDirective', function($compile, $location, $parse) {
   /**
@@ -90,4 +90,3 @@ angular.module('calcentral.directives').directive('ccCampusSolutionsLinkDirectiv
     }
   };
 });
-

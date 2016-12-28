@@ -12,6 +12,7 @@ angular.module('calcentral.factories').factory('advisingFactory', function(apiSe
   // var urlAdvisingStudent = '/dummy/json/advising_student_academics.json';
   var urlAdvisingAcademics = '/api/advising/academics/';
   // var urlAdvisingAcademics = '/dummy/json/advising_student_academics.json?';
+  var urlAdvisingAcademicsCacheExpiry = '/api/advising/cache_expiry/academics/';
   var urlAdvisingResources = '/api/advising/resources/';
   // var urlAdvisingResources = '/dummy/json/advising_resources.json';
   var urlAdvisingRegistrations = '/api/advising/registrations/';
@@ -55,6 +56,10 @@ angular.module('calcentral.factories').factory('advisingFactory', function(apiSe
     return apiService.http.request(options, urlAdvisingDegreeProgressUndergrad + options.uid);
   };
 
+  var expireAcademicsCache = function(options) {
+    return apiService.http.request(options, urlAdvisingAcademicsCacheExpiry + options.uid);
+  };
+
   return {
     getAdvisingResources: getAdvisingResources,
     getResources: getResources,
@@ -63,6 +68,7 @@ angular.module('calcentral.factories').factory('advisingFactory', function(apiSe
     getStudentRegistrations: getStudentRegistrations,
     getStudentSuccess: getStudentSuccess,
     getDegreeProgressGraduate: getDegreeProgressGraduate,
-    getDegreeProgressUndergrad: getDegreeProgressUndergrad
+    getDegreeProgressUndergrad: getDegreeProgressUndergrad,
+    expireAcademicsCache: expireAcademicsCache
   };
 });
