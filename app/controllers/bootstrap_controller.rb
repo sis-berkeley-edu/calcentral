@@ -46,6 +46,7 @@ class BootstrapController < ApplicationController
     # Sent from Campus Solutions Fluid UI when returning to CalCentral from
     # a Fluid activity that may have changed some data.
     flag = params['ucUpdateCache']
+    url = params['url']
     case flag
       when 'finaid'
         CampusSolutions::FinancialAidExpiry.expire current_user.user_id
@@ -53,6 +54,11 @@ class BootstrapController < ApplicationController
         CampusSolutions::PersonDataExpiry.expire current_user.user_id
       when 'enrollment'
         CampusSolutions::EnrollmentTermExpiry.expire current_user.user_id
+      when 'advisingAcademics'
+        # Since current_user does not know the student-overview UID the advisor is looking-up, we strip it from the URL
+        if (student_uid = url[/[0-9]+/])
+          MyAcademics::FilteredForAdvisor.expire student_uid
+        end
       else
         # no-op
     end
