@@ -162,8 +162,7 @@ module EdoOracle
         )
         WHERE
           sec."term-id" = '#{term_id}' AND
-          sec."id" = '#{section_id}' AND
-          mtg."location-code" IS NOT NULL
+          sec."id" = '#{section_id}'
         ORDER BY meeting_start_date, meeting_start_time
       SQL
     end
