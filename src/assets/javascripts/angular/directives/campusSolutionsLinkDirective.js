@@ -3,12 +3,23 @@
 var angular = require('angular');
 
 /**
- * Directive for Campus Solutions links
- * This will allow for the 'Back to CalCentral' branding in Campus Solutions
+ * Low level directive for Campus Solutions links
+ *
+ * Allows for the 'Back to CalCentral' branding in Campus Solutions
  * and have a way to refresh the cache for CS specific items
  *
+ * ********************************************************************************
+ * Note: Use of the ccCampusSolutionsLinkItemDirective is recommended for links
+ * provided directly by the Campus Solutions Link API (CampusSolutions::Link)
+ *
+ * Only use this directive to render a Campus Solutions link that is manually
+ * configured or is required to defy the conventions of the CS Link API.
+ * ********************************************************************************
+ *
  * Usage:
- *   data-cc-campus-solutions-link-directive="testUrl" // CS URL
+ *   <div data-cc-campus-solutions-link-directive="csLinkUrl"></div>
+ *
+ *   data-cc-campus-solutions-link-directive="csLinkUrl" // CS URL
  *   data-cc-campus-solutions-link-directive-enabled="{{item.isCsLink}}" // Default is true, if set to false, we don't execute this directive
  *   data-cc-campus-solutions-link-directive-text="backToText" // For the 'Back to ...'' text in CS
  *   data-cc-campus-solutions-link-directive-cache="finaid" // Will add an addition querystring to the back to link to expire the cache (e.g. 'finaid' or 'profile' - see bootsrap_controller.rb)

@@ -7,7 +7,6 @@ var _ = require('lodash');
  * Tasks controller
  */
 angular.module('calcentral.controllers').controller('TasksController', function(apiService, linkService, tasksFactory, $http, $interval, $filter, $scope) {
-  var backToText = 'My Dashboard';
   // Initial mode for Tasks view
   $scope.currentTaskMode = 'scheduled';
   $scope.taskModes = ['scheduled', 'unscheduled', 'completed'];
@@ -66,7 +65,7 @@ angular.module('calcentral.controllers').controller('TasksController', function(
       apiService.updatedFeeds.feedLoaded(data);
       angular.extend($scope, data);
       if (_.get($scope, 'tasks')) {
-        linkService.addBackToTextToResources($scope.tasks, backToText);
+        linkService.addBackToTextToResources($scope.tasks, $scope.currentPage.name);
       }
       if ($scope.tasks) {
         $scope.updateTaskLists();

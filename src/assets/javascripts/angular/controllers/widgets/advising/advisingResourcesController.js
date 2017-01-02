@@ -12,22 +12,20 @@ angular.module('calcentral.controllers').controller('AdvisingResourcesController
     isLoading: true
   };
 
-  var backToText = 'My Dashboard';
-
   /**
    * Add the back to text
    */
   var addBackToText = function(resources) {
     if (_.get(resources, 'ucAdvisingResources.ucAdvisingFavoriteReports.length')) {
-      linkService.addBackToTextToResources(resources.ucAdvisingResources.ucAdvisingFavoriteReports, backToText);
+      linkService.addBackToTextToResources(resources.ucAdvisingResources.ucAdvisingFavoriteReports, $scope.currentPage.name);
     }
 
     if (_.get(resources, '.links')) {
-      linkService.addBackToTextToResources(resources.links, backToText);
+      linkService.addBackToTextToResources(resources.links, $scope.currentPage.name);
     }
 
     if (_.get(resources, 'csLinks')) {
-      linkService.addBackToTextToResources(resources.csLinks, backToText);
+      linkService.addBackToTextToResources(resources.csLinks, $scope.currentPage.name);
     }
   };
 

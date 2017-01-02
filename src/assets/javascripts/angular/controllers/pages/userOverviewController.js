@@ -7,6 +7,8 @@ var _ = require('lodash');
  * Preview of user profile prior to viewing-as
  */
 angular.module('calcentral.controllers').controller('UserOverviewController', function(academicsService, adminService, advisingFactory, academicStatusFactory, apiService, enrollmentVerificationFactory, linkService, statusHoldsService, studentAttributesFactory, $route, $routeParams, $scope) {
+  linkService.addCurrentRouteSettings($scope);
+
   $scope.expectedGradTerm = academicsService.expectedGradTerm;
   $scope.academics = {
     isLoading: true,
@@ -76,19 +78,17 @@ angular.module('calcentral.controllers').controller('UserOverviewController', fu
     $scope.statusHoldsBlocks.enabledSections = enabledSections;
   });
 
-  var backToText = 'Student Overview';
-
   var parseAdvisingResources = function(data) {
     var resources = $scope.ucAdvisingResources;
 
     angular.extend(resources, _.get(data, 'data.feed'));
 
     if (_.get(resources, 'links')) {
-      linkService.addBackToTextToResources(resources.links, backToText);
+      linkService.addBackToTextToResources(resources.links, $scope.currentPage.name);
     }
 
     if (_.get(resources, 'csLinks')) {
-      linkService.addBackToTextToResources(resources.csLinks, backToText);
+      linkService.addBackToTextToResources(resources.csLinks, $scope.currentPage.name);
     }
 
     resources.isLoading = false;
@@ -161,7 +161,7 @@ angular.module('calcentral.controllers').controller('UserOverviewController', fu
         };
       }
       if (!!_.get($scope, 'updatePlanUrl.url')) {
-        linkService.addBackToTextToLink($scope.updatePlanUrl, backToText);
+        linkService.addBackToTextToLink($scope.updatePlanUrl, $scope.currentPage.name);
       }
     }).error(function(data, status) {
       $scope.academics.error = errorReport(status, data.error);

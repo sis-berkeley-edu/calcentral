@@ -9,7 +9,6 @@ var _ = require('lodash');
 angular.module('calcentral.controllers').controller('MyAdvisingController', function(academicsFactory, advisingFactory, myAdvisingFactory, userService, $route, $routeParams, $scope, $q) {
   $scope.myAdvising = {
     isLoading: true,
-    backToText: 'My Academics',
     roles: {}
   };
 

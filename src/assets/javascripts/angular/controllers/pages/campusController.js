@@ -6,7 +6,6 @@ var angular = require('angular');
  * Campus controller
  */
 angular.module('calcentral.controllers').controller('CampusController', function(apiService, campusLinksFactory, $routeParams, $scope) {
-
   var setPageTitle = function(topCategory) {
     apiService.util.setTitle('Campus - ' + topCategory);
   };

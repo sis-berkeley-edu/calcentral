@@ -6,7 +6,9 @@ var angular = require('angular');
 /**
  * Profile controller
  */
-angular.module('calcentral.controllers').controller('ProfileController', function(apiService, profileMenuService, $routeParams, $scope) {
+angular.module('calcentral.controllers').controller('ProfileController', function(apiService, linkService, profileMenuService, $routeParams, $scope) {
+  linkService.addCurrentRouteSettings($scope);
+
   /**
    * Find the category object when we get a categoryId back
    */
