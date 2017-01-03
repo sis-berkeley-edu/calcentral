@@ -8,8 +8,8 @@
         <img data-cc-load-error-directive="photo" class="cc-visuallyhidden" data-ng-src="/api/my/photo">
       </span>
       <span data-ng-if="photo.loadError" class="cc-popover-gear-round-profile cc-popover-gear-round-profile-bear-photo"></span>
-      <span data-ng-bind="api.user.profile.firstName" class="cc-popover-gear-first-name" data-ng-class="{'cc-popover-gear-has-alerts': hasAlerts && !api.user.profile.delegateActingAsUid && !api.user.profile.advisorActingAsUid}"></span>
-      <span data-ng-if="!api.user.profile.delegateActingAsUid && !api.user.profile.advisorActingAsUid">
+      <span data-ng-bind="api.user.profile.firstName" class="cc-popover-gear-first-name" data-ng-class="{'cc-popover-gear-has-alerts': hasAlerts && !api.user.profile.delegateActingAsUid}"></span>
+      <span data-ng-if="!api.user.profile.delegateActingAsUid">
         <span class="cc-visuallyhidden">.</span>
         <span data-ng-if="hasAlerts" class="cc-icon-status-person-layover cc-icon-status-person-layover-red">
           <span data-ng-bind="count"></span><span class="cc-visuallyhidden"> active alerts.</span>
@@ -30,7 +30,7 @@
         data-cc-loading-process="Loading..."
         data-ng-if="statusLoading">
       </div>
-      <div data-ng-if="!statusLoading && !api.user.profile.delegateActingAsUid && !api.user.profile.advisorActingAsUid && (count !== 0 || hasBillingData || hasRegistrationData)">
+      <div data-ng-if="!statusLoading && !api.user.profile.delegateActingAsUid && (count !== 0 || hasBillingData || hasRegistrationData)">
         <div class="cc-popover-title">
           <h4>Status</h4>
         </div>
