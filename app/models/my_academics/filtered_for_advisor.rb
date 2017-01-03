@@ -2,6 +2,7 @@ module MyAcademics
   class FilteredForAdvisor < UserSpecificModel
     include Cache::CachedFeed
     include Cache::JsonifiedFeed
+    include Cache::UserCacheExpiry
     include MergedModel
 
     # Advisors do not see Teaching or Course Website (aka CanvasSites) data.
