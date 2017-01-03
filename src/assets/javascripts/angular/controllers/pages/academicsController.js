@@ -11,6 +11,9 @@ angular.module('calcentral.controllers').controller('AcademicsController', funct
   var title = 'My Academics';
   apiService.util.setTitle(title);
   $scope.backToText = title;
+  $scope.academicStatus = {
+    roles: {}
+  };
   $scope.academics = {
     isLoading: true
   };
@@ -157,8 +160,11 @@ angular.module('calcentral.controllers').controller('AcademicsController', funct
     }
   };
 
-  var loadNumberOfHolds = function(data) {
-    $scope.numberOfHolds = _.get(data, 'feed.student.holds.length');
+  var loadNumberOfHolds = function() {
+    return academicStatusFactory.getHolds()
+      .then(function(data) {
+        $scope.numberOfHolds = _.get(data, 'holds.length');
+      });
   };
 
   var loadRegistrations = function(data) {
@@ -172,7 +178,7 @@ angular.module('calcentral.controllers').controller('AcademicsController', funct
     $scope.isLSStudent = academicsService.isLSStudent($scope.collegeAndLevel);
     $scope.isUndergraduate = _.includes(_.get($scope.collegeAndLevel, 'careers'), 'Undergraduate');
     $scope.hasTeachingClasses = academicsService.hasTeachingClasses(data.teachingSemesters);
-    $scope.canViewFinalExamSchedule = $scope.api.user.profile.roles.student && !$scope.api.user.profile.delegateActingAsUid && !$scope.collegeAndLevel.roles.summerVisitor;
+    $scope.canViewFinalExamSchedule = $scope.api.user.profile.roles.student && !$scope.api.user.profile.delegateActingAsUid && !$scope.academicStatus.roles.summerVisitor;
 
     // Get selected semester from URL params and extract data from semesters array
     var semesterSlug = ($routeParams.semesterSlug || $routeParams.teachingSemesterSlug);
@@ -202,7 +208,7 @@ angular.module('calcentral.controllers').controller('AcademicsController', funct
     $scope.showLegacyAdvising = !$scope.filteredForDelegate && $scope.api.user.profile.features.legacyAdvising && $scope.isLSStudent;
     $scope.showAdvising = !$scope.filteredForDelegate && apiService.user.profile.features.advising && apiService.user.profile.roles.student && isMbaJdOrNotLaw();
     $scope.showProfileMessage = (!$scope.isAcademicInfoAvailable || !$scope.collegeAndLevel || _.isEmpty($scope.collegeAndLevel.careers));
-    $scope.showResidency = apiService.user.profile.roles.student && !$scope.collegeAndLevel.roles.summerVisitor && hasResidency();
+    $scope.showResidency = apiService.user.profile.roles.student && !$scope.academicStatus.roles.summerVisitor && hasResidency();
   };
 
   /**
@@ -210,14 +216,21 @@ angular.module('calcentral.controllers').controller('AcademicsController', funct
    * @return {Boolean} Returns true when student is MBA/JD or Not a Law Student
    */
   var isMbaJdOrNotLaw = function() {
-    if (!$scope.collegeAndLevel.roles.law || ($scope.collegeAndLevel.roles.law && $scope.collegeAndLevel.roles.haasMbaJurisDoctor)) {
+    if (!$scope.academicStatus.roles.law || ($scope.academicStatus.roles.law && $scope.academicStatus.roles.haasMbaJurisDoctor)) {
       return true;
     }
     return false;
   };
 
   var hasResidency = function() {
-    return (!$scope.collegeAndLevel.roles.haasMastersFinEng && !$scope.collegeAndLevel.roles.haasExecMba && !$scope.collegeAndLevel.roles.haasEveningWeekendMba);
+    return (!$scope.academicStatus.roles.haasMastersFinEng && !$scope.academicStatus.roles.haasExecMba && !$scope.academicStatus.roles.haasEveningWeekendMba);
+  };
+
+  var loadAcademicRoles = function() {
+    return academicStatusFactory.getAcademicRoles()
+      .then(function(data) {
+        $scope.academicStatus.roles = _.get(data, 'roles');
+      });
   };
 
   // Wait until user profile is fully loaded before hitting academics data
@@ -226,13 +239,11 @@ angular.module('calcentral.controllers').controller('AcademicsController', funct
       $scope.canViewAcademics = $scope.api.user.profile.hasAcademicsTab;
       var getAcademics = academicsFactory.getAcademics().success(parseAcademics);
       var getRegistrations = registrationsFactory.getRegistrations().success(loadRegistrations);
-      var requests = [getAcademics, getRegistrations];
-      var getNumberOfHolds;
+      var requests = [loadAcademicRoles(), getAcademics, getRegistrations];
 
       if ($scope.api.user.profile.features.csHolds &&
         ($scope.api.user.profile.roles.student || $scope.api.user.profile.roles.applicant)) {
-        getNumberOfHolds = academicStatusFactory.getAcademicStatus().success(loadNumberOfHolds);
-        requests.push(getNumberOfHolds);
+        requests.push(loadNumberOfHolds());
       }
       $q.all(requests).then(filterWidgets);
     }

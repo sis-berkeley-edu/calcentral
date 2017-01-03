@@ -6,7 +6,7 @@ var angular = require('angular');
 /**
  * Profile Menu Serives - provide all the information for the profile menu
  */
-angular.module('calcentral.services').factory('profileMenuService', function(apiService, $q) {
+angular.module('calcentral.services').factory('profileMenuService', function(apiService, academicStatusFactory, $q) {
   var navigation = [
     {
       label: 'Profile',
@@ -119,6 +119,7 @@ angular.module('calcentral.services').factory('profileMenuService', function(api
       ]
     }
   ];
+  var academicRoles = {};
 
   /**
    * Wrap callbacks into a promise
@@ -150,7 +151,6 @@ angular.module('calcentral.services').factory('profileMenuService', function(api
   };
 
   var hasBlacklistedRole = function(categoryRoles) {
-    var academicRoles = apiService.academics.roles;
     return _.some(academicRoles, function(hasRole, role) {
       return hasRole && categoryRoles[role] === false;
     });
@@ -241,13 +241,16 @@ angular.module('calcentral.services').factory('profileMenuService', function(api
     });
   };
 
-  var getAcademics = function() {
-    return apiService.academics.fetch();
+  var loadAcademicRoles = function() {
+    return academicStatusFactory.getAcademicRoles()
+      .then(function(data) {
+        academicRoles = _.get(data, 'roles');
+      });
   };
 
   var getNavigation = function() {
     return apiService.user.fetch()
-      .then(getAcademics)
+      .then(loadAcademicRoles)
       .then(initialNavigation)
       .then(filterRoles)
       .then(filterFeatureFlags)

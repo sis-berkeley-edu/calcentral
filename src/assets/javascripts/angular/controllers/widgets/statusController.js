@@ -139,23 +139,29 @@ angular.module('calcentral.controllers').controller('StatusController', function
     });
   };
 
-  var loadHolds = function(data) {
+  var loadHolds = function() {
+    var deferred;
+
     if (!apiService.user.profile.features.csHolds ||
       !(apiService.user.profile.roles.student || apiService.user.profile.roles.applicant)) {
-      return;
+      deferred = $q.defer();
+      deferred.resolve();
+      return deferred.promise;
     }
-    $scope.holds = _.get(data, 'data.feed.student.holds');
-    var numberOfHolds = _.get($scope, 'holds.length');
-    if (numberOfHolds) {
-      $scope.count += numberOfHolds;
-      $scope.hasAlerts = true;
-    } else if (_.get(data, 'data.errored')) {
-      $scope.holds = {
-        errored: true
-      };
-      $scope.count++;
-      $scope.hasWarnings = true;
-    }
+    return academicStatusFactory.getHolds()
+      .then(function(data) {
+        if (data.isError) {
+          $scope.holds = {
+            errored: true
+          };
+          $scope.count++;
+          $scope.hasWarnings = true;
+        } else {
+          $scope.holds = _.get(data, 'holds');
+          $scope.count += _.get(data, 'holds.length');
+          $scope.hasAlerts = true;
+        }
+      });
   };
 
   var finishLoading = function() {
@@ -192,10 +198,9 @@ angular.module('calcentral.controllers').controller('StatusController', function
       $scope.photo = {};
 
       // Get all the necessary data from the different factories
-      var getHolds = academicStatusFactory.getAcademicStatus().then(loadHolds);
       var getRegistrations = registrationsFactory.getRegistrations().then(parseRegistrations);
       var getStudentAttributes = studentAttributesFactory.getStudentAttributes().then(parseStudentAttributes);
-      var statusGets = [getHolds, getRegistrations, getStudentAttributes];
+      var statusGets = [loadHolds(), getRegistrations, getStudentAttributes];
 
       // Only fetch financial data for delegates who have been given explicit permssion.
       var includeFinancial = (!apiService.user.profile.delegateActingAsUid || apiService.user.profile.delegateViewAsPrivileges.financial);

@@ -11,15 +11,22 @@ angular.module('calcentral.controllers').controller('HoldsController', function(
     isLoading: true
   };
 
-  var init = function(options) {
-    academicStatusFactory.getAcademicStatus(options).then(function(data) {
-      $scope.holdsInfo.isLoading = false;
-      $scope.holds = _.get(data, 'data.feed.student.holds');
-    });
+  var loadHolds = function() {
+    return academicStatusFactory.getHolds()
+      .then(function(data) {
+        $scope.holds = _.get(data, 'holds');
+      })
+      .finally(function() {
+        $scope.holdsInfo.isLoading = false;
+      });
+  };
 
+  var init = function() {
     if ($route.current.isAdvisingStudentLookup) {
       $scope.holds = $scope.$parent.holds;
       $scope.holdsInfo = $scope.$parent.holdsInfo;
+    } else {
+      loadHolds();
     }
   };
 
