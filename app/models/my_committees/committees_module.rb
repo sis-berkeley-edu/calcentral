@@ -86,7 +86,8 @@ module MyCommittees::CommitteesModule
   def parse_cs_committee_members (cs_committee, include_inactive)
     committee_members_result = get_empty_committee_members
     cs_committee_members = filter_members(cs_committee[:committeeMembers], include_inactive)
-    cs_committee_members.try(:each) do |cs_committee_member|
+    cs_sorted_members = cs_committee_members.try(:sort_by) { |member| [ member[:memberNameLast] || '', member[:memberNameFirst] || ''] }
+    cs_sorted_members.try(:each) do |cs_committee_member|
       if cs_committee_member && cs_committee_member[:memberRole]
         # Assign the key of committee member based on role code in cs data
         role_key = get_cs_committee_role_key(cs_committee_member[:memberRole])
