@@ -160,6 +160,9 @@ angular.module('calcentral.controllers').controller('UserOverviewController', fu
           studentUid: $routeParams.uid
         };
       }
+      if (!!$scope.updatePlanUrl.url) {
+        linkService.addBackToTextToLink($scope.updatePlanUrl, backToText);
+      }
     }).error(function(data, status) {
       $scope.academics.error = errorReport(status, data.error);
     }).finally(function() {
@@ -295,6 +298,12 @@ angular.module('calcentral.controllers').controller('UserOverviewController', fu
           _.merge($scope.regStatus.messages, statusHoldsService.getRegStatusMessages(messages));
         }
       });
+  };
+
+  $scope.expireAcademicsCache = function() {
+    advisingFactory.expireAcademicsCache({
+      uid: $routeParams.uid
+    });
   };
 
   $scope.showCNP = function(registration) {

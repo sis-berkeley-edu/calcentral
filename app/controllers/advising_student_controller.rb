@@ -68,6 +68,11 @@ class AdvisingStudentController < ApplicationController
     render json: HubEdos::StudentAttributes.new(user_id: student_uid_param).get
   end
 
+  def academics_cache_expiry
+    MyAcademics::FilteredForAdvisor.expire student_uid_param
+    render :nothing => true
+  end
+
   private
 
   def authorize_for_student
