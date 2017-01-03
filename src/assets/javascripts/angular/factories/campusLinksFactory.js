@@ -141,7 +141,7 @@ angular.module('calcentral.factories').factory('campusLinksFactory', function(ap
   var loadAcademicRoles = function() {
     return academicStatusFactory.getAcademicRoles()
       .then(function(data) {
-        academicRoles = data.roles;
+        academicRoles = _.get(data, 'roles');
       });
   };
 

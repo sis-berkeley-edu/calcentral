@@ -1,6 +1,7 @@
 'use strict';
 
 var angular = require('angular');
+var _ = require('lodash');
 
 /**
  * My Finances controller
@@ -15,7 +16,7 @@ angular.module('calcentral.controllers').controller('MyFinancesController', func
   var loadAcademicRoles = function() {
     return academicStatusFactory.getAcademicRoles()
       .then(function(data) {
-        $scope.academicStatus.roles = data.roles;
+        $scope.academicStatus.roles = _.get(data, 'roles');
       });
   };
 

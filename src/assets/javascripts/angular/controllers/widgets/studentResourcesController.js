@@ -28,7 +28,7 @@ angular.module('calcentral.controllers').controller('StudentResourcesController'
   var loadAcademicRoles = function() {
     return academicStatusFactory.getAcademicRoles()
       .then(function(data) {
-        $scope.isSummerVisitor = data.roles.summerVisitor;
+        $scope.isSummerVisitor = _.get(data, 'roles.summerVisitor');
       });
   };
 

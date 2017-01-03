@@ -163,7 +163,7 @@ angular.module('calcentral.controllers').controller('AcademicsController', funct
   var loadNumberOfHolds = function() {
     return academicStatusFactory.getHolds()
       .then(function(data) {
-        $scope.numberOfHolds = data.holds.length;
+        $scope.numberOfHolds = _.get(data, 'holds.length');
       });
   };
 
@@ -229,7 +229,7 @@ angular.module('calcentral.controllers').controller('AcademicsController', funct
   var loadAcademicRoles = function() {
     return academicStatusFactory.getAcademicRoles()
       .then(function(data) {
-        $scope.academicStatus.roles = data.roles;
+        $scope.academicStatus.roles = _.get(data, 'roles');
       });
   };
 

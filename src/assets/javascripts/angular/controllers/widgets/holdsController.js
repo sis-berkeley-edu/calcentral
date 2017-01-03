@@ -1,6 +1,7 @@
 'use strict';
 
 var angular = require('angular');
+var _ = require('lodash');
 
 /**
  * Holds controller
@@ -13,7 +14,7 @@ angular.module('calcentral.controllers').controller('HoldsController', function(
   var loadHolds = function() {
     return academicStatusFactory.getHolds()
       .then(function(data) {
-        $scope.holds = data.holds;
+        $scope.holds = _.get(data, 'holds');
       })
       .finally(function() {
         $scope.holdsInfo.isLoading = false;

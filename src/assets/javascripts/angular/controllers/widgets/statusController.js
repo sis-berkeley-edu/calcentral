@@ -157,8 +157,8 @@ angular.module('calcentral.controllers').controller('StatusController', function
           $scope.count++;
           $scope.hasWarnings = true;
         } else {
-          $scope.holds = data.holds;
-          $scope.count += data.holds.length;
+          $scope.holds = _.get(data, 'holds');
+          $scope.count += _.get(data, 'holds.length');
           $scope.hasAlerts = true;
         }
       });

@@ -177,7 +177,7 @@ angular.module('calcentral.controllers').controller('UserOverviewController', fu
     };
     return academicStatusFactory.getHolds(options)
       .then(function(data) {
-        $scope.holds = data.holds;
+        $scope.holds = _.get(data, 'holds');
       })
       .finally(function() {
         $scope.holdsInfo.isLoading = false;
