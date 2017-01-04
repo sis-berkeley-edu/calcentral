@@ -6,7 +6,7 @@ $primary-color: #2683bc;
 
 // Responsive
 $small-breakpoint: (767px);
-$medium-breakpoint: (1025px);
+$medium-breakpoint: (1024px);
 $screen: "only screen";
 $small-up: $screen;
 $small-only: "#{$screen} and (max-width: #{$small-breakpoint})";
