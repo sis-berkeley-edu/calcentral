@@ -20,4 +20,5 @@
 
   </div>
 </div>
-<div data-ng-include="'404.html'" data-ng-if="!api.user.profile.hasFinancialsTab"></div>
+<div data-ng-include="'404.html'" data-ng-if="!api.user.profile.hasFinancialsTab && !api.user.profile.delegateActingAsUid"></div>
+<div data-ng-include="'delegate_access_denied.html'" data-ng-if="!api.user.profile.hasFinancialsTab && api.user.profile.delegateActingAsUid"></div>
