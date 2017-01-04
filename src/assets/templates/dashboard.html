@@ -19,4 +19,5 @@
     <div data-ng-include="'faculty_resources.html'" data-ng-if="api.user.profile.roles.faculty || api.user.profile.hasInstructorHistory"></div>
   </div>
 </div>
-<div data-ng-include="'404.html'" data-ng-if="!api.user.profile.hasDashboardTab"></div>
+<div data-ng-include="'404.html'" data-ng-if="!api.user.profile.hasDashboardTab && !api.user.profile.delegateActingAsUid"></div>
+<div data-ng-include="'delegate_access_denied.html'" data-ng-if="!api.user.profile.profile.hasDashboardTab && api.user.profile.delegateActingAsUid"></div>
