@@ -1,14 +1,23 @@
 <div class="cc-widget-finaid-summary-funding-offered">
   <div
-    class="cc-text-bold"
+    class="cc-text-bold cc-padded"
     data-cc-finaid-summary-item-directive
     data-item="finaidSummaryData.fundingOffered.total"
   ></div>
-  <div data-ng-repeat="category in finaidSummaryData.fundingOffered.categories" class="cc-widget-finaid-summary-funding-offered-category">
-    <div data-cc-finaid-summary-item-directive data-item="category.total" data-fade-total="true"></div>
-    <hr class="cc-hr-spacing-5" aria-hidden="true">
-    <div data-ng-repeat="item in category.items" class="cc-text-small cc-widget-finaid-summary-indent">
-      <div data-cc-finaid-summary-item-directive data-item="item"></div>
-    </div>
+
+  <div data-ng-repeat="category in finaidSummaryData.fundingOffered.categories">
+    <ul class="cc-widget-list">
+      <li class="cc-widget-list-hover"
+          data-ng-class="{'cc-widget-list-hover-opened':(category.show)}"
+          data-cc-accessible-focus-directive
+          data-ng-click="api.widget.toggleShow($event, null, category, 'My Finances - Financial Aid and Scholarships')">
+        <div class="cc-padded" data-cc-finaid-summary-item-directive data-item="category.total"></div>
+
+        <div data-ng-show="category.show" data-ng-repeat="item in category.items" class="cc-text-small cc-widget-finaid-summary-indent cc-padded">
+          <div data-cc-finaid-summary-item-directive data-item="item"></div>
+        </div>
+      </li>
+    </ul>
+
   </div>
 </div>
