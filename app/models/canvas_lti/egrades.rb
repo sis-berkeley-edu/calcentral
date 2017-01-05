@@ -91,12 +91,17 @@ module CanvasLti
       sec_ids = @canvas_official_course.official_section_identifiers
       return [] if sec_ids.empty?
       # A course site can only be provisioned to include sections from a specific term, so all terms should be the same for each section
-      term = { :term_yr => sec_ids[0][:term_yr], :term_cd => sec_ids[0][:term_cd] }
-      ccns = sec_ids.collect {|sec_id| sec_id[:ccn] }
+      term = {
+        term_yr: sec_ids[0][:term_yr],
+        term_cd: sec_ids[0][:term_cd]
+      }
+      ccns = sec_ids.collect { |sec_id| sec_id[:ccn] }
       sections = CanvasLti::SisAdapter.get_sections_by_ids(ccns, term[:term_yr], term[:term_cd])
-      retained_keys = ['dept_name', 'catalog_id', 'instruction_format', 'primary_secondary_cd', 'section_num', 'term_yr', 'term_cd', 'course_cntl_num']
+      # Ensure distinct section ids
+      sections.uniq! { |s| s['course_cntl_num'] }
+      retained_keys = %w(dept_name catalog_id instruction_format primary_secondary_cd section_num term_yr term_cd course_cntl_num)
       sections.collect do |sec|
-        filtered_sec = sec.reject {|key, value| !retained_keys.include?(key) }
+        filtered_sec = sec.slice *retained_keys
         filtered_sec['display_name'] = "#{sec['dept_name']} #{sec['catalog_id']} #{sec['instruction_format']} #{sec['section_num']}"
         filtered_sec
       end
