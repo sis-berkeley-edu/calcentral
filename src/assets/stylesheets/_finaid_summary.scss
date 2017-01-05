@@ -24,6 +24,10 @@
   border: 1px solid $cc-color-light-grey;
   margin: 20px 0;
   padding: 5px 10px;
+
+  hr {
+    border-bottom: 1px solid $cc-color-light-grey;
+  }
 }
 .cc-widget-finaid-summary-funding-offered {
   .cc-padded {
