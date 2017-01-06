@@ -3,22 +3,6 @@
 var angular = require('angular');
 
 angular.module('calcentral.services').service('utilService', function($cacheFactory, $http, $location, $rootScope, $route, $window) {
-  /**
-   * Check whether the current browser can play mp3 files
-   * Based on Modernizr: http://git.io/DPOxlQ
-   */
-  var canPlayMp3 = function() {
-    var canPlay = false;
-    var element = document.createElement('audio');
-
-    try {
-      var hasAudioElement = !!element.canPlayType;
-      if (hasAudioElement) {
-        canPlay = element.canPlayType('audio/mpeg;');
-      }
-    } catch (e) { }
-    return canPlay;
-  };
 
   /**
    * Pass in controller name so we can set active location in menu
@@ -210,7 +194,6 @@ angular.module('calcentral.services').service('utilService', function($cacheFact
   // Expose methods
   return {
     accessibilityAnnounce: accessibilityAnnounce,
-    canPlayMp3: canPlayMp3,
     changeControllerName: changeControllerName,
     checkIsBcourses: checkIsBcourses,
     encodeSlash: encodeSlash,

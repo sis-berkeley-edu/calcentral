@@ -3,7 +3,7 @@ describe Webcast::Rooms do
   let (:rooms_json_uri) { URI.parse "#{Settings.webcast_proxy.base_url}/warehouse/rooms.json" }
 
   context 'a fake proxy' do
-    subject { Webcast::Rooms.new({:fake => true}) }
+    subject { Webcast::Rooms.new(fake: true) }
 
     context 'fake data' do
       it 'should return webcast-enabled rooms' do
@@ -27,7 +27,8 @@ describe Webcast::Rooms do
           {
             'building' =>'SOUTH HALL',
             'number' => '390'
-          }]
+          }
+        ]
         expect(subject.includes_any? rooms).to be true
       end
 
@@ -40,16 +41,17 @@ describe Webcast::Rooms do
           {
             'building' =>'SOUTH HALL',
             'number' => '390'
-          }]
+          }
+        ]
         expect(subject.includes_any? rooms).to be false
       end
     end
   end
 
-  context 'a real, non-fake proxy' do
+  context 'a real, non-fake proxy', testext: true do
     subject { Webcast::Rooms.new }
 
-    context 'real data', :testext => true do
+    context 'real data' do
       it 'should return at least one building' do
         buildings = subject.get
         expect(buildings.keys.length).to be >= 0

@@ -201,9 +201,6 @@ webcast_proxy:
   username: ''
   password: ''
 
-audio_proxy:
-  base_url: 'https://wbe-itunes.berkeley.edu'
-
 blog_latest_release_notes_feed_proxy:
   fake: false
   base_url: "https://www.ets.berkeley.edu/news-archive/calcentral-release-notes/feed"
@@ -476,7 +473,6 @@ features:
   advising: false
   advising_academic_planner: false
   advising_student_success: false
-  audio: false
   authentication_validator: false
   background_jobs_check: true
   cal1card: false

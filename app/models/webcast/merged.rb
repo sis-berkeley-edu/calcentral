@@ -24,12 +24,9 @@ module Webcast
       media = get_media
       feed = get_eligible_for_sign_up media
       if media.any?
-        # Put video and audio
         media_hash = {
           :media => media,
-          :videos => merge(media, :videos),
-          :audio => merge(media, :audio),
-          :iTunes => merge_itunes(media)
+          :videos => merge(media, :videos)
         }
         feed.merge! media_hash
       end
@@ -140,11 +137,6 @@ module Webcast
         recordings.each { |r| all_recordings << r } if recordings
       end
       all_recordings.to_a
-    end
-
-    def merge_itunes(course)
-      course.each { |s| return s[:iTunes] if s[:iTunes] } if course
-      { :audio => nil, :video => nil }
     end
 
   end

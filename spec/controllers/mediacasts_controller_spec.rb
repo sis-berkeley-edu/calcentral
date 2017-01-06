@@ -53,24 +53,12 @@ describe MediacastsController do
       expect(data_source_type).to receive(:new).and_return (edo = double)
       expect(edo).to receive(:get_all_campus_courses).once.and_return courses
     end
-    it 'should have audio and/or video' do
+    it 'should have video' do
       get :get_media, params
       expect(response).to be_success
       media = JSON.parse(response.body)['media'][0]
       expect(media['ccn']).to eq expected_ccn
       expect(media['videos']).to eq expected_videos
-      itunes_audio = media['iTunes']['audio']
-      itunes_video = media['iTunes']['video']
-      if expected_itunes_audio
-        expect(itunes_audio).to include expected_itunes_audio
-      else
-        expect(itunes_audio).to be_nil
-      end
-      if expected_itunes_video
-        expect(itunes_video).to include expected_itunes_video
-      else
-        expect(itunes_video).to be_nil
-      end
     end
   end
 
@@ -108,8 +96,6 @@ describe MediacastsController do
             }
           ]
         }
-        let(:expected_itunes_audio) { nil }
-        let(:expected_itunes_video) { nil }
       end
     end
   end
@@ -172,8 +158,6 @@ describe MediacastsController do
         }
         let(:expected_ccn) { malay_ccn_with_recordings.to_s }
         let(:expected_videos) { [] }
-        let(:expected_itunes_audio) { nil }
-        let(:expected_itunes_video) { '819827828' }
       end
     end
   end
