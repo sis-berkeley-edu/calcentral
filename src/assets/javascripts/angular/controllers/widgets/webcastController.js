@@ -12,12 +12,9 @@ angular.module('calcentral.controllers').controller('WebcastController', functio
   $scope.accessibilityAnnounce = apiService.util.accessibilityAnnounce;
 
   /**
-   * Select media items from video/audio dropdowns, defaulting to first
+   * Dropdown defaults to first video in the list
    */
   var selectMediaOptions = function() {
-    if ($scope.audio) {
-      $scope.selectedAudio = $scope.audio[0];
-    }
     if ($scope.videos) {
       if ($routeParams.video) {
         for (var i = 0; i < $scope.videos.length; i++) {
@@ -40,24 +37,14 @@ angular.module('calcentral.controllers').controller('WebcastController', functio
     }
   };
 
-  var setSelectedOption = function() {
-    var audioOnly = $scope.audio && ($scope.audio.length > 0) && (!$scope.videos || $scope.videos.length === 0);
-    if (audioOnly) {
-      $scope.switchSelectedOption($scope.selectOptions[1]);
-    } else {
-      $scope.switchSelectedOption($scope.selectOptions[0]);
-    }
-    var showSignUpTab = $scope.eligibleForSignUp && $scope.eligibleForSignUp.length > 0;
-    $scope.currentTabSelection = showSignUpTab ? outerTabs[0] : outerTabs[1];
-  };
-
   var getWebcasts = function(title) {
     webcastFactory.getWebcasts({
       url: webcastUrl(title)
     }).success(function(data) {
       angular.extend($scope, data);
       selectMediaOptions();
-      setSelectedOption();
+      var showSignUpTab = $scope.eligibleForSignUp && $scope.eligibleForSignUp.length > 0;
+      $scope.currentTabSelection = showSignUpTab ? outerTabs[0] : outerTabs[1];
     });
   };
 
@@ -77,23 +64,8 @@ angular.module('calcentral.controllers').controller('WebcastController', functio
     $scope.currentTabSelection = tabOption;
   };
 
-  $scope.switchSelectedOption = function(selectedOption) {
-    $scope.accessibilityAnnounce('Loaded ' + selectedOption + ' recordings');
-    $scope.currentSelection = selectedOption;
-  };
-
   $scope.announceVideoSelect = function() {
     $scope.accessibilityAnnounce('Selected video \'' + $scope.selectedVideo.lecture + '\' loaded');
-  };
-
-  $scope.announceAudioSelect = function() {
-    $scope.accessibilityAnnounce('Selected audio recording \'' + $scope.selectedAudio.title + '\' loaded');
-  };
-
-  var setSelectOptions = function() {
-    $scope.outerTabOptions = outerTabs;
-    var options = ['Video', 'Audio'];
-    $scope.selectOptions = options;
   };
 
   if ($routeParams.canvasCourseId || $route.current.isEmbedded) {
@@ -107,12 +79,12 @@ angular.module('calcentral.controllers').controller('WebcastController', functio
     }
     apiService.util.setTitle('Course Captures');
     getWebcasts(canvasCourseId);
-    setSelectOptions();
+    $scope.outerTabOptions = outerTabs;
   } else {
     $scope.$watchCollection('[$parent.selectedCourse.sections, api.user.profile.features.videos]', function(returnValues) {
       if (returnValues[0] && returnValues[1] === true) {
         formatClassTitle();
-        setSelectOptions();
+        $scope.outerTabOptions = outerTabs;
       }
     });
   }

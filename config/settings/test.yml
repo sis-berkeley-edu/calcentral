@@ -52,6 +52,9 @@ calnet_crosswalk_proxy:
 mailgun_proxy:
   fake: true
 
+webcast_proxy:
+  fake: true
+
 # To avoid "Illegal key size" errors on systems which we can't modify (e.g., Travis),
 # lower the security of the encryption algorithm.
 oauth2:
@@ -96,7 +99,6 @@ features:
   advising: true
   advising_academic_planner: true
   advising_student_success: true
-  audio: true
   bearfacts: true
   cal1card: true
   class_info_enrollment_tab: true

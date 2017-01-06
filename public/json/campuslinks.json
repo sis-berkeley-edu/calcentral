@@ -1516,7 +1516,7 @@
     },
     {
       "name": "Course Capture Support",
-      "description": "Help with audio and video recordings of class lectures and discussions",
+      "description": "Help with video recordings of class lectures and discussions",
       "url": "https://www.ets.berkeley.edu/discover-services/course-capture",
       "roles": {
         "student": false,
@@ -2226,25 +2226,6 @@
         {
           "topcategory": "Tools \u0026 Resources",
           "subcategory": "Computing"
-        }
-      ]
-    },
-    {
-      "name": "iTunesU - Berkeley",
-      "description": "Audio files of recordings from lectures or events",
-      "url": "http://itunes.berkeley.edu",
-      "roles": {
-        "student": true,
-        "applicant": true,
-        "staff": true,
-        "faculty": true,
-        "exStudent": true,
-        "summerVisitor": true
-      },
-      "categories": [
-        {
-          "topcategory": "Classes",
-          "subcategory": "Learning Resources"
         }
       ]
     },

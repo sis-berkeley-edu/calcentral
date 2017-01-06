@@ -1071,7 +1071,7 @@ INSERT INTO links VALUES (1707, 'Classroom Technology', 'https://www.ets.berkele
 INSERT INTO links VALUES (1708, 'Colleges & Schools', 'http://www.berkeley.edu/academics/school.shtml', 'Different departments (colleges) that majors fall under', true, '2015-08-21 00:19:37.905', '2015-08-21 00:19:37.905');
 INSERT INTO links VALUES (1709, 'Computer Use Policy', 'https://security.berkeley.edu/policy/usepolicy.html', 'Rules, rights, and policies regarding computer facilities', true, '2015-08-21 00:19:37.94', '2015-08-21 00:19:37.94');
 INSERT INTO links VALUES (1710, 'Counseling & Psychological Services', 'http://uhs.berkeley.edu/students/counseling/cps.shtml', 'Individual, group, & self-help from Tang Center', true, '2015-08-21 00:19:37.985', '2015-08-21 00:19:37.985');
-INSERT INTO links VALUES (1711, 'Course Capture Support', 'https://www.ets.berkeley.edu/discover-services/course-capture', 'Help with audio and video recordings of class lectures and discussions', true, '2015-08-21 00:19:38.021', '2015-08-21 00:19:38.021');
+INSERT INTO links VALUES (1711, 'Course Capture Support', 'https://www.ets.berkeley.edu/discover-services/course-capture', 'Help with recordings of class lectures and discussions', true, '2015-08-21 00:19:38.021', '2015-08-21 00:19:38.021');
 INSERT INTO links VALUES (1712, 'Course Catalog', 'http://guide.berkeley.edu/courses/', 'Detailed course descriptions', true, '2015-08-21 00:19:38.052', '2015-08-21 00:19:38.052');
 INSERT INTO links VALUES (1713, 'DARS', 'https://marin.berkeley.edu/darsweb/servlet/ListAuditsServlet ', 'Degree requirements and track progress', true, '2015-08-21 00:19:38.086', '2015-08-21 00:19:38.086');
 INSERT INTO links VALUES (1714, 'DeCal Courses', 'http://www.decal.org/ ', 'Catalog of student-led courses', true, '2015-08-21 00:19:38.142', '2015-08-21 00:19:38.142');
@@ -1106,7 +1106,6 @@ INSERT INTO links VALUES (1742, 'Imagine Services', 'http://ist.berkeley.edu/ima
 INSERT INTO links VALUES (1743, 'International House', 'http://ihouse.berkeley.edu/', 'On-campus dormitory with a dining common for international students', true, '2015-08-21 00:19:39.244', '2015-08-21 00:19:39.244');
 INSERT INTO links VALUES (1744, 'IST Knowledge Base', 'http://ist.berkeley.edu/support/kb', 'Contains answers to Berkeley computing and IT questions', true, '2015-08-21 00:19:39.272', '2015-08-21 00:19:39.272');
 INSERT INTO links VALUES (1745, 'IST Support', 'http://ist.berkeley.edu/support/', 'Information Technology support for services and systems', true, '2015-08-21 00:19:39.307', '2015-08-21 00:19:39.307');
-INSERT INTO links VALUES (1746, 'iTunesU - Berkeley', 'http://itunes.berkeley.edu', 'Audio files of recordings from lectures or events', true, '2015-08-21 00:19:39.342', '2015-08-21 00:19:39.342');
 INSERT INTO links VALUES (1747, 'KALX', 'http://kalx.berkeley.edu/', '90.7 MHz. Berkeley''s campus radio station', true, '2015-08-21 00:19:39.387', '2015-08-21 00:19:39.387');
 INSERT INTO links VALUES (1748, 'Lab Safety', 'http://rac.berkeley.edu/compliancebook/labsafety.html', 'Lab Safety & Hazardous Materials Management', true, '2015-08-21 00:19:39.426', '2015-08-21 00:19:39.426');
 INSERT INTO links VALUES (1749, 'LEAD Center', 'http://lead.berkeley.edu/', 'Student leadership programs and workshops', true, '2015-08-21 00:19:39.46', '2015-08-21 00:19:39.46');

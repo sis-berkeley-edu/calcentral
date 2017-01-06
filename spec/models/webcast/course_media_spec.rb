@@ -1,17 +1,5 @@
 describe Webcast::CourseMedia do
 
-  let(:audio_as_json) {
-    {
-      audio: [
-        {
-          'downloadUrl' => 'https://wbe-itunes.berkeley.edu/download/common/courses/fall_2008/law_2723_001/a046b053-02b4-4c1c-a4e4-1dd2c7481e98_opencast_audio_course_alldist.mp3',
-          'playUrl' => 'https://wbe-itunes.berkeley.edu/media/common/courses/fall_2008/law_2723_001/a046b053-02b4-4c1c-a4e4-1dd2c7481e98_opencast_audio_course_alldist.mp3',
-          'title' => 'The Economics of Climate Change'
-        }
-      ]
-    }
-  }
-
   context 'when generating id according to year, term, ccn' do
     it 'should allow lookups by either term_cd or term name' do
       expect(Webcast::CourseMedia.id_per_ccn(2014, 'sPriNg ', 1234)).to eq '2014-B-1234'
@@ -47,16 +35,12 @@ describe Webcast::CourseMedia do
     subject { Webcast::CourseMedia.new(2008, 'D', [49688], fake: true) }
 
     context 'when proxy error message is blank' do
-      before { expect(subject).to receive(:get_audio_as_json).with(anything).and_return audio_as_json }
       it 'should parse Webcast JSON per normal procedure' do
         response = subject.get_feed[49688]
         expect(response).not_to be_nil
         expect(response[:youTubePlaylist]).to eq 'EC8DA9DAD111EAAD28'
         expect(response[:videos]).to have(12).items
         expect(response[:videos][0]['youTubeId']).to eq 'bBithUtaaas'
-        expect(response[:audio]).to_not be_nil
-        expect(response[:iTunes][:audio]).to end_with '354822467'
-        expect(response[:iTunes][:video]).to end_with '354822464'
       end
     end
   end
@@ -64,7 +48,6 @@ describe Webcast::CourseMedia do
   context 'when serving multiple sets of Webcast recordings' do
     context 'when ccn matches a set of Webcast recordings' do
       subject { Webcast::CourseMedia.new(2014, 'B', [1, 87432, 2, 76207], fake: true) }
-      before { expect(subject).to receive(:get_audio_as_json).with(anything).twice.and_return audio_as_json }
       it 'should return youtube videos' do
         response = subject.get_feed
         expect(response[1]).to be_nil
@@ -76,18 +59,14 @@ describe Webcast::CourseMedia do
 
     context 'when videos are not present' do
       subject { Webcast::CourseMedia.new(2014, 'D', [123], fake: true) }
-      before { expect(subject).to receive(:get_audio_as_json).with(anything).and_return audio_as_json }
       it 'should return an empty array' do
         response = subject.get_feed[123]
         expect(response[:videos]).to be_empty
-        expect(response[:iTunes][:audio]).to be_nil
-        expect(response[:iTunes][:video]).to end_with '789'
       end
     end
 
     context 'when course title has a _slash_' do
       subject { Webcast::CourseMedia.new(2014, 'D', [85006], fake: true) }
-      before { expect(subject).to receive(:get_audio_as_json).with(anything).and_return audio_as_json }
       it 'should decode _slash_ to /' do
         expect(subject.get_feed[85006]).to be_an_instance_of Hash
       end

@@ -13,13 +13,8 @@
       "ccn": 49688,
       "catalogId": "2723",
       "deptName": "LAW",
-      "audioOnly": false,
       "youTubePlaylist": "EC8DA9DAD111EAAD28",
-      "iTunesAudio": 354822467,
-      "iTunesVideo": 354822464,
       "public": true,
-      "audioRSS": "http://wbe-itunes.berkeley.edu/media/common/rss/law_2723_Fall_2008_Audio__itunes.rss",
-      "videoRSS": "http://wbe-itunes.berkeley.edu/media/common/rss/law_2723_Fall_2008_Video__itunes.rss",
       "recordings": [
         {
           "lecture": "Lecture 1: The Science of Climate Change",
@@ -77,13 +72,8 @@
       "ccn": 81852,
       "catalogId": "150A",
       "deptName": "SOCIOL",
-      "audioOnly": false,
       "public": true,
       "youTubePlaylist": "ECBFB989AB595269F6",
-      "iTunesAudio": 461123891,
-      "iTunesVideo": 461123880,
-      "audioRSS": "http://wbe-itunes.berkeley.edu/media/common/rss/Sociology_150A__001_Spring_2009_Audio__webcast.rss",
-      "videoRSS": "http://wbe-itunes.berkeley.edu/media/common/rss/Sociology_150A__001_Spring_2009_Video__webcast.rss",
       "recordings": [
         {
           "lecture": "Lecture 1: Introduction to Social Psychology",
@@ -193,13 +183,8 @@
       "ccn": 49982,
       "catalogId": "27171",
       "deptName": "LAW",
-      "audioOnly": false,
       "public": true,
       "youTubePlaylist": "EC5A39957CF1E5C676",
-      "iTunesAudio": 354822513,
-      "iTunesVideo": 354822509,
-      "audioRSS": "http://wbe-itunes.berkeley.edu/media/common/rss/law_27171_Spring_2009_Audio__itunes.rss",
-      "videoRSS": "http://wbe-itunes.berkeley.edu/media/common/rss/law_27171_Spring_2009_Video__itunes.rss",
       "recordings": [
         {
           "lecture": "Lecture 1: The Scope of International Environmental Law",
@@ -213,13 +198,8 @@
       "ccn": 81853,
       "catalogId": "150A",
       "deptName": "SOCIOL",
-      "audioOnly": false,
       "public": true,
       "youTubePlaylist": "ECBFB989AB595269F6",
-      "iTunesAudio": 461123891,
-      "iTunesVideo": 461123880,
-      "audioRSS": "http://wbe-itunes.berkeley.edu/media/common/rss/Sociology_150A__001_Spring_2009_Audio__webcast.rss",
-      "videoRSS": "http://wbe-itunes.berkeley.edu/media/common/rss/Sociology_150A__001_Spring_2009_Video__webcast.rss",
       "recordings": [
         {
           "lecture": "Lecture 1: Introduction to Social Psychology",
@@ -329,13 +309,8 @@
       "ccn": 69390,
       "catalogId": "C10",
       "deptName": "PHYSICS",
-      "audioOnly": false,
       "public": true,
       "youTubePlaylist": "EC810FF8DB5EB87B5F",
-      "iTunesAudio": 461123864,
-      "iTunesVideo": 461123867,
-      "audioRSS": "http://wbe-itunes.berkeley.edu/media/common/rss/Letters_and_Science_C70V__001__Physics_C10__001_Spring_2010_Audio__webcast.rss",
-      "videoRSS": "http://wbe-itunes.berkeley.edu/media/common/rss/Letters_and_Science_C70V__001__Physics_C10__001_Spring_2010_Video__webcast.rss",
       "recordings": [
         {
           "lecture": "Lecture 1",
@@ -437,13 +412,8 @@
       "ccn": 25195,
       "catalogId": "105",
       "deptName": "EL ENG",
-      "audioOnly": false,
       "public": true,
       "youTubePlaylist": "ECC9EE10FC67D122E1",
-      "iTunesAudio": 556234847,
-      "iTunesVideo": 556234894,
-      "audioRSS": "http://wbe-itunes.berkeley.edu/media/common/rss/electrical_engineering_105_001_Fall_2012_Audio__itunes.rss",
-      "videoRSS": "http://wbe-itunes.berkeley.edu/media/common/rss/electrical_engineering_105_001_Fall_2012_Video__itunes.rss",
       "recordings": [
         {
           "lecture": "Lecture 1",
@@ -537,11 +507,8 @@
       "ccn": 7309,
       "catalogId": "1A",
       "deptName": "BIOLOGY",
-      "audioOnly": false,
       "public": true,
       "youTubePlaylist": "-XXv-cvA_iDoDi4YEjSRuViC1hIjenaF",
-      "iTunesVideo": 704945873,
-      "screenRSS": "http://wbe-itunes.berkeley.edu/media/common/courses/fall_2013/rss/environmental_economics_and_policy_c1_001_screen.rss",
       "recordings": [
         {
           "lecture": "Lecture 1",
@@ -691,11 +658,8 @@
       "ccn": 56745,
       "catalogId": "C104C",
       "deptName": "MEDIAST",
-      "audioOnly": false,
       "public": true,
       "youTubePlaylist": "-XXv-cvA_iDIx4iAfMsFgGH9VCjhWy7C",
-      "iTunesVideo": 804524534,
-      "screenRSS": "http://wbe-itunes.berkeley.edu/media/common/courses/spring_2014/rss/cognitive_science_c103_001_screen.rss",
       "recordings": [
         {
           "lecture": "2014-04-01, Low audio from 00:06:47 to 00:15:41",
@@ -709,11 +673,8 @@
       "ccn": 64596,
       "catalogId": "11",
       "deptName": "NUSCTX",
-      "audioOnly": false,
       "public": true,
       "youTubePlaylist": "-XXv-cvA_iDB_CQznbg243kNm4BMrxqe",
-      "iTunesVideo": 804503889,
-      "screenRSS": "http://wbe-itunes.berkeley.edu/media/common/courses/spring_2014/rss/nutritional_sciences_and_toxicology_11_001_screen.rss",
       "recordings": [
         {
           "lecture": "Thu, January 23",
@@ -791,11 +752,8 @@
       "ccn": 67301,
       "catalogId": "135",
       "deptName": "PHILOS",
-      "audioOnly": false,
       "public": true,
       "youTubePlaylist": "-XXv-cvA_iD9kWJvDoqa7WoLok3P55qn",
-      "iTunesVideo": 805328142,
-      "screenRSS": "http://wbe-itunes.berkeley.edu/media/common/courses/spring_2014/rss/philosophy_135_001_screen.rss",
       "recordings": [
         {
           "lecture": "Wed, January 22",
@@ -953,11 +911,8 @@
       "ccn": 69344,
       "catalogId": "C10",
       "deptName": "PHYSICS",
-      "audioOnly": false,
       "public": true,
       "youTubePlaylist": "-XXv-cvA_iAKxxGD1tIWLS0DcieGLHh0",
-      "iTunesVideo": 804529583,
-      "screenRSS": "http://wbe-itunes.berkeley.edu/media/common/courses/spring_2014/rss/physics_c10_001_screen.rss",
       "recordings": [
         {
           "lecture": "Thu, January 23",
@@ -1075,11 +1030,8 @@
       "ccn": 71859,
       "catalogId": "179",
       "deptName": "POL SCI",
-      "audioOnly": false,
       "public": true,
       "youTubePlaylist": "-XXv-cvA_iAXFq_NM5rmehLjFFB6pahf",
-      "iTunesVideo": 806033899,
-      "screenRSS": "http://wbe-itunes.berkeley.edu/media/common/courses/spring_2014/rss/political_science_179_001_screen.rss",
       "recordings": [
         {
           "lecture": "Wed, January 22",
@@ -1133,11 +1085,8 @@
       "ccn": 74163,
       "catalogId": "131",
       "deptName": "PSYCH",
-      "audioOnly": false,
       "public": true,
       "youTubePlaylist": "-XXv-cvA_iCx-g-oTS7fGLPt2nJKPIGx",
-      "iTunesVideo": 806034944,
-      "screenRSS": "http://wbe-itunes.berkeley.edu/media/common/courses/spring_2014/rss/psychology_131_001_screen.rss",
       "recordings": [
         {
           "lecture": "Wed, January 22",
@@ -1243,11 +1192,8 @@
       "ccn": 74193,
       "catalogId": "140",
       "deptName": "PSYCH",
-      "audioOnly": false,
       "public": true,
       "youTubePlaylist": "-XXv-cvA_iB7lXNvTI_KkwIJrPm9__5E",
-      "iTunesVideo": 805328514,
-      "screenRSS": "http://wbe-itunes.berkeley.edu/media/common/courses/spring_2014/rss/psychology_140_001_screen.rss",
       "recordings": [
         {
           "lecture": "Wed, January 22",
@@ -1345,11 +1291,8 @@
       "ccn": 74253,
       "catalogId": "164",
       "deptName": "PSYCH",
-      "audioOnly": false,
       "public": true,
       "youTubePlaylist": "-XXv-cvA_iCcEZBHdPAdKdwJjpwlgYRO",
-      "iTunesVideo": 805328563,
-      "screenRSS": "http://wbe-itunes.berkeley.edu/media/common/courses/spring_2014/rss/psychology_164_001_screen.rss",
       "recordings": [
         {
           "lecture": "Wed, January 22",
@@ -1455,11 +1398,8 @@
       "ccn": 76207,
       "catalogId": "241",
       "deptName": "PB HLTH",
-      "audioOnly": false,
       "public": true,
       "youTubePlaylist": "-XXv-cvA_iBacs-uhTVhDhip4sGWoq2C",
-      "iTunesAudio": 805328862,
-      "screenRSS": "http://wbe-itunes.berkeley.edu/media/common/courses/spring_2014/rss/public_health_241_001_screen.rss",
       "recordings": [
         {
           "lecture": "Wed, January 22",
@@ -1609,12 +1549,8 @@
       "ccn": 87432,
       "catalogId": "131A",
       "deptName": "STAT",
-      "audioOnly": false,
       "public": true,
       "youTubePlaylist": "-XXv-cvA_iDmBzAfitlZXganWpqMiXkG",
-      "iTunesVideo": 819827827,
-      "iTunesAudio": 819827828,
-      "screenRSS": "http://wbe-itunes.berkeley.edu/media/common/courses/spring_2014/rss/statistics_131a_001_screen.rss",
       "recordings": [
         {
           "lecture": "Wed, January 22",
@@ -1747,12 +1683,8 @@
       "semester": "Fall",
       "ccn": 123,
       "catalogId": "catalog_id_1",
-      "audioOnly": true,
       "public": true,
-      "youTubePlaylist": "youTubePlaylistId",
-      "iTunesVideo": 789,
-      "audioRSS": "http://berkeley.edu/audio.rss",
-      "screenRSS": "http://berkeley.edu/video.rss"
+      "youTubePlaylist": "youTubePlaylistId"
     },
     {
       "year": 2014,
@@ -1760,11 +1692,8 @@
       "ccn": 85006,
       "catalogId": "100A",
       "deptName": "MALAY/I",
-      "audioOnly": false,
       "public": true,
-      "youTubePlaylist": "PL-XXv-cvA_iDy-rACIy-kh40XJJDp3Y0X",
-      "iTunesVideo": 819827828,
-      "videoRSS": "http://wbe-itunes.berkeley.edu/media/common/courses/spring_2014/rss/statistics_131a_001_screen.rss"
+      "youTubePlaylist": "PL-XXv-cvA_iDy-rACIy-kh40XJJDp3Y0X"
     },
     {
       "year": 2015,
@@ -1774,8 +1703,6 @@
       "catalogId": "C70U",
       "public": false,
       "youTubePlaylist": "PL-XXv-cvA_iAn6Qt6B7D-phRT0Ld1GOUV",
-      "audioRSS": "http://wbe-itunes.berkeley.edu/media/common/courses/2015B/rss/5915_audio.rss",
-      "screenRSS": "http://wbe-itunes.berkeley.edu/media/common/courses/2015B/rss/5915_screen.rss",
       "recordings": [
         {
           "lecture": "2015-01-21: A Grand Tour of the Cosmos",
@@ -1917,8 +1844,7 @@
           "youTubeId": "Ax670ei7h2Q",
           "recordingStartUTC": "2015-04-01T15:06:00-07:00"
         }
-      ],
-      "audioOnly": false
+      ]
     },
     {
       "year": 2015,
@@ -1928,8 +1854,6 @@
       "catalogId": "C10",
       "public": false,
       "youTubePlaylist": "PL-XXv-cvA_iAn6Qt6B7D-phRT0Ld1GOUV",
-      "audioRSS": "http://wbe-itunes.berkeley.edu/media/common/courses/2015B/rss/5915_audio.rss",
-      "screenRSS": "http://wbe-itunes.berkeley.edu/media/common/courses/2015B/rss/5915_screen.rss",
       "recordings": [
         {
           "lecture": "2015-01-21: A Grand Tour of the Cosmos",
@@ -2071,8 +1995,7 @@
           "youTubeId": "Ax670ei7h2Q",
           "recordingStartUTC": "2015-04-01T15:06:00-07:00"
         }
-      ],
-      "audioOnly": false
+      ]
     },
     {
       "year": 2016,
@@ -2088,8 +2011,7 @@
           "youTubeId": "E8WBr8u7YoI",
           "recordingStartUTC": "2015-08-25T15:07:00-08:00"
         }
-      ],
-      "audioOnly": false
+      ]
     },
     {
       "year": 2016,
@@ -2105,8 +2027,7 @@
           "youTubeId": "yDqMvV0Hj5g",
           "recordingStartUTC": "2016-08-25T15:10:00-11:00"
         }
-      ],
-      "audioOnly": false
+      ]
     }
   ]
 }

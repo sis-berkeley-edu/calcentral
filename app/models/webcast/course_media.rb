@@ -34,10 +34,7 @@ module Webcast
       @ccn_list.each do |ccn|
         data = media_hash[ccn]
         if data
-          videos = get_videos_as_json data
-          audio = get_audio_as_json data
-          itunes = get_itunes_as_json data
-          media_per_ccn[ccn] = videos.merge(audio).merge(itunes)
+          media_per_ccn[ccn] = get_videos_as_json data
           media_per_ccn[ccn][:youTubePlaylist] = data[:youtube_playlist]
         end
       end
@@ -57,21 +54,8 @@ module Webcast
       media_hash
     end
 
-    def get_itunes_url(id)
-      id && "https://itunes.apple.com/us/itunes-u/id#{id}"
-    end
-
-    def get_itunes_as_json(playlist)
-      {
-        :iTunes => {
-          :audio => get_itunes_url(playlist[:itunes_audio]),
-          :video => get_itunes_url(playlist[:itunes_video])
-        }
-      }
-    end
-
     def get_videos_as_json(playlist)
-      if playlist[:recordings].blank? || playlist[:audio_only]
+      if playlist[:recordings].blank?
         {
           :videos => []
         }
@@ -80,15 +64,6 @@ module Webcast
           :videos => playlist[:recordings].reverse
         }
       end
-    end
-
-    def get_audio_as_json(playlist)
-      get_audio playlist[:audio_rss]
-    end
-
-    def get_audio(audio_rss)
-      audio_options = @options.merge({:audio_rss => audio_rss})
-      Webcast::Audio.new(audio_options).get
     end
 
   end

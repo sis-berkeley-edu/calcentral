@@ -22,8 +22,6 @@ describe Webcast::Merged do
         expect(feed[:media]).to be_nil
         # Verify backwards compatibility
         expect(feed[:videos]).to be_nil
-        expect(feed[:audio]).to be_nil
-        expect(feed[:iTunes]).to be_nil
       end
     end
 
@@ -60,7 +58,6 @@ describe Webcast::Merged do
         expect(stat_131[:deptName]).to eq 'PLANTBI'
         expect(stat_131[:catalogId]).to eq '150'
         videos = stat_131[:videos]
-        expect(stat_131[:iTunes][:audio]).to end_with '819827828'
         expect(videos).to have(31).items
         # Verify backwards compatibility
         expect(feed[:videos]).to eq videos
@@ -76,7 +73,13 @@ describe Webcast::Merged do
           {
             classes: [
               {
-                sections: [{ ccn: '09688', section_number: '101', instruction_format: 'LEC' }]
+                sections: [
+                  {
+                    ccn: '09688',
+                    section_number: '101',
+                    instruction_format: 'LEC'
+                  }
+                ]
               }
             ]
           }
@@ -173,12 +176,7 @@ describe Webcast::Merged do
         expect(pb_health_241[:ccn]).to eq '76207'
         expect(pb_health_241[:youTubePlaylist]).to eq '-XXv-cvA_iBacs-uhTVhDhip4sGWoq2C'
         expect(pb_health_241[:videos]).to have(35).items
-        expect(pb_health_241[:iTunes][:audio]).to end_with '805328862'
-        expect(pb_health_241[:iTunes][:video]).to be_nil
         expect(feed[:videos]).to match_array(pb_health_241[:videos] + stat_131[:videos])
-        expect(feed[:audio]).to be_empty
-        expect(feed[:iTunes][:audio]).to end_with '805328862'
-        expect(feed[:iTunes][:video]).to be_nil
 
         # Instructors that can sign up for Webcast
         eligible_for_sign_up = feed[:eligibleForSignUp]
@@ -237,11 +235,11 @@ describe Webcast::Merged do
     context 'course with zero recordings is different than course not scheduled for recordings' do
       before do
         # Ensure that testext can reach 2015-B.
-        allow(Settings.terms).to receive(:fake_now).and_return('2015-07-01'.to_datetime)
+        allow(Settings.terms).to receive(:fake_now).and_return '2015-07-01'.to_datetime
       end
       let(:media) do
-        user_id = rand(99999).to_s
-        view_as_mode = AuthenticationState.new('user_id' => user_id, SessionKey.original_user_id => rand(99999).to_s)
+        user_id = random_id
+        view_as_mode = AuthenticationState.new('user_id' => user_id, SessionKey.original_user_id => random_id)
         policy = AuthenticationStatePolicy.new(view_as_mode, nil)
         Webcast::Merged.new(user_id, policy, 2015, 'B', [1, 56742, 56745]).get_feed[:media]
       end
