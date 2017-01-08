@@ -160,7 +160,7 @@ angular.module('calcentral.controllers').controller('UserOverviewController', fu
           studentUid: $routeParams.uid
         };
       }
-      if (!!$scope.updatePlanUrl.url) {
+      if (!!_.get($scope, 'updatePlanUrl.url')) {
         linkService.addBackToTextToLink($scope.updatePlanUrl, backToText);
       }
     }).error(function(data, status) {
