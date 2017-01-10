@@ -168,7 +168,7 @@ describe Oec::PublishTask do
       let(:end_date) { '5/3/2015' }
       before do
         merged_course_confirmations_csv.concat(
-          "#{course_id},#{course_id},LGBT C146A LEC 002 REP SEXUALITY/LIT,Y,GWS/LGBT C146A LEC 002,LGBT,C146A,LEC,002,P,562283,10945601,Clarice,Cccc,cccc@berkeley.edu,23,Y,LGBT,G,Y,#{start_date},#{end_date}")
+          "#{course_id},#{course_id},LGBT C146A LEC 002 REP SEXUALITY/LIT,Y,GWS/LGBT C146A LEC 002,LGBT,C146A,LEC,002,P,34822,562283,10945601,Clarice,Cccc,cccc@berkeley.edu,23,Y,LGBT,G,Y,#{start_date},#{end_date}")
       end
 
       it 'should normalize dates' do
@@ -183,7 +183,7 @@ describe Oec::PublishTask do
       let(:student_uids_for_ccn) { %w(1000 2000 3000) }
       before do
         merged_course_confirmations_csv.concat(
-          "2015-B-#{ccn}_GSI,2015-B-#{ccn}_GSI,LGBT C146A LEC 001 REP SEXUALITY/LIT,,,LGBT,C146A,LEC,001,P,562283,10945601,Clarice,Cccc,cccc@berkeley.edu,23,Y,LGBT,G,,01-26-2015,05-11-2015")
+          "2015-B-#{ccn}_GSI,2015-B-#{ccn}_GSI,LGBT C146A LEC 001 REP SEXUALITY/LIT,,,LGBT,C146A,LEC,001,P,#{ccn},562283,10945601,Clarice,Cccc,cccc@berkeley.edu,23,Y,LGBT,G,,01-26-2015,05-11-2015")
         student_uids_for_ccn.each do |uid|
           enrollment_data[:rows] << fake_enrollment_data_row(ccn, uid)
         end

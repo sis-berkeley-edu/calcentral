@@ -53,7 +53,14 @@ module EdoOracle
             mtg2."offeringNumber" = sec3."offeringNumber" AND
             mtg2."sectionNumber" = sec3."sectionNumber")
           )
-        END AS co_scheduled_ccns
+        END AS co_scheduled_ccns,
+        (
+          SELECT listagg("primaryAssociatedSectionId", ',') WITHIN GROUP (ORDER BY "primaryAssociatedSectionId")
+          FROM SISEDO.CLASSSECTIONV00_VW sec4
+          WHERE
+            sec."id" = sec4."id" AND
+            sec4."term-id" = '#{term_id}'
+        ) AS associated_primary
       FROM
         SISEDO.CLASSSECTIONV00_VW sec
         LEFT OUTER JOIN SISEDO.MEETINGV00_VW mtg ON (
