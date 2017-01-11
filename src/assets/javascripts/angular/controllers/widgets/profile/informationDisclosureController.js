@@ -9,7 +9,6 @@ var _ = require('lodash');
  */
 angular.module('calcentral.controllers').controller('InformationDisclosureController', function(ferpaDeeplinkFactory, $scope) {
   $scope.ferpa = {
-    backToText: 'Information Disclosure',
     deeplink: {},
     isErrored: false,
     isLoading: true

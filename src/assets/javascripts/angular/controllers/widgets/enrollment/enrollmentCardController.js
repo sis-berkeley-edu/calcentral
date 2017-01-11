@@ -9,6 +9,7 @@ var _ = require('lodash');
  */
 angular.module('calcentral.controllers').controller('EnrollmentCardController', function(apiService, enrollmentFactory, linkService, $route, $scope) {
   $scope.accessibilityAnnounce = apiService.util.accessibilityAnnounce;
+  linkService.addCurrentRouteSettings($scope);
 
   var sections = [
     {
@@ -137,13 +138,7 @@ angular.module('calcentral.controllers').controller('EnrollmentCardController', 
     if (!enrollmentInstruction.links) {
       return enrollmentInstruction;
     }
-
-    var backToText = 'My Academics';
-    if ($route.current.isAdvisingStudentLookup) {
-      backToText = 'Student Overview';
-    }
-    enrollmentInstruction.links = linkService.addBackToTextToResources(enrollmentInstruction.links, backToText);
-
+    enrollmentInstruction.links = linkService.addBackToTextToResources(enrollmentInstruction.links, $scope.currentPage.name);
     return enrollmentInstruction;
   };
 

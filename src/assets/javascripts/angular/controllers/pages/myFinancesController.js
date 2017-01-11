@@ -6,8 +6,9 @@ var _ = require('lodash');
 /**
  * My Finances controller
  */
-angular.module('calcentral.controllers').controller('MyFinancesController', function($scope, apiService, academicStatusFactory) {
-  apiService.util.setTitle('My Finances');
+angular.module('calcentral.controllers').controller('MyFinancesController', function(academicStatusFactory, apiService, linkService, $scope) {
+  linkService.addCurrentRouteSettings($scope);
+  apiService.util.setTitle($scope.currentPage.name);
 
   $scope.academicStatus = {
     roles: {}

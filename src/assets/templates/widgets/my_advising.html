@@ -5,7 +5,7 @@
       data-ng-if="showAppointmentLinks()"
       data-cc-campus-solutions-link-directive="myAdvising.links.newAppointment.url"
       data-cc-campus-solutions-link-directive-enabled="{{myAdvising.links.newAppointment.isCsLink}}"
-      data-cc-campus-solutions-link-directive-text="myAdvising.backToText"
+      data-cc-campus-solutions-link-directive-text="currentPage.name"
       data-cc-campus-solutions-link-directive-cache="'myAdvising'"
       data-cc-outbound-enabled="false"
       data-ng-disabled="!myAdvising.links.newAppointment.url || !api.user.profile.isDirectlyAuthenticated || isAdvisingStudentLookup"
@@ -130,7 +130,7 @@
               data-ng-disabled="{{!myAdvising.links.manageAppointments.url || !api.user.profile.isDirectlyAuthenticated || isAdvisingStudentLookup}}"
               data-cc-campus-solutions-link-directive="myAdvising.links.manageAppointments.url"
               data-cc-campus-solutions-link-directive-enabled="{{myAdvising.links.manageAppointments.isCsLink}}"
-              data-cc-campus-solutions-link-directive-text="myAdvising.backToText"
+              data-cc-campus-solutions-link-directive-text="currentPage.name"
               data-cc-campus-solutions-link-directive-cache="'myAdvising'"
               data-cc-outbound-enabled="false"
             >

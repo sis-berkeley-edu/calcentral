@@ -6,7 +6,9 @@ var _ = require('lodash');
 /**
  * Academics status, holds & blocks controller
  */
-angular.module('calcentral.controllers').controller('AcademicsStatusHoldsBlocksController', function(apiService, enrollmentVerificationFactory, academicsFactory, slrDeeplinkFactory, studentAttributesFactory, registrationsFactory, statusHoldsService, $scope) {
+angular.module('calcentral.controllers').controller('AcademicsStatusHoldsBlocksController', function(apiService, enrollmentVerificationFactory, academicsFactory, linkService, slrDeeplinkFactory, studentAttributesFactory, registrationsFactory, statusHoldsService, $scope) {
+  linkService.addCurrentRouteSettings($scope);
+
   // Data for csHolds is pulled by the AcademicsController that
   // governs the academics template. The statusHoldsBlocks segment watches those
   // for changes in order to display the corresponding UI elements.
@@ -119,7 +121,6 @@ angular.module('calcentral.controllers').controller('AcademicsStatusHoldsBlocksC
 
     angular.extend($scope, {
       slr: {
-        backToText: 'My Academics',
         deeplink: false,
         isErrored: false,
         isLoading: true

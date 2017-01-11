@@ -8,14 +8,14 @@
   <div class="cc-widget-vertical-padding" data-ng-if="residency.statementOfLegalResidenceStatus.code === 'N' && slr.deeplink">
     <a data-cc-campus-solutions-link-directive="slr.deeplink.url"
     data-cc-campus-solutions-link-directive-enabled="{{slr.deeplink.isCsLink}}"
-    data-cc-campus-solutions-link-directive-text="slr.backToText"
+    data-cc-campus-solutions-link-directive-text="currentPage.name"
     data-cc-campus-solutions-link-directive-cache="'profile'"
     data-cc-outbound-enabled="false">Submit Statement of Legal Residence</a>
   </div>
   <div class="cc-widget-vertical-padding" data-ng-if="residency.statementOfLegalResidenceStatus.code !== 'N' && slr.deeplink">
     <a data-cc-campus-solutions-link-directive="slr.deeplink.url"
     data-cc-campus-solutions-link-directive-enabled="{{slr.deeplink.isCsLink}}"
-    data-cc-campus-solutions-link-directive-text="slr.backToText"
+    data-cc-campus-solutions-link-directive-text="currentPage.name"
     data-cc-campus-solutions-link-directive-cache="'profile'"
     data-cc-outbound-enabled="false">Access Statement of Legal Residence</a>
   </div>

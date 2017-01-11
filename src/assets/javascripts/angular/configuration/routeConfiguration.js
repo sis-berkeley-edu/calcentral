@@ -14,7 +14,8 @@ angular.module('calcentral.config').config(function($routeProvider) {
   }).
   when('/academics', {
     templateUrl: 'academics.html',
-    controller: 'AcademicsController'
+    controller: 'AcademicsController',
+    pageName: 'My Academics'
   }).
   when('/academics/academic_summary', {
     templateUrl: 'academic_summary.html',
@@ -27,27 +28,33 @@ angular.module('calcentral.config').config(function($routeProvider) {
   }).
   when('/academics/semester/:semesterSlug', {
     templateUrl: 'academics_semester.html',
-    controller: 'AcademicsController'
+    controller: 'AcademicsController',
+    pageName: 'My Academics'
   }).
   when('/academics/semester/:semesterSlug/class/:classSlug', {
     templateUrl: 'academics_classinfo.html',
-    controller: 'AcademicsController'
+    controller: 'AcademicsController',
+    pageName: 'My Academics'
   }).
   when('/academics/semester/:semesterSlug/class/:classSlug/:sectionSlug', {
     templateUrl: 'academics_classinfo.html',
-    controller: 'AcademicsController'
+    controller: 'AcademicsController',
+    pageName: 'My Academics'
   }).
   when('/academics/booklist/:semesterSlug', {
     templateUrl: 'academics_booklist.html',
-    controller: 'AcademicsController'
+    controller: 'AcademicsController',
+    pageName: 'My Academics'
   }).
   when('/academics/teaching-semester/:teachingSemesterSlug/class/:classSlug', {
     templateUrl: 'academics_classinfo.html',
-    controller: 'AcademicsController'
+    controller: 'AcademicsController',
+    pageName: 'My Academics'
   }).
   when('/academics/teaching-semester/:teachingSemesterSlug/class/:classSlug/:category', {
     templateUrl: 'academics_classinfo.html',
-    controller: 'AcademicsController'
+    controller: 'AcademicsController',
+    pageName: 'My Academics'
   }).
   when('/calcentral_update', {
     templateUrl: 'calcentral_update.html',
@@ -60,7 +67,8 @@ angular.module('calcentral.config').config(function($routeProvider) {
   when('/dashboard', {
     templateUrl: 'dashboard.html',
     controller: 'DashboardController',
-    fireUpdatedFeeds: true
+    fireUpdatedFeeds: true,
+    pageName: 'My Dashboard'
   }).
   when('/delegate_landing', {
     templateUrl: 'delegate_landing.html',
@@ -73,19 +81,23 @@ angular.module('calcentral.config').config(function($routeProvider) {
   }).
   when('/finances', {
     templateUrl: 'myfinances.html',
-    controller: 'MyFinancesController'
+    controller: 'MyFinancesController',
+    pageName: 'My Finances'
   }).
   when('/finances/details', {
     templateUrl: 'cars_details.html',
-    controller: 'MyFinancesController'
+    controller: 'MyFinancesController',
+    pageName: 'My Finances'
   }).
   when('/billing/details', {
     templateUrl: 'billing_details.html',
-    controller: 'BillingDetailsController'
+    controller: 'BillingDetailsController',
+    pageName: 'My Finances'
   }).
   when('/finances/finaid/:finaidYearId?', {
     templateUrl: 'finaid.html',
-    controller: 'MyFinancesController'
+    controller: 'MyFinancesController',
+    pageName: 'My Finances'
   }).
   when('/finances/finaid/awards/:finaidYearId?', {
     templateUrl: 'finaid_awards_term.html',
@@ -101,12 +113,14 @@ angular.module('calcentral.config').config(function($routeProvider) {
   }).
   when('/profile/:category?', {
     templateUrl: 'profile.html',
-    controller: 'ProfileController'
+    controller: 'ProfileController',
+    pageName: 'Profile'
   }).
   when('/user/overview/:uid', {
     templateUrl: 'user_overview.html',
     controller: 'UserOverviewController',
-    isAdvisingStudentLookup: true
+    isAdvisingStudentLookup: true,
+    pageName: 'Student Overview'
   }).
   when('/toolbox', {
     templateUrl: 'toolbox.html',

@@ -7,10 +7,8 @@ var _ = require('lodash');
  * Finaid Communications controller
  */
 angular.module('calcentral.controllers').controller('FinaidCommunicationsController', function($q, $scope, activityFactory, finaidFactory, finaidService, linkService, tasksFactory) {
-  var backToText = 'Financial Aid and Scholarships';
   $scope.communicationsInfo = {
     aidYear: '',
-    backToText: backToText,
     isLoading: true,
     counts: {
       completed: 0,
@@ -32,10 +30,10 @@ angular.module('calcentral.controllers').controller('FinaidCommunicationsControl
     return activityFactory.getFinaidActivity(options).then(function(data) {
       angular.extend($scope, data);
       if (_.get($scope, 'list')) {
-        linkService.addBackToTextToResources($scope.list, backToText);
+        linkService.addBackToTextToResources($scope.list, $scope.currentPage.name);
         _.forEach($scope.list, function(value) {
           if (_.get(value, 'elements')) {
-            linkService.addBackToTextToResources(value.elements, backToText);
+            linkService.addBackToTextToResources(value.elements, $scope.currentPage.name);
           }
         });
       }

@@ -6,8 +6,6 @@ var _ = require('lodash');
 angular.module('calcentral.controllers').controller('StudentResourcesController', function(apiService, linkService, academicStatusFactory, studentResourcesFactory, $scope) {
   $scope.isLoading = true;
 
-  var backToText = 'My Dashboard';
-
   var loadStudentResources = function() {
     return studentResourcesFactory.getStudentResources();
   };
@@ -15,7 +13,7 @@ angular.module('calcentral.controllers').controller('StudentResourcesController'
   var parseStudentResources = function(data) {
     var resources = _.get(data, 'data.feed.resources');
     if (!_.isEmpty(resources)) {
-      $scope.studentResources = linkService.addBackToTextToResources(resources, backToText);
+      $scope.studentResources = linkService.addBackToTextToResources(resources, $scope.currentPage.name);
     }
   };
 

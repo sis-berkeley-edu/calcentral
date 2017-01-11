@@ -7,13 +7,14 @@ var angular = require('angular');
 /**
  * Academics controller
  */
-angular.module('calcentral.controllers').controller('AcademicsController', function(academicsFactory, academicsService, academicStatusFactory, apiService, badgesFactory, registrationsFactory, userService, $q, $routeParams, $scope, $location) {
-  var title = 'My Academics';
-  apiService.util.setTitle(title);
-  $scope.backToText = title;
+angular.module('calcentral.controllers').controller('AcademicsController', function(academicsFactory, academicsService, academicStatusFactory, apiService, badgesFactory, linkService, registrationsFactory, userService, $q, $routeParams, $scope, $location) {
+  linkService.addCurrentRouteSettings($scope);
+  apiService.util.setTitle($scope.currentPage.name);
+
   $scope.academicStatus = {
     roles: {}
   };
+
   $scope.academics = {
     isLoading: true
   };

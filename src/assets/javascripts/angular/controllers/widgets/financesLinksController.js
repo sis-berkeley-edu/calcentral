@@ -41,7 +41,6 @@ angular.module('calcentral.controllers').controller('FinancesLinksController', f
       title: 'Details about tuition and fees payment plan'
     },
     activatePlanLink: {
-      backtoText: 'My Finances',
       title: 'Activate your tuition and fees payment plan'
     }
   };

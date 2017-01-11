@@ -6,13 +6,13 @@ var _ = require('lodash');
 /**
  * Financial Aid controller
  */
-angular.module('calcentral.controllers').controller('FinaidController', function(apiService, finaidFactory, finaidService, tasksFactory, $routeParams, $scope) {
-  apiService.util.setTitle('Financial Aid and Scholarships');
+angular.module('calcentral.controllers').controller('FinaidController', function(apiService, finaidFactory, finaidService, linkService, tasksFactory, $routeParams, $scope) {
+  linkService.addCurrentRouteSettings($scope);
+  apiService.util.setTitle($scope.currentPage.name);
 
   $scope.isMainFinaid = true;
   $scope.finaid = {
-    isLoading: true,
-    backToText: 'My Finances'
+    isLoading: true
   };
   $scope.changeTags = {
     added: 'added',

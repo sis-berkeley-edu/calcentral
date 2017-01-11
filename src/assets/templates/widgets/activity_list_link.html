@@ -2,7 +2,7 @@
    data-ng-click="api.util.preventBubble($event);api.analytics.trackExternalLink('Activities', activityItem.source, activityItem.sourceUrl)"
    data-ng-if="activityItem.sourceUrl && api.user.profile.actAsOptions.canSeeCSLinks"
    data-cc-campus-solutions-link-directive="activityItem.sourceUrl"
-   data-cc-campus-solutions-link-directive-text="activityItem.backToText"
+   data-cc-campus-solutions-link-directive-text="currentPage.name"
    data-cc-campus-solutions-link-directive-enabled="{{activityItem.emitter === 'Campus Solutions'}}"
    data-cc-outbound-enabled="{{activityItem.emitter !== 'Campus Solutions'}}">
   <span data-ng-bind="activityItem.linkText || 'More info'"></span>
