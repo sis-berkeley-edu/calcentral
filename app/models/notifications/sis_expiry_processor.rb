@@ -2,13 +2,26 @@ module Notifications
   class SisExpiryProcessor
     include ClassLogger
 
+    PROVIDERS = Hash[
+      'student' => SisExpirySingleStudentProvider.new,
+      'students' => SisExpiryStudentsProvider.new
+    ]
+
     def process(event, timestamp)
       return false unless accept? event
       begin
         logger.debug "Processing event: #{event}; timestamp = #{timestamp}"
         if (expiry_module = get_expiry event)
-          if (uid = (event['topic'] == 'sis:faculty:grade-roster') ? (get_instructor_uids event) : (get_uid event))
-            expiry_module.expire uid
+
+          if event['topic'] == 'sis:faculty:grade-roster'
+            uids = get_instructor_uids event
+            expiry_module.expire uids
+          else
+            payload = event.try(:[], 'payload')
+            payload.keys.each do |key|
+              uids = PROVIDERS[key].get_uids(event)
+              expiry_module.expire uids if uids
+            end
           end
         else
           logger.warn "Event topic #{event['topic']} not recognized"
@@ -26,16 +39,6 @@ module Notifications
 
     def get_expiry(event)
       EXPIRY_BY_TOPIC[event['topic']]
-    end
-
-    def get_uid(event)
-      if (campus_solutions_id = event['payload'] && event['payload']['student'] && event['payload']['student']['StudentId'])
-        uid = CalnetCrosswalk::ByCsId.new(user_id: campus_solutions_id).lookup_ldap_uid
-        logger.error "No UID found for Campus Solutions ID #{campus_solutions_id}" unless uid
-      else
-        logger.error "Could not parse Campus Solutions ID from event #{event}"
-      end
-      uid
     end
 
     def get_instructor_uids(event)
@@ -57,6 +60,7 @@ module Notifications
     #TODO Mapping of event topics to expiry modules is incomplete.
     EXPIRY_BY_TOPIC = {
       'sis:staff:advisor' => CampusSolutions::AdvisingExpiry,
+      'sis:student:academic-progress-report' => CampusSolutions::DegreeProgress::UndergradRequirementsExpiry,
       'sis:student:affiliation' => CampusSolutions::UserApiExpiry,
       'sis:student:checklist' => CampusSolutions::ChecklistDataExpiry,
       'sis:student:delegate' => CampusSolutions::DelegateStudentsExpiry,
