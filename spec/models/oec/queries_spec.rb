@@ -40,6 +40,7 @@ describe Oec::Queries do
     context 'missing email address' do
       before { edo_oracle_rows[0][5] = nil }
       it 'fills in email address from attributes query' do
+        allow(User::BasicAttributes).to receive(:attributes_for_uids).and_call_original
         expect(User::BasicAttributes).to receive(:attributes_for_uids).with(['1234567']).and_return([{
           ldap_uid: '1234567',
           email_address: 'buck@tcd.ie'

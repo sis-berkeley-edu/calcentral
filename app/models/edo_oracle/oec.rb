@@ -108,7 +108,7 @@ module EdoOracle
               email."EMAIL_TYPE_CODE" = 'CAMP')
             LEFT OUTER JOIN SISEDO.PERSON_NAMEV00_VW name ON (
               name."PERSON_KEY" = enroll."STUDENT_ID" AND
-              name."NAME_TYPE_CODE" = 'PRI')
+              name."NAME_TYPE_CODE" = 'PRF')
             WHERE
               enroll."TERM_ID" = '#{term_id}'
               AND (enroll."STDNT_ENRL_STATUS_CODE" = 'E')

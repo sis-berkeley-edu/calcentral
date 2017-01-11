@@ -124,6 +124,7 @@ describe EdoOracle::Adapters::Oec do
     context 'missing email address' do
       before { row['email_address'] = nil }
       it 'fills in email address from attributes query' do
+        allow(User::BasicAttributes).to receive(:attributes_for_uids).and_call_original
         expect(User::BasicAttributes).to receive(:attributes_for_uids).with(['12345']).and_return([{
           ldap_uid: '12345',
           email_address: 'kaymcnulty@arl.army.mil'
@@ -161,12 +162,31 @@ describe EdoOracle::Adapters::Oec do
     context 'missing email address' do
       before { row[5] = nil }
       it 'fills in email address from attributes query' do
+        allow(User::BasicAttributes).to receive(:attributes_for_uids).and_call_original
         expect(User::BasicAttributes).to receive(:attributes_for_uids).with(['12345678']).and_return([{
           ldap_uid: '12345678',
           email_address: 'hedy@gmail.com'
         }])
-        EdoOracle::Adapters::Oec.supplement_email_addresses([row], columns)
+        EdoOracle::Adapters::Oec.supplement_user_attributes([row], columns)
         expect(enrollment['EMAIL_ADDRESS']).to eq 'hedy@gmail.com'
+      end
+    end
+
+    context 'missing name' do
+      before do
+        row[3] = nil
+        row[4] = nil
+      end
+      it 'fills in email address from attributes query' do
+        allow(User::BasicAttributes).to receive(:attributes_for_uids).and_call_original
+        expect(User::BasicAttributes).to receive(:attributes_for_uids).with(['12345678']).and_return([{
+          ldap_uid: '12345678',
+          first_name: 'Hedwig Eva Maria',
+          last_name: 'Kiesler'
+        }])
+        EdoOracle::Adapters::Oec.supplement_user_attributes([row], columns)
+        expect(enrollment['FIRST_NAME']).to eq 'Hedwig Eva Maria'
+        expect(enrollment['LAST_NAME']).to eq 'Kiesler'
       end
     end
   end
