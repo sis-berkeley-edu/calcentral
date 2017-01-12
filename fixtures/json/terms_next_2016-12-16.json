@@ -61,72 +61,7 @@
               "dropWithPenaltyDeadline": "2017-04-28",
               "cancelDeadline": "2017-01-04",
               "withdrawNoPenaltyDeadline": "2017-02-17",
-              "withdrawWithPenaltyDeadline": "2017-04-28",
-              "timePeriods": [
-                {
-                  "period": {
-                    "code": "100",
-                    "description": "instruction Begins"
-                  },
-                  "endDate": "2017-01-02"
-                },
-                {
-                  "period": {
-                    "code": "110",
-                    "description": "End of First Week"
-                  },
-                  "endDate": "2017-01-13"
-                },
-                {
-                  "period": {
-                    "code": "120",
-                    "description": "End of Second Week"
-                  },
-                  "endDate": "2017-01-20"
-                },
-                {
-                  "period": {
-                    "code": "130",
-                    "description": "End of Third Week"
-                  },
-                  "endDate": "2017-01-27"
-                },
-                {
-                  "period": {
-                    "code": "140",
-                    "description": "End of Drop/Add"
-                  },
-                  "endDate": "2017-02-17"
-                },
-                {
-                  "period": {
-                    "code": "200",
-                    "description": "End of RRR Week"
-                  },
-                  "endDate": "2017-04-25"
-                },
-                {
-                  "period": {
-                    "code": "250",
-                    "description": "End of Instruction"
-                  },
-                  "endDate": "2017-04-28"
-                },
-                {
-                  "period": {
-                    "code": "300",
-                    "description": "End of Term"
-                  },
-                  "endDate": "2017-05-10"
-                },
-                {
-                  "period": {
-                    "code": "400",
-                    "description": "End of Grading Period"
-                  },
-                  "endDate": "2017-05-17"
-                }
-              ]
+              "withdrawWithPenaltyDeadline": "2017-04-28"
             }
           ]
         },
@@ -184,8 +119,7 @@
               "dropWithPenaltyDeadline": "2017-05-05",
               "cancelDeadline": "2017-01-16",
               "withdrawNoPenaltyDeadline": "2017-02-21",
-              "withdrawWithPenaltyDeadline": "2017-05-05",
-              "timePeriods": []
+              "withdrawWithPenaltyDeadline": "2017-05-05"
             }
           ]
         },
@@ -239,8 +173,7 @@
               "dropDeletedFromRecordDeadline": "2017-01-16",
               "dropRetainedOnRecordDeadline": "2017-05-05",
               "cancelDeadline": "2017-01-16",
-              "withdrawNoPenaltyDeadline": "2017-05-05",
-              "timePeriods": []
+              "withdrawNoPenaltyDeadline": "2017-05-05"
             }
           ]
         },
@@ -298,8 +231,7 @@
               "dropWithPenaltyDeadline": "2017-05-05",
               "cancelDeadline": "2017-01-16",
               "withdrawNoPenaltyDeadline": "2017-02-21",
-              "withdrawWithPenaltyDeadline": "2017-05-05",
-              "timePeriods": []
+              "withdrawWithPenaltyDeadline": "2017-05-05"
             }
           ]
         }
