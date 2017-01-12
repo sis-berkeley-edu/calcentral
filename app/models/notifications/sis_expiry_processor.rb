@@ -4,13 +4,17 @@ module Notifications
 
     def process(event, timestamp)
       return false unless accept? event
-      logger.debug "Processing event: #{event}; timestamp = #{timestamp}"
-      if (expiry_module = get_expiry event)
-        if (uid = (event['topic'] == 'sis:faculty:grade-roster') ? (get_instructor_uids event) : (get_uid event))
-        expiry_module.expire uid
+      begin
+        logger.debug "Processing event: #{event}; timestamp = #{timestamp}"
+        if (expiry_module = get_expiry event)
+          if (uid = (event['topic'] == 'sis:faculty:grade-roster') ? (get_instructor_uids event) : (get_uid event))
+            expiry_module.expire uid
+          end
+        else
+          logger.warn "Event topic #{event['topic']} not recognized"
         end
-      else
-        logger.warn "Event topic #{event['topic']} not recognized"
+      ensure
+        ActiveRecord::Base.clear_active_connections!
       end
     end
 
