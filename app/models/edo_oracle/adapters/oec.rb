@@ -6,7 +6,7 @@ module EdoOracle
       def self.adapt_courses(rows, term_code)
         default_dates = get_default_dates term_code
         user_courses = EdoOracle::UserCourses::Base.new
-        supplement_email_addresses rows
+        supplement_user_attributes rows
 
         rows.each do |row|
           uniq_ccn_lists row
@@ -32,23 +32,40 @@ module EdoOracle
         hash_row
       end
 
-      def self.supplement_email_addresses(rows, columns=nil)
+      def self.supplement_user_attributes(rows, columns=nil)
         # Depending on source query, the 'rows' argument may be an array of hashes (in which case we retrieve values
         # using string keys), or an array of arrays (in which case we pass in an additional 'columns' argument and
         # retrieve values using integer indexes).
         email_address_key = columns ? columns.index('EMAIL_ADDRESS') : 'email_address'
         ldap_uid_key = columns ? columns.index('LDAP_UID') : 'ldap_uid'
+        first_name_key = columns ? columns.index('FIRST_NAME') : 'first_name'
+        last_name_key = columns ? columns.index('LAST_NAME') : 'last_name'
 
-        rows_without_email = rows.inject({}) do |hash, row|
-          if row[ldap_uid_key].present? && row[email_address_key].blank?
-            hash[row[ldap_uid_key].to_s] ||= []
-            hash[row[ldap_uid_key].to_s] << row
+        rows_without_email = {}
+        rows_without_names = {}
+
+        rows.each do |row|
+          next if row[ldap_uid_key].blank?
+          if row[email_address_key].blank?
+            rows_without_email[row[ldap_uid_key].to_s] ||= []
+            rows_without_email[row[ldap_uid_key].to_s] << row
           end
-          hash
+          if row[last_name_key].blank?
+            rows_without_names[row[ldap_uid_key].to_s] ||= []
+            rows_without_names[row[ldap_uid_key].to_s] << row
+          end
         end
+
         User::BasicAttributes.attributes_for_uids(rows_without_email.keys).each do |attrs|
           rows_without_email[attrs[:ldap_uid]].each do |row|
             row[email_address_key] = attrs[:email_address]
+          end
+        end
+
+        User::BasicAttributes.attributes_for_uids(rows_without_names.keys).each do |attrs|
+          rows_without_names[attrs[:ldap_uid]].each do |row|
+            row[first_name_key] = attrs[:first_name]
+            row[last_name_key] = attrs[:last_name]
           end
         end
       end

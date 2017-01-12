@@ -48,7 +48,7 @@ module Oec
         batch += 1
       end
 
-      EdoOracle::Adapters::Oec.supplement_email_addresses(rows, columns)
+      EdoOracle::Adapters::Oec.supplement_user_attributes(rows, columns)
 
       {
         rows: rows,
