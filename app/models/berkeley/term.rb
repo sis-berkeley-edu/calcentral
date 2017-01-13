@@ -80,9 +80,11 @@ module Berkeley
         @classes_end = @instruction_end.advance(days: -7)
         @final_exam_week_start = @instruction_end.advance(days: 3)
         @final_exam_cs_data_available = @end.advance(days: -56)
-        session['timePeriods'].each do |timePeriod|
-          if timePeriod['period']['code'] == end_drop_add_code
-            @end_drop_add = timePeriod['endDate']
+        if (timePeriods = session['timePeriods']).present?
+          timePeriods.each do |timePeriod|
+            if timePeriod['period']['code'] == end_drop_add_code
+              @end_drop_add = timePeriod['endDate']
+            end
           end
         end
       end
@@ -144,7 +146,7 @@ module Berkeley
     def to_h
       methods = [:campus_solutions_id, :name, :year, :code, :slug, :to_english,
         :start, :end, :classes_start, :classes_end, :instruction_end, :grades_entered,
-        :is_summer, :legacy?, :final_exam_week_start]
+        :is_summer, :legacy?, :final_exam_week_start, :end_drop_add]
       Hash[methods.collect {|m| [m, send(m)]}]
     end
 

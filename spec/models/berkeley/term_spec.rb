@@ -2,7 +2,8 @@ describe Berkeley::Term do
 
   context 'CS SIS' do
     subject { Berkeley::Term.new.from_cs_api(cs_feed) }
-    let(:cs_feed) { HubTerm::Proxy.new(fake:true, temporal_position: temporal_position).get_term }
+    let(:as_of_date) { nil }
+    let(:cs_feed) { HubTerm::Proxy.new(fake:true, temporal_position: temporal_position, as_of_date: as_of_date).get_term }
     context 'Summer Sessions' do
       let(:temporal_position) {HubTerm::Proxy::CURRENT_TERM}
       it 'parses the feed' do
@@ -21,6 +22,7 @@ describe Berkeley::Term do
         expect(subject.to_english).to eq 'Summer 2016'
         expect(subject.legacy?).to be_truthy
         expect(subject.sis_current_term?).to be_truthy
+        expect(subject.end_drop_add).to be_blank
         expect(subject.raw_source[0]['temporalPosition']).to eq 'Current'
       end
     end
@@ -45,6 +47,25 @@ describe Berkeley::Term do
         expect(subject.to_english).to eq 'Fall 2016'
         expect(subject.legacy?).to be_falsey
         expect(subject.sis_current_term?).to be_falsey
+        expect(subject.end_drop_add).to be_present
+        expect(subject.raw_source[0]['temporalPosition']).to eq 'Future'
+      end
+    end
+
+    context 'Future Spring' do
+      let(:temporal_position) {HubTerm::Proxy::NEXT_TERM}
+      let(:as_of_date) {'2016-12-16'}
+      it 'parses the feed' do
+        expect(subject.slug).to eq 'spring-2017'
+        expect(subject.year).to eq 2017
+        expect(subject.code).to eq 'B'
+        expect(subject.name).to eq 'Spring'
+        expect(subject.campus_solutions_id).to eq '2172'
+        expect(subject.is_summer).to eq false
+        expect(subject.to_english).to eq 'Spring 2017'
+        expect(subject.legacy?).to be_falsey
+        expect(subject.sis_current_term?).to be_falsey
+        expect(subject.end_drop_add).to be_blank
         expect(subject.raw_source[0]['temporalPosition']).to eq 'Future'
       end
     end
