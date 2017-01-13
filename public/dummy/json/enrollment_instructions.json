@@ -22,46 +22,46 @@
       }
     }
   },
-  "enrollmentTermInstructionTypes": [
+  "enrollmentTermInstructionTypeDecks": [
     {
-      "careerCode": "UGRD",
-      "role": "default",
-      "academicPlans": [
+      "cards": [
         {
-          "career": {
-            "code": "UGRD",
-            "description": "Undergraduate"
-          },
-          "plan": {
-            "code": "04606U",
-            "description": "Nutritional Science BS"
+          "academicPlans": [
+            {
+              "career": {
+                "code": "UGRD",
+                "description": "Undergraduate"
+              },
+              "college": "Undergrad Natural Resources",
+              "enrollmentRole": "default",
+              "plan": {
+                "code": "04606U",
+                "description": "Nutritional Science BS"
+              },
+              "primary": true,
+              "program": {
+                "code": "UCNR",
+                "description": "Undergrad Natural Resources"
+              },
+              "role": "default",
+              "subPlan": {},
+              "type": {
+                "category": "Major",
+                "code": "MAJ",
+                "description": "Major - Regular Acad/Prfnl"
+              }
+            }
+          ],
+          "careerCode": "UGRD",
+          "role": "default",
+          "term": {
+            "termDescr": "2017 Spring",
+            "termId": "2172",
+            "termIsSummer": false,
+            "termName": "Spring 2017"
           }
         }
-      ],
-      "term": {
-        "termDescr": "2016 Fall",
-        "termId": "2168"
-      }
-    },
-    {
-      "careerCode": "UCBX",
-      "role": "concurrent",
-      "academicPlans": [
-        {
-          "career": {
-            "code": "UCBX",
-            "description": "UC Extension"
-          },
-          "plan": {
-            "code": "12345U",
-            "description": "Clinical Lab Prep"
-          }
-        }
-      ],
-      "term": {
-        "termDescr": "2016 Fall",
-        "termId": "2168"
-      }
+      ]
     }
   ],
   "enrollmentTermInstructions": {
@@ -264,7 +264,26 @@
   },
   "hasHolds": false,
   "links": {
-    "concurrentApplyToClass": "https://bcswebqat.is.berkeley.edu/psp/bcsqat/EMPLOYEE/HRMS/c/G3FRAME.G3SEARCH.GBL?",
-    "concurrentSubmittedClassApplications": "https://bcswebqat.is.berkeley.edu/psp/bcsqat/EMPLOYEE/HRMS/c/G3ACTION_CENTER.G3ACTION_CENTER.GBL?FolderPath=PORTAL_ROOT_OBJECT.UC_CMPONENTS.UC_FORMS.G3EFORM3_FOLDER.G3ACTION_CENTER_GBL&IsFolder=false&IgnoreParamTempl=FolderPath%2cIsFolder"
+    "ucAddClassEnrollment": {
+      "name": "Apply to a Class",
+      "showNewWindow": true,
+      "title": "Complete your class enrollment application.",
+      "url": "https://bcswebqat.is.berkeley.edu/psp/bcsqat/EMPLOYEE/HRMS/c/G3FRAME.G3SEARCH.GBL?&G3FORM_FAMILY=STUDENT&G3FORM_TYPE=SSCNTENRL&G3FORM_CONDITION=Default&G3FORM_TASK=ADD",
+      "urlId": "UC_CX_GT_SSCNTENRL_ADD"
+    },
+    "ucEditClassEnrollment": {
+      "name": "Edit Class Applications",
+      "showNewWindow": true,
+      "title": "Edit your submited class enrollment application.",
+      "url": "https://bcswebqat.is.berkeley.edu/psp/bcsqat/EMPLOYEE/HRMS/c/G3FRAME.G3SEARCH.GBL?&G3FORM_FAMILY=STUDENT&G3FORM_TYPE=SSCNTENRL&G3FORM_CONDITION=Default&G3FORM_TASK=UPD",
+      "urlId": "UC_CX_GT_SSCNTENRL_UPD"
+    },
+    "ucViewClassEnrollment": {
+      "name": "Submitted Class Applications",
+      "showNewWindow": true,
+      "title": "View your submitted class enrollment application.",
+      "url": "https://bcswebqat.is.berkeley.edu/psp/bcsqat/EMPLOYEE/HRMS/c/G3FRAME.G3SEARCH.GBL?&G3FORM_FAMILY=STUDENT&G3FORM_TYPE=SSCNTENRL&G3FORM_CONDITION=Default&G3FORM_TASK=VWS",
+      "urlId": "UC_CX_GT_SSCNTENRL_VIEW"
+    }
   }
 }

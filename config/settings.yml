@@ -437,8 +437,6 @@ calnet_crosswalk_proxy:
   http_timeout_seconds: 30
 
 campus_solutions_links:
-  advising:
-    schedule_planner: ''
   academics:
     enrollment_verification_google: ''
     enrollment_Verification: ''
