@@ -66,10 +66,6 @@ module CampusSolutions
       if student_empl_id
         # advisors and students see these on student-specific views
 
-        # Hard-coded link in settings.yml.campus_solutions_links.advising for
-        # use until available from CS Link API.
-        add_cs_link links, :schedule_planner, 'SCHEDULE_PLANNER_STUDENT_SPECIFIC', 'Schedule Planner', "?EMPLID=#{student_empl_id}", "View this student's planned schedule for this term."
-
         advising_student_link_settings = [
           { feed_key: :student_academic_progress_report, cs_link_key: 'UC_CX_APR_RPT_STDNT', cs_link_params: { :EMPLID => student_empl_id } },
           { feed_key: :student_administrative_transcripts, cs_link_key: 'UC_CX_ADM_TRANSCRIPT_STDNT', cs_link_params: { :EMPLID => student_empl_id } },
@@ -112,20 +108,6 @@ module CampusSolutions
 
     def xml_filename
       'advising_resources.xml'
-    end
-
-    private
-
-    def add_cs_link(links, config_key, link_key, name, params_string = '', title = '')
-      value = Settings.campus_solutions_links.advising.send config_key
-      if value
-        links[link_key] = {
-          'NAME' => name,
-          'URL' => value + params_string,
-          'IS_CS_LINK' => true,
-          'TITLE' => title
-        }
-      end
     end
 
   end
