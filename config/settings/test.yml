@@ -81,11 +81,6 @@ cache:
 advising_proxy:
   fake: true
 
-campus_solutions_links:
-  class_enrollment:
-    concurrent_apply_to_class: 'http://example.com/apply_to_class_url/'
-    concurrent_submitted_class_applications: 'http://example.com/concurrent_submitted_class_applications/'
-
 grading_period:
   assistance_link: '#'
   general:
