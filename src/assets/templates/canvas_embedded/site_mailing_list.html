@@ -12,12 +12,16 @@
       </div>
     </div>
 
-    <div data-ng-if="listCreated" class="bc-alert bc-alert-success">
+    <div data-ng-if="errorMessages" class="bc-alert bc-alert-error">
+      <div data-ng-repeat="errorMessage in errorMessages" data-ng-bind="errorMessage"></div>
+    </div>
+
+    <div data-ng-if="!errorMessages && listCreated" class="bc-alert bc-alert-success">
       A Mailing List has been created at <strong data-ng-bind-template="{{mailingList.name}}@{{mailingList.domain}}"></strong>.
       Messages can now be sent through this address.
     </div>
 
-    <div data-ng-if="!listCreated" class="bc-alert">
+    <div data-ng-if="!errorMessages && !listCreated" class="bc-alert">
       No Mailing List has yet been created for this site.
     </div>
 
@@ -30,7 +34,10 @@
 
     <form class="bc-canvas-page-form bc-canvas-form" data-ng-if="!listCreated">
       <div class="bc-form-actions">
-        <button data-ng-click="createMailingList()" class="bc-canvas-button bc-canvas-button-primary" aria-controls="cc-page-reader-alert">
+        <button data-ng-click="createMailingList()"
+                class="bc-canvas-button bc-canvas-button-primary"
+                aria-controls="cc-page-reader-alert"
+                data-ng-disabled="errorMessages">
           <span data-ng-if="!isCreating">Create mailing list</span>
           <span data-ng-if="isCreating"><i class="fa fa-spinner fa-spin"></i> Creating ...</span>
         </button>

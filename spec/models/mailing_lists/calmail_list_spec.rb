@@ -28,7 +28,7 @@ describe MailingLists::CalmailList do
         count = described_class.count
         create_list
         expect(described_class.count).to eq count
-        expect(response['errorMessages']).to include("Mailing list name \"#{list.list_name}\" is already taken.")
+        expect(response['errorMessages']).to include("A Mailing List cannot be created for the site \"#{list.canvas_site_name}\".")
       end
     end
 
@@ -57,7 +57,7 @@ describe MailingLists::CalmailList do
 
       it 'returns error on attempt to populate' do
         list.populate
-        expect(response['errorMessages']).to include("Mailing list \"#{list.list_name}\" must be created before being populated.")
+        expect(response['errorMessages']).to include("Mailing List \"#{list.list_name}\" must be created before being populated.")
         expect(response['mailingList']).not_to include('timeLastPopulated')
       end
     end

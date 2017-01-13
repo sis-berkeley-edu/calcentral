@@ -13,9 +13,9 @@ module MailingLists
     validate :catch_request_failure
 
     validates :canvas_site_id, presence: {message: 'ID must be a numeric string.'}
-    validates :canvas_site_id, uniqueness: {message: 'ID "%{value}" has already reserved a mailing list.'}
+    validates :canvas_site_id, uniqueness: {message: 'ID "%{value}" has already reserved a Mailing List.'}
 
-    validates :list_name, uniqueness: {message: '"%{value}" has already been reserved.'}
+    validates :list_name, uniqueness: {message: '"%{value}" is already in use by another Mailing List.'}
     validates :list_name, format: {
       with: /\A[\w-]+\Z/,
       message: 'may contain only lowercase, numeric, underscore and hyphen characters.',
@@ -36,7 +36,7 @@ module MailingLists
 
     def populate
       if self.state != 'created'
-        self.request_failure = "Mailing list \"#{self.list_name}\" must be created before being populated."
+        self.request_failure = "Mailing List \"#{self.list_name}\" must be created before being populated."
         return
       end
 
@@ -129,7 +129,7 @@ module MailingLists
       get_canvas_site
       self.list_name ||= generate_list_name
       if name_available? == false
-        self.request_failure = "Mailing list name \"#{self.list_name}\" is already taken."
+        self.request_failure = "A Mailing List cannot be created for the site \"#{self.canvas_site_name}\"."
       end
     end
 

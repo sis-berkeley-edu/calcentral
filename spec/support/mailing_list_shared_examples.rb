@@ -24,7 +24,7 @@ shared_examples 'a newly initialized mailing list' do
 
   it 'returns error on attempt to populate before save' do
     list.populate
-    expect(response['errorMessages']).to include("Mailing list \"#{list.list_name}\" must be created before being populated.")
+    expect(response['errorMessages']).to include("Mailing List \"#{list.list_name}\" must be created before being populated.")
     expect(response['mailingList']).not_to include('timeLastPopulated')
   end
 
@@ -82,7 +82,7 @@ shared_examples 'mailing list creation errors' do
       count = described_class.count
       create_list
       expect(described_class.count).to eq count
-      expect(response['errorMessages']).to include("List name \"#{list_name}\" has already been reserved.")
+      expect(response['errorMessages']).to include("List name \"#{list_name}\" is already in use by another Mailing List.")
     end
   end
 
@@ -93,7 +93,7 @@ shared_examples 'mailing list creation errors' do
       count = described_class.count
       create_list
       expect(described_class.count).to eq count
-      expect(response['errorMessages']).to include("Canvas site ID \"#{canvas_site_id}\" has already reserved a mailing list.")
+      expect(response['errorMessages']).to include("Canvas site ID \"#{canvas_site_id}\" has already reserved a Mailing List.")
     end
   end
 end
