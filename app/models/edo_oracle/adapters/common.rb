@@ -8,9 +8,10 @@ module EdoOracle
       end
 
       def adapt_dept_name_and_catalog_id(row, user_courses)
-        dept_name, catalog_id = user_courses.parse_course_code row
+        dept_name, dept_code, catalog_id = user_courses.parse_course_code row
         row.merge!({
           'dept_name' => dept_name,
+          'dept_code' => dept_code,
           'catalog_id' => catalog_id
         })
       end

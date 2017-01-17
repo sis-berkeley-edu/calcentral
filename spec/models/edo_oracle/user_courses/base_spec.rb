@@ -439,6 +439,8 @@ describe EdoOracle::UserCourses::Base do
       its([:slug]) { should eq 'mec_eng_i_res-0109al' }
       its([:id])  {should eq 'mec_eng_i_res-0109al-2016-D' }
       its([:course_code]) { should eq 'MEC ENG/I,RES 0109AL' }
+      its([:dept]) { should eq 'MEC ENG/I,RES' }
+      its([:dept_code]) { should eq 'MECENGIRES' }
     end
     let(:subject_areas) { ['MEC ENG/I,RES', 'MUSIC'] }
     context 'dept_name and catalog_id available' do
@@ -446,6 +448,7 @@ describe EdoOracle::UserCourses::Base do
         'catalog_id' => '0109AL',
         'course_display_name' => 'MEC ENG/I,RES 0109AL',
         'dept_name' => 'MEC ENG/I,RES',
+        'dept_code' => 'MECENGIRES',
         'section_display_name' => 'MECENGIRES 0109AL',
         'term_id' => '2168'
       }}
@@ -456,6 +459,7 @@ describe EdoOracle::UserCourses::Base do
         'catalog_id' => nil,
         'course_display_name' => 'MEC ENG/I,RES 0109AL',
         'dept_name' => nil,
+        'dept_code' => 'MECENGIRES',
         'section_display_name' => 'MECENGIRES 0109AL',
         'term_id' => '2168'
       }}
@@ -466,6 +470,7 @@ describe EdoOracle::UserCourses::Base do
         'catalog_id' => nil,
         'course_display_name' => nil,
         'dept_name' => nil,
+        'dept_code' => 'MECENGIRES',
         'section_display_name' => 'MECENGIRES 0109AL',
         'term_id' => '2168'
       }}
@@ -476,6 +481,7 @@ describe EdoOracle::UserCourses::Base do
         'catalog_id' => '0109AL',
         'course_display_name' => 'MECENGIRES 0109AL',
         'dept_name' => 'MECENGIRES',
+        'dept_code' => 'MECENGIRES',
         'section_display_name' => 'MECENGIRES 0109AL',
         'term_id' => '2168'
       }}
@@ -487,6 +493,7 @@ describe EdoOracle::UserCourses::Base do
     let(:row) {{
       'catalog_id' => '0109AL',
       'dept_name' => 'MEC ENG/I,RES',
+      'dept_code' => 'MECENGIRES',
       'term_id' => '2168',
       'course_title' => course_title,
       'course_title_short' => 'KOLLAPS',

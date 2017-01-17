@@ -18,6 +18,7 @@ module EdoOracle
       TRIM(crs."title") AS course_title,
       TRIM(crs."transcriptTitle") AS course_title_short,
       crs."subjectArea" AS dept_name,
+      crs."classSubjectArea" AS dept_code,
       sec."primary" AS primary,
       sec."sectionNumber" AS section_num,
       sec."component-code" as instruction_format,
