@@ -13,6 +13,11 @@ describe MyCommittees::FacultyCommittees do
       allow(CalnetCrosswalk::ByUid).to receive(:new).with(user_id: uid).and_return(
         double(lookup_campus_solutions_id: user_cs_id))
     end
+
+    it 'sorts active and inactive committees into separate lists' do
+      expect(feed[:facultyCommittees][:active].count).to eq 1
+      expect(feed[:facultyCommittees][:completed].count).to eq 1
+    end
     it 'contains the expected faculty data' do
       committees = feed[:facultyCommittees][:completed]
       expect(committees[0][:committeeType]).to eq 'Advancement to Candidacy Mas1'
