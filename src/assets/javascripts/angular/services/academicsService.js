@@ -281,7 +281,7 @@ angular.module('calcentral.services').service('academicsService', function() {
     if (sectionNumbers.length) {
       var courseInfo = {
         'sectionNumbers[]': sectionNumbers,
-        'department': course.dept,
+        'department': course.dept_code,
         'courseCatalog': course.courseCatalog,
         'slug': semester.slug
       };

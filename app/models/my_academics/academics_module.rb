@@ -49,7 +49,7 @@ module MyAcademics
     end
 
     def course_listing(campus_course)
-      campus_course.slice(:course_code, :dept, :dept_desc).merge({
+      campus_course.slice(:course_code, :dept, :dept_code, :dept_desc).merge({
         courseCatalog: campus_course[:course_catalog],
         course_id: campus_course[:id]
       })
