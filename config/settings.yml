@@ -451,15 +451,31 @@ final_exam_schedule: [
   }
 ]
 
-# This is a temporary setting for grading period which will be set manually for Fall 2016 semester.
+# This is a temporary setting for grading period which will be set manually for Fall 2016 & Spring 2017 semesters.
 grading_period:
-  assistance_link: ''
-  general:
-    start: ''
-    end: ''
-  law:
-    start: ''
-    end: ''
+  links:
+    final: ''
+    midpoint:  ''
+    law:  ''
+  dates:
+    general:
+      fall_2016:
+        start: ''
+        end: ''
+      spring_2017:
+        midpoint:
+          start: ''
+          end: ''
+        final:
+          start: ''
+          end: ''
+    law:
+      fall_2016:
+        start: ''
+        end: ''
+      spring_2017:
+        start: ''
+        end: ''
 
 # A feature will be disabled if the corresponding feature-flag is false or nil.
 features:

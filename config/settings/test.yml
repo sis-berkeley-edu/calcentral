@@ -82,13 +82,29 @@ advising_proxy:
   fake: true
 
 grading_period:
-  assistance_link: '#'
-  general:
-    start: 2016-12-12 0:0:0
-    end: 2017-01-06 23:59:59
-  law:
-    start: 2016-11-01 0:0:0
-    end: 2017-01-06 23:59:59
+  links:
+    final: '#'
+    midpoint:  '#'
+    law:  '#'
+  dates:
+    general:
+      fall_2016:
+        start: 2016-12-12 0:0:0
+        end: 2016-12-21 23:59:59
+      spring_2017:
+        midpoint:
+          start: 2017-03-01 0:0:0
+          end: 2017-03-10 23:59:59
+        final:
+          start: 2017-03-22 0:0:0
+          end: 2017-03-28 23:59:59
+    law:
+      fall_2016:
+        start: 2016-11-05 0:0:0
+        end: 2017-01-11 23:59:59
+      spring_2017:
+        start: 2017-03-26 0:0:0
+        end: 2017-03-30 23:59:59
 
 features:
   advising: true

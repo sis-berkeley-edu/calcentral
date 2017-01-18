@@ -65,49 +65,60 @@
       </div>
     </div>
   </div>
-  <div data-ng-if="selectedTeachingSemester && (selectedTeachingSemester.gradingAssistanceLink || selectedTeachingSemester.gradingAssistanceLinkLaw)">
+  <div data-ng-if="selectedTeachingSemester && (selectedTeachingSemester.gradingAssistanceLinkMidpoint || selectedTeachingSemester.gradingAssistanceLink || selectedTeachingSemester.gradingAssistanceLinkLaw)">
     <div class="cc-academics-subtitle">
       <h3>Grading</h3>
     </div>
     <div class="cc-academics-course-grading-header cc-widget-padding show-for-medium-up">
-      <div data-ng-if="selectedTeachingSemester.gradingAssistanceLink">
+      <div class="cc-clearfix" data-ng-if="gradingPeriodMidpointStart || gradingPeriodFinalStart || gradingPeriodStartLaw">
+        <h4 class="cc-academics-course-standard-grading-header cc-academics-course-grading-header-period">Standard Grading Entry Periods</h4>
+      </div>
+      <div class="cc-clearfix" data-ng-if="selectedTeachingSemester.gradingAssistanceLinkMidpoint">
+        <span>
+          <a data-ng-href="{{selectedTeachingSemester.gradingAssistanceLinkMidpoint}}" title="Assistance with midpoint grading for general classes">
+            &#9632; Assistance with Midpoint Grading: General
+          </a>
+        </span>
+        <span data-ng-if="selectedTeachingSemester.gradingPeriodMidpointStart && selectedTeachingSemester.gradingPeriodMidpointEnd" class="cc-academics-course-grading-header-period">
+          <span class="cc-text-light">Midpoint Grades</span> Start: <strong><span data-ng-bind="selectedTeachingSemester.gradingPeriodMidpointStart"></span></strong> | Due: <strong><span data-ng-bind="selectedTeachingSemester.gradingPeriodMidpointEnd"></span></strong>
+        </span>
+      </div>
+      <div class="cc-clearfix" data-ng-if="selectedTeachingSemester.gradingAssistanceLink">
         <span>
           <a data-ng-href="{{selectedTeachingSemester.gradingAssistanceLink}}" title="Assistance with grading for general classes">
             &#9632; Assistance with Grading: General
           </a>
         </span>
-        <span data-ng-if="selectedTeachingSemester.gradingPeriodStart && selectedTeachingSemester.gradingPeriodEnd" class="cc-academics-course-grading-header-period">
-          <span class="cc-text-light">Final Grading Entry Period:</span> Start: <strong>{{selectedTeachingSemester.gradingPeriodStart}}</strong> | Due: <strong>{{selectedTeachingSemester.gradingPeriodEnd}}</strong>
+        <span data-ng-if="selectedTeachingSemester.gradingPeriodFinalStart && selectedTeachingSemester.gradingPeriodFinalEnd" class="cc-academics-course-grading-header-period">
+          <span class="cc-text-light">Final Grades</span> Start: <strong><span data-ng-bind="selectedTeachingSemester.gradingPeriodFinalStart"></span></strong> | Due: <strong><span data-ng-bind="selectedTeachingSemester.gradingPeriodFinalEnd"></span></strong>
         </span>
       </div>
-      <div data-ng-if="selectedTeachingSemester.gradingAssistanceLinkLaw">
+      <div class="cc-clearfix" data-ng-if="selectedTeachingSemester.gradingAssistanceLinkLaw">
         <span>
           <a data-ng-href="{{selectedTeachingSemester.gradingAssistanceLinkLaw}}" title="Assistance with grading for Law classes">
             &#9632; Assistance with Grading: Law
           </a>
         </span>
         <span data-ng-if="selectedTeachingSemester.gradingPeriodStartLaw && selectedTeachingSemester.gradingPeriodEndLaw" class="cc-academics-course-grading-header-period">
-          <span class="cc-text-light">Final Grading Entry Period (Law):</span> Start: <strong>{{selectedTeachingSemester.gradingPeriodStartLaw}}</strong> | Due: <strong>{{selectedTeachingSemester.gradingPeriodEndLaw}}</strong>
+          <span class="cc-text-light">Final Grades (Law)</span> Start: <strong><span data-ng-bind="selectedTeachingSemester.gradingPeriodStartLaw"></span></strong> | Due: <strong><span data-ng-bind="selectedTeachingSemester.gradingPeriodEndLaw"></span></strong>
         </span>
-      </div>
-      <div>
-        <br>Please expect 15-20 minutes for Grading Status updates to be reflected below.
       </div>
     </div>
     <div class="cc-widget-padding">
       <div class="cc-table">
         <table>
           <thead>
-            <th scope="col" class="cc-academics-course-number">Course</th>
-            <th scope="col" class="show-for-medium-up">Class Number</th>
-            <th scope="col">Title</th>
-            <th scope="col" class="show-for-medium-up cc-academics-course-section">Section</th>
-            <th scope="col" class="show-for-medium-up cc-academics-course-grading">Grading Links</th>
-            <th scope="col" class="show-for-medium-up cc-academics-course-grading">Grading Status</th>
+            <th width="15%" scope="col" class="cc-academics-course-number">Course</th>
+            <th width="10%" scope="col" class="show-for-medium-up">Class Number</th>
+            <th data-ng-attr-width="{{containsMidpointclass ? '35%' : '45%'}}" scope="col">Title</th>
+            <th width="10%" scope="col" class="show-for-medium-up cc-academics-course-section">Section</th>
+            <th width="10%" scope="col" class="show-for-medium-up cc-academics-course-grading cc-academics-course-grading-centered">Grading Links</th>
+            <th data-ng-if="containsMidpointClass" width="10%" scope="col" class="show-for-medium up cc-academics-course-grading cc-academics-course-grading-centered">Midpoint Status</th>
+            <th width="10%" scope="col" class="show-for-medium-up cc-academics-course-grading cc-academics-course-grading-centered">Final Status</th>
           </thead>
           <tbody data-ng-if="selectedTeachingSemester.classes.length" data-ng-repeat="course in selectedTeachingSemester.classes">
             <tr data-ng-repeat="section in course.sections">
-              <td data-ng-if="section.is_primary_section" class="cc-academics-course-number"  >
+              <td data-ng-if="section.is_primary_section">
                 <div data-ng-repeat="listing in course.listings">
                   <span data-ng-bind="listing.course_code"></span>
                 </div>
@@ -115,27 +126,33 @@
                   <span data-ng-bind="section.section_label"></span>
                 </div>
               </td>
-              <td data-ng-if="section.is_primary_section" class="show-for-medium-up"  >
+              <td data-ng-if="section.is_primary_section" class="show-for-medium-up">
                 <div data-ng-bind="section.ccn"></div>
               </td>
-              <td data-ng-if="section.is_primary_section" data-ng-bind="course.title"  ></td>
-              <td data-ng-if="section.is_primary_section" class="show-for-medium-up cc-academics-course-section"  >
+              <td data-ng-if="section.is_primary_section" class="cc-academics-course-title" data-ng-bind="course.title"></td>
+              <td data-ng-if="section.is_primary_section" class="show-for-medium-up">
                 <div data-ng-bind="section.section_label"></div>
               </td>
-              <td data-ng-if="section.is_primary_section && section.gradingLink.url" class="show-for-medium-up cc-academics-course-grading-link" >
+              <td data-ng-if="section.is_primary_section && section.gradingLink.url" class="show-for-medium-up cc-academics-course-grading-centered">
                 <a data-cc-campus-solutions-link-directive="section.gradingLink.url"
                   data-cc-campus-solutions-link-directive-enabled="{{section.gradingLink.isCsLink}}"
                   data-cc-campus-solutions-link-directive-text="currentPage.name"
                   data-cc-outbound-enabled="false"
                   data-ng-disabled="!section.gradingLink.url"
                   data-ng-attr-title="{{section.gradingLink.title}}">
-                  Enter Grades
+                  Grades
                 </a>
               </td>
-              <td data-ng-if="section.is_primary_section && !section.gradingLink.url" class="show-for-medium-up cc-academics-course-grading-link">
+              <td data-ng-if="section.is_primary_section && !section.gradingLink.url" class="show-for-medium-up cc-academics-course-grading-centered">
                 &mdash;
               </td>
-              <td data-ng-if="section.is_primary_section" class="show-for-medium-up cc-academics-course-grading-icon" data-ng-switch="section.ccGradingStatus" >
+              <td data-ng-if="section.is_primary_section && containsMidpointClass" class="show-for-medium-up cc-academics-course-grading-centered" data-ng-switch="section.ccMidpointGradingStatus">
+                <i data-ng-switch-when="periodNotStarted" class="fa fa-ban"></i>
+                <i data-ng-switch-when="periodStarted" class="fa fa-file-o"></i>
+                <i data-ng-switch-when="gradesPosted" class="fa fa-check-circle cc-icon-green"></i>
+                <i data-ng-switch-default class="fa fa-circle"></i>
+              </td>
+              <td data-ng-if="section.is_primary_section" class="show-for-medium-up cc-academics-course-grading-centered" data-ng-switch="section.ccGradingStatus">
                 <i data-ng-switch-when="periodNotStarted" class="fa fa-ban"></i>
                 <i data-ng-switch-when="periodStarted" class="fa fa-file-o"></i>
                 <i data-ng-switch-when="gradesApproved" class="fa fa-check cc-icon-green"></i>
@@ -154,7 +171,9 @@
         <table>
           <tr>
             <td>
-              <span><i class="fa fa-ban"></i></span>
+              <i class="fa fa-ban"></i>
+            </td>
+            <td width="20%">
               <span>
                 Grade entry period not started or no access
                 <span data-ng-if="selectedTeachingSemester.gradingAssistanceLinkLaw">
@@ -163,19 +182,40 @@
                 </span>
               </span>
             </td>
-            <td>
-              <span><i class="fa fa-file-o"></i></span>
-              <span>Grade entry period started and grades not yet approved</span>
+            <td rowspan="2">
+              <i class="fa fa-file-o"></i>
+            </td>
+            <td rowspan="2">
+              <span>Grade entry period started and grades not yet approved or posted</span>
             </td>
             <td>
-              <span><i class="fa fa-check cc-icon-green"></i></span>
-              <span>Grades approved</span><br>
-              <span><i class="fa fa-check-circle cc-icon-green"></i></span>
-              <span> Grades posted</span>
+              <i class="fa fa-check cc-icon-green"></i>
             </td>
             <td>
-              <span><i class="fa fa-exclamation-circle cc-icon-red"></i></span>
+              <span>Grades approved</span>
+            </td>
+            <td rowspan="2">
+              <i class="fa fa-exclamation-circle cc-icon-red"></i>
+            </td>
+            <td rowspan="2">
               <span>Final grade entry period ended and grades overdue</span>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <span><i class="fa fa-circle"></i></span>
+            </td>
+            <td>
+              <span>
+                No midpoint grade roster for Law classes
+              </span>
+            </td>
+            <td>
+              <i class="fa fa-check-circle cc-icon-green"></i>
+            </td>
+            <td>
+              <span>Grades posted<br>
+              <strong>Note:</strong> Classes with no midpoint grades entered are also marked as posted.</span>
             </td>
           </tr>
         </table>
@@ -224,4 +264,3 @@
       </div>
     </div>
   </div>
-
