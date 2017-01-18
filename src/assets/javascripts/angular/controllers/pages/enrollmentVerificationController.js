@@ -6,9 +6,9 @@ var angular = require('angular');
 /**
  * Enrollment Verification Controller
  */
-angular.module('calcentral.controllers').controller('EnrollmentVerificationController', function(apiService, enrollmentVerificationFactory, $scope) {
-  var title = 'My Enrollment Verification';
-  apiService.util.setTitle(title);
+angular.module('calcentral.controllers').controller('EnrollmentVerificationController', function(apiService, csLinkFactory, enrollmentVerificationFactory, linkService, $scope) {
+  linkService.addCurrentRouteSettings($scope);
+  apiService.util.setTitle($scope.currentPage.name);
 
   $scope.enrollmentCsDeeplink = {
     title: 'Request Other Verifications'
@@ -48,18 +48,20 @@ angular.module('calcentral.controllers').controller('EnrollmentVerificationContr
     }
   };
 
-  var getDeeplink = function() {
-    enrollmentVerificationFactory.getEnrollmentVerificationDeeplink()
-      .then(function(data) {
-        var enrollmentCsDeeplink = _.get(data, 'data.feed');
-        _.merge($scope.enrollmentCsDeeplink, enrollmentCsDeeplink);
-      });
+  var getCsLink = function() {
+    csLinkFactory.getLink({
+      urlId: 'UC_CX_SS_ENRL_VER_REQ'
+    }).then(function successCallback(data) {
+      $scope.requestOfficialVerificationLink = _.get(data, 'data.link');
+    }, function errorCallback() {
+      $scope.requestOfficialVerificationLink = null;
+    });
   };
 
   var getMessages = function() {
     enrollmentVerificationFactory.getEnrollmentVerificationMessages()
       .then(parseMessages)
-      .then(getDeeplink)
+      .then(getCsLink)
       .finally(function() {
         $scope.enrollmentMessages.isLoading = false;
       });

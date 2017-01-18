@@ -17,7 +17,7 @@ var angular = require('angular');
  * ********************************************************************************
  *
  * Usage:
- *   <div data-cc-campus-solutions-link-directive="csLinkUrl"></div>
+ *   <a data-cc-campus-solutions-link-directive="csLinkUrl"></a>
  *
  *   data-cc-campus-solutions-link-directive="csLinkUrl" // CS URL
  *   data-cc-campus-solutions-link-directive-enabled="{{item.isCsLink}}" // Default is true, if set to false, we don't execute this directive

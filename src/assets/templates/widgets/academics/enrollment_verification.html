@@ -43,13 +43,15 @@
               <div data-ng-if="!api.user.profile.features.enrollmentVerificationDeeplink">
                 <strong><a data-ng-href="{{enrollmentGoogleLink.url}}" data-ng-attr-title="{{enrollmentGoogleLink.title}}">Request Official Verification</a></strong>
               </div>
-              <div data-ng-if="api.user.profile.features.enrollmentVerificationDeeplink">
-                <strong>
-                  <a data-cc-outbound-enabled="true"
-                    data-ng-href="{{enrollmentCsDeeplink.url}}"
-                    data-ng-attr-title="{{enrollmentCsDeeplink.title}}">Request Official Verification</a>
-                </strong>
-              </div>
+              <strong data-ng-if="requestOfficialVerificationLink.url">
+                <a data-cc-campus-solutions-link-directive="requestOfficialVerificationLink.url"
+                  data-cc-campus-solutions-link-directive-enabled="true"
+                  data-cc-campus-solutions-link-directive-text="currentPage.name"
+                  data-cc-outbound-enabled="{{requestOfficialVerificationLink.showNewWindow}}"
+                  data-ng-attr-title="{{requestOfficialVerificationLink.title}}"
+                  data-ng-bind="requestOfficialVerificationLink.name"
+                ></a>
+              </strong>
             </div>
             <div data-ng-if="!api.user.profile.isDirectlyAuthenticated">
               <p class="cc-enrollment-verification-link-disabled">
