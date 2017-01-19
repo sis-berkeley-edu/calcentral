@@ -2,7 +2,7 @@
 
 var angular = require('angular');
 
-angular.module('calcentral.services').service('utilService', function($cacheFactory, $http, $location, $rootScope, $route, $window) {
+angular.module('calcentral.services').service('utilService', function($cacheFactory, $http, $location, $rootScope, $route, $window, calcentralConfig) {
 
   /**
    * Pass in controller name so we can set active location in menu
@@ -87,7 +87,12 @@ angular.module('calcentral.services').service('utilService', function($cacheFact
    * @param {String} title The title that you want to show for the current web page
    */
   var setTitle = function(title) {
-    $rootScope.title = title + ' | CalCentral';
+    var providedServices = calcentralConfig.providedServices;
+    if (providedServices.indexOf('calcentral') !== -1) {
+      $rootScope.title = title + ' | CalCentral';
+    } else {
+      $rootScope.title = title;
+    }
   };
 
   /**

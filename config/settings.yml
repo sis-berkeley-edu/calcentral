@@ -13,6 +13,9 @@ application:
   layer: development
   # Lifespan of session cookie
   session_expiration: <%= 4.hours %>
+  # Restrict deployment to the SIS service 'calcentral' or the ETS services 'bcourses' and 'oec'.
+  # The default is to support all CalCentral/Junction services.
+  provided_services: ['calcentral', 'bcourses', 'oec']
 
 logger:
   level: <%= ENV['LOGGER_LEVEL'] || WARN %>

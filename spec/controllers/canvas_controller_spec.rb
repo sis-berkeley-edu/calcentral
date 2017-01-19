@@ -66,5 +66,21 @@ describe CanvasController do
       end
     end
 
+    context 'running from ETS Junction rather than within LTI app' do
+      let(:uid) {random_id}
+      before do
+        worker = instance_double(CanvasLti::PublicAuthorizer)
+        expect(worker).to receive(:can_create_site?).and_return(true)
+        expect(CanvasLti::PublicAuthorizer).to receive(:new).with("sis_login_id:#{uid}").and_return(worker)
+        session['user_id'] = uid
+      end
+      it 'lets directly authenticated users run a legitimate check' do
+        get :user_can_create_site
+        expect(response.status).to eq(200)
+        response_json = JSON.parse(response.body)
+        expect(response_json['canCreateSite']).to eq true
+      end
+    end
+
   end
 end

@@ -11,8 +11,8 @@ describe ConfigController do
       expect(subject).is_a? Hash
     end
     it 'should contain the correct properties' do
-      expect(subject).to have_at_most(7).items
-      %w(applicationVersion clientHostname googleAnalyticsId sentryUrl csrfToken csrfParam).each do |key|
+      expect(subject).to have_at_most(8).items
+      %w(applicationVersion clientHostname googleAnalyticsId sentryUrl csrfToken csrfParam providedServices).each do |key|
         expect(subject[key]).is_a? String
       end
     end
@@ -29,7 +29,7 @@ describe ConfigController do
     }
     context 'ordinary user' do
       it 'should contain the uid property' do
-        expect(subject).to have_at_most(7).items
+        expect(subject).to have_at_most(8).items
         expect(subject['uid']).to eq user_id
       end
       it 'should not contain sensitive data' do

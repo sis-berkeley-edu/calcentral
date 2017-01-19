@@ -11,7 +11,11 @@ class BootstrapController < ApplicationController
   # We don't want to serve index-main statically because that would skip the check_databases_alive and
   # check_reauthentication code.
   def index
-    render 'public/index-main.html'
+    if @calcentral_config[:providedServices].include? 'calcentral'
+      render 'public/index-main.html'
+    else
+      render 'public/index-junction.html'
+    end
   end
 
   # CalCentral cannot fully trust a user session which was initiated via an LTI embedded app,
@@ -39,7 +43,9 @@ class BootstrapController < ApplicationController
   end
 
   def warmup_live_updates
-    LiveUpdatesWarmer.warmup_request session['user_id'] if session['user_id']
+    if @calcentral_config[:providedServices].include? 'calcentral'
+      LiveUpdatesWarmer.warmup_request session['user_id'] if session['user_id']
+    end
   end
 
   def check_cache_clear_flag
