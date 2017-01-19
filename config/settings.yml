@@ -436,11 +436,6 @@ calnet_crosswalk_proxy:
   password: secret
   http_timeout_seconds: 30
 
-campus_solutions_links:
-  academics:
-    enrollment_verification_google: ''
-    enrollment_Verification: ''
-
 final_exam_schedule: [
   {
     year: 2016,
@@ -499,7 +494,6 @@ features:
   cs_profile_work_experience: false
   cs_sir: true
   enrollment_verification: false
-  enrollment_verification_deeplink: false
   final_exam_schedule: false
   gpa_calculator: true
   hub_term_api: true

@@ -24,7 +24,8 @@ angular.module('calcentral.config').config(function($routeProvider) {
   }).
   when('/academics/enrollment_verification', {
     templateUrl: 'academics_enrollment_verification.html',
-    controller: 'EnrollmentVerificationController'
+    controller: 'EnrollmentVerificationController',
+    pageName: 'My Enrollment Verification'
   }).
   when('/academics/semester/:semesterSlug', {
     templateUrl: 'academics_semester.html',
