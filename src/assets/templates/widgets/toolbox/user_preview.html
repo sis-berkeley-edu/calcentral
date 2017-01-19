@@ -92,54 +92,54 @@
               </th>
               <td>
                 <div data-ng-if="ucAdvisingResources.csLinks.studentServiceIndicators.url">
-                  <div
-                    data-cc-campus-solutions-link-item-directive
-                    data-link="ucAdvisingResources.csLinks.studentServiceIndicators"
-                  ></div>
+                  <a data-cc-campus-solutions-link-v2-directive="ucAdvisingResources.csLinks.studentServiceIndicators"
+                    data-cc-campus-solutions-link-v2-directive-cc-page-name="currentPage.name"
+                    data-cc-campus-solutions-link-v2-directive-cc-page-url="currentPage.url"
+                  ></a>
                 </div>
                 <div data-ng-if="ucAdvisingResources.csLinks.studentAdvisingAssignments.url">
-                  <div
-                    data-cc-campus-solutions-link-item-directive
-                    data-link="ucAdvisingResources.csLinks.studentAdvisingAssignments"
-                  ></div>
+                  <a data-cc-campus-solutions-link-v2-directive="ucAdvisingResources.csLinks.studentAdvisingAssignments"
+                    data-cc-campus-solutions-link-v2-directive-cc-page-name="currentPage.name"
+                    data-cc-campus-solutions-link-v2-directive-cc-page-url="currentPage.url"
+                  ></a>
                 </div>
                 <div data-ng-if="ucAdvisingResources.csLinks.studentAdministrativeTranscripts.url">
-                  <div
-                    data-cc-campus-solutions-link-item-directive
-                    data-link="ucAdvisingResources.csLinks.studentAdministrativeTranscripts"
-                  ></div>
+                  <a data-cc-campus-solutions-link-v2-directive="ucAdvisingResources.csLinks.studentAdministrativeTranscripts"
+                    data-cc-campus-solutions-link-v2-directive-cc-page-name="currentPage.name"
+                    data-cc-campus-solutions-link-v2-directive-cc-page-url="currentPage.url"
+                  ></a>
                 </div>
                 <div data-ng-if="ucAdvisingResources.csLinks.studentAcademicProgressReport.url">
-                  <div
-                    data-cc-campus-solutions-link-item-directive
-                    data-link="ucAdvisingResources.csLinks.studentAcademicProgressReport"
-                  ></div>
+                  <a data-cc-campus-solutions-link-v2-directive="ucAdvisingResources.csLinks.studentAcademicProgressReport"
+                    data-cc-campus-solutions-link-v2-directive-cc-page-name="currentPage.name"
+                    data-cc-campus-solutions-link-v2-directive-cc-page-url="currentPage.url"
+                  ></a>
                 </div>
                 <div data-ng-if="ucAdvisingResources.csLinks.studentWhatIfReport.url">
-                  <div
-                    data-cc-campus-solutions-link-item-directive
-                    data-link="ucAdvisingResources.csLinks.studentWhatIfReport"
-                  ></div>
+                  <a data-cc-campus-solutions-link-v2-directive="ucAdvisingResources.csLinks.studentWhatIfReport"
+                    data-cc-campus-solutions-link-v2-directive-cc-page-name="currentPage.name"
+                    data-cc-campus-solutions-link-v2-directive-cc-page-url="currentPage.url"
+                  ></a>
                 </div>
                 <div data-ng-if="ucAdvisingResources.csLinks.studentManageMilestones.url">
-                  <div
-                    data-cc-campus-solutions-link-item-directive
-                    data-link="ucAdvisingResources.csLinks.studentManageMilestones"
-                  ></div>
+                  <a data-cc-campus-solutions-link-v2-directive="ucAdvisingResources.csLinks.studentManageMilestones"
+                    data-cc-campus-solutions-link-v2-directive-cc-page-name="currentPage.name"
+                    data-cc-campus-solutions-link-v2-directive-cc-page-url="currentPage.url"
+                  ></a>
                 </div>
                 <div data-ng-if="ucAdvisingResources.csLinks.studentMultiYearAcademicPlanner.url">
-                  <div
-                    data-cc-campus-solutions-link-item-directive
-                    data-link="ucAdvisingResources.csLinks.studentMultiYearAcademicPlanner"
-                    data-cache="advisingAcademics"
+                  <a data-cc-campus-solutions-link-v2-directive="ucAdvisingResources.csLinks.studentMultiYearAcademicPlanner"
+                    data-cc-campus-solutions-link-v2-directive-cc-page-name="currentPage.name"
+                    data-cc-campus-solutions-link-v2-directive-cc-page-url="currentPage.url"
+                    data-cc-campus-solutions-link-v2-directive-cc-cache="advisingAcademics"
                     data-ng-click="expireAcademicsCache()"
-                  ></div>
+                  ></a>
                 </div>
                 <div data-ng-if="ucAdvisingResources.csLinks.studentAdvisorNotes.url">
-                  <div
-                    data-cc-campus-solutions-link-item-directive
-                    data-link="ucAdvisingResources.csLinks.studentAdvisorNotes"
-                  ></div>
+                  <a data-cc-campus-solutions-link-v2-directive="ucAdvisingResources.csLinks.studentAdvisorNotes"
+                    data-cc-campus-solutions-link-v2-directive-cc-page-name="currentPage.name"
+                    data-cc-campus-solutions-link-v2-directive-cc-page-url="currentPage.url"
+                  ></a>
                 </div>
                 <div data-ng-if="schedulePlanner">
                   <a
@@ -150,9 +150,10 @@
                   </a>
                 </div>
                 <div data-ng-if="ucAdvisingResources.csLinks.studentWebnowDocuments.url">
-                  <a
-                    data-ng-href="{{ucAdvisingResources.csLinks.studentWebnowDocuments.url}}"
-                    data-ng-bind="ucAdvisingResources.csLinks.studentWebnowDocuments.name" data-ng-attr-title="{{ucAdvisingResources.csLinks.studentWebnowDocuments.title}}"></a>
+                  <a data-cc-campus-solutions-link-v2-directive="ucAdvisingResources.csLinks.studentWebnowDocuments"
+                    data-cc-campus-solutions-link-v2-directive-cc-page-name="currentPage.name"
+                    data-cc-campus-solutions-link-v2-directive-cc-page-url="currentPage.url"
+                  ></a>
                 </div>
               </td>
             </tr>

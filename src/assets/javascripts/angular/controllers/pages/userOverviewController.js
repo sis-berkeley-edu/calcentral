@@ -84,11 +84,11 @@ angular.module('calcentral.controllers').controller('UserOverviewController', fu
     angular.extend(resources, _.get(data, 'data.feed'));
 
     if (_.get(resources, 'links')) {
-      linkService.addBackToTextToResources(resources.links, $scope.currentPage.name);
+      linkService.addCurrentPagePropertiesToResources(resources.links, $scope.currentPage.name, $scope.currentPage.url);
     }
 
     if (_.get(resources, 'csLinks')) {
-      linkService.addBackToTextToResources(resources.csLinks, $scope.currentPage.name);
+      linkService.addCurrentPagePropertiesToResources(resources.csLinks, $scope.currentPage.name, $scope.currentPage.url);
     }
 
     resources.isLoading = false;
