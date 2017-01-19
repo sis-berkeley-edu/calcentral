@@ -15,8 +15,9 @@ module MyActivities
       ]
     end
 
-    def self.cutoff_date
-      @cutoff_date ||= (Settings.terms.fake_now || Time.zone.today.in_time_zone).to_datetime.advance(days: -10).to_time.to_i
+    def self.cutoff_date(offset = 10)
+      today = Settings.terms.fake_now || Time.zone.today.in_time_zone
+      today.to_datetime.advance(days: -offset).to_time.to_i
     end
 
     def get_feed_internal
