@@ -4,7 +4,9 @@ describe MyActivities::Webcasts do
 
   before {
     allow(Settings.terms).to receive(:fake_now).and_return '2017-01-18 04:20:00'
-    allow(Webcast::Recordings).to receive(:new).and_return recordings_proxy
+    allow(Berkeley::Terms).to receive(:fetch).and_return (terms = double)
+    allow(terms).to receive(:current).and_return double(year: 2017, code: 'B')
+    allow(terms).to receive(:campus).and_return({})
   }
 
   let(:activities) do
@@ -67,6 +69,7 @@ describe MyActivities::Webcasts do
     }
 
     before {
+      allow(Webcast::Recordings).to receive(:new).and_return recordings_proxy
       expect(EdoOracle::UserCourses::All).to receive(:new).with(user_id: uid).once.and_return (queries = double)
       expect(queries).to receive(:get_all_campus_courses).and_return(term => my_current_courses)
     }
