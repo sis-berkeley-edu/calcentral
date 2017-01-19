@@ -2028,6 +2028,22 @@
           "recordingStartUTC": "2016-08-25T15:10:00-11:00"
         }
       ]
+    },
+    {
+      "year": 2017,
+      "semester": "Spring",
+      "ccn": 32502,
+      "deptName": "PB HLTH",
+      "catalogId": "142",
+      "public": false,
+      "youTubePlaylist": "PLFeJ2hV8Fyt7RQcMDcQk9VlpIQ_jHPFbE",
+      "recordings": [
+        {
+          "lecture": "2017-01-18",
+          "youTubeId": "ROyv2nlf4xk",
+          "recordingStartUTC": "2017-01-18T08:07:00-08:00"
+        }
+      ]
     }
   ]
 }
