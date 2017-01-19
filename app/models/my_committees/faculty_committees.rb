@@ -60,18 +60,27 @@ module MyCommittees
     end
 
     def parse_cs_faculty_committee_svc(cs_committee)
-      committee_service_range_result = ''
       user_committee = cs_committee[:committeeMembers].try(:find) do |mem|
         mem[:memberEmplid].present? &&  mem[:memberEmplid] == @emplid
       end
       start_date = user_committee.try(:[], :memberStartDate)
       end_date = user_committee.try(:[], :memberEndDate)
       committee_service_range_result = {
-        serviceRange: "#{ format_date(start_date) } - #{ format_date(end_date) }",
+        serviceRange: "#{ to_display(start_date) } - #{ to_display(end_date) }",
         memberEndDate: end_date,
         memberStartDate: start_date
-      } if user_committee
-      committee_service_range_result
+      }
+      if user_committee
+        committee_service_range_result
+      end
+    end
+
+    def to_display(date)
+      if date === '2999-01-01'
+        'Present'
+      else
+        format_date date
+      end
     end
 
     def is_committee_active(cs_committee)

@@ -8,7 +8,7 @@
               'one': 'Higher Degree Committee',
               'other': 'Higher Degree Committees'
             }">
-        </ng-pluralize>
+        </data-ng-pluralize>
       </h2>
     </div>
     <div data-ng-switch="facultyCommittees.activeToggle">
@@ -49,13 +49,13 @@
                   <div class="cc-text-light" data-ng-bind="committee.header.type"></div>
                   <div class="cc-higher-degree-committees-list-item">
                     <span data-ng-if="facultyCommittees.activeToggle">
-                    <i data-ngclass="committees.header.statusIcon"></i>
-                  </span>
-                    <span class="cc-text-light">
-                    <strong><span data-ng-bind="committee.header.statusTitle"></span></strong> <span data-ng-bind="committee.header.statusMessage"></span>
+                      <i data-ngclass="committees.header.statusIcon"></i>
                     </span>
-                    <div class="cc-text-light" data-ng-if="!facultyCommittees.activeToggle">
-                      <span>Your Service: </span><span data-ng-bind="committee.serviceRange"></span>
+                    <span class="cc-text-light">
+                      <strong><span data-ng-bind="committee.header.statusTitle"></span></strong> <span data-ng-bind="committee.header.statusMessage"></span>
+                    </span>
+                    <div class="cc-text-light">
+                      <span>Service: </span><span data-ng-bind="committee.serviceRange"></span>
                     </div>
                   </div>
                 </div>
