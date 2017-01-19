@@ -1,9 +1,9 @@
 describe Webcast::Recordings do
 
   context 'a fake proxy' do
-    let(:recordings) { Webcast::Recordings.new({:fake => true}).get }
+    let(:recordings) { Webcast::Recordings.new(fake: true).get }
     it 'should return many playlists' do
-      expect(recordings[:courses]).to have(24).items
+      expect(recordings[:courses]).to have(25).items
       law_2723 = recordings[:courses]['2008-D-49688']
       expect(law_2723).to_not be_nil
       expect(law_2723[:youtube_playlist]).to eq 'EC8DA9DAD111EAAD28'

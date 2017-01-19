@@ -1,6 +1,11 @@
 describe MyActivities::Webcasts do
+  let(:uid) { random_id }
   let(:recordings_proxy) { Webcast::Recordings.new(fake: fake) }
-  before { allow(Webcast::Recordings).to receive(:new).and_return recordings_proxy }
+
+  before {
+    allow(Settings.terms).to receive(:fake_now).and_return '2017-01-18 04:20:00'
+    allow(Webcast::Recordings).to receive(:new).and_return recordings_proxy
+  }
 
   let(:activities) do
     activities = []
@@ -20,53 +25,74 @@ describe MyActivities::Webcasts do
     end
 
     it 'should include course and uid data' do
-      expect(activities).to all include({
+      expected_activity = {
         emitter: 'Course Captures',
         id: '',
         linkText: 'View recording',
-        source: 'BIOLOGY 1A',
-        summary: 'A new recording for your Fall 2013 course, General Biology Lecture, is now available.',
+        source: 'PB HLTH 142',
+        summary: 'A new recording for your Spring 2017 course, Intro to Probability and Statistics, is now available.',
         type: 'webcast',
         title: 'Recording Available',
         user_id: uid
-      })
+      }
+      expect(activities).to all include expected_activity
     end
 
     it 'should include recording-specific URLs' do
       activities.each do |activity|
-        expect(activity[:sourceUrl]).to match /academics.*biology-1a\?video=.+/
+        expect(activity[:sourceUrl]).to match /academics.*pb_hlth-142\?video=.+/
         expect(activity[:url]).to eq activity[:sourceUrl]
       end
     end
 
     it 'should only include webcasts after cutoff date' do
-      expect(activities.collect{|activity| activity[:date][:epoch]}).to all be > MyActivities::Merged.cutoff_date
+      expect(activities.collect { |a| a[:date][:epoch] }).to all be > MyActivities::Merged.cutoff_date
     end
   end
 
-  context 'fake webcast proxy', if: CampusOracle::Connection.test_data? do
+  context 'fake webcast proxy' do
     let(:fake) { true }
+    let(:term) { '2017-B' }
+    let(:my_current_courses) {
+      [
+        {
+          term_yr: 2017,
+          term_cd: 'B',
+          course_code: 'PB HLTH 142',
+          slug: 'pb_hlth-142',
+          name: 'Intro to Probability and Statistics',
+          sections: sections
+        }
+      ]
+    }
 
-    context 'student enrolled in webcast course' do
-      let(:uid) { '300939' }
+    before {
+      expect(EdoOracle::UserCourses::All).to receive(:new).with(user_id: uid).once.and_return (queries = double)
+      expect(queries).to receive(:get_all_campus_courses).and_return(term => my_current_courses)
+    }
+
+    context 'user enrolled or teaching a course with recordings' do
+      let(:sections) {
+        [
+          ccn: '32502'
+        ]
+      }
       it_should_behave_like 'a feed with webcast activities'
     end
 
-    context 'instructor of webcast course' do
-      let(:uid) { '238382' }
-      it_should_behave_like 'a feed with webcast activities'
-    end
-
-    context 'student not enrolled in webcast course' do
-      let(:uid) { '300940' }
+    context 'user neither teaching nor enrolled in a course with recordings' do
+      let(:sections) {
+        [
+          ccn: '00000'
+        ]
+      }
       it_should_behave_like 'a feed with no webcast activities'
     end
   end
 
   context 'connection failure' do
     let(:fake) { false }
-    let(:uid) { random_id }
-    before { stub_request(:any, /.*/).to_raise(Errno::EHOSTUNREACH) }
+    before { stub_request(:any, /.*/).to_raise Errno::EHOSTUNREACH }
     after { WebMock.reset! }
 
     it_should_behave_like 'a feed with no webcast activities'
