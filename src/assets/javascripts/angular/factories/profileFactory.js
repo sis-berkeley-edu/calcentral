@@ -7,6 +7,7 @@ var angular = require('angular');
  */
 angular.module('calcentral.factories').factory('profileFactory', function(apiService, $http) {
   var urlAddressFields = '/api/campus_solutions/address_label';
+  var urlConfidentialStudentMessage = '/api/campus_solutions/confidential_student_message';
   var urlCountries = '/api/campus_solutions/country';
   var urlDeleteLanguage = '/api/campus_solutions/language';
   var urlEmergencyContacts = '/api/campus_solutions/emergency_contacts';
@@ -59,6 +60,9 @@ angular.module('calcentral.factories').factory('profileFactory', function(apiSer
   // Get - General
   var getAddressFields = function(options) {
     return apiService.http.request(options, urlAddressFields + '?country=' + options.country);
+  };
+  var getConfidentialStudentMessage = function(options) {
+    return apiService.http.request(options, urlConfidentialStudentMessage);
   };
   var getCountries = function(options) {
     return apiService.http.request(options, urlCountries);
@@ -133,6 +137,7 @@ angular.module('calcentral.factories').factory('profileFactory', function(apiSer
     deleteLanguage: deleteLanguage,
     deletePhone: deletePhone,
     deleteWorkExperience: deleteWorkExperience,
+    getConfidentialStudentMessage: getConfidentialStudentMessage,
     getCountries: getCountries,
     getCurrencies: getCurrencies,
     getAddressFields: getAddressFields,

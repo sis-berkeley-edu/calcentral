@@ -1,13 +1,8 @@
-<div class="cc-page-widget-profile-section">
+<div class="cc-page-widget-profile-section" data-ng-controller="ConfidentialStudentController" data-cc-spinner-directive="confidentialStudent.isLoading">
   <div class="cc-page-widget-profile-section-label cc-page-widget-profile-section-label-medium">Confidential Status</div>
   <div class="cc-page-widget-profile-section-content">
     <div class="cc-page-widget-profile-section-content-item">
-      <p>
-        You are designated as a <strong>Confidential Student</strong>. If you have any questions regarding your
-        <strong>Confidential Student</strong> status, please contact Dorothy Jones
-        (<a href="mailto:dorothyj@berkeley.edu">dorothyj@berkeley.edu</a> or 510-643-5242),
-        Office of the Registrar.
-      </p>
+      <p data-ng-bind="confidentialStudent.message"></p>
     </div>
   </div>
 </div>

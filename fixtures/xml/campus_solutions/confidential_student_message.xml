@@ -1,0 +1,12 @@
+<?xml version='1.0'?>
+<ROOT>
+  <GET_MESSAGE_CAT_DEFN>
+    <MESSAGE_SET_NBR>28000</MESSAGE_SET_NBR>
+    <MESSAGE_NBR>52</MESSAGE_NBR>
+    <MESSAGE_TEXT>CalCentral Confidential Student Message</MESSAGE_TEXT>
+    <MSG_SEVERITY>M</MSG_SEVERITY>
+    <DESCRLONG>You are designated as a Confidential Student. If you have any questions regarding your Confidential
+      Student status, please contact Dorothy Jones (dorothyj@berkeley.edu or 510-643-5242), Office of the Registrar.
+    </DESCRLONG>
+  </GET_MESSAGE_CAT_DEFN>
+</ROOT>
