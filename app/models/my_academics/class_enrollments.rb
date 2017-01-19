@@ -120,9 +120,10 @@ module MyAcademics
 
     def get_enrollment_term_instructions
       instructions = {}
-      get_active_term_ids.collect do |term_id|
+      get_active_term_ids.each do |term_id|
         term_details = CampusSolutions::EnrollmentTerm.new(user_id: @uid, term_id: term_id).get
         instructions[term_id] = term_details.try(:[], :feed).try(:[], :enrollmentTerm)
+        instructions[term_id][:concurrentApplyDeadline] = get_concurrent_apply_deadline(term_id)
       end
       instructions
     end
@@ -178,6 +179,22 @@ module MyAcademics
       end
 
       cs_links
+    end
+
+    def get_concurrent_apply_deadline(term_id)
+      get_concurrent_apply_deadlines_hash[term_id.to_s].try(:deadline_date) || "TBD"
+    end
+
+    def get_concurrent_apply_deadlines_hash
+      deadlines_array = Settings.class_enrollment.try(:concurrent_apply_deadlines)
+      deadlines = {}
+      if deadlines_array.to_a.count > 0
+        deadlines = deadlines_array.inject({}) do |map, term_deadline|
+          map[term_deadline.term_code.to_s] = term_deadline
+          map
+        end
+      end
+      deadlines
     end
 
     private

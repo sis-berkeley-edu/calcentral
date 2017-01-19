@@ -436,6 +436,9 @@ calnet_crosswalk_proxy:
   password: secret
   http_timeout_seconds: 30
 
+class_enrollment:
+  concurrent_apply_deadlines: []
+
 final_exam_schedule: [
   {
     year: 2016,
