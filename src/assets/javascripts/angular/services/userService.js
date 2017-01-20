@@ -3,7 +3,7 @@
 var _ = require('lodash');
 var angular = require('angular');
 
-angular.module('calcentral.services').service('userService', function($http, $location, $route, analyticsService, httpService, utilService) {
+angular.module('calcentral.services').service('userService', function($http, $location, $route, analyticsService, httpService, utilService, calcentralConfig) {
   var profile = {};
   var events = {
     isLoaded: false,
@@ -12,6 +12,7 @@ angular.module('calcentral.services').service('userService', function($http, $lo
     profile: false
   };
   var statusUrl = '/api/my/status';
+  var providedServices = calcentralConfig.providedServices;
 
   // Private methods that are only exposed for testing but shouldn't be used within the views
 
@@ -41,14 +42,18 @@ angular.module('calcentral.services').service('userService', function($http, $lo
   var redirectToHome = function() {
     if ($location.path() === '/') {
       analyticsService.sendEvent('Authentication', 'Redirect to dashboard');
-      if (profile.hasDashboardTab) {
-        utilService.redirect('dashboard');
-      } else if (profile.hasAcademicsTab) {
-        utilService.redirect('academics');
-      } else if (profile.hasFinancialsTab) {
-        utilService.redirect('finances');
+      if (providedServices.indexOf('calcentral') !== -1) {
+        if (profile.hasDashboardTab) {
+          utilService.redirect('dashboard');
+        } else if (profile.hasAcademicsTab) {
+          utilService.redirect('academics');
+        } else if (profile.hasFinancialsTab) {
+          utilService.redirect('finances');
+        } else {
+          utilService.redirect('campus');
+        }
       } else {
-        utilService.redirect('campus');
+        utilService.redirect('toolbox');
       }
     }
   };

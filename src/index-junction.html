@@ -1,0 +1,25 @@
+<div data-ng-include="'accessibility.html'"></div>
+<div data-ng-include="'ieold.html'"></div>
+
+<div class="cc-off-canvas-container" data-ng-swipe-left="offCanvasMenu.show=false">
+  <header class="cc-masthead ng-scope" data-ng-cloak data-ng-show="api.user.events.isAuthenticated">
+    <div class="junction-header-text">ETS bCourses Utilities</div>
+    <nav class="junction-header-links">
+      <ul>
+        <li>
+          <a data-ng-click="api.user.signOut()">Log out</a>
+        </li>
+      </ul>
+    </nav>
+  </header>
+  <div class="cc-offcanvas-right">
+    <div
+    class="row cc-container-main"
+    id="cc-main-content"
+    role="main">
+      <div class="cc-clearfix-container" data-ng-view></div>
+    </div>
+    <div data-ng-include="'footer_junction.html'"></div>
+  </div>
+</div>
+<div data-ng-include="'acting_as.html'"></div>

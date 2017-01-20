@@ -5,15 +5,18 @@ TorqueBox.configure do
   end
 
   # process incoming JMS messages from activeMQ
+  # CALCENTRAL-ONLY
   service JmsWorker
 
   # warm up active users caches once a day
+  # CALCENTRAL-ONLY
   job HotPlate do
     cron '0 1 8 * * ? *'
     singleton true
   end
 
   # set up messaging queues
+  # CALCENTRAL-ONLY
   queue '/queues/hot_plate' do
     durable false
     processor HotPlate do
@@ -22,6 +25,7 @@ TorqueBox.configure do
       end
     end
   end
+  # CALCENTRAL-ONLY
   queue '/queues/warmup_request' do
     durable false
     processor LiveUpdatesWarmer do
@@ -30,6 +34,7 @@ TorqueBox.configure do
       end
     end
   end
+  # CALCENTRAL-ONLY
   queue '/queues/feed_changed' do
     durable false
     processor Cache::FeedUpdateWhiteboard

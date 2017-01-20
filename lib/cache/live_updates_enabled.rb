@@ -65,7 +65,7 @@ module Cache
           last_modified[:timestamp] = format_date(Time.now.to_datetime)
           Rails.cache.write(last_modified_cache_key(key), last_modified, :expires_in => 28.days)
           Rails.cache.fetch(feed_changed_rate_limiter(key), :expires_in => 10.seconds) do
-            Messaging.publish('/queues/feed_changed', key)
+            Messaging.publish('/queues/feed_changed', key) if Settings.application.provided_services.include? 'calcentral'
             true
           end
         end

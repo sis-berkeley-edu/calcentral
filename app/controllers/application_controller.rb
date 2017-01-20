@@ -206,6 +206,7 @@ class ApplicationController < ActionController::Base
       applicationVersion: ServerRuntime.get_settings['versions']['application'],
       clientHostname: ServerRuntime.get_settings['hostname'],
       googleAnalyticsId: Settings.google_analytics_id,
+      providedServices: Settings.application.provided_services,
       sentryUrl: Settings.sentry_url,
       uid: @uid
     }
