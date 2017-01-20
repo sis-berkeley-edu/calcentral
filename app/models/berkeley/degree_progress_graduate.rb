@@ -31,7 +31,8 @@ module Berkeley
         'AAGQERESLT' => 'Qualifying Exam Results',
         'AAGADVPHD' => 'Advancement to Candidacy',
         'AAGFINALCK' => 'Department Final Recommendations',
-        'AAGDISSERT' => 'Dissertation File Date'
+        'AAGDISSERT' => 'Dissertation File Date',
+        'AAGACADP2' => 'Capstone'
       }
     end
 

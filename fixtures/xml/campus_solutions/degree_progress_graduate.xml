@@ -22,6 +22,13 @@
           <DATE></DATE>
           <CODE>AAGACADP2</CODE>
         </REQUIREMENT>
+        <REQUIREMENT>
+          <NAME>Garbage</NAME>
+          <NUMBER>60</NUMBER>
+          <STATUS>N</STATUS>
+          <DATE></DATE>
+          <CODE>GARBAGE</CODE>
+        </REQUIREMENT>
       </REQUIREMENTS>
     </PROGRESS>
     <PROGRESS>
@@ -50,13 +57,6 @@
           <STATUS>N</STATUS>
           <DATE></DATE>
           <CODE>AAGADVMAS2</CODE>
-        </REQUIREMENT>
-        <REQUIREMENT>
-          <NAME>Capstone</NAME>
-          <NUMBER>30</NUMBER>
-          <STATUS>N</STATUS>
-          <DATE></DATE>
-          <CODE>AAGACADP2</CODE>
         </REQUIREMENT>
       </REQUIREMENTS>
     </PROGRESS>
