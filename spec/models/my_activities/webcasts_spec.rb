@@ -48,7 +48,9 @@ describe MyActivities::Webcasts do
     end
 
     it 'should only include webcasts after cutoff date' do
-      expect(activities.collect { |a| a[:date][:epoch] }).to all be > MyActivities::Merged.cutoff_date
+      today = (Settings.terms.fake_now || Time.zone.today.in_time_zone).to_datetime
+      cutoff_date = MyActivities::Merged.cutoff_date MyActivities::Webcasts::CUTOFF_DAY_COUNT
+      expect(activities.collect { |a| a[:date][:epoch] }).to all be > cutoff_date
     end
   end
 

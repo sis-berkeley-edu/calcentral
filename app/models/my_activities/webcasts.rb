@@ -2,6 +2,9 @@ module MyActivities
   class Webcasts
     include DatedFeed
 
+    # Custom cutoff date for Course Capture related notifications
+    CUTOFF_DAY_COUNT = 2
+
     def self.append!(uid, activities)
       term_code = get_current_term_code
       courses_by_ccn = get_courses_by_ccn(uid, term_code)
@@ -39,7 +42,7 @@ module MyActivities
     def self.each_recent_recording(webcast_course)
       webcast_course[:recordings].each do |recording|
         next unless recording['recordingStartUTC'].present? && (start_time = DateTime.parse recording['recordingStartUTC'])
-        if start_time.to_i >= MyActivities::Merged.cutoff_date
+        if start_time.to_i >= MyActivities::Merged.cutoff_date(CUTOFF_DAY_COUNT)
           yield recording.merge('startTime' => start_time)
         end
       end
