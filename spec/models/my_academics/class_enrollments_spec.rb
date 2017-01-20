@@ -148,7 +148,11 @@ describe MyAcademics::ClassEnrollments do
       feed_hash.merge!(college_and_level_feed)
     end
     allow_any_instance_of(CampusSolutions::EnrollmentTerms).to receive(:get).and_return(cs_enrollment_career_terms_feed)
-    allow_any_instance_of(CampusSolutions::EnrollmentTerm).to receive(:get).and_return(cs_enrollment_term_detail_feed)
+    allow(CampusSolutions::EnrollmentTerm).to receive(:new) do |args|
+      custom_feed = cs_enrollment_term_detail_feed.deep_dup
+      custom_feed[:feed][:enrollmentTerm][:term] = args[:term_id]
+      double('CampusSolutions::EnrollmentTerm', get: custom_feed)
+    end
   end
 
   context 'when providing the class enrollment instructions feed for a student' do
@@ -183,7 +187,7 @@ describe MyAcademics::ClassEnrollments do
         instructions = feed[:enrollmentTermInstructions]
         expect(instructions.keys.count).to eq 1
         expect(instructions[:'2168'][:studentId]).to eq student_emplid
-        expect(instructions[:'2168'][:term]).to eq '216X'
+        expect(instructions[:'2168'][:term]).to eq '2168'
       end
       it 'includes academic planner data for each term' do
         plans = feed[:enrollmentTermAcademicPlanner]
@@ -499,8 +503,21 @@ describe MyAcademics::ClassEnrollments do
           term_instructions.keys.each do |term_key|
             term_detail = term_instructions[term_key]
             expect(term_detail[:studentId]).to eq '12000001'
-            expect(term_detail[:term]).to eq '216X'
+            expect(term_detail[:term]).to eq term_key
             expect(term_detail[:termDescr]).to eq 'Afterlithe 2016'
+          end
+        end
+        it 'includes application deadline date for concurrent enrollment students for each term' do
+          expect(term_instructions.keys.count).to eq 2
+          expect(term_instructions['2165'][:concurrentApplyDeadline]).to eq '05/01/2016'
+          expect(term_instructions['2168'][:concurrentApplyDeadline]).to eq '09/23/2016'
+        end
+        context 'when application deadline date not available for term' do
+          before { Settings.class_enrollment.concurrent_apply_deadlines.delete_at(1) }
+          it 'defaults to TBD' do
+            expect(term_instructions.keys.count).to eq 2
+            expect(term_instructions['2165'][:concurrentApplyDeadline]).to eq '05/01/2016'
+            expect(term_instructions['2168'][:concurrentApplyDeadline]).to eq 'TBD'
           end
         end
       end
