@@ -1,7 +1,8 @@
 module MyCommittees::CommitteesModule
   extend self
 
-  COMMITTEE_TYPE_EXAM = 'QE'
+  COMMITTEE_TYPE_EXAM = 'QECOMM'
+  DATE_FORMAT = '%b %d, %Y'
 
   def initialize(uid)
     @uid = uid
@@ -134,7 +135,7 @@ module MyCommittees::CommitteesModule
   def format_date(unformatted_date)
     formatted_date = ''
     begin
-      formatted_date = DateTime.parse(unformatted_date.to_s).strftime("%b %d, %Y")
+      formatted_date = DateTime.parse(unformatted_date.to_s).strftime(DATE_FORMAT)
     rescue
       logger.error "Bad Format For Committees Date for Class #{self.class.name} feed, uid = #{@uid}"
     end
