@@ -160,6 +160,7 @@ Calcentral::Application.routes.draw do
     get '/api/campus_solutions/student_resources' => 'campus_solutions/student_resources#get', :defaults => { :format => 'json' }
     get '/api/campus_solutions/degree_progress' => 'campus_solutions/degree_progress#get', :defaults => { :format => 'json' }
     get '/api/campus_solutions/cs_official_transcript' => 'campus_solutions/cs_official_transcript#get', :defaults => { :format => 'json' }
+    get '/api/campus_solutions/confidential_student_message' => 'campus_solutions/confidential_student#get_message', :defaults => { :format => 'json' }
     post '/api/campus_solutions/address' => 'campus_solutions/address#post', :defaults => { :format => 'json' }
     post '/api/campus_solutions/email' => 'campus_solutions/email#post', :defaults => { :format => 'json' }
     post '/api/campus_solutions/person_name' => 'campus_solutions/person_name#post', :defaults => { :format => 'json' }

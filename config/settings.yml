@@ -297,6 +297,7 @@ cache:
 
     CampusSolutions::AddressLabel: <%= 29.days %>
     CampusSolutions::AddressType: <%= 29.days %>
+    CampusSolutions::ConfidentialStudentMessage: <%= 24.hours %>
     CampusSolutions::Country: <%= 29.days %>
     CampusSolutions::CurrencyCode: <%= 29.days %>
     CampusSolutions::DelegateManagementURL: <%= 24.hours %>
