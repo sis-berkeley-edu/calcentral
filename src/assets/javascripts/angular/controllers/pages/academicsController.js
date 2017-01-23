@@ -118,6 +118,7 @@ angular.module('calcentral.controllers').controller('AcademicsController', funct
     }
     $scope.selectedStudentSemester = selectedStudentSemester;
     $scope.selectedTeachingSemester = selectedTeachingSemester;
+    $scope.containsMidpointClass = academicsService.containsMidpointClass(selectedTeachingSemester);
 
     // Get selected course from URL params and extract data from selected semester schedule
     if ($routeParams.classSlug) {
