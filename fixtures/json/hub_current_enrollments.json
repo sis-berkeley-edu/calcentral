@@ -1,0 +1,727 @@
+{
+    "apiResponse": {
+        "httpStatus": {
+            "code": "200",
+            "description": "OK"
+        },
+        "responseType": "namespaceURI=\"http://bmeta.berkeley.edu/student/enrollmentV0.xsd\" element=\"enrollmentsByStudent\"",
+        "response": {
+            "student": {
+                "identifiers": [
+                    {
+                        "type": "student-id",
+                        "id": "12345678",
+                        "disclose": false
+                    },
+                    {
+                        "type": "campus-uid",
+                        "id": "1234567",
+                        "disclose": true
+                    },
+                    {
+                        "type": "Social Security Number",
+                        "id": "000-00-0000",
+                        "disclose": false
+                    },
+                    {
+                        "type": "DB2",
+                        "id": "12345678",
+                        "disclose": false
+                    }
+                ],
+                "names": [
+                    {
+                        "type": {
+                            "code": "PRF",
+                            "description": "Preferred"
+                        },
+                        "familyName": "Duck",
+                        "givenName": "TheDonald",
+                        "formattedName": "TheDonald Duck",
+                        "disclose": false,
+                        "uiControl": {
+                            "code": "U",
+                            "description": "Edit - No Delete"
+                        },
+                        "fromDate": "1902-02-01"
+                    },
+                    {
+                        "type": {
+                            "code": "PRI",
+                            "description": "Primary"
+                        },
+                        "familyName": "Duck",
+                        "givenName": "TheDonald",
+                        "formattedName": "TheDonald Duck",
+                        "disclose": false,
+                        "uiControl": {
+                            "code": "D",
+                            "description": "Display Only"
+                        },
+                        "fromDate": "1902-02-01"
+                    }
+                ],
+                "emails": [
+                    {
+                        "type": {
+                            "code": "CAMP",
+                            "description": "Campus"
+                        },
+                        "emailAddress": "daffyduck@berkeley.edu",
+                        "primary": true,
+                        "disclose": false,
+                        "uiControl": {
+                            "code": "D",
+                            "description": "Display Only"
+                        }
+                    },
+                    {
+                        "type": {
+                            "code": "OTHR",
+                            "description": "Other"
+                        },
+                        "emailAddress": "daffyduck@berkeley.edu",
+                        "primary": false,
+                        "disclose": false,
+                        "uiControl": {
+                            "code": "F",
+                            "description": "Full Edit"
+                        }
+                    }
+                ],
+                "confidential": false
+            },
+            "studentEnrollments": [
+                {
+                    "enrollmentStatus": {
+                        "status": {
+                            "code": "E",
+                            "description": "Enrolled"
+                        },
+                        "reason": {
+                            "code": "EWAT",
+                            "description": "Enrolled from Wait List"
+                        },
+                        "fromDate": "2016-10-20"
+                    },
+                    "enrolledUnits": {
+                        "taken": 3,
+                        "forAcademicProgress": 3,
+                        "forFinancialAid": 3,
+                        "forBilling": 3
+                    },
+                    "gradingBasis": {
+                        "code": "GRD",
+                        "description": "Standard Grading Basis"
+                    },
+                    "grades": [
+                        {
+                            "type": {
+                                "code": "MID",
+                                "description": "Mid-Term Grade"
+                            },
+                            "mark": "F",
+                            "status": {},
+                            "uiControl": {}
+                        }
+                    ],
+                    "classSection": {
+                        "id": 10633,
+                        "number": "001",
+                        "component": {
+                            "code": "LEC",
+                            "description": "Lecture"
+                        },
+                        "displayName": "2017 Spring UGBA 102B 001 LEC 001",
+                        "association": {
+                            "primary": false,
+                            "primaryAssociatedComponent": {}
+                        },
+                        "enrollmentStatus": {
+                            "status": {}
+                        },
+                        "printInScheduleOfClasses": false,
+                        "addConsentRequired": {
+                            "code": "N",
+                            "description": "No Special Consent Required"
+                        },
+                        "dropConsentRequired": {
+                            "code": "N",
+                            "description": "No Special Consent Required"
+                        },
+                        "meetings": [
+                            {
+                                "number": 1,
+                                "meetsDays": "TuTh",
+                                "meetsMonday": false,
+                                "meetsTuesday": true,
+                                "meetsWednesday": false,
+                                "meetsThursday": true,
+                                "meetsFriday": false,
+                                "meetsSaturday": false,
+                                "meetsSunday": false,
+                                "startTime": "11:00:00",
+                                "endTime": "12:29:00",
+                                "location": {
+                                    "code": "CHEIC230",
+                                    "description": "Cheit C230"
+                                },
+                                "building": {
+                                    "code": "1233",
+                                    "description": "Cheit"
+                                },
+                                "assignedInstructors": [
+                                    {
+                                        "assignmentNumber": 1,
+                                        "instructor": {
+                                            "identifiers": [
+                                                {
+                                                    "type": "student-id",
+                                                    "id": "13764941",
+                                                    "disclose": false
+                                                },
+                                                {
+                                                    "type": "campus-uid",
+                                                    "id": "92860",
+                                                    "disclose": true
+                                                },
+                                                {
+                                                    "type": "Social Security Number",
+                                                    "id": "000-00-0000",
+                                                    "disclose": false
+                                                },
+                                                {
+                                                    "type": "DB2",
+                                                    "id": "13764941",
+                                                    "disclose": false
+                                                },
+                                                {
+                                                    "type": "HCM System",
+                                                    "id": "011186083",
+                                                    "disclose": false
+                                                }
+                                            ],
+                                            "names": [
+                                                {
+                                                    "type": {
+                                                        "code": "PRF",
+                                                        "description": "Preferred"
+                                                    },
+                                                    "familyName": "Briginshaw",
+                                                    "givenName": "John",
+                                                    "formattedName": "John  Briginshaw",
+                                                    "disclose": false,
+                                                    "uiControl": {
+                                                        "code": "U",
+                                                        "description": "Edit - No Delete"
+                                                    },
+                                                    "fromDate": "1998-04-01"
+                                                },
+                                                {
+                                                    "type": {
+                                                        "code": "PRI",
+                                                        "description": "Primary"
+                                                    },
+                                                    "familyName": "Briginshaw",
+                                                    "givenName": "John",
+                                                    "formattedName": "John  Briginshaw",
+                                                    "disclose": false,
+                                                    "uiControl": {
+                                                        "code": "D",
+                                                        "description": "Display Only"
+                                                    },
+                                                    "fromDate": "1998-04-01"
+                                                }
+                                            ],
+                                            "emails": [
+                                                {
+                                                    "type": {
+                                                        "code": "CAMP",
+                                                        "description": "Campus"
+                                                    },
+                                                    "emailAddress": "john_briginshaw@haas.berkeley.edu",
+                                                    "primary": true,
+                                                    "disclose": false,
+                                                    "uiControl": {
+                                                        "code": "D",
+                                                        "description": "Display Only"
+                                                    }
+                                                }
+                                            ]
+                                        },
+                                        "role": {
+                                            "code": "PI",
+                                            "description": "1-TIC",
+                                            "formalDescription": "Teaching and In Charge"
+                                        },
+                                        "printInScheduleOfClasses": true,
+                                        "gradeRosterAccess": {}
+                                    }
+                                ],
+                                "startDate": "2017-01-17",
+                                "endDate": "2017-05-05",
+                                "meetingTopic": {}
+                            }
+                        ],
+                        "class": {
+                            "course": {
+                                "identifiers": [
+                                    {
+                                        "type": "cs-course-id",
+                                        "id": "122485"
+                                    }
+                                ],
+                                "subjectArea": {
+                                    "code": "UGBA",
+                                    "description": "Business Admin-Undergrad"
+                                },
+                                "catalogNumber": {
+                                    "number": "102",
+                                    "suffix": "B",
+                                    "formatted": "102B"
+                                },
+                                "displayName": "UGBA 102B",
+                                "title": "Introduction to Managerial Accounting",
+                                "transcriptTitle": "INTRO MANAGER ACCT"
+                            },
+                            "offeringNumber": 1,
+                            "session": {
+                                "term": {
+                                    "id": "2172",
+                                    "name": "2017 Spring"
+                                },
+                                "id": "1",
+                                "name": "Regular Academic Session"
+                            },
+                            "number": "001",
+                            "displayName": "2017 Spring UGBA 102B 001",
+                            "allowedUnits": {
+                                "minimum": 3,
+                                "maximum": 3,
+                                "forAcademicProgress": 3,
+                                "forFinancialAid": 3
+                            }
+                        }
+                    }
+                },
+                {
+                    "enrollmentStatus": {
+                        "status": {
+                            "code": "E",
+                            "description": "Enrolled"
+                        },
+                        "reason": {
+                            "code": "ENRL",
+                            "description": "Enrolled"
+                        },
+                        "fromDate": "2016-10-19"
+                    },
+                    "enrolledUnits": {
+                        "taken": 3,
+                        "forAcademicProgress": 3,
+                        "forFinancialAid": 3,
+                        "forBilling": 3
+                    },
+                    "gradingBasis": {
+                        "code": "GRD",
+                        "description": "Standard Grading Basis"
+                    },
+                    "grades": [
+                        {
+                            "type": {
+                                "code": "MID",
+                                "description": "Mid-Term Grade"
+                            },
+                            "mark": "D",
+                            "status": {},
+                            "uiControl": {}
+                        }
+                    ],
+                    "classSection": {
+                        "id": 10665,
+                        "number": "001",
+                        "component": {
+                            "code": "LEC",
+                            "description": "Lecture"
+                        },
+                        "displayName": "2017 Spring UGBA 106 001 LEC 001",
+                        "association": {
+                            "primary": false,
+                            "primaryAssociatedComponent": {}
+                        },
+                        "enrollmentStatus": {
+                            "status": {}
+                        },
+                        "printInScheduleOfClasses": false,
+                        "addConsentRequired": {
+                            "code": "N",
+                            "description": "No Special Consent Required"
+                        },
+                        "dropConsentRequired": {
+                            "code": "N",
+                            "description": "No Special Consent Required"
+                        },
+                        "meetings": [
+                            {
+                                "number": 1,
+                                "meetsDays": "Mo",
+                                "meetsMonday": true,
+                                "meetsTuesday": false,
+                                "meetsWednesday": false,
+                                "meetsThursday": false,
+                                "meetsFriday": false,
+                                "meetsSaturday": false,
+                                "meetsSunday": false,
+                                "startTime": "12:30:00",
+                                "endTime": "13:59:00",
+                                "location": {
+                                    "code": "HAASF295",
+                                    "description": "Haas Faculty Wing F295"
+                                },
+                                "building": {
+                                    "code": "1236",
+                                    "description": "Haas"
+                                },
+                                "assignedInstructors": [
+                                    {
+                                        "assignmentNumber": 1,
+                                        "instructor": {
+                                            "identifiers": [
+                                                {
+                                                    "type": "student-id",
+                                                    "id": "3030367705",
+                                                    "disclose": true
+                                                },
+                                                {
+                                                    "type": "campus-uid",
+                                                    "id": "264867",
+                                                    "disclose": true
+                                                },
+                                                {
+                                                    "type": "Social Security Number",
+                                                    "id": "000-00-0000",
+                                                    "disclose": false
+                                                },
+                                                {
+                                                    "type": "HCM System",
+                                                    "id": "011772648",
+                                                    "disclose": false
+                                                }
+                                            ],
+                                            "names": [
+                                                {
+                                                    "type": {
+                                                        "code": "PRF",
+                                                        "description": "Preferred"
+                                                    },
+                                                    "familyName": "Azhar",
+                                                    "givenName": "Wasim",
+                                                    "formattedName": "Wasim  Azhar",
+                                                    "disclose": true,
+                                                    "uiControl": {
+                                                        "code": "U",
+                                                        "description": "Edit - No Delete"
+                                                    },
+                                                    "fromDate": "1902-02-01"
+                                                },
+                                                {
+                                                    "type": {
+                                                        "code": "PRI",
+                                                        "description": "Primary"
+                                                    },
+                                                    "familyName": "Azhar",
+                                                    "givenName": "Wasim",
+                                                    "formattedName": "Wasim  Azhar",
+                                                    "disclose": true,
+                                                    "uiControl": {
+                                                        "code": "D",
+                                                        "description": "Display Only"
+                                                    },
+                                                    "fromDate": "2005-08-01"
+                                                }
+                                            ],
+                                            "emails": [
+                                                {
+                                                    "type": {
+                                                        "code": "CAMP",
+                                                        "description": "Campus"
+                                                    },
+                                                    "emailAddress": "azhar@berkeley.edu",
+                                                    "primary": true,
+                                                    "disclose": true,
+                                                    "uiControl": {
+                                                        "code": "D",
+                                                        "description": "Display Only"
+                                                    }
+                                                }
+                                            ]
+                                        },
+                                        "role": {
+                                            "code": "PI",
+                                            "description": "1-TIC",
+                                            "formalDescription": "Teaching and In Charge"
+                                        },
+                                        "printInScheduleOfClasses": true,
+                                        "gradeRosterAccess": {}
+                                    }
+                                ],
+                                "startDate": "2017-01-17",
+                                "endDate": "2017-05-05",
+                                "meetingTopic": {}
+                            }
+                        ],
+                        "class": {
+                            "course": {
+                                "identifiers": [
+                                    {
+                                        "type": "cs-course-id",
+                                        "id": "122489"
+                                    }
+                                ],
+                                "subjectArea": {
+                                    "code": "UGBA",
+                                    "description": "Business Admin-Undergrad"
+                                },
+                                "catalogNumber": {
+                                    "number": "106",
+                                    "formatted": "106"
+                                },
+                                "displayName": "UGBA 106",
+                                "title": "Marketing",
+                                "transcriptTitle": "MARKETING"
+                            },
+                            "offeringNumber": 1,
+                            "session": {
+                                "term": {
+                                    "id": "2172",
+                                    "name": "2017 Spring"
+                                },
+                                "id": "1",
+                                "name": "Regular Academic Session"
+                            },
+                            "number": "001",
+                            "displayName": "2017 Spring UGBA 106 001",
+                            "allowedUnits": {
+                                "minimum": 3,
+                                "maximum": 3,
+                                "forAcademicProgress": 3,
+                                "forFinancialAid": 3
+                            }
+                        }
+                    }
+                },
+                {
+                    "enrollmentStatus": {
+                        "status": {
+                            "code": "E",
+                            "description": "Enrolled"
+                        },
+                        "reason": {
+                            "code": "ENRL",
+                            "description": "Enrolled"
+                        },
+                        "fromDate": "2016-10-19"
+                    },
+                    "enrolledUnits": {
+                        "taken": 3,
+                        "forAcademicProgress": 3,
+                        "forFinancialAid": 3,
+                        "forBilling": 3
+                    },
+                    "gradingBasis": {
+                        "code": "GRD",
+                        "description": "Standard Grading Basis"
+                    },
+                    "grades": [
+                        {
+                            "type": {
+                                "code": "MID",
+                                "description": "Mid-Term Grade"
+                            },
+                            "mark": "F",
+                            "status": {},
+                            "uiControl": {}
+                        }
+                    ],
+                    "classSection": {
+                        "id": 10729,
+                        "number": "001",
+                        "component": {
+                            "code": "LEC",
+                            "description": "Lecture"
+                        },
+                        "displayName": "2017 Spring UGBA 179 001 LEC 001",
+                        "association": {
+                            "primary": false,
+                            "primaryAssociatedComponent": {}
+                        },
+                        "enrollmentStatus": {
+                            "status": {}
+                        },
+                        "printInScheduleOfClasses": false,
+                        "addConsentRequired": {
+                            "code": "N",
+                            "description": "No Special Consent Required"
+                        },
+                        "dropConsentRequired": {
+                            "code": "N",
+                            "description": "No Special Consent Required"
+                        },
+                        "meetings": [
+                            {
+                                "number": 1,
+                                "meetsDays": "TuTh",
+                                "meetsMonday": false,
+                                "meetsTuesday": true,
+                                "meetsWednesday": false,
+                                "meetsThursday": true,
+                                "meetsFriday": false,
+                                "meetsSaturday": false,
+                                "meetsSunday": false,
+                                "startTime": "09:30:00",
+                                "endTime": "10:59:00",
+                                "location": {
+                                    "code": "CHEIC330",
+                                    "description": "Cheit C330"
+                                },
+                                "building": {
+                                    "code": "1233",
+                                    "description": "Cheit"
+                                },
+                                "assignedInstructors": [
+                                    {
+                                        "assignmentNumber": 1,
+                                        "instructor": {
+                                            "identifiers": [
+                                                {
+                                                    "type": "student-id",
+                                                    "id": "82056430",
+                                                    "disclose": false
+                                                },
+                                                {
+                                                    "type": "campus-uid",
+                                                    "id": "632242",
+                                                    "disclose": true
+                                                },
+                                                {
+                                                    "type": "Social Security Number",
+                                                    "id": "000-00-0000",
+                                                    "disclose": false
+                                                },
+                                                {
+                                                    "type": "DB2",
+                                                    "id": "82056430",
+                                                    "disclose": false
+                                                },
+                                                {
+                                                    "type": "HCM System",
+                                                    "id": "011205891",
+                                                    "disclose": false
+                                                }
+                                            ],
+                                            "names": [
+                                                {
+                                                    "type": {
+                                                        "code": "PRF",
+                                                        "description": "Preferred"
+                                                    },
+                                                    "familyName": "Himelstein",
+                                                    "givenName": "Daniel",
+                                                    "formattedName": "Daniel A Himelstein",
+                                                    "disclose": false,
+                                                    "uiControl": {
+                                                        "code": "U",
+                                                        "description": "Edit - No Delete"
+                                                    },
+                                                    "fromDate": "1998-07-01"
+                                                },
+                                                {
+                                                    "type": {
+                                                        "code": "PRI",
+                                                        "description": "Primary"
+                                                    },
+                                                    "familyName": "Himelstein",
+                                                    "givenName": "Daniel",
+                                                    "formattedName": "Daniel Alan Himelstein",
+                                                    "disclose": false,
+                                                    "uiControl": {
+                                                        "code": "D",
+                                                        "description": "Display Only"
+                                                    },
+                                                    "fromDate": "2004-02-23"
+                                                }
+                                            ],
+                                            "emails": [
+                                                {
+                                                    "type": {
+                                                        "code": "CAMP",
+                                                        "description": "Campus"
+                                                    },
+                                                    "emailAddress": "dhimel@berkeley.edu",
+                                                    "primary": false,
+                                                    "disclose": false,
+                                                    "uiControl": {
+                                                        "code": "D",
+                                                        "description": "Display Only"
+                                                    }
+                                                }
+                                            ]
+                                        },
+                                        "role": {
+                                            "code": "PI",
+                                            "description": "1-TIC",
+                                            "formalDescription": "Teaching and In Charge"
+                                        },
+                                        "printInScheduleOfClasses": true,
+                                        "gradeRosterAccess": {}
+                                    }
+                                ],
+                                "startDate": "2017-01-17",
+                                "endDate": "2017-05-05",
+                                "meetingTopic": {}
+                            }
+                        ],
+                        "class": {
+                            "course": {
+                                "identifiers": [
+                                    {
+                                        "type": "cs-course-id",
+                                        "id": "122540"
+                                    }
+                                ],
+                                "subjectArea": {
+                                    "code": "UGBA",
+                                    "description": "Business Admin-Undergrad"
+                                },
+                                "catalogNumber": {
+                                    "number": "179",
+                                    "formatted": "179"
+                                },
+                                "displayName": "UGBA 179",
+                                "title": "International Consulting for Small and Medium-Sized Enterprises",
+                                "transcriptTitle": "INTL CONSULTING SME"
+                            },
+                            "offeringNumber": 1,
+                            "session": {
+                                "term": {
+                                    "id": "2172",
+                                    "name": "2017 Spring"
+                                },
+                                "id": "1",
+                                "name": "Regular Academic Session"
+                            },
+                            "number": "001",
+                            "displayName": "2017 Spring UGBA 179 001",
+                            "allowedUnits": {
+                                "minimum": 3,
+                                "maximum": 3,
+                                "forAcademicProgress": 3,
+                                "forFinancialAid": 3
+                            }
+                        }
+                    }
+                }
+            ]
+        }
+    }
+}

@@ -309,6 +309,13 @@ export HUB_APP_KEY="${yml_hub_term_proxy_app_key//\'}"
 verify_hub 'hub_term_api' "${yml_features_hub_term_api}" \
   "${yml_hub_term_proxy_base_url//\'}?temporal-position=Next"
 
+# Custom credentials are needed for the Hub's Enrollment API
+export HUB_APP_ID="${yml_hub_enrollments_proxy_app_id//\'}"
+export HUB_APP_KEY="${yml_hub_enrollments_proxy_app_key//\'}"
+
+verify_hub 'hub_enrollments_api' true \
+  "${yml_hub_enrollments_proxy_base_url//\'}/${CAMPUS_SOLUTIONS_ID}?page-size=1"
+
 echo; echo "----------------------------------------------------------------------------------------------------"; echo
 echo "Results can be found in the directory:"
 echo "  ${LOG_DIRECTORY}/${LOG_RELATIVE_PATH}"; echo;
