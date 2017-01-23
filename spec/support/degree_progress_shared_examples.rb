@@ -14,7 +14,7 @@ shared_examples 'a proxy that returns graduate milestone data' do
   end
 
   it 'filters out requirements that we don\'t want to display' do
-    expect(subject[:feed][:degreeProgress][0][:requirements].length).to eql(1)
+    expect(subject[:feed][:degreeProgress][0][:requirements].length).to eql(2)
   end
 
   it 'merges two Advancement to Candidacy milestones if neither one is complete' do
