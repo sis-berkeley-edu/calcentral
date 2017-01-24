@@ -22,7 +22,7 @@ module MyCommittees::CommitteesModule
   def parse_cs_committee (cs_committee, include_inactive)
     return nil unless cs_committee.present?
     {
-      committeeType:  cs_committee[:studentMilestoneDescr],
+      committeeType:  cs_committee[:committeeDescrlong],
       program:        cs_committee[:studentAcadPlan],
       statusIcon: committee_status_icon(cs_committee),
       statusTitle: committee_status_title(cs_committee),

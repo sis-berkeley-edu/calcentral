@@ -20,7 +20,7 @@ describe MyCommittees::FacultyCommittees do
     end
     it 'contains the expected faculty data' do
       committees = feed[:facultyCommittees][:active]
-      expect(committees[0][:committeeType]).to eq 'Advancement to Candidacy Mas1'
+      expect(committees[0][:committeeType]).to eq 'Qualifying Exam Committee'
       expect(committees[0][:program]).to eq 'Civil Environmental Eng MS'
       expect(committees[0][:statusMessage]).to eq 'Pending'
       expect(committees[0][:serviceRange]).to eq 'Aug 30, 2016 - Aug 30, 2017'
