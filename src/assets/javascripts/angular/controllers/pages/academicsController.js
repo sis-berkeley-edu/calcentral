@@ -118,7 +118,7 @@ angular.module('calcentral.controllers').controller('AcademicsController', funct
     }
     $scope.selectedStudentSemester = selectedStudentSemester;
     $scope.selectedTeachingSemester = selectedTeachingSemester;
-    $scope.containsMidpointClass = academicsService.containsMidpointClass(selectedTeachingSemester);
+    $scope.containsMidpointClass = academicsService.containsMidpointClass($scope.selectedTeachingSemester);
 
     // Get selected course from URL params and extract data from selected semester schedule
     if ($routeParams.classSlug) {
@@ -191,6 +191,7 @@ angular.module('calcentral.controllers').controller('AcademicsController', funct
         // Show the current semester, or the most recent semester, since otherwise the instructor
         // landing page will be grimly bare.
         $scope.selectedTeachingSemester = academicsService.chooseDefaultSemester(data.teachingSemesters);
+        $scope.containsMidpointClass = academicsService.containsMidpointClass($scope.selectedTeachingSemester);
         $scope.widgetSemesterName = $scope.selectedTeachingSemester.name;
       }
     }
