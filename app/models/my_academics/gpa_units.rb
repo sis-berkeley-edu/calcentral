@@ -57,7 +57,7 @@ module MyAcademics
     def parse_hub_total_units(status)
       if (units = status['cumulativeUnits']) && (total_units = units.find { |u| u['type'] && u['type']['code'] == 'Total'})
         {
-          totalUnits: total_units['unitsPassed'].to_f,
+          totalUnits: total_units['unitsCumulative'].to_f,
           transferUnitsAccepted: total_units['unitsTransferAccepted'].to_f,
           testingUnits: total_units['unitsTest'].to_f
         }
