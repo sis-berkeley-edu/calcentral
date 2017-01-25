@@ -16,7 +16,7 @@ describe MyCommittees::StudentCommittees do
 
     it 'contains the expected student data for non qualifying exam' do
       committees = feed[:studentCommittees]
-      expect(committees[0][:committeeType]).to eq 'STUDENTMILESTONEDESCR1'
+      expect(committees[0][:committeeType]).to eq 'COMMITTEEDESCRLONG1'
       expect(committees[0][:program]).to eq 'STUDENTACADPLAN1'
       expect(committees[0][:statusTitle]).to eq 'Advancement To Candidacy:'
       expect(committees[0][:statusIcon]).to eq 'check'
@@ -30,7 +30,7 @@ describe MyCommittees::StudentCommittees do
 
     it 'contains the expected student data for qualifying exam pending' do
       committees = feed[:studentCommittees]
-      expect(committees[2][:committeeType]).to eq 'STUDENTMILESTONEDESCR3'
+      expect(committees[2][:committeeType]).to eq 'Qualifying Exam Committee'
       expect(committees[2][:program]).to eq 'STUDENTACADPLAN3'
       expect(committees[2][:statusTitle]).to eq 'Exam Date:'
       expect(committees[2][:statusIcon]).to eq 'exclamation-triangle'
@@ -39,7 +39,7 @@ describe MyCommittees::StudentCommittees do
 
     it 'contains the expected student data for qualifying exam dated' do
       committees = feed[:studentCommittees]
-      expect(committees[3][:committeeType]).to eq 'STUDENTMILESTONEDESCR4'
+      expect(committees[3][:committeeType]).to eq 'Dissertation Committee'
       expect(committees[3][:program]).to eq 'STUDENTACADPLAN4'
       expect(committees[3][:statusTitle]).to eq 'Exam Date:'
       expect(committees[3][:statusIcon]).to eq 'check'
