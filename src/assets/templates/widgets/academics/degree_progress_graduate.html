@@ -4,7 +4,8 @@
   </div>
   <div class="cc-widget-padding">
     <div data-ng-if="degreeProgress.graduate.errored">There was an error retrieving graduate degree progress data.</div>
-    <ul data-ng-if="!degreeProgress.graduate.errored && degreeProgress.graduate.progresses" class="cc-list-links">
+    <div data-ng-if="!degreeProgress.graduate.progresses.length">It appears that you haven’t completed any Graduate Division Milestones. If you believe this to be in error, please contact your department.</div>
+    <ul data-ng-if="!degreeProgress.graduate.errored && degreeProgress.graduate.progresses.length" class="cc-list-links">
       <li data-ng-if="degreeProgress.graduate.links.advancementFormSubmit.url">
         <div
           data-cc-campus-solutions-link-item-directive

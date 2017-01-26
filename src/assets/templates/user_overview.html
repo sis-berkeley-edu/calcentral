@@ -11,7 +11,7 @@
       <div data-ng-include src="'academics_semesters.html'" data-ng-if="semesters.length && !api.user.profile.features.advisingAcademicPlanner"></div>
       <div data-ng-include="'widgets/status_and_holds.html'"></div>
       <div data-cc-spinner-directive="degreeProgress.isLoading">
-        <div data-ng-include src="'widgets/academics/degree_progress_graduate.html'" data-ng-if="api.user.profile.features.csDegreeProgressGradAdvising && degreeProgress.graduate.progresses.length"></div>
+        <div data-ng-include src="'widgets/academics/degree_progress_graduate.html'" data-ng-if="api.user.profile.features.csDegreeProgressGradAdvising"></div>
         <div data-ng-include src="'widgets/academics/degree_progress_undergrad.html'" data-ng-if="api.user.profile.features.csDegreeProgressUgrdAdvising && degreeProgress.undergraduate.progresses.length"></div>
       </div>
     </div>
