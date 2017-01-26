@@ -24,57 +24,78 @@
           <thead>
             <tr>
               <th width="30%" scope="col">Class</th>
-              <th width="40%" scope="col">Title</th>
-              <th data-ng-if="!semester.summaryFromTranscript" width="20%" scope="col" class="cc-table-right">Units</th>
-              <th data-ng-if="semester.summaryFromTranscript" width="20%" scope="col" title="Units" class="cc-table-right cc-table-right-spacing">Un.</th>
-              <th data-ng-if="semester.summaryFromTranscript && api.user.profile.canViewGrades" width="10%" scope="col" title="Grades">Gr.</th>
+              <th width="50%" scope="col">Title</th>
+              <th data-ng-if="!api.user.profile.canViewGrades" width="20%" scope="col" class="cc-table-center">Units</th>
+              <th data-ng-if="api.user.profile.canViewGrades" width="10%" scope="col" title="Units" class="cc-table-center">Un.</th>
+              <th data-ng-if="api.user.profile.canViewGrades" width="10%" scope="col" title="Grades" class="cc-table-center">Gr.</th>
             </tr>
           </thead>
           <tbody data-ng-if="!semester.summaryFromTranscript" data-ng-repeat="class in semester.classes">
-            <tr data-ng-repeat="section in class.sections" data-ng-if="section.is_primary_section && !section.waitlisted">
-              <td>
-                <span data-ng-if="class.multiplePrimaries && section.url && !(isAdvisingStudentLookup || isAcademicSummary)">
-                  <a data-ng-href="{{section.url}}">
+              <tr data-ng-repeat-start="section in class.sections" data-ng-if="section.is_primary_section && !section.waitlisted">
+                <td>
+                  <span data-ng-if="class.multiplePrimaries && section.url && !(isAdvisingStudentLookup || isAcademicSummary)">
+                    <a data-ng-href="{{section.url}}">
+                      <span data-ng-bind-template="{{class.course_code}} {{section.section_label}}"></span>
+                      <span data-ng-if="class.session_code" data-ng-bind-template="(Session {{class.session_code}})" class="cc-nowrap"></span>
+                    </a>
+                  </span>
+
+                  <span data-ng-if="class.multiplePrimaries && (!section.url || isAdvisingStudentLookup || isAcademicSummary)">
                     <span data-ng-bind-template="{{class.course_code}} {{section.section_label}}"></span>
                     <span data-ng-if="class.session_code" data-ng-bind-template="(Session {{class.session_code}})" class="cc-nowrap"></span>
-                  </a>
-                </span>
+                  </span>
 
-                <span data-ng-if="class.multiplePrimaries && (!section.url || isAdvisingStudentLookup || isAcademicSummary)">
-                  <span data-ng-bind-template="{{class.course_code}} {{section.section_label}}"></span>
-                  <span data-ng-if="class.session_code" data-ng-bind-template="(Session {{class.session_code}})" class="cc-nowrap"></span>
-                </span>
+                  <span data-ng-if="!class.multiplePrimaries && class.url && !(isAdvisingStudentLookup || isAcademicSummary)">
+                    <a data-ng-href="{{class.url}}">
+                      <span data-ng-bind="class.course_code"></span>
+                      <span data-ng-if="class.session_code" data-ng-bind-template="(Session {{class.session_code}})" class="cc-nowrap"></span>
+                    </a>
+                  </span>
 
-                <span data-ng-if="!class.multiplePrimaries && class.url && !(isAdvisingStudentLookup || isAcademicSummary)">
-                  <a data-ng-href="{{class.url}}">
+                  <span data-ng-if="!class.multiplePrimaries && (!class.url || isAdvisingStudentLookup || isAcademicSummary)">
                     <span data-ng-bind="class.course_code"></span>
                     <span data-ng-if="class.session_code" data-ng-bind-template="(Session {{class.session_code}})" class="cc-nowrap"></span>
-                  </a>
-                </span>
-
-                <span data-ng-if="!class.multiplePrimaries && (!class.url || isAdvisingStudentLookup || isAcademicSummary)">
-                  <span data-ng-bind="class.course_code"></span>
-                  <span data-ng-if="class.session_code" data-ng-bind-template="(Session {{class.session_code}})" class="cc-nowrap"></span>
-                </span>
-              </td>
-              <td data-ng-bind="class.title"></td>
-              <td data-ng-bind="section.units | number:1" class="cc-table-right"></td>
-            </tr>
+                  </span>
+                </td>
+                <td data-ng-bind="class.title"></td>
+                <td data-ng-bind="section.units | number:1" class="cc-table-center"></td>
+                <td data-ng-if="api.user.profile.canViewGrades && class.midpointGrade" class="cc-table-center">
+                  <i class="fa fa-exclamation-triangle cc-icon-gold"></i>
+                  <span data-ng-click="api.widget.toggleShow($event, null, section, 'My Academics - Semesters')" class="cc-academics-midpoint-show-hide"> ?</span>
+                </td>
+                <td data-ng-if="api.user.profile.canViewGrades && !class.midpointGrade" class="cc-table-center">&mdash;</td>
+              </tr>
+              <tr data-ng-repeat-end data-ng-if="section.is_primary_section && !section.waitlisted && class.midpointGrade && section.show">
+                <td></td>
+                <td colspan="3">
+                  <table>
+                    <tr>
+                      <td><i class="fa fa-exclamation-triangle cc-icon-gold"></i></td>
+                      <td>
+                        Your unofficial midpoint grade is: <strong><span data-ng-bind="class.midpointGrade"></span></strong><br />
+                        Your success is important to us. <br />
+                        Please contact your instructor or an advisor as soon as possible. <br />
+                        <span data-ng-click="api.widget.toggleShow($event, null, section, 'My Academics - Semesters')" class="cc-academics-midpoint-show-hide">Hide</span>
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
           </tbody>
           <tbody data-ng-if="semester.summaryFromTranscript" data-ng-repeat="class in semester.classes">
             <tr data-ng-if="class.transcript" data-ng-repeat="transcript in class.transcript">
               <td data-ng-if="class.url && !(isAdvisingStudentLookup || isAcademicSummary)"><a data-ng-href="{{class.url}}" data-ng-bind="class.course_code"></a>
               <td data-ng-if="!class.url || isAdvisingStudentLookup || isAcademicSummary" data-ng-bind="class.course_code"></td>
               <td data-ng-bind="class.title"></td>
-              <td data-ng-bind="transcript.units | number:1" class="cc-table-right cc-table-right-spacing"></td>
-              <td data-ng-bind="transcript.grade" data-ng-if="api.user.profile.canViewGrades"></td>
+              <td data-ng-bind="transcript.units | number:1" class="cc-table-center"></td>
+              <td data-ng-if="api.user.profile.canViewGrades" data-ng-bind="transcript.grade" class="cc-table-center"></td>
             </tr>
             <tr data-ng-if="!class.transcript && section.is_primary_section" data-ng-repeat="section in class.sections">
               <td data-ng-if="class.url && !(isAdvisingStudentLookup || isAcademicSummary)"><a data-ng-href="{{class.url}}" data-ng-bind="class.course_code"></a>
               <td data-ng-if="!class.url || isAdvisingStudentLookup || isAcademicSummary" data-ng-bind="class.course_code"></td>
               <td data-ng-bind="class.title"></td>
-              <td data-ng-bind="section.units | number:1" class="cc-table-right cc-table-right-spacing"></td>
-              <td data-ng-if="api.user.profile.canViewGrades">--</td>
+              <td data-ng-bind="section.units | number:1" class="cc-table-center"></td>
+              <td data-ng-if="api.user.profile.canViewGrades" class="cc-table-center">&mdash;</td>
             </tr>
           </tbody>
         </table>
