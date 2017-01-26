@@ -3,7 +3,6 @@ module HubEnrollments
     include Cache::CachedFeed
     include Cache::FeedExceptionsHandled
     include Cache::UserCacheExpiry
-    include Cache::JsonifiedFeed
 
     def initialize (options = {})
       @uid = options[:user_id]

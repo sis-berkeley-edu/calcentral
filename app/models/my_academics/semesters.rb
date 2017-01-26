@@ -114,6 +114,35 @@ module MyAcademics
           semester[:classes].concat map_transcripts(incomplete_removals)
         end
       end
+
+      if semester.try(:[], :timeBucket) == 'current' && semester.try(:[], :classes).length
+        semester[:classes].each do |course|
+          add_midpoint_grade(course) if course[:role] == 'Student'
+        end
+      end
+    end
+
+    def add_midpoint_grade(course)
+      current_enrollments = hub_current_enrollments.try(:[], :feed)
+      primary_section = course.try(:[], :sections).try(:find) do |section|
+        section.try(:[], :is_primary_section)
+      end
+      section_midpoint_grade = current_enrollments.try(:find) do |enrollment|
+        # Find the relevant enrollment object, matching on CCN
+        enrollment.try(:[], 'classSection').try(:[], 'id').try(:to_i) == primary_section.try(:[], :ccn).try(:to_i)
+      end.try(:[], 'grades').try(:find) do |grade|
+        # Return the object containing the midpoint grade
+        grade.try(:[], 'type').try(:[], 'code') == 'MID'
+      end.try(:[], 'mark')
+      course.merge!({midpointGrade: section_midpoint_grade})
+    end
+
+    def hub_current_enrollments
+      if current_term
+        @hub_current_enrollments ||= HubEnrollments::MyCurrentEnrollments.new(user_id: @uid, term_id: current_term.campus_solutions_id).get_feed
+      else
+        {}
+      end
     end
 
     def translate_notation(transcript_notations)
