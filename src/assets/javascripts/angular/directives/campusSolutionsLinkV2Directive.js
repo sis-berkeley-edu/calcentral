@@ -118,9 +118,9 @@ angular.module('calcentral.directives').directive('ccCampusSolutionsLinkV2Direct
    * Process ucFrom parameter configuration
    */
   var getUcFromParamConfig = function(linkObj, scope, attrs) {
-    var includeUcFrom = !!(scope.$eval(attrs.ccCampusSolutionsLinkV2DirectiveUcFrom) || _.get(linkObj, 'ucfrom')) || false;
-    var includeUcFromLink = !!(scope.$eval(attrs.ccCampusSolutionsLinkV2DirectiveUcFromLink) || _.get(linkObj, 'ucfromlink')) || false;
-    var includeUcFromText = !!(scope.$eval(attrs.ccCampusSolutionsLinkV2DirectiveUcFromText) || _.get(linkObj, 'ucfromtext')) || false;
+    var includeUcFrom = !!(scope.$eval(attrs.ccCampusSolutionsLinkV2DirectiveUcFrom) || _.get(linkObj, 'ucfrom') || _.get(linkObj, 'ucFrom')) || false;
+    var includeUcFromLink = !!(scope.$eval(attrs.ccCampusSolutionsLinkV2DirectiveUcFromLink) || _.get(linkObj, 'ucfromlink') || _.get(linkObj, 'ucFromLink')) || false;
+    var includeUcFromText = !!(scope.$eval(attrs.ccCampusSolutionsLinkV2DirectiveUcFromText) || _.get(linkObj, 'ucfromtext') || _.get(linkObj, 'ucFromText')) || false;
     return {
       includeUcFrom: includeUcFrom,
       includeUcFromLink: includeUcFromLink,
