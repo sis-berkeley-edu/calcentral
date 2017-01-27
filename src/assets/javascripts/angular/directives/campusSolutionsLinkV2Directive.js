@@ -72,7 +72,6 @@ var angular = require('angular');
  *
  */
 angular.module('calcentral.directives').directive('ccCampusSolutionsLinkV2Directive', function(linkService) {
-
   /**
    * Sets the text for the anchor tag if not already present
    */
@@ -96,13 +95,11 @@ angular.module('calcentral.directives').directive('ccCampusSolutionsLinkV2Direct
    */
   var getLinkConfig = function(linkObj, scope, attrs) {
     var baseLinkUrl = scope.$eval(attrs.ccCampusSolutionsLinkV2DirectiveUrl) || _.get(linkObj, 'url');
-    var includeUcFrom = !!(scope.$eval(attrs.ccCampusSolutionsLinkV2DirectiveUcFrom) || _.get(linkObj, 'ucfrom'));
-    var includeUcFromLink = !!(scope.$eval(attrs.ccCampusSolutionsLinkV2DirectiveUcFromLink) || _.get(linkObj, 'ucfromlink'));
-    var includeUcFromText = !!(scope.$eval(attrs.ccCampusSolutionsLinkV2DirectiveUcFromText) || _.get(linkObj, 'ucfromtext'));
     var ccCacheString = attrs.ccCampusSolutionsLinkV2DirectiveCcCache || _.get(linkObj, 'ccCache');
     var ccPageName = scope.$eval(attrs.ccCampusSolutionsLinkV2DirectiveCcPageName) || _.get(linkObj, 'ccPageName') || 'CalCentral';
     var ccPageUrl = scope.$eval(attrs.ccCampusSolutionsLinkV2DirectiveCcPageUrl) || _.get(linkObj, 'ccPageUrl');
-    var decoratedLinkUrl = decorateLink(baseLinkUrl, includeUcFrom, includeUcFromLink, includeUcFromText, ccCacheString, ccPageName, ccPageUrl);
+    var ucFromParamsConfig = getUcFromParamConfig(linkObj, scope, attrs);
+    var decoratedLinkUrl = decorateLink(baseLinkUrl, ucFromParamsConfig.includeUcFrom, ucFromParamsConfig.includeUcFromLink, ucFromParamsConfig.includeUcFromText, ccCacheString, ccPageName, ccPageUrl);
 
     // TODO: Discover why link objects either include 'showNewwindow' or 'shownewwindow' property
     var showNewWindow = scope.$eval(attrs.ccCampusSolutionsLinkV2DirectiveShowNewWindow) || _.get(linkObj, 'shownewwindow') || _.get(linkObj, 'showNewWindow') || false;
@@ -114,6 +111,20 @@ angular.module('calcentral.directives').directive('ccCampusSolutionsLinkV2Direct
       linkHoverText: linkHoverText,
       linkUrl: decoratedLinkUrl,
       showNewWindow: showNewWindow
+    };
+  };
+
+  /**
+   * Process ucFrom parameter configuration
+   */
+  var getUcFromParamConfig = function(linkObj, scope, attrs) {
+    var includeUcFrom = !!(scope.$eval(attrs.ccCampusSolutionsLinkV2DirectiveUcFrom) || _.get(linkObj, 'ucfrom')) || false;
+    var includeUcFromLink = !!(scope.$eval(attrs.ccCampusSolutionsLinkV2DirectiveUcFromLink) || _.get(linkObj, 'ucfromlink')) || false;
+    var includeUcFromText = !!(scope.$eval(attrs.ccCampusSolutionsLinkV2DirectiveUcFromText) || _.get(linkObj, 'ucfromtext')) || false;
+    return {
+      includeUcFrom: includeUcFrom,
+      includeUcFromLink: includeUcFromLink,
+      includeUcFromText: includeUcFromText
     };
   };
 
