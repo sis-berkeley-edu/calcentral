@@ -1,0 +1,302 @@
+{
+  "enrollmentTermAcademicPlanner": {
+      "2172": {
+          "academicplanner": [
+              {
+                  "term": "2172",
+                  "termDescr": "2017 Spring"
+              }
+          ],
+          "studentId": "26028400",
+          "updateAcademicPlanner": {
+              "isCsLink": true,
+              "name": "Update",
+              "url": "https://bcs-web-dev-03.is.berkeley.edu:8443/psc/bcsdev/EMPLOYEE/HRMS/c/SCI_PLNR_FL.SCI_PLNR_FL.GBL?ucInstitution=UCB01"
+          }
+      }
+  },
+  "enrollmentTermInstructionTypeDecks": [
+    {
+      "cards": [
+        {
+          "academicPlans": [
+            {
+              "career": {
+                "code": "UGRD",
+                "description": "Undergraduate"
+              },
+              "college": "Undergrad Natural Resources",
+              "enrollmentRole": "default",
+              "plan": {
+                "code": "04606U",
+                "description": "Nutritional Science BS"
+              },
+              "primary": true,
+              "program": {
+                "code": "UCNR",
+                "description": "Undergrad Natural Resources"
+              },
+              "role": "default",
+              "subPlan": {},
+              "type": {
+                "category": "Major",
+                "code": "MAJ",
+                "description": "Major - Regular Acad/Prfnl"
+              }
+            }
+          ],
+          "careerCode": "UGRD",
+          "role": "default",
+          "term": {
+            "termDescr": "2017 Spring",
+            "termId": "2172",
+            "termIsSummer": false,
+            "termName": "Spring 2017"
+          }
+        }
+      ]
+    }
+  ],
+  "enrollmentTermInstructions": {
+    "2172": {
+      "advisors": [
+        {
+          "emailAddress": "nlowy@berkeley.edu",
+          "id": "270614",
+          "name": "Nicole Lowy",
+          "plan": "Nutritional Science BS",
+          "program": "Undergrad Natural Resources",
+          "title": "Advisor Only"
+        }
+      ],
+      "concurrentApplyDeadline": "02/17/2017",
+      "enrolledClasses": [
+        {
+          "acadCareer": "UGRD",
+          "acadCareerDescr": "Undergrad",
+          "id": "24692",
+          "ssrComponent": "LEC",
+          "ssrComponentDescr": "Lecture",
+          "subjectCatalog": "ESPM C167",
+          "title": "ENV HEALTH & DEV",
+          "units": 4.0,
+          "when": "TuTh 12:30P-1:59P"
+        },
+        {
+          "acadCareer": "UGRD",
+          "acadCareerDescr": "Undergrad",
+          "id": "24697",
+          "ssrComponent": "DIS",
+          "ssrComponentDescr": "Discussion",
+          "subjectCatalog": "ESPM C167",
+          "title": "ENV HEALTH & DEV",
+          "units": 0.0,
+          "when": "W 8:00A-8:59A"
+        },
+        {
+          "acadCareer": "UGRD",
+          "acadCareerDescr": "Undergrad",
+          "id": "18775",
+          "ssrComponent": "LEC",
+          "ssrComponentDescr": "Lecture",
+          "subjectCatalog": "MCELLBI 102",
+          "title": "SURV BIOCHEM & MOBI",
+          "units": 4.0,
+          "when": "MWF 11:00A-11:59A"
+        },
+        {
+          "acadCareer": "UGRD",
+          "acadCareerDescr": "Undergrad",
+          "id": "18776",
+          "ssrComponent": "DIS",
+          "ssrComponentDescr": "Discussion",
+          "subjectCatalog": "MCELLBI 102",
+          "title": "SURV BIOCHEM & MOBI",
+          "units": 0.0,
+          "when": "M 10:00A-10:59A"
+        },
+        {
+          "acadCareer": "UGRD",
+          "acadCareerDescr": "Undergrad",
+          "id": "32081",
+          "ssrComponent": "DIS",
+          "ssrComponentDescr": "Discussion",
+          "subjectCatalog": "PLANTBI 40",
+          "title": "SECRET LIFE PLANTS",
+          "units": 0.0,
+          "when": "Tu 4:00P-4:59P"
+        },
+        {
+          "acadCareer": "UGRD",
+          "acadCareerDescr": "Undergrad",
+          "id": "25382",
+          "ssrComponent": "LEC",
+          "ssrComponentDescr": "Lecture",
+          "subjectCatalog": "PLANTBI 40",
+          "title": "SECRET LIFE PLANTS",
+          "units": 3.0,
+          "when": "TuTh 2:00P-2:59P"
+        },
+        {
+          "acadCareer": "UGRD",
+          "acadCareerDescr": "Undergrad",
+          "id": "23470",
+          "ssrComponent": "LAB",
+          "ssrComponentDescr": "Laboratory",
+          "subjectCatalog": "STAT 133",
+          "title": "COMPUTING DATA",
+          "units": 0.0,
+          "when": "W 12:00P-1:59P"
+        },
+        {
+          "acadCareer": "UGRD",
+          "acadCareerDescr": "Undergrad",
+          "id": "23467",
+          "ssrComponent": "LEC",
+          "ssrComponentDescr": "Lecture",
+          "subjectCatalog": "STAT 133",
+          "title": "COMPUTING DATA",
+          "units": 3.0,
+          "when": "TuTh 11:00A-12:29P"
+        },
+        {
+          "acadCareer": "UGRD",
+          "acadCareerDescr": "Undergrad",
+          "id": "23479",
+          "ssrComponent": "LEC",
+          "ssrComponentDescr": "Lecture",
+          "subjectCatalog": "STAT 134",
+          "title": "CONCEPTS OF PROB",
+          "units": 3.0,
+          "when": "TuTh 9:30A-10:59A"
+        },
+        {
+          "acadCareer": "UGRD",
+          "acadCareerDescr": "Undergrad",
+          "id": "23480",
+          "ssrComponent": "DIS",
+          "ssrComponentDescr": "Discussion",
+          "subjectCatalog": "STAT 134",
+          "title": "CONCEPTS OF PROB",
+          "units": 0.0,
+          "when": "MW 9:00A-9:59A"
+        }
+      ],
+      "enrolledClassesTotalUnits": 17.0,
+      "enrollmentPeriod": [
+        {
+          "date": {
+            "datestring": "10/17",
+            "datetime": "2016-10-17T11:00:00-07:00",
+            "epoch": 1476727200
+          },
+          "id": "PRI1",
+          "name": "Phase 1 Begins"
+        },
+        {
+          "date": {
+            "datestring": "11/14",
+            "datetime": "2016-11-14T11:00:00-08:00",
+            "epoch": 1479150000
+          },
+          "id": "PRI2",
+          "name": "Phase 2 Begins"
+        },
+        {
+          "date": {
+            "datestring": "1/09",
+            "datetime": "2017-01-09T09:00:00-08:00",
+            "epoch": 1483981200
+          },
+          "id": "ADJ",
+          "name": "Adjustment Begins"
+        }
+      ],
+      "isClassScheduleAvailable": true,
+      "isGradeBaseAvailable": false,
+      "links": {
+        "addEnrolledClasses": {
+          "isCsLink": true,
+          "name": "Add enrolled classes",
+          "url": "https://bcs-web-dev-03.is.berkeley.edu:8443/psc/bcsdev/EMPLOYEE/HRMS/c/SA_LEARNER_SERVICES_2.SSR_SSENRL_CART.GBL?"
+        },
+        "chooseClasses": {
+          "isCsLink": true,
+          "name": "Choose classes",
+          "url": "https://bcs-web-dev-03.is.berkeley.edu:8443/psc/bcsdev/EMPLOYEE/HRMS/c/SA_LEARNER_SERVICES_2.SSR_SSENRL_CART.GBL?"
+        },
+        "courseCatalog": {
+          "isCsLink": true,
+          "name": "Course Catalog",
+          "url": "https://bcs-web-dev-03.is.berkeley.edu:8443/psc/bcsdev/EMPLOYEE/HRMS/c/SA_LEARNER_SERVICES.SSS_BROWSE_CATLG.GBL?"
+        },
+        "dropEnrolledClasses": {
+          "isCsLink": true,
+          "name": "Drop enrolled classes",
+          "url": "https://bcs-web-dev-03.is.berkeley.edu:8443/psc/bcsdev/EMPLOYEE/HRMS/c/SA_LEARNER_SERVICES.SSR_SSENRL_DROP.GBL?"
+        },
+        "gradeBase": {
+          "isCsLink": true,
+          "name": "Grade Base URL",
+          "url": "https://bcs-web-dev-03.is.berkeley.edu:8443/psc/bcsdev/EMPLOYEE/HRMS/c/SA_LEARNER_SERVICES.SSR_SSENRL_EDIT.GBL?"
+        },
+        "scheduleClasses": {
+          "isCsLink": true,
+          "name": "Schedule of Classes - SIS",
+          "url": "https://bcs-web-dev-03.is.berkeley.edu:8443/psc/bcsdev/EMPLOYEE/HRMS/c/SA_LEARNER_SERVICES.CLASS_SEARCH.GBL?Page=SSR_CLSRCH_ENTRY&Action=U"
+        },
+        "swapEnrolledClasses": {
+          "isCsLink": true,
+          "name": "Swap enrolled classes",
+          "url": "https://bcs-web-dev-03.is.berkeley.edu:8443/psc/bcsdev/EMPLOYEE/HRMS/c/SA_LEARNER_SERVICES.SSR_SSENRL_SWAP.GBL?"
+        },
+        "updateEnrolledClasses": {
+          "isCsLink": true,
+          "name": "Update enrolled classes",
+          "url": "https://bcs-web-dev-03.is.berkeley.edu:8443/psc/bcsdev/EMPLOYEE/HRMS/c/SA_LEARNER_SERVICES.SSR_SSENRL_EDIT.GBL?"
+        },
+        "withdrawFromSemester": {
+          "isCsLink": false,
+          "name": "Withdraw from semester",
+          "url": "http://studentcentral.berkeley.edu/withdraw"
+        }
+      },
+      "scheduleOfClassesPeriod": {
+        "date": {
+          "datestring": "10/05",
+          "datetime": "2016-10-05T00:00:00-07:00",
+          "epoch": 1475650800
+        }
+      },
+      "studentId": "26028400",
+      "term": "2172",
+      "termDescr": "Spring 2017",
+      "waitlistedClasses": [],
+      "waitlistedClassesTotalUnits": 0.0
+    }
+  },
+  "hasHolds": false,
+  "links": {
+    "ucAddClassEnrollment": {
+      "name": "Apply to a Class",
+      "showNewWindow": true,
+      "title": "Complete your class enrollment application.",
+      "url": "https://bcsweb.is.berkeley.edu/psp/bcsprd/EMPLOYEE/HRMS/c/G3FRAME.G3SEARCH.GBL?&G3FORM_FAMILY=STUDENT&G3FORM_TYPE=SSCNTENRL&G3FORM_CONDITION=Default&G3FORM_TASK=ADD",
+      "urlId": "UC_CX_GT_SSCNTENRL_ADD"
+    },
+    "ucEditClassEnrollment": {
+      "name": "Edit Class Applications",
+      "showNewWindow": true,
+      "title": "Edit your submited class enrollment application.",
+      "url": "https://bcsweb.is.berkeley.edu/psp/bcsprd/EMPLOYEE/HRMS/c/G3FRAME.G3SEARCH.GBL?&G3FORM_FAMILY=STUDENT&G3FORM_TYPE=SSCNTENRL&G3FORM_CONDITION=Default&G3FORM_TASK=UPD",
+      "urlId": "UC_CX_GT_SSCNTENRL_UPD"
+    },
+    "ucViewClassEnrollment": {
+      "name": "Submitted Class Applications",
+      "showNewWindow": true,
+      "title": "View your submitted class enrollment application.",
+      "url": "https://bcsweb.is.berkeley.edu/psp/bcsprd/EMPLOYEE/HRMS/c/G3FRAME.G3SEARCH.GBL?&G3FORM_FAMILY=STUDENT&G3FORM_TYPE=SSCNTENRL&G3FORM_CONDITION=Default&G3FORM_TASK=VWS",
+      "urlId": "UC_CX_GT_SSCNTENRL_VIEW"
+    }
+  }
+}

@@ -13,13 +13,17 @@
   <div data-ng-if="api.user.profile.actAsOptions.canSeeCSLinks">
     <div data-ng-if="enrollmentInstruction.updatePlannerLink && !enrollmentInstruction.academicPlanner.classes.length">
       Build your multi-year
-      <a data-cc-campus-solutions-link-directive="enrollmentInstruction.updatePlannerLink.url"
-        data-cc-campus-solutions-link-directive-enabled="{{enrollmentInstruction.updatePlannerLink.isCsLink}}"
-        data-cc-campus-solutions-link-directive-text="currentPage.name"
-        data-cc-campus-solutions-link-directive-cache="'enrollment'"
-        data-cc-outbound-enabled="{{!enrollmentInstruction.updatePlannerLink.isCsLink}}">
-        academic plan
-      </a>
+      <a
+        data-cc-campus-solutions-link-v2-directive="true"
+        data-cc-campus-solutions-link-v2-directive-name="enrollmentInstruction.updatePlannerLink.name"
+        data-cc-campus-solutions-link-v2-directive-url="enrollmentInstruction.updatePlannerLink.url"
+        data-cc-campus-solutions-link-v2-directive-cc-cache="enrollment"
+        data-cc-campus-solutions-link-v2-directive-uc-from="true"
+        data-cc-campus-solutions-link-v2-directive-uc-from-link="true"
+        data-cc-campus-solutions-link-v2-directive-uc-from-text="true"
+        data-cc-campus-solutions-link-v2-directive-cc-page-name="currentPage.name"
+        data-cc-campus-solutions-link-v2-directive-cc-page-url="currentPage.url"
+      >academic plan</a>
     </div>
 
     <div data-ng-if="enrollmentInstruction.updatePlannerLink && enrollmentInstruction.academicPlanner.classes.length">
@@ -27,15 +31,18 @@
         <div>
           <strong>Current Academic Plan for <span data-ng-bind="enrollmentInstruction.termDescr"></span></strong>
         </div>
-
         <div>
-          <a data-cc-campus-solutions-link-directive="enrollmentInstruction.updatePlannerLink.url"
-            data-cc-campus-solutions-link-directive-enabled="{{enrollmentInstruction.updatePlannerLink.isCsLink}}"
-            data-cc-campus-solutions-link-directive-text="currentPage.name"
-            data-cc-campus-solutions-link-directive-cache="'enrollment'"
-            data-cc-outbound-enabled="{{!enrollmentInstruction.updatePlannerLink.isCsLink}}">
-            Update
-          </a>
+          <a
+            data-cc-campus-solutions-link-v2-directive="true"
+            data-cc-campus-solutions-link-v2-directive-name="enrollmentInstruction.updatePlannerLink.name"
+            data-cc-campus-solutions-link-v2-directive-url="enrollmentInstruction.updatePlannerLink.url"
+            data-cc-campus-solutions-link-v2-directive-cc-cache="enrollment"
+            data-cc-campus-solutions-link-v2-directive-uc-from="true"
+            data-cc-campus-solutions-link-v2-directive-uc-from-link="true"
+            data-cc-campus-solutions-link-v2-directive-uc-from-text="true"
+            data-cc-campus-solutions-link-v2-directive-cc-page-name="currentPage.name"
+            data-cc-campus-solutions-link-v2-directive-cc-page-url="currentPage.url"
+          >Update</a>
         </div>
       </div>
 
