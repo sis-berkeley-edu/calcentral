@@ -21,6 +21,9 @@
         <li data-ng-if="api.user.profile.features.enrollmentVerification && (api.user.profile.isDirectlyAuthenticated || api.user.profile.actingAsUid)">
           <a title="Request Enrollment Verification" href="academics/enrollment_verification">Request Enrollment Verification</a>
         </li>
+        <li>
+          <a data-ng-href="{{ucbxTranscriptLink.link}}" data-ng-attr-title="{{ucbxTranscriptLink.title}}">Request University Extension Transcript</a>
+        </li>
       </ul>
     </div>
   </div>
