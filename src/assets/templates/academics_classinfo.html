@@ -168,19 +168,19 @@
                   <th width="30%" class="cc-academics-instructors-grading-th">
                      <h3 data-ng-if="$index == 0">Role</h3>
                   </th>
-                  <th width="20%" data-ng-if="!api.user.profile.roles.student" class="cc-academics-instructors-grading-th">
+                  <th width="20%" data-ng-if="api.user.profile.roles.faculty" class="cc-academics-instructors-grading-th">
                      <h3 data-ng-if="$index == 0">Grading</h3>
                   </th>
                 </thead>
                 <tbody>
                   <tr data-ng-repeat="instructor in section.instructors | orderBy:'ccDelegateRoleOrder'">
-                    <td >
+                    <td data-ng-if="api.user.profile.roles.faculty || instructor.printInSchedule == 'Y'">
                       <a data-ng-href="http://www.berkeley.edu/directory/results?search-type=uid&search-base=all&search-term={{instructor.uid}}" data-ng-bind-template="&#9632; {{instructor.name}}"></a>
                     </td>
-                    <td>
+                    <td data-ng-if="api.user.profile.roles.faculty || instructor.printInSchedule == 'Y'">
                       <span data-ng-bind="instructor.ccDelegateRole">
                     </td>
-                    <td data-ng-if="!api.user.profile.roles.student" data-ng-switch="instructor.ccGradingAccess" class="cc-academics-instructors-grading-status">
+                    <td data-ng-if="api.user.profile.roles.faculty" data-ng-switch="instructor.ccGradingAccess" class="cc-academics-instructors-grading-status">
                       <i data-ng-switch-when="approveGrades" class="fa fa-check"></i>
                       <i data-ng-switch-when="enterGrades" class="fa fa-list-ul"></i>
                     </td>
@@ -189,7 +189,7 @@
               </table>
             </div>
           </div>
-           <div data-ng-if="!api.user.profile.roles.student" class="cc-academics-instructors-grading-header">
+           <div data-ng-if="api.user.profile.roles.faculty" class="cc-academics-instructors-grading-header">
             <h3>Grading Legend</h3>
             <span><i class="fa fa-list-ul"></i><span> Can enter grades</span></span>
             <span class="cc-academics-instructors-grading-header-legend"><i class="fa fa-check"></i><span> Can enter and approve grades</span></span>
