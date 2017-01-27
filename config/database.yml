@@ -2,7 +2,7 @@ development:
   adapter: postgresql
   database: <%= Settings.postgres.database %>
   encoding: unicode
-  pool: 3
+  pool: <%= Settings.postgres.pool %>
   timeout: 5000
   username: <%= Settings.postgres.username %>
   password: <%= Settings.postgres.password %>
