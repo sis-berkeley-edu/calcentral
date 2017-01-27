@@ -16,6 +16,10 @@ angular.module('calcentral.controllers').controller('AcademicRecordsController',
     link: 'http://www.law.berkeley.edu/php-programs/registrar/forms/transcriptrequestform.php',
     title: 'Request your official Law Transcript'
   };
+  $scope.ucbxTranscriptLink = {
+    link: 'http://extension.berkeley.edu/static/studentservices/transcripts/#ordertranscripts',
+    title: 'Request your University Extension Transcript'
+  };
   $scope.lawUnofficialTranscriptLink = {};
 
   /**
