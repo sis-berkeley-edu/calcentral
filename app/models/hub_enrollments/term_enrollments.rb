@@ -1,5 +1,5 @@
 module HubEnrollments
-  class CurrentEnrollments < Proxy
+  class TermEnrollments < Proxy
 
     def initialize (options = {})
       @term_id = options[:term_id]
@@ -7,10 +7,10 @@ module HubEnrollments
     end
 
     def json_filename
-      'hub_current_enrollments.json'
+      'hub_term_enrollments.json'
     end
 
-    # Returns only current enrollments in primary class sections.  This response is limited to 50
+    # Returns only the passed term's enrollments in primary class sections.  This response is limited to 50
     # enrollments.  If more is needed, a loop will be required.
     def url
       "#{@settings.base_url}/#{@campus_solutions_id}?term-id=#{@term_id}&primary-only=true&page-size=50"
