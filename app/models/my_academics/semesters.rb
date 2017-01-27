@@ -139,7 +139,7 @@ module MyAcademics
 
     def hub_current_enrollments
       if current_term
-        @hub_current_enrollments ||= HubEnrollments::MyCurrentEnrollments.new(user_id: @uid, term_id: current_term.campus_solutions_id).get_feed
+        @hub_current_enrollments ||= HubEnrollments::MyTermEnrollments.new(user_id: @uid, term_id: current_term.campus_solutions_id).get_feed
       else
         {}
       end

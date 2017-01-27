@@ -1,7 +1,7 @@
-describe HubEnrollments::CurrentEnrollments do
+describe HubEnrollments::TermEnrollments do
 
   context 'mock proxy' do
-    let(:proxy) { HubEnrollments::CurrentEnrollments.new(fake: true, user_id: '61889', term_id: 2172) }
+    let(:proxy) { HubEnrollments::TermEnrollments.new(fake: true, user_id: '61889', term_id: 2172) }
     subject { proxy.get }
 
     it_should_behave_like 'a simple proxy that returns errors'
