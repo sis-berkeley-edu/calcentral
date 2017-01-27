@@ -178,13 +178,15 @@ describe EdoOracle::CourseSections do
             'ldap_uid' => '2040',
             'person_name' => 'Albertus Magnus',
             'grade_roster_access' => 'A',
-            'role_code' => 'PI'
+            'role_code' => 'PI',
+            'print_in_schedule' => 'Y'
           },
           {
             'ldap_uid' => '242881',
             'person_name' => 'Thomas Aquinas',
             'grade_roster_access' => 'A',
-            'role_code' => 'TNIC'
+            'role_code' => 'TNIC',
+            'print_in_schedule' => 'N'
           }
         ]
       end
@@ -196,13 +198,15 @@ describe EdoOracle::CourseSections do
             name: 'Albertus Magnus',
             role: 'PI',
             gradeRosterAccess: 'A',
-            uid: '2040'
+            uid: '2040',
+            printInSchedule: 'Y'
           },
           {
             name: 'Thomas Aquinas',
             role: 'TNIC',
             gradeRosterAccess: 'A',
-            uid: '242881'
+            uid: '242881',
+            printInSchedule: 'N'
           }
         ]
       end

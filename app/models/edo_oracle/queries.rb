@@ -233,7 +233,8 @@ module EdoOracle
           instr."campus-uid" AS ldap_uid,
           instr."role-code" AS role_code,
           instr."role-descr" AS role_description,
-          instr."gradeRosterAccess" AS grade_roster_access
+          instr."gradeRosterAccess" AS grade_roster_access,
+          instr."printInScheduleOfClasses" AS print_in_schedule
         FROM
           SISEDO.ASSIGNEDINSTRUCTORV00_VW instr
         JOIN SISEDO.CLASSSECTIONV00_VW sec ON (

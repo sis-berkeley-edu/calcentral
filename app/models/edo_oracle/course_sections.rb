@@ -56,7 +56,8 @@ module EdoOracle
           name: instructor['person_name'],
           role: instructor['role_code'],
           gradeRosterAccess: instructor['grade_roster_access'],
-          uid: instructor['ldap_uid']
+          uid: instructor['ldap_uid'],
+          printInSchedule: instructor['print_in_schedule']
         }
       end
       instructors.uniq
