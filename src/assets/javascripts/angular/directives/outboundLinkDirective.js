@@ -49,7 +49,7 @@ var isSameDomain = function(requestUrl, locationUrl) {
  * This directive will make sure that external links are always opened in a new window
  * To make it more accessible, we also add an extra message to each element.
  */
-angular.module('calcentral.directives').directive('a', function() {
+angular.module('calcentral.directives').directive('a', function(linkService) {
   return {
     restrict: 'E',
     // We need to run this after ngHref has changed
@@ -63,12 +63,7 @@ angular.module('calcentral.directives').directive('a', function() {
         // We only want to change anchor tags that link to a different domain
         // Since this gets executed a couple of times, we add a class to the screenreader message & check for it
         if ((attr.ccOutboundEnabled === 'true' || !isSameDomain(url, location.href)) && !element[0].querySelector('.cc-outbound-link')) {
-          var screenReadMessage = document.createElement('span');
-          screenReadMessage.className = 'cc-outbound-link cc-visuallyhidden cc-print-hide';
-          screenReadMessage.innerHTML = ' - opens in new window';
-          element.append(screenReadMessage);
-          element.addClass('cc-outbound-link');
-          attr.$set('target', '_blank');
+          linkService.makeOutboundlink(element);
         }
       };
 
@@ -76,9 +71,10 @@ angular.module('calcentral.directives').directive('a', function() {
        * Check whether the href attribute has changed
        */
       var observe = function(value) {
-        // Check whether the element actually has an href
-        // and whether we disabled the outbound directive
-        if (value && scope.$eval(attr.ccOutboundEnabled) !== false) {
+        // Check whether the element actually has an href,
+        // whether we disabled the outbound directive,
+        // and if the ccCampusSolutionsLinkV2Directive is present
+        if (value && scope.$eval(attr.ccOutboundEnabled) !== false && !attr.ccCampusSolutionsLinkV2Directive) {
           updateAnchorTag(value);
         }
       };

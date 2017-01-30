@@ -135,10 +135,10 @@ angular.module('calcentral.controllers').controller('EnrollmentCardController', 
    * Add aditional metadata to the links
    */
   var mapLinks = function(enrollmentInstruction) {
-    if (!enrollmentInstruction.links) {
+    if (!_.isEmpty(_.get(enrollmentInstruction, 'links'))) {
       return enrollmentInstruction;
     }
-    enrollmentInstruction.links = linkService.addBackToTextToResources(enrollmentInstruction.links, $scope.currentPage.name);
+    enrollmentInstruction.links = linkService.addCurrentPagePropertiesToResources(enrollmentInstruction.links, $scope.currentPage.name, $scope.currentPage.url);
     return enrollmentInstruction;
   };
 

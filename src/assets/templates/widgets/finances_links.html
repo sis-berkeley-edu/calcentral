@@ -40,19 +40,22 @@
             data-ng-bind="link.name">
           </a>
         </li>
+        <!-- NOTE: The following two elements are configured to only be appended to the 2nd link configured for this category -->
+        <!-- Use /api/my/campuslinks/refresh to ensure proper loaded link configuration -->
         <li data-ng-if="subcategory === 'Billing & Payments' && $index === 1 && api.user.profile.roles.student &&
           (api.user.profile.roles.undergrad || api.user.profile.roles.graduate || api.user.profile.roles.law)">
           <a data-ng-href="{{$parent.fpp.fppLink.url}}"
             data-ng-attr-title="{{$parent.fpp.fppLink.title}}">Tuition and Fees Payment Plan</a>
           <a class="cc-list-links-nested-dash"
-            data-cc-campus-solutions-link-directive="$parent.fpp.data.fppEnrollUrl.url"
-            data-cc-campus-solutions-link-directive-enabled="{{$parent.fpp.data.fppEnrollUrl.isCsLink}}"
-            data-cc-campus-solutions-link-directive-text="currentPage.name"
-            data-cc-campus-solutions-link-directive-cache="'finances'"
-            data-cc-outbound-enabled="false"
-            data-ng-attr-title="{{$parent.fpp.activatePlanLink.title}}"
-            data-ng-if="$parent.fpp.data.fppEnrollUrl.url"><strong>Activate Plan</strong>
-          </a>
+            data-cc-campus-solutions-link-v2-directive="$parent.fpp.data.fppEnrollUrl"
+            data-cc-campus-solutions-link-v2-directive-cc-page-name="currentPage.name"
+            data-cc-campus-solutions-link-v2-directive-cc-page-url="currentPage.url"
+            data-cc-campus-solutions-link-v2-directive-cc-cache="finances"
+            data-cc-campus-solutions-link-v2-directive-uc-from="true"
+            data-cc-campus-solutions-link-v2-directive-uc-from-link="true"
+            data-cc-campus-solutions-link-v2-directive-uc-from-text="true"
+            data-cc-campus-solutions-link-v2-directive-title="$parent.fpp.activatePlanLink.title"
+          ><strong>Activate Plan</strong></a>
         </li>
         <li data-ng-if="subcategory === 'Billing & Payments' && $index === 1 && api.user.profile.roles.student &&
           (api.user.profile.roles.undergrad || api.user.profile.roles.graduate || api.user.profile.roles.law)"
@@ -67,7 +70,10 @@
           </a>
         </li>
         <li data-ng-if="subcategory === 'Financial Assistance' && emergencyLoanLink.url && canViewEmergencyLoanLink">
-          <a data-ng-attr-href="{{emergencyLoanLink.url}}" data-ng-attr-title="{{emergencyLoanLink.description}}" data-cc-outbound-enabled="emergencyLoanLink.showNewWindow">Apply for an Emergency Loan</a>
+          <a data-cc-campus-solutions-link-v2-directive="emergencyLoanLink"
+            data-cc-campus-solutions-link-v2-directive-cc-page-name="currentPage.name"
+            data-cc-campus-solutions-link-v2-directive-cc-page-url="currentPage.url"
+          ></a>
         </li>
       </ul>
     </div>

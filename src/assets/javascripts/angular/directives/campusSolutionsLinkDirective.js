@@ -24,25 +24,7 @@ var angular = require('angular');
  *   data-cc-campus-solutions-link-directive-text="backToText" // For the 'Back to ...'' text in CS
  *   data-cc-campus-solutions-link-directive-cache="finaid" // Will add an addition querystring to the back to link to expire the cache (e.g. 'finaid' or 'profile' - see bootsrap_controller.rb)
  */
-angular.module('calcentral.directives').directive('ccCampusSolutionsLinkDirective', function($compile, $location, $parse) {
-  /**
-   * Update a querystring parameter
-   * We'll add it when there is none and update it when there is
-   * @param {String} uri The URI you want to update
-   * @param {String} key The key of the param you want to update
-   * @param {String} value The value of the param you want to update
-   * @return {String} The updated URI
-   */
-  var updateQueryStringParameter = function(uri, key, value) {
-    var re = new RegExp('([?&])' + key + '=.*?(&|$)', 'i');
-    var separator = uri.indexOf('?') !== -1 ? '&' : '?';
-    if (uri.match(re)) {
-      return uri.replace(re, '$1' + key + '=' + value + '$2');
-    } else {
-      return uri + separator + key + '=' + value;
-    }
-  };
-
+angular.module('calcentral.directives').directive('ccCampusSolutionsLinkDirective', function(linkService, $location, $parse) {
   /**
    * Get the Back To CalCentral link
    */
@@ -50,18 +32,7 @@ angular.module('calcentral.directives').directive('ccCampusSolutionsLinkDirectiv
     var link = $location.absUrl();
     if (cacheParam) {
       // We need to do the extra encoding, otherwise, the complete URL will be incorrect
-      link = encodeURIComponent(updateQueryStringParameter(link, 'ucUpdateCache', cacheParam));
-    }
-    return link;
-  };
-
-  /**
-   * Sometimes Campus Solutions gives us links that end with a question mark, we should clean those up
-   * /EMPLOYEE/HRMS/c/MAINTAIN_SERVICE_IND_STDNT.ACTIVE_SRVC_INDICA.GBL?
-   */
-  var fixLastQuestionMark = function(link) {
-    if (link.indexOf('?', link.length - 1) !== -1) {
-      link = link.slice(0, -1);
+      link = encodeURIComponent(linkService.updateQueryStringParameter(link, 'ucUpdateCache', cacheParam));
     }
     return link;
   };
@@ -77,15 +48,15 @@ angular.module('calcentral.directives').directive('ccCampusSolutionsLinkDirectiv
         }
         var csBannerEnabled = scope.$eval(attrs.ccCampusSolutionsLinkDirectiveEnabled);
         if (/^http/.test(value) && csBannerEnabled === true) {
-          value = fixLastQuestionMark(value);
-          value = updateQueryStringParameter(value, 'ucFrom', 'CalCentral');
+          value = linkService.fixLastQuestionMark(value);
+          value = linkService.updateQueryStringParameter(value, 'ucFrom', 'CalCentral');
           var calCentrallink = getCalCentralLink(scope.$eval(attrs.ccCampusSolutionsLinkDirectiveCache));
-          value = updateQueryStringParameter(value, 'ucFromLink', calCentrallink);
+          value = linkService.updateQueryStringParameter(value, 'ucFromLink', calCentrallink);
           var textAttribute = attrs.ccCampusSolutionsLinkDirectiveText;
           if (textAttribute) {
             var text = $parse(textAttribute)(scope);
             if (text) {
-              value = updateQueryStringParameter(value, 'ucFromText', text);
+              value = linkService.updateQueryStringParameter(value, 'ucFromText', text);
             }
           }
         }

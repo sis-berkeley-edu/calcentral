@@ -13,7 +13,7 @@ angular.module('calcentral.controllers').controller('StudentResourcesController'
   var parseStudentResources = function(data) {
     var resources = _.get(data, 'data.feed.resources');
     if (!_.isEmpty(resources)) {
-      $scope.studentResources = linkService.addBackToTextToResources(resources, $scope.currentPage.name);
+      $scope.studentResources = linkService.addCurrentPagePropertiesToResources(resources, $scope.currentPage.name, $scope.currentPage.url);
     }
   };
 

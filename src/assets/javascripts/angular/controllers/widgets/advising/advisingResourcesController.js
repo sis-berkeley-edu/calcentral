@@ -13,19 +13,19 @@ angular.module('calcentral.controllers').controller('AdvisingResourcesController
   };
 
   /**
-   * Add the back to text
+   * Adds page name and url to link resource sets
    */
-  var addBackToText = function(resources) {
+  var addPagePropertiesToLinks = function(resources) {
     if (_.get(resources, 'ucAdvisingResources.ucAdvisingFavoriteReports.length')) {
-      linkService.addBackToTextToResources(resources.ucAdvisingResources.ucAdvisingFavoriteReports, $scope.currentPage.name);
+      linkService.addCurrentPagePropertiesToResources(resources.ucAdvisingResources.ucAdvisingFavoriteReports, $scope.currentPage.name, $scope.currentPage.url);
     }
 
     if (_.get(resources, '.links')) {
-      linkService.addBackToTextToResources(resources.links, $scope.currentPage.name);
+      linkService.addCurrentPagePropertiesToResources(resources.links, $scope.currentPage.name, $scope.currentPage.url);
     }
 
     if (_.get(resources, 'csLinks')) {
-      linkService.addBackToTextToResources(resources.csLinks, $scope.currentPage.name);
+      linkService.addCurrentPagePropertiesToResources(resources.csLinks, $scope.currentPage.name, $scope.currentPage.url);
     }
   };
 
@@ -35,9 +35,8 @@ angular.module('calcentral.controllers').controller('AdvisingResourcesController
   var parseResources = function(data) {
     var resources = _.get(data, 'data.feed');
 
-    addBackToText(resources);
+    addPagePropertiesToLinks(resources);
     angular.extend($scope, resources);
-
     $scope.advisingResources.isLoading = false;
   };
 

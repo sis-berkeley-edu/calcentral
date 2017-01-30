@@ -8,10 +8,13 @@
   <ul class="cc-list-bullets">
     <li>
       <div>
-        <div
-          data-cc-campus-solutions-link-item-directive
-          data-link="enrollmentInstruction.csLinks.ucAddClassEnrollment" data-ng-disabled="enrollmentInstruction.isGradeBaseAvailable || !enrollmentInstruction.csLinks.ucAddClassEnrollment">
-        ></div>
+        <div>
+          <a data-cc-campus-solutions-link-v2-directive="enrollmentInstruction.csLinks.ucAddClassEnrollment"
+            data-cc-campus-solutions-link-v2-directive-cc-page-name="currentPage.name"
+            data-cc-campus-solutions-link-v2-directive-cc-page-url="currentPage.url"
+            data-ng-disabled="enrollmentInstruction.isGradeBaseAvailable || !enrollmentInstruction.csLinks.ucAddClassEnrollment"
+          ></a>
+        </div>
         <div data-ng-if="!enrollmentInstruction.csLinks.ucAddClassEnrollment.url">
           Application temporarily unavailable at this time
         </div>
@@ -23,16 +26,16 @@
         </div>
       </div>
     </li>
-    <li>
-      <div
-        data-cc-campus-solutions-link-item-directive
-        data-link="enrollmentInstruction.csLinks.ucViewClassEnrollment" data-ng-if="enrollmentInstruction.csLinks.ucViewClassEnrollment.url"
-      ></div>
-    <li>
-      <div
-        data-cc-campus-solutions-link-item-directive
-        data-link="enrollmentInstruction.csLinks.ucEditClassEnrollment" data-ng-if="enrollmentInstruction.csLinks.ucEditClassEnrollment.url"
-      ></div>
+    <li data-ng-if="enrollmentInstruction.csLinks.ucViewClassEnrollment.url">
+      <a data-cc-campus-solutions-link-v2-directive="enrollmentInstruction.csLinks.ucViewClassEnrollment"
+        data-cc-campus-solutions-link-v2-directive-cc-page-name="currentPage.name"
+        data-cc-campus-solutions-link-v2-directive-cc-page-url="currentPage.url"
+      ></a>
+    <li data-ng-if="enrollmentInstruction.csLinks.ucEditClassEnrollment.url">
+      <a data-cc-campus-solutions-link-v2-directive="enrollmentInstruction.csLinks.ucEditClassEnrollment"
+        data-cc-campus-solutions-link-v2-directive-cc-page-name="currentPage.name"
+        data-cc-campus-solutions-link-v2-directive-cc-page-url="currentPage.url"
+      ></a>
     </li>
   </ul>
 </div>

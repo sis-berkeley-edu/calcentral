@@ -22,10 +22,10 @@
           </li>
 
           <li data-ng-if="studentResources.emergencyLoanFormAdd.url && !isSummerVisitor">
-            <div
-              data-cc-campus-solutions-link-item-directive
-              data-link="studentResources.emergencyLoanFormAdd"
-            ></div>
+            <a data-cc-campus-solutions-link-v2-directive="studentResources.emergencyLoanFormAdd"
+              data-cc-campus-solutions-link-v2-directive-cc-page-name="currentPage.name"
+              data-cc-campus-solutions-link-v2-directive-cc-page-url="currentPage.url"
+            ></a>
           </li>
           <li data-ng-if="studentResources.veteransBenefitsAdd.url">
             <div

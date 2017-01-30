@@ -3,12 +3,11 @@
     <h2 class="cc-left">Advising</h2>
     <a class="cc-button cc-right cc-widget-title-button"
       data-ng-if="showAppointmentLinks()"
-      data-cc-campus-solutions-link-directive="myAdvising.links.newAppointment.url"
-      data-cc-campus-solutions-link-directive-enabled="{{myAdvising.links.newAppointment.isCsLink}}"
-      data-cc-campus-solutions-link-directive-text="currentPage.name"
-      data-cc-campus-solutions-link-directive-cache="'myAdvising'"
-      data-cc-outbound-enabled="false"
       data-ng-disabled="!myAdvising.links.newAppointment.url || !api.user.profile.isDirectlyAuthenticated || isAdvisingStudentLookup"
+      data-cc-campus-solutions-link-v2-directive="myAdvising.links.newAppointment"
+      data-cc-campus-solutions-link-v2-directive-cc-cache="myAdvising"
+      data-cc-campus-solutions-link-v2-directive-cc-page-name="currentPage.name"
+      data-cc-campus-solutions-link-v2-directive-cc-page-url="currentPage.url"
     >
       <i class="fa fa-plus cc-button-plus-icon"></i>
       <span>New Appointment</span>
@@ -126,18 +125,15 @@
           data-ng-if="showAppointmentLinks()">
           <h3 class="cc-widget-myadvising-header">Appointments</h3>
           <div class="cc-widget-myadvising-link">
-            <a
+            <a data-cc-campus-solutions-link-v2-directive="myAdvising.links.manageAppointments"
+              data-cc-campus-solutions-link-v2-directive-cc-cache="myAdvising"
+              data-cc-campus-solutions-link-v2-directive-cc-page-name="currentPage.name"
+              data-cc-campus-solutions-link-v2-directive-cc-page-url="currentPage.url"
               data-ng-disabled="{{!myAdvising.links.manageAppointments.url || !api.user.profile.isDirectlyAuthenticated || isAdvisingStudentLookup}}"
-              data-cc-campus-solutions-link-directive="myAdvising.links.manageAppointments.url"
-              data-cc-campus-solutions-link-directive-enabled="{{myAdvising.links.manageAppointments.isCsLink}}"
-              data-cc-campus-solutions-link-directive-text="currentPage.name"
-              data-cc-campus-solutions-link-directive-cache="'myAdvising'"
-              data-cc-outbound-enabled="false"
-            >
-              Access and Manage My Appointments
-            </a>
+            ></a>
           </div>
         </div>
+
       </div>
     </div>
   </div>

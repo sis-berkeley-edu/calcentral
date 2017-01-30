@@ -48,11 +48,19 @@
     </ul>
     <ul class="cc-list-links" data-ng-if="isInstructionType(enrollmentInstruction, ['default'])">
       <li data-ng-if="enrollmentInstruction.isClassScheduleAvailable">
-        <div
-          data-cc-campus-solutions-link-item-directive
-          data-link="enrollmentInstruction.links.scheduleClasses"
-          data-cache="enrollment"
-        ></div>
+        <div>
+          <a
+            data-cc-campus-solutions-link-v2-directive="true"
+            data-cc-campus-solutions-link-v2-directive-name="enrollmentInstruction.links.scheduleClasses.name"
+            data-cc-campus-solutions-link-v2-directive-url="enrollmentInstruction.links.scheduleClasses.url"
+            data-cc-campus-solutions-link-v2-directive-cc-cache="enrollment"
+            data-cc-campus-solutions-link-v2-directive-uc-from="true"
+            data-cc-campus-solutions-link-v2-directive-uc-from-link="true"
+            data-cc-campus-solutions-link-v2-directive-uc-from-text="true"
+            data-cc-campus-solutions-link-v2-directive-cc-page-name="currentPage.name"
+            data-cc-campus-solutions-link-v2-directive-cc-page-url="currentPage.url"
+          >Search for classes</a>
+        </div>
       </li>
       <li>
         <a href="https://calstudentstore.berkeley.edu/textbook">Class Textbooks: ASUC Bookstore</a>
