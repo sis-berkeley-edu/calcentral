@@ -39,6 +39,7 @@ module Berkeley
     def self.statuses
       @statuses ||= {
         'F' => 'Failed',
+        'PF' => 'Partially Failed',
         'I' => 'In Progress',
         'N' => 'Not Satisfied',
         'P' => 'Passed',
