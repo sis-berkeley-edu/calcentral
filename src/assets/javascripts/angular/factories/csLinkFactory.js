@@ -8,6 +8,8 @@ var _ = require('lodash');
  */
 angular.module('calcentral.factories').factory('csLinkFactory', function(apiService) {
   var csLinkUrl = '/api/campus_solutions/link';
+  // var csLinkUrl = '/dummy/json/campus_solutions_link.json';
+  // var csLinkUrl = '/dummy/json/campus_solutions_link_empty.json';
 
   var getLink = function(options) {
     var url = csLinkUrl + '?urlId=' + options.urlId;

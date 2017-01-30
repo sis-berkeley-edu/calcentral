@@ -9,8 +9,10 @@
           <a data-ng-href="{{lawTranscriptLink.link}}" data-ng-attr-title="{{lawTranscriptLink.title}}">Request Law School Transcript</a>
         </li>
         <li data-ng-if="lawUnofficialTranscriptLink.url">
-          <div data-cc-campus-solutions-link-item-directive data-link="lawUnofficialTranscriptLink">
-          </div>
+          <a data-cc-campus-solutions-link-v2-directive="lawUnofficialTranscriptLink"
+            data-cc-campus-solutions-link-v2-directive-cc-page-name="currentPage.name"
+            data-cc-campus-solutions-link-v2-directive-cc-page-url="currentPage.url"
+          ></a>
         </li>
         <li>
           <a data-ng-href="{{ucbxTranscriptLink.link}}" data-ng-attr-title="{{ucbxTranscriptLink.title}}">Request Concurrent Enrollment (UC Extension) Transcript</a>

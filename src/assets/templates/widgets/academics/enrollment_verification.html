@@ -44,12 +44,9 @@
                 <strong><a data-ng-href="{{enrollmentGoogleLink.url}}" data-ng-attr-title="{{enrollmentGoogleLink.title}}">Request Official Verification</a></strong>
               </div>
               <strong data-ng-if="requestOfficialVerificationLink.url">
-                <a data-cc-campus-solutions-link-directive="requestOfficialVerificationLink.url"
-                  data-cc-campus-solutions-link-directive-enabled="true"
-                  data-cc-campus-solutions-link-directive-text="currentPage.name"
-                  data-cc-outbound-enabled="{{requestOfficialVerificationLink.showNewWindow}}"
-                  data-ng-attr-title="{{requestOfficialVerificationLink.title}}"
-                  data-ng-bind="requestOfficialVerificationLink.name"
+                <a data-cc-campus-solutions-link-v2-directive="requestOfficialVerificationLink"
+                  data-cc-campus-solutions-link-v2-directive-cc-page-name="currentPage.name"
+                  data-cc-campus-solutions-link-v2-directive-cc-page-url="currentPage.url"
                 ></a>
               </strong>
             </div>

@@ -1,6 +1,6 @@
 <div class="cc-page-academics" data-cc-spinner-directive>
   <div data-ng-if="canViewAcademics"
-    data-ng-class="{'cc-two-column-layout':(!api.user.profile.roles.student)}">
+    data-ng-class="{'cc-two-column-layout':(!(api.user.profile.roles.student || api.user.profile.roles.exStudent))}">
     <div class="column">
       <h1 class="cc-heading-page-title">My Academics</h1>
     </div>
@@ -20,7 +20,7 @@
     </div>
 
     <div
-      data-ng-class="{'medium-6':(api.user.profile.roles.student), 'medium-4':(!api.user.profile.roles.student)}"
+      data-ng-class="{'medium-6':(api.user.profile.roles.student || api.user.profile.roles.exStudent), 'medium-4':(!(api.user.profile.roles.student || api.user.profile.roles.exStudent))}"
       class="large-4 columns cc-column-2 cc-academics-row-margin">
       <div data-ng-include src="'academics_semesters.html'" data-ng-if="api.user.profile.hasStudentHistory && semesters.length"></div>
       <div data-ng-include src="'widgets/academics/degree_progress_graduate.html'" data-ng-controller="DegreeProgressController"  data-ng-if="api.user.profile.features.csDegreeProgressGradStudent && (api.user.profile.roles.graduate || api.user.profile.roles.law)"></div>

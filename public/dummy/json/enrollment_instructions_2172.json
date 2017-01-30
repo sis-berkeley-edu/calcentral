@@ -271,7 +271,32 @@
       "studentId": "26028400",
       "term": "2172",
       "termDescr": "Spring 2017",
-      "waitlistedClasses": [],
+      "waitlistedClasses": [
+        {
+          "acadCareer": "UGRD",
+          "acadCareerDescr": "Undergrad",
+          "id": "10917",
+          "position": null,
+          "ssrComponent": "LAB",
+          "ssrComponentDescr": "Laboratory",
+          "subjectCatalog": "CHEM 3BL",
+          "title": "Organic Chem Lab",
+          "units": 0.0,
+          "when": "M 9:00 AM-12:59 PM"
+        },
+        {
+          "acadCareer": "UGRD",
+          "acadCareerDescr": "Undergrad",
+          "id": "10915",
+          "position": 4.0,
+          "ssrComponent": "LEC",
+          "ssrComponentDescr": "Lecture",
+          "subjectCatalog": "CHEM 3BL",
+          "title": "Organic Chem Lab",
+          "units": 2.0,
+          "when": "F 4:00 PM-4:59 PM"
+        }
+      ],
       "waitlistedClassesTotalUnits": 0.0
     }
   },
