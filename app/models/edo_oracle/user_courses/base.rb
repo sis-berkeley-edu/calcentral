@@ -5,8 +5,7 @@ module EdoOracle
       def initialize(options = {})
         super(Settings.edodb, options)
         @uid = @settings.fake_user_id if @fake
-        # Non-legacy terms are those after Settings.terms.legacy_cutoff.
-        @non_legacy_academic_terms = Berkeley::Terms.fetch.campus.values.reject &:legacy?
+        @non_legacy_academic_terms = Berkeley::Summer16EnrollmentTerms.non_legacy_terms
       end
 
       def self.access_granted?(uid)
@@ -16,6 +15,7 @@ module EdoOracle
       def merge_enrollments(campus_classes)
         return if @non_legacy_academic_terms.empty?
         previous_item = {}
+
         EdoOracle::Queries.get_enrolled_sections(@uid, @non_legacy_academic_terms).each do |row|
           if (item = row_to_feed_item(row, previous_item))
             item[:role] = 'Student'
@@ -32,6 +32,7 @@ module EdoOracle
         return if @non_legacy_academic_terms.empty?
         previous_item = {}
         cross_listing_tracker = {}
+
         EdoOracle::Queries.get_instructing_sections(@uid, @non_legacy_academic_terms).each do |row|
           if (item = row_to_feed_item(row, previous_item, cross_listing_tracker))
             item[:role] = 'Instructor'

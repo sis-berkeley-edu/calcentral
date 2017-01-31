@@ -8,8 +8,7 @@ module CampusOracle
       def initialize(options = {})
         super(Settings.campusdb, options)
         @uid = @settings.fake_user_id if @fake
-        # Legacy terms are those before and including Settings.terms.legacy_cutoff.
-        @legacy_academic_terms = Berkeley::Terms.fetch.campus.values.select &:legacy?
+        @legacy_academic_terms = Berkeley::Summer16EnrollmentTerms.legacy_terms
       end
 
       def self.expires_in
@@ -23,8 +22,8 @@ module CampusOracle
       def merge_enrollments(campus_classes)
         return if @legacy_academic_terms.empty?
         previous_item = {}
-        enrollments = CampusOracle::Queries.get_enrolled_sections(@uid, @legacy_academic_terms)
-        enrollments.each do |row|
+
+        CampusOracle::Queries.get_enrolled_sections(@uid, @legacy_academic_terms).each do |row|
           if (item = row_to_feed_item(row, previous_item))
             item[:role] = 'Student'
             semester_key = "#{item[:term_yr]}-#{item[:term_cd]}"

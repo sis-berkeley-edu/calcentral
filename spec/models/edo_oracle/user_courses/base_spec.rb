@@ -1,15 +1,15 @@
 describe EdoOracle::UserCourses::Base do
 
-  RSpec::Matchers.define :terms_following_cutoff do |cutoff|
+  RSpec::Matchers.define :terms_following_and_including_cutoff do |cutoff|
     match do |terms|
       term_ids = terms.map &:campus_solutions_id
-      term_ids.present? && term_ids.all? { |term_id| term_id > cutoff }
+      term_ids.present? && term_ids.all? { |term_id| term_id >= cutoff }
     end
   end
 
   it 'should query non-legacy terms only' do
     allow(Settings.terms).to receive(:legacy_cutoff).and_return 'summer-2013'
-    expect(EdoOracle::Queries).to receive(:get_enrolled_sections).with(anything, terms_following_cutoff('2135')).and_return []
+    expect(EdoOracle::Queries).to receive(:get_enrolled_sections).with(anything, terms_following_and_including_cutoff('2135')).and_return []
     described_class.new(user_id: random_id).merge_enrollments({})
   end
 
