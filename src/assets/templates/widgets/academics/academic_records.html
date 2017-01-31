@@ -6,23 +6,23 @@
     <div class="cc-list-link-container" data-cc-spinner-directive="officialTranscript.isLoading">
       <ul class="cc-list-links">
         <li>
-          <a data-ng-href="{{lawTranscriptLink.link}}" data-ng-attr-title="{{lawTranscriptLink.title}}">Request Law School Transcript</a>
+          <a data-ng-href="{{lawTranscriptLink.link}}" data-ng-attr-title="{{lawTranscriptLink.title}}">Transcript - Law School students</a>
         </li>
         <li data-ng-if="lawUnofficialTranscriptLink.url">
           <div data-cc-campus-solutions-link-item-directive data-link="lawUnofficialTranscriptLink">
           </div>
         </li>
         <li>
-          <a data-ng-href="{{ucbxTranscriptLink.link}}" data-ng-attr-title="{{ucbxTranscriptLink.title}}">Request Concurrent Enrollment (UC Extension) Transcript</a>
+          <a data-ng-href="{{ucbxTranscriptLink.link}}" data-ng-attr-title="{{ucbxTranscriptLink.title}}">Transcript - Concurrent Enrollment students</a>
         </li>
         <li>
           <a data-ng-class="{'cc-academics-link-disabled':(api.user.profile.delegateActingAsUid)}"
             data-ng-click="requestTranscript()"
             data-ng-disabled="api.user.profile.delegateActingAsUid"
-            data-ng-attr-title="{{officialTranscript.postUrlHover}}">Request All Other Transcripts</a>
+            data-ng-attr-title="{{officialTranscript.postUrlHover}}">Transcript - General students (not Law, not Concurrent)</a>
         </li>
         <li data-ng-if="api.user.profile.features.enrollmentVerification && (api.user.profile.isDirectlyAuthenticated || api.user.profile.actingAsUid)">
-          <a title="Request Enrollment Verification" href="academics/enrollment_verification">Request Enrollment Verification</a>
+          <a title="Request Enrollment Verification" href="academics/enrollment_verification">Enrollment Verification</a>
         </li>
       </ul>
     </div>
