@@ -152,7 +152,8 @@ angular.module('calcentral.controllers').controller('AcademicsHigherDegreeCommit
       studentCommittees: studentCommittiees,
       facultyCommittees: {
         active: facultyActiveCommittiees,
-        completed: facultyCompletedCommittiees
+        completed: facultyCompletedCommittiees,
+        activeToggle: true
       }
     });
   };

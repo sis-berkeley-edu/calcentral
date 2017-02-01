@@ -11,7 +11,8 @@ module MyCommittees
     def get_feed
       result = {
         facultyCommittees: {
-          active: []
+          active: [],
+          completed: []
         }
       }
       feed = CampusSolutions::FacultyCommittees.new(user_id: @uid).get[:feed]
@@ -26,7 +27,7 @@ module MyCommittees
     def parse_cs_faculty_committees (cs_committees, committees_result)
       cs_committees.compact!
       cs_committees.try(:each) do |cs_committee|
-        faculty_committee = parse_cs_committee(cs_committee)
+        faculty_committee = parse_cs_committee(cs_committee, is_committee_active(cs_committee))
         if cs_committee.present?
           # Add additional pieces of data needed faculty committees
           cs_faculty_committee_svc = parse_cs_faculty_committee_svc(cs_committee)
@@ -36,9 +37,14 @@ module MyCommittees
             csMemberEndDate: cs_faculty_committee_svc[:memberEndDate],
             csMemberStartDate: cs_faculty_committee_svc[:memberStartDate]
           )
-          committees_result[:active] << faculty_committee
+          if is_committee_active cs_committee
+            committees_result[:active] << faculty_committee
+          else
+            committees_result[:completed] << faculty_committee
+          end
         end
       end
+      committees_result[:completed] = sort_committees_by_svc(committees_result[:completed])
       committees_result[:active] = sort_committees_by_svc(committees_result[:active])
       committees_result
     end
@@ -76,5 +82,10 @@ module MyCommittees
         format_date date
       end
     end
+
+    def is_committee_active(cs_committee)
+      cs_committee[:committeeStatus] === 'A'
+    end
+
   end
 end
