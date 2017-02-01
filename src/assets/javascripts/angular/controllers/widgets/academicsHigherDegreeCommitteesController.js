@@ -139,9 +139,8 @@ angular.module('calcentral.controllers').controller('AcademicsHigherDegreeCommit
     if (!committeeData) {
       return;
     }
-    var studentCommittiees = parseCommitteeData(committeeData.studentCommittees, false);
-    var facultyActiveCommittiees = parseCommitteeData(committeeData.facultyCommittees.active, true);
-    var facultyCompletedCommittiees = parseCommitteeData(committeeData.facultyCommittees.completed, true);
+    var studentCommittees = parseCommitteeData(committeeData.studentCommittees, false);
+    var facultyCommittees = parseCommitteeData(committeeData.facultyCommittees, true);
     var committeeRequestChangeLink = committeeData.committeeRequestChangeLink;
 
     /**
@@ -149,12 +148,8 @@ angular.module('calcentral.controllers').controller('AcademicsHigherDegreeCommit
     */
     angular.extend($scope, {
       committeeRequestChangeLink: committeeRequestChangeLink,
-      studentCommittees: studentCommittiees,
-      facultyCommittees: {
-        active: facultyActiveCommittiees,
-        completed: facultyCompletedCommittiees,
-        activeToggle: true
-      }
+      studentCommittees: studentCommittees,
+      facultyCommittees: facultyCommittees
     });
   };
 
