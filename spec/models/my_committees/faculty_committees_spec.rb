@@ -22,6 +22,7 @@ describe MyCommittees::FacultyCommittees do
       committees = feed[:facultyCommittees][:active]
       expect(committees[0][:committeeType]).to eq 'Qualifying Exam Committee'
       expect(committees[0][:program]).to eq 'Civil Environmental Eng MS'
+      expect(committees[0][:statusTitle]).to eq 'Proposed Exam Date:'
       expect(committees[0][:statusMessage]).to eq 'Pending'
       expect(committees[0][:serviceRange]).to eq 'Aug 30, 2016 - Aug 30, 2017'
     end
