@@ -25,7 +25,7 @@
       <div data-ng-include src="'academics_semesters.html'" data-ng-if="api.user.profile.hasStudentHistory && semesters.length"></div>
       <div data-ng-include src="'widgets/academics/degree_progress_graduate.html'" data-ng-controller="DegreeProgressController"  data-ng-if="api.user.profile.features.csDegreeProgressGradStudent && (api.user.profile.roles.graduate || api.user.profile.roles.law)"></div>
       <div data-ng-include src="'academics_teaching.html'" data-ng-if="!api.user.profile.delegateActingAsUid && hasTeachingClasses"></div>
-      <div data-ng-include src="'academics_higher_degree_committees.html'" data-ng-if="api.user.profile.features.csCommittees && api.user.profile.roles.student"></div>
+      <div data-ng-include src="'academics_higher_degree_committees.html'" data-ng-if="api.user.profile.features.csCommittees && (api.user.profile.roles.student || api.user.profile.roles.exStudent)"></div>
       <div data-ng-include src="'academics_higher_degree_faculty_committees.html'" data-ng-if="api.user.profile.features.csCommittees && api.user.profile.roles.faculty"></div>
     </div>
 
