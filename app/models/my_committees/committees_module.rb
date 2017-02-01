@@ -19,7 +19,7 @@ module MyCommittees::CommitteesModule
     }
   end
 
-  def parse_cs_committee (cs_committee, include_inactive)
+  def parse_cs_committee (cs_committee)
     return nil unless cs_committee.present?
     {
       committeeType:  cs_committee[:committeeDescrlong],
@@ -27,7 +27,7 @@ module MyCommittees::CommitteesModule
       statusIcon: committee_status_icon(cs_committee),
       statusTitle: committee_status_title(cs_committee),
       statusMessage: committee_status_message(cs_committee),
-      committeeMembers: parse_cs_committee_members(cs_committee, include_inactive)
+      committeeMembers: parse_cs_committee_members(cs_committee)
     }
   end
 
@@ -84,32 +84,20 @@ module MyCommittees::CommitteesModule
     end
   end
 
-  def parse_cs_committee_members (cs_committee, include_inactive)
+  def parse_cs_committee_members (cs_committee)
     committee_members_result = get_empty_committee_members
-    cs_committee_members = filter_members(cs_committee[:committeeMembers], include_inactive)
+    cs_committee_members = cs_committee[:committeeMembers]
     cs_sorted_members = cs_committee_members.try(:sort_by) { |member| [ member[:memberNameLast] || '', member[:memberNameFirst] || ''] }
     cs_sorted_members.try(:each) do |cs_committee_member|
-      if cs_committee_member && cs_committee_member[:memberRole]
-        # Assign the key of committee member based on role code in cs data
-        role_key = get_cs_committee_role_key(cs_committee_member[:memberRole])
-        committee_members_result[role_key] << parse_cs_committee_member(cs_committee_member)
-      end
+      assign_member_role(committee_members_result, cs_committee_member)
     end
     committee_members_result
   end
 
-  def filter_members(cs_committee_members, include_inactive)
-    return cs_committee_members if include_inactive
-      cs_committee_members.try(:select) do |member|
-        is_member_active?(member[:memberEndDate])
-    end
-  end
-
-  def is_member_active?(member_end_date)
-    begin
-      return DateTime.parse(member_end_date) >= DateTime.now
-    rescue
-      return true
+  def assign_member_role(committee_members, committee_member)
+    if committee_member && committee_member[:memberRole]
+      role_key = get_cs_committee_role_key(committee_member[:memberRole])
+      committee_members[role_key] << parse_cs_committee_member(committee_member)
     end
   end
 

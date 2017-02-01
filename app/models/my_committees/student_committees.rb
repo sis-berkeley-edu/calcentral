@@ -25,8 +25,7 @@ module MyCommittees
       cs_committees.compact!
       committees_result = []
       cs_committees.try(:each) do |cs_committee|
-        is_completed = cs_committee[:studentMilestoneCompleteDate].present?
-        committees_result << parse_cs_committee(cs_committee, is_completed)
+        committees_result << parse_cs_committee(cs_committee)
       end
       committees_result.compact
     end
