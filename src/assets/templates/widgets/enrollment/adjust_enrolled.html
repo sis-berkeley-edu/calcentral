@@ -6,7 +6,7 @@
   class="cc-flex cc-flex-wrap cc-enrollment-card-enrolled-links"
 >
   <div data-ng-if="enrollmentInstruction.isClassScheduleAvailable && !enrollmentInstruction.isGradeBaseAvailable && !isInstructionType(enrollmentInstruction, ['concurrent'])">
-    <a data-cc-campus-solutions-link-v2-directive="true"
+    <a data-cc-campus-solutions-link-v2-directive
       data-cc-campus-solutions-link-v2-directive-name="'Add'"
       data-cc-campus-solutions-link-v2-directive-title="enrollmentInstruction.links.addEnrolledClasses.name"
       data-cc-campus-solutions-link-v2-directive-url="enrollmentInstruction.links.addEnrolledClasses.url"
@@ -19,7 +19,7 @@
     ></a>
   </div>
   <div data-ng-if="enrollmentInstruction.isClassScheduleAvailable && !enrollmentInstruction.isGradeBaseAvailable && !isInstructionType(enrollmentInstruction, ['concurrent'])">
-    <a data-cc-campus-solutions-link-v2-directive="true"
+    <a data-cc-campus-solutions-link-v2-directive
       data-cc-campus-solutions-link-v2-directive-name="'Drop'"
       data-cc-campus-solutions-link-v2-directive-title="enrollmentInstruction.links.dropEnrolledClasses.name"
       data-cc-campus-solutions-link-v2-directive-url="enrollmentInstruction.links.dropEnrolledClasses.url"
@@ -32,7 +32,7 @@
     ></a>
   </div>
   <div data-ng-if="enrollmentInstruction.isClassScheduleAvailable && !enrollmentInstruction.isGradeBaseAvailable && !isInstructionType(enrollmentInstruction, ['concurrent'])">
-    <a data-cc-campus-solutions-link-v2-directive="true"
+    <a data-cc-campus-solutions-link-v2-directive
       data-cc-campus-solutions-link-v2-directive-name="'Swap'"
       data-cc-campus-solutions-link-v2-directive-title="enrollmentInstruction.links.swapEnrolledClasses.name"
       data-cc-campus-solutions-link-v2-directive-url="enrollmentInstruction.links.swapEnrolledClasses.url"
@@ -45,7 +45,7 @@
     ></a>
   </div>
   <div data-ng-if="enrollmentInstruction.isClassScheduleAvailable && !enrollmentInstruction.isGradeBaseAvailable && !isInstructionType(enrollmentInstruction, ['concurrent'])">
-    <a data-cc-campus-solutions-link-v2-directive="true"
+    <a data-cc-campus-solutions-link-v2-directive
       data-cc-campus-solutions-link-v2-directive-name="'Options'"
       data-cc-campus-solutions-link-v2-directive-title="'Change Grading Option'"
       data-cc-campus-solutions-link-v2-directive-url="enrollmentInstruction.links.gradeBase.url"
@@ -58,7 +58,7 @@
     ></a>
   </div>
   <div data-ng-if="enrollmentInstruction.isGradeBaseAvailable && !isInstructionType(enrollmentInstruction, ['law', 'concurrent'])">
-    <a data-cc-campus-solutions-link-v2-directive="true"
+    <a data-cc-campus-solutions-link-v2-directive
       data-cc-campus-solutions-link-v2-directive-name="'Change Grading Option'"
       data-cc-campus-solutions-link-v2-directive-title="'Change Grading Option'"
       data-cc-campus-solutions-link-v2-directive-url="enrollmentInstruction.links.gradeBase.url"
@@ -75,9 +75,8 @@
       data-ng-href="{{enrollmentInstruction.links.withdrawFromSemester.url}}"
     >Withdraw</a>
   </div>
-
   <div data-ng-if="enrollmentInstruction.isClassScheduleAvailable && isInstructionType(enrollmentInstruction, ['concurrent'])">
-    <a data-cc-campus-solutions-link-v2-directive="true"
+    <a data-cc-campus-solutions-link-v2-directive
       data-cc-campus-solutions-link-v2-directive-name="'Drop a Class'"
       data-cc-campus-solutions-link-v2-directive-title="enrollmentInstruction.links.dropEnrolledClasses.name"
       data-cc-campus-solutions-link-v2-directive-url="enrollmentInstruction.links.dropEnrolledClasses.url"
@@ -90,7 +89,7 @@
     ></a>
   </div>
   <div data-ng-if="enrollmentInstruction.isClassScheduleAvailable && isInstructionType(enrollmentInstruction, ['concurrent'])">
-    <a data-cc-campus-solutions-link-v2-directive="true"
+    <a data-cc-campus-solutions-link-v2-directive
       data-cc-campus-solutions-link-v2-directive-name="'Edit Class Options'"
       data-cc-campus-solutions-link-v2-directive-title="'Edit Class Options'"
       data-cc-campus-solutions-link-v2-directive-url="enrollmentInstruction.links.gradeBase.url"

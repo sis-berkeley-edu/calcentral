@@ -7,7 +7,10 @@
     <h3>Action Center</h3>
     <ul class="cc-list-bullets">
       <li data-ng-if="facultyResources.eformsReviewCenterLink.url">
-        <div data-cc-campus-solutions-link-item-directive data-link="facultyResources.eformsReviewCenterLink"></div>
+        <a data-cc-campus-solutions-link-v2-directive="facultyResources.eformsReviewCenterLink"
+          data-cc-campus-solutions-link-v2-directive-cc-page-name="currentPage.name"
+          data-cc-campus-solutions-link-v2-directive-cc-page-url="currentPage.url"
+        ></a>
       </li>
     </ul>
 

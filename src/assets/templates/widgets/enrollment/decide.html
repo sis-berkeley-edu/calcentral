@@ -9,12 +9,17 @@
 <div class="cc-enrollment-card-section-content" data-ng-if="section.show">
   <div data-ng-if="api.user.profile.actAsOptions.canSeeCSLinks && !isInstructionType(enrollmentInstruction, ['law'])">
     <div data-ng-if="enrollmentInstruction.isClassScheduleAvailable">
-      <span
-        data-cc-campus-solutions-link-item-directive
-        data-link="enrollmentInstruction.links.chooseClasses"
-        data-text="Choose classes"
-        data-cache="enrollment"
-      ></span> for the upcoming semester.<br>
+      <a data-cc-campus-solutions-link-v2-directive
+        data-cc-campus-solutions-link-v2-directive-url="enrollmentInstruction.links.chooseClasses.url"
+        data-cc-campus-solutions-link-v2-directive-name="enrollmentInstruction.links.chooseClasses.name"
+        data-cc-campus-solutions-link-v2-directive-title="'Select classes for the upcoming semester.'"
+        data-cc-campus-solutions-link-v2-directive-uc-from="true"
+        data-cc-campus-solutions-link-v2-directive-uc-from-link="true"
+        data-cc-campus-solutions-link-v2-directive-uc-from-text="true"
+        data-cc-campus-solutions-link-v2-directive-cc-page-name="currentPage.name"
+        data-cc-campus-solutions-link-v2-directive-cc-page-url="currentPage.url"
+        data-cc-campus-solutions-link-v2-directive-cc-cache="enrollment"
+      ></a> for the upcoming semester.<br>
     </div>
   </div>
   <div data-ng-if="!enrollmentInstruction.isClassScheduleAvailable">

@@ -4,16 +4,20 @@
       <strong>Waitlisted</strong>
     </div>
     <div
-      data-ng-if="api.user.profile.actAsOptions.canSeeCSLinks"
+      data-ng-if="api.user.profile.actAsOptions.canSeeCSLinks && enrollmentInstruction.isClassScheduleAvailable"
       class="cc-flex cc-flex-wrap cc-enrollment-card-enrolled-links"
     >
-      <div
-        data-cc-campus-solutions-link-item-directive
-        data-link="enrollmentInstruction.links.dropEnrolledClasses"
-        data-text="Drop"
-        data-cache="enrollment"
-        data-ng-if="enrollmentInstruction.isClassScheduleAvailable"
-      ></div>
+      <a data-cc-campus-solutions-link-v2-directive
+        data-cc-campus-solutions-link-v2-directive-name="'Drop'"
+        data-cc-campus-solutions-link-v2-directive-title="enrollmentInstruction.links.dropEnrolledClasses.name"
+        data-cc-campus-solutions-link-v2-directive-url="enrollmentInstruction.links.dropEnrolledClasses.url"
+        data-cc-campus-solutions-link-v2-directive-cc-cache="enrollment"
+        data-cc-campus-solutions-link-v2-directive-cc-page-name="currentPage.name"
+        data-cc-campus-solutions-link-v2-directive-cc-page-url="currentPage.url"
+        data-cc-campus-solutions-link-v2-directive-uc-from="true"
+        data-cc-campus-solutions-link-v2-directive-uc-from-link="true"
+        data-cc-campus-solutions-link-v2-directive-uc-from-text="true"
+      ></a>
     </div>
   </div>
   <div

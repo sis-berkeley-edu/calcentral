@@ -51,10 +51,11 @@ var angular = require('angular');
  *   ></a>
  *
  * If needed, any of the attributes may specified to override the property of the same name in the link object.
- * If you are needing to manually configure CS links, you can specify a value of 'true' instead of passing a
- * CS Link Object to the directive, specifying all the other values as needed.
+ * It is also possible to specify the behavior through the attributes alone. The directive
+ * relies on the URL string specified in the link object (passed to data-cc-campus-solutions-link-v2-directive),
+ * or the URL specified to the data-cc-campus-solutions-link-v2-directive-url attribute.
  *   <a
- *     data-cc-campus-solutions-link-v2-directive="true"
+ *     data-cc-campus-solutions-link-v2-directive
  *     data-cc-campus-solutions-link-v2-directive-cc-cache="enrollment"
  *     data-cc-campus-solutions-link-v2-directive-cc-page-name="My Academics"
  *     data-cc-campus-solutions-link-v2-directive-cc-page-url="{{alternativeUrl}}"
@@ -72,6 +73,25 @@ var angular = require('angular');
  *
  */
 angular.module('calcentral.directives').directive('ccCampusSolutionsLinkV2Directive', function(linkService) {
+  /* Returns link object passed to directive */
+  var getLinkObject = function(scope, attrs) {
+    return scope.$eval(_.get(attrs, 'ccCampusSolutionsLinkV2Directive'));
+  };
+
+  /**
+   * Returns base URL
+   */
+  var getBaseUrl = function(scope, attrs) {
+    var attrUrl = scope.$eval(_.get(attrs, 'ccCampusSolutionsLinkV2DirectiveUrl'));
+    if (_.isEmpty(attrUrl)) {
+      var linkObj = getLinkObject(scope, attrs);
+      var linkObjUrl = _.get(linkObj, 'url');
+      return linkObjUrl;
+    } else {
+      return attrUrl;
+    }
+  };
+
   /**
    * Sets the text for the anchor tag if not already present
    */
@@ -88,13 +108,13 @@ angular.module('calcentral.directives').directive('ccCampusSolutionsLinkV2Direct
    * Prepares object used to configure the link.
    * Provides logic for element attributes overriding link object properties
    *
-   * @param  {Object} linkObj Link object originating from the Campus Solutions Link API
-   * @param  {Object} scope   AngularJS scope object
-   * @param  {Object} attrs   Attributes object for the element the directive being processed is applied to
-   * @return {Object}         Link configuration object
+   * @param  {Object} scope       AngularJS scope object
+   * @param  {Object} attrs       Attributes object for the element the directive being processed is applied to
+   * @return {Object}             Link configuration object
    */
-  var getLinkConfig = function(linkObj, scope, attrs) {
-    var baseLinkUrl = scope.$eval(attrs.ccCampusSolutionsLinkV2DirectiveUrl) || _.get(linkObj, 'url');
+  var getLinkConfig = function(scope, attrs) {
+    var linkObj = getLinkObject(scope, attrs);
+    var baseLinkUrl = getBaseUrl(scope, attrs);
     var ccCacheString = attrs.ccCampusSolutionsLinkV2DirectiveCcCache || _.get(linkObj, 'ccCache');
     var ccPageName = scope.$eval(attrs.ccCampusSolutionsLinkV2DirectiveCcPageName) || _.get(linkObj, 'ccPageName') || 'CalCentral';
     var ccPageUrl = scope.$eval(attrs.ccCampusSolutionsLinkV2DirectiveCcPageUrl) || _.get(linkObj, 'ccPageUrl');
@@ -158,9 +178,13 @@ angular.module('calcentral.directives').directive('ccCampusSolutionsLinkV2Direct
     priority: 99,
     restrict: 'A',
     link: function(scope, element, attrs) {
-      scope.$watch(attrs.ccCampusSolutionsLinkV2Directive, function(linkObj) {
-        var linkConfig = getLinkConfig(linkObj, scope, attrs);
+      // used to watch for changes in response of getBaseUrl
+      var baseUrl = function() {
+        return getBaseUrl(scope, attrs);
+      };
 
+      scope.$watch(baseUrl, function() {
+        var linkConfig = getLinkConfig(scope, attrs);
         attrs.$set('href', linkConfig.linkUrl);
         if (linkConfig.linkHoverText) {
           attrs.$set('title', linkConfig.linkHoverText);
@@ -168,7 +192,7 @@ angular.module('calcentral.directives').directive('ccCampusSolutionsLinkV2Direct
         setLinkBody(linkConfig.linkBody, element);
 
         // respect if ccOutboundEnabled manually set
-        if ((attrs.ccOutboundEnabled === undefined || attrs.ccOutboundEnabled === false) && linkConfig.showNewWindow) {
+        if (_.isEmpty(attrs.ccOutboundEnabled) && linkConfig.showNewWindow) {
           linkService.makeOutboundlink(element);
         }
       });
