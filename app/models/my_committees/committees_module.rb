@@ -62,7 +62,7 @@ module MyCommittees::CommitteesModule
 
   def committee_status_title (cs_committee)
     if cs_committee[:committeeType].to_s == COMMITTEE_TYPE_EXAM
-      'Exam Date:'
+      'Proposed Exam Date:'
     else
       'Advancement To Candidacy:'
     end
