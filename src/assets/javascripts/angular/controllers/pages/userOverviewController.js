@@ -41,6 +41,7 @@ angular.module('calcentral.controllers').controller('UserOverviewController', fu
     dataSeries: []
   };
   $scope.studentSuccess = {
+    activeCareers: null,
     gpaChart: {
       series: {
         className: 'cc-student-success-color-blue'
@@ -163,6 +164,9 @@ angular.module('calcentral.controllers').controller('UserOverviewController', fu
       if (!!_.get($scope, 'updatePlanUrl.url')) {
         linkService.addCurrentPagePropertiesToResources($scope.updatePlanUrl, $scope.currentPage.name, $scope.currentPage.url);
       }
+
+      // prepare Student Success filtering of inactive careers
+      $scope.studentSuccess.activeCareers = _.map(_.get($scope, 'collegeAndLevel.careers'), toLowerCase);
     }).error(function(data, status) {
       $scope.academics.error = errorReport(status, data.error);
     }).finally(function() {
@@ -236,7 +240,7 @@ angular.module('calcentral.controllers').controller('UserOverviewController', fu
       uid: $routeParams.uid
     }).success(function(data) {
       $scope.studentSuccess.outstandingBalance = _.get(data, 'outstandingBalance');
-      $scope.studentSuccess.termGpa = _.sortBy(data.termGpa, ['termId']);
+      $scope.studentSuccess.termGpa = _.sortBy(_.get(data, 'termGpa'), ['termId']);
       parseTermGpa();
     }).finally(function() {
       $scope.studentSuccess.isLoading = false;
@@ -262,6 +266,7 @@ angular.module('calcentral.controllers').controller('UserOverviewController', fu
   };
 
   var parseTermGpa = function() {
+    filterInactiveCareers();
     var termGpa = [];
     _.forEach($scope.studentSuccess.termGpa, function(term) {
       if (term.termGpa) {
@@ -301,6 +306,22 @@ angular.module('calcentral.controllers').controller('UserOverviewController', fu
           _.merge($scope.regStatus.messages, statusHoldsService.getRegStatusMessages(messages));
         }
       });
+  };
+
+  /**
+   * This should be done in back-end, but requires a refactoring of MyAcademics::FilteredForAdvisor and StudentSuccess::Merged.
+   * This is a temporary fix aimed for GoLive 7.5, but should be refactored for GoLive 8.
+   */
+  var filterInactiveCareers = function() {
+    _.remove($scope.studentSuccess.termGpa, function(term) {
+      return !_.includes($scope.studentSuccess.activeCareers, toLowerCase(term.career));
+    });
+  };
+
+  var toLowerCase = function(text) {
+    if (text) {
+      return text.toLowerCase();
+    }
   };
 
   $scope.expireAcademicsCache = function() {
