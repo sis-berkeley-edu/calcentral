@@ -22,7 +22,7 @@
     <ul>
       <li data-ng-repeat="plan in degreeProgress.graduate.progresses">
         <h3 data-ng-bind="plan.acadPlan ? plan.acadPlan + ' &mdash; Graduate Division Milestones' : 'Graduate Division Milestones'"></h3>
-        <div data-ng-repeat="requirement in plan.requirements">
+        <div data-ng-repeat="requirement in plan.requirements | orderBy:'parseInt(number)'">
           <div class="cc-left cc-degree-progress-graduate-checkmark">
             <i class="fa fa-check cc-icon-green" data-ng-if="requirement.status === 'Y' || requirement.status === 'P'"></i>&nbsp;
           </div>
