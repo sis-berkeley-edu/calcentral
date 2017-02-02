@@ -164,58 +164,15 @@
     </div>
     <div class="cc-academics-course-grading-footer cc-widget-padding show-for-medium-up">
       <h3>Grading Status Legend</h3>
-      <div class="cc-table">
-        <table>
-          <tr>
-            <td>
-              <i class="fa fa-ban"></i>
-            </td>
-            <td width="20%">
-              <span>
-                Grade entry period not started or no access
-                <span data-ng-if="selectedTeachingSemester.gradingAssistanceLinkLaw">
-                  <br>
-                  Law classes: Instructor may need to submit raw scores
-                </span>
-              </span>
-            </td>
-            <td rowspan="2">
-              <i class="fa fa-file-o"></i>
-            </td>
-            <td rowspan="2">
-              <span>Grade entry period started and grades not yet approved or posted</span>
-            </td>
-            <td>
-              <i class="fa fa-check cc-icon-green"></i>
-            </td>
-            <td>
-              <span>Grades approved</span>
-            </td>
-            <td rowspan="2">
-              <i class="fa fa-exclamation-circle cc-icon-red"></i>
-            </td>
-            <td rowspan="2">
-              <span>Final grade entry period ended and grades overdue</span>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <span><i class="fa fa-circle"></i></span>
-            </td>
-            <td>
-              <span>
-                No midpoint grade roster for Law classes
-              </span>
-            </td>
-            <td>
-              <i class="fa fa-check-circle cc-icon-green"></i>
-            </td>
-            <td>
-              <span>Grades posted<br>
-              <strong>Note:</strong> Classes with no midpoint grades entered are also marked as posted.</span>
-            </td>
-          </tr>
-        </table>
+      <div>
+        <ul class="cc-academics-course-grading-icon">
+          <li><i class="fa fa-ban cc-inline-block"></i> Grade entry period not open</li>
+          <li><i class="fa fa-circle cc-inline-block"></i> Law class (no midpoint grades) <strong>OR</strong> you do not have grading permissions</li>
+          <li><i class="fa fa-file-o cc-inline-block"></i> Grade entry period open; grades not approved or posted</li>
+          <li><i class="fa fa-check cc-icon-green cc-inline-block"></i> Grades approved</li>
+          <li><i class="fa fa-check-circle cc-icon-green cc-inline-block"></i> Grades posted <strong>Note: </strong>All classes, with or without midpoint grades, will post.</li>
+          <li><i class="fa fa-exclamation-circle cc-icon-red cc-inline-block"></i> Final grade entry period closed; grades overdue</li>
+        </ul>
       </div>
     </div>
   </div>
