@@ -4,10 +4,10 @@
     <a class="cc-button cc-right cc-widget-title-button"
       data-ng-if="showAppointmentLinks()"
       data-ng-disabled="!myAdvising.links.newAppointment.url || !api.user.profile.isDirectlyAuthenticated || isAdvisingStudentLookup"
-      data-cc-campus-solutions-link-v2-directive="myAdvising.links.newAppointment"
-      data-cc-campus-solutions-link-v2-directive-cc-cache="myAdvising"
-      data-cc-campus-solutions-link-v2-directive-cc-page-name="currentPage.name"
-      data-cc-campus-solutions-link-v2-directive-cc-page-url="currentPage.url"
+      data-cc-campus-solutions-link-directive="myAdvising.links.newAppointment"
+      data-cc-campus-solutions-link-directive-cc-cache="myAdvising"
+      data-cc-campus-solutions-link-directive-cc-page-name="currentPage.name"
+      data-cc-campus-solutions-link-directive-cc-page-url="currentPage.url"
     >
       <i class="fa fa-plus cc-button-plus-icon"></i>
       <span>New Appointment</span>
@@ -125,10 +125,10 @@
           data-ng-if="showAppointmentLinks()">
           <h3 class="cc-widget-myadvising-header">Appointments</h3>
           <div class="cc-widget-myadvising-link">
-            <a data-cc-campus-solutions-link-v2-directive="myAdvising.links.manageAppointments"
-              data-cc-campus-solutions-link-v2-directive-cc-cache="myAdvising"
-              data-cc-campus-solutions-link-v2-directive-cc-page-name="currentPage.name"
-              data-cc-campus-solutions-link-v2-directive-cc-page-url="currentPage.url"
+            <a data-cc-campus-solutions-link-directive="myAdvising.links.manageAppointments"
+              data-cc-campus-solutions-link-directive-cc-cache="myAdvising"
+              data-cc-campus-solutions-link-directive-cc-page-name="currentPage.name"
+              data-cc-campus-solutions-link-directive-cc-page-url="currentPage.url"
               data-ng-disabled="{{!myAdvising.links.manageAppointments.url || !api.user.profile.isDirectlyAuthenticated || isAdvisingStudentLookup}}"
             ></a>
           </div>

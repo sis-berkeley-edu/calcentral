@@ -4,12 +4,15 @@
   </div>
   <div data-ng-if="finaidAwards.awards.loans.links && api.user.profile.actAsOptions.canSeeCSLinks">
     <a data-ng-repeat="link in finaidAwards.awards.loans.links"
-      data-cc-campus-solutions-link-directive="link.url"
-      data-cc-campus-solutions-link-directive-cache="'finaid'"
-      data-cc-campus-solutions-link-directive-enabled="{{link.isCsLink}}"
-      data-cc-campus-solutions-link-directive-text="currentPage.name"
-      data-cc-outbound-enabled="{{!link.isCsLink}}"
-      data-ng-bind="link.title"
+      data-cc-campus-solutions-link-directive
+      data-cc-campus-solutions-link-directive-name="link.title"
+      data-cc-campus-solutions-link-directive-url="link.url"
+      data-cc-campus-solutions-link-directive-cc-cache="finaid"
+      data-cc-campus-solutions-link-directive-cc-page-name="currentPage.name"
+      data-cc-campus-solutions-link-directive-cc-page-url="currentPage.url"
+      data-cc-campus-solutions-link-directive-uc-from="true"
+      data-cc-campus-solutions-link-directive-uc-from-link="true"
+      data-cc-campus-solutions-link-directive-uc-from-text="true"
       data-ng-class="{'cc-widget-finaid-awards-section-link-separator': ($index > 0)}"
     >
     </a>

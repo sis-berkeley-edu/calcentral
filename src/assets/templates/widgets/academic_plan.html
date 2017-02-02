@@ -4,11 +4,12 @@
   </div>
   <div class="cc-widget-padding" data-ng-if="updatePlanUrl.url">
     <h3>
-      <div data-cc-campus-solutions-link-item-directive
-        data-link="updatePlanUrl"
-        data-text="Update Multi-Year Planner"
-        data-cache="advisingAcademics"
-        data-ng-click="expireAcademicsCache()"></div>
+      <a data-cc-campus-solutions-link-directive="updatePlanUrl"
+        data-cc-campus-solutions-link-directive-cc-page-name="currentPage.name"
+        data-cc-campus-solutions-link-directive-cc-page-url="currentPage.url"
+        data-cc-campus-solutions-link-directive-cc-cache="advisingAcademics"
+        data-ng-click="expireAcademicsCache()"
+      >Update Multi-Year Planner</a>
     </h3>
   </div>
 

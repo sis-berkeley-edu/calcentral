@@ -9,6 +9,7 @@ var _ = require('lodash');
 angular.module('calcentral.factories').factory('tasksFactory', function(apiService, $http) {
   var removeUrl = '/api/my/tasks/delete/';
   var url = '/api/my/tasks';
+  // var url = '/dummy/json/tasks.json'
 
   var remove = function(task) {
     return $http.post(removeUrl + task.id, task);

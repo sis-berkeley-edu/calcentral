@@ -47,14 +47,14 @@
           <a data-ng-href="{{$parent.fpp.fppLink.url}}"
             data-ng-attr-title="{{$parent.fpp.fppLink.title}}">Tuition and Fees Payment Plan</a>
           <a class="cc-list-links-nested-dash"
-            data-cc-campus-solutions-link-v2-directive="$parent.fpp.data.fppEnrollUrl"
-            data-cc-campus-solutions-link-v2-directive-cc-page-name="currentPage.name"
-            data-cc-campus-solutions-link-v2-directive-cc-page-url="currentPage.url"
-            data-cc-campus-solutions-link-v2-directive-cc-cache="finances"
-            data-cc-campus-solutions-link-v2-directive-uc-from="true"
-            data-cc-campus-solutions-link-v2-directive-uc-from-link="true"
-            data-cc-campus-solutions-link-v2-directive-uc-from-text="true"
-            data-cc-campus-solutions-link-v2-directive-title="$parent.fpp.activatePlanLink.title"
+            data-cc-campus-solutions-link-directive="$parent.fpp.data.fppEnrollUrl"
+            data-cc-campus-solutions-link-directive-cc-page-name="currentPage.name"
+            data-cc-campus-solutions-link-directive-cc-page-url="currentPage.url"
+            data-cc-campus-solutions-link-directive-cc-cache="finances"
+            data-cc-campus-solutions-link-directive-uc-from="true"
+            data-cc-campus-solutions-link-directive-uc-from-link="true"
+            data-cc-campus-solutions-link-directive-uc-from-text="true"
+            data-cc-campus-solutions-link-directive-title="$parent.fpp.activatePlanLink.title"
           ><strong>Activate Plan</strong></a>
         </li>
         <li data-ng-if="subcategory === 'Billing & Payments' && $index === 1 && api.user.profile.roles.student &&
@@ -70,9 +70,9 @@
           </a>
         </li>
         <li data-ng-if="subcategory === 'Financial Assistance' && emergencyLoanLink.url && canViewEmergencyLoanLink">
-          <a data-cc-campus-solutions-link-v2-directive="emergencyLoanLink"
-            data-cc-campus-solutions-link-v2-directive-cc-page-name="currentPage.name"
-            data-cc-campus-solutions-link-v2-directive-cc-page-url="currentPage.url"
+          <a data-cc-campus-solutions-link-directive="emergencyLoanLink"
+            data-cc-campus-solutions-link-directive-cc-page-name="currentPage.name"
+            data-cc-campus-solutions-link-directive-cc-page-url="currentPage.url"
           ></a>
         </li>
       </ul>

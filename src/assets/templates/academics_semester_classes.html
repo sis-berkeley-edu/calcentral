@@ -134,14 +134,11 @@
                 <div data-ng-bind="section.section_label"></div>
               </td>
               <td data-ng-if="section.is_primary_section && section.gradingLink.url" class="show-for-medium-up cc-academics-course-grading-centered">
-                <a data-cc-campus-solutions-link-directive="section.gradingLink.url"
-                  data-cc-campus-solutions-link-directive-enabled="{{section.gradingLink.isCsLink}}"
-                  data-cc-campus-solutions-link-directive-text="currentPage.name"
-                  data-cc-outbound-enabled="false"
+                <a data-cc-campus-solutions-link-directive="section.gradingLink"
+                  data-cc-campus-solutions-link-directive-cc-page-name="currentPage.name"
+                  data-cc-campus-solutions-link-directive-cc-page-url="currentPage.url"
                   data-ng-disabled="!section.gradingLink.url"
-                  data-ng-attr-title="{{section.gradingLink.title}}">
-                  Grades
-                </a>
+                >Grades</a>
               </td>
               <td data-ng-if="section.is_primary_section && !section.gradingLink.url" class="show-for-medium-up cc-academics-course-grading-centered">
                 &mdash;

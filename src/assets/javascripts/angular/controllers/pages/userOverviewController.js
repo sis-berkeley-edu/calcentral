@@ -161,7 +161,7 @@ angular.module('calcentral.controllers').controller('UserOverviewController', fu
         };
       }
       if (!!_.get($scope, 'updatePlanUrl.url')) {
-        linkService.addBackToTextToLink($scope.updatePlanUrl, $scope.currentPage.name);
+        linkService.addCurrentPagePropertiesToResources($scope.updatePlanUrl, $scope.currentPage.name, $scope.currentPage.url);
       }
     }).error(function(data, status) {
       $scope.academics.error = errorReport(status, data.error);

@@ -5,26 +5,8 @@ var _ = require('lodash');
 
 angular.module('calcentral.services').factory('linkService', function($location, $route) {
   /**
-   * Add the back to text for external link objects
-   */
-  var addBackToTextToLink = function(link, backToText) {
-    link.backToText = backToText;
-    return link;
-  };
-
-  /**
-   * Adds the back to text to each object in a resource collection
-   */
-  var addBackToTextToResources = function(resources, backToText) {
-    var addBackToTextLinkWrapper = function(resource) {
-      return addBackToTextToLink(resource, backToText);
-    };
-    return _.mapValues(resources, addBackToTextLinkWrapper);
-  };
-
-  /**
    * Add the page name and url to a link object
-   * Designed for use on objects used with ccCampusSolutionsLinkV2Directive to include current page name and URL
+   * Designed for use on objects used with ccCampusSolutionsLinkDirective to include current page name and URL
    */
   var addCurrentPagePropertiesToLink = function(link, pageName, pageUrl) {
     link.ccPageName = pageName;
@@ -34,7 +16,7 @@ angular.module('calcentral.services').factory('linkService', function($location,
 
   /**
    * Adds the current page name and URL to each object in a resource collection
-   * Designed for use on objects used with ccCampusSolutionsLinkV2Directive
+   * Designed for use on objects used with ccCampusSolutionsLinkDirective
    */
   var addCurrentPagePropertiesToResources = function(resources, pageName, pageUrl) {
     var addCurrentPagePropertiesToResourcesWrapper = function(resource) {
@@ -101,8 +83,6 @@ angular.module('calcentral.services').factory('linkService', function($location,
   };
 
   return {
-    addBackToTextToLink: addBackToTextToLink,
-    addBackToTextToResources: addBackToTextToResources,
     addCurrentPagePropertiesToLink: addCurrentPagePropertiesToLink,
     addCurrentPagePropertiesToResources: addCurrentPagePropertiesToResources,
     addCurrentRouteSettings: addCurrentRouteSettings,

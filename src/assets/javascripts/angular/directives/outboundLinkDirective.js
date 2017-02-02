@@ -73,8 +73,8 @@ angular.module('calcentral.directives').directive('a', function(linkService) {
       var observe = function(value) {
         // Check whether the element actually has an href,
         // whether we disabled the outbound directive,
-        // and if the ccCampusSolutionsLinkV2Directive is present
-        if (value && scope.$eval(attr.ccOutboundEnabled) !== false && !(attr.ccCampusSolutionsLinkV2Directive || attr.ccCampusSolutionsLinkV2DirectiveUrl)) {
+        // and if the ccCampusSolutionsLinkDirective is present
+        if (value && scope.$eval(attr.ccOutboundEnabled) !== false && !(attr.ccCampusSolutionsLinkDirective || attr.ccCampusSolutionsLinkDirectiveUrl)) {
           updateAnchorTag(value);
         }
       };

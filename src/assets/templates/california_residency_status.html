@@ -6,18 +6,26 @@
     Exemption: <span data-ng-bind="residency.tuitionException.description"></span>
   </div>
   <div class="cc-widget-vertical-padding" data-ng-if="residency.statementOfLegalResidenceStatus.code === 'N' && slr.deeplink">
-    <a data-cc-campus-solutions-link-directive="slr.deeplink.url"
-    data-cc-campus-solutions-link-directive-enabled="{{slr.deeplink.isCsLink}}"
-    data-cc-campus-solutions-link-directive-text="currentPage.name"
-    data-cc-campus-solutions-link-directive-cache="'profile'"
-    data-cc-outbound-enabled="false">Submit Statement of Legal Residence</a>
+    <a data-cc-campus-solutions-link-directive
+      data-cc-campus-solutions-link-directive-url="slr.deeplink.url"
+      data-cc-campus-solutions-link-directive-cc-page-name="currentPage.name"
+      data-cc-campus-solutions-link-directive-cc-page-url="currentPage.url"
+      data-cc-campus-solutions-link-directive-cc-cache="profile"
+      data-cc-campus-solutions-link-directive-uc-from="true"
+      data-cc-campus-solutions-link-directive-uc-from-link="true"
+      data-cc-campus-solutions-link-directive-uc-from-text="true"
+    >Submit Statement of Legal Residence</a>
   </div>
   <div class="cc-widget-vertical-padding" data-ng-if="residency.statementOfLegalResidenceStatus.code !== 'N' && slr.deeplink">
-    <a data-cc-campus-solutions-link-directive="slr.deeplink.url"
-    data-cc-campus-solutions-link-directive-enabled="{{slr.deeplink.isCsLink}}"
-    data-cc-campus-solutions-link-directive-text="currentPage.name"
-    data-cc-campus-solutions-link-directive-cache="'profile'"
-    data-cc-outbound-enabled="false">Access Statement of Legal Residence</a>
+    <a data-cc-campus-solutions-link-directive
+      data-cc-campus-solutions-link-directive-url="slr.deeplink.url"
+      data-cc-campus-solutions-link-directive-cc-page-name="currentPage.name"
+      data-cc-campus-solutions-link-directive-cc-page-url="currentPage.url"
+      data-cc-campus-solutions-link-directive-cc-cache="profile"
+      data-cc-campus-solutions-link-directive-uc-from="true"
+      data-cc-campus-solutions-link-directive-uc-from-link="true"
+      data-cc-campus-solutions-link-directive-uc-from-text="true"
+    >Access Statement of Legal Residence</a>
   </div>
   <div class="cc-widget-vertical-padding" data-ng-bind-html="residency.message.description"></div>
 </div>

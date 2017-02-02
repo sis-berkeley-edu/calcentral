@@ -97,13 +97,15 @@
           class="cc-widget-tasks-upload"
         >
           <a class="cc-button"
-          data-ng-click="api.util.preventBubble($event);api.analytics.trackExternalLink('Tasks', 'Upload CS Document', task.uploadUrl)"
-          data-cc-campus-solutions-link-directive="task.uploadUrl"
-          data-cc-campus-solutions-link-directive-text="currentPage.name"
-          data-cc-campus-solutions-link-directive-enabled="true"
-          data-cc-outbound-enabled="false">
-            <span>Upload</span>
-          </a>
+            data-ng-click="api.util.preventBubble($event);api.analytics.trackExternalLink('Tasks', 'Upload CS Document', task.uploadUrl)"
+            data-cc-campus-solutions-link-directive
+            data-cc-campus-solutions-link-directive-url="task.uploadUrl"
+            data-cc-campus-solutions-link-directive-uc-from="true"
+            data-cc-campus-solutions-link-directive-uc-from-link="true"
+            data-cc-campus-solutions-link-directive-uc-from-text="true"
+            data-cc-campus-solutions-link-directive-cc-page-name="currentPage.name"
+            data-cc-campus-solutions-link-directive-cc-page-url="currentPage.url"
+          ><span>Upload</span></a>
         </div>
 
         <button class="cc-button cc-button-blue"

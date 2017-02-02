@@ -1,6 +1,27 @@
 {
   "activities": [
     {
+      "cs": {
+        "finaidYearId": "2017",
+        "isFinaid": true
+      },
+      "date": {
+        "dateString": "5/31",
+        "dateTime": "2016-05-31T17:31:14-07:00",
+        "epoch": 1464741074
+      },
+      "emitter": "Campus Solutions",
+      "id": "",
+      "linkText": "Read more",
+      "source": "Financial Aid and Scholarships",
+      "sourceUrl": "https://bcswebqat.is.berkeley.edu/psc/bcsqat/EMPLOYEE/HRMS/c/CCI_COMMUNICATION_CENTER_SS.CCI_COMM_TRANS_FSS.GBL?ucCommTransID=00000537424",
+      "summary": null,
+      "title": "Conditional Financial Aid",
+      "type": "campusSolutions",
+      "url": "https://bcswebqat.is.berkeley.edu/psc/bcsqat/EMPLOYEE/HRMS/c/CCI_COMMUNICATION_CENTER_SS.CCI_COMM_TRANS_FSS.GBL?ucCommTransID=00000537424",
+      "user_id": "1091292"
+    },
+    {
       "id": 2,
       "title": "Incomplete Grade Notice - Math 1B",
       "summary": "You have 90 days to complete Math 1B and submit a Petition to Remove an Incomplete",

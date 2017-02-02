@@ -30,11 +30,10 @@
                 <span><strong><span data-ng-bind="committee.header.statusTitle"></span></strong> <span data-ng-bind="committee.header.statusMessage"></span></span>
               </div>
               <div data-ng-if='committeeRequestChangeLink.url'>
-                <a
-                  data-cc-campus-solutions-link-directive="committeeRequestChangeLink.url"
-                  data-cc-campus-solutions-link-directive-enabled="{{committeeRequestChangeLink.isCsLink}}"
-                  data-cc-campus-solutions-link-directive-text="committeeRequestChangeLink.ucFromText"
-                  data-cc-outbound-enabled="false">Request Change To Higher Degree Committee</a>
+                <a data-cc-campus-solutions-link-directive="committeeRequestChangeLink"
+                  data-cc-campus-solutions-link-directive-cc-page-name="currentPage.name"
+                  data-cc-campus-solutions-link-directive-cc-page-url="currentPage.url"
+                >Request Change To Higher Degree Committee</a>
               </div>
               <div data-ng-include="'widgets/academics/higher_degree_committee.html'"></div>
             </div>
