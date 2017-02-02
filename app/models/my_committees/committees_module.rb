@@ -1,7 +1,7 @@
 module MyCommittees::CommitteesModule
   extend self
 
-  COMMITTEE_TYPE_EXAM = 'QECOMM'
+  COMMITTEE_TYPE_EXAM = 'QE'
   DATE_FORMAT = '%b %d, %Y'
 
   def initialize(uid)
