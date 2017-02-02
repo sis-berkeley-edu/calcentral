@@ -7,8 +7,8 @@ var _ = require('lodash');
  * Activity Factory
  */
 angular.module('calcentral.factories').factory('activityFactory', function(apiService) {
-  // var activityUrl = '/dummy/json/activities.json';
   var activityUrl = '/api/my/activities';
+  // var activityUrl = '/dummy/json/activities.json';
 
   /**
    * Filter out only the finaid activities with a specific aid year

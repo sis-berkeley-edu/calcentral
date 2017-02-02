@@ -65,7 +65,7 @@ angular.module('calcentral.controllers').controller('TasksController', function(
       apiService.updatedFeeds.feedLoaded(data);
       angular.extend($scope, data);
       if (_.get($scope, 'tasks')) {
-        linkService.addBackToTextToResources($scope.tasks, $scope.currentPage.name);
+        linkService.addCurrentPagePropertiesToResources($scope.tasks, $scope.currentPage.name, $scope.currentPage.url);
       }
       if ($scope.tasks) {
         $scope.updateTaskLists();

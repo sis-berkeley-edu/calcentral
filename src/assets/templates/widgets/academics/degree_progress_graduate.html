@@ -7,15 +7,15 @@
     <div data-ng-if="!degreeProgress.graduate.progresses.length">It appears that you haven’t completed any Graduate Division Milestones. If you believe this to be in error, please contact your department.</div>
     <ul data-ng-if="!degreeProgress.graduate.errored && degreeProgress.graduate.progresses.length" class="cc-list-links">
       <li data-ng-if="degreeProgress.graduate.links.advancementFormSubmit.url">
-        <a data-cc-campus-solutions-link-v2-directive="degreeProgress.graduate.links.advancementFormSubmit"
-          data-cc-campus-solutions-link-v2-directive-cc-page-name="currentPage.name"
-          data-cc-campus-solutions-link-v2-directive-cc-page-url="currentPage.url"
+        <a data-cc-campus-solutions-link-directive="degreeProgress.graduate.links.advancementFormSubmit"
+          data-cc-campus-solutions-link-directive-cc-page-name="currentPage.name"
+          data-cc-campus-solutions-link-directive-cc-page-url="currentPage.url"
         ></a>
       </li>
       <li data-ng-if="degreeProgress.graduate.links.advancementFormView.url">
-        <a data-cc-campus-solutions-link-v2-directive="degreeProgress.graduate.links.advancementFormView"
-          data-cc-campus-solutions-link-v2-directive-cc-page-name="currentPage.name"
-          data-cc-campus-solutions-link-v2-directive-cc-page-url="currentPage.url"
+        <a data-cc-campus-solutions-link-directive="degreeProgress.graduate.links.advancementFormView"
+          data-cc-campus-solutions-link-directive-cc-page-name="currentPage.name"
+          data-cc-campus-solutions-link-directive-cc-page-url="currentPage.url"
         ></a>
       </li>
     </ul>

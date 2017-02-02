@@ -1,5 +1,145 @@
 {
+  "feedName": "MyTasks::Merged",
+  "lastModified": {
+    "hash": "abc123def456abc123abc123456bcd3ce30237b2",
+    "timestamp": {
+      "dateString": "2/01",
+      "dateTime": "2017-02-01T15:55:17-08:00",
+      "epoch": 1485993317
+    }
+  },
   "tasks": [
+    {
+      "bucket": "Unscheduled",
+      "cs": {
+        "finaidYearId": "2017",
+        "isFinaid": true,
+        "organization": null,
+        "responsibleContactEmail": null,
+        "showStatus": "Incomplete"
+      },
+      "emitter": "Campus Solutions",
+      "linkDescription": "2016-17 Student Parent Cost of Attendance Adjustment Request",
+      "linkUrl": "http://financialaid.berkeley.edu/sites/default/files/docs/forms/Cost_of_Attendance_Appeal_Student_Parent_1617.pdf",
+      "notes": "We received your Cost of Attendance Adjustment Request. Processing times may vary based on our current volume of requests. Please monitor your messages in the My Finances section of Cal Central and respond to requests for additional information promptly to expedite our review. Note: Submitting a request does not guarantee approval.",
+      "sourceUrl": "http://sis-project.berkeley.edu",
+      "status": "inprogress",
+      "subTitle": null,
+      "title": "COA Adj Req - Student Parent",
+      "type": "task",
+      "updatedDate": {
+        "dateString": "1/08",
+        "dateTime": "2017-01-08T00:00:00-08:00",
+        "epoch": 1483862400
+      },
+      "uploadUrl": "https://bcswebqat.is.berkeley.edu/psc/bcsqat/EMPLOYEE/HRMS/c/UC_CC_CHKLST_UPLOAD_FLU.UC_CC_FILE_UPL_FLU.GBL?ucAdminFunction=FINA&ucSeq3C=136&ucChecklistSeq=100&ucAidYear=2017&ucChklstItemCd=FCRSA"
+    },
+    {
+      "bucket": "Unscheduled",
+      "completedDate": {
+        "dateString": "11/14",
+        "dateTime": "2016-11-14T00:00:00-08:00",
+        "epoch": 1479110400,
+        "hasTime": false
+      },
+      "cs": {
+        "finaidYearId": "2017",
+        "isFinaid": true,
+        "organization": null,
+        "responsibleContactEmail": null,
+        "showStatus": ""
+      },
+      "emitter": "Campus Solutions",
+      "linkDescription": "2016-17 Independence Appeal",
+      "linkUrl": "http://financialaid.berkeley.edu/sites/default/files/docs/otherforms/Independence_Appeal_2016-17.pdf",
+      "notes": "Please complete the Independence Appeal form and provide the requested supporting documentation as soon as possible.",
+      "sourceUrl": "http://sis-project.berkeley.edu",
+      "status": "completed",
+      "subTitle": null,
+      "title": "Independence Appeal",
+      "type": "task",
+      "updatedDate": {
+        "dateString": "11/14",
+        "dateTime": "2016-11-14T00:00:00-08:00",
+        "epoch": 1479110400
+      },
+      "uploadUrl": "https://bcswebqat.is.berkeley.edu/psc/bcsqat/EMPLOYEE/HRMS/c/UC_CC_CHKLST_UPLOAD_FLU.UC_CC_FILE_UPL_FLU.GBL?"
+    },
+    {
+      "bucket": "Unscheduled",
+      "cs": {
+        "finaidYearId": "2017",
+        "isFinaid": true,
+        "organization": null,
+        "responsibleContactEmail": null,
+        "showStatus": "Received"
+      },
+      "emitter": "Campus Solutions",
+      "linkDescription": "2016-17 Independence Appeal",
+      "linkUrl": "http://financialaid.berkeley.edu/sites/default/files/docs/otherforms/Independence_Appeal_2016-17.pdf",
+      "notes": "Please complete the Independence Appeal form and provide the requested supporting documentation as soon as possible.",
+      "sourceUrl": "http://sis-project.berkeley.edu",
+      "status": "inprogress",
+      "subTitle": null,
+      "title": "Independence Appeal",
+      "type": "task",
+      "updatedDate": {
+        "dateString": "11/06",
+        "dateTime": "2016-11-06T00:00:00-07:00",
+        "epoch": 1478415600
+      },
+      "uploadUrl": "https://bcswebqat.is.berkeley.edu/psc/bcsqat/EMPLOYEE/HRMS/c/UC_CC_CHKLST_UPLOAD_FLU.UC_CC_FILE_UPL_FLU.GBL?"
+    },
+    {
+      "bucket": "Unscheduled",
+      "cs": {
+        "finaidYearId": "2017",
+        "isFinaid": true,
+        "organization": null,
+        "responsibleContactEmail": null,
+        "showStatus": "Received"
+      },
+      "emitter": "Campus Solutions",
+      "linkDescription": "Americorps",
+      "linkUrl": null,
+      "notes": "Received",
+      "sourceUrl": "http://sis-project.berkeley.edu",
+      "status": "inprogress",
+      "subTitle": null,
+      "title": "Americorps",
+      "type": "task",
+      "updatedDate": {
+        "dateString": "9/18",
+        "dateTime": "2016-09-18T00:00:00-07:00",
+        "epoch": 1474182000
+      },
+      "uploadUrl": null
+    },
+    {
+      "bucket": "Unscheduled",
+      "cs": {
+        "finaidYearId": "2017",
+        "isFinaid": true,
+        "organization": null,
+        "responsibleContactEmail": null,
+        "showStatus": "Received"
+      },
+      "emitter": "Campus Solutions",
+      "linkDescription": "Americorps",
+      "linkUrl": null,
+      "notes": "Received",
+      "sourceUrl": "http://sis-project.berkeley.edu",
+      "status": "inprogress",
+      "subTitle": null,
+      "title": "Americorps",
+      "type": "task",
+      "updatedDate": {
+        "dateString": "6/26",
+        "dateTime": "2016-06-26T00:00:00-07:00",
+        "epoch": 1466924400
+      },
+      "uploadUrl": null
+    },
     {
       "type": "task",
       "title": "Lunch with study group",
@@ -131,13 +271,5 @@
       "sourceUrl": "https://www.googleapis.com/tasks/v1/lists/MDY0OTA0MjU4MDkyNTI0Mzc0OTI6MDow/tasks/MDY0OTA0MjU4MDkyNTI0Mzc0OTI6MDoyMTExODI3NTU1",
       "status": "needs_action"
     }
-  ],
-  "lastModified": {
-    "hash": "af8f7132a5d2efdf8bd3d88c2d1fa5d37086c389",
-    "timestamp": {
-      "epoch": 1383947240,
-      "dateTime": "2013-11-08T13:47:20-08:00",
-      "dateString": "11/08"
-    }
-  }
+  ]
 }

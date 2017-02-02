@@ -1,10 +1,15 @@
 <a class="cc-widget-activities-info-link"
-   data-ng-click="api.util.preventBubble($event);api.analytics.trackExternalLink('Activities', activityItem.source, activityItem.sourceUrl)"
-   data-ng-if="activityItem.sourceUrl && api.user.profile.actAsOptions.canSeeCSLinks"
-   data-cc-campus-solutions-link-directive="activityItem.sourceUrl"
-   data-cc-campus-solutions-link-directive-text="currentPage.name"
-   data-cc-campus-solutions-link-directive-enabled="{{activityItem.emitter === 'Campus Solutions'}}"
-   data-cc-outbound-enabled="{{activityItem.emitter !== 'Campus Solutions'}}">
+  data-ng-click="api.util.preventBubble($event);api.analytics.trackExternalLink('Activities', activityItem.source, activityItem.sourceUrl)"
+  data-ng-if="activityItem.sourceUrl && api.user.profile.actAsOptions.canSeeCSLinks"
+  data-cc-campus-solutions-link-directive
+  data-cc-campus-solutions-link-directive-url="activityItem.sourceUrl"
+  data-cc-campus-solutions-link-directive-cc-page-name="currentPage.name"
+  data-cc-campus-solutions-link-directive-cc-page-url="currentPage.url"
+  data-cc-campus-solutions-link-directive-uc-from="true"
+  data-cc-campus-solutions-link-directive-uc-from-link="true"
+  data-cc-campus-solutions-link-directive-uc-from-text="true"
+  data-cc-campus-solutions-link-directive-show-new-window="{{activityItem.emitter !== 'Campus Solutions'}}"
+>
   <span data-ng-bind="activityItem.linkText || 'More info'"></span>
   <span class="cc-visuallyhidden">
     View more info about <span data-ng-bind="activityItem.title"></span> in <span data-ng-bind="activityItem.source"></span>

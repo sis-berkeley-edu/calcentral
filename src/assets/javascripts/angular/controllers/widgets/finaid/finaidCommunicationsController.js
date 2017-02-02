@@ -30,10 +30,10 @@ angular.module('calcentral.controllers').controller('FinaidCommunicationsControl
     return activityFactory.getFinaidActivity(options).then(function(data) {
       angular.extend($scope, data);
       if (_.get($scope, 'list')) {
-        linkService.addBackToTextToResources($scope.list, $scope.currentPage.name);
+        linkService.addCurrentPagePropertiesToResources($scope.list, $scope.currentPage.name, $scope.currentPage.url);
         _.forEach($scope.list, function(value) {
           if (_.get(value, 'elements')) {
-            linkService.addBackToTextToResources(value.elements, $scope.currentPage.name);
+            linkService.addCurrentPagePropertiesToResources(value.elements, $scope.currentPage.name, $scope.currentPage.url);
           }
         });
       }

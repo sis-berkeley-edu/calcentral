@@ -6,68 +6,68 @@
   class="cc-flex cc-flex-wrap cc-enrollment-card-enrolled-links"
 >
   <div data-ng-if="enrollmentInstruction.isClassScheduleAvailable && !enrollmentInstruction.isGradeBaseAvailable && !isInstructionType(enrollmentInstruction, ['concurrent'])">
-    <a data-cc-campus-solutions-link-v2-directive
-      data-cc-campus-solutions-link-v2-directive-name="'Add'"
-      data-cc-campus-solutions-link-v2-directive-title="enrollmentInstruction.links.addEnrolledClasses.name"
-      data-cc-campus-solutions-link-v2-directive-url="enrollmentInstruction.links.addEnrolledClasses.url"
-      data-cc-campus-solutions-link-v2-directive-cc-cache="enrollment"
-      data-cc-campus-solutions-link-v2-directive-cc-page-name="currentPage.name"
-      data-cc-campus-solutions-link-v2-directive-cc-page-url="currentPage.url"
-      data-cc-campus-solutions-link-v2-directive-uc-from="true"
-      data-cc-campus-solutions-link-v2-directive-uc-from-link="true"
-      data-cc-campus-solutions-link-v2-directive-uc-from-text="true"
+    <a data-cc-campus-solutions-link-directive
+      data-cc-campus-solutions-link-directive-name="'Add'"
+      data-cc-campus-solutions-link-directive-title="enrollmentInstruction.links.addEnrolledClasses.name"
+      data-cc-campus-solutions-link-directive-url="enrollmentInstruction.links.addEnrolledClasses.url"
+      data-cc-campus-solutions-link-directive-cc-cache="enrollment"
+      data-cc-campus-solutions-link-directive-cc-page-name="currentPage.name"
+      data-cc-campus-solutions-link-directive-cc-page-url="currentPage.url"
+      data-cc-campus-solutions-link-directive-uc-from="true"
+      data-cc-campus-solutions-link-directive-uc-from-link="true"
+      data-cc-campus-solutions-link-directive-uc-from-text="true"
     ></a>
   </div>
   <div data-ng-if="enrollmentInstruction.isClassScheduleAvailable && !enrollmentInstruction.isGradeBaseAvailable && !isInstructionType(enrollmentInstruction, ['concurrent'])">
-    <a data-cc-campus-solutions-link-v2-directive
-      data-cc-campus-solutions-link-v2-directive-name="'Drop'"
-      data-cc-campus-solutions-link-v2-directive-title="enrollmentInstruction.links.dropEnrolledClasses.name"
-      data-cc-campus-solutions-link-v2-directive-url="enrollmentInstruction.links.dropEnrolledClasses.url"
-      data-cc-campus-solutions-link-v2-directive-cc-cache="enrollment"
-      data-cc-campus-solutions-link-v2-directive-cc-page-name="currentPage.name"
-      data-cc-campus-solutions-link-v2-directive-cc-page-url="currentPage.url"
-      data-cc-campus-solutions-link-v2-directive-uc-from="true"
-      data-cc-campus-solutions-link-v2-directive-uc-from-link="true"
-      data-cc-campus-solutions-link-v2-directive-uc-from-text="true"
+    <a data-cc-campus-solutions-link-directive
+      data-cc-campus-solutions-link-directive-name="'Drop'"
+      data-cc-campus-solutions-link-directive-title="enrollmentInstruction.links.dropEnrolledClasses.name"
+      data-cc-campus-solutions-link-directive-url="enrollmentInstruction.links.dropEnrolledClasses.url"
+      data-cc-campus-solutions-link-directive-cc-cache="enrollment"
+      data-cc-campus-solutions-link-directive-cc-page-name="currentPage.name"
+      data-cc-campus-solutions-link-directive-cc-page-url="currentPage.url"
+      data-cc-campus-solutions-link-directive-uc-from="true"
+      data-cc-campus-solutions-link-directive-uc-from-link="true"
+      data-cc-campus-solutions-link-directive-uc-from-text="true"
     ></a>
   </div>
   <div data-ng-if="enrollmentInstruction.isClassScheduleAvailable && !enrollmentInstruction.isGradeBaseAvailable && !isInstructionType(enrollmentInstruction, ['concurrent'])">
-    <a data-cc-campus-solutions-link-v2-directive
-      data-cc-campus-solutions-link-v2-directive-name="'Swap'"
-      data-cc-campus-solutions-link-v2-directive-title="enrollmentInstruction.links.swapEnrolledClasses.name"
-      data-cc-campus-solutions-link-v2-directive-url="enrollmentInstruction.links.swapEnrolledClasses.url"
-      data-cc-campus-solutions-link-v2-directive-cc-cache="enrollment"
-      data-cc-campus-solutions-link-v2-directive-cc-page-name="currentPage.name"
-      data-cc-campus-solutions-link-v2-directive-cc-page-url="currentPage.url"
-      data-cc-campus-solutions-link-v2-directive-uc-from="true"
-      data-cc-campus-solutions-link-v2-directive-uc-from-link="true"
-      data-cc-campus-solutions-link-v2-directive-uc-from-text="true"
+    <a data-cc-campus-solutions-link-directive
+      data-cc-campus-solutions-link-directive-name="'Swap'"
+      data-cc-campus-solutions-link-directive-title="enrollmentInstruction.links.swapEnrolledClasses.name"
+      data-cc-campus-solutions-link-directive-url="enrollmentInstruction.links.swapEnrolledClasses.url"
+      data-cc-campus-solutions-link-directive-cc-cache="enrollment"
+      data-cc-campus-solutions-link-directive-cc-page-name="currentPage.name"
+      data-cc-campus-solutions-link-directive-cc-page-url="currentPage.url"
+      data-cc-campus-solutions-link-directive-uc-from="true"
+      data-cc-campus-solutions-link-directive-uc-from-link="true"
+      data-cc-campus-solutions-link-directive-uc-from-text="true"
     ></a>
   </div>
   <div data-ng-if="enrollmentInstruction.isClassScheduleAvailable && !enrollmentInstruction.isGradeBaseAvailable && !isInstructionType(enrollmentInstruction, ['concurrent'])">
-    <a data-cc-campus-solutions-link-v2-directive
-      data-cc-campus-solutions-link-v2-directive-name="'Options'"
-      data-cc-campus-solutions-link-v2-directive-title="'Change Grading Option'"
-      data-cc-campus-solutions-link-v2-directive-url="enrollmentInstruction.links.gradeBase.url"
-      data-cc-campus-solutions-link-v2-directive-cc-cache="enrollment"
-      data-cc-campus-solutions-link-v2-directive-cc-page-name="currentPage.name"
-      data-cc-campus-solutions-link-v2-directive-cc-page-url="currentPage.url"
-      data-cc-campus-solutions-link-v2-directive-uc-from="true"
-      data-cc-campus-solutions-link-v2-directive-uc-from-link="true"
-      data-cc-campus-solutions-link-v2-directive-uc-from-text="true"
+    <a data-cc-campus-solutions-link-directive
+      data-cc-campus-solutions-link-directive-name="'Options'"
+      data-cc-campus-solutions-link-directive-title="'Change Grading Option'"
+      data-cc-campus-solutions-link-directive-url="enrollmentInstruction.links.gradeBase.url"
+      data-cc-campus-solutions-link-directive-cc-cache="enrollment"
+      data-cc-campus-solutions-link-directive-cc-page-name="currentPage.name"
+      data-cc-campus-solutions-link-directive-cc-page-url="currentPage.url"
+      data-cc-campus-solutions-link-directive-uc-from="true"
+      data-cc-campus-solutions-link-directive-uc-from-link="true"
+      data-cc-campus-solutions-link-directive-uc-from-text="true"
     ></a>
   </div>
   <div data-ng-if="enrollmentInstruction.isGradeBaseAvailable && !isInstructionType(enrollmentInstruction, ['law', 'concurrent'])">
-    <a data-cc-campus-solutions-link-v2-directive
-      data-cc-campus-solutions-link-v2-directive-name="'Change Grading Option'"
-      data-cc-campus-solutions-link-v2-directive-title="'Change Grading Option'"
-      data-cc-campus-solutions-link-v2-directive-url="enrollmentInstruction.links.gradeBase.url"
-      data-cc-campus-solutions-link-v2-directive-cc-cache="enrollment"
-      data-cc-campus-solutions-link-v2-directive-cc-page-name="currentPage.name"
-      data-cc-campus-solutions-link-v2-directive-cc-page-url="currentPage.url"
-      data-cc-campus-solutions-link-v2-directive-uc-from="true"
-      data-cc-campus-solutions-link-v2-directive-uc-from-link="true"
-      data-cc-campus-solutions-link-v2-directive-uc-from-text="true"
+    <a data-cc-campus-solutions-link-directive
+      data-cc-campus-solutions-link-directive-name="'Change Grading Option'"
+      data-cc-campus-solutions-link-directive-title="'Change Grading Option'"
+      data-cc-campus-solutions-link-directive-url="enrollmentInstruction.links.gradeBase.url"
+      data-cc-campus-solutions-link-directive-cc-cache="enrollment"
+      data-cc-campus-solutions-link-directive-cc-page-name="currentPage.name"
+      data-cc-campus-solutions-link-directive-cc-page-url="currentPage.url"
+      data-cc-campus-solutions-link-directive-uc-from="true"
+      data-cc-campus-solutions-link-directive-uc-from-link="true"
+      data-cc-campus-solutions-link-directive-uc-from-text="true"
     ></a>
   </div>
   <div data-ng-if="enrollmentInstruction.enrollmentPeriod[0] && !isInstructionType(enrollmentInstruction, ['law', 'concurrent'])">
@@ -76,29 +76,29 @@
     >Withdraw</a>
   </div>
   <div data-ng-if="enrollmentInstruction.isClassScheduleAvailable && isInstructionType(enrollmentInstruction, ['concurrent'])">
-    <a data-cc-campus-solutions-link-v2-directive
-      data-cc-campus-solutions-link-v2-directive-name="'Drop a Class'"
-      data-cc-campus-solutions-link-v2-directive-title="enrollmentInstruction.links.dropEnrolledClasses.name"
-      data-cc-campus-solutions-link-v2-directive-url="enrollmentInstruction.links.dropEnrolledClasses.url"
-      data-cc-campus-solutions-link-v2-directive-cc-cache="enrollment"
-      data-cc-campus-solutions-link-v2-directive-cc-page-name="currentPage.name"
-      data-cc-campus-solutions-link-v2-directive-cc-page-url="currentPage.url"
-      data-cc-campus-solutions-link-v2-directive-uc-from="true"
-      data-cc-campus-solutions-link-v2-directive-uc-from-link="true"
-      data-cc-campus-solutions-link-v2-directive-uc-from-text="true"
+    <a data-cc-campus-solutions-link-directive
+      data-cc-campus-solutions-link-directive-name="'Drop a Class'"
+      data-cc-campus-solutions-link-directive-title="enrollmentInstruction.links.dropEnrolledClasses.name"
+      data-cc-campus-solutions-link-directive-url="enrollmentInstruction.links.dropEnrolledClasses.url"
+      data-cc-campus-solutions-link-directive-cc-cache="enrollment"
+      data-cc-campus-solutions-link-directive-cc-page-name="currentPage.name"
+      data-cc-campus-solutions-link-directive-cc-page-url="currentPage.url"
+      data-cc-campus-solutions-link-directive-uc-from="true"
+      data-cc-campus-solutions-link-directive-uc-from-link="true"
+      data-cc-campus-solutions-link-directive-uc-from-text="true"
     ></a>
   </div>
   <div data-ng-if="enrollmentInstruction.isClassScheduleAvailable && isInstructionType(enrollmentInstruction, ['concurrent'])">
-    <a data-cc-campus-solutions-link-v2-directive
-      data-cc-campus-solutions-link-v2-directive-name="'Edit Class Options'"
-      data-cc-campus-solutions-link-v2-directive-title="'Edit Class Options'"
-      data-cc-campus-solutions-link-v2-directive-url="enrollmentInstruction.links.gradeBase.url"
-      data-cc-campus-solutions-link-v2-directive-cc-cache="enrollment"
-      data-cc-campus-solutions-link-v2-directive-cc-page-name="currentPage.name"
-      data-cc-campus-solutions-link-v2-directive-cc-page-url="currentPage.url"
-      data-cc-campus-solutions-link-v2-directive-uc-from="true"
-      data-cc-campus-solutions-link-v2-directive-uc-from-link="true"
-      data-cc-campus-solutions-link-v2-directive-uc-from-text="true"
+    <a data-cc-campus-solutions-link-directive
+      data-cc-campus-solutions-link-directive-name="'Edit Class Options'"
+      data-cc-campus-solutions-link-directive-title="'Edit Class Options'"
+      data-cc-campus-solutions-link-directive-url="enrollmentInstruction.links.gradeBase.url"
+      data-cc-campus-solutions-link-directive-cc-cache="enrollment"
+      data-cc-campus-solutions-link-directive-cc-page-name="currentPage.name"
+      data-cc-campus-solutions-link-directive-cc-page-url="currentPage.url"
+      data-cc-campus-solutions-link-directive-uc-from="true"
+      data-cc-campus-solutions-link-directive-uc-from-link="true"
+      data-cc-campus-solutions-link-directive-uc-from-text="true"
     ></a>
   </div>
 </div>

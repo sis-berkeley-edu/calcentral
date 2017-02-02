@@ -4,11 +4,17 @@
   </p>
   <div data-cc-spinner-directive="ferpa.isLoading" data-ng-if="api.user.profile.actAsOptions.canSeeCSLinks">
     <p>
-      You may restrict your directory information from being disclosed to third parties by <a data-cc-campus-solutions-link-directive="ferpa.deeplink.url"
-      data-cc-campus-solutions-link-directive-enabled="{{ferpa.deeplink.isCsLink}}"
-      data-cc-campus-solutions-link-directive-text="currentPage.name"
-      data-cc-campus-solutions-link-directive-cache="'profile'"
-      data-cc-outbound-enabled="false">managing your FERPA restrictions</a>.
+      You may restrict your directory information from being disclosed to third parties by
+      <a data-cc-campus-solutions-link-directive
+        data-cc-campus-solutions-link-directive-name="report.name"
+        data-cc-campus-solutions-link-directive-url="ferpa.deeplink.url"
+        data-cc-campus-solutions-link-directive-cc-cache="profile"
+        data-cc-campus-solutions-link-directive-uc-from="true"
+        data-cc-campus-solutions-link-directive-uc-from-link="true"
+        data-cc-campus-solutions-link-directive-uc-from-text="true"
+        data-cc-campus-solutions-link-directive-cc-page-name="currentPage.name"
+        data-cc-campus-solutions-link-directive-cc-page-url="currentPage.url"
+      >managing your FERPA restrictions</a>.
     </p>
     <p data-ng-if="!ferpa.deeplink.url || ferpa.isErrored">
       <i class="fa fa-exclamation-triangle cc-icon-red"></i> The "managing your FERPA Restriction" link is currently unavailable. Please try again later.
