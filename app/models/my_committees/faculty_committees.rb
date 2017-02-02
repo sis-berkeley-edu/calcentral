@@ -10,12 +10,9 @@ module MyCommittees
 
     def get_feed
       result = {
-        facultyCommittees: {
-          active: [],
-          completed: []
-        }
+        facultyCommittees: []
       }
-      feed = CampusSolutions::FacultyCommittees.new(user_id: @uid).get[:feed]
+      feed = CampusSolutions::FacultyCommittees.new(user_id: @uid).get.try(:[], :feed)
       if feed && (cs_committees = feed[:ucSrFacultyCommittee].try(:[], :facultyCommittees))
         # Service range will be parsed from nested member data with match on emplid
         @emplid = feed[:ucSrFacultyCommittee].try(:[], :emplid)
@@ -27,7 +24,7 @@ module MyCommittees
     def parse_cs_faculty_committees (cs_committees, committees_result)
       cs_committees.compact!
       cs_committees.try(:each) do |cs_committee|
-        faculty_committee = parse_cs_committee(cs_committee, is_committee_active(cs_committee))
+        faculty_committee = parse_cs_committee(cs_committee)
         if cs_committee.present?
           # Add additional pieces of data needed faculty committees
           cs_faculty_committee_svc = parse_cs_faculty_committee_svc(cs_committee)
@@ -37,16 +34,10 @@ module MyCommittees
             csMemberEndDate: cs_faculty_committee_svc[:memberEndDate],
             csMemberStartDate: cs_faculty_committee_svc[:memberStartDate]
           )
-          if is_committee_active cs_committee
-            committees_result[:active] << faculty_committee
-          else
-            committees_result[:completed] << faculty_committee
-          end
+          committees_result << faculty_committee
         end
       end
-      committees_result[:completed] = sort_committees_by_svc(committees_result[:completed])
-      committees_result[:active] = sort_committees_by_svc(committees_result[:active])
-      committees_result
+      sort_committees_by_svc(committees_result)
     end
 
     def sort_committees_by_svc(cs_committees)
@@ -60,17 +51,17 @@ module MyCommittees
     end
 
     def parse_cs_faculty_committee_svc(cs_committee)
-      user_committee = cs_committee[:committeeMembers].try(:find) do |mem|
+      current_user_member = cs_committee[:committeeMembers].try(:find) do |mem|
         mem[:memberEmplid].present? &&  mem[:memberEmplid] == @emplid
       end
-      start_date = user_committee.try(:[], :memberStartDate)
-      end_date = user_committee.try(:[], :memberEndDate)
+      start_date = current_user_member.try(:[], :memberStartDate)
+      end_date = current_user_member.try(:[], :memberEndDate)
       committee_service_range_result = {
         serviceRange: "#{ to_display(start_date) } - #{ to_display(end_date) }",
         memberEndDate: end_date,
         memberStartDate: start_date
       }
-      if user_committee
+      if current_user_member
         committee_service_range_result
       end
     end
@@ -82,10 +73,5 @@ module MyCommittees
         format_date date
       end
     end
-
-    def is_committee_active(cs_committee)
-      cs_committee[:committeeStatus] === 'A'
-    end
-
   end
 end

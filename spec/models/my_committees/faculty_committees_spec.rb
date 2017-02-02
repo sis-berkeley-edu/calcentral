@@ -14,28 +14,36 @@ describe MyCommittees::FacultyCommittees do
         double(lookup_campus_solutions_id: user_cs_id))
     end
 
-    it 'sorts active and inactive committees into separate lists' do
-      expect(feed[:facultyCommittees][:active].count).to eq 1
-      expect(feed[:facultyCommittees][:completed].count).to eq 1
+    it 'dumps all committees into one list' do
+      expect(feed[:facultyCommittees].count).to eq 2
     end
+
+    it 'sorts the committees by the current user\'s membership end date and start date' do
+      committees = feed[:facultyCommittees]
+      expect(committees[0][:csMemberStartDate]).to eq '2016-08-31'
+      expect(committees[0][:csMemberEndDate]).to eq '2999-01-01'
+      expect(committees[1][:csMemberStartDate]).to eq '2016-08-30'
+      expect(committees[1][:csMemberEndDate]).to eq '2017-08-30'
+    end
+
     it 'contains the expected faculty data' do
-      committees = feed[:facultyCommittees][:active]
-      expect(committees[0][:committeeType]).to eq 'Qualifying Exam Committee'
-      expect(committees[0][:program]).to eq 'Civil Environmental Eng MS'
-      expect(committees[0][:statusTitle]).to eq 'Proposed Exam Date:'
-      expect(committees[0][:statusMessage]).to eq 'Pending'
-      expect(committees[0][:serviceRange]).to eq 'Aug 30, 2016 - Aug 30, 2017'
+      committees = feed[:facultyCommittees]
+      expect(committees[1][:committeeType]).to eq 'Qualifying Exam Committee'
+      expect(committees[1][:program]).to eq 'Civil Environmental Eng MS'
+      expect(committees[1][:statusTitle]).to eq 'Proposed Exam Date:'
+      expect(committees[1][:statusMessage]).to eq 'Pending'
+      expect(committees[1][:serviceRange]).to eq 'Aug 30, 2016 - Aug 30, 2017'
     end
 
     it 'contains the expected faculty committee data' do
-      members = feed[:facultyCommittees][:active][0][:committeeMembers]
+      members = feed[:facultyCommittees][1][:committeeMembers]
       expect(members[:additionalReps][0][:name]).to eq 'John Bear'
       expect(members[:additionalReps][1][:name]).to eq 'Bad Dog'
     end
 
     it 'replaces bogus dates with text' do
-      committees = feed[:facultyCommittees][:completed]
-      expect(committees[0][:serviceRange]).to eq 'Aug 30, 2016 - Present'
+      committees = feed[:facultyCommittees]
+      expect(committees[0][:serviceRange]).to eq 'Aug 31, 2016 - Present'
     end
   end
 end
