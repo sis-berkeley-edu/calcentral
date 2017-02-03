@@ -4,6 +4,11 @@ TorqueBox.configure do
     IS_TORQUEBOX true
   end
 
+  # By default, Backgroundable tasks are durable (queued tasks will persist between
+  # server restarts) and processing has a concurrency of 1 (single-threaded).
+  # The next line would make them double-threadable and discardable at shutdown:
+  # options_for Backgroundable, :concurrency => 2, :durable => false
+
   # process incoming JMS messages from activeMQ
   # CALCENTRAL-ONLY
   service JmsWorker
