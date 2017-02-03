@@ -184,6 +184,11 @@
   .cc-academics-course-grading-header-period {
     float: right;
   }
+  .cc-academics-course-grading-icon {
+    i {
+      margin-right: 6px;
+    }
+  }
   .cc-academics-course-standard-grading-header {
     color: $cc-color-light-medium-grey;
   }
