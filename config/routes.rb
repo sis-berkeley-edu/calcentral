@@ -32,6 +32,7 @@ Calcentral::Application.routes.draw do
     get '/api/torque/bg' => 'torquebox#bg', :defaults => {:format => 'json'}
     get '/api/torque/bg_msgs' => 'torquebox#bg_msgs', :defaults => {:format => 'json'}
     get '/api/torque/bg_purge' => 'torquebox#bg_purge', :defaults => {:format => 'json'}
+    get '/api/torque/job' => 'torquebox#job', :defaults => {:format => 'json'}
     get '/api/torque/test_no_wait' => 'torquebox#test_no_wait', :defaults => {:format => 'json'}
     get '/api/torque/test_wait' => 'torquebox#test_wait', :defaults => {:format => 'json'}
   end
