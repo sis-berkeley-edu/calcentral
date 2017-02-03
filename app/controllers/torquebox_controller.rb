@@ -24,6 +24,15 @@ class TorqueboxController < ApplicationController
     render json: {status: result}.to_json
   end
 
+  def job
+    if (background_job = BackgroundJob.find(params['id']))
+      result = background_job.background_job_report
+    else
+      result = {error: "#{params['id']} not found"}
+    end
+    render json: result.to_json
+  end
+
   def test_no_wait
     worker = TorqueboxTester.new()
     times = params['times'] || 5
