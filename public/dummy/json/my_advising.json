@@ -148,8 +148,28 @@
       }
     ],
     "links": {
-      "manageAppointments": "https://bcs-web-dev-03.is.berkeley.edu:8443/psc/bcsdev/EMPLOYEE/HRMS/c/SCI_APPT_STUSS.SCI_APPT_MY_APPTS.GBL",
-      "newAppointment": "https://bcs-web-dev-03.is.berkeley.edu:8443/psc/bcsdev/EMPLOYEE/HRMS/c/SCI_APPT_STUSS.SCI_APPT_SS_FLU.GBL"
+      "manageAppointments": {
+        "IS_CS_LINK": true,
+        "isCsLink": true,
+        "name": "Access and Manage Appointments",
+        "title": "View or update your advising appointments.",
+        "ucFrom": "CalCentral",
+        "ucFromLink": "https://calcentral-sis-dev-01.ist.berkeley.edu/",
+        "ucFromText": "CalCentral",
+        "url": "https://bcswebqat.is.berkeley.edu/psc/bcsqat/EMPLOYEE/HRMS/c/SCI_APPT_STUSS.SCI_APPT_MY_APPTS.GBL",
+        "urlId": "UC_CX_APPOINTMENT_STD_MY_APPTS"
+      },
+      "newAppointment": {
+        "IS_CS_LINK": true,
+        "isCsLink": true,
+        "name": "New Appointment",
+        "title": "Create a new advising appointment.",
+        "ucFrom": "CalCentral",
+        "ucFromLink": "https://calcentral-sis-dev-01.ist.berkeley.edu/",
+        "ucFromText": "CalCentral",
+        "url": "https://bcswebqat.is.berkeley.edu/psc/bcsqat/EMPLOYEE/HRMS/c/SCI_APPT_STUSS.SCI_APPT_SS_FLU.GBL",
+        "urlId": "UC_CX_APPOINTMENT_STD_ADD"
+      }
     }
   }
 }
