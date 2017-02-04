@@ -42,6 +42,7 @@ module DegreeProgress
         if name
           requirement[:name] = name
           requirement[:status_descr] = Berkeley::DegreeProgressGraduate.get_status(requirement[:status])
+          requirement[:order_number] = Berkeley::DegreeProgressGraduate.get_order_number(requirement[:code])
           requirement[:date_formatted] = format_date(strptime_in_time_zone(requirement[:date], '%F'), '%m/%d/%Y') unless requirement[:date].blank?
           requirement[:form_notification] = Berkeley::DegreeProgressGraduate.get_form_notification(requirement[:code], requirement[:status])
           requirement
