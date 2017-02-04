@@ -148,15 +148,15 @@ group :development, :test , :testext do
 
   # Webmock is not thread-safe and should never be enabled in production-like environments.
   gem 'webmock', '~> 1.20.4'
-
-  # To support debug in Torquebox.
-  gem 'ruby-debug-ide', '~> 0.6.0'
 end
 
 group :development do
   # Automatically reloads your browser when 'view' files are modified.
   # https://github.com/guard/guard-livereload
   gem 'guard-livereload', '~> 2.4.0', require: false
+
+  # To support debug in Torquebox.
+  gem 'ruby-debug-ide', '~> 0.6.0'
 end
 
 group :test do

@@ -75,7 +75,7 @@ class TorqueboxInspector
     @bg_message_processor ||= begin
       # Full name is 'torquebox.messaging.processors:name=/queues/torquebox/calcentral/tasks/torquebox_backgroundable/torque_box/messaging/backgroundable_processor,app=calcentral'
       message_processor_names = jmx_server.query_names('torquebox.messaging.processors:*')
-      bg_name = message_processor_names.select {|name| name.to_s.include? 'torquebox_backgroundable'}.first
+      bg_name = message_processor_names.find {|name| name.to_s.include? 'torquebox_backgroundable'}
       jmx_server[bg_name]
     end
   end
@@ -83,8 +83,8 @@ class TorqueboxInspector
   def bg_queue
     @bg_queue ||= begin
       # Full name is 'org.hornetq:module=Core,type=Queue,address=\"jms.queue./queues/torquebox/calcentral/tasks/torquebox_backgroundable\",name=\"jms.queue./queues/torquebox/calcentral/tasks/torquebox_backgroundable\"'
-      destrination_name = bg_message_processor['DestinationName']
-      queue_name = "org.hornetq:module=Core,type=Queue,address=\"jms.queue.#{destrination_name}\",name=\"jms.queue.#{destrination_name}\""
+      destination_name = bg_message_processor['DestinationName']
+      queue_name = "org.hornetq:module=Core,type=Queue,address=\"jms.queue.#{destination_name}\",name=\"jms.queue.#{destination_name}\""
       jmx_server[queue_name]
     end
   end

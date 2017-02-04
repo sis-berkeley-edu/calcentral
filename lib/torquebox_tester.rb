@@ -14,11 +14,12 @@ class TorqueboxTester
     background_job_set_total_steps times
     tracker = background_correlate(background.twiddle_thumbs(@background_job_id, times, pauses))
     logger.warn "#{@background_job_id} wait tracker = #{tracker}, correlation_id = #{tracker.correlation_id}"
-    begin
-      logger.warn "#{@background_job_id}  started = #{tracker.started?}, error = #{tracker.error?}, complete = #{tracker.complete?}, status = #{tracker.status}"
+    loop do
+      logger.warn "#{@background_job_id} started = #{tracker.started?}, error = #{tracker.error?}, complete = #{tracker.complete?}, status = #{tracker.status}"
       logger.warn "Report : #{background_job_report}"
       sleep(2)
-    end while !tracker.complete?
+      break if tracker.complete?
+    end
     logger.warn "#{@background_job_id} started = #{tracker.started?}, error = #{tracker.error?}, complete = #{tracker.complete?}, status = #{tracker.status}"
     logger.warn "Report : #{background_job_report}"
     result = tracker.result
@@ -39,10 +40,10 @@ class TorqueboxTester
   def twiddle_thumbs(test_id, times, pauses)
     logger.warn "#{test_id} began twiddling"
     logger.warn "From inside background job Report : #{background_job_report}"
-    for i in 0..(times - 1)
+    times.times do |i|
       future.status = (i * 100) / times
       sleep(pauses)
-      logger.warn "#{test_id}  waking for for i = #{i}"
+      logger.warn "#{test_id} waking for for i = #{i}"
       background_job_complete_step "Loop #{i}"
     end
     result = "All done with #{times} twiddles"
