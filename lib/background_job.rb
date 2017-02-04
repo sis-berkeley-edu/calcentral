@@ -50,6 +50,14 @@ module BackgroundJob
     Rails.cache.fetch cache_key
   end
 
+  def background
+    # By default, Torquebox keeps task state changes and completed tasks in the queue
+    # for 10 minutes, so that tardy clients have a chance to check their associated
+    # TorqueBox::Messaging::Future objects. Our code doesn't rely on long-running
+    # parent threads, and so we can dispose with the noise.
+    super(future_ttl: 5000)
+  end
+
   def background_job_initialize(options = {})
     default_options = {
       :job_type => '',
