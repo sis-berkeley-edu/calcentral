@@ -31,15 +31,16 @@ module BackgroundJob
   #
   #   worker = Canvas::MyClass.new(:canvas_course_id => canvas_course_id)
   #   worker.background_job_initialize(:job_type => 'special_job', :total_steps => 3)
-  #   worker.background.perform_work
+  #   worker.background_correlate(worker.background.perform_work)
   #
   include TorqueBox::Messaging::Backgroundable
+  include ClassLogger
 
   attr_reader :background_job_id
 
   def self.unique_job_id
     15.times do
-      cache_key_candidate = "#{Time.now.to_f.to_s.gsub('.', '')}-#{SecureRandom.hex(8)}"
+      cache_key_candidate = "#{DateTime.now.to_s}-#{SecureRandom.hex(8)}"
       return cache_key_candidate if Rails.cache.read(cache_key_candidate).nil?
     end
     raise RuntimeError, 'Unable to find unique Canvas Background Job ID'
@@ -47,6 +48,14 @@ module BackgroundJob
 
   def self.find(cache_key)
     Rails.cache.fetch cache_key
+  end
+
+  def background
+    # By default, Torquebox keeps task state changes and completed tasks in the queue
+    # for 10 minutes, so that tardy clients have a chance to check their associated
+    # TorqueBox::Messaging::Future objects. Our code doesn't rely on long-running
+    # parent threads, and so we can dispose with the noise.
+    super(future_ttl: 5000)
   end
 
   def background_job_initialize(options = {})
@@ -82,7 +91,18 @@ module BackgroundJob
     }
     report[:errors] = @background_job_errors if @background_job_errors.count > 0
     report.reverse_merge!(background_job_report_custom)
+    report[:correlation_id] = Rails.cache.fetch correlation_cache_key
     report
+  end
+
+  def correlation_cache_key
+    @background_job_id + '.Correlation'
+  end
+
+  def background_correlate(backgroundable_future)
+    torquebox_correlation_id = backgroundable_future.correlation_id
+    Rails.cache.write(correlation_cache_key, torquebox_correlation_id, expires_in: Settings.cache.expiration.CanvasBackgroundJobs)
+    backgroundable_future
   end
 
   def background_job_set_type(type)
@@ -105,7 +125,7 @@ module BackgroundJob
     background_job_save
   end
 
-  def background_job_complete_step(step_text)
+  def background_job_complete_step(step_text = '')
     @background_job_completed_steps << step_text
     if @background_job_status != 'Error'
       completed_steps = @background_job_completed_steps.count
