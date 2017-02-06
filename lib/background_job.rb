@@ -101,6 +101,7 @@ module BackgroundJob
 
   def background_correlate(backgroundable_future)
     torquebox_correlation_id = backgroundable_future.correlation_id
+    logger.warn "background_job_id = #{@background_job_id}, Torquebox correlation_id = #{torquebox_correlation_id}"
     Rails.cache.write(correlation_cache_key, torquebox_correlation_id, expires_in: Settings.cache.expiration.CanvasBackgroundJobs)
     backgroundable_future
   end

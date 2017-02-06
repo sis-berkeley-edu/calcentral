@@ -180,6 +180,7 @@ describe CanvasCourseProvisionController do
 
     it 'returns status of canvas course provisioning job' do
       cpcs = CanvasCsv::ProvideCourseSite.new '1234'
+      cpcs.background_job_initialize(job_type: 'course_creation', total_steps: 10)
       cpcs.instance_eval { @background_job_status = 'processing'; @background_job_completed_steps = ['Prepared courses list', 'Identified department sub-account'] }
       cpcs.background_job_save
 

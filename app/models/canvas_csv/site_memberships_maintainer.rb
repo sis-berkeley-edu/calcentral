@@ -1,6 +1,5 @@
 module CanvasCsv
   class SiteMembershipsMaintainer < Base
-    include TorqueBox::Messaging::Backgroundable
 
     # Roles indicated by Canvas Enrollments API
     ENROLL_STATUS_TO_CANVAS_API_ROLE = {
@@ -23,7 +22,7 @@ module CanvasCsv
       worker.refresh_sections_in_course
     end
 
-    # Self-contained method suitable for running as a background job.
+    # Self-contained method suitable for running in a background job.
     def self.import_memberships(sis_course_id, sis_section_ids, enrollments_csv_filename, into_canvas_course_id = nil)
       enrollments_rows = []
       users_rows = []
