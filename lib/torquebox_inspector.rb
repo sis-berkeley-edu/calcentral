@@ -91,11 +91,28 @@ class TorqueboxInspector
 
   def mbean_hash(jmx_name)
     mbean = jmx_server[jmx_name]
-    attributes = Hash[mbean.attributes.collect { |attr| [attr, mbean[attr]]}]
+    if mbean.blank?
+      attributes = {}
+      operations = []
+    else
+      if (attribute_names = mbean.attributes)
+        attribute_array = attribute_names.collect do |attr|
+          val = nil
+          begin
+            val = mbean[attr]
+          rescue => e
+            val = "#{e.class} #{e.message}"
+          end
+          [attr, val]
+        end
+        attributes = Hash[attribute_array]
+      end
+      operations = mbean.operations
+    end
     {
       name: jmx_name.to_s,
       attributes: attributes,
-      operations: mbean.operations
+      operations: operations
     }
   end
 
