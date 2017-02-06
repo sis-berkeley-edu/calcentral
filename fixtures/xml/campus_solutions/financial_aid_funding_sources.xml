@@ -699,6 +699,13 @@
           </SUB_ITEMS>
         </ITEM>
       </ITEMS>
+      <LINKS type="array">
+        <LINK>
+          <URL>https://bcswebqat.is.berkeley.edu/psp/bcsqat/EMPLOYEE/HRMS/c/UC_FA_ADDL_SRC_FLU.UC_FA_ADDL_SRC_FLU.GBL?ucInstitution=UCB01&amp;ucAidYear=2017</URL>
+          <TITLE>Report Outside Resources</TITLE>
+          <IS_CS_LINK type="boolean">true</IS_CS_LINK>
+        </LINK>
+      </LINKS>
     </GIFTAID>
     <WORKSTUDY>
       <TOTAL>
@@ -738,6 +745,18 @@
           </SUB_ITEMS>
         </ITEM>
       </ITEMS>
+      <LINKS type="array">
+        <LINK>
+          <URL>http://financialaid.berkeley.edu/work-study</URL>
+          <TITLE>Find a Job</TITLE>
+          <IS_CS_LINK type="boolean">false</IS_CS_LINK>
+        </LINK>
+        <LINK>
+          <URL>https://bcswebqat.is.berkeley.edu/psp/bcsqat/EMPLOYEE/HRMS/c/UC_FA_CONV_AID_FLU.UC_FA_CONV_AID_FLU.GBL?ucInstitution=UCB01&amp;ucAidYear=2017&amp;ucConvertType=WKSToLoan</URL>
+          <TITLE>Convert to Loan</TITLE>
+          <IS_CS_LINK type="boolean">true</IS_CS_LINK>
+        </LINK>
+      </LINKS>
     </WORKSTUDY>
     <SUBSIDIZEDLOANS>
       <TOTAL>
@@ -957,5 +976,25 @@
         </ITEM>
       </ITEMS>
     </ALTERNATIVELOANS>
+    <LOANS>
+      <LINKS type="array">
+        <LINK>
+          <URL>https://bcswebqat.is.berkeley.edu/psp/bcsqat/EMPLOYEE/HRMS/c/UC_FA_RDC_CNCL_FLU.UC_FA_RDC_CNCL_FLU.GBL?ucInstitution=UCB01&amp;ucAidYear=2017</URL>
+          <TITLE>Reduce/Cancel</TITLE>
+          <IS_CS_LINK type="boolean">true</IS_CS_LINK>
+        </LINK>
+        <LINK>
+          <URL>https://bcswebqat.is.berkeley.edu/psp/bcsqat/EMPLOYEE/HRMS/c/UC_FA_CONV_AID_FLU.UC_FA_CONV_AID_FLU.GBL?ucInstitution=UCB01&amp;ucAidYear=2017&amp;ucConvertType=LoanToWKS</URL>
+          <TITLE>Convert to Work-Study</TITLE>
+          <IS_CS_LINK type="boolean">true</IS_CS_LINK>
+        </LINK>
+      </LINKS>
+    </LOANS>
+    <GRANDTOTAL>
+      <TOTAL>
+        <Amount type="float">38030</Amount>
+        <TITLE>Grand Total</TITLE>
+      </TOTAL>
+    </GRANDTOTAL>
   </AWARDS>
 </ROOT>
