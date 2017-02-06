@@ -2,11 +2,15 @@ module Berkeley
   class DegreeProgressGraduate
 
     def self.get_status(status_code)
-      statuses[status_code.strip.upcase] unless status_code.blank?
+      statuses.try(:[], status_code.strip.upcase) unless status_code.blank?
     end
 
     def self.get_description(milestone_code)
-      milestones[milestone_code.strip.upcase] unless milestone_code.blank?
+      milestones.try(:[], milestone_code.strip.upcase).try(:[], :milestone) unless milestone_code.blank?
+    end
+
+    def self.get_order_number(milestone_code)
+      milestones.try(:[], milestone_code.strip.upcase).try(:[], :order) unless milestone_code.blank?
     end
 
     def self.get_merged_description
@@ -14,7 +18,7 @@ module Berkeley
     end
 
     def self.get_form_notification(milestone_code, status_code)
-      form_notifications[milestone_code.strip.upcase] unless (status_code === 'Y' || milestone_code.blank?)
+      form_notifications.try(:[], milestone_code.strip.upcase) unless (status_code === 'Y' || milestone_code.blank?)
     end
 
     def self.get_merged_form_notification
@@ -23,16 +27,42 @@ module Berkeley
 
     def self.milestones
       @milestones ||= {
-        'AAGADVMAS1' => 'Advancement to Candidacy Plan I',
-        'AAGADVMAS2' => 'Advancement to Candidacy Plan II',
-        'AAGFINALCK' => 'Department Final Recommendations',
-        'AAGACADP1' => 'Thesis File Date',
-        'AAGQEAPRV' => 'Approval for Qualifying Exam',
-        'AAGQERESLT' => 'Qualifying Exam Results',
-        'AAGADVPHD' => 'Advancement to Candidacy',
-        'AAGFINALCK' => 'Department Final Recommendations',
-        'AAGDISSERT' => 'Dissertation File Date',
-        'AAGACADP2' => 'Capstone'
+        'AAGADVMAS1' => {
+          :milestone => 'Advancement to Candidacy Plan I',
+          :order => 2
+        },
+        'AAGADVMAS2' => {
+          :milestone => 'Advancement to Candidacy Plan II',
+          :order => 3
+        },
+        'AAGFINALCK' => {
+          :milestone => 'Department Final Recommendations',
+          :order => 4
+        },
+        'AAGACADP1' => {
+          :milestone => 'Thesis File Date',
+          :order => 5
+        },
+        'AAGQEAPRV' => {
+          :milestone => 'Approval for Qualifying Exam',
+          :order => 1
+        },
+        'AAGQERESLT' => {
+          :milestone => 'Qualifying Exam Results',
+          :order => 2
+        },
+        'AAGADVPHD' => {
+          :milestone => 'Advancement to Candidacy',
+          :order => 3
+        },
+        'AAGDISSERT' => {
+          :milestone => 'Dissertation File Date',
+          :order => 5
+        },
+        'AAGACADP2' => {
+          :milestone => 'Capstone',
+          :order => 6
+        },
       }
     end
 
