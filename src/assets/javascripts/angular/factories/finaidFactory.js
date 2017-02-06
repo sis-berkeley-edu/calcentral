@@ -7,6 +7,8 @@ var angular = require('angular');
  */
 angular.module('calcentral.factories').factory('finaidFactory', function(apiService, $http) {
   var urlAwards = '/api/campus_solutions/financial_aid_funding_sources';
+  // var urlAwards = '/dummy/json/financial_aid_funding_sources.json';
+
   var urlAwardsTerm = '/api/campus_solutions/financial_aid_funding_sources_term';
 
   var urlCompareAwardsCurrent = '/api/campus_solutions/financial_aid_compare_awards_current';
