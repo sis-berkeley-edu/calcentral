@@ -9,7 +9,11 @@ describe CanvasCsv::ProvideCourseSite do
     {:yr=>'2014', :cd=>'D', :slug=>'fall-2014', :name=>'Fall 2014'},
     {:yr=>'2015', :cd=>'B', :slug=>'spring-2015', :name=>'Spring 2015'},
   ] }
-  subject { CanvasCsv::ProvideCourseSite.new uid }
+  subject do
+    subj = CanvasCsv::ProvideCourseSite.new uid
+    subj.background_job_initialize
+    subj
+  end
 
   it_should_behave_like 'a background job worker'
 
@@ -41,6 +45,8 @@ describe CanvasCsv::ProvideCourseSite do
     ] }
     before do
       allow(subject).to receive(:current_terms).and_return(current_terms)
+      allow(subject).to receive(:background).and_return(subject)
+      allow(subject).to receive(:background_correlate).and_return(true)
       task_steps.each do |step|
         allow(subject).to receive(step)
       end
@@ -70,7 +76,7 @@ describe CanvasCsv::ProvideCourseSite do
     end
 
     it 'sets job type to course_creation' do
-      subject.create_course_site(site_name, site_course_code, 'fall-2014', ['21136', '21204'])
+      subject.bg_create_course_site(site_name, site_course_code, 'fall-2014', ['21136', '21204'])
       cached_object = BackgroundJob.find(subject.background_job_id)
       expect(cached_object.background_job_report[:jobType]).to eq 'course_creation'
     end
@@ -81,7 +87,7 @@ describe CanvasCsv::ProvideCourseSite do
         subject.create_course_site(site_name, site_course_code, 'fall-2014', ['1136', '1204'])
       end
       it 'calculates 10 total steps to completion' do
-        subject.create_course_site(site_name, site_course_code, 'fall-2014', ['1136', '1204'])
+        subject.bg_create_course_site(site_name, site_course_code, 'fall-2014', ['1136', '1204'])
         expect(subject.instance_eval { @background_job_total_steps }).to eq 10
       end
     end
@@ -98,7 +104,7 @@ describe CanvasCsv::ProvideCourseSite do
         subject.create_course_site(site_name, site_course_code, 'fall-2014', ['1136', '1204'], true)
       end
       it 'calculates 8 total steps to completion' do
-        subject.create_course_site(site_name, site_course_code, 'fall-2014', ['1136', '1204'], true)
+        subject.bg_create_course_site(site_name, site_course_code, 'fall-2014', ['1136', '1204'], true)
         expect(subject.instance_eval { @background_job_total_steps }).to eq 8
       end
     end
@@ -125,6 +131,8 @@ describe CanvasCsv::ProvideCourseSite do
     ] }
     before do
       allow(subject).to receive(:current_terms).and_return(current_terms)
+      allow(subject).to receive(:background).and_return(subject)
+      allow(subject).to receive(:background_correlate).and_return(true)
       task_steps.each do |step|
         allow(subject).to receive(step)
       end
@@ -138,7 +146,7 @@ describe CanvasCsv::ProvideCourseSite do
         end
       end
       it 'sets job type to edit_sections' do
-        subject.edit_sections(canvas_course_info, ccns_to_remove, ccns_to_add)
+        subject.bg_edit_sections(canvas_course_info, ccns_to_remove, ccns_to_add)
         cached_object = BackgroundJob.find(subject.background_job_id)
         expect(cached_object.background_job_report[:jobType]).to eq 'edit_sections'
       end
@@ -153,7 +161,7 @@ describe CanvasCsv::ProvideCourseSite do
           subject.edit_sections(canvas_course_info, ccns_to_remove, ccns_to_add)
         end
         it 'calculates 5 total steps to completion' do
-          subject.edit_sections(canvas_course_info, ccns_to_remove, ccns_to_add)
+          subject.bg_edit_sections(canvas_course_info, ccns_to_remove, ccns_to_add)
           expect(subject.instance_eval { @background_job_total_steps }).to eq 5
         end
       end
@@ -171,7 +179,7 @@ describe CanvasCsv::ProvideCourseSite do
           subject.edit_sections(canvas_course_info, ccns_to_remove, ccns_to_add)
         end
         it 'calculates 4 total steps to completion' do
-          subject.edit_sections(canvas_course_info, ccns_to_remove, ccns_to_add)
+          subject.bg_edit_sections(canvas_course_info, ccns_to_remove, ccns_to_add)
           expect(subject.instance_eval { @background_job_total_steps }).to eq 4
         end
       end
@@ -181,7 +189,7 @@ describe CanvasCsv::ProvideCourseSite do
           subject.edit_sections(canvas_course_info, ccns_to_remove, ccns_to_add)
         end
         it 'calculates 6 total steps to completion' do
-          subject.edit_sections(canvas_course_info, ccns_to_remove, ccns_to_add)
+          subject.bg_edit_sections(canvas_course_info, ccns_to_remove, ccns_to_add)
           expect(subject.instance_eval { @background_job_total_steps }).to eq 6
         end
       end
@@ -191,7 +199,7 @@ describe CanvasCsv::ProvideCourseSite do
         allow(subject).to receive(:prepare_section_deletions).and_raise(RuntimeError, 'Unable to remove memberships')
       end
       it 'returns a proper message' do
-        expect {subject.edit_sections(canvas_course_info, ccns_to_remove, ccns_to_add) }.to raise_error(RuntimeError, 'Unable to remove memberships')
+        expect {subject.bg_edit_sections(canvas_course_info, ccns_to_remove, ccns_to_add) }.to raise_error(RuntimeError, 'Unable to remove memberships')
         cached_object = BackgroundJob.find(subject.background_job_id)
         expect(cached_object.background_job_report[:jobType]).to eq 'edit_sections'
         expect(cached_object.background_job_report[:jobStatus]).to eq 'Error'
@@ -579,10 +587,13 @@ describe CanvasCsv::ProvideCourseSite do
       'status' => 'active'
     }]}
     let(:maintainer) {double}
+    before do
+      allow(subject).to receive(:background).and_return(subject)
+      allow(subject).to receive(:background_correlate).and_return(true)
+    end
     it 'should forward to a background job handler' do
-      expect(CanvasCsv::SiteMembershipsMaintainer).to receive(:background).and_return(maintainer)
-      expect(maintainer).to receive(:import_memberships).with(course_id, section_ids, anything, anything)
-      subject.import_enrollments_in_background(course_id, section_definitions)
+      expect(CanvasCsv::SiteMembershipsMaintainer).to receive(:import_memberships).with(course_id, section_ids, anything, anything)
+      subject.bg_import_enrollments(course_id, section_definitions, nil)
     end
   end
 

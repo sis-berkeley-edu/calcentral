@@ -57,8 +57,7 @@ module CanvasLti
 
     def create_course_site(site_name, site_course_code, term_slug, ccns)
       cpcs = CanvasCsv::ProvideCourseSite.new(working_uid)
-      cpcs.background_job_save
-      cpcs.background.create_course_site(site_name, site_course_code, term_slug, ccns, @admin_by_ccns.present?)
+      cpcs.bg_create_course_site(site_name, site_course_code, term_slug, ccns, @admin_by_ccns.present?)
       self.class.expire instance_key unless @admin_by_ccns
       cpcs.background_job_id
     end
@@ -66,8 +65,7 @@ module CanvasLti
     def edit_sections(ccns_to_remove, ccns_to_add)
       raise RuntimeError, 'canvas_course_id option not present' if @canvas_course_id.blank?
       cpcs = CanvasCsv::ProvideCourseSite.new(working_uid)
-      cpcs.background_job_save
-      cpcs.background.edit_sections(get_course_info, ccns_to_remove, ccns_to_add)
+      cpcs.bg_edit_sections(get_course_info, ccns_to_remove, ccns_to_add)
       self.class.expire instance_key unless @admin_by_ccns
       cpcs.background_job_id
     end
