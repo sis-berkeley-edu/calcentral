@@ -11,13 +11,13 @@
         data-cc-campus-solutions-link-directive-cc-cache="finaid"
         data-cc-campus-solutions-link-directive-cc-page-name="currentPage.name"
         data-cc-campus-solutions-link-directive-cc-page-url="currentPage.url"
-        data-cc-campus-solutions-link-directive-uc-from="true"
-        data-cc-campus-solutions-link-directive-uc-from-link="true"
-        data-cc-campus-solutions-link-directive-uc-from-text="true"
+        data-cc-campus-solutions-link-directive-uc-from="link.isCsLink"
+        data-cc-campus-solutions-link-directive-uc-from-link="link.isCsLink"
+        data-cc-campus-solutions-link-directive-uc-from-text="link.isCsLink"
+        data-cc-campus-solutions-link-directive-show-new-window="!link.isCsLink"
         data-ng-class="{'cc-widget-finaid-awards-section-link-separator': ($index > 0)}"
         data-ng-if="api.user.profile.actAsOptions.canSeeCSLinks"
-      >
-      </a>
+      ></a>
     </div>
   </div>
 

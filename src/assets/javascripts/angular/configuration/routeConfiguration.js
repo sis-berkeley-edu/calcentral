@@ -101,11 +101,12 @@ angular.module('calcentral.config').config(function($routeProvider, calcentralCo
     when('/finances/finaid/:finaidYearId?', {
       templateUrl: 'finaid.html',
       controller: 'MyFinancesController',
-      pageName: 'My Finances'
+      pageName: 'Financial Aid and Scholarships'
     }).
     when('/finances/finaid/awards/:finaidYearId?', {
       templateUrl: 'finaid_awards_term.html',
-      controller: 'MyFinancesController'
+      controller: 'MyFinancesController',
+      pageName: 'Financial Aid and Scholarships'
     }).
     when('/finances/finaid/compare/:finaidYearId?', {
       templateUrl: 'finaid_awards_compare.html',
