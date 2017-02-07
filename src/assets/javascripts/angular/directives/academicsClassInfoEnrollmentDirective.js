@@ -10,6 +10,13 @@ angular.module('calcentral.directives').directive('ccAcademicsClassInfoEnrollmen
     link: function(scope, elem, attrs) {
       scope.bmailLink = rosterService.bmailLink;
 
+      var isLaw = function(dept) {
+        if (dept === 'LAW') {
+          return true;
+        } else {
+          return false;
+        }
+      };
       /*
        * Returns true if student is in the selected section
        * @returns {Boolean}
@@ -308,6 +315,7 @@ angular.module('calcentral.directives').directive('ccAcademicsClassInfoEnrollmen
       scope.displaySection('default');
       scope.className = scope.$eval(attrs.className);
       scope.instructorName = scope.$eval(attrs.instructorName);
+      scope.isLaw = isLaw(scope.$eval(attrs.classDepartment));
       scope.seatsLimit = scope.$eval(attrs.seatsLimit);
       scope.semesterName = scope.$eval(attrs.semesterName);
       scope.showPosition = scope.$eval(attrs.showPosition);
