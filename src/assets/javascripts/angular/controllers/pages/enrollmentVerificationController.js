@@ -10,9 +10,6 @@ angular.module('calcentral.controllers').controller('EnrollmentVerificationContr
   linkService.addCurrentRouteSettings($scope);
   apiService.util.setTitle($scope.currentPage.name);
 
-  $scope.enrollmentCsDeeplink = {
-    title: 'Request Other Verifications'
-  };
   $scope.enrollmentGoogleLink = {
     url: 'http://goo.gl/forms/xcYYehIBFDbDE92y1',
     title: 'Request Other Verifications'
