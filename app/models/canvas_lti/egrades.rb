@@ -58,7 +58,13 @@ module CanvasLti
       end
     end
 
+    def bg_canvas_course_student_grades(force = false)
+      background_job_initialize
+      background_correlate(background.canvas_course_student_grades(force))
+    end
+
     def canvas_course_student_grades(force = false)
+      logger.warn "Course student grades job started. Job state updated in cache key #{background_job_id}"
       self.class.fetch_from_cache("course-students-#{@canvas_course_id}", force) do
         proxy = Canvas::CourseUsers.new(course_id: @canvas_course_id, paging_callback: self)
         course_users = proxy.course_users(cache: false)[:body] || []
