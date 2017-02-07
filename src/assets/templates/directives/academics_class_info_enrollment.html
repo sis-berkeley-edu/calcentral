@@ -35,28 +35,28 @@
       </a>
 
       <a class="cc-button cc-class-enrollment-formatted-content-show-button"
-          data-ng-if="studentRole === 'waitlisted'"
+          data-ng-if="studentRole === 'waitlisted' && !isLaw"
           data-ng-disabled="displayedSection === 'promote' || noStudentsSelected()"
           data-ng-click="displaySection('promote')">
         <span class="hidden-for-small-only">Request to</span> Promote
       </a>
 
       <a class="cc-button cc-class-enrollment-formatted-content-show-button"
-          data-ng-if="studentRole === 'waitlisted'"
+          data-ng-if="studentRole === 'waitlisted' && !isLaw"
           data-ng-disabled="displayedSection === 'enroll' || noStudentsSelected()"
           data-ng-click="displaySection('enroll')">
         <span class="hidden-for-small-only">Request to</span> Enroll
       </a>
 
       <a class="cc-button cc-class-enrollment-formatted-content-show-button"
-          data-ng-if="studentRole === 'waitlisted'"
+          data-ng-if="studentRole === 'waitlisted' && !isLaw"
           data-ng-disabled="displayedSection === 'remove' || noStudentsSelected()"
           data-ng-click="displaySection('remove')">
         <span class="hidden-for-small-only">Request to</span> Remove
       </a>
 
       <a class="cc-button cc-class-enrollment-formatted-content-show-button"
-          data-ng-if="studentRole !== 'waitlisted'"
+          data-ng-if="studentRole !== 'waitlisted' && !isLaw"
           data-ng-disabled="displayedSection === 'drop' || noStudentsSelected()"
           data-ng-click="displaySection('drop')">
         <span class="hidden-for-small-only">Request to</span> Drop
