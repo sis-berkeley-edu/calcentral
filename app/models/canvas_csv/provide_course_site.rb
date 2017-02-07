@@ -19,7 +19,7 @@ module CanvasCsv
     end
 
     def create_course_site(site_name, site_course_code, term_slug, ccns, is_admin_by_ccns = false)
-      logger.info "Course provisioning job started. Job state updated in cache key #{background_job_id}"
+      logger.warn "Course provisioning job started. Job state updated in cache key #{background_job_id}"
       @import_data['site_name'] = site_name
       @import_data['site_course_code'] = site_course_code
       @import_data['term_slug'] = term_slug
@@ -64,9 +64,9 @@ module CanvasCsv
     end
 
     def edit_sections(canvas_course_info, ccns_to_remove, ccns_to_add)
+      logger.warn "Edit course site sections job started. Job state updated in cache key #{background_job_id}"
       canvas_course_id = canvas_course_info[:canvasCourseId]
       @import_data['sis_course_id'] = canvas_course_info[:sisCourseId]
-      logger.info "Edit course site sections job started. Job state updated in cache key #{background_job_id}"
       @import_data['term'] = find_term(yr: canvas_course_info[:term][:term_yr], cd: canvas_course_info[:term][:term_cd])
       raise RuntimeError, "Course site #{canvas_course_id} does not match a current term" if @import_data['term'].nil?
       @import_data['term_slug'] = @import_data['term'][:slug]
@@ -229,6 +229,7 @@ module CanvasCsv
     end
 
     def import_enrollments(sis_course_id, canvas_section_rows, into_canvas_course_id)
+      logger.warn "Enrollments import job started. Job state updated in cache key #{background_job_id}"
       added_sections = canvas_section_rows.select {|row| row['status'] == 'active'}
       CanvasCsv::SiteMembershipsMaintainer.import_memberships(sis_course_id,
         added_sections.collect {|row| row['section_id']}, "#{csv_filename_prefix}-enrollments.csv",
