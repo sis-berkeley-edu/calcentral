@@ -42,6 +42,7 @@ describe CanvasCourseGradeExportController do
     it 'makes call to load canvas course student grades with forced cacheing' do
       expect(torquebox_fake_background_proxy).to receive(:canvas_course_student_grades).with(true).and_return(nil)
       allow_any_instance_of(CanvasLti::Egrades).to receive(:background).and_return(torquebox_fake_background_proxy)
+      allow_any_instance_of(CanvasLti::Egrades).to receive(:background_correlate).and_return(true)
       post :prepare_grades_cache, :canvas_course_id => canvas_course_id, :format => :csv
       expect(response.status).to eq(200)
       json_response = JSON.parse(response.body)
@@ -51,6 +52,7 @@ describe CanvasCourseGradeExportController do
 
     it 'returns background job id' do
       allow_any_instance_of(CanvasLti::Egrades).to receive(:background).and_return(torquebox_fake_background_proxy)
+      allow_any_instance_of(CanvasLti::Egrades).to receive(:background_correlate).and_return(true)
       post :prepare_grades_cache, :canvas_course_id => canvas_course_id, :format => :csv
       expect(response.status).to eq(200)
       json_response = JSON.parse(response.body)

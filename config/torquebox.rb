@@ -4,6 +4,11 @@ TorqueBox.configure do
     IS_TORQUEBOX true
   end
 
+  # By default, Backgroundable tasks are durable (queued tasks will persist between
+  # server restarts) and processing has a concurrency of 1 (single-threaded).
+  # Increasing concurrency keeps a single slow job from blocking on all other apps.
+  options_for Backgroundable, :concurrency => 3
+
   # process incoming JMS messages from activeMQ
   # CALCENTRAL-ONLY
   service JmsWorker

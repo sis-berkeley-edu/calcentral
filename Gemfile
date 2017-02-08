@@ -85,6 +85,7 @@ gem 'bootstrap-sass', '~> 3.3.1.0'
 gem 'torquebox', '~> 3.1.2'
 gem 'torquebox-server', '~> 3.1.2'
 gem 'torquebox-messaging', '~> 3.1.2'
+gem 'jmx', '~> 1.0'
 
 # for trying, and trying again, and then giving up.
 gem 'retriable', '~> 1.4'
@@ -153,6 +154,9 @@ group :development do
   # Automatically reloads your browser when 'view' files are modified.
   # https://github.com/guard/guard-livereload
   gem 'guard-livereload', '~> 2.4.0', require: false
+
+  # To support debug in Torquebox.
+  gem 'ruby-debug-ide', '~> 0.6.0'
 end
 
 group :test do
