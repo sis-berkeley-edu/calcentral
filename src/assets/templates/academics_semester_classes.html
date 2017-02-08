@@ -144,25 +144,25 @@
                 &mdash;
               </td>
               <td data-ng-if="section.is_primary_section && containsMidpointClass" class="show-for-medium-up cc-academics-course-grading-centered" data-ng-switch="section.ccMidpointGradingStatus">
-                <i data-ng-switch-when="periodNotStarted" class="fa fa-ban"></i>
-                <i data-ng-switch-when="periodStarted" class="fa fa-file-o"></i>
-                <i data-ng-switch-when="gradesPosted" class="fa fa-check-circle cc-icon-green"></i>
-                <i data-ng-switch-default class="fa fa-circle"></i>
+                <span data-ng-switch-when="periodNotStarted"><i class="fa fa-ban" aria-hidden="true"></i><p class="cc-visuallyhidden">Grade entry period not open</p></span>
+                <span data-ng-switch-when="periodStarted"><i class="fa fa-file-o" aria-hidden="true"></i><p class="cc-visuallyhidden">Grade entry period open; grades not approved or posted</p></span>
+                <span data-ng-switch-when="gradesPosted"><i class="fa fa-check-circle cc-icon-green" aria-hidden="true"></i><p class="cc-visuallyhidden">Grades posted. Note: All classes, with or without midpoint grades, will post</p></span>
+                <span data-ng-switch-default><i class="fa fa-circle" aria-hidden="true"></i><p class="cc-visuallyhidden">Law class (no midpoint grades) OR you do not have grading permissions</p></span>
               </td>
               <td data-ng-if="section.is_primary_section" class="show-for-medium-up cc-academics-course-grading-centered" data-ng-switch="section.ccGradingStatus">
-                <i data-ng-switch-when="periodNotStarted" class="fa fa-ban"></i>
-                <i data-ng-switch-when="periodStarted" class="fa fa-file-o"></i>
-                <i data-ng-switch-when="gradesApproved" class="fa fa-check cc-icon-green"></i>
-                <i data-ng-switch-when="gradesPosted" class="fa fa-check-circle cc-icon-green"></i>
-                <i data-ng-switch-when="gradesOverdue" class="fa fa-exclamation-circle cc-icon-red"></i>
-                <i data-ng-switch-default class="fa fa-ban"></i>
+                <span data-ng-switch-when="periodNotStarted"><i class="fa fa-ban" aria-hidden="true"></i><p class="cc-visuallyhidden">Grade entry period not open</p></span>
+                <span data-ng-switch-when="periodStarted"><i class="fa fa-file-o" aria-hidden="true"></i><p class="cc-visuallyhidden">Grade entry period open; grades not approved or posted</p></span>
+                <span data-ng-switch-when="gradesApproved"><i class="fa fa-check cc-icon-green" aria-hidden="true"></i><p class="cc-visuallyhidden">Grades approved</p></span>
+                <span data-ng-switch-when="gradesPosted"><i class="fa fa-check-circle cc-icon-green" aria-hidden="true"></i><p class="cc-visuallyhidden">Grades posted. Note: All classes, with or without midpoint grades, will post</p></span>
+                <span data-ng-switch-when="gradesOverdue"><i class="fa fa-exclamation-circle cc-icon-red" aria-hidden="true"></i><p class="cc-visuallyhidden">Final grade entry period closed; grades overdue</p></span>
+                <span data-ng-switch-default><i class="fa fa-ban" aria-hidden="true"></i><p class="cc-visuallyhidden">Grade entry period not open</p></span>
               </td>
             </tr>
           </tbody>
         </table>
       </div>
     </div>
-    <div class="cc-academics-course-grading-footer cc-widget-padding show-for-medium-up">
+    <div class="cc-academics-course-grading-footer cc-widget-padding show-for-medium-up" aria-hidden="true">
       <h3>Grading Status Legend</h3>
       <div>
         <ul class="cc-academics-course-grading-icon">
