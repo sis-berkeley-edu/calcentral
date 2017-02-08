@@ -31,6 +31,7 @@ describe Oec::ApiTaskWrapper do
     before do
       allow(Oec::RemoteDrive).to receive(:new).and_return double
       allow(wrapper).to receive(:background).and_return wrapper
+      allow(wrapper).to receive(:background_correlate).and_return(true)
       allow_any_instance_of(Oec::TermSetupTask).to receive(:run)
     end
 

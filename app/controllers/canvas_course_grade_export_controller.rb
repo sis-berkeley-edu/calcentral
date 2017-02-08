@@ -18,8 +18,7 @@ class CanvasCourseGradeExportController < ApplicationController
 
   # POST /api/academics/canvas/egrade_export/prepare/:canvas_course_id.json
   def prepare_grades_cache
-    egrades.background_job_initialize
-    egrades.background.canvas_course_student_grades(true)
+    egrades.bg_canvas_course_student_grades(true)
     render json: { jobRequestStatus: 'Success', jobId: egrades.background_job_id }.to_json
   end
 

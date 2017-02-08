@@ -202,9 +202,7 @@ describe CanvasLti::CourseProvision do
     subject     { CanvasLti::CourseProvision.new(instructor_id) }
     let(:cpcs)  { instance_double CanvasCsv::ProvideCourseSite }
     before do
-      allow(cpcs).to receive(:background).and_return(cpcs)
-      allow(cpcs).to receive(:background_job_save).and_return(true)
-      allow(cpcs).to receive(:create_course_site).and_return(true)
+      allow(cpcs).to receive(:bg_create_course_site).and_return(true)
       allow(cpcs).to receive(:background_job_id).and_return('canvas.courseprovision.1234.1383330151057')
       allow(CanvasCsv::ProvideCourseSite).to receive(:new).and_return(cpcs)
     end
@@ -215,8 +213,7 @@ describe CanvasLti::CourseProvision do
     end
 
     it 'saves state of job before sending to bg job queue' do
-      expect(cpcs).to receive(:background_job_save).ordered.and_return(true)
-      expect(cpcs).to receive(:background).ordered.and_return(cpcs)
+      expect(cpcs).to receive(:bg_create_course_site).ordered.and_return(true)
       expect(cpcs).to receive(:background_job_id).ordered.and_return('canvas.courseprovision.1234.1383330151057')
       subject.create_course_site('Intro to Biomedicine', 'BIOENG 101 LEC', 'fall-2013', ['1136', '1204'])
     end
@@ -233,9 +230,7 @@ describe CanvasLti::CourseProvision do
       before do
         expect(subject).to receive(:get_course_info).and_return(course_info)
         expect(CanvasCsv::ProvideCourseSite).to receive(:new).and_return(cpcs)
-        expect(cpcs).to receive(:background_job_save).ordered
-        expect(cpcs).to receive(:background).ordered.and_return(cpcs)
-        expect(cpcs).to receive(:edit_sections).ordered
+        expect(cpcs).to receive(:bg_edit_sections).ordered
         expect(cpcs).to receive(:background_job_id).ordered.and_return(background_job_id)
       end
       it 'saves the state of the job' do

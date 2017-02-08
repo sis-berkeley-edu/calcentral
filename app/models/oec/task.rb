@@ -62,6 +62,7 @@ module Oec
     end
 
     def run
+      logger.warn "OEC job started. Job state updated in cache key #{@api_task_id}"
       return if @status == 'Error'
       begin
         log :info, "Starting #{self.class.name}"

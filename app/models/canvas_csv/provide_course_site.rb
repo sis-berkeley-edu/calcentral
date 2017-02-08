@@ -11,13 +11,15 @@ module CanvasCsv
       @uid = uid
       @import_data = {}
       @section_definitions = []
-      background_job_initialize
+    end
+
+    def bg_create_course_site(site_name, site_course_code, term_slug, ccns, is_admin_by_ccns = false)
+      background_job_initialize(job_type: 'course_creation', total_steps: 10)
+      background_correlate(background.create_course_site(site_name, site_course_code, term_slug, ccns, is_admin_by_ccns))
     end
 
     def create_course_site(site_name, site_course_code, term_slug, ccns, is_admin_by_ccns = false)
-      background_job_set_type 'course_creation'
-      background_job_set_total_steps 10
-      logger.info "Course provisioning job started. Job state updated in cache key #{background_job_id}"
+      logger.warn "Course provisioning job started. Job state updated in cache key #{background_job_id}"
       @import_data['site_name'] = site_name
       @import_data['site_course_code'] = site_course_code
       @import_data['term_slug'] = term_slug
@@ -53,14 +55,18 @@ module CanvasCsv
       raise error
     end
 
+    def bg_edit_sections(canvas_course_info, ccns_to_remove, ccns_to_add)
+      total_steps = 3 # Section CSV import, clearing course site cache
+      total_steps += 2 if ccns_to_add.present?
+      total_steps += 1 if ccns_to_remove.present?
+      background_job_initialize(job_type: 'edit_sections', total_steps: total_steps)
+      background_correlate(background.edit_sections(canvas_course_info, ccns_to_remove, ccns_to_add))
+    end
+
     def edit_sections(canvas_course_info, ccns_to_remove, ccns_to_add)
+      logger.warn "Edit course site sections job started. Job state updated in cache key #{background_job_id}"
       canvas_course_id = canvas_course_info[:canvasCourseId]
       @import_data['sis_course_id'] = canvas_course_info[:sisCourseId]
-      background_job_set_total_steps(3) # Section CSV import, clearing course site cache
-      @background_job_total_steps += 2.0 if ccns_to_add.present?
-      @background_job_total_steps += 1.0 if ccns_to_remove.present?
-      background_job_set_type('edit_sections')
-      logger.info "Edit course site sections job started. Job state updated in cache key #{background_job_id}"
       @import_data['term'] = find_term(yr: canvas_course_info[:term][:term_yr], cd: canvas_course_info[:term][:term_cd])
       raise RuntimeError, "Course site #{canvas_course_id} does not match a current term" if @import_data['term'].nil?
       @import_data['term_slug'] = @import_data['term'][:slug]
@@ -77,7 +83,7 @@ module CanvasCsv
       # Add section enrollments.
       refresh_sections_cache(canvas_course_id)
 
-      # Start a background job to add students and instructors to the new sections in the site.
+      # Start a background job from a new instance to add students and instructors to the new sections in the site.
       import_enrollments_in_background(@import_data['sis_course_id'], section_definitions, canvas_course_id)
     rescue StandardError => error
       logger.error("ERROR: #{error.message}; Completed steps: #{@background_job_completed_steps.inspect}; Import Data: #{@import_data.inspect}; UID: #{@uid}")
@@ -213,12 +219,23 @@ module CanvasCsv
     end
 
     def import_enrollments_in_background(sis_course_id, canvas_section_rows, into_canvas_course_id = nil)
+      CanvasCsv::ProvideCourseSite.new(@uid).bg_import_enrollments(sis_course_id, canvas_section_rows, into_canvas_course_id)
+      background_job_complete_step 'Started enrollments import in background'
+    end
+
+    def bg_import_enrollments(sis_course_id, canvas_section_rows, into_canvas_course_id)
+      background_job_initialize(job_type: 'import_enrollments', total_steps: 1)
+      background_correlate(background.import_enrollments(sis_course_id, canvas_section_rows, into_canvas_course_id))
+    end
+
+    def import_enrollments(sis_course_id, canvas_section_rows, into_canvas_course_id)
+      logger.warn "Enrollments import job started. Job state updated in cache key #{background_job_id}"
       added_sections = canvas_section_rows.select {|row| row['status'] == 'active'}
-      CanvasCsv::SiteMembershipsMaintainer.background.import_memberships(sis_course_id,
+      CanvasCsv::SiteMembershipsMaintainer.import_memberships(sis_course_id,
         added_sections.collect {|row| row['section_id']}, "#{csv_filename_prefix}-enrollments.csv",
         into_canvas_course_id
       )
-      background_job_complete_step 'Started enrollments import in background'
+      background_job_complete_step 'Finished enrollments import'
     end
 
     def csv_filename_prefix
