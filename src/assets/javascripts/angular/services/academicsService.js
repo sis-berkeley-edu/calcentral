@@ -294,8 +294,8 @@ angular.module('calcentral.services').service('academicsService', function() {
   var containsMidpointClass = function(selectedTeachingSemester) {
     var classes = _.get(selectedTeachingSemester, 'classes');
     if (classes && classes.length) {
-      return _.every(classes, function(klass) {
-        if (_.get(klass, 'dept') !== 'LAW') {
+      return !_.every(classes, function(klass) {
+        if (_.get(klass, 'dept') === 'LAW') {
           return true;
         } else {
           return false;
