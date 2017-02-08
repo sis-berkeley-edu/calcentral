@@ -619,7 +619,7 @@
     {
       "name": "Blu Card",
       "description": "A procurement card, issued to select employees, and used for purchasing work-related items and services",
-      "url": "http://supplychain.berkeley.edu/programs/card-program-services/blucard",
+      "url": "http://supplychain.berkeley.edu/campus/card-programs/blucard-program",
       "roles": {
         "student": false,
         "applicant": false,
@@ -657,7 +657,7 @@
     {
       "name": "Bookstore - Berkeley Law",
       "description": "Textbooks and other learning resources for Berkeley Law students",
-      "url": "http://www.law.berkeley.edu/15687.htm",
+      "url": "https://www.law.berkeley.edu/students/bookstore/",
       "roles": {
         "student": true,
         "applicant": true,
@@ -1220,7 +1220,7 @@
     {
       "name": "Campus Shuttles",
       "description": "Bus routes around the Berkeley campus (most are free)",
-      "url": "http://pt.berkeley.edu/around/transit/routes/",
+      "url": "http://pt.berkeley.edu/campus-transportation-options/campus-shuttle",
       "roles": {
         "student": true,
         "applicant": true,
@@ -1399,7 +1399,7 @@
     {
       "name": "Class Pass",
       "description": "AC Transit Pass to bus for free",
-      "url": "http://pt.berkeley.edu/pay/transit/classpass/",
+      "url": "http://pt.berkeley.edu/campus-transportation-options/public-transportation-passes/student-class-pass",
       "roles": {
         "student": true,
         "applicant": true,
@@ -2156,7 +2156,7 @@
     {
       "name": "Imagine Services",
       "description": "Custom electronic document workflows",
-      "url": "http://ist.berkeley.edu/imagine",
+      "url": "https://technology.berkeley.edu/services/enterprise-applications/imagine-document-imaging-processing-and-workflow-management",
       "roles": {
         "student": false,
         "applicant": false,
@@ -2194,7 +2194,7 @@
     {
       "name": "IST Knowledge Base",
       "description": "Contains answers to Berkeley computing and IT questions",
-      "url": "http://ist.berkeley.edu/support/kb",
+      "url": "https://technology.berkeley.edu/news/improved-ist-knowledge-base-coming-soon",
       "roles": {
         "student": true,
         "applicant": true,
@@ -2255,7 +2255,7 @@
     {
       "name": "Lab Safety",
       "description": "Lab Safety \u0026 Hazardous Materials Management",
-      "url": "http://rac.berkeley.edu/compliancebook/labsafety.html",
+      "url": "http://rac.berkeley.edu/training.html#general_lab",
       "roles": {
         "student": true,
         "applicant": true,
@@ -2791,7 +2791,7 @@
     {
       "name": "Purchasing",
       "description": "Services that can be purchased by individuals with a CalNet ID and passphrase",
-      "url": "http://businessservices.berkeley.edu/procurement/services",
+      "url": "http://supplychain.berkeley.edu/campus/how-purchase",
       "roles": {
         "student": false,
         "applicant": false,
@@ -3202,7 +3202,7 @@
     {
       "name": "Student Organizations Search",
       "description": "Cal's clubs and organizations on campus",
-      "url": "http://students.berkeley.edu/osl/studentgroups/public/index.asp",
+      "url": "https://callink.berkeley.edu/organizations",
       "roles": {
         "student": true,
         "applicant": true,
@@ -3240,7 +3240,7 @@
     {
       "name": "Submit a Service Request",
       "description": "Help requests for various services such as research",
-      "url": "https://shared-services-help.berkeley.edu/",
+      "url": "https://berkeley.service-now.com/ess/",
       "roles": {
         "student": false,
         "applicant": false,
@@ -3356,25 +3356,6 @@
       ]
     },
     {
-      "name": "Tele-BEARS",
-      "description": "Register for classes",
-      "url": "https://telebears.berkeley.edu",
-      "roles": {
-        "student": true,
-        "applicant": true,
-        "staff": false,
-        "faculty": false,
-        "exStudent": true,
-        "summerVisitor": true
-      },
-      "categories": [
-        {
-          "topcategory": "Academic Planning",
-          "subcategory": "Planning"
-        }
-      ]
-    },
-    {
       "name": "The Berkeley Blog",
       "description": "Issues that are being discussed by members of Berkeley's academic community ",
       "url": "http://blogs.berkeley.edu",
@@ -3472,7 +3453,7 @@
     {
       "name": "Travel \u0026 Entertainment",
       "description": "Travel services including airfare and Berkeley's Direct Bill ID system",
-      "url": "http://controller.berkeley.edu/travel/",
+      "url": "http://travel.berkeley.edu/book-trip",
       "roles": {
         "student": false,
         "applicant": false,
