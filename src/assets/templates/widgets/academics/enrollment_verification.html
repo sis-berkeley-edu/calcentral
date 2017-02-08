@@ -40,16 +40,12 @@
           </div>
           <div class="cc-enrollment-verification-link">
             <div data-ng-if="api.user.profile.isDirectlyAuthenticated">
-              <strong data-ng-if="!requestOfficialVerificationLink.url">
-                <a data-ng-href="{{enrollmentGoogleLink.url}}" data-ng-attr-title="{{enrollmentGoogleLink.title}}">Request Official Verification</a>
-              </strong>
               <strong data-ng-if="requestOfficialVerificationLink.url">
                 <a data-cc-campus-solutions-link-directive="requestOfficialVerificationLink"
                   data-cc-campus-solutions-link-directive-cc-page-name="currentPage.name"
                   data-cc-campus-solutions-link-directive-cc-page-url="currentPage.url"
                 ></a>
               </strong>
-
             </div>
             <div data-ng-if="!api.user.profile.isDirectlyAuthenticated">
               <p class="cc-enrollment-verification-link-disabled">
