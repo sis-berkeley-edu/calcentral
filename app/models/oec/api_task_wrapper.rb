@@ -1,6 +1,7 @@
 module Oec
   class ApiTaskWrapper
     include TorqueBox::Messaging::Backgroundable
+    include ClassLogger
 
     TASK_LIST = [
       {
@@ -75,7 +76,13 @@ module Oec
 
     def start_in_background
       task_id = self.class.generate_task_id
-      self.background.run task_id
+      # Ensure that a Task Status entry will be found in the cache even before the queued
+      # background job starts.
+      @task_class.write_cache(
+        {status: 'In progress', log: []},
+        task_id
+      )
+      background_correlate(self.background(future_ttl: 5000).run(task_id), task_id)
       {
         id: task_id,
         status: 'In progress'
@@ -83,6 +90,12 @@ module Oec
     end
 
     private
+
+    def background_correlate(backgroundable_future, task_id)
+      torquebox_correlation_id = backgroundable_future.correlation_id
+      logger.warn "#{@task_class.name} task_id = #{task_id}, Torquebox correlation_id = #{torquebox_correlation_id}"
+      backgroundable_future
+    end
 
     def translate_params(params)
       term_code = Berkeley::TermCodes.from_english params['term']
