@@ -195,6 +195,22 @@ angular.module('calcentral.directives').directive('ccAcademicsClassInfoEnrollmen
         return list;
       };
 
+      var setOpenSeatsCount = function() {
+        var selectedSectionId = _.get(scope.selectedSection, 'ccn');
+        var openSeatsCount = _.reduce(scope.sections, function(count, section) {
+          if (!selectedSectionId || selectedSectionId === section.ccn) {
+            count += scope.studentRole === 'waitlisted' ? section.waitlist_open : section.enroll_open;
+          }
+          return count;
+        }, 0);
+        scope.seatsAvailable = openSeatsCount;
+      };
+
+      var setFilledSeatsCount = function() {
+        scope.studentsInSection = studentsInSelectedSection();
+        scope.seatsFilled = Array.isArray(scope.studentsInSection) ? scope.studentsInSection.length : 0;
+      };
+
       /*
        * Deselects all selected students
        */
@@ -261,16 +277,9 @@ angular.module('calcentral.directives').directive('ccAcademicsClassInfoEnrollmen
        */
       scope.sectionChangeActions = function() {
         apiService.util.accessibilityAnnounce('Enrollment filtered by section');
+        setOpenSeatsCount();
+        setFilledSeatsCount();
         scope.clearSelected();
-      };
-
-      /*
-       * Returns true if no section selected, or if student is in the selected section
-       * @param {object} student - A student object
-       * @returns {Boolean}
-       */
-      scope.studentInSectionFilter = function(student) {
-        return (sectionNotSelected() || isStudentInSection(student));
       };
 
       /*
@@ -307,8 +316,17 @@ angular.module('calcentral.directives').directive('ccAcademicsClassInfoEnrollmen
         },
         function(newValue) {
           scope.students = newValue;
-          var studentCount = Array.isArray(newValue) ? newValue.length : 0;
-          scope.seatsAvailable = scope.seatsLimit - studentCount;
+          setFilledSeatsCount();
+        }
+      );
+
+      scope.$watch(
+        function() {
+          return scope.$parent.sections;
+        },
+        function(newValue) {
+          scope.sections = newValue;
+          setOpenSeatsCount();
         }
       );
 
@@ -316,7 +334,6 @@ angular.module('calcentral.directives').directive('ccAcademicsClassInfoEnrollmen
       scope.className = scope.$eval(attrs.className);
       scope.instructorName = scope.$eval(attrs.instructorName);
       scope.isLaw = isLaw(scope.$eval(attrs.classDepartment));
-      scope.seatsLimit = scope.$eval(attrs.seatsLimit);
       scope.semesterName = scope.$eval(attrs.semesterName);
       scope.showPosition = scope.$eval(attrs.showPosition);
       scope.studentRole = (attrs.title === 'Wait List') ? 'waitlisted' : 'enrolled';

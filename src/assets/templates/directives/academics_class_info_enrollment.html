@@ -21,7 +21,7 @@
 
     <div class="cc-academics-class-enrollment-text">
       <span class="cc-academics-class-enrollment-stats">
-        On List: <strong data-ng-bind="students.length"></strong> |
+        On List: <strong data-ng-bind="seatsFilled"></strong> |
         Available: <strong data-ng-bind="seatsAvailable"></strong>
       </span>
 
@@ -128,7 +128,7 @@
             <th data-cc-sortable-column-directive="grade_option" data-column-heading="Grade" class="show-for-large-up"></th>
             <th data-cc-sortable-column-directive="student_id" data-column-heading="SID" class="show-for-large-up"></th>
           </thead>
-          <tbody data-ng-repeat="student in filteredStudents = (students | filter:studentInSectionFilter | orderBy:tableSort.column:tableSort.reverse)"
+          <tbody data-ng-repeat="student in filteredStudents = (studentsInSection | orderBy:tableSort.column:tableSort.reverse)"
                  data-ng-class-even="'cc-academics-even'"
                  data-ng-if="students.length">
             <tr class="cc-academics-class-enrollment-table-row">
