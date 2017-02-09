@@ -84,7 +84,7 @@
       </div>
 
       <div class="cc-clearfix">
-        <a class="cc-button"
+        <a class="cc-button cc-widget-tasks-button"
         data-ng-if="task.linkDescription && task.linkUrl"
         data-ng-click="api.util.preventBubble($event);api.analytics.trackExternalLink('Tasks', task.emitter, task.linkUrl)"
         data-ng-href="{{task.linkUrl}}">
