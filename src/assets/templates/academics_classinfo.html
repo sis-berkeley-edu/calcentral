@@ -347,6 +347,13 @@
       </div>
       <div class="cc-widget-padding cc-academics-class-info-grading">
          <span><h2>More Info</h2></span>
+         <div data-ng-if="selectedTeachingSemester.gradingAssistanceLinkMidpoint">
+           <span>
+             <a data-ng-href="{{selectedTeachingSemester.gradingAssistanceLinkMidpoint}}" title="Assistance with midpoint grading for general classes">
+               &#9632; Assistance with Midpoint Grading: General
+             </a>
+           </span>
+         </div>
         <div data-ng-if="selectedTeachingSemester.gradingAssistanceLink">
           <span>
             <a data-ng-href="{{selectedTeachingSemester.gradingAssistanceLink}}" title="Assistance with grading for general classes">
