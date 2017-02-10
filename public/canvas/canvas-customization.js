@@ -1,5 +1,5 @@
-/* jshint camelcase: false */
 // jscs:disable maximumNumberOfLines
+/* jshint camelcase: false */
 
 (function(window, document, $) {
   'use strict';
@@ -195,82 +195,179 @@
 
   /* ADD PEOPLE */
 
-  /**
-   * Add additional support for adding users to a course site
-   */
-  var addPeopleSupport = function() {
-    // Verify that the current context is the People tool
-    if (window.ENV && window.ENV.permissions && window.ENV.permissions.add_users) {
-      // Add additional support to the first step
-      waitUntilAvailable('#create-users-step-1:visible:not(.calcentral-modified)', true, function($createUserStep1) {
-        $createUserStep1.addClass('calcentral-modified');
-        // Replace instruction text
-        var instructionText = 'Type or paste a list of email addresses or CalNet UIDs below:';
-        $('p:first', $createUserStep1).text(instructionText);
-        // Replace placeholder text
-        var placeholderText = 'student@berkeley.edu, 323494, 1032343, guest@example.com, 11203443, gsi@berkeley.edu';
-        $('#user_list_textarea', $createUserStep1).attr('placeholder', placeholderText);
+  var customizations = function() {
+    return {
+      'peoplesearch_radio_cc_path': {
+        'text': 'Email Address',
+        'example': 'student@berkeley.edu, guest@example.com, gsi@berkeley.edu',
+        'help': 'Please enter the email addresses of users you would like to add, separated by commas'
+      },
+      'peoplesearch_radio_unique_id': {
+        'text': 'Berkeley UID',
+        'example': '1032343, 11203443',
+        'help': 'Please enter the UC Berkeley UIDs of users you would like to add, separated by commas.'
+      },
+      'peoplesearch_radio_sis_user_id': {
+        'text': 'Student ID',
+        'example': '25738808, UID:11203443',
+        'help': 'Please enter the Student IDs of users you would like to add, separated by commas.'
+      }
+    };
+  };
 
-        // Add a link to the help pages
-        if ($('#add-people-help').length === 0) {
-          var helpLink = [
-            '<a href="http://ets.berkeley.edu/bcourses/faq/adding-people" id="add-people-help" target="_blank">',
-            '  <i class="icon-question" aria-hidden="true"></i>',
-            '  <span class="screenreader-only">Need help adding someone to your site?</span>',
-            '</a>'
-          ].join('');
-          $('#ui-id-1').after(helpLink);
-        }
-
-        // Get the id of the Find a Person to Add LTI tool
-        getExternalToolId('globalTools', 'Find a Person to Add', function(findPersonId) {
-          if (findPersonId) {
-            var linkUrl = window.ENV.COURSE_ROOT_URL + '/external_tools/' + findPersonId;
-            var findPersonToAdd = [
-              '<div class="pull-right" id="calnet-directory-link">',
-              '  <a href="' + linkUrl + '">',
-              '    <i class="icon-search-address-book" aria-hidden="true"></i>',
-              '    Find a Person to Add',
-              '  </a>',
-              '</div>'
-            ].join('');
-            $createUserStep1.prepend(findPersonToAdd);
-          }
-        });
-      });
+  var constructFindPersonLink = function(toolId) {
+    if (toolId) {
+      var linkUrl = window.ENV.COURSE_ROOT_URL + '/external_tools/' + toolId;
+      return [
+        '<div class="pull-right" id="calnet-directory-link">',
+        '  <a href="' + linkUrl + '">',
+        '    <i class="icon-search-address-book" aria-hidden="true"></i>',
+        '    Find a Person to Add',
+        '  </a>',
+        '</div>'
+      ].join('');
     }
+  };
+
+  /**
+   * Customize help text of Add People text-area
+   */
+  var customizeAddPeopleTextArea = function(customization) {
+    if (customization) {
+      var textArea = $('[for^=TextArea__]');
+      if (textArea.length > 0) {
+        $('span:first span:first', textArea).text(customization.help);
+        $('div:first span:last', textArea[0].parentNode).text(customization.example);
+      }
+    }
+  };
+
+  var onPeopleSearchRadioChange = function(event) {
+    if (event && event.target && event.target.id) {
+      customizeAddPeopleTextArea(customizations()[event.target.id]);
+    }
+  };
+
+  /**
+   * Customize People tool of React-based Canvas UI
+   */
+  var customizeAddPeople = function() {
+    var defaultRadioButtonId = 'peoplesearch_radio_cc_path';
+    var modifiedMarker = 'calcentral-modified';
+    waitUntilAvailable('[for=' + defaultRadioButtonId + ']:visible:not(.' + modifiedMarker + ')', true, function() {
+      var c = customizations();
+      customizeAddPeopleTextArea(c[defaultRadioButtonId]);
+      // Modify radio buttons
+      for (var id in c) {
+        // JSHint demands the following conditional
+        if (c.hasOwnProperty(id)) {
+          var e = $('#' + id);
+          if (e.length > 0) {
+            $('[for=' + id + ']').addClass(modifiedMarker);
+            $('[for=' + id + '] span:first span:last').text(c[id].text);
+            e[0].addEventListener('change', onPeopleSearchRadioChange);
+          }
+        }
+      }
+      // Instructional text in footer of dialog
+      var informational = $('.peoplesearch__instructions span:first span:first');
+      if (informational.length > 0) {
+        informational.text('Add user by Email Address, Berkeley UID or Student ID.');
+      }
+      getExternalToolId('globalTools', 'Find a Person to Add', function(toolId) {
+        var parentDiv = $('#' + defaultRadioButtonId).parents('div');
+        if (parentDiv.length > 0) {
+          var firstDiv = parentDiv.first();
+          if (!firstDiv.hasClass(modifiedMarker)) {
+            firstDiv.addClass(modifiedMarker);
+            firstDiv.prepend(constructFindPersonLink(toolId));
+          }
+        }
+      });
+    });
+  };
+
+  /**
+   * The legacy 'Add People' UI is identified by id 'create-users-step-1'.
+   * TODO: Remove this legacy support once Canvas' new React-based UI is in production and reliable.
+   */
+  var customizeAddPeopleLegacy = function() {
+    // Add additional support to the first step
+    waitUntilAvailable('#create-users-step-1:visible:not(.calcentral-modified)', true, function($createUserStep1) {
+      $createUserStep1.addClass('calcentral-modified');
+      // Replace instruction text
+      var instructionText = 'Type or paste a list of email addresses or CalNet UIDs below:';
+      $('p:first', $createUserStep1).text(instructionText);
+      // Replace placeholder text
+      var placeholderText = 'student@berkeley.edu, 323494, 1032343, guest@example.com, 11203443, gsi@berkeley.edu';
+      $('#user_list_textarea', $createUserStep1).attr('placeholder', placeholderText);
+
+      // Add a link to the help pages
+      if ($('#add-people-help').length === 0) {
+        var helpLink = [
+          '<a href="http://ets.berkeley.edu/bcourses/faq/adding-people" id="add-people-help" target="_blank">',
+          '  <i class="icon-question" aria-hidden="true"></i>',
+          '  <span class="screenreader-only">Need help adding someone to your site?</span>',
+          '</a>'
+        ].join('');
+        $('#ui-id-1').after(helpLink);
+      }
+
+      // Get the id of the Find a Person to Add LTI tool
+      getExternalToolId('globalTools', 'Find a Person to Add', function(toolId) {
+        $createUserStep1.prepend(constructFindPersonLink(toolId));
+      });
+    });
+  };
+
+  /**
+   * Customize Canvas' error dialog of Add People tool
+   */
+  var customizeAddPeopleError = function() {
+    // TODO: support needed for new React-based UI
+  };
+
+  /**
+   * The legacy 'Add People' error UI is identified by id 'user_email_errors'.
+   * TODO: Remove this legacy support once Canvas' new React-based UI is in production and reliable.
+   */
+  var customizeAddPeopleErrorLegacy = function() {
+    waitUntilAvailable('#user_email_errors:visible:not(.calcentral-modified)', true, function($userEmailErrors) {
+      $userEmailErrors.addClass('calcentral-modified');
+      // Set a custom error message
+      var customErrorMessage = [
+        '<div>These users had errors and will not be added. Please ensure they are formatted correctly.</div>',
+        '<div><small>Examples: student@berkeley.edu, 323494, 1032343, guest@example.com, 11203443, gsi@berkeley.edu</small></div>'
+      ].join('');
+      $userEmailErrors.find('p').first().html(customErrorMessage);
+
+      // Append a note for guest user addition
+      var addGuestMessage = [
+        '<div id="add-people-error-guests">',
+        '  <strong>NOTE</strong>: If you are attempting to add a guest to your site who does NOT have a CalNet ID, they must first be sponsored.',
+        '  For more information, see <a target="_blank" href="http://ets.berkeley.edu/bcourses/faq-page/7">Adding People to bCourses</a>.',
+        '</div>'
+      ].join('');
+      $userEmailErrors.find('ul.createUsersErroredUsers').after(addGuestMessage);
+    });
   };
 
   /**
    * Add additional information to the Add People error message
    */
-  var addPeopleError = function() {
-    // Verify that the current context is the People tool
+  var customizePeopleTools = function() {
+    // Verify 'add_users' context
     if (window.ENV && window.ENV.permissions && window.ENV.permissions.add_users) {
-      // Add additional information to the Add People error message
-      waitUntilAvailable('#user_email_errors:visible:not(.calcentral-modified)', true, function($userEmailErrors) {
-        $userEmailErrors.addClass('calcentral-modified');
-        // Set a custom error message
-        var customErrorMessage = [
-          '<div>These users had errors and will not be added. Please ensure they are formatted correctly.</div>',
-          '<div><small>Examples: student@berkeley.edu, 323494, 1032343, guest@example.com, 11203443, gsi@berkeley.edu</small></div>'
-        ].join('');
-        $userEmailErrors.find('p').first().html(customErrorMessage);
-
-        // Append a note for guest user addition
-        var addGuestMessage = [
-          '<div id="add-people-error-guests">',
-          '  <strong>NOTE</strong>: If you are attempting to add a guest to your site who does NOT have a CalNET ID, they must first be sponsored.',
-          '  For more information, see <a target="_blank" href="http://ets.berkeley.edu/bcourses/faq-page/7">Adding People to bCourses</a>.',
-          '</div>'
-        ].join('');
-        $userEmailErrors.find('ul.createUsersErroredUsers').after(addGuestMessage);
-      });
+      // Customizations for both Canvas React-based UI and the legacy Canvas UI.
+      customizeAddPeople();
+      customizeAddPeopleLegacy();
+      // The error page requires customization, too.
+      customizeAddPeopleError();
+      customizeAddPeopleErrorLegacy();
     }
   };
 
-  addPeopleSupport();
-  addPeopleError();
+  customizePeopleTools();
 
   /* ALTERNATIVE MEDIA PANEL */
 
@@ -532,3 +629,5 @@
   };
 
 })(window, window.document, window.$);
+
+// jscs:enable maximumNumberOfLines
