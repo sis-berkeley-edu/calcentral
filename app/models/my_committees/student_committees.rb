@@ -9,9 +9,10 @@ module MyCommittees
     end
 
     def get_feed
+      #TODO: un-comment the 'request change' link (see SISRP-30410)
       result = {
         studentCommittees: [],
-        committeeRequestChangeLink: fetch_link('UC_CX_GT_AAQEAPPLIC_ADD')
+        #committeeRequestChangeLink: fetch_link('UC_CX_GT_AAQEAPPLIC_ADD')
       }
       feed = CampusSolutions::StudentCommittees.new(user_id: @uid).get[:feed]
 
