@@ -162,7 +162,7 @@ angular.module('calcentral.controllers').controller('UserOverviewController', fu
         };
       }
       if (!!_.get($scope, 'updatePlanUrl.url')) {
-        linkService.addCurrentPagePropertiesToResources($scope.updatePlanUrl, $scope.currentPage.name, $scope.currentPage.url);
+        linkService.addCurrentPagePropertiesToLink($scope.updatePlanUrl, $scope.currentPage.name, $scope.currentPage.url);
       }
 
       // prepare Student Success filtering of inactive careers
