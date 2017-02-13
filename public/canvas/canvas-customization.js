@@ -457,6 +457,21 @@
 
   enableFullScreen();
 
+  /* ALLY */
+
+  /**
+   * Load custom Ally JavaScript
+   */
+  var loadAllyCustomizations = function() {
+    window.ALLY_CFG = {
+      'baseUrl': 'https://prod.ally.ac',
+      'clientId': 2
+    };
+    $.getScript(window.ALLY_CFG.baseUrl + '/integration/canvas/ally.js');
+  };
+
+  loadAllyCustomizations();
+
   /* FOOTER */
 
   /**
