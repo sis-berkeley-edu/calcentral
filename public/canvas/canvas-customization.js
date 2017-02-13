@@ -257,6 +257,8 @@
     waitUntilAvailable('[for=' + defaultRadioButtonId + ']:visible:not(.' + modifiedMarker + ')', true, function() {
       var c = customizations();
       customizeAddPeopleTextArea(c[defaultRadioButtonId]);
+      // Class names are dynamically generated in Canvas' React-based UI.
+      var labelStyle = '';
       // Modify radio buttons
       for (var id in c) {
         // JSHint demands the following conditional
@@ -264,7 +266,9 @@
           var e = $('#' + id);
           if (e.length > 0) {
             $('[for=' + id + ']').addClass(modifiedMarker);
-            $('[for=' + id + '] span:first span:last').text(c[id].text);
+            var label = $('[for=' + id + '] span:first span:last');
+            label.text(c[id].text);
+            labelStyle = label[0].className;
             e[0].addEventListener('change', onPeopleSearchRadioChange);
           }
         }
@@ -279,8 +283,13 @@
         if (parentDiv.length > 0) {
           var firstDiv = parentDiv.first();
           if (!firstDiv.hasClass(modifiedMarker)) {
-            firstDiv.addClass(modifiedMarker);
+            if (labelStyle) {
+              firstDiv.addClass(labelStyle);
+            } else {
+              firstDiv[0].setAttribute('style', 'font-family: \'Lato\', \'Helvetica Neue\'');
+            }
             firstDiv.prepend(constructFindPersonLink(toolId));
+            firstDiv.addClass(modifiedMarker);
           }
         }
       });
