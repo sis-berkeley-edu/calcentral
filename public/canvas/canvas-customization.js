@@ -215,10 +215,6 @@
     };
   };
 
-  var modifiedMarker = function() {
-    return 'calcentral-modified';
-  };
-
   var constructFindPersonLink = function(toolId) {
     if (toolId) {
       var linkUrl = window.ENV.COURSE_ROOT_URL + '/external_tools/' + toolId;
@@ -257,7 +253,9 @@
    */
   var customizeAddPeople = function() {
     var defaultRadioButtonId = 'peoplesearch_radio_cc_path';
-    waitUntilAvailable('[for=' + defaultRadioButtonId + ']:visible:not(.' + modifiedMarker() + ')', true, function() {
+    var modifiedMarker = 'calcentral-modified';
+
+    waitUntilAvailable('[for=' + defaultRadioButtonId + ']:visible:not(.' + modifiedMarker + ')', true, function() {
       var c = customizations();
       customizeAddPeopleTextArea(c[defaultRadioButtonId]);
       // Class names are dynamically generated in Canvas' React-based UI.
@@ -268,7 +266,7 @@
         if (c.hasOwnProperty(id)) {
           var e = $('#' + id);
           if (e.length > 0) {
-            $('[for=' + id + ']').addClass(modifiedMarker());
+            $('[for=' + id + ']').addClass(modifiedMarker);
             var label = $('[for=' + id + '] span:first span:last');
             label.text(c[id].text);
             labelStyle = label[0].className;
@@ -285,14 +283,14 @@
         var parentDiv = $('#' + defaultRadioButtonId).parents('div');
         if (parentDiv.length > 0) {
           var firstDiv = parentDiv.first();
-          if (!firstDiv.hasClass(modifiedMarker())) {
+          if (!firstDiv.hasClass(modifiedMarker)) {
             if (labelStyle) {
               firstDiv.addClass(labelStyle);
             } else {
               firstDiv[0].setAttribute('style', 'font-family: \'Lato\', \'Helvetica Neue\'');
             }
             firstDiv.prepend(constructFindPersonLink(toolId));
-            firstDiv.addClass(modifiedMarker());
+            firstDiv.addClass(modifiedMarker);
           }
         }
       });
@@ -304,26 +302,17 @@
    * TODO: Remove this legacy support once Canvas' new React-based UI is in production and reliable.
    */
   var customizeAddPeopleLegacy = function() {
+    var modifiedMarker = 'calcentral-modified';
+
     // Add additional support to the first step
-    waitUntilAvailable('#create-users-step-1:visible:not(.' + modifiedMarker() + ')', true, function($createUserStep1) {
-      $createUserStep1.addClass(modifiedMarker());
+    waitUntilAvailable('#create-users-step-1:visible:not(.' + modifiedMarker + ')', true, function($createUserStep1) {
+      $createUserStep1.addClass(modifiedMarker);
       // Replace instruction text
       var instructionText = 'Type or paste a list of email addresses or CalNet UIDs below:';
       $('p:first', $createUserStep1).text(instructionText);
       // Replace placeholder text
       var placeholderText = 'student@berkeley.edu, 323494, 1032343, guest@example.com, 11203443, gsi@berkeley.edu';
       $('#user_list_textarea', $createUserStep1).attr('placeholder', placeholderText);
-
-      // Add a link to the help pages
-      if ($('#add-people-help').length === 0) {
-        var helpLink = [
-          '<a href="http://ets.berkeley.edu/bcourses/faq/adding-people" id="add-people-help" target="_blank">',
-          '  <i class="icon-question" aria-hidden="true"></i>',
-          '  <span class="screenreader-only">Need help adding someone to your site?</span>',
-          '</a>'
-        ].join('');
-        $('#ui-id-1').after(helpLink);
-      }
 
       // Get the id of the Find a Person to Add LTI tool
       getExternalToolId('globalTools', 'Find a Person to Add', function(toolId) {
@@ -388,8 +377,10 @@
    * Customize Canvas' error dialog of Add People tool
    */
   var customizeAddPeopleError = function() {
-    waitUntilAvailable('#addpeople_back:visible:not(.' + modifiedMarker() + ')', true, function($backButton) {
-      $backButton.addClass(modifiedMarker());
+    var modifiedMarker = 'calcentral-modified';
+
+    waitUntilAvailable('#addpeople_back:visible:not(.' + modifiedMarker + ')', true, function($backButton) {
+      $backButton.addClass(modifiedMarker);
       var validationError = $('.peoplevalidationissues__missing');
       if (validationError.length > 0) {
         // Add listeners to button
@@ -412,8 +403,10 @@
    * TODO: Remove this legacy support once Canvas' new React-based UI is in production and reliable.
    */
   var customizeAddPeopleErrorLegacy = function() {
-    waitUntilAvailable('#user_email_errors:visible:not(.' + modifiedMarker() + ')', true, function($userEmailErrors) {
-      $userEmailErrors.addClass(modifiedMarker());
+    var modifiedMarker = 'calcentral-modified';
+
+    waitUntilAvailable('#user_email_errors:visible:not(.' + modifiedMarker + ')', true, function($userEmailErrors) {
+      $userEmailErrors.addClass(modifiedMarker);
       // Set a custom error message
       var customErrorMessage = [
         '<div>These users had errors and will not be added. Please ensure they are formatted correctly.</div>',
@@ -432,6 +425,20 @@
   var customizePeopleTools = function() {
     // Verify 'add_users' context
     if (window.ENV && window.ENV.permissions && window.ENV.permissions.add_users) {
+
+      // First, give active tab an icon linked to ETS help page
+      var modifiedMarker = 'calcentral-modified';
+
+      waitUntilAvailable('#ui-id-1:visible:not(.' + modifiedMarker + ')', true, function($activeTab) {
+        $activeTab.after([
+          '<a href="http://ets.berkeley.edu/bcourses/faq/adding-people" id="add-people-help" target="_blank">',
+          '  <i class="icon-question" aria-hidden="true"></i>',
+          '  <span class="screenreader-only">Need help adding someone to your site?</span>',
+          '</a>'
+        ].join(''));
+        $activeTab.addClass(modifiedMarker);
+      });
+
       // Customizations for both Canvas React-based UI and the legacy Canvas UI.
       customizeAddPeople();
       customizeAddPeopleLegacy();
