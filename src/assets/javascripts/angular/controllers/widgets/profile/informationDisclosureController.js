@@ -7,22 +7,29 @@ var _ = require('lodash');
  * Controller for Information Disclosure, requests a deeplink URL for students
  * to manage any FERPA restrictions.
  */
-angular.module('calcentral.controllers').controller('InformationDisclosureController', function(ferpaDeeplinkFactory, $scope) {
+angular.module('calcentral.controllers').controller('InformationDisclosureController', function(csLinkFactory, $scope) {
   $scope.ferpa = {
     deeplink: {},
     isErrored: false,
     isLoading: true
   };
 
-  var loadInformation = function() {
-    ferpaDeeplinkFactory.getUrl().then(function(data) {
-      $scope.ferpa.isErrored = _.get(data, 'data.errored');
-      $scope.ferpa.deeplink = _.get(data, 'data.feed.ucSrFerpa.ferpaDeeplink');
+  var stopSpinner = function() {
+    $scope.ferpa.isLoading = false;
+  };
 
-      // Notify spinner that display is ready
-      $scope.ferpa.isLoading = false;
+  var getFerpaRestrictionManagementLink = function() {
+    csLinkFactory.getLink({
+      urlId: 'UC_CX_STDNT_FERPA_RESTR_MGMT'
+    }).then(function successCallback(data) {
+      $scope.ferpa.deeplink = _.get(data, 'data.link');
+      stopSpinner();
+    }, function errorCallback() {
+      $scope.ferpa.isErrored = true;
+      $scope.ferpa.deeplink = null;
+      stopSpinner();
     });
   };
 
-  loadInformation();
+  getFerpaRestrictionManagementLink();
 });
