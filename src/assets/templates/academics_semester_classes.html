@@ -167,7 +167,8 @@
       <div>
         <ul class="cc-academics-course-grading-icon">
           <li><i class="fa fa-ban cc-inline-block"></i> Grade entry period not open</li>
-          <li><i class="fa fa-circle cc-inline-block"></i> Law class (no midpoint grades) <strong>OR</strong> you do not have grading permissions</li>
+          <li data-ng-if="containsMidpointClass"><i class="fa fa-circle cc-inline-block"></i> Law class (no midpoint grades) <strong>OR</strong> you do not have grading permissions</li>
+          <li data-ng-if="!containsMidpointClass"><i class="fa fa-circle cc-inline-block"></i> You do not have grading permissions</li>
           <li><i class="fa fa-file-o cc-inline-block"></i> Grade entry period open; grades not approved or posted</li>
           <li><i class="fa fa-check cc-icon-green cc-inline-block"></i> Grades approved</li>
           <li><i class="fa fa-check-circle cc-icon-green cc-inline-block"></i> Grades posted <strong>Note: </strong>All classes, with or without midpoint grades, will post.</li>
