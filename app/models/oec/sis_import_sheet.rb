@@ -22,7 +22,6 @@ module Oec
         INSTRUCTION_FORMAT
         SECTION_NUM
         PRIMARY_SECONDARY_CD
-        ASSOCIATED_PRIMARY
         LDAP_UID
         SIS_ID
         FIRST_NAME

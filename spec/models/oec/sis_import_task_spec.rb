@@ -100,7 +100,7 @@ describe Oec::SisImportTask do
           courses.headers.each { |header| expect(row).to have_key header }
           expect(row['BLUE_ROLE']).to eq '23'
           expect(row['EVALUATE']).to be_nil
-          %w(COURSE_ID COURSE_NAME DEPT_NAME CATALOG_ID INSTRUCTION_FORMAT SECTION_NUM ASSOCIATED_PRIMARY).each do |key|
+          %w(COURSE_ID COURSE_NAME DEPT_NAME CATALOG_ID INSTRUCTION_FORMAT SECTION_NUM).each do |key|
             expect(row[key]).to be_present
           end
           expect(%w(P S)).to include row['PRIMARY_SECONDARY_CD']
@@ -260,13 +260,6 @@ describe Oec::SisImportTask do
         stat_65 = subject.select { |row| row['DEPT_NAME'] == 'STAT' && row['CATALOG_ID'] == '65' }
         expect(stat_65[0]['PRIMARY_SECONDARY_CD']).to eq 'P'
         expect(stat_65[1]['PRIMARY_SECONDARY_CD']).to eq 'S'
-      end
-
-      it 'can return a single associated primary section' do
-        expect(subject.find{|row| row['COURSE_ID'] == '2015-B-87672'}['ASSOCIATED_PRIMARY']).to eq '87672'
-      end
-      it 'can return multiple associated primary sections' do
-        expect(subject.find{|row| row['COURSE_ID'] == '2015-B-87693'}['ASSOCIATED_PRIMARY']).to eq '54432,87672'
       end
 
       it 'flags non-student academic employees as faculty' do
