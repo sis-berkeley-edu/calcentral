@@ -215,6 +215,10 @@
     };
   };
 
+  var modifiedMarker = function() {
+    return 'calcentral-modified';
+  };
+
   var constructFindPersonLink = function(toolId) {
     if (toolId) {
       var linkUrl = window.ENV.COURSE_ROOT_URL + '/external_tools/' + toolId;
@@ -253,8 +257,7 @@
    */
   var customizeAddPeople = function() {
     var defaultRadioButtonId = 'peoplesearch_radio_cc_path';
-    var modifiedMarker = 'calcentral-modified';
-    waitUntilAvailable('[for=' + defaultRadioButtonId + ']:visible:not(.' + modifiedMarker + ')', true, function() {
+    waitUntilAvailable('[for=' + defaultRadioButtonId + ']:visible:not(.' + modifiedMarker() + ')', true, function() {
       var c = customizations();
       customizeAddPeopleTextArea(c[defaultRadioButtonId]);
       // Class names are dynamically generated in Canvas' React-based UI.
@@ -265,7 +268,7 @@
         if (c.hasOwnProperty(id)) {
           var e = $('#' + id);
           if (e.length > 0) {
-            $('[for=' + id + ']').addClass(modifiedMarker);
+            $('[for=' + id + ']').addClass(modifiedMarker());
             var label = $('[for=' + id + '] span:first span:last');
             label.text(c[id].text);
             labelStyle = label[0].className;
@@ -282,14 +285,14 @@
         var parentDiv = $('#' + defaultRadioButtonId).parents('div');
         if (parentDiv.length > 0) {
           var firstDiv = parentDiv.first();
-          if (!firstDiv.hasClass(modifiedMarker)) {
+          if (!firstDiv.hasClass(modifiedMarker())) {
             if (labelStyle) {
               firstDiv.addClass(labelStyle);
             } else {
               firstDiv[0].setAttribute('style', 'font-family: \'Lato\', \'Helvetica Neue\'');
             }
             firstDiv.prepend(constructFindPersonLink(toolId));
-            firstDiv.addClass(modifiedMarker);
+            firstDiv.addClass(modifiedMarker());
           }
         }
       });
@@ -302,8 +305,8 @@
    */
   var customizeAddPeopleLegacy = function() {
     // Add additional support to the first step
-    waitUntilAvailable('#create-users-step-1:visible:not(.calcentral-modified)', true, function($createUserStep1) {
-      $createUserStep1.addClass('calcentral-modified');
+    waitUntilAvailable('#create-users-step-1:visible:not(.' + modifiedMarker() + ')', true, function($createUserStep1) {
+      $createUserStep1.addClass(modifiedMarker());
       // Replace instruction text
       var instructionText = 'Type or paste a list of email addresses or CalNet UIDs below:';
       $('p:first', $createUserStep1).text(instructionText);
@@ -329,11 +332,79 @@
     });
   };
 
+  var extractBadUserInput = function(nameList) {
+    // Extract user input from table elements.
+    var userInput = [];
+    var rows = $(':button[data-address]', nameList);
+    for (var row in rows) {
+      if (rows.hasOwnProperty(row) && rows[row].getAttribute) {
+        var ref = rows[row].getAttribute('data-address');
+        if (ref) {
+          userInput.push(ref);
+        }
+      }
+    }
+    return (userInput.length > 0) ? '<div>Unable to find matches for ' + userInput.join(', ') + '. Please ensure they are formatted correctly.</div>' : '';
+  };
+
+  var helpTextForAddPeopleError = function() {
+    return [
+      '<div id="add-people-error-guests">',
+      '  <strong>NOTE</strong>: If you are attempting to add a guest to your site who does NOT have a CalNet ID, they must first be sponsored.',
+      '  For more information, see <a target="_blank" href="http://ets.berkeley.edu/bcourses/faq-page/7">Adding People to bCourses</a>.',
+      '</div>'
+    ].join('');
+  };
+
+  var addPeopleNextClickable = function(clickable) {
+    var nextButton = $('#addpeople_next');
+    if (nextButton.length > 0) {
+      var b = nextButton[0];
+      if (clickable) {
+        b.removeAttribute('disabled');
+        b.removeAttribute('aria-disabled');
+      } else {
+        b.setAttribute('disabled', 'true');
+        b.setAttribute('aria-disabled', 'true');
+      }
+    }
+  };
+
+  var enableNextButton = function() {
+    addPeopleNextClickable(true);
+  };
+
+  var listenersForAddPeopleError = function(backButton) {
+    addPeopleNextClickable(false);
+    // The 'Next' button will be re-enabled when user clicks 'Back' or 'Cancel'.
+    backButton[0].addEventListener('click', enableNextButton);
+    var cancelButton = backButton.siblings(':button').first();
+    if (cancelButton.length > 0) {
+      cancelButton[0].addEventListener('click', enableNextButton);
+    }
+  };
+
   /**
    * Customize Canvas' error dialog of Add People tool
    */
   var customizeAddPeopleError = function() {
-    // TODO: support needed for new React-based UI
+    waitUntilAvailable('#addpeople_back:visible:not(.' + modifiedMarker() + ')', true, function($backButton) {
+      $backButton.addClass(modifiedMarker());
+      var validationError = $('.peoplevalidationissues__missing');
+      if (validationError.length > 0) {
+        // Add listeners to button
+        listenersForAddPeopleError($backButton);
+        // The following names were not found.
+        var nameList = $('.addpeople__missing.namelist');
+        var alertBox = $('div div', validationError);
+        if (alertBox.length > 1) {
+          // UC Berkeley's custom messaging
+          alertBox.last().html('<div>' + extractBadUserInput(nameList) + helpTextForAddPeopleError() + '</div>');
+        }
+        // We remove the Canvas feature in which you can create new users using unrecognized input.
+        nameList.remove();
+      }
+    });
   };
 
   /**
@@ -341,8 +412,8 @@
    * TODO: Remove this legacy support once Canvas' new React-based UI is in production and reliable.
    */
   var customizeAddPeopleErrorLegacy = function() {
-    waitUntilAvailable('#user_email_errors:visible:not(.calcentral-modified)', true, function($userEmailErrors) {
-      $userEmailErrors.addClass('calcentral-modified');
+    waitUntilAvailable('#user_email_errors:visible:not(.' + modifiedMarker() + ')', true, function($userEmailErrors) {
+      $userEmailErrors.addClass(modifiedMarker());
       // Set a custom error message
       var customErrorMessage = [
         '<div>These users had errors and will not be added. Please ensure they are formatted correctly.</div>',
@@ -351,13 +422,7 @@
       $userEmailErrors.find('p').first().html(customErrorMessage);
 
       // Append a note for guest user addition
-      var addGuestMessage = [
-        '<div id="add-people-error-guests">',
-        '  <strong>NOTE</strong>: If you are attempting to add a guest to your site who does NOT have a CalNet ID, they must first be sponsored.',
-        '  For more information, see <a target="_blank" href="http://ets.berkeley.edu/bcourses/faq-page/7">Adding People to bCourses</a>.',
-        '</div>'
-      ].join('');
-      $userEmailErrors.find('ul.createUsersErroredUsers').after(addGuestMessage);
+      $userEmailErrors.find('ul.createUsersErroredUsers').after(helpTextForAddPeopleError());
     });
   };
 
