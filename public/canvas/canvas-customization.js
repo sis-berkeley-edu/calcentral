@@ -429,7 +429,7 @@
       // First, give active tab an icon linked to ETS help page
       var modifiedMarker = 'calcentral-modified';
 
-      waitUntilAvailable('#ui-id-1:visible:not(.' + modifiedMarker + ')', true, function($activeTab) {
+      waitUntilAvailable('#group_categories_tabs ul li a:first:not(.' + modifiedMarker + ')', true, function($activeTab) {
         $activeTab.after([
           '<a href="http://ets.berkeley.edu/bcourses/faq/adding-people" id="add-people-help" target="_blank">',
           '  <i class="icon-question" aria-hidden="true"></i>',
