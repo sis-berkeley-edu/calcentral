@@ -46,6 +46,11 @@ describe MyCommittees::StudentCommittees do
       expect(committees[3][:statusMessage]).to eq 'Jan 01, 2024'
     end
 
+    it 'filters out committee members with end date in the past' do
+      members = feed[:studentCommittees][0][:committeeMembers]
+      expect(members[:chair].count).to eq 2
+    end
+
     it 'contains the expected student committee data for chairs' do
       members = feed[:studentCommittees][0][:committeeMembers]
       expect(members[:chair][0][:name]).to eq 'MEMBERFIRSTNAME1 MEMBERLASTNAME1'
@@ -84,6 +89,36 @@ describe MyCommittees::StudentCommittees do
       expect(members[:academicSenate][0][:name]).to eq 'MEMBERFIRSTNAME7 MEMBERLASTNAME7'
       expect(members[:academicSenate][0][:email]).to eq 'MEMBER@EMAIL.7'
       expect(members[:academicSenate][0][:primaryDepartment]).to eq 'MEMBERDEPTDESCR7'
+    end
+  end
+
+  describe '#inactive?' do
+    let(:committee_member) do
+      {
+        :memberEndDate => end_date
+      }
+    end
+    let(:result) { described_class.new(uid).inactive?(committee_member) }
+
+    context 'valid future date' do
+      let(:end_date) { '2999-01-01' }
+      it 'parses date and flags member as active' do
+        expect(result).to be false
+      end
+    end
+
+    context 'valid past date' do
+      let(:end_date) { '1999-01-01' }
+      it 'parses date and flags member as inactive' do
+        expect(result).to be true
+      end
+    end
+
+    context 'invalid date' do
+      let(:end_date) { 'bogus' }
+      it 'fails the date parsing but assumes member is active' do
+        expect(result).to be false
+      end
     end
   end
 end

@@ -25,9 +25,26 @@ module MyCommittees
       cs_committees.compact!
       committees_result = []
       cs_committees.try(:each) do |cs_committee|
+        remove_inactive_members(cs_committee)
         committees_result << parse_cs_committee(cs_committee)
       end
       committees_result.compact
+    end
+
+    def remove_inactive_members(cs_committee)
+      cs_committee[:committeeMembers].try(:reject!) do |member|
+        inactive?(member)
+      end
+    end
+
+    def inactive?(committee_member)
+      inactive = false;
+      begin
+        inactive = Time.zone.parse(committee_member[:memberEndDate].to_s).to_datetime.try(:past?)
+      rescue
+        logger.error "Bad Format for committee member end date; Class #{self.class.name} feed, uid = #{@uid}"
+      end
+      inactive
     end
 
   end
