@@ -179,7 +179,7 @@ module MyAcademics
     def get_cs_status(ccn, is_law, term_code)
       cnn_status = nil
       if (grading_feed = get_grading_data)
-        grading_statuses = grading_feed[:feed].try(:[],:ucSrClassGrading).try(:[],:classGradingStatuses)
+        grading_statuses = grading_feed.try(:[],:feed).try(:[],:ucSrClassGrading).try(:[],:classGradingStatuses)
         cnn_status = find_ccn_grading_statuses(grading_statuses, ccn, is_law, term_code)
       end
       cnn_status
@@ -220,7 +220,7 @@ module MyAcademics
     end
 
     def parse_cs_grading_status(cs_grading_status, is_law)
-      return :noCsData if unexpected_cs_status?(cs_grading_status, is_law)
+      return {finalStatus: :noCsData, midpointStatus: :noCsData} if unexpected_cs_status?(cs_grading_status, is_law)
       cs_grading_status[:finalStatus] = case cs_grading_status[:finalStatus]
         when 'GRD'
           :GRD
@@ -250,12 +250,16 @@ module MyAcademics
     end
 
     def unexpected_cs_status?(cs_grading_status, is_law)
-      return false if !!%w{GRD RDY APPR POST}.find { |s| s == cs_grading_status[:finalStatus] } || cs_grading_status[:finalStatus].blank?
-      if !is_law
-        return false if !!%w{APPR NRVW RDY}.find { |s| s == cs_grading_status[:midpointStatus] } || cs_grading_status[:midpointStatus].blank?
+      has_error = false
+      if cs_grading_status.nil? ||
+         !(!!%w{GRD RDY APPR POST}.find { |s| s == cs_grading_status.try(:[],:finalStatus) } || cs_grading_status.try(:[],:finalStatus).blank?) ||
+         (!is_law && !(!!%w{APPR NRVW RDY}.find { |s| s == cs_grading_status.try(:[],:midpointStatus) } || cs_grading_status.try(:[],:midpointStatus).blank?))
+        has_error = true
       end
-      logger.debug "Unexpected CS Final Grading Status Received (Final: #{cs_grading_status[:finalStatus]}#{', Midpoint: ' + cs_grading_status[:midpointStatus] if cs_grading_status.key?(:midpointStatus)}) for Class #{self.class.name} feed, uid = #{@uid}"
-      true
+      if has_error && cs_grading_status.present?
+        logger.debug "Unexpected CS Final Grading Status Received (Final: #{cs_grading_status[:finalStatus]}#{', Midpoint: ' + cs_grading_status[:midpointStatus] if cs_grading_status.key?(:midpointStatus)}) for Class #{self.class.name} feed, uid = #{@uid}"
+      end
+      has_error
     end
 
     def get_grading_period_status(is_law, is_midpoint, term_code)
