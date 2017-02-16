@@ -26,12 +26,21 @@ describe MyCommittees::FacultyCommittees do
       expect(committees[1][:csMemberEndDate]).to eq '2017-08-30'
     end
 
-    it 'contains the expected faculty data' do
+    it 'contains the expected faculty data for a Dissertation committee' do
+      committees = feed[:facultyCommittees]
+      expect(committees[0][:committeeType]).to eq 'Dissertation Committee'
+      expect(committees[0][:program]).to eq 'Education PhD'
+      expect(committees[0][:statusTitle]).to eq 'Advancement To Candidacy:'
+      expect(committees[0][:statusMessage]).to eq 'Pending'
+      expect(committees[0][:serviceRange]).to eq 'Aug 31, 2016 - Present'
+    end
+
+    it 'contains the expected faculty data for a Qualifying Exam committee' do
       committees = feed[:facultyCommittees]
       expect(committees[1][:committeeType]).to eq 'Qualifying Exam Committee'
       expect(committees[1][:program]).to eq 'Civil Environmental Eng MS'
-      expect(committees[1][:statusTitle]).to eq 'Proposed Exam Date:'
-      expect(committees[1][:statusMessage]).to eq 'Pending'
+      expect(committees[1][:statusTitle]).to eq nil
+      expect(committees[1][:statusMessage]).to eq nil
       expect(committees[1][:serviceRange]).to eq 'Aug 30, 2016 - Aug 30, 2017'
     end
 
