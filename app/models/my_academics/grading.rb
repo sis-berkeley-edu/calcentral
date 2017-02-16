@@ -251,9 +251,7 @@ module MyAcademics
 
     def unexpected_cs_status?(cs_grading_status, is_law)
       has_error = false
-      if cs_grading_status.nil? ||
-         !(!!%w{GRD RDY APPR POST}.find { |s| s == cs_grading_status.try(:[],:finalStatus) } || cs_grading_status.try(:[],:finalStatus).blank?) ||
-         (!is_law && !(!!%w{APPR NRVW RDY}.find { |s| s == cs_grading_status.try(:[],:midpointStatus) } || cs_grading_status.try(:[],:midpointStatus).blank?))
+      if cs_grading_status.nil? || final_status_error?(cs_grading_status) || (!is_law && midpoint_status_error?(cs_grading_status))
         has_error = true
       end
       if has_error && cs_grading_status.present?
@@ -261,6 +259,15 @@ module MyAcademics
       end
       has_error
     end
+
+    def final_status_error?(cs_grading_status)
+      !(!!%w{GRD RDY APPR POST}.find { |s| s == cs_grading_status.try(:[],:finalStatus) } || cs_grading_status.try(:[], :finalStatus).blank?)
+    end
+
+    def midpoint_status_error?(cs_grading_status)
+      !(!!%w{APPR NRVW RDY}.find { |s| s== cs_grading_status.try(:[], :midpointStatus) } || cs_grading_status.try(:[],:midpointStatus).blank?)
+    end
+
 
     def get_grading_period_status(is_law, is_midpoint, term_code)
       return :gradingPeriodNotSet unless valid_grading_period?(is_law, term_code)
