@@ -62,7 +62,7 @@ module MyCommittees::CommitteesModule
 
   def committee_status_title (cs_committee)
     if cs_committee[:committeeType].to_s == COMMITTEE_TYPE_EXAM
-      'Proposed Exam Date:'
+      nil
     else
       'Advancement To Candidacy:'
     end
@@ -70,14 +70,18 @@ module MyCommittees::CommitteesModule
 
   def committee_status_message (cs_committee)
     if cs_committee[:committeeType].to_s == COMMITTEE_TYPE_EXAM
-      return cs_committee[:studentQeExamDate].present? ? format_date(cs_committee[:studentQeExamDate]) : 'Pending'
+      nil
+    elsif cs_committee[:studentMilestoneCompleteDate].blank?
+      'Pending'
+    else
+      'Approved'
     end
-    'Approved'
   end
 
   def committee_status_icon (cs_committee)
-    if cs_committee[:committeeType].to_s == COMMITTEE_TYPE_EXAM &&
-      cs_committee[:studentQeExamDate].blank?
+    if cs_committee[:committeeType].to_s == COMMITTEE_TYPE_EXAM
+      ''
+    elsif cs_committee[:studentMilestoneCompleteDate].blank?
       'exclamation-triangle'
     else
       'check'
