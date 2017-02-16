@@ -28,22 +28,22 @@ describe MyCommittees::StudentCommittees do
       expect(committees[1][:committeeType]).to eq 'NOT ACTIVE'
     end
 
-    it 'contains the expected student data for qualifying exam pending' do
+    it 'contains the expected student data for a qualifying exam committee' do
       committees = feed[:studentCommittees]
       expect(committees[2][:committeeType]).to eq 'Qualifying Exam Committee'
       expect(committees[2][:program]).to eq 'STUDENTACADPLAN3'
-      expect(committees[2][:statusTitle]).to eq 'Proposed Exam Date:'
-      expect(committees[2][:statusIcon]).to eq 'exclamation-triangle'
-      expect(committees[2][:statusMessage]).to eq 'Pending'
+      expect(committees[2][:statusTitle]).to be nil
+      expect(committees[2][:statusIcon]).to eq ''
+      expect(committees[2][:statusMessage]).to be nil
     end
 
-    it 'contains the expected student data for qualifying exam dated' do
+    it 'contains the expected student data for a dissertation committee' do
       committees = feed[:studentCommittees]
       expect(committees[3][:committeeType]).to eq 'Dissertation Committee'
       expect(committees[3][:program]).to eq 'STUDENTACADPLAN4'
-      expect(committees[3][:statusTitle]).to eq 'Proposed Exam Date:'
-      expect(committees[3][:statusIcon]).to eq 'check'
-      expect(committees[3][:statusMessage]).to eq 'Jan 01, 2024'
+      expect(committees[3][:statusTitle]).to eq 'Advancement To Candidacy:'
+      expect(committees[3][:statusIcon]).to eq 'exclamation-triangle'
+      expect(committees[3][:statusMessage]).to eq 'Pending'
     end
 
     it 'contains the expected student committee data for chairs' do
