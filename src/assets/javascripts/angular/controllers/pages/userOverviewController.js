@@ -175,19 +175,6 @@ angular.module('calcentral.controllers').controller('UserOverviewController', fu
     });
   };
 
-  var loadHolds = function() {
-    var options = {
-      uid: $routeParams.uid
-    };
-    return academicStatusFactory.getHolds(options)
-      .then(function(data) {
-        $scope.holds = _.get(data, 'holds');
-      })
-      .finally(function() {
-        $scope.holdsInfo.isLoading = false;
-      });
-  };
-
   var loadRegistrations = function() {
     advisingFactory.getStudentRegistrations({
       uid: $routeParams.uid
@@ -347,7 +334,6 @@ angular.module('calcentral.controllers').controller('UserOverviewController', fu
       .then(loadProfile)
       .then(loadAcademics)
       .then(loadStudentSuccess)
-      .then(loadHolds)
       .then(loadRegistrations)
       .then(loadDegreeProgresses)
       .then(getRegMessages);
