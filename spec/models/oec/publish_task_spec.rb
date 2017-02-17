@@ -142,9 +142,9 @@ describe Oec::PublishTask do
         expect(instructors.find { |i| i['LDAP_UID'] == '77777'}).to be_present
       end
 
-      it 'should not include course-instructor pairings a year old or more' do
-        expect(course_instructors.find { |ci| ci['COURSE_ID'] == '2014-B-11111' && ci['LDAP_UID'] == '55555'}).not_to be_present
-        expect(instructors.find { |i| i['LDAP_UID'] == '55555'}).not_to be_present
+      it 'should also include course-instructor pairings from the distant past' do
+        expect(course_instructors.find { |ci| ci['COURSE_ID'] == '2014-B-11111' && ci['LDAP_UID'] == '55555'}).to be_present
+        expect(instructors.find { |i| i['LDAP_UID'] == '55555'}).to be_present
       end
 
       it 'should merge instructor data from previous terms when current-term data absent' do

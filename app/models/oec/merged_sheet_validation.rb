@@ -23,19 +23,16 @@ module Oec
         course_supervisors = Oec::CourseSupervisors.new
       end
 
-      # Carry over course-instructor associations from the previous year, and note instructor UIDs to fill
+      # Carry over course-instructor associations from previous years, and note instructor UIDs to fill
       # any gaps in the this term's instructor data.
       previous_instructor_uids = Set.new
       if (previous_term_folder = find_previous_term_folder) && (previous_term_last_export = find_last_export previous_term_folder)
         previous_course_instructors = worksheet_from_folder(previous_term_last_export, Oec::CourseInstructors)
         previous_instructors = worksheet_from_folder(previous_term_last_export, Oec::Instructors)
         if previous_course_instructors && previous_instructors
-          cutoff_term = term_one_year_ago
           previous_course_instructors.each do |row|
-            if row['COURSE_ID'][0..5] > cutoff_term
-              validate_and_add(course_instructors, row, %w(LDAP_UID COURSE_ID))
-              previous_instructor_uids << row['LDAP_UID']
-            end
+            validate_and_add(course_instructors, row, %w(LDAP_UID COURSE_ID))
+            previous_instructor_uids << row['LDAP_UID']
           end
         end
       end
@@ -168,12 +165,6 @@ module Oec
         log_validation_errors
         nil
       end
-    end
-
-    def term_one_year_ago
-      # If this task's term is 2016-D, then 2015-D
-      term_yr = @term_code.to_i
-      @term_code.sub(term_yr.to_s, (term_yr - 1).to_s)
     end
 
     def validate_integrity(key, *worksheets)
