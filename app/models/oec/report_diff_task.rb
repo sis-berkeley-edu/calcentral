@@ -6,27 +6,56 @@ module Oec
     attr_accessor :diff_report
 
     def run_internal
-      @diff_report = Oec::DiffReport.new @opts
-      Oec::CourseCode.by_dept_code(@course_code_filter).keys.each { |dept_code| analyze dept_code }
-      update_remote_drive
+      @confirmations_folder = @remote_drive.find_nested([@term_code, Oec::Folder.confirmations])
+      raise UnexpectedDataError, "No department confirmations folder found for term #{@term_code}" unless @confirmations_folder
+
+      Oec::CourseCode.by_dept_code(@course_code_filter).keys.each do |dept_code|
+        if (diff_report = diff_for_department dept_code)
+          update_departmental_diff(diff_report, dept_code)
+        end
+      end
       log_validation_errors
     end
 
     private
 
-    def update_remote_drive
-      confirmations_folder = @remote_drive.find_nested([@term_code, Oec::Folder.confirmations])
-      raise UnexpectedDataError, "No department confirmations folder found for term #{@term_code}" unless confirmations_folder
-      title = "#{@term_code} diff report"
-      if (remote_file = @remote_drive.find_first_matching_item(title, confirmations_folder))
-        # TODO: Be transactional, implement @remote_drive.update_worksheet(). For now, the benefit is not worth the risk of refactor.
-        log :info, "Permanently delete the old diff report #{remote_file.id}"
-        @remote_drive.trash_item(remote_file, permanently_delete: true)
+    def update_departmental_diff(updated_diff, dept_code)
+      dept_name = Berkeley::Departments.get(dept_code, concise: true)
+      unless (dept_confirmation = @remote_drive.find_first_matching_item(dept_name, @confirmations_folder)) &&
+             (dept_confirmation_sheet = @remote_drive.spreadsheet_by_id dept_confirmation.id)
+        log :error, "Could not find '#{dept_name}' department confirmation sheet to update diff report"
+        return
       end
-      upload_worksheet(@diff_report, title, confirmations_folder)
+
+      diff_report_worksheet = (dept_confirmation_sheet.worksheets.find { |w| w.title == 'Diff Report' }) ||
+                               dept_confirmation_sheet.add_worksheet('Diff Report', updated_diff.count+1, updated_diff.headers.count)
+
+      if diff_report_worksheet.max_rows <= updated_diff.count
+        diff_report_worksheet.max_rows = updated_diff.count + 1
+        diff_report_worksheet.save
+      end
+
+      # Write header and data rows.
+      cell_updates = {}
+      updated_diff.headers.each_with_index { |header, x| cell_updates[[1, x+1]] = "'#{header}" }
+      updated_diff.each_sorted_with_index do |diff_report_row, y|
+        updated_diff.headers.each_with_index { |header, x| cell_updates[[y+2, x+1]] = diff_report_row[header] }
+      end
+      # If the old worksheet has more rows than the new worksheet, overwrite old values with blanks.
+      (updated_diff.count + 1).upto(diff_report_worksheet.rows.count) do |y|
+        1.upto(updated_diff.headers.count) { |x| cell_updates[[y, x]] = '' }
+      end
+
+      begin
+        @remote_drive.update_worksheet(diff_report_worksheet, cell_updates)
+        log :debug, "Updated diff report for '#{dept_name}' confirmation sheet"
+      rescue Errors::ProxyError => e
+        log :error, "Update of diff report for '#{dept_name}' confirmation sheet failed: #{e}"
+      end
     end
 
-    def analyze(dept_code)
+    def diff_for_department(dept_code)
+      diff_report = Oec::DiffReport.new @opts
       dept_name = Berkeley::Departments.get(dept_code, concise: true)
       validate(dept_code, @term_code) do |errors|
         unless (sis_data = csv_row_hash([@term_code, Oec::Folder.sis_imports, "#{datestamp} #{timestamp}", dept_name], dept_code, Oec::SisImportSheet))
@@ -53,8 +82,9 @@ module Oec
           end
         end
         log :info, "#{keys_of_rows_with_diff.length} row(s) with diff found in #{@term_code}/departments/#{dept_name}"
-        report_diff(dept_code, sis_data, dept_data, keys_of_rows_with_diff)
+        add_rows_to_diff(diff_report, dept_code, sis_data, dept_data, keys_of_rows_with_diff)
       end
+      diff_report
     end
 
     def default_date_time
@@ -64,7 +94,7 @@ module Oec
       @status = 'Error'
     end
 
-    def report_diff(dept_code, sis_data, dept_data, keys)
+    def add_rows_to_diff(diff_report, dept_code, sis_data, dept_data, keys)
       keys.each do |key|
         sis_row = sis_data[key]
         dept_row = dept_data[key]
@@ -81,7 +111,7 @@ module Oec
           diff_row["sis:#{column}"] = sis_row ? sis_row[column] : nil
           diff_row[column] = dept_row ? dept_row[column] : nil
         end
-        @diff_report[key] = diff_row
+        diff_report[key] = diff_row
       end
     end
 
