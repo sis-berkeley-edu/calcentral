@@ -3,7 +3,7 @@ module Oec
 
     def headers
       %w(
-        +/-
+        REASON
         DEPT_CODE
         KEY
         LDAP_UID

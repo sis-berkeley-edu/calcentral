@@ -5,6 +5,8 @@ module Oec
 
     attr_accessor :diff_report
 
+    COLUMNS_TO_COMPARE = %w(COURSE_NAME FIRST_NAME LAST_NAME EMAIL_ADDRESS DEPT_FORM EVALUATION_TYPE MODULAR_COURSE START_DATE END_DATE)
+
     def run_internal
       @confirmations_folder = @remote_drive.find_nested([@term_code, Oec::Folder.confirmations])
       raise UnexpectedDataError, "No department confirmations folder found for term #{@term_code}" unless @confirmations_folder
@@ -70,7 +72,7 @@ module Oec
         intersection = (sis_keys = sis_data.keys) & (dept_keys = dept_data.keys)
         (sis_keys | dept_keys).select do |key|
           if intersection.include? key
-            column_with_diff = columns_to_compare.detect do |column|
+            column_with_diff = COLUMNS_TO_COMPARE.detect do |column|
               # Anticipate nil column values
               sis_value = sis_data[key][column].to_s
               dept_value = dept_data[key][column].to_s
@@ -98,30 +100,47 @@ module Oec
       keys.each do |key|
         sis_row = sis_data[key]
         dept_row = dept_data[key]
-        ldap_uid = sis_row ? sis_row['LDAP_UID'] : dept_row['LDAP_UID']
-        id = "#{key[:term_yr]}-#{key[:term_cd]}-#{key[:ccn]}"
-        id << "-#{key[:ldap_uid]}" unless key[:ldap_uid].to_s.empty?
+
+        diff_key = key.values_at(:term_yr, :term_cd, :ccn, :ldap_uid).map(&:to_s).reject(&:empty?).join('-')
+
         diff_row = {
-          '+/-' => diff_type_symbol(sis_row, dept_row),
           'DEPT_CODE' => dept_code,
-          'KEY' => id,
-          'LDAP_UID' => ldap_uid
+          'KEY' => diff_key
         }
-        columns_to_compare.each do |column|
-          diff_row["sis:#{column}"] = sis_row ? sis_row[column] : nil
-          diff_row[column] = dept_row ? dept_row[column] : nil
+
+        if !sis_row
+          # Add a single row with values from the department sheet.
+          diff_report[diff_key] = diff_row.merge(dept_row.slice('LDAP_UID', *COLUMNS_TO_COMPARE)).merge({
+            'REASON' => 'Not in SIS'
+          })
+
+        elsif !dept_row
+          # Add a single row with values from the SIS import sheet.
+          COLUMNS_TO_COMPARE.each { |column| diff_row["sis:#{column}"] = sis_row[column] }
+          diff_report[diff_key] = diff_row.merge(sis_row.slice('LDAP_UID')).merge({
+            'REASON' => 'Not in DCS'
+          })
+
+        else
+          # Add as many rows as there are discrepancies.
+          diff_row.merge!({
+            'LDAP_UID' =>        sis_row['LDAP_UID'],
+            'COURSE_NAME' =>     dept_row['COURSE_NAME'],
+            'sis:COURSE_NAME' => sis_row['COURSE_NAME']
+          })
+          COLUMNS_TO_COMPARE.each do |column|
+            key_with_column = [diff_key, column].join '-'
+            if dept_row[column] != sis_row[column]
+              diff_report[key_with_column] = diff_row.merge({
+                'KEY'           => key_with_column,
+                'REASON'        => column,
+                column          => dept_row[column],
+                "sis:#{column}" => sis_row[column]
+              })
+            end
+          end
         end
-        diff_report[key] = diff_row
       end
-    end
-
-    def diff_type_symbol(sis_row, dept_row)
-      return ' ' if sis_row && dept_row
-      dept_row ? '+' : '-'
-    end
-
-    def columns_to_compare
-      %w(COURSE_NAME FIRST_NAME LAST_NAME EMAIL_ADDRESS DEPT_FORM EVALUATION_TYPE MODULAR_COURSE START_DATE END_DATE)
     end
 
     def csv_row_hash(folder_titles, dept_code, klass)
