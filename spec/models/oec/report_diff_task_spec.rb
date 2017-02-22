@@ -37,9 +37,18 @@ describe Oec::ReportDiffTask do
         dept_data = dept_name == 'STAT' ? JSON.parse(modified_stat_data) : sis_data
         fake_csv_hash[dept_name] = [ sis_data, dept_data]
       end
-      # Behave as if there is no previous diff report on remote drive
+
+      # Behave as if there is no previous diff report on remote drive for any of the three departments
+      expect(fake_remote_drive).to receive(:spreadsheet_by_id).exactly(3).times.and_return (remote_sheet = double)
+      expect(remote_sheet).to receive(:worksheets).exactly(3).times.and_return []
+      expect(remote_sheet).to receive(:add_worksheet).exactly(3).times.with('Diff Report', anything, anything).and_return (fake_worksheet = double(
+        max_rows: 100,
+        rows: []
+      ))
+      expect(fake_remote_drive).to receive(:update_worksheet).exactly(3).times.with(fake_worksheet, anything)
+
       expect(fake_remote_drive).to receive(:find_nested).with([term_code, Oec::Folder.confirmations]).and_return (departments_folder = double)
-      expect(fake_remote_drive).to receive(:find_first_matching_item).with('2014-B diff report', departments_folder).and_return nil
+      allow(fake_remote_drive).to receive(:find_first_matching_item).and_return mock_google_drive_item
       dept_code_mappings.each do |dept_code, dept_name|
         friendly_name = Berkeley::Departments.get(dept_code, concise: true)
         imports_path = [term_code, Oec::Folder.sis_imports, now.strftime('%F %H:%M:%S'), friendly_name]
@@ -56,19 +65,31 @@ describe Oec::ReportDiffTask do
           end
         end
       end
-      subject.run
     }
 
     it 'should log errors' do
+      subject.run
       expect(subject.errors).to have(1).item
       expect(subject.errors['PSTAT']).to have(2).item
       expect(subject.errors['PSTAT']['87672'].keys).to match_array ['Invalid EVALUATION_TYPE: X']
       expect(subject.errors['PSTAT']['99999'].keys).to match_array ['Invalid annotation: wrong', 'Invalid ldap_uid: bad_data']
     end
 
-    it 'should report STAT diff' do
-      pstat_diff_rows = subject.diff_report.select { |row| row['DEPT_CODE'] == 'PSTAT' }
-      expect(pstat_diff_rows).to have(9).items
+    it 'should report STAT diff only' do
+      diff_rows_by_dept = {}
+
+      original_update_departmental_diff = subject.method(:update_departmental_diff)
+      allow(subject).to receive(:update_departmental_diff) do |diff_rows, dept_code|
+        diff_rows_by_dept[dept_code] = diff_rows
+        original_update_departmental_diff.call(diff_rows, dept_code)
+      end
+      subject.run
+
+      expect(diff_rows_by_dept['FOO']).to be_nil
+      expect(diff_rows_by_dept['SZANT']).to have(0).items
+      expect(diff_rows_by_dept['SPOLS']).to have(0).items
+      expect(diff_rows_by_dept['PSTAT']).to have(9).items
+      
       expected_diff = {
         '2015-B-87672-10316' => {
           '+/-' => ' ',
@@ -92,7 +113,7 @@ describe Oec::ReportDiffTask do
           'sis:EMAIL_ADDRESS' => nil
         }
       }
-      pstat_diff_rows.each do |row|
+      diff_rows_by_dept['PSTAT'].each do |row|
         row_key = row['KEY']
         if expected_diff.has_key? row_key
           expected_diff[row_key].each do |key, expected|
