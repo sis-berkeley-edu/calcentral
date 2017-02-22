@@ -69,6 +69,12 @@ module CampusSolutions
               if property[:name] == 'UCFROMTEXT'
                 link[:ucFromText] = property[:value]
               end
+              if property[:name] == 'LINK_DESCRIPTION'
+                link[:linkDescription] = property[:value]
+              end
+              if property[:name] == 'LINK_DESCRIPTION_DISPLAY'
+                link[:linkDescriptionDisplay] = property[:value] == 'Y'
+              end
             end
 
             # convert campus solutions property names to calcentral

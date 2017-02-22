@@ -1,6 +1,27 @@
 <?xml version="1.0"?>
 <UC_LINK_RESOURCES>
   <Link>
+    <URL_ID>UC_CX_GT_SRVAONCE_ADD</URL_ID>
+    <Description>Veteran’s Benefits Intake Form</Description>
+    <HOVER_OVER_TEXT>Complete this form to initiate Veterans Affairs benefits at UC Berkeley.</HOVER_OVER_TEXT>
+    <PROPERTIES type="array">
+      <PROPERTY>
+        <NAME>CALCENTRAL</NAME>
+        <value>FORM</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>NEW_WINDOW</NAME>
+        <value>Y</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>URI_TYPE</NAME>
+        <value>PL</value>
+      </PROPERTY>
+    </PROPERTIES>
+    <URL>https://bcs-web-dev-03.is.berkeley.edu:8443/psp/bcsdev/EMPLOYEE/HRMS/c/G3FRAME.G3SEARCH.GBL?&amp;G3FORM_FAMILY=STUDENT&amp;G3FORM_TYPE=SRVAONCE&amp;G3FORM_CONDITION=Default&amp;G3FORM_TASK=ADD</URL>
+    <COMMENTS>Apply to gain veteran's educational benefits.</COMMENTS>
+  </Link>
+  <Link>
     <URL_ID>UC_CX_GT_CPPSTACK_ADD</URL_ID>
     <Description>Change of Academic Plan</Description>
     <HOVER_OVER_TEXT>Complete this form to change your academic plan.</HOVER_OVER_TEXT>
@@ -43,9 +64,9 @@
     <COMMENTS>Form to view your Academic Plan change requests which includes your major, minor, subplan, graduation date, designated emphasis, or degree</COMMENTS>
   </Link>
   <Link>
-    <URL_ID>UC_CX_SRWITHDRL_ADD</URL_ID>
-    <Description>Add a Withdrawal Request</Description>
-    <HOVER_OVER_TEXT></HOVER_OVER_TEXT>
+    <URL_ID>UC_CX_GT_AAQEAPPLIC_ADD</URL_ID>
+    <Description>Submit an Advancement Form</Description>
+    <HOVER_OVER_TEXT/>
     <PROPERTIES type="array">
       <PROPERTY>
         <NAME>CALCENTRAL</NAME>
@@ -60,582 +81,9 @@
         <value>PL</value>
       </PROPERTY>
     </PROPERTIES>
-    <URL>https://bcswebqat.is.berkeley.edu/psp/bcsqat/EMPLOYEE/HRMS/c/G3FRAME.G3SEARCH.GBL?&amp;G3FORM_FAMILY=STUDENT&amp;G3FORM_TYPE=SRWITHDRL&amp;G3FORM_CONDITION=Default&amp;G3FORM_TASK=ADD</URL>
-    <COMMENTS>Add a Withdrawal Request</COMMENTS>
-  </Link>
-  <Link>
-    <URL_ID>UC_CX_GT_FAEMRLAON_VIEW</URL_ID>
-    <Description>View Emergency Loan Status</Description>
-    <HOVER_OVER_TEXT></HOVER_OVER_TEXT>
-    <PROPERTIES type="array">
-      <PROPERTY>
-        <NAME>CALCENTRAL</NAME>
-        <value>FORM</value>
-      </PROPERTY>
-      <PROPERTY>
-        <NAME>NEW_WINDOW</NAME>
-        <value>Y</value>
-      </PROPERTY>
-      <PROPERTY>
-        <NAME>URI_TYPE</NAME>
-        <value>PL</value>
-      </PROPERTY>
-    </PROPERTIES>
-    <URL>https://bcswebqat.is.berkeley.edu/psp/bcsqat/EMPLOYEE/HRMS/c/G3FRAME.G3SEARCH.GBL?&amp;G3FORM_FAMILY=FAEMRLOAN&amp;G3FORM_TYPE=FAEMRLAON&amp;G3FORM_CONDITION=Default&amp;G3FORM_TASK=VWS</URL>
-    <COMMENTS>View Emergency Loans</COMMENTS>
-  </Link>
-  <Link>
-    <URL_ID>UC_CX_APPOINTMENT_ADV_SETUP</URL_ID>
-    <Description>Appointment System</Description>
-    <HOVER_OVER_TEXT></HOVER_OVER_TEXT>
-    <PROPERTIES type="array">
-      <PROPERTY>
-        <NAME>CALCENTRAL</NAME>
-        <value>APPOINTMENTS-ADV</value>
-      </PROPERTY>
-      <PROPERTY>
-        <NAME>UCFROM</NAME>
-        <value>CalCentral</value>
-      </PROPERTY>
-      <PROPERTY>
-        <NAME>UCFROMLINK</NAME>
-        <value>https://calcentral-sis-dev-01.ist.berkeley.edu/</value>
-      </PROPERTY>
-      <PROPERTY>
-        <NAME>UCFROMTEXT</NAME>
-        <value>CalCentral</value>
-      </PROPERTY>
-      <PROPERTY>
-        <NAME>URI_TYPE</NAME>
-        <value>CN</value>
-      </PROPERTY>
-    </PROPERTIES>
-    <URL>https://bcs-web-dev-03.is.berkeley.edu:8443/psp/bcsdev/EMPLOYEE/HRMS/c/SCI_APPT_SETUP.SCI_APPT_ADV.GBL?EMPLID={EMPLID}</URL>
-    <COMMENTS>Appointment System Setup and Settings</COMMENTS>
-  </Link>
-  <Link>
-    <URL_ID>UC_CX_SSS_GRADE_ROSTER</URL_ID>
-    <Description>Grade Roster</Description>
-    <HOVER_OVER_TEXT></HOVER_OVER_TEXT>
-    <PROPERTIES type="array">
-      <PROPERTY>
-        <NAME>CALCENTRAL</NAME>
-        <value>GRADE-ROSTER</value>
-      </PROPERTY>
-      <PROPERTY>
-        <NAME>UCFROM</NAME>
-        <value>CalCentral</value>
-      </PROPERTY>
-      <PROPERTY>
-        <NAME>UCFROMLINK</NAME>
-        <value>https://calcentral-sis-dev-01.ist.berkeley.edu/</value>
-      </PROPERTY>
-      <PROPERTY>
-        <NAME>UCFROMTEXT</NAME>
-        <value>CalCentral</value>
-      </PROPERTY>
-      <PROPERTY>
-        <NAME>URI_TYPE</NAME>
-        <value>CN</value>
-      </PROPERTY>
-    </PROPERTIES>
-    <URL>https://bcs-web-dev-03.is.berkeley.edu:8443/psp/bcsdev/EMPLOYEE/HRMS/c/SA_LEARNING_MANAGEMENT.SS_GRADE_RSTR.GBL?STRM={STRM}&amp;CLASS_NBR={CLASS_NBR}</URL>
-    <COMMENTS>Need the STRM and CLASS_NBR of the student to be passed into the URL.</COMMENTS>
-  </Link>
-  <Link>
-    <URL_ID>UC_CX_REPORTING_CENTER</URL_ID>
-    <Description>Reporting Center</Description>
-    <HOVER_OVER_TEXT>Access the centralized list of report queries.</HOVER_OVER_TEXT>
-    <PROPERTIES type="array">
-      <PROPERTY>
-        <NAME>CALCENTRAL</NAME>
-        <value>REPORTING</value>
-      </PROPERTY>
-      <PROPERTY>
-        <NAME>UCFROM</NAME>
-        <value>CalCentral</value>
-      </PROPERTY>
-      <PROPERTY>
-        <NAME>UCFROMLINK</NAME>
-        <value>https://calcentral-sis-dev-01.ist.berkeley.edu/</value>
-      </PROPERTY>
-      <PROPERTY>
-        <NAME>UCFROMTEXT</NAME>
-        <value>CalCentral</value>
-      </PROPERTY>
-      <PROPERTY>
-        <NAME>URI_TYPE</NAME>
-        <value>CN</value>
-      </PROPERTY>
-    </PROPERTIES>
-    <URL>https://bcs-web-dev-03.is.berkeley.edu:8443/psp/bcsdev/EMPLOYEE/HRMS/s/WEBLIB_PTAL.ISCRIPT1.FieldFormula.IScript_PTAL_DASHBOARD?tab=UC_CS_RP_RC_RPT_DASHBOARD</URL>
-    <COMMENTS></COMMENTS>
-  </Link>
-  <Link>
-    <URL_ID>UC_CX_GT_SSCNTENRL_UPD</URL_ID>
-    <Description>Update Class Applications</Description>
-    <HOVER_OVER_TEXT>Edit your submited class enrollment application.</HOVER_OVER_TEXT>
-    <PROPERTIES type="array">
-      <PROPERTY>
-        <NAME>CALCENTRAL</NAME>
-        <value>FORM</value>
-      </PROPERTY>
-      <PROPERTY>
-        <NAME>NEW_WINDOW</NAME>
-        <value>Y</value>
-      </PROPERTY>
-      <PROPERTY>
-        <NAME>URI_TYPE</NAME>
-        <value>PL</value>
-      </PROPERTY>
-    </PROPERTIES>
-    <URL>https://bcs-web-dev-03.is.berkeley.edu:8443/psp/bcsdev/EMPLOYEE/HRMS/c/G3FRAME.G3SEARCH.GBL?&amp;G3FORM_FAMILY=STUDENT&amp;G3FORM_TYPE=SSCNTENRL&amp;G3FORM_CONDITION=Default&amp;G3FORM_TASK=UPD</URL>
-    <COMMENTS>Update submitted concurrent enrollment class applications</COMMENTS>
-  </Link>
-  <Link>
-    <URL_ID>UC_CX_GT_FAEMRLAON_ADD</URL_ID>
-    <Description>Apply for an Emergency Loan</Description>
-    <HOVER_OVER_TEXT></HOVER_OVER_TEXT>
-    <PROPERTIES type="array">
-      <PROPERTY>
-        <NAME>CALCENTRAL</NAME>
-        <value>FORM</value>
-      </PROPERTY>
-      <PROPERTY>
-        <NAME>NEW_WINDOW</NAME>
-        <value>Y</value>
-      </PROPERTY>
-      <PROPERTY>
-        <NAME>URI_TYPE</NAME>
-        <value>PL</value>
-      </PROPERTY>
-    </PROPERTIES>
-    <URL>https://bcs-web-dev-03.is.berkeley.edu:8443/psp/bcsdev/EMPLOYEE/HRMS/c/G3FRAME.G3SEARCH.GBL?&amp;G3FORM_FAMILY=FAEMRLOAN&amp;G3FORM_TYPE=FAEMRLAON&amp;G3FORM_CONDITION=Default&amp;G3FORM_TASK=ADD</URL>
-    <COMMENTS>Form to apply for an Emergency Loan</COMMENTS>
-  </Link>
-  <Link>
-    <URL_ID>UC_CX_GT_ACTION_CENTER</URL_ID>
-    <Description>eForms Center</Description>
-    <HOVER_OVER_TEXT>View your WorkCenter online forms main dashboard.</HOVER_OVER_TEXT>
-    <PROPERTIES type="array">
-      <PROPERTY>
-        <NAME>CALCENTRAL</NAME>
-        <value>FORM</value>
-      </PROPERTY>
-      <PROPERTY>
-        <NAME>NEW_WINDOW</NAME>
-        <value>Y</value>
-      </PROPERTY>
-      <PROPERTY>
-        <NAME>URI_TYPE</NAME>
-        <value>PL</value>
-      </PROPERTY>
-    </PROPERTIES>
-    <URL>https://bcs-web-dev-03.is.berkeley.edu:8443/psp/bcsdev/EMPLOYEE/HRMS/c/G3ACTION_CENTER.G3ACTION_CENTER.GBL</URL>
-    <COMMENTS>Action Center for reviewing and taking action on eforms such as Concurrent Enrollment Class Applications</COMMENTS>
-  </Link>
-  <Link>
-    <URL_ID>UC_CX_GT_SRVAONCE_ADD</URL_ID>
-    <Description>Veteran’s Benefits Intake Form</Description>
-    <HOVER_OVER_TEXT>Complete this form to initiate Veterans Affairs benefits at UC Berkeley.</HOVER_OVER_TEXT>
-    <PROPERTIES type="array">
-      <PROPERTY>
-        <NAME>CALCENTRAL</NAME>
-        <value>FORM</value>
-      </PROPERTY>
-      <PROPERTY>
-        <NAME>NEW_WINDOW</NAME>
-        <value>Y</value>
-      </PROPERTY>
-      <PROPERTY>
-        <NAME>URI_TYPE</NAME>
-        <value>PL</value>
-      </PROPERTY>
-    </PROPERTIES>
-    <URL>https://bcs-web-dev-03.is.berkeley.edu:8443/psp/bcsdev/EMPLOYEE/HRMS/c/G3FRAME.G3SEARCH.GBL?&amp;G3FORM_FAMILY=STUDENT&amp;G3FORM_TYPE=SRVAONCE&amp;G3FORM_CONDITION=Default&amp;G3FORM_TASK=ADD</URL>
-    <COMMENTS>Apply to gain veteran's educational benefits.</COMMENTS>
-  </Link>
-  <Link>
-    <URL_ID>UC_CX_PLANNER_ADV_STDNT</URL_ID>
-    <Description>My Dashboard (Advisor) &gt; Stdnt</Description>
-    <HOVER_OVER_TEXT>View upcoming semester classes built from a multi-year academic plan.</HOVER_OVER_TEXT>
-    <PROPERTIES type="array">
-      <PROPERTY>
-        <NAME>CALCENTRAL</NAME>
-        <value>PLANNER-ADV</value>
-      </PROPERTY>
-      <PROPERTY>
-        <NAME>UCFROM</NAME>
-        <value>CalCentral</value>
-      </PROPERTY>
-      <PROPERTY>
-        <NAME>UCFROMLINK</NAME>
-        <value>https://calcentral-sis-dev-01.ist.berkeley.edu/</value>
-      </PROPERTY>
-      <PROPERTY>
-        <NAME>UCFROMTEXT</NAME>
-        <value>CalCentral</value>
-      </PROPERTY>
-      <PROPERTY>
-        <NAME>URI_TYPE</NAME>
-        <value>CN</value>
-      </PROPERTY>
-    </PROPERTIES>
-    <URL>https://bcs-web-dev-03.is.berkeley.edu:8443/psp/bcsdev/EMPLOYEE/HRMS/c/SCI_PLNR_ADMIN.SCI_PLNR_LAUNCH.GBL?&amp;EMPLID={EMPLID}</URL>
-    <COMMENTS>My Dashboard (Advisor) &gt; Student Overview</COMMENTS>
-  </Link>
-  <Link>
-    <URL_ID>UC_CX_GT_WITHDRAWFORM_ADD</URL_ID>
-    <Description>Add a Request for Withdrawal</Description>
-    <HOVER_OVER_TEXT></HOVER_OVER_TEXT>
-    <PROPERTIES type="array">
-      <PROPERTY>
-        <NAME>CALCENTRAL</NAME>
-        <value>FORM</value>
-      </PROPERTY>
-      <PROPERTY>
-        <NAME>NEW_WINDOW</NAME>
-        <value>Y</value>
-      </PROPERTY>
-      <PROPERTY>
-        <NAME>URI_TYPE</NAME>
-        <value>PL</value>
-      </PROPERTY>
-    </PROPERTIES>
-    <URL>https://bcs-web-dev-03.is.berkeley.edu:8443/psp/bcsdev/EMPLOYEE/HRMS/c/G3FRAME.G3SEARCH.GBL?&amp;G3FORM_FAMILY=FAEMRLOAN&amp;G3FORM_TYPE=FAEMRLAON&amp;G3FORM_CONDITION=Default&amp;G3FORM_TASK=ADD</URL>
-    <COMMENTS></COMMENTS>
-  </Link>
-  <Link>
-    <URL_ID>UC_CX_GT_SSCNTENRL_ADD</URL_ID>
-    <Description>Apply to a Class</Description>
-    <HOVER_OVER_TEXT>Complete your class enrollment application.</HOVER_OVER_TEXT>
-    <PROPERTIES type="array">
-      <PROPERTY>
-        <NAME>CALCENTRAL</NAME>
-        <value>FORM</value>
-      </PROPERTY>
-      <PROPERTY>
-        <NAME>NEW_WINDOW</NAME>
-        <value>Y</value>
-      </PROPERTY>
-      <PROPERTY>
-        <NAME>URI_TYPE</NAME>
-        <value>PL</value>
-      </PROPERTY>
-    </PROPERTIES>
-    <URL>https://bcs-web-dev-03.is.berkeley.edu:8443/psp/bcsdev/EMPLOYEE/HRMS/c/G3FRAME.G3SEARCH.GBL?&amp;G3FORM_FAMILY=STUDENT&amp;G3FORM_TYPE=SSCNTENRL&amp;G3FORM_CONDITION=Default&amp;G3FORM_TASK=ADD</URL>
-    <COMMENTS>Apply to a class for concurrent enrollment</COMMENTS>
-  </Link>
-  <Link>
-    <URL_ID>UC_CX_GT_SSCNTENRL_VIEW</URL_ID>
-    <Description>Submitted Class Applications</Description>
-    <HOVER_OVER_TEXT>View your submitted class enrollment application.</HOVER_OVER_TEXT>
-    <PROPERTIES type="array">
-      <PROPERTY>
-        <NAME>CALCENTRAL</NAME>
-        <value>FORM</value>
-      </PROPERTY>
-      <PROPERTY>
-        <NAME>NEW_WINDOW</NAME>
-        <value>Y</value>
-      </PROPERTY>
-      <PROPERTY>
-        <NAME>URI_TYPE</NAME>
-        <value>PL</value>
-      </PROPERTY>
-    </PROPERTIES>
-    <URL>https://bcs-web-dev-03.is.berkeley.edu:8443/psp/bcsdev/EMPLOYEE/HRMS/c/G3FRAME.G3SEARCH.GBL?&amp;G3FORM_FAMILY=STUDENT&amp;G3FORM_TYPE=SSCNTENRL&amp;G3FORM_CONDITION=Default&amp;G3FORM_TASK=VWS</URL>
-    <COMMENTS>View submitted concurrent enrollment class applications</COMMENTS>
-  </Link>
-  <Link>
-    <URL_ID>UC_CX_SRWITHDRL_VIEW</URL_ID>
-    <Description>View a Withdrawal Request</Description>
-    <HOVER_OVER_TEXT></HOVER_OVER_TEXT>
-    <PROPERTIES type="array">
-      <PROPERTY>
-        <NAME>CALCENTRAL</NAME>
-        <value>FORM</value>
-      </PROPERTY>
-      <PROPERTY>
-        <NAME>NEW_WINDOW</NAME>
-        <value>Y</value>
-      </PROPERTY>
-      <PROPERTY>
-        <NAME>URI_TYPE</NAME>
-        <value>PL</value>
-      </PROPERTY>
-    </PROPERTIES>
-    <URL>https://bcs-web-dev-03.is.berkeley.edu:8443/psp/bcsdev/EMPLOYEE/HRMS/c/G3FRAME.G3SEARCH.GBL?&amp;G3FORM_FAMILY=STUDENT&amp;G3FORM_TYPE=SRWITHDRL&amp;G3FORM_CONDITION=Default&amp;G3FORM_TASK=VWS</URL>
-    <COMMENTS>View a Withdrawal Request</COMMENTS>
-  </Link>
-  <Link>
-    <URL_ID>UC_CX_SCI_NOTE_FLU</URL_ID>
-    <Description>Advising Notes</Description>
-    <HOVER_OVER_TEXT>View this student's advising notes.</HOVER_OVER_TEXT>
-    <PROPERTIES type="array">
-      <PROPERTY>
-        <NAME>CALCENTRAL</NAME>
-        <value>NOTES-ADV</value>
-      </PROPERTY>
-      <PROPERTY>
-        <NAME>URI_TYPE</NAME>
-        <value>CN</value>
-      </PROPERTY>
-    </PROPERTIES>
-    <URL>https://bcs-web-dev-03.is.berkeley.edu:8443/psp/bcsdev/EMPLOYEE/HRMS/c/SCI_NOTES_FLU.SCI_NOTE_FLU.GBL?ucStudentID={EMPLID}</URL>
-    <COMMENTS>ucStudentID={EMPLID} is the Student's emplid.</COMMENTS>
-  </Link>
-  <Link>
-    <URL_ID>UC_CX_APPOINTMENT_ADV_MY_APPTS</URL_ID>
-    <Description>My Appointments - Advisor</Description>
-    <HOVER_OVER_TEXT>View your student advising appointments.</HOVER_OVER_TEXT>
-    <PROPERTIES type="array">
-      <PROPERTY>
-        <NAME>CALCENTRAL</NAME>
-        <value>APPOINTMENTS-ADV</value>
-      </PROPERTY>
-      <PROPERTY>
-        <NAME>UCFROM</NAME>
-        <value>CalCentral</value>
-      </PROPERTY>
-      <PROPERTY>
-        <NAME>UCFROMLINK</NAME>
-        <value>https://calcentral-sis-dev-01.ist.berkeley.edu/</value>
-      </PROPERTY>
-      <PROPERTY>
-        <NAME>UCFROMTEXT</NAME>
-        <value>CalCentral</value>
-      </PROPERTY>
-      <PROPERTY>
-        <NAME>URI_TYPE</NAME>
-        <value>CN</value>
-      </PROPERTY>
-    </PROPERTIES>
-    <URL>https://bcs-web-dev-03.is.berkeley.edu:8443/psp/bcsdev/EMPLOYEE/HRMS/c/SCI_APPT_ADVSS.SCI_APPT_ADV_APPTS.GBL</URL>
-    <COMMENTS></COMMENTS>
-  </Link>
-  <Link>
-    <URL_ID>UC_CX_APPOINTMENT_ADV_VIEW_STD</URL_ID>
-    <Description>Advisee's view of stdnt appt</Description>
-    <HOVER_OVER_TEXT>View this student's advising appointments.</HOVER_OVER_TEXT>
-    <PROPERTIES type="array">
-      <PROPERTY>
-        <NAME>CALCENTRAL</NAME>
-        <value>APPOINTMENTS-ADV</value>
-      </PROPERTY>
-      <PROPERTY>
-        <NAME>UCFROM</NAME>
-        <value>CalCentral</value>
-      </PROPERTY>
-      <PROPERTY>
-        <NAME>UCFROMLINK</NAME>
-        <value>https://calcentral-sis-dev-01.ist.berkeley.edu/</value>
-      </PROPERTY>
-      <PROPERTY>
-        <NAME>UCFROMTEXT</NAME>
-        <value>CalCentral</value>
-      </PROPERTY>
-      <PROPERTY>
-        <NAME>URI_TYPE</NAME>
-        <value>CN</value>
-      </PROPERTY>
-    </PROPERTIES>
-    <URL>https://bcs-web-dev-03.is.berkeley.edu:8443/psp/bcsdev/EMPLOYEE/HRMS/c/SCI_APPT_ADVSS.SCI_APPT_MY_APPTS.GBL?&amp;Action=U&amp;EMPLID={EMPLID}</URL>
-    <COMMENTS></COMMENTS>
-  </Link>
-  <Link>
-    <URL_ID>UC_CX_APPOINTMENT_STD_ADD</URL_ID>
-    <Description>New Appointment</Description>
-    <HOVER_OVER_TEXT>Create a new advising appointment.</HOVER_OVER_TEXT>
-    <PROPERTIES type="array">
-      <PROPERTY>
-        <NAME>CALCENTRAL</NAME>
-        <value>APPOINTMENTS-STU</value>
-      </PROPERTY>
-      <PROPERTY>
-        <NAME>UCFROM</NAME>
-        <value>CalCentral</value>
-      </PROPERTY>
-      <PROPERTY>
-        <NAME>UCFROMLINK</NAME>
-        <value>https://calcentral-sis-dev-01.ist.berkeley.edu/</value>
-      </PROPERTY>
-      <PROPERTY>
-        <NAME>UCFROMTEXT</NAME>
-        <value>CalCentral</value>
-      </PROPERTY>
-      <PROPERTY>
-        <NAME>URI_TYPE</NAME>
-        <value>CN</value>
-      </PROPERTY>
-    </PROPERTIES>
-    <URL>https://bcs-web-dev-03.is.berkeley.edu:8443/psp/bcsdev/EMPLOYEE/HRMS/c/SCI_APPT_STUSS.SCI_APPT_SS_FLU.GBL</URL>
-    <COMMENTS>Make an Appointment</COMMENTS>
-  </Link>
-  <Link>
-    <URL_ID>UC_CX_APPOINTMENT_STD_MY_APPTS</URL_ID>
-    <Description>Access and Manage Appointments</Description>
-    <HOVER_OVER_TEXT>View or update your advising appointments.</HOVER_OVER_TEXT>
-    <PROPERTIES type="array">
-      <PROPERTY>
-        <NAME>CALCENTRAL</NAME>
-        <value>APPOINTMENTS-STU</value>
-      </PROPERTY>
-      <PROPERTY>
-        <NAME>UCFROM</NAME>
-        <value>CalCentral</value>
-      </PROPERTY>
-      <PROPERTY>
-        <NAME>UCFROMLINK</NAME>
-        <value>https://calcentral-sis-dev-01.ist.berkeley.edu/</value>
-      </PROPERTY>
-      <PROPERTY>
-        <NAME>UCFROMTEXT</NAME>
-        <value>CalCentral</value>
-      </PROPERTY>
-      <PROPERTY>
-        <NAME>URI_TYPE</NAME>
-        <value>CN</value>
-      </PROPERTY>
-    </PROPERTIES>
-    <URL>https://bcs-web-dev-03.is.berkeley.edu:8443/psp/bcsdev/EMPLOYEE/HRMS/c/SCI_APPT_STUSS.SCI_APPT_MY_APPTS.GBL</URL>
-    <COMMENTS>Advisee's Appointments</COMMENTS>
-  </Link>
-  <Link>
-    <URL_ID>UC_CX_STUDENT_ADVISOR</URL_ID>
-    <Description>Advising Assignments</Description>
-    <HOVER_OVER_TEXT>Attach an advisor to a student.</HOVER_OVER_TEXT>
-    <PROPERTIES type="array">
-      <PROPERTY>
-        <NAME>CALCENTRAL</NAME>
-        <value>ADVISOR</value>
-      </PROPERTY>
-      <PROPERTY>
-        <NAME>NEW_WINDOW</NAME>
-        <value>Y</value>
-      </PROPERTY>
-      <PROPERTY>
-        <NAME>URI_TYPE</NAME>
-        <value>PL</value>
-      </PROPERTY>
-    </PROPERTIES>
-    <URL>https://bcs-web-dev-03.is.berkeley.edu:8443/psp/bcsdev/EMPLOYEE/HRMS/c/TRACK_STUDENT_CAREERS.STDNT_ADVISOR.GBL</URL>
-    <COMMENTS></COMMENTS>
-  </Link>
-  <Link>
-    <URL_ID>UC_CX_CLASS_SEARCH</URL_ID>
-    <Description>Class Search</Description>
-    <HOVER_OVER_TEXT>Search for classes.</HOVER_OVER_TEXT>
-    <PROPERTIES type="array">
-      <PROPERTY>
-        <NAME>CALCENTRAL</NAME>
-        <value>CLASS-SCHEDULE</value>
-      </PROPERTY>
-      <PROPERTY>
-        <NAME>UCFROM</NAME>
-        <value>CalCentral</value>
-      </PROPERTY>
-      <PROPERTY>
-        <NAME>UCFROMLINK</NAME>
-        <value>https://calcentral-sis-dev-01.ist.berkeley.edu/</value>
-      </PROPERTY>
-      <PROPERTY>
-        <NAME>UCFROMTEXT</NAME>
-        <value>CalCentral</value>
-      </PROPERTY>
-      <PROPERTY>
-        <NAME>URI_TYPE</NAME>
-        <value>CN</value>
-      </PROPERTY>
-    </PROPERTIES>
-    <URL>https://bcs-web-dev-03.is.berkeley.edu:8443/psp/bcsdev/EMPLOYEE/HRMS/c/COMMUNITY_ACCESS.CLASS_SEARCH.GBL</URL>
-    <COMMENTS></COMMENTS>
-  </Link>
-  <Link>
-    <URL_ID>UC_CX_STUDENT_ADVISOR_STDNT</URL_ID>
-    <Description>Advising Assignments</Description>
-    <HOVER_OVER_TEXT>Attach an advisor to this student.</HOVER_OVER_TEXT>
-    <PROPERTIES type="array">
-      <PROPERTY>
-        <NAME>CALCENTRAL</NAME>
-        <value>ADVISOR</value>
-      </PROPERTY>
-      <PROPERTY>
-        <NAME>UCFROM</NAME>
-        <value>CalCentral</value>
-      </PROPERTY>
-      <PROPERTY>
-        <NAME>UCFROMLINK</NAME>
-        <value>https://calcentral-sis-dev-01.ist.berkeley.edu/</value>
-      </PROPERTY>
-      <PROPERTY>
-        <NAME>UCFROMTEXT</NAME>
-        <value>CalCentral</value>
-      </PROPERTY>
-      <PROPERTY>
-        <NAME>URI_TYPE</NAME>
-        <value>CN</value>
-      </PROPERTY>
-    </PROPERTIES>
-    <URL>https://bcs-web-dev-03.is.berkeley.edu:8443/psp/bcsdev/EMPLOYEE/HRMS/c/TRACK_STUDENT_CAREERS.STDNT_ADVISOR.GBL?EMPLID={EMPLID}</URL>
-    <COMMENTS>The EMPLID of the student needs to be passed into the URL.</COMMENTS>
-  </Link>
-  <Link>
-    <URL_ID>UC_CX_SERVICE_IND_STDNT</URL_ID>
-    <Description>Service Indicators</Description>
-    <HOVER_OVER_TEXT>Access service indicators for this student.</HOVER_OVER_TEXT>
-    <PROPERTIES type="array">
-      <PROPERTY>
-        <NAME>CALCENTRAL</NAME>
-        <value>CAMPUS-COMMUNITY</value>
-      </PROPERTY>
-      <PROPERTY>
-        <NAME>UCFROM</NAME>
-        <value>CalCentral</value>
-      </PROPERTY>
-      <PROPERTY>
-        <NAME>UCFROMLINK</NAME>
-        <value>https://calcentral-sis-dev-01.ist.berkeley.edu/</value>
-      </PROPERTY>
-      <PROPERTY>
-        <NAME>UCFROMTEXT</NAME>
-        <value>CalCentral</value>
-      </PROPERTY>
-      <PROPERTY>
-        <NAME>URI_TYPE</NAME>
-        <value>CN</value>
-      </PROPERTY>
-    </PROPERTIES>
-    <URL>https://bcs-web-dev-03.is.berkeley.edu:8443/psp/bcsdev/EMPLOYEE/HRMS/c/MAINTAIN_SERVICE_IND_STDNT.ACTIVE_SRVC_INDICA.GBL?EMPLID={EMPLID}&amp;ACAD_CAREER={ACAD_CAREER}</URL>
-    <COMMENTS>Need the EMPLID and ACAD_CAREER of the student to be passed into the URL.</COMMENTS>
-  </Link>
-  <Link>
-    <URL_ID>UC_CX_SERVICE_IND_DATA</URL_ID>
-    <Description>Service Indicators</Description>
-    <HOVER_OVER_TEXT>Manage student service indicators.</HOVER_OVER_TEXT>
-    <PROPERTIES type="array">
-      <PROPERTY>
-        <NAME>CALCENTRAL</NAME>
-        <value>CAMPUS-COMMUNITY</value>
-      </PROPERTY>
-      <PROPERTY>
-        <NAME>UCFROM</NAME>
-        <value>CalCentral</value>
-      </PROPERTY>
-      <PROPERTY>
-        <NAME>UCFROMLINK</NAME>
-        <value>https://calcentral-sis-dev-01.ist.berkeley.edu/</value>
-      </PROPERTY>
-      <PROPERTY>
-        <NAME>UCFROMTEXT</NAME>
-        <value>CalCentral</value>
-      </PROPERTY>
-      <PROPERTY>
-        <NAME>URI_TYPE</NAME>
-        <value>CN</value>
-      </PROPERTY>
-    </PROPERTIES>
-    <URL>https://bcs-web-dev-03.is.berkeley.edu:8443/psp/bcsdev/EMPLOYEE/HRMS/c/MAINTAIN_SERVICE_IND_STDNT.ACTIVE_SRVC_INDICA.GBL</URL>
+    <URL>
+    https://bcs-web-dev-03.is.berkeley.edu:8443/psp/bcsdev/EMPLOYEE/HRMS/c/G3FRAME.G3SEARCH.GBL?&amp;G3FORM_FAMILY=STUDENT&amp;G3FORM_TYPE=AAQEAPPLIC&amp;G3FORM_CONDITION=Default&amp;G3FORM_TASK=ADD&amp;cmd=login&amp;errorCode=105&amp;languageCd=ENG
+    </URL>
     <COMMENTS></COMMENTS>
   </Link>
   <Link>
@@ -662,8 +110,316 @@
     <COMMENTS></COMMENTS>
   </Link>
   <Link>
-    <URL_ID>UC_CX_GT_AAQEAPPLIC_ADD</URL_ID>
-    <Description>Submit an Advancement Form</Description>
+    <URL_ID>UC_CX_ARCH_TSCRPT_ADVISOR</URL_ID>
+    <Description>Archived Transcripts: Pre-1995</Description>
+    <HOVER_OVER_TEXT>Access a student's archived Pre-1995 DB2 transcript</HOVER_OVER_TEXT>
+    <PROPERTIES type="array">
+      <PROPERTY>
+        <NAME>CALCENTRAL</NAME>
+        <value>ADVISOR</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>UCFROM</NAME>
+        <value>CalCentral</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>UCFROMLINK</NAME>
+        <value>https://calcentral-sis-dev-01.ist.berkeley.edu/</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>UCFROMTEXT</NAME>
+        <value>CalCentral</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>URI_TYPE</NAME>
+        <value>PL</value>
+      </PROPERTY>
+    </PROPERTIES>
+    <URL>https://bcswebqat.is.berkeley.edu/psp/bcsqat/EMPLOYEE/HRMS/c/UC_SR_TSCRPT.UC_SR_TSCRP.GBL</URL>
+    <COMMENTS/>
+  </Link>
+  <Link>
+    <URL_ID>UC_CX_ROOT_ADVISOR</URL_ID>
+    <Description>SIS Campus Solutions</Description>
+    <HOVER_OVER_TEXT>Access to Campus Solutions tools</HOVER_OVER_TEXT>
+    <PROPERTIES type="array">
+      <PROPERTY>
+        <NAME>CALCENTRAL</NAME>
+        <value>ADVISOR</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>UCFROM</NAME>
+        <value>CalCentral</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>UCFROMLINK</NAME>
+        <value>https://calcentral-sis-dev-01.ist.berkeley.edu/</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>UCFROMTEXT</NAME>
+        <value>CalCentral</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>URI_TYPE</NAME>
+        <value>PL</value>
+      </PROPERTY>
+    </PROPERTIES>
+    <URL>https://bcsintqat.is.berkeley.edu/</URL>
+    <COMMENTS/>
+  </Link>
+  <Link>
+    <URL_ID>UC_CX_STUDENT_ADVISOR</URL_ID>
+    <Description>Advising Assignments</Description>
+    <HOVER_OVER_TEXT>Attach an advisor to a student.</HOVER_OVER_TEXT>
+    <PROPERTIES type="array">
+      <PROPERTY>
+        <NAME>CALCENTRAL</NAME>
+        <value>ADVISOR</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>UCFROM</NAME>
+        <value>CalCentral</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>UCFROMLINK</NAME>
+        <value>https://calcentral-sis-dev-01.ist.berkeley.edu/</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>UCFROMTEXT</NAME>
+        <value>CalCentral</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>URI_TYPE</NAME>
+        <value>PL</value>
+      </PROPERTY>
+    </PROPERTIES>
+    <URL>https://bcswebqat.is.berkeley.edu/psp/bcsqat/EMPLOYEE/HRMS/c/TRACK_STUDENT_CAREERS.STDNT_ADVISOR.GBL</URL>
+    <COMMENTS/>
+  </Link>
+  <Link>
+    <URL_ID>UC_CX_CLASS_SEARCH</URL_ID>
+    <Description>Class Search</Description>
+    <HOVER_OVER_TEXT>Search for classes.</HOVER_OVER_TEXT>
+    <PROPERTIES type="array">
+      <PROPERTY>
+        <NAME>CALCENTRAL</NAME>
+        <value>CLASS-SCHEDULE</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>UCFROM</NAME>
+        <value>CalCentral</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>UCFROMLINK</NAME>
+        <value>https://calcentral-sis-dev-01.ist.berkeley.edu/</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>UCFROMTEXT</NAME>
+        <value>CalCentral</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>URI_TYPE</NAME>
+        <value>PL</value>
+      </PROPERTY>
+    </PROPERTIES>
+    <URL>https://bcswebqat.is.berkeley.edu/psp/bcsqat/EMPLOYEE/HRMS/c/COMMUNITY_ACCESS.CLASS_SEARCH.GBL</URL>
+    <COMMENTS/>
+  </Link>
+  <Link>
+    <URL_ID>UC_CX_STUDENT_ADVISOR_STDNT</URL_ID>
+    <Description>Advising Assignments</Description>
+    <HOVER_OVER_TEXT>Attach an advisor to this student.</HOVER_OVER_TEXT>
+    <PROPERTIES type="array">
+      <PROPERTY>
+        <NAME>CALCENTRAL</NAME>
+        <value>ADVISOR</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>UCFROM</NAME>
+        <value>CalCentral</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>UCFROMLINK</NAME>
+        <value>https://calcentral-sis-dev-01.ist.berkeley.edu/</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>UCFROMTEXT</NAME>
+        <value>CalCentral</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>URI_TYPE</NAME>
+        <value>PL</value>
+      </PROPERTY>
+    </PROPERTIES>
+    <URL>https://bcswebqat.is.berkeley.edu/psp/bcsqat/EMPLOYEE/HRMS/c/TRACK_STUDENT_CAREERS.STDNT_ADVISOR.GBL?EMPLID={EMPLID}</URL>
+    <COMMENTS>The EMPLID of the student needs to be passed into the URL.</COMMENTS>
+  </Link>
+  <Link>
+    <URL_ID>UC_CX_ADV_MY_APPMNT_SETTINGS</URL_ID>
+    <Description>My Appointments Settings</Description>
+    <HOVER_OVER_TEXT>Edit your appointments settings</HOVER_OVER_TEXT>
+    <PROPERTIES type="array">
+      <PROPERTY>
+        <NAME>CALCENTRAL</NAME>
+        <value>APPOINTMENTS-ADV</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>UCFROM</NAME>
+        <value>CalCentral</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>UCFROMLINK</NAME>
+        <value>https://calcentral-sis-dev-01.ist.berkeley.edu/</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>UCFROMTEXT</NAME>
+        <value>CalCentral</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>URI_TYPE</NAME>
+        <value>PL</value>
+      </PROPERTY>
+    </PROPERTIES>
+    <URL>https://bcswebqat.is.berkeley.edu/psp/bcsqat/EMPLOYEE/HRMS/c/SCI_APPT_ADVSS.SCI_APPT_ADV.GBL</URL>
+    <COMMENTS>Advisors will land on fluid interface that allows them to set up their appointments schedule and more.</COMMENTS>
+  </Link>
+  <Link>
+    <URL_ID>UC_CX_SERVICE_IND_STDNT</URL_ID>
+    <Description>Service Indicators</Description>
+    <HOVER_OVER_TEXT>Access service indicators for this student.</HOVER_OVER_TEXT>
+    <PROPERTIES type="array">
+      <PROPERTY>
+        <NAME>CALCENTRAL</NAME>
+        <value>CAMPUS-COMMUNITY</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>UCFROM</NAME>
+        <value>CalCentral</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>UCFROMLINK</NAME>
+        <value>https://calcentral-sis-dev-01.ist.berkeley.edu/</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>UCFROMTEXT</NAME>
+        <value>CalCentral</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>URI_TYPE</NAME>
+        <value>PL</value>
+      </PROPERTY>
+    </PROPERTIES>
+    <URL>https://bcswebqat.is.berkeley.edu/psp/bcsqat/EMPLOYEE/HRMS/c/MAINTAIN_SERVICE_IND_STDNT.ACTIVE_SRVC_INDICA.GBL?EMPLID={EMPLID}&amp;ACAD_CAREER={ACAD_CAREER}</URL>
+    <COMMENTS>Need the EMPLID and ACAD_CAREER of the student to be passed into the URL.</COMMENTS>
+  </Link>
+  <Link>
+    <URL_ID>UC_CX_SERVICE_IND_DATA</URL_ID>
+    <Description>Service Indicators</Description>
+    <HOVER_OVER_TEXT>Manage student service indicators.</HOVER_OVER_TEXT>
+    <PROPERTIES type="array">
+      <PROPERTY>
+        <NAME>CALCENTRAL</NAME>
+        <value>CAMPUS-COMMUNITY</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>UCFROM</NAME>
+        <value>CalCentral</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>UCFROMLINK</NAME>
+        <value>https://calcentral-sis-dev-01.ist.berkeley.edu/</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>UCFROMTEXT</NAME>
+        <value>CalCentral</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>URI_TYPE</NAME>
+        <value>PL</value>
+      </PROPERTY>
+    </PROPERTIES>
+    <URL>https://bcswebqat.is.berkeley.edu/psp/bcsqat/EMPLOYEE/HRMS/c/MAINTAIN_SERVICE_IND_STDNT.ACTIVE_SRVC_INDICA.GBL</URL>
+    <COMMENTS/>
+  </Link>
+  <Link>
+    <URL_ID>UC_CX_GT_WORK_CENTER</URL_ID>
+    <Description>eForms Work Center</Description>
+    <HOVER_OVER_TEXT>View your WorkCenter online forms main dashboard.</HOVER_OVER_TEXT>
+    <PROPERTIES type="array">
+      <PROPERTY>
+        <NAME>CALCENTRAL</NAME>
+        <value>FORM</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>URI_TYPE</NAME>
+        <value>PL</value>
+      </PROPERTY>
+    </PROPERTIES>
+    <URL>https://bcswebqat.is.berkeley.edu/psp/bcsqat/EMPLOYEE/HRMS/s/WEBLIB_PTAL.ISCRIPT1.FieldFormula.IScript_PTAL_DASHBOARD?tab=G3WORKCENTER</URL>
+    <COMMENTS/>
+  </Link>
+  <Link>
+    <URL_ID>UC_CX_SSS_TSRQST_UNOFF</URL_ID>
+    <Description>View Unofficial Transcript</Description>
+    <HOVER_OVER_TEXT/>
+    <PROPERTIES type="array">
+      <PROPERTY>
+        <NAME>CALCENTRAL</NAME>
+        <value>TRANSCRIPT</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>UCFROM</NAME>
+        <value>CalCentral</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>UCFROMLINK</NAME>
+        <value>https://calcentral-sis-dev-01.ist.berkeley.edu/</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>UCFROMTEXT</NAME>
+        <value>CalCentral</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>URI_TYPE</NAME>
+        <value>PL</value>
+      </PROPERTY>
+    </PROPERTIES>
+    <URL>https://bcswebqat.is.berkeley.edu/psp/bcsqat/EMPLOYEE/HRMS/c/SA_LEARNER_SERVICES.SSS_TSRQST_UNOFF.GBL</URL>
+    <COMMENTS>This link does not need any special parameters passed except for the ucFrom strings.</COMMENTS>
+  </Link>
+  <Link>
+    <URL_ID>UC_CX_SSS_GRADE_ROSTER</URL_ID>
+    <Description>Course Grades</Description>
+    <HOVER_OVER_TEXT>Enter, edit, and approve final grades for this course.</HOVER_OVER_TEXT>
+    <PROPERTIES type="array">
+      <PROPERTY>
+        <NAME>CALCENTRAL</NAME>
+        <value>GRADE-ROSTER</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>UCFROM</NAME>
+        <value>CalCentral</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>UCFROMLINK</NAME>
+        <value>https://calcentral-sis-dev-01.ist.berkeley.edu/</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>UCFROMTEXT</NAME>
+        <value>CalCentral</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>URI_TYPE</NAME>
+        <value>PL</value>
+      </PROPERTY>
+    </PROPERTIES>
+    <URL>https://bcswebqat.is.berkeley.edu/psp/bcsqat/EMPLOYEE/HRMS/c/SA_LEARNING_MANAGEMENT.SS_GRADE_RSTR.GBL?INSTITUTION={INSTITUTION}&amp;STRM={STRM}&amp;CLASS_NBR={CLASS_NBR}</URL>
+    <COMMENTS>Need the INSTITUTION, STRM and CLASS_NBR of the student to be passed into the URL.
+This link should take an instructor to the Grade Roster in BCS of the identified course</COMMENTS>
+  </Link>
+  <Link>
+    <URL_ID>UC_CX_EMERGENCY_LOAN_FORM</URL_ID>
+    <Description>Apply for an Emergency Loan</Description>
     <HOVER_OVER_TEXT/>
     <PROPERTIES type="array">
       <PROPERTY>
@@ -671,17 +427,1265 @@
         <value>FORM</value>
       </PROPERTY>
       <PROPERTY>
-        <NAME>NEW_WINDOW</NAME>
-        <value>Y</value>
+        <NAME>DEV_NODE</NAME>
+        <value>bcs-web-dev-03.is.berkeley.edu:8443/psp/bcsdev/</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>PRD_NODE</NAME>
+        <value>bcsweb.is.berkeley.edu/psp/bcsprd/</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>QAT_NODE</NAME>
+        <value>bcswebqat.is.berkeley.edu/psp/bcsqat/</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>TST_NODE</NAME>
+        <value>bcs-web-test-01.ist.1918.berkeley.edu:8443/psp/bcstst/</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>UCFROM</NAME>
+        <value>CalCentral</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>UCFROMLINK</NAME>
+        <value>https://calcentral-sis-dev-01.ist.berkeley.edu/</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>UCFROMTEXT</NAME>
+        <value>CalCentral</value>
+      </PROPERTY>
+    </PROPERTIES>
+    <URL>https://bcswebqat.is.berkeley.edu/psp/bcsqat/EMPLOYEE/HRMS/c/G3FRAME.G3SEARCH.GBL?&amp;G3FORM_FAMILY=FAEMRLOAN&amp;G3FORM_TYPE=FAEMRLAON&amp;G3FORM_CONDITION=Default&amp;G3FORM_TASK=ADD</URL>
+    <COMMENTS/>
+  </Link>
+  <Link>
+    <URL_ID>UC_CX_GT_STUDENT_VIEW</URL_ID>
+    <Description>View Submitted Forms</Description>
+    <HOVER_OVER_TEXT>View the status of the forms you have submitted.</HOVER_OVER_TEXT>
+    <PROPERTIES type="array">
+      <PROPERTY>
+        <NAME>CALCENTRAL</NAME>
+        <value>FORM</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>UCFROM</NAME>
+        <value>CalCentral</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>UCFROMLINK</NAME>
+        <value>https://calcentral-sis-dev-01.ist.berkeley.edu/</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>UCFROMTEXT</NAME>
+        <value>CalCentral</value>
       </PROPERTY>
       <PROPERTY>
         <NAME>URI_TYPE</NAME>
         <value>PL</value>
       </PROPERTY>
     </PROPERTIES>
-    <URL>
-    https://bcs-web-dev-03.is.berkeley.edu:8443/psp/bcsdev/EMPLOYEE/HRMS/c/G3FRAME.G3SEARCH.GBL?&amp;G3FORM_FAMILY=STUDENT&amp;G3FORM_TYPE=AAQEAPPLIC&amp;G3FORM_CONDITION=Default&amp;G3FORM_TASK=ADD&amp;cmd=login&amp;errorCode=105&amp;languageCd=ENG
-    </URL>
-    <COMMENTS></COMMENTS>
+    <URL>https://bcswebqat.is.berkeley.edu/psp/bcsqat/EMPLOYEE/HRMS/c/G3FRAME.G3SEARCH.GBL?&amp;G3FORM_FAMILY=STUDENT&amp;G3FORM_CONDITION=Default&amp;G3FORM_TASK=VWS</URL>
+    <COMMENTS>View search page for all student forms.</COMMENTS>
+  </Link>
+  <Link>
+    <URL_ID>UC_CX_GT_ACTION_CENTER</URL_ID>
+    <Description>eForms Action Center</Description>
+    <HOVER_OVER_TEXT>View online forms that require evaluation.</HOVER_OVER_TEXT>
+    <PROPERTIES type="array">
+      <PROPERTY>
+        <NAME>CALCENTRAL</NAME>
+        <value>FORM</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>UCFROM</NAME>
+        <value>CalCentral</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>UCFROMLINK</NAME>
+        <value>https://calcentral-sis-dev-01.ist.berkeley.edu/</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>UCFROMTEXT</NAME>
+        <value>CalCentral</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>URI_TYPE</NAME>
+        <value>PL</value>
+      </PROPERTY>
+    </PROPERTIES>
+    <URL>https://bcswebqat.is.berkeley.edu/psp/bcsqat/EMPLOYEE/HRMS/c/G3ACTION_CENTER.G3ACTION_CENTER.GBL</URL>
+    <COMMENTS>Action Center for reviewing and taking action on eforms such as Concurrent Enrollment Class Applications</COMMENTS>
+  </Link>
+  <Link>
+    <URL_ID>UC_CX_APPOINTMENT_STD_MY_APPTS</URL_ID>
+    <Description>Access and Manage Appointments</Description>
+    <HOVER_OVER_TEXT>View or update your advising appointments.</HOVER_OVER_TEXT>
+    <PROPERTIES type="array">
+      <PROPERTY>
+        <NAME>CALCENTRAL</NAME>
+        <value>APPOINTMENTS-STU</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>UCFROM</NAME>
+        <value>CalCentral</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>UCFROMLINK</NAME>
+        <value>https://calcentral-sis-dev-01.ist.berkeley.edu/</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>UCFROMTEXT</NAME>
+        <value>CalCentral</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>URI_TYPE</NAME>
+        <value>PL</value>
+      </PROPERTY>
+    </PROPERTIES>
+    <URL>https://bcswebqat.is.berkeley.edu/psp/bcsqat/EMPLOYEE/HRMS/c/SCI_APPT_STUSS.SCI_APPT_MY_APPTS.GBL</URL>
+    <COMMENTS>Advisee's Appointments</COMMENTS>
+  </Link>
+  <Link>
+    <URL_ID>UC_CX_GT_FAEMRLAON_VIEW</URL_ID>
+    <Description>Submitted Emergency Loan Forms</Description>
+    <HOVER_OVER_TEXT>View your submitted emergency loan forms.</HOVER_OVER_TEXT>
+    <PROPERTIES type="array">
+      <PROPERTY>
+        <NAME>CALCENTRAL</NAME>
+        <value>FORM</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>UCFROM</NAME>
+        <value>CalCentral</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>UCFROMLINK</NAME>
+        <value>https://calcentral-sis-dev-01.ist.berkeley.edu/</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>UCFROMTEXT</NAME>
+        <value>CalCentral</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>URI_TYPE</NAME>
+        <value>PL</value>
+      </PROPERTY>
+    </PROPERTIES>
+    <URL>https://bcswebqat.is.berkeley.edu/psp/bcsqat/EMPLOYEE/HRMS/c/G3FRAME.G3SEARCH.GBL?&amp;G3FORM_FAMILY=FAEMRLOAN&amp;G3FORM_TYPE=FAEMRLAON&amp;G3FORM_CONDITION=Default&amp;G3FORM_TASK=VWS</URL>
+    <COMMENTS>View Emergency Loans</COMMENTS>
+  </Link>
+  <Link>
+    <URL_ID>UC_CX_GT_STUDENT_UPDATE</URL_ID>
+    <Description>Update Pending Forms</Description>
+    <HOVER_OVER_TEXT>Modify and update your pending forms</HOVER_OVER_TEXT>
+    <PROPERTIES type="array">
+      <PROPERTY>
+        <NAME>CALCENTRAL</NAME>
+        <value>FORM</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>UCFROM</NAME>
+        <value>CalCentral</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>UCFROMLINK</NAME>
+        <value>https://calcentral-sis-dev-01.ist.berkeley.edu/</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>UCFROMTEXT</NAME>
+        <value>CalCentral</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>URI_TYPE</NAME>
+        <value>PL</value>
+      </PROPERTY>
+    </PROPERTIES>
+    <URL>https://bcswebqat.is.berkeley.edu/psp/bcsqat/EMPLOYEE/HRMS/c/G3FRAME.G3SEARCH.GBL?&amp;G3FORM_FAMILY=STUDENT&amp;G3FORM_CONDITION=Default&amp;G3FORM_TASK=UPD</URL>
+    <COMMENTS/>
+  </Link>
+  <Link>
+    <URL_ID>UC_CX_APR_RPT_STDNT</URL_ID>
+    <Description>Academic Progress Report</Description>
+    <HOVER_OVER_TEXT>View this student's Academic Progress Report</HOVER_OVER_TEXT>
+    <PROPERTIES type="array">
+      <PROPERTY>
+        <NAME>CALCENTRAL</NAME>
+        <value>ADVISOR</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>UCFROM</NAME>
+        <value>CalCentral</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>UCFROMLINK</NAME>
+        <value>https://calcentral-sis-dev-01.ist.berkeley.edu/</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>UCFROMTEXT</NAME>
+        <value>CalCentral</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>URI_TYPE</NAME>
+        <value>PL</value>
+      </PROPERTY>
+    </PROPERTIES>
+    <URL>https://bcswebqat.is.berkeley.edu/psp/bcsqat/EMPLOYEE/PSFT_CS/c/SSR_ADVISEE_OVRD.SAA_SS_DPR_ADB.GBL?EMPLID={EMPLID}</URL>
+    <COMMENTS>This should take an advisor to a student's student center page where they may select a drop down to find the Academic Progress Report in CS.</COMMENTS>
+  </Link>
+  <Link>
+    <URL_ID>UC_CX_AA_MILESTONE</URL_ID>
+    <Description>Milestones</Description>
+    <HOVER_OVER_TEXT>Look up a student's milestones</HOVER_OVER_TEXT>
+    <PROPERTIES type="array">
+      <PROPERTY>
+        <NAME>CALCENTRAL</NAME>
+        <value>ADVISOR</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>UCFROM</NAME>
+        <value>CalCentral</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>UCFROMLINK</NAME>
+        <value>https://calcentral-sis-dev-01.ist.berkeley.edu/</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>UCFROMTEXT</NAME>
+        <value>CalCentral</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>URI_TYPE</NAME>
+        <value>PL</value>
+      </PROPERTY>
+    </PROPERTIES>
+    <URL>https://bcswebqat.is.berkeley.edu/psp/bcsqat/EMPLOYEE/PSFT_CS/c/MANAGE_ACADEMIC_RECORDS.STUDENT_MILESTONE1.GBL</URL>
+    <COMMENTS>View and manage this student's milestones</COMMENTS>
+  </Link>
+  <Link>
+    <URL_ID>UC_CX_ADM_TRANSCRIPT_STDNT</URL_ID>
+    <Description>Administrative Transcript</Description>
+    <HOVER_OVER_TEXT>View this Student's Administrative Transcript</HOVER_OVER_TEXT>
+    <PROPERTIES type="array">
+      <PROPERTY>
+        <NAME>CALCENTRAL</NAME>
+        <value>ADVISOR</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>UCFROM</NAME>
+        <value>CalCentral</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>UCFROMLINK</NAME>
+        <value>https://calcentral-sis-dev-01.ist.berkeley.edu/</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>UCFROMTEXT</NAME>
+        <value>CalCentral</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>URI_TYPE</NAME>
+        <value>PL</value>
+      </PROPERTY>
+    </PROPERTIES>
+    <URL>https://bcswebqat.is.berkeley.edu/psp/bcsqat/EMPLOYEE/PSFT_CS/c/SSR_ADVISEE_OVRD.SSS_TSRQST_UNOFF.GBL?&amp;EMPLID={EMPLID}</URL>
+    <COMMENTS>Take advisors to a student's  administrative transcript</COMMENTS>
+  </Link>
+  <Link>
+    <URL_ID>UC_CX_WHIF_RPT_STDNT</URL_ID>
+    <Description>What-If Reports</Description>
+    <HOVER_OVER_TEXT>View this student's What-If Report</HOVER_OVER_TEXT>
+    <PROPERTIES type="array">
+      <PROPERTY>
+        <NAME>CALCENTRAL</NAME>
+        <value>ADVISOR</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>UCFROM</NAME>
+        <value>CalCentral</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>UCFROMLINK</NAME>
+        <value>https://calcentral-sis-dev-01.ist.berkeley.edu/</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>UCFROMTEXT</NAME>
+        <value>CalCentral</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>URI_TYPE</NAME>
+        <value>PL</value>
+      </PROPERTY>
+    </PROPERTIES>
+    <URL>https://bcswebqat.is.berkeley.edu/psp/bcsqat/EMPLOYEE/PSFT_CS/c/SSR_ADVISEE_OVRD.SAA_SS_WHATIF_SEL.GBL?EMPLID={EMPLID}</URL>
+    <COMMENTS>This should take an advisor to a student's student center page where they may select a drop down to find the What-If Report in CS.</COMMENTS>
+  </Link>
+  <Link>
+    <URL_ID>UC_CX_AA_MILESTONE_STDNT</URL_ID>
+    <Description>Manage Milestones</Description>
+    <HOVER_OVER_TEXT>View and manage this student's milestones</HOVER_OVER_TEXT>
+    <PROPERTIES type="array">
+      <PROPERTY>
+        <NAME>CALCENTRAL</NAME>
+        <value>ADVISOR</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>UCFROM</NAME>
+        <value>CalCentral</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>UCFROMLINK</NAME>
+        <value>https://calcentral-sis-dev-01.ist.berkeley.edu/</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>UCFROMTEXT</NAME>
+        <value>CalCentral</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>URI_TYPE</NAME>
+        <value>PL</value>
+      </PROPERTY>
+    </PROPERTIES>
+    <URL>https://bcswebqat.is.berkeley.edu/psp/bcsqat/EMPLOYEE/PSFT_CS/c/MANAGE_ACADEMIC_RECORDS.STUDENT_MILESTONE1.GBL?EMPLID={EMPLID}</URL>
+    <COMMENTS>This should take an advisor to a student's milestones page in CS.</COMMENTS>
+  </Link>
+  <Link>
+    <URL_ID>UC_CX_APPOINTMENT_STD_ADD</URL_ID>
+    <Description>New Appointment</Description>
+    <HOVER_OVER_TEXT>Create a new advising appointment.</HOVER_OVER_TEXT>
+    <PROPERTIES type="array">
+      <PROPERTY>
+        <NAME>CALCENTRAL</NAME>
+        <value>APPOINTMENTS-STU</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>UCFROM</NAME>
+        <value>CalCentral</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>UCFROMLINK</NAME>
+        <value>https://calcentral-sis-dev-01.ist.berkeley.edu/</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>UCFROMTEXT</NAME>
+        <value>CalCentral</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>URI_TYPE</NAME>
+        <value>PL</value>
+      </PROPERTY>
+    </PROPERTIES>
+    <URL>https://bcswebqat.is.berkeley.edu/psp/bcsqat/EMPLOYEE/HRMS/c/SCI_APPT_STUSS.SCI_APPT_SS_FLU.GBL</URL>
+    <COMMENTS>Make an Appointment</COMMENTS>
+  </Link>
+  <Link>
+    <URL_ID>UC_CX_GT_SRWITHDRL_ADD</URL_ID>
+    <Description>Add a Withdrawal Request</Description>
+    <HOVER_OVER_TEXT/>
+    <PROPERTIES type="array">
+      <PROPERTY>
+        <NAME>CALCENTRAL</NAME>
+        <value>FORM</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>UCFROM</NAME>
+        <value>CalCentral</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>UCFROMLINK</NAME>
+        <value>https://calcentral-sis-dev-01.ist.berkeley.edu/</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>UCFROMTEXT</NAME>
+        <value>CalCentral</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>URI_TYPE</NAME>
+        <value>PL</value>
+      </PROPERTY>
+    </PROPERTIES>
+    <URL>https://bcswebqat.is.berkeley.edu/psp/bcsqat/EMPLOYEE/HRMS/c/G3FRAME.G3SEARCH.GBL?&amp;G3FORM_FAMILY=STUDENT&amp;G3FORM_TYPE=SRWITHDRL&amp;G3FORM_CONDITION=Default&amp;G3FORM_TASK=ADD</URL>
+    <COMMENTS>Add a Withdrawal Request</COMMENTS>
+  </Link>
+  <Link>
+    <URL_ID>UC_CX_GT_SRWITHDRL_VIEW</URL_ID>
+    <Description>View a Withdrawal Request</Description>
+    <HOVER_OVER_TEXT/>
+    <PROPERTIES type="array">
+      <PROPERTY>
+        <NAME>CALCENTRAL</NAME>
+        <value>FORM</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>UCFROM</NAME>
+        <value>CalCentral</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>UCFROMLINK</NAME>
+        <value>https://calcentral-sis-dev-01.ist.berkeley.edu/</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>UCFROMTEXT</NAME>
+        <value>CalCentral</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>URI_TYPE</NAME>
+        <value>PL</value>
+      </PROPERTY>
+    </PROPERTIES>
+    <URL>https://bcswebqat.is.berkeley.edu/psp/bcsqat/EMPLOYEE/HRMS/c/G3FRAME.G3SEARCH.GBL?&amp;G3FORM_FAMILY=STUDENT&amp;G3FORM_TYPE=SRWITHDRL&amp;G3FORM_CONDITION=Default&amp;G3FORM_TASK=VWS</URL>
+    <COMMENTS>View a Withdrawal Request</COMMENTS>
+  </Link>
+  <Link>
+    <URL_ID>UC_CX_XFER_CREDIT_REPORT</URL_ID>
+    <Description>Transfer Credit Reports</Description>
+    <HOVER_OVER_TEXT>View a student's Transfer Credit Report</HOVER_OVER_TEXT>
+    <PROPERTIES type="array">
+      <PROPERTY>
+        <NAME>CALCENTRAL</NAME>
+        <value>ADVISOR</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>UCFROM</NAME>
+        <value>CalCentral</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>UCFROMLINK</NAME>
+        <value>https://calcentral-sis-dev-01.ist.berkeley.edu/</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>UCFROMTEXT</NAME>
+        <value>CalCentral</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>URI_TYPE</NAME>
+        <value>PL</value>
+      </PROPERTY>
+    </PROPERTIES>
+    <URL>https://bcswebqat.is.berkeley.edu/psp/bcsqat/EMPLOYEE/PSFT_CS/c/SSR_ADVISEE_OVRD.CSU_DA_TRN_CDT.GBL</URL>
+    <COMMENTS>CS page where an advisor may look up a student to view their transfer credit report in CS.</COMMENTS>
+  </Link>
+  <Link>
+    <URL_ID>UC_CX_GT_SRWITHDRL_UPDATE</URL_ID>
+    <Description>Update a Withdrawal Request</Description>
+    <HOVER_OVER_TEXT/>
+    <PROPERTIES type="array">
+      <PROPERTY>
+        <NAME>CALCENTRAL</NAME>
+        <value>FORM</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>UCFROM</NAME>
+        <value>CalCentral</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>UCFROMLINK</NAME>
+        <value>https://calcentral-sis-dev-01.ist.berkeley.edu/</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>UCFROMTEXT</NAME>
+        <value>CalCentral</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>URI_TYPE</NAME>
+        <value>PL</value>
+      </PROPERTY>
+    </PROPERTIES>
+    <URL>https://bcswebqat.is.berkeley.edu/psp/bcsqat/EMPLOYEE/HRMS/c/G3FRAME.G3SEARCH.GBL?&amp;G3FORM_FAMILY=STUDENT&amp;G3FORM_TYPE=SRWITHDRL&amp;G3FORM_CONDITION=Default&amp;G3FORM_TASK=UPD</URL>
+    <COMMENTS>Update a Withdrawal Request</COMMENTS>
+  </Link>
+  <Link>
+    <URL_ID>UC_CX_CSU_DA_TRN_CDT</URL_ID>
+    <Description>Transfer Credit Reports</Description>
+    <HOVER_OVER_TEXT>Detailed report of student's transfer credit</HOVER_OVER_TEXT>
+    <PROPERTIES type="array">
+      <PROPERTY>
+        <NAME>CALCENTRAL</NAME>
+        <value>TRANSFER-CREDIT</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>UCFROM</NAME>
+        <value>CalCentral</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>UCFROMLINK</NAME>
+        <value>https://calcentral-sis-dev-01.ist.berkeley.edu/</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>UCFROMTEXT</NAME>
+        <value>CalCentral</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>URI_TYPE</NAME>
+        <value>PL</value>
+      </PROPERTY>
+    </PROPERTIES>
+    <URL>https://bcswebqat.is.berkeley.edu/psp/bcsqat/EMPLOYEE/HRMS/c/SSR_ADVISEE_OVRD.CSU_DA_TRN_CDT.GBL</URL>
+    <COMMENTS>May need to change this later to include EMPLID.</COMMENTS>
+  </Link>
+  <Link>
+    <URL_ID>UC_CX_PLANNER_ADV_STDNT</URL_ID>
+    <Description>Multi-Year Planner</Description>
+    <HOVER_OVER_TEXT>View this specific student's upcoming semester classes built from a multi-year academic plan.</HOVER_OVER_TEXT>
+    <PROPERTIES type="array">
+      <PROPERTY>
+        <NAME>CALCENTRAL</NAME>
+        <value>PLANNER-ADV</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>UCFROM</NAME>
+        <value>CalCentral</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>UCFROMLINK</NAME>
+        <value>https://calcentral-sis-dev-01.ist.berkeley.edu/</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>UCFROMTEXT</NAME>
+        <value>CalCentral</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>URI_TYPE</NAME>
+        <value>PL</value>
+      </PROPERTY>
+    </PROPERTIES>
+    <URL>https://bcswebqat.is.berkeley.edu/psp/bcsqat/EMPLOYEE/HRMS/c/SCI_PLNR_ADMIN.SCI_PLNR_FL.GBL?&amp;EMPLID={EMPLID}</URL>
+    <COMMENTS>My Dashboard (Advisor) &gt; Student Overview</COMMENTS>
+  </Link>
+  <Link>
+    <URL_ID>UC_CX_GT_WITHDRAWFORM_ADD</URL_ID>
+    <Description>Add a Request for Withdrawal</Description>
+    <HOVER_OVER_TEXT/>
+    <PROPERTIES type="array">
+      <PROPERTY>
+        <NAME>CALCENTRAL</NAME>
+        <value>FORM</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>UCFROM</NAME>
+        <value>CalCentral</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>UCFROMLINK</NAME>
+        <value>https://calcentral-sis-dev-01.ist.berkeley.edu/</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>UCFROMTEXT</NAME>
+        <value>CalCentral</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>URI_TYPE</NAME>
+        <value>PL</value>
+      </PROPERTY>
+    </PROPERTIES>
+    <URL>https://bcswebqat.is.berkeley.edu/psp/bcsqat/EMPLOYEE/HRMS/c/G3FRAME.G3SEARCH.GBL?&amp;G3FORM_FAMILY=STUDENT&amp;G3FORM_TYPE=SRWITHDRL&amp;G3FORM_CONDITION=Default&amp;G3FORM_TASK=ADD</URL>
+    <COMMENTS/>
+  </Link>
+  <Link>
+    <URL_ID>UC_CX_GT_SSCNTENRL_ADD</URL_ID>
+    <Description>Apply to a Class</Description>
+    <HOVER_OVER_TEXT>Complete your class enrollment application.</HOVER_OVER_TEXT>
+    <PROPERTIES type="array">
+      <PROPERTY>
+        <NAME>CALCENTRAL</NAME>
+        <value>FORM</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>UCFROM</NAME>
+        <value>CalCentral</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>UCFROMLINK</NAME>
+        <value>https://calcentral-sis-dev-01.ist.berkeley.edu/</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>UCFROMTEXT</NAME>
+        <value>CalCentral</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>URI_TYPE</NAME>
+        <value>PL</value>
+      </PROPERTY>
+    </PROPERTIES>
+    <URL>https://bcswebqat.is.berkeley.edu/psp/bcsqat/EMPLOYEE/HRMS/c/G3FRAME.G3SEARCH.GBL?&amp;G3FORM_FAMILY=STUDENT&amp;G3FORM_TYPE=SSCNTENRL&amp;G3FORM_CONDITION=Default&amp;G3FORM_TASK=ADD</URL>
+    <COMMENTS>Apply to a class for concurrent enrollment</COMMENTS>
+  </Link>
+  <Link>
+    <URL_ID>UC_CX_GT_SSCNTENRL_VIEW</URL_ID>
+    <Description>Submitted Class Applications</Description>
+    <HOVER_OVER_TEXT>View your submitted class enrollment application.</HOVER_OVER_TEXT>
+    <PROPERTIES type="array">
+      <PROPERTY>
+        <NAME>CALCENTRAL</NAME>
+        <value>FORM</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>UCFROM</NAME>
+        <value>CalCentral</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>UCFROMLINK</NAME>
+        <value>https://calcentral-sis-dev-01.ist.berkeley.edu/</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>UCFROMTEXT</NAME>
+        <value>CalCentral</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>URI_TYPE</NAME>
+        <value>PL</value>
+      </PROPERTY>
+    </PROPERTIES>
+    <URL>https://bcswebqat.is.berkeley.edu/psp/bcsqat/EMPLOYEE/HRMS/c/G3FRAME.G3SEARCH.GBL?&amp;G3FORM_FAMILY=STUDENT&amp;G3FORM_TYPE=SSCNTENRL&amp;G3FORM_CONDITION=Default&amp;G3FORM_TASK=VWS</URL>
+    <COMMENTS>View submitted concurrent enrollment class applications</COMMENTS>
+  </Link>
+  <Link>
+    <URL_ID>UC_CX_SRWITHDRL_VIEW</URL_ID>
+    <Description>View a Withdrawal Request</Description>
+    <HOVER_OVER_TEXT/>
+    <PROPERTIES type="array">
+      <PROPERTY>
+        <NAME>CALCENTRAL</NAME>
+        <value>FORM</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>UCFROM</NAME>
+        <value>CalCentral</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>UCFROMLINK</NAME>
+        <value>https://calcentral-sis-dev-01.ist.berkeley.edu/</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>UCFROMTEXT</NAME>
+        <value>CalCentral</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>URI_TYPE</NAME>
+        <value>PL</value>
+      </PROPERTY>
+    </PROPERTIES>
+    <URL>https://bcswebqat.is.berkeley.edu/psp/bcsqat/EMPLOYEE/HRMS/c/G3FRAME.G3SEARCH.GBL?&amp;G3FORM_FAMILY=STUDENT&amp;G3FORM_TYPE=SRWITHDRL&amp;G3FORM_CONDITION=Default&amp;G3FORM_TASK=VWS</URL>
+    <COMMENTS>View a Withdrawal Request</COMMENTS>
+  </Link>
+  <Link>
+    <URL_ID>UC_CX_SS_ENRL_VER_REQ</URL_ID>
+    <Description>Request Official Verification</Description>
+    <HOVER_OVER_TEXT>Request Other Verifications</HOVER_OVER_TEXT>
+    <PROPERTIES type="array">
+      <PROPERTY>
+        <NAME>CALCENTRAL</NAME>
+        <value>GENERIC</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>UCFROM</NAME>
+        <value>CalCentral</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>UCFROMLINK</NAME>
+        <value>https://calcentral-sis-dev-01.ist.berkeley.edu/</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>UCFROMTEXT</NAME>
+        <value>CalCentral</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>URI_TYPE</NAME>
+        <value>PL</value>
+      </PROPERTY>
+    </PROPERTIES>
+    <URL>https://bcswebqat.is.berkeley.edu/psp/bcsqat/EMPLOYEE/HRMS/c/SA_LEARNER_SERVICES.SS_ENRL_VER_REQ.GBL</URL>
+    <COMMENTS>Request Official Verification</COMMENTS>
+  </Link>
+  <Link>
+    <URL_ID>UC_CX_APPOINTMENT_ADV_MY_APPTS</URL_ID>
+    <Description>My Appointments</Description>
+    <HOVER_OVER_TEXT>View your appointments.</HOVER_OVER_TEXT>
+    <PROPERTIES type="array">
+      <PROPERTY>
+        <NAME>CALCENTRAL</NAME>
+        <value>APPOINTMENTS-ADV</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>UCFROM</NAME>
+        <value>CalCentral</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>UCFROMLINK</NAME>
+        <value>https://calcentral-sis-dev-01.ist.berkeley.edu/</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>UCFROMTEXT</NAME>
+        <value>CalCentral</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>URI_TYPE</NAME>
+        <value>PL</value>
+      </PROPERTY>
+    </PROPERTIES>
+    <URL>https://bcswebqat.is.berkeley.edu/psp/bcsqat/EMPLOYEE/HRMS/c/SCI_APPT_ADVSS.SCI_APPT_ADV_APPTS.GBL</URL>
+    <COMMENTS>Advisors should be able to view their advising appointments from the Fluid interface.</COMMENTS>
+  </Link>
+  <Link>
+    <URL_ID>UC_CX_SRWITHDRL_UPDATE</URL_ID>
+    <Description>Update a Withdrawal Request</Description>
+    <HOVER_OVER_TEXT/>
+    <PROPERTIES type="array">
+      <PROPERTY>
+        <NAME>CALCENTRAL</NAME>
+        <value>FORM</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>UCFROM</NAME>
+        <value>CalCentral</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>UCFROMLINK</NAME>
+        <value>https://calcentral-sis-dev-01.ist.berkeley.edu/</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>UCFROMTEXT</NAME>
+        <value>CalCentral</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>URI_TYPE</NAME>
+        <value>PL</value>
+      </PROPERTY>
+    </PROPERTIES>
+    <URL>https://bcswebqat.is.berkeley.edu/psp/bcsqat/EMPLOYEE/HRMS/c/G3FRAME.G3SEARCH.GBL?&amp;G3FORM_FAMILY=STUDENT&amp;G3FORM_TYPE=SRWITHDRL&amp;G3FORM_CONDITION=Default&amp;G3FORM_TASK=UPD</URL>
+    <COMMENTS>Update a Withdrawal Request</COMMENTS>
+  </Link>
+  <Link>
+    <URL_ID>UC_CX_SCI_NOTE_FLU</URL_ID>
+    <Description>Advising Notes</Description>
+    <HOVER_OVER_TEXT>View this student's advising notes.</HOVER_OVER_TEXT>
+    <PROPERTIES type="array">
+      <PROPERTY>
+        <NAME>CALCENTRAL</NAME>
+        <value>NOTES-ADV</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>UCFROM</NAME>
+        <value>CalCentral</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>UCFROMLINK</NAME>
+        <value>https://calcentral-sis-dev-01.ist.berkeley.edu/</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>UCFROMTEXT</NAME>
+        <value>CalCentral</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>URI_TYPE</NAME>
+        <value>PL</value>
+      </PROPERTY>
+    </PROPERTIES>
+    <URL>https://bcswebqat.is.berkeley.edu/psp/bcsqat/EMPLOYEE/HRMS/c/SCI_NOTES_FLU.SCI_NOTE_FLU.GBL?EMPLID_SRCH={EMPLID}</URL>
+    <COMMENTS>EMPLID_SRCH={EMPLID} is the Student's emplid.</COMMENTS>
+  </Link>
+  <Link>
+    <URL_ID>UC_CX_PLANNER_ADV</URL_ID>
+    <Description>Multi-Year Planner</Description>
+    <HOVER_OVER_TEXT>View upcoming semester classes built from a multi-year academic plan.</HOVER_OVER_TEXT>
+    <PROPERTIES type="array">
+      <PROPERTY>
+        <NAME>CALCENTRAL</NAME>
+        <value>PLANNER-ADV</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>UCFROM</NAME>
+        <value>CalCentral</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>UCFROMLINK</NAME>
+        <value>https://calcentral-sis-dev-01.ist.berkeley.edu/</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>UCFROMTEXT</NAME>
+        <value>CalCentral</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>URI_TYPE</NAME>
+        <value>PL</value>
+      </PROPERTY>
+    </PROPERTIES>
+    <URL>https://bcswebqat.is.berkeley.edu/psp/bcsqat/EMPLOYEE/HRMS/c/SCI_PLNR_ADMIN.SCI_PLNR_LAUNCH.GBL</URL>
+    <COMMENTS>My Dashboard (Advisor)</COMMENTS>
+  </Link>
+  <Link>
+    <URL_ID>UC_CX_TEST_CONCEPT</URL_ID>
+    <Description>Test URL</Description>
+    <HOVER_OVER_TEXT>HOVER TEST</HOVER_OVER_TEXT>
+    <PROPERTIES type="array">
+      <PROPERTY>
+        <NAME>CALCENTRAL</NAME>
+        <value>APPOINTMENTS-ADV</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>UCFROM</NAME>
+        <value>CalCentral</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>UCFROMLINK</NAME>
+        <value>https://calcentral-sis-dev-01.ist.berkeley.edu/</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>UCFROMTEXT</NAME>
+        <value>CalCentral</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>URI_TYPE</NAME>
+        <value>PL</value>
+      </PROPERTY>
+    </PROPERTIES>
+    <URL>https://bcswebqat.is.berkeley.edu/psp/bcsqat/EMPLOYEE/HRMS/c/UC_LINK_URL_MENU.UC_LINKAPI_URL_CMP.GBL?EMPLID={EMPLID}&amp;AID_YEAR={AID_YEAR}</URL>
+    <COMMENTS>Test URL - Or instructions for user here.</COMMENTS>
+  </Link>
+  <Link>
+    <URL_ID>UC_CX_TEST_LINK</URL_ID>
+    <Description>Testing URL for CalCentral</Description>
+    <HOVER_OVER_TEXT/>
+    <PROPERTIES type="array">
+      <PROPERTY>
+        <NAME>CALCENTRAL</NAME>
+        <value>GENERIC</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>UCFROM</NAME>
+        <value>CalCentral</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>UCFROMLINK</NAME>
+        <value>https://calcentral-sis-dev-01.ist.berkeley.edu/</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>UCFROMTEXT</NAME>
+        <value>CalCentral</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>URI_TYPE</NAME>
+        <value>PL</value>
+      </PROPERTY>
+    </PROPERTIES>
+    <URL>https://bcswebqat.is.berkeley.edu/psp/bcsqat/path/to/endpoint?PLACEHOLDER={PLACEHOLDER}</URL>
+    <COMMENTS>Test URL for verifying that {PLACEHOLDER} is returned as part of the URL, and replaced by the caller (client).</COMMENTS>
+  </Link>
+  <Link>
+    <URL_ID>UC_CX_SRWITHDRL_ADD</URL_ID>
+    <Description>Add a Withdrawal Request</Description>
+    <HOVER_OVER_TEXT>Complete this form to withdraw from UC Berkeley.</HOVER_OVER_TEXT>
+    <PROPERTIES type="array">
+      <PROPERTY>
+        <NAME>CALCENTRAL</NAME>
+        <value>FORM</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>UCFROM</NAME>
+        <value>CalCentral</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>UCFROMLINK</NAME>
+        <value>https://calcentral-sis-dev-01.ist.berkeley.edu/</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>UCFROMTEXT</NAME>
+        <value>CalCentral</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>URI_TYPE</NAME>
+        <value>PL</value>
+      </PROPERTY>
+    </PROPERTIES>
+    <URL>https://bcswebqat.is.berkeley.edu/psp/bcsqat/EMPLOYEE/HRMS/c/G3FRAME.G3SEARCH.GBL?&amp;G3FORM_FAMILY=STUDENT&amp;G3FORM_TYPE=SRWITHDRL&amp;G3FORM_CONDITION=Default&amp;G3FORM_TASK=ADD</URL>
+    <COMMENTS>Add a Withdrawal Request</COMMENTS>
+  </Link>
+  <Link>
+    <URL_ID>UC_CX_ADV_CHG_CRS_LOAD</URL_ID>
+    <Description>Change of Course Load</Description>
+    <HOVER_OVER_TEXT>Change a student's course load</HOVER_OVER_TEXT>
+    <PROPERTIES type="array">
+      <PROPERTY>
+        <NAME>CALCENTRAL</NAME>
+        <value>GENERIC</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>UCFROM</NAME>
+        <value>CalCentral</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>UCFROMLINK</NAME>
+        <value>https://calcentral-sis-dev-01.ist.berkeley.edu/</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>UCFROMTEXT</NAME>
+        <value>CalCentral</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>URI_TYPE</NAME>
+        <value>PL</value>
+      </PROPERTY>
+    </PROPERTIES>
+    <URL>https://bcswebqat.is.berkeley.edu/psp/bcsqat/EMPLOYEE/HRMS/c/STDNT_ACTIVATION.MANAGE_ACADEMIC_RECORDS.GBL</URL>
+    <COMMENTS/>
+  </Link>
+  <Link>
+    <URL_ID>UC_CX_STDNT_FERPA_RESTR_MGMT</URL_ID>
+    <Description>managing FERPA restrictions</Description>
+    <HOVER_OVER_TEXT/>
+    <PROPERTIES type="array">
+      <PROPERTY>
+        <NAME>CALCENTRAL</NAME>
+        <value>GENERIC</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>UCFROM</NAME>
+        <value>CalCentral</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>UCFROMLINK</NAME>
+        <value>https://calcentral-sis-dev-01.ist.berkeley.edu/</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>UCFROMTEXT</NAME>
+        <value>CalCentral</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>URI_TYPE</NAME>
+        <value>PL</value>
+      </PROPERTY>
+    </PROPERTIES>
+    <URL>https://bcswebqat.is.berkeley.edu/psp/bcsqat/EMPLOYEE/HRMS/c/CC_PORTFOLIO.SS_CC_FERPA_SETUP.GBL?Page=SS_CC_FERPA</URL>
+    <COMMENTS/>
+  </Link>
+  <Link>
+    <URL_ID>UC_CX_APR_RPT</URL_ID>
+    <Description>Academic Progress Reports</Description>
+    <HOVER_OVER_TEXT>Find a student's Advising Academic Progress Report</HOVER_OVER_TEXT>
+    <PROPERTIES type="array">
+      <PROPERTY>
+        <NAME>CALCENTRAL</NAME>
+        <value>ADVISOR</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>UCFROM</NAME>
+        <value>CalCentral</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>UCFROMLINK</NAME>
+        <value>https://calcentral-sis-dev-01.ist.berkeley.edu/</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>UCFROMTEXT</NAME>
+        <value>CalCentral</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>URI_TYPE</NAME>
+        <value>PL</value>
+      </PROPERTY>
+    </PROPERTIES>
+    <URL>https://bcswebqat.is.berkeley.edu/psp/bcsqat/EMPLOYEE/PSFT_CS/c/SSR_ADVISEE_OVRD.SSS_STUDENT_CENTER.GBL</URL>
+    <COMMENTS>This should take advisors to a look up page where they may look up the advisee student center in CS.</COMMENTS>
+  </Link>
+  <Link>
+    <URL_ID>UC_CX_XFER_CREDIT_REPORT_STDNT</URL_ID>
+    <Description>Transfer Credit Report</Description>
+    <HOVER_OVER_TEXT>Detailed Transfer Credit Report</HOVER_OVER_TEXT>
+    <PROPERTIES type="array">
+      <PROPERTY>
+        <NAME>CALCENTRAL</NAME>
+        <value>ADVISOR</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>UCFROM</NAME>
+        <value>CalCentral</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>UCFROMLINK</NAME>
+        <value>https://calcentral-sis-dev-01.ist.berkeley.edu/</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>UCFROMTEXT</NAME>
+        <value>CalCentral</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>URI_TYPE</NAME>
+        <value>PL</value>
+      </PROPERTY>
+    </PROPERTIES>
+    <URL>https://bcswebqat.is.berkeley.edu/psp/bcsqat/EMPLOYEE/HRMS/c/SSR_ADVISEE_OVRD.CSU_DA_TRN_CDT.GBL?EMPLID={EMPLID}</URL>
+    <COMMENTS>This should take an advisor to a student's transfer credit report in CS.</COMMENTS>
+  </Link>
+  <Link>
+    <URL_ID>UC_CX_WHIF_RPT</URL_ID>
+    <Description>What-If Reports</Description>
+    <HOVER_OVER_TEXT>Find a student's Advising What-If Reports</HOVER_OVER_TEXT>
+    <PROPERTIES type="array">
+      <PROPERTY>
+        <NAME>CALCENTRAL</NAME>
+        <value>ADVISOR</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>UCFROM</NAME>
+        <value>CalCentral</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>UCFROMLINK</NAME>
+        <value>https://calcentral-sis-dev-01.ist.berkeley.edu/</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>UCFROMTEXT</NAME>
+        <value>CalCentral</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>URI_TYPE</NAME>
+        <value>PL</value>
+      </PROPERTY>
+    </PROPERTIES>
+    <URL>https://bcswebqat.is.berkeley.edu/psp/bcsqat/EMPLOYEE/PSFT_CS/c/SSR_ADVISEE_OVRD.SSS_STUDENT_CENTER.GBL</URL>
+    <COMMENTS>This should take advisors to a look up page where they may look up the advisee student center in CS.</COMMENTS>
+  </Link>
+  <Link>
+    <URL_ID>UC_CX_GT_SRSEP_ADD</URL_ID>
+    <Description>Special Enrollment Petition</Description>
+    <HOVER_OVER_TEXT>Special Enrollment Petition form</HOVER_OVER_TEXT>
+    <PROPERTIES type="array">
+      <PROPERTY>
+        <NAME>CALCENTRAL</NAME>
+        <value>FORM</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>UCFROM</NAME>
+        <value>CalCentral</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>UCFROMLINK</NAME>
+        <value>https://calcentral-sis-dev-01.ist.berkeley.edu/</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>UCFROMTEXT</NAME>
+        <value>CalCentral</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>URI_TYPE</NAME>
+        <value>PL</value>
+      </PROPERTY>
+    </PROPERTIES>
+    <URL>https://bcswebqat.is.berkeley.edu/psp/bcsqat/EMPLOYEE/HRMS/c/G3FRAME.G3SEARCH.GBL?&amp;G3FORM_FAMILY=STUDENT&amp;G3FORM_TYPE=SRSEP&amp;G3FORM_CONDITION=Default&amp;G3FORM_TASK=ADD</URL>
+    <COMMENTS/>
+  </Link>
+  <Link>
+    <URL_ID>UC_CX_WEBNOW_STUDENT_URI</URL_ID>
+    <Description>External Student Docs-ImageNow</Description>
+    <HOVER_OVER_TEXT>View (undergraduate) student's external transcript and exam documents.</HOVER_OVER_TEXT>
+    <PROPERTIES type="array">
+      <PROPERTY>
+        <NAME>CALCENTRAL</NAME>
+        <value>NOTES-STU</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>DEV_NODE</NAME>
+        <value>imagine-content-qa.berkeley.edu/#document/view/321Z059_0GPM1PTTW00S1WH</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>NEW_WINDOW</NAME>
+        <value>Y</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>PRD_NODE</NAME>
+        <value>imagine-content.berkeley.edu/#document/view/321Z05B_01EFZBH4W0004XD</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>QAT_NODE</NAME>
+        <value>imagine-content-qa.berkeley.edu/#document/view/321Z059_0GPM1PTTW00S1WH</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>TST_NODE</NAME>
+        <value>imagine-content-qa.berkeley.edu/#document/view/321Z059_0GPM1PTTW00S1WH</value>
+      </PROPERTY>
+    </PROPERTIES>
+    <URL>https://imagine-content-qa.berkeley.edu/#document/view/321Z059_0GPM1PTTW00S1WH?simplemode=true&amp;constraint=[field1]%20=%20'{EMPLID}'</URL>
+    <COMMENTS>Advisee's Perceptive Content Documents</COMMENTS>
+  </Link>
+  <Link>
+    <URL_ID>UC_CX_APPOINTMENT_ADV_SETUP</URL_ID>
+    <Description>Appointment System</Description>
+    <HOVER_OVER_TEXT/>
+    <PROPERTIES type="array">
+      <PROPERTY>
+        <NAME>CALCENTRAL</NAME>
+        <value>APPOINTMENTS-ADV</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>UCFROM</NAME>
+        <value>CalCentral</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>UCFROMLINK</NAME>
+        <value>https://calcentral-sis-dev-01.ist.berkeley.edu/</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>UCFROMTEXT</NAME>
+        <value>CalCentral</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>URI_TYPE</NAME>
+        <value>PL</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>LINK_DESCRIPTION</NAME>
+        <value>May your hats fly as high as your dreams</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>LINK_DESCRIPTION_DISPLAY</NAME>
+        <value>Y</value>
+      </PROPERTY>
+    </PROPERTIES>
+    <URL>https://bcswebqat.is.berkeley.edu/psp/bcsqat/EMPLOYEE/HRMS/c/SCI_APPT_SETUP.SCI_APPT_ADV.GBL?EMPLID={EMPLID}</URL>
+    <COMMENTS>Appointment System Setup and Settings</COMMENTS>
+  </Link>
+  <Link>
+    <URL_ID>UC_CX_ADM_TRANSCRIPT</URL_ID>
+    <Description>Administrative Transcripts</Description>
+    <HOVER_OVER_TEXT>Find a Student's Administrative Transcript</HOVER_OVER_TEXT>
+    <PROPERTIES type="array">
+      <PROPERTY>
+        <NAME>CALCENTRAL</NAME>
+        <value>ADVISOR</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>UCFROM</NAME>
+        <value>CalCentral</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>UCFROMLINK</NAME>
+        <value>https://calcentral-sis-dev-01.ist.berkeley.edu/</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>UCFROMTEXT</NAME>
+        <value>CalCentral</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>URI_TYPE</NAME>
+        <value>PL</value>
+      </PROPERTY>
+    </PROPERTIES>
+    <URL>https://bcswebqat.is.berkeley.edu/psp/bcsqat/EMPLOYEE/PSFT_CS/c/SSR_ADVISEE_OVRD.SSS_STUDENT_CENTER.GBL</URL>
+    <COMMENTS>This should take advisors to a look up page where they may look up the advisee student center in CS.</COMMENTS>
+  </Link>
+  <Link>
+    <URL_ID>UC_CX_REPORTING_CENTER</URL_ID>
+    <Description>Reporting Center</Description>
+    <HOVER_OVER_TEXT>Access the centralized list of report queries.</HOVER_OVER_TEXT>
+    <PROPERTIES type="array">
+      <PROPERTY>
+        <NAME>CALCENTRAL</NAME>
+        <value>REPORTING</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>UCFROM</NAME>
+        <value>CalCentral</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>UCFROMLINK</NAME>
+        <value>https://calcentral-sis-dev-01.ist.berkeley.edu/</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>UCFROMTEXT</NAME>
+        <value>CalCentral</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>URI_TYPE</NAME>
+        <value>PL</value>
+      </PROPERTY>
+    </PROPERTIES>
+    <URL>https://bcswebqat.is.berkeley.edu/psp/bcsqat/EMPLOYEE/HRMS/s/WEBLIB_PTAL.ISCRIPT1.FieldFormula.IScript_PTAL_DASHBOARD?tab=UC_CS_RP_RC_RPT_DASHBOARD&amp;FolderPath=PORTAL_ROOT_OBJECT.UC_CMPONENTS.UC_CUSTOM_RP.UC_CS_RP_RC_RPT_DASHBOARD_LINK&amp;IsFolder=false&amp;IgnoreParamTempl=FolderPath%2cIsFolder</URL>
+    <COMMENTS/>
+  </Link>
+  <Link>
+    <URL_ID>UC_CX_GT_SSCNTENRL_UPD</URL_ID>
+    <Description>Edit Class Applications</Description>
+    <HOVER_OVER_TEXT>Edit your submited class enrollment application.</HOVER_OVER_TEXT>
+    <PROPERTIES type="array">
+      <PROPERTY>
+        <NAME>CALCENTRAL</NAME>
+        <value>FORM</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>UCFROM</NAME>
+        <value>CalCentral</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>UCFROMLINK</NAME>
+        <value>https://calcentral-sis-dev-01.ist.berkeley.edu/</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>UCFROMTEXT</NAME>
+        <value>CalCentral</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>URI_TYPE</NAME>
+        <value>PL</value>
+      </PROPERTY>
+    </PROPERTIES>
+    <URL>https://bcswebqat.is.berkeley.edu/psp/bcsqat/EMPLOYEE/HRMS/c/G3FRAME.G3SEARCH.GBL?&amp;G3FORM_FAMILY=STUDENT&amp;G3FORM_TYPE=SSCNTENRL&amp;G3FORM_CONDITION=Default&amp;G3FORM_TASK=UPD</URL>
+    <COMMENTS>Update submitted concurrent enrollment class applications</COMMENTS>
+  </Link>
+  <Link>
+    <URL_ID>UC_CX_GT_FAEMRLAON_ADD</URL_ID>
+    <Description>Apply for an Emergency Loan</Description>
+    <HOVER_OVER_TEXT>Complete this form to apply for an emergency loan.</HOVER_OVER_TEXT>
+    <PROPERTIES type="array">
+      <PROPERTY>
+        <NAME>CALCENTRAL</NAME>
+        <value>FORM</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>UCFROM</NAME>
+        <value>CalCentral</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>UCFROMLINK</NAME>
+        <value>https://calcentral-sis-dev-01.ist.berkeley.edu/</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>UCFROMTEXT</NAME>
+        <value>CalCentral</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>URI_TYPE</NAME>
+        <value>PL</value>
+      </PROPERTY>
+    </PROPERTIES>
+    <URL>https://bcswebqat.is.berkeley.edu/psp/bcsqat/EMPLOYEE/HRMS/c/G3FRAME.G3SEARCH.GBL?&amp;G3FORM_FAMILY=FAEMRLOAN&amp;G3FORM_TYPE=FAEMRLAON&amp;G3FORM_CONDITION=Default&amp;G3FORM_TASK=ADD</URL>
+    <COMMENTS>eForm to apply for an Emergency Loan</COMMENTS>
+  </Link>
+  <Link>
+    <URL_ID>NSC_LINK</URL_ID>
+    <Description>NSC LINK</Description>
+    <HOVER_OVER_TEXT/>
+    <PROPERTIES type="array">
+      <PROPERTY>
+        <NAME>CALCENTRAL</NAME>
+        <value>GENERIC</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>DEV_NODE</NAME>
+        <value>secure.studentclearinghouse.org</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>PRD_NODE</NAME>
+        <value>secure.studentclearinghouse.org</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>QAT_NODE</NAME>
+        <value>secure.studentclearinghouse.org</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>TST_NODE</NAME>
+        <value>secure.studentclearinghouse.org</value>
+      </PROPERTY>
+    </PROPERTIES>
+    <URL>https://secure.studentclearinghouse.org/sssportalui/authenticate</URL>
+    <COMMENTS/>
   </Link>
 </UC_LINK_RESOURCES>
