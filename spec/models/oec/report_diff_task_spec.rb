@@ -24,7 +24,7 @@ describe Oec::ReportDiffTask do
       })
     end
 
-    before {
+    before do
       allow(Oec::CourseCode).to receive(:by_dept_code).and_return dept_code_mappings
       allow(Oec::RemoteDrive).to receive(:new).and_return fake_remote_drive
       allow(fake_remote_drive).to receive(:check_conflicts_and_upload)
@@ -35,7 +35,7 @@ describe Oec::ReportDiffTask do
         sis_data = JSON.parse(File.read json)
         # Two entries for each dept: sis_data and modified data. In this test, only STAT data has been modified.
         dept_data = dept_name == 'STAT' ? JSON.parse(modified_stat_data) : sis_data
-        fake_csv_hash[dept_name] = [ sis_data, dept_data]
+        fake_csv_hash[dept_name] = [sis_data, dept_data]
       end
 
       # Behave as if there is no previous diff report on remote drive for any of the three departments
@@ -65,7 +65,7 @@ describe Oec::ReportDiffTask do
           end
         end
       end
-    }
+    end
 
     it 'should log errors' do
       subject.run
@@ -75,56 +75,67 @@ describe Oec::ReportDiffTask do
       expect(subject.errors['PSTAT']['99999'].keys).to match_array ['Invalid annotation: wrong', 'Invalid ldap_uid: bad_data']
     end
 
-    it 'should report STAT diff only' do
-      diff_rows_by_dept = {}
-
-      original_update_departmental_diff = subject.method(:update_departmental_diff)
-      allow(subject).to receive(:update_departmental_diff) do |diff_rows, dept_code|
-        diff_rows_by_dept[dept_code] = diff_rows
-        original_update_departmental_diff.call(diff_rows, dept_code)
+    context 'discrepancies in STAT department' do
+      let(:diff_rows_by_dept) do
+        {}.tap do |dept_hash|
+          original_update_departmental_diff = subject.method(:update_departmental_diff)
+          allow(subject).to receive(:update_departmental_diff) do |diff_rows, dept_code|
+            dept_hash[dept_code] = diff_rows
+            original_update_departmental_diff.call(diff_rows, dept_code)
+          end
+          subject.run
+        end
       end
-      subject.run
 
-      expect(diff_rows_by_dept['FOO']).to be_nil
-      expect(diff_rows_by_dept['SZANT']).to have(0).items
-      expect(diff_rows_by_dept['SPOLS']).to have(0).items
-      expect(diff_rows_by_dept['PSTAT']).to have(9).items
-      
-      expected_diff = {
-        '2015-B-87672-10316' => {
-          '+/-' => ' ',
-          'COURSE_NAME' => 'different_course_name',
-          'sis:COURSE_NAME' => 'STAT C205A LEC 001 PROB THEORY',
-          'EMAIL_ADDRESS' => 'different_email_address@berkeley.edu',
-          'sis:EMAIL_ADDRESS' => 'blanco@berkeley.edu'
-        },
-        '2015-B-87690-12345678' => {
-          '+/-' => '-',
+      it 'should omit nonexistent departments' do
+        expect(diff_rows_by_dept['FOO']).to be_nil
+      end
+
+      it 'should include diff for STAT department only' do
+        expect(diff_rows_by_dept['SZANT']).to have(0).items
+        expect(diff_rows_by_dept['SPOLS']).to have(0).items
+        expect(diff_rows_by_dept['PSTAT']).to have(14).items
+      end
+
+      it 'should note rows missing from the department confirmation sheet' do
+        expect(diff_rows_by_dept['PSTAT']['2015-B-87690-12345678'].to_hash).to include({
+          'REASON' => 'Not in DCS',
           'COURSE_NAME' => nil,
           'sis:COURSE_NAME' => 'STAT C236A LEC 001 STATS SOCI SCI',
           'EMAIL_ADDRESS' => nil,
           'sis:EMAIL_ADDRESS' => 'stat_supervisor@berkeley.edu'
-        },
-        '2015-B-11111' => {
-          '+/-' => '+',
+        })
+      end
+
+      it 'should note rows missing from the SIS import sheet' do
+        expect(diff_rows_by_dept['PSTAT']['2015-B-11111'].to_hash).to include({
+          'REASON' => 'Not in SIS',
           'COURSE_NAME' => 'Added by dept',
           'sis:COURSE_NAME' => nil,
           'EMAIL_ADDRESS' => 'trump@berkeley.edu',
           'sis:EMAIL_ADDRESS' => nil
-        }
-      }
-      diff_rows_by_dept['PSTAT'].each do |row|
-        row_key = row['KEY']
-        if expected_diff.has_key? row_key
-          expected_diff[row_key].each do |key, expected|
-            actual = row[key]
-            expect(expected).to eq(actual), "#{row_key}: expected '#{expected}', got '#{actual}' where key=#{key}"
-          end
-          expected_diff.delete row_key
-        end
+        })
       end
-      expect(expected_diff).to be_empty
-    end
 
+      it 'should highlight differing course name and ignore other columns' do
+        expect(diff_rows_by_dept['PSTAT']['2015-B-87672-10316-COURSE_NAME'].to_hash).to include({
+          'REASON' => 'COURSE_NAME',
+          'COURSE_NAME' => 'different_course_name',
+          'sis:COURSE_NAME' => 'STAT C205A LEC 001 PROB THEORY',
+          'EMAIL_ADDRESS' => nil,
+          'sis:EMAIL_ADDRESS' => nil
+        })
+      end
+
+      it 'should highlight differing email address and include course name for identification' do
+        expect(diff_rows_by_dept['PSTAT']['2015-B-87672-10316-EMAIL_ADDRESS'].to_hash).to include({
+          'COURSE_NAME' => 'different_course_name',
+          'sis:COURSE_NAME' => 'STAT C205A LEC 001 PROB THEORY',
+          'REASON' => 'EMAIL_ADDRESS',
+          'EMAIL_ADDRESS' => 'different_email_address@berkeley.edu',
+          'sis:EMAIL_ADDRESS' => 'blanco@berkeley.edu'
+        })
+      end
+    end
   end
 end
