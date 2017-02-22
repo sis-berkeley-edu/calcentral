@@ -25,8 +25,7 @@ describe EdoOracle::Adapters::Oec do
         'enrollment_count'=>22,
         'affiliations'=>'INSTRUCTOR',
         'cross_listed_ccns'=>'32819',
-        'co_scheduled_ccns'=>'32819,32820,32820,32821',
-        'associated_primary'=>'32819,32819'
+        'co_scheduled_ccns'=>'32819,32820,32820,32821'
       }
     end
     let(:course) { described_class.adapt_courses([row], term_code).first }
@@ -37,7 +36,6 @@ describe EdoOracle::Adapters::Oec do
       expect(course['course_name']).to eq 'COMPSCI 8 LEC 001 FOUNDATION DATA SCI'
     end
     it 'de-duplicates ccn aggregates' do
-      expect(course['associated_primary']).to eq '32819'
       expect(course['co_scheduled_ccns']).to eq '32819,32820,32821'
     end
     it 'removes single-item ccn aggregates' do

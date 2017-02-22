@@ -130,10 +130,9 @@ module Oec
         csv << headers
         each_sorted do |row|
           csv_row = headers.map do |header|
-            # For numerical values (any combination of digits and commas), a prepended single quote forces plaintext
-            # formatting in Google Sheets. Google ignores enclosing double quotes, such as the CSV :force_quotes option
-            # would generate.
-            row[header] =~ /\A[\d,]+\Z/ ? "'#{row[header]}" : row[header]
+            # A trick to force plaintext formatting in Google Sheets.
+            # TODO Why not use the CSV :force_quotes option?
+            row[header] =~ /\A\d+\Z/ ? "'#{row[header]}" : row[header]
           end
           csv << csv_row
         end

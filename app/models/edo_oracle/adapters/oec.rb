@@ -10,7 +10,6 @@ module EdoOracle
 
         rows.each do |row|
           uniq_ccn_lists row
-          uniq_associated_primary row
 
           adapt_dept_name_and_catalog_id(row, user_courses)
           adapt_course_name row
@@ -127,11 +126,6 @@ module EdoOracle
         end
       end
 
-      def self.uniq_associated_primary(row)
-        if row['associated_primary'].present?
-          row['associated_primary'] = row['associated_primary'].split(',').uniq.join(',')
-        end
-      end
     end
   end
 end

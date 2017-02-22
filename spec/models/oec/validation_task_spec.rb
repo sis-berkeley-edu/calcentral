@@ -24,7 +24,7 @@ describe Oec::ValidationTask do
   end
 
   context 'conflicting instructor data' do
-    let(:invalid_row) { '2015-B-32960,2015-B-32960,GWS 103 LEC 001 IDENTITY ACROSS DIF,,,GWS,103,LEC,001,P,32960,104033,UID:104033,BAD_FIRST_NAME,Ffff,ffff@berkeley.edu,23,Y,GWS,F,,01-26-2015,05-11-2015' }
+    let(:invalid_row) { '2015-B-32960,2015-B-32960,GWS 103 LEC 001 IDENTITY ACROSS DIF,,,GWS,103,LEC,001,P,104033,UID:104033,BAD_FIRST_NAME,Ffff,ffff@berkeley.edu,23,Y,GWS,F,,01-26-2015,05-11-2015' }
     let(:sheet_name) { 'instructors' }
     let(:key) { '104033' }
     let(:expected_message) { "Conflicting values found under FIRST_NAME: 'Flora', 'BAD_FIRST_NAME'" }
@@ -32,7 +32,7 @@ describe Oec::ValidationTask do
   end
 
   context 'conflicting course dates' do
-    let(:invalid_row) { '2015-B-34818,2015-B-34818,LGBT 100 LEC 001 SPECIAL TOPICS,,,LGBT,100,LEC,001,P,34818,77865,UID:77865,Doris,Dddd,dddd@berkeley.edu,23,Y,LGBT,F,Y,02-01-2015,05-01-2015' }
+    let(:invalid_row) { '2015-B-34818,2015-B-34818,LGBT 100 LEC 001 SPECIAL TOPICS,,,LGBT,100,LEC,001,P,77865,UID:77865,Doris,Dddd,dddd@berkeley.edu,23,Y,LGBT,F,Y,02-01-2015,05-01-2015' }
     let(:sheet_name) { 'courses' }
     let(:key) { '2015-B-34818' }
     let(:expected_message) { "Conflicting values found under END_DATE: '04-01-2015', '05-01-2015'" }
@@ -44,81 +44,81 @@ describe Oec::ValidationTask do
     let(:key) { '2015-B-99999' }
 
     context 'blank field' do
-      let(:invalid_row) { '2015-B-99999,2015-B-99999,BIOLOGY 150 LEC 001 VINDICATION OF RIGHTS,,,BIOLOGY,150,LEC,001,P,99999,155555,UID:155555,Zachary,Zzzz,zzzz@berkeley.edu,23,Y,,F,,01-26-2015,05-11-2015' }
+      let(:invalid_row) { '2015-B-99999,2015-B-99999,BIOLOGY 150 LEC 001 VINDICATION OF RIGHTS,,,BIOLOGY,150,LEC,001,P,155555,UID:155555,Zachary,Zzzz,zzzz@berkeley.edu,23,Y,,F,,01-26-2015,05-11-2015' }
       let(:expected_message) { 'Blank DEPT_FORM' }
       include_examples 'validation error logging'
     end
 
     context 'invalid BIOLOGY department form' do
-      let(:invalid_row) { '2015-B-99999,2015-B-99999,BIOLOGY 150 LEC 001 VINDICATION OF RIGHTS,,,BIOLOGY,150,LEC,001,P,99999,155555,UID:155555,Zachary,Zzzz,zzzz@berkeley.edu,23,Y,SPANISH,F,,01-26-2015,05-11-2015' }
+      let(:invalid_row) { '2015-B-99999,2015-B-99999,BIOLOGY 150 LEC 001 VINDICATION OF RIGHTS,,,BIOLOGY,150,LEC,001,P,155555,UID:155555,Zachary,Zzzz,zzzz@berkeley.edu,23,Y,SPANISH,F,,01-26-2015,05-11-2015' }
       let(:expected_message) { 'Unexpected for BIOLOGY course: DEPT_FORM SPANISH' }
       include_examples 'validation error logging'
     end
 
     context 'invalid course id' do
-      let(:invalid_row) { '2015-B-999991,2015-B-999991,GWS 150 LEC 001 VINDICATION OF RIGHTS,,,GWS,150,LEC,001,P,99999,155555,UID:155555,Zachary,Zzzz,zzzz@berkeley.edu,23,Y,GWS,F,,01-26-2015,05-11-2015' }
+      let(:invalid_row) { '2015-B-999991,2015-B-999991,GWS 150 LEC 001 VINDICATION OF RIGHTS,,,GWS,150,LEC,001,P,155555,UID:155555,Zachary,Zzzz,zzzz@berkeley.edu,23,Y,GWS,F,,01-26-2015,05-11-2015' }
       let(:key) { '2015-B-999991' }
       let(:expected_message) { 'Invalid COURSE_ID 2015-B-999991' }
       include_examples 'validation error logging'
     end
 
     context 'non-matching COURSE_ID_2' do
-      let(:invalid_row) { '2015-B-99999,2015-B-99998,GWS 150 LEC 001 VINDICATION OF RIGHTS,,,GWS,150,LEC,001,P,99999,155555,UID:155555,Zachary,Zzzz,zzzz@berkeley.edu,23,Y,GWS,F,,01-26-2015,05-11-2015' }
+      let(:invalid_row) { '2015-B-99999,2015-B-99998,GWS 150 LEC 001 VINDICATION OF RIGHTS,,,GWS,150,LEC,001,P,155555,UID:155555,Zachary,Zzzz,zzzz@berkeley.edu,23,Y,GWS,F,,01-26-2015,05-11-2015' }
       let(:expected_message) { 'Non-matching COURSE_ID_2 2015-B-99998' }
       include_examples 'validation error logging'
     end
 
     context 'unexpected GSI evaluation type' do
       let(:key) { '2015-B-99999_GSI' }
-      let(:invalid_row) { '2015-B-99999_GSI,2015-B-99999_GSI,GWS 150 LEC 001 VINDICATION OF RIGHTS,,,GWS,150,LEC,001,P,99999,155555,UID:155555,Zachary,Zzzz,zzzz@berkeley.edu,23,Y,GWS,F,,01-26-2015,05-11-2015' }
+      let(:invalid_row) { '2015-B-99999_GSI,2015-B-99999_GSI,GWS 150 LEC 001 VINDICATION OF RIGHTS,,,GWS,150,LEC,001,P,155555,UID:155555,Zachary,Zzzz,zzzz@berkeley.edu,23,Y,GWS,F,,01-26-2015,05-11-2015' }
       let(:expected_message) { 'Unexpected for _GSI course: EVALUATION_TYPE F' }
       include_examples 'validation error logging'
     end
 
     context 'course ID in wrong term' do
-      let(:invalid_row) { '2014-B-99999,2014-B-99999,GWS 150 LEC 001 VINDICATION OF RIGHTS,,,GWS,150,LEC,001,P,99999,155555,UID:155555,Zachary,Zzzz,zzzz@berkeley.edu,23,Y,GWS,F,,01-26-2015,05-11-2015' }
+      let(:invalid_row) { '2014-B-99999,2014-B-99999,GWS 150 LEC 001 VINDICATION OF RIGHTS,,,GWS,150,LEC,001,P,155555,UID:155555,Zachary,Zzzz,zzzz@berkeley.edu,23,Y,GWS,F,,01-26-2015,05-11-2015' }
       let(:key) { '2014-B-99999' }
       let(:expected_message) { 'Incorrect term code in COURSE_ID 2014-B-99999' }
       include_examples 'validation error logging'
     end
 
     context 'start and end date equal' do
-      let(:invalid_row) { '2015-B-99999,2015-B-99999,GWS 150 LEC 001 VINDICATION OF RIGHTS,,,GWS,150,LEC,001,P,99999,155555,UID:155555,Zachary,Zzzz,zzzz@berkeley.edu,23,Y,GWS,F,Y,03-11-2015,03-11-2015' }
+      let(:invalid_row) { '2015-B-99999,2015-B-99999,GWS 150 LEC 001 VINDICATION OF RIGHTS,,,GWS,150,LEC,001,P,155555,UID:155555,Zachary,Zzzz,zzzz@berkeley.edu,23,Y,GWS,F,Y,03-11-2015,03-11-2015' }
       let(:key) { '2015-B-99999' }
       let(:expected_message) { 'START_DATE 03-11-2015 equal to END_DATE 03-11-2015' }
       include_examples 'validation error logging'
     end
 
     context 'end date before start date' do
-      let(:invalid_row) { '2015-B-99999,2015-B-99999,GWS 150 LEC 001 VINDICATION OF RIGHTS,,,GWS,150,LEC,001,P,99999,155555,UID:155555,Zachary,Zzzz,zzzz@berkeley.edu,23,Y,GWS,F,Y,03-26-2015,03-11-2015' }
+      let(:invalid_row) { '2015-B-99999,2015-B-99999,GWS 150 LEC 001 VINDICATION OF RIGHTS,,,GWS,150,LEC,001,P,155555,UID:155555,Zachary,Zzzz,zzzz@berkeley.edu,23,Y,GWS,F,Y,03-26-2015,03-11-2015' }
       let(:key) { '2015-B-99999' }
       let(:expected_message) { 'START_DATE 03-26-2015 later than END_DATE 03-11-2015' }
       include_examples 'validation error logging'
     end
 
     context 'date not matching term code' do
-      let(:invalid_row) { '2015-B-99999,2015-B-99999,GWS 150 LEC 001 VINDICATION OF RIGHTS,,,GWS,150,LEC,001,P,99999,155555,UID:155555,Zachary,Zzzz,zzzz@berkeley.edu,23,Y,GWS,F,Y,01-26-2015,05-11-2016' }
+      let(:invalid_row) { '2015-B-99999,2015-B-99999,GWS 150 LEC 001 VINDICATION OF RIGHTS,,,GWS,150,LEC,001,P,155555,UID:155555,Zachary,Zzzz,zzzz@berkeley.edu,23,Y,GWS,F,Y,01-26-2015,05-11-2016' }
       let(:key) { '2015-B-99999' }
       let(:expected_message) { 'END_DATE 05-11-2016 does not match term code 2015-B' }
       include_examples 'validation error logging'
     end
 
     context 'default dates for modular course' do
-      let(:invalid_row) { '2015-B-99999,2015-B-99999,GWS 150 LEC 001 VINDICATION OF RIGHTS,,,GWS,150,LEC,001,P,99999,155555,UID:155555,Zachary,Zzzz,zzzz@berkeley.edu,23,Y,GWS,F,Y,01-26-2015,05-11-2015' }
+      let(:invalid_row) { '2015-B-99999,2015-B-99999,GWS 150 LEC 001 VINDICATION OF RIGHTS,,,GWS,150,LEC,001,P,155555,UID:155555,Zachary,Zzzz,zzzz@berkeley.edu,23,Y,GWS,F,Y,01-26-2015,05-11-2015' }
       let(:key) { '2015-B-99999' }
       let(:expected_message) { 'Default term dates 01-26-2015 to 05-11-2015 for modular course' }
       include_examples 'validation error logging'
     end
 
     context 'non-default dates for non-modular course' do
-      let(:invalid_row) { '2015-B-99999,2015-B-99999,GWS 150 LEC 001 VINDICATION OF RIGHTS,,,GWS,150,LEC,001,P,99999,155555,UID:155555,Zachary,Zzzz,zzzz@berkeley.edu,23,Y,GWS,F,,02-26-2015,05-11-2015' }
+      let(:invalid_row) { '2015-B-99999,2015-B-99999,GWS 150 LEC 001 VINDICATION OF RIGHTS,,,GWS,150,LEC,001,P,155555,UID:155555,Zachary,Zzzz,zzzz@berkeley.edu,23,Y,GWS,F,,02-26-2015,05-11-2015' }
       let(:key) { '2015-B-99999' }
       let(:expected_message) { 'Unexpected dates 02-26-2015 to 05-11-2015 for non-modular course' }
       include_examples 'validation error logging'
     end
 
     context 'evaluation type validation' do
-      let(:invalid_row) { "2015-B-99999,2015-B-99999,GWS 150 LEC 001 VINDICATION OF RIGHTS,,,GWS,150,LEC,001,P,99999,155555,UID:155555,Zachary,Zzzz,zzzz@berkeley.edu,23,Y,#{dept_form},#{evaluation_type},,01-26-2015,05-11-2015" }
+      let(:invalid_row) { "2015-B-99999,2015-B-99999,GWS 150 LEC 001 VINDICATION OF RIGHTS,,,GWS,150,LEC,001,P,155555,UID:155555,Zachary,Zzzz,zzzz@berkeley.edu,23,Y,#{dept_form},#{evaluation_type},,01-26-2015,05-11-2015" }
       let(:key) { '2015-B-99999' }
 
       context 'LAW evaluation type for non-LAW course' do
@@ -158,14 +158,14 @@ describe Oec::ValidationTask do
     end
 
     context 'unexpected MODULAR_COURSE value' do
-      let(:invalid_row) { '2015-B-99999,2015-B-99999,GWS 150 LEC 001 VINDICATION OF RIGHTS,,,GWS,150,LEC,001,P,99999,155555,UID:155555,Zachary,Zzzz,zzzz@berkeley.edu,23,Y,GWS,F,F12,01-26-2015,05-11-2015' }
+      let(:invalid_row) { '2015-B-99999,2015-B-99999,GWS 150 LEC 001 VINDICATION OF RIGHTS,,,GWS,150,LEC,001,P,155555,UID:155555,Zachary,Zzzz,zzzz@berkeley.edu,23,Y,GWS,F,F12,01-26-2015,05-11-2015' }
       let(:key) { '2015-B-99999' }
       let(:expected_message) { 'Unexpected MODULAR_COURSE value F12' }
       include_examples 'validation error logging'
     end
 
     context 'conflicting instructor data across cross-listings' do
-      let(:invalid_row) { '2015-B-34821,2015-B-34821,LGBT C146A LEC 001 REP SEXUALITY/LIT,Y,GWS/LGBT C146A LEC 001,LGBT,C146A,LEC,001,P,34821,155555,UID:155555,Zachary,Zzzz,zzzz@berkeley.edu,23,Y,LGBT,F,,01-26-2015,05-11-2015' }
+      let(:invalid_row) { '2015-B-34821,2015-B-34821,LGBT C146A LEC 001 REP SEXUALITY/LIT,Y,GWS/LGBT C146A LEC 001,LGBT,C146A,LEC,001,P,155555,UID:155555,Zachary,Zzzz,zzzz@berkeley.edu,23,Y,LGBT,F,,01-26-2015,05-11-2015' }
       let(:key) { '2015-B-34821' }
       let(:expected_message) { 'Instructor list (155555, 942792) differs from instructor list (942792) of cross-listed course 2015-B-32984' }
       include_examples 'validation error logging'
@@ -173,7 +173,7 @@ describe Oec::ValidationTask do
 
     context 'DEPT_FORM specifies non-participating department' do
       before { allow(Oec::CourseCode).to receive(:participating_dept_names).and_return %w(BIOLOGY INTEGBI MCELLBI) }
-      let(:invalid_row) { '2015-B-99999,2015-B-99999,GWS 150 LEC 001 VINDICATION OF RIGHTS,,,GWS,150,LEC,001,P,99999,155555,UID:155555,Zachary,Zzzz,zzzz@berkeley.edu,23,Y,GWS,F,,01-26-2015,05-11-2015' }
+      let(:invalid_row) { '2015-B-99999,2015-B-99999,GWS 150 LEC 001 VINDICATION OF RIGHTS,,,GWS,150,LEC,001,P,155555,UID:155555,Zachary,Zzzz,zzzz@berkeley.edu,23,Y,GWS,F,,01-26-2015,05-11-2015' }
       let(:key) { '2015-B-99999' }
       let(:expected_message) { 'DEPT_FORM GWS not found among participating departments' }
       include_examples 'validation error logging'
@@ -185,14 +185,14 @@ describe Oec::ValidationTask do
 
     context 'invalid BLUE_ROLE' do
       let(:key) { '155555' }
-      let(:invalid_row) { '2015-B-99999_GSI,2015-B-99999_GSI,GWS 150 LEC 001 VINDICATION OF RIGHTS,,,GWS,150,LEC,001,P,99999,155555,UID:155555,Zachary,Zzzz,zzzz@berkeley.edu,24,Y,GWS,F,,01-26-2015,05-11-2015' }
+      let(:invalid_row) { '2015-B-99999_GSI,2015-B-99999_GSI,GWS 150 LEC 001 VINDICATION OF RIGHTS,,,GWS,150,LEC,001,P,155555,UID:155555,Zachary,Zzzz,zzzz@berkeley.edu,24,Y,GWS,F,,01-26-2015,05-11-2015' }
       let(:expected_message) { 'Invalid BLUE_ROLE 24' }
       include_examples 'validation error logging'
     end
 
     context 'non-numeric UID' do
       let(:key) { '155555Z' }
-      let(:invalid_row) { '2015-B-99999,2015-B-99999,GWS 150 LEC 001 VINDICATION OF RIGHTS,,,GWS,150,LEC,001,P,99999,155555Z,UID:155555Z,Zachary,Zzzz,zzzz@berkeley.edu,23,Y,GWS,F,,01-26-2015,05-11-2015' }
+      let(:invalid_row) { '2015-B-99999,2015-B-99999,GWS 150 LEC 001 VINDICATION OF RIGHTS,,,GWS,150,LEC,001,P,155555Z,UID:155555Z,Zachary,Zzzz,zzzz@berkeley.edu,23,Y,GWS,F,,01-26-2015,05-11-2015' }
       let(:expected_message) { 'Non-numeric LDAP_UID 155555Z' }
       include_examples 'validation error logging'
     end
@@ -200,8 +200,8 @@ describe Oec::ValidationTask do
 
   context 'repeated errors' do
     before do
-      merged_course_confirmations_csv.concat "2015-B-99999,2015-B-99999,GWS 150 LEC 001 VINDICATION OF RIGHTS,,,GWS,150,LEC,001,P,99999,155555Z,UID:155555Z,Zachary,Zzzz,zzzz@berkeley.edu,23,Y,GWS,F,,01-26-2015,05-11-2015\n"
-      merged_course_confirmations_csv.concat "2015-B-99999,2015-B-99999,GWS 150 DIS 001 VINDICATION OF RIGHTS,,,GWS,150,LEC,001,P,99999,155555Z,UID:155555Z,Zachary,Zzzz,zzzz@berkeley.edu,23,Y,GWS,F,,01-26-2015,05-11-2015\n"
+      merged_course_confirmations_csv.concat "2015-B-99999,2015-B-99999,GWS 150 LEC 001 VINDICATION OF RIGHTS,,,GWS,150,LEC,001,P,155555Z,UID:155555Z,Zachary,Zzzz,zzzz@berkeley.edu,23,Y,GWS,F,,01-26-2015,05-11-2015\n"
+      merged_course_confirmations_csv.concat "2015-B-99999,2015-B-99999,GWS 150 DIS 001 VINDICATION OF RIGHTS,,,GWS,150,LEC,001,P,155555Z,UID:155555Z,Zachary,Zzzz,zzzz@berkeley.edu,23,Y,GWS,F,,01-26-2015,05-11-2015\n"
       expect(task).not_to receive :export_sheet
     end
 
