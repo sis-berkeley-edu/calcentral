@@ -3,6 +3,9 @@
   .cc-page-roster .cc-roster-search .cc-right {
     margin-top: 8px;
   }
+  .cc-page-roster .cc-roster-search .cc-roster-search-type-filter {
+    display: none;
+  }
   .cc-page-roster .cc-inline-select {
     height: auto;
   }
@@ -34,7 +37,7 @@
     border-bottom: 1px solid $cc-color-button-border;
     margin: 0 0 15px;
     overflow: hidden;
-    padding: 7px 0 15px;
+    padding: 7px 0 5px;
 
     .cc-button-spaced {
       margin: 0 5px;
@@ -42,6 +45,16 @@
 
     .cc-inline-select {
       width: 200px;
+    }
+
+    .cc-roster-search-row {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 10px;
+
+      .cc-roster-search-horizontal-radio label {
+        display: inline;
+      }
     }
   }
 

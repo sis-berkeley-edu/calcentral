@@ -2,6 +2,7 @@
 'use strict';
 
 var angular = require('angular');
+var _ = require('lodash');
 
 /**
  * Canvas roster photos LTI app controller
@@ -11,14 +12,32 @@ angular.module('calcentral.controllers').controller('RosterController', function
     apiService.util.setTitle('Roster Photos');
   }
   $scope.accessibilityAnnounce = apiService.util.accessibilityAnnounce;
-
   $scope.bmailLink = rosterService.bmailLink;
+  $scope.searchOptions = {
+    text: '',
+    section: null,
+    type: 'all'
+  };
+
+  $scope.rosterTypeFilter = function(student) {
+    switch ($scope.searchOptions.type) {
+      case 'enrolled': {
+        return (!_.get(student, 'waitlist_position'));
+      }
+      case 'waitlist': {
+        return (_.get(student, 'waitlist_position'));
+      }
+      default: {
+        return true;
+      }
+    }
+  };
 
   $scope.studentInSectionFilter = function(student) {
-    if (!$scope.searchSection) {
+    if (!$scope.searchOptions.section) {
       return true;
     }
-    return (student.section_ccns.indexOf($scope.searchSection.ccn) !== -1);
+    return (student.section_ccns.indexOf($scope.searchOptions.section.ccn) !== -1);
   };
 
   var getRoster = function() {

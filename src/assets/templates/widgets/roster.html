@@ -7,28 +7,50 @@
     <h2 class="cc-visuallyhidden">Filter Options</h2>
 
     <form class="cc-roster-search" data-ng-hide="errorStatus">
-      <div class="cc-left">
-        <label for="roster-search" class="cc-visuallyhidden">Filter by Text</label>
-        <input id="roster-search" class="cc-roster-input cc-left bc-canvas-embedded-roster-input" placeholder="Search People"
-          data-ng-model="search.$" data-ng-change="accessibilityAnnounce('Rosters filtered by text')">
+      <div class="cc-roster-search-row">
+        <div>
+          <label for="roster-search" class="cc-visuallyhidden">Filter by Text</label>
+          <input id="roster-search" class="cc-roster-input cc-left bc-canvas-embedded-roster-input" placeholder="Search People"
+            data-ng-model="searchOptions.text.$" data-ng-change="accessibilityAnnounce('Rosters filtered by text')">
 
-        <label for="section-select" class="cc-visuallyhidden">Filter by Section</label>
-        <select id="section-select" class="cc-inline-select bc-canvas-embedded-roster-select"
-          data-ng-options="section as section.name for section in sections track by section.ccn"
-          data-ng-model="searchSection"
-          data-ng-change="accessibilityAnnounce('Rosters filtered by section')">
-          <option value="">All Sections</option>
-        </select>
+          <label for="section-select" class="cc-visuallyhidden">Filter by Section</label>
+          <select id="section-select" class="cc-inline-select bc-canvas-embedded-roster-select"
+            data-ng-options="section as section.name for section in sections track by section.ccn"
+            data-ng-model="searchOptions.section"
+            data-ng-change="accessibilityAnnounce('Rosters filtered by section')">
+            <option value="">All Sections</option>
+          </select>
+        </div>
+        <div>
+          <a class="cc-button cc-button-spaced" target="_self"
+            data-ng-disabled="!students.length"
+            data-ng-href="/api/academics/rosters/{{context}}/csv/{{courseId}}.csv">
+            <i class="fa fa-download" aria-hidden="true"></i> Export
+          </a>
+          <a class="cc-button cc-button-blue cc-button-spaced" data-ng-click="api.util.printPage()">
+            <i class="fa fa-print"></i> Print
+          </a>
+        </div>
       </div>
-      <div class="cc-right">
-        <a class="cc-button cc-button-spaced" target="_self"
-          data-ng-disabled="!students.length"
-          data-ng-href="/api/academics/rosters/{{context}}/csv/{{courseId}}.csv">
-          <i class="fa fa-download" aria-hidden="true"></i> Export
-        </a>
-        <a class="cc-button cc-button-blue cc-button-spaced" data-ng-click="api.util.printPage()">
-          <i class="fa fa-print"></i> Print
-        </a>
+      <div class="cc-roster-search-type-filter cc-roster-search-row">
+        <div class="cc-roster-search-horizontal-radio">
+          <strong>Include:</strong>
+          <label for="searchOptionType">
+            <input type="radio" name="searchOptionType" value="all"
+              data-ng-model="searchOptions.type"
+              data-ng-change="accessibilityAnnounce('All roster types shown')">All
+          </label>
+          <label for="searchOptionType">
+            <input type="radio" name="searchOptionType" value="enrolled"
+              data-ng-model="searchOptions.type"
+              data-ng-change="accessibilityAnnounce('Only enrollments shown')">Enrolled Only
+          </label>
+          <label for="searchOptionType">
+            <input type="radio" name="searchOptionType" value="waitlist"
+              data-ng-model="searchOptions.type"
+              data-ng-change="accessibilityAnnounce('Only waitlisted shown')">Waitlisted Only
+          </label>
+        </div>
       </div>
     </form>
 
@@ -45,13 +67,13 @@
 
   <h2 class="cc-visuallyhidden">
     <span data-ng-bind="course.name"></span> -
-    <span data-ng-if="searchSection.name" data-ng-bind="searchSection.name"></span>
-    <span data-ng-if="!searchSection.name">All Sections</span>
-    <span data-ng-if="search.$" data-ng-bind-template=" - Matching '{{search.$}}'"></span>
+    <span data-ng-if="searchOptions.section.name" data-ng-bind="searchOptions.section.name"></span>
+    <span data-ng-if="!searchOptions.section.name">All Sections</span>
+    <span data-ng-if="searchOptions.text.$" data-ng-bind-template=" - Matching '{{searchOptions.text.$}}'"></span>
   </h2>
 
   <ul class="cc-page-roster-list">
-    <li data-ng-repeat="student in students | filter:search | filter:studentInSectionFilter | orderBy:['last_name', 'first_name']">
+    <li data-ng-repeat="student in students | filter:searchOptions.text | filter:studentInSectionFilter | filter:rosterTypeFilter | orderBy:['last_name', 'first_name']">
       <div data-ng-if="student.profile_url">
         <a data-ng-href="{{student.profile_url}}" target="_top">
           <div data-ng-include="'widgets/roster_photo.html'"></div>
