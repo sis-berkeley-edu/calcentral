@@ -61,6 +61,7 @@
 @import "enrollment_verification";
 @import "degree_progress";
 @import "higher_degree_committees";
+@import "roster";
 
 // Textbooks
 @import "textbooks";
@@ -85,6 +86,7 @@
 @import "campus";
 
 // Canvas external apps
+// See also 'roster' above for shared CalCentral/Canvas Roster
 @import "canvas_colors";
 @import "canvas_base";
 @import "canvas_embedded";
@@ -95,7 +97,6 @@
 @import "canvas_create_course_site";
 @import "canvas_create_project_site";
 @import "canvas_user_provision";
-@import "canvas_roster";
 @import "canvas_site_creation";
 @import "canvas_site_mailing_list";
 

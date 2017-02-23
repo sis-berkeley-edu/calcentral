@@ -1,18 +1,21 @@
-// Canvas Embedded Overrides
-.bc-canvas-embedded {
+// Canvas Application Overrides
+.bc-canvas-application {
   .cc-page-roster .cc-roster-search .cc-right {
     margin-top: 8px;
-  }
-  .cc-page-roster .cc-roster-search .cc-roster-search-type-filter {
-    display: none;
   }
   .cc-page-roster .cc-inline-select {
     height: auto;
   }
-  .cc-page-roster-list {
+  .cc-page-roster .cc-page-roster-photos-list {
     li {
       height: auto;
     }
+  }
+  .cc-page-roster div.cc-roster-view-mode {
+    display: none;
+  }
+  .cc-page-roster div.cc-roster-search-enroll-status {
+    display: none;
   }
 }
 
@@ -21,7 +24,6 @@
   border: 1px solid $cc-color-button-border;
   border-radius: 5px;
   font-size: 12px;
-  margin: 0 10px 0 0;
   padding: 4px 10px 5px 8px;
   width: 200px;
 }
@@ -44,7 +46,19 @@
     }
 
     .cc-inline-select {
+      height: 26px;
       width: 200px;
+    }
+
+    .cc-roster-search-option {
+      padding-right: 10px;
+      .cc-button-group {
+        margin-top: 2px;
+        li a {
+          line-height: 2;
+          padding: 6px 20px;
+        }
+      }
     }
 
     .cc-roster-search-row {
@@ -58,7 +72,14 @@
     }
   }
 
-  .cc-page-roster-list {
+  .cc-page-roster-image-unavailable {
+    background-image: url('../images/svg/photo_unavailable_official_72x96.svg');
+    height: 96px;
+    margin: 0 auto;
+    max-width: 72px;
+  }
+
+  .cc-page-roster-photos-list {
     li {
       display: block;
       float: left;
@@ -74,13 +95,6 @@
     }
   }
 
-  .cc-page-roster-image-unavailable {
-    background-image: url('../images/svg/photo_unavailable_official_72x96.svg');
-    height: 96px;
-    margin: 0 auto;
-    max-width: 72px;
-  }
-
   .cc-page-roster-student-name {
     display: block;
     overflow: hidden;
@@ -88,18 +102,32 @@
     white-space: nowrap;
   }
 
+  .cc-page-roster-table-list-description {
+    margin-bottom: 10px;
+  }
+
   @media print {
     overflow: visible;
     padding: 0;
 
-    .cc-page-roster-image-unavailable::before {
-      content: url('../images/svg/photo_unavailable_official_72x96.svg');
+    a[href]::after {
+      content: none;
     }
 
-    .cc-page-roster-list {
-      a[href]::after {
-        content: "";
+    .cc-academics-class-enrollment-table {
+      table tr th {
+        padding: 2px;
+        vertical-align: top;
       }
+      table tr td {
+        font-size: 10px;
+        line-height: normal;
+        padding: 2px;
+      }
+    }
+
+    .cc-page-roster-image-unavailable::before {
+      content: url('../images/svg/photo_unavailable_official_72x96.svg');
     }
 
     .cc-page-roster-student-name {
@@ -109,7 +137,7 @@
       white-space: normal;
     }
 
-    .cc-page-roster-list {
+    .cc-page-roster-photos-list {
       li {
         height: auto;
         margin-top: 15px;

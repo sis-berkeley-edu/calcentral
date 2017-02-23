@@ -24,6 +24,10 @@ module Canvas
       }
     end
 
+    def to_s
+      "Canvas Course ID #{@canvas_course_id}"
+    end
+
     private
 
     def request_path

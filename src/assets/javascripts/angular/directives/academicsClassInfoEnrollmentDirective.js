@@ -1,28 +1,26 @@
 /* jshint camelcase: false */
 'use strict';
 
-var _ = require('lodash');
 var angular = require('angular');
+var _ = require('lodash');
 
 angular.module('calcentral.directives').directive('ccAcademicsClassInfoEnrollmentDirective', function(apiService, rosterService) {
   return {
     scope: true,
     link: function(scope, elem, attrs) {
       scope.bmailLink = rosterService.bmailLink;
-
-      var isLaw = function(dept) {
-        if (dept === 'LAW') {
-          return true;
-        } else {
-          return false;
-        }
+      scope.searchFilters = {
+        section: null,
+        enrollStatus: attrs.enrollmentStatus
       };
-      /*
-       * Returns true if student is in the selected section
-       * @returns {Boolean}
+
+      /**
+       * Indicates if a department is a LAW department or not
+       * @param  {String}  deptCode department code
+       * @return {Boolean} boolean
        */
-      var isStudentInSection = function(student) {
-        return (student.section_ccns.indexOf(scope.selectedSection.ccn) !== -1);
+      var isLawDept = function(deptCode) {
+        return (deptCode === 'LAW');
       };
 
       /*
@@ -32,13 +30,13 @@ angular.module('calcentral.directives').directive('ccAcademicsClassInfoEnrollmen
       var requestMessages = function() {
         var sortingNote = '';
         var action = scope.displayedSection;
-        var role = scope.studentRole;
+        var enrollStatus = scope.enrollStatus;
         var semesterName = scope.semesterName;
         var subjectEnd = scope.className + ' class for ' + semesterName;
-        if (role === 'waitlisted') {
+        if (enrollStatus === 'waitlisted') {
           sortingNote = 'The above students are listed by waitlist priority. ';
         }
-        if (role === 'enrolled') {
+        if (enrollStatus === 'enrolled') {
           sortingNote = 'The above students are listed alphabetically by last name. ';
         }
 
@@ -88,14 +86,6 @@ angular.module('calcentral.directives').directive('ccAcademicsClassInfoEnrollmen
       };
 
       /*
-       * Returns true if a section is not selected
-       * @returns {Boolean}
-       */
-      var sectionNotSelected = function() {
-        return !scope.selectedSection;
-      };
-
-      /*
        * Returns array of selected students
        * @returns {Array} selected students
        */
@@ -131,21 +121,6 @@ angular.module('calcentral.directives').directive('ccAcademicsClassInfoEnrollmen
       };
 
       /*
-       * Returns students in selected section
-       * @returns {Array} students in selected section
-       */
-      var studentsInSelectedSection = function() {
-        if (scope.students) {
-          if (sectionNotSelected()) {
-            return scope.students;
-          }
-          return _.filter(scope.students, isStudentInSection);
-        } else {
-          return [];
-        }
-      };
-
-      /*
        * Returns string containing formatted list of students grouped by sections
        * @param {Array} student list
        * @return {String}
@@ -167,13 +142,13 @@ angular.module('calcentral.directives').directive('ccAcademicsClassInfoEnrollmen
       };
 
       /*
-       * Returns tab spaced table of students. Sorted by waitlist position when studentRole is 'waitlisted'
+       * Returns tab spaced table of students. Sorted by waitlist position when enrollStatus is 'waitlisted'
        * @return {String}
        */
       var textStudentList = function(students, includeSections) {
         var includeSectionsList = (typeof includeSections !== 'undefined') ? includeSections : false;
         var list = '';
-        var isWaitlist = scope.studentRole === 'waitlisted';
+        var isWaitlist = scope.enrollStatus === 'waitlisted';
         var sortMethod = 'last_name';
         if (isWaitlist) {
           sortMethod = 'waitlist_position';
@@ -195,20 +170,12 @@ angular.module('calcentral.directives').directive('ccAcademicsClassInfoEnrollmen
         return list;
       };
 
-      var setOpenSeatsCount = function() {
-        var selectedSectionId = _.get(scope.selectedSection, 'ccn');
-        var openSeatsCount = _.reduce(scope.sections, function(count, section) {
-          if (!selectedSectionId || selectedSectionId === section.ccn) {
-            count += scope.studentRole === 'waitlisted' ? section.waitlist_open : section.enroll_open;
-          }
-          return count;
-        }, 0);
-        scope.seatsAvailable = openSeatsCount;
-      };
-
-      var setFilledSeatsCount = function() {
-        scope.studentsInSection = studentsInSelectedSection();
-        scope.seatsFilled = Array.isArray(scope.studentsInSection) ? scope.studentsInSection.length : 0;
+      /**
+       * Refreshes list of displayed students and statistics
+       */
+      var refreshFilteredStudents = function() {
+        var useWaitlistCounts = (scope.enrollStatus === 'waitlisted');
+        scope.filteredStudents = rosterService.getFilteredStudents(scope.students, scope.sections, scope.searchFilters, useWaitlistCounts);
       };
 
       /*
@@ -277,9 +244,9 @@ angular.module('calcentral.directives').directive('ccAcademicsClassInfoEnrollmen
        */
       scope.sectionChangeActions = function() {
         apiService.util.accessibilityAnnounce('Enrollment filtered by section');
-        setOpenSeatsCount();
-        setFilledSeatsCount();
         scope.clearSelected();
+        scope.displaySection('default');
+        refreshFilteredStudents();
       };
 
       /*
@@ -302,7 +269,7 @@ angular.module('calcentral.directives').directive('ccAcademicsClassInfoEnrollmen
        */
       scope.toggleSelected = function() {
         if (selectedStudents().length === 0) {
-          _.forEach(studentsInSelectedSection(), function(student) {
+          _.forEach(scope.filteredStudents.shownStudents, function(student) {
             student.selected = true;
           });
         } else {
@@ -310,33 +277,34 @@ angular.module('calcentral.directives').directive('ccAcademicsClassInfoEnrollmen
         }
       };
 
+      // Refresh students and count when student source changes
       scope.$watch(
         function() {
           return scope.$eval(attrs.students);
         },
         function(newValue) {
           scope.students = newValue;
-          setFilledSeatsCount();
+          refreshFilteredStudents();
         }
       );
 
+      // Refresh sections and open seats count if sections refreshed from parent
       scope.$watch(
         function() {
           return scope.$parent.sections;
         },
         function(newValue) {
           scope.sections = newValue;
-          setOpenSeatsCount();
+          refreshFilteredStudents();
         }
       );
 
       scope.displaySection('default');
       scope.className = scope.$eval(attrs.className);
       scope.instructorName = scope.$eval(attrs.instructorName);
-      scope.isLaw = isLaw(scope.$eval(attrs.classDepartment));
+      scope.isLaw = isLawDept(scope.$eval(attrs.classDepartment));
       scope.semesterName = scope.$eval(attrs.semesterName);
       scope.showPosition = scope.$eval(attrs.showPosition);
-      scope.studentRole = (attrs.title === 'Wait List') ? 'waitlisted' : 'enrolled';
       scope.tableSort = {
         'column': (scope.showPosition ? 'waitlist_position' : ['last_name', 'first_name']),
         'reverse': false
