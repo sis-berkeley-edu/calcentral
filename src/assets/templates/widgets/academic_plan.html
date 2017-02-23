@@ -17,7 +17,7 @@
     <ul class="cc-widget-list cc-widget-list-border-top">
         <li
           data-ng-repeat="semester in planSemesters"
-          class="cc-academics-semester-list cc-widget-list-hover cc-enrollment-card-section cc-table"
+          class="cc-widget-list-hover cc-table"
           data-ng-class="{'cc-widget-list-hover-opened':(semester.show)}"
           data-cc-accessible-focus-directive
           data-ng-click="api.widget.toggleShow($event,  null, semester, 'Student Overview - Academic Plan')">
@@ -80,17 +80,38 @@
                     <tr>
                       <th width="60%" scope="col">Enrolled</th>
                       <th width="25%" scope="col" title="Units">Units</th>
-                      <th data-ng-if="api.user.profile.canViewGrades" width="15%" scope="col"></th>
+                      <th data-ng-if="api.user.profile.canViewGrades" width="15%" scope="col" title="Grades">Grade</th>
                     </tr>
                   </thead>
                   <tbody data-ng-repeat="class in semester.enrolledClasses">
-                    <tr data-ng-if="!class.transcript && section.is_primary_section" data-ng-repeat="section in class.sections">
+                    <tr data-ng-if="!class.transcript && section.is_primary_section" data-ng-repeat-start="section in class.sections">
                       <td>
                         <span data-ng-bind="class.course_code"></span>
                         <span data-ng-if="class.session_code" data-ng-bind-template="(Session {{class.session_code}})"></span>
                       </td>
                       <td data-ng-bind="section.units | number:1" ></td>
-                      <td></td>
+                      <td data-ng-if="api.user.profile.canViewGrades && class.midpointGrade">
+                        <span data-ng-click="api.util.preventBubble($event);api.widget.toggleShow($event, null, section, 'Student Overview - Academic Plan')" class="cc-non-anchored-link">
+                          <i class="fa fa-exclamation-triangle cc-icon-gold"></i> ?
+                        </span>
+                      </td>
+                      <td data-ng-if="api.user.profile.canViewGrades && !class.midpointGrade">&mdash;</td>
+                    </tr>
+                    <tr data-ng-repeat-end data-ng-if="class.midpointGrade && section.show">
+                      <td colspan="3">
+                        <table>
+                          <tr>
+                            <td>
+                              <i class="fa fa-exclamation-triangle cc-icon-gold"></i>
+                              Your midpoint grade is: <strong><span data-ng-bind="class.midpointGrade"></span></strong><br />
+                              Your success is important to us.  Midpoint grades do not appear on transcripts. <br />
+                              Please contact your instructor or an advisor as soon as possible. <br />
+                              <span data-ng-click="api.util.preventBubble($event);api.widget.toggleShow($event, null, section, 'Student Overview - Academic Plan')" class="cc-non-anchored-link">Hide</span>
+                            </td>
+                          </tr>
+                        </table>
+                      </td>
+                    </tr>
                     </tr>
                   </tbody>
                 </table>
@@ -99,18 +120,38 @@
                     <tr>
                       <th width="60%" scope="col">Enrolled</th>
                       <th width="25%" scope="col" title="Units">Units</th>
-                      <th data-ng-if="api.user.profile.canViewGrades" width="15%" scope="col"></th>
+                      <th data-ng-if="api.user.profile.canViewGrades" width="15%" scope="col" title="Grades">Grade</th>
                     </tr>
                   </thead>
                   <tbody data-ng-repeat="class in semester.enrolledClasses">
-                    <tr data-ng-repeat="section in class.sections" data-ng-if="section.is_primary_section && !section.waitlisted">
+                    <tr data-ng-repeat-start="section in class.sections" data-ng-if="section.is_primary_section && !section.waitlisted">
                       <td>
                         <span data-ng-bind="class.course_code"></span>
                         <span data-ng-if="class.multiplePrimaries && section.section_label" data-ng-bind="section.section_label"></span>
                         <span data-ng-if="class.session_code" data-ng-bind-template="(Session {{class.session_code}})"></span>
                       </td>
                       <td data-ng-bind="section.units | number:1"></td>
-                      <td></td>
+                      <td data-ng-if="api.user.profile.canViewGrades && class.midpointGrade">
+                        <span data-ng-click="api.util.preventBubble($event);api.widget.toggleShow($event, null, section, 'Student Overview - Academic Plan')" class="cc-non-anchored-link">
+                          <i class="fa fa-exclamation-triangle cc-icon-gold"></i> ?
+                        </span>
+                      </td>
+                      <td data-ng-if="api.user.profile.canViewGrades && !class.midpointGrade">&mdash;</td>
+                    </tr>
+                    <tr data-ng-repeat-end data-ng-if="class.midpointGrade && section.show">
+                      <td colspan="3">
+                        <table>
+                          <tr>
+                            <td>
+                              <i class="fa fa-exclamation-triangle cc-icon-gold"></i>
+                              Your midpoint grade is: <strong><span data-ng-bind="class.midpointGrade"></span></strong><br />
+                              Your success is important to us.  Midpoint grades do not appear on transcripts. <br />
+                              Please contact your instructor or an advisor as soon as possible. <br />
+                              <span data-ng-click="api.util.preventBubble($event);api.widget.toggleShow($event, null, section, 'Student Overview - Academic Plan')" class="cc-non-anchored-link">Hide</span>
+                            </td>
+                          </tr>
+                        </table>
+                      </td>
                     </tr>
                   </tbody>
                 </table>
