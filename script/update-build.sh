@@ -6,9 +6,15 @@
 #
 ######################################################
 
+HOST=$(uname -n)
+if [[ "${HOST}" = *calcentral* ]]; then
+  APP_MODE="calcentral"
+else
+  APP_MODE="junction"
+fi
 WAR_URL=${WAR_URL:="https://bamboo.media.berkeley.edu/bamboo/browse/MYB-MVPWAR/latest/artifact/JOB1/warfile/calcentral.knob"}
 MAX_ASSET_AGE_IN_DAYS=${MAX_ASSET_AGE_IN_DAYS:="45"}
-DOC_ROOT="/var/www/html/calcentral"
+DOC_ROOT="/var/www/html/${APP_MODE}"
 
 LOG=$(date +"${PWD}/log/update-build_%Y-%m-%d.log")
 LOGIT="tee -a ${LOG}"
@@ -66,10 +72,10 @@ cp -Rvf public/assets ${DOC_ROOT} | ${LOGIT}
 echo "Deleting old assets from ${DOC_ROOT}/assets" | ${LOGIT}
 find ${DOC_ROOT}/assets -type f -mtime +${MAX_ASSET_AGE_IN_DAYS} -delete | ${LOGIT}
 
-echo "Copying bCourses static files into /var/www/html/calcentral" | ${LOGIT}
+echo "Copying bCourses static files into ${DOC_ROOT}" | ${LOGIT}
 cp -Rvf public/canvas ${DOC_ROOT} | ${LOGIT}
 
-echo "Copying OAuth static files into /var/www/html/calcentral" | ${LOGIT}
+echo "Copying OAuth static files into ${DOC_ROOT}" | ${LOGIT}
 cp -Rvf public/oauth ${DOC_ROOT} | ${LOGIT}
 
 exit 0
