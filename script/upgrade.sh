@@ -10,7 +10,7 @@ cd $( dirname "${BASH_SOURCE[0]}" )/..
 
 HOST=$(uname -n)
 
-if [[ "${HOST}" = *calcentral-*-01\.ist.berkeley.edu ]]; then
+if [[ "${HOST}" = *-01\.ist.berkeley.edu ]]; then
   IS_NODE_ONE="yes"
 fi
 

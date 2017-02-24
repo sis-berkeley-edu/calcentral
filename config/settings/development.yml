@@ -6,9 +6,6 @@ logger:
   stdout: <%= ENV['LOGGER_STDOUT'] || true %>
   slow_query_threshold_in_ms: 2000
 
-bearfacts_proxy:
-  fake: true
-
 blog_latest_release_notes_feed_proxy:
   fake: true
 

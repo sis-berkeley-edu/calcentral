@@ -137,12 +137,6 @@ cal_link_proxy:
   public_key: secret set in production
   private_key: secret set in production
 
-bearfacts_proxy:
-  fake: false
-  app_id: ''
-  app_key: ''
-  base_url: "https://apis-dev.berkeley.edu/bearfacts-apis"
-
 cal_groups_proxy:
   fake: false
   username: 'secret'
@@ -174,12 +168,6 @@ mailgun_proxy:
   base_url: 'https://api.mailgun.net/v3'
   domain: 'bcourses-mail.berkeley.edu'
   api_key: 'secret'
-
-regstatus_proxy:
-  fake: false
-  app_id: ''
-  app_key: ''
-  base_url: 'https://apis.berkeley.edu/cxf/asws/regstatus'
 
 financials_proxy:
   fake: false

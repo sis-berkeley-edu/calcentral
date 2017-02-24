@@ -10,15 +10,21 @@
 #
 ######################################################
 
-RUN_AS_USER="app_calcentral"
+HOST=$(uname -n)
+if [[ "${HOST}" = *calcentral* ]]; then
+  APP_MODE="calcentral"
+else
+  APP_MODE="junction"
+fi
+RUN_AS_USER="app_${APP_MODE}"
 BASE="${HOME}/calcentral"
 START_SCRIPT="${BASE}/script/start-torquebox.sh"
 STOP_SCRIPT="${BASE}/script/stop-torquebox.sh"
-DOCROOT="/var/www/html/calcentral"
-OFFLINE_FILE="${DOCROOT}/calcentral-in-maintenance"
-MAINT_HTML="${DOCROOT}/index_maintenance.html"
-EMERGENCY_HTML="${DOCROOT}/index_emergency.html"
-INDEX_HTML="${DOCROOT}/index.html"
+DOC_ROOT="/var/www/html/${APP_MODE}"
+OFFLINE_FILE="${DOC_ROOT}/calcentral-in-maintenance"
+MAINT_HTML="${DOC_ROOT}/index_maintenance.html"
+EMERGENCY_HTML="${DOC_ROOT}/index_emergency.html"
+INDEX_HTML="${DOC_ROOT}/index.html"
 
 if [ -x "/usr/bin/id" ]; then
   CURR_USER="$(/usr/bin/id -u -n)"
@@ -29,10 +35,6 @@ fi
 if [ "${CURR_USER}" != "${RUN_AS_USER}" ]; then
   echo "Only ${RUN_AS_USER} can execute this script"
   exit 1
-fi
-
-if [[ "$(uname -n)" = *calcentral-*-01\.ist.berkeley.edu ]]; then
-  NODE_ONE="yes"
 fi
 
 online() {
@@ -60,7 +62,7 @@ start() {
     echo "${START_SCRIPT} does not exist or is not executable"
     exit 1
   fi
-  echo "Starting calcentral..."
+  echo "Starting ${APP_MODE}..."
   ${START_SCRIPT} || exit 1
 }
 
@@ -69,7 +71,7 @@ stop() {
     echo "${STOP_SCRIPT} does not exist or is not executable"
     exit 1
   fi
-  echo "Shutting down calcentral..."
+  echo "Shutting down ${APP_MODE}..."
   ${STOP_SCRIPT}
 }
 

@@ -24,7 +24,7 @@ module User
     end
 
     def get_delegate_students
-      return nil unless is_cs_delegated_access_feature_enabled
+      return nil unless is_cs_delegated_access_feature_enabled && ProvidedServices.calcentral?
       delegate_uid = authentication_state.original_delegate_user_id || @uid
       response = CampusSolutions::DelegateStudents.new(user_id: delegate_uid).get
       response && response[:feed] && response[:feed][:students]
