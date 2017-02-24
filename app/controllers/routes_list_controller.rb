@@ -1,5 +1,6 @@
 class RoutesListController < ApplicationController
   extend Cache::Cacheable
+  include ProvidedServices
 
   respond_to :json
 
@@ -11,14 +12,13 @@ class RoutesListController < ApplicationController
   private
 
   def get_smoke_test_routes
-    provided_services = Settings.application.provided_services
     routes = %w(
       /api/my/am_i_logged_in
       /api/my/status
       /api/ping
       /api/server_info
     )
-    if provided_services.include? 'calcentral'
+    if calcentral?
       routes.concat %w(
         /api/my/academics
         /api/my/activities
@@ -36,7 +36,7 @@ class RoutesListController < ApplicationController
         /api/stats
       )
     end
-    if provided_services.include? 'bcourses'
+    if bcourses?
       routes.concat %w(
         /api/academics/canvas/external_tools
         /api/academics/canvas/user_can_create_site

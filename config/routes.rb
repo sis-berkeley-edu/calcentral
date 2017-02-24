@@ -1,7 +1,4 @@
-
 Calcentral::Application.routes.draw do
-
-  provided_services = Settings.application.provided_services
 
   mount RailsAdmin::Engine => '/ccadmin', :as => 'rails_admin'
 
@@ -70,7 +67,7 @@ Calcentral::Application.routes.draw do
   post '/delete_users/recent' => 'stored_users#delete_all_recent', defaults: { format: 'json' }
   post '/delete_users/saved' => 'stored_users#delete_all_saved', defaults: { format: 'json' }
 
-  if provided_services.include? 'calcentral'
+  if ProvidedServices.calcentral?
     get '/api/stats' => 'stats#get_stats', :defaults => { :format => 'json' }
 
     post '/api/my/calendar/opt_in' => 'user_api#calendar_opt_in'
@@ -213,7 +210,7 @@ Calcentral::Application.routes.draw do
     get '/api/edos/work_experience' => 'hub_edo#work_experience', :defaults => { :format => 'json' }
   end
 
-  if provided_services.include? 'bcourses'
+  if ProvidedServices.bcourses?
     # Canvas embedded application support.
     post '/canvas/embedded/*url' => 'canvas_lti#embedded', :defaults => { :format => 'html' }
     get '/canvas/lti_roster_photos' => 'canvas_lti#lti_roster_photos', :defaults => { :format => 'xml' }
@@ -264,7 +261,7 @@ Calcentral::Application.routes.draw do
     post '/api/mailing_lists/message' => 'mailing_lists_message#relay', :defaults => { :format => 'json' }
   end
 
-  if provided_services.include? 'oec'
+  if ProvidedServices.oec?
     # OEC endpoints
     get '/api/oec/google/request_authorization'=> 'oec_google_auth#refresh_tokens', :defaults => { :format => 'json' }
     get '/api/oec/google/handle_callback' => 'oec_google_auth#handle_callback', :defaults => { :format => 'json' }
