@@ -171,7 +171,6 @@ describe GoogleAuthController do
     before do
       expect(GoogleApps::Revoke).to receive(:new).with(user_id: user_id).and_return(google = double)
       expect(google).to receive :revoke
-      expect(Calendar::User).to receive(:delete_all).with uid: user_id
       expect(User::Oauth2Data).to receive(:remove).with(user_id, app_id)
       expect(Cache::UserCacheExpiry).to receive :notify
     end

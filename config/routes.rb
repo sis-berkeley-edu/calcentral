@@ -70,9 +70,6 @@ Calcentral::Application.routes.draw do
   if ProvidedServices.calcentral?
     get '/api/stats' => 'stats#get_stats', :defaults => { :format => 'json' }
 
-    post '/api/my/calendar/opt_in' => 'user_api#calendar_opt_in'
-    post '/api/my/calendar/opt_out' => 'user_api#calendar_opt_out'
-
     # Feeds of read-only content
     get '/api/advising/my_advising' => 'my_advising#get_feed', :as => :advising, :defaults => {:format => 'json'}
     get '/api/my/classes' => 'my_classes#get_feed', :as => :my_classes, :defaults => { :format => 'json' }

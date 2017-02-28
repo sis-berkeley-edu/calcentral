@@ -11,7 +11,6 @@ class Ability
       can :dashboard, :all
       if user.policy.can_administrate?
         can :manage, [
-          Calendar::User, Calendar::QueuedEntry, Calendar::LoggedEntry, Calendar::Job,
           MailingLists::Member,
           MailingLists::SiteMailingList,
           Oec::CourseCode,
@@ -69,7 +68,6 @@ RailsAdmin.config do |config|
 
   # Include specific models (exclude the others):
   config.included_models = %w(
-    Calendar::User Calendar::QueuedEntry Calendar::LoggedEntry Calendar::Job
     Links::Link Links::LinkCategory Links::LinkSection Links::UserRole
     MailingLists::Member MailingLists::SiteMailingList
     Oec::CourseCode
@@ -158,65 +156,6 @@ RailsAdmin.config do |config|
       end
       field :updated_at do
         column_width 130
-      end
-    end
-  end
-
-  config.model 'Calendar::User' do
-    label 'Class Calendar Whitelist'
-  end
-
-  config.model 'Calendar::Job' do
-    label 'Class Calendar Jobs'
-  end
-
-  config.model 'Calendar::QueuedEntry' do
-    label 'Class Calendar Queue'
-    list do
-      field :year do
-        column_width 50
-      end
-      field :term_cd do
-        column_width 20
-      end
-      field :ccn do
-        column_width 50
-      end
-      field :multi_entry_cd do
-        column_width 20
-      end
-      field :transaction_type do
-        column_width 20
-      end
-    end
-  end
-
-  config.model 'Calendar::LoggedEntry' do
-    label 'Class Calendar Log'
-    list do
-      field :year do
-        column_width 50
-      end
-      field :term_cd do
-        column_width 20
-      end
-      field :ccn do
-        column_width 50
-      end
-      field :multi_entry_cd do
-        column_width 20
-      end
-      field :transaction_type do
-        column_width 20
-      end
-      field :job_id do
-        column_width 50
-      end
-      field :has_error do
-        column_width 50
-        pretty_value do
-          value ? 'yes' : ''
-        end
       end
     end
   end
