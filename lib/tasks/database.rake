@@ -2,10 +2,10 @@ namespace :database do
 
   def seeded?
     begin
-      year = Finaid::FinAidYear.all.first
+      link_role = Links::UserRole.all.first
     rescue ActiveRecord::NoDatabaseError, ActiveRecord::StatementInvalid
     end
-    if year.present?
+    if link_role.present?
       true
     else
       false

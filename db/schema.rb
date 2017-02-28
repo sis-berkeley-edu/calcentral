@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161219213430) do
+ActiveRecord::Schema.define(version: 20170228181344) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -94,15 +94,6 @@ ActiveRecord::Schema.define(version: 20161219213430) do
     t.string "uid"
     t.string "alternate_email"
   end
-
-  create_table "fin_aid_years", force: true do |t|
-    t.integer  "current_year",        null: false
-    t.date     "upcoming_start_date", null: false
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "fin_aid_years", ["current_year"], name: "index_fin_aid_years_on_current_year", unique: true, using: :btree
 
   create_table "link_categories", force: true do |t|
     t.string   "name",                       null: false
