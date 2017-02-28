@@ -13,7 +13,6 @@ SET search_path = public, pg_catalog;
 DROP INDEX public.index_user_auths_on_uid;
 DROP INDEX public.index_summer_sub_terms_on_year_and_sub_term_code;
 DROP INDEX public.index_service_alerts_on_display_and_created_at;
-DROP INDEX public.index_fin_aid_years_on_current_year;
 DROP INDEX public.index_canvas_site_mailing_lists_on_canvas_site_id;
 DROP INDEX public.mailing_list_membership_index;
 ALTER TABLE ONLY public.user_roles DROP CONSTRAINT user_roles_pkey;
@@ -26,7 +25,6 @@ ALTER TABLE ONLY public.oec_course_codes DROP CONSTRAINT oec_course_codes_pkey;
 ALTER TABLE ONLY public.links DROP CONSTRAINT links_pkey;
 ALTER TABLE ONLY public.link_sections DROP CONSTRAINT link_sections_pkey;
 ALTER TABLE ONLY public.link_categories DROP CONSTRAINT link_categories_pkey;
-ALTER TABLE ONLY public.fin_aid_years DROP CONSTRAINT fin_aid_years_pkey;
 ALTER TABLE ONLY public.canvas_site_mailing_lists DROP CONSTRAINT canvas_site_mailing_lists_pkey;
 ALTER TABLE ONLY public.canvas_site_mailing_list_members DROP CONSTRAINT canvas_site_mailing_list_members_pkey;
 ALTER TABLE public.user_roles ALTER COLUMN id DROP DEFAULT;
@@ -37,7 +35,6 @@ ALTER TABLE public.oec_course_codes ALTER COLUMN id DROP DEFAULT;
 ALTER TABLE public.links ALTER COLUMN id DROP DEFAULT;
 ALTER TABLE public.link_sections ALTER COLUMN id DROP DEFAULT;
 ALTER TABLE public.link_categories ALTER COLUMN id DROP DEFAULT;
-ALTER TABLE public.fin_aid_years ALTER COLUMN id DROP DEFAULT;
 ALTER TABLE public.canvas_site_mailing_lists ALTER COLUMN id DROP DEFAULT;
 ALTER TABLE public.canvas_site_mailing_list_members ALTER COLUMN id DROP DEFAULT;
 DROP SEQUENCE public.user_roles_id_seq;
@@ -59,8 +56,6 @@ DROP TABLE public.link_sections;
 DROP TABLE public.link_categories_link_sections;
 DROP SEQUENCE public.link_categories_id_seq;
 DROP TABLE public.link_categories;
-DROP SEQUENCE public.fin_aid_years_id_seq;
-DROP TABLE public.fin_aid_years;
 DROP SEQUENCE public.canvas_site_mailing_lists_id_seq;
 DROP TABLE public.canvas_site_mailing_lists;
 DROP SEQUENCE public.canvas_site_mailing_list_members_id_seq;
@@ -139,38 +134,6 @@ CACHE 1;
 --
 
 ALTER SEQUENCE canvas_site_mailing_lists_id_seq OWNED BY canvas_site_mailing_lists.id;
-
-
---
--- Name: fin_aid_years; Type: TABLE; Schema: public; Owner: -; Tablespace:
---
-
-CREATE TABLE fin_aid_years (
-    id integer NOT NULL,
-    current_year integer NOT NULL,
-    upcoming_start_date date NOT NULL,
-    created_at timestamp without time zone,
-    updated_at timestamp without time zone
-);
-
-
---
--- Name: fin_aid_years_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE fin_aid_years_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: fin_aid_years_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE fin_aid_years_id_seq OWNED BY fin_aid_years.id;
 
 
 --
@@ -493,13 +456,6 @@ ALTER TABLE ONLY canvas_site_mailing_lists ALTER COLUMN id SET DEFAULT nextval('
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY fin_aid_years ALTER COLUMN id SET DEFAULT nextval('fin_aid_years_id_seq'::regclass);
-
-
---
--- Name: id; Type: DEFAULT; Schema: public; Owner: -
---
-
 ALTER TABLE ONLY link_categories ALTER COLUMN id SET DEFAULT nextval('link_categories_id_seq'::regclass);
 
 
@@ -550,27 +506,6 @@ ALTER TABLE ONLY user_auths ALTER COLUMN id SET DEFAULT nextval('user_auths_id_s
 --
 
 ALTER TABLE ONLY user_roles ALTER COLUMN id SET DEFAULT nextval('user_roles_id_seq'::regclass);
-
-
---
--- Data for Name: fin_aid_years; Type: TABLE DATA; Schema: public; Owner: -
---
-
-INSERT INTO fin_aid_years VALUES (4, 2014, '2014-03-29', '2014-05-12 13:03:16.162', '2014-05-12 13:03:16.162');
-INSERT INTO fin_aid_years VALUES (5, 2015, '2015-04-25', '2014-05-12 13:03:16.169', '2015-03-31 22:48:01.32');
-INSERT INTO fin_aid_years VALUES (6, 2016, '2016-05-01', '2014-05-12 13:03:16.175', '2015-04-27 13:01:59.352');
-INSERT INTO fin_aid_years VALUES (7, 2017, '2017-05-01', '2014-06-02 13:02:01.337', '2015-04-27 13:01:59.372');
-INSERT INTO fin_aid_years VALUES (8, 2018, '2018-05-01', '2014-06-02 13:02:01.373', '2015-04-27 13:01:59.378');
-INSERT INTO fin_aid_years VALUES (9, 2019, '2019-05-01', '2014-06-02 13:02:01.385', '2015-04-27 13:01:59.383');
-INSERT INTO fin_aid_years VALUES (10, 2020, '2020-05-01', '2014-06-02 13:02:01.396', '2015-04-27 13:01:59.388');
-INSERT INTO fin_aid_years VALUES (11, 2021, '2021-05-01', '2014-06-02 13:02:01.408', '2015-04-27 13:01:59.393');
-
-
---
--- Name: fin_aid_years_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
---
-
-SELECT pg_catalog.setval('fin_aid_years_id_seq', 11, true);
 
 
 --
@@ -2070,14 +2005,6 @@ ALTER TABLE ONLY canvas_site_mailing_lists
   ADD CONSTRAINT canvas_site_mailing_lists_pkey PRIMARY KEY (id);
 
 --
--- Name: fin_aid_years_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
---
-
-ALTER TABLE ONLY fin_aid_years
-    ADD CONSTRAINT fin_aid_years_pkey PRIMARY KEY (id);
-
-
---
 -- Name: link_categories_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
 --
 
@@ -2146,13 +2073,6 @@ ALTER TABLE ONLY user_roles
 --
 
 CREATE UNIQUE INDEX index_canvas_site_mailing_lists_on_canvas_site_id ON canvas_site_mailing_lists USING btree (canvas_site_id);
-
-
---
--- Name: index_fin_aid_years_on_current_year; Type: INDEX; Schema: public; Owner: -; Tablespace:
---
-
-CREATE UNIQUE INDEX index_fin_aid_years_on_current_year ON fin_aid_years USING btree (current_year);
 
 
 --

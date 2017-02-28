@@ -12,7 +12,6 @@ class Ability
       if user.policy.can_administrate?
         can :manage, [
           Calendar::User, Calendar::QueuedEntry, Calendar::LoggedEntry, Calendar::Job,
-          Finaid::FinAidYear,
           MailingLists::Member,
           MailingLists::SiteMailingList,
           Oec::CourseCode,
@@ -71,7 +70,6 @@ RailsAdmin.config do |config|
   # Include specific models (exclude the others):
   config.included_models = %w(
     Calendar::User Calendar::QueuedEntry Calendar::LoggedEntry Calendar::Job
-    Finaid::FinAidYear
     Links::Link Links::LinkCategory Links::LinkSection Links::UserRole
     MailingLists::Member MailingLists::SiteMailingList
     Oec::CourseCode
@@ -162,10 +160,6 @@ RailsAdmin.config do |config|
         column_width 130
       end
     end
-  end
-
-  config.model 'Finaid::FinAidYear' do
-    label 'Financial Aid Transition Dates'
   end
 
   config.model 'Calendar::User' do
