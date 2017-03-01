@@ -3,31 +3,22 @@ module Notifications
     include ClassLogger
 
     PROVIDERS = Hash[
+      'class' => SisExpiryClassProvider.new,
       'student' => SisExpirySingleStudentProvider.new,
       'students' => SisExpiryStudentsProvider.new
     ]
 
     def process(event, timestamp)
       return false unless accept? event
-      begin
-        logger.debug "Processing event: #{event}; timestamp = #{timestamp}"
-        if (expiry_module = get_expiry event)
-
-          if event['topic'] == 'sis:faculty:grade-roster'
-            uids = get_instructor_uids event
-            expiry_module.expire uids
-          else
-            payload = event.try(:[], 'payload')
-            payload.keys.each do |key|
-              uids = PROVIDERS[key].get_uids(event)
-              expiry_module.expire uids if uids
-            end
-          end
-        else
-          logger.warn "Event topic #{event['topic']} not recognized"
+      logger.debug "Processing event: #{event}; timestamp = #{timestamp}"
+      if (expiry_module = get_expiry event)
+        payload = event.try(:[], 'payload')
+        payload.keys.each do |key|
+          uids = PROVIDERS[key].get_uids(event)
+          expiry_module.expire uids if uids
         end
-      ensure
-        ActiveRecord::Base.clear_active_connections!
+      else
+        logger.warn "Event topic #{event['topic']} not recognized"
       end
     end
 
@@ -39,22 +30,6 @@ module Notifications
 
     def get_expiry(event)
       EXPIRY_BY_TOPIC[event['topic']]
-    end
-
-    def get_instructor_uids(event)
-      uids = []
-      if (section_data = event['payload'] && event['payload']['student'] && event['payload']['student']['StudentId'].to_s.split('|'))
-        if (term_id = section_data[0]) && (section_id = section_data[1])
-          instructors = EdoOracle::Queries.get_section_instructors(term_id, section_id)
-          instructors.each do |instructor|
-            uids.push instructor['ldap_uid'].to_i
-          end
-          logger.error "No Instructor UIDs found for section #{section_id}, term #{term_id}" unless (uids.length > 0)
-        end
-      else
-        logger.error "Could not parse Instructor UIDs from event #{event}"
-      end
-      uids
     end
 
     #TODO Mapping of event topics to expiry modules is incomplete.
@@ -72,7 +47,7 @@ module Notifications
       'sis:student:financials' => CampusSolutions::MyBilling,
       'sis:student:messages' => MyActivities::Merged,
       'sis:student:serviceindicator' => HubEdos::MyAcademicStatus,
-      'sis:faculty:grade-roster' => CampusSolutions::SectionGradesExpiry
+      'sis:class:grade-roster' => CampusSolutions::SectionGradesExpiry
     }
   end
 end
