@@ -8,14 +8,7 @@ var angular = require('angular');
 angular.module('calcentral.controllers').controller('bConnectedController', function(apiService, $scope) {
   var services = ['Google'];
 
-  var refreshIsCalendarOptedIn = function(profile) {
-    $scope.bConnected = {
-      isCalendarOptedIn: profile.isCalendarOptedIn
-    };
-  };
-
   var refreshServices = function(profile) {
-    refreshIsCalendarOptedIn(profile);
     $scope.connectedServices = services.filter(function(element) {
       return profile['has' + element + 'AccessToken'];
     });

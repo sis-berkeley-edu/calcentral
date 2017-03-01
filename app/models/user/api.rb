@@ -47,7 +47,6 @@ module User
       logger.warn "Removing all stored user data for user #{uid}"
       user = nil
       use_pooled_connection {
-        Calendar::User.delete_all({uid: uid})
         user = User::Data.where(:uid => uid).first
         if !user.blank?
           user.delete
@@ -142,7 +141,6 @@ module User
       current_user_policy = authentication_state.policy
       is_google_reminder_dismissed = User::Oauth2Data.is_google_reminder_dismissed(@uid)
       is_google_reminder_dismissed = is_google_reminder_dismissed && is_google_reminder_dismissed.present?
-      is_calendar_opted_in = Calendar::User.where(:uid => @uid).first.present?
       has_student_history = User::HasStudentHistory.new(@uid).has_student_history?
       has_instructor_history = User::HasInstructorHistory.new(@uid).has_instructor_history?
       roles = @user_attributes[:roles]
@@ -162,7 +160,6 @@ module User
         givenFirstName: given_first_name,
         givenFullName: given_first_name + ' ' + @user_attributes[:familyName],
         isGoogleReminderDismissed: is_google_reminder_dismissed,
-        isCalendarOptedIn: is_calendar_opted_in,
         hasGoogleAccessToken: GoogleApps::Proxy.access_granted?(@uid),
         hasStudentHistory: has_student_history,
         hasInstructorHistory: has_instructor_history,

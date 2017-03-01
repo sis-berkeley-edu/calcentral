@@ -63,7 +63,6 @@ describe 'Profile bConnected', :testui => true do
         it 'shows no "class calendar" option for a non-student' do
           @bconnected_card.load_page
           @bconnected_card.connected_as_element.when_visible(timeout=WebDriverUtils.page_load_timeout)
-          expect(@bconnected_card.calendar_opt_in?).to be false
         end
       end
 

@@ -60,7 +60,6 @@ module GoogleApps
     def remove_user_authorization
       logger.warn "Deleting Google OAuth2 tokens of user #{@user_id} (app_id: #{@app_id}) per user request"
       GoogleApps::Revoke.new(user_id: @user_id).revoke
-      Calendar::User.delete_all(uid: @user_id)
       User::Oauth2Data.remove(@user_id, @app_id)
       expire
     end

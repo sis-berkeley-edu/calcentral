@@ -215,42 +215,6 @@ describe UserApiController do
         end
       end
 
-      context 'opting into the calendar integration' do
-        before { Calendar::User.should_not_receive(:find_or_create_by) }
-        subject do
-          post :calendar_opt_in
-          response.status
-        end
-        context 'when viewing as' do
-          let(:original_user_id) { random_id }
-          it { should eq 403 }
-        end
-        context 'when authenticated by LTI' do
-          let(:original_user_id) { nil }
-          before { session['lti_authenticated_only'] = true }
-          it { should eq 403 }
-        end
-      end
-      context 'opting out of the calendar integration' do
-        before {
-          Calendar::User.should_not_receive(:where)
-          Calendar::User.should_not_receive(:delete_all)
-        }
-        subject do
-          post :calendar_opt_out
-          response.status
-        end
-        context 'when viewing as' do
-          let(:original_user_id) { random_id }
-          it { should eq 403 }
-        end
-        context 'when authenticated by LTI' do
-          let(:original_user_id) { nil }
-          before { session['lti_authenticated_only'] = true }
-          it { should eq 403 }
-        end
-      end
-
       context 'when viewing as' do
         subject do
           get :mystatus
@@ -262,20 +226,6 @@ describe UserApiController do
           expect(subject['canActOnFinances']).to be false
         end
       end
-    end
-  end
-
-  describe '#calendar_opt_in' do
-    it 'should handle an opt-in' do
-      post :calendar_opt_in
-      expect(response.status).to eq 204
-    end
-  end
-
-  describe '#calendar_opt_out' do
-    it 'should handle an opt-out' do
-      post :calendar_opt_out
-      expect(response.status).to eq 204
     end
   end
 

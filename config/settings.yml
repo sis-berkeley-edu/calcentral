@@ -365,13 +365,6 @@ oec:
   }]
   departments: [ 'A,RESEC', 'BIOLOGY', 'CATALAN', 'CHEM', 'DATASCI', 'ECON', 'ENE,RES', 'ENVECON', 'EPS', 'ESPM', 'GWS', 'INFO', 'INTEGBI', 'LGBT', 'LINGUIS', 'MATH', 'MCELLBI', 'NUSCTX', 'PHYSICS', 'PLANTBI', 'POL SCI', 'PORTUG', 'PSYCH', 'SPANISH', 'STAT' ]
 
-class_calendar:
-  slice_size: 10000
-  slice_pause_duration: 600
-  access_token: secret
-  refresh_token: secret
-  departments: [ 'BIOLOGY', 'CHEM' ]
-
 ui_selenium:
   base_url: https://calcentral-dev.berkeley.edu
   cal_net_url: https://auth-test.berkeley.edu
@@ -486,7 +479,6 @@ features:
   authentication_validator: false
   background_jobs_check: true
   cal1card: false
-  class_calendar: false
   class_info_enrollment_section_overview: false
   class_info_enrollment_tab: false
   course_manage_official_sections: false

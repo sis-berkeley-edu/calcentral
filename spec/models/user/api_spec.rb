@@ -56,7 +56,6 @@ describe User::Api do
     it 'should return a user data structure' do
       api = User::Api.new(uid).get_feed
       expect(api[:preferredName]).to eq preferred_name
-      expect(api[:isCalendarOptedIn]).to_not be_nil
       expect(api[:isLegacyStudent]).to be false
       expect(api[:isDelegateUser]).to be false
       expect(api[:showSisProfileUI]).to be true
@@ -230,7 +229,6 @@ describe User::Api do
       expect(User::Oauth2Data).to receive :destroy_all
       expect(Notifications::Notification).to receive :destroy_all
       expect(Cache::UserCacheExpiry).to receive :notify
-      expect(Calendar::User).to receive :delete_all
 
       User::Api.delete uid
 

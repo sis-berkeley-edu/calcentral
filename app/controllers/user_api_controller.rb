@@ -54,24 +54,4 @@ class UserApiController < ApplicationController
     render :nothing => true, :status => 204
   end
 
-  def calendar_opt_in
-    expire_current_user
-    if (user_id = session['user_id']) && current_user.directly_authenticated?
-      Calendar::User.where(uid: user_id).first_or_create
-      render :nothing => true, :status => 204
-    else
-      render :nothing => true, :status => 403
-    end
-  end
-
-  def calendar_opt_out
-    expire_current_user
-    if (user_id = session['user_id']) && current_user.directly_authenticated?
-      Calendar::User.where(uid: user_id).delete_all
-      render :nothing => true, :status => 204
-    else
-      render :nothing => true, :status => 403
-    end
-  end
-
 end

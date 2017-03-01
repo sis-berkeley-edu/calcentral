@@ -9,7 +9,6 @@ module CalCentralPages
     # bConnected
     div(:bconnected_section, :class => 'cc-profile-bconnected')
     div(:connected_as, :xpath => '//div[@data-ng-if="api.user.profile.googleEmail && api.user.profile.hasGoogleAccessToken"]')
-    checkbox(:calendar_opt_in, :id => 'cc-profile-bconnected-service-calendar-optin')
     button(:disconnect_button, :xpath => '//button[contains(.,"Disconnect")]')
     button(:disconnect_yes_button, :xpath => '//button[@data-ng-click="api.user.removeOAuth(service)"]')
     button(:disconnect_no_button, :xpath => '//button[@data-ng-click="showValidation = false"]')
