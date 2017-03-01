@@ -2,10 +2,18 @@ module Notifications
   class SisExpiryStudentsProvider
     include ClassLogger
 
+    # This class will handle anything wrapped in a <STUDENTS /> tag - this could be a single item or an array.
+    #
+    # Single item example:
+    #   "students": {"id": 123}
+    #
+    # Array example:
+    #  "students": {"id": [123, 456]}
+
     def get_uids(event)
       if event && ids = event.try(:[], 'payload').try(:[], 'students')
         uids = []
-        ids.each do |student_id|
+        Array(ids).each do |student_id|
           if (uid = CalnetCrosswalk::ByCsId.new(user_id: student_id).lookup_ldap_uid)
             uids << uid
           else
