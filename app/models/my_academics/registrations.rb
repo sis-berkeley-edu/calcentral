@@ -81,7 +81,7 @@ module MyAcademics
         term_id = value[:id]
         term_registrations = []
         # If the term is less than or equal to Settings.terms.legacy_cutoff, parse it as we would a legacy term.
-        if (term_id.to_i <= legacy_cutoff.to_i)
+        if (term_id.to_i <= legacy_cutoff.to_i && Settings.features.allow_legacy_fallback)
           term_registrations.push parse_legacy_term(key, term_id, value[:name])
         elsif registrations.present?
           registrations.each do |registration|

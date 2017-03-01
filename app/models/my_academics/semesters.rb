@@ -7,16 +7,16 @@ module MyAcademics
     end
 
     def merge(data)
-      legacy_user_courses = CampusOracle::UserCourses::All.new(user_id: @uid)
-      edo_user_courses = EdoOracle::UserCourses::All.new(user_id: @uid)
 
       if (@filtered = data[:filteredForDelegate])
-        enrollments = legacy_user_courses.get_enrollments_summary.merge(edo_user_courses.get_enrollments_summary)
+        enrollments = EdoOracle::UserCourses::All.new(user_id: @uid).get_enrollments_summary
+        enrollments.merge!(CampusOracle::UserCourses::All.new(user_id: @uid).get_enrollments_summary) if Settings.features.allow_legacy_fallback
       else
-        enrollments = legacy_user_courses.get_all_campus_courses.merge(edo_user_courses.get_all_campus_courses)
+        enrollments = EdoOracle::UserCourses::All.new(user_id: @uid).get_all_campus_courses
+        enrollments.merge!(CampusOracle::UserCourses::All.new(user_id: @uid).get_all_campus_courses) if Settings.features.allow_legacy_fallback
       end
 
-      transcripts = CampusOracle::UserCourses::Transcripts.new(user_id: @uid).get_all_transcripts
+      transcripts =  Settings.features.allow_legacy_fallback ? CampusOracle::UserCourses::Transcripts.new(user_id: @uid).get_all_transcripts : []
 
       data[:additionalCredits] = transcripts[:additional_credits] if transcripts[:additional_credits].any?
       data[:semesters] = semester_feed(enrollments, transcripts[:semesters]).compact
@@ -33,7 +33,7 @@ module MyAcademics
           semester[:classes] = map_enrollments(enrollment_terms[term_key]).compact
           semester[:hasEnrolledClasses] = has_enrolled_classes?(enrollment_terms[term_key])
           merge_grades(semester, transcript_terms[term_key])
-        else
+        elsif Settings.features.allow_legacy_fallback
           semester[:hasEnrollmentData] = false
           semester[:summaryFromTranscript] = true
           semester[:hasEnrolledClasses] = false
@@ -159,7 +159,7 @@ module MyAcademics
     end
 
     def use_transcript_grades?(semester)
-      semester[:timeBucket] == 'past' && !semester[:gradingInProgress] && !semester[:campusSolutionsTerm]
+      semester[:timeBucket] == 'past' && !semester[:gradingInProgress] && !semester[:campusSolutionsTerm] && Settings.features.allow_legacy_fallback
     end
 
   end

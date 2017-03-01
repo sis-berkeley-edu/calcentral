@@ -476,6 +476,7 @@ features:
   advising: false
   advising_academic_planner: false
   advising_student_success: false
+  allow_legacy_fallback: true
   authentication_validator: false
   background_jobs_check: true
   cal1card: false

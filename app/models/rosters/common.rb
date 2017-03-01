@@ -62,7 +62,7 @@ module Rosters
     end
 
     def get_enrollments(ccns, term_yr, term_cd)
-      if Berkeley::Terms.legacy?(term_yr, term_cd)
+      if Berkeley::Terms.legacy?(term_yr, term_cd) && Settings.features.allow_legacy_fallback
         enrollments = CampusOracle::Queries.get_enrolled_students_for_ccns(ccns, term_yr, term_cd).map do |row|
           {
             ccn: row['course_cntl_num'],
