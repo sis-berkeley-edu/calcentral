@@ -22,6 +22,7 @@ module Berkeley
     end
 
     def non_legacy_inclusive? term
+      return true unless Settings.features.allow_legacy_fallback
       term[:campus_solutions_id] >= TermCodes.slug_to_edo_id(Settings.terms.legacy_cutoff)
     end
 

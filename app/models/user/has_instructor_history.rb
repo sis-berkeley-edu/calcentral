@@ -9,7 +9,7 @@ module User
         grouped_terms = Berkeley::Terms.legacy_group(current_terms)
         has_legacy_instructor_history = Proc.new { CampusOracle::Queries.has_instructor_history?(@uid, grouped_terms[:legacy]) }
         has_sisedo_instructor_history = Proc.new { EdoOracle::Queries.has_instructor_history?(@uid, grouped_terms[:sisedo]) }
-        has_legacy_instructor_history.call || has_sisedo_instructor_history.call
+        (Settings.features.allow_legacy_fallback && has_legacy_instructor_history.call) || has_sisedo_instructor_history.call
       end
     end
   end

@@ -26,7 +26,7 @@ class MediacastsController < ApplicationController
 
   def term_courses(uid, year, term_code)
     legacy = Berkeley::Terms.legacy? year, term_code
-    all_courses = legacy ?
+    all_courses = legacy && Settings.features.allow_legacy_fallback ?
       CampusOracle::UserCourses::All.new(user_id: uid).get_all_campus_courses :
       EdoOracle::UserCourses::All.new(user_id: uid).get_all_campus_courses
     all_courses["#{year}-#{term_code}"] || []

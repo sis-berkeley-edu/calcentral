@@ -5,6 +5,7 @@ module User
     end
 
     def lookup_student_id
+      return student_id_from_ldap unless Settings.features.allow_legacy_fallback
       student_id_from_ldap || student_id_from_oracle
     end
 

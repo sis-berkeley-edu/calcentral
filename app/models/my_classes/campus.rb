@@ -10,7 +10,7 @@ module MyClasses
 
     def classes_for_term(term)
       classes = []
-      if term.legacy?
+      if term.legacy? && Settings.features.allow_legacy_fallback
         all_courses = CampusOracle::UserCourses::All.new(user_id: @uid).get_all_campus_courses
       else
         all_courses = EdoOracle::UserCourses::All.new(user_id: @uid).get_all_campus_courses

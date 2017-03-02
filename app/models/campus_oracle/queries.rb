@@ -186,6 +186,7 @@ module CampusOracle
     end
 
     def self.get_enrolled_students(ccn, term_yr, term_cd)
+      logger.warn 'Calling get_enrolled_students on campus_oracle when allow_legacy_fallback flag set to false' unless Settings.features.allow_legacy_fallback
       result = []
       use_pooled_connection {
         sql = <<-SQL
@@ -205,6 +206,7 @@ module CampusOracle
 
     # Version of get_enrolled_students for multiple CCNs.
     def self.get_enrolled_students_for_ccns(ccns, term_yr, term_cd)
+      logger.warn 'Calling get_enrolled_students_for_ccns on campus_oracle when allow_legacy_fallback flag set to false' unless Settings.features.allow_legacy_fallback
       result = []
       use_pooled_connection {
         sql = <<-SQL
@@ -224,6 +226,7 @@ module CampusOracle
     end
 
     def self.get_course_from_section(ccn, term_yr, term_cd)
+      logger.warn 'Calling get_course_from_section on campus_oracle when allow_legacy_fallback flag set to false' unless Settings.features.allow_legacy_fallback
       result = {}
       use_pooled_connection {
         sql = <<-SQL
@@ -239,6 +242,7 @@ module CampusOracle
     end
 
     def self.get_sections_from_ccns(term_yr, term_cd, ccns)
+      logger.warn 'Calling get_sections_from_ccns on campus_oracle when allow_legacy_fallback flag set to false' unless Settings.features.allow_legacy_fallback
       result = {}
       use_pooled_connection {
         sql = <<-SQL
@@ -258,6 +262,7 @@ module CampusOracle
 
     # Catalog ID sorting is: "99", "101L", "C103", "C107L", "110", "110L", "C112", "C112L"
     def self.get_enrolled_sections(person_id, terms = nil)
+      logger.warn 'Calling get_enrolled_sections on campus_oracle when allow_legacy_fallback flag set to false' unless Settings.features.allow_legacy_fallback
       result = []
       terms_clause = terms_query_clause('r', terms)
       use_pooled_connection {
@@ -285,6 +290,7 @@ module CampusOracle
     end
 
     def self.get_transcript_grades(person_id, terms = nil)
+      logger.warn 'Calling get_transcript_grades on campus_oracle when allow_legacy_fallback flag set to false' unless Settings.features.allow_legacy_fallback
       result = []
       terms_clause = terms_query_clause('t', terms)
       use_pooled_connection {
@@ -302,6 +308,7 @@ module CampusOracle
     end
 
     def self.get_instructing_sections(person_id, terms = nil)
+      logger.warn 'Calling get_instructing_sections on campus_oracle when allow_legacy_fallback flag set to false' unless Settings.features.allow_legacy_fallback
       result = []
       terms_clause = terms_query_clause('i', terms)
       use_pooled_connection {
@@ -326,6 +333,7 @@ module CampusOracle
     end
 
     def self.get_cross_listings(term_yr, term_cd, ccns)
+      logger.warn 'Calling get_cross_listings on campus_oracle when allow_legacy_fallback flag set to false' unless Settings.features.allow_legacy_fallback
       result = {}
       query_result = []
       use_pooled_connection {
@@ -351,6 +359,7 @@ module CampusOracle
     end
 
     def self.get_section_schedules(term_yr, term_cd, ccn)
+      logger.warn 'Calling get_section_schedules on campus_oracle when allow_legacy_fallback flag set to false' unless Settings.features.allow_legacy_fallback
       result = []
       use_pooled_connection {
         sql = <<-SQL
@@ -371,6 +380,7 @@ module CampusOracle
     end
 
     def self.get_section_instructors(term_yr, term_cd, ccn)
+      logger.warn 'Calling get_section_instructors on campus_oracle when allow_legacy_fallback flag set to false' unless Settings.features.allow_legacy_fallback
       result = []
       use_pooled_connection {
         sql = <<-SQL
@@ -417,6 +427,7 @@ module CampusOracle
     end
 
     def self.has_instructor_history?(ldap_uid, instructor_terms = nil)
+      logger.warn 'Calling has_instructor_history? on campus_oracle when allow_legacy_fallback flag set to false' unless Settings.features.allow_legacy_fallback
       result = {}
       instructor_terms_clause = terms_query_clause('r', instructor_terms)
       use_pooled_connection {
@@ -434,6 +445,7 @@ module CampusOracle
     end
 
     def self.has_student_history?(ldap_uid, student_terms = nil)
+      logger.warn 'Calling has_student_history? on campus_oracle when allow_legacy_fallback flag set to false' unless Settings.features.allow_legacy_fallback
       result = {}
       student_terms_clause = terms_query_clause('r', student_terms)
       use_pooled_connection {
@@ -451,6 +463,7 @@ module CampusOracle
     end
 
     def self.terms
+      logger.warn 'Calling terms on campus_oracle when allow_legacy_fallback flag set to false' unless Settings.features.allow_legacy_fallback
       result = []
       use_pooled_connection {
         sql = <<-SQL
@@ -467,6 +480,7 @@ module CampusOracle
     private
 
     def self.get_course_sections(term_yr, term_cd, department, catalog_id, only_secondary_sections)
+      logger.warn 'Calling get_course_sections on campus_oracle when allow_legacy_fallback flag set to false' unless Settings.features.allow_legacy_fallback
       result = []
       section_type_condition = only_secondary_sections ? ' and c.primary_secondary_cd != \'P\' ' : ''
       use_pooled_connection {

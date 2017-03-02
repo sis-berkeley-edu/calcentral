@@ -81,7 +81,7 @@ module Berkeley
 
       # Do initial term parsing.
       terms_array = fetch_terms_from_api
-      merge_terms_from_legacy_db terms_array
+      merge_terms_from_legacy_db terms_array if Settings.features.allow_legacy_fallback
 
       # Classify and map terms.
       terms_array.each do |term|
@@ -129,7 +129,7 @@ module Berkeley
         logger.error "No Next term found from HubTerm::Proxy; no non-legacy academic terms are available"
       else
         term = Berkeley::Term.new.from_cs_api(feed)
-        cs_terms << term unless term.legacy?
+        cs_terms << term unless term.legacy? && Settings.features.allow_legacy_fallback
         term_date = term.end.to_date.to_s
         if (next_after_next = HubTerm::Proxy.new(temporal_position: HubTerm::Proxy::NEXT_TERM, as_of_date: term_date).get_term)
           cs_terms.unshift Berkeley::Term.new.from_cs_api(next_after_next)
@@ -139,7 +139,7 @@ module Berkeley
           feed = HubTerm::Proxy.new(temporal_position: HubTerm::Proxy::PREVIOUS_TERM, as_of_date: term_date).get_term
           break unless feed.present?
           term = Berkeley::Term.new.from_cs_api(feed)
-          break if term.legacy?
+          break if term.legacy? && Settings.features.allow_legacy_fallback
           @sis_current_term = term if term.sis_current_term?
           cs_terms << term
           break if term.slug == @oldest

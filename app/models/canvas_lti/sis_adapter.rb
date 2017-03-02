@@ -4,7 +4,7 @@ module CanvasLti
     extend self
 
     def get_enrolled_students(section_id, term_year, term_code)
-      if Berkeley::Terms.legacy?(term_year, term_code)
+      if Berkeley::Terms.legacy?(term_year, term_code) && Settings.features.allow_legacy_fallback
         CampusOracle::Queries.get_enrolled_students(section_id, term_year, term_code)
       else
         EdoOracle::Queries.get_enrolled_students(section_id, term_id(term_year, term_code)).each do |enrollment|
@@ -14,7 +14,7 @@ module CanvasLti
     end
 
     def get_section_instructors(section_id, term_year, term_code)
-      if Berkeley::Terms.legacy?(term_year, term_code)
+      if Berkeley::Terms.legacy?(term_year, term_code) && Settings.features.allow_legacy_fallback
         CampusOracle::Queries.get_section_instructors(term_year, term_code, section_id)
       else
         EdoOracle::Queries.get_section_instructors(term_id(term_year, term_code), section_id).each do |instructor|
@@ -24,7 +24,7 @@ module CanvasLti
     end
 
     def get_sections_by_ids(section_ids, term_year, term_code)
-      if Berkeley::Terms.legacy?(term_year, term_code)
+      if Berkeley::Terms.legacy?(term_year, term_code) && Settings.features.allow_legacy_fallback
         CampusOracle::Queries.get_sections_from_ccns(term_year, term_code, section_ids)
       else
         user_courses = EdoOracle::UserCourses::Base.new

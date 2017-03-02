@@ -3,9 +3,8 @@ module MyAcademics
     include AcademicsModule
 
     def merge(data)
-      legacy_user_courses = CampusOracle::UserCourses::All.new(user_id: @uid)
-      edo_user_courses = EdoOracle::UserCourses::All.new(user_id: @uid)
-      feed = legacy_user_courses.get_all_campus_courses.merge edo_user_courses.get_all_campus_courses
+      feed = EdoOracle::UserCourses::All.new(user_id: @uid).get_all_campus_courses
+      feed.merge!  CampusOracle::UserCourses::All.new(user_id: @uid).get_all_campus_courses if Settings.features.allow_legacy_fallback
 
       teaching_semesters = format_teaching_semesters feed
       if teaching_semesters.present?
@@ -18,7 +17,7 @@ module MyAcademics
     # Our bCourses Canvas integration occasionally needs to create an Academics Teaching Semesters
     # list based on an explicit set of CCNs.
     def courses_list_from_ccns(term_yr, term_code, ccns)
-      if Berkeley::Terms.legacy?(term_yr, term_code)
+      if Berkeley::Terms.legacy?(term_yr, term_code) && Settings.features.allow_legacy_fallback
         proxy = CampusOracle::UserCourses::SelectedSections.new({user_id: @uid})
       else
         proxy = EdoOracle::UserCourses::SelectedSections.new({user_id: @uid})
