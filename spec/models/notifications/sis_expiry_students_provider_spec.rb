@@ -33,6 +33,18 @@ describe Notifications::SisExpiryStudentsProvider do
         expect(uids).to eq([])
       end
     end
+    context 'when given a single ID' do
+      include_context 'when uid lookup is unsuccessful'
+      let(:event) do
+        {
+          'payload' => {
+            'students' => ids
+          }
+        }
+      end
+      let(:ids) { '61889' }
+      it_behaves_like 'a provider receiving an empty response'
+    end
     context 'when given an array of IDs' do
       include_context 'when uid lookup is unsuccessful'
       let(:event) do
@@ -44,6 +56,21 @@ describe Notifications::SisExpiryStudentsProvider do
       end
       let(:ids) { ['61889'] }
       it_behaves_like 'a provider receiving an empty response'
+    end
+    context 'when given a single ID' do
+      include_context 'when uid lookup is successful'
+      let(:event) do
+        {
+          'payload' => {
+            'students' => ids
+          }
+        }
+      end
+      let(:ids) { '61889' }
+      it 'returns an array of UIDs' do
+        uids = subject.get_uids(event)
+        expect(uids).to eq([uid])
+      end
     end
     context 'when given an array of IDs' do
       include_context 'when uid lookup is successful'
