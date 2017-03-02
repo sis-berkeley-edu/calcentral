@@ -18,23 +18,23 @@
 <div class="cc-table cc-table-top-border cc-clearfix" data-ng-if="!collegeAndLevel.roles.summerVisitor && collegeAndLevel.level">
   <table class="cc-widget-profile-table">
     <tbody>
-    <tr>
-      <th>Level</th>
-      <th class="cc-table-subheader" scope="col" data-ng-if="collegeAndLevel.nonApLevel">Including AP</th>
-      <td data-ng-if="!collegeAndLevel.nonApLevel"><strong data-ng-bind="collegeAndLevel.level"></strong></td>
-    </tr>
-    <tr data-ng-if="collegeAndLevel.nonApLevel">
-      <td></td>
-      <td><strong data-ng-bind="collegeAndLevel.level"></strong></td>
-    </tr>
-    <tr data-ng-if="collegeAndLevel.nonApLevel">
-      <th></th>
-      <th class="cc-table-subheader" scope="col">Not Including AP</th>
-    </tr>
-    <tr data-ng-if="collegeAndLevel.nonApLevel">
-      <td></td>
-      <td><strong data-ng-bind="collegeAndLevel.nonApLevel"></strong></td>
-    </tr>
+      <tr>
+        <th>Level</th>
+        <th class="cc-table-subheader" scope="col" data-ng-if="collegeAndLevel.nonApLevel">Including AP</th>
+        <td data-ng-if="!collegeAndLevel.nonApLevel"><strong data-ng-bind="collegeAndLevel.level"></strong></td>
+      </tr>
+      <tr data-ng-if="collegeAndLevel.nonApLevel">
+        <td></td>
+        <td><strong data-ng-bind="collegeAndLevel.level"></strong></td>
+      </tr>
+      <tr data-ng-if="collegeAndLevel.nonApLevel">
+        <th></th>
+        <th class="cc-table-subheader" scope="col">Not Including AP</th>
+      </tr>
+      <tr data-ng-if="collegeAndLevel.nonApLevel">
+        <td></td>
+        <td><strong data-ng-bind="collegeAndLevel.nonApLevel"></strong></td>
+      </tr>
     </tbody>
   </table>
 </div>
