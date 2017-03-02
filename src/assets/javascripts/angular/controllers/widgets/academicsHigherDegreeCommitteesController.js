@@ -25,6 +25,10 @@ angular.module('calcentral.controllers').controller('AcademicsHigherDegreeCommit
         iconStyle = 'cc-icon fa fa-exclamation-triangle cc-icon-gold';
         break;
       }
+      case 'exclamation-circle': {
+        iconStyle = 'cc-icon fa fa-exclamation-circle cc-icon-red';
+        break;
+      }
       default: {
         iconStyle = '';
       }
@@ -86,6 +90,7 @@ angular.module('calcentral.controllers').controller('AcademicsHigherDegreeCommit
     _.forEach(committees, function(committee) {
       var reducedData = {
           header: getCommitteeHeader(committee),
+          milestoneAttempts: committee.milestoneAttempts,
           chairs: decorateCommittees(getCommitteeChair(committee)),
           coChairs: decorateCommittees(getCommitteeCoChair(committee)),
           inside: decorateCommittees(getCommitteeInsideMembers(committee)),

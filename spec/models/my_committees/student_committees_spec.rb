@@ -14,36 +14,55 @@ describe MyCommittees::StudentCommittees do
         double(lookup_campus_solutions_id: user_cs_id))
     end
 
-    it 'contains the expected student data for non qualifying exam' do
-      committees = feed[:studentCommittees]
-      expect(committees[0][:committeeType]).to eq 'COMMITTEEDESCRLONG1'
-      expect(committees[0][:program]).to eq 'STUDENTACADPLAN1'
-      expect(committees[0][:statusTitle]).to eq 'Advancement To Candidacy:'
-      expect(committees[0][:statusIcon]).to eq 'check'
-      expect(committees[0][:statusMessage]).to eq 'Approved'
+    it 'correctly parses a qualifying exam committee when student has passed the exam' do
+      committee = feed[:studentCommittees][0]
+      expect(committee[:committeeType]).to eq 'COMMITTEEDESCRLONG1'
+      expect(committee[:program]).to eq 'STUDENTACADPLAN1'
+      expect(committee[:statusTitle]).to eq 'Advancement To Candidacy:'
+      expect(committee[:statusIcon]).to eq 'check'
+      expect(committee[:statusMessage]).to eq 'Approved'
     end
 
     it 'contains the expected student data for completed committees' do
-      committees = feed[:studentCommittees]
-      expect(committees[1][:committeeType]).to eq 'NOT ACTIVE'
+      committee = feed[:studentCommittees][1]
+      expect(committee[:committeeType]).to eq 'NOT ACTIVE'
     end
 
-    it 'contains the expected student data for a qualifying exam committee' do
-      committees = feed[:studentCommittees]
-      expect(committees[2][:committeeType]).to eq 'Qualifying Exam Committee'
-      expect(committees[2][:program]).to eq 'STUDENTACADPLAN3'
-      expect(committees[2][:statusTitle]).to be nil
-      expect(committees[2][:statusIcon]).to eq ''
-      expect(committees[2][:statusMessage]).to be nil
+    it 'correctly parses a qualifying exam committee when student has failed the exam' do
+      committee = feed[:studentCommittees][2]
+      expect(committee[:committeeType]).to eq 'Qualifying Exam Committee'
+      expect(committee[:program]).to eq 'STUDENTACADPLAN3'
+      expect(committee[:statusTitle]).to be nil
+      expect(committee[:statusIcon]).to eq 'exclamation-triangle'
+      expect(committee[:statusMessage]).to be nil
     end
 
     it 'contains the expected student data for a dissertation committee' do
-      committees = feed[:studentCommittees]
-      expect(committees[3][:committeeType]).to eq 'Dissertation Committee'
-      expect(committees[3][:program]).to eq 'STUDENTACADPLAN4'
-      expect(committees[3][:statusTitle]).to eq 'Advancement To Candidacy:'
-      expect(committees[3][:statusIcon]).to eq 'exclamation-triangle'
-      expect(committees[3][:statusMessage]).to eq 'Pending'
+      committee = feed[:studentCommittees][3]
+      expect(committee[:committeeType]).to eq 'Dissertation Committee'
+      expect(committee[:program]).to eq 'STUDENTACADPLAN4'
+      expect(committee[:statusTitle]).to eq 'Advancement To Candidacy:'
+      expect(committee[:statusIcon]).to eq 'check'
+      expect(committee[:statusMessage]).to eq 'Pending'
+    end
+
+    it 'contains only the most recent milestone attempt' do
+      qualifying_exam_attempts = feed[:studentCommittees][0][:milestoneAttempts]
+      expect(qualifying_exam_attempts.count).to eq 1
+      expect(qualifying_exam_attempts[0][:sequenceNumber]).to eq 2
+      expect(qualifying_exam_attempts[0][:date]).to eq 'Jan 01, 2015'
+      expect(qualifying_exam_attempts[0][:result]).to eq 'Passed'
+    end
+
+    context 'when building a string to represent the milestone attempt' do
+      it 'includes the attempt number if student did not pass the first attempt' do
+        qualifying_exam_attempts = feed[:studentCommittees][2][:milestoneAttempts]
+        expect(qualifying_exam_attempts[0][:display]).to eq 'Exam 1: Failed Jan 01, 2014'
+      end
+      it 'does not include the attempt number if student passed the first attempt' do
+        qualifying_exam_attempts = feed[:studentCommittees][4][:milestoneAttempts]
+        expect(qualifying_exam_attempts[0][:display]).to eq 'Passed Jan 01, 2016'
+      end
     end
 
     it 'filters out committee members with end date in the past' do

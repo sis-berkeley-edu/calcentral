@@ -31,6 +31,27 @@ module MyCommittees
       committees_result.compact
     end
 
+    def parse_cs_milestone_attempts(cs_committee)
+      attempts = cs_committee[:studentMilestoneAttempts].try(:map) do |attempt|
+        parse_cs_milestone_attempt(attempt)
+      end
+      attempts.try(:sort_by) do |attempt|
+        attempt[:sequenceNumber]
+      end.last(1)
+    end
+
+    def format_milestone_attempt(milestone_attempt)
+      if first_attempt_exam_passed?(milestone_attempt)
+        "#{milestone_attempt[:result]} #{milestone_attempt[:date]}"
+      else
+        "Exam #{milestone_attempt[:sequenceNumber]}: #{milestone_attempt[:result]} #{milestone_attempt[:date]}"
+      end
+    end
+
+    def first_attempt_exam_passed?(milestone_attempt)
+      milestone_attempt[:sequenceNumber] === 1 && milestone_attempt[:result] == Berkeley::GraduateMilestones::QE_STATUS_PASSED
+    end
+
     def remove_inactive_members(cs_committee)
       cs_committee[:committeeMembers].try(:reject!) do |member|
         inactive?(member)

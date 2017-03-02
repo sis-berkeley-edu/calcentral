@@ -32,10 +32,6 @@
     font-size: 16px;
   }
 
-  .cc-higher-degree-committees-list-item {
-    margin: 0 0 8px 1px;
-  }
-
   .cc-higher-degree-committees-picture {
     padding: 0 10px 10px 0;
 
@@ -50,7 +46,7 @@
   }
 
   .cc-higher-degree-committees-list {
-    li {
+    >li {
       border-bottom: 1px solid $cc-color-widget-background;
     }
   }
