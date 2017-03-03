@@ -71,6 +71,10 @@
     margin-right: 5px;
   }
 }
+.cc-non-anchored-link {
+  color: $cc-color-link;
+  cursor: pointer;
+}
 .cc-nowrap {
   white-space: nowrap;
 }
