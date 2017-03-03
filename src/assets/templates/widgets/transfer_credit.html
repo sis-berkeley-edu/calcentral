@@ -74,12 +74,24 @@
             </td>
           </tr>
         </tbody>
-        <tbody data-ng-if="transferCredit.tcReportLink.url">
+        <tbody data-ng-if="studentLinks.tcReportLink.url && api.user.profile.roles.student">
           <tr><td class="cc-transfer-credit-table-border" colspan="3"></td></tr>
           <tr class="cc-transfer-credit-table-parent-row">
             <td colspan="3">
               <a
-                data-cc-campus-solutions-link-directive="transferCredit.tcReportLink"
+                data-cc-campus-solutions-link-directive="studentLinks.tcReportLink"
+                data-cc-campus-solutions-link-directive-cc-page-name="currentPage.name"
+                data-cc-campus-solutions-link-directive-cc-page-url="currentPage.url"
+              ></a>
+            </td>
+          </tr>
+        </tbody>
+        <tbody data-ng-if="advisorLinks.tcReportLink.url && api.user.profile.roles.advisor">
+          <tr><td class="cc-transfer-credit-table-border" colspan="3"></td></tr>
+          <tr class="cc-transfer-credit-table-parent-row">
+            <td colspan="3">
+              <a
+                data-cc-campus-solutions-link-directive="advisorLinks.tcReportLink"
                 data-cc-campus-solutions-link-directive-cc-page-name="currentPage.name"
                 data-cc-campus-solutions-link-directive-cc-page-url="currentPage.url"
               ></a>

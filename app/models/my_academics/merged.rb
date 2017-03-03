@@ -20,7 +20,8 @@ module MyAcademics
         Exams,
         CanvasSites,
         FacultyDelegate,
-        Grading
+        Grading,
+        StudentLinks
       ]
     end
 

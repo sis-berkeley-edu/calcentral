@@ -22,6 +22,64 @@
     <COMMENTS>Apply to gain veteran's educational benefits.</COMMENTS>
   </Link>
   <Link>
+    <URL_ID>UC_CX_XFER_CREDIT_REPORT_STDNT</URL_ID>
+    <Description>Transfer Credit Report</Description>
+    <HOVER_OVER_TEXT>Detailed Transfer Credit Report</HOVER_OVER_TEXT>
+    <PROPERTIES type="array">
+      <PROPERTY>
+        <NAME>CALCENTRAL</NAME>
+        <value>ADVISOR</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>UCFROM</NAME>
+        <value>CalCentral</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>UCFROMLINK</NAME>
+        <value>https://calcentral-sis-dev-01.ist.berkeley.edu/</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>UCFROMTEXT</NAME>
+        <value>CalCentral</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>URI_TYPE</NAME>
+        <value>PL</value>
+      </PROPERTY>
+    </PROPERTIES>
+    <URL>https://bcswebqat.is.berkeley.edu/psp/bcsqat/EMPLOYEE/HRMS/c/CSU_DA_TRN_CDT_STD.CSU_DA_TRN_CDT_STD.GBL</URL>
+    <COMMENTS>This should take an advisor to a student's transfer credit report in CS.</COMMENTS>
+  </Link>
+  <Link>
+    <URL_ID>UC_CX_XFER_CREDIT_REPORT_ADVSR</URL_ID>
+    <Description>Transfer Credit Report</Description>
+    <HOVER_OVER_TEXT>Detailed Transfer Credit Report</HOVER_OVER_TEXT>
+    <PROPERTIES type="array">
+      <PROPERTY>
+        <NAME>CALCENTRAL</NAME>
+        <value>ADVISOR</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>UCFROM</NAME>
+        <value>CalCentral</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>UCFROMLINK</NAME>
+        <value>https://calcentral-sis-dev-01.ist.berkeley.edu/</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>UCFROMTEXT</NAME>
+        <value>CalCentral</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>URI_TYPE</NAME>
+        <value>PL</value>
+      </PROPERTY>
+    </PROPERTIES>
+    <URL>https://bcswebqat.is.berkeley.edu/psp/bcsqat/EMPLOYEE/HRMS/c/SSR_ADVISEE_OVRD.CSU_DA_TRN_CDT.GBL?EMPLID={EMPLID}</URL>
+    <COMMENTS>This should take an advisor to a student's transfer credit report in CS.</COMMENTS>
+  </Link>
+  <Link>
     <URL_ID>UC_CX_GT_CPPSTACK_ADD</URL_ID>
     <Description>Change of Academic Plan</Description>
     <HOVER_OVER_TEXT>Complete this form to change your academic plan.</HOVER_OVER_TEXT>
