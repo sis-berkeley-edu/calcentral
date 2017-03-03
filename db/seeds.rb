@@ -10,3 +10,6 @@ sql.gsub!(/(\n?)(ALTER TABLE .+ OWNER TO [\w]+;)/, "\\1-- \\2")
 
 ActiveRecord::Base.connection.execute sql
 Rails.logger.warn "developer-seed-data.sql loaded into db"
+
+Rails.logger.warn "To add yourself as a Superuser/Admin from Rails Console:"
+Rails.logger.warn "  User::Auth.new_or_update_superuser! 'YOUR_UID'"

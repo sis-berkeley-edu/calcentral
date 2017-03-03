@@ -18,7 +18,11 @@ namespace :database do
     else
       Rails.logger.warn 'Database does not exist or has not been seeded, running db:setup...'
       Rake::Task['db:schema:load'].invoke
-      Rake::Task['db:seed'].invoke
+      if Rails.env != 'production'
+        Rake::Task['db:seed'].invoke
+      else
+        Rails.logger.warn 'Production database has not been seeded - please import data as needed'
+      end
     end
   end
 
