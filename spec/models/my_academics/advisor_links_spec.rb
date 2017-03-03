@@ -1,7 +1,6 @@
 describe MyAcademics::AdvisorLinks do
   let(:uid) { random_id }
   let(:user_cs_id) { random_id }
-  let(:fake) { true }
 
   before do
     allow(CalnetCrosswalk::ByUid).to receive(:new).with(user_id: uid).and_return(

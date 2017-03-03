@@ -5,8 +5,6 @@ module MyAcademics
 
     def merge(data)
       if is_feature_enabled
-        update_url_proxy = CampusSolutions::Link.new.get_url('UC_CX_PLANNER_ADV_STDNT', {:EMPLID => campus_solutions_id}).try(:[], :link)
-        data[:updatePlanUrl] = update_url_proxy
         data[:planSemesters] = get_plan_semesters(data[:semesters])
       end
     end
