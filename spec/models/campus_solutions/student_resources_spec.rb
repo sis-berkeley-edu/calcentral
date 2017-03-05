@@ -14,7 +14,7 @@ describe CampusSolutions::StudentResources do
     it 'returns data with the expected structure' do
       resources = subject[:feed][:resources]
       expect(resources).not_to be_empty
-      expect(resources.count).to eq 7
+      expect(resources.count).to eq 10
     end
   end
 

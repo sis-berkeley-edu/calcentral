@@ -101,9 +101,11 @@ describe CampusSolutions::Link do
       it_should_behave_like 'a proxy that gets data'
       it 'returns data with the expected structure' do
         expect(link_get_url_response[:link][:properties]).not_to be
-        expect(link_get_url_for_properties_response[:link][:ucFrom]).to be
-        expect(link_get_url_for_properties_response[:link][:ucFromLink]).to be
-        expect(link_get_url_for_properties_response[:link][:ucFromText]).to be
+        expect(link_get_url_for_properties_response[:link][:ucFrom]).to eq 'CalCentral'
+        expect(link_get_url_for_properties_response[:link][:ucFromLink]).to eq 'https://calcentral-sis-dev-01.ist.berkeley.edu/'
+        expect(link_get_url_for_properties_response[:link][:ucFromText]).to eq 'CalCentral'
+        expect(link_get_url_for_properties_response[:link][:linkDescription]).to eq 'May your hats fly as high as your dreams'
+        expect(link_get_url_for_properties_response[:link][:linkDescriptionDisplay]).to eq true
       end
     end
   end
