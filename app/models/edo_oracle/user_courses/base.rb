@@ -71,7 +71,7 @@ module EdoOracle
 
       def row_to_feed_item(row, previous_item, cross_listing_tracker=nil)
         course_item = course_ids_from_row row
-        if course_item[:id] == previous_item[:id]
+        if course_item[:id] == previous_item[:id] && previous_item[:session_code] == Berkeley::TermCodes::SUMMER_SESSIONS[row['session_id']]
           previous_section = previous_item[:sections].last
           # Odd database joins will occasionally give us null course titles, which we can replace from later rows.
           previous_item[:name] = row['course_title'] if previous_item[:name].blank?
