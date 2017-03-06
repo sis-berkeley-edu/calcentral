@@ -155,7 +155,8 @@ module MyAcademics
     end
 
     def use_enrollment_grades?(semester)
-      semester[:timeBucket] == 'current' || semester[:gradingInProgress] || semester[:campusSolutionsTerm]
+      return true unless Settings.features.allow_legacy_fallback
+      semester[:timeBucket] == 'current' || semester[:gradingInProgress] || semester[:campusSolutionsTerm] ||  semester[:slug] == Settings.terms.legacy_cutoff
     end
 
     def use_transcript_grades?(semester)
