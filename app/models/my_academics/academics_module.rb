@@ -230,5 +230,8 @@ module MyAcademics
       link
     end
 
+    def get_campus_solutions_id(uid)
+      CalnetCrosswalk::ByUid.new(user_id: uid).lookup_campus_solutions_id
+    end
   end
 end

@@ -13,7 +13,8 @@ module MyAcademics
         Semesters,
         TransferCredit,
         Exams,
-        AcademicPlan
+        AcademicPlan,
+        AdvisorLinks
       ]
     end
 
