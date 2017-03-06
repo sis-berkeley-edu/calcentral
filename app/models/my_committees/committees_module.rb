@@ -1,7 +1,7 @@
 module MyCommittees::CommitteesModule
   extend self
 
-  COMMITTEE_TYPE_EXAM = 'QE'
+  COMMITTEE_TYPE_QUALIFYING_EXAM = 'QE'
   DATE_FORMAT = '%b %d, %Y'
 
   def initialize(uid)
@@ -21,14 +21,26 @@ module MyCommittees::CommitteesModule
 
   def parse_cs_committee (cs_committee)
     return nil unless cs_committee.present?
-    {
+    committee = {
       committeeType:  cs_committee[:committeeDescrlong],
       program:        cs_committee[:studentAcadPlan],
-      statusIcon: committee_status_icon(cs_committee),
       statusTitle: committee_status_title(cs_committee),
       statusMessage: committee_status_message(cs_committee),
+      milestoneAttempts: parse_cs_milestone_attempts(cs_committee),
       committeeMembers: parse_cs_committee_members(cs_committee)
     }
+    committee[:statusIcon] = committee_status_icon(cs_committee[:committeeType], committee)
+    committee
+  end
+
+  def parse_cs_milestone_attempt(cs_milestone_attempt)
+    milestone_attempt = {
+      sequenceNumber: cs_milestone_attempt[:attemptNbr].to_i,
+      date: format_date(cs_milestone_attempt[:attemptDate]),
+      result: Berkeley::GraduateMilestones.get_status(cs_milestone_attempt[:attemptStatus])
+    }
+    milestone_attempt[:display] = format_milestone_attempt(milestone_attempt)
+    milestone_attempt
   end
 
   def parse_cs_committee_member (cs_committee_member)
@@ -61,7 +73,7 @@ module MyCommittees::CommitteesModule
   end
 
   def committee_status_title (cs_committee)
-    if cs_committee[:committeeType].to_s == COMMITTEE_TYPE_EXAM
+    if cs_committee[:committeeType].to_s == COMMITTEE_TYPE_QUALIFYING_EXAM
       nil
     else
       'Advancement To Candidacy:'
@@ -69,7 +81,7 @@ module MyCommittees::CommitteesModule
   end
 
   def committee_status_message (cs_committee)
-    if cs_committee[:committeeType].to_s == COMMITTEE_TYPE_EXAM
+    if cs_committee[:committeeType].to_s == COMMITTEE_TYPE_QUALIFYING_EXAM
       nil
     elsif cs_committee[:studentMilestoneCompleteDate].blank?
       'Pending'
@@ -78,13 +90,23 @@ module MyCommittees::CommitteesModule
     end
   end
 
-  def committee_status_icon (cs_committee)
-    if cs_committee[:committeeType].to_s == COMMITTEE_TYPE_EXAM
-      ''
-    elsif cs_committee[:studentMilestoneCompleteDate].blank?
-      'exclamation-triangle'
+  def committee_status_icon (committeeType, committee)
+    if committeeType.to_s == COMMITTEE_TYPE_QUALIFYING_EXAM
+      determine_qualifying_exam_status_icon(committee)
     else
       'check'
+    end
+  end
+
+  def determine_qualifying_exam_status_icon(committee)
+    latest_attempt = committee[:milestoneAttempts].first
+    return '' unless latest_attempt
+    if latest_attempt[:result] == Berkeley::GraduateMilestones::QE_STATUS_PASSED
+      'check'
+    elsif latest_attempt[:sequenceNumber] === 1
+      'exclamation-triangle'
+    else
+      'exclamation-circle'
     end
   end
 

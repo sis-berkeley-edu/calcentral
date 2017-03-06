@@ -1,5 +1,9 @@
 module Berkeley
-  class DegreeProgressGraduate
+  class GraduateMilestones
+
+    QE_STATUS_FAILED = 'Failed'
+    QE_STATUS_PARTIALLY_FAILED = 'Partially Failed'
+    QE_STATUS_PASSED = 'Passed'
 
     def self.get_status(status_code)
       statuses.try(:[], status_code.strip.upcase) unless status_code.blank?
@@ -68,11 +72,11 @@ module Berkeley
 
     def self.statuses
       @statuses ||= {
-        'F' => 'Failed',
-        'PF' => 'Partially Failed',
+        'F' => QE_STATUS_FAILED,
+        'PF' => QE_STATUS_PARTIALLY_FAILED,
         'I' => 'In Progress',
         'N' => 'Not Satisfied',
-        'P' => 'Passed',
+        'P' => QE_STATUS_PASSED,
         'S' => 'Partially Passed',
         'Y' => 'Completed'
       }
