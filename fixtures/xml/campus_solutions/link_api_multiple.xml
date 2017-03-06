@@ -1,6 +1,35 @@
 <?xml version="1.0"?>
 <UC_LINK_RESOURCES>
   <Link>
+    <URL_ID>UC_CX_GT_GRADEOPT_ADD</URL_ID>
+    <Description>Request Late Class Changes</Description>
+    <HOVER_OVER_TEXT>Request late add, drop, grading basis, or unit value changes to class schedule</HOVER_OVER_TEXT>
+    <PROPERTIES type="array">
+      <PROPERTY>
+        <NAME>CALCENTRAL</NAME>
+        <value>FORM</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>UCFROM</NAME>
+        <value>CalCentral</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>UCFROMLINK</NAME>
+        <value>https://calcentral-sis-dev-01.ist.berkeley.edu/</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>UCFROMTEXT</NAME>
+        <value>CalCentral</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>URI_TYPE</NAME>
+        <value>PL</value>
+      </PROPERTY>
+    </PROPERTIES>
+    <URL>https://bcs-web-dev-03.is.berkeley.edu:8443/psp/bcsdev/EMPLOYEE/HRMS/c/G3FRAME.G3SEARCH.GBL?&amp;G3FORM_FAMILY=STUDENT&amp;G3FORM_TYPE=GRADEOPT&amp;G3FORM_CONDITION=Default&amp;G3FORM_TASK=ADD</URL>
+    <COMMENTS/>
+  </Link>
+  <Link>
     <URL_ID>UC_CX_GT_SRVAONCE_ADD</URL_ID>
     <Description>Veteran’s Benefits Intake Form</Description>
     <HOVER_OVER_TEXT>Complete this form to initiate Veterans Affairs benefits at UC Berkeley.</HOVER_OVER_TEXT>
