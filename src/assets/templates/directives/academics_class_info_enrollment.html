@@ -11,7 +11,7 @@
       <label for="section-select" class="cc-visuallyhidden">Filter by Section</label>
       <select id="section-select" class="cc-inline-select bc-canvas-embedded-roster-select"
               data-ng-options="section as section.name for section in sections track by section.ccn"
-              data-ng-model="selectedSection"
+              data-ng-model="searchFilters.section"
               data-ng-change="sectionChangeActions()">
         <option value="">All Sections</option>
       </select>
@@ -21,8 +21,9 @@
 
     <div class="cc-academics-class-enrollment-text">
       <span class="cc-academics-class-enrollment-stats">
-        On List: <strong data-ng-bind="seatsFilled"></strong> |
-        Available: <strong data-ng-bind="seatsAvailable"></strong>
+        On List: <strong data-ng-bind="filteredStudents.totalStudentCount"></strong> |
+        Available: <strong data-ng-bind="filteredStudents.openSeatsCount"></strong> |
+        Shown: <strong data-ng-bind="filteredStudents.shownStudentCount"></strong>
       </span>
 
       <div class="visible-for-small-only cc-academics-class-enrollment-mobile-button-spacer"></div>
@@ -35,28 +36,28 @@
       </a>
 
       <a class="cc-button cc-class-enrollment-formatted-content-show-button"
-          data-ng-if="studentRole === 'waitlisted' && !isLaw"
+          data-ng-if="searchFilters.enrollStatus === 'waitlisted' && !isLaw"
           data-ng-disabled="displayedSection === 'promote' || noStudentsSelected()"
           data-ng-click="displaySection('promote')">
         <span class="hidden-for-small-only">Request to</span> Promote
       </a>
 
       <a class="cc-button cc-class-enrollment-formatted-content-show-button"
-          data-ng-if="studentRole === 'waitlisted' && !isLaw"
+          data-ng-if="searchFilters.enrollStatus === 'waitlisted' && !isLaw"
           data-ng-disabled="displayedSection === 'enroll' || noStudentsSelected()"
           data-ng-click="displaySection('enroll')">
         <span class="hidden-for-small-only">Request to</span> Enroll
       </a>
 
       <a class="cc-button cc-class-enrollment-formatted-content-show-button"
-          data-ng-if="studentRole === 'waitlisted' && !isLaw"
+          data-ng-if="searchFilters.enrollStatus === 'waitlisted' && !isLaw"
           data-ng-disabled="displayedSection === 'remove' || noStudentsSelected()"
           data-ng-click="displaySection('remove')">
         <span class="hidden-for-small-only">Request to</span> Remove
       </a>
 
       <a class="cc-button cc-class-enrollment-formatted-content-show-button"
-          data-ng-if="studentRole !== 'waitlisted' && !isLaw"
+          data-ng-if="searchFilters.enrollStatus !== 'waitlisted' && !isLaw"
           data-ng-disabled="displayedSection === 'drop' || noStudentsSelected()"
           data-ng-click="displaySection('drop')">
         <span class="hidden-for-small-only">Request to</span> Drop
@@ -128,19 +129,19 @@
             <th data-cc-sortable-column-directive="grade_option" data-column-heading="Grade" class="show-for-large-up"></th>
             <th data-cc-sortable-column-directive="student_id" data-column-heading="SID" class="show-for-large-up"></th>
           </thead>
-          <tbody data-ng-repeat="student in filteredStudents = (studentsInSection | orderBy:tableSort.column:tableSort.reverse)"
+          <tbody data-ng-repeat="student in sortedStudents = (filteredStudents.shownStudents | orderBy:tableSort.column:tableSort.reverse)"
                  data-ng-class-even="'cc-academics-even'"
                  data-ng-if="students.length">
             <tr class="cc-academics-class-enrollment-table-row">
               <td>
-                <input id="cc-academics-class-enrollment-{{studentRole}}-{{$index}}"
+                <input id="cc-academics-class-enrollment-{{searchFilters.enrollStatus}}-{{$index}}"
                   type="checkbox" name="student_id" data-ng-model="student.selected">
               </td>
               <td data-ng-if="showPosition">
                 <strong data-ng-bind="student.waitlist_position"></strong>
               </td>
               <td>
-                <label for="cc-academics-class-enrollment-{{studentRole}}-{{$index}}">
+                <label for="cc-academics-class-enrollment-{{searchFilters.enrollStatus}}-{{$index}}">
                   <span data-ng-bind="student.last_name"></span>,
                   <span data-ng-bind="student.first_name"></span>
                 </label>
@@ -165,10 +166,10 @@
         </div>
         <div data-ng-if="!errorStatus">
           <div class="cc-academics-class-enrollment-table-notice" data-ng-if="!students.length">
-            No students are currently <span data-ng-bind="studentRole"></span> in this class.
+            No students are currently <span data-ng-bind="searchFilters.enrollStatus"></span> in this class.
           </div>
-          <div class="cc-academics-class-enrollment-table-notice" data-ng-if="students.length && !filteredStudents.length">
-            No students are currently <span data-ng-bind="studentRole"></span> in this section.
+          <div class="cc-academics-class-enrollment-table-notice" data-ng-if="students.length && !sortedStudents.length">
+            No students are currently <span data-ng-bind="searchFilters.enrollStatus"></span> in this section.
           </div>
         </div>
       </div>

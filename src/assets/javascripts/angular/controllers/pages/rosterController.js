@@ -2,7 +2,6 @@
 'use strict';
 
 var angular = require('angular');
-var _ = require('lodash');
 
 /**
  * Canvas roster photos LTI app controller
@@ -13,31 +12,20 @@ angular.module('calcentral.controllers').controller('RosterController', function
   }
   $scope.accessibilityAnnounce = apiService.util.accessibilityAnnounce;
   $scope.bmailLink = rosterService.bmailLink;
+  $scope.currentRosterViewType = 'photos';
   $scope.searchOptions = {
     text: '',
     section: null,
-    type: 'all'
+    enrollStatus: 'all'
+  };
+  $scope.tableSort = {
+    'column': ['last_name', 'first_name'],
+    'reverse': false
   };
 
-  $scope.rosterTypeFilter = function(student) {
-    switch ($scope.searchOptions.type) {
-      case 'enrolled': {
-        return (!_.get(student, 'waitlist_position'));
-      }
-      case 'waitlist': {
-        return (_.get(student, 'waitlist_position'));
-      }
-      default: {
-        return true;
-      }
-    }
-  };
-
-  $scope.studentInSectionFilter = function(student) {
-    if (!$scope.searchOptions.section) {
-      return true;
-    }
-    return (student.section_ccns.indexOf($scope.searchOptions.section.ccn) !== -1);
+  $scope.sectionChangeActions = function(filterType) {
+    $scope.accessibilityAnnounce('Rosters filtered by ' + filterType);
+    refreshFilteredStudents();
   };
 
   var getRoster = function() {
@@ -49,10 +37,15 @@ angular.module('calcentral.controllers').controller('RosterController', function
       angular.extend($scope, data);
       $scope.course = $scope[$scope.context + '_course'];
       apiService.util.iframeUpdateHeight();
+      refreshFilteredStudents();
     }).error(function(data, status) {
       angular.extend($scope, data);
       $scope.errorStatus = status;
     });
+  };
+
+  var refreshFilteredStudents = function() {
+    $scope.filteredStudents = rosterService.getFilteredStudents($scope.students, $scope.sections, $scope.searchOptions, false);
   };
 
   getRoster();

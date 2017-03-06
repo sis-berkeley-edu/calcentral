@@ -7,6 +7,8 @@ describe Rosters::Campus do
   let(:student_user_id) {rand(99999).to_s}
   let(:ccn1) {rand(9999)}
   let(:ccn2) {rand(9999)}
+  let(:ccn3) {rand(9999)}
+  let(:ccn4) {rand(9999)}
   let(:enrolled_student_login_id) {rand(99999).to_s}
   let(:enrolled_student_student_id) {rand(99999).to_s}
   let(:waitlisted_student_login_id) {rand(99999).to_s}
@@ -17,54 +19,80 @@ describe Rosters::Campus do
   let(:campus_course_id) {"info-#{catid}-#{term_slug}"}
   let(:fake_campus) do
     {
-      "#{term_slug}" => [{
-        id: campus_course_id,
-        term_yr: term_yr,
-        term_cd: term_cd,
-        catid: catid,
-        dept: 'INFO',
-        course_code: "INFO #{catid}",
-        emitter: 'Campus',
-        name: 'Data Rules Everything Around Me',
-        role: 'Instructor',
-        sections: [{
-          ccn: ccn1,
-          section_label: 'LEC 001',
-          is_primary_section: true,
-          enroll_limit: 650,
-          waitlist_limit: 110,
-          schedules: {
-            recurring: [
-              {
-                buildingName: 'Soda',
-                roomNumber: '100',
-                schedule: 'TuTh 3:00P-3:59P'
-              },
-              {
-                buildingName: 'Soda',
-                roomNumber: '102',
-                schedule: 'Fr 11:00A-11:59A'
-              }
-            ]
-          }
-        },
+      "#{term_slug}" => [
         {
-          ccn: ccn2,
-          section_label: 'LAB 001',
-          is_primary_section: false,
-          enroll_limit: 2,
-          waitlist_limit: 1,
-          schedules: {
-            recurring: [
-              {
-                buildingName: 'Hertz',
-                roomNumber: '320',
-                schedule: 'MoFr 1:00P-1:59P'
+          id: campus_course_id,
+          term_yr: term_yr,
+          term_cd: term_cd,
+          catid: catid,
+          dept: 'INFO',
+          course_code: "INFO #{catid}",
+          emitter: 'Campus',
+          name: 'Data Rules Everything Around Me',
+          role: 'Instructor',
+          sections: [
+            {
+              ccn: ccn1,
+              section_label: 'LEC 001',
+              section_number: '001',
+              instruction_format: 'LEC',
+              is_primary_section: true,
+              enroll_limit: 650,
+              waitlist_limit: 110,
+              schedules: {
+                recurring: [
+                  {
+                    buildingName: 'Soda',
+                    roomNumber: '100',
+                    schedule: 'TuTh 3:00P-3:59P'
+                  },
+                  {
+                    buildingName: 'Soda',
+                    roomNumber: '102',
+                    schedule: 'Fr 11:00A-11:59A'
+                  }
+                ]
               }
-            ]
-          }
-        }]
-      }]
+            },
+            {
+              ccn: ccn2,
+              section_label: 'LAB 001',
+              section_number: '001',
+              instruction_format: 'LAB',
+              is_primary_section: false,
+              enroll_limit: 4,
+              waitlist_limit: 2,
+              schedules: {
+                recurring: [
+                  {
+                    buildingName: 'Hertz',
+                    roomNumber: '320',
+                    schedule: 'MoFr 1:00P-1:59P'
+                  }
+                ]
+              }
+            },
+            {
+              ccn: ccn3,
+              section_label: 'LAB 002',
+              section_number: '003',
+              instruction_format: 'LAB',
+              is_primary_section: false,
+              enroll_limit: 3,
+              waitlist_limit: 2,
+              schedules: {
+                recurring: [
+                  {
+                    buildingName: 'Hertz',
+                    roomNumber: '450',
+                    schedule: 'MoFr 1:00P-1:59P'
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ]
     }
   end
 
@@ -78,10 +106,12 @@ describe Rosters::Campus do
     end
 
     it 'should include section statistics' do
-      expect(feed[:sections].length).to eq 2
+      expect(feed[:sections].length).to eq 3
       expect(feed[:sections][0][:ccn]).to eq ccn1
       expect(feed[:sections][0][:name]).to eq "INFO #{catid} LEC 001"
       expect(feed[:sections][0][:section_label]).to eq "LEC 001"
+      expect(feed[:sections][0][:section_number]).to eq "001"
+      expect(feed[:sections][0][:instruction_format]).to eq "LEC"
       expect(feed[:sections][0][:dates]).to eq ['TuTh 3:00P-3:59P', 'Fr 11:00A-11:59A']
       expect(feed[:sections][0][:locations]).to eq ['100 Soda', '102 Soda']
       expect(feed[:sections][0][:is_primary]).to eq true
@@ -94,14 +124,16 @@ describe Rosters::Campus do
       expect(feed[:sections][1][:ccn]).to eq ccn2
       expect(feed[:sections][1][:name]).to eq "INFO #{catid} LAB 001"
       expect(feed[:sections][1][:section_label]).to eq "LAB 001"
+      expect(feed[:sections][1][:section_number]).to eq "001"
+      expect(feed[:sections][1][:instruction_format]).to eq "LAB"
       expect(feed[:sections][1][:dates]).to eq ['MoFr 1:00P-1:59P']
       expect(feed[:sections][1][:locations]).to eq ['320 Hertz']
       expect(feed[:sections][1][:is_primary]).to eq false
-      expect(feed[:sections][1][:enroll_limit]).to eq 2
-      expect(feed[:sections][1][:enroll_open]).to eq 0
+      expect(feed[:sections][1][:enroll_limit]).to eq 4
+      expect(feed[:sections][1][:enroll_open]).to eq 2
       expect(feed[:sections][1][:enroll_count]).to eq 2
-      expect(feed[:sections][1][:waitlist_limit]).to eq 1
-      expect(feed[:sections][1][:waitlist_open]).to eq 0
+      expect(feed[:sections][1][:waitlist_limit]).to eq 2
+      expect(feed[:sections][1][:waitlist_open]).to eq 1
       expect(feed[:sections][1][:waitlist_count]).to eq 1
     end
 
@@ -122,7 +154,7 @@ describe Rosters::Campus do
     end
 
     it 'should show official photo links for students who are not waitlisted in all sections' do
-      expect(feed[:sections].length).to eq 2
+      expect(feed[:sections].length).to eq 3
       expect(feed[:students].length).to eq 3
       expect(feed[:students].index {|student| student[:id] == waitlisted_student_login_id &&
         student[:photo].nil?
@@ -142,7 +174,7 @@ describe Rosters::Campus do
       let(:fake_oracle) { fake_campus }
       let(:fake_edo) { {} }
       before do
-        expect(CampusOracle::Queries).to receive(:get_enrolled_students_for_ccns).with([ccn1, ccn2], term_yr, term_cd).and_return(fake_enrollments)
+        expect(CampusOracle::Queries).to receive(:get_enrolled_students_for_ccns).with([ccn1, ccn2, ccn3], term_yr, term_cd).and_return(fake_enrollments)
       end
       let(:fake_enrollments) do
         [
@@ -214,7 +246,7 @@ describe Rosters::Campus do
 
       context 'when enrollments are present' do
         before do
-          expect(EdoOracle::Queries).to receive(:get_rosters).with([ccn1, ccn2], term_id).and_return enrollments
+          expect(EdoOracle::Queries).to receive(:get_rosters).with([ccn1, ccn2, ccn3], term_id).and_return enrollments
           # A method rather than a let so that modifications during a test don't persist.
           def attributes
             [

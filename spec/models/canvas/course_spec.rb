@@ -6,6 +6,10 @@ describe Canvas::Course do
 
   context 'when requesting course from canvas' do
     context 'if course exists in canvas' do
+      it 'returns a string representation of itself' do
+        expect(subject.to_s).to eq 'Canvas Course ID 1121'
+      end
+
       it 'returns course hash' do
         course = subject.course[:body]
         expect(course['id']).to eq 1121

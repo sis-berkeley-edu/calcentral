@@ -9,17 +9,48 @@
     <form class="cc-roster-search" data-ng-hide="errorStatus">
       <div class="cc-roster-search-row">
         <div>
-          <label for="roster-search" class="cc-visuallyhidden">Filter by Text</label>
-          <input id="roster-search" class="cc-roster-input cc-left bc-canvas-embedded-roster-input" placeholder="Search People"
-            data-ng-model="searchOptions.text.$" data-ng-change="accessibilityAnnounce('Rosters filtered by text')">
+          <div class="cc-left cc-roster-search-option">
+            <label for="roster-search" class="cc-visuallyhidden">Filter by Text</label>
+            <input id="roster-search" class="cc-roster-input bc-canvas-embedded-roster-input" placeholder="Search People"
+              data-ng-model="searchOptions.text"
+              data-ng-change="sectionChangeActions('text')">
+          </div>
 
-          <label for="section-select" class="cc-visuallyhidden">Filter by Section</label>
-          <select id="section-select" class="cc-inline-select bc-canvas-embedded-roster-select"
-            data-ng-options="section as section.name for section in sections track by section.ccn"
-            data-ng-model="searchOptions.section"
-            data-ng-change="accessibilityAnnounce('Rosters filtered by section')">
-            <option value="">All Sections</option>
-          </select>
+          <div class="cc-left cc-roster-search-option">
+            <label for="section-select" class="cc-visuallyhidden">Filter by Section</label>
+            <select id="section-select" class="cc-inline-select bc-canvas-embedded-roster-select"
+              data-ng-options="section as section.name for section in sections track by section.ccn"
+              data-ng-model="searchOptions.section"
+              data-ng-change="sectionChangeActions('section')">
+              <option value="">All Sections</option>
+            </select>
+          </div>
+
+          <div class="cc-roster-view-mode cc-left cc-roster-search-option">
+            <ul class="cc-button-group" role="tablist">
+              <li>
+                <a class="cc-button"
+                  aria-selected="{{currentRosterViewType === 'photos'}}"
+                  role="tab"
+                  data-ng-click="currentRosterViewType = 'photos'"
+                  data-ng-class="{'cc-button-selected cc-button-selected-roster':(currentRosterViewType === 'photos')}"
+                >
+                  <i class="fa fa-user"></i> Photos
+                </a>
+              </li>
+              <li>
+                <a class="cc-button"
+                  aria-selected="{{currentRosterViewType === 'list'}}"
+                  role="tab"
+                  data-ng-click="currentRosterViewType = 'list'"
+                  data-ng-class="{'cc-button-selected cc-button-selected-roster':(currentRosterViewType === 'list')}"
+                >
+                  <i class="fa fa-list"></i> List
+                </a>
+              </li>
+            </ul>
+          </div>
+
         </div>
         <div>
           <a class="cc-button cc-button-spaced" target="_self"
@@ -32,23 +63,23 @@
           </a>
         </div>
       </div>
-      <div class="cc-roster-search-type-filter cc-roster-search-row">
+      <div class="cc-roster-search-enroll-status cc-roster-search-row">
         <div class="cc-roster-search-horizontal-radio">
           <strong>Include:</strong>
-          <label for="searchOptionType">
-            <input type="radio" name="searchOptionType" value="all"
-              data-ng-model="searchOptions.type"
-              data-ng-change="accessibilityAnnounce('All roster types shown')">All
+          <label for="searchOptionEnrollStatus">
+            <input type="radio" name="searchOptionEnrollStatus" value="all"
+              data-ng-model="searchOptions.enrollStatus"
+              data-ng-change="sectionChangeActions('enrollment status')">All
           </label>
-          <label for="searchOptionType">
-            <input type="radio" name="searchOptionType" value="enrolled"
-              data-ng-model="searchOptions.type"
-              data-ng-change="accessibilityAnnounce('Only enrollments shown')">Enrolled Only
+          <label for="searchOptionEnrollStatus">
+            <input type="radio" name="searchOptionEnrollStatus" value="enrolled"
+              data-ng-model="searchOptions.enrollStatus"
+              data-ng-change="sectionChangeActions('enrollment status')">Enrolled Only
           </label>
-          <label for="searchOptionType">
-            <input type="radio" name="searchOptionType" value="waitlist"
-              data-ng-model="searchOptions.type"
-              data-ng-change="accessibilityAnnounce('Only waitlisted shown')">Waitlisted Only
+          <label for="searchOptionEnrollStatus">
+            <input type="radio" name="searchOptionEnrollStatus" value="waitlisted"
+              data-ng-model="searchOptions.enrollStatus"
+              data-ng-change="sectionChangeActions('enrollment status')">Waitlisted Only
           </label>
         </div>
       </div>
@@ -69,50 +100,126 @@
     <span data-ng-bind="course.name"></span> -
     <span data-ng-if="searchOptions.section.name" data-ng-bind="searchOptions.section.name"></span>
     <span data-ng-if="!searchOptions.section.name">All Sections</span>
-    <span data-ng-if="searchOptions.text.$" data-ng-bind-template=" - Matching '{{searchOptions.text.$}}'"></span>
+    <span data-ng-if="searchOptions.text" data-ng-bind-template=" - Matching '{{searchOptions.text}}'"></span>
   </h2>
 
-  <ul class="cc-page-roster-list">
-    <li data-ng-repeat="student in students | filter:searchOptions.text | filter:studentInSectionFilter | filter:rosterTypeFilter | orderBy:['last_name', 'first_name']">
-      <div data-ng-if="student.profile_url">
-        <a data-ng-href="{{student.profile_url}}" target="_top">
-          <div data-ng-include="'widgets/roster_photo.html'"></div>
-        </a>
-      </div>
-      <div data-ng-if="!student.profile_url">
-        <a data-ng-href="{{origin}}/{{context}}/{{courseId}}/profile/{{student.login_id}}" target="_top">
-          <div data-ng-include="'widgets/roster_photo.html'"></div>
-        </a>
-      </div>
-      <div data-ng-if="!student.email">
-        <div class="cc-page-roster-student-name" data-ng-bind="student.first_name"></div>
-        <div class="cc-page-roster-student-name">
-          <strong data-ng-bind="student.last_name"></strong>
-        </div>
-      </div>
-      <div data-ng-if="student.email">
-        <div class="cc-page-roster-student-name">
-          <a data-ng-href="{{bmailLink(student.email)}}">
-            <span data-ng-bind="student.first_name"></span>
+  <div data-ng-show="currentRosterViewType === 'photos'">
+    <ul class="cc-page-roster-photos-list">
+      <li data-ng-repeat="student in sortedStudents = (filteredStudents.shownStudents | orderBy:tableSort.column:tableSort.reverse)">
+        <div data-ng-if="student.profile_url">
+          <a data-ng-href="{{student.profile_url}}" target="_top">
+            <div data-ng-include="'widgets/roster_photo.html'"></div>
           </a>
         </div>
-        <div class="cc-page-roster-student-name">
-          <a data-ng-href="{{bmailLink(student.email)}}">
+        <div data-ng-if="!student.profile_url">
+          <a data-ng-href="{{origin}}/{{context}}/{{courseId}}/profile/{{student.login_id}}" target="_top">
+            <div data-ng-include="'widgets/roster_photo.html'"></div>
+          </a>
+        </div>
+        <div data-ng-if="!student.email">
+          <div class="cc-page-roster-student-name" data-ng-bind="student.first_name"></div>
+          <div class="cc-page-roster-student-name">
             <strong data-ng-bind="student.last_name"></strong>
-          </a>
+          </div>
+        </div>
+        <div data-ng-if="student.email">
+          <div class="cc-page-roster-student-name">
+            <a data-ng-href="{{bmailLink(student.email)}}">
+              <span data-ng-bind="student.first_name"></span>
+            </a>
+          </div>
+          <div class="cc-page-roster-student-name">
+            <a data-ng-href="{{bmailLink(student.email)}}">
+              <strong data-ng-bind="student.last_name"></strong>
+            </a>
+          </div>
+        </div>
+        <div class="cc-print-hide">
+          <span class="cc-visuallyhidden">Student ID: </span>
+          <span data-ng-bind="student.student_id"></span>
+        </div>
+        <div class="cc-page-roster-student-terms cc-print-hide"
+            data-ng-if="student.terms_in_attendance"
+            data-ng-bind-template="Terms: {{student.terms_in_attendance}}"></div>
+        <div class="cc-page-roster-student-majors cc-print-hide">
+          <span data-ng-bind="student.majors.join(', ') | limitTo:50"></span>
+        </div>
+      </li>
+    </ul>
+  </div>
+
+  <div data-ng-show="currentRosterViewType === 'list'">
+    <div class="cc-page-roster-table-list-description">
+      <strong>Primary Section:</strong>
+      On List: <strong data-ng-bind="filteredStudents.totalStudentCount"></strong> |
+      Available: <strong data-ng-bind="filteredStudents.openSeatsCount"></strong> |
+      Shown: <strong data-ng-bind="filteredStudents.shownStudentCount"></strong>
+    </div>
+    <div class="cc-page-roster-table-list-description">
+      <strong>Notes:</strong>
+      Use headers to sort columns. For email links, have bMail open in the same browser as CalCentral.
+      Only waitlisted students have "Pos" position numbers.
+    </div>
+    <div class="cc-table cc-academics-class-enrollment-table">
+      <table>
+        <thead class="cc-academics-class-enrollment-table-head">
+          <th data-cc-sortable-column-directive="waitlist_position" data-column-heading="Pos" data-ng-if="showPosition"></th>
+          <th data-cc-sortable-column-directive="last_name" data-column-heading="Name"></th>
+          <th data-cc-sortable-column-directive="email" data-column-heading="Email"></th>
+          <th data-cc-sortable-column-directive="majors" data-column-heading="Majors" class="show-for-medium-up"></th>
+          <th class="show-for-medium-up"
+            data-ng-repeat="column in columnHeaders"
+            data-cc-sortable-column-directive="{{column.instruction_format}}"
+            data-column-heading="{{column.instruction_format}}"></th>
+          <th data-cc-sortable-column-directive="terms_in_attendance" data-column-heading="Terms" class="show-for-large-up"></th>
+          <th data-cc-sortable-column-directive="student_id" data-column-heading="SID" class="show-for-large-up cc-print-hide"></th>
+          <th data-cc-sortable-column-directive="units" data-column-heading="Units" class="show-for-large-up"></th>
+          <th data-cc-sortable-column-directive="grade_option" data-column-heading="Grade" class="show-for-large-up"></th>
+        </thead>
+        <tbody
+          data-ng-repeat="student in sortedStudents = (filteredStudents.shownStudents | orderBy:tableSort.column:tableSort.reverse)"
+          data-ng-class-even="'cc-academics-even'"
+          data-ng-if="students.length"
+        >
+          <tr class="cc-academics-class-enrollment-table-row">
+            <td data-ng-if="showPosition">
+              <strong data-ng-bind="student.waitlist_position"></strong>
+            </td>
+            <td>
+              <label for="cc-academics-class-enrollment-{{studentRole}}-{{$index}}">
+                <span data-ng-bind="student.last_name"></span>,
+                <span data-ng-bind="student.first_name"></span>
+              </label>
+            </td>
+            <td>
+              <a data-ng-if="student.email" data-ng-bind="student.email" data-ng-href="{{bmailLink(student.email)}}"></a>
+            </td>
+            <td class="show-for-medium-up">
+              <span data-ng-repeat="major in student.majors">
+                <span data-ng-bind="major"></span><br>
+              </span>
+            </td>
+            <td data-ng-bind="column.section_number" data-ng-repeat="column in student.columns" class="show-for-medium-up"></td>
+            <td data-ng-bind="student.terms_in_attendance" class="show-for-large-up"></td>
+            <td data-ng-bind="student.student_id" class="show-for-large-up cc-print-hide"></td>
+            <td data-ng-bind="student.units" class="show-for-large-up"></td>
+            <td data-ng-bind="student.grade_option" class="show-for-large-up"></td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="cc-academics-class-enrollment-table-notice" data-ng-if="errorStatus">
+        There was an error retrieving roster data.
+      </div>
+      <div data-ng-if="!errorStatus">
+        <div class="cc-academics-class-enrollment-table-notice" data-ng-if="!students.length">
+          No students are currently enrolled or waitlisted in this class.
+        </div>
+        <div class="cc-academics-class-enrollment-table-notice" data-ng-if="students.length && !sortedStudents.length">
+          No students found matching the above search criteria.
         </div>
       </div>
-      <div class="cc-print-hide">
-        <span class="cc-visuallyhidden">Student ID: </span>
-        <span data-ng-bind="student.student_id"></span>
-      </div>
-      <div class="cc-page-roster-student-terms cc-print-hide"
-          data-ng-if="student.terms_in_attendance"
-          data-ng-bind-template="Terms: {{student.terms_in_attendance}}"></div>
-      <div class="cc-page-roster-student-majors cc-print-hide">
-        <span data-ng-bind="student.majors.join(', ') | limitTo:50"></span>
-      </div>
-    </li>
-  </ul>
+    </div>
+
+  </div>
 
 </div>

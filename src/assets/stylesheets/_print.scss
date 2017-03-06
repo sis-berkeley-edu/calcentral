@@ -19,6 +19,11 @@
       content: " (" attr(href) ")";
     }
   }
+  .cc-heading-page-title {
+    a[href]::after {
+      content: none;
+    }
+  }
   abbr[title]::after {
     content: " (" attr(title) ")";
   }

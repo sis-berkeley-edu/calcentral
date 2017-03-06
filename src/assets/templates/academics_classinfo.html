@@ -10,7 +10,7 @@
       <a data-ng-href="/academics/semester/{{selectedSemester.slug}}"><span data-ng-bind="selectedSemester.name"></span></a> &raquo;
       <span data-ng-bind="selectedCourse.course_code"></span>
       <span data-ng-if="selectedSection" data-ng-bind-template=" &raquo; {{selectedSection.section_label}}"></span>
-      <div class="cc-academics-teaching-button-group" data-ng-if="isInstructorOrGsi">
+      <div class="cc-academics-teaching-button-group cc-print-hide" data-ng-if="isInstructorOrGsi">
         <ul class="cc-button-group cc-even-{{classInfoCategories.length}}" role="tablist">
           <li data-ng-repeat="classInfoCategory in classInfoCategories">
             <a class="cc-button cc-academics-class-info-category-button"
@@ -299,6 +299,7 @@
          data-cc-academics-class-info-enrollment-directive
          data-class-department="selectedCourse.dept"
          data-class-name="selectedCourse.course_code"
+         data-enrollment-status="waitlisted"
          data-instructor-name="api.user.profile.preferredName"
          data-semester-name="selectedSemester.name"
          data-show-position="true"
@@ -309,6 +310,7 @@
          data-cc-academics-class-info-enrollment-directive
          data-class-department="selectedCourse.dept"
          data-class-name="selectedCourse.course_code"
+         data-enrollment-status="enrolled"
          data-instructor-name="api.user.profile.preferredName"
          data-semester-name="selectedSemester.name"
          data-show-position="false"
@@ -322,7 +324,7 @@
       <div class="cc-widget-title">
         <h2>Roster</h2>
       </div>
-      <div data-ng-include src="'canvas_embedded/roster.html'"></div>
+      <div data-ng-include src="'widgets/roster.html'"></div>
     </div>
   </div>
 
