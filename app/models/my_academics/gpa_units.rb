@@ -36,9 +36,12 @@ module MyAcademics
           result = result.merge(totalUnitsForGpa)
           unit_sum += result[:totalUnitsForGpa]
         end
-        if (totalUnitsNotForGpa = parse_hub_total_units_not_for_gpa status) && totalUnitsNotForGpa.present?
-          result[:totalUnitsNotForGpa] = totalUnitsNotForGpa
-          unit_sum += result[:totalUnitsNotForGpa]
+        if (totalUnitsTakenNotForGpa = parse_hub_total_units_taken_not_for_gpa status) && totalUnitsTakenNotForGpa.present?
+          result[:totalUnitsTakenNotForGpa] = totalUnitsTakenNotForGpa
+        end
+        if (totalUnitsPassedNotForGpa = parse_hub_total_units_passed_not_for_gpa status) && totalUnitsPassedNotForGpa.present?
+          result[:totalUnitsPassedNotForGpa] = totalUnitsPassedNotForGpa
+          unit_sum += result[:totalUnitsPassedNotForGpa]
         end
         if (unit_total != unit_sum)
           logger.warn("Hub unit conflict for UID #{@uid}: Total units (#{unit_total}) does not match summed units (#{unit_sum}).")
@@ -73,7 +76,13 @@ module MyAcademics
       end
     end
 
-    def parse_hub_total_units_not_for_gpa(status)
+    def parse_hub_total_units_taken_not_for_gpa(status)
+      if (units = status['cumulativeUnits']) && (total_units = units.find { |u| u['type'] && u['type']['code'] == 'Not For GPA'})
+        total_units['unitsTaken'].to_f
+      end
+    end
+
+    def parse_hub_total_units_passed_not_for_gpa(status)
       if (units = status['cumulativeUnits']) && (total_units = units.find { |u| u['type'] && u['type']['code'] == 'Not For GPA'})
         total_units['unitsPassed'].to_f
       end

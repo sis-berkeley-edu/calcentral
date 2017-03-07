@@ -1,0 +1,41 @@
+.cc-academic-summary {
+  .cc-academic-summary-border-bottom {
+    td,th {
+      border-bottom: 1px solid $cc-color-popover-border;
+      margin-top: 5px;
+      padding-top: 5px;
+    }
+  }
+  .cc-academic-summary-margin-bottom {
+    margin-bottom: 15px;
+  }
+  .cc-academic-summary-row-header {
+    color: $cc-color-light-medium-grey;
+  }
+  .cc-academic-summary-row-title {
+    width: 20%;
+    h4 {
+      color: $cc-color-light-medium-grey;
+      font-size: 14px;
+      margin: 0;
+      padding: 2px 2px 2px 0;
+    }
+  }
+  .cc-academic-summary-subheader {
+    h3 {
+      margin: 15px 15px 10px;
+    }
+  }
+  .cc-academic-summary-sub-plan {
+    margin-left: 10px;
+  }
+  .cc-table {
+    margin: 0 15px;
+    td {
+      padding-top: 0;
+    }
+    td,th {
+      vertical-align: bottom;
+    }
+  }
+}
