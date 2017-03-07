@@ -5,33 +5,55 @@
   <div class="cc-widget-padding">
     <div data-ng-if="degreeProgress.graduate.errored">There was an error retrieving graduate degree progress data.</div>
     <div data-ng-if="!degreeProgress.graduate.progresses.length">It appears that you haven’t completed any Graduate Division Milestones. If you believe this to be in error, please contact your department.</div>
-    <ul data-ng-if="!degreeProgress.graduate.errored && degreeProgress.graduate.progresses.length" class="cc-list-links">
-      <li data-ng-if="degreeProgress.graduate.links.advancementFormSubmit.url">
-        <a data-cc-campus-solutions-link-directive="degreeProgress.graduate.links.advancementFormSubmit"
-          data-cc-campus-solutions-link-directive-cc-page-name="currentPage.name"
-          data-cc-campus-solutions-link-directive-cc-page-url="currentPage.url"
-        ></a>
-      </li>
-      <li data-ng-if="degreeProgress.graduate.links.advancementFormView.url">
-        <a data-cc-campus-solutions-link-directive="degreeProgress.graduate.links.advancementFormView"
-          data-cc-campus-solutions-link-directive-cc-page-name="currentPage.name"
-          data-cc-campus-solutions-link-directive-cc-page-url="currentPage.url"
-        ></a>
-      </li>
-    </ul>
-    <ul>
-      <li data-ng-repeat="plan in degreeProgress.graduate.progresses">
-        <h3 data-ng-bind="plan.acadPlan ? plan.acadPlan + ' &mdash; Graduate Division Milestones' : 'Graduate Division Milestones'"></h3>
-        <div data-ng-repeat="requirement in plan.requirements | orderBy:'orderNumber'">
-          <div class="cc-left cc-degree-progress-graduate-checkmark">
-            <i class="fa fa-check cc-icon-green" data-ng-if="requirement.status === 'Y' || requirement.status === 'P'"></i>&nbsp;
-          </div>
-          <div>
-            <h4 data-ng-bind="requirement.name"></h4>
-            <span data-ng-bind="requirement.statusDescr"></span>&nbsp;<span data-ng-bind="requirement.dateFormatted.dateString"></span>&nbsp;<span data-ng-bind="requirement.formNotification"></span>
-          </div>
-        </div>
-      </li>
-    </ul>
+
+    <div data-ng-if="!degreeProgress.graduate.errored && degreeProgress.graduate.progresses.length">
+      <div>
+        <ul>
+          <li data-ng-repeat="plan in degreeProgress.graduate.progresses">
+            <h3 data-ng-bind="plan.acadPlan ? plan.acadPlan + ' &mdash; Graduate Division Milestones' : 'Graduate Division Milestones'"></h3>
+            <div data-ng-repeat="requirement in plan.requirements | orderBy:'orderNumber'">
+              <div class="cc-left cc-degree-progress-graduate-checkmark">
+                <i class="fa fa-check cc-icon-green" data-ng-if="requirement.status === 'Y' || requirement.status === 'P'"></i>&nbsp;
+              </div>
+              <div>
+                <h4 data-ng-bind="requirement.name"></h4>
+                <span data-ng-bind="requirement.statusDescr"></span>&nbsp;<span data-ng-bind="requirement.dateFormatted.dateString"></span>&nbsp;<span data-ng-bind="requirement.formNotification"></span>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+
+      <div class="cc-degree-progress-graduate-links-section" data-ng-if="degreeProgress.graduate.links">
+        <h3>Degree Actions</h3>
+        <ul class="cc-list-links">
+          <li data-ng-if="degreeProgress.graduate.links.applyForAdvancementToCandidacy.url">
+            <a data-cc-campus-solutions-link-directive="degreeProgress.graduate.links.applyForAdvancementToCandidacy"
+              data-cc-campus-solutions-link-directive-cc-page-name="currentPage.name"
+              data-cc-campus-solutions-link-directive-cc-page-url="currentPage.url"
+            ></a>
+          </li>
+          <li data-ng-if="degreeProgress.graduate.links.applyDoctorsQualifyingExam.url">
+            <a data-cc-campus-solutions-link-directive="degreeProgress.graduate.links.applyDoctorsQualifyingExam"
+              data-cc-campus-solutions-link-directive-cc-page-name="currentPage.name"
+              data-cc-campus-solutions-link-directive-cc-page-url="currentPage.url"
+            ></a>
+          </li>
+          <li data-ng-if="degreeProgress.graduate.links.submitDoctoralDegreeCandidacyReview.url">
+            <a data-cc-campus-solutions-link-directive="degreeProgress.graduate.links.submitDoctoralDegreeCandidacyReview"
+              data-cc-campus-solutions-link-directive-cc-page-name="currentPage.name"
+              data-cc-campus-solutions-link-directive-cc-page-url="currentPage.url"
+            ></a>
+          </li>
+          <li data-ng-if="degreeProgress.graduate.links.viewSubmittedForms.url">
+            <a data-cc-campus-solutions-link-directive="degreeProgress.graduate.links.viewSubmittedForms"
+              data-cc-campus-solutions-link-directive-cc-page-name="currentPage.name"
+              data-cc-campus-solutions-link-directive-cc-page-url="currentPage.url"
+            ></a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
   </div>
 </div>
