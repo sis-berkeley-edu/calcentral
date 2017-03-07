@@ -59,6 +59,10 @@ $bc-base-font-family: 'Lato', 'Helvetica Neue', Helvetica, Arial, sans-serif;
   p {
     font-weight: 300;
   }
+
+  .cc-page-roster .cc-roster-search .cc-inline-select {
+    height: auto;
+  }
 }
 
 // Canvas-specific overrides
@@ -104,7 +108,7 @@ button.bc-button-link {
 // Form Elements
 // https://ucberkeley.instructure.com/styleguide#forms
 .bc-form-input-text,
-.bc-canvas-embedded .bc-canvas-embedded-roster-input {
+.bc-canvas-application .bc-canvas-embedded-roster-input {
   font-family: $bc-base-font-family;
   font-size: 14px;
   font-weight: normal;
@@ -116,8 +120,8 @@ button.bc-button-link {
 }
 
 .bc-form-input-select,
-.bc-canvas-embedded .bc-canvas-embedded-roster-select,
-.bc-canvas-embedded .bc-canvas-embedded-form-select {
+.bc-canvas-application .bc-canvas-embedded-roster-select,
+.bc-canvas-application .bc-canvas-embedded-form-select {
   -moz-appearance: none;
   -webkit-appearance: none;
   background: url('../images/canvas/select-menu-arrow-down.svg') no-repeat calc(100% - 8px) 50% $cc-color-white;
@@ -151,7 +155,7 @@ button.bc-button-link {
   text-align: right;
 }
 
-.bc-main .bc-canvas-embedded .bc-canvas-embedded-buttonset,
+.bc-main .bc-canvas-application .bc-canvas-embedded-buttonset,
 .bc-buttonset {
   margin: 10px 0;
 
