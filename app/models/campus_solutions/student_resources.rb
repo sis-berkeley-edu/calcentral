@@ -25,7 +25,8 @@ module CampusSolutions
         { feed_key: :update_pending_forms, cs_link_key: 'UC_CX_GT_STUDENT_UPDATE' },
         { feed_key: :veterans_benefits_add, cs_link_key: 'UC_CX_GT_SRVAONCE_ADD' },
         { feed_key: :view_submitted_forms, cs_link_key: 'UC_CX_GT_STUDENT_VIEW'},
-        { feed_key: :withdraw_from_semester_add, cs_link_key: 'UC_CX_SRWITHDRL_ADD' }
+        { feed_key: :withdraw_from_semester_add, cs_link_key: 'UC_CX_SRWITHDRL_ADD' },
+        { feed_key: :request_late_class_changes, cs_link_key: 'UC_CX_GT_GRADEOPT_ADD' },
       ]
 
       campus_solutions_link_settings.each do |setting|
