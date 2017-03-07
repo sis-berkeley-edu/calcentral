@@ -3,20 +3,46 @@
 var angular = require('angular');
 var _ = require('lodash');
 
-angular.module('calcentral.controllers').controller('AcademicSummaryController', function(academicsFactory, academicsService, apiService, profileFactory, userService, $route, $scope) {
+angular.module('calcentral.controllers').controller('AcademicSummaryController', function(academicsFactory, academicsService, apiService, linkService, profileFactory, userService, $route, $scope) {
   apiService.util.setTitle('Academic Summary');
+  linkService.addCurrentRouteSettings($scope);
   $scope.isAcademicSummary = $route.current.isAcademicSummary;
   $scope.academicSummary = {
     isLoading: true
   };
   $scope.expectedGradTerm = academicsService.expectedGradTerm;
 
-  var parseAcademics = function(data) {
-    angular.extend($scope, _.get(data, 'data'));
+  var showTransferCredit = function() {
+    return !!(_.get($scope, 'transferCredit.ucTransferCrseSch.unitsTotal') || _.get('transferCredit.ucTestComponent.totalTestUnits'));
+  };
+
+  var showTransferCreditPoints = function(creditItems) {
+    // If one transfer credit institution includes a 'ucbGradePoints' value, show the Points column.  Otherwise, hide it.
+    return !!_.find(creditItems, function(credit) {
+      return (_.get(credit, 'ucbGradePoints') > 0);
+    });
+  };
+
+  var parseGpaUnits = function() {
     // Testing units are lumped in with Transfer Units on the academic summary
     if ($scope.gpaUnits && !$scope.gpaUnits.errored) {
       _.set($scope.gpaUnits, 'testingAndTransferUnits', $scope.gpaUnits.testingUnits + $scope.gpaUnits.transferUnitsAccepted);
     }
+  };
+
+  var parseTransferCredit = function() {
+    $scope.showTransferCredit = showTransferCredit();
+    if (!showTransferCredit) {
+      return;
+    } else {
+      $scope.showPointsColumn = showTransferCreditPoints(_.get($scope, 'transferCredit.ucTransferCrseSch.items'));
+    }
+  };
+
+  var parseAcademics = function(data) {
+    angular.extend($scope, _.get(data, 'data'));
+    parseGpaUnits();
+    parseTransferCredit();
   };
 
   var parsePerson = function(data) {

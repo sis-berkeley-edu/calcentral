@@ -2,5 +2,14 @@
   <div class="cc-widget-title">
     <h2>Academic Summary</h2>
   </div>
-  <div class="cc-academic-summary-margin-bottom" data-ng-include="'widgets/academic_summary/academic_summary_student_profile.html'"></div>
+  <div data-cc-spinner-directive="academicSummary.isLoading">
+    <div class="cc-academic-summary-subheader">
+      <h3>Student Profile</h3>
+    </div>
+    <div class="cc-academic-summary-margin-bottom" data-ng-include="'widgets/academic_summary/academic_summary_student_profile.html'"></div>
+    <div class="cc-academic-summary-subheader">
+      <h3>Enrollment</h3>
+    </div>
+    <div data-ng-if="showTransferCredit" data-ng-include="'widgets/academic_summary/academic_summary_transfer_credit.html'"></div>
+  </div>
 </div>
