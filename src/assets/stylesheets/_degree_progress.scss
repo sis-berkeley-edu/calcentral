@@ -1,9 +1,18 @@
 .cc-degree-progress-card {
-  ul li >div {
-    margin: 0 20px;
+  ul {
+    li > div {
+      margin: 0 20px;
 
-    h4 {
-      margin-bottom: 0;
+      h4 {
+        margin-bottom: 0;
+      }
+    }
+    &.cc-milestone-attempts {
+      color: $cc-color-lighter-medium-grey;
+
+      :first-child {
+        color: $body-font-color;
+      }
     }
   }
   .cc-degree-progress-graduate-checkmark {

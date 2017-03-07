@@ -15,9 +15,9 @@ module DegreeProgress
       if response[:errored] || response[:noStudentId]
         response[:feed] = {}
       else
-        response[:feed] = HashConverter.camelize({
-          degree_progress: process(response),
-        })
+        response[:feed] = {
+          degreeProgress: process(response),
+        }
       end
       response
     end
