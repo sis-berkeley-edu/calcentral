@@ -1,7 +1,7 @@
 module DegreeProgress
-  class UndergradRequirements < UserSpecificModel
-    # This model provides an advisor-specific version of milestone data for UGRD career.
-
+  class MyUndergradRequirements < UserSpecificModel
+    # This model provides an student-specific version of milestone data for UGRD career.
+    # TODO Could be replaced by adding FilterJsonOutput to a shared cached feed.
     include Cache::CachedFeed
     include Cache::JsonifiedFeed
     include Cache::UserCacheExpiry
@@ -23,7 +23,7 @@ module DegreeProgress
     private
 
     def is_feature_enabled?
-      Settings.features.cs_degree_progress_ugrd_advising
+      Settings.features.cs_degree_progress_ugrd_student
     end
   end
 end

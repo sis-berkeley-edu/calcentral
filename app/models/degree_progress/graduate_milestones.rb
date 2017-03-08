@@ -6,11 +6,10 @@ module DegreeProgress
     include Cache::CachedFeed
     include Cache::JsonifiedFeed
     include Cache::UserCacheExpiry
-    include CampusSolutions::DegreeProgressGradAdvisingFeatureFlagged
     include MilestonesModule
 
     def get_feed_internal
-      return {} unless is_feature_enabled
+      return {} unless is_feature_enabled?
       response = CampusSolutions::DegreeProgress::GraduateMilestones.new(user_id: @uid).get
       if response[:errored] || response[:noStudentId]
         response[:feed] = {}
@@ -20,6 +19,12 @@ module DegreeProgress
         })
       end
       response
+    end
+
+    private
+
+    def is_feature_enabled?
+      Settings.features.cs_degree_progress_grad_advising
     end
   end
 end

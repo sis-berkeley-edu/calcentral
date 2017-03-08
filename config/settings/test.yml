@@ -132,6 +132,7 @@ features:
   cs_degree_progress_grad_advising: true
   cs_degree_progress_grad_student: true
   cs_degree_progress_ugrd_advising: true
+  cs_degree_progress_ugrd_student: true
   cs_delegated_access: true
   cs_enrollment_card: true
   cs_fin_aid: true

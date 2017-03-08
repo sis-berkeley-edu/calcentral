@@ -3,14 +3,20 @@
 var angular = require('angular');
 
 angular.module('calcentral.factories').factory('degreeProgressFactory', function(apiService) {
+  var undergraduateRequirementsUrl = '/api/academics/degree_progress/ugrd';
+  // var undergraduateRequirementsUrl = '/dummy/json/degree_progress_ugrd_all_complete.json';
+  var graduateMilestonesUrl = '/api/academics/degree_progress/grad';
 
-  var url = '/api/campus_solutions/degree_progress';
+  var getUndergraduateRequirements = function(options) {
+    return apiService.http.request(options, undergraduateRequirementsUrl);
+  };
 
-  var getDegreeProgress = function(options) {
-    return apiService.http.request(options, url);
+  var getGraduateMilestones = function(options) {
+    return apiService.http.request(options, graduateMilestonesUrl);
   };
 
   return {
-    getDegreeProgress: getDegreeProgress
+    getGraduateMilestones: getGraduateMilestones,
+    getUndergraduateRequirements: getUndergraduateRequirements
   };
 });

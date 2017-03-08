@@ -54,8 +54,6 @@ end
 
 shared_examples 'a proxy that returns undergraduate milestone data' do
 
-  it_behaves_like 'a proxy that properly observes the undergrad degree progress for student feature flag'
-
   it 'returns data with the expected structure' do
     data = subject[:feed][:degreeProgress]
     expect(data).to be
