@@ -6,9 +6,6 @@ settings = ServerConfig.get_settings(Dir.home + "/.calcentral_config/server_conf
 
 set :application, "Calcentral"
 
-role(:sandbox_dev_host) {
-  settings.sandbox.servers << { :branch => settings.sandbox.branch, :project_root => settings.sandbox.root }
-}
 role(:calcentral_dev_host) { settings.dev.servers }
 set :user, settings.common.user
 set :branch, settings.common.branch
@@ -46,22 +43,6 @@ namespace :calcentral_dev do
           sleep 120
         end
       end
-    end
-  end
-end
-
-# Sandbox_dev is the sandbox testing server that we have setup in 117. It sits on a old macbook
-# and runs headless, used primarily for demos and other testing/experimental purposes.
-namespace :sandbox_dev_host do
-  desc "Update and restart the sandbox_dev machine"
-  task :update, :roles => :sandbox_dev_host do
-    rake = fetch(:rake, 'bundle exec rake')
-    rails_env = fetch(:rails_env, 'production')
-    find_servers_for_task(current_task).each do |server|
-      run "cd #{server.options[:project_root].concat('/script')}; ./stop-torquebox.sh", :hosts => server
-      run "cd #{server.options[:project_root].concat('/script')}; ./update-build.sh", :hosts => server
-      run "cd #{server.options[:project_root].concat('/script')}; ./migrate.sh", :hosts => server
-      run "cd #{server.options[:project_root].concat('/script')}; ./start-torquebox.sh", :hosts => server
     end
   end
 end
