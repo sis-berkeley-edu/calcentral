@@ -6,6 +6,14 @@
       padding-top: 5px;
     }
   }
+  .cc-academic-summary-border-wrapper {
+    border: 1px solid $cc-color-list-border;
+    margin: 15px;
+  }
+  .cc-academic-summary-enrollment-header {
+    display: inline-block;
+    margin: 15px;
+  }
   .cc-academic-summary-margin-bottom {
     margin-bottom: 15px;
   }
@@ -29,8 +37,11 @@
   .cc-academic-summary-sub-plan {
     margin-left: 10px;
   }
-  .cc-table {
+  .cc-academic-summary-table {
     margin: 0 15px;
+    .cc-academic-summary-table-spacing {
+      padding: 0;
+    }
     td {
       padding-top: 0;
     }
