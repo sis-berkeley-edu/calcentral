@@ -58,6 +58,13 @@
           <STATUS>N</STATUS>
           <CODE>AAGADVMAS2</CODE>
         </REQUIREMENT>
+        <REQUIREMENT>
+          <NAME>Department Final Recommendations</NAME>
+          <DATE_COMPLETED></DATE_COMPLETED>
+          <DATE_ANTICIPATED></DATE_ANTICIPATED>
+          <STATUS>N</STATUS>
+          <CODE>AAGFINALCK</CODE>
+        </REQUIREMENT>
       </REQUIREMENTS>
     </PROGRESS>
     <PROGRESS>

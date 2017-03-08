@@ -22,31 +22,19 @@ module Berkeley
       milestones.try(:[], milestone_code.strip.upcase).try(:[], :order) unless milestone_code.blank?
     end
 
-    def self.get_merged_description
-      'Advancement to Candidacy Plan I or Plan II'
-    end
-
     def self.get_form_notification(milestone_code, status_code)
       form_notifications.try(:[], milestone_code.strip.upcase) unless (status_code === 'Y' || milestone_code.blank?)
-    end
-
-    def self.get_merged_form_notification
-      '(Plan 1 Requires a Form)'
     end
 
     def self.milestones
       @milestones ||= {
         'AAGADVMAS1' => {
-          :milestone => 'Advancement to Candidacy Plan I',
+          :milestone => 'Advancement to Candidacy (Thesis Plan)',
           :order => 2
         },
         'AAGADVMAS2' => {
-          :milestone => 'Advancement to Candidacy Plan II',
+          :milestone => 'Advancement to Candidacy (Capstone Plan)',
           :order => 3
-        },
-        'AAGFINALCK' => {
-          :milestone => 'Department Final Recommendations',
-          :order => 4
         },
         'AAGACADP1' => {
           :milestone => 'Thesis File Date',

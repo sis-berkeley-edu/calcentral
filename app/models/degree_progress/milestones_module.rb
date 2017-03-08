@@ -19,17 +19,11 @@ module DegreeProgress
           end
 
           result.push(progress).last.tap do |prog|
-            massage_requirements prog
+            prog[:requirements] = normalize(prog.fetch(:requirements))
           end
         end
       end
       result
-    end
-
-    def massage_requirements(progress)
-      requirements = normalize(progress.fetch(:requirements))
-      merged_requirements = merge(requirements)
-      progress[:requirements] = merged_requirements
     end
 
     def should_exclude(progress)
@@ -56,42 +50,6 @@ module DegreeProgress
       end.compact
       set_proposed_exam_date(normalized_requirements)
       normalized_requirements
-    end
-
-    def merge(requirements)
-      merge_candidates = []
-      result = []
-
-      requirements.each do |requirement|
-        if is_merge_candidate requirement
-          merge_candidates.push requirement
-        else
-          result.push requirement
-        end
-      end
-
-      if merge_candidates.length > 1
-        first = find_first merge_candidates
-        first[:name] = Berkeley::GraduateMilestones.get_merged_description
-        first[:formNotification] = Berkeley::GraduateMilestones.get_merged_form_notification
-        result.unshift(first)
-      elsif merge_candidates.length === 1
-        result.unshift(merge_candidates.first)
-      end
-      result
-    end
-
-    def is_merge_candidate(requirement)
-      is_advancement_to_candidacy = %w(AAGADVMAS1 AAGADVMAS2).include? requirement[:code]
-      is_incomplete = requirement[:dateCompleted].blank?
-
-      is_incomplete && is_advancement_to_candidacy
-    end
-
-    def find_first(requirements)
-      requirements.min do |first, second|
-        first[:number] <=> second[:number]
-      end
     end
 
     def parse_date(date)

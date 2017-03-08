@@ -34,7 +34,7 @@ describe Berkeley::GraduateMilestones do
     end
     context 'when milestone_code exists in @statuses' do
       let(:milestone_code) {'AAGADVMAS1'}
-      it {should eq 'Advancement to Candidacy Plan I'}
+      it {should eq 'Advancement to Candidacy (Thesis Plan)'}
     end
     context 'when milestone_code exists in @statuses but is lowercase' do
       let(:milestone_code) {'aagdissert'}
