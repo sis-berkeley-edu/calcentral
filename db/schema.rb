@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170228210646) do
+ActiveRecord::Schema.define(version: 20170307233607) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -158,6 +158,7 @@ ActiveRecord::Schema.define(version: 20170228210646) do
     t.boolean  "display",          default: false, null: false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "splash",           default: false, null: false
   end
 
   add_index "service_alerts", ["display", "created_at"], name: "index_service_alerts_on_display_and_created_at", using: :btree

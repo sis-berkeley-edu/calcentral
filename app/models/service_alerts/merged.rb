@@ -5,7 +5,11 @@ module ServiceAlerts
 
     def get_feed_internal
       feed = {}
-      feed[:releaseNote] = EtsBlog::ReleaseNotes.new.get_latest
+      feed[:releaseNote] = if (latest_splash = ServiceAlerts::Alert.get_latest_splash)
+        latest_splash.to_feed
+      else
+        EtsBlog::ReleaseNotes.new.get_latest
+      end
       if (latest_alert = ServiceAlerts::Alert.get_latest)
         feed[:alert] = latest_alert.to_feed
       end
