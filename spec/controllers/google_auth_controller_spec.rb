@@ -139,7 +139,7 @@ describe GoogleAuthController do
   describe '#current_scope' do
     let(:access_granted) { true }
     before do
-      expect(GoogleApps::Proxy).to receive(:access_granted?).with(user_id).and_return access_granted
+      expect(GoogleApps::Proxy).to receive(:access_granted?).with(user_id, GoogleApps::Proxy::APP_ID).and_return access_granted
     end
     subject {
       post :current_scope, { format: 'json' }
@@ -151,7 +151,7 @@ describe GoogleAuthController do
     context 'access granted' do
       let(:current_scope) { [ random_string(5), random_string(5) ] }
       before do
-        expect(GoogleApps::Userinfo).to receive(:new).with(user_id: user_id).and_return (user_info = double)
+        expect(GoogleApps::Userinfo).to receive(:new).with(user_id: user_id, app_id: GoogleApps::Proxy::APP_ID).and_return (user_info = double)
         expect(user_info).to receive(:current_scope).and_return current_scope
       end
 
