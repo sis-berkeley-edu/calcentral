@@ -69,7 +69,7 @@
         <REQUIREMENT>
           <NAME>Approval for Qualifying Exam</NAME>
           <DATE_COMPLETED>2016-12-22</DATE_COMPLETED>
-          <DATE_ANTICIPATED></DATE_ANTICIPATED>
+          <DATE_ANTICIPATED>2016-12-21</DATE_ANTICIPATED>
           <STATUS>Y</STATUS>
           <CODE>AAGQEAPRV</CODE>
         </REQUIREMENT>
@@ -103,6 +103,33 @@
           <DATE_ANTICIPATED></DATE_ANTICIPATED>
           <STATUS>N</STATUS>
           <CODE>AAGDISSERT</CODE>
+        </REQUIREMENT>
+      </REQUIREMENTS>
+    </PROGRESS>
+    <PROGRESS>
+      <CAREER>GRAD</CAREER>
+      <ACAD_PLAN>Physics PhD</ACAD_PLAN>
+      <ACAD_PROG_CODE>GACAD</ACAD_PROG_CODE>
+      <ACAD_PROG>Graduate Academic Programs</ACAD_PROG>
+      <REQUIREMENTS type="array">
+        <REQUIREMENT>
+          <NAME>Approval for Qualifying Exam</NAME>
+          <DATE_COMPLETED>2016-12-22</DATE_COMPLETED>
+          <DATE_ANTICIPATED>2016-12-21</DATE_ANTICIPATED>
+          <STATUS>Y</STATUS>
+          <CODE>AAGQEAPRV</CODE>
+        </REQUIREMENT>
+        <REQUIREMENT>
+          <NAME>Qualifying Exam Results</NAME>
+          <DATE_ANTICIPATED></DATE_ANTICIPATED>
+          <CODE>AAGQERESLT</CODE>
+          <ATTEMPTS type="array">
+            <ATTEMPT>
+              <ATTEMPT_NBR>1</ATTEMPT_NBR>
+              <ATTEMPT_DATE>2016-10-01</ATTEMPT_DATE>
+              <ATTEMPT_STATUS>F</ATTEMPT_STATUS>
+            </ATTEMPT>
+          </ATTEMPTS>
         </REQUIREMENT>
       </REQUIREMENTS>
     </PROGRESS>

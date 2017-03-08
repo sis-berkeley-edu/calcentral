@@ -10,10 +10,11 @@ shared_examples 'a proxy that returns graduate milestone data' do
   end
 
   it 'filters out any LAW career programs that are not LACAD' do
-    expect(subject[:feed][:degreeProgress].length).to eql(3)
+    expect(subject[:feed][:degreeProgress].length).to eql(4)
   end
 
   it 'filters out requirements that we don\'t want to display' do
+    puts subject[:feed][:degreeProgress][0].pretty_inspect
     expect(subject[:feed][:degreeProgress][0][:requirements].length).to eql(2)
   end
 
@@ -31,13 +32,8 @@ shared_examples 'a proxy that returns graduate milestone data' do
   end
 
   it 'formats dates' do
-    expect(subject[:feed][:degreeProgress][0][:requirements][0][:dateAnticipated]).to eq 'Jun 08, 2015'
     expect(subject[:feed][:degreeProgress][0][:requirements][0][:dateCompleted]).to eq ''
-
-    expect(subject[:feed][:degreeProgress][1][:requirements][0][:dateAnticipated]).to eq ''
     expect(subject[:feed][:degreeProgress][1][:requirements][0][:dateCompleted]).to eq ''
-
-    expect(subject[:feed][:degreeProgress][2][:requirements][0][:dateAnticipated]).to eq ''
     expect(subject[:feed][:degreeProgress][2][:requirements][0][:dateCompleted]).to eq 'Dec 22, 2016'
   end
 
@@ -63,6 +59,25 @@ shared_examples 'a proxy that returns graduate milestone data' do
     expect(qualifying_exam_attempts[0][:display]).to eq 'Passed Dec 22, 2016'
     expect(qualifying_exam_attempts[1][:display]).to eq 'Exam 1: Failed Oct 01, 2016'
   end
+
+  context 'when the QE Results milestone is not satisfied' do
+    it 'includes the proposed exam date on the QE Approval milestone' do
+      qualifying_exam_approval_milestone = subject[:feed][:degreeProgress][3][:requirements][0]
+      expect(qualifying_exam_approval_milestone[:proposedExamDate]).to eq 'Dec 21, 2016'
+    end
+    it 'does not include the proposed exam date on other milestones' do
+      other_milestone = subject[:feed][:degreeProgress][0][:requirements][0]
+      expect(other_milestone[:proposedExamDate]).not_to be
+    end
+  end
+
+  context 'when the QE Results milestone is complete' do
+    it 'does not include the proposed exam date on the QE Approval milestone' do
+      qualifying_exam_approval_milestone = subject[:feed][:degreeProgress][2][:requirements][0]
+      expect(qualifying_exam_approval_milestone[:proposedExamDate]).not_to be
+    end
+  end
+
 end
 
 shared_examples 'a proxy that returns undergraduate milestone data' do

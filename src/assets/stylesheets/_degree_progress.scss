@@ -1,20 +1,35 @@
-.cc-degree-progress-card {
-  ul {
-    li > div {
-      margin: 0 20px;
+.cc-degree-progress-card ul.cc-graduate-milestones>li {
+  margin-bottom: 15px;
 
+  .cc-graduate-milestone {
+    margin: 5px 20px 0 0;
+
+    .cc-graduate-milestone-title {
+      position: relative;
+      i {
+        left: 0;
+        margin: 2px 0 0 0;
+        position: absolute;
+      }
       h4 {
-        margin-bottom: 0;
+        display: inline;
+        margin: 0 0 0 20px;
       }
     }
-    &.cc-milestone-attempts {
-      color: $cc-color-lighter-medium-grey;
+    .cc-milestone-detail {
+      margin-left: 20px;
 
-      :first-child {
-        color: $body-font-color;
+      ul.cc-milestone-attempts {
+        color: $cc-color-lighter-medium-grey;
+        margin-left: 0;
+
+        li:first-child {
+          color: $body-font-color;
+        }
       }
     }
   }
+<<<<<<< 47185c4c48377ca3dd5540c3f2e516263a9b147a
   .cc-degree-progress-graduate-checkmark {
     margin-right: 8px;
     width: 10px;
@@ -24,4 +39,6 @@
     margin-top: 15px;
     padding-top: 10px;
   }
+=======
+>>>>>>> SISRP-30568 - Displays proposed exam date on QE Approval milestone
 }

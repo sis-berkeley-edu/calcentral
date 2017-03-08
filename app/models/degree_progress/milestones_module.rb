@@ -37,7 +37,7 @@ module DegreeProgress
     end
 
     def normalize(requirements)
-      normalized = requirements.map do |requirement|
+      normalized_requirements = requirements.map do |requirement|
         name = Berkeley::GraduateMilestones.get_description(requirement[:code])
         if name
           normalized = {
@@ -53,8 +53,9 @@ module DegreeProgress
           normalized[:statusCode] = determine_status_code(requirement[:status], normalized[:attempts])
           normalized
         end
-      end
-      normalized.compact
+      end.compact
+      set_proposed_exam_date(normalized_requirements)
+      normalized_requirements
     end
 
     def merge(requirements)
@@ -135,6 +136,19 @@ module DegreeProgress
       return status_code unless status_code.blank?
       latest_attempt = milestone_attempts.first unless milestone_attempts.blank?
       return latest_attempt.try(:[], :statusCode)
+    end
+
+    def set_proposed_exam_date(requirements)
+      qualifying_exam_approval_milestone = requirements.select do |requirement|
+        requirement.try(:[], :code) === Berkeley::GraduateMilestones::QE_APPROVAL_MILESTONE
+      end.first
+      if qualifying_exam_approval_milestone
+        qualifying_exam_results_milestone = requirements.select do |requirement|
+          requirement.try(:[], :code) === Berkeley::GraduateMilestones::QE_RESULTS_MILESTONE
+        end.first
+        exam_passed = qualifying_exam_results_milestone.try(:[], :statusCode) === Berkeley::GraduateMilestones::QE_STATUS_CODE_PASSED
+        qualifying_exam_approval_milestone[:proposedExamDate] = qualifying_exam_approval_milestone.try(:[], :dateAnticipated) unless exam_passed
+      end
     end
   end
 end

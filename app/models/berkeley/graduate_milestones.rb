@@ -1,9 +1,14 @@
 module Berkeley
   class GraduateMilestones
 
+    QE_STATUS_CODE_PASSED = 'P'
+
     QE_STATUS_FAILED = 'Failed'
     QE_STATUS_PARTIALLY_FAILED = 'Partially Failed'
     QE_STATUS_PASSED = 'Passed'
+
+    QE_APPROVAL_MILESTONE = 'AAGQEAPRV'
+    QE_RESULTS_MILESTONE = 'AAGQERESLT'
 
     def self.get_status(status_code)
       statuses.try(:[], status_code.strip.upcase) unless status_code.blank?
@@ -47,11 +52,11 @@ module Berkeley
           :milestone => 'Thesis File Date',
           :order => 5
         },
-        'AAGQEAPRV' => {
+        QE_APPROVAL_MILESTONE => {
           :milestone => 'Approval for Qualifying Exam',
           :order => 1
         },
-        'AAGQERESLT' => {
+        QE_RESULTS_MILESTONE => {
           :milestone => 'Qualifying Exam Results',
           :order => 2
         },
@@ -74,10 +79,8 @@ module Berkeley
       @statuses ||= {
         'F' => QE_STATUS_FAILED,
         'PF' => QE_STATUS_PARTIALLY_FAILED,
-        'I' => 'In Progress',
+        QE_STATUS_CODE_PASSED => QE_STATUS_PASSED,
         'N' => 'Not Satisfied',
-        'P' => QE_STATUS_PASSED,
-        'S' => 'Partially Passed',
         'Y' => 'Completed'
       }
     end
