@@ -65,8 +65,8 @@ module GoogleApps
     end
 
     def scope_granted
-      return [] unless GoogleApps::Proxy.access_granted? @user_id
-      GoogleApps::Userinfo.new(user_id: @user_id).current_scope
+      return [] unless GoogleApps::Proxy.access_granted?(@user_id, @app_id)
+      GoogleApps::Userinfo.new(user_id: @user_id, app_id: @app_id).current_scope
     end
 
     def expire

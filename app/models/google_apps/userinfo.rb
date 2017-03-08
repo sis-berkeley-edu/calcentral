@@ -3,12 +3,14 @@ module GoogleApps
 
     def initialize(options = {})
       super options
-      @json_filename='google_userinfo.json'
+      @json_filename = 'google_userinfo.json'
     end
 
     def mock_request
-      super.merge(method: :get,
-                  uri_matching: 'https://www.googleapis.com/plus/v1/people/me')
+      super.merge(
+        method: :get,
+        uri_matching: 'https://www.googleapis.com/plus/v1/people/me'
+      )
     end
 
     def self.api
@@ -21,25 +23,37 @@ module GoogleApps
         api_version: 'v1',
         resource: 'people',
         method: 'get',
-        headers: {'Content-Type' => 'application/json'},
-        params: { 'userId' => 'me'}
+        headers: {
+          'Content-Type' => 'application/json'
+        },
+        params: {
+          'userId' => 'me'
+        }
       ).first
     end
 
     def current_scope
-      # Make a real API request to ensure an up-to-date access token.
-      ensure_access = user_info
-      return [] unless ensure_access && ensure_access.response.status == 200
+      access_granted = case @app_id
+                         when GoogleApps::Proxy::APP_ID
+                           # Google API call for 'self' to update tokens of current user.
+                           (info = user_info) && info.response && info.response.status == 200
+                         when GoogleApps::Proxy::OEC_APP_ID
+                           # We rely on the invoking controller to verify 'can_administer_oec' privileges.
+                           @uid == Settings.oec.google.uid
+                         else
+                           false
+                       end
+      return [] unless access_granted
+
+      # Ask Google for scope associated with token
       access_token = authorization.access_token
       request_options = {
-        query: {access_token: access_token}
+        query: {
+          access_token: access_token
+        }
       }
       response = get_response('https://www.googleapis.com/oauth2/v1/tokeninfo', request_options)
-      if response['scope'].present?
-        response['scope'].split
-      else
-        []
-      end
+      response['scope'].present? ? response['scope'].split : []
     end
 
   end
