@@ -29,8 +29,8 @@
                 <i data-ng-class="committee.header.statusIcon"></i>
                 <strong><span data-ng-bind="committee.header.statusMessage"></span></strong>
               </div>
-              <ul>
-                <li data-ng-repeat="attempt in committee.milestoneAttempts" class="cc-text-light">
+              <ul class="cc-milestone-attempts">
+                <li data-ng-repeat="attempt in committee.milestoneAttempts">
                   <i data-ng-class="committee.header.statusIcon"></i>
                   <strong><span data-ng-bind="attempt.display"></span></strong>
                 </li>

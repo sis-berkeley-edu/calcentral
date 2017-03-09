@@ -51,22 +51,42 @@ describe MyCommittees::StudentCommittees do
       expect(committee[:statusMessage]).to eq 'Advanced: Jun 16, 2018'
     end
 
-    it 'contains only the most recent milestone attempt' do
-      qualifying_exam_attempts = feed[:studentCommittees][0][:milestoneAttempts]
-      expect(qualifying_exam_attempts.count).to eq 1
-      expect(qualifying_exam_attempts[0][:sequenceNumber]).to eq 2
-      expect(qualifying_exam_attempts[0][:date]).to eq 'Jan 01, 2015'
-      expect(qualifying_exam_attempts[0][:result]).to eq 'Passed'
+    context 'when student has attempted the Qualifying Exam milestone' do
+      it 'contains only the most recent attempt' do
+        qualifying_exam_attempts = feed[:studentCommittees][0][:milestoneAttempts]
+        expect(qualifying_exam_attempts.count).to eq 1
+        expect(qualifying_exam_attempts[0][:sequenceNumber]).to eq 2
+        expect(qualifying_exam_attempts[0][:date]).to eq 'Jan 01, 2015'
+        expect(qualifying_exam_attempts[0][:result]).to eq 'Passed'
+      end
+
+      context 'when building a string to represent the attempt' do
+        it 'includes the attempt number if student did not pass the first attempt' do
+          qualifying_exam_attempts = feed[:studentCommittees][2][:milestoneAttempts]
+          expect(qualifying_exam_attempts[0][:display]).to eq 'Exam 1: Failed Jan 01, 2014'
+        end
+        it 'does not include the attempt number if student passed the first attempt' do
+          qualifying_exam_attempts = feed[:studentCommittees][4][:milestoneAttempts]
+          expect(qualifying_exam_attempts[0][:display]).to eq 'Passed Jan 01, 2016'
+        end
+      end
+
+      it 'has a blank status message' do
+        expect(feed[:studentCommittees][0][:statusMessage]).to be nil
+        expect(feed[:studentCommittees][2][:statusMessage]).to be nil
+        expect(feed[:studentCommittees][4][:statusMessage]).to be nil
+      end
     end
 
-    context 'when building a string to represent the milestone attempt' do
-      it 'includes the attempt number if student did not pass the first attempt' do
-        qualifying_exam_attempts = feed[:studentCommittees][2][:milestoneAttempts]
-        expect(qualifying_exam_attempts[0][:display]).to eq 'Exam 1: Failed Jan 01, 2014'
+    context 'when student has not yet attempted the Qualifying Exam milestone' do
+      let(:qe_committee_with_proposed_exam) { feed[:studentCommittees][6] }
+
+      it 'has an empty attempts list' do
+        expect(qe_committee_with_proposed_exam[:milestoneAttempts]).to eq []
       end
-      it 'does not include the attempt number if student passed the first attempt' do
-        qualifying_exam_attempts = feed[:studentCommittees][4][:milestoneAttempts]
-        expect(qualifying_exam_attempts[0][:display]).to eq 'Passed Jan 01, 2016'
+
+      it 'populates the status message with the proposed exam date' do
+        expect(qe_committee_with_proposed_exam[:statusMessage]).to eq 'Proposed Exam Date: Dec 10, 2020'
       end
     end
 
