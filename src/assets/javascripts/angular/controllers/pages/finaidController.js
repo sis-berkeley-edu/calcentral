@@ -23,13 +23,6 @@ angular.module('calcentral.controllers').controller('FinaidController', function
   };
 
   /**
-   * Set whether you can a user can see the finaid year data
-   */
-  var setCanSeeFinaidYear = function(data, finaidYear) {
-    $scope.canSeeFinaidData = finaidService.canSeeFinaidData(data, finaidYear);
-  };
-
-  /**
    * Set the current finaid year
    * If we don't receive a finaid year through the route params, use the default aid year
    */
@@ -62,7 +55,6 @@ angular.module('calcentral.controllers').controller('FinaidController', function
     return finaidFactory.getSummary(options).success(function(data) {
       setFinaidYear(data.feed, $routeParams.finaidYearId);
       combinationExists(data.feed, _.get($scope, 'finaidYear.id'));
-      setCanSeeFinaidYear(data.feed, $scope.finaidYear);
       $scope.finaidSummary = data.feed.finaidSummary;
       $scope.finaid.isLoading = false;
     });

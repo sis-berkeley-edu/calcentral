@@ -21,15 +21,6 @@ angular.module('calcentral.controllers').controller('FinaidSummaryController', f
   });
 
   /**
-   * Update whether you can see the current finaid data or not
-   */
-  var updateCanSeeFinaid = function() {
-    $scope.canSeeFinaidData =
-      $scope.selected.finaidYear.termsAndConditions.approved &&
-      $scope.finaidSummary.title4.approved !== null;
-  };
-
-  /**
    * Set the default selections on the finaid year
    */
   var setDefaultSelections = function(data) {
@@ -37,7 +28,6 @@ angular.module('calcentral.controllers').controller('FinaidSummaryController', f
       return;
     }
     finaidService.setDefaultFinaidYear(data, $routeParams.finaidYearId);
-    updateCanSeeFinaid();
     selectFinaidYear();
     updateFinaidUrl();
   };
@@ -61,9 +51,6 @@ angular.module('calcentral.controllers').controller('FinaidSummaryController', f
   };
 
   var getFinaidYearData = function() {
-    if (!$scope.canSeeFinaidData) {
-      return;
-    }
     return finaidFactory.getFinaidYearInfo({
       finaidYearId: finaidService.options.finaidYear.id
     }).success(parseFinaidYearData);
@@ -71,7 +58,6 @@ angular.module('calcentral.controllers').controller('FinaidSummaryController', f
 
   var selectFinaidYear = function() {
     $scope.selected.finaidYear = finaidService.options.finaidYear;
-    updateCanSeeFinaid();
     getFinaidYearData();
   };
 
@@ -83,7 +69,6 @@ angular.module('calcentral.controllers').controller('FinaidSummaryController', f
   $scope.updateFinaidYear = function() {
     finaidService.setFinaidYear($scope.selected.finaidYear);
     updateFinaidUrl();
-    updateCanSeeFinaid();
   };
 
   /**

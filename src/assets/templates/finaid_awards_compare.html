@@ -9,17 +9,9 @@
         Compare Award Packages
       </h1>
     </div>
-
-    <div data-ng-if="!canSeeFinaidData">
-      Please see the <a href="/finances/finaid">Financial Aid and Scholarships</a> page to accept your T&amp;C and Title IV.
+    <div class="large-8 medium-12 columns cc-column-3">
+      <div data-ng-include="'widgets/finaid_awards_compare_widget.html'"></div>
     </div>
-
-    <div data-ng-if="canSeeFinaidData">
-      <div class="large-8 medium-12 columns cc-column-3">
-        <div data-ng-include="'widgets/finaid_awards_compare_widget.html'"></div>
-      </div>
-    </div>
-
   </div>
 </div>
 <div data-ng-include="'404.html'" data-ng-if="!api.user.profile.features.csFinAidAwardCompare"></div>

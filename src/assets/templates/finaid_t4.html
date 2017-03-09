@@ -1,0 +1,36 @@
+<div class="cc-page-finaid" data-ng-controller="FinaidController" data-cc-spinner-directive="finaid.isLoading" data-ng-if="api.user.profile.features.csFinAid">
+  <div class="row collapse">
+    <div class="column">
+      <h1 class="cc-heading-page-title cc-print-hide">
+        <a href="/finances">My Finances</a> &raquo; Financial Aid and Scholarships
+      </h1>
+      <h1 class="cc-heading-page-title cc-hidden cc-print-show">
+        Financial aid for <span data-ng-bind="api.user.profile.fullName"></span>
+      </h1>
+    </div>
+    <div data-ng-controller="FinaidApprovalsController" class="columns">
+      <div data-ng-if="approvalMessage.ucHeaderDecline">
+        <div
+          data-cc-finaid-permissions-directive
+          data-title="approvalMessage.ucHeaderDecline"
+          data-text="approvalMessage.ucLongTextDecline"
+          data-button-go-back="true"
+          data-can-post="api.user.profile.actAsOptions.canPost"
+        ></div>
+      </div>
+      <div data-ng-if="!approvalMessage.ucHeaderDecline">
+        <div
+          data-cc-finaid-permissions-directive
+          data-title="'Title IV Authorization'"
+          data-header="finaidSummary.title4.longTitle"
+          data-text="finaidSummary.title4.longMessage"
+          data-button-text-dont-approve="'I Do Not Authorize'"
+          data-button-text-approve="'Authorize'"
+          data-button-action-dont-approve="sendResponseT4('N')"
+          data-button-action-approve="sendResponseT4('Y')"
+          data-can-post="api.user.profile.actAsOptions.canPost"
+        ></div>
+      </div>
+    </div>
+  </div>
+</div>

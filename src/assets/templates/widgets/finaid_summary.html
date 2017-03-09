@@ -8,10 +8,18 @@
   <div class="cc-widget-text" data-cc-spinner-directive="finaidSummaryInfo.isLoadingOptions">
     <div data-ng-if="!finaidSummaryInfo.errored">
       <div data-ng-if="finaidSummary.finaidYears.length">
+        <ul class="cc-list-links">
+        <li data-ng-if="!selected.finaidYear.termsAndConditions.approved">
+          <a data-ng-href="{{finaidUrl}}/tc" class="cc-outbound-link" title="Accept terms and conditions">Accept terms and conditions</a>
+        </li>
+        <li data-ng-if="!finaidSummary.title4.approved">
+          <a data-ng-href="{{finaidUrl}}/t4" class="cc-outbound-link" title="Authorize Title IV authoriztion">Authorize Title IV authoriztion</a>
+        </li>
+      </ul>
+        <hr data-ng-if="!selected.finaidYear.termsAndConditions.approved || !finaidSummary.title4.approved" aria-hidden="true">
         <div data-ng-include="'widgets/finaid_summary_aidyear.html'"></div>
         <hr data-ng-if="selected.finaidYear.availableSemesters.length" aria-hidden="true">
-        <div data-ng-include="'widgets/finaid_summary_approvals.html'"></div>
-        <div data-ng-if="canSeeFinaidData">
+        <div>
           <div data-ng-include="'widgets/finaid_summary_semester.html'"></div>
           <div data-cc-spinner-directive="finaidSummaryInfo.isLoadingData">
             <div data-ng-include="'widgets/finaid_summary_netcost.html'"></div>
