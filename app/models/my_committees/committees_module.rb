@@ -3,6 +3,9 @@ module MyCommittees::CommitteesModule
 
   COMMITTEE_TYPE_QUALIFYING_EXAM = 'QE'
   DATE_FORMAT = '%b %d, %Y'
+  STATUS_ICON_SUCCESS = 'check'
+  STATUS_ICON_WARN = 'exclamation-triangle'
+  STATUS_ICON_FAIL = 'exclamation-circle'
 
   def initialize(uid)
     @uid = uid
@@ -24,12 +27,10 @@ module MyCommittees::CommitteesModule
     committee = {
       committeeType:  cs_committee[:committeeDescrlong],
       program:        cs_committee[:studentAcadPlan],
-      statusTitle: committee_status_title(cs_committee),
-      statusMessage: committee_status_message(cs_committee),
       milestoneAttempts: parse_cs_milestone_attempts(cs_committee),
       committeeMembers: parse_cs_committee_members(cs_committee)
     }
-    committee[:statusIcon] = committee_status_icon(cs_committee[:committeeType], committee)
+    set_committee_status(cs_committee, committee)
     committee
   end
 
@@ -72,29 +73,14 @@ module MyCommittees::CommitteesModule
     "/api/my/committees/photo/student/#{user_id}"
   end
 
-  def committee_status_title (cs_committee)
+  def set_committee_status(cs_committee, committee)
     if cs_committee[:committeeType].to_s == COMMITTEE_TYPE_QUALIFYING_EXAM
-      nil
-    else
-      'Advancement To Candidacy:'
-    end
-  end
-
-  def committee_status_message (cs_committee)
-    if cs_committee[:committeeType].to_s == COMMITTEE_TYPE_QUALIFYING_EXAM
-      nil
-    elsif cs_committee[:studentMilestoneCompleteDate].blank?
-      'Pending'
-    else
-      'Approved'
-    end
-  end
-
-  def committee_status_icon (committeeType, committee)
-    if committeeType.to_s == COMMITTEE_TYPE_QUALIFYING_EXAM
-      determine_qualifying_exam_status_icon(committee)
-    else
-      'check'
+      committee[:statusIcon] = determine_qualifying_exam_status_icon(committee)
+    elsif cs_committee[:studentFilingDate]
+      committee[:statusIcon] = STATUS_ICON_SUCCESS
+      committee[:statusMessage] = "Filing Date: #{format_date(cs_committee[:studentFilingDate])}"
+    elsif cs_committee[:studentAdvancedDate]
+      committee[:statusMessage] = "Advanced: #{format_date(cs_committee[:studentAdvancedDate])}"
     end
   end
 
@@ -102,11 +88,11 @@ module MyCommittees::CommitteesModule
     latest_attempt = committee[:milestoneAttempts].first
     return '' unless latest_attempt
     if latest_attempt[:result] == Berkeley::GraduateMilestones::QE_STATUS_PASSED
-      'check'
+      STATUS_ICON_SUCCESS
     elsif latest_attempt[:sequenceNumber] === 1
-      'exclamation-triangle'
+      STATUS_ICON_WARN
     else
-      'exclamation-circle'
+      STATUS_ICON_FAIL
     end
   end
 

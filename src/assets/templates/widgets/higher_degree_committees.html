@@ -27,7 +27,7 @@
               <h4 data-ng-bind="committee.header.program"></h4>
               <div data-ng-if="!committee.milestoneAttempts.length">
                 <i data-ng-class="committee.header.statusIcon"></i>
-                <span><strong><span data-ng-bind="committee.header.statusTitle"></span></strong> <span data-ng-bind="committee.header.statusMessage"></span></span>
+                <strong><span data-ng-bind="committee.header.statusMessage"></span></strong>
               </div>
               <ul>
                 <li data-ng-repeat="attempt in committee.milestoneAttempts" class="cc-text-light">
