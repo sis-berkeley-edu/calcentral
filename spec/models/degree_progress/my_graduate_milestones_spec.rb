@@ -24,8 +24,10 @@ describe DegreeProgress::MyGraduateMilestones do
 
       it 'includes links in the response' do
         expect(subject[:feed][:links]).to be
-        expect(subject[:feed][:links][:advancementFormSubmit]).to be
-        expect(subject[:feed][:links][:advancementFormView]).to be
+        expect(subject[:feed][:links][:applyForAdvancementToCandidacy]).to be
+        expect(subject[:feed][:links][:applyDoctorsQualifyingExam]).to be
+        expect(subject[:feed][:links][:submitDoctoralDegreeCandidacyReview]).to be
+        expect(subject[:feed][:links][:viewSubmittedForms]).to be
       end
     end
 
@@ -38,8 +40,10 @@ describe DegreeProgress::MyGraduateMilestones do
 
       it 'includes links in the response' do
         expect(subject[:feed][:links]).to be
-        expect(subject[:feed][:links][:advancementFormSubmit]).to be
-        expect(subject[:feed][:links][:advancementFormView]).to be
+        expect(subject[:feed][:links][:applyForAdvancementToCandidacy]).to be
+        expect(subject[:feed][:links][:applyDoctorsQualifyingExam]).to be
+        expect(subject[:feed][:links][:submitDoctoralDegreeCandidacyReview]).to be
+        expect(subject[:feed][:links][:viewSubmittedForms]).to be
       end
     end
 

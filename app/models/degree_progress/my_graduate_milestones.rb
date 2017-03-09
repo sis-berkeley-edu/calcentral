@@ -9,8 +9,10 @@ module DegreeProgress
     include MilestonesModule
 
     LINKS_CONFIG = [
-      { feed_key: :advancement_form_submit, cs_link_key: 'UC_CX_GT_AAQEAPPLIC_ADD' },
-      { feed_key: :advancement_form_view, cs_link_key: 'UC_CX_GT_AAQEAPPLIC_VIEW' }
+      { feed_key: :apply_for_advancement_to_candidacy, cs_link_key: 'UC_CX_GT_GRAD_ADVC' },
+      { feed_key: :apply_doctors_qualifying_exam, cs_link_key: 'UC_CX_GT_GRAD_APPQE' },
+      { feed_key: :submit_doctoral_degree_candidacy_review, cs_link_key: 'UC_CX_GT_SRDCR_ADD_DP' },
+      { feed_key: :view_submitted_forms, cs_link_key: 'UC_CX_GT_STUDENT_VIEW_DP' }
     ]
 
     def get_feed_internal
