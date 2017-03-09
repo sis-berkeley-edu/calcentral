@@ -65,7 +65,7 @@ describe MyCommittees::FacultyCommittees do
       expect(committee[:serviceRange]).to eq 'Aug 31, 2015 - Jan 01, 2016'
     end
 
-    it 'contains the expected milestone attempts data ordered with most recent first' do
+    it 'contains the expected Qualifying Exam milestone attempts data ordered with most recent first' do
       qualifying_exam_attempts = feed[:facultyCommittees][2][:milestoneAttempts]
       expect(qualifying_exam_attempts.count).to eq 3
       expect(qualifying_exam_attempts[0][:sequenceNumber]).to eq 3

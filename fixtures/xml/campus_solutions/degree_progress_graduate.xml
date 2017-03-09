@@ -10,23 +10,23 @@
       <REQUIREMENTS type="array">
         <REQUIREMENT>
           <NAME>Advancement to Candidacy Mas1</NAME>
-          <NUMBER>10</NUMBER>
+          <DATE_COMPLETED>ill-formatted-date</DATE_COMPLETED>
+          <DATE_ANTICIPATED>2015-06-08</DATE_ANTICIPATED>
           <STATUS>N</STATUS>
-          <DATE></DATE>
           <CODE>AAGADVMAS1</CODE>
         </REQUIREMENT>
         <REQUIREMENT>
           <NAME>Capstone</NAME>
-          <NUMBER>20</NUMBER>
+          <DATE_COMPLETED></DATE_COMPLETED>
+          <DATE_ANTICIPATED></DATE_ANTICIPATED>
           <STATUS>N</STATUS>
-          <DATE></DATE>
           <CODE>AAGACADP2</CODE>
         </REQUIREMENT>
         <REQUIREMENT>
           <NAME>Garbage</NAME>
-          <NUMBER>60</NUMBER>
+          <DATE_COMPLETED></DATE_COMPLETED>
+          <DATE_ANTICIPATED></DATE_ANTICIPATED>
           <STATUS>N</STATUS>
-          <DATE></DATE>
           <CODE>GARBAGE</CODE>
         </REQUIREMENT>
       </REQUIREMENTS>
@@ -46,17 +46,24 @@
       <REQUIREMENTS type="array">
         <REQUIREMENT>
           <NAME>Advancement to Candidacy Mas1</NAME>
-          <NUMBER>10</NUMBER>
+          <DATE_COMPLETED></DATE_COMPLETED>
+          <DATE_ANTICIPATED></DATE_ANTICIPATED>
           <STATUS></STATUS>
-          <DATE></DATE>
           <CODE>AAGADVMAS1</CODE>
         </REQUIREMENT>
         <REQUIREMENT>
           <NAME>Advancement to Candidacy Mas2</NAME>
-          <NUMBER>20</NUMBER>
+          <DATE_COMPLETED></DATE_COMPLETED>
+          <DATE_ANTICIPATED></DATE_ANTICIPATED>
           <STATUS>N</STATUS>
-          <DATE></DATE>
           <CODE>AAGADVMAS2</CODE>
+        </REQUIREMENT>
+        <REQUIREMENT>
+          <NAME>Department Final Recommendations</NAME>
+          <DATE_COMPLETED></DATE_COMPLETED>
+          <DATE_ANTICIPATED></DATE_ANTICIPATED>
+          <STATUS>N</STATUS>
+          <CODE>AAGFINALCK</CODE>
         </REQUIREMENT>
       </REQUIREMENTS>
     </PROGRESS>
@@ -68,31 +75,68 @@
       <REQUIREMENTS type="array">
         <REQUIREMENT>
           <NAME>Approval for Qualifying Exam</NAME>
-          <NUMBER>10</NUMBER>
+          <DATE_COMPLETED>2016-12-22</DATE_COMPLETED>
+          <DATE_ANTICIPATED>2016-12-21</DATE_ANTICIPATED>
           <STATUS>Y</STATUS>
-          <DATE>2016-12-22</DATE>
           <CODE>AAGQEAPRV</CODE>
         </REQUIREMENT>
         <REQUIREMENT>
           <NAME>Qualifying Exam Results</NAME>
-          <NUMBER>20</NUMBER>
-          <STATUS>P</STATUS>
-          <DATE>2016-12-26</DATE>
+          <DATE_ANTICIPATED></DATE_ANTICIPATED>
           <CODE>AAGQERESLT</CODE>
+          <ATTEMPTS type="array">
+            <ATTEMPT>
+              <ATTEMPT_NBR>1</ATTEMPT_NBR>
+              <ATTEMPT_DATE>2016-10-01</ATTEMPT_DATE>
+              <ATTEMPT_STATUS>F</ATTEMPT_STATUS>
+            </ATTEMPT>
+            <ATTEMPT>
+              <ATTEMPT_NBR>2</ATTEMPT_NBR>
+              <ATTEMPT_DATE>2016-12-22</ATTEMPT_DATE>
+              <ATTEMPT_STATUS>P</ATTEMPT_STATUS>
+            </ATTEMPT>
+          </ATTEMPTS>
         </REQUIREMENT>
         <REQUIREMENT>
           <NAME>Advancement to Candidacy PhD</NAME>
-          <NUMBER>30</NUMBER>
+          <DATE_COMPLETED>2016-12-31</DATE_COMPLETED>
+          <DATE_ANTICIPATED></DATE_ANTICIPATED>
           <STATUS>Y</STATUS>
-          <DATE>2016-12-31</DATE>
           <CODE>AAGADVPHD</CODE>
         </REQUIREMENT>
         <REQUIREMENT>
           <NAME>Dissertation Filed</NAME>
-          <NUMBER>40</NUMBER>
+          <DATE_COMPLETED></DATE_COMPLETED>
+          <DATE_ANTICIPATED></DATE_ANTICIPATED>
           <STATUS>N</STATUS>
-          <DATE></DATE>
           <CODE>AAGDISSERT</CODE>
+        </REQUIREMENT>
+      </REQUIREMENTS>
+    </PROGRESS>
+    <PROGRESS>
+      <CAREER>GRAD</CAREER>
+      <ACAD_PLAN>Physics PhD</ACAD_PLAN>
+      <ACAD_PROG_CODE>GACAD</ACAD_PROG_CODE>
+      <ACAD_PROG>Graduate Academic Programs</ACAD_PROG>
+      <REQUIREMENTS type="array">
+        <REQUIREMENT>
+          <NAME>Approval for Qualifying Exam</NAME>
+          <DATE_COMPLETED>2016-12-22</DATE_COMPLETED>
+          <DATE_ANTICIPATED>2016-12-21</DATE_ANTICIPATED>
+          <STATUS>Y</STATUS>
+          <CODE>AAGQEAPRV</CODE>
+        </REQUIREMENT>
+        <REQUIREMENT>
+          <NAME>Qualifying Exam Results</NAME>
+          <DATE_ANTICIPATED></DATE_ANTICIPATED>
+          <CODE>AAGQERESLT</CODE>
+          <ATTEMPTS type="array">
+            <ATTEMPT>
+              <ATTEMPT_NBR>1</ATTEMPT_NBR>
+              <ATTEMPT_DATE>2016-10-01</ATTEMPT_DATE>
+              <ATTEMPT_STATUS>F</ATTEMPT_STATUS>
+            </ATTEMPT>
+          </ATTEMPTS>
         </REQUIREMENT>
       </REQUIREMENTS>
     </PROGRESS>
