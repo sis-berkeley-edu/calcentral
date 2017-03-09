@@ -15,7 +15,7 @@ describe MyCommittees::FacultyCommittees do
     end
 
     it 'dumps all committees into one list' do
-      expect(feed[:facultyCommittees].count).to eq 3
+      expect(feed[:facultyCommittees].count).to eq 4
     end
 
     it 'sorts the committees by the current user\'s membership end date and start date' do
@@ -26,15 +26,12 @@ describe MyCommittees::FacultyCommittees do
       expect(committees[1][:csMemberEndDate]).to eq '2999-01-01'
       expect(committees[2][:csMemberStartDate]).to eq '2016-08-30'
       expect(committees[2][:csMemberEndDate]).to eq '2017-08-30'
+      expect(committees[3][:csMemberStartDate]).to eq '2015-08-31'
+      expect(committees[3][:csMemberEndDate]).to eq '2016-01-01'
     end
 
-    it 'correctly parses a Qualifying Exam committee with no members' do
+    it 'correctly parses a committee with no members' do
       committee = feed[:facultyCommittees][0]
-      expect(committee[:committeeType]).to eq 'Qualifying Exam Committee'
-      expect(committee[:program]).to eq 'Underwater Basket Weaving PhD'
-      expect(committee[:statusTitle]).to eq nil
-      expect(committee[:statusMessage]).to eq nil
-      expect(committee[:statusIcon]).to eq 'exclamation-circle'
       expect(committee[:serviceRange]).to be nil
     end
 
@@ -42,9 +39,9 @@ describe MyCommittees::FacultyCommittees do
       committee = feed[:facultyCommittees][1]
       expect(committee[:committeeType]).to eq 'Dissertation Committee'
       expect(committee[:program]).to eq 'Education PhD'
-      expect(committee[:statusTitle]).to eq 'Advancement To Candidacy:'
-      expect(committee[:statusMessage]).to eq 'Pending'
-      expect(committee[:statusIcon]).to eq 'check'
+      expect(committee[:statusTitle]).to eq nil
+      expect(committee[:statusMessage]).to eq 'Advanced: Oct 06, 2017'
+      expect(committee[:statusIcon]).to eq nil
       expect(committee[:serviceRange]).to eq 'Aug 31, 2016 - Present'
     end
 
@@ -56,6 +53,16 @@ describe MyCommittees::FacultyCommittees do
       expect(committee[:statusMessage]).to eq nil
       expect(committee[:statusIcon]).to eq 'check'
       expect(committee[:serviceRange]).to eq 'Aug 30, 2016 - Aug 30, 2017'
+    end
+
+    it 'correctly parses a Masters Thesis committee' do
+      committee = feed[:facultyCommittees][3]
+      expect(committee[:committeeType]).to eq 'Master\'s Thesis Committee'
+      expect(committee[:program]).to eq 'South & SE Asian Studies MA'
+      expect(committee[:statusTitle]).to eq nil
+      expect(committee[:statusMessage]).to eq 'Filing Date: Nov 06, 2016'
+      expect(committee[:statusIcon]).to eq 'check'
+      expect(committee[:serviceRange]).to eq 'Aug 31, 2015 - Jan 01, 2016'
     end
 
     it 'contains the expected milestone attempts data ordered with most recent first' do

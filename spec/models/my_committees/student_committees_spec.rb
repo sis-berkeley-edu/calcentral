@@ -18,12 +18,11 @@ describe MyCommittees::StudentCommittees do
       committee = feed[:studentCommittees][0]
       expect(committee[:committeeType]).to eq 'COMMITTEEDESCRLONG1'
       expect(committee[:program]).to eq 'STUDENTACADPLAN1'
-      expect(committee[:statusTitle]).to eq 'Advancement To Candidacy:'
       expect(committee[:statusIcon]).to eq 'check'
-      expect(committee[:statusMessage]).to eq 'Approved'
+      expect(committee[:statusMessage]).to eq nil
     end
 
-    it 'contains the expected student data for completed committees' do
+    it 'contains the expected student data for a completed committee' do
       committee = feed[:studentCommittees][1]
       expect(committee[:committeeType]).to eq 'NOT ACTIVE'
     end
@@ -32,7 +31,6 @@ describe MyCommittees::StudentCommittees do
       committee = feed[:studentCommittees][2]
       expect(committee[:committeeType]).to eq 'Qualifying Exam Committee'
       expect(committee[:program]).to eq 'STUDENTACADPLAN3'
-      expect(committee[:statusTitle]).to be nil
       expect(committee[:statusIcon]).to eq 'exclamation-triangle'
       expect(committee[:statusMessage]).to be nil
     end
@@ -41,9 +39,16 @@ describe MyCommittees::StudentCommittees do
       committee = feed[:studentCommittees][3]
       expect(committee[:committeeType]).to eq 'Dissertation Committee'
       expect(committee[:program]).to eq 'STUDENTACADPLAN4'
-      expect(committee[:statusTitle]).to eq 'Advancement To Candidacy:'
       expect(committee[:statusIcon]).to eq 'check'
-      expect(committee[:statusMessage]).to eq 'Pending'
+      expect(committee[:statusMessage]).to eq 'Filing Date: Jun 16, 2025'
+    end
+
+    it 'contains the expected student data for a Masters Thesis committee' do
+      committee = feed[:studentCommittees][5]
+      expect(committee[:committeeType]).to eq 'Master\'s Thesis Committee'
+      expect(committee[:program]).to eq 'STUDENTACADPLAN6'
+      expect(committee[:statusIcon]).to eq nil
+      expect(committee[:statusMessage]).to eq 'Advanced: Jun 16, 2018'
     end
 
     it 'contains only the most recent milestone attempt' do

@@ -35,6 +35,7 @@ module MyCommittees
       attempts = cs_committee[:studentMilestoneAttempts].try(:map) do |attempt|
         parse_cs_milestone_attempt(attempt)
       end
+      return [] unless attempts
       attempts.try(:sort_by) do |attempt|
         attempt[:sequenceNumber]
       end.last(1)

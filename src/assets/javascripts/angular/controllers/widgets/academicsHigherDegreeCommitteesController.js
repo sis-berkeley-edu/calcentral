@@ -43,7 +43,6 @@ angular.module('calcentral.controllers').controller('AcademicsHigherDegreeCommit
     return {
       type: committeeData.committeeType,
       program: committeeData.program,
-      statusTitle: committeeData.statusTitle,
       statusIcon: getIconStyle(committeeData.statusIcon),
       statusMessage: committeeData.statusMessage
     };
