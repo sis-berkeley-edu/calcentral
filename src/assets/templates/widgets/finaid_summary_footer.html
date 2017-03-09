@@ -1,5 +1,5 @@
 <div class="cc-clearfix-container cc-text-small" data-ng-if="finaidSummary.finaidYears.length">
-  <div class="cc-left" data-ng-if="canSeeFinaidData && !finaidSummaryInfo.errored">
+  <div class="cc-left" data-ng-if="!finaidSummaryInfo.errored">
     <a data-ng-href="{{finaidUrl}}" data-ng-if="(!shoppingSheet.url || !api.user.profile.actAsOptions.canSeeCSLinks) && !isMainFinaid">View Awards</a>
     <a data-ng-if="shoppingSheet.url && api.user.profile.actAsOptions.canSeeCSLinks"
       data-cc-campus-solutions-link-directive

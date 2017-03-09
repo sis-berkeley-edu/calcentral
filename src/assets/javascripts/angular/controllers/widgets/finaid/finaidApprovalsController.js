@@ -5,7 +5,7 @@ var angular = require('angular');
 /**
  * Finaid Approvals controller
  */
-angular.module('calcentral.controllers').controller('FinaidApprovalsController', function($rootScope, $scope, finaidFactory) {
+angular.module('calcentral.controllers').controller('FinaidApprovalsController', function($location, $rootScope, $scope, finaidFactory) {
   $scope.approvalMessage = {};
 
   /**
@@ -25,6 +25,7 @@ angular.module('calcentral.controllers').controller('FinaidApprovalsController',
         showDeclineMessage(data);
       } else {
         sendEvent();
+        $location.path('/finances');
       }
     });
   };
@@ -38,6 +39,7 @@ angular.module('calcentral.controllers').controller('FinaidApprovalsController',
         showDeclineMessage(data);
       } else {
         sendEvent();
+        $location.path('/finances');
       }
     });
   };
