@@ -3,14 +3,20 @@
 var angular = require('angular');
 var _ = require('lodash');
 
-angular.module('calcentral.controllers').controller('AcademicSummaryController', function(academicsFactory, academicsService, apiService, linkService, profileFactory, userService, $route, $scope) {
+angular.module('calcentral.controllers').controller('AcademicSummaryController', function(academicsFactory, academicsService, apiService, linkService, profileFactory, $route, $scope) {
   apiService.util.setTitle('Academic Summary');
   linkService.addCurrentRouteSettings($scope);
-  $scope.isAcademicSummary = $route.current.isAcademicSummary;
   $scope.academicSummary = {
     isLoading: true
   };
   $scope.expectedGradTerm = academicsService.expectedGradTerm;
+  $scope.printPage = function() {
+    apiService.util.printPage();
+  };
+
+  var showSemesters = function() {
+    return !!(_.get($scope, 'semesters.length') && apiService.user.profile.hasStudentHistory);
+  };
 
   var showTransferCredit = function() {
     return !!(_.get($scope, 'transferCredit.ucTransferCrseSch.unitsTotal') || _.get('transferCredit.ucTestComponent.totalTestUnits'));
@@ -41,6 +47,7 @@ angular.module('calcentral.controllers').controller('AcademicSummaryController',
 
   var parseAcademics = function(data) {
     angular.extend($scope, _.get(data, 'data'));
+    $scope.showSemesters = showSemesters();
     parseGpaUnits();
     parseTransferCredit();
   };
@@ -53,7 +60,7 @@ angular.module('calcentral.controllers').controller('AcademicSummaryController',
   // Similar to academicsController, we wait until user profile is fully loaded before hitting academics data
   $scope.$on('calcentral.api.user.isAuthenticated', function(event, isAuthenticated) {
     if (isAuthenticated) {
-      $scope.canViewAcademics = userService.profile.hasAcademicsTab;
+      $scope.canViewAcademics = apiService.user.profile.hasAcademicsTab;
       academicsFactory.getAcademics()
       .then(parseAcademics)
       .then(profileFactory.getPerson)

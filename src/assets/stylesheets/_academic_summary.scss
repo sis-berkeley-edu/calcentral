@@ -12,7 +12,7 @@
   }
   .cc-academic-summary-enrollment-header {
     display: inline-block;
-    margin: 15px;
+    margin: 10px 15px 5px;
   }
   .cc-academic-summary-margin-bottom {
     margin-bottom: 15px;
@@ -42,11 +42,20 @@
     .cc-academic-summary-table-spacing {
       padding: 0;
     }
+    .cc-academic-summary-table-units {
+      padding-right: 15px;
+    }
     td {
       padding-top: 0;
     }
     td,th {
       vertical-align: bottom;
+    }
+  }
+
+  @media print {
+    a[href]::after {
+      content: "";
     }
   }
 }

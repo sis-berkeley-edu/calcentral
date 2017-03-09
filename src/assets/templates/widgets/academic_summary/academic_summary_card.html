@@ -1,15 +1,19 @@
 <div class="cc-widget cc-academic-summary">
   <div class="cc-widget-title">
-    <h2>Academic Summary</h2>
+    <h2 class="cc-left">Academic Summary</h2>
+    <button class="cc-button cc-button-blue cc-right cc-widget-title-button" data-ng-click="printPage()">
+      <i class="fa fa-print"></i> Print
+    </button>
   </div>
   <div data-cc-spinner-directive="academicSummary.isLoading">
     <div class="cc-academic-summary-subheader">
       <h3>Student Profile</h3>
     </div>
     <div class="cc-academic-summary-margin-bottom" data-ng-include="'widgets/academic_summary/academic_summary_student_profile.html'"></div>
-    <div class="cc-academic-summary-subheader">
+    <div data-ng-if="showTransferCredit || showSemesters" class="cc-academic-summary-subheader">
       <h3>Enrollment</h3>
     </div>
     <div data-ng-if="showTransferCredit" data-ng-include="'widgets/academic_summary/academic_summary_transfer_credit.html'"></div>
+    <div data-ng-if="showSemesters" data-ng-repeat="semester in semesters | orderBy:'-'" data-ng-include="'widgets/academic_summary/academic_summary_semesters.html'"></div>
   </div>
 </div>
