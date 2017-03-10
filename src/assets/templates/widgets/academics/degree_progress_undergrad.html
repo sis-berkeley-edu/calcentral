@@ -6,12 +6,11 @@
     <div data-ng-if="degreeProgress.undergraduate.errored">There was an error retrieving undergraduate degree progress data.</div>
     <ul data-ng-if="!degreeProgress.undergraduate.errored && degreeProgress.undergraduate.progresses">
       <li data-ng-repeat="plan in degreeProgress.undergraduate.progresses">
-        <h3>University Requirements</h3>
         <div class="cc-table">
           <table>
             <thead>
               <tr>
-                <th>Requirement</th>
+                <th>University Requirement</th>
                 <th>Status</th>
               </tr>
             </thead>
