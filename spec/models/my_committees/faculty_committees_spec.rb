@@ -15,7 +15,7 @@ describe MyCommittees::FacultyCommittees do
     end
 
     it 'dumps all committees into one list' do
-      expect(feed[:facultyCommittees].count).to eq 4
+      expect(feed[:facultyCommittees].count).to eq 5
     end
 
     it 'sorts the committees by the current user\'s membership end date and start date' do
@@ -65,25 +65,45 @@ describe MyCommittees::FacultyCommittees do
       expect(committee[:serviceRange]).to eq 'Aug 31, 2015 - Jan 01, 2016'
     end
 
-    it 'contains the expected Qualifying Exam milestone attempts data ordered with most recent first' do
-      qualifying_exam_attempts = feed[:facultyCommittees][2][:milestoneAttempts]
-      expect(qualifying_exam_attempts.count).to eq 3
-      expect(qualifying_exam_attempts[0][:sequenceNumber]).to eq 3
-      expect(qualifying_exam_attempts[0][:date]).to eq 'Jan 01, 2015'
-      expect(qualifying_exam_attempts[0][:result]).to eq 'Passed'
-      expect(qualifying_exam_attempts[1][:sequenceNumber]).to eq 2
-      expect(qualifying_exam_attempts[1][:date]).to eq 'Jan 01, 2014'
-      expect(qualifying_exam_attempts[1][:result]).to eq 'Partially Failed'
-      expect(qualifying_exam_attempts[2][:sequenceNumber]).to eq 1
-      expect(qualifying_exam_attempts[2][:date]).to eq 'Jan 01, 2013'
-      expect(qualifying_exam_attempts[2][:result]).to eq 'Failed'
+    context 'when student has attempted the Qualifying Exam milestone' do
+      let(:qe_committee_with_exam_attempts) { feed[:facultyCommittees][2] }
+
+      it 'contains the expected attempts ordered with most recent first' do
+        qualifying_exam_attempts = qe_committee_with_exam_attempts[:milestoneAttempts]
+        expect(qualifying_exam_attempts.count).to eq 3
+        expect(qualifying_exam_attempts[0][:sequenceNumber]).to eq 3
+        expect(qualifying_exam_attempts[0][:date]).to eq 'Jan 01, 2015'
+        expect(qualifying_exam_attempts[0][:result]).to eq 'Passed'
+        expect(qualifying_exam_attempts[1][:sequenceNumber]).to eq 2
+        expect(qualifying_exam_attempts[1][:date]).to eq 'Jan 01, 2014'
+        expect(qualifying_exam_attempts[1][:result]).to eq 'Partially Failed'
+        expect(qualifying_exam_attempts[2][:sequenceNumber]).to eq 1
+        expect(qualifying_exam_attempts[2][:date]).to eq 'Jan 01, 2013'
+        expect(qualifying_exam_attempts[2][:result]).to eq 'Failed'
+      end
+
+      it 'builds a string to represent each attempt' do
+        qualifying_exam_attempts = qe_committee_with_exam_attempts[:milestoneAttempts]
+        expect(qualifying_exam_attempts[0][:display]).to eq 'Exam 3: Passed Jan 01, 2015'
+        expect(qualifying_exam_attempts[1][:display]).to eq 'Exam 2: Partially Failed Jan 01, 2014'
+        expect(qualifying_exam_attempts[2][:display]).to eq 'Exam 1: Failed Jan 01, 2013'
+      end
+
+      it 'has a blank status message' do
+        expect(qe_committee_with_exam_attempts[:statusMessage]).to be nil
+      end
     end
 
-    it 'builds a string to represent the milestone attempt' do
-      qualifying_exam_attempts = feed[:facultyCommittees][2][:milestoneAttempts]
-      expect(qualifying_exam_attempts[0][:display]).to eq 'Exam 3: Passed Jan 01, 2015'
-      expect(qualifying_exam_attempts[1][:display]).to eq 'Exam 2: Partially Failed Jan 01, 2014'
-      expect(qualifying_exam_attempts[2][:display]).to eq 'Exam 1: Failed Jan 01, 2013'
+    context 'when student has not yet attempted the Qualifying Exam milestone' do
+      let(:qe_committee_with_proposed_exam) { feed[:facultyCommittees][4] }
+
+      it 'has an empty attempts list' do
+        expect(qe_committee_with_proposed_exam[:milestoneAttempts]).to eq []
+      end
+
+      it 'populates the status message with the proposed exam date' do
+        expect(qe_committee_with_proposed_exam[:statusMessage]).to eq 'Proposed Exam Date: May 05, 2019'
+      end
     end
 
     it 'contains the expected faculty committee data' do

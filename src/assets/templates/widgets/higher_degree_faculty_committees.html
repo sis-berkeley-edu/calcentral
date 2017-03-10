@@ -36,9 +36,11 @@
                 <div><strong class="cc-button-link"><span data-ng-bind="committee.student.email"></span></strong></div>
                 <div data-ng-bind="committee.header.program"></div>
                 <div class="cc-text-light">
-                  <i data-ng-class="committee.header.statusIcon"></i><span data-ng-bind="committee.header.type"></span>
+                  <i data-ng-if="committee.milestoneAttempts.length" data-ng-class="committee.header.statusIcon"></i>
+                  <span data-ng-bind="committee.header.type"></span>
                 </div>
                 <div class="cc-text-light" data-ng-if="!committee.milestoneAttempts.length">
+                  <i data-ng-class="committee.header.statusIcon"></i>
                   <strong><span data-ng-bind="committee.header.statusMessage"></span></strong>
                 </div>
                 <ul>

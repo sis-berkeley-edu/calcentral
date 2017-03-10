@@ -48,6 +48,10 @@
   .cc-higher-degree-committees-list {
     >li {
       border-bottom: 1px solid $cc-color-widget-background;
+
+      ul.cc-milestone-attempts {
+        margin-left: 0;
+      }
     }
   }
 

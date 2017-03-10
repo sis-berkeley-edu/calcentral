@@ -76,6 +76,7 @@ module MyCommittees::CommitteesModule
   def set_committee_status(cs_committee, committee)
     if cs_committee[:committeeType].to_s == COMMITTEE_TYPE_QUALIFYING_EXAM
       committee[:statusIcon] = determine_qualifying_exam_status_icon(committee)
+      committee[:statusMessage] = determine_qualifying_exam_status_message(cs_committee)
     elsif cs_committee[:studentFilingDate]
       committee[:statusIcon] = STATUS_ICON_SUCCESS
       committee[:statusMessage] = "Filing Date: #{format_date(cs_committee[:studentFilingDate])}"
@@ -93,6 +94,13 @@ module MyCommittees::CommitteesModule
       STATUS_ICON_WARN
     else
       STATUS_ICON_FAIL
+    end
+  end
+
+  def determine_qualifying_exam_status_message(cs_committee)
+    if cs_committee[:studentMilestoneAttempts].empty?
+      proposed_exam_date = cs_committee.try(:[], :studentQeExamProposeDate)
+      "Proposed Exam Date: #{format_date(proposed_exam_date)}" unless proposed_exam_date.blank?
     end
   end
 
