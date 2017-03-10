@@ -23,8 +23,7 @@ angular.module('calcentral.config').config(function($routeProvider, calcentralCo
     when('/academics/academic_summary', {
       templateUrl: 'academic_summary_page.html',
       controller: 'AcademicSummaryController',
-      pageName: 'My Academics',
-      isAcademicSummary: true
+      pageName: 'My Academics'
     }).
     when('/academics/enrollment_verification', {
       templateUrl: 'academics_enrollment_verification.html',
