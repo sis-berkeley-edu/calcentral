@@ -25,12 +25,16 @@ module MyCommittees
       cs_committees.compact!
       committees_result = []
       cs_committees.try(:each) do |cs_committee|
-        remove_inactive_members(cs_committee)
-        committee = parse_cs_committee(cs_committee)
-        committee[:isActive] = is_active?(cs_committee)
-        committees_result << committee
+        committees_result << parse_student_cs_committee(cs_committee)
       end
       committees_result.compact
+    end
+
+    def parse_student_cs_committee(cs_committee)
+      remove_inactive_members(cs_committee) if (is_active = is_active?(cs_committee))
+      committee = parse_cs_committee(cs_committee)
+      committee[:isActive] = is_active
+      committee
     end
 
     def is_active?(cs_committee)
@@ -66,7 +70,7 @@ module MyCommittees
     end
 
     def inactive?(committee_member)
-      inactive = false;
+      inactive = false
       begin
         inactive = Time.zone.parse(committee_member[:memberEndDate].to_s).to_datetime.try(:past?)
       rescue
