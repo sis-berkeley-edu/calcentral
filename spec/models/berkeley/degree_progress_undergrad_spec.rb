@@ -1,23 +1,37 @@
 describe Berkeley::DegreeProgressUndergrad do
 
   describe '#get_status' do
-    subject { described_class.get_status(status_code) }
+    subject { described_class.get_status(status_code, in_progress_value) }
 
-    context 'when status_code is nil' do
-      let(:status_code) {nil}
-      it {should be nil}
+    context 'when in progress is nil' do
+      let(:in_progress_value) { nil }
+      context 'when status_code is nil' do
+        let(:status_code) {nil}
+        it {should be nil}
+      end
+      context 'when status_code is garbage' do
+        let(:status_code) {'garbage'}
+        it {should be nil}
+      end
+      context 'when status_code exists in @statuses' do
+        let(:status_code) {'FAIL'}
+        it {should eq 'Not Satisfied'}
+      end
+      context 'when status_code exists in @statuses but is lowercase' do
+        let(:status_code) {'comp'}
+        it {should eq 'Satisfied'}
+      end
     end
-    context 'when status_code is garbage' do
-      let(:status_code) {'garbage'}
-      it {should be nil}
-    end
-    context 'when status_code exists in @statuses' do
-      let(:status_code) {'FAIL'}
-      it {should eq 'Not Satisfied'}
-    end
-    context 'when status_code exists in @statuses but is lowercase' do
-      let(:status_code) {'comp'}
-      it {should eq 'Satisfied'}
+    context 'when in progress is \'Y\'' do
+      let(:in_progress_value) { 'Y' }
+      context 'when status_code is FAIL' do
+        let(:status_code) {'FAIL'}
+        it {should eq 'Not Satisfied'}
+      end
+      context 'when status_code is COMP' do
+        let(:status_code) {'COMP'}
+        it {should eq 'In Progress'}
+      end
     end
   end
 

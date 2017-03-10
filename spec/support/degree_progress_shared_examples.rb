@@ -95,6 +95,11 @@ shared_examples 'a proxy that returns undergraduate milestone data' do
     expect(plan_level_data.first[:requirements].first[:code]).to be
   end
 
+  it 'converts report dates for progress' do
+    plan_level_data = subject[:feed][:degreeProgress][:progresses]
+    expect(plan_level_data.first[:reportDate]).to eq 'Mar 3, 2017'
+  end
+
   it 'filters out requirements that we don\'t want to display' do
     plan_level_data = subject[:feed][:degreeProgress][:progresses]
     expect(plan_level_data.first[:requirements].length).to eql(4)
@@ -117,6 +122,6 @@ shared_examples 'a proxy that returns undergraduate milestone data' do
     expect(plan_level_data.first[:requirements][2][:name]).to eq('American Institutions')
     expect(plan_level_data.first[:requirements][2][:status]).to eq('Not Satisfied')
     expect(plan_level_data.first[:requirements][3][:name]).to eq('American Cultures')
-    expect(plan_level_data.first[:requirements][3][:status]).to eq('Satisfied')
+    expect(plan_level_data.first[:requirements][3][:status]).to eq('In Progress')
   end
 end

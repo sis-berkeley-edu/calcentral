@@ -2,8 +2,15 @@ module Berkeley
   class DegreeProgressUndergrad
     include ClassLogger
 
-    def self.get_status(status_code)
-      statuses[status_code.strip.upcase] unless status_code.blank?
+    def self.get_status(status_code, in_progress_value)
+      return nil if status_code.blank?
+      uniform_status_code = status_code.strip.upcase
+      in_progress = uniform_status_code == 'COMP' && in_progress_boolean(in_progress_value)
+      in_progress ? 'In Progress' : statuses[uniform_status_code]
+    end
+
+    def self.in_progress_boolean(in_progress_value)
+      in_progress_value == 'Y'
     end
 
     def self.requirements_whitelist

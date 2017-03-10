@@ -9,25 +9,25 @@
             {
               "code": "000000001",
               "name": "Entry Level Writing",
-              "status": "Completed"
+              "status": "Satisfied"
             },
             {
               "code": "000000002",
               "name": "American History",
-              "status": "Completed"
+              "status": "Satisfied"
             },
             {
               "code": "000000018",
               "name": "American Institutions",
-              "status": "Completed"
+              "status": "Not Satisfied"
             },
             {
               "code": "000000003",
               "name": "American Cultures",
-              "status": "Completed"
+              "status": "In Progress"
             }
           ],
-          "rptDate": "2016-12-21"
+          "reportDate": "Dec 21, 2016"
         }
       ]
     }
