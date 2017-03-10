@@ -311,6 +311,7 @@ CREATE TABLE service_alerts (
   body text NOT NULL,
   publication_date timestamp without time zone NOT NULL,
   display boolean DEFAULT false NOT NULL,
+  splash boolean DEFAULT false NOT NULL,
   created_at timestamp without time zone,
   updated_at timestamp without time zone
 );
