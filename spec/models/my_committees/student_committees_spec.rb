@@ -14,17 +14,22 @@ describe MyCommittees::StudentCommittees do
         double(lookup_campus_solutions_id: user_cs_id))
     end
 
+    it 'correctly identifies an active committee' do
+      committee = feed[:studentCommittees][2]
+      expect(committee[:isActive]).to be true
+    end
+
+    it 'correctly identifies a completed committee' do
+      committee = feed[:studentCommittees][1]
+      expect(committee[:isActive]).to be false
+    end
+
     it 'correctly parses a qualifying exam committee when student has passed the exam' do
       committee = feed[:studentCommittees][0]
       expect(committee[:committeeType]).to eq 'COMMITTEEDESCRLONG1'
       expect(committee[:program]).to eq 'STUDENTACADPLAN1'
       expect(committee[:statusIcon]).to eq 'check'
       expect(committee[:statusMessage]).to eq nil
-    end
-
-    it 'contains the expected student data for a completed committee' do
-      committee = feed[:studentCommittees][1]
-      expect(committee[:committeeType]).to eq 'NOT ACTIVE'
     end
 
     it 'correctly parses a qualifying exam committee when student has failed the exam' do
