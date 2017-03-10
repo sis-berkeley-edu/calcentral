@@ -8,46 +8,55 @@
           <NAME/>
           <STATUS>FAIL</STATUS>
           <CODE/>
+          <IN_PROGRESS/>
         </REQUIREMENT>
         <REQUIREMENT>
           <NAME>American History (R-0002)</NAME>
           <STATUS>FAIL</STATUS>
           <CODE>000000002</CODE>
+          <IN_PROGRESS/>
         </REQUIREMENT>
         <REQUIREMENT>
           <NAME>American Cultures (R-0003)</NAME>
           <STATUS>COMP</STATUS>
           <CODE>000000003</CODE>
+          <IN_PROGRESS>Y</IN_PROGRESS>
         </REQUIREMENT>
         <REQUIREMENT>
           <NAME>University GPA (R-0004)</NAME>
           <STATUS>COMP</STATUS>
           <CODE>000000004</CODE>
+          <IN_PROGRESS>Y</IN_PROGRESS>
         </REQUIREMENT>
         <REQUIREMENT>
           <NAME>Career Level Limits (R-0005)</NAME>
           <STATUS>COMP</STATUS>
           <CODE>000000005</CODE>
+          <IN_PROGRESS/>
         </REQUIREMENT>
         <REQUIREMENT>
           <NAME>American Institutions (R-0018)</NAME>
           <STATUS>FAIL</STATUS>
           <CODE>000000018</CODE>
+          <IN_PROGRESS/>
         </REQUIREMENT>
         <REQUIREMENT>
           <NAME>Minimum Total Units (R-0131)</NAME>
           <STATUS>FAIL</STATUS>
           <CODE>000000131</CODE>
+          <IN_PROGRESS/>
         </REQUIREMENT>
         <REQUIREMENT>
           <NAME>Senior Residence (R-0132)</NAME>
           <STATUS>COMP</STATUS>
           <CODE>000000132</CODE>
+          <IN_PROGRESS/>
         </REQUIREMENT>
         <REQUIREMENT>
           <NAME>Entry Level Writing (R-0001)</NAME>
           <STATUS>COMP</STATUS>
           <CODE>000000001</CODE>
+          <IN_PROGRESS/>
         </REQUIREMENT>
       </REQUIREMENTS>
     </PROGRESS>

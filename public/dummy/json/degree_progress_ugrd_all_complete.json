@@ -1,0 +1,36 @@
+{
+  "feed": {
+    "degreeProgress": {
+      "acadCareer": "UGRD",
+      "emplid": "12345678",
+      "progresses": [
+        {
+          "requirements": [
+            {
+              "code": "000000001",
+              "name": "Entry Level Writing",
+              "status": "Completed"
+            },
+            {
+              "code": "000000002",
+              "name": "American History",
+              "status": "Completed"
+            },
+            {
+              "code": "000000018",
+              "name": "American Institutions",
+              "status": "Completed"
+            },
+            {
+              "code": "000000003",
+              "name": "American Cultures",
+              "status": "Completed"
+            }
+          ],
+          "rptDate": "2016-12-21"
+        }
+      ]
+    }
+  },
+  "statusCode": 200
+}
