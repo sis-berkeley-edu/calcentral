@@ -5,7 +5,7 @@ module ServiceAlerts
 
     self.table_name = 'service_alerts'
 
-    attr_accessible :title, :snippet, :body, :publication_date, :display
+    attr_accessible :title, :snippet, :body, :publication_date, :display, :splash
 
     validates :title, presence: true
     validates :body, presence: true
@@ -14,7 +14,11 @@ module ServiceAlerts
     after_initialize :set_default_publication_date
 
     def self.get_latest
-      self.where(display: true).order(created_at: :desc).first
+      self.where(display: true, splash: false).order(created_at: :desc).first
+    end
+
+    def self.get_latest_splash
+      self.where(display: true, splash: true).order(created_at: :desc).first
     end
 
     def set_default_publication_date
