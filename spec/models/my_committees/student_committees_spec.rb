@@ -14,14 +14,27 @@ describe MyCommittees::StudentCommittees do
         double(lookup_campus_solutions_id: user_cs_id))
     end
 
-    it 'correctly identifies an active committee' do
-      committee = feed[:studentCommittees][2]
-      expect(committee[:isActive]).to be true
+    context 'when committee is active' do
+      let(:committee) { feed[:studentCommittees][2] }
+
+      it 'correctly identifies an active committee' do
+        committee = feed[:studentCommittees][2]
+        expect(committee[:isActive]).to be true
+      end
+      it 'filters out committee members with service end date in the past' do
+        expect(committee[:committeeMembers][:chair].count).to eq 1
+      end
     end
 
-    it 'correctly identifies a completed committee' do
-      committee = feed[:studentCommittees][1]
-      expect(committee[:isActive]).to be false
+    context 'when committee is inactive/complete' do
+      let(:committee) { feed[:studentCommittees][0] }
+
+      it 'correctly identifies a completed committee' do
+        expect(committee[:isActive]).to be false
+      end
+      it 'retains all committee members regardless of service end date' do
+        expect(committee[:committeeMembers][:chair].count).to eq 3
+      end
     end
 
     it 'correctly parses a qualifying exam committee when student has passed the exam' do
@@ -73,11 +86,6 @@ describe MyCommittees::StudentCommittees do
         qualifying_exam_attempts = feed[:studentCommittees][4][:milestoneAttempts]
         expect(qualifying_exam_attempts[0][:display]).to eq 'Passed Jan 01, 2016'
       end
-    end
-
-    it 'filters out committee members with end date in the past' do
-      members = feed[:studentCommittees][0][:committeeMembers]
-      expect(members[:chair].count).to eq 2
     end
 
     it 'contains the expected student committee data for chairs' do
