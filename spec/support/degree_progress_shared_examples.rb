@@ -111,12 +111,12 @@ shared_examples 'a proxy that returns undergraduate milestone data' do
   it 'replaces codes with descriptive names' do
     plan_level_data = subject[:feed][:degreeProgress][:progresses]
     expect(plan_level_data.first[:requirements][0][:name]).to eq('Entry Level Writing')
-    expect(plan_level_data.first[:requirements][0][:status]).to eq('Completed')
+    expect(plan_level_data.first[:requirements][0][:status]).to eq('Satisfied')
     expect(plan_level_data.first[:requirements][1][:name]).to eq('American History')
-    expect(plan_level_data.first[:requirements][1][:status]).to eq('Incomplete')
+    expect(plan_level_data.first[:requirements][1][:status]).to eq('Not Satisfied')
     expect(plan_level_data.first[:requirements][2][:name]).to eq('American Institutions')
-    expect(plan_level_data.first[:requirements][2][:status]).to eq('Incomplete')
+    expect(plan_level_data.first[:requirements][2][:status]).to eq('Not Satisfied')
     expect(plan_level_data.first[:requirements][3][:name]).to eq('American Cultures')
-    expect(plan_level_data.first[:requirements][3][:status]).to eq('Completed')
+    expect(plan_level_data.first[:requirements][3][:status]).to eq('Satisfied')
   end
 end

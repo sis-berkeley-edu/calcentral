@@ -13,11 +13,11 @@ describe Berkeley::DegreeProgressUndergrad do
     end
     context 'when status_code exists in @statuses' do
       let(:status_code) {'FAIL'}
-      it {should eq 'Incomplete'}
+      it {should eq 'Not Satisfied'}
     end
     context 'when status_code exists in @statuses but is lowercase' do
       let(:status_code) {'comp'}
-      it {should eq 'Completed'}
+      it {should eq 'Satisfied'}
     end
   end
 

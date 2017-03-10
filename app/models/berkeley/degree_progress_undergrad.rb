@@ -47,8 +47,8 @@ module Berkeley
 
     def self.statuses
       @statuses ||= {
-        'FAIL' => 'Incomplete',
-        'COMP' => 'Completed'
+        'FAIL' => 'Not Satisfied',
+        'COMP' => 'Satisfied'
       }
     end
   end
