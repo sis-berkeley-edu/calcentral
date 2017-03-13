@@ -3,7 +3,7 @@ module DegreeProgress
 
     def process(response)
       degree_progress = response.try(:[], :feed).try(:[], :ucAaProgress)
-      degree_progress[:progresses] = massage_progresses(degree_progress[:progresses])
+      degree_progress[:progresses] = massage_progresses(degree_progress.try(:[], :progresses))
       degree_progress
     end
 

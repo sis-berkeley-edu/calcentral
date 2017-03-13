@@ -24,7 +24,6 @@
       class="large-4 columns cc-column-2 cc-academics-row-margin">
       <div data-ng-include src="'academics_semesters.html'" data-ng-if="api.user.profile.hasStudentHistory && semesters.length"></div>
       <div
-        data-ng-if="api.user.profile.features.csDegreeProgressUgrdStudent && (api.user.profile.roles.undergrad)"
         data-ng-include src="'widgets/academics/degree_progress_undergrad.html'"
         data-ng-controller="UndergraduateDegreeProgressController"
       ></div>
