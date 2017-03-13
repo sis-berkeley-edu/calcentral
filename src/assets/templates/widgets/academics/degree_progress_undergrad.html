@@ -1,34 +1,39 @@
-<div data-ng-if="degreeProgress.undergraduate.showCard"
-  class="cc-widget cc-degree-progress-card">
+<div data-ng-if="degreeProgress.undergraduate.showCard" class="cc-widget cc-undergrad-degree-progress-card">
   <div class="cc-widget-title">
     <h2>Degree Progress</h2>
   </div>
   <div class="cc-widget-padding">
     <div data-ng-if="degreeProgress.undergraduate.errored">There was an error retrieving undergraduate degree progress data.</div>
-    <div data-ng-if="!degreeProgress.undergraduate.progresses.length">It appears that you haven’t completed any University Requirements. If you believe this to be in error, please contact your advisor.</div>
-
-    <ul data-ng-if="!degreeProgress.undergraduate.errored && degreeProgress.undergraduate.progresses.length">
-      <li data-ng-repeat="plan in degreeProgress.undergraduate.progresses">
-        <div class="cc-table">
-          <table>
-            <thead>
-              <tr>
-                <th>University Requirement</th>
-                <th>Status</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr data-ng-repeat="requirement in plan.requirements">
-                <td data-ng-bind="requirement.name"></td>
-                <td>
-                  <i class="fa" data-ng-class="{'cc-icon fa fa-check cc-icon-green': requirement.status === 'Satisfied', 'cc-icon fa fa-exclamation-triangle cc-icon-gold': requirement.status === 'Not Satisfied'}"></i>
-                  <span data-ng-bind="requirement.status"></span>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </li>
-    </ul>
+    <div data-ng-if="!degreeProgress.undergraduate.errored && !degreeProgress.undergraduate.progresses.length">
+      It appears that you haven’t completed any University Requirements. If you believe this to be in error, please contact your advisor.
+    </div>
+    <div data-ng-if="!degreeProgress.undergraduate.errored && degreeProgress.undergraduate.progresses.length">
+      <ul>
+        <li data-ng-repeat="plan in degreeProgress.undergraduate.progresses">
+          <div class="cc-degree-progress-report-date">
+            Degree Progress as of <span data-ng-bind="plan.reportDate"></span>
+          </div>
+          <div class="cc-table">
+            <table>
+              <thead>
+                <tr>
+                  <th>University Requirement</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr data-ng-repeat="requirement in plan.requirements">
+                  <td data-ng-bind="requirement.name"></td>
+                  <td>
+                    <i class="fa" data-ng-class="{'cc-icon fa fa-check cc-icon-green': requirement.status === 'Satisfied', 'cc-icon fa fa-exclamation-triangle cc-icon-gold': requirement.status === 'Not Satisfied'}"></i>
+                    <span data-ng-bind="requirement.status"></span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </li>
+      </ul>
+    </div>
   </div>
 </div>
