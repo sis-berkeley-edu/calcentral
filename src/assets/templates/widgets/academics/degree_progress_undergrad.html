@@ -1,10 +1,13 @@
-<div class="cc-widget cc-degree-progress-card">
+<div data-ng-if="degreeProgress.undergraduate.showCard"
+  class="cc-widget cc-degree-progress-card">
   <div class="cc-widget-title">
     <h2>Degree Progress</h2>
   </div>
   <div class="cc-widget-padding">
     <div data-ng-if="degreeProgress.undergraduate.errored">There was an error retrieving undergraduate degree progress data.</div>
-    <ul data-ng-if="!degreeProgress.undergraduate.errored && degreeProgress.undergraduate.progresses">
+    <div data-ng-if="!degreeProgress.undergraduate.progresses.length">It appears that you haven’t completed any University Requirements. If you believe this to be in error, please contact your advisor.</div>
+
+    <ul data-ng-if="!degreeProgress.undergraduate.errored && degreeProgress.undergraduate.progresses.length">
       <li data-ng-repeat="plan in degreeProgress.undergraduate.progresses">
         <div class="cc-table">
           <table>
