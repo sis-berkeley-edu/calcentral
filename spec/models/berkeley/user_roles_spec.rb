@@ -10,6 +10,47 @@ describe Berkeley::UserRoles do
   describe '#roles_from_cs_affiliations' do
     subject { Berkeley::UserRoles.roles_from_cs_affiliations(affiliations) }
 
+    context 'concurrent enrollment student' do
+      let(:affiliations) do
+        [
+          {
+            :type => {
+              :code => 'STUDENT',
+              :description => ''
+            },
+            :status => {
+              :code =>'ACT',
+              :description => 'Active'
+            },
+            :fromDate => '2017-01-21'
+          },
+          {
+            :type => {
+              :code => 'EXTENSION',
+              :description => 'UCB Extension Student'
+            },
+            :status => {
+              :code => 'ACT',
+              :description => 'Active'
+            },
+            :fromDate => '2017-01-21'
+          },
+          {
+            :type => {
+              :code => 'UNDERGRAD',
+              :description => 'Undergraduate Student'
+            },
+            :status => {
+              :code =>'ACT',
+              :description => 'Active'
+            },
+            :fromDate => '2017-02-10'
+          }
+        ]
+      end
+      it_behaves_like 'a parser for roles', [:student, :undergrad, :concurrentEnrollmentStudent]
+    end
+
     context 'undergraduate student' do
       let(:affiliations) do
         [

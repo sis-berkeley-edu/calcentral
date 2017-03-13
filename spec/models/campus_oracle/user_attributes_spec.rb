@@ -29,10 +29,6 @@ describe CampusOracle::UserAttributes do
           let(:uid) {19999969}
           it_behaves_like 'a parser for roles', [:guest]
         end
-        context 'concurrent enrollment student' do
-          let(:uid) {321703}
-          it_behaves_like 'a parser for roles', [:concurrentEnrollmentStudent]
-        end
         context 'user with expired CalNet account' do
           let(:uid) {6188989}
           it_behaves_like 'a parser for roles', [:student, :registered, :expiredAccount, :graduate]

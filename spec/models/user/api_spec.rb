@@ -448,7 +448,6 @@ describe User::Api do
           faculty: false,
           staff: false,
           guest: false,
-          concurrentEnrollmentStudent: false,
           expiredAccount: false
         }
       }
@@ -471,7 +470,6 @@ describe User::Api do
           faculty: true,
           staff: false,
           guest: false,
-          concurrentEnrollmentStudent: false,
           expiredAccount: false
         }
       }
@@ -491,8 +489,7 @@ describe User::Api do
               exStudent: true,
               faculty: true,
               staff: false,
-              guest: false,
-              concurrentEnrollmentStudent: false
+              guest: false
             },
             student_id: '17154428'
           }

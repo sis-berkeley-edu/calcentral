@@ -12,8 +12,7 @@ module Berkeley
         :exStudent => (affiliations & ['STUDENT-STATUS-EXPIRED', 'FORMER-STUDENT', 'AFFILIATE-TYPE-ADVCON-ALUMNUS']).present?,
         :faculty => affiliations.include?('EMPLOYEE-TYPE-ACADEMIC'),
         :staff => affiliations.include?('EMPLOYEE-TYPE-STAFF'),
-        :guest => affiliations.include?('GUEST-TYPE-COLLABORATOR'),
-        :concurrentEnrollmentStudent => affiliations.include?('AFFILIATE-TYPE-CONCURR ENROLL')
+        :guest => affiliations.include?('GUEST-TYPE-COLLABORATOR')
       }
     end
 
@@ -95,6 +94,8 @@ module Berkeley
             result[:undergrad] = true
           when 'LAW'
             result[:law] = true
+          when 'EXTENSION'
+            result[:concurrentEnrollmentStudent] = true
         end
       end
       cs_affiliations.select { |a| a[:status][:code] == 'INA' }.each do |inactive_affiliation|
