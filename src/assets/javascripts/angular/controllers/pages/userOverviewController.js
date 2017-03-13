@@ -245,6 +245,7 @@ angular.module('calcentral.controllers').controller('UserOverviewController', fu
         uid: $routeParams.uid
       }).then(function(data) {
         $scope.degreeProgress.undergraduate.progresses = _.get(data, 'data.feed.degreeProgress.progresses');
+        $scope.degreeProgress.undergraduate.links = _.get(data, 'data.feed.links');
         $scope.degreeProgress.undergraduate.errored = _.get(data, 'errored');
       }).finally(function() {
         $scope.degreeProgress.undergraduate.showCard = apiService.user.profile.features.csDegreeProgressUgrdAdvising && $scope.degreeProgress.undergraduate.progresses.length;

@@ -37,7 +37,7 @@ module DegreeProgress
       if (link_feed = CampusSolutions::Link.new.get_url link_key)
         link = link_feed.try(:[], :link)
       end
-      logger.error "Could not retrieve CS link #{link_key} for Degree Progress feed, uid = #{@uid}" unless link
+      logger.error "Could not retrieve CS link #{link_key} for #{self.class.name} feed, uid = #{@uid}" unless link
       link
     end
 

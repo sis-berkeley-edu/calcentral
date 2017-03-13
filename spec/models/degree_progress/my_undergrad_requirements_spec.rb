@@ -9,5 +9,9 @@ describe DegreeProgress::MyUndergradRequirements do
 
     it_behaves_like 'a proxy that observes a feature flag'
     it_behaves_like 'a proxy that returns undergraduate milestone data'
+
+    it 'does not include the Academic Progress Report link in the response' do
+      expect(subject[:feed][:links]).not_to be
+    end
   end
 end

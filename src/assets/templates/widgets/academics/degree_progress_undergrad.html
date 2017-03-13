@@ -10,14 +10,14 @@
     <div data-ng-if="!degreeProgress.undergraduate.errored && degreeProgress.undergraduate.progresses.length">
       <ul>
         <li data-ng-repeat="plan in degreeProgress.undergraduate.progresses">
-          <div class="cc-degree-progress-report-date">
+          <div data-ng-if="plan.reportDate" class="cc-degree-progress-report-date">
             Degree Progress as of <span data-ng-bind="plan.reportDate"></span>
           </div>
           <div class="cc-table">
             <table>
               <thead>
                 <tr>
-                  <th>University Requirement</th>
+                  <th>University Requirement</th>r
                   <th>Status</th>
                 </tr>
               </thead>
@@ -34,6 +34,19 @@
           </div>
         </li>
       </ul>
+    </div>
+    <div data-ng-if="api.user.profile.roles.advisor" class="cc-degree-progress-footer">
+      Run the
+      <a data-ng-if="degreeProgress.undergraduate.links.academicProgressReport.url"
+        data-cc-campus-solutions-link-directive="degreeProgress.undergraduate.links.academicProgressReport"
+        data-cc-campus-solutions-link-directive-cc-page-name="currentPage.name"
+        data-cc-campus-solutions-link-directive-cc-page-url="currentPage.url"
+      ></a>
+      <span data-ng-if="!degreeProgress.undergraduate.links.academicProgressReport.url">Academic Progress Report</span>
+      to refresh this data. Updates may take up to 24 hours.
+    </div>
+    <div data-ng-if="!api.user.profile.roles.advisor" class="cc-degree-progress-footer">
+      If this information is out of date, please contact your advisor.
     </div>
   </div>
 </div>
