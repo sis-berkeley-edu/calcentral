@@ -98,7 +98,7 @@ module MyCommittees::CommitteesModule
   end
 
   def determine_qualifying_exam_status_message(cs_committee)
-    if cs_committee[:studentMilestoneAttempts].empty?
+    if cs_committee[:studentMilestoneAttempts].blank?
       proposed_exam_date = cs_committee.try(:[], :studentQeExamProposeDate)
       "Proposed Exam Date: #{format_date(proposed_exam_date)}" unless proposed_exam_date.blank?
     end
