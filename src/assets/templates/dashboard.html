@@ -13,7 +13,7 @@
 
   <div class="medium-7 large-4 columns cc-column-3">
     <div data-ng-include="'widgets/activity.html'"></div>
-    <div data-ng-include="'widgets/student_resources.html'" data-ng-if="api.user.profile.roles.student || api.user.profile.roles.applicant"></div>
+    <div data-ng-include="'widgets/student_resources.html'" data-ng-if="api.user.profile.roles.student && (api.user.profile.roles.undergrad || api.user.profile.roles.graduate || api.user.profile.roles.law)"></div>
     <div data-ng-include="'widgets/toolbox/user_search.html'" data-ng-if="api.user.profile.features.csAdvisorStudentLookup && api.user.profile.roles.advisor"></div>
     <div data-ng-include="'widgets/advisor/resources.html'" data-ng-if="api.user.profile.roles.advisor"></div>
     <div data-ng-include="'faculty_resources.html'" data-ng-if="api.user.profile.roles.faculty || api.user.profile.hasInstructorHistory"></div>
