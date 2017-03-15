@@ -85,9 +85,9 @@ button {
   }
 }
 .cc-button-blue[disabled] {
-  background: $cc-color-button-action-disabled-background !important;
+  background: $cc-color-blue-grey !important;
   &:focus, &:hover {
-    background: $cc-color-button-action-disabled-background !important;
+    background: $cc-color-blue-grey !important;
   }
 }
 
