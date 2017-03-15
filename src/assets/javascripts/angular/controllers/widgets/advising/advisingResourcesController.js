@@ -54,7 +54,7 @@ angular.module('calcentral.controllers').controller('AdvisingResourcesController
     _.forEach(sections, function(section) {
       if (section.links.length > 0) {
         section.links = _.orderBy(section.links, function(link) {
-          return link.name.toLowerCase();
+          return _.toString(link.name).toLowerCase();
         });
       }
     });
