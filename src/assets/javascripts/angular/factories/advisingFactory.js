@@ -20,7 +20,7 @@ angular.module('calcentral.factories').factory('advisingFactory', function(apiSe
   var urlAdvisingStudentSuccess = '/api/advising/student_success/';
   // var urlAdvisingStudentSuccess = '/dummy/json/advising_student_success.json';
   var urlAdvisingDegreeProgressGraduate = '/api/advising/degree_progress/grad/';
-  // var urlAdvisingDegreeProgress = '/dummy/json/degree_progress_graduate.json';
+  // var urlAdvisingDegreeProgressGraduate = '/dummy/json/degree_progress_grad.json';
   var urlAdvisingDegreeProgressUndergrad = '/api/advising/degree_progress/ugrd/';
   // var urlAdvisingDegreeProgressUndergrad = '/dummy/json/degree_progress_undergrad.json';
 

@@ -4,8 +4,13 @@
   </div>
   <div class="cc-widget-padding">
     <div data-ng-if="degreeProgress.graduate.errored">There was an error retrieving graduate degree progress data.</div>
-    <div data-ng-if="!degreeProgress.graduate.progresses.length">It appears that you haven’t completed any Graduate Division Milestones. If you believe this to be in error, please contact your department.</div>
-    
+    <div data-ng-if="!degreeProgress.graduate.progresses.length && !api.user.profile.roles.advisor">
+      You have not completed any Graduate Division Milestones. Please contact your department if you believe this is an error.
+    </div>
+    <div data-ng-if="!degreeProgress.graduate.progresses.length && api.user.profile.roles.advisor">
+      This student has not completed any Graduate Division Milestones.
+    </div>
+
     <ul class="cc-graduate-milestones">
       <li data-ng-repeat="plan in degreeProgress.graduate.progresses">
         <h3 data-ng-bind="plan.acadPlan ? plan.acadPlan + ' &mdash; Graduate Division Milestones' : 'Graduate Division Milestones'"></h3>

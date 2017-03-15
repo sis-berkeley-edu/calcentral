@@ -1,0 +1,145 @@
+{
+  "statusCode": 200,
+  "feed": {
+    "degreeProgress": [
+      {
+        "acadCareer": "GRAD",
+        "acadProgCode": "GACAD",
+        "acadDegreeStatus": "AW",
+        "acadProg": "Graduate Academic Programs",
+        "acadPlan": "Education MA",
+        "requirements": [
+          {
+            "name": "Advancement to Candidacy (Capstone Plan)",
+            "code": "AAGADVMAS2",
+            "status": "Completed",
+            "orderNumber": 3,
+            "dateCompleted": "Sep 23, 2002",
+            "dateAnticipated": "",
+            "formNotification": null,
+            "attempts": null,
+            "statusCode": "Y"
+          },
+          {
+            "name": "Capstone",
+            "code": "AAGACADP2",
+            "status": "Completed",
+            "orderNumber": 6,
+            "dateCompleted": "Dec 02, 2002",
+            "dateAnticipated": "",
+            "formNotification": null,
+            "attempts": null,
+            "statusCode": "Y"
+          }
+        ]
+      },
+      {
+        "acadCareer": "GRAD",
+        "acadProgCode": "GACAD",
+        "acadDegreeStatus": null,
+        "acadProg": "Graduate Academic Programs",
+        "acadPlan": "Education PhD",
+        "requirements": [
+          {
+            "name": "Approval for Qualifying Exam",
+            "code": "AAGQEAPRV",
+            "status": "Completed",
+            "orderNumber": 1,
+            "dateCompleted": "Apr 16, 2013",
+            "dateAnticipated": "May 02, 2013",
+            "formNotification": null,
+            "attempts": null,
+            "statusCode": "Y"
+          },
+          {
+            "name": "Qualifying Exam Results",
+            "code": "AAGQERESLT",
+            "status": null,
+            "orderNumber": 2,
+            "dateCompleted": "",
+            "dateAnticipated": "",
+            "formNotification": null,
+            "attempts": [
+              {
+                "sequenceNumber": 1,
+                "date": "May 02, 2013",
+                "result": "Passed",
+                "statusCode": "P",
+                "display": "Passed May 02, 2013"
+              }
+            ],
+            "statusCode": "P"
+          },
+          {
+            "name": "Advancement to Candidacy",
+            "code": "AAGADVPHD",
+            "status": "Completed",
+            "orderNumber": 3,
+            "dateCompleted": "Mar 24, 2014",
+            "dateAnticipated": "",
+            "formNotification": null,
+            "attempts": null,
+            "statusCode": "Y"
+          },
+          {
+            "name": "Dissertation File Date",
+            "code": "AAGDISSERT",
+            "status": "Not Satisfied",
+            "orderNumber": 5,
+            "dateCompleted": "",
+            "dateAnticipated": "",
+            "formNotification": null,
+            "attempts": null,
+            "statusCode": "N"
+          }
+        ]
+      }
+    ],
+    "links": {
+      "applyForAdvancementToCandidacy": {
+        "url": "https://bcs-web-dev-03.is.berkeley.edu:8443/psp/bcsdev/EMPLOYEE/HRMS/c/G3FRAME.G3SEARCH.GBL?\u0026G3FORM_FAMILY=STUDENT\u0026G3FORM_TYPE=AAQEAPPLIC\u0026G3FORM_CONDITION=Default\u0026G3FORM_TASK=ADD",
+        "urlId": "UC_CX_GT_GRAD_ADVC",
+        "ucFrom": "CalCentral",
+        "ucFromLink": "https://calcentral-sis-dev-01.ist.berkeley.edu/",
+        "ucFromText": "CalCentral",
+        "name": "Apply for Advancement to Candidacy",
+        "title": "Apply for Advancement to Candidacy",
+        "isCsLink": true,
+        "iSCsLink": true
+      },
+      "applyDoctorsQualifyingExam": {
+        "url": "https://bcs-web-dev-03.is.berkeley.edu:8443/psp/bcsdev/EMPLOYEE/HRMS/c/G3FRAME.G3SEARCH.GBL?\u0026G3FORM_FAMILY=STUDENT\u0026G3FORM_TYPE=AAQEAPPLIC\u0026G3FORM_CONDITION=Default\u0026G3FORM_TASK=ADD",
+        "urlId": "UC_CX_GT_GRAD_APPQE",
+        "ucFrom": "CalCentral",
+        "ucFromLink": "https://calcentral-sis-dev-01.ist.berkeley.edu/",
+        "ucFromText": "CalCentral",
+        "name": "Apply for the Doctoral Qualifying Exam",
+        "title": "Apply for the Doctoral Qualifying Exam",
+        "isCsLink": true,
+        "iSCsLink": true
+      },
+      "submitDoctoralDegreeCandidacyReview": {
+        "url": "https://bcs-web-dev-03.is.berkeley.edu:8443/psp/bcsdev/EMPLOYEE/HRMS/c/G3FRAME.G3SEARCH.GBL?\u0026G3FORM_FAMILY=STUDENT\u0026G3FORM_TYPE=SRDCR\u0026G3FORM_CONDITION=Default\u0026G3FORM_TASK=ADD",
+        "urlId": "UC_CX_GT_SRDCR_ADD_DP",
+        "ucFrom": "CalCentral",
+        "ucFromLink": "https://calcentral-sis-dev-01.ist.berkeley.edu/",
+        "ucFromText": "CalCentral",
+        "name": "Submit a Doctoral Degree Candidacy Review",
+        "title": "View your submitted doctoral candidacy reviews",
+        "isCsLink": true,
+        "iSCsLink": true
+      },
+      "viewSubmittedForms": {
+        "url": "https://bcs-web-dev-03.is.berkeley.edu:8443/psp/bcsdev/EMPLOYEE/HRMS/c/G3FRAME.G3SEARCH.GBL?\u0026G3FORM_FAMILY=STUDENT\u0026G3FORM_CONDITION=Default\u0026G3FORM_TASK=VWS",
+        "urlId": "UC_CX_GT_STUDENT_VIEW_DP",
+        "ucFrom": "CalCentral",
+        "ucFromLink": "https://calcentral-sis-dev-01.ist.berkeley.edu/",
+        "ucFromText": "CalCentral",
+        "name": "View Submitted Forms",
+        "title": "View the status of the forms you have submitted.",
+        "isCsLink": true,
+        "iSCsLink": true
+      }
+    }
+  }
+}

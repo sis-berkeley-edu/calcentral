@@ -6,6 +6,7 @@ angular.module('calcentral.factories').factory('degreeProgressFactory', function
   var undergraduateRequirementsUrl = '/api/academics/degree_progress/ugrd';
   // var undergraduateRequirementsUrl = '/dummy/json/degree_progress_ugrd.json';
   var graduateMilestonesUrl = '/api/academics/degree_progress/grad';
+  // var graduateMilestonesUrl = '/dummy/json/degree_progress_grad.json';
 
   var getUndergraduateRequirements = function(options) {
     return apiService.http.request(options, undergraduateRequirementsUrl);
