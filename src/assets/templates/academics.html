@@ -28,7 +28,6 @@
         data-ng-controller="UndergraduateDegreeProgressController"
       ></div>
       <div
-        data-ng-if="api.user.profile.features.csDegreeProgressGradStudent && (api.user.profile.roles.graduate || api.user.profile.roles.law)"
         data-ng-include src="'widgets/academics/degree_progress_graduate.html'"
         data-ng-controller="GraduateDegreeProgressController"
       ></div>
