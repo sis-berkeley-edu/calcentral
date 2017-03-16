@@ -44,7 +44,7 @@ module DegreeProgress
     private
 
     def target_audience?
-      User::SearchUsersByUid.new(id: @uid, roles: [:graduate, :law]).search_users_by_uid.present?
+      User::SearchUsersByUid.new(id: @uid, roles: [:graduate, :law, :exStudent]).search_users_by_uid.present?
     end
 
     def is_feature_enabled?
