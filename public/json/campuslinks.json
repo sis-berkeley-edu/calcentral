@@ -3002,25 +3002,6 @@
       ]
     },
     {
-      "name": "Schedule Builder",
-      "description": "Plan your classes",
-      "url": "https://schedulebuilder.berkeley.edu/",
-      "roles": {
-        "student": true,
-        "applicant": true,
-        "staff": true,
-        "faculty": true,
-        "exStudent": true,
-        "summerVisitor": true
-      },
-      "categories": [
-        {
-          "topcategory": "Academic Planning",
-          "subcategory": "Planning"
-        }
-      ]
-    },
-    {
       "name": "Schedule \u0026 Deadlines",
       "description": "Key dates and deadlines for summer sessions",
       "url": "http://summer.berkeley.edu/registration/schedule",
