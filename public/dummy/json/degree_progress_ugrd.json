@@ -30,6 +30,19 @@
           "reportDate": "Dec 21, 2016"
         }
       ]
+    },
+    "links": {
+      "academicProgressReport": {
+        "url": "https://bcswebqat.is.berkeley.edu/psp/bcsqat/EMPLOYEE/PSFT_CS/c/SSR_ADVISEE_OVRD.SAA_SS_DPR_ADB.GBL?EMPLID={EMPLID}",
+        "urlId": "UC_CX_APR_RPT_STDNT",
+        "ucFrom": "CalCentral",
+        "ucFromLink": "https://calcentral-sis-dev-01.ist.berkeley.edu/",
+        "ucFromText": "CalCentral",
+        "name": "Academic Progress Report",
+        "title": "View this student's Academic Progress Report",
+        "isCsLink": true,
+        "iSCsLink": true
+      }
     }
   },
   "statusCode": 200
