@@ -44,8 +44,8 @@ angular.module('calcentral.controllers').controller('CanvasCourseGradeExportCont
    * Updates status of background job in $scope.
    * Halts jobStatusLoader loop if job no longer in progress.
    */
-  var statusProcessor = function(data) {
-    angular.extend($scope, data);
+  var statusProcessor = function(response) {
+    angular.extend($scope, response.data);
     $scope.percentCompleteRounded = Math.round($scope.percentComplete * 100);
     if ($scope.jobStatus === 'Processing' || $scope.jobStatus === 'New') {
       jobStatusLoader();
@@ -66,8 +66,7 @@ angular.module('calcentral.controllers').controller('CanvasCourseGradeExportCont
   var jobStatusLoader = function() {
     timeoutPromise = $timeout(function() {
       return canvasCourseGradeExportFactory.jobStatus($scope.canvasCourseId, $scope.backgroundJobId)
-        .success(statusProcessor)
-        .error(function() {
+        .then(statusProcessor, function errorCallback() {
           $scope.errorStatus = 'error';
           $scope.contactSupport = true;
           $scope.displayError = 'Unable to obtain grade preloading status.';
@@ -84,41 +83,46 @@ angular.module('calcentral.controllers').controller('CanvasCourseGradeExportCont
     $scope.appfocus = true;
     $scope.jobStatus = 'New';
     apiService.util.iframeScrollToTop();
-    canvasCourseGradeExportFactory.prepareGradesCacheJob($scope.canvasCourseId).success(function(data) {
-      if (data.jobRequestStatus === 'Success') {
-        $scope.backgroundJobId = data.jobId;
-        jobStatusLoader();
-      } else {
+    canvasCourseGradeExportFactory.prepareGradesCacheJob($scope.canvasCourseId).then(
+      function successCallback(response) {
+        if (response.data.jobRequestStatus === 'Success') {
+          $scope.backgroundJobId = response.data.jobId;
+          jobStatusLoader();
+        } else {
+          $scope.appState = 'error';
+          $scope.contactSupport = true;
+          $scope.errorStatus = 'Grade preloading request failed';
+        }
+      },
+      function errorCallback() {
         $scope.appState = 'error';
         $scope.contactSupport = true;
-        $scope.errorStatus = 'Grade preloading request failed';
+        $scope.errorStatus = 'Grade preloading failed';
       }
-    }).error(function() {
-      $scope.appState = 'error';
-      $scope.contactSupport = true;
-      $scope.errorStatus = 'Grade preloading failed';
-    });
+    );
   };
 
   $scope.getExportOptions = function() {
-    canvasCourseGradeExportFactory.exportOptions($scope.canvasCourseId).success(function(data) {
-      if ($scope.appState !== 'error') {
-        loadSectionTerms(data.sectionTerms);
+    canvasCourseGradeExportFactory.exportOptions($scope.canvasCourseId).then(
+      function successCallback(response) {
+        if ($scope.appState !== 'error') {
+          loadSectionTerms(response.data.sectionTerms);
+        }
+        if ($scope.appState !== 'error') {
+          loadOfficialSections(response.data.officialSections);
+        }
+        if ($scope.appState !== 'error') {
+          validateCourseState(response.data.gradingStandardEnabled, response.data.mutedAssignments);
+        }
+        if ($scope.appState !== 'error') {
+          $scope.appState = 'selection';
+        }
+      }, function errorCallback() {
+        $scope.appState = 'error';
+        $scope.contactSupport = true;
+        $scope.errorStatus = 'Unable to obtain course settings.';
       }
-      if ($scope.appState !== 'error') {
-        loadOfficialSections(data.officialSections);
-      }
-      if ($scope.appState !== 'error') {
-        validateCourseState(data.gradingStandardEnabled, data.mutedAssignments);
-      }
-      if ($scope.appState !== 'error') {
-        $scope.appState = 'selection';
-      }
-    }).error(function() {
-      $scope.appState = 'error';
-      $scope.contactSupport = true;
-      $scope.errorStatus = 'Unable to obtain course settings.';
-    });
+    );
   };
 
   $scope.notReadyForPreparation = function() {
@@ -145,9 +149,9 @@ angular.module('calcentral.controllers').controller('CanvasCourseGradeExportCont
 
   $scope.resolveIssues = function() {
     $scope.accessibilityAnnounce('Updating course settings');
-    canvasCourseGradeExportFactory.resolveIssues($scope.canvasCourseId, $scope.enableDefaultGradingScheme, $scope.unmuteAllAssignments)
-      .success(function(data) {
-        if (data.status && data.status === 'Resolved') {
+    canvasCourseGradeExportFactory.resolveIssues($scope.canvasCourseId, $scope.enableDefaultGradingScheme, $scope.unmuteAllAssignments).then(
+      function successCallback(response) {
+        if (response.data.status && response.data.status === 'Resolved') {
           $scope.accessibilityAnnounce('Course settings updated. Export form options loaded.');
           $scope.switchToSelection();
         } else {
@@ -155,7 +159,8 @@ angular.module('calcentral.controllers').controller('CanvasCourseGradeExportCont
           $scope.contactSupport = true;
           $scope.errorStatus = 'Error resolving course site state for E-Grades Export.';
         }
-      }).error(function() {
+      },
+      function errorCallback() {
         $scope.appState = 'error';
         $scope.contactSupport = true;
         if ($scope.enableDefaultGradingScheme) {
@@ -167,7 +172,8 @@ angular.module('calcentral.controllers').controller('CanvasCourseGradeExportCont
         if ($scope.enableDefaultGradingScheme && $scope.unmuteAllAssignments) {
           $scope.errorStatus = 'Error enabling grading scheme and unmuting assignments.';
         }
-      });
+      }
+    );
   };
 
   /*
@@ -189,28 +195,31 @@ angular.module('calcentral.controllers').controller('CanvasCourseGradeExportCont
    * Performs authorization check on user to control interface presentation
    */
   var checkAuthorization = function() {
-    canvasSharedFactory.courseUserRoles($scope.canvasCourseId).success(function(data) {
-      $scope.canvasRootUrl = data.canvasRootUrl;
-      $scope.canvasCourseId = data.courseId;
-      $scope.courseUserRoles = data.roles;
+    canvasSharedFactory.courseUserRoles($scope.canvasCourseId).then(
+      function successCallback(response) {
+        $scope.canvasRootUrl = response.data.canvasRootUrl;
+        $scope.canvasCourseId = response.data.courseId;
+        $scope.courseUserRoles = response.data.roles;
 
-      $scope.userAuthorized = userIsAuthorized($scope.courseUserRoles);
-      if ($scope.userAuthorized) {
-        $scope.getExportOptions();
-      } else {
+        $scope.userAuthorized = userIsAuthorized($scope.courseUserRoles);
+        if ($scope.userAuthorized) {
+          $scope.getExportOptions();
+        } else {
+          $scope.appState = 'error';
+          $scope.errorStatus = 'You must be a teacher in this bCourses course to export to E-Grades CSV.';
+        }
+      },
+      function errorCallback(response) {
+        $scope.userAuthorized = false;
         $scope.appState = 'error';
-        $scope.errorStatus = 'You must be a teacher in this bCourses course to export to E-Grades CSV.';
+        if (response.data && response.data.error) {
+          $scope.errorStatus = response.data.error;
+        } else {
+          $scope.errorStatus = 'Authorization Check Failed';
+          $scope.contactSupport = true;
+        }
       }
-    }).error(function(data) {
-      $scope.userAuthorized = false;
-      $scope.appState = 'error';
-      if (data.error) {
-        $scope.errorStatus = data.error;
-      } else {
-        $scope.errorStatus = 'Authorization Check Failed';
-        $scope.contactSupport = true;
-      }
-    });
+    );
   };
 
   /* Load and initialize application based on section terms provided */

@@ -7,14 +7,16 @@ var angular = require('angular');
  */
 angular.module('calcentral.controllers').controller('HookupGoogleReminderController', function(apiService, googleFactory, $scope) {
   $scope.dismissReminder = function() {
-    googleFactory.dismissReminder().success(function() {
-      apiService.analytics.sendEvent('Preferences', 'Dismiss bConnected reminder card');
-      $scope.showReminderCard = false;
-      // Force the user.profile to refresh since status has changed.
-      $scope.api.user.fetch({
-        refreshCache: true
-      });
-    });
+    googleFactory.dismissReminder().then(
+      function successCallback() {
+        apiService.analytics.sendEvent('Preferences', 'Dismiss bConnected reminder card');
+        $scope.showReminderCard = false;
+        // Force the user.profile to refresh since status has changed.
+        $scope.api.user.fetch({
+          refreshCache: true
+        });
+      }
+    );
   };
 
   $scope.showReminderCard = true;

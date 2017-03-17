@@ -28,8 +28,8 @@ angular.module('calcentral.controllers').controller('CanvasCreateCourseSiteContr
    * Updates status of background job in $scope.
    * Halts jobStatusLoader loop if job no longer in progress.
    */
-  var statusProcessor = function(data) {
-    angular.extend($scope, data);
+  var statusProcessor = function(response) {
+    angular.extend($scope, response.data);
     $scope.percentCompleteRounded = Math.round($scope.percentComplete * 100);
     if ($scope.jobStatus === 'Processing' || $scope.jobStatus === 'New') {
       jobStatusLoader();
@@ -58,18 +58,20 @@ angular.module('calcentral.controllers').controller('CanvasCreateCourseSiteContr
   var timeoutPromise;
   var jobStatusLoader = function() {
     timeoutPromise = $timeout(function() {
-      return canvasCourseProvisionFactory.courseProvisionJobStatus($scope.job_id)
-        .success(statusProcessor).error(function() {
+      return canvasCourseProvisionFactory.courseProvisionJobStatus($scope.job_id).then(
+        statusProcessor,
+        function errorCallback() {
           $scope.displayError = 'failure';
-        });
+        }
+      );
     }, 2000);
   };
 
   /*
    * Saves background job ID to scope and begins background job monitoring loop
    */
-  var courseSiteJobCreated = function(data) {
-    angular.extend($scope, data);
+  var courseSiteJobCreated = function(response) {
+    angular.extend($scope, response.data);
     $scope.currentWorkflowStep = 'monitoring_job';
     $scope.accessibilityAnnounce('Course site created successfully');
     $scope.completedFocus = true;
@@ -159,16 +161,17 @@ angular.module('calcentral.controllers').controller('CanvasCreateCourseSiteContr
         }
       }
 
-      canvasCourseProvisionFactory.courseCreate(newCourse)
-        .success(courseSiteJobCreated)
-        .error(function() {
+      canvasCourseProvisionFactory.courseCreate(newCourse).then(
+        courseSiteJobCreated,
+        function errorCallback() {
           angular.extend($scope, {
             percentCompleteRounded: 0,
             currentWorkflowStep: 'monitoring_job',
             jobStatus: 'Error',
             error: 'Failed to create course provisioning job.'
           });
-        });
+        }
+      );
     }
   };
 

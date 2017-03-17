@@ -40,12 +40,14 @@ angular.module('calcentral.controllers').controller('WebcastController', functio
   var getWebcasts = function(title) {
     webcastFactory.getWebcasts({
       url: webcastUrl(title)
-    }).success(function(data) {
-      angular.extend($scope, data);
-      selectMediaOptions();
-      var showSignUpTab = $scope.eligibleForSignUp && $scope.eligibleForSignUp.length > 0;
-      $scope.currentTabSelection = showSignUpTab ? outerTabs[0] : outerTabs[1];
-    });
+    }).then(
+      function(response) {
+        angular.extend($scope, response.data);
+        selectMediaOptions();
+        var showSignUpTab = $scope.eligibleForSignUp && $scope.eligibleForSignUp.length > 0;
+        $scope.currentTabSelection = showSignUpTab ? outerTabs[0] : outerTabs[1];
+      }
+    );
   };
 
   var formatClassTitle = function() {

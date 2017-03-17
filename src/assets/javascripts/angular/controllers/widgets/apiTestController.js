@@ -41,18 +41,19 @@ angular.module('calcentral.controllers').controller('ApiTestController', functio
     return apiTestFactory.request({
       url: route,
       refreshCache: true
-    })
-    .success(function(data) {
-      var responseItem = responseDictionary[route];
-      if (responseItem) {
-        $scope.apiTest.data[route] = data[responseItem] ? 'success' : 'failed';
-      } else {
-        $scope.apiTest.data[route] = 'success';
+    }).then(
+      function successCallback(response) {
+        var responseItem = responseDictionary[route];
+        if (responseItem) {
+          $scope.apiTest.data[route] = response.data[responseItem] ? 'success' : 'failed';
+        } else {
+          $scope.apiTest.data[route] = 'success';
+        }
+      },
+      function errorCallback() {
+        $scope.apiTest.data[route] = 'failed';
       }
-    })
-    .error(function() {
-      $scope.apiTest.data[route] = 'failed';
-    });
+    );
   };
 
   /**
@@ -81,9 +82,9 @@ angular.module('calcentral.controllers').controller('ApiTestController', functio
   /**
    * Parse the routes so we can add a status to them
    */
-  var parseRoutes = function(data) {
+  var parseRoutes = function(response) {
     routesWithStatus = {};
-    _.forEach(data.routes, function(url) {
+    _.forEach(response.data.routes, function(url) {
       routesWithStatus[url] = 'pending';
     });
     $scope.apiTest.isLoading = false;
@@ -96,7 +97,7 @@ angular.module('calcentral.controllers').controller('ApiTestController', functio
   var getRoutes = function() {
     apiTestFactory.smokeTest({
       refreshCache: true
-    }).success(parseRoutes);
+    }).then(parseRoutes);
   };
 
   getRoutes();

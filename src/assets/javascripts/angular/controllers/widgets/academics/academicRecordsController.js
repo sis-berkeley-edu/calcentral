@@ -52,8 +52,8 @@ angular.module('calcentral.controllers').controller('AcademicRecordsController',
     newWindow.document.getElementsByName('transcriptRequestForm')[0].submit();
   };
 
-  var parseData = function(data) {
-    var transcriptData = _.get(data, 'data.feed.transcriptOrder');
+  var parseData = function(response) {
+    var transcriptData = _.get(response, 'data.feed.transcriptOrder');
     $scope.officialTranscript.postUrl = _.get(transcriptData, 'credSolLink');
     _.forOwn(transcriptData, function(value, key) {
       if (key !== 'credSolLink' && key !== 'debugDbname') {
@@ -68,16 +68,17 @@ angular.module('calcentral.controllers').controller('AcademicRecordsController',
       placeholders: {
         EMPLID: userService.profile.sid
       }
-    })
-    .then(function(data) {
-      $scope.lawUnofficialTranscriptLink = _.get(data, 'data.link');
-    });
+    }).then(
+      function successCallback(response) {
+        $scope.lawUnofficialTranscriptLink = _.get(response, 'data.link');
+      }
+    );
   };
 
   var loadTranscriptData = function() {
     academicRecordsFactory.getTranscriptData()
-      .then(function(data) {
-        parseData(data);
+      .then(function(response) {
+        parseData(response);
       })
       .then(fetchLawUnofficialTranscriptLink)
       .finally(function() {

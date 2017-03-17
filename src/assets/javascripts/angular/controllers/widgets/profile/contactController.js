@@ -13,9 +13,9 @@ angular.module('calcentral.controllers').controller('ContactController', functio
   };
 
   var loadInformation = function() {
-    profileFactory.getPerson().then(function(data) {
+    profileFactory.getPerson().then(function(response) {
       $scope.contactInformation.isLoading = false;
-      $scope.contactInformation.isErrored = _.get(data, 'data.errored');
+      $scope.contactInformation.isErrored = _.get(response, 'data.errored');
     });
   };
 

@@ -7,10 +7,12 @@ var angular = require('angular');
  */
 angular.module('calcentral.controllers').controller('MyGroupsController', function(apiService, myGroupsFactory, $routeParams, $scope) {
   var getMyGroups = function(options) {
-    myGroupsFactory.getGroups(options).success(function(data) {
-      apiService.updatedFeeds.feedLoaded(data);
-      angular.extend($scope, data);
-    });
+    myGroupsFactory.getGroups(options).then(
+      function successCallback(response) {
+        apiService.updatedFeeds.feedLoaded(response.data);
+        angular.extend($scope, response.data);
+      }
+    );
   };
 
   $scope.$on('calcentral.api.updatedFeeds.updateServices', function(event, services) {

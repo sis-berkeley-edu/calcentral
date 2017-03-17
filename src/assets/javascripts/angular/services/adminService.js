@@ -11,7 +11,7 @@ angular.module('calcentral.services').service('adminService', function(adminFact
     var actAs = isAdvisorOnly ? adminFactory.advisorActAs : adminFactory.actAs;
     return actAs({
       uid: getLdapUid(user)
-    }).success(apiService.util.redirectToHome);
+    }).then(apiService.util.redirectToHome);
   };
 
   var getLdapUid = function(user) {

@@ -31,12 +31,13 @@ angular.module('calcentral.controllers').controller('MyAdvisingController', func
       uid: $routeParams.uid
     };
 
-    var getAcademics = academicsSource(options).then(function(data) {
-      angular.extend($scope.myAdvising.roles, _.get(data, 'data.collegeAndLevel.roles'));
+    var getAcademics = academicsSource(options).then(function(response) {
+      angular.extend($scope.myAdvising.roles, _.get(response, 'data.collegeAndLevel.roles'));
     });
-    var getAdvisingInfo = myAdvisingFactory.getStudentAdvisingInfo().then(function(data) {
-      angular.extend($scope.myAdvising, _.get(data, 'data.feed'));
-      $scope.myAdvising.errored = _.get(data, 'data.errored');
+
+    var getAdvisingInfo = myAdvisingFactory.getStudentAdvisingInfo().then(function(response) {
+      angular.extend($scope.myAdvising, _.get(response, 'data.feed'));
+      $scope.myAdvising.errored = _.get(response, 'data.errored');
     });
 
     $q.all([getAcademics, getAdvisingInfo]).then(function() {

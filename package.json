@@ -29,9 +29,9 @@
   "license": "ECL-2.0",
   "devDependencies": {
     "add-stream": "^1.0.0",
-    "angular": "1.5.8",
-    "angular-route": "1.5.8",
-    "angular-sanitize": "1.5.8",
+    "angular": "1.6.3",
+    "angular-route": "1.6.3",
+    "angular-sanitize": "1.6.3",
     "browser-sync": "^2.12.3",
     "browserify": "^13.0.0",
     "bulkify": "^1.2.0",

@@ -37,12 +37,15 @@ angular.module('calcentral.controllers').controller('DelegateLinkingController',
   };
 
   $scope.getTermsAndConditions = function() {
-    delegateFactory.getTermsAndConditions().success(function(data) {
-      angular.extend($scope, _.get(data, 'feed'));
-      $scope.delegate.termsAndConditionsVisible = true;
-    }).error(function() {
-      $scope.delegate.errorMessage = 'The system failed to get Terms and Conditions.';
-    });
+    delegateFactory.getTermsAndConditions().then(
+      function successCallback(response) {
+        angular.extend($scope, _.get(response, 'data.feed'));
+        $scope.delegate.termsAndConditionsVisible = true;
+      },
+      function errorCallback() {
+        $scope.delegate.errorMessage = 'The system failed to get Terms and Conditions.';
+      }
+    );
   };
 
   var loadInformation = function() {

@@ -38,17 +38,16 @@ angular.module('calcentral.controllers').controller('Title4Controller', function
    * Get the finaid summary information
    */
   var getFinaidPermissions = function(options) {
-    return finaidFactory.getSummary(options).success(function(data) {
-      $scope.title4.hasFinaid = !!_.get(data, 'feed.finaidSummary.finaidYears.length');
-
-      if ($scope.title4.hasFinaid) {
-        parseFinaid(data);
+    return finaidFactory.getSummary(options).then(
+      function successCallback(response) {
+        $scope.title4.hasFinaid = !!_.get(response, 'data.feed.finaidSummary.finaidYears.length');
+        if ($scope.title4.hasFinaid) {
+          parseFinaid(response.data);
+        }
+        $scope.title4.isLoading = false;
+        return response.data;
       }
-
-      $scope.title4.isLoading = false;
-
-      return data;
-    });
+    );
   };
 
   getFinaidPermissions();
@@ -56,8 +55,8 @@ angular.module('calcentral.controllers').controller('Title4Controller', function
   /**
    * After changing the T4 permissions, we also need to update the aid year info for each aid year (profile)
    */
-  var refreshAidYearInfo = function(data) {
-    var aidYears = _.get(data, 'data.feed.finaidSummary.finaidYears');
+  var refreshAidYearInfo = function(response) {
+    var aidYears = _.get(response, 'data.feed.finaidSummary.finaidYears');
     var aidYearsIds = _.map(aidYears, 'id');
     _.forEach(aidYearsIds, function(aidYearId) {
       finaidFactory.getFinaidYearInfo({

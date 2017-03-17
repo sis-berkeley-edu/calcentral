@@ -13,13 +13,16 @@ angular.module('calcentral.controllers').controller('ClassInfoEnrollmentControll
   };
 
   var getStudents = function() {
-    rosterFactory.getRoster('campus', $scope.campusCourseId).success(function(data) {
-      angular.extend($scope, data);
-      partitionStudentsByEnrollmentStatus();
-    }).error(function(data, status) {
-      angular.extend($scope, data);
-      $scope.errorStatus = status;
-    });
+    rosterFactory.getRoster('campus', $scope.campusCourseId).then(
+      function successCallback(response) {
+        angular.extend($scope, _.get(response, 'data'));
+        partitionStudentsByEnrollmentStatus();
+      },
+      function errorCallback(response) {
+        angular.extend($scope, _.get(response, 'data'));
+        $scope.errorStatus = _.get(response, 'status');
+      }
+    );
   };
 
   $scope.tableSort = {

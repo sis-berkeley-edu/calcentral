@@ -253,41 +253,44 @@ angular.module('calcentral.controllers').controller('CarsController', function(a
    */
   var getCarsInfo = function() {
     // Data contains all the financial information for the current student
-    financesFactory.getFinances().success(function(data) {
-      angular.extend($scope, data);
-      if (userService.profile.features.csBilling) {
-        loadCsInfo();
-      } else {
-        $scope.csActivity.isLoadingCs = false;
+    financesFactory.getFinances().then(
+      function successCallback(response) {
+        angular.extend($scope, response.data);
+        if (userService.profile.features.csBilling) {
+          loadCsInfo();
+        } else {
+          $scope.csActivity.isLoadingCs = false;
+        }
+
+        if (response && response.data && response.data.summary && response.data.activity) {
+          parseData(response.data);
+          createTerms();
+          createCounts();
+        }
+
+        if (response.data && response.data.statusCode && response.data.statusCode >= 400) {
+          $scope.myfinancesError = response.data;
+        }
+      },
+      function errorCallback(response) {
+        angular.extend($scope, response.data);
       }
-
-      if (data && data.summary && data.activity) {
-        parseData(data);
-
-        createTerms();
-
-        createCounts();
-      }
-
-      if (data.statusCode && data.statusCode >= 400) {
-        $scope.myfinancesError = data;
-      }
-    }).error(function(data) {
-      angular.extend($scope, data);
-    }).finally(function() {
+    ).finally(function() {
       $scope.csActivity.isLoadingCs = false;
     });
   };
 
   var loadCsInfo = function() {
-    financesFactory.getCsFinances().success(function(data) {
-      if (!data || !data.feed || !data.feed.summary) {
-        return;
+    financesFactory.getCsFinances().then(
+      function successCallback(response) {
+        if (!response || !response.data || !response.data.feed || !response.data.feed.summary) {
+          return;
+        }
+        if (response.data.feed.activity && response.data.feed.activity.length) {
+          $scope.csActivity.hasCsActivity = true;
+        }
       }
-      if (data.feed.activity && data.feed.activity.length) {
-        $scope.csActivity.hasCsActivity = true;
-      }
-    });
+    );
   };
 
   // http://jsfiddle.net/vojtajina/js64b/14/

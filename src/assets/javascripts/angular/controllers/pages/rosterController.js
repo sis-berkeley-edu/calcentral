@@ -33,15 +33,18 @@ angular.module('calcentral.controllers').controller('RosterController', function
     $scope.courseId = $scope.campusCourseId || $routeParams.canvasCourseId || 'embedded';
     $scope.origin = $window.location.origin;
 
-    rosterFactory.getRoster($scope.context, $scope.courseId).success(function(data) {
-      angular.extend($scope, data);
-      $scope.course = $scope[$scope.context + '_course'];
-      apiService.util.iframeUpdateHeight();
-      refreshFilteredStudents();
-    }).error(function(data, status) {
-      angular.extend($scope, data);
-      $scope.errorStatus = status;
-    });
+    rosterFactory.getRoster($scope.context, $scope.courseId).then(
+      function successCallback(response) {
+        angular.extend($scope, response.data);
+        $scope.course = $scope[$scope.context + '_course'];
+        apiService.util.iframeUpdateHeight();
+        refreshFilteredStudents();
+      },
+      function errorCallback(response) {
+        angular.extend($scope, response.data);
+        $scope.errorStatus = response.status;
+      }
+    );
   };
 
   var refreshFilteredStudents = function() {

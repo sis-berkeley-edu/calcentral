@@ -26,12 +26,12 @@ angular.module('calcentral.controllers').controller('ProfileEmailController', fu
   });
   $scope.contacts = {};
 
-  var parsePerson = function(data) {
-    apiService.profile.parseSection($scope, data, 'emails');
+  var parsePerson = function(response) {
+    apiService.profile.parseSection($scope, response, 'emails');
   };
 
-  var parseTypes = function(data) {
-    $scope.types = apiService.profile.filterTypes(_.get(data, 'data.feed.xlatvalues.values'), $scope.items);
+  var parseTypes = function(response) {
+    $scope.types = apiService.profile.filterTypes(_.get(response, 'data.feed.xlatvalues.values'), $scope.items);
   };
 
   var getPerson = profileFactory.getPerson;
@@ -50,13 +50,13 @@ angular.module('calcentral.controllers').controller('ProfileEmailController', fu
     });
   };
 
-  var actionCompleted = function(data) {
-    apiService.profile.actionCompleted($scope, data, loadInformation);
+  var actionCompleted = function(response) {
+    apiService.profile.actionCompleted($scope, response, loadInformation);
   };
 
-  var deleteCompleted = function(data) {
+  var deleteCompleted = function(response) {
     $scope.isDeleting = false;
-    actionCompleted(data);
+    actionCompleted(response);
   };
 
   $scope.delete = function(item) {
@@ -65,9 +65,9 @@ angular.module('calcentral.controllers').controller('ProfileEmailController', fu
     }).then(deleteCompleted);
   };
 
-  var saveCompleted = function(data) {
+  var saveCompleted = function(response) {
     $scope.isSaving = false;
-    actionCompleted(data);
+    actionCompleted(response);
   };
 
   $scope.save = function(item) {

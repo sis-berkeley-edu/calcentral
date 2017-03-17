@@ -112,14 +112,17 @@ angular.module('calcentral.controllers').controller('TasksController', function(
     }
 
     apiService.analytics.sendEvent('Tasks', 'Set completed', 'completed: ' + !!changedTask.completedDate);
-    tasksFactory.update(changedTask).success(function(data) {
-      task.editorIsProcessing = false;
-      angular.extend(task, data);
-      $scope.updateTaskLists();
-    }).error(function() {
-      apiService.analytics.sendEvent('Error', 'Set completed failure', 'completed: ' + !!changedTask.completedDate);
-      // Some error notification would be helpful.
-    });
+    tasksFactory.update(changedTask).then(
+      function successCallback(response) {
+        task.editorIsProcessing = false;
+        angular.extend(task, response.data);
+        $scope.updateTaskLists();
+      },
+      function errorCallback() {
+        apiService.analytics.sendEvent('Error', 'Set completed failure', 'completed: ' + !!changedTask.completedDate);
+        // Some error notification would be helpful.
+      }
+    );
   };
 
   // Switch mode for scheduled/unscheduled/completed tasks
@@ -140,20 +143,23 @@ angular.module('calcentral.controllers').controller('TasksController', function(
       'emitter': 'Google'
     };
 
-    tasksFactory.remove(deltask).success(function() {
-      // task.$index is duplicated between buckets, so need to iterate through ALL tasks
-      for (var i = 0; i < $scope.tasks.length; i++) {
-        if ($scope.tasks[i].id === task.id) {
-          $scope.tasks.splice(i, 1);
-          break;
+    tasksFactory.remove(deltask).then(
+      function successCallback() {
+        // task.$index is duplicated between buckets, so need to iterate through ALL tasks
+        for (var i = 0; i < $scope.tasks.length; i++) {
+          if ($scope.tasks[i].id === task.id) {
+            $scope.tasks.splice(i, 1);
+            break;
+          }
         }
+        $scope.updateTaskLists();
+        apiService.analytics.sendEvent('Tasks', 'Delete', task);
+      },
+      function errorCallback() {
+        apiService.analytics.sendEvent('Error', 'Delete task failure');
+        // Some error notification would be helpful.
       }
-      $scope.updateTaskLists();
-      apiService.analytics.sendEvent('Tasks', 'Delete', task);
-    }).error(function() {
-      apiService.analytics.sendEvent('Error', 'Delete task failure');
-      // Some error notification would be helpful.
-    });
+    );
   };
 
   var filterOverdue = function(task) {

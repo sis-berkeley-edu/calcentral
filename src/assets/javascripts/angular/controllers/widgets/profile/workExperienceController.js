@@ -13,9 +13,9 @@ angular.module('calcentral.controllers').controller('WorkExperienceController', 
   };
 
   var loadInformation = function() {
-    profileFactory.getWorkExperience().then(function(data) {
+    profileFactory.getWorkExperience().then(function(response) {
       $scope.workExperienceInformation.isLoading = false;
-      $scope.workExperienceInformation.isErrored = _.get(data, 'data.errored');
+      $scope.workExperienceInformation.isErrored = _.get(response, 'data.errored');
     });
   };
 

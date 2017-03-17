@@ -60,7 +60,7 @@ angular.module('calcentral.services').service('userService', function($http, $lo
     // Record that the user visited calcentral
     } else if (events.isAuthenticated && !profile.firstLoginAt && !profile.actingAsUid && !profile.delegateActingAsUid && !profile.advisorActingAsUid) {
       analyticsService.sendEvent('Authentication', 'First login');
-      $http.post('/api/my/record_first_login').success(setFirstLogin);
+      $http.post('/api/my/record_first_login').then(setFirstLogin);
     // Redirect to the dashboard when you're accessing the root page and are authenticated
     } else if (events.isAuthenticated) {
       redirectToHome();
@@ -147,27 +147,32 @@ angular.module('calcentral.services').service('userService', function($http, $lo
   var removeOAuth = function(authorizationService) {
     // Send the request to remove the authorization for the specific OAuth service
     // Only when the request was successful, we update the UI
-    $http.post('/api/' + authorizationService.toLowerCase() + '/remove_authorization').success(function() {
-      analyticsService.sendEvent('OAuth', 'Remove', 'service: ' + authorizationService);
-      profile['has' + authorizationService + 'AccessToken'] = false;
-    });
+    $http.post('/api/' + authorizationService.toLowerCase() + '/remove_authorization').then(
+      function successCallback() {
+        analyticsService.sendEvent('OAuth', 'Remove', 'service: ' + authorizationService);
+        profile['has' + authorizationService + 'AccessToken'] = false;
+      }
+    );
   };
 
   /**
    * Sign the current user out.
    */
   var signOut = function() {
-    $http.post('/logout').success(function(data) {
-      if (data && data.redirectUrl) {
-        analyticsService.sendEvent('Authentication', 'Redirect to logout');
-        window.location = data.redirectUrl;
+    $http.post('/logout').then(
+      function successCallback(response) {
+        if (response.data && response.data.redirectUrl) {
+          analyticsService.sendEvent('Authentication', 'Redirect to logout');
+          window.location = response.data.redirectUrl;
+        }
+      },
+      function errorCallback(response) {
+        if (response && response.status === 401) {
+          // User is already logged out
+          window.location = '/';
+        }
       }
-    }).error(function(data, responseCode) {
-      if (responseCode && responseCode === 401) {
-        // User is already logged out
-        window.location = '/';
-      }
-    });
+    );
   };
 
   // Expose methods

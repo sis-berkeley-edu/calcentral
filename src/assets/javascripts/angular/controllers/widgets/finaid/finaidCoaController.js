@@ -41,12 +41,14 @@ angular.module('calcentral.controllers').controller('FinaidCoaController', funct
   var loadCoa = function() {
     return finaidFactory.getFinaidYearInfo({
       finaidYearId: finaidService.options.finaidYear.id
-    }).success(function(data) {
-      angular.extend($scope.coa, _.get(data, 'feed.coa'));
-      adaptCategoryTitles($scope.coa);
-      $scope.coa.errored = data.errored;
-      $scope.coa.isLoading = false;
-    });
+    }).then(
+      function successCallback(response) {
+        angular.extend($scope.coa, _.get(response, 'data.feed.coa'));
+        adaptCategoryTitles($scope.coa);
+        $scope.coa.errored = _.get(response, 'data.errored');
+        $scope.coa.isLoading = false;
+      }
+    );
   };
 
   $scope.$on('calcentral.custom.api.finaid.finaidYear', loadCoa);

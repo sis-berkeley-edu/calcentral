@@ -11,9 +11,11 @@ angular.module('calcentral.controllers').controller('FooterController', function
   };
 
   var loadServerInformation = function() {
-    serverInfoFactory.getServerInfo().success(function(data) {
-      angular.extend($scope, data);
-    });
+    serverInfoFactory.getServerInfo().then(
+      function successCallback(response) {
+        angular.extend($scope, response.data);
+      }
+    );
   };
 
   $scope.$watch('footer.showInfo', function(showInfo) {

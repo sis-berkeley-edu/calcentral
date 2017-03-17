@@ -70,9 +70,9 @@ angular.module('calcentral.controllers').controller('FinancesLinksController', f
     return _.filter(orderedLinks);
   };
 
-  var parseCampusLinks = function(data) {
-    angular.extend($scope.campusLinks.data, data);
-    $scope.campusLinks.data.links = sortCampusLinks(data.links);
+  var parseCampusLinks = function(response) {
+    angular.extend($scope.campusLinks.data, response);
+    $scope.campusLinks.data.links = sortCampusLinks(response.links);
   };
 
   /**
@@ -80,15 +80,15 @@ angular.module('calcentral.controllers').controller('FinancesLinksController', f
    SID, this likely means the SID has never logged on to the EFT web app before,
    so we parse it the same way we would an 'inactive' student.
    **/
-  var parseEftEnrollment = function(data) {
-    angular.merge($scope.eft, data);
+  var parseEftEnrollment = function(response) {
+    angular.merge($scope.eft, response);
     if (_.get($scope.eft, 'data.statusCode') === 404 || _.get($scope.eft, 'data.data.eftStatus') === 'inactive') {
       $scope.eft.studentActive = false;
     }
   };
 
-  var parseFppEnrollment = function(data) {
-    angular.extend($scope.fpp.data, data.data.feed.ucSfFppEnroll);
+  var parseFppEnrollment = function(response) {
+    angular.extend($scope.fpp.data, response.data.feed.ucSfFppEnroll);
   };
 
   var loadEftEnrollment = function() {
@@ -107,8 +107,8 @@ angular.module('calcentral.controllers').controller('FinancesLinksController', f
   var loadCsLinks = function() {
     csLinkFactory.getLink({
       urlId: 'UC_CX_EMERGENCY_LOAN_FORM'
-    }).then(function(data) {
-      var link = _.get(data, 'data.link');
+    }).then(function(response) {
+      var link = _.get(response, 'data.link');
       $scope.emergencyLoanLink = link;
     });
   };

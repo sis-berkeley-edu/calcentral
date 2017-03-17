@@ -1,6 +1,7 @@
 /* jshint camelcase: false */
 'use strict';
 
+var _ = require('lodash');
 var angular = require('angular');
 
 /**
@@ -24,8 +25,9 @@ angular.module('calcentral.controllers').controller('TextbookController', functi
   var getTextbook = function(courseInfo, sectionLabel) {
     return textbookFactory.getTextbooks({
       params: courseInfo
-    })
-      .success(function(data) {
+    }).then(
+      function successCallback(response) {
+        var data = _.get(response, 'data');
         data.sectionLabel = sectionLabel;
         if (data.statusCode && data.statusCode >= 400) {
           data.errorMessage = data.body;
@@ -38,7 +40,8 @@ angular.module('calcentral.controllers').controller('TextbookController', functi
         $scope.bookListsBySection.sort(function(a, b) {
           return a.sectionLabel.localeCompare(b.sectionLabel);
         });
-      });
+      }
+    );
   };
 
   var getCourseTextbooks = function(selectedCourse) {

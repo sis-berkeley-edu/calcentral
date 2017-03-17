@@ -44,11 +44,14 @@ angular.module('calcentral.controllers').controller('EnrollmentVerificationContr
   var getCsLink = function() {
     csLinkFactory.getLink({
       urlId: 'UC_CX_SS_ENRL_VER_REQ'
-    }).then(function successCallback(data) {
-      $scope.requestOfficialVerificationLink = _.get(data, 'data.link');
-    }, function errorCallback() {
-      $scope.requestOfficialVerificationLink = null;
-    });
+    }).then(
+      function successCallback(response) {
+        $scope.requestOfficialVerificationLink = _.get(response, 'data.link');
+      },
+      function errorCallback() {
+        $scope.requestOfficialVerificationLink = null;
+      }
+    );
   };
 
   var getMessages = function() {

@@ -93,22 +93,22 @@ angular.module('calcentral.controllers').controller('WorkExperienceSectionContro
     return;
   };
 
-  var parseAddressFields = function(data) {
-    $scope.currentObject.fields = _.filter(_.get(data, 'data.feed.labels'), returnCityState);
+  var parseAddressFields = function(response) {
+    $scope.currentObject.fields = _.filter(_.get(response, 'data.feed.labels'), returnCityState);
   };
 
-  var parseCountries = function(data) {
-    $scope.countries = _.sortBy(_.filter(_.get(data, 'data.feed.countries'), {
+  var parseCountries = function(response) {
+    $scope.countries = _.sortBy(_.filter(_.get(response, 'data.feed.countries'), {
       hasAddressFields: true
     }), 'descr');
   };
 
-  var parseCurrencies = function(data) {
-    $scope.currencies = _.sortBy(_.get(data, 'data.feed.currencyCodes'), 'currencyCd');
+  var parseCurrencies = function(response) {
+    $scope.currencies = _.sortBy(_.get(response, 'data.feed.currencyCodes'), 'currencyCd');
   };
 
-  var parseStates = function(data) {
-    $scope.states = _.sortBy(_.get(data, 'data.feed.states'), 'descr');
+  var parseStates = function(response) {
+    $scope.states = _.sortBy(_.get(response, 'data.feed.states'), 'descr');
     if ($scope.states && $scope.states.length) {
       angular.merge($scope.currentObject, {
         data: {
@@ -119,12 +119,12 @@ angular.module('calcentral.controllers').controller('WorkExperienceSectionContro
     }
   };
 
-  var parseTypesPayFrequency = function(data) {
-    $scope.typesPayFrequency = _.get(data, 'data.feed.xlatvalues.values');
+  var parseTypesPayFrequency = function(response) {
+    $scope.typesPayFrequency = _.get(response, 'data.feed.xlatvalues.values');
   };
 
-  var parseWorkExperience = function(data) {
-    var parsedData = formatDates(_.get(data, 'data.feed.workExperiences'));
+  var parseWorkExperience = function(response) {
+    var parsedData = formatDates(_.get(response, 'data.feed.workExperiences'));
     angular.extend($scope, {
       items: {
         content: parsedData
@@ -208,18 +208,18 @@ angular.module('calcentral.controllers').controller('WorkExperienceSectionContro
     });
   };
 
-  var actionCompleted = function(data) {
-    apiService.profile.actionCompleted($scope, data, loadInformation);
+  var actionCompleted = function(response) {
+    apiService.profile.actionCompleted($scope, response, loadInformation);
   };
 
-  var deleteCompleted = function(data) {
+  var deleteCompleted = function(response) {
     $scope.isDeleting = false;
-    actionCompleted(data);
+    actionCompleted(response);
   };
 
-  var saveCompleted = function(data) {
+  var saveCompleted = function(response) {
     $scope.isSaving = false;
-    actionCompleted(data);
+    actionCompleted(response);
   };
 
   $scope.showAdd = function() {

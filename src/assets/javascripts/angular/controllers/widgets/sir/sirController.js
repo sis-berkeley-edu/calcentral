@@ -111,8 +111,8 @@ angular.module('calcentral.controllers').controller('SirController', function(si
    * Parse the CS checklist and see whether we have any
    * admission checklists for the current user
    */
-  var parseChecklist = function(data, studentResponse) {
-    var checklistItems = _.get(data, 'data.feed.checkListItems');
+  var parseChecklist = function(checklistResponse, studentResponse) {
+    var checklistItems = _.get(checklistResponse, 'data.feed.checkListItems');
     if (!checklistItems || !checklistItems.length) {
       return $q.reject('No checklist items');
     }
@@ -120,7 +120,7 @@ angular.module('calcentral.controllers').controller('SirController', function(si
     var checkStatus = $scope.sir.checklistItems.length ? '' : 'C';
 
     // Filter the checklists (will be Initiated or Received on initial load & completed after that)
-    checklistItems = _.get(data, 'data.feed.checkListItems').filter(function(checklistItem) {
+    checklistItems = _.get(checklistResponse, 'data.feed.checkListItems').filter(function(checklistItem) {
       return (checklistItem &&
         checklistItem.adminFunc &&
         checklistItem.adminFunc === 'ADMP' &&
@@ -141,8 +141,8 @@ angular.module('calcentral.controllers').controller('SirController', function(si
    * Parse the SIR configuration object.
    * This contains information for each checklist item
    */
-  var parseSirConfig = function(data) {
-    sirConfig = _.get(data, 'data.feed.sirConfig');
+  var parseSirConfig = function(response) {
+    sirConfig = _.get(response, 'data.feed.sirConfig');
     if (!sirConfig) {
       return $q.reject('No SIR Config');
     }
@@ -169,8 +169,8 @@ angular.module('calcentral.controllers').controller('SirController', function(si
         refreshCache: _.get(options, 'refresh')
       });
     })
-    .then(function(data) {
-      return parseChecklist(data, _.get(options, 'studentResponse'));
+    .then(function(checklistResponse) {
+      return parseChecklist(checklistResponse, _.get(options, 'studentResponse'));
     });
   };
 

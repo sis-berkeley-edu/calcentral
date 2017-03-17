@@ -18,9 +18,9 @@ angular.module('calcentral.controllers').controller('CanvasCreateProjectSiteCont
   $scope.createProjectSite = function() {
     $scope.creatingSite = true;
     $scope.actionStatus = 'Now redirecting to the new project site';
-    canvasProjectProvisionFactory.createProjectSite($scope.projectSiteName)
-      .success(function(data) {
-        angular.extend($scope, data);
+    canvasProjectProvisionFactory.createProjectSite($scope.projectSiteName).then(
+      function successCallback(response) {
+        angular.extend($scope, response.data);
         if ($scope.projectSiteUrl) {
           if ($route.current.isEmbedded) {
             apiService.util.iframeParentLocation($scope.projectSiteUrl);
@@ -30,33 +30,35 @@ angular.module('calcentral.controllers').controller('CanvasCreateProjectSiteCont
         } else {
           $scope.displayError = 'failure';
         }
-      })
-      .error(function(data, status) {
-        if (status === 400) {
+      },
+      function errorCallback(response) {
+        if (response.status === 400) {
           $scope.displayError = 'badRequest';
-          $scope.badRequestError = data.error;
+          $scope.badRequestError = response.data.error;
         } else {
           $scope.displayError = 'failure';
         }
         $scope.creatingSite = false;
-      });
+      }
+    );
   };
 
   var loadAuthorization = function() {
-    canvasSiteCreationFactory.getAuthorizations()
-      .success(function(data) {
-        if (!data && (typeof(data.authorizations.canCreateProjectSite) === 'undefined')) {
+    canvasSiteCreationFactory.getAuthorizations().then(
+      function successCallback(response) {
+        if (!response && !response.data && (typeof(response.data.authorizations.canCreateProjectSite) === 'undefined')) {
           $scope.displayError = 'failure';
         } else {
-          angular.extend($scope, data);
+          angular.extend($scope, response.data);
           if ($scope.authorizations.canCreateProjectSite === false) {
             $scope.displayError = 'unauthorized';
           }
         }
-      })
-      .error(function() {
+      },
+      function errorCallback() {
         $scope.displayError = 'failure';
-      });
+      }
+    );
   };
 
   loadAuthorization();

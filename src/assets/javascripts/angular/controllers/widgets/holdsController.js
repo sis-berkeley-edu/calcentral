@@ -12,13 +12,11 @@ angular.module('calcentral.controllers').controller('HoldsController', function(
   };
 
   var loadHolds = function() {
-    return academicStatusFactory.getHolds()
-      .then(function(data) {
-        $scope.holds = _.get(data, 'holds');
-      })
-      .finally(function() {
-        $scope.holdsInfo.isLoading = false;
-      });
+    return academicStatusFactory.getHolds().then(function(parsedHolds) {
+      $scope.holds = _.get(parsedHolds, 'holds');
+    }).finally(function() {
+      $scope.holdsInfo.isLoading = false;
+    });
   };
 
   loadHolds();

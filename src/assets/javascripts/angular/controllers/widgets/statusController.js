@@ -18,15 +18,15 @@ angular.module('calcentral.controllers').controller('StatusController', function
   // Keep track on whether the status has been loaded or not
   var hasLoaded = false;
 
-  var loadCarsFinances = function(data) {
-    if (data.summary) {
-      $scope.finances.carsFinances = data.summary;
+  var loadCarsFinances = function(response) {
+    if (response.data && response.data.summary) {
+      $scope.finances.carsFinances = response.data.summary;
     }
   };
 
-  var loadCsFinances = function(data) {
-    if (_.get(data, 'feed.summary')) {
-      $scope.finances.csFinances = data.feed.summary;
+  var loadCsFinances = function(response) {
+    if (_.get(response, 'data.feed.summary')) {
+      $scope.finances.csFinances = response.data.feed.summary;
     }
   };
 
@@ -74,8 +74,8 @@ angular.module('calcentral.controllers').controller('StatusController', function
     }
   };
 
-  var parseRegistrations = function(data) {
-    _.forOwn(data.data.terms, function(value, key) {
+  var parseRegistrations = function(response) {
+    _.forOwn(response.data.terms, function(value, key) {
       if (key === 'current' || key === 'next') {
         if (value) {
           $scope.regStatus.terms.push(value);
@@ -83,7 +83,7 @@ angular.module('calcentral.controllers').controller('StatusController', function
       }
     });
     _.forEach($scope.regStatus.terms, function(term) {
-      var regStatus = data.data.registrations[term.id];
+      var regStatus = response.data.registrations[term.id];
 
       if (regStatus && regStatus[0]) {
         _.merge(regStatus[0], term);
@@ -103,8 +103,8 @@ angular.module('calcentral.controllers').controller('StatusController', function
     return;
   };
 
-  var parseStudentAttributes = function(data) {
-    var studentAttributes = _.get(data, 'data.feed.student.studentAttributes.studentAttributes');
+  var parseStudentAttributes = function(response) {
+    var studentAttributes = _.get(response, 'data.feed.student.studentAttributes.studentAttributes');
     // Strip all positive student indicators from student attributes feed.
     _.forEach(studentAttributes, function(attribute) {
       if (_.startsWith(attribute.type.code, '+')) {
@@ -148,20 +148,21 @@ angular.module('calcentral.controllers').controller('StatusController', function
       deferred.resolve();
       return deferred.promise;
     }
-    return academicStatusFactory.getHolds()
-      .then(function(data) {
-        if (data.isError) {
+    return academicStatusFactory.getHolds().then(
+      function(parsedHolds) {
+        if (parsedHolds.isError) {
           $scope.holds = {
             errored: true
           };
           $scope.count++;
           $scope.hasWarnings = true;
         } else {
-          $scope.holds = _.get(data, 'holds');
-          $scope.count += _.get(data, 'holds.length');
+          $scope.holds = _.get(parsedHolds, 'holds');
+          $scope.count += _.get(parsedHolds, 'holds.length');
           $scope.hasAlerts = true;
         }
-      });
+      }
+    );
   };
 
   var finishLoading = function() {
@@ -205,8 +206,8 @@ angular.module('calcentral.controllers').controller('StatusController', function
       // Only fetch financial data for delegates who have been given explicit permssion.
       var includeFinancial = (!apiService.user.profile.delegateActingAsUid || apiService.user.profile.delegateViewAsPrivileges.financial);
       if (includeFinancial) {
-        var getCarsFinances = financesFactory.getFinances().success(loadCarsFinances);
-        var getCsFinances = financesFactory.getCsFinances().success(loadCsFinances);
+        var getCarsFinances = financesFactory.getFinances().then(loadCarsFinances);
+        var getCsFinances = financesFactory.getCsFinances().then(loadCsFinances);
         statusGets.push(getCarsFinances, getCsFinances);
       }
 

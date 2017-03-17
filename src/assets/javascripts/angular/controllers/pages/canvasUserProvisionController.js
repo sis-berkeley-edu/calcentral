@@ -31,16 +31,17 @@ angular.module('calcentral.controllers').controller('CanvasUserProvisionControll
         }
       };
 
-      $http(importRequest).
-        success(function(data) {
+      $http(importRequest).then(
+        function successCallback(response) {
           $scope.isLoading = false;
           $scope.importProcessing = false;
-          angular.extend($scope, data);
-        }).
-        error(function(data) {
+          angular.extend($scope, response.data);
+        },
+        function errorCallback(response) {
           $scope.status = 'error';
-          angular.extend($scope, data);
-        });
+          angular.extend($scope, response.data);
+        }
+      );
     }
   };
 

@@ -79,19 +79,15 @@ angular.module('calcentral.controllers').controller('UserOverviewController', fu
     $scope.statusHoldsBlocks.enabledSections = enabledSections;
   });
 
-  var parseAdvisingResources = function(data) {
+  var parseAdvisingResources = function(response) {
     var resources = $scope.ucAdvisingResources;
-
-    angular.extend(resources, _.get(data, 'data.feed'));
-
+    angular.extend(resources, _.get(response, 'data.feed'));
     if (_.get(resources, 'links')) {
       linkService.addCurrentPagePropertiesToResources(resources.links, $scope.currentPage.name, $scope.currentPage.url);
     }
-
     if (_.get(resources, 'csLinks')) {
       linkService.addCurrentPagePropertiesToResources(resources.csLinks, $scope.currentPage.name, $scope.currentPage.url);
     }
-
     resources.isLoading = false;
   };
 
@@ -114,24 +110,27 @@ angular.module('calcentral.controllers').controller('UserOverviewController', fu
     var targetUserUid = $routeParams.uid;
     advisingFactory.getStudent({
       uid: targetUserUid
-    }).success(function(data) {
-      angular.extend($scope.targetUser, _.get(data, 'attributes'));
-      angular.extend($scope.residency, _.get(data, 'residency.residency'));
-      $scope.targetUser.ldapUid = targetUserUid;
-      $scope.targetUser.addresses = apiService.profile.fixFormattedAddresses(_.get(data, 'contacts.feed.student.addresses'));
-      $scope.targetUser.phones = _.get(data, 'contacts.feed.student.phones');
-      $scope.targetUser.emails = _.get(data, 'contacts.feed.student.emails');
-      // 'student.fullName' is expected by shared code (e.g., photo unavailable widget)
-      $scope.targetUser.fullName = $scope.targetUser.defaultName;
-      apiService.util.setTitle($scope.targetUser.defaultName);
+    }).then(
+      function successCallback(response) {
+        angular.extend($scope.targetUser, _.get(response, 'data.attributes'));
+        angular.extend($scope.residency, _.get(response, 'data.residency.residency'));
+        $scope.targetUser.ldapUid = targetUserUid;
+        $scope.targetUser.addresses = apiService.profile.fixFormattedAddresses(_.get(response, 'data.contacts.feed.student.addresses'));
+        $scope.targetUser.phones = _.get(response, 'data.contacts.feed.student.phones');
+        $scope.targetUser.emails = _.get(response, 'data.contacts.feed.student.emails');
+        // 'student.fullName' is expected by shared code (e.g., photo unavailable widget)
+        $scope.targetUser.fullName = $scope.targetUser.defaultName;
+        apiService.util.setTitle($scope.targetUser.defaultName);
 
-      // Get links to advising resources
-      advisingFactory.getAdvisingResources({
-        uid: targetUserUid
-      }).then(parseAdvisingResources);
-    }).error(function(data, status) {
-      $scope.targetUser.error = errorReport(status, data.error);
-    }).finally(function() {
+        // Get links to advising resources
+        advisingFactory.getAdvisingResources({
+          uid: targetUserUid
+        }).then(parseAdvisingResources);
+      },
+      function errorCallback(response) {
+        $scope.targetUser.error = errorReport(_.get(response, 'data.status'), _.get(response, 'data.error'));
+      }
+    ).finally(function() {
       $scope.residency.isLoading = false;
       $scope.targetUser.isLoading = false;
     });
@@ -140,36 +139,39 @@ angular.module('calcentral.controllers').controller('UserOverviewController', fu
   var loadAcademics = function() {
     advisingFactory.getStudentAcademics({
       uid: $routeParams.uid
-    }).success(function(data) {
-      angular.extend($scope, data);
-      _.forEach($scope.planSemesters, function(semester) {
-        angular.extend(
-          semester,
-          {
-            show: ['current', 'previous', 'next'].indexOf(semester.timeBucket) > -1
-          });
-      });
+    }).then(
+      function successCallback(response) {
+        angular.extend($scope, _.get(response, 'data'));
+        _.forEach($scope.planSemesters, function(semester) {
+          angular.extend(
+            semester,
+            {
+              show: ['current', 'previous', 'next'].indexOf(semester.timeBucket) > -1
+            });
+        });
 
-      // prepare schedule planner link data
-      var studentPlans = _.get($scope, 'collegeAndLevel.plans');
-      var uniqueCareerCodes = academicsService.getUniqueCareerCodes(studentPlans);
-      var currentRegistrationTermId = _.get($scope, 'collegeAndLevel.termId');
-      if (uniqueCareerCodes.length > 0 && currentRegistrationTermId) {
-        $scope.schedulePlanner = {
-          careerCode: _.first(uniqueCareerCodes),
-          termId: currentRegistrationTermId,
-          studentUid: $routeParams.uid
-        };
-      }
-      if (!!_.get($scope, 'updatePlanUrl.url')) {
-        linkService.addCurrentPagePropertiesToLink($scope.updatePlanUrl, $scope.currentPage.name, $scope.currentPage.url);
-      }
+        // prepare schedule planner link data
+        var studentPlans = _.get($scope, 'collegeAndLevel.plans');
+        var uniqueCareerCodes = academicsService.getUniqueCareerCodes(studentPlans);
+        var currentRegistrationTermId = _.get($scope, 'collegeAndLevel.termId');
+        if (uniqueCareerCodes.length > 0 && currentRegistrationTermId) {
+          $scope.schedulePlanner = {
+            careerCode: _.first(uniqueCareerCodes),
+            termId: currentRegistrationTermId,
+            studentUid: $routeParams.uid
+          };
+        }
+        if (!!_.get($scope, 'updatePlanUrl.url')) {
+          linkService.addCurrentPagePropertiesToLink($scope.updatePlanUrl, $scope.currentPage.name, $scope.currentPage.url);
+        }
 
-      // prepare Student Success filtering of inactive careers
-      $scope.studentSuccess.activeCareers = _.map(_.get($scope, 'collegeAndLevel.careers'), toLowerCase);
-    }).error(function(data, status) {
-      $scope.academics.error = errorReport(status, data.error);
-    }).finally(function() {
+        // prepare Student Success filtering of inactive careers
+        $scope.studentSuccess.activeCareers = _.map(_.get($scope, 'collegeAndLevel.careers'), toLowerCase);
+      },
+      function errorCallback(response) {
+        $scope.academics.error = errorReport(_.get(response, 'status'), _.get(response, 'data.error'));
+      }
+    ).finally(function() {
       $scope.academics.isLoading = false;
       $scope.planSemestersInfo.isLoading = false;
     });
@@ -178,8 +180,8 @@ angular.module('calcentral.controllers').controller('UserOverviewController', fu
   var loadRegistrations = function() {
     advisingFactory.getStudentRegistrations({
       uid: $routeParams.uid
-    }).then(function(data) {
-      _.forOwn(data.data.terms, function(value, key) {
+    }).then(function(response) {
+      _.forOwn(response.data.terms, function(value, key) {
         if (key === 'current' || key === 'next') {
           if (value) {
             $scope.regStatus.terms.push(value);
@@ -187,7 +189,7 @@ angular.module('calcentral.controllers').controller('UserOverviewController', fu
         }
       });
       _.forEach($scope.regStatus.terms, function(term) {
-        var regStatus = data.data.registrations[term.id];
+        var regStatus = response.data.registrations[term.id];
 
         if (regStatus && regStatus[0]) {
           _.merge(regStatus[0], term);
@@ -206,18 +208,20 @@ angular.module('calcentral.controllers').controller('UserOverviewController', fu
   var loadStudentAttributes = function() {
     studentAttributesFactory.getStudentAttributes({
       uid: $routeParams.uid
-    }).success(function(data) {
-      var studentAttributes = _.get(data, 'feed.student.studentAttributes.studentAttributes');
-      // Strip all positive student indicators from student attributes feed.
-      _.forEach(studentAttributes, function(attribute) {
-        if (_.startsWith(attribute.type.code, '+')) {
-          $scope.regStatus.positiveIndicators.push(attribute);
-        }
-      });
+    }).then(
+      function successCallback(response) {
+        var studentAttributes = _.get(response, 'data.feed.student.studentAttributes.studentAttributes');
+        // Strip all positive student indicators from student attributes feed.
+        _.forEach(studentAttributes, function(attribute) {
+          if (_.startsWith(attribute.type.code, '+')) {
+            $scope.regStatus.positiveIndicators.push(attribute);
+          }
+        });
 
-      statusHoldsService.matchTermIndicators($scope.regStatus.positiveIndicators, $scope.regStatus.registrations);
-      $scope.hasShownRegistrations = statusHoldsService.checkShownRegistrations($scope.regStatus.registrations);
-    }).finally(function() {
+        statusHoldsService.matchTermIndicators($scope.regStatus.positiveIndicators, $scope.regStatus.registrations);
+        $scope.hasShownRegistrations = statusHoldsService.checkShownRegistrations($scope.regStatus.registrations);
+      }
+    ).finally(function() {
       $scope.regStatus.isLoading = false;
     });
   };
@@ -225,11 +229,13 @@ angular.module('calcentral.controllers').controller('UserOverviewController', fu
   var loadStudentSuccess = function() {
     advisingFactory.getStudentSuccess({
       uid: $routeParams.uid
-    }).success(function(data) {
-      $scope.studentSuccess.outstandingBalance = _.get(data, 'outstandingBalance');
-      $scope.studentSuccess.termGpa = _.sortBy(_.get(data, 'termGpa'), ['termId']);
-      parseTermGpa();
-    }).finally(function() {
+    }).then(
+      function successCallback(response) {
+        $scope.studentSuccess.outstandingBalance = _.get(response, 'data.outstandingBalance');
+        $scope.studentSuccess.termGpa = _.sortBy(_.get(response, 'data.termGpa'), ['termId']);
+        parseTermGpa();
+      }
+    ).finally(function() {
       $scope.studentSuccess.isLoading = false;
     });
   };
@@ -237,16 +243,16 @@ angular.module('calcentral.controllers').controller('UserOverviewController', fu
   var loadDegreeProgresses = function() {
     advisingFactory.getDegreeProgressGraduate({
       uid: $routeParams.uid
-    }).then(function(data) {
-      $scope.degreeProgress.graduate.progresses = _.get(data, 'data.feed.degreeProgress');
-      $scope.degreeProgress.graduate.errored = _.get(data, 'errored');
+    }).then(function(response) {
+      $scope.degreeProgress.graduate.progresses = _.get(response, 'data.feed.degreeProgress');
+      $scope.degreeProgress.graduate.errored = _.get(response, 'errored');
     }).then(function() {
       advisingFactory.getDegreeProgressUndergrad({
         uid: $routeParams.uid
-      }).then(function(data) {
-        $scope.degreeProgress.undergraduate.progresses = _.get(data, 'data.feed.degreeProgress.progresses');
-        $scope.degreeProgress.undergraduate.links = _.get(data, 'data.feed.links');
-        $scope.degreeProgress.undergraduate.errored = _.get(data, 'errored');
+      }).then(function(response) {
+        $scope.degreeProgress.undergraduate.progresses = _.get(response, 'data.feed.degreeProgress.progresses');
+        $scope.degreeProgress.undergraduate.links = _.get(response, 'data.feed.links');
+        $scope.degreeProgress.undergraduate.errored = _.get(response, 'errored');
       }).finally(function() {
         $scope.degreeProgress.undergraduate.showCard = apiService.user.profile.features.csDegreeProgressUgrdAdvising && ($scope.targetUser.roles.undergrad || $scope.degreeProgress.undergraduate.progresses.length);
         $scope.degreeProgress.graduate.showCard = apiService.user.profile.features.csDegreeProgressGradAdvising && ($scope.degreeProgress.graduate.progresses.length || $scope.targetUser.roles.graduate || $scope.targetUser.roles.law);
@@ -288,14 +294,15 @@ angular.module('calcentral.controllers').controller('UserOverviewController', fu
   };
 
   var getRegMessages = function() {
-    enrollmentVerificationFactory.getEnrollmentVerificationMessages()
-      .then(function(data) {
-        var messages = _.get(data, 'data.feed.root.getMessageCatDefn');
+    enrollmentVerificationFactory.getEnrollmentVerificationMessages().then(
+      function(response) {
+        var messages = _.get(response, 'data.feed.root.getMessageCatDefn');
         if (messages) {
           $scope.regStatus.messages = {};
           _.merge($scope.regStatus.messages, statusHoldsService.getRegStatusMessages(messages));
         }
-      });
+      }
+    );
   };
 
   /**

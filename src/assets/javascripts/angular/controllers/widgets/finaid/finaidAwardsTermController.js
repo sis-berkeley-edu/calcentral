@@ -15,11 +15,13 @@ angular.module('calcentral.controllers').controller('FinaidAwardsTermController'
   var loadAwardsTerm = function() {
     return finaidFactory.getAwardsTerm({
       finaidYearId: $routeParams.finaidYearId
-    }).success(function(data) {
-      angular.extend($scope.finaidAwardsTerm.feed, _.get(data, 'feed'));
-      $scope.finaidAwardsTerm.errored = data.errored;
-      $scope.finaidAwardsTerm.isLoading = false;
-    });
+    }).then(
+      function successCallback(response) {
+        angular.extend($scope.finaidAwardsTerm.feed, _.get(response, 'data.feed'));
+        $scope.finaidAwardsTerm.errored = _.get(response, 'data.errored');
+        $scope.finaidAwardsTerm.isLoading = false;
+      }
+    );
   };
 
   loadAwardsTerm();

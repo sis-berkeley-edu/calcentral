@@ -64,8 +64,8 @@ angular.module('calcentral.controllers').controller('BillingController', functio
     }
   };
 
-  var hasCarsActivity = function(data) {
-    $scope.billing.hasCarsActivity = !!_.get(data, 'data.activity.length');
+  var hasCarsActivity = function(response) {
+    $scope.billing.hasCarsActivity = !!_.get(response, 'data.activity.length');
   };
 
   var loadCarsInfo = function() {
@@ -110,8 +110,8 @@ angular.module('calcentral.controllers').controller('BillingController', functio
     return billingItem;
   };
 
-  var parseBillingInfo = function(data) {
-    var billing = _.get(data, 'data.feed');
+  var parseBillingInfo = function(response) {
+    var billing = _.get(response, 'data.feed');
 
     if (!billing || !billing.summary) {
       $scope.billing.isErrored = true;

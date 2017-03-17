@@ -45,16 +45,16 @@ angular.module('calcentral.controllers').controller('BasicPreferredNameControlle
     });
   };
 
-  var actionCompleted = function(data) {
-    apiService.profile.actionCompleted($scope, data, loadInformation);
+  var actionCompleted = function(response) {
+    apiService.profile.actionCompleted($scope, response, loadInformation);
   };
 
-  var saveCompleted = function(data) {
+  var saveCompleted = function(response) {
     // Notify other controllers about the preferredName update.
     $rootScope.$broadcast('calcentral.custom.api.preferredname.update');
 
     $scope.isSaving = false;
-    actionCompleted(data);
+    actionCompleted(response);
   };
 
   $scope.save = function(item) {

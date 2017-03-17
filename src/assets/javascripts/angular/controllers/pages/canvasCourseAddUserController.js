@@ -87,29 +87,32 @@ angular.module('calcentral.controllers').controller('CanvasCourseAddUserControll
     $scope.showUsersArea = true;
     $scope.isLoading = true;
 
-    canvasCourseAddUserFactory.searchUsers($scope.canvasCourseId, $scope.searchText, $scope.searchType).success(function(data) {
-      $scope.userSearchResults = data.users;
-      if (data.users.length > 0) {
-        $scope.userSearchResultsCount = Math.floor(data.users[0].resultCount);
-        $scope.selectedUser = data.users[0];
-      } else {
-        setSearchTypeNotice();
-        $scope.userSearchResultsCount = 0;
-        $scope.noSearchResultsNotice = true;
+    canvasCourseAddUserFactory.searchUsers($scope.canvasCourseId, $scope.searchText, $scope.searchType).then(
+      function successCallback(response) {
+        $scope.userSearchResults = response.data.users;
+        if (response.data.users.length > 0) {
+          $scope.userSearchResultsCount = Math.floor(response.data.users[0].resultCount);
+          $scope.selectedUser = response.data.users[0];
+        } else {
+          setSearchTypeNotice();
+          $scope.userSearchResultsCount = 0;
+          $scope.noSearchResultsNotice = true;
+        }
+        $scope.isLoading = false;
+        $scope.showAlerts = true;
+        $scope.searchResultsFocus = true;
+      },
+      function errorCallback(response) {
+        $scope.showError = true;
+        if (response.data && response.data.error) {
+          $scope.errorStatus = response.data.error;
+        } else {
+          $scope.errorStatus = 'User search failed.';
+        }
+        $scope.isLoading = false;
+        $scope.showAlerts = true;
       }
-      $scope.isLoading = false;
-      $scope.showAlerts = true;
-      $scope.searchResultsFocus = true;
-    }).error(function(data) {
-      $scope.showError = true;
-      if (data.error) {
-        $scope.errorStatus = data.error;
-      } else {
-        $scope.errorStatus = 'User search failed.';
-      }
-      $scope.isLoading = false;
-      $scope.showAlerts = true;
-    });
+    );
   };
 
   $scope.addUser = function() {
@@ -126,26 +129,29 @@ angular.module('calcentral.controllers').controller('CanvasCourseAddUserControll
     var submittedSection = $scope.selectedSection;
     var submittedRole = $scope.selectedRole;
 
-    canvasCourseAddUserFactory.addUser($scope.canvasCourseId, submittedUser.ldapUid, submittedSection.id, submittedRole).success(function(data) {
-      $scope.userAdded = data.userAdded;
-      $scope.userAdded.fullName = submittedUser.firstName + ' ' + submittedUser.lastName;
-      $scope.userAdded.role = submittedRole;
-      $scope.userAdded.sectionName = submittedSection.name;
-      $scope.additionSuccessMessage = true;
-      $scope.showSearchForm = true;
-      $scope.isLoading = false;
-      resetSearchState();
-    }).error(function(data) {
-      if (data.error) {
-        $scope.errorStatus = data.error;
-      } else {
-        $scope.errorStatus = 'Request to add user failed';
+    canvasCourseAddUserFactory.addUser($scope.canvasCourseId, submittedUser.ldapUid, submittedSection.id, submittedRole).then(
+      function successCallback(response) {
+        $scope.userAdded = response.data.userAdded;
+        $scope.userAdded.fullName = submittedUser.firstName + ' ' + submittedUser.lastName;
+        $scope.userAdded.role = submittedRole;
+        $scope.userAdded.sectionName = submittedSection.name;
+        $scope.additionSuccessMessage = true;
+        $scope.showSearchForm = true;
+        $scope.isLoading = false;
+        resetSearchState();
+      },
+      function errorCallback(response) {
+        if (response.data && response.data.error) {
+          $scope.errorStatus = response.data.error;
+        } else {
+          $scope.errorStatus = 'Request to add user failed';
+        }
+        $scope.showSearchForm = true;
+        $scope.additionFailureMessage = true;
+        $scope.isLoading = false;
+        resetSearchState();
       }
-      $scope.showSearchForm = true;
-      $scope.additionFailureMessage = true;
-      $scope.isLoading = false;
-      resetSearchState();
-    });
+    );
   };
 
   $scope.noUserSelected = function() {
@@ -153,43 +159,49 @@ angular.module('calcentral.controllers').controller('CanvasCourseAddUserControll
   };
 
   var checkAuthorization = function() {
-    canvasSharedFactory.courseUserRoles($scope.canvasCourseId).success(function(data) {
-      $scope.courseUserRoles = data.roles;
-      $scope.courseUserRoleTypes = data.roleTypes;
-      $scope.grantingRoles = data.grantingRoles;
-      $scope.selectedRole = $scope.grantingRoles[0];
+    canvasSharedFactory.courseUserRoles($scope.canvasCourseId).then(
+      function successCallback(response) {
+        $scope.courseUserRoles = response.data.roles;
+        $scope.courseUserRoleTypes = response.data.roleTypes;
+        $scope.grantingRoles = response.data.grantingRoles;
+        $scope.selectedRole = $scope.grantingRoles[0];
 
-      $scope.userAuthorized = userIsAuthorized($scope.courseUserRoleTypes) || ($scope.courseUserRoles.indexOf('globalAdmin') > -1);
-      if ($scope.userAuthorized) {
-        getCourseSections();
-        $scope.showSearchForm = true;
-      } else {
+        $scope.userAuthorized = userIsAuthorized($scope.courseUserRoleTypes) || ($scope.courseUserRoles.indexOf('globalAdmin') > -1);
+        if ($scope.userAuthorized) {
+          getCourseSections();
+          $scope.showSearchForm = true;
+        } else {
+          $scope.showError = true;
+          $scope.errorStatus = 'You must be a teacher in this bCourses course to import users.';
+        }
+      },
+      function errorCallback(response) {
+        $scope.userAuthorized = false;
         $scope.showError = true;
-        $scope.errorStatus = 'You must be a teacher in this bCourses course to import users.';
+        if (response.data && response.data.error) {
+          $scope.errorStatus = response.data.error;
+        } else {
+          $scope.errorStatus = 'Authorization Check Failed';
+        }
       }
-    }).error(function(data) {
-      $scope.userAuthorized = false;
-      $scope.showError = true;
-      if (data.error) {
-        $scope.errorStatus = data.error;
-      } else {
-        $scope.errorStatus = 'Authorization Check Failed';
-      }
-    });
+    );
   };
 
   var getCourseSections = function() {
-    canvasCourseAddUserFactory.courseSections($scope.canvasCourseId).success(function(data) {
-      $scope.courseSections = data.courseSections;
-      $scope.selectedSection = $scope.courseSections[0];
-    }).error(function(data) {
-      $scope.showError = true;
-      if (data.error) {
-        $scope.errorStatus = data.error;
-      } else {
-        $scope.errorStatus = 'Course sections failed to load';
+    canvasCourseAddUserFactory.courseSections($scope.canvasCourseId).then(
+      function successCallback(response) {
+        $scope.courseSections = response.data.courseSections;
+        $scope.selectedSection = $scope.courseSections[0];
+      },
+      function errorCallback(response) {
+        $scope.showError = true;
+        if (response.data && response.data.error) {
+          $scope.errorStatus = response.data.error;
+        } else {
+          $scope.errorStatus = 'Course sections failed to load';
+        }
       }
-    });
+    );
   };
 
   var userIsAuthorized = function(courseUserRoleTypes) {

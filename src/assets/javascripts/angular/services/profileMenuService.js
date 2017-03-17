@@ -242,10 +242,9 @@ angular.module('calcentral.services').factory('profileMenuService', function(api
   };
 
   var loadAcademicRoles = function() {
-    return academicStatusFactory.getAcademicRoles()
-      .then(function(data) {
-        academicRoles = _.get(data, 'roles');
-      });
+    return academicStatusFactory.getAcademicRoles().then(function(parsedAcademicRoles) {
+      academicRoles = _.get(parsedAcademicRoles, 'roles');
+    });
   };
 
   var getNavigation = function() {

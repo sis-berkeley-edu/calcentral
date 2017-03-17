@@ -21,14 +21,16 @@ angular.module('calcentral.controllers').controller('InformationDisclosureContro
   var getFerpaRestrictionManagementLink = function() {
     csLinkFactory.getLink({
       urlId: 'UC_CX_STDNT_FERPA_RESTR_MGMT'
-    }).then(function successCallback(data) {
-      $scope.ferpa.deeplink = _.get(data, 'data.link');
-      stopSpinner();
-    }, function errorCallback() {
-      $scope.ferpa.isErrored = true;
-      $scope.ferpa.deeplink = null;
-      stopSpinner();
-    });
+    }).then(
+      function successCallback(response) {
+        $scope.ferpa.deeplink = _.get(response, 'data.link');
+        stopSpinner();
+      }, function errorCallback() {
+        $scope.ferpa.isErrored = true;
+        $scope.ferpa.deeplink = null;
+        stopSpinner();
+      }
+    );
   };
 
   getFerpaRestrictionManagementLink();

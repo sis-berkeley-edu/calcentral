@@ -1,6 +1,7 @@
 'use strict';
 
 var angular = require('angular');
+var _ = require('lodash');
 
 /**
  * Basic Authentication controller
@@ -11,12 +12,15 @@ angular.module('calcentral.controllers').controller('BasicAuthController', funct
   };
 
   $scope.basicauth.connect = function() {
-    basicAuthFactory.login().success(function(data, status) {
-      if (status < 200 || status >= 300) {
-        return;
+    basicAuthFactory.login().then(
+      function successCallback(response) {
+        var status = _.get(response, 'status');
+        if (status < 200 || status >= 300) {
+          return;
+        }
+        window.location = '/';
       }
-      window.location = '/';
-    });
+    );
   };
 
   $scope.basicauth.disconnect = function() {

@@ -12,11 +12,13 @@ angular.module('calcentral.services').service('authService', function($http, $ro
     // We need a $timeout since we need to wait for the DOM to be ready
     // otherwise the back button doesn't trigger a new response
     $timeout(function() {
-      $http.get('/api/my/am_i_logged_in').success(function(data) {
-        if (data && !data.amILoggedIn && $route && $route.current && !$route.current.isPublic) {
-          window.location = '/auth/cas';
+      $http.get('/api/my/am_i_logged_in').then(
+        function successCallback(response) {
+          if (response.data && !response.data.amILoggedIn && $route && $route.current && !$route.current.isPublic) {
+            window.location = '/auth/cas';
+          }
         }
-      });
+      );
     }, 0);
   };
 

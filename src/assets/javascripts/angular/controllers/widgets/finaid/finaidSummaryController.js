@@ -43,17 +43,17 @@ angular.module('calcentral.controllers').controller('FinaidSummaryController', f
     }
   };
 
-  var parseFinaidYearData = function(data) {
-    angular.extend($scope.finaidSummaryData, _.get(data, 'feed.financialAidSummary'));
-    angular.extend($scope.shoppingSheet, _.get(data, 'feed.shoppingSheet'));
-    $scope.finaidSummaryInfo.errored = data.errored;
+  var parseFinaidYearData = function(response) {
+    angular.extend($scope.finaidSummaryData, _.get(response, 'data.feed.financialAidSummary'));
+    angular.extend($scope.shoppingSheet, _.get(response, 'data.feed.shoppingSheet'));
+    $scope.finaidSummaryInfo.errored = _.get(response, 'data.errored');
     $scope.finaidSummaryInfo.isLoadingData = false;
   };
 
   var getFinaidYearData = function() {
     return finaidFactory.getFinaidYearInfo({
       finaidYearId: finaidService.options.finaidYear.id
-    }).success(parseFinaidYearData);
+    }).then(parseFinaidYearData);
   };
 
   var selectFinaidYear = function() {
@@ -75,11 +75,14 @@ angular.module('calcentral.controllers').controller('FinaidSummaryController', f
    * Get the financial aid summary information
    */
   var getFinaidSummary = function() {
-    finaidFactory.getSummary().success(function(data) {
-      angular.extend($scope, data.feed);
-      setDefaultSelections(data.feed);
-      $scope.finaidSummaryInfo.isLoadingOptions = false;
-    });
+    finaidFactory.getSummary().then(
+      function successCallback(response) {
+        var feed = _.get(response, 'data.feed');
+        angular.extend($scope, feed);
+        setDefaultSelections(feed);
+        $scope.finaidSummaryInfo.isLoadingOptions = false;
+      }
+    );
   };
 
   getFinaidSummary();

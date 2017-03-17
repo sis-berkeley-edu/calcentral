@@ -59,12 +59,12 @@ angular.module('calcentral.controllers').controller('UserSearchController', func
       user.save = function() {
         adminFactory.storeUser({
           uid: adminService.getLdapUid(user)
-        }).success(refreshStoredUsers);
+        }).then(refreshStoredUsers);
       };
       user.delete = function() {
         return adminFactory.deleteUser({
           uid: adminService.getLdapUid(user)
-        }).success(refreshStoredUsers);
+        }).then(refreshStoredUsers);
       };
     });
     return users;
@@ -98,25 +98,30 @@ angular.module('calcentral.controllers').controller('UserSearchController', func
 
   var refreshStoredUsers = function() {
     var tabs = $scope.userSearch.tabs;
-    getStoredUsers().success(function(data) {
-      angular.forEach([tabs.saved, tabs.recent], function(tab) {
-        tab.isLoading = true;
-        tab.users = decorate(_.get(data, 'users.' + tab.label.toLowerCase()));
-        if (tab.users.length === 0) {
-          tab.message = 'No ' + tab.label.toLowerCase() + ' items.';
-        } else {
-          tab.message = '';
-        }
-        if (tab === tabs.saved) {
-          updateSearchedUserSavedStates();
-        }
-        tab.isLoading = false;
-      });
-    }).error(function(data, status) {
-      angular.forEach([tabs.saved, tabs.recent], function(tab) {
-        reportError(tab, status, data.error);
-      });
-    });
+    getStoredUsers().then(
+      function successCallback(response) {
+        angular.forEach([tabs.saved, tabs.recent], function(tab) {
+          tab.isLoading = true;
+          tab.users = decorate(_.get(response, 'data.users.' + tab.label.toLowerCase()));
+          if (tab.users.length === 0) {
+            tab.message = 'No ' + tab.label.toLowerCase() + ' items.';
+          } else {
+            tab.message = '';
+          }
+          if (tab === tabs.saved) {
+            updateSearchedUserSavedStates();
+          }
+          tab.isLoading = false;
+        });
+      },
+      function errorCallback(response) {
+        var error = _.get(response, 'data.error');
+        var status = _.get(response, 'status');
+        angular.forEach([tabs.saved, tabs.recent], function(tab) {
+          reportError(tab, status, error);
+        });
+      }
+    );
   };
 
   $scope.userSearch.byNameOrId = function() {
@@ -125,20 +130,26 @@ angular.module('calcentral.controllers').controller('UserSearchController', func
     searchTab.message = null;
     searchTab.queryRunning = true;
 
-    adminFactory.searchUsers(searchTab.nameOrId).success(function(data) {
-      if (!data.users || data.users.length === 0) {
-        var noun = 'users';
-        if (apiService.user.profile.roles.advisor) {
-          noun = 'students';
+    adminFactory.searchUsers(searchTab.nameOrId).then(
+      function successCallback(response) {
+        var users = _.get(response, 'data.users');
+        if (!users || users.length === 0) {
+          var noun = 'users';
+          if (apiService.user.profile.roles.advisor) {
+            noun = 'students';
+          }
+          searchTab.message = 'Your search on \"' + searchTab.nameOrId + '\" did not match any ' + noun + '.';
         }
-        searchTab.message = 'Your search on \"' + searchTab.nameOrId + '\" did not match any ' + noun + '.';
+        searchTab.users = decorate(users);
+        updateSearchedUserSavedStates();
+      },
+      function errorCallback(response) {
+        var error = _.get(response, 'data.error');
+        var status = _.get(response, 'status');
+        searchTab.users = [];
+        reportError(searchTab, status, error);
       }
-      searchTab.users = decorate(data.users);
-      updateSearchedUserSavedStates();
-    }).error(function(data, status) {
-      searchTab.users = [];
-      reportError(searchTab, status, data.error);
-    }).finally(function() {
+    ).finally(function() {
       searchTab.queryRunning = false;
     });
   };

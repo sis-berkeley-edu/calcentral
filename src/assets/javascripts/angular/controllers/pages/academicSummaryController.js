@@ -45,15 +45,15 @@ angular.module('calcentral.controllers').controller('AcademicSummaryController',
     }
   };
 
-  var parseAcademics = function(data) {
-    angular.extend($scope, _.get(data, 'data'));
+  var parseAcademics = function(response) {
+    angular.extend($scope, _.get(response, 'data'));
     $scope.showSemesters = showSemesters();
     parseGpaUnits();
     parseTransferCredit();
   };
 
-  var parsePerson = function(data) {
-    var names = _.get(data, 'data.feed.student.names');
+  var parsePerson = function(response) {
+    var names = _.get(response, 'data.feed.student.names');
     $scope.primaryName = apiService.profile.findPrimary(names);
   };
 

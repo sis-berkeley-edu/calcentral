@@ -32,16 +32,16 @@ angular.module('calcentral.factories').factory('enrollmentFactory', function(api
 
   /**
    * Processes raw data feed for presentation
-   * @param  {object} data enrollment instructions feed
-   * @return {object} prepared enrollment instructions object
+   * @param  {object} response    data enrollment instructions feed
+   * @return {object}             prepared enrollment instructions object
    */
-  var parseEnrollmentInstructionDecks = function(data) {
+  var parseEnrollmentInstructionDecks = function(response) {
     var enrollmentInstructionDecks = [];
-    var instructionTypeDecks = _.get(data, 'data.enrollmentTermInstructionTypeDecks');
-    var academicPlanner = _.get(data, 'data.enrollmentTermAcademicPlanner');
-    var instructions = _.get(data, 'data.enrollmentTermInstructions');
-    var hasHolds = _.get(data, 'data.hasHolds');
-    var links = _.get(data, 'data.links');
+    var instructionTypeDecks = _.get(response, 'data.enrollmentTermInstructionTypeDecks');
+    var academicPlanner = _.get(response, 'data.enrollmentTermAcademicPlanner');
+    var instructions = _.get(response, 'data.enrollmentTermInstructions');
+    var hasHolds = _.get(response, 'data.hasHolds');
+    var links = _.get(response, 'data.links');
     if (!instructionTypeDecks || !academicPlanner || !instructions) {
       return;
     }

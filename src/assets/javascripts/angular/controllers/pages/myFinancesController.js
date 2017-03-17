@@ -19,10 +19,11 @@ angular.module('calcentral.controllers').controller('MyFinancesController', func
   };
 
   var loadAcademicRoles = function() {
-    return academicStatusFactory.getAcademicRoles()
-      .then(function(data) {
-        $scope.academicStatus.roles = _.get(data, 'roles');
-      });
+    return academicStatusFactory.getAcademicRoles().then(
+      function(parsedAcademicRoles) {
+        $scope.academicStatus.roles = _.get(parsedAcademicRoles, 'roles');
+      }
+    );
   };
 
   $scope.$on('calcentral.api.user.isAuthenticated', function(event, isAuthenticated) {

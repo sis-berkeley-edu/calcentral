@@ -11,8 +11,8 @@ angular.module('calcentral.controllers').controller('FacultyResourcesController'
   var loadCsLinks = function() {
     csLinkFactory.getLink({
       urlId: 'UC_CX_GT_ACTION_CENTER'
-    }).then(function(data) {
-      var link = _.get(data, 'data.link');
+    }).then(function(response) {
+      var link = _.get(response, 'data.link');
       $scope.facultyResources.eformsReviewCenterLink = link;
       $scope.facultyResources.isLoading = false;
     });

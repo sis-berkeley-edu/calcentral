@@ -82,9 +82,9 @@ angular.module('calcentral.controllers').controller('FinaidAwardsCompareControll
   /**
    * Parse the list of packages
    */
-  var parseFinaidAwardCompareList = function(data) {
-    $scope.finaidAwardsCompare.data.list = _.get(data, 'data.feed.awardParms');
-    $scope.finaidAwardsCompare.errored = data.errored;
+  var parseFinaidAwardCompareList = function(response) {
+    $scope.finaidAwardsCompare.data.list = _.get(response, 'data.feed.awardParms');
+    $scope.finaidAwardsCompare.errored = response.errored;
     $scope.finaidAwardsCompare.isLoading = false;
   };
 
@@ -378,10 +378,10 @@ angular.module('calcentral.controllers').controller('FinaidAwardsCompareControll
   /**
    * Parse the current and prior package data
    */
-  var parseCurrentAndPrior = function(data) {
-    parseSummaryData(data);
-    parseNetcostData(data);
-    parsePackagesData(data);
+  var parseCurrentAndPrior = function(response) {
+    parseSummaryData(response);
+    parseNetcostData(response);
+    parsePackagesData(response);
   };
 
   /**
@@ -403,8 +403,8 @@ angular.module('calcentral.controllers').controller('FinaidAwardsCompareControll
           finaidYearId: finaidService.options.finaidYear.id,
           date: priorDate.csdate
         })
-      }).then(function(data) {
-        parseCurrentAndPrior(data);
+      }).then(function(response) {
+        parseCurrentAndPrior(response);
         $scope.finaidAwardsCompare.isLoadingCurrentAndPrior = false;
       });
     }
