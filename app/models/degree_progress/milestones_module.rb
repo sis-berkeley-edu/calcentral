@@ -37,7 +37,7 @@ module DegreeProgress
           normalized = {
             name: name,
             code: requirement[:code],
-            status:  Berkeley::GraduateMilestones.get_status(requirement[:status]),
+            status:  parse_status(requirement),
             orderNumber: Berkeley::GraduateMilestones.get_order_number(requirement[:code]),
             dateCompleted: parse_date(requirement[:dateCompleted]),
             dateAnticipated: parse_date(requirement[:dateAnticipated]),
@@ -50,6 +50,10 @@ module DegreeProgress
       end.compact
       set_proposed_exam_date(normalized_requirements)
       normalized_requirements
+    end
+
+    def parse_status(requirement)
+      Berkeley::GraduateMilestones.get_status(requirement[:status]) || Berkeley::GraduateMilestones::STATUS_INCOMPLETE
     end
 
     def parse_date(date)
@@ -93,7 +97,7 @@ module DegreeProgress
     def determine_status_code(status_code, milestone_attempts)
       return status_code unless status_code.blank?
       latest_attempt = milestone_attempts.first unless milestone_attempts.blank?
-      return latest_attempt.try(:[], :statusCode)
+      latest_attempt.try(:[], :statusCode)
     end
 
     def set_proposed_exam_date(requirements)
