@@ -22,7 +22,7 @@ angular.module('calcentral.factories').factory('advisingFactory', function(apiSe
   var urlAdvisingDegreeProgressGraduate = '/api/advising/degree_progress/grad/';
   // var urlAdvisingDegreeProgressGraduate = '/dummy/json/degree_progress_grad.json';
   var urlAdvisingDegreeProgressUndergrad = '/api/advising/degree_progress/ugrd/';
-  // var urlAdvisingDegreeProgressUndergrad = '/dummy/json/degree_progress_undergrad.json';
+  // var urlAdvisingDegreeProgressUndergrad = '/dummy/json/degree_progress_ugrd.json';
 
   var getResources = function(options) {
     return apiService.http.request(options, urlResources);
