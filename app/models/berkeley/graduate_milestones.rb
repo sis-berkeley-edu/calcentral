@@ -6,6 +6,7 @@ module Berkeley
     QE_STATUS_FAILED = 'Failed'
     QE_STATUS_PARTIALLY_FAILED = 'Partially Failed'
     QE_STATUS_PASSED = 'Passed'
+    STATUS_INCOMPLETE = 'Not Satisfied'
 
     QE_APPROVAL_MILESTONE = 'AAGQEAPRV'
     QE_RESULTS_MILESTONE = 'AAGQERESLT'
@@ -68,7 +69,7 @@ module Berkeley
         'F' => QE_STATUS_FAILED,
         'PF' => QE_STATUS_PARTIALLY_FAILED,
         QE_STATUS_CODE_PASSED => QE_STATUS_PASSED,
-        'N' => 'Not Satisfied',
+        'N' => STATUS_INCOMPLETE,
         'Y' => 'Completed'
       }
     end

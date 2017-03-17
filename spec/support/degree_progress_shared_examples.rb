@@ -14,7 +14,6 @@ shared_examples 'a proxy that returns graduate milestone data' do
   end
 
   it 'filters out requirements that we don\'t want to display' do
-    puts subject[:feed][:degreeProgress][0].pretty_inspect
     expect(subject[:feed][:degreeProgress][0][:requirements].length).to eql(2)
     expect(subject[:feed][:degreeProgress][1][:requirements].length).to eql(2)
   end
@@ -22,12 +21,14 @@ shared_examples 'a proxy that returns graduate milestone data' do
   it 'replaces codes with descriptive names' do
     expect(subject[:feed][:degreeProgress][0][:requirements][0][:name]).to eql('Advancement to Candidacy (Thesis Plan)')
     expect(subject[:feed][:degreeProgress][0][:requirements][0][:status]).to eql('Not Satisfied')
-    expect(subject[:feed][:degreeProgress][1][:requirements][0][:name]).to eql('Advancement to Candidacy (Thesis Plan)')
-    expect(subject[:feed][:degreeProgress][1][:requirements][0][:status]).to be nil
     expect(subject[:feed][:degreeProgress][1][:requirements][1][:name]).to eql('Advancement to Candidacy (Capstone Plan)')
-    expect(subject[:feed][:degreeProgress][1][:requirements][0][:status]).to be nil
+    expect(subject[:feed][:degreeProgress][1][:requirements][1][:status]).to eql('Not Satisfied')
     expect(subject[:feed][:degreeProgress][2][:requirements][0][:name]).to eql('Approval for Qualifying Exam')
     expect(subject[:feed][:degreeProgress][2][:requirements][0][:status]).to eql('Completed')
+  end
+
+  it 'marks a milestone \'Not Satisfied\' if it has an unexpected status code' do
+    expect(subject[:feed][:degreeProgress][0][:requirements][1][:status]).to eql('Not Satisfied')
   end
 
   it 'formats dates' do
