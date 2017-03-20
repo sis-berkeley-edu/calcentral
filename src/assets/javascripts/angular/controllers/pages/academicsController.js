@@ -23,6 +23,10 @@ angular.module('calcentral.controllers').controller('AcademicsController', funct
     $location.path('/academics/semester/' + slug);
   };
 
+  $scope.redirectToHome = function() {
+    return apiService.util.redirectToHome();
+  };
+
   var checkPageExists = function(page) {
     if (!page) {
       apiService.util.redirect('404');
@@ -240,6 +244,9 @@ angular.module('calcentral.controllers').controller('AcademicsController', funct
   $scope.$on('calcentral.api.user.isAuthenticated', function(event, isAuthenticated) {
     if (isAuthenticated) {
       $scope.canViewAcademics = $scope.api.user.profile.hasAcademicsTab;
+      if (!$scope.canViewAcademics) {
+        apiService.user.redirectToHome();
+      }
       var getAcademics = academicsFactory.getAcademics().success(parseAcademics);
       var getRegistrations = registrationsFactory.getRegistrations().success(loadRegistrations);
       var requests = [loadAcademicRoles(), getAcademics, getRegistrations];

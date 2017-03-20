@@ -14,6 +14,10 @@ angular.module('calcentral.controllers').controller('MyFinancesController', func
     roles: {}
   };
 
+  $scope.redirectToHome = function() {
+    return apiService.util.redirectToHome();
+  };
+
   var loadAcademicRoles = function() {
     return academicStatusFactory.getAcademicRoles()
       .then(function(data) {
@@ -24,6 +28,8 @@ angular.module('calcentral.controllers').controller('MyFinancesController', func
   $scope.$on('calcentral.api.user.isAuthenticated', function(event, isAuthenticated) {
     if (isAuthenticated && apiService.user.profile.hasFinancialsTab) {
       loadAcademicRoles();
+    } else {
+      apiService.user.redirectToHome();
     }
   });
 });

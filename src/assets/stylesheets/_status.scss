@@ -39,6 +39,11 @@
     height: 200px;
     width: 190px;
   }
+  .cc-page-status-private-folder {
+    background-image: url('../images/svg/private_folder.svg');
+    height: 125px;
+    width: 200px;
+  }
 
   @media #{$small-only} {
     img {

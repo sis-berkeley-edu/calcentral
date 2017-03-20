@@ -16,6 +16,10 @@ angular.module('calcentral.controllers').controller('DashboardController', funct
     }
   };
 
+  $scope.redirectToHome = function() {
+    return apiService.util.redirectToHome();
+  };
+
   // We have to watch the user profile for changes because of async loading in
   // case of Back button navigation from a different (non-CalCentral) location.
   $scope.$watch('api.user.profile.hasDashboardTab', init);
