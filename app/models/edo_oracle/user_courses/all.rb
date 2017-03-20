@@ -29,7 +29,9 @@ module EdoOracle
           campus_classes = {}
           merge_enrollments campus_classes
           sort_courses campus_classes
-          Hash[campus_classes.sort.reverse]
+          campus_classes = Hash[campus_classes.sort.reverse]
+          remove_duplicate_sections(campus_classes)
+          campus_classes
         end
       end
 
