@@ -17,15 +17,15 @@
           <tr>
             <th>Institution</th>
             <th class="cc-table-right">Units</th>
-            <th data-ng-if="showTransferCreditPoints" class="cc-table-center">Points</th>
+            <th data-ng-if="showPointsColumn" class="cc-table-center">Points</th>
           </tr>
         </thead>
         <tbody>
           <tr data-ng-repeat="credit in transferCredit.ucTransferCrseSch.items">
             <td data-ng-bind="credit.institution"></td>
             <td class="cc-text-right" data-ng-bind="credit.ucbUnits | number:3"></td>
-            <td class="cc-text-center" data-ng-if="showTransferCreditPoints && credit.ucbGradePoints" data-ng-bind="credit.ucbGradePoints | number:3"></td>
-            <td class="cc-text-center" data-ng-if="showTransferCreditPoints && !credit.ucbGradePoints">&mdash;</td>
+            <td class="cc-text-center" data-ng-if="showPointsColumn && credit.ucbGradePoints" data-ng-bind="credit.ucbGradePoints | number:3"></td>
+            <td class="cc-text-center" data-ng-if="showPointsColumn && !credit.ucbGradePoints">&mdash;</td>
           </tr>
           <tr>
             <td class="cc-text-right" colspan="2">Total Course Units: <strong data-ng-bind="transferCredit.ucTransferCrseSch.unitsTotal | number:3"></strong></td>
