@@ -7,6 +7,7 @@ describe DegreeProgress::MyUndergradRequirements do
     proxy_class = CampusSolutions::DegreeProgress::UndergradRequirements
     fake_proxy = proxy_class.new(user_id: user_id, fake: true)
     allow(proxy_class).to receive(:new).and_return fake_proxy
+    allow(Settings.features).to receive(flag).and_return(true)
   end
 
   describe '#get_feed_internal' do
@@ -17,7 +18,6 @@ describe DegreeProgress::MyUndergradRequirements do
     it_behaves_like 'a proxy that returns undergraduate milestone data'
 
     it 'does not include the Academic Progress Report link in the response' do
-      allow(Settings.features).to receive(flag).and_return(true)
       expect(subject[:feed][:links]).not_to be
     end
   end
