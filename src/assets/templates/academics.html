@@ -49,4 +49,5 @@
     </div>
   </div>
 </div>
-<div data-ng-include="'404.html'" data-ng-if="!canViewAcademics"></div>
+<div data-ng-include="'404.html'" data-ng-if="!canViewAcademics && !api.user.profile.delegateActingAsUid"></div>
+<div data-ng-include="'delegate_access_denied.html'" data-ng-if="!canViewAcademics && api.user.profile.delegateActingAsUid"></div>
