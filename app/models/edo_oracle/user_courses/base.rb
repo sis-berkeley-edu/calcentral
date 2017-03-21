@@ -190,6 +190,14 @@ module EdoOracle
         section_data
       end
 
+      def remove_duplicate_sections(campus_classes)
+        campus_classes.each_value do |semester|
+          semester.each do |course|
+            course[:sections].uniq!
+          end
+        end
+      end
+
       def merge_cross_listed_titles(course)
         if (course[:catid].start_with? 'C') && !course[:name]
           title_results = self.class.fetch_from_cache "cross_listed_title-#{course[:course_code]}" do
