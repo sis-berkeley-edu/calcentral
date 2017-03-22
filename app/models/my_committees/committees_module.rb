@@ -27,11 +27,19 @@ module MyCommittees::CommitteesModule
     committee = {
       committeeType:  cs_committee[:committeeDescrlong],
       program:        cs_committee[:studentAcadPlan],
-      milestoneAttempts: parse_cs_milestone_attempts(cs_committee),
+      milestoneAttempts: parse_cs_qualifying_exam_attempts(cs_committee),
       committeeMembers: parse_cs_committee_members(cs_committee)
     }
     set_committee_status(cs_committee, committee)
     committee
+  end
+
+  def parse_cs_qualifying_exam_attempts(cs_committee)
+    qualifying_exam_attempts = []
+    if cs_committee[:committeeType].to_s == COMMITTEE_TYPE_QUALIFYING_EXAM
+      qualifying_exam_attempts = parse_cs_milestone_attempts(cs_committee)
+    end
+    qualifying_exam_attempts
   end
 
   def parse_cs_milestone_attempt(cs_milestone_attempt)
