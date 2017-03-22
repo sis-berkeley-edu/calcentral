@@ -175,6 +175,14 @@ RailsAdmin.config do |config|
   config.model 'ServiceAlerts::Alert' do
     label 'Service Alert'
 
+    include_fields :title, :snippet, :body, :publication_date
+
+    field :splash do
+      label 'Only on splash page'
+    end
+
+    include_fields :display
+
     configure :preview do
       help false
       read_only true
