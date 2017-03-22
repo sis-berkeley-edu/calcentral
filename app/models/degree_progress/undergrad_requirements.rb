@@ -7,10 +7,6 @@ module DegreeProgress
     include Cache::UserCacheExpiry
     include RequirementsModule
 
-    LINKS_CONFIG = [
-      { feed_key: :academic_progress_report, cs_link_key: 'UC_CX_APR_RPT_STDNT' }
-    ]
-
     def get_feed_internal
       return {} unless is_feature_enabled?
       response = CampusSolutions::DegreeProgress::UndergradRequirements.new(user_id: @uid).get
@@ -27,17 +23,24 @@ module DegreeProgress
 
     private
 
+    def student_empl_id
+      CalnetCrosswalk::ByUid.new(user_id: @uid).lookup_campus_solutions_id
+    end
+
     def get_links
       links = {}
-      LINKS_CONFIG.each do |setting|
-        link = fetch_link setting[:cs_link_key]
+      links_config = [
+        { feed_key: :academic_progress_report, cs_link_key: 'UC_CX_APR_RPT_STDNT', cs_link_params: { :EMPLID => student_empl_id } }
+      ]
+      links_config.each do |setting|
+        link = fetch_link setting[:cs_link_key], setting[:cs_link_params]
         links[setting[:feed_key]] = link unless link.blank?
       end
       links
     end
 
-    def fetch_link(link_key)
-      if (link_feed = CampusSolutions::Link.new.get_url link_key)
+    def fetch_link(link_key, placeholders = {})
+      if (link_feed = CampusSolutions::Link.new.get_url(link_key, placeholders))
         link = link_feed.try(:[], :link)
       end
       logger.error "Could not retrieve CS link #{link_key} for #{self.class.name} feed, uid = #{@uid}" unless link

@@ -20,6 +20,7 @@ describe DegreeProgress::UndergradRequirements do
     it 'includes the Academic Progress Report link in the response' do
       expect(subject[:feed][:links]).to be
       expect(subject[:feed][:links][:academicProgressReport]).to be
+      expect(subject[:feed][:links][:academicProgressReport][:url]).to eq 'https://bcswebqat.is.berkeley.edu/psp/bcsqat/EMPLOYEE/PSFT_CS/c/SSR_ADVISEE_OVRD.SAA_SS_DPR_ADB.GBL?EMPLID=25738808'
     end
   end
 end
