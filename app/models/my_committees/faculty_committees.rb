@@ -41,7 +41,7 @@ module MyCommittees
     end
 
     def parse_cs_milestone_attempts(cs_committee)
-      attempts = cs_committee[:studentMilestoneAttempts].try(:map) do |attempt|
+      attempts = cs_committee[:studentApprovalMilestoneAttempts].try(:map) do |attempt|
         parse_cs_milestone_attempt(attempt)
       end
       attempts.try(:sort_by) do |attempt|
