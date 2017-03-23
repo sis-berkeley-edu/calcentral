@@ -59,6 +59,7 @@ describe MyCommittees::StudentCommittees do
       expect(committee[:program]).to eq 'STUDENTACADPLAN4'
       expect(committee[:statusIcon]).to eq 'check'
       expect(committee[:statusMessage]).to eq 'Filing Date: Jun 16, 2025'
+      expect(committee[:milestoneAttempts]).to eq []
     end
 
     it 'contains the expected student data for a Masters Thesis committee' do
@@ -67,6 +68,7 @@ describe MyCommittees::StudentCommittees do
       expect(committee[:program]).to eq 'STUDENTACADPLAN6'
       expect(committee[:statusIcon]).to eq nil
       expect(committee[:statusMessage]).to eq 'Advanced: Jun 16, 2018'
+      expect(committee[:milestoneAttempts]).to eq []
     end
 
     context 'when student has attempted the Qualifying Exam milestone' do

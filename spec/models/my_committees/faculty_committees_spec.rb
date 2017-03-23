@@ -42,6 +42,7 @@ describe MyCommittees::FacultyCommittees do
       expect(committee[:statusMessage]).to eq 'Advanced: Oct 06, 2017'
       expect(committee[:statusIcon]).to eq nil
       expect(committee[:serviceRange]).to eq 'Aug 31, 2016 - Present'
+      expect(committee[:milestoneAttempts]).to eq []
     end
 
     it 'correctly parses a Qualifying Exam committee with exam passed' do
@@ -69,6 +70,7 @@ describe MyCommittees::FacultyCommittees do
       expect(committee[:statusMessage]).to eq 'Filing Date: Nov 06, 2016'
       expect(committee[:statusIcon]).to eq 'check'
       expect(committee[:serviceRange]).to eq 'Aug 31, 2015 - Jan 01, 2016'
+      expect(committee[:milestoneAttempts]).to eq []
     end
 
     context 'when student has attempted the Qualifying Exam milestone' do
