@@ -28,7 +28,8 @@
           data-button-text-approve="'I Do Agree'"
           data-button-action-dont-approve="sendResponseTC(finaidYear.id, 'N')"
           data-button-action-approve="sendResponseTC(finaidYear.id, 'Y')"
-          data-can-post="api.user.profile.actAsOptions.canPost"
+          data-button-go-back="true"
+          data-can-post="api.user.profile.actAsOptions.canPost && !finaidYear.termsAndConditions.approved"
         ></div>
       </div>
     </div>
