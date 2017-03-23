@@ -28,7 +28,8 @@
           data-button-text-approve="'Authorize'"
           data-button-action-dont-approve="sendResponseT4('N')"
           data-button-action-approve="sendResponseT4('Y')"
-          data-can-post="api.user.profile.actAsOptions.canPost"
+          data-button-go-back="true"
+          data-can-post="api.user.profile.actAsOptions.canPost && !finaidSummary.title4.approved"
         ></div>
       </div>
     </div>
