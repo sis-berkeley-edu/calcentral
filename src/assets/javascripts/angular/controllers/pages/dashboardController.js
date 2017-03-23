@@ -8,10 +8,9 @@ var angular = require('angular');
 angular.module('calcentral.controllers').controller('DashboardController', function(apiService, linkService, $scope) {
 
   var init = function() {
-    if (apiService.user.profile.hasDashboardTab) {
-      linkService.addCurrentRouteSettings($scope);
-      apiService.util.setTitle($scope.currentPage.name);
-    } else {
+    linkService.addCurrentRouteSettings($scope);
+    apiService.util.setTitle($scope.currentPage.name);
+    if (!apiService.user.profile.hasDashboardTab) {
       apiService.user.redirectToHome();
     }
   };
