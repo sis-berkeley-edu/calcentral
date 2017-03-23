@@ -5,7 +5,7 @@
   <div class="cc-widget-padding">
     <div data-ng-if="degreeProgress.undergraduate.errored">There was an error retrieving undergraduate degree progress data.</div>
     <div data-ng-if="!degreeProgress.undergraduate.errored && !degreeProgress.undergraduate.progresses.length && !api.user.profile.roles.advisor">
-      It appears that you haven’t completed any University Requirements. If you believe this to be in error, please contact your advisor.
+      You do not have degree progress report data. Please contact your advisor for assistance.
     </div>
     <div data-ng-if="!degreeProgress.undergraduate.errored && !degreeProgress.undergraduate.progresses.length && api.user.profile.roles.advisor">
       <p>This student has no degree progress data.</p>
