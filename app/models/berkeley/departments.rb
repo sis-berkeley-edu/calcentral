@@ -83,6 +83,7 @@ module Berkeley
         'PHYSI' =>  'Department of Physics',
         'PMATH' =>  'Department of Mathematics',
         'PSTAT' =>  'Department of Statistics',
+        'QHINS' =>  'Freshman and Sophomore Seminars',
         'QHUIS' =>  'Office of Undergraduate and Interdisciplinary Studies',
         'QIIAS' =>  'International and Area Studies Academic Program',
         'QKCWP' =>  'College Writing Programs',
