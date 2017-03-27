@@ -11,7 +11,7 @@ module Notifications
     #  "students": {"id": [123, 456]}
 
     def get_uids(event)
-      if event && ids = event.try(:[], 'payload').try(:[], 'students')
+      if event && (ids = event.try(:[], 'payload').try(:[], 'students').try(:[], 'id'))
         uids = []
         Array(ids).each do |student_id|
           if (uid = CalnetCrosswalk::ByCsId.new(user_id: student_id).lookup_ldap_uid)
