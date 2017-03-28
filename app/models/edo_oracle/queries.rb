@@ -39,6 +39,12 @@ module EdoOracle
         crs."status-code" = 'ACTIVE')
     SQL
 
+    JOIN_ROSTER_TO_EMAIL = <<-SQL
+       LEFT OUTER JOIN SISEDO.PERSON_EMAILV00_VW email ON (
+         email."PERSON_KEY" = enroll."STUDENT_ID" AND
+         email."EMAIL_PRIMARY" = 'Y')
+    SQL
+
     # EDO equivalent of CampusOracle::Queries.get_enrolled_sections
     # Changes:
     #   - 'wait_list_seq_num' replaced by 'waitlist_position'
@@ -319,6 +325,11 @@ module EdoOracle
 
     # Extended version of #get_enrolled_students used for rosters
     def self.get_rosters(ccns, term_id)
+      if Settings.features.allow_alt_email_addr_for_enrollments
+        join_roster_to_email = JOIN_ROSTER_TO_EMAIL
+        email_col = ", email.\"EMAIL_EMAILADDRESS\" AS email_address"
+      end
+
       safe_query <<-SQL
         SELECT DISTINCT
           enroll."CLASS_SECTION_ID" AS section_id,
@@ -332,6 +343,7 @@ module EdoOracle
           plan."ACADPLAN_DESCR" AS major,
           plan."STATUSINPLAN_STATUS_CODE",
           stdgroup."STDNT_GROUP" AS terms_in_attendance_group
+          #{email_col}
         FROM SISEDO.ENROLLMENTV00_VW enroll
         LEFT OUTER JOIN
           SISEDO.STUDENT_PLAN_CC_V00_VW plan ON enroll."STUDENT_ID" = plan."STUDENT_ID" AND
@@ -339,6 +351,7 @@ module EdoOracle
         LEFT OUTER JOIN
           SISEDO.STUDENT_GROUPV00_VW stdgroup ON enroll."STUDENT_ID" = stdgroup."STUDENT_ID" AND
           stdgroup."STDNT_GROUP" IN ('R1TA', 'R2TA', 'R3TA', 'R4TA', 'R5TA', 'R6TA', 'R7TA', 'R8TA')
+        #{join_roster_to_email}
         WHERE
           enroll."CLASS_SECTION_ID" IN ('#{ccns.join "','"}')
           AND enroll."TERM_ID" = '#{term_id}'
