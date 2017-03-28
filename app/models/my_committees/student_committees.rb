@@ -37,10 +37,6 @@ module MyCommittees
       committee
     end
 
-    def is_active?(cs_committee)
-      cs_committee.try(:[], :committeeFinishingMilestoneComplete) != 'Y'
-    end
-
     def parse_cs_milestone_attempts(cs_committee)
       attempts = cs_committee[:studentApprovalMilestoneAttempts].try(:map) do |attempt|
         parse_cs_milestone_attempt(attempt)
