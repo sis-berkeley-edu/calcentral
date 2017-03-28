@@ -87,6 +87,7 @@ module Rosters
               .select { |e| [nil, '', 'AC'].include? e['statusinplan_status_code'] }
               .collect { |e| e['major'] }.uniq
             if (enrollment_row = section_enrollments_by_uid[attrs[:ldap_uid]].first)
+              attrs[:email] = enrollment_row['email_address'] if attrs[:email].blank?
               attrs[:student_id] = enrollment_row['student_id']
               attrs[:terms_in_attendance] = terms_in_attendance_code(enrollment_row['academic_career'], enrollment_row['terms_in_attendance_group'])
               attrs[:enroll_status] = enrollment_row['enroll_status']

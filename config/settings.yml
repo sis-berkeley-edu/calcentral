@@ -477,6 +477,7 @@ features:
   advising_academic_planner: false
   advising_student_success: false
   allow_legacy_fallback: true
+  allow_alt_email_addr_for_enrollments: true
   authentication_validator: false
   background_jobs_check: true
   cal1card: false
