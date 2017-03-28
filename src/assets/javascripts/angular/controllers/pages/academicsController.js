@@ -123,6 +123,7 @@ angular.module('calcentral.controllers').controller('AcademicsController', funct
     $scope.selectedStudentSemester = selectedStudentSemester;
     $scope.selectedTeachingSemester = selectedTeachingSemester;
     $scope.containsMidpointClass = academicsService.containsMidpointClass($scope.selectedTeachingSemester);
+    $scope.isSummerSemester = academicsService.isSummerSemester($scope.selectedTeachingSemester);
 
     // Get selected course from URL params and extract data from selected semester schedule
     if ($routeParams.classSlug) {
@@ -197,6 +198,7 @@ angular.module('calcentral.controllers').controller('AcademicsController', funct
         // landing page will be grimly bare.
         $scope.selectedTeachingSemester = academicsService.chooseDefaultSemester(response.data.teachingSemesters);
         $scope.containsMidpointClass = academicsService.containsMidpointClass($scope.selectedTeachingSemester);
+        $scope.isSummerSemester = academicsService.isSummerSemester($scope.selectedTeachingSemester);
         $scope.widgetSemesterName = $scope.selectedTeachingSemester.name;
       }
     }

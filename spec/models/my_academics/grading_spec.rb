@@ -2,6 +2,9 @@ describe MyAcademics::Grading do
 
   let(:uid) { '123456' }
   let(:fake) { true }
+  let(:fake_grading_url) { 'http://fake.grading.com' }
+  let(:link_proxy_class) { CampusSolutions::Link }
+  let(:link_fake_proxy) { link_proxy_class.new(fake: true) }
 
   subject do
     MyAcademics::Grading.new(uid)
@@ -9,6 +12,8 @@ describe MyAcademics::Grading do
 
   before do
     allow(Settings.terms).to receive(:fake_now).and_return nil
+    allow(link_proxy_class).to receive(:new).and_return link_fake_proxy
+    allow(link_fake_proxy).to receive(:get_url).and_return({link: fake_grading_url})
   end
 
   context 'when grading period from settings is set' do
@@ -159,39 +164,32 @@ describe MyAcademics::Grading do
   end
 
   context 'when mapping CC grading status to grading link' do
-    let(:fake_grading_url) { 'http://fake.grading.com' }
     before do
-      link_proxy_class = CampusSolutions::Link
-      link_fake_proxy = link_proxy_class.new(fake: true)
-      allow(link_proxy_class).to receive(:new).and_return link_fake_proxy
-      allow(link_fake_proxy).to receive(:get_url).and_return({link: fake_grading_url})
-
       allow(subject).to receive(:get_grading_period_status).and_return(:gradingPeriodNotSet)
     end
 
     it 'it should return nil for missing ccn in sections' do
-      expect(subject.get_grading_link(ccn = nil , term_code ='2168', is_law = true, cc_grading_status = {finalStatus: :noCsData})).to eq nil
+      expect(subject.get_grading_link(ccn = nil , term_code ='2168', cc_grading_status = {finalStatus: :noCsData})).to eq nil
     end
 
     it 'it should return nil for missing term_code in sections' do
-      expect(subject.get_grading_link(ccn = '123456' , term_code = nil, is_law = true, cc_grading_status = {finalStatus: :noCsData})).to eq nil
+      expect(subject.get_grading_link(ccn = '123456' , term_code = nil, cc_grading_status = {finalStatus: :noCsData})).to eq nil
     end
 
     it 'it should return expected for given set grading period and no CS data' do
-      expect(subject.get_grading_link(ccn = '12666' , term_code = '2168', is_law = false, cc_grading_status = {finalStatus: :noCsData})).to eq nil
+      expect(subject.get_grading_link(ccn = '12666' , term_code = '2168', cc_grading_status = {finalStatus: :noCsData})).to eq nil
     end
 
     it 'it should return expected result with no set grading period and no CS data' do
-      expect(subject.get_grading_link(ccn = '12666' , term_code = '2168', is_law = true, cc_grading_status = {finalStatus: :noCsData})).to eq nil
+      expect(subject.get_grading_link(ccn = '12666' , term_code = '2168', cc_grading_status = {finalStatus: :noCsData})).to eq nil
     end
 
     it 'it should return expected result with no set grading period and CS status' do
-      expect(subject.get_grading_link(ccn = '12666' , term_code = '2168', is_law = false, cc_grading_status = {finalStatus: :POST})).to eq fake_grading_url
+      expect(subject.get_grading_link(ccn = '12666' , term_code = '2168', cc_grading_status = {finalStatus: :POST})).to eq fake_grading_url
     end
   end
 
   context 'when grading returns statuses for a teaching semester' do
-    let(:fake_grading_url) { 'http://fake.grading.com' }
     let(:uid) { '238382' }
     let(:grading_proxy) { CampusSolutions::Grading.new(user_id: uid, fake: fake) }
     let(:feed) { {}.tap { |feed| MyAcademics::Teaching.new(uid).merge feed } }
@@ -200,13 +198,8 @@ describe MyAcademics::Grading do
       allow(Settings.terms).to receive(:legacy_cutoff).and_return 'summer-2014'
       allow(Settings.features).to receive(:hub_term_api).and_return true
       allow(CampusSolutions::Grading).to receive(:new).and_return(grading_proxy)
-
-      link_proxy_class = CampusSolutions::Link
-      link_fake_proxy = link_proxy_class.new(fake: true)
-      allow(link_proxy_class).to receive(:new).and_return link_fake_proxy
-      allow(link_fake_proxy).to receive(:get_url).and_return({link: fake_grading_url})
-
       allow(subject).to receive(:get_grading_period_status).and_return(:gradingPeriodNotSet)
+      stub_const("MyAcademics::Grading::ACTIVE_GRADING_TERMS", ['2138'])
     end
 
     it 'it should return expected values merged into section' do
@@ -218,6 +211,28 @@ describe MyAcademics::Grading do
       expect(feed[:teachingSemesters][0][:classes][0][:sections][1][:ccGradingStatus]).to eq nil
       expect(feed[:teachingSemesters][0][:classes][0][:sections][1][:csGradingStatus]).to eq nil
     end
+  end
 
+  context 'when grading for a summer term' do
+
+    let(:uid) { '904715' }
+    let(:grading_proxy) { CampusSolutions::Grading.new(user_id: uid, fake: fake) }
+    let(:feed) { {}.tap { |feed| MyAcademics::Teaching.new(uid).merge feed } }
+
+    before do
+      allow(Settings.terms).to receive(:legacy_cutoff).and_return 'summer-2014'
+      allow(Settings.features).to receive(:hub_term_api).and_return true
+      allow(CampusSolutions::Grading).to receive(:new).and_return(grading_proxy)
+      allow(subject).to receive(:parse_cs_grading_status).and_return ({ finalStatus: :GRD })
+      allow(subject).to receive(:get_grading_period_status_summer).and_return :afterGradingPeriod
+      stub_const("MyAcademics::Grading::ACTIVE_GRADING_TERMS", ['2145'])
+    end
+
+    it 'should use the summer-specific function to parse grading status' do
+      subject.merge(feed)
+      expect(feed[:teachingSemesters][0][:classes][0][:sections][0][:gradingLink]).to eq fake_grading_url
+      expect(feed[:teachingSemesters][0][:classes][0][:sections][0][:csGradingStatus]).to eq :GRD
+      expect(feed[:teachingSemesters][0][:classes][0][:sections][0][:ccGradingStatus]).to eq :gradesOverdue
+    end
   end
 end

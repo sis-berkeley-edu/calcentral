@@ -84,7 +84,9 @@ module EdoOracle
           #{SECTION_COLUMNS},
           sec."cs-course-id" AS cs_course_id,
           sec."maxEnroll" AS enroll_limit,
-          sec."maxWaitlist" AS waitlist_limit
+          sec."maxWaitlist" AS waitlist_limit,
+          sec."startDate" AS start_date,
+          sec."endDate" AS end_date
         FROM SISEDO.ASSIGNEDINSTRUCTORV00_VW instr
         JOIN SISEDO.CLASSSECTIONV00_VW sec ON (
           instr."term-id" = sec."term-id" AND
