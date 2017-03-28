@@ -7,10 +7,12 @@ describe Notifications::SisExpiryStudentsProvider do
       let(:event) { nil }
       it_behaves_like 'a provider receiving a malformed response'
     end
+
     context 'when given an empty event' do
       let(:event) { {} }
       it_behaves_like 'a provider receiving a malformed response'
     end
+
     context 'when given an empty payload' do
       let(:event) do
         {
@@ -19,74 +21,59 @@ describe Notifications::SisExpiryStudentsProvider do
       end
       it_behaves_like 'a provider receiving a malformed response'
     end
-    context 'when given an empty array' do
+
+    context 'when payload' do
       let(:event) do
         {
           'payload' => {
-            'students' => ids
+            'students' => students
           }
         }
       end
-      let(:ids) { [] }
-      it 'returns an empty array' do
-        uids = subject.get_uids(event)
-        expect(uids).to eq([])
+
+      context 'is missing the \'id\' node' do
+        let(:students) { {} }
+        it_behaves_like 'a provider receiving a malformed response'
       end
-    end
-    context 'when given a single ID' do
-      include_context 'when uid lookup is unsuccessful'
-      let(:event) do
-        {
-          'payload' => {
-            'students' => ids
-          }
-        }
+
+      context 'contains an empty array' do
+        let(:students) { {'id' => []} }
+        it 'returns an empty array' do
+          uids = subject.get_uids(event)
+          expect(uids).to eq([])
+        end
       end
-      let(:ids) { '61889' }
-      it_behaves_like 'a provider receiving an empty response'
-    end
-    context 'when given an array of IDs' do
-      include_context 'when uid lookup is unsuccessful'
-      let(:event) do
-        {
-          'payload' => {
-            'students' => ids
-          }
-        }
+
+      context 'contains a single ID' do
+        include_context 'when uid lookup is unsuccessful'
+        let(:students) { {'id' => '61889'} }
+        it_behaves_like 'a provider receiving an empty response'
       end
-      let(:ids) { ['61889'] }
-      it_behaves_like 'a provider receiving an empty response'
-    end
-    context 'when given a single ID' do
-      include_context 'when uid lookup is successful'
-      let(:event) do
-        {
-          'payload' => {
-            'students' => ids
-          }
-        }
+
+      context 'when given an array of IDs' do
+        include_context 'when uid lookup is unsuccessful'
+        let(:students) { {'id' => ['61889']} }
+        it_behaves_like 'a provider receiving an empty response'
       end
-      let(:ids) { '61889' }
-      it 'returns an array of UIDs' do
-        uids = subject.get_uids(event)
-        expect(uids).to eq([uid])
+
+      context 'when given a single ID' do
+        include_context 'when uid lookup is successful'
+        let(:students) { {'id' => '61889'} }
+        it 'returns an array of UIDs' do
+          uids = subject.get_uids(event)
+          expect(uids).to eq([uid])
+        end
       end
-    end
-    context 'when given an array of IDs' do
-      include_context 'when uid lookup is successful'
-      let(:event) do
-        {
-          'payload' => {
-            'students' => ids
-          }
-        }
+
+      context 'when given an array of IDs' do
+        include_context 'when uid lookup is successful'
+        let(:students) { {'id' => ['61889']} }
+        it 'returns an array of UIDs' do
+          uids = subject.get_uids(event)
+          expect(uids).to eq([uid])
+        end
       end
-      let(:ids) { ['61889'] }
-      it 'returns an array of UIDs' do
-        uids = subject.get_uids(event)
-        expect(uids).to eq([uid])
-      end
+
     end
   end
-
 end
