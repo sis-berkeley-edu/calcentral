@@ -85,7 +85,7 @@ module MyCommittees::CommitteesModule
     if cs_committee[:committeeType].to_s == COMMITTEE_TYPE_QUALIFYING_EXAM
       committee[:statusIcon] = determine_qualifying_exam_status_icon(committee)
       committee[:statusMessage] = determine_qualifying_exam_status_message(cs_committee)
-    elsif cs_committee[:studentFilingDate]
+    elsif !is_active?(cs_committee) && cs_committee[:studentFilingDate]
       committee[:statusIcon] = STATUS_ICON_SUCCESS
       committee[:statusMessage] = "Filing Date: #{format_date(cs_committee[:studentFilingDate])}"
     elsif cs_committee[:studentAdvancedDate]
@@ -146,6 +146,10 @@ module MyCommittees::CommitteesModule
       else
         :additionalReps
     end
+  end
+
+  def is_active?(cs_committee)
+    cs_committee.try(:[], :committeeFinishingMilestoneComplete) != 'Y'
   end
 
   def format_date(unformatted_date)
