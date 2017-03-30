@@ -88,8 +88,8 @@ module MyCommittees::CommitteesModule
     elsif !is_active?(cs_committee) && cs_committee[:studentFilingDate]
       committee[:statusIcon] = STATUS_ICON_SUCCESS
       committee[:statusMessage] = "Filing Date: #{format_date(cs_committee[:studentFilingDate])}"
-    elsif cs_committee[:studentAdvancedDate]
-      committee[:statusMessage] = "Advanced: #{format_date(cs_committee[:studentAdvancedDate])}"
+    elsif (advanced_date = determine_advanced_date(cs_committee))
+      committee[:statusMessage] = "Advanced: #{format_date(advanced_date)}"
     end
   end
 
@@ -110,6 +110,19 @@ module MyCommittees::CommitteesModule
       proposed_exam_date = cs_committee.try(:[], :studentQeExamProposedDate)
       "Proposed Exam Date: #{format_date(proposed_exam_date)}" unless proposed_exam_date.blank?
     end
+  end
+
+  def determine_advanced_date(cs_committee)
+    if (advanced_date = cs_committee[:studentAdvancedDate]).blank?
+      advanced_date = latest_milestone_attempt(cs_committee).try(:[], :attemptDate)
+    end
+    advanced_date
+  end
+
+  def latest_milestone_attempt(cs_committee)
+    cs_committee.try(:[], :studentApprovalMilestoneAttempts).try(:sort_by!) do |attempt|
+      attempt.try(:[], :attemptNbr)
+    end.try(:last)
   end
 
   def parse_cs_committee_members (cs_committee)
