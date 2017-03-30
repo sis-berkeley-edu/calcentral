@@ -24,7 +24,9 @@ shared_examples 'a proxy that returns graduate milestone data' do
     expect(subject[:feed][:degreeProgress][1][:requirements][1][:name]).to eql('Advancement to Candidacy (Capstone Plan)')
     expect(subject[:feed][:degreeProgress][1][:requirements][1][:status]).to eql('Not Satisfied')
     expect(subject[:feed][:degreeProgress][2][:requirements][0][:name]).to eql('Approval for Qualifying Exam')
-    expect(subject[:feed][:degreeProgress][2][:requirements][0][:status]).to eql('Completed')
+    expect(subject[:feed][:degreeProgress][2][:requirements][0][:status]).to eql('Approved')
+    expect(subject[:feed][:degreeProgress][2][:requirements][2][:name]).to eql('Advancement to Candidacy')
+    expect(subject[:feed][:degreeProgress][2][:requirements][2][:status]).to eql('Completed')
   end
 
   it 'marks a milestone \'Not Satisfied\' if it has an unexpected status code' do
