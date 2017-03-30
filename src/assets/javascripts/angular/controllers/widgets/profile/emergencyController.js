@@ -13,9 +13,9 @@ angular.module('calcentral.controllers').controller('EmergencyController', funct
   };
 
   var loadInformation = function() {
-    profileFactory.getPerson().then(function(data) {
+    profileFactory.getPerson().then(function(response) {
       $scope.emergencyContactInformation.isLoading = false;
-      $scope.emergencyContactInformation.isErrored = _.get(data, 'data.errored');
+      $scope.emergencyContactInformation.isErrored = _.get(response, 'data.errored');
     });
   };
 

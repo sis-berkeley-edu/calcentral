@@ -18,14 +18,16 @@ angular.module('calcentral.controllers').controller('UpNextController', function
   };
 
   var getUpNext = function(options) {
-    upNextFactory.getUpNext(options).success(function(data) {
-      if (!_.get(data, 'items')) {
-        return;
+    upNextFactory.getUpNext(options).then(
+      function successCallback(response) {
+        if (!_.get(response, 'data.items')) {
+          return;
+        }
+        apiService.updatedFeeds.feedLoaded(response.data);
+        angular.extend($scope, response.data);
+        setLastModifiedDate(response.data.lastModified.timestamp.epoch);
       }
-      apiService.updatedFeeds.feedLoaded(data);
-      angular.extend($scope, data);
-      setLastModifiedDate(data.lastModified.timestamp.epoch);
-    });
+    );
   };
 
   $scope.$on('calcentral.api.updatedFeeds.updateServices', function(event, services) {

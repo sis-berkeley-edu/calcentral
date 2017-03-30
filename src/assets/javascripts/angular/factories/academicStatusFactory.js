@@ -11,18 +11,18 @@ angular.module('calcentral.factories').factory('academicStatusFactory', function
   var urlAcademicStatus = '/api/edos/academic_status';
   var urlAdvisingAcademicStatus = '/api/advising/academic_status/';
 
-  var parseAcademicRoles = function(data) {
-    var roles = _.get(data, 'data.feed.student.roles');
-    var isError = _.get(data, 'data.errored');
+  var parseAcademicRoles = function(response) {
+    var roles = _.get(response, 'data.feed.student.roles');
+    var isError = _.get(response, 'data.errored');
     return {
       roles: roles || {},
       isError: isError
     };
   };
 
-  var parseHolds = function(data) {
-    var holds = _.get(data, 'data.feed.student.holds');
-    var isError = _.get(data, 'data.errored');
+  var parseHolds = function(response) {
+    var holds = _.get(response, 'data.feed.student.holds');
+    var isError = _.get(response, 'data.errored');
     return {
       holds: holds || [],
       isError: isError
@@ -35,13 +35,11 @@ angular.module('calcentral.factories').factory('academicStatusFactory', function
   };
 
   var getAcademicRoles = function(options) {
-    return fetch(options)
-      .then(parseAcademicRoles);
+    return fetch(options).then(parseAcademicRoles);
   };
 
   var getHolds = function(options) {
-    return fetch(options)
-      .then(parseHolds);
+    return fetch(options).then(parseHolds);
   };
 
   return {

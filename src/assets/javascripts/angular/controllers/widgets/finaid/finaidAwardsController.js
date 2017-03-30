@@ -56,11 +56,13 @@ angular.module('calcentral.controllers').controller('FinaidAwardsController', fu
   var loadAwards = function() {
     return finaidFactory.getAwards({
       finaidYearId: finaidService.options.finaidYear.id
-    }).success(function(data) {
-      angular.extend($scope.finaidAwards, parseAwards(data.feed));
-      $scope.finaidAwardsInfo.errored = data.errored;
-      $scope.finaidAwardsInfo.isLoading = false;
-    });
+    }).then(
+      function successCallback(response) {
+        angular.extend($scope.finaidAwards, parseAwards(_.get(response, 'data.feed')));
+        $scope.finaidAwardsInfo.errored = _.get(response, 'data.errored');
+        $scope.finaidAwardsInfo.isLoading = false;
+      }
+    );
   };
 
   var loadData = function() {

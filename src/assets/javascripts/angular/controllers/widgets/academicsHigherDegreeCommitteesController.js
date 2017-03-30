@@ -137,8 +137,8 @@ angular.module('calcentral.controllers').controller('AcademicsHigherDegreeCommit
    */
   var getCommittees = higherDegreeCommitteeFactory.getCommittees;
 
-  var parseCommittees = function(data) {
-    var committeeData = _.get(data, 'data');
+  var parseCommittees = function(response) {
+    var committeeData = _.get(response, 'data');
 
     if (!committeeData) {
       return;

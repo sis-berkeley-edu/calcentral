@@ -12,8 +12,8 @@ angular.module('calcentral.controllers').controller('ConfidentialStudentControll
   };
 
   var loadInformation = function() {
-    profileFactory.getConfidentialStudentMessage().then(function(data) {
-      angular.extend($scope.confidentialStudent, _.get(data, 'data.feed'));
+    profileFactory.getConfidentialStudentMessage().then(function(response) {
+      angular.extend($scope.confidentialStudent, _.get(response, 'data.feed'));
       $scope.confidentialStudent.isLoading = false;
     });
   };

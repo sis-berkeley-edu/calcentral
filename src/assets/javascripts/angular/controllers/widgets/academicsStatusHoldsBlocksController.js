@@ -40,9 +40,9 @@ angular.module('calcentral.controllers').controller('AcademicsStatusHoldsBlocksC
   // Request-and-parse sequence for the Statement of Legal Residency deeplink
   var fetchSlrDeeplink = slrDeeplinkFactory.getUrl;
 
-  var parseSlrDeeplink = function(data) {
-    $scope.slr.deeplink = _.get(data, 'data.feed.root.ucSrSlrResources.ucSlrLinks.ucSlrLink');
-    $scope.slr.isErrored = _.get(data, 'data.errored');
+  var parseSlrDeeplink = function(response) {
+    $scope.slr.deeplink = _.get(response, 'data.feed.root.ucSrSlrResources.ucSlrLinks.ucSlrLink');
+    $scope.slr.isErrored = _.get(response, 'data.errored');
     $scope.slr.isLoading = false;
   };
 
@@ -57,8 +57,8 @@ angular.module('calcentral.controllers').controller('AcademicsStatusHoldsBlocksC
    * This code should be able to be removed by Fall 2016, when we should start getting term data exclusively from the hub.
    * There is also the possibility of the hub bringing over more than one registration for a term.
    */
-  var parseRegistrations = function(data) {
-    _.forOwn(data.data.terms, function(value, key) {
+  var parseRegistrations = function(response) {
+    _.forOwn(response.data.terms, function(value, key) {
       if (key === 'current' || key === 'next') {
         if (value) {
           $scope.regStatus.terms.push(value);
@@ -66,7 +66,7 @@ angular.module('calcentral.controllers').controller('AcademicsStatusHoldsBlocksC
       }
     });
     _.forEach($scope.regStatus.terms, function(term) {
-      var regStatus = data.data.registrations[term.id];
+      var regStatus = response.data.registrations[term.id];
 
       if (regStatus && regStatus[0]) {
         _.merge(regStatus[0], term);
@@ -88,8 +88,8 @@ angular.module('calcentral.controllers').controller('AcademicsStatusHoldsBlocksC
     .then(parseStudentAttributes);
   };
 
-  var parseStudentAttributes = function(data) {
-    var studentAttributes = _.get(data, 'data.feed.student.studentAttributes.studentAttributes');
+  var parseStudentAttributes = function(response) {
+    var studentAttributes = _.get(response, 'data.feed.student.studentAttributes.studentAttributes');
     // Strip all positive student indicators from student attributes feed.
     _.forEach(studentAttributes, function(attribute) {
       if (_.startsWith(attribute.type.code, '+')) {
@@ -102,14 +102,15 @@ angular.module('calcentral.controllers').controller('AcademicsStatusHoldsBlocksC
   };
 
   var getMessages = function() {
-    enrollmentVerificationFactory.getEnrollmentVerificationMessages()
-      .then(function(data) {
-        var messages = _.get(data, 'data.feed.root.getMessageCatDefn');
+    enrollmentVerificationFactory.getEnrollmentVerificationMessages().then(
+      function(response) {
+        var messages = _.get(response, 'data.feed.root.getMessageCatDefn');
         if (messages) {
           $scope.regStatus.messages = {};
           _.merge($scope.regStatus.messages, statusHoldsService.getRegStatusMessages(messages));
         }
-      });
+      }
+    );
   };
 
   var getSlrDeeplink = function() {
@@ -139,8 +140,8 @@ angular.module('calcentral.controllers').controller('AcademicsStatusHoldsBlocksC
   });
 
   var getCalResidency = academicsFactory.getResidency;
-  var parseCalResidency = function(data) {
-    var residency = _.get(data, 'data.residency');
+  var parseCalResidency = function(response) {
+    var residency = _.get(response, 'data.residency');
     angular.merge($scope.residency, residency);
   };
 

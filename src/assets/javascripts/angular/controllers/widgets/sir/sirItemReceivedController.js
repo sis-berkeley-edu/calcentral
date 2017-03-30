@@ -22,9 +22,11 @@ angular.module('calcentral.controllers').controller('SirItemReceivedController',
   var getHigherOneUrl = function() {
     return sirFactory.getHigherOneUrl({
       refreshCache: true
-    }).success(function(data) {
-      $scope.sirReceivedItem.higherOneUrl = _.get(data, 'feed.root.higherOneUrl.url');
-    });
+    }).then(
+      function successCallback(response) {
+        $scope.sirReceivedItem.higherOneUrl = _.get(response, 'data.feed.root.higherOneUrl.url');
+      }
+    );
   };
 
   /**
@@ -39,9 +41,9 @@ angular.module('calcentral.controllers').controller('SirItemReceivedController',
    * Parse the deposit information.
    * Contains the deposit amount & date
    */
-  var parseDepositInformation = function(data) {
-    $scope.sirReceivedItem.depositInfo = _.get(data, 'data.feed.depositResponse.deposit');
-    $scope.sirReceivedItem.hasDeposit = !!_.get(data, 'data.feed.depositResponse.deposit.dueAmt');
+  var parseDepositInformation = function(response) {
+    $scope.sirReceivedItem.depositInfo = _.get(response, 'data.feed.depositResponse.deposit');
+    $scope.sirReceivedItem.hasDeposit = !!_.get(response, 'data.feed.depositResponse.deposit.dueAmt');
     $scope.sirReceivedItem.isLoading = false;
 
     if (apiService.user.profile.canActOnFinances) {

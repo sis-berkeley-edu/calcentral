@@ -10,8 +10,8 @@ angular.module('calcentral.controllers').controller('StudentResourcesController'
     return studentResourcesFactory.getStudentResources();
   };
 
-  var parseStudentResources = function(data) {
-    var resources = _.get(data, 'data.feed.resources');
+  var parseStudentResources = function(response) {
+    var resources = _.get(response, 'data.feed.resources');
     if (!_.isEmpty(resources)) {
       $scope.studentResources = linkService.addCurrentPagePropertiesToResources(resources, $scope.currentPage.name, $scope.currentPage.url);
     }
@@ -24,10 +24,11 @@ angular.module('calcentral.controllers').controller('StudentResourcesController'
   };
 
   var loadAcademicRoles = function() {
-    return academicStatusFactory.getAcademicRoles()
-      .then(function(data) {
-        $scope.isSummerVisitor = _.get(data, 'roles.summerVisitor');
-      });
+    return academicStatusFactory.getAcademicRoles().then(
+      function(parsedAcademicRoles) {
+        $scope.isSummerVisitor = _.get(parsedAcademicRoles, 'roles.summerVisitor');
+      }
+    );
   };
 
   var loadInformation = function() {

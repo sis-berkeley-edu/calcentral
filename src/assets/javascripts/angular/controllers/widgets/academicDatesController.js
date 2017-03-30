@@ -23,11 +23,13 @@ angular.module('calcentral.controllers').controller('AcademicDatesController', f
   };
 
   var getAcademicDates = function() {
-    academicDatesFactory.getAcademicDates().then(function(data) {
-      var items = _.get(data, 'data.feed.academicDates');
-      $scope.academicDates.items = formatItemTitles(items);
-      $scope.academicDates.isLoading = false;
-    });
+    academicDatesFactory.getAcademicDates().then(
+      function successCallback(response) {
+        var items = _.get(response, 'data.feed.academicDates');
+        $scope.academicDates.items = formatItemTitles(items);
+        $scope.academicDates.isLoading = false;
+      }
+    );
   };
 
   getAcademicDates();

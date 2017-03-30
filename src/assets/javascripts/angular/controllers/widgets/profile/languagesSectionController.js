@@ -117,8 +117,8 @@ angular.module('calcentral.controllers').controller('LanguagesSectionController'
     return languages;
   };
 
-  var parsePerson = function(data) {
-    var languages = parseLanguages(_.get(data, 'data.feed.student.languages'));
+  var parsePerson = function(response) {
+    var languages = parseLanguages(_.get(response, 'data.feed.student.languages'));
 
     languages = _.sortBy(languages, function(language) {
       return language.name;
@@ -151,8 +151,8 @@ angular.module('calcentral.controllers').controller('LanguagesSectionController'
     return sortedCodes;
   };
 
-  var parseLanguageCodes = function(data) {
-    var accomplishments = _.get(data, 'data.feed.accomplishments');
+  var parseLanguageCodes = function(response) {
+    var accomplishments = _.get(response, 'data.feed.accomplishments');
     var languageCodes = sortLanguageCodes(accomplishments);
 
     angular.extend($scope, {
@@ -184,13 +184,13 @@ angular.module('calcentral.controllers').controller('LanguagesSectionController'
     });
   };
 
-  var actionCompleted = function(data) {
-    apiService.profile.actionCompleted($scope, data, loadInformation);
+  var actionCompleted = function(response) {
+    apiService.profile.actionCompleted($scope, response, loadInformation);
   };
 
-  var deleteCompleted = function(data) {
+  var deleteCompleted = function(response) {
     $scope.isDeleting = false;
-    actionCompleted(data);
+    actionCompleted(response);
   };
 
   $scope.closeEditor = function() {
@@ -216,9 +216,9 @@ angular.module('calcentral.controllers').controller('LanguagesSectionController'
     apiService.profile.showEdit($scope, item);
   };
 
-  var saveCompleted = function(data) {
+  var saveCompleted = function(response) {
     $scope.isSaving = false;
-    actionCompleted(data);
+    actionCompleted(response);
   };
 
   $scope.saveItem = function(item) {

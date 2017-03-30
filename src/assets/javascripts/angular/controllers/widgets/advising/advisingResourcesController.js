@@ -84,8 +84,8 @@ angular.module('calcentral.controllers').controller('AdvisingResourcesController
   /**
    * Parse the advising resources
    */
-  var parseResources = function(data) {
-    var resources = _.get(data, 'data.feed.csLinks');
+  var parseResources = function(response) {
+    var resources = _.get(response, 'data.feed.csLinks');
     if (resources) {
       addPagePropertiesToLinks(resources);
       populateSections(resources);

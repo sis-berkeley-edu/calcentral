@@ -64,9 +64,11 @@ angular.module('calcentral.controllers').controller('FinaidCommunicationsControl
   var getFinaidYearInfo = function(options) {
     return finaidFactory.getFinaidYearInfo({
       finaidYearId: options.finaidYearId
-    }).success(function(data) {
-      $scope.communicationsInfo.unsolicitedResourcesUrl = _.get(data, 'feed.communications.unsolicitedResourcesUrl');
-    });
+    }).then(
+      function successCallback(response) {
+        $scope.communicationsInfo.unsolicitedResourcesUrl = _.get(response, 'data.feed.communications.unsolicitedResourcesUrl');
+      }
+    );
   };
 
   var loadCommunications = function() {

@@ -34,27 +34,27 @@ angular.module('calcentral.controllers').controller('ProfileAddressController', 
   };
   var countryWatcher;
 
-  var parsePerson = function(data) {
-    apiService.profile.parseSection($scope, data, 'addresses');
+  var parsePerson = function(response) {
+    apiService.profile.parseSection($scope, response, 'addresses');
     $scope.items.content = apiService.profile.fixFormattedAddresses($scope.items.content);
   };
 
-  var parseTypes = function(data) {
-    $scope.types = apiService.profile.filterTypes(_.get(data, 'data.feed.addressTypes'), $scope.items);
+  var parseTypes = function(response) {
+    $scope.types = apiService.profile.filterTypes(_.get(response, 'data.feed.addressTypes'), $scope.items);
   };
 
-  var parseCountries = function(data) {
-    $scope.countries = _.sortBy(_.filter(_.get(data, 'data.feed.countries'), {
+  var parseCountries = function(response) {
+    $scope.countries = _.sortBy(_.filter(_.get(response, 'data.feed.countries'), {
       hasAddressFields: true
     }), 'descr');
   };
 
-  var parseAddressFields = function(data) {
-    $scope.currentObject.fields = _.get(data, 'data.feed.labels');
+  var parseAddressFields = function(response) {
+    $scope.currentObject.fields = _.get(response, 'data.feed.labels');
   };
 
-  var parseStates = function(data) {
-    $scope.states = _.sortBy(_.get(data, 'data.feed.states'), 'descr');
+  var parseStates = function(response) {
+    $scope.states = _.sortBy(_.get(response, 'data.feed.states'), 'descr');
     if ($scope.states && $scope.states.length) {
       angular.merge($scope.currentObject, {
         data: {
@@ -139,13 +139,13 @@ angular.module('calcentral.controllers').controller('ProfileAddressController', 
     });
   };
 
-  var actionCompleted = function(data) {
-    apiService.profile.actionCompleted($scope, data, loadInformation);
+  var actionCompleted = function(response) {
+    apiService.profile.actionCompleted($scope, response, loadInformation);
   };
 
-  var deleteCompleted = function(data) {
+  var deleteCompleted = function(response) {
     $scope.isDeleting = false;
-    actionCompleted(data);
+    actionCompleted(response);
   };
 
   $scope.delete = function(item) {
@@ -154,9 +154,9 @@ angular.module('calcentral.controllers').controller('ProfileAddressController', 
     }).then(deleteCompleted);
   };
 
-  var saveCompleted = function(data) {
+  var saveCompleted = function(response) {
     $scope.isSaving = false;
-    actionCompleted(data);
+    actionCompleted(response);
   };
 
   $scope.save = function(item) {

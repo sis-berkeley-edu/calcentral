@@ -8,6 +8,10 @@ var angular = require('angular');
 angular.module('calcentral.controllers').controller('CanvasSiteMailingListsController', function(apiService, canvasSiteMailingListsFactory, dateFilter, $scope) {
   apiService.util.setTitle('Manage Site Mailing List');
 
+  var errorCallback = function() {
+    $scope.displayError = 'failure';
+  };
+
   /*
    * Initializes application upon loading.
    */
@@ -83,45 +87,49 @@ angular.module('calcentral.controllers').controller('CanvasSiteMailingListsContr
 
   $scope.confirmCreation = function() {
     $scope.isConfirmingCreation = true;
-    return canvasSiteMailingListsFactory.getSiteMailingList($scope.canvasSite.canvasCourseId).success(function(data) {
-      $scope.isConfirmingCreation = false;
-      setStateFromData(data);
-      if (!$scope.listCreated && !$scope.alerts.error.count) {
-        $scope.alerts.error.push('You cannot update memberships before the list is created in CalMail.');
-      }
-    }).error(function() {
-      $scope.displayError = 'failure';
-    });
+    return canvasSiteMailingListsFactory.getSiteMailingList($scope.canvasSite.canvasCourseId).then(
+      function successCallback(response) {
+        $scope.isConfirmingCreation = false;
+        setStateFromData(response.data);
+        if (!$scope.listCreated && !$scope.alerts.error.count) {
+          $scope.alerts.error.push('You cannot update memberships before the list is created in CalMail.');
+        }
+      },
+      errorCallback
+    );
   };
 
   $scope.findSiteMailingList = function() {
     $scope.isProcessing = true;
-    return canvasSiteMailingListsFactory.getSiteMailingList($scope.canvasSite.canvasCourseId).success(function(data) {
-      setStateFromData(data);
-    }).error(function() {
-      $scope.displayError = 'failure';
-    });
+    return canvasSiteMailingListsFactory.getSiteMailingList($scope.canvasSite.canvasCourseId).then(
+      function successCallback(response) {
+        setStateFromData(response.data);
+      },
+      errorCallback
+    );
   };
 
   $scope.populateMailingList = function() {
     $scope.isProcessing = true;
-    return canvasSiteMailingListsFactory.populateSiteMailingList($scope.canvasSite.canvasCourseId).success(function(data) {
-      setStateFromData(data);
-      if (!data.populationResults) {
-        $scope.alerts.error.push('The mailing list could not be populated.');
-      }
-    }).error(function() {
-      $scope.displayError = 'failure';
-    });
+    return canvasSiteMailingListsFactory.populateSiteMailingList($scope.canvasSite.canvasCourseId).then(
+      function successCallback(response) {
+        setStateFromData(response.data);
+        if (!response.data || !response.data.populationResults) {
+          $scope.alerts.error.push('The mailing list could not be populated.');
+        }
+      },
+      errorCallback
+    );
   };
 
   $scope.registerMailingList = function() {
     $scope.isProcessing = true;
-    return canvasSiteMailingListsFactory.registerSiteMailingList($scope.canvasSite.canvasCourseId, $scope.mailingList).success(function(data) {
-      setStateFromData(data);
-    }).error(function() {
-      $scope.displayError = 'failure';
-    });
+    return canvasSiteMailingListsFactory.registerSiteMailingList($scope.canvasSite.canvasCourseId, $scope.mailingList).then(
+      function successCallback(response) {
+        setStateFromData(response.data);
+      },
+      errorCallback
+    );
   };
 
   $scope.resetForm = function() {
@@ -130,11 +138,12 @@ angular.module('calcentral.controllers').controller('CanvasSiteMailingListsContr
 
   $scope.unregisterMailingList = function() {
     $scope.isProcessing = true;
-    return canvasSiteMailingListsFactory.deleteSiteMailingList($scope.canvasSite.canvasCourseId).success(function() {
-      initState();
-    }).error(function() {
-      $scope.displayError = 'failure';
-    });
+    return canvasSiteMailingListsFactory.deleteSiteMailingList($scope.canvasSite.canvasCourseId).then(
+      function successCallback() {
+        initState();
+      },
+      errorCallback
+    );
   };
 
   // Wait until user profile is fully loaded before starting.

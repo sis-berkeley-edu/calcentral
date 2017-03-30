@@ -36,18 +36,18 @@ angular.module('calcentral.controllers').controller('EmergencyContactController'
     return _.isNil(value) ? '' : value;
   };
 
-  var actionCompleted = function(data) {
-    apiService.profile.actionCompleted($scope, data, loadInformation);
+  var actionCompleted = function(response) {
+    apiService.profile.actionCompleted($scope, response, loadInformation);
   };
 
-  var deleteCompleted = function(data) {
+  var deleteCompleted = function(response) {
     $scope.isDeleting = false;
-    actionCompleted(data);
+    actionCompleted(response);
   };
 
-  var saveCompleted = function(data) {
+  var saveCompleted = function(response) {
     $scope.isSaving = false;
-    actionCompleted(data);
+    actionCompleted(response);
   };
 
   $scope.closeEditor = function() {
@@ -157,18 +157,18 @@ angular.module('calcentral.controllers').controller('EmergencyContactController'
     }
   });
 
-  var phoneActionCompleted = function(data) {
-    apiService.profile.actionCompleted($scope.emergencyPhone, data, loadInformation);
+  var phoneActionCompleted = function(response) {
+    apiService.profile.actionCompleted($scope.emergencyPhone, response, loadInformation);
   };
 
-  var phoneDeleteCompleted = function(data) {
+  var phoneDeleteCompleted = function(response) {
     $scope.emergencyPhone.isDeleting = false;
-    phoneActionCompleted(data);
+    phoneActionCompleted(response);
   };
 
-  var phoneSaveCompleted = function(data) {
+  var phoneSaveCompleted = function(response) {
     $scope.emergencyPhone.isSaving = false;
-    phoneActionCompleted(data);
+    phoneActionCompleted(response);
   };
 
   $scope.emergencyPhone.cancelEdit = function() {
@@ -278,8 +278,8 @@ angular.module('calcentral.controllers').controller('EmergencyContactController'
 
   var getTypesPhone = profileFactory.getTypesPhone;
 
-  var parseTypesPhone = function(data) {
-    var allowedTypes = _.get(data, 'data.feed.xlatvalues.values');
+  var parseTypesPhone = function(response) {
+    var allowedTypes = _.get(response, 'data.feed.xlatvalues.values');
     _.forEach($scope.items.content, function(contact) {
       var phones = contact.emergencyPhones;
 
@@ -321,8 +321,8 @@ angular.module('calcentral.controllers').controller('EmergencyContactController'
    */
   var getEmergencyContacts = profileFactory.getEmergencyContacts;
 
-  var parseEmergencyContacts = function(data) {
-    var emergencyContacts = _.get(data, 'data.feed.students.student.emergencyContacts.emergencyContact') || [];
+  var parseEmergencyContacts = function(response) {
+    var emergencyContacts = _.get(response, 'data.feed.students.student.emergencyContacts.emergencyContact') || [];
 
     parseEmergencyPhones(emergencyContacts);
 
@@ -340,8 +340,8 @@ angular.module('calcentral.controllers').controller('EmergencyContactController'
   };
 
   var getTypesRelationship = profileFactory.getTypesRelationship;
-  var parseTypesRelationship = function(data) {
-    var relationshipTypes = apiService.profile.filterTypes(_.get(data, 'data.feed.xlatvalues.values'), $scope.items);
+  var parseTypesRelationship = function(response) {
+    var relationshipTypes = apiService.profile.filterTypes(_.get(response, 'data.feed.xlatvalues.values'), $scope.items);
 
     $scope.relationshipTypes = sortRelationshipTypes(relationshipTypes);
   };
@@ -369,8 +369,8 @@ angular.module('calcentral.controllers').controller('EmergencyContactController'
   };
 
   var getCountries = profileFactory.getCountries;
-  var parseCountries = function(data) {
-    $scope.countries = _.sortBy(_.filter(_.get(data, 'data.feed.countries'), {
+  var parseCountries = function(response) {
+    $scope.countries = _.sortBy(_.filter(_.get(response, 'data.feed.countries'), {
       hasAddressFields: true
     }), 'descr');
   };
@@ -398,12 +398,12 @@ angular.module('calcentral.controllers').controller('EmergencyContactController'
     });
   };
 
-  var parseAddressFields = function(data) {
-    $scope.currentObject.addressFields = _.get(data, 'data.feed.labels');
+  var parseAddressFields = function(response) {
+    $scope.currentObject.addressFields = _.get(response, 'data.feed.labels');
   };
 
-  var parseStates = function(data) {
-    $scope.states = _.sortBy(_.get(data, 'data.feed.states'), 'descr');
+  var parseStates = function(response) {
+    $scope.states = _.sortBy(_.get(response, 'data.feed.states'), 'descr');
   };
 
   /**

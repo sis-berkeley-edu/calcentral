@@ -104,8 +104,8 @@ angular.module('calcentral.controllers').controller('CanvasCourseManageOfficialS
    * Updates status of background job in $scope.
    * Halts jobStatusLoader loop if job no longer in progress.
    */
-  var statusProcessor = function(data) {
-    angular.extend($scope, data);
+  var statusProcessor = function(response) {
+    angular.extend($scope, response.data);
     $scope.percentCompleteRounded = Math.round($scope.percentComplete * 100);
     if ($scope.jobStatus === 'Processing' || $scope.jobStatus === 'New') {
       jobStatusLoader();
@@ -127,18 +127,20 @@ angular.module('calcentral.controllers').controller('CanvasCourseManageOfficialS
   var timeoutPromise;
   var jobStatusLoader = function() {
     timeoutPromise = $timeout(function() {
-      return canvasCourseProvisionFactory.courseProvisionJobStatus($scope.job_id)
-        .success(statusProcessor).error(function() {
+      return canvasCourseProvisionFactory.courseProvisionJobStatus($scope.job_id).then(
+        statusProcessor,
+        function errorCallback() {
           $scope.displayError = 'failure';
-        });
+        }
+      );
     }, 2000);
   };
 
   /*
    * Saves background job ID to scope and begins background job monitoring loop
    */
-  var sectionUpdateJobCreated = function(data) {
-    angular.extend($scope, data);
+  var sectionUpdateJobCreated = function(response) {
+    angular.extend($scope, response.data);
     jobStatusLoader();
   };
 
@@ -405,9 +407,9 @@ angular.module('calcentral.controllers').controller('CanvasCourseManageOfficialS
     $scope.changeWorkflowStep('processing');
     $scope.jobStatus = 'sendingRequest';
     var update = stagedSections();
-    canvasCourseProvisionFactory.updateSections(canvasCourseId, update.addSections, update.deleteSections)
-      .success(sectionUpdateJobCreated)
-      .error(function() {
+    canvasCourseProvisionFactory.updateSections(canvasCourseId, update.addSections, update.deleteSections).then(
+      sectionUpdateJobCreated,
+      function errorCallback() {
         fetchFeed();
         angular.extend($scope, {
           percentCompleteRounded: 0,
@@ -415,7 +417,8 @@ angular.module('calcentral.controllers').controller('CanvasCourseManageOfficialS
           jobStatus: 'error',
           jobStatusMessage: 'An error occurred processing your request. Please contact bCourses support for further assistance.'
         });
-      });
+      }
+    );
   };
 
   /*

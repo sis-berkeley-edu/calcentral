@@ -16,12 +16,12 @@ angular.module('calcentral.controllers').controller('CanvasSiteCreationControlle
   $scope.createProjectSiteButtonFocus = '0';
 
   var loadAuthorizations = function() {
-    canvasSiteCreationFactory.getAuthorizations()
-      .success(function(data) {
-        if (!data && (typeof(data.authorizations.canCreateCourseSite) === 'undefined') || (typeof(data.authorizations.canCreateProjectSite) === 'undefined')) {
+    canvasSiteCreationFactory.getAuthorizations().then(
+      function successCallback(response) {
+        if (!response && !response.data && (typeof(response.data.authorizations.canCreateCourseSite) === 'undefined') || (typeof(response.data.authorizations.canCreateProjectSite) === 'undefined')) {
           $scope.displayError = 'failure';
         } else {
-          angular.extend($scope, data);
+          angular.extend($scope, response.data);
           if ($scope.authorizations.canCreateCourseSite === false) {
             $scope.createCourseSiteButtonFocus = '-1';
           }
@@ -32,10 +32,11 @@ angular.module('calcentral.controllers').controller('CanvasSiteCreationControlle
             $scope.displayError = 'unauthorized';
           }
         }
-      })
-      .error(function() {
+      },
+      function errorCallback() {
         $scope.displayError = 'failure';
-      });
+      }
+    );
   };
 
   loadAuthorizations();

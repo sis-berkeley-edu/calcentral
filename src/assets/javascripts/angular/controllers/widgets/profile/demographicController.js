@@ -13,9 +13,9 @@ angular.module('calcentral.controllers').controller('DemographicController', fun
   };
 
   var loadInformation = function() {
-    profileFactory.getPerson().then(function(data) {
+    profileFactory.getPerson().then(function(response) {
       $scope.demographicInformation.isLoading = false;
-      $scope.demographicInformation.isErrored = _.get(data, 'data.errored');
+      $scope.demographicInformation.isErrored = _.get(response, 'data.errored');
     });
   };
 

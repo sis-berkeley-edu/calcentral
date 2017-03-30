@@ -52,12 +52,14 @@ angular.module('calcentral.controllers').controller('FinaidController', function
    * Get the finaid summary information
    */
   var getFinaidSummary = function(options) {
-    return finaidFactory.getSummary(options).success(function(data) {
-      setFinaidYear(data.feed, $routeParams.finaidYearId);
-      combinationExists(data.feed, _.get($scope, 'finaidYear.id'));
-      $scope.finaidSummary = data.feed.finaidSummary;
-      $scope.finaid.isLoading = false;
-    });
+    return finaidFactory.getSummary(options).then(
+      function successCallback(response) {
+        setFinaidYear(response.data.feed, $routeParams.finaidYearId);
+        combinationExists(response.data.feed, _.get($scope, 'finaidYear.id'));
+        $scope.finaidSummary = response.data.feed.finaidSummary;
+        $scope.finaid.isLoading = false;
+      }
+    );
   };
 
   getFinaidSummary();

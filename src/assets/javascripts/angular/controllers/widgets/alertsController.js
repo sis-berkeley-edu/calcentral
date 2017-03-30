@@ -7,8 +7,8 @@ var angular = require('angular');
  */
 angular.module('calcentral.controllers').controller('AlertsController', function(serviceAlertsFactory, $scope) {
   var fetch = function(options) {
-    serviceAlertsFactory.getAlerts(options).success(function(data) {
-      $scope.alert = data.alert;
+    serviceAlertsFactory.getAlerts(options).then(function successCallback(response) {
+      $scope.alert = response.data.alert;
     });
   };
 

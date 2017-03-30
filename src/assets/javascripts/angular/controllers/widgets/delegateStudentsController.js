@@ -62,10 +62,10 @@ angular.module('calcentral.controllers').controller('DelegateStudentsController'
   };
 
   var getStudents = function() {
-    return delegateFactory.getStudents().then(function(data) {
-      angular.extend($scope, _.get(data, 'data.feed'));
+    return delegateFactory.getStudents().then(function(response) {
+      angular.extend($scope, _.get(response, 'data.feed'));
 
-      var students = _.get(data, 'data.feed.students');
+      var students = _.get(response, 'data.feed.students');
       _.each(students, setDelegateAccess);
       $scope.students = students;
       $scope.delegateStudents.isLoading = false;
@@ -75,7 +75,7 @@ angular.module('calcentral.controllers').controller('DelegateStudentsController'
   $scope.delegateStudents.actAs = function(uid) {
     return adminFactory.delegateActAs({
       uid: uid
-    }).success(apiService.util.redirectToHome);
+    }).then(apiService.util.redirectToHome);
   };
 
   getStudents();

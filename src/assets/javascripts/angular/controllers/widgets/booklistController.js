@@ -2,6 +2,7 @@
 'use strict';
 
 var angular = require('angular');
+var _ = require('lodash');
 
 /**
  * Textbook controller
@@ -13,17 +14,19 @@ angular.module('calcentral.controllers').controller('BooklistController', functi
   var getTextbook = function(courseInfo, courseNumber) {
     return textbookFactory.getTextbooks({
       params: courseInfo
-    })
-    .success(function(books) {
-      books.course = courseNumber;
-      if (books.statusCode && books.statusCode >= 400) {
-        books.errorMessage = books.body;
+    }).then(
+      function successCallback(response) {
+        var data = _.get(response, 'data');
+        data.course = courseNumber;
+        if (data.statusCode && data.statusCode >= 400) {
+          data.errorMessage = data.body;
+        }
+        $scope.semesterBooks.push(data);
+        $scope.semesterBooks.sort(function(a, b) {
+          return a.course.localeCompare(b.course);
+        });
       }
-      $scope.semesterBooks.push(books);
-      $scope.semesterBooks.sort(function(a, b) {
-        return a.course.localeCompare(b.course);
-      });
-    });
+    );
   };
 
   var addToRequests = function(semester) {

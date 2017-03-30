@@ -167,34 +167,35 @@ angular.module('calcentral.controllers').controller('AcademicsController', funct
   };
 
   var loadNumberOfHolds = function() {
-    return academicStatusFactory.getHolds()
-      .then(function(data) {
-        $scope.numberOfHolds = _.get(data, 'holds.length');
-      });
+    return academicStatusFactory.getHolds().then(
+      function(parsedHolds) {
+        $scope.numberOfHolds = _.get(parsedHolds, 'holds.length');
+      }
+    );
   };
 
-  var loadRegistrations = function(data) {
-    var registrations = _.get(data, 'registrations');
+  var loadRegistrations = function(response) {
+    var registrations = _.get(response, 'data.registrations');
     $scope.hasRegStatus = !_.isEmpty(registrations);
   };
 
-  var parseAcademics = function(data) {
-    angular.extend($scope, data);
+  var parseAcademics = function(response) {
+    angular.extend($scope, _.get(response, 'data'));
 
     $scope.isLSStudent = academicsService.isLSStudent($scope.collegeAndLevel);
     $scope.isUndergraduate = _.includes(_.get($scope.collegeAndLevel, 'careers'), 'Undergraduate');
-    $scope.hasTeachingClasses = academicsService.hasTeachingClasses(data.teachingSemesters);
+    $scope.hasTeachingClasses = academicsService.hasTeachingClasses(_.get(response, 'data.teachingSemesters'));
     $scope.canViewFinalExamSchedule = $scope.api.user.profile.roles.student && !$scope.api.user.profile.delegateActingAsUid && !$scope.academicStatus.roles.summerVisitor;
 
     // Get selected semester from URL params and extract data from semesters array
     var semesterSlug = ($routeParams.semesterSlug || $routeParams.teachingSemesterSlug);
     if (semesterSlug) {
-      fillSemesterSpecificPage(semesterSlug, data);
+      fillSemesterSpecificPage(semesterSlug, _.get(response, 'data'));
     } else {
-      if ($scope.hasTeachingClasses && (!data.semesters || (data.semesters.length === 0))) {
+      if ($scope.hasTeachingClasses && (!response.data || !response.data.semesters || (response.data.semesters.length === 0))) {
         // Show the current semester, or the most recent semester, since otherwise the instructor
         // landing page will be grimly bare.
-        $scope.selectedTeachingSemester = academicsService.chooseDefaultSemester(data.teachingSemesters);
+        $scope.selectedTeachingSemester = academicsService.chooseDefaultSemester(response.data.teachingSemesters);
         $scope.containsMidpointClass = academicsService.containsMidpointClass($scope.selectedTeachingSemester);
         $scope.widgetSemesterName = $scope.selectedTeachingSemester.name;
       }
@@ -247,8 +248,8 @@ angular.module('calcentral.controllers').controller('AcademicsController', funct
       if (!$scope.canViewAcademics) {
         apiService.user.redirectToHome();
       }
-      var getAcademics = academicsFactory.getAcademics().success(parseAcademics);
-      var getRegistrations = registrationsFactory.getRegistrations().success(loadRegistrations);
+      var getAcademics = academicsFactory.getAcademics().then(parseAcademics);
+      var getRegistrations = registrationsFactory.getRegistrations().then(loadRegistrations);
       var requests = [loadAcademicRoles(), getAcademics, getRegistrations];
 
       if ($scope.api.user.profile.features.csHolds &&

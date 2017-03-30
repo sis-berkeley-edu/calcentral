@@ -15,11 +15,13 @@ angular.module('calcentral.controllers').controller('FinaidProfileController', f
   var loadProfile = function() {
     return finaidFactory.getFinaidYearInfo({
       finaidYearId: finaidService.options.finaidYear.id
-    }).success(function(data) {
-      angular.extend($scope.finaidProfile, _.get(data, 'feed.status'));
-      $scope.finaidProfileInfo.errored = data.errored;
-      $scope.finaidProfileInfo.isLoading = false;
-    });
+    }).then(
+      function successCallback(response) {
+        angular.extend($scope.finaidProfile, _.get(response, 'data.feed.status'));
+        $scope.finaidProfileInfo.errored = _.get(response, 'data.errored');
+        $scope.finaidProfileInfo.isLoading = false;
+      }
+    );
   };
 
   $scope.$on('calcentral.custom.api.finaid.finaidYear', loadProfile);

@@ -1,38 +1,42 @@
 'use strict';
 
 var angular = require('angular');
+var _ = require('lodash');
 
 /**
  * OEC Control Panel app controller
  */
 angular.module('calcentral.controllers').controller('OecController', function(apiService, oecFactory, $scope, $timeout) {
   $scope.initialize = function() {
-    oecFactory.getOecTasks().success(function(data) {
-      apiService.util.setTitle('OEC Control Panel');
-      angular.extend($scope, data);
-      $scope.displayError = null;
-      $scope.oecTaskStatus = null;
-      $scope.taskParameters = {
-        selectedTask: {
-          name: null
-        },
-        options: {
-          term: data.currentTerm
+    oecFactory.getOecTasks().then(
+      function successCallback(response) {
+        apiService.util.setTitle('OEC Control Panel');
+        angular.extend($scope, response.data);
+        $scope.displayError = null;
+        $scope.oecTaskStatus = null;
+        $scope.taskParameters = {
+          selectedTask: {
+            name: null
+          },
+          options: {
+            term: response.data.currentTerm
+          }
+        };
+      },
+      function errorCallback(response) {
+        $scope.isLoading = false;
+        if (response.status === 403) {
+          $scope.displayError = 'unauthorized';
+        } else {
+          $scope.displayError = 'failure';
         }
-      };
-    }).error(function(data, status) {
-      $scope.isLoading = false;
-      if (status === 403) {
-        $scope.displayError = 'unauthorized';
-      } else {
-        $scope.displayError = 'failure';
+        $scope.errorMessage = response.data.error;
       }
-      $scope.errorMessage = data.error;
-    });
+    );
   };
 
-  var handleTaskStatus = function(data) {
-    angular.extend($scope.oecTaskStatus, data.oecTaskStatus);
+  var handleTaskStatus = function(response) {
+    angular.extend($scope.oecTaskStatus, _.get(response, 'data.oecTaskStatus'));
     if ($scope.oecTaskStatus.status === 'In progress') {
       pollTaskStatus();
     } else {
@@ -44,10 +48,12 @@ angular.module('calcentral.controllers').controller('OecController', function(ap
   var timeoutPromise;
   var pollTaskStatus = function() {
     timeoutPromise = $timeout(function() {
-      return oecFactory.oecTaskStatus($scope.oecTaskStatus.id)
-        .success(handleTaskStatus).error(function() {
+      return oecFactory.oecTaskStatus($scope.oecTaskStatus.id).then(
+        handleTaskStatus,
+        function errorCallback() {
           $scope.displayError = 'failure';
-        });
+        }
+      );
     }, 2000);
   };
 
@@ -59,12 +65,15 @@ angular.module('calcentral.controllers').controller('OecController', function(ap
 
   $scope.runOecTask = function() {
     sanitizeTaskOptions();
-    return oecFactory.runOecTask($scope.taskParameters.selectedTask.name, $scope.taskParameters.options).success(function(data) {
-      angular.extend($scope, data);
-      pollTaskStatus();
-    }).error(function() {
-      $scope.displayError = 'failure';
-    });
+    return oecFactory.runOecTask($scope.taskParameters.selectedTask.name, $scope.taskParameters.options).then(
+      function successCallback(response) {
+        angular.extend($scope, _.get(response, 'data'));
+        pollTaskStatus();
+      },
+      function errorCallback() {
+        $scope.displayError = 'failure';
+      }
+    );
   };
 
   // Wait until user profile is fully loaded before starting.

@@ -33,12 +33,14 @@ angular.module('calcentral.controllers').controller('StylesController', function
     return (brightness <= 0.6);
   };
 
-  toolsFactory.getStyles().success(function(data) {
-    $scope.colorvars = data.colors;
+  toolsFactory.getStyles().then(
+    function(response) {
+      $scope.colorvars = response.data.colors;
 
-    // Set lightdark class for each color
-    angular.forEach($scope.colorvars, function(obj) {
-      obj.lightdark = darkOrLight(hexToRgb(obj.hex));
-    });
-  });
+      // Set lightdark class for each color
+      angular.forEach($scope.colorvars, function(obj) {
+        obj.lightdark = darkOrLight(hexToRgb(obj.hex));
+      });
+    }
+  );
 });

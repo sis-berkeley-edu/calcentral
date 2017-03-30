@@ -1,5 +1,6 @@
 'use strict';
 
+var _ = require('lodash');
 var angular = require('angular');
 
 /**
@@ -34,15 +35,15 @@ angular.module('calcentral.controllers').controller('TaskEditorController', func
     $scope.editorEnabled = false;
   };
 
-  var editTaskCompleted = function(data) {
-    angular.extend($scope.task, data);
+  var editTaskCompleted = function(response) {
+    angular.extend($scope.task, _.get(response, 'data'));
 
     // Extend won't remove already existing sub-objects. If we've returned from Google
     // AND there is no dueDate or notes on the returned object, remove those props from $scope.task
-    if (!data.dueDate) {
+    if (!_.get(response, 'data.dueDate')) {
       delete $scope.task.dueDate;
     }
-    if (!data.notes) {
+    if (!_.get(response, 'data.notes')) {
       delete $scope.task.notes;
     }
     $scope.updateTaskLists();
@@ -67,10 +68,13 @@ angular.module('calcentral.controllers').controller('TaskEditorController', func
     }
 
     apiService.analytics.sendEvent('Tasks', 'Task edited', 'edited: ' + !!changedTask.title);
-    tasksFactory.update(changedTask).success(editTaskCompleted).error(function() {
-      apiService.analytics.sendEvent('Error', 'Task editing failure', 'edited: ' + !!changedTask.title);
-      // Some error notification would be helpful.
-    });
+    tasksFactory.update(changedTask).then(
+      editTaskCompleted,
+      function errorCallback() {
+        apiService.analytics.sendEvent('Error', 'Task editing failure', 'edited: ' + !!changedTask.title);
+        // Some error notification would be helpful.
+      }
+    );
 
     $scope.disableEditor();
   };

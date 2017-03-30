@@ -62,7 +62,7 @@ angular.module('calcentral.services').service('taskAdderService', function($http
     var deferred = $q.defer();
     // Angular already blocks form submission if title is empty, but also check here for testing
     if (newtask.title) {
-      $http.post('/api/my/tasks/create', newtask).success(deferred.resolve);
+      $http.post('/api/my/tasks/create', newtask).then(deferred.resolve);
     } else {
       deferred.reject('Title cannot be empty');
     }

@@ -22,16 +22,22 @@ angular.module('calcentral.controllers').controller('CanvasSiteMailingListContro
   };
 
   var getMailingList = function() {
-    return canvasSiteMailingListFactory.getMailingList($scope.canvasCourseId).success(function(data) {
-      showMailingList(data);
-    }).error(showError);
+    return canvasSiteMailingListFactory.getMailingList($scope.canvasCourseId).then(
+      function successCallback(response) {
+        showMailingList(response.data);
+      },
+      showError
+    );
   };
 
   $scope.createMailingList = function() {
     $scope.isCreating = true;
-    return canvasSiteMailingListFactory.createMailingList($scope.canvasCourseId).success(function(data) {
-      showMailingList(data);
-    }).error(showError);
+    return canvasSiteMailingListFactory.createMailingList($scope.canvasCourseId).then(
+      function successCallback(response) {
+        showMailingList(response.data);
+      },
+      showError
+    );
   };
 
   $scope.isLoading = true;

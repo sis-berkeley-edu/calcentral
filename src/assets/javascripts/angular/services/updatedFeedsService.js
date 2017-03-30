@@ -71,15 +71,18 @@ angular.module('calcentral.services').service('updatedFeedsService', function($h
   };
 
   var polling = function(autoRefresh) {
-    // $http.get('/dummy/json/updated_feeds.json').success(function(data) {
-    $http.get('/api/my/updated_feeds').success(function(data) {
-      parseUpdatedFeeds(data, autoRefresh);
-      $timeout(polling, getPollInterval() * 1000);
-    }).error(function(data, responseCode) {
-      if (responseCode && responseCode === 401) {
-        userService.signOut();
+    // $http.get('/dummy/json/updated_feeds.json').then(
+    $http.get('/api/my/updated_feeds').then(
+      function successCallback(response) {
+        parseUpdatedFeeds(response.data, autoRefresh);
+        $timeout(polling, getPollInterval() * 1000);
+      },
+      function errorCallback(response) {
+        if (response && response.status === 401) {
+          userService.signOut();
+        }
       }
-    });
+    );
   };
 
   /**

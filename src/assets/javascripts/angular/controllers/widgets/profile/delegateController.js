@@ -12,8 +12,8 @@ angular.module('calcentral.controllers').controller('DelegateController', functi
   };
 
   var loadInformation = function() {
-    delegateFactory.getManageDelegatesURL().then(function(data) {
-      angular.extend($scope, _.get(data, 'data.feed.root'));
+    delegateFactory.getManageDelegatesURL().then(function(response) {
+      angular.extend($scope, _.get(response, 'data.feed.root'));
       $scope.delegate.isLoading = false;
     });
   };

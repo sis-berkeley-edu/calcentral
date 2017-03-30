@@ -121,10 +121,12 @@ angular.module('calcentral.controllers').controller('BadgesController', function
   };
 
   var fetch = function(options) {
-    badgesFactory.getBadges(options).success(function(data) {
-      apiService.updatedFeeds.feedLoaded(data);
-      decorateBadges(processCalendarEvents(data.badges || {}));
-    });
+    badgesFactory.getBadges(options).then(
+      function successCallback(response) {
+        apiService.updatedFeeds.feedLoaded(response.data);
+        decorateBadges(processCalendarEvents(response.data.badges || {}));
+      }
+    );
   };
 
   /**
