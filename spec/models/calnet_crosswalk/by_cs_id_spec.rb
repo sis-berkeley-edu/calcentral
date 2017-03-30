@@ -14,14 +14,6 @@ describe CalnetCrosswalk::ByCsId do
         expect(subject).to eq campus_solutions_id
       end
     end
-
-    context 'looking up student id' do
-      subject { proxy.lookup_legacy_student_id }
-      it 'should be nil' do
-        # Always nil because feed does not give LEGACY_SIS_STUDENT_ID.
-        expect(subject).to be_nil
-      end
-    end
   end
 
   context 'mock proxy' do

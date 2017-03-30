@@ -80,8 +80,6 @@ describe SessionsController do
 
         crosswalk = CalnetCrosswalk::ByUid.new user_id: user_id
         expect(crosswalk.lookup_campus_solutions_id).to eq '13320459'
-        expect(crosswalk.lookup_legacy_student_id).to eq '24188910'
-        expect(crosswalk.lookup_delegate_user_id).to eq '20394351'
       end
     end
   end

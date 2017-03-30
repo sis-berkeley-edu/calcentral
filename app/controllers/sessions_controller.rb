@@ -13,12 +13,7 @@ class SessionsController < ApplicationController
     if auth.respond_to?(:extra)
       logger.warn "Omniauth extra from SAML = #{auth.extra.inspect}"
       crosswalk = CalnetCrosswalk::ByUid.new(user_id: auth_uid)
-      sid = auth.extra['berkeleyEduStuID']
       cs_id = auth.extra['berkeleyEduCSID']
-      if sid.present?
-        logger.debug "Caching student ID #{sid} for UID #{auth_uid} based on SAML assertion"
-        crosswalk.cache_legacy_student_id sid
-      end
       if cs_id.present?
         logger.debug "Caching Campus Solutions ID #{cs_id} for UID #{auth_uid} based on SAML assertion"
         crosswalk.cache_campus_solutions_id cs_id
