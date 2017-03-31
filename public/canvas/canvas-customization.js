@@ -236,8 +236,8 @@
     if (customization) {
       var textArea = $('[for^=TextArea__]');
       if (textArea.length > 0) {
-        $('span:first span:first', textArea).text(customization.help);
-        $('div:first span:last', textArea[0].parentNode).text(customization.example);
+        $('span:first span:first span:first span:first span:first span:first', textArea).text(customization.help);
+        $('div:first span:nth-child(3)', textArea[0].parentNode).text(customization.example);
       }
     }
   };
