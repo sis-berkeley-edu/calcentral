@@ -1,6 +1,8 @@
 module Rosters
   class Canvas < Common
 
+    ENROLLMENT_ATTRIBUTE_KEYS = [:student_id, :first_name, :last_name, :email, :enroll_status, :units, :grade_option, :waitlist_position]
+
     def get_feed_internal
       feed = {
         canvas_course: {
@@ -41,7 +43,7 @@ module Rosters
               existing_entry[:enroll_status] = 'E'
             end
           else
-            campus_enrollment_map[enr[:ldap_uid]] = enr.slice(:student_id, :first_name, :last_name, :email, :enroll_status).merge({
+            campus_enrollment_map[enr[:ldap_uid]] = enr.slice(*ENROLLMENT_ATTRIBUTE_KEYS).merge({
               sections: [{id: section_ccn}],
               section_ccns: [section_ccn]
             })

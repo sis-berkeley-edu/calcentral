@@ -308,13 +308,19 @@ describe Rosters::Canvas do
             'section_id' => lecture_section_ccn,
             'ldap_uid' => student_in_discussion_section_login_id,
             'enroll_status' => 'E',
-            'student_id' => student_in_discussion_section_student_id
+            'student_id' => student_in_discussion_section_student_id,
+            'waitlist_position' => nil,
+            'units' => BigDecimal.new(4),
+            'grading_basis' => 'GRD'
           },
           {
             'section_id' => lecture_section_ccn,
             'ldap_uid' => student_not_in_discussion_section_login_id,
             'enroll_status' => 'E',
-            'student_id' => student_not_in_discussion_section_student_id
+            'student_id' => student_not_in_discussion_section_student_id,
+            'waitlist_position' => nil,
+            'units' => BigDecimal.new(4),
+            'grading_basis' => 'GRD'
           },
           {
             'section_id' => discussion_section_ccn,
@@ -323,7 +329,10 @@ describe Rosters::Canvas do
             'student_id' => student_in_discussion_section_student_id,
             'first_name' => 'Thurston',
             'last_name' => "Howell #{student_in_discussion_section_login_id}",
-            'student_email_address' => "#{student_in_discussion_section_login_id}@example.com"
+            'student_email_address' => "#{student_in_discussion_section_login_id}@example.com",
+            'waitlist_position' => nil,
+            'units' => BigDecimal.new(4),
+            'grading_basis' => 'GRD'
           }
         ]
       )
@@ -360,6 +369,17 @@ describe Rosters::Canvas do
         )
     end
     include_examples 'a good and proper roster'
+
+    it 'includes waitlist position, units, and grading basis' do
+      feed = subject.get_feed
+      expect(feed[:students].length).to eq 2
+      expect(feed[:students][0][:grade_option]).to eq 'Letter'
+      expect(feed[:students][0][:units]).to eq '4.0'
+      expect(feed[:students][0][:waitlist_position]).to eq nil
+      expect(feed[:students][1][:grade_option]).to eq 'Letter'
+      expect(feed[:students][1][:units]).to eq '4.0'
+      expect(feed[:students][1][:waitlist_position]).to eq nil
+    end
   end
 
   def stub_teacher_status(teacher_login_id, canvas_course_id)
