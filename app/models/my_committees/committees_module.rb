@@ -46,7 +46,7 @@ module MyCommittees::CommitteesModule
     milestone_attempt = {
       sequenceNumber: cs_milestone_attempt[:attemptNbr].to_i,
       date: format_date(cs_milestone_attempt[:attemptDate]),
-      result: Berkeley::GraduateMilestones.get_status(cs_milestone_attempt[:attemptStatus])
+      result: Berkeley::GraduateMilestones.get_status(cs_milestone_attempt[:attemptStatus], Berkeley::GraduateMilestones::QE_RESULTS_MILESTONE)
     }
     milestone_attempt[:display] = format_milestone_attempt(milestone_attempt)
     milestone_attempt

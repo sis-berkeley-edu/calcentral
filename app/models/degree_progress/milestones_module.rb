@@ -53,7 +53,7 @@ module DegreeProgress
     end
 
     def parse_status(requirement)
-      Berkeley::GraduateMilestones.get_status(requirement[:status]) || Berkeley::GraduateMilestones::STATUS_INCOMPLETE
+      Berkeley::GraduateMilestones.get_status(requirement[:status], requirement[:code]) || Berkeley::GraduateMilestones::STATUS_INCOMPLETE
     end
 
     def parse_date(date)
@@ -79,7 +79,7 @@ module DegreeProgress
       milestone_attempt = {
         sequenceNumber: milestone_attempt[:attemptNbr].to_i,
         date: parse_date(milestone_attempt[:attemptDate]),
-        result: Berkeley::GraduateMilestones.get_status(milestone_attempt[:attemptStatus]),
+        result: Berkeley::GraduateMilestones.get_status(milestone_attempt[:attemptStatus], Berkeley::GraduateMilestones::QE_RESULTS_MILESTONE),
         statusCode: milestone_attempt[:attemptStatus]
       }
       milestone_attempt[:display] = format_milestone_attempt(milestone_attempt)

@@ -11,8 +11,16 @@ module Berkeley
     QE_APPROVAL_MILESTONE = 'AAGQEAPRV'
     QE_RESULTS_MILESTONE = 'AAGQERESLT'
 
-    def self.get_status(status_code)
-      statuses.try(:[], status_code.strip.upcase) unless status_code.blank?
+    def self.get_status(status_code, milestone_code = nil)
+      status_code_standardized = status_code.strip.upcase unless status_code.blank?
+
+      if milestone_code === QE_APPROVAL_MILESTONE
+        qualifying_exam_approval_statuses.try(:[], status_code_standardized)
+      elsif milestone_code === QE_RESULTS_MILESTONE
+        qualifying_exam_results_statuses.try(:[], status_code_standardized)
+      else
+        statuses.try(:[], status_code_standardized)
+      end
     end
 
     def self.get_description(milestone_code)
@@ -64,11 +72,23 @@ module Berkeley
       }
     end
 
-    def self.statuses
-      @statuses ||= {
+    def self.qualifying_exam_approval_statuses
+      @qualifying_exam_approval_statuses ||= {
+        'N' => STATUS_INCOMPLETE,
+        'Y' => 'Approved'
+      }
+    end
+
+    def self.qualifying_exam_results_statuses
+      @qualifying_exam_results_statuses ||= {
         'F' => QE_STATUS_FAILED,
         'PF' => QE_STATUS_PARTIALLY_FAILED,
-        QE_STATUS_CODE_PASSED => QE_STATUS_PASSED,
+        QE_STATUS_CODE_PASSED => QE_STATUS_PASSED
+      }
+    end
+
+    def self.statuses
+      @statuses ||= {
         'N' => STATUS_INCOMPLETE,
         'Y' => 'Completed'
       }
