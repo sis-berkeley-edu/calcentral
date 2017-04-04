@@ -1,0 +1,1384 @@
+{
+  "statusCode": 200,
+  "feed": {
+    "sirConfig": {
+      "sirForms": [
+        {
+          "institution": "UCB01",
+          "acadCareer": "LAW",
+          "ucSirFormCd": "AL005",
+          "effdt": "1901-01-01",
+          "effStatus": "A",
+          "descrProgram": "LAW JD TRN & FYR (after 4/15)",
+          "descrProgramLong": "Berkeley Law School",
+          "ucSirImageCd": "LAW",
+          "descrLong": "Our goal in this process is to allow you flexibility in the timing of your enrollment commitment while holding you to the standards of your chosen profession. Candor, integrity, and keeping one’s word are characteristics vital in the legal profession. Therefore, we will indicate our trust in you by not requiring a seat deposit at any time.",
+          "chklstItemCd": "AL0006",
+          "sirConditions": [
+            {
+              "institution": "UCB01",
+              "acadCareer": "LAW",
+              "ucSirFormCd": "AL005",
+              "effdt": "1901-01-01",
+              "seqnum": "1",
+              "messageSetNbr": "24000",
+              "messageNbr": "1",
+              "messageText": "I pledge to abide by the university’s honor code: as a member of the UC Berkeley community, I act with honesty, integrity and respect for others."
+            },
+            {
+              "institution": "UCB01",
+              "acadCareer": "LAW",
+              "ucSirFormCd": "AL005",
+              "effdt": "1901-01-01",
+              "seqnum": "2",
+              "messageSetNbr": "24000",
+              "messageNbr": "2",
+              "messageText": "By submitting this Statement of Intent to Register, I certify that I understand and will meet any requirements specified in my admission letter and that the statements on this form are true and complete."
+            },
+            {
+              "institution": "UCB01",
+              "acadCareer": "LAW",
+              "ucSirFormCd": "AL005",
+              "effdt": "1901-01-01",
+              "seqnum": "3",
+              "messageSetNbr": "24000",
+              "messageNbr": "10",
+              "messageText": "I will decline all offers from other schools but understand that I may remain on waiting lists. I agree to notify the Admissions Office if my plans change subsequently so as to affect my enrollment in August."
+            }
+          ],
+          "sirOptions": [
+            {
+              "institution": "UCB01",
+              "acadCareer": "LAW",
+              "ucSirFormCd": "AL005",
+              "effdt": "1901-01-01",
+              "seqnum": "1",
+              "descrLong": "I accept admission to Berkeley Law School. I will definitely enroll at Berkeley in August.",
+              "progAction": "DEIN",
+              "progActionDescr": "Intention to Matriculate",
+              "progReason": null,
+              "progReasonDescr": null,
+              "messageSetNbr": "24000",
+              "messageNbr": "3",
+              "messageText": "You have confirmed you are accepting admission to Berkeley Law."
+            },
+            {
+              "institution": "UCB01",
+              "acadCareer": "LAW",
+              "ucSirFormCd": "AL005",
+              "effdt": "1901-01-01",
+              "seqnum": "2",
+              "descrLong": "I decline admission to Berkeley Law School.",
+              "progAction": "WAPP",
+              "progActionDescr": "Applicant Withdrawal",
+              "progReason": "SREQ",
+              "progReasonDescr": "Student Request",
+              "messageSetNbr": "24000",
+              "messageNbr": "5",
+              "messageText": "You have confirmed you are declining admission to Berkeley Law."
+            }
+          ]
+        },
+        {
+          "institution": "UCB01",
+          "acadCareer": "LAW",
+          "ucSirFormCd": "AL005",
+          "effdt": "1901-01-01",
+          "effStatus": "A",
+          "descrProgram": "LAW JD TRN & FYR (after 4/15)",
+          "descrProgramLong": "Berkeley Law School",
+          "ucSirImageCd": "LAW",
+          "descrLong": "Our goal in this process is to allow you flexibility in the timing of your enrollment commitment while holding you to the standards of your chosen profession. Candor, integrity, and keeping one’s word are characteristics vital in the legal profession. Therefore, we will indicate our trust in you by not requiring a seat deposit at any time.",
+          "chklstItemCd": "AL0005",
+          "sirConditions": [
+            {
+              "institution": "UCB01",
+              "acadCareer": "LAW",
+              "ucSirFormCd": "AL005",
+              "effdt": "1901-01-01",
+              "seqnum": "1",
+              "messageSetNbr": "24000",
+              "messageNbr": "1",
+              "messageText": "I pledge to abide by the university’s honor code: as a member of the UC Berkeley community, I act with honesty, integrity and respect for others."
+            },
+            {
+              "institution": "UCB01",
+              "acadCareer": "LAW",
+              "ucSirFormCd": "AL005",
+              "effdt": "1901-01-01",
+              "seqnum": "2",
+              "messageSetNbr": "24000",
+              "messageNbr": "2",
+              "messageText": "By submitting this Statement of Intent to Register, I certify that I understand and will meet any requirements specified in my admission letter and that the statements on this form are true and complete."
+            },
+            {
+              "institution": "UCB01",
+              "acadCareer": "LAW",
+              "ucSirFormCd": "AL005",
+              "effdt": "1901-01-01",
+              "seqnum": "3",
+              "messageSetNbr": "24000",
+              "messageNbr": "10",
+              "messageText": "I will decline all offers from other schools but understand that I may remain on waiting lists. I agree to notify the Admissions Office if my plans change subsequently so as to affect my enrollment in August."
+            }
+          ],
+          "sirOptions": [
+            {
+              "institution": "UCB01",
+              "acadCareer": "LAW",
+              "ucSirFormCd": "AL005",
+              "effdt": "1901-01-01",
+              "seqnum": "1",
+              "descrLong": "I accept admission to Berkeley Law School. I will definitely enroll at Berkeley in August.",
+              "progAction": "DEIN",
+              "progActionDescr": "Intention to Matriculate",
+              "progReason": null,
+              "progReasonDescr": null,
+              "messageSetNbr": "24000",
+              "messageNbr": "3",
+              "messageText": "You have confirmed you are accepting admission to Berkeley Law."
+            },
+            {
+              "institution": "UCB01",
+              "acadCareer": "LAW",
+              "ucSirFormCd": "AL005",
+              "effdt": "1901-01-01",
+              "seqnum": "2",
+              "descrLong": "I decline admission to Berkeley Law School.",
+              "progAction": "WAPP",
+              "progActionDescr": "Applicant Withdrawal",
+              "progReason": "SREQ",
+              "progReasonDescr": "Student Request",
+              "messageSetNbr": "24000",
+              "messageNbr": "5",
+              "messageText": "You have confirmed you are declining admission to Berkeley Law."
+            }
+          ]
+        },
+        {
+          "institution": "UCB01",
+          "acadCareer": "GRAD",
+          "ucSirFormCd": "GDMPA1",
+          "effdt": "1901-01-01",
+          "effStatus": "A",
+          "descrProgram": "Graduate Division",
+          "descrProgramLong": "Graduate Division",
+          "ucSirImageCd": "GRADDIV",
+          "descrLong": "Congratulations on your admission! The next step for you is to accept our offer and reserve your place. Be advised that completing your Statement of Intent to Register is the official acceptance of admission, allowing you to enroll in classes and register. Notifying your program alone is not sufficient. Depending on your program, a deposit may be required at this time to reserve your space.  Even if you decide not to attend, we would appreciate a response. We are eager to learn of your decision and hope to welcome you in Berkeley soon.",
+          "chklstItemCd": "AGP001",
+          "sirConditions": [
+            {
+              "institution": "UCB01",
+              "acadCareer": "GRAD",
+              "ucSirFormCd": "GDMPA1",
+              "effdt": "1901-01-01",
+              "seqnum": "1",
+              "messageSetNbr": "24000",
+              "messageNbr": "1",
+              "messageText": "I pledge to abide by the university’s honor code: as a member of the UC Berkeley community, I act with honesty, integrity and respect for others."
+            },
+            {
+              "institution": "UCB01",
+              "acadCareer": "GRAD",
+              "ucSirFormCd": "GDMPA1",
+              "effdt": "1901-01-01",
+              "seqnum": "2",
+              "messageSetNbr": "24000",
+              "messageNbr": "2",
+              "messageText": "By submitting this Statement of Intent to Register, I certify that I understand and will meet any requirements specified in my admission letter and that the statements on this form are true and complete."
+            }
+          ],
+          "sirOptions": [
+            {
+              "institution": "UCB01",
+              "acadCareer": "GRAD",
+              "ucSirFormCd": "GDMPA1",
+              "effdt": "1901-01-01",
+              "seqnum": "1",
+              "descrLong": "I accept admission to the University of California, Berkeley and intend to register.",
+              "progAction": "DEIN",
+              "progActionDescr": "Intention to Matriculate",
+              "progReason": null,
+              "progReasonDescr": null,
+              "messageSetNbr": "24000",
+              "messageNbr": "6",
+              "messageText": "You have confirmed you are accepting admission to the University of California, Berkeley."
+            },
+            {
+              "institution": "UCB01",
+              "acadCareer": "GRAD",
+              "ucSirFormCd": "GDMPA1",
+              "effdt": "1901-01-01",
+              "seqnum": "2",
+              "descrLong": "I decline admission to the University of California,Berkeley.",
+              "progAction": "WAPP",
+              "progActionDescr": "Applicant Withdrawal",
+              "progReason": "SREQ",
+              "progReasonDescr": "Student Request",
+              "messageSetNbr": "24000",
+              "messageNbr": "7",
+              "messageText": "You have confirmed you are declining admission to the University of California, Berkeley."
+            }
+          ]
+        },
+        {
+          "institution": "UCB01",
+          "acadCareer": "GRAD",
+          "ucSirFormCd": "GD0001",
+          "effdt": "1901-01-01",
+          "effStatus": "A",
+          "descrProgram": "Graduate Division",
+          "descrProgramLong": "Graduate Division",
+          "ucSirImageCd": "GRADDIV",
+          "descrLong": "Congratulations on your admission! The next step for you is to accept our offer and reserve your place. Be advised that completing your Statement of Intent to Register is the official acceptance of admission, allowing you to enroll in classes and register. Notifying your program alone is not sufficient. Depending on your program, a deposit may be required at this time to reserve your space.  Even if you decide not to attend, we would appreciate a response. We are eager to learn of your decision and hope to welcome you in Berkeley soon.",
+          "chklstItemCd": "AG0001",
+          "sirConditions": [
+            {
+              "institution": "UCB01",
+              "acadCareer": "GRAD",
+              "ucSirFormCd": "GD0001",
+              "effdt": "1901-01-01",
+              "seqnum": "1",
+              "messageSetNbr": "24000",
+              "messageNbr": "1",
+              "messageText": "I pledge to abide by the university’s honor code: as a member of the UC Berkeley community, I act with honesty, integrity and respect for others."
+            },
+            {
+              "institution": "UCB01",
+              "acadCareer": "GRAD",
+              "ucSirFormCd": "GD0001",
+              "effdt": "1901-01-01",
+              "seqnum": "2",
+              "messageSetNbr": "24000",
+              "messageNbr": "2",
+              "messageText": "By submitting this Statement of Intent to Register, I certify that I understand and will meet any requirements specified in my admission letter and that the statements on this form are true and complete."
+            }
+          ],
+          "sirOptions": [
+            {
+              "institution": "UCB01",
+              "acadCareer": "GRAD",
+              "ucSirFormCd": "GD0001",
+              "effdt": "1901-01-01",
+              "seqnum": "1",
+              "descrLong": "I accept admission to the University of California, Berkeley and intend to register.",
+              "progAction": "DEIN",
+              "progActionDescr": "Intention to Matriculate",
+              "progReason": null,
+              "progReasonDescr": null,
+              "messageSetNbr": "24000",
+              "messageNbr": "6",
+              "messageText": "You have confirmed you are accepting admission to the University of California, Berkeley."
+            },
+            {
+              "institution": "UCB01",
+              "acadCareer": "GRAD",
+              "ucSirFormCd": "GD0001",
+              "effdt": "1901-01-01",
+              "seqnum": "2",
+              "descrLong": "I decline admission to the University of California, Berkeley.",
+              "progAction": "WAPP",
+              "progActionDescr": "Applicant Withdrawal",
+              "progReason": "SREQ",
+              "progReasonDescr": "Student Request",
+              "messageSetNbr": "24000",
+              "messageNbr": "7",
+              "messageText": "You have confirmed you are declining admission to the University of California, Berkeley."
+            }
+          ]
+        },
+        {
+          "institution": "UCB01",
+          "acadCareer": "GRAD",
+          "ucSirFormCd": "GHMBA2",
+          "effdt": "1901-01-01",
+          "effStatus": "A",
+          "descrProgram": "Evening & Weekend MBA",
+          "descrProgramLong": "Haas School of Business",
+          "ucSirImageCd": "HAASGRAD",
+          "descrLong": "Congratulations on your admission to the University of California, Berkeley.  We hope you will choose Berkeley, and we look forward to welcoming you on our campus. Please follow the steps on how to accept your offer and reserve you place.  Be advised that completing your Statement of Intent to Register is the official acceptance of admission allowing you to enroll in classes and register. Notifying your department alone is not sufficient. Even if you decide not to attend we would appreciate your official response. We are eager to learn of your decision.",
+          "chklstItemCd": "AGH003",
+          "sirConditions": [
+            {
+              "institution": "UCB01",
+              "acadCareer": "GRAD",
+              "ucSirFormCd": "GHMBA2",
+              "effdt": "1901-01-01",
+              "seqnum": "1",
+              "messageSetNbr": "24000",
+              "messageNbr": "1",
+              "messageText": "I pledge to abide by the university’s honor code: as a member of the UC Berkeley community, I act with honesty, integrity and respect for others."
+            },
+            {
+              "institution": "UCB01",
+              "acadCareer": "GRAD",
+              "ucSirFormCd": "GHMBA2",
+              "effdt": "1901-01-01",
+              "seqnum": "2",
+              "messageSetNbr": "24000",
+              "messageNbr": "2",
+              "messageText": "By submitting this Statement of Intent to Register, I certify that I understand and will meet any requirements specified in my admission letter and that the statements on this form are true and complete."
+            }
+          ],
+          "sirOptions": [
+            {
+              "institution": "UCB01",
+              "acadCareer": "GRAD",
+              "ucSirFormCd": "GHMBA2",
+              "effdt": "1901-01-01",
+              "seqnum": "1",
+              "descrLong": "YES: I accept admission to the University of California, Berkeley and intend to register.  By submitting this Statement of Intent to Register, I certify that I understand and will meet any requirements specified in my admission letter.",
+              "progAction": "DEIN",
+              "progActionDescr": "Intention to Matriculate",
+              "progReason": null,
+              "progReasonDescr": null,
+              "messageSetNbr": "24000",
+              "messageNbr": "8",
+              "messageText": "You have confirmed you are accepting admission to the Haas School of Business at the University of California, Berkeley."
+            },
+            {
+              "institution": "UCB01",
+              "acadCareer": "GRAD",
+              "ucSirFormCd": "GHMBA2",
+              "effdt": "1901-01-01",
+              "seqnum": "2",
+              "descrLong": "NO: You have indicated that you wish to decline our offer of admission.  We understand that your decision is an important one and we'd appreciate your reason for doing so.",
+              "progAction": "WAPP",
+              "progActionDescr": "Applicant Withdrawal",
+              "progReason": "SREQ",
+              "progReasonDescr": "Student Request",
+              "messageSetNbr": "24000",
+              "messageNbr": "9",
+              "messageText": "You have confirmed you are declining admission to the Haas School of Business at the University of California, Berkeley."
+            }
+          ]
+        },
+        {
+          "institution": "UCB01",
+          "acadCareer": "GRAD",
+          "ucSirFormCd": "GHMBA3",
+          "effdt": "1901-01-01",
+          "effStatus": "A",
+          "descrProgram": "Executive MBA",
+          "descrProgramLong": "Haas School of Business",
+          "ucSirImageCd": "HAASGRAD",
+          "descrLong": "Congratulations on your admission to the University of California, Berkeley.  We hope you will choose Berkeley, and we look forward to welcoming you on our campus. Please follow the steps on how to accept your offer and reserve you place.  Be advised that completing your Statement of Intent to Register is the official acceptance of admission allowing you to enroll in classes and register. Notifying your department alone is not sufficient. Even if you decide not to attend we would appreciate your official response. We are eager to learn of your decision.",
+          "chklstItemCd": "AGH004",
+          "sirConditions": [
+            {
+              "institution": "UCB01",
+              "acadCareer": "GRAD",
+              "ucSirFormCd": "GHMBA3",
+              "effdt": "1901-01-01",
+              "seqnum": "1",
+              "messageSetNbr": "24000",
+              "messageNbr": "1",
+              "messageText": "I pledge to abide by the university’s honor code: as a member of the UC Berkeley community, I act with honesty, integrity and respect for others."
+            },
+            {
+              "institution": "UCB01",
+              "acadCareer": "GRAD",
+              "ucSirFormCd": "GHMBA3",
+              "effdt": "1901-01-01",
+              "seqnum": "2",
+              "messageSetNbr": "24000",
+              "messageNbr": "2",
+              "messageText": "By submitting this Statement of Intent to Register, I certify that I understand and will meet any requirements specified in my admission letter and that the statements on this form are true and complete."
+            }
+          ],
+          "sirOptions": [
+            {
+              "institution": "UCB01",
+              "acadCareer": "GRAD",
+              "ucSirFormCd": "GHMBA3",
+              "effdt": "1901-01-01",
+              "seqnum": "1",
+              "descrLong": "YES: I accept admission to the University of California, Berkeley and intend to register.  By submitting this Statement of Intent to Register, I certify that I understand and will meet any requirements specified in my admission letter.",
+              "progAction": "DEIN",
+              "progActionDescr": "Intention to Matriculate",
+              "progReason": null,
+              "progReasonDescr": null,
+              "messageSetNbr": "24000",
+              "messageNbr": "8",
+              "messageText": "You have confirmed you are accepting admission to the Haas School of Business at the University of California, Berkeley."
+            },
+            {
+              "institution": "UCB01",
+              "acadCareer": "GRAD",
+              "ucSirFormCd": "GHMBA3",
+              "effdt": "1901-01-01",
+              "seqnum": "2",
+              "descrLong": "NO: You have indicated that you wish to decline our offer of admission.  We understand that your decision is an important one and we'd appreciate your reason for doing so.",
+              "progAction": "WAPP",
+              "progActionDescr": "Applicant Withdrawal",
+              "progReason": "SREQ",
+              "progReasonDescr": "Student Request",
+              "messageSetNbr": "24000",
+              "messageNbr": "9",
+              "messageText": "You have confirmed you are declining admission to the Haas School of Business at the University of California, Berkeley."
+            }
+          ]
+        },
+        {
+          "institution": "UCB01",
+          "acadCareer": "LAW",
+          "ucSirFormCd": "AL001",
+          "effdt": "1901-01-01",
+          "effStatus": "A",
+          "descrProgram": "LAW JD 1st Year/1st Response",
+          "descrProgramLong": "Berkeley Law School",
+          "ucSirImageCd": "LAW",
+          "descrLong": "Our goal in this process is to allow you flexibility in the timing of your enrollment commitment while holding you to the standards of your chosen profession. Candor, integrity, and keeping one’s word are characteristics vital in the legal profession. Therefore, we will indicate our trust in you by not requiring a seat deposit at any time.",
+          "chklstItemCd": "AL0001",
+          "sirConditions": [
+            {
+              "institution": "UCB01",
+              "acadCareer": "LAW",
+              "ucSirFormCd": "AL001",
+              "effdt": "1901-01-01",
+              "seqnum": "1",
+              "messageSetNbr": "24000",
+              "messageNbr": "1",
+              "messageText": "I pledge to abide by the university’s honor code: as a member of the UC Berkeley community, I act with honesty, integrity and respect for others."
+            },
+            {
+              "institution": "UCB01",
+              "acadCareer": "LAW",
+              "ucSirFormCd": "AL001",
+              "effdt": "1901-01-01",
+              "seqnum": "2",
+              "messageSetNbr": "24000",
+              "messageNbr": "2",
+              "messageText": "By submitting this Statement of Intent to Register, I certify that I understand and will meet any requirements specified in my admission letter and that the statements on this form are true and complete."
+            },
+            {
+              "institution": "UCB01",
+              "acadCareer": "LAW",
+              "ucSirFormCd": "AL001",
+              "effdt": "1901-01-01",
+              "seqnum": "3",
+              "messageSetNbr": "24000",
+              "messageNbr": "10",
+              "messageText": "I will decline all offers from other schools but understand that I may remain on waiting lists. I agree to notify the Admissions Office if my plans change subsequently so as to affect my enrollment in August."
+            }
+          ],
+          "sirOptions": [
+            {
+              "institution": "UCB01",
+              "acadCareer": "LAW",
+              "ucSirFormCd": "AL001",
+              "effdt": "1901-01-01",
+              "seqnum": "1",
+              "descrLong": "I accept admission to Berkeley Law School. I will definitely enroll at Berkeley in August.",
+              "progAction": "DEIN",
+              "progActionDescr": "Intention to Matriculate",
+              "progReason": null,
+              "progReasonDescr": null,
+              "messageSetNbr": "24000",
+              "messageNbr": "3",
+              "messageText": "You have confirmed you are accepting admission to Berkeley Law."
+            },
+            {
+              "institution": "UCB01",
+              "acadCareer": "LAW",
+              "ucSirFormCd": "AL001",
+              "effdt": "1901-01-01",
+              "seqnum": "2",
+              "descrLong": "I tentatively plan to attend Berkeley Law School in August. Please reserve a place for me.",
+              "progAction": "DATA",
+              "progActionDescr": "Data Change",
+              "progReason": "LMAY",
+              "progReasonDescr": "Law SIR- Maybe",
+              "messageSetNbr": "24000",
+              "messageNbr": "4",
+              "messageText": "Please notify us immediately once your plans become final, using the Second Statement of Intent to Register form to indicate your decision by no later than June 1."
+            },
+            {
+              "institution": "UCB01",
+              "acadCareer": "LAW",
+              "ucSirFormCd": "AL001",
+              "effdt": "1901-01-01",
+              "seqnum": "3",
+              "descrLong": "I decline admission to Berkeley Law School.",
+              "progAction": "WAPP",
+              "progActionDescr": "Applicant Withdrawal",
+              "progReason": "SREQ",
+              "progReasonDescr": "Student Request",
+              "messageSetNbr": "24000",
+              "messageNbr": "5",
+              "messageText": "You have confirmed you are declining admission to Berkeley Law."
+            }
+          ]
+        },
+        {
+          "institution": "UCB01",
+          "acadCareer": "LAW",
+          "ucSirFormCd": "AL003",
+          "effdt": "1901-01-01",
+          "effStatus": "A",
+          "descrProgram": "LAW JSD",
+          "descrProgramLong": "Berkeley Law J.S.D.",
+          "ucSirImageCd": "LAW",
+          "descrLong": "Congratulations on your admission to Berkeley Law!  If you have any questions, please contact the Advanced Degree Programs Office at llmadmits@law.berkeley.edu or 510-642-1476.",
+          "chklstItemCd": "AL0004",
+          "sirConditions": [
+            {
+              "institution": "UCB01",
+              "acadCareer": "LAW",
+              "ucSirFormCd": "AL003",
+              "effdt": "1901-01-01",
+              "seqnum": "1",
+              "messageSetNbr": "24000",
+              "messageNbr": "1",
+              "messageText": "I pledge to abide by the university’s honor code: as a member of the UC Berkeley community, I act with honesty, integrity and respect for others."
+            },
+            {
+              "institution": "UCB01",
+              "acadCareer": "LAW",
+              "ucSirFormCd": "AL003",
+              "effdt": "1901-01-01",
+              "seqnum": "2",
+              "messageSetNbr": "24000",
+              "messageNbr": "2",
+              "messageText": "By submitting this Statement of Intent to Register, I certify that I understand and will meet any requirements specified in my admission letter and that the statements on this form are true and complete."
+            }
+          ],
+          "sirOptions": [
+            {
+              "institution": "UCB01",
+              "acadCareer": "LAW",
+              "ucSirFormCd": "AL003",
+              "effdt": "1901-01-01",
+              "seqnum": "1",
+              "descrLong": "Yes, I ACCEPT your offer of admission to the J.S.D. program at Berkeley Law, and will enroll as a member of the incoming class in August.  I agree to notify Berkeley Law if my plans change subsequently so as to affect my enrollment.",
+              "progAction": "DEIN",
+              "progActionDescr": "Intention to Matriculate",
+              "progReason": null,
+              "progReasonDescr": null,
+              "messageSetNbr": "24000",
+              "messageNbr": "3",
+              "messageText": "You have confirmed you are accepting admission to Berkeley Law."
+            },
+            {
+              "institution": "UCB01",
+              "acadCareer": "LAW",
+              "ucSirFormCd": "AL003",
+              "effdt": "1901-01-01",
+              "seqnum": "2",
+              "descrLong": "I DECLINE admission to Berkeley Law.",
+              "progAction": "WAPP",
+              "progActionDescr": "Applicant Withdrawal",
+              "progReason": "SREQ",
+              "progReasonDescr": "Student Request",
+              "messageSetNbr": "24000",
+              "messageNbr": "5",
+              "messageText": "You have confirmed you are declining admission to Berkeley Law."
+            }
+          ]
+        },
+        {
+          "institution": "UCB01",
+          "acadCareer": "LAW",
+          "ucSirFormCd": "AL002",
+          "effdt": "1901-01-01",
+          "effStatus": "A",
+          "descrProgram": "LAW JD 1st Year/2nd Response",
+          "descrProgramLong": "Berkeley School of Law",
+          "ucSirImageCd": "LAW",
+          "descrLong": "Previously you indicated that you tentatively planned to attend Berkeley Law School. We now ask that you indicate your firm commitment to attend, or your decision to decline our offer of admission.",
+          "chklstItemCd": "AL0002",
+          "sirConditions": [
+            {
+              "institution": "UCB01",
+              "acadCareer": "LAW",
+              "ucSirFormCd": "AL002",
+              "effdt": "1901-01-01",
+              "seqnum": "1",
+              "messageSetNbr": "24000",
+              "messageNbr": "1",
+              "messageText": "I pledge to abide by the university’s honor code: as a member of the UC Berkeley community, I act with honesty, integrity and respect for others."
+            },
+            {
+              "institution": "UCB01",
+              "acadCareer": "LAW",
+              "ucSirFormCd": "AL002",
+              "effdt": "1901-01-01",
+              "seqnum": "2",
+              "messageSetNbr": "24000",
+              "messageNbr": "2",
+              "messageText": "By submitting this Statement of Intent to Register, I certify that I understand and will meet any requirements specified in my admission letter and that the statements on this form are true and complete."
+            },
+            {
+              "institution": "UCB01",
+              "acadCareer": "LAW",
+              "ucSirFormCd": "AL002",
+              "effdt": "1901-01-01",
+              "seqnum": "3",
+              "messageSetNbr": "24000",
+              "messageNbr": "10",
+              "messageText": "I will decline all offers from other schools but understand that I may remain on waiting lists. I agree to notify the Admissions Office if my plans change subsequently so as to affect my enrollment in August."
+            }
+          ],
+          "sirOptions": [
+            {
+              "institution": "UCB01",
+              "acadCareer": "LAW",
+              "ucSirFormCd": "AL002",
+              "effdt": "1901-01-01",
+              "seqnum": "1",
+              "descrLong": "I accept admission to Berkeley Law School. I will definitely enroll at Berkeley in August.",
+              "progAction": "DEIN",
+              "progActionDescr": "Intention to Matriculate",
+              "progReason": null,
+              "progReasonDescr": null,
+              "messageSetNbr": "24000",
+              "messageNbr": "3",
+              "messageText": "You have confirmed you are accepting admission to Berkeley Law."
+            },
+            {
+              "institution": "UCB01",
+              "acadCareer": "LAW",
+              "ucSirFormCd": "AL002",
+              "effdt": "1901-01-01",
+              "seqnum": "2",
+              "descrLong": "I decline admission to Berkeley Law School.",
+              "progAction": "WAPP",
+              "progActionDescr": "Applicant Withdrawal",
+              "progReason": "SREQ",
+              "progReasonDescr": "Student Request",
+              "messageSetNbr": "24000",
+              "messageNbr": "5",
+              "messageText": "You have confirmed you are declining admission to Berkeley Law."
+            }
+          ]
+        },
+        {
+          "institution": "UCB01",
+          "acadCareer": "LAW",
+          "ucSirFormCd": "ALLM01",
+          "effdt": "1901-01-01",
+          "effStatus": "A",
+          "descrProgram": "Law LLM Traditional",
+          "descrProgramLong": "Berkeley Law LL.M.",
+          "ucSirImageCd": "LAW",
+          "descrLong": "Congratulations on your admission to Berkeley Law!  If you have any questions, please contact the Advanced Degree Programs Office at llmadmits@law.berkeley.edu or 510-642-1476.",
+          "chklstItemCd": "AL0003",
+          "sirConditions": [
+            {
+              "institution": "UCB01",
+              "acadCareer": "LAW",
+              "ucSirFormCd": "ALLM01",
+              "effdt": "1901-01-01",
+              "seqnum": "1",
+              "messageSetNbr": "24000",
+              "messageNbr": "1",
+              "messageText": "I pledge to abide by the university’s honor code: as a member of the UC Berkeley community, I act with honesty, integrity and respect for others."
+            },
+            {
+              "institution": "UCB01",
+              "acadCareer": "LAW",
+              "ucSirFormCd": "ALLM01",
+              "effdt": "1901-01-01",
+              "seqnum": "2",
+              "messageSetNbr": "24000",
+              "messageNbr": "2",
+              "messageText": "By submitting this Statement of Intent to Register, I certify that I understand and will meet any requirements specified in my admission letter and that the statements on this form are true and complete."
+            },
+            {
+              "institution": "UCB01",
+              "acadCareer": "LAW",
+              "ucSirFormCd": "ALLM01",
+              "effdt": "1901-01-01",
+              "seqnum": "3",
+              "messageSetNbr": "24000",
+              "messageNbr": "11",
+              "messageText": "I understand that this is a non-refundable deposit of one thousand dollars (USD $1,000.00) to secure my place in the LL.M. traditional track program at Berkeley Law.  This deposit will be applied toward tuition and fees for the term beginning in August, and cannot be transferred to any other term or program.  I understand that if I withdraw my acceptance for the LL.M. program for any reason, my deposit will not be refunded."
+            }
+          ],
+          "sirOptions": [
+            {
+              "institution": "UCB01",
+              "acadCareer": "LAW",
+              "ucSirFormCd": "ALLM01",
+              "effdt": "1901-01-01",
+              "seqnum": "1",
+              "descrLong": "Yes, I ACCEPT your offer of admission to the LL.M. program at Berkeley Law School and will enroll as a member of the incoming class in August. I agree to notify Berkeley Law if my plans change subsequently so as to affect my enrollment.",
+              "progAction": "DEIN",
+              "progActionDescr": "Intention to Matriculate",
+              "progReason": null,
+              "progReasonDescr": null,
+              "messageSetNbr": "24000",
+              "messageNbr": "3",
+              "messageText": "You have confirmed you are accepting admission to Berkeley Law."
+            },
+            {
+              "institution": "UCB01",
+              "acadCareer": "LAW",
+              "ucSirFormCd": "ALLM01",
+              "effdt": "1901-01-01",
+              "seqnum": "2",
+              "descrLong": "I DECLINE admission to Berkeley Law.",
+              "progAction": "WAPP",
+              "progActionDescr": "Applicant Withdrawal",
+              "progReason": "SREQ",
+              "progReasonDescr": "Student Request",
+              "messageSetNbr": "24000",
+              "messageNbr": "5",
+              "messageText": "You have confirmed you are declining admission to Berkeley Law."
+            }
+          ]
+        },
+        {
+          "institution": "UCB01",
+          "acadCareer": "GRAD",
+          "ucSirFormCd": "GHMBA1",
+          "effdt": "1901-01-01",
+          "effStatus": "A",
+          "descrProgram": "Haas MBA",
+          "descrProgramLong": "Haas School of Business",
+          "ucSirImageCd": "HAASGRAD",
+          "descrLong": "Congratulations on your admission to the University of California, Berkeley.  We hope you will choose Berkeley, and we look forward to welcoming you on our campus. Please follow the steps on how to accept your offer and reserve you place.  Be advised that completing your Statement of Intent to Register is the official acceptance of admission allowing you to enroll in classes and register. Notifying your department alone is not sufficient. Even if you decide not to attend we would appreciate your official response. We are eager to learn of your decision.",
+          "chklstItemCd": "AGH001",
+          "sirConditions": [
+            {
+              "institution": "UCB01",
+              "acadCareer": "GRAD",
+              "ucSirFormCd": "GHMBA1",
+              "effdt": "1901-01-01",
+              "seqnum": "1",
+              "messageSetNbr": "24000",
+              "messageNbr": "1",
+              "messageText": "I pledge to abide by the university’s honor code: as a member of the UC Berkeley community, I act with honesty, integrity and respect for others."
+            },
+            {
+              "institution": "UCB01",
+              "acadCareer": "GRAD",
+              "ucSirFormCd": "GHMBA1",
+              "effdt": "1901-01-01",
+              "seqnum": "2",
+              "messageSetNbr": "24000",
+              "messageNbr": "2",
+              "messageText": "By submitting this Statement of Intent to Register, I certify that I understand and will meet any requirements specified in my admission letter and that the statements on this form are true and complete."
+            }
+          ],
+          "sirOptions": [
+            {
+              "institution": "UCB01",
+              "acadCareer": "GRAD",
+              "ucSirFormCd": "GHMBA1",
+              "effdt": "1901-01-01",
+              "seqnum": "1",
+              "descrLong": "YES: I accept admission to the University of California, Berkeley and intend to register.  By submitting this Statement of Intent to Register, I certify that I understand and will meet any requirements specified in my admission letter.",
+              "progAction": "DEIN",
+              "progActionDescr": "Intention to Matriculate",
+              "progReason": null,
+              "progReasonDescr": null,
+              "messageSetNbr": "24000",
+              "messageNbr": "8",
+              "messageText": "You have confirmed you are accepting admission to the Haas School of Business at the University of California, Berkeley."
+            },
+            {
+              "institution": "UCB01",
+              "acadCareer": "GRAD",
+              "ucSirFormCd": "GHMBA1",
+              "effdt": "1901-01-01",
+              "seqnum": "2",
+              "descrLong": "NO: You have indicated that you wish to decline our offer of admission.  We understand that your decision is an important one and we'd appreciate your reason for doing so.",
+              "progAction": "WAPP",
+              "progActionDescr": "Applicant Withdrawal",
+              "progReason": "SREQ",
+              "progReasonDescr": "Student Request",
+              "messageSetNbr": "24000",
+              "messageNbr": "9",
+              "messageText": "You have confirmed you are declining admission to the Haas School of Business at the University of California, Berkeley."
+            }
+          ]
+        },
+        {
+          "institution": "UCB01",
+          "acadCareer": "GRAD",
+          "ucSirFormCd": "GHMFE1",
+          "effdt": "2015-09-02",
+          "effStatus": "A",
+          "descrProgram": "Haas MFE",
+          "descrProgramLong": "Haas School of Business",
+          "ucSirImageCd": "HAASGRAD",
+          "descrLong": "Congratulations on your admission to the University of California, Berkeley.  We hope you will choose Berkeley, and we look forward to welcoming you on our campus. Please follow the steps on how to accept your offer and reserve you place.  Be advised that completing your Statement of Intent to Register is the official acceptance of admission allowing you to enroll in classes and register. Notifying your department alone is not sufficient. Even if you decide not to attend we would appreciate your official response. We are eager to learn of your decision.",
+          "chklstItemCd": "AGH002",
+          "sirConditions": [
+            {
+              "institution": "UCB01",
+              "acadCareer": "GRAD",
+              "ucSirFormCd": "GHMFE1",
+              "effdt": "2015-09-02",
+              "seqnum": "1",
+              "messageSetNbr": "24000",
+              "messageNbr": "1",
+              "messageText": "I pledge to abide by the university’s honor code: as a member of the UC Berkeley community, I act with honesty, integrity and respect for others."
+            },
+            {
+              "institution": "UCB01",
+              "acadCareer": "GRAD",
+              "ucSirFormCd": "GHMFE1",
+              "effdt": "2015-09-02",
+              "seqnum": "2",
+              "messageSetNbr": "24000",
+              "messageNbr": "2",
+              "messageText": "By submitting this Statement of Intent to Register, I certify that I understand and will meet any requirements specified in my admission letter and that the statements on this form are true and complete."
+            }
+          ],
+          "sirOptions": [
+            {
+              "institution": "UCB01",
+              "acadCareer": "GRAD",
+              "ucSirFormCd": "GHMFE1",
+              "effdt": "2015-09-02",
+              "seqnum": "1",
+              "descrLong": "YES: I accept admission to the University of California, Berkeley and intend to register.  By submitting this Statement of Intent to Register, I certify that I understand and will meet any requirements specified in my admission letter.",
+              "progAction": "DEIN",
+              "progActionDescr": "Intention to Matriculate",
+              "progReason": null,
+              "progReasonDescr": null,
+              "messageSetNbr": "24000",
+              "messageNbr": "8",
+              "messageText": "You have confirmed you are accepting admission to the Haas School of Business at the University of California, Berkeley."
+            },
+            {
+              "institution": "UCB01",
+              "acadCareer": "GRAD",
+              "ucSirFormCd": "GHMFE1",
+              "effdt": "2015-09-02",
+              "seqnum": "2",
+              "descrLong": "NO: You have indicated that you wish to decline our offer of admission.  We understand that your decision is an important one and we'd appreciate your reason for doing so.",
+              "progAction": "WAPP",
+              "progActionDescr": "Applicant Withdrawal",
+              "progReason": "SREQ",
+              "progReasonDescr": "Student Request",
+              "messageSetNbr": "24000",
+              "messageNbr": "9",
+              "messageText": "You have confirmed you are declining admission to the Haas School of Business at the University of California, Berkeley."
+            }
+          ]
+        },
+        {
+          "institution": "UCB01",
+          "acadCareer": "UGRD",
+          "ucSirFormCd": "FRESH",
+          "effdt": "1901-01-01",
+          "effStatus": "A",
+          "descrProgram": "Freshman Generic",
+          "descrProgramLong": "Undergraduate Offer of Admission",
+          "ucSirImageCd": "UGRD",
+          "descrLong": "This is UC Berkeley's process to indicate your Statement of Intent to Register (SIR). The process should take less than 5 minutes, and you'll be on your way to being a Cal Golden Bear!",
+          "chklstItemCd": "AUSIRF",
+          "sirConditions": [
+            {
+              "institution": "UCB01",
+              "acadCareer": "UGRD",
+              "ucSirFormCd": "FRESH",
+              "effdt": "1901-01-01",
+              "seqnum": "1",
+              "messageSetNbr": "24000",
+              "messageNbr": "31",
+              "messageText": "I pledge to abide by the university’s honor code: \"As a member of the UC Berkeley community, I act with honesty, integrity and respect for others\"."
+            },
+            {
+              "institution": "UCB01",
+              "acadCareer": "UGRD",
+              "ucSirFormCd": "FRESH",
+              "effdt": "1901-01-01",
+              "seqnum": "2",
+              "messageSetNbr": "24000",
+              "messageNbr": "21",
+              "messageText": "I agree to sustain a term and cumulative GPA of 3.0 or higher with no D or F grades in my senior coursework."
+            },
+            {
+              "institution": "UCB01",
+              "acadCareer": "UGRD",
+              "ucSirFormCd": "FRESH",
+              "effdt": "1901-01-01",
+              "seqnum": "3",
+              "messageSetNbr": "24000",
+              "messageNbr": "20",
+              "messageText": "I agree to complete all of my current self-reported coursework with passing grades.  If I cannot, I will contact the Office of Undergraduate Admissions before submitting my final transcript."
+            },
+            {
+              "institution": "UCB01",
+              "acadCareer": "UGRD",
+              "ucSirFormCd": "FRESH",
+              "effdt": "1901-01-01",
+              "seqnum": "4",
+              "messageSetNbr": "24000",
+              "messageNbr": "24",
+              "messageText": "I understand that it is my responsibility to contact the Office of Undergraduate Admissions if my courses have changed from what was self-reported on my application.\n\n*See your Conditions of Admission and FAQs"
+            },
+            {
+              "institution": "UCB01",
+              "acadCareer": "UGRD",
+              "ucSirFormCd": "FRESH",
+              "effdt": "1901-01-01",
+              "seqnum": "5",
+              "messageSetNbr": "24000",
+              "messageNbr": "28",
+              "messageText": "I understand that I must complete the final year of academic classes and/or the external examinations listed on my application.  If I will not be able to meet this expectation, I will contact the Office of Undergraduate Admissions with a written explanation."
+            },
+            {
+              "institution": "UCB01",
+              "acadCareer": "UGRD",
+              "ucSirFormCd": "FRESH",
+              "effdt": "1901-01-01",
+              "seqnum": "6",
+              "messageSetNbr": "24000",
+              "messageNbr": "23",
+              "messageText": "I agree to submit all required documents listed on my Tasks list, including test scores, certificates and transcripts by the deadlines."
+            },
+            {
+              "institution": "UCB01",
+              "acadCareer": "UGRD",
+              "ucSirFormCd": "FRESH",
+              "effdt": "1901-01-01",
+              "seqnum": "7",
+              "messageSetNbr": "24000",
+              "messageNbr": "29",
+              "messageText": "I agree to submit all exams eligible for University Credit."
+            }
+          ],
+          "sirOptions": [
+            {
+              "institution": "UCB01",
+              "acadCareer": "UGRD",
+              "ucSirFormCd": "FRESH",
+              "effdt": "1901-01-01",
+              "seqnum": "1",
+              "descrLong": "Yes, I accept my offer of Admission to UC Berkeley!",
+              "progAction": "DEIN",
+              "progActionDescr": "Intention to Matriculate",
+              "progReason": null,
+              "progReasonDescr": null,
+              "messageSetNbr": "24000",
+              "messageNbr": "25",
+              "messageText": "Thank you for confirming your enrollment at Berkeley!"
+            }
+          ]
+        },
+        {
+          "institution": "UCB01",
+          "acadCareer": "UGRD",
+          "ucSirFormCd": "SUMBR",
+          "effdt": "1901-01-01",
+          "effStatus": "A",
+          "descrProgram": "Summer Bridge Required",
+          "descrProgramLong": "Undergraduate Offer of Admission",
+          "ucSirImageCd": "UGRD",
+          "descrLong": "This is UC Berkeley's process to indicate your Statement of Intent to Register (SIR). The process should take less than 5 minutes, and you'll be on your way to being a Cal Golden Bear!",
+          "chklstItemCd": "AUSIRS",
+          "sirConditions": [
+            {
+              "institution": "UCB01",
+              "acadCareer": "UGRD",
+              "ucSirFormCd": "SUMBR",
+              "effdt": "1901-01-01",
+              "seqnum": "1",
+              "messageSetNbr": "24000",
+              "messageNbr": "31",
+              "messageText": "I pledge to abide by the university’s honor code: \"As a member of the UC Berkeley community, I act with honesty, integrity and respect for others\"."
+            },
+            {
+              "institution": "UCB01",
+              "acadCareer": "UGRD",
+              "ucSirFormCd": "SUMBR",
+              "effdt": "1901-01-01",
+              "seqnum": "2",
+              "messageSetNbr": "24000",
+              "messageNbr": "26",
+              "messageText": "I agree to enroll in the Summer Bridge Program by May 1st and successfully complete coursework by earning a grade of C or better."
+            },
+            {
+              "institution": "UCB01",
+              "acadCareer": "UGRD",
+              "ucSirFormCd": "SUMBR",
+              "effdt": "1901-01-01",
+              "seqnum": "3",
+              "messageSetNbr": "24000",
+              "messageNbr": "21",
+              "messageText": "I agree to sustain a term and cumulative GPA of 3.0 or higher with no D or F grades in my senior coursework."
+            },
+            {
+              "institution": "UCB01",
+              "acadCareer": "UGRD",
+              "ucSirFormCd": "SUMBR",
+              "effdt": "1901-01-01",
+              "seqnum": "4",
+              "messageSetNbr": "24000",
+              "messageNbr": "20",
+              "messageText": "I agree to complete all of my current self-reported coursework with passing grades.  If I cannot, I will contact the Office of Undergraduate Admissions before submitting my final transcript."
+            },
+            {
+              "institution": "UCB01",
+              "acadCareer": "UGRD",
+              "ucSirFormCd": "SUMBR",
+              "effdt": "1901-01-01",
+              "seqnum": "5",
+              "messageSetNbr": "24000",
+              "messageNbr": "24",
+              "messageText": "I understand that it is my responsibility to contact the Office of Undergraduate Admissions if my courses have changed from what was self-reported on my application.\n\n*See your Conditions of Admission and FAQs"
+            },
+            {
+              "institution": "UCB01",
+              "acadCareer": "UGRD",
+              "ucSirFormCd": "SUMBR",
+              "effdt": "1901-01-01",
+              "seqnum": "6",
+              "messageSetNbr": "24000",
+              "messageNbr": "28",
+              "messageText": "I understand that I must complete the final year of academic classes and/or the external examinations listed on my application.  If I will not be able to meet this expectation, I will contact the Office of Undergraduate Admissions with a written explanation."
+            },
+            {
+              "institution": "UCB01",
+              "acadCareer": "UGRD",
+              "ucSirFormCd": "SUMBR",
+              "effdt": "1901-01-01",
+              "seqnum": "7",
+              "messageSetNbr": "24000",
+              "messageNbr": "23",
+              "messageText": "I agree to submit all required documents listed on my Tasks list, including test scores, certificates and transcripts by the deadlines."
+            },
+            {
+              "institution": "UCB01",
+              "acadCareer": "UGRD",
+              "ucSirFormCd": "SUMBR",
+              "effdt": "1901-01-01",
+              "seqnum": "8",
+              "messageSetNbr": "24000",
+              "messageNbr": "29",
+              "messageText": "I agree to submit all exams eligible for University Credit."
+            }
+          ],
+          "sirOptions": [
+            {
+              "institution": "UCB01",
+              "acadCareer": "UGRD",
+              "ucSirFormCd": "SUMBR",
+              "effdt": "1901-01-01",
+              "seqnum": "1",
+              "descrLong": "Yes, I accept my offer of Admission to UC Berkeley!",
+              "progAction": "DEIN",
+              "progActionDescr": "Intention to Matriculate",
+              "progReason": null,
+              "progReasonDescr": null,
+              "messageSetNbr": "24000",
+              "messageNbr": "25",
+              "messageText": "Thank you for confirming your enrollment at Berkeley!"
+            }
+          ]
+        },
+        {
+          "institution": "UCB01",
+          "acadCareer": "UGRD",
+          "ucSirFormCd": "TRANSF",
+          "effdt": "1901-01-01",
+          "effStatus": "A",
+          "descrProgram": "Transfer",
+          "descrProgramLong": "Undergraduate Offer of Admission",
+          "ucSirImageCd": "UGRD",
+          "descrLong": "This is UC Berkeley's process to indicate your Statement of Intent to Register (SIR). The process should take less than 5 minutes, and you'll be on your way to being a Cal Golden Bear!",
+          "chklstItemCd": "AUSIRT",
+          "sirConditions": [
+            {
+              "institution": "UCB01",
+              "acadCareer": "UGRD",
+              "ucSirFormCd": "TRANSF",
+              "effdt": "1901-01-01",
+              "seqnum": "1",
+              "messageSetNbr": "24000",
+              "messageNbr": "31",
+              "messageText": "I pledge to abide by the university’s honor code: \"As a member of the UC Berkeley community, I act with honesty, integrity and respect for others\"."
+            },
+            {
+              "institution": "UCB01",
+              "acadCareer": "UGRD",
+              "ucSirFormCd": "TRANSF",
+              "effdt": "1901-01-01",
+              "seqnum": "2",
+              "messageSetNbr": "24000",
+              "messageNbr": "22",
+              "messageText": "I have read my Conditions of Admission (located in MAP@Berkeley portal) and understand I must earn the minimum grade(s) specified by my college in each course, sustaining a term and cumulative UC-transferable GPA of 3.0 or higher.  I understand that if I do not successfully complete each course listed in my Conditions of Admission, then my admission to Berkeley will be subject to cancellation."
+            },
+            {
+              "institution": "UCB01",
+              "acadCareer": "UGRD",
+              "ucSirFormCd": "TRANSF",
+              "effdt": "1901-01-01",
+              "seqnum": "3",
+              "messageSetNbr": "24000",
+              "messageNbr": "23",
+              "messageText": "I agree to submit all required documents listed on my Tasks list, including test scores, certificates and transcripts by the deadlines."
+            },
+            {
+              "institution": "UCB01",
+              "acadCareer": "UGRD",
+              "ucSirFormCd": "TRANSF",
+              "effdt": "1901-01-01",
+              "seqnum": "4",
+              "messageSetNbr": "24000",
+              "messageNbr": "24",
+              "messageText": "I understand that it is my responsibility to contact the Office of Undergraduate Admissions if my courses have changed from what was self-reported on my application.\n\n*See your Conditions of Admission and FAQs"
+            },
+            {
+              "institution": "UCB01",
+              "acadCareer": "UGRD",
+              "ucSirFormCd": "TRANSF",
+              "effdt": "1901-01-01",
+              "seqnum": "5",
+              "messageSetNbr": "24000",
+              "messageNbr": "30",
+              "messageText": "I understand I must fulfill the breadth and major prep requirements as determined by my college.\n\n*See Conditions of Admission and Tasks list"
+            }
+          ],
+          "sirOptions": [
+            {
+              "institution": "UCB01",
+              "acadCareer": "UGRD",
+              "ucSirFormCd": "TRANSF",
+              "effdt": "1901-01-01",
+              "seqnum": "1",
+              "descrLong": "Yes, I accept my offer of Admission to UC Berkeley!",
+              "progAction": "DEIN",
+              "progActionDescr": "Intention to Matriculate",
+              "progReason": null,
+              "progReasonDescr": null,
+              "messageSetNbr": "24000",
+              "messageNbr": "25",
+              "messageText": "Thank you for confirming your enrollment at Berkeley!"
+            }
+          ]
+        },
+        {
+          "institution": "UCB01",
+          "acadCareer": "LAW",
+          "ucSirFormCd": "ALLM02",
+          "effdt": "2016-08-31",
+          "effStatus": "A",
+          "descrProgram": "Law LLM Professional",
+          "descrProgramLong": "Berkeley School of Law (Professional Track)",
+          "ucSirImageCd": "LAW",
+          "descrLong": "Congratulations on your admission to Berkeley Law!  If you have any questions, please contact the Advanced Degree Programs Office at llmadmits@law.berkeley.edu or 510-642-1476.",
+          "chklstItemCd": "AL0007",
+          "sirConditions": [
+            {
+              "institution": "UCB01",
+              "acadCareer": "LAW",
+              "ucSirFormCd": "ALLM02",
+              "effdt": "2016-08-31",
+              "seqnum": "1",
+              "messageSetNbr": "24000",
+              "messageNbr": "1",
+              "messageText": "I pledge to abide by the university’s honor code: as a member of the UC Berkeley community, I act with honesty, integrity and respect for others."
+            },
+            {
+              "institution": "UCB01",
+              "acadCareer": "LAW",
+              "ucSirFormCd": "ALLM02",
+              "effdt": "2016-08-31",
+              "seqnum": "2",
+              "messageSetNbr": "24000",
+              "messageNbr": "2",
+              "messageText": "By submitting this Statement of Intent to Register, I certify that I understand and will meet any requirements specified in my admission letter and that the statements on this form are true and complete."
+            },
+            {
+              "institution": "UCB01",
+              "acadCareer": "LAW",
+              "ucSirFormCd": "ALLM02",
+              "effdt": "2016-08-31",
+              "seqnum": "3",
+              "messageSetNbr": "24000",
+              "messageNbr": "36",
+              "messageText": "I understand that this is a non-refundable deposit of one thousand dollars (USD $1,000.00) to secure my place in the LL.M. professional track program at Berkeley Law.  This deposit will be applied toward tuition and fees for the first term of the program, and cannot be transferred to any other term or program.  I understand that if I withdraw my acceptance for the LL.M. program for any reason, my deposit will not be refunded."
+            }
+          ],
+          "sirOptions": [
+            {
+              "institution": "UCB01",
+              "acadCareer": "LAW",
+              "ucSirFormCd": "ALLM02",
+              "effdt": "2016-08-31",
+              "seqnum": "1",
+              "descrLong": "Yes, I ACCEPT your offer of admission to the LL.M. professional track program at Berkeley Law, and will enroll as a member of the incoming class. I will begin the program in Quarter 1 on May 17, 2017 and end after Quarter 3.",
+              "progAction": "DEIN",
+              "progActionDescr": "Intention to Matriculate",
+              "progReason": "LSQ1",
+              "progReasonDescr": "Law Summer Quarter 1-3",
+              "messageSetNbr": "24000",
+              "messageNbr": "3",
+              "messageText": "You have confirmed you are accepting admission to Berkeley Law."
+            },
+            {
+              "institution": "UCB01",
+              "acadCareer": "LAW",
+              "ucSirFormCd": "ALLM02",
+              "effdt": "2016-08-31",
+              "seqnum": "2",
+              "descrLong": "Yes, I ACCEPT your offer of admission to the LL.M. professional track program at Berkeley Law, and will enroll as a member of the incoming class. I will begin the program in Quarter 1 on May 17, 2017 and end after Quarter 4.",
+              "progAction": "DEIN",
+              "progActionDescr": "Intention to Matriculate",
+              "progReason": "LSQ3",
+              "progReasonDescr": "Law Summer Quarter 1-4",
+              "messageSetNbr": "24000",
+              "messageNbr": "3",
+              "messageText": "You have confirmed you are accepting admission to Berkeley Law."
+            },
+            {
+              "institution": "UCB01",
+              "acadCareer": "LAW",
+              "ucSirFormCd": "ALLM02",
+              "effdt": "2016-08-31",
+              "seqnum": "3",
+              "descrLong": "Yes, I ACCEPT your offer of admission to the LL.M. professional track program at Berkeley Law, and will enroll as a member of the incoming class. I will begin the program in Quarter 2 on June 8, 2017 and end after Quarter 4.",
+              "progAction": "DEIN",
+              "progActionDescr": "Intention to Matriculate",
+              "progReason": "LSQ2",
+              "progReasonDescr": "Law Summer Quarter 2-4",
+              "messageSetNbr": "24000",
+              "messageNbr": "3",
+              "messageText": "You have confirmed you are accepting admission to Berkeley Law."
+            },
+            {
+              "institution": "UCB01",
+              "acadCareer": "LAW",
+              "ucSirFormCd": "ALLM02",
+              "effdt": "2016-08-31",
+              "seqnum": "4",
+              "descrLong": "No, I DECLINE admission to Berkeley Law.",
+              "progAction": "WAPP",
+              "progActionDescr": "Applicant Withdrawal",
+              "progReason": "SREQ",
+              "progReasonDescr": "Student Request",
+              "messageSetNbr": "24000",
+              "messageNbr": "5",
+              "messageText": "You have confirmed you are declining admission to Berkeley Law."
+            }
+          ]
+        }
+      ],
+      "responseReasons": [
+        {
+          "institution": "UCB01",
+          "acadCareer": "LAW",
+          "responseReason": "SCHL",
+          "effdt": "1901-01-01",
+          "effStatus": "A",
+          "descr": "Attending another school",
+          "descrshort": "School"
+        },
+        {
+          "institution": "UCB01",
+          "acadCareer": "LAW",
+          "responseReason": "LATE",
+          "effdt": "1901-01-01",
+          "effStatus": "A",
+          "descr": "UCB offer received too late",
+          "descrshort": "Late"
+        },
+        {
+          "institution": "UCB01",
+          "acadCareer": "LAW",
+          "responseReason": "WORK",
+          "effdt": "1901-01-01",
+          "effStatus": "A",
+          "descr": "Career/Employment opportunity",
+          "descrshort": "WORK"
+        },
+        {
+          "institution": "UCB01",
+          "acadCareer": "GRAD",
+          "responseReason": "MIL",
+          "effdt": "1901-01-01",
+          "effStatus": "A",
+          "descr": "Military",
+          "descrshort": "Military"
+        },
+        {
+          "institution": "UCB01",
+          "acadCareer": "GRAD",
+          "responseReason": "WORK",
+          "effdt": "1901-01-01",
+          "effStatus": "A",
+          "descr": "Career/Employment Opportunity",
+          "descrshort": "Career"
+        },
+        {
+          "institution": "UCB01",
+          "acadCareer": "LAW",
+          "responseReason": "OTHR",
+          "effdt": "1901-01-01",
+          "effStatus": "A",
+          "descr": "Other",
+          "descrshort": "Other"
+        },
+        {
+          "institution": "UCB01",
+          "acadCareer": "GRAD",
+          "responseReason": "FIN",
+          "effdt": "1901-01-01",
+          "effStatus": "A",
+          "descr": "Financial reasons",
+          "descrshort": "Financial"
+        },
+        {
+          "institution": "UCB01",
+          "acadCareer": "GRAD",
+          "responseReason": "PERS",
+          "effdt": "1901-01-01",
+          "effStatus": "A",
+          "descr": "Personal/family reasons",
+          "descrshort": "Personal"
+        },
+        {
+          "institution": "UCB01",
+          "acadCareer": "GRAD",
+          "responseReason": "SCHL",
+          "effdt": "1901-01-01",
+          "effStatus": "A",
+          "descr": "Attending another school",
+          "descrshort": "School"
+        },
+        {
+          "institution": "UCB01",
+          "acadCareer": "LAW",
+          "responseReason": "FIN",
+          "effdt": "1901-01-01",
+          "effStatus": "A",
+          "descr": "Financial reasons",
+          "descrshort": "Financial"
+        },
+        {
+          "institution": "UCB01",
+          "acadCareer": "GRAD",
+          "responseReason": "LATE",
+          "effdt": "1901-01-01",
+          "effStatus": "A",
+          "descr": "UCB offer received too late",
+          "descrshort": "Late"
+        },
+        {
+          "institution": "UCB01",
+          "acadCareer": "LAW",
+          "responseReason": "PERS",
+          "effdt": "1901-01-01",
+          "effStatus": "A",
+          "descr": "Personal/family reasons",
+          "descrshort": "Personal"
+        },
+        {
+          "institution": "UCB01",
+          "acadCareer": "LAW",
+          "responseReason": "MIL",
+          "effdt": "1901-01-01",
+          "effStatus": "A",
+          "descr": "Military",
+          "descrshort": "Military"
+        }
+      ]
+    }
+  }
+}

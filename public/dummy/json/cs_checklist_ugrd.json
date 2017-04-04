@@ -1,0 +1,340 @@
+{
+  "statusCode": 200,
+  "feed": {
+    "checkListItems": [
+      {
+        "emplid": "3000000123",
+        "seq3c": "2",
+        "checklistSeq": "200",
+        "chklstItemCd": "ACTSAT",
+        "checkListDescr": "SAT Reasoning/ACT Pluss Writing",
+        "itemStatus": "Completed",
+        "itemStatusCode": "C",
+        "statusDt": "2017-03-23",
+        "dueDt": "2017-07-15",
+        "responsibleCntctName": "Office of Undergraduate Admissions",
+        "responsibleCntctEmail": null,
+        "associationIdName": null,
+        "itemComment": "Submit your official test scores for the SAT Reasoning OR the ACT plus Writing electronically.\n\nAll final, official results must be received by July 15th.\n\nTo request your scores, contact the College Board online at http://www.CollegeBoard.com, via phone at (866) 756-7346 OR the ACT online at www.ACTstudent.org, via phone at (319) 337-1313 for score report information.",
+        "adminFunc": "ADMP",
+        "adminFuncDescr": "Admissions Program",
+        "checkListDocMgmt": {
+          "linkUrlLbl": null,
+          "linkUrl": null,
+          "displayStatusDt": false,
+          "displayDueDt": true,
+          "displayResponsibleCntct": true
+        },
+        "checkListMgmtAdmp": {
+          "varDataSeq": "1",
+          "acadCareer": "UGRD",
+          "stdntCarNbr": "0",
+          "admApplNbr": "00069742",
+          "applProgNbr": "0"
+        }
+      },
+      {
+        "emplid": "3000000123",
+        "seq3c": "2",
+        "checklistSeq": "1100",
+        "chklstItemCd": "AHSTR",
+        "checkListDescr": "Final High School Transcript",
+        "itemStatus": "Initiated",
+        "itemStatusCode": "I",
+        "dueDt": "2017-07-01",
+        "responsibleCntctName": "Office of Undergraduate Admissions",
+        "responsibleCntctEmail": null,
+        "associationIdName": "Thomas Jefferson Hs Sci/Tec",
+        "itemComment": "Please submit your final transcript(s) from all high schools/secondary schools for years 9-12.  The transcript must include the date of graduation and verify your self-reported academic record.\n\nALL final, official documents must be postmarked by July 1st.\n\nYou may mail official documents to:\n\n     UC Berkeley Undergraduate Admissions Transcripts\n     16 Sproul Hall, MC 0608 \n     Berkeley, CA 94720-0608",
+        "adminFunc": "ADMP",
+        "adminFuncDescr": "Admissions Program",
+        "checkListDocMgmt": {
+          "linkUrlLbl": null,
+          "linkUrl": null,
+          "displayStatusDt": false,
+          "displayDueDt": true,
+          "displayResponsibleCntct": true
+        },
+        "checkListMgmtAdmp": {
+          "varDataSeq": "1",
+          "acadCareer": "UGRD",
+          "stdntCarNbr": "0",
+          "admApplNbr": "00069742",
+          "applProgNbr": "0"
+        }
+      },
+      {
+        "emplid": "3000000123",
+        "seq3c": "2",
+        "checklistSeq": "400",
+        "chklstItemCd": "AP07",
+        "checkListDescr": "U.S. History",
+        "itemStatus": "Initiated",
+        "itemStatusCode": "I",
+        "dueDt": "2017-07-15",
+        "responsibleCntctName": "Office of Undergraduate Admissions",
+        "responsibleCntctEmail": null,
+        "associationIdName": null,
+        "itemComment": "Please submit your official scores for all Advanced Placement exams for which you have earned a score of 3 or higher.\n\nALL final, official exam results must be received by July 15th.\n\nNote:  If you have completed Advanced Placement (AP), you must submit an official report for all sittings, including exams from previous years. To arrange for AP scores to be sent to us, visit www.collegeboard.com.",
+        "adminFunc": "ADMP",
+        "adminFuncDescr": "Admissions Program",
+        "checkListDocMgmt": {
+          "linkUrlLbl": null,
+          "linkUrl": null,
+          "displayStatusDt": false,
+          "displayDueDt": true,
+          "displayResponsibleCntct": true
+        },
+        "checkListMgmtAdmp": {
+          "varDataSeq": "1",
+          "acadCareer": "UGRD",
+          "stdntCarNbr": "0",
+          "admApplNbr": "00069742",
+          "applProgNbr": "0"
+        }
+      },
+      {
+        "emplid": "3000000123",
+        "seq3c": "2",
+        "checklistSeq": "1000",
+        "chklstItemCd": "AP90",
+        "checkListDescr": "Statistics",
+        "itemStatus": "Initiated",
+        "itemStatusCode": "I",
+        "dueDt": "2017-07-15",
+        "responsibleCntctName": "Office of Undergraduate Admissions",
+        "responsibleCntctEmail": null,
+        "associationIdName": null,
+        "itemComment": "Please submit your official scores for all Advanced Placement exams for which you have earned a score of 3 or higher.\n\nALL final, official exam results must be received by July 15th.\n\nNote:  If you have completed Advanced Placement (AP), you must submit an official report for all sittings, including exams from previous years. To arrange for AP scores to be sent to us, visit www.collegeboard.com.",
+        "adminFunc": "ADMP",
+        "adminFuncDescr": "Admissions Program",
+        "checkListDocMgmt": {
+          "linkUrlLbl": null,
+          "linkUrl": null,
+          "displayStatusDt": false,
+          "displayDueDt": true,
+          "displayResponsibleCntct": true
+        },
+        "checkListMgmtAdmp": {
+          "varDataSeq": "1",
+          "acadCareer": "UGRD",
+          "stdntCarNbr": "0",
+          "admApplNbr": "00069742",
+          "applProgNbr": "0"
+        }
+      },
+      {
+        "emplid": "3000000123",
+        "seq3c": "2",
+        "checklistSeq": "300",
+        "chklstItemCd": "ASAT2",
+        "checkListDescr": "SAT Subject Exam",
+        "itemStatus": "Completed",
+        "itemStatusCode": "C",
+        "statusDt": "2017-03-23",
+        "dueDt": "2017-07-15",
+        "responsibleCntctName": "Office of Undergraduate Admissions",
+        "responsibleCntctEmail": null,
+        "associationIdName": null,
+        "itemComment": "Please submit the official exam results for all SAT Subject exams electronically.\n\nALL final, official exam results must be received by July 15th.\n\nNote: To request your scores, contact the College Board online at www.CollegeBoard.com, via phone at (866) 756-7346 for score report information.",
+        "adminFunc": "ADMP",
+        "adminFuncDescr": "Admissions Program",
+        "checkListDocMgmt": {
+          "linkUrlLbl": null,
+          "linkUrl": null,
+          "displayStatusDt": false,
+          "displayDueDt": true,
+          "displayResponsibleCntct": true
+        },
+        "checkListMgmtAdmp": {
+          "varDataSeq": "1",
+          "acadCareer": "UGRD",
+          "stdntCarNbr": "0",
+          "admApplNbr": "00069742",
+          "applProgNbr": "0"
+        }
+      },
+      {
+        "emplid": "3000000123",
+        "seq3c": "1",
+        "checklistSeq": "100",
+        "chklstItemCd": "AUSIRF",
+        "checkListDescr": "Accept Your Offer of Admission",
+        "itemStatus": "Initiated",
+        "itemStatusCode": "I",
+        "statusDt": "2017-02-07",
+        "dueDt": "2017-05-01",
+        "responsibleCntctName": "Office of Undergraduate Admissions",
+        "responsibleCntctEmail": null,
+        "associationIdName": null,
+        "itemComment": "Accept your Offer of Admission in CalCentral by 11:59pm PDT on your deadline.     \n\nIf you are required to pay the SIR Deposit, know that the $250.00 fee is non-refundable.                         \n                                                                                                                                               \nMore information about UC Berkeley's Honor Code can be found here:  https://asuc.org/honorcode/\n\nReview your Conditions of Admission here:  \nhttps://apply.berkeley.edu/apply/status",
+        "adminFunc": "ADMP",
+        "adminFuncDescr": "Admissions Program",
+        "checkListDocMgmt": {
+          "linkUrlLbl": null,
+          "linkUrl": null,
+          "displayStatusDt": true,
+          "displayDueDt": true,
+          "displayResponsibleCntct": true
+        },
+        "checkListMgmtAdmp": {
+          "varDataSeq": "1",
+          "acadCareer": "UGRD",
+          "stdntCarNbr": "0",
+          "admApplNbr": "00069742",
+          "applProgNbr": "0"
+        }
+      },
+      {
+        "emplid": "3000000123",
+        "seq3c": "2",
+        "checklistSeq": "500",
+        "chklstItemCd": "AP31",
+        "checkListDescr": "Computer Science A",
+        "itemStatus": "Initiated",
+        "itemStatusCode": "I",
+        "dueDt": "2017-07-15",
+        "responsibleCntctName": "Office of Undergraduate Admissions",
+        "responsibleCntctEmail": null,
+        "associationIdName": null,
+        "itemComment": "Please submit your official scores for all Advanced Placement exams for which you have earned a score of 3 or higher.\n\nALL final, official exam results must be received by July 15th.\n\nNote:  If you have completed Advanced Placement (AP), you must submit an official report for all sittings, including exams from previous years. To arrange for AP scores to be sent to us, visit www.collegeboard.com.",
+        "adminFunc": "ADMP",
+        "adminFuncDescr": "Admissions Program",
+        "checkListDocMgmt": {
+          "linkUrlLbl": null,
+          "linkUrl": null,
+          "displayStatusDt": false,
+          "displayDueDt": true,
+          "displayResponsibleCntct": true
+        },
+        "checkListMgmtAdmp": {
+          "varDataSeq": "1",
+          "acadCareer": "UGRD",
+          "stdntCarNbr": "0",
+          "admApplNbr": "00069742",
+          "applProgNbr": "0"
+        }
+      },
+      {
+        "emplid": "3000000123",
+        "seq3c": "2",
+        "checklistSeq": "600",
+        "chklstItemCd": "AP37",
+        "checkListDescr": "English Literature & Compostn",
+        "itemStatus": "Initiated",
+        "itemStatusCode": "I",
+        "dueDt": "2017-07-15",
+        "responsibleCntctName": "Office of Undergraduate Admissions",
+        "responsibleCntctEmail": null,
+        "associationIdName": null,
+        "itemComment": "Please submit your official scores for all Advanced Placement exams for which you have earned a score of 3 or higher.\n\nALL final, official exam results must be received by July 15th.\n\nNote:  If you have completed Advanced Placement (AP), you must submit an official report for all sittings, including exams from previous years. To arrange for AP scores to be sent to us, visit www.collegeboard.com.",
+        "adminFunc": "ADMP",
+        "adminFuncDescr": "Admissions Program",
+        "checkListDocMgmt": {
+          "linkUrlLbl": null,
+          "linkUrl": null,
+          "displayStatusDt": false,
+          "displayDueDt": true,
+          "displayResponsibleCntct": true
+        },
+        "checkListMgmtAdmp": {
+          "varDataSeq": "1",
+          "acadCareer": "UGRD",
+          "stdntCarNbr": "0",
+          "admApplNbr": "00069742",
+          "applProgNbr": "0"
+        }
+      },
+      {
+        "emplid": "3000000123",
+        "seq3c": "2",
+        "checklistSeq": "700",
+        "chklstItemCd": "AP57",
+        "checkListDescr": "Government & Politics: U.S.",
+        "itemStatus": "Initiated",
+        "itemStatusCode": "I",
+        "dueDt": "2017-07-15",
+        "responsibleCntctName": "Office of Undergraduate Admissions",
+        "responsibleCntctEmail": null,
+        "associationIdName": null,
+        "itemComment": "Please submit your official scores for all Advanced Placement exams for which you have earned a score of 3 or higher.\n\nALL final, official exam results must be received by July 15th.\n\nNote:  If you have completed Advanced Placement (AP), you must submit an official report for all sittings, including exams from previous years. To arrange for AP scores to be sent to us, visit www.collegeboard.com.",
+        "adminFunc": "ADMP",
+        "adminFuncDescr": "Admissions Program",
+        "checkListDocMgmt": {
+          "linkUrlLbl": null,
+          "linkUrl": null,
+          "displayStatusDt": false,
+          "displayDueDt": true,
+          "displayResponsibleCntct": true
+        },
+        "checkListMgmtAdmp": {
+          "varDataSeq": "1",
+          "acadCareer": "UGRD",
+          "stdntCarNbr": "0",
+          "admApplNbr": "00069742",
+          "applProgNbr": "0"
+        }
+      },
+      {
+        "emplid": "3000000123",
+        "seq3c": "2",
+        "checklistSeq": "800",
+        "chklstItemCd": "AP68",
+        "checkListDescr": "Mathematics: Calculus BC",
+        "itemStatus": "Initiated",
+        "itemStatusCode": "I",
+        "dueDt": "2017-07-15",
+        "responsibleCntctName": "Office of Undergraduate Admissions",
+        "responsibleCntctEmail": null,
+        "associationIdName": null,
+        "itemComment": "Please submit your official scores for all Advanced Placement exams for which you have earned a score of 3 or higher.\n\nALL final, official exam results must be received by July 15th.\n\nNote:  If you have completed Advanced Placement (AP), you must submit an official report for all sittings, including exams from previous years. To arrange for AP scores to be sent to us, visit www.collegeboard.com.",
+        "adminFunc": "ADMP",
+        "adminFuncDescr": "Admissions Program",
+        "checkListDocMgmt": {
+          "linkUrlLbl": null,
+          "linkUrl": null,
+          "displayStatusDt": false,
+          "displayDueDt": true,
+          "displayResponsibleCntct": true
+        },
+        "checkListMgmtAdmp": {
+          "varDataSeq": "1",
+          "acadCareer": "UGRD",
+          "stdntCarNbr": "0",
+          "admApplNbr": "00069742",
+          "applProgNbr": "0"
+        }
+      },
+      {
+        "emplid": "3000000123",
+        "seq3c": "2",
+        "checklistSeq": "900",
+        "chklstItemCd": "AP75",
+        "checkListDescr": "Music: Theory",
+        "itemStatus": "Initiated",
+        "itemStatusCode": "I",
+        "dueDt": "2017-07-15",
+        "responsibleCntctName": "Office of Undergraduate Admissions",
+        "responsibleCntctEmail": null,
+        "associationIdName": null,
+        "itemComment": "Please submit your official scores for all Advanced Placement exams for which you have earned a score of 3 or higher.\n\nALL final, official exam results must be received by July 15th.\n\nNote:  If you have completed Advanced Placement (AP), you must submit an official report for all sittings, including exams from previous years. To arrange for AP scores to be sent to us, visit www.collegeboard.com.",
+        "adminFunc": "ADMP",
+        "adminFuncDescr": "Admissions Program",
+        "checkListDocMgmt": {
+          "linkUrlLbl": null,
+          "linkUrl": null,
+          "displayStatusDt": false,
+          "displayDueDt": true,
+          "displayResponsibleCntct": true
+        },
+        "checkListMgmtAdmp": {
+          "varDataSeq": "1",
+          "acadCareer": "UGRD",
+          "stdntCarNbr": "0",
+          "admApplNbr": "00069742",
+          "applProgNbr": "0"
+        }
+      }
+    ]
+  }
+}

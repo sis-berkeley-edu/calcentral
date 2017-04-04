@@ -11,7 +11,7 @@ angular.module('calcentral.controllers').controller('SirItemController', functio
     form: {
       option: false,
       decline: {},
-      check: false
+      check: {}
     },
     isFormValid: false,
     isSubmitting: false,
