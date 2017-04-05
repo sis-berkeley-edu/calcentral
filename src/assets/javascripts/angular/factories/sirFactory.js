@@ -7,9 +7,11 @@ var angular = require('angular');
  */
 angular.module('calcentral.factories').factory('sirFactory', function(apiService, $http) {
   var urlChecklist = '/api/campus_solutions/checklist';
+  // var urlChecklist = '/dummy/json/cs_checklist_ugrd.json';
   var urlDeposit = '/api/campus_solutions/deposit';
   var urlHigherOne = '/api/campus_solutions/higher_one_url';
   var urlSirConfig = '/api/campus_solutions/sir_config';
+  // var urlSirConfig = '/dummy/json/cs_sir_config.json';
   var urlSirResponse = '/api/campus_solutions/sir_response';
 
   var getChecklist = function(options) {
