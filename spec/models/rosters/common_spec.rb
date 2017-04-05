@@ -21,6 +21,7 @@ describe Rosters::Common do
           :first_name => 'Jack',
           :last_name => 'Nicholson',
           :email => 'jnicholson@example.com',
+          :grade_option => 'Letter',
           :majors => [
             'Computer Science BA',
             'Cognitive Science BA'
@@ -42,6 +43,7 @@ describe Rosters::Common do
           :first_name => 'Seth',
           :last_name => 'Rogen',
           :email => 'srogen@example.com',
+          :grade_option => 'P/NP',
           :majors => ['Chemistry PhD'],
           :terms_in_attendance => 'G',
           :sections => [
@@ -61,6 +63,7 @@ describe Rosters::Common do
           :first_name => 'Michael',
           :last_name => 'Fox',
           :email => 'mfox@example.com',
+          :grade_option => 'Letter',
           :majors => ['Flux Capacitance BA'],
           :terms_in_attendance => '6',
           :sections => [
@@ -95,6 +98,9 @@ describe Rosters::Common do
         expect(rosters_csv[0]['Terms in Attendance']).to eq '3'
         expect(rosters_csv[0]['Role']).to eq 'Student'
         expect(rosters_csv[0]['Sections']).to eq 'COMPSCI 9G SLF 001'
+        expect(rosters_csv[0]['Units']).to eq '4.0'
+        expect(rosters_csv[0]['Grading Basis']).to eq 'Letter'
+        expect(rosters_csv[0]['Waitlist Position']).to eq ''
 
         expect(rosters_csv[1]).to be_an_instance_of CSV::Row
         expect(rosters_csv[1]['Name']).to eq 'Rogen, Seth'
@@ -105,6 +111,9 @@ describe Rosters::Common do
         expect(rosters_csv[1]['Terms in Attendance']).to eq 'G'
         expect(rosters_csv[1]['Role']).to eq 'Waitlist Student'
         expect(rosters_csv[1]['Sections']).to eq 'COMPSCI 9G SLF 001, COMPSCI 9G SLF 002'
+        expect(rosters_csv[1]['Units']).to eq '3.0'
+        expect(rosters_csv[1]['Grading Basis']).to eq 'P/NP'
+        expect(rosters_csv[1]['Waitlist Position']).to eq '2'
 
         expect(rosters_csv[2]).to be_an_instance_of CSV::Row
         expect(rosters_csv[2]['Name']).to eq 'Fox, Michael'
@@ -115,6 +124,10 @@ describe Rosters::Common do
         expect(rosters_csv[2]['Terms in Attendance']).to eq '6'
         expect(rosters_csv[2]['Role']).to eq 'Concurrent Student'
         expect(rosters_csv[2]['Sections']).to eq 'COMPSCI 9G SLF 003'
+        expect(rosters_csv[2]['Units']).to eq '3.0'
+        expect(rosters_csv[2]['Grading Basis']).to eq 'Letter'
+        expect(rosters_csv[2]['Waitlist Position']).to eq ''
+
       end
     end
   end

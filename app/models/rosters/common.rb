@@ -25,7 +25,7 @@ module Rosters
     # Serves rosters in CSV format
     def get_csv
       CSV.generate do |csv|
-        csv << ['Name','Student ID','User ID','Role','Email Address','Sections','Majors','Terms in Attendance']
+        csv << ['Name','Student ID','User ID','Role','Email Address','Sections','Majors','Terms in Attendance','Units','Grading Basis','Waitlist Position']
         get_feed[:students].each do |student|
           name = student[:last_name] + ', ' + student[:first_name]
           user_id = student[:login_id]
@@ -33,9 +33,12 @@ module Rosters
           email_address = student[:email]
           role = ENROLL_STATUS_TO_CSV_ROLE[student[:enroll_status]]
           sections = sections_to_name_string(student[:sections])
-          terms_in_attendance = student[:terms_in_attendance]
           majors = student[:majors].try(:sort).try(:join, ', ')
-          csv << [name, student_id, user_id, role, email_address, sections, majors, terms_in_attendance]
+          terms_in_attendance = student[:terms_in_attendance]
+          units = student[:units]
+          grade_option = student[:grade_option]
+          waitlist_position = student[:waitlist_position] || ''
+          csv << [name, student_id, user_id, role, email_address, sections, majors, terms_in_attendance, units, grade_option, waitlist_position]
         end
       end
     end
