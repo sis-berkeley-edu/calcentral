@@ -14,8 +14,9 @@ angular.module('calcentral.controllers').controller('GraduateDegreeProgressContr
   var loadGraduateDegreeProgress = function() {
     degreeProgressFactory.getGraduateMilestones().then(
       function(response) {
+        var links = _.get(response, 'data.feed.links');
+        $scope.degreeProgress.graduate.links = _.isEmpty(links) ? undefined : links;
         $scope.degreeProgress.graduate.progresses = _.get(response, 'data.feed.degreeProgress');
-        $scope.degreeProgress.graduate.links = _.get(response, 'data.feed.links');
         $scope.degreeProgress.graduate.errored = _.get(response, 'errored');
       }
     ).finally(
