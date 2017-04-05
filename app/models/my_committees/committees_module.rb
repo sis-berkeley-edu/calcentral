@@ -1,7 +1,20 @@
 module MyCommittees::CommitteesModule
   extend self
 
-  COMMITTEE_TYPE_QUALIFYING_EXAM = 'QE'
+  COMMITTEE_TYPES = {
+    QE: {
+      code: 'QE',
+      label: 'Qualifying Exam Committee'
+    },
+    PLN1MASTER: {
+      code: 'PLN1MASTER',
+      label: 'Master\'s Thesis Committee'
+    },
+    DOCTORAL: {
+      code: 'DOCTORAL',
+      label: 'Dissertation Committee'
+    }
+  }
   DATE_FORMAT = '%b %d, %Y'
   STATUS_ICON_SUCCESS = 'check'
   STATUS_ICON_WARN = 'exclamation-triangle'
@@ -25,7 +38,7 @@ module MyCommittees::CommitteesModule
   def parse_cs_committee (cs_committee)
     return nil unless cs_committee.present?
     committee = {
-      committeeType:  cs_committee[:committeeDescrlong],
+      committeeType:  translate_committee_type(cs_committee),
       program:        cs_committee[:studentAcadPlan],
       milestoneAttempts: parse_cs_qualifying_exam_attempts(cs_committee),
       committeeMembers: parse_cs_committee_members(cs_committee)
@@ -34,9 +47,18 @@ module MyCommittees::CommitteesModule
     committee
   end
 
+  def translate_committee_type(cs_committee)
+    committee_type_code = cs_committee[:committeeType].try(:intern)
+    COMMITTEE_TYPES[committee_type_code].try(:[], :label)
+  end
+
+  def qualifying_exam?(cs_committee)
+    cs_committee[:committeeType].to_s.strip.upcase === COMMITTEE_TYPES[:QE][:code]
+  end
+
   def parse_cs_qualifying_exam_attempts(cs_committee)
     qualifying_exam_attempts = []
-    if cs_committee[:committeeType].to_s == COMMITTEE_TYPE_QUALIFYING_EXAM
+    if qualifying_exam?(cs_committee)
       qualifying_exam_attempts = parse_cs_milestone_attempts(cs_committee)
     end
     qualifying_exam_attempts
@@ -82,7 +104,7 @@ module MyCommittees::CommitteesModule
   end
 
   def set_committee_status(cs_committee, committee)
-    if cs_committee[:committeeType].to_s == COMMITTEE_TYPE_QUALIFYING_EXAM
+    if qualifying_exam?(cs_committee)
       committee[:statusIcon] = determine_qualifying_exam_status_icon(committee)
       committee[:statusMessage] = determine_qualifying_exam_status_message(cs_committee)
     elsif !is_active?(cs_committee) && cs_committee[:studentFilingDate]
