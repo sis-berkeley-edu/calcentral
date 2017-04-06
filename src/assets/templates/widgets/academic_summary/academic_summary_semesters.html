@@ -14,11 +14,11 @@
           <th width="20%">Class</th>
           <th width="50%">Title</th>
           <th class="cc-table-right cc-academic-summary-table-units" width="15%">Units</th>
-          <th width="15%"><span data-ng-if="semester.summaryFromTranscript">Grade</span></th>
+          <th width="15%">Grade</th>
         </tr>
       </thead>
       <tbody data-ng-if="!semester.summaryFromTranscript" data-ng-repeat="class in semester.classes">
-        <tr data-ng-repeat="section in class.sections" data-ng-if="section.is_primary_section && !section.waitlisted">
+        <tr data-ng-repeat="section in class.sections" data-ng-if="section.is_primary_section && !section.waitlisted && !class.transcript">
           <td>
             <span data-ng-if="class.multiplePrimaries && section.url">
               <a data-ng-href="{{section.url}}">
@@ -46,6 +46,14 @@
           </td>
           <td data-ng-bind="class.title"></td>
           <td class="cc-text-right cc-academic-summary-table-units" data-ng-bind="section.units | number:1"></td>
+          <td>&mdash;</td>
+        </tr>
+        <tr data-ng-if="class.transcript" data-ng-repeat="transcript in class.transcript">
+          <td data-ng-if="class.url"><a data-ng-href="{{class.url}}" data-ng-bind="class.course_code"></a>
+          <td data-ng-if="!class.url" data-ng-bind="class.course_code"></td>
+          <td data-ng-bind="class.title"></td>
+          <td class="cc-text-right cc-academic-summary-table-units" data-ng-bind="transcript.units | number:1"></td>
+          <td data-ng-if="api.user.profile.canViewGrades" data-ng-bind="transcript.grade"></td>
         </tr>
       </tbody>
       <tbody data-ng-if="semester.summaryFromTranscript" data-ng-repeat="class in semester.classes">
