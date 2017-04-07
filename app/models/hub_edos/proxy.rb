@@ -4,7 +4,7 @@ module HubEdos
     include ClassLogger
     include Proxies::Mockable
     include CampusSolutions::ProfileFeatureFlagged
-    include User::Student
+    include User::Identifiers
     include SafeJsonParser
     include ResponseHandler
 

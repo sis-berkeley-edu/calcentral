@@ -2,7 +2,7 @@ module MyAcademics
   class GpaUnits
     include AcademicsModule
     include ClassLogger
-    include User::Student
+    include User::Identifiers
 
     def merge(data)
       gpa = hub_gpa_units

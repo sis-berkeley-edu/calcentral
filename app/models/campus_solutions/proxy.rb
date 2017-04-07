@@ -3,7 +3,7 @@ module CampusSolutions
 
     include ClassLogger
     include Proxies::MockableXml
-    include User::Student
+    include User::Identifiers
 
     APP_ID = 'campussolutions'
     APP_NAME = 'Campus Solutions'

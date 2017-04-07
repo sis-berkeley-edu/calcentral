@@ -1,6 +1,6 @@
-describe User::Student do
+describe User::Identifiers do
 
-  class StudentTestClass < BaseProxy; include User::Student; end
+  class StudentTestClass < BaseProxy; include User::Identifiers; end
 
   before do
     allow(CalnetLdap::UserAttributes).to receive(:new).and_return double(get_feed: ldap_attributes)

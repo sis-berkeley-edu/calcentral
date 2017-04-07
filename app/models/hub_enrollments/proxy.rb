@@ -2,7 +2,7 @@ module HubEnrollments
   class Proxy < BaseProxy
     include ClassLogger
     include Proxies::Mockable
-    include User::Student
+    include User::Identifiers
     include SafeJsonParser
 
     def initialize(options = {})

@@ -9,7 +9,7 @@ module Financials
     include Cache::UserCacheExpiry
     include Cache::FeedExceptionsHandled
     include Cache::JsonifiedFeed
-    include User::Student
+    include User::Identifiers
 
     def get_feed_internal
       student_id = lookup_student_id

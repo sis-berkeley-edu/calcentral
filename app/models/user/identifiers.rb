@@ -1,5 +1,5 @@
 module User
-  module Student
+  module Identifiers
     def lookup_student_id
       if !(sid = student_id_from_ldap) && Settings.features.allow_legacy_fallback
         sid = student_id_from_oracle

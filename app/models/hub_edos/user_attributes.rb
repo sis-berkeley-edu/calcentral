@@ -1,7 +1,7 @@
 module HubEdos
   class UserAttributes
 
-    include User::Student
+    include User::Identifiers
     include Berkeley::UserRoles
     include ResponseWrapper
     include ClassLogger
