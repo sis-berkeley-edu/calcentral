@@ -144,7 +144,6 @@ features:
   cs_profile_work_experience: true
   final_exam_schedule: true
   financials: true
-  legacy_advising: true
   textbooks: true
   videos: true
   webcast_sign_up_on_calcentral: true

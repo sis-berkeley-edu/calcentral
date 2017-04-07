@@ -509,7 +509,6 @@ features:
   final_exam_schedule: false
   gpa_calculator: true
   hub_term_api: true
-  legacy_advising: false
   manage_site_mailing_lists: false
   my_fin_aid: false
   prevent_acting_as_users_from_posting: true
