@@ -14,29 +14,35 @@ describe MyCommittees::FacultyCommittees do
         double(lookup_campus_solutions_id: user_cs_id))
     end
 
-    it 'dumps all committees into one list' do
-      expect(feed[:facultyCommittees].count).to eq 5
+    it 'sorts active and inactive committees into separate lists' do
+      expect(feed[:facultyCommittees][:active].count).to eq 2
+      expect(feed[:facultyCommittees][:completed].count).to eq 3
     end
 
-    it 'sorts the committees by the current user\'s membership end date and start date' do
-      committees = feed[:facultyCommittees]
-      expect(committees[0][:csMemberStartDate]).to be nil
-      expect(committees[0][:csMemberEndDate]).to be nil
-      expect(committees[1][:csMemberStartDate]).to eq '2016-08-31'
-      expect(committees[1][:csMemberEndDate]).to eq '2999-01-01'
-      expect(committees[2][:csMemberStartDate]).to eq '2016-08-30'
-      expect(committees[2][:csMemberEndDate]).to eq '2017-08-30'
-      expect(committees[3][:csMemberStartDate]).to eq '2015-08-31'
-      expect(committees[3][:csMemberEndDate]).to eq '2016-01-01'
+    it 'sorts the committees by the current user\'s membership end date and start date, most recent first' do
+      activeCommittees = feed[:facultyCommittees][:active]
+      completedCommittees = feed[:facultyCommittees][:completed]
+
+      expect(activeCommittees[0][:csMemberStartDate]).to be nil
+      expect(activeCommittees[0][:csMemberEndDate]).to be nil
+      expect(activeCommittees[1][:csMemberStartDate]).to eq '2014-08-31'
+      expect(activeCommittees[1][:csMemberEndDate]).to eq '2015-01-01'
+
+      expect(completedCommittees[0][:csMemberStartDate]).to eq '2016-08-31'
+      expect(completedCommittees[0][:csMemberEndDate]).to eq '2999-01-01'
+      expect(completedCommittees[1][:csMemberStartDate]).to eq '2016-08-30'
+      expect(completedCommittees[1][:csMemberEndDate]).to eq '2017-08-30'
+      expect(completedCommittees[2][:csMemberStartDate]).to eq '2015-08-31'
+      expect(completedCommittees[2][:csMemberEndDate]).to eq '2016-01-01'
     end
 
     it 'correctly parses a committee with no members' do
-      committee = feed[:facultyCommittees][0]
+      committee = feed[:facultyCommittees][:active][0]
       expect(committee[:serviceRange]).to be nil
     end
 
     it 'correctly parses a Dissertation committee' do
-      committee = feed[:facultyCommittees][1]
+      committee = feed[:facultyCommittees][:completed][0]
       expect(committee[:committeeType]).to eq 'Dissertation Committee'
       expect(committee[:program]).to eq 'Education PhD'
       expect(committee[:statusMessage]).to eq 'Advanced: Oct 06, 2017'
@@ -46,7 +52,7 @@ describe MyCommittees::FacultyCommittees do
     end
 
     it 'correctly parses a Qualifying Exam committee with exam passed' do
-      committee = feed[:facultyCommittees][2]
+      committee = feed[:facultyCommittees][:completed][1]
       expect(committee[:committeeType]).to eq 'Qualifying Exam Committee'
       expect(committee[:program]).to eq 'Civil Environmental Eng MS'
       expect(committee[:statusMessage]).to eq nil
@@ -55,7 +61,7 @@ describe MyCommittees::FacultyCommittees do
     end
 
     it 'correctly parses a Qualifying Exam committee with exam not passed' do
-      committee = feed[:facultyCommittees][0]
+      committee = feed[:facultyCommittees][:active][0]
       expect(committee[:committeeType]).to eq 'Qualifying Exam Committee'
       expect(committee[:program]).to eq 'Underwater Basket Weaving PhD'
       expect(committee[:statusMessage]).to eq nil
@@ -64,7 +70,7 @@ describe MyCommittees::FacultyCommittees do
     end
 
     it 'correctly parses a Masters Thesis committee' do
-      committee = feed[:facultyCommittees][3]
+      committee = feed[:facultyCommittees][:completed][2]
       expect(committee[:committeeType]).to eq 'Master\'s Thesis Committee'
       expect(committee[:program]).to eq 'South & SE Asian Studies MA'
       expect(committee[:statusMessage]).to eq 'Filing Date: Nov 06, 2016'
@@ -74,7 +80,7 @@ describe MyCommittees::FacultyCommittees do
     end
 
     context 'when student has attempted the Qualifying Exam milestone' do
-      let(:qe_committee_with_exam_attempts) { feed[:facultyCommittees][2] }
+      let(:qe_committee_with_exam_attempts) { feed[:facultyCommittees][:completed][1] }
 
       it 'contains the expected attempts ordered with most recent first' do
         qualifying_exam_attempts = qe_committee_with_exam_attempts[:milestoneAttempts]
@@ -103,7 +109,7 @@ describe MyCommittees::FacultyCommittees do
     end
 
     context 'when student has not yet attempted the Qualifying Exam milestone' do
-      let(:qe_committee_with_proposed_exam) { feed[:facultyCommittees][4] }
+      let(:qe_committee_with_proposed_exam) { feed[:facultyCommittees][:active][1] }
 
       it 'has an empty attempts list' do
         expect(qe_committee_with_proposed_exam[:milestoneAttempts]).to eq []
@@ -115,13 +121,13 @@ describe MyCommittees::FacultyCommittees do
     end
 
     it 'contains the expected faculty committee data' do
-      members = feed[:facultyCommittees][2][:committeeMembers]
+      members = feed[:facultyCommittees][:completed][1][:committeeMembers]
       expect(members[:additionalReps][0][:name]).to eq 'John Bear'
       expect(members[:additionalReps][1][:name]).to eq 'Bad Dog'
     end
 
     it 'replaces bogus dates with text' do
-      committee = feed[:facultyCommittees][1]
+      committee = feed[:facultyCommittees][:completed][0]
       expect(committee[:serviceRange]).to eq 'Aug 31, 2016 - Present'
     end
   end
