@@ -242,9 +242,13 @@
     }
   };
 
-  var onPeopleSearchRadioChange = function(event) {
+  var onPeopleSearchRadioClick = function(event) {
     if (event && event.target && event.target.id) {
-      customizeAddPeopleTextArea(customizations()[event.target.id]);
+      var c = customizations();
+      var keys = Object.keys(c);
+      if (keys.indexOf(event.target.id) !== -1) {
+        customizeAddPeopleTextArea(c[event.target.id]);
+      }
     }
   };
 
@@ -270,10 +274,14 @@
             var label = $('[for=' + id + '] span:first span:last');
             label.text(c[id].text);
             labelStyle = label[0].className;
-            e[0].addEventListener('change', onPeopleSearchRadioChange);
           }
         }
       }
+
+      // Canvas's rendering is triggered by a click event listener on the document root.
+      // To override it across browsers, we must append a click event listener on the same element.
+      document.addEventListener('click', onPeopleSearchRadioClick);
+
       // Instructional text in footer of dialog
       var informational = $('.peoplesearch__instructions span:first span:first');
       if (informational.length > 0) {
