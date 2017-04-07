@@ -18,11 +18,6 @@ class SessionsController < ApplicationController
         logger.debug "Caching Campus Solutions ID #{cs_id} for UID #{auth_uid} based on SAML assertion"
         crosswalk.cache_campus_solutions_id cs_id
       end
-      delegate_id = auth.extra['berkeleyEduCSDelegateID']
-      if delegate_id.present?
-        logger.debug "Caching Campus Solutions Delegate ID #{delegate_id} for UID #{auth_uid} based on SAML assertion"
-        crosswalk.cache_delegate_user_id delegate_id
-      end
     end
 
     if params['renew'] == 'true'

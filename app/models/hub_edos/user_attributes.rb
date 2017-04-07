@@ -17,10 +17,6 @@ module HubEdos
     def get_ids(result)
       result[:ldap_uid] = @uid
 
-      # Users who are delegates-only, with no other role on campus, will be identified only through
-      # Crosswalk or SAML assertions.
-      result[:delegate_user_id] = lookup_delegate_user_id
-
       # Hub and CampusSolutions APIs will be unreachable unless a CS ID is provided from Crosswalk or SAML assertions.
       @campus_solutions_id = lookup_campus_solutions_id
       result[:campus_solutions_id] = @campus_solutions_id

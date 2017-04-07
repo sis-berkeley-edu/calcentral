@@ -20,7 +20,7 @@ module User
 
     def id_to_uids(id)
       results = Set.new
-      [CalnetCrosswalk::ByUid, CalnetCrosswalk::BySid, CalnetCrosswalk::ByCsId].each do |proxy_class|
+      [CalnetCrosswalk::ByUid, CalnetCrosswalk::ByCsId].each do |proxy_class|
         proxy = proxy_class.new(user_id: id)
         if (uid = proxy.lookup_ldap_uid)
           results << uid

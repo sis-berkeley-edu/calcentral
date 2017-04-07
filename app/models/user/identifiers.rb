@@ -16,14 +16,6 @@ module User
       end
     end
 
-    def lookup_delegate_user_id
-      if Settings.calnet_crosswalk_proxy.enabled
-        CalnetCrosswalk::ByUid.new(user_id: @uid).lookup_delegate_user_id
-      else
-        nil
-      end
-    end
-
     def has_legacy_data?(id = nil)
       if (test_id = id || lookup_campus_solutions_id || lookup_student_id)
         test_id.to_s.length < 10
