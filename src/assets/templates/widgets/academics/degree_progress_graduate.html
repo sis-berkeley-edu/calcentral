@@ -18,7 +18,8 @@
           <div class="cc-graduate-milestone-title">
             <h4 data-ng-bind="requirement.name"></h4>
             <i class="cc-icon fa fa-check cc-icon-green" data-ng-if="requirement.statusCode === 'Y' || requirement.statusCode === 'P'"></i>
-            <i class="cc-icon fa fa-exclamation-triangle cc-icon-gold" data-ng-if="requirement.statusCode === 'PF' || requirement.statusCode === 'F'"></i>
+            <i class="cc-icon fa fa-exclamation-triangle cc-icon-gold" data-ng-if="(requirement.statusCode === 'PF' || requirement.statusCode === 'F') && requirement.attempts && requirement.attempts.length <= 1"></i>
+            <i class="cc-icon fa fa-exclamation-circle cc-icon-red" data-ng-if="(requirement.statusCode === 'PF' || requirement.statusCode === 'F') && requirement.attempts && requirement.attempts.length > 1"></i>
           </div>
           <div class="cc-milestone-detail">
             <div data-ng-if="!requirement.attempts.length">
