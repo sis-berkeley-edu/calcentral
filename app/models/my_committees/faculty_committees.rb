@@ -10,7 +10,10 @@ module MyCommittees
 
     def get_feed
       result = {
-        facultyCommittees: []
+        facultyCommittees: {
+          active: [],
+          completed: []
+        }
       }
       feed = CampusSolutions::FacultyCommittees.new(user_id: @uid).get.try(:[], :feed)
       if feed && (cs_committees = feed[:ucSrFacultyCommittee].try(:[], :facultyCommittees))
@@ -26,7 +29,7 @@ module MyCommittees
       cs_committees.try(:each) do |cs_committee|
         faculty_committee = parse_cs_committee(cs_committee)
         if cs_committee.present?
-          # Add additional pieces of data needed faculty committees
+          # Add additional pieces of data specific to faculty committees
           cs_faculty_committee_svc = parse_cs_faculty_committee_svc(cs_committee)
           faculty_committee.merge!(
             student: parse_cs_committee_student(cs_committee),
@@ -34,10 +37,16 @@ module MyCommittees
             csMemberEndDate: cs_faculty_committee_svc[:memberEndDate],
             csMemberStartDate: cs_faculty_committee_svc[:memberStartDate]
           )
-          committees_result << faculty_committee
+          if is_active? cs_committee
+            committees_result[:active] << faculty_committee
+          else
+            committees_result[:completed] << faculty_committee
+          end
         end
       end
-      sort_committees_by_svc(committees_result)
+      committees_result[:completed] = sort_committees_by_svc(committees_result[:completed])
+      committees_result[:active] = sort_committees_by_svc(committees_result[:active])
+      committees_result
     end
 
     def parse_cs_milestone_attempts(cs_committee)

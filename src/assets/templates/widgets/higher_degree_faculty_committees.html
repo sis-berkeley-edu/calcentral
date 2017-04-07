@@ -11,17 +11,29 @@
         </span>
       </h2>
     </div>
-    <div class="cc-widget-padding" data-ng-if="facultyCommittees.length == 0">You are not a member of any committee at this time.</div>
-    <div class="cc-widget-padding" data-ng-if="facultyCommittees.length > 0">
+    <div data-ng-switch="facultyCommittees.activeToggle">
+      <div data-ng-switch-when="true">
+        <div class="cc=button-link cc-widget-padding cc-higher-degree-committee-toggle-link" data-ng-click="facultyCommittees.activeToggle = false">View Completed Committees</div>
+        <div class="cc-widget-subtitle cc-higher-degree-committee-subtitle">Active Committees</div>
+        <div class="cc-widget-padding" data-ng-if="facultyCommittees.active.length == 0">You are not a member of any active committees.</div>
+      </div>
+      <div data-ng-switch-when="false">
+        <div class="cc=button-link cc-widget-padding cc-higher-degree-committee-toggle-link" data-ng-click="facultyCommittees.activeToggle = true">View Active Committees</div>
+        <div class="cc-widget-subtitle cc-higher-degree-committee-subtitle">Completed Committees</div>
+        <div class="cc-widget-padding" data-ng-if="facultyCommittees.active.length == 0">You are not a member of any completed committees.</div>
+      </div>
+    </div>
+
+    <div class="cc-widget-padding">
       <div class="cc-higher-degree-committees-section">
         <ul class="cc-higher-degree-committees-list">
-          <li data-ng-repeat="committee in facultyCommittees | limitTo: committeesLimit"
+          <li data-ng-repeat="committee in (facultyCommittees.activeToggle? facultyCommittees.active : facultyCommittees.completed) | limitTo: committeesLimit"
               class="cc-widget-list-hover "
               data-cc-accessible-focus-directive data-ng-class="{'cc-widget-list-hover-opened':(committee.show)}"
               data-ng-click="api.widget.toggleShow($event, null, committee, 'My Academics - Higher Degree Committee')"
           >
             <div>
-              <div class="cc-left cc-higher-degree-committees-picture">
+              <div data-ng-if="facultyCommittees.activeToggle" class="cc-left cc-higher-degree-committees-picture">
                 <div>
                   <img data-cc-load-error-directive="committee" data-ng-if="committee.student.photo && !committee.loadError" data-ng-src="{{committee.student.photo}}"
                     data-ng-attr-alt="Photo of {{commitee.student.name}}">
@@ -31,7 +43,7 @@
                   </div>
                 </div>
               </div>
-              <div class="cc-higher-degree-committees-content">
+              <div class="{true:'cc-higher-degree-committees-content', false:''} [facultyCommittees.activeToggle]">
                 <div><strong><span data-ng-bind="committee.student.name"></span></strong></div>
                 <div><strong class="cc-button-link"><span data-ng-bind="committee.student.email"></span></strong></div>
                 <div data-ng-bind="committee.header.program"></div>
@@ -56,7 +68,7 @@
             <div data-ng-include="'widgets/academics/higher_degree_committee.html'"></div>
           </li>
         </ul>
-        <div data-cc-show-more-directive data-cc-show-more-list="facultyCommittees" data-cc-show-more-limit="committeesLimit">
+        <div data-cc-show-more-directive data-cc-show-more-list="(facultyCommittees.activeToggle? facultyCommittees.active: facultyCommittees.completed)" data-cc-show-more-limit="committeesLimit">
         </div>
       </div>
     </div>
