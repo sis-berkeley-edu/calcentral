@@ -19,7 +19,8 @@ module User
         person_name: string_attribute(ldap_record, :displayname),
         roles: roles,
         student_id: string_attribute(ldap_record, :berkeleyedustuid),
-        official_bmail_address: string_attribute(ldap_record, :berkeleyeduofficialemail)
+        official_bmail_address: string_attribute(ldap_record, :berkeleyeduofficialemail),
+        campus_solutions_id: string_attribute(ldap_record, :berkeleyeducsid)
       }
     end
 

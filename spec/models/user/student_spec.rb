@@ -60,4 +60,29 @@ describe User::Student do
       end
     end
   end
+
+  describe '#lookup_campus_solutions_id' do
+    let(:cs_id) { random_id }
+    subject { StudentTestClass.new(double(fake: true), user_id: uid).lookup_campus_solutions_id }
+    context 'with Crosswalk enabled' do
+      before do
+        allow(Settings.calnet_crosswalk_proxy).to receive(:enabled).and_return true
+        expect(CalnetCrosswalk::ByUid).to receive(:new).with(user_id: uid).and_return(double(
+          lookup_campus_solutions_id: cs_id
+        ))
+        expect(CalnetLdap::UserAttributes).to receive(:new).never
+      end
+      it { should eq cs_id }
+    end
+    context 'with Crosswalk disabled' do
+      before do
+        allow(Settings.calnet_crosswalk_proxy).to receive(:enabled).and_return false
+        expect(CalnetCrosswalk::ByUid).to receive(:new).never
+        expect(CalnetLdap::UserAttributes).to receive(:new).with(user_id: uid).and_return(double(
+          get_feed: ldap_attributes.merge(campus_solutions_id: cs_id)
+        ))
+      end
+      it { should eq cs_id }
+    end
+  end
 end

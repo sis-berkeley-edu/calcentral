@@ -22,7 +22,8 @@ describe CalnetLdap::UserAttributes do
         berkeleyedustuid: ['11667051'],
         displayname: ['Oski BEAR'],
         sn: ['BEAR'],
-        cn: ['BEAR, Oski']
+        cn: ['BEAR, Oski'],
+        berkeleyeducsid: ['11667051']
       }
     end
     before { allow(CalnetLdap::Client).to receive(:new).and_return double(search_by_uid: ldap_result) }
@@ -38,6 +39,7 @@ describe CalnetLdap::UserAttributes do
       expect(feed[:roles][:exStudent]).to eq false
       expect(feed[:roles][:confidential]).to be_falsey
       expect(feed[:student_id]).to eq '11667051'
+      expect(feed[:campus_solutions_id]).to eq '11667051'
     end
 
     context 'customized Directory names' do
@@ -148,6 +150,7 @@ describe CalnetLdap::UserAttributes do
       expect(feed[:first_name]).to eq 'AFF-GUEST'
       expect(feed[:last_name]).to eq 'TEST'
       expect(feed[:person_name]).to eq 'AFF-GUEST TEST'
+      expect(feed[:campus_solutions_id]).to be_present
     end
   end
 

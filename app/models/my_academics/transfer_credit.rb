@@ -2,7 +2,6 @@ module MyAcademics
   class TransferCredit
     include AcademicsModule
     include ClassLogger
-    include User::Student
 
     def merge(data)
       data[:transferCredit] = transfer_credit
