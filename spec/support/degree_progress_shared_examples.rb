@@ -10,7 +10,7 @@ shared_examples 'a proxy that returns graduate milestone data' do
   end
 
   it 'filters out any LAW career programs that are not LACAD' do
-    expect(subject[:feed][:degreeProgress].length).to eql(4)
+    expect(subject[:feed][:degreeProgress].length).to eql(5)
   end
 
   it 'filters out requirements that we don\'t want to display' do
@@ -64,23 +64,23 @@ shared_examples 'a proxy that returns graduate milestone data' do
   end
 
   context 'when the QE Results milestone is not satisfied' do
-    it 'includes the proposed exam date on the QE Approval milestone' do
-      qualifying_exam_approval_milestone = subject[:feed][:degreeProgress][3][:requirements][0]
-      expect(qualifying_exam_approval_milestone[:proposedExamDate]).to eq 'Dec 21, 2016'
+    context 'when the exam hasn\'t been attempted' do
+      it 'includes the proposed exam date on the QE Approval milestone' do
+        qualifying_exam_approval_milestone = subject[:feed][:degreeProgress][4][:requirements][0]
+        expect(qualifying_exam_approval_milestone[:proposedExamDate]).to eq 'Feb 14, 2017'
+      end
+    end
+    context 'when the exam has been attempted' do
+      it 'does not include the proposed exam date on the QE Approval milestone' do
+        qualifying_exam_approval_milestone = subject[:feed][:degreeProgress][3][:requirements][0]
+        expect(qualifying_exam_approval_milestone[:proposedExamDate]).to be nil
+      end
     end
     it 'does not include the proposed exam date on other milestones' do
       other_milestone = subject[:feed][:degreeProgress][0][:requirements][0]
       expect(other_milestone[:proposedExamDate]).not_to be
     end
   end
-
-  context 'when the QE Results milestone is complete' do
-    it 'does not include the proposed exam date on the QE Approval milestone' do
-      qualifying_exam_approval_milestone = subject[:feed][:degreeProgress][2][:requirements][0]
-      expect(qualifying_exam_approval_milestone[:proposedExamDate]).not_to be
-    end
-  end
-
 end
 
 shared_examples 'a proxy that returns undergraduate milestone data' do

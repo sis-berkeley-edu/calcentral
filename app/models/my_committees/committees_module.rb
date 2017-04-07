@@ -118,7 +118,7 @@ module MyCommittees::CommitteesModule
   def determine_qualifying_exam_status_icon(committee)
     latest_attempt = committee.try(:[], :milestoneAttempts).try(:first)
     return '' unless latest_attempt
-    if latest_attempt.try(:[], :result) == Berkeley::GraduateMilestones::QE_STATUS_PASSED
+    if latest_attempt.try(:[], :result) == Berkeley::GraduateMilestones::QE_RESULTS_STATUS_PASSED
       STATUS_ICON_SUCCESS
     elsif latest_attempt.try(:[], :sequenceNumber) === 1
       STATUS_ICON_WARN

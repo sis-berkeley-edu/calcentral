@@ -87,7 +87,7 @@ module DegreeProgress
     end
 
     def format_milestone_attempt(milestone_attempt)
-      if milestone_attempt[:result] == Berkeley::GraduateMilestones::QE_STATUS_PASSED
+      if milestone_attempt[:result] == Berkeley::GraduateMilestones::QE_RESULTS_STATUS_PASSED
         "#{milestone_attempt[:result]} #{milestone_attempt[:date]}"
       else
         "Exam #{milestone_attempt[:sequenceNumber]}: #{milestone_attempt[:result]} #{milestone_attempt[:date]}"
@@ -104,12 +104,12 @@ module DegreeProgress
       qualifying_exam_approval_milestone = requirements.select do |requirement|
         requirement.try(:[], :code) === Berkeley::GraduateMilestones::QE_APPROVAL_MILESTONE
       end.first
-      if qualifying_exam_approval_milestone
+      if qualifying_exam_approval_milestone.try(:[], :statusCode) === Berkeley::GraduateMilestones::STATUS_CODE_COMPLETE
         qualifying_exam_results_milestone = requirements.select do |requirement|
           requirement.try(:[], :code) === Berkeley::GraduateMilestones::QE_RESULTS_MILESTONE
         end.first
-        exam_passed = qualifying_exam_results_milestone.try(:[], :statusCode) === Berkeley::GraduateMilestones::QE_STATUS_CODE_PASSED
-        qualifying_exam_approval_milestone[:proposedExamDate] = qualifying_exam_approval_milestone.try(:[], :dateAnticipated) unless exam_passed
+        exam_attempted = qualifying_exam_results_milestone.try(:[], :attempts).present?
+        qualifying_exam_approval_milestone[:proposedExamDate] = qualifying_exam_approval_milestone.try(:[], :dateAnticipated) unless exam_attempted
       end
     end
   end
