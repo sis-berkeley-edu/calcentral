@@ -39,7 +39,7 @@ describe MyCommittees::StudentCommittees do
 
     it 'correctly parses a qualifying exam committee when student has passed the exam' do
       committee = feed[:studentCommittees][0]
-      expect(committee[:committeeType]).to eq 'COMMITTEEDESCRLONG1'
+      expect(committee[:committeeType]).to eq 'Qualifying Exam Committee'
       expect(committee[:program]).to eq 'STUDENTACADPLAN1'
       expect(committee[:statusIcon]).to eq 'check'
       expect(committee[:statusMessage]).to eq nil
