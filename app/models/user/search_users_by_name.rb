@@ -1,6 +1,5 @@
 module User
   class SearchUsersByName
-    include User::Parser
 
     def search_by(name, opts={})
       return [] if name.blank?

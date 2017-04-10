@@ -1,7 +1,6 @@
 module User
   class SearchUsers
     extend Cache::Cacheable
-    include User::Parser
 
     def initialize(options={})
       @options = options

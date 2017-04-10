@@ -11,16 +11,27 @@ module User
       group_roles = Berkeley::UserRoles.roles_from_ldap_groups(ldap_record[:berkeleyeduismemberof])
       roles = group_roles.merge affiliation_roles
       roles[:confidential] = true if string_attribute(ldap_record, :berkeleyeduconfidentialflag) == 'true'
-      {
+      identifiers(ldap_record).merge({
         email_address: string_attribute(ldap_record, :mail) || string_attribute(ldap_record, :berkeleyeduofficialemail),
         first_name: string_attribute(ldap_record, :berkeleyEduFirstName) || string_attribute(ldap_record, :givenname),
         last_name: string_attribute(ldap_record, :berkeleyEduLastName) || string_attribute(ldap_record, :sn),
-        ldap_uid: string_attribute(ldap_record, :uid),
         person_name: string_attribute(ldap_record, :displayname),
         roles: roles,
-        student_id: string_attribute(ldap_record, :berkeleyedustuid),
-        official_bmail_address: string_attribute(ldap_record, :berkeleyeduofficialemail),
-        campus_solutions_id: string_attribute(ldap_record, :berkeleyeducsid)
+        official_bmail_address: string_attribute(ldap_record, :berkeleyeduofficialemail)
+      })
+    end
+
+    def identifiers(ldap_record)
+      sid = string_attribute(ldap_record, :berkeleyedustuid)
+      cs_id = string_attribute(ldap_record, :berkeleyeducsid)
+      ldap_uid = string_attribute(ldap_record, :uid)
+      if sid.present? && cs_id.present? && sid != cs_id
+        logger.warn "Conflicting berkeleyEduStuID #{sid} and berkeleyEduCSID #{cs_id} for UID #{ldap_uid}"
+      end
+      {
+        ldap_uid: ldap_uid,
+        student_id: sid,
+        campus_solution_id: cs_id
       }
     end
 
@@ -28,13 +39,6 @@ module User
       if (attribute = ldap_record[key].try(:first).try(:to_s))
         safe_utf8 attribute
       end
-    end
-
-    def tokenize_for_search_by_name(phrase)
-      return [] if phrase.blank?
-      tokens = phrase.strip.gsub(/[;,\s]+/, ' ').split /[\s,]/
-      # Discard middle initials, generational designations (e.g., Jr.) and academic suffixes (e.g., M.A.)
-      tokens.select { |token| !token.end_with? '.' }
     end
 
     def has_role(user, roles)
