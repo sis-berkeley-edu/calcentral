@@ -140,5 +140,26 @@
         </REQUIREMENT>
       </REQUIREMENTS>
     </PROGRESS>
+    <PROGRESS>
+      <CAREER>GRAD</CAREER>
+      <ACAD_PLAN>Physics PhD</ACAD_PLAN>
+      <ACAD_PROG_CODE>GACAD</ACAD_PROG_CODE>
+      <ACAD_PROG>Graduate Academic Programs</ACAD_PROG>
+      <REQUIREMENTS type="array">
+        <REQUIREMENT>
+          <NAME>Approval for Qualifying Exam</NAME>
+          <DATE_COMPLETED>2017-02-14</DATE_COMPLETED>
+          <DATE_ANTICIPATED>2017-02-14</DATE_ANTICIPATED>
+          <STATUS>Y</STATUS>
+          <CODE>AAGQEAPRV</CODE>
+        </REQUIREMENT>
+        <REQUIREMENT>
+          <NAME>Qualifying Exam Results</NAME>
+          <DATE_ANTICIPATED></DATE_ANTICIPATED>
+          <CODE>AAGQERESLT</CODE>
+          <ATTEMPTS type="array" />
+        </REQUIREMENT>
+      </REQUIREMENTS>
+    </PROGRESS>
   </PROGRESSES>
 </UC_AA_PROGRESS>

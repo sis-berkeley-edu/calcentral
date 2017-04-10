@@ -1,11 +1,12 @@
 module Berkeley
   class GraduateMilestones
 
-    QE_STATUS_CODE_PASSED = 'P'
+    STATUS_CODE_COMPLETE = 'Y'
+    QE_RESULTS_STATUS_CODE_PASSED = 'P'
 
-    QE_STATUS_FAILED = 'Failed'
-    QE_STATUS_PARTIALLY_FAILED = 'Partially Failed'
-    QE_STATUS_PASSED = 'Passed'
+    QE_RESULTS_STATUS_FAILED = 'Failed'
+    QE_RESULTS_STATUS_PARTIALLY_FAILED = 'Partially Failed'
+    QE_RESULTS_STATUS_PASSED = 'Passed'
     STATUS_INCOMPLETE = 'Not Satisfied'
 
     QE_APPROVAL_MILESTONE = 'AAGQEAPRV'
@@ -75,22 +76,22 @@ module Berkeley
     def self.qualifying_exam_approval_statuses
       @qualifying_exam_approval_statuses ||= {
         'N' => STATUS_INCOMPLETE,
-        'Y' => 'Approved'
+        STATUS_CODE_COMPLETE => 'Approved'
       }
     end
 
     def self.qualifying_exam_results_statuses
       @qualifying_exam_results_statuses ||= {
-        'F' => QE_STATUS_FAILED,
-        'PF' => QE_STATUS_PARTIALLY_FAILED,
-        QE_STATUS_CODE_PASSED => QE_STATUS_PASSED
+        'F' => QE_RESULTS_STATUS_FAILED,
+        'PF' => QE_RESULTS_STATUS_PARTIALLY_FAILED,
+        QE_RESULTS_STATUS_CODE_PASSED => QE_RESULTS_STATUS_PASSED
       }
     end
 
     def self.statuses
       @statuses ||= {
         'N' => STATUS_INCOMPLETE,
-        'Y' => 'Completed'
+        STATUS_CODE_COMPLETE => 'Completed'
       }
     end
 

@@ -56,7 +56,7 @@ module MyCommittees
     end
 
     def first_attempt_exam_passed?(milestone_attempt)
-      milestone_attempt[:sequenceNumber] === 1 && milestone_attempt[:result] == Berkeley::GraduateMilestones::QE_STATUS_PASSED
+      milestone_attempt[:sequenceNumber] === 1 && milestone_attempt[:result] == Berkeley::GraduateMilestones::QE_RESULTS_STATUS_PASSED
     end
 
     def remove_inactive_members(cs_committee)
