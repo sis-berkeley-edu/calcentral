@@ -21,7 +21,7 @@ module HubEdos
       @campus_solutions_id = lookup_campus_solutions_id
       result[:campus_solutions_id] = @campus_solutions_id
 
-      result[:is_legacy_student] = has_legacy_data?(@campus_solutions_id)
+      result[:is_legacy_student] = has_legacy_student_data?(@campus_solutions_id)
     end
 
     def get_edo

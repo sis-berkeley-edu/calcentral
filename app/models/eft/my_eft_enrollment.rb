@@ -21,7 +21,7 @@ module Eft
     end
 
     def campus_solutions_id
-      @campus_solutions_id ||= CalnetCrosswalk::ByUid.new(user_id: @uid).lookup_campus_solutions_id
+      @campus_solutions_id ||= User::Identifiers.lookup_campus_solutions_id @uid
     end
 
     def get_feed_internal

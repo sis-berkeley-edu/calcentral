@@ -23,7 +23,7 @@ module CampusSolutions
     end
 
     def url
-      if @student_uid.present? && student_campus_solutions_id = CalnetCrosswalk::ByUid.new(user_id: @student_uid).lookup_campus_solutions_id
+      if @student_uid.present? && student_campus_solutions_id = lookup_campus_solutions_id(@student_uid)
         emplid = student_campus_solutions_id
         advisor_id = @campus_solutions_id
       else

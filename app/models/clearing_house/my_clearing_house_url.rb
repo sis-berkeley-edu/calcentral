@@ -11,9 +11,8 @@ module ClearingHouse
     end
 
     def lookup_student_id
-      calnet_crosswalk = CalnetCrosswalk::ByUid.new(user_id: @uid)
       if @uid
-        @student_id = calnet_crosswalk.lookup_campus_solutions_id
+        @student_id = User::Identifiers.lookup_campus_solutions_id @uid
       end
     end
 

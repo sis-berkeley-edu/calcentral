@@ -9,9 +9,9 @@ module User
     end
 
     def get_feed_internal
+      @edo_attributes = HubEdos::UserAttributes.new(user_id: @uid).get if is_cs_profile_feature_enabled
       @ldap_attributes = CalnetLdap::UserAttributes.new(user_id: @uid).get_feed
       @oracle_attributes = CampusOracle::UserAttributes.new(user_id: @uid).get_feed
-      @edo_attributes = HubEdos::UserAttributes.new(user_id: @uid).get if is_cs_profile_feature_enabled
       campus_solutions_id = @edo_attributes[:campus_solutions_id] if @edo_attributes.present?
       unknown = @ldap_attributes.blank? && @oracle_attributes.blank? && campus_solutions_id.blank?
       # TODO isLegacyStudent is no longer used.

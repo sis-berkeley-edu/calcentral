@@ -26,7 +26,7 @@ module CampusSolutions
 
     def lookup_student_id
       if @student[:uid]
-        @student[:campus_solutions_id] = CalnetCrosswalk::ByUid.new(user_id: @student[:uid]).lookup_campus_solutions_id
+        @student[:campus_solutions_id] = lookup_campus_solutions_id @student[:uid]
       end
     end
 

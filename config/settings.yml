@@ -306,7 +306,7 @@ cache:
     CampusSolutions::DashboardUrl: <%= 29.days %>
 
     CalnetCrosswalk::ByUid: <%= 4.hours %>
-    CalnetCrosswalk::BySid: <%= 4.hours %>
+    User::Identifiers::Cached: <%= 4.hours %>
 
     # Merge of independently cached feeds.
     HubEdos::MyStudent: <%= 5.minutes %>
@@ -422,6 +422,7 @@ hub_enrollments_proxy:
 
 calnet_crosswalk_proxy:
   fake: true
+  enabled: true
   base_url: 'https://registry-d1.calnet.1918.berkeley.edu:8453/registry-service/api/v1/identifiers'
   username: secret
   password: secret

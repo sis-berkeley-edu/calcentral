@@ -18,12 +18,9 @@ module User
     end
 
     def id_to_uids(id)
-      results = Set.new
-      [CalnetCrosswalk::ByUid, CalnetCrosswalk::ByCsId].each do |proxy_class|
-        proxy = proxy_class.new(user_id: id)
-        if (uid = proxy.lookup_ldap_uid)
-          results << uid
-        end
+      results = Set[id]
+      if (uid = User::Identifiers.lookup_ldap_uid id)
+        results << uid
       end
       results
     end
