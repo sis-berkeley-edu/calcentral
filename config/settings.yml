@@ -485,7 +485,6 @@ features:
   class_info_enrollment_tab: false
   course_manage_official_sections: false
   cs_academic_planner: false
-  cs_academic_profile_prefers_legacy: true
   cs_advising_links: false
   cs_advisor_student_lookup: false
   cs_billing: false

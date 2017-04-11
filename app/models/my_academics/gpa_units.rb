@@ -2,17 +2,9 @@ module MyAcademics
   class GpaUnits
     include AcademicsModule
     include ClassLogger
-    include User::Identifiers
 
     def merge(data)
       gpa = hub_gpa_units
-      prefer_legacy_data = Settings.features.cs_academic_profile_prefers_legacy
-      if (current_term.legacy? || prefer_legacy_data) && has_legacy_data? && Settings.features.allow_legacy_fallback
-        legacy_gpa = oracle_gpa_units
-        if gpa[:empty] || (prefer_legacy_data && !legacy_gpa[:empty])
-          gpa = legacy_gpa
-        end
-      end
       data[:gpaUnits] = gpa
     end
 
@@ -86,16 +78,6 @@ module MyAcademics
       if (units = status['cumulativeUnits']) && (total_units = units.find { |u| u['type'] && u['type']['code'] == 'Not For GPA'})
         total_units['unitsPassed'].to_f
       end
-    end
-
-    def oracle_gpa_units
-      student_info = CampusOracle::Queries.get_student_info(@uid) || {}
-      {
-        cumulativeGpa: student_info['cum_gpa'].nil? ? nil: student_info['cum_gpa'].to_s,
-        totalUnits: student_info['tot_units'].nil? ? nil : student_info['tot_units'].to_f,
-        totalUnitsAttempted: student_info['lgr_tot_attempt_unit'].nil? ? nil : student_info['lgr_tot_attempt_unit'].to_f,
-        isLegacy: true
-      }
     end
 
   end
