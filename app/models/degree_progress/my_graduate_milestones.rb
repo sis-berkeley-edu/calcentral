@@ -6,6 +6,7 @@ module DegreeProgress
     include Cache::JsonifiedFeed
     include Cache::UserCacheExpiry
     include MilestonesModule
+    include LinkFetcher
 
     LINKS_CONFIG = [
       { feed_key: :apply_for_advancement_to_candidacy, cs_link_key: 'UC_CX_GT_GRAD_ADVC' },
@@ -31,14 +32,6 @@ module DegreeProgress
         links[setting[:feed_key]] = link unless link.blank?
       end
       links
-    end
-
-    def fetch_link(link_key)
-      if (link_feed = CampusSolutions::Link.new.get_url link_key)
-        link = link_feed.try(:[], :link)
-      end
-      logger.error "Could not retrieve CS link #{link_key} for #{self.class.name} feed, uid = #{@uid}" unless link
-      link
     end
 
     private

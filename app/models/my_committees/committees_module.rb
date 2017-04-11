@@ -1,6 +1,8 @@
 module MyCommittees::CommitteesModule
   extend self
 
+  include LinkFetcher
+
   COMMITTEE_TYPES = {
     QE: {
       code: 'QE',
@@ -195,12 +197,6 @@ module MyCommittees::CommitteesModule
       logger.error "Bad Format For Committees Date for Class #{self.class.name} feed, uid = #{@uid}"
     end
     formatted_date
-  end
-
-  def fetch_link(link_key, placeholders = {})
-    link = CampusSolutions::Link.new.get_url(link_key, placeholders).try(:[], :link)
-    logger.debug "Could not retrieve CS link #{link_key} for Class #{self.class.name} feed, uid = #{@uid}" unless link
-    link
   end
 
 end

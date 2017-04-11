@@ -161,7 +161,11 @@ describe MyAcademics::Grading do
   context 'when mapping CC grading status to grading link' do
     let(:fake_grading_url) { 'http://fake.grading.com' }
     before do
-      allow(MyAcademics::AcademicsModule).to receive(:fetch_link).and_return(fake_grading_url)
+      link_proxy_class = CampusSolutions::Link
+      link_fake_proxy = link_proxy_class.new(fake: true)
+      allow(link_proxy_class).to receive(:new).and_return link_fake_proxy
+      allow(link_fake_proxy).to receive(:get_url).and_return({link: fake_grading_url})
+
       allow(subject).to receive(:get_grading_period_status).and_return(:gradingPeriodNotSet)
     end
 
@@ -196,7 +200,12 @@ describe MyAcademics::Grading do
       allow(Settings.terms).to receive(:legacy_cutoff).and_return 'summer-2014'
       allow(Settings.features).to receive(:hub_term_api).and_return true
       allow(CampusSolutions::Grading).to receive(:new).and_return(grading_proxy)
-      allow(MyAcademics::AcademicsModule).to receive(:fetch_link).and_return(fake_grading_url)
+
+      link_proxy_class = CampusSolutions::Link
+      link_fake_proxy = link_proxy_class.new(fake: true)
+      allow(link_proxy_class).to receive(:new).and_return link_fake_proxy
+      allow(link_fake_proxy).to receive(:get_url).and_return({link: fake_grading_url})
+
       allow(subject).to receive(:get_grading_period_status).and_return(:gradingPeriodNotSet)
     end
 

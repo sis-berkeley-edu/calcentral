@@ -2,6 +2,7 @@ module MyAcademics
   class AdvisorLinks
     include AcademicsModule
     include ClassLogger
+    include LinkFetcher
 
     def merge(data)
       data[:advisorLinks] = links

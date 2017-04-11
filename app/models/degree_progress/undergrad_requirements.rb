@@ -6,6 +6,7 @@ module DegreeProgress
     include Cache::JsonifiedFeed
     include Cache::UserCacheExpiry
     include RequirementsModule
+    include LinkFetcher
 
     def get_feed_internal
       return {} unless is_feature_enabled?
@@ -37,14 +38,6 @@ module DegreeProgress
         links[setting[:feed_key]] = link unless link.blank?
       end
       links
-    end
-
-    def fetch_link(link_key, placeholders = {})
-      if (link_feed = CampusSolutions::Link.new.get_url(link_key, placeholders))
-        link = link_feed.try(:[], :link)
-      end
-      logger.error "Could not retrieve CS link #{link_key} for #{self.class.name} feed, uid = #{@uid}" unless link
-      link
     end
 
     def is_feature_enabled?

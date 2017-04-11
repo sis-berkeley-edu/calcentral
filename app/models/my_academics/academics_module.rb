@@ -224,12 +224,6 @@ module MyAcademics
       end
     end
 
-    def fetch_link(link_key, placeholders = {})
-      link = CampusSolutions::Link.new.get_url(link_key, placeholders).try(:[], :link)
-      logger.debug "Could not retrieve CS link #{link_key} for Class #{self.class.name} feed, uid = #{@uid}" unless link
-      link
-    end
-
     def get_campus_solutions_id(uid)
       CalnetCrosswalk::ByUid.new(user_id: uid).lookup_campus_solutions_id
     end
