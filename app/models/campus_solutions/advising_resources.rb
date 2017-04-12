@@ -3,6 +3,7 @@ module CampusSolutions
 
     include CampusSolutionsIdRequired
     include Cache::RelatedCacheKeyTracker
+    include LinkFetcher
 
     def initialize(options = {})
       @student = {
@@ -92,10 +93,6 @@ module CampusSolutions
         links: links,
         cs_links: cs_links
       }
-    end
-
-    def fetch_link(link_key, placeholders = {})
-      CampusSolutions::Link.new.get_url(link_key, placeholders).try(:[], :link)
     end
 
     def instance_key

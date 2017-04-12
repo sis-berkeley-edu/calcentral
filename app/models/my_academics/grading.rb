@@ -1,6 +1,8 @@
 module MyAcademics
   class Grading < UserSpecificModel
 
+    include LinkFetcher
+
     def merge(data)
       teaching_semesters = data[:teachingSemesters]
       if teaching_semesters
@@ -169,7 +171,7 @@ module MyAcademics
 
     def get_grading_link(ccn, term_code, is_law, cs_grading_status)
       return nil unless ccn && term_code
-      grading_link = AcademicsModule::fetch_link('UC_CX_SSS_GRADE_ROSTER', { STRM: term_code, CLASS_NBR: ccn, INSTITUTION: 'UCB01' })
+      grading_link = fetch_link('UC_CX_SSS_GRADE_ROSTER', { STRM: term_code, CLASS_NBR: ccn, INSTITUTION: 'UCB01' })
       return grading_link if cs_grading_status[:finalStatus] != :noCsData
       if !is_law && cs_grading_status.key?(:midpointStatus)
         return grading_link if cs_grading_status[:midpointStatus] != :noCsData

@@ -2,6 +2,7 @@ module CampusSolutions
   class StudentResources < Proxy
 
     include CampusSolutionsIdRequired
+    include LinkFetcher
 
     def initialize(options = {})
       super options
@@ -45,10 +46,5 @@ module CampusSolutions
     def xml_filename
       'file_is_not_used_in_test.xml'
     end
-
-    def fetch_link(link_key, placeholders = {})
-      CampusSolutions::Link.new.get_url(link_key, placeholders).try(:[], :link)
-    end
-
   end
 end

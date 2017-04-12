@@ -4,6 +4,7 @@ module MyAcademics
     include Cache::CachedFeed
     include Cache::UserCacheExpiry
     include CampusSolutions::EnrollmentCardFeatureFlagged
+    include LinkFetcher
 
     def get_feed_internal
       return {} unless is_feature_enabled && user_is_student?
@@ -174,7 +175,7 @@ module MyAcademics
       ]
 
       campus_solutions_link_settings.each do |setting|
-        link = AcademicsModule::fetch_link(setting[:cs_link_key], setting[:cs_link_params])
+        link = fetch_link(setting[:cs_link_key], setting[:cs_link_params])
         cs_links[setting[:feed_key]] = link unless link.blank?
       end
 

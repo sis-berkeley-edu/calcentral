@@ -6,6 +6,7 @@ module Advising
     include Cache::JsonifiedFeed
     include Cache::UserCacheExpiry
     include DatedFeed
+    include LinkFetcher
 
     RELATIONSHIP_ORDER = [
       'GSAO', # Graduate Student Affairs Offcr
@@ -95,12 +96,6 @@ module Advising
       else
         yield response[:feed]
       end
-    end
-
-    def fetch_link(link_key, placeholders = {})
-      link = CampusSolutions::Link.new.get_url(link_key, placeholders).try(:[], :link)
-      logger.debug "Could not retrieve CS link #{link_key} for MyAdvising feed, uid = #{@uid}" unless link
-      link
     end
 
     def transform_date(item, key)
