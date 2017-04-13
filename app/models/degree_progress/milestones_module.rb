@@ -76,22 +76,13 @@ module DegreeProgress
     end
 
     def parse_milestone_attempt(milestone_attempt)
-      milestone_attempt = {
-        sequenceNumber: milestone_attempt[:attemptNbr].to_i,
-        date: parse_date(milestone_attempt[:attemptDate]),
-        result: Berkeley::GraduateMilestones.get_status(milestone_attempt[:attemptStatus], Berkeley::GraduateMilestones::QE_RESULTS_MILESTONE),
-        statusCode: milestone_attempt[:attemptStatus]
+      attempt_result = Berkeley::GraduateMilestones.get_status(milestone_attempt[:attemptStatus], Berkeley::GraduateMilestones::QE_RESULTS_MILESTONE)
+      sequence_number = milestone_attempt[:attemptNbr].to_i
+      {
+        sequenceNumber: sequence_number,
+        statusCode: milestone_attempt[:attemptStatus],
+        display: "Exam #{sequence_number}: #{attempt_result} #{parse_date(milestone_attempt[:attemptDate])}"
       }
-      milestone_attempt[:display] = format_milestone_attempt(milestone_attempt)
-      milestone_attempt
-    end
-
-    def format_milestone_attempt(milestone_attempt)
-      if milestone_attempt[:result] == Berkeley::GraduateMilestones::QE_RESULTS_STATUS_PASSED
-        "#{milestone_attempt[:result]} #{milestone_attempt[:date]}"
-      else
-        "Exam #{milestone_attempt[:sequenceNumber]}: #{milestone_attempt[:result]} #{milestone_attempt[:date]}"
-      end
     end
 
     def determine_status_code(status_code, milestone_attempts)
