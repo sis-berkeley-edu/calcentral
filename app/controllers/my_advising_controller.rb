@@ -6,8 +6,4 @@ class MyAdvisingController < ApplicationController
     render json: Advising::MyAdvising.from_session(session).get_feed_as_json
   end
 
-  def get_legacy_feed
-    render json: Advising::LegacyMyAdvising.from_session(session).get_feed_as_json
-  end
-
 end

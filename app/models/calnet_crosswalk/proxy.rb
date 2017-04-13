@@ -84,22 +84,6 @@ module CalnetCrosswalk
       cache_id('CAMPUS_SOLUTIONS_ID', value)
     end
 
-    def lookup_legacy_student_id
-      lookup_id 'LEGACY_SIS_STUDENT_ID'
-    end
-
-    def cache_legacy_student_id(value)
-      cache_id('LEGACY_SIS_STUDENT_ID', value)
-    end
-
-    def lookup_delegate_user_id
-      lookup_id 'DELEGATE_USER_ID'
-    end
-
-    def cache_delegate_user_id(value)
-      cache_id('DELEGATE_USER_ID', value)
-    end
-
     def lookup_id(id_type)
       self.class.smart_fetch_from_cache({id: "#{@uid}/#{id_type}"}) do
         id = nil

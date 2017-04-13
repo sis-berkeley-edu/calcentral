@@ -12,21 +12,9 @@ describe 'MyAcademics::GpaUnits' do
     let(:status_proxy) { HubEdos::AcademicStatus.new(user_id: uid, fake: true) }
     before do
       allow_any_instance_of(CalnetCrosswalk::ByUid).to receive(:lookup_campus_solutions_id).and_return eight_digit_cs_id
-      allow(Settings.features).to receive(:cs_academic_profile_prefers_legacy).and_return(prefer_legacy)
       allow(Settings.terms).to receive(:legacy_cutoff).and_return('spring-2010')
     end
-    context 'CS-based data not fully baked' do
-      let(:prefer_legacy) {true}
-      it 'sources from Oracle' do
-        expect(CampusOracle::Queries).to receive(:get_student_info).with(uid).and_return({
-          'cum_gpa' => 2.0
-        })
-        expect(HubEdos::AcademicStatus).to receive(:new).and_return status_proxy
-        expect(feed[:gpaUnits][:cumulativeGpa]).to eq '2.0'
-      end
-    end
     context 'CS data is ready to go' do
-      let(:prefer_legacy) {false}
       it 'sources from Hub' do
         expect(CampusOracle::Queries).to receive(:get_student_info).never
         expect(HubEdos::AcademicStatus).to receive(:new).and_return status_proxy
@@ -77,22 +65,6 @@ describe 'MyAcademics::GpaUnits' do
       it 'returns what data it can' do
         expect(feed[:gpaUnits][:cumulativeGpa]).to be_present
         expect(feed[:gpaUnits][:totalUnits]).to be nil
-      end
-    end
-  end
-
-  context 'when sourced from Oracle views' do
-    before { allow_any_instance_of(CalnetCrosswalk::ByUid).to receive(:lookup_campus_solutions_id).and_return eight_digit_cs_id }
-
-    context 'known test user', if: CampusOracle::Connection.test_data? do
-      let(:uid) { '300939' }
-      it 'should contain expected test data' do
-        expect(feed[:gpaUnits]).to eq ({
-          cumulativeGpa: '2.595',
-          totalUnits: 18,
-          totalUnitsAttempted: 20,
-          isLegacy: true
-        })
       end
     end
   end

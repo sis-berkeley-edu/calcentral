@@ -25,7 +25,7 @@ module DegreeProgress
     private
 
     def student_empl_id
-      CalnetCrosswalk::ByUid.new(user_id: @uid).lookup_campus_solutions_id
+      User::Identifiers.lookup_campus_solutions_id @uid
     end
 
     def get_links

@@ -306,7 +306,7 @@ cache:
     CampusSolutions::DashboardUrl: <%= 29.days %>
 
     CalnetCrosswalk::ByUid: <%= 4.hours %>
-    CalnetCrosswalk::BySid: <%= 4.hours %>
+    User::Identifiers::Cached: <%= 4.hours %>
 
     # Merge of independently cached feeds.
     HubEdos::MyStudent: <%= 5.minutes %>
@@ -422,6 +422,7 @@ hub_enrollments_proxy:
 
 calnet_crosswalk_proxy:
   fake: true
+  enabled: true
   base_url: 'https://registry-d1.calnet.1918.berkeley.edu:8453/registry-service/api/v1/identifiers'
   username: secret
   password: secret
@@ -485,7 +486,6 @@ features:
   class_info_enrollment_tab: false
   course_manage_official_sections: false
   cs_academic_planner: false
-  cs_academic_profile_prefers_legacy: true
   cs_advising_links: false
   cs_advisor_student_lookup: false
   cs_billing: false
@@ -509,7 +509,6 @@ features:
   final_exam_schedule: false
   gpa_calculator: true
   hub_term_api: true
-  legacy_advising: false
   manage_site_mailing_lists: false
   my_fin_aid: false
   prevent_acting_as_users_from_posting: true

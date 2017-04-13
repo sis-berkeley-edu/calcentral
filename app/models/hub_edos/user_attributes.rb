@@ -1,7 +1,7 @@
 module HubEdos
   class UserAttributes
 
-    include User::Student
+    include User::Identifiers
     include Berkeley::UserRoles
     include ResponseWrapper
     include ClassLogger
@@ -17,19 +17,11 @@ module HubEdos
     def get_ids(result)
       result[:ldap_uid] = @uid
 
-      # Users who are delegates-only, with no other role on campus, will be identified only through
-      # Crosswalk or SAML assertions.
-      result[:delegate_user_id] = lookup_delegate_user_id
-
-      # Pre-CS student IDs should have been migrated, but note them if Crosswalk or SAML assertions
-      # provided one.
-      result[:legacy_student_id] = lookup_legacy_student_id_from_crosswalk
-
       # Hub and CampusSolutions APIs will be unreachable unless a CS ID is provided from Crosswalk or SAML assertions.
       @campus_solutions_id = lookup_campus_solutions_id
       result[:campus_solutions_id] = @campus_solutions_id
 
-      result[:is_legacy_student] = has_legacy_data?(@campus_solutions_id) || result[:legacy_student_id]
+      result[:is_legacy_student] = has_legacy_student_data?(@campus_solutions_id)
     end
 
     def get_edo

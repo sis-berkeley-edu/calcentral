@@ -117,8 +117,9 @@ module Cache
     end
 
     def write_cache(value, id = nil)
+      cached_value = value.nil? ? NilClass : value
       Rails.cache.write(cache_key(id),
-        value,
+        cached_value,
         :expires_in => self.expires_in,
         :force => true)
     end

@@ -1,7 +1,6 @@
 describe User::AggregatedAttributes do
   let(:uid) { random_id }
   let(:campus_solutions_id) { random_cs_id }
-  let(:legacy_student_id) { random_id }
   let(:preferred_name) { 'Grigori Rasputin' }
   let(:first_name_from_edo) { 'Ed' }
   let(:last_name_from_edo) { 'O\'Houlihan' }

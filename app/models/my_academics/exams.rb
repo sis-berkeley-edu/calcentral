@@ -3,7 +3,6 @@ module MyAcademics
     include AcademicsModule
     include ClassLogger
     include DatedFeed
-    include User::Student
     include FinalExamsFeatureFlagged
 
     # Merges the final result into the academics feed

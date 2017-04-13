@@ -2,7 +2,6 @@ module MyAcademics
   class CollegeAndLevel
     include AcademicsModule
     include ClassLogger
-    include User::Student
 
     def merge(data)
       college_and_level = hub_college_and_level

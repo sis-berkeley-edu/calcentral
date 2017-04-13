@@ -9,10 +9,10 @@ module Financials
     include Cache::UserCacheExpiry
     include Cache::FeedExceptionsHandled
     include Cache::JsonifiedFeed
-    include User::Student
+    include User::Identifiers
 
     def get_feed_internal
-      student_id = lookup_student_id
+      student_id = lookup_campus_solutions_id
       if student_id.blank?
         # don't continue if student id can't be found.
         logger.info "Lookup of student_id for uid #{@uid} failed, cannot call CFV API"

@@ -1,7 +1,6 @@
 module MyAcademics
   class AcademicPlan < UserSpecificModel
     include AdvisingAcademicPlannerFeatureFlagged
-    include User::Student
 
     def merge(data)
       if is_feature_enabled

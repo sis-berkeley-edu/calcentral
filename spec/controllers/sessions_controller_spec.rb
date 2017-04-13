@@ -3,10 +3,13 @@ describe SessionsController do
   let(:response_body) { nil }
 
   describe '#lookup' do
-    before(:each) do
-      @request.env['omniauth.auth'] = {
+    let(:omniauth_auth) do
+      {
         'uid' => user_id
       }
+    end
+    before(:each) do
+      @request.env['omniauth.auth'] = omniauth_auth
       cookie_hash = {}
       :logout
     end
@@ -70,18 +73,21 @@ describe SessionsController do
       end
     end
 
-    context 'campus solutions' do
-      let(:user_id) { '12352' }
-
-      it 'will cache the Campus Solutions IDs' do
+    context 'with SAML attributes' do
+      let(:cs_id) { random_id }
+      let(:user_id) { random_id }
+      let(:omniauth_auth) do
+        dbl = double
+        allow(dbl).to receive(:[]).with('uid').and_return user_id
+        allow(dbl).to receive(:extra).and_return({
+          'berkeleyEduCSID' => cs_id
+        })
+        dbl
+      end
+      it 'will cache the Campus Solutions ID if provided through CAS' do
         session['user_id'] = user_id
-
+        expect(User::Identifiers).to receive(:cache).with(user_id, cs_id)
         get :lookup
-
-        crosswalk = CalnetCrosswalk::ByUid.new user_id: user_id
-        expect(crosswalk.lookup_campus_solutions_id).to eq '13320459'
-        expect(crosswalk.lookup_legacy_student_id).to eq '24188910'
-        expect(crosswalk.lookup_delegate_user_id).to eq '20394351'
       end
     end
   end

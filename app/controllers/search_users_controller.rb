@@ -1,6 +1,5 @@
 class SearchUsersController < ApplicationController
   include ViewAsAuthorization
-  include User::Parser
 
   before_action :api_authenticate
 

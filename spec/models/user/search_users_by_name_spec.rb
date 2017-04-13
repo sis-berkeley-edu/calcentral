@@ -48,16 +48,13 @@ describe User::SearchUsersByName do
       let(:roles) { [:student, :exStudent] }
       let(:uid) { random_id }
       before {
-        allow(CalnetLdap::Client).to receive(:new).and_return (client = double)
-        ldap_records = [:faculty, :student, :staff, :exStudent]
-        allow(client).to receive(:search_by_name).with(name, true).and_return ldap_records
-        ldap_records.each_index do |idx|
-          # To avoid a complex spec, each ldap_record translate very nicely into a user role and UID.
-          uid = (idx + 1).to_s
-          record =  ldap_records[idx]
-          allow_any_instance_of(User::Parser).to receive(:parse).with(record).and_return({ ldap_uid: uid })
-          allow(User::AggregatedAttributes).to receive(:new).with(uid).and_return double(get_feed: {ldapUid: uid, roles: { record => true }})
+        # Search should only use LDAP to get UIDs, and then rely on merged attributes to check roles.
+        ldap_records = [:faculty, :student, :staff, :exStudent].each_with_index.map do |role, i|
+          uid = (i + 1).to_s
+          allow(User::AggregatedAttributes).to receive(:new).with(uid).and_return double(get_feed: {ldapUid: uid, roles: { role => true }})
+          {ldap_uid: uid}
         end
+        allow(CalnetLdap::UserAttributes).to receive(:get_attributes_by_name).with(name, true).and_return ldap_records
       }
       it 'should only match on student-related roles' do
         expect(subject).to have(2).items

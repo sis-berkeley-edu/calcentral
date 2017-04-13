@@ -2,7 +2,6 @@ require 'net/ldap'
 
 module CalnetLdap
   class Client
-    include User::Parser
     include ClassLogger
 
     PEOPLE_DN = 'ou=people,dc=berkeley,dc=edu'
@@ -72,6 +71,15 @@ module CalnetLdap
       results.first
     end
 
+    def search_by_cs_id(cs_id)
+      filter = cs_ids_filter([cs_id])
+      results = search(base: PEOPLE_DN, filter: filter)
+      results = search(base: GUEST_DN, filter: filter) if results.empty?
+      results = search(base: ADVCON_DN, filter: filter) if results.empty?
+      results = search(base: EXPIRED_DN, filter: filter) if results.empty?
+      results.first
+    end
+
     def search_by_uids(uids)
       [].tap do |results|
         uids.each_slice(BATCH_QUERY_MAXIMUM).map do |uid_slice|
@@ -92,6 +100,10 @@ module CalnetLdap
       uids.map { |uid| Net::LDAP::Filter.eq('uid', uid.to_s) }.inject :|
     end
 
+    def cs_ids_filter(ids)
+      ids.map { |id| Net::LDAP::Filter.eq('berkeleyeducsid', id.to_s) }.inject :|
+    end
+
     def search(args = {})
       ActiveSupport::Notifications.instrument('proxy', {class: self.class, search: args}) do
         response = @ldap.search args
@@ -103,6 +115,13 @@ module CalnetLdap
           response
         end
       end
+    end
+
+    def tokenize_for_search_by_name(phrase)
+      return [] if phrase.blank?
+      tokens = phrase.strip.gsub(/[;,\s]+/, ' ').split /[\s,]/
+      # Discard middle initials, generational designations (e.g., Jr.) and academic suffixes (e.g., M.A.)
+      tokens.select { |token| !token.end_with? '.' }
     end
 
   end
