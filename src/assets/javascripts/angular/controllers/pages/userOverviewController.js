@@ -227,16 +227,21 @@ angular.module('calcentral.controllers').controller('UserOverviewController', fu
   };
 
   var loadStudentSuccess = function() {
+    console.log('calling advisingFactory.getStudentSuccess');
     advisingFactory.getStudentSuccess({
       uid: $routeParams.uid
     }).then(
       function successCallback(response) {
+        console.log('executing successCallback. Scope: ');
         $scope.studentSuccess.outstandingBalance = _.get(response, 'data.outstandingBalance');
         $scope.studentSuccess.termGpa = _.sortBy(_.get(response, 'data.termGpa'), ['termId']);
+        console.dir($scope);
         parseTermGpa();
       }
     ).finally(function() {
+      console.log('Setting isLoading to false');
       $scope.studentSuccess.isLoading = false;
+      console.log('All done... finally');
     });
   };
 
@@ -262,6 +267,7 @@ angular.module('calcentral.controllers').controller('UserOverviewController', fu
   };
 
   var parseTermGpa = function() {
+    console.log('Parsing term GPA');
     filterInactiveCareers();
     var termGpa = [];
     _.forEach($scope.studentSuccess.termGpa, function(term) {
@@ -290,7 +296,9 @@ angular.module('calcentral.controllers').controller('UserOverviewController', fu
         symbol: 'circle'
       }
     };
+    console.log('Setting highcharts data into scope: ');
     $scope.highCharts.dataSeries.push(termGpa);
+    console.dir($scope);
   };
 
   var getRegMessages = function() {
