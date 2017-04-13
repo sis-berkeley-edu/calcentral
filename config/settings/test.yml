@@ -78,9 +78,6 @@ cache:
     UpNext::MyUpNext: <%= 1.day %>
     User::Api: <%= 1.day %>
 
-advising_proxy:
-  fake: true
-
 grading_period:
   links:
     final: '#'
@@ -122,7 +119,6 @@ features:
   advising: true
   advising_academic_planner: true
   advising_student_success: true
-  bearfacts: true
   cal1card: true
   class_info_enrollment_tab: true
   cs_academic_planner: true
