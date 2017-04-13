@@ -45,6 +45,7 @@ angular.module('calcentral.factories').factory('advisingFactory', function(apiSe
   };
 
   var getStudentSuccess = function(options) {
+    console.log('requesting Student Success for ' + options.uid);
     return apiService.http.request(options, urlAdvisingStudentSuccess + options.uid);
   };
 
