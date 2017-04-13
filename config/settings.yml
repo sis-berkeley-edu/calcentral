@@ -247,7 +247,6 @@ cache:
     CanvasLti::Egrades: <%= 1.minute %>
     CanvasLti::Lti: <%= 5.minutes %>
 
-    Advising::LegacyMyAdvising: <%= 2.hours %>
     Advising::MyAdvising: <%= 2.hours %>
 
     MyAcademics::CollegeAndLevel: NEXT_08_00
@@ -391,12 +390,6 @@ ui_selenium:
   ets_qa_gmail_username: secret
   ets_qa_gmail_password: secret
   admin_uid: secret
-
-advising_proxy:
-  fake: false
-  base_url: 'https://bhive.berkeley.edu/api'
-  username: secret
-  password: secret
 
 campus_solutions_proxy:
   fake: true
