@@ -41,11 +41,13 @@ describe Oec::MergeConfirmationSheetsTask do
   let(:merged_course_confirmation) { Oec::SisImportSheet.from_csv(File.read Rails.root.join('tmp', 'oec', 'Merged course confirmations.csv')) }
   let(:merged_supervisor_confirmation) { Oec::Supervisors.from_csv(File.read Rails.root.join('tmp', 'oec', 'Merged supervisor confirmations.csv')) }
 
+  let(:departments) { %w(SWOME IMMCB) }
+
   before(:each) do
     @mock_sheets = []
 
     allow(Oec::RemoteDrive).to receive(:new).and_return fake_remote_drive
-    allow(Oec::CourseCode).to receive(:by_dept_code).and_return({'SWOME' => [], 'IMMCB' => []})
+    allow(Oec::CourseCode).to receive(:by_dept_code).and_return(departments.inject({}) { |hash, dept| hash[dept] = []; hash })
     allow(Oec::CourseCode).to receive(:participating_dept_names).and_return %w(GWS MCELLBI LGBT)
     allow(Settings.terms).to receive(:fake_now).and_return DateTime.parse('2015-03-09')
 
@@ -103,6 +105,12 @@ describe Oec::MergeConfirmationSheetsTask do
       expect(merged_course_confirmation.first).to_not be_empty
     end
 
+    it 'should include courses marked for evaluation by all participating departments' do
+      expect(merged_course_confirmation.select { |row| row['DEPT_FORM'] == 'GWS' }).to have(20).items
+      expect(merged_course_confirmation.select { |row| row['DEPT_FORM'] == 'LGBT' }).to have(3).items
+      expect(merged_course_confirmation.select { |row| row['DEPT_FORM'] == 'MCELLBI' }).to have(15).items
+    end
+
     it 'should group cross-listings together' do
       cross_listed_names = merged_course_confirmation.map { |row| row['CROSS_LISTED_NAME'] }.compact.uniq
       cross_listed_names.each do |name|
@@ -131,6 +139,13 @@ describe Oec::MergeConfirmationSheetsTask do
       expect(merged_supervisor_confirmation.first).to_not be_empty
     end
 
+    it 'should include supervisors for all participating departments' do
+      expect(merged_supervisor_confirmation.select { |row| row['DEPT_NAME_1'] == 'GWS'}).to have(2).items
+      expect(merged_supervisor_confirmation.select { |row| row['DEPT_NAME_1'] == 'LGBT'}).to have(1).item
+      expect(merged_supervisor_confirmation.select { |row| row['DEPT_NAME_2'] == 'MCELLBI'}).to have(2).items
+      expect(merged_supervisor_confirmation.select { |row| row['DEPT_NAME_3'] == 'MCELLBI'}).to have(1).item
+    end
+
     it 'should overwrite supervisors sheet when confirmed report viewers sheet includes column' do
       [gws_supervisor_confirmation_worksheet, mcellbi_supervisor_confirmation_worksheet].each do |confirmation|
         confirmation.each do |confirmation_row|
@@ -144,6 +159,23 @@ describe Oec::MergeConfirmationSheetsTask do
             end
           end
         end
+      end
+    end
+
+    context 'when a department filter is specified' do
+      let(:departments) { %w(SWOME) }
+
+      it 'should include courses marked for evaluation by filtered departments only' do
+        expect(merged_course_confirmation.select { |row| row['DEPT_FORM'] == 'GWS' }).to have(20).items
+        expect(merged_course_confirmation.select { |row| row['DEPT_FORM'] == 'LGBT' }).to have(3).items
+        expect(merged_course_confirmation.select { |row| row['DEPT_FORM'] == 'MCELLBI' }).to have(0).items
+      end
+
+      it 'should include supervisors for filtered departments only' do
+        expect(merged_supervisor_confirmation.select { |row| row['DEPT_NAME_1'] == 'GWS'}).to have(2).items
+        expect(merged_supervisor_confirmation.select { |row| row['DEPT_NAME_1'] == 'LGBT'}).to have(1).item
+        expect(merged_supervisor_confirmation.select { |row| row['DEPT_NAME_2'] == 'MCELLBI'}).to have(0).items
+        expect(merged_supervisor_confirmation.select { |row| row['DEPT_NAME_3'] == 'MCELLBI'}).to have(0).item
       end
     end
   end
@@ -204,7 +236,6 @@ describe Oec::MergeConfirmationSheetsTask do
     it 'should record errors' do
       expect(Rails.logger).to receive(:warn).at_least(1).times
       task.run
-      pp task.errors
       expect(task.errors['Merged supervisor confirmations']['999999'].keys).to match_array([
         "Conflicting values found under FIRST_NAME: 'Raccoona', 'James'",
         "Conflicting values found under LAST_NAME: 'Sheldon', 'Tiptree'",
