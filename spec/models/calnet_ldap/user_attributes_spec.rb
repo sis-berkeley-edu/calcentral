@@ -144,12 +144,12 @@ describe CalnetLdap::UserAttributes do
   end
 
   context 'test user from real LDAP connection', testext: true do
-    let(:uid) { '212373' }
+    let(:uid) { '61889' }
     it 'translates attributes' do
-      expect(feed[:ldap_uid]).to eq '212373'
-      expect(feed[:first_name]).to eq 'AFF-GUEST'
-      expect(feed[:last_name]).to eq 'TEST'
-      expect(feed[:person_name]).to eq 'AFF-GUEST TEST'
+      expect(feed[:ldap_uid]).to eq '61889'
+      expect(feed[:first_name]).to be_present
+      expect(feed[:last_name]).to be_present
+      expect(feed[:person_name]).to be_present
       expect(feed[:campus_solutions_id]).to be_present
     end
   end
