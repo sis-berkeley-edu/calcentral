@@ -58,6 +58,15 @@
   width: auto;
 }
 
+.cc-inline-multiselect {
+  border: 1px solid $cc-color-button-border;
+  border-radius: 5px;
+  cursor: pointer;
+  display: inline;
+  padding: 4px 25px 5px 10px;
+  width: auto;
+}
+
 @media print {
   .cc-select {
     border-radius: 0;

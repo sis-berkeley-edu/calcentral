@@ -7,44 +7,41 @@ module Oec
       {
         name: 'TermSetupTask',
         friendlyName: 'Term setup',
-        htmlDescription: 'Create a Google Drive folder under a new term code (e.g., <strong>2017-D</strong>) and populate it with initial folders and files.',
-        acceptsDepartmentOptions: false
+        htmlDescription: 'Create a Google Drive folder under a new term code (e.g., <strong>2017-D</strong>) and populate it with initial folders and files.'
       },
       {
         name: 'SisImportTask',
         friendlyName: 'SIS data import',
         htmlDescription: "Import course and instructor data for one or more campus departments. Imported data will appear in a new, timestamped subfolder of the <strong>#{Oec::Folder.sis_imports}</strong> folder.",
-        acceptsDepartmentOptions: true
+        departmentOptions: 'single'
       },
       {
         name: 'CreateConfirmationSheetsTask',
         friendlyName: 'Create confirmation sheets',
         htmlDescription: "Create confirmation sheets for review and edits by department administrators. Sheets will appear under the <strong>#{Oec::Folder.confirmations}</strong> folder. If that folder contains a sheet named <strong>TEMPLATE</strong>, it will be used as a model for the confirmation sheets.",
-        acceptsDepartmentOptions: true
+        departmentOptions: 'single'
       },
       {
         name: 'ReportDiffTask',
         friendlyName: 'Diff confirmation sheets',
         htmlDescription: "Compare department confirmation sheets to the most recent SIS import data and report on differences. The diff report will appear as a new sheet in the <strong>#{Oec::Folder.confirmations}</strong> folder, and will replace any previous diff report.",
-        acceptsDepartmentOptions: true
+        departmentOptions: 'single'
       },
       {
         name: 'MergeConfirmationSheetsTask',
         friendlyName: 'Merge confirmation sheets',
-        htmlDescription: "Merge department confirmation sheets into master sheets for preflight review. Two new sheets will be created in the <strong>#{Oec::Folder.merged_confirmations}</strong> folder: <strong>Merged course confirmations</strong> and <strong>Merged supervisor confirmations</strong>.",
-        acceptsDepartmentOptions: false
+        htmlDescription: "Merge confirmation sheets from participating departments into master sheets for preflight review. Two new sheets will be created in the <strong>#{Oec::Folder.merged_confirmations}</strong> folder: <strong>Merged course confirmations</strong> and <strong>Merged supervisor confirmations</strong>.",
+        departmentOptions: 'multiple'
       },
       {
         name: 'ValidationTask',
         friendlyName: 'Validate confirmed data',
-        htmlDescription: "Run a validation report on merged confirmation sheets. Validation results will appear in a dated subfolder of the <strong>#{Oec::Folder.logs}</strong> folder.",
-        acceptsDepartmentOptions: false
+        htmlDescription: "Run a validation report on merged confirmation sheets. Validation results will appear in a dated subfolder of the <strong>#{Oec::Folder.logs}</strong> folder."
       },
       {
         name: 'PublishTask',
         friendlyName: 'Publish confirmed data to Explorance',
-        htmlDescription: "Validate and export merged confirmation sheets. Files will be uploaded to the vendor only if validation passes. A copy of the uploaded data will appear in a timestamped subfolder of the <strong>#{Oec::Folder.published}</strong> folder.",
-        acceptsDepartmentOptions: false
+        htmlDescription: "Validate and export merged confirmation sheets. Files will be uploaded to the vendor only if validation passes. A copy of the uploaded data will appear in a timestamped subfolder of the <strong>#{Oec::Folder.published}</strong> folder."
       }
     ]
 
@@ -104,7 +101,7 @@ module Oec
       }
       if params['departmentCode'].present?
         translated_params.merge!({
-          dept_codes: params['departmentCode'],
+          dept_codes: Array.wrap(params['departmentCode']).join(' '),
           import_all: true
         })
       end

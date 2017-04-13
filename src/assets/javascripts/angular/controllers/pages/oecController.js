@@ -14,6 +14,7 @@ angular.module('calcentral.controllers').controller('OecController', function(ap
         angular.extend($scope, response.data);
         $scope.displayError = null;
         $scope.oecTaskStatus = null;
+        $scope.participatingDepartments = _.filter(response.data.oecDepartments, 'participating');
         $scope.taskParameters = {
           selectedTask: {
             name: null
@@ -58,7 +59,7 @@ angular.module('calcentral.controllers').controller('OecController', function(ap
   };
 
   var sanitizeTaskOptions = function() {
-    if (!$scope.taskParameters.selectedTask.acceptsDepartmentOptions) {
+    if (!$scope.taskParameters.selectedTask.departmentOptions) {
       $scope.taskParameters.options.departmentCode = null;
     }
   };

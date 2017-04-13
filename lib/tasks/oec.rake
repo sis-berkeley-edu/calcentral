@@ -28,7 +28,7 @@ namespace :oec do
     end
   end
 
-  desc 'Merge all sheets in \'departments\' folder to prepare for publishing'
+  desc 'Merge sheets in \'departments\' folder to prepare for publishing'
   task :merge_confirmation_sheets => :environment do
     opts = Oec::Task.opts_from_environment
     Oec::MergeConfirmationSheetsTask.new(opts).run

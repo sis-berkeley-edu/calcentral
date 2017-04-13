@@ -25,7 +25,7 @@
           </div>
         </div>
 
-        <div class="row" data-ng-if="taskParameters.selectedTask.acceptsDepartmentOptions">
+        <div class="row" data-ng-if="taskParameters.selectedTask.departmentOptions === 'single'">
           <div class="small-3 columns">
             <label for="cc-page-oec-department" class="cc-oec-label">Department(s):</label>
           </div>
@@ -45,17 +45,32 @@
             <span data-ng-bind-html="taskParameters.selectedTask.htmlDescription"></span>
           </div>
 
-          <div class="small-9 small-offset-3 columns cc-oec-text" data-ng-if="taskParameters.selectedTask.acceptsDepartmentOptions && !taskParameters.options.departmentCode.length">
+          <div class="small-9 small-offset-3 columns cc-oec-text" data-ng-if="taskParameters.selectedTask.departmentOptions === 'single' && !taskParameters.options.departmentCode.length">
             <strong>All participating departments</strong> are selected. The following departments will be included:
             <ul>
-              <li data-ng-repeat="department in oecDepartments" data-ng-if="department.participating" data-ng-bind="department.name"></li>
+              <li data-ng-repeat="department in participatingDepartments" data-ng-bind="department.name"></li>
             </ul>
           </div>
         </div>
 
+        <div class="small-9 small-offset-3 columns cc-oec-text" data-ng-if="taskParameters.selectedTask.departmentOptions === 'multiple'">
+          <div class="small-3 columns">
+            <label for="cc-page-oec-departments" class="cc-oec-label">Select one or more departments:</label>
+          </div>
+          <select multiple
+                  id="cc-page-oec-departments"
+                  class="cc-inline-multiselect"
+                  data-ng-attr-size="{{participatingDepartments.length}}"
+                  data-ng-model="taskParameters.options.departmentCode"
+                  data-ng-options="department.code as department.name for department in participatingDepartments">
+          </select>
+        </div>
+
         <div class="row">
           <div class="small-9 small-offset-3 columns">
-            <button class="cc-button cc-button-blue" type="submit" data-ng-disabled="!taskParameters.selectedTask.name.length || !taskParameters.options.term.length">
+            <button class="cc-button cc-button-blue"
+                    type="submit"
+                    data-ng-disabled="!taskParameters.selectedTask.name.length || !taskParameters.options.term.length || (taskParameters.selectedTask.departmentOptions === 'multiple' && !taskParameters.options.departmentCode)">
               Run task
             </button>
           </div>
