@@ -816,6 +816,19 @@
       ]
     }
   ],
+  "legacyReportStatus": {
+    "code": "BOTH",
+    "message": "This student has a historic summary report as well as recent records. Use the link below to view the April 30th, 2017 snapshot of this student's record.",
+    "link": {
+      "name":"Archived DB2 Transcript",
+      "title":"Access this student's archived Pre-1995 DB2 transcript",
+      "url":"https://bcswebqat.is.berkeley.edu/psp/bcsqat/EMPLOYEE/HRMS/c/UC_SR_TSCRPT.UC_SR_TSCRP.GBL?UC_CTS_EMPLID8=12345",
+      "urlId":"UC_CX_ARCH_TSCRPT_ADVSTDNT",
+      "ucFrom":"CalCentral",
+      "ucFromText":"CalCentral",
+      "ucFromLink":"https://calcentral-sis-dev-01.ist.berkeley.edu/"
+    }
+  },
   "updatePlanUrl" : "https://bcs-web-dev-03.is.berkeley.edu:8443/psc/bcsdev/EMPLOYEE/HRMS/c/SCI_PLNR_FL.SCI_PLNR_FL.GBL?ucInstitution=UCB01",
   "lastModified":{
     "hash":"ffabb092eb078bba9c5717705bfb543166b3305e",
