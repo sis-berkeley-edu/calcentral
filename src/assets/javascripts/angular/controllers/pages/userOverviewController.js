@@ -232,14 +232,13 @@ angular.module('calcentral.controllers').controller('UserOverviewController', fu
       uid: $routeParams.uid
     }).then(
       function successCallback(response) {
-        console.log('executing successCallback. Scope: ');
+        console.log('executing successCallback');
         $scope.studentSuccess.outstandingBalance = _.get(response, 'data.outstandingBalance');
-        $scope.studentSuccess.termGpa = _.sortBy(_.get(response, 'data.termGpa'), ['termId']);
-        console.dir($scope);
-        parseTermGpa();
+        parseTermGpa(response);
       }
     ).finally(function() {
-      console.log('Setting isLoading to false');
+      console.log('finished parsing');
+      console.dir($scope);
       $scope.studentSuccess.isLoading = false;
       console.log('All done... finally');
     });
@@ -266,24 +265,15 @@ angular.module('calcentral.controllers').controller('UserOverviewController', fu
     });
   };
 
-  var parseTermGpa = function() {
-    console.log('Parsing term GPA');
-    filterInactiveCareers();
-    var termGpa = [];
-    _.forEach($scope.studentSuccess.termGpa, function(term) {
-      if (term.termGpa) {
-        termGpa.push(term.termGpa);
-      }
-    });
-    if (termGpa.length < 2) {
-      $scope.studentSuccess.showChart = false;
-      return;
-    }
+  var chartGpaTrend = function(termGpas) {
+    console.log('Building highcharts data');
+    var chartData = _.map(termGpas, 'termGpa');
+
     // The last element of the data series must also contain custom marker information to show the GPA.
-    termGpa[termGpa.length - 1] = {
-      y: termGpa[termGpa.length - 1],
+    chartData[chartData.length - 1] = {
+      y: chartData[chartData.length - 1],
       dataLabels: {
-        color: termGpa[termGpa.length - 1] >= 2 ? '#2b6281' : '#cf1715',
+        color: chartData[chartData.length - 1] >= 2 ? '#2b6281' : '#cf1715',
         enabled: true,
         style: {
           'fontSize': '12px'
@@ -291,14 +281,34 @@ angular.module('calcentral.controllers').controller('UserOverviewController', fu
       },
       marker: {
         enabled: true,
-        fillColor: termGpa[termGpa.length - 1] >= 2 ? '#2b6281' : '#cf1715',
+        fillColor: chartData[chartData.length - 1] >= 2 ? '#2b6281' : '#cf1715',
         radius: 3,
         symbol: 'circle'
       }
     };
     console.log('Setting highcharts data into scope: ');
-    $scope.highCharts.dataSeries.push(termGpa);
+    $scope.highCharts.dataSeries.push(chartData);
     console.dir($scope);
+  };
+
+  var parseTermGpa = function(response) {
+    console.log('Parsing term GPA');
+    console.dir(_.get(response, 'data.termGpa'));
+
+    var termGpas = [];
+    _.forEach(_.get(response, 'data.termGpa'), function(term) {
+      if (term.termGpa && isActiveCareer(term)) {
+        termGpas.push(term);
+      }
+    });
+    $scope.studentSuccess.termGpa = _.sortBy(termGpas, ['termId']);
+    console.dir($scope);
+
+    if (termGpas.length > 2) {
+      chartGpaTrend(termGpas);
+    } else {
+      $scope.studentSuccess.showChart = false;
+    }
   };
 
   var getRegMessages = function() {
@@ -317,10 +327,8 @@ angular.module('calcentral.controllers').controller('UserOverviewController', fu
    * This should be done in back-end, but requires a refactoring of MyAcademics::FilteredForAdvisor and StudentSuccess::Merged.
    * This is a temporary fix aimed for GoLive 7.5, but should be refactored for GoLive 8.
    */
-  var filterInactiveCareers = function() {
-    _.remove($scope.studentSuccess.termGpa, function(term) {
-      return !_.includes($scope.studentSuccess.activeCareers, toLowerCase(term.career));
-    });
+  var isActiveCareer = function(term) {
+    return _.includes($scope.studentSuccess.activeCareers, toLowerCase(term.career));
   };
 
   var toLowerCase = function(text) {
