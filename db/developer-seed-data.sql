@@ -1719,13 +1719,63 @@ INSERT INTO oec_course_codes VALUES (185, 'VIS SCI', '', 'BOOPT', false, '2015-0
 INSERT INTO oec_course_codes VALUES (186, 'VIS STD', '', 'DBARC', false, '2015-08-13 23:26:36.494', '2015-08-13 23:26:36.494');
 INSERT INTO oec_course_codes VALUES (187, 'XMBA', '', 'BAHSB', false, '2015-08-13 23:26:36.498', '2015-08-13 23:26:36.498');
 INSERT INTO oec_course_codes VALUES (188, 'YIDDISH', '', 'HZGER', true, '2015-08-13 23:26:36.502', '2015-08-13 23:26:36.502');
+INSERT INTO oec_course_codes VALUES (189, 'AFRICAM', '24', 'QHINS', true, '2017-04-14 17:40:36.502', '2017-04-14 17:40:36.502');
+INSERT INTO oec_course_codes VALUES (190, 'ANTHRO', '24', 'QHINS', true, '2017-04-14 17:40:36.502', '2017-04-14 17:40:36.502');
+INSERT INTO oec_course_codes VALUES (901, 'ASTRON', '84', 'QHINS', true, '2017-04-14 17:40:36.502', '2017-04-14 17:40:36.502');
+INSERT INTO oec_course_codes VALUES (192, 'CHM ENG', '24', 'QHINS', true, '2017-04-14 17:40:36.502', '2017-04-14 17:40:36.502');
+INSERT INTO oec_course_codes VALUES (193, 'CIV ENG', '24', 'QHINS', true, '2017-04-14 17:40:36.502', '2017-04-14 17:40:36.502');
+INSERT INTO oec_course_codes VALUES (194, 'COMPSCI', '24', 'QHINS', true, '2017-04-14 17:40:36.502', '2017-04-14 17:40:36.502');
+INSERT INTO oec_course_codes VALUES (195, 'COMPSCI', '39', 'QHINS', true, '2017-04-14 17:40:36.502', '2017-04-14 17:40:36.502');
+INSERT INTO oec_course_codes VALUES (196, 'EL ENG', '24', 'QHINS', true, '2017-04-14 17:40:36.502', '2017-04-14 17:40:36.502');
+INSERT INTO oec_course_codes VALUES (197, 'EL ENG', '39', 'QHINS', true, '2017-04-14 17:40:36.502', '2017-04-14 17:40:36.502');
+INSERT INTO oec_course_codes VALUES (198, 'EL ENG', '84', 'QHINS', true, '2017-04-14 17:40:36.502', '2017-04-14 17:40:36.502');
+INSERT INTO oec_course_codes VALUES (199, 'ENGLISH', '24', 'QHINS', true, '2017-04-14 17:40:36.502', '2017-04-14 17:40:36.502');
+INSERT INTO oec_course_codes VALUES (200, 'ENGLISH', '84', 'QHINS', true, '2017-04-14 17:40:36.502', '2017-04-14 17:40:36.502');
+INSERT INTO oec_course_codes VALUES (201, 'ENV SCI', '24', 'QHINS', true, '2017-04-14 17:40:36.502', '2017-04-14 17:40:36.502');
+INSERT INTO oec_course_codes VALUES (202, 'EPS', '24', 'QHINS', true, '2017-04-14 17:40:36.502', '2017-04-14 17:40:36.502');
+INSERT INTO oec_course_codes VALUES (203, 'FRENCH', '24', 'QHINS', true, '2017-04-14 17:40:36.502', '2017-04-14 17:40:36.502');
+INSERT INTO oec_course_codes VALUES (204, 'GLOBAL', '24', 'QHINS', true, '2017-04-14 17:40:36.502', '2017-04-14 17:40:36.502');
+INSERT INTO oec_course_codes VALUES (205, 'HISTORY', '24', 'QHINS', true, '2017-04-14 17:40:36.502', '2017-04-14 17:40:36.502');
+INSERT INTO oec_course_codes VALUES (206, 'IND ENG', '24', 'QHINS', true, '2017-04-14 17:40:36.502', '2017-04-14 17:40:36.502');
+INSERT INTO oec_course_codes VALUES (207, 'INTEGBI', '24', 'QHINS', true, '2017-04-14 17:40:36.502', '2017-04-14 17:40:36.502');
+INSERT INTO oec_course_codes VALUES (208, 'INTEGBI', '84', 'QHINS', true, '2017-04-14 17:40:36.502', '2017-04-14 17:40:36.502');
+INSERT INTO oec_course_codes VALUES (209, 'ITALIAN', '24', 'QHINS', true, '2017-04-14 17:40:36.502', '2017-04-14 17:40:36.502');
+INSERT INTO oec_course_codes VALUES (210, 'JEWISH', '24', 'QHINS', true, '2017-04-14 17:40:36.502', '2017-04-14 17:40:36.502');
+INSERT INTO oec_course_codes VALUES (211, 'JEWISH', '39', 'QHINS', true, '2017-04-14 17:40:36.502', '2017-04-14 17:40:36.502');
+INSERT INTO oec_course_codes VALUES (212, 'JOURN', '24', 'QHINS', true, '2017-04-14 17:40:36.502', '2017-04-14 17:40:36.502');
+INSERT INTO oec_course_codes VALUES (213, 'LEGALST', '39D', 'QHINS', true, '2017-04-14 17:40:36.502', '2017-04-14 17:40:36.502');
+INSERT INTO oec_course_codes VALUES (214, 'LINGUIS', '24', 'QHINS', true, '2017-04-14 17:40:36.502', '2017-04-14 17:40:36.502');
+INSERT INTO oec_course_codes VALUES (215, 'MATH', '24', 'QHINS', true, '2017-04-14 17:40:36.502', '2017-04-14 17:40:36.502');
+INSERT INTO oec_course_codes VALUES (216, 'MEC ENG', '24', 'QHINS', true, '2017-04-14 17:40:36.502', '2017-04-14 17:40:36.502');
+INSERT INTO oec_course_codes VALUES (217, 'MEDIAST', '24', 'QHINS', true, '2017-04-14 17:40:36.502', '2017-04-14 17:40:36.502');
+INSERT INTO oec_course_codes VALUES (218, 'MCELLBI', '90A', 'QHINS', true, '2017-04-14 17:40:36.502', '2017-04-14 17:40:36.502');
+INSERT INTO oec_course_codes VALUES (219, 'MCELLBI', '90B', 'QHINS', true, '2017-04-14 17:40:36.502', '2017-04-14 17:40:36.502');
+INSERT INTO oec_course_codes VALUES (220, 'MCELLBI', '90D', 'QHINS', true, '2017-04-14 17:40:36.502', '2017-04-14 17:40:36.502');
+INSERT INTO oec_course_codes VALUES (221, 'NAT RES', '24', 'QHINS', true, '2017-04-14 17:40:36.502', '2017-04-14 17:40:36.502');
+INSERT INTO oec_course_codes VALUES (222, 'NAT RES', '84', 'QHINS', true, '2017-04-14 17:40:36.502', '2017-04-14 17:40:36.502');
+INSERT INTO oec_course_codes VALUES (223, 'NATAMST', '90', 'QHINS', true, '2017-04-14 17:40:36.502', '2017-04-14 17:40:36.502');
+INSERT INTO oec_course_codes VALUES (224, 'NE STUD', '24', 'QHINS', true, '2017-04-14 17:40:36.502', '2017-04-14 17:40:36.502');
+INSERT INTO oec_course_codes VALUES (225, 'NUCENG', '24', 'QHINS', true, '2017-04-14 17:40:36.502', '2017-04-14 17:40:36.502');
+INSERT INTO oec_course_codes VALUES (226, 'NUSCTX', '24', 'QHINS', true, '2017-04-14 17:40:36.502', '2017-04-14 17:40:36.502');
+INSERT INTO oec_course_codes VALUES (227, 'PHYSICS', '24', 'QHINS', true, '2017-04-14 17:40:36.502', '2017-04-14 17:40:36.502');
+INSERT INTO oec_course_codes VALUES (228, 'PLANTBI', '24', 'QHINS', true, '2017-04-14 17:40:36.502', '2017-04-14 17:40:36.502');
+INSERT INTO oec_course_codes VALUES (229, 'POLECON', '24', 'QHINS', true, '2017-04-14 17:40:36.502', '2017-04-14 17:40:36.502');
+INSERT INTO oec_course_codes VALUES (230, 'PORTUG', '24', 'QHINS', true, '2017-04-14 17:40:36.502', '2017-04-14 17:40:36.502');
+INSERT INTO oec_course_codes VALUES (231, 'PSYCH', '24', 'QHINS', true, '2017-04-14 17:40:36.502', '2017-04-14 17:40:36.502');
+INSERT INTO oec_course_codes VALUES (232, 'RHETOR', '24', 'QHINS', true, '2017-04-14 17:40:36.502', '2017-04-14 17:40:36.502');
+INSERT INTO oec_course_codes VALUES (233, 'SEASIAN', '84', 'QHINS', true, '2017-04-14 17:40:36.502', '2017-04-14 17:40:36.502');
+INSERT INTO oec_course_codes VALUES (234, 'SPANISH', '24', 'QHINS', true, '2017-04-14 17:40:36.502', '2017-04-14 17:40:36.502');
+INSERT INTO oec_course_codes VALUES (235, 'THEATER', '24', 'QHINS', true, '2017-04-14 17:40:36.502', '2017-04-14 17:40:36.502');
+INSERT INTO oec_course_codes VALUES (236, 'THEATER', '39', 'QHINS', true, '2017-04-14 17:40:36.502', '2017-04-14 17:40:36.502');
+INSERT INTO oec_course_codes VALUES (237, 'VIS SCI', '24', 'QHINS', true, '2017-04-14 17:40:36.502', '2017-04-14 17:40:36.502');
+INSERT INTO oec_course_codes VALUES (238, 'VIS SCI', '84', 'QHINS', true, '2017-04-14 17:40:36.502', '2017-04-14 17:40:36.502');
 
 
 --
 -- Name: oec_course_codes_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('oec_course_codes_id_seq', 188, true);
+SELECT pg_catalog.setval('oec_course_codes_id_seq', 238, true);
 
 
 --
