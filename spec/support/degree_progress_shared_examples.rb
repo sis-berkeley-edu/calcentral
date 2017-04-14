@@ -50,16 +50,14 @@ shared_examples 'a proxy that returns graduate milestone data' do
     qualifying_exam_attempts = subject[:feed][:degreeProgress][2][:requirements][1][:attempts]
     expect(qualifying_exam_attempts.count).to eq 2
     expect(qualifying_exam_attempts[0][:sequenceNumber]).to eq 2
-    expect(qualifying_exam_attempts[0][:date]).to eq 'Dec 22, 2016'
-    expect(qualifying_exam_attempts[0][:result]).to eq 'Passed'
+    expect(qualifying_exam_attempts[0][:statusCode]).to eq 'P'
     expect(qualifying_exam_attempts[1][:sequenceNumber]).to eq 1
-    expect(qualifying_exam_attempts[1][:date]).to eq 'Oct 01, 2016'
-    expect(qualifying_exam_attempts[1][:result]).to eq 'Failed'
+    expect(qualifying_exam_attempts[1][:statusCode]).to eq 'F'
   end
 
   it 'builds a string to represent the milestone attempt' do
     qualifying_exam_attempts = subject[:feed][:degreeProgress][2][:requirements][1][:attempts]
-    expect(qualifying_exam_attempts[0][:display]).to eq 'Passed Dec 22, 2016'
+    expect(qualifying_exam_attempts[0][:display]).to eq 'Exam 2: Passed Dec 22, 2016'
     expect(qualifying_exam_attempts[1][:display]).to eq 'Exam 1: Failed Oct 01, 2016'
   end
 
