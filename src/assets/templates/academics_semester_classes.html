@@ -110,10 +110,11 @@
           <thead>
             <th width="15%" scope="col" class="cc-academics-course-number">Course</th>
             <th width="10%" scope="col" class="show-for-medium-up">Class Number</th>
-            <th data-ng-attr-width="{{containsMidpointclass ? '35%' : '45%'}}" scope="col">Title</th>
+            <th data-ng-attr-width="{{(containsMidpointclass || isSummerSemester) ? '35%' : '45%'}}" scope="col">Title</th>
             <th width="10%" scope="col" class="show-for-medium-up cc-academics-course-section">Section</th>
+            <th data-ng-if="isSummerSemester" width="10%" scope="col" class="show-for-medium-up cc-academics-course-grading cc-academics-course-grading-centered">Grades Due</th>
             <th width="10%" scope="col" class="show-for-medium-up cc-academics-course-grading cc-academics-course-grading-centered">Grading Links</th>
-            <th data-ng-if="containsMidpointClass" width="10%" scope="col" class="show-for-medium up cc-academics-course-grading cc-academics-course-grading-centered">Midpoint Status</th>
+            <th data-ng-if="containsMidpointClass" width="10%" scope="col" class="show-for-medium-up cc-academics-course-grading cc-academics-course-grading-centered">Midpoint Status</th>
             <th width="10%" scope="col" class="show-for-medium-up cc-academics-course-grading cc-academics-course-grading-centered">Final Status</th>
           </thead>
           <tbody data-ng-if="selectedTeachingSemester.classes.length" data-ng-repeat="course in selectedTeachingSemester.classes">
@@ -132,6 +133,10 @@
               <td data-ng-if="section.is_primary_section" class="cc-academics-course-title" data-ng-bind="course.title"></td>
               <td data-ng-if="section.is_primary_section" class="show-for-medium-up">
                 <div data-ng-bind="section.section_label"></div>
+              </td>
+              <td data-ng-if="section.is_primary_section && isSummerSemester" class="show-for-medium-up cc-academics-course-grading-centered">
+                <span data-ng-if="section.gradingPeriodEndDateFormatted" data-ng-bind="section.gradingPeriodEndDateFormatted"></span>
+                <span data-ng-if="!section.gradingPeriodEndDateFormatted">&mdash;</span>
               </td>
               <td data-ng-if="section.is_primary_section && section.gradingLink.url" class="show-for-medium-up cc-academics-course-grading-centered">
                 <a data-cc-campus-solutions-link-directive="section.gradingLink"

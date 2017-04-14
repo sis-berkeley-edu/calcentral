@@ -293,7 +293,8 @@ angular.module('calcentral.services').service('academicsService', function() {
 
   var containsMidpointClass = function(selectedTeachingSemester) {
     var classes = _.get(selectedTeachingSemester, 'classes');
-    if (classes && classes.length) {
+    var isSummer = isSummerSemester(selectedTeachingSemester);
+    if (!isSummer && classes && classes.length) {
       return !_.every(classes, function(klass) {
         if (_.get(klass, 'dept') === 'LAW') {
           return true;
@@ -304,6 +305,11 @@ angular.module('calcentral.services').service('academicsService', function() {
     } else {
       return false;
     }
+  };
+
+  var isSummerSemester = function(selectedTeachingSemester) {
+    var termCode = _.get(selectedTeachingSemester, 'termCode');
+    return (termCode === 'C');
   };
 
   // Expose methods
@@ -320,6 +326,7 @@ angular.module('calcentral.services').service('academicsService', function() {
     getPreviousClasses: getPreviousClasses,
     hasTeachingClasses: hasTeachingClasses,
     isLSStudent: isLSStudent,
+    isSummerSemester: isSummerSemester,
     normalizeGradingData: normalizeGradingData,
     textbookRequestInfo: textbookRequestInfo
   };

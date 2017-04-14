@@ -152,6 +152,9 @@ module EdoOracle
         }
         if section_data[:is_primary_section]
           section_data[:units] = row['units']
+          section_data[:start_date] = row['start_date'] if row['start_date']
+          section_data[:end_date] = row['end_date'] if row['end_date']
+          section_data[:session_id] = row['session_id'] if row['session_id']
         else
           section_data[:associated_primary_id] = row['primary_associated_section_id']
         end
