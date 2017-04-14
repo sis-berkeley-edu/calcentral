@@ -31,7 +31,7 @@
       <div data-ng-include="'widgets/my_advising.html'" data-ng-if="!collegeAndLevel.roles.summerVisitor"></div>
     </div>
     <div class="medium-6 large-4 columns cc-column-2">
-      <div data-ng-include src="'widgets/academic_plan.html'" data-ng-if="planSemesters.length"></div>
+      <div data-ng-include src="'widgets/academic_plan.html'" data-ng-if="showAcademicPlanCard()"></div>
     </div>
     <div class="medium-6 large-4 columns cc-column-3">
       <div data-ng-include="'widgets/status_and_holds.html'"></div>
