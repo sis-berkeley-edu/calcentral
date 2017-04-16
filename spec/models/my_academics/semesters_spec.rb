@@ -196,6 +196,35 @@ describe MyAcademics::Semesters do
     end
   end
 
+  context 'Has withdrawal data' do
+    before do
+      allow(Settings.terms).to receive(:fake_now).and_return '2016-04-01'
+      allow(Settings.terms).to receive(:legacy_cutoff).and_return 'fall-2009'
+      expect(CampusOracle::Queries).not_to receive :get_enrolled_sections
+      allow_any_instance_of(EdoOracle::UserCourses::All).to receive(:get_all_campus_courses).and_return enrollment_data
+      allow(EdoOracle::Queries).to receive(:get_withdrawal_status).and_return withdrawal_data
+    end
+    let(:withdrawal_data) do
+      [
+        {
+          'student_id'=>'25259127',
+          'acadcareer_code'=>'UGRD',
+          'term_id'=>'2158',
+          'withcncl_type_code'=>'WDR',
+          'withcncl_type_descr'=>'Withdrew',
+          'withcncl_reason_code'=>'RETR',
+          'withcncl_reason_descr'=>'Retroactive',
+          'withcncl_fromdate'=> Time.parse('2016-02-04 00:00:00 UTC'),
+          'withcncl_lastattendate'=> Time.parse('2014-12-12 00:00:00 UTC')
+        }
+      ]
+    end
+    let(:enrollment_data) { generate_enrollment_data(edo_source: true) }
+    it 'should add withdrawal data' do
+      expect([feed[:semesters][3]]).to all include({hasWithdrawalData: true})
+    end
+  end
+
   context 'mixed legacy and Campus Solutions academic data' do
     let(:legacy_enrollment_data) do
       {

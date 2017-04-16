@@ -17,13 +17,14 @@ module MyAcademics
       end
 
       transcripts =  Settings.features.allow_legacy_fallback ? CampusOracle::UserCourses::Transcripts.new(user_id: @uid).get_all_transcripts : []
-
+      campus_solution_id = CalnetCrosswalk::ByUid.new(user_id: @uid).lookup_campus_solutions_id
+      withdrawal_data = EdoOracle::Queries.get_withdrawal_status(campus_solution_id)
       data[:additionalCredits] = transcripts[:additional_credits] if transcripts[:additional_credits].any?
-      data[:semesters] = semester_feed(enrollments, transcripts[:semesters]).compact
+      data[:semesters] = semester_feed(enrollments, transcripts[:semesters], withdrawal_data).compact
       merge_semesters_count data
     end
 
-    def semester_feed(enrollment_terms, transcript_terms)
+    def semester_feed(enrollment_terms, transcript_terms, withdrawal_data)
       (enrollment_terms.keys | transcript_terms.keys).sort.reverse.map do |term_key|
         semester = semester_info term_key
         semester.delete :slug if @filtered
@@ -33,6 +34,7 @@ module MyAcademics
           semester[:classes] = map_enrollments(enrollment_terms[term_key]).compact
           semester[:hasEnrolledClasses] = has_enrolled_classes?(enrollment_terms[term_key])
           merge_grades(semester, transcript_terms[term_key])
+          merge_withdrawals(semester, withdrawal_data)
         elsif Settings.features.allow_legacy_fallback
           semester[:hasEnrollmentData] = false
           semester[:summaryFromTranscript] = true
@@ -41,6 +43,28 @@ module MyAcademics
           semester[:notation] = translate_notation transcript_terms[term_key][:notations]
         end
         semester unless semester[:classes].empty?
+      end
+    end
+
+    def merge_withdrawals (semester, withdrawal_data)
+      withdrawal_data.each do |row|
+        if row['term_id'] == Berkeley::TermCodes.slug_to_edo_id(semester[:slug])
+          withdrawal_status =
+            {
+              hasWithdrawalData: true,
+              withdrawalStatus:
+                {
+                  acadcareerCode: row['acadcareer_code'],
+                  withcnclTypeCode: row['withcncl_type_code'],
+                  withcnclTypeDescr: row['withcncl_type_descr'],
+                  withcnclReasonCode: row['withcncl_reason_code'],
+                  withcnclReasonDescr: row['withcncl_reason_descr'],
+                  withcnclFromDate:  row['withcncl_fromdate'].to_date.strftime('%b %d, %Y'),
+                  withcnclLastAttenDate:  row['withcncl_lastattendate'].to_date.strftime('%b %d, %Y'),
+                }
+            }
+          semester.merge! withdrawal_status
+        end
       end
     end
 

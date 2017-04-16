@@ -11,16 +11,18 @@
   <div class="cc-widget-padding cc-flex-space-between-vertical-15">
     <div class="cc-table cc-academics-semester cc-academics-semester-{{semester.timeBucket}}" data-ng-repeat="semester in semesters | limitTo:pastSemestersLimit">
       <div>
-        <h3 data-ng-if="semester.hasEnrollmentData && semester.slug && !isAdvisingStudentLookup"><a class="cc-left" data-ng-href="/academics/semester/{{semester.slug}}" data-ng-bind="semester.name"></a></h3>
-        <h3 class="cc-left" data-ng-if="!semester.hasEnrollmentData || !semester.slug || isAdvisingStudentLookup" data-ng-bind="semester.name"></h3>
+        <h3 data-ng-if="!semester.hasWithdrawalData && semester.hasEnrollmentData && semester.slug && !isAdvisingStudentLookup"><a class="cc-left" data-ng-href="/academics/semester/{{semester.slug}}" data-ng-bind="semester.name"></a></h3>
+        <h3 class="cc-left" data-ng-if="semester.hasWithdrawalData || !semester.hasEnrollmentData || !semester.slug || isAdvisingStudentLookup" data-ng-bind="semester.name"></h3>
+        <h4 class="cc-left" data-ng-if="semester.hasWithdrawalData" data-ng-bind="semester.withdrawalStatus.withcnclTypeDescr"></h4>
+        <h4 class="cc-left" data-ng-if="semester.hasWithdrawalData" data-ng-bind="semester.withdrawalStatus.withcnclFromDate"></h4>
         <h4 class="cc-left" data-ng-if="semester.notation" data-ng-bind="semester.notation"></h4>
         <a class="cc-right cc-academics-semester-title-link" data-ng-href="/academics/booklist/{{semester.slug}}" data-ng-if="semester.hasEnrollmentData && semester.slug && semester.timeBucket !== 'past' && !isAdvisingStudentLookup">Book List</a>
         <br>
-        <div class="cc-widget-text" data-ng-if="!semester.hasEnrolledClasses && !semester.summaryFromTranscript">
+        <div class="cc-widget-text" data-ng-if="!semester.hasEnrolledClasses && !semester.summaryFromTranscript && !semester.hasWithdrawalData">
           You are currently not enrolled in any classes for
           <span data-ng-bind="semester.name"></span>.
         </div>
-        <table data-ng-if="semester.hasEnrolledClasses || semester.summaryFromTranscript">
+        <table data-ng-if="!semester.hasWithdrawalData && (semester.hasEnrolledClasses || semester.summaryFromTranscript)">
           <thead>
             <tr>
               <th width="30%" scope="col">Class</th>
