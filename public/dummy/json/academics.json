@@ -559,7 +559,18 @@
           ],
           "url": "/academics/semester/spring-2012/class/pb_hlth-297"
         }
-      ]
+      ],
+      "hasWithdrawalData": true,
+      "withdrawalStatus":
+      {
+        "acadcareerCode": "UGRD",
+        "withcnclTypeCode": "WDR",
+        "withcnclTypeDescr": "Withdrew",
+        "withcnclReasonCode": "RETR",
+        "withcnclReasonDescr": "Retroactive",
+        "withcnclFromDate": "Feb 16, 2013",
+        "withcnclLastAttenDate": "Dec 14, 2012"
+      }
     }
   ],
   "teachingSemesters": [

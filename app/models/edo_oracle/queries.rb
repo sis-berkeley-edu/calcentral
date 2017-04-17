@@ -433,5 +433,24 @@ module EdoOracle
       SQL
     end
 
+    def self.get_withdrawal_status (person_id)
+      safe_query <<-SQL
+        SELECT STUDENT_ID as student_id,
+          ACADCAREER_CODE as acadcareer_code,
+          TERM_ID as term_id,
+          WITHCNCL_TYPE_CODE as withcncl_type_code,
+          WITHCNCL_TYPE_DESCR as withcncl_type_descr,
+          WITHCNCL_REASON_CODE as withcncl_reason_code,
+          WITHCNCL_REASON_DESCR as withcncl_reason_descr,
+          WITHCNCL_FROMDATE as withcncl_fromdate,
+          WITHCNCL_LASTATTENDDATE as withcncl_lastattendate
+        FROM
+          SISEDO.STUDENT_REGISTRATIONV00_VW
+        WHERE
+          STUDENT_ID = '#{person_id}' AND
+          WITHCNCL_TYPE_CODE IS NOT NULL
+      SQL
+    end
+
   end
 end
