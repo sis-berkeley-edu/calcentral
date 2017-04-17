@@ -9,9 +9,13 @@ module Oec
     end
 
     def self.catalog_id_specific_mapping(dept_name, catalog_id)
+      self.catalog_id_specific_mappings(dept_name).find { |m| m.catalog_id == catalog_id }
+    end
+
+    def self.catalog_id_specific_mappings(dept_name)
       # Cached retrieval for the small number of mappings, such as BIOLOGY 1A/1B, that depend on specific catalog IDs.
       @catalog_id_specific_mappings ||= Oec::CourseCode.where.not(catalog_id: '').to_a
-      @catalog_id_specific_mappings.find { |m| m.dept_name == dept_name && m.catalog_id == catalog_id }
+      @catalog_id_specific_mappings.select { |m| m.dept_name == dept_name }
     end
 
     def self.dept_names_for_code(dept_code)
