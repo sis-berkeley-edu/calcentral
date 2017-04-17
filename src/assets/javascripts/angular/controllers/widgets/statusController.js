@@ -150,6 +150,7 @@ angular.module('calcentral.controllers').controller('StatusController', function
     }
     return academicStatusFactory.getHolds().then(
       function(parsedHolds) {
+        var holdsCount;
         if (parsedHolds.isError) {
           $scope.holds = {
             errored: true
@@ -158,8 +159,9 @@ angular.module('calcentral.controllers').controller('StatusController', function
           $scope.hasWarnings = true;
         } else {
           $scope.holds = _.get(parsedHolds, 'holds');
-          $scope.count += _.get(parsedHolds, 'holds.length');
-          $scope.hasAlerts = true;
+          holdsCount = _.get(parsedHolds, 'holds.length');
+          $scope.count += holdsCount;
+          $scope.hasAlerts = (holdsCount > 0);
         }
       }
     );
