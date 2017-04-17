@@ -35,7 +35,7 @@ module EdoOracle
           ) AS affiliations,
           (
             SELECT LISTAGG("id", ',') WITHIN GROUP (ORDER BY "id")
-            FROM SISEDO.CLASSSECTIONV00_VW sec2
+            FROM SISEDO.CLASSSECTIONALLV00_MVW sec2
             WHERE
               sec."cs-course-id" = sec2."cs-course-id" AND
               sec."term-id" = sec2."term-id" AND
@@ -60,7 +60,7 @@ module EdoOracle
             )
           END AS co_scheduled_ccns
         FROM
-          SISEDO.CLASSSECTIONV00_VW sec
+          SISEDO.CLASSSECTIONALLV00_MVW sec
           LEFT OUTER JOIN SISEDO.MEETINGV00_VW mtg ON (
             mtg."cs-course-id" = sec."cs-course-id" AND
             mtg."term-id" = sec."term-id" AND
@@ -75,7 +75,7 @@ module EdoOracle
             instr."number" = sec."sectionNumber")
           LEFT OUTER JOIN SISEDO.DISPLAYNAMEXLAT_MVW xlat ON (
             xlat."classDisplayName" = sec."displayName")
-          LEFT OUTER JOIN SISEDO.API_COURSEV00_VW crs ON (
+          LEFT OUTER JOIN SISEDO.API_COURSEV00_MVW crs ON (
             xlat."courseDisplayName" = crs."displayName"
             AND crs."status-code" = 'ACTIVE')
           WHERE
