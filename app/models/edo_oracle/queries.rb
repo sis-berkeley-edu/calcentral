@@ -34,7 +34,7 @@ module EdoOracle
     JOIN_SECTION_TO_COURSE = <<-SQL
       LEFT OUTER JOIN SISEDO.DISPLAYNAMEXLAT_MVW xlat ON (
         xlat."classDisplayName" = sec."displayName")
-      LEFT OUTER JOIN SISEDO.API_COURSEV00_VW crs ON (
+      LEFT OUTER JOIN SISEDO.API_COURSEV00_MVW crs ON (
         xlat."courseDisplayName" = crs."displayName" AND
         crs."status-code" = 'ACTIVE')
     SQL
@@ -53,7 +53,7 @@ module EdoOracle
     def self.get_enrolled_sections(person_id, terms = nil)
       # The push_pred hint below alerts Oracle to use indexes on SISEDO.API_COURSEV00_VW, aka crs.
       safe_query <<-SQL
-        SELECT /*+ push_pred(crs) */
+        SELECT
           #{SECTION_COLUMNS},
           sec."maxEnroll" AS enroll_limit,
           enr."STDNT_ENRL_STATUS_CODE" AS enroll_status,
@@ -61,8 +61,8 @@ module EdoOracle
           enr."UNITS_TAKEN" AS units,
           enr."GRADE_MARK" AS grade,
           enr."GRADING_BASIS_CODE" AS grading_basis
-        FROM SISEDO.ENROLLMENT_UIDV00_VW enr
-        JOIN SISEDO.CLASSSECTIONV00_VW sec ON (
+        FROM SISEDO.CC_ENROLLMENTV00_VW enr
+        JOIN SISEDO.CLASSSECTIONALLV00_MVW sec ON (
           enr."TERM_ID" = sec."term-id" AND
           enr."SESSION_ID" = sec."session-id" AND
           enr."CLASS_SECTION_ID" = sec."id" AND
@@ -88,7 +88,7 @@ module EdoOracle
           sec."startDate" AS start_date,
           sec."endDate" AS end_date
         FROM SISEDO.ASSIGNEDINSTRUCTORV00_VW instr
-        JOIN SISEDO.CLASSSECTIONV00_VW sec ON (
+        JOIN SISEDO.CLASSSECTIONALLV00_MVW sec ON (
           instr."term-id" = sec."term-id" AND
           instr."session-id" = sec."session-id" AND
           instr."cs-course-id" = sec."cs-course-id" AND
@@ -114,7 +114,7 @@ module EdoOracle
           sec."cs-course-id" AS cs_course_id,
           sec."maxEnroll" AS enroll_limit,
           sec."maxWaitlist" AS waitlist_limit
-        FROM SISEDO.CLASSSECTIONV00_VW sec
+        FROM SISEDO.CLASSSECTIONALLV00_MVW sec
         #{JOIN_SECTION_TO_COURSE}
         WHERE sec."status-code" IN ('A','S')
           AND sec."primary" = 'false'
@@ -162,7 +162,7 @@ module EdoOracle
           mtg."endDate" AS meeting_end_date
         FROM
           SISEDO.MEETINGV00_VW mtg
-        JOIN SISEDO.CLASSSECTIONV00_VW sec ON (
+        JOIN SISEDO.CLASSSECTIONALLV00_MVW sec ON (
           mtg."cs-course-id" = sec."cs-course-id" AND
           mtg."term-id" = sec."term-id" AND
           mtg."session-id" = sec."session-id" AND
@@ -190,7 +190,7 @@ module EdoOracle
           exam."location-descr" AS location
         FROM
           SISEDO.EXAMV00_VW exam
-        RIGHT JOIN SISEDO.CLASSSECTIONV00_VW sec ON (
+        RIGHT JOIN SISEDO.CLASSSECTIONALLV00_MVW sec ON (
           exam."cs-course-id" = sec."cs-course-id" AND
           exam."term-id" = sec."term-id" AND
           exam."session-id" = sec."session-id" AND
@@ -216,7 +216,7 @@ module EdoOracle
       safe_query <<-SQL
         SELECT
           #{SECTION_COLUMNS}
-        FROM SISEDO.CLASSSECTIONV00_VW sec
+        FROM SISEDO.CLASSSECTIONALLV00_MVW sec
         #{JOIN_SECTION_TO_COURSE}
         WHERE sec."term-id" = '#{term_id}'
           AND sec."id" IN (#{section_ids.collect { |id| id.to_i }.join(', ')})
@@ -245,7 +245,7 @@ module EdoOracle
           instr."printInScheduleOfClasses" AS print_in_schedule
         FROM
           SISEDO.ASSIGNEDINSTRUCTORV00_VW instr
-        JOIN SISEDO.CLASSSECTIONV00_VW sec ON (
+        JOIN SISEDO.CLASSSECTIONALLV00_MVW sec ON (
           instr."cs-course-id" = sec."cs-course-id" AND
           instr."term-id" = sec."term-id" AND
           instr."session-id" = sec."session-id" AND
@@ -288,7 +288,7 @@ module EdoOracle
           TRIM(crs."title") AS course_title,
           TRIM(crs."transcriptTitle") AS course_title_short
         FROM SISEDO.API_CROSSLISTINGSV00_VW xlist
-        JOIN SISEDO.API_COURSEV00_VW crs ON
+        JOIN SISEDO.API_COURSEV00_MVW crs ON
           (xlist."cms-id" = crs."cms-id")
         WHERE xlist."displayName" = '#{course_code}'
       SQL
@@ -392,7 +392,7 @@ module EdoOracle
         SELECT
           count(enroll."TERM_ID") AS enroll_count
         FROM
-          SISEDO.ENROLLMENT_UIDV00_VW enroll
+          SISEDO.CC_ENROLLMENTV00_VW enroll
         WHERE
           enroll."CAMPUS_UID" = '#{ldap_uid.to_i}' AND
           rownum < 2
@@ -419,7 +419,7 @@ module EdoOracle
         SELECT
           #{SECTION_COLUMNS}
         FROM
-          SISEDO.CLASSSECTIONV00_VW sec
+          SISEDO.CLASSSECTIONALLV00_MVW sec
         #{JOIN_SECTION_TO_COURSE}
         WHERE
           sec."term-id" = '#{term_id}' AND
