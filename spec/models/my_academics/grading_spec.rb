@@ -202,7 +202,7 @@ describe MyAcademics::Grading do
       stub_const("MyAcademics::Grading::ACTIVE_GRADING_TERMS", ['2138'])
     end
 
-    it 'it should return expected values merged into section' do
+    it 'it should return expected values merged into section', :if => CampusOracle::Connection.test_data? do
       subject.merge(feed)
       expect(feed[:teachingSemesters][0][:classes][0][:sections][0][:gradingLink]).to eq fake_grading_url
       expect(feed[:teachingSemesters][0][:classes][0][:sections][0][:ccGradingStatus]).to eq :gradesPosted
@@ -228,7 +228,7 @@ describe MyAcademics::Grading do
       stub_const("MyAcademics::Grading::ACTIVE_GRADING_TERMS", ['2145'])
     end
 
-    it 'should use the summer-specific function to parse grading status' do
+    it 'should use the summer-specific function to parse grading status', :if => CampusOracle::Connection.test_data? do
       subject.merge(feed)
       expect(feed[:teachingSemesters][0][:classes][0][:sections][0][:gradingLink]).to eq fake_grading_url
       expect(feed[:teachingSemesters][0][:classes][0][:sections][0][:csGradingStatus]).to eq :GRD
