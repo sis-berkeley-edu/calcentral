@@ -129,7 +129,7 @@ module MyAcademics
         elsif use_transcript_grades?(semester) && transcript_term && transcript_term[:courses]
           grade_sources = transcript_term[:courses].select { |t| t[:dept] == course[:dept] && t[:courseCatalog] == course[:courseCatalog] }
         end
-        course[:transcript] = grade_sources.map { |e| e.slice(:units, :grade) } if grade_sources.present?
+        course[:transcript] = grade_sources.map { |e| e.slice(:units, :grade, :grade_points) } if grade_sources.present?
       end
 
       if transcript_term && transcript_term[:courses]
