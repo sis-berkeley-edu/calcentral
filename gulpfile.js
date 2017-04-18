@@ -374,15 +374,11 @@
    * Add hashes to the files and update the includes (production)
    */
   gulp.task('revall', function() {
-    if (!isProduction) {
-      return;
-    }
-
     var path = require('path');
     var RevAll = require('gulp-rev-all');
     var revAllAssets = new RevAll({
-      // Since we only run this in production mode, add some extra logging
-      debug: true,
+      // Add some extra logging in production mode
+      debug: isProduction,
       dontGlobal: [
         /favicon\.ico/g,
         'manifest.json'
