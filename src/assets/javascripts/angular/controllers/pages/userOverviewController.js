@@ -227,20 +227,15 @@ angular.module('calcentral.controllers').controller('UserOverviewController', fu
   };
 
   var loadStudentSuccess = function() {
-    console.log('calling advisingFactory.getStudentSuccess');
     advisingFactory.getStudentSuccess({
       uid: $routeParams.uid
     }).then(
       function successCallback(response) {
-        console.log('executing successCallback');
         $scope.studentSuccess.outstandingBalance = _.get(response, 'data.outstandingBalance');
         parseTermGpa(response);
       }
     ).finally(function() {
-      console.log('finished parsing');
-      console.dir($scope);
       $scope.studentSuccess.isLoading = false;
-      console.log('All done... finally');
     });
   };
 
@@ -266,7 +261,6 @@ angular.module('calcentral.controllers').controller('UserOverviewController', fu
   };
 
   var chartGpaTrend = function(termGpas) {
-    console.log('Building highcharts data');
     var chartData = _.map(termGpas, 'termGpa');
 
     // The last element of the data series must also contain custom marker information to show the GPA.
@@ -286,15 +280,10 @@ angular.module('calcentral.controllers').controller('UserOverviewController', fu
         symbol: 'circle'
       }
     };
-    console.log('Setting highcharts data into scope: ');
     $scope.highCharts.dataSeries.push(chartData);
-    console.dir($scope);
   };
 
   var parseTermGpa = function(response) {
-    console.log('Parsing term GPA');
-    console.dir(_.get(response, 'data.termGpa'));
-
     var termGpas = [];
     _.forEach(_.get(response, 'data.termGpa'), function(term) {
       if (term.termGpa && isActiveCareer(term)) {
@@ -302,7 +291,6 @@ angular.module('calcentral.controllers').controller('UserOverviewController', fu
       }
     });
     $scope.studentSuccess.termGpa = _.sortBy(termGpas, ['termId']);
-    console.dir($scope);
 
     if (termGpas.length > 2) {
       chartGpaTrend(termGpas);

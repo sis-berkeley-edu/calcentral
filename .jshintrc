@@ -19,6 +19,5 @@
   "strict": true,
   "undef": true,
   "unused": true,
-  "trailing": true,
-  "devel": true
+  "trailing": true
 }
