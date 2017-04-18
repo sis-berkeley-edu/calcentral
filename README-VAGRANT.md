@@ -1,6 +1,6 @@
-#CalCentral with Vagrant
+# CalCentral with Vagrant
 
-##Overview
+## Overview
 
 Our Vagrant environment has 2 layers. First, Vagrant automates the startup & shutdown of a virtual machine that
 runs Linux. Inside this virtual machine, Docker is used to automate the startup of "containers" that run the
@@ -9,7 +9,7 @@ was used as the core of our Vagrant/Docker setup, and has a lot of helpful backg
 and Docker work. You should also read and understand the [Docker user guide](https://docs.docker.com/userguide/) as the
 Docker container way of doing things can often be counterintuitive.
 
-##New developer setup
+## New developer setup
 1. Install Vagrant https://www.vagrantup.com/downloads.html
 1. Install VirtualBox  https://www.virtualbox.org/wiki/Downloads
 1. Install vagrant-vbguest (to keep guest additions up to date):
