@@ -162,6 +162,7 @@ module EdoOracle
         if row.include? 'enroll_status'
           # Grading and waitlist data relevant to students.
           section_data[:grade] = row['grade'].strip if row['grade'].present?
+          section_data[:grade_points] = row['grade_points'] if row['grade_points'].present?
           section_data[:grading_basis] = row['grading_basis'] if section_data[:is_primary_section]
           if row['enroll_status'] == 'W'
             section_data[:waitlisted] = true
