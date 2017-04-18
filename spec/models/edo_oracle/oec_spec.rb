@@ -18,9 +18,9 @@ describe EdoOracle::Oec do
         ]
       end
       it { should include(
-        "(sec.\"displayName\" LIKE 'CATALAN %')",
-        "(sec.\"displayName\" LIKE 'PORTUG %')",
-        "(sec.\"displayName\" LIKE 'SPANISH %')"
+        "(sec.\"displayName\" LIKE 'CATALAN %'",
+        "(sec.\"displayName\" LIKE 'PORTUG %'",
+        "(sec.\"displayName\" LIKE 'SPANISH %'"
       ) }
       it { should_not include "(sec.\"displayName\" LIKE 'ILA %')" }
       it { should_not include 'NOT' }
