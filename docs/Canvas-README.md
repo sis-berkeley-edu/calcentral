@@ -1,4 +1,4 @@
-#Canvas support
+# Canvas support
 
 ## Canvas maintenance Rake tasks
 

@@ -1,4 +1,4 @@
-#CalCentral
+# CalCentral
 
 [![Dependency Status](https://img.shields.io/gemnasium/ets-berkeley-edu/calcentral.svg)](https://gemnasium.com/ets-berkeley-edu/calcentral) [![devDependency Status](https://david-dm.org/ets-berkeley-edu/calcentral/dev-status.svg)](https://david-dm.org/ets-berkeley-edu/calcentral#info=devDependencies) [![Code Climate](https://img.shields.io/codeclimate/github/ets-berkeley-edu/calcentral.svg)](https://codeclimate.com/github/ets-berkeley-edu/calcentral)
 * Master Build: [![Build Status](https://api.travis-ci.org/ets-berkeley-edu/calcentral.svg?branch=master)](https://travis-ci.org/ets-berkeley-edu/calcentral)
