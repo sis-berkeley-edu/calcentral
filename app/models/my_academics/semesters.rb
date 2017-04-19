@@ -16,11 +16,16 @@ module MyAcademics
         enrollments.merge!(CampusOracle::UserCourses::All.new(user_id: @uid).get_all_campus_courses) if Settings.features.allow_legacy_fallback
       end
 
-      transcripts =  Settings.features.allow_legacy_fallback ? CampusOracle::UserCourses::Transcripts.new(user_id: @uid).get_all_transcripts : []
       campus_solution_id = CalnetCrosswalk::ByUid.new(user_id: @uid).lookup_campus_solutions_id
       withdrawal_data = EdoOracle::Queries.get_withdrawal_status(campus_solution_id)
-      data[:additionalCredits] = transcripts[:additional_credits] if transcripts[:additional_credits].any?
-      data[:semesters] = semester_feed(enrollments, transcripts[:semesters], withdrawal_data).compact
+
+      if Settings.features.allow_legacy_fallback
+        transcripts =  CampusOracle::UserCourses::Transcripts.new(user_id: @uid).get_all_transcripts
+        data[:additionalCredits] = transcripts[:additional_credits] if transcripts[:additional_credits].any?
+      end
+
+      transcript_terms = transcripts ? transcripts[:semesters] : {}
+      data[:semesters] = semester_feed(enrollments, transcript_terms, withdrawal_data).compact
       merge_semesters_count data
     end
 
