@@ -175,7 +175,6 @@ describe MyAcademics::Semesters do
     before do
       allow(Settings.terms).to receive(:fake_now).and_return '2016-04-01'
       allow(Settings.terms).to receive(:legacy_cutoff).and_return 'spring-2017'
-      allow(Settings.features).to receive(:allow_legacy_fallback).and_return true
       allow_any_instance_of(CampusOracle::UserCourses::All).to receive(:get_all_campus_courses).and_return enrollment_data
       expect(EdoOracle::Queries).not_to receive :get_enrolled_sections
     end
@@ -191,7 +190,6 @@ describe MyAcademics::Semesters do
     before do
       allow(Settings.terms).to receive(:fake_now).and_return '2016-04-01'
       allow(Settings.terms).to receive(:legacy_cutoff).and_return 'fall-2009'
-      allow(Settings.features).to receive(:allow_legacy_fallback).and_return false
       expect(CampusOracle::Queries).not_to receive :get_enrolled_sections
       allow_any_instance_of(EdoOracle::UserCourses::All).to receive(:get_all_campus_courses).and_return enrollment_data
     end
