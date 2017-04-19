@@ -162,6 +162,9 @@ describe MyAcademics::Semesters do
         end
       end
     end
+  end
+
+  shared_examples 'a legacy semester with additional credits' do
     it 'should include additional credits' do
       expect(feed[:additionalCredits]).to eq transcript_data[:additional_credits]
       expect(feed[:pastSemestersLimit]).to eq (feed[:pastSemestersCount] + 2)
@@ -172,11 +175,13 @@ describe MyAcademics::Semesters do
     before do
       allow(Settings.terms).to receive(:fake_now).and_return '2016-04-01'
       allow(Settings.terms).to receive(:legacy_cutoff).and_return 'spring-2017'
+      allow(Settings.features).to receive(:allow_legacy_fallback).and_return true
       allow_any_instance_of(CampusOracle::UserCourses::All).to receive(:get_all_campus_courses).and_return enrollment_data
       expect(EdoOracle::Queries).not_to receive :get_enrolled_sections
     end
     let(:enrollment_data) { generate_enrollment_data(edo_source: false)  }
     it_should_behave_like 'a good and proper munge'
+    it_should_behave_like 'a legacy semester with additional credits'
     it 'advertises legacy source' do
       expect(feed[:semesters]).to all include({campusSolutionsTerm: false})
     end
@@ -186,6 +191,7 @@ describe MyAcademics::Semesters do
     before do
       allow(Settings.terms).to receive(:fake_now).and_return '2016-04-01'
       allow(Settings.terms).to receive(:legacy_cutoff).and_return 'fall-2009'
+      allow(Settings.features).to receive(:allow_legacy_fallback).and_return false
       expect(CampusOracle::Queries).not_to receive :get_enrolled_sections
       allow_any_instance_of(EdoOracle::UserCourses::All).to receive(:get_all_campus_courses).and_return enrollment_data
     end
@@ -246,6 +252,7 @@ describe MyAcademics::Semesters do
       allow_any_instance_of(EdoOracle::UserCourses::All).to receive(:get_all_campus_courses).and_return edo_enrollment_data
     end
     it_should_behave_like 'a good and proper munge'
+    it_should_behave_like 'a legacy semester with additional credits'
     it 'advertises mixed source' do
       expect(feed[:semesters][0..1]).to all include({campusSolutionsTerm: true})
       expect(feed[:semesters][2..3]).to all include({campusSolutionsTerm: false})
