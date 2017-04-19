@@ -60,6 +60,7 @@ module EdoOracle
           enr."WAITLISTPOSITION" AS waitlist_position,
           enr."UNITS_TAKEN" AS units,
           enr."GRADE_MARK" AS grade,
+          enr."GRADE_POINTS" AS grade_points,
           enr."GRADING_BASIS_CODE" AS grading_basis
         FROM SISEDO.CC_ENROLLMENTV00_VW enr
         JOIN SISEDO.CLASSSECTIONALLV00_MVW sec ON (
