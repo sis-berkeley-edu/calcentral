@@ -131,21 +131,21 @@ module EdoOracle
       subclauses = course_codes.group_by(&:dept_name).map do |dept_name, codes|
         subclause = ''
         if (default_code = codes.find { |code| code.catalog_id.blank? }) && (default_code.include_in_oec || import_all)
-          #All catalog IDs are included by default; note explicit exclusions
-          excluded_catalog_ids = codes.reject(&:include_in_oec).map(&:catalog_id)
+          # All catalog IDs are included by default; note explicit exclusions.
+          excluded_codes = codes.reject &:include_in_oec
+          # Also exclude any catalog IDs that are explicitly mapped to other departments.
+          excluded_codes.concat ::Oec::CourseCode.catalog_id_specific_mappings(dept_name)
           subclause << "sec.\"displayName\" LIKE '#{SubjectAreas.compress dept_name} %'"
-          if !import_all && excluded_catalog_ids.any?
-            excluded_catalog_ids.each do |id|
-              subclause << " and sec.\"displayName\" NOT LIKE '%#{id}')"
+          if !import_all && excluded_codes.any?
+            excluded_codes.each do |code|
+              subclause << " and sec.\"displayName\" != '#{SubjectAreas.compress dept_name} #{code.catalog_id}'"
             end
           end
         else
-          #No catalog IDs are included by default; note explicit inclusions
-          included_catalog_ids = codes.select(&:include_in_oec).map(&:catalog_id)
-          if included_catalog_ids.any?
-            subclause << "sec.\"displayName\" LIKE '#{SubjectAreas.compress dept_name} %' and ("
-            subclause << included_catalog_ids.map { |id| "sec.\"displayName\" LIKE '%#{id}'" }.join(' or ')
-            subclause << ')'
+          # No catalog IDs are included by default; note explicit inclusions
+          included_codes = codes.select &:include_in_oec
+          if included_codes.any?
+            subclause << included_codes.map { |code| "sec.\"displayName\" = '#{SubjectAreas.compress dept_name} #{code.catalog_id}'" }.join(' or ')
           end
         end
         subclause

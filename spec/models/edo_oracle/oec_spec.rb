@@ -11,16 +11,16 @@ describe EdoOracle::Oec do
     context 'limiting query by department code' do
       let(:course_codes) do
         [
-          Oec::CourseCode.new(dept_name: 'CATALAN', catalog_id: nil, dept_code: 'LPSPP', include_in_oec: true),
-          Oec::CourseCode.new(dept_name: 'PORTUG', catalog_id: nil, dept_code: 'LPSPP', include_in_oec: true),
-          Oec::CourseCode.new(dept_name: 'SPANISH', catalog_id: nil, dept_code: 'LPSPP', include_in_oec: true),
-          Oec::CourseCode.new(dept_name: 'ILA', catalog_id: nil, dept_code: 'LPSPP', include_in_oec: false)
+          Oec::CourseCode.new(dept_name: 'CATALAN', catalog_id: '', dept_code: 'LPSPP', include_in_oec: true),
+          Oec::CourseCode.new(dept_name: 'PORTUG', catalog_id: '', dept_code: 'LPSPP', include_in_oec: true),
+          Oec::CourseCode.new(dept_name: 'SPANISH', catalog_id: '', dept_code: 'LPSPP', include_in_oec: true),
+          Oec::CourseCode.new(dept_name: 'ILA', catalog_id: '', dept_code: 'LPSPP', include_in_oec: false)
         ]
       end
       it { should include(
-        "(sec.\"displayName\" LIKE 'CATALAN %')",
-        "(sec.\"displayName\" LIKE 'PORTUG %')",
-        "(sec.\"displayName\" LIKE 'SPANISH %')"
+        "(sec.\"displayName\" LIKE 'CATALAN %'",
+        "(sec.\"displayName\" LIKE 'PORTUG %'",
+        "(sec.\"displayName\" LIKE 'SPANISH %'"
       ) }
       it { should_not include "(sec.\"displayName\" LIKE 'ILA %')" }
       it { should_not include 'NOT' }
@@ -34,14 +34,14 @@ describe EdoOracle::Oec do
     context 'limiting query by course code' do
       let(:course_codes) do
         [
-          Oec::CourseCode.new(dept_name: 'INTEGBI', catalog_id: nil, dept_code: 'IBIBI', include_in_oec: true),
+          Oec::CourseCode.new(dept_name: 'INTEGBI', catalog_id: '', dept_code: 'IBIBI', include_in_oec: true),
           Oec::CourseCode.new(dept_name: 'BIOLOGY', catalog_id: '1B', dept_code: 'IBIBI', include_in_oec: true),
           Oec::CourseCode.new(dept_name: 'BIOLOGY', catalog_id: '1BL', dept_code: 'IBIBI', include_in_oec: true)
         ]
       end
       it { should include(
         "(sec.\"displayName\" LIKE 'INTEGBI %'",
-        "(sec.\"displayName\" LIKE 'BIOLOGY %' and (sec.\"displayName\" LIKE '%1B' or sec.\"displayName\" LIKE '%1BL')"
+        "(sec.\"displayName\" = 'BIOLOGY 1B' or sec.\"displayName\" = 'BIOLOGY 1BL')"
       )}
       it { should_not include 'NOT' }
     end
