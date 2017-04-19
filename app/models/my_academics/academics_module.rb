@@ -22,6 +22,10 @@ module MyAcademics
         termCode: term_cd,
         termYear: term_yr,
         timeBucket: time_bucket(term_yr, term_cd),
+        # TODO: With Settings.features.allow_legacy_fallback == false for GL8.1, this is no longer accurate, and should be removed.
+        # We will be pulling from EDODB for all terms including legacy terms, so every term will be a CampusSolutionsTerm.
+        # But until we decide to remove the flag, we should leave this, in case we need to fallback onto CampusOracle again.  In that case,
+        # a lot of the logic dependent on this flag will still be valid.
         campusSolutionsTerm: !Berkeley::Terms.legacy?(term_yr, term_cd),
         gradingInProgress: (terms.grading_in_progress && (slug == terms.grading_in_progress.slug)),
         classes: []
