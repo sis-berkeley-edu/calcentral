@@ -125,6 +125,7 @@ module MyAcademics
         term_details = CampusSolutions::EnrollmentTerm.new(user_id: @uid, term_id: term_id).get
         instructions[term_id] = term_details.try(:[], :feed).try(:[], :enrollmentTerm)
         instructions[term_id][:concurrentApplyDeadline] = get_concurrent_apply_deadline(term_id)
+        instructions[term_id][:termIsSummer] = Berkeley::TermCodes.edo_id_is_summer?(term_id)
       end
       instructions
     end

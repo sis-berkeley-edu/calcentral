@@ -11,6 +11,11 @@ angular.module('calcentral.controllers').controller('EnrollmentCardController', 
   $scope.accessibilityAnnounce = apiService.util.accessibilityAnnounce;
   linkService.addCurrentRouteSettings($scope);
 
+  $scope.summerFees = {
+    link: 'http://summer.berkeley.edu/application/fees',
+    title: 'Summer Sessions Fees'
+  };
+
   var sections = [
     {
       id: 'plan',
