@@ -3,7 +3,7 @@ describe User::Identifiers do
   class StudentTestClass < BaseProxy; include User::Identifiers; end
 
   before do
-    allow(CalnetLdap::UserAttributes).to receive(:new).and_return double(get_feed: ldap_attributes)
+    allow(CalnetLdap::UserAttributes).to receive(:new).with(user_id: uid).and_return double(get_feed: ldap_attributes)
   end
 
   let(:ldap_attributes) { {ldap_uid: uid, campus_solutions_id: ldap_student_id} }

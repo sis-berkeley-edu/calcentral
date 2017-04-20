@@ -19,7 +19,7 @@ module User
         if Settings.calnet_crosswalk_proxy.enabled
           cs_id = CalnetCrosswalk::ByUid.new(user_id: ldap_uid).lookup_campus_solutions_id
         else
-          cs_id = (ldap_feed = CalnetLdap::UserAttributes.new(user_id: @uid).get_feed) && ldap_feed[:campus_solutions_id]
+          cs_id = (ldap_feed = CalnetLdap::UserAttributes.new(user_id: ldap_uid).get_feed) && ldap_feed[:campus_solutions_id]
         end
         cache(ldap_uid, cs_id)
       end
