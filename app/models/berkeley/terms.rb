@@ -176,7 +176,8 @@ module Berkeley
         legacy_terms = grouped[true]
         sisedo_terms = grouped[false]
       end
-      return {:legacy => legacy_terms, :sisedo => sisedo_terms}
+      return {:legacy => legacy_terms, :sisedo => sisedo_terms} if Settings.features.allow_legacy_fallback
+      {:legacy => nil, :sisedo => terms}
     end
 
   end
