@@ -307,6 +307,13 @@ angular.module('calcentral.services').service('academicsService', function() {
     }
   };
 
+  var containsLawClass = function(selectedTeachingSemester) {
+    var classes = _.get(selectedTeachingSemester, 'classes');
+    return !!_.find(classes, {
+      dept: 'LAW'
+    });
+  };
+
   var isSummerSemester = function(selectedTeachingSemester) {
     var termCode = _.get(selectedTeachingSemester, 'termCode');
     return (termCode === 'C');
@@ -315,6 +322,7 @@ angular.module('calcentral.services').service('academicsService', function() {
   // Expose methods
   return {
     chooseDefaultSemester: chooseDefaultSemester,
+    containsLawClass: containsLawClass,
     containsMidpointClass: containsMidpointClass,
     countSectionItem: countSectionItem,
     expectedGradTerm: expectedGradTerm,
