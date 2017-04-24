@@ -1,12 +1,10 @@
 module MyAcademics
   class AcademicPlan < UserSpecificModel
     include AdvisingAcademicPlannerFeatureFlagged
-    include LinkFetcher
 
     def merge(data)
       if is_feature_enabled
         data[:planSemesters] = get_plan_semesters(data[:semesters])
-        data[:legacyReportStatus] = get_legacy_report_status
       end
     end
 
@@ -18,27 +16,6 @@ module MyAcademics
         plan_semesters << build_term_plan_semester(term_id, plans, semesters)
       end
       add_prev_next(plan_semesters)
-    end
-
-    def get_legacy_report_status
-      attributes_response = HubEdos::StudentAttributes.new(user_id: @uid).get
-      attributes = attributes_response.try(:[], :feed).try(:[], 'student').try(:[], 'studentAttributes')
-      if attributes
-        legacy_attribute = attributes.find {|attr| attr.try(:[], 'type').try(:[], 'code') == '+R11'}
-        campus_solutions_id = CalnetCrosswalk::ByUid.new(user_id: @uid).lookup_campus_solutions_id
-        if legacy_attribute && campus_solutions_id
-          return {
-            code: legacy_attribute.try(:[], 'reason').try(:[], 'code'),
-            message: legacy_attribute.try(:[], 'reason').try(:[], 'formalDescription'),
-            link: fetch_link('UC_CX_ARCH_TSCRPT_ADVSTDNT', {EMPLID: campus_solutions_id})
-          }
-        end
-      end
-      {
-        code: 'NONE',
-        message: 'Legacy report not present',
-        link: nil
-      }
     end
 
     def build_term_plan_semester(term_id, plans, semesters)
