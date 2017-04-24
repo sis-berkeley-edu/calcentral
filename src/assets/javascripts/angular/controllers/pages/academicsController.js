@@ -100,6 +100,12 @@ angular.module('calcentral.controllers').controller('AcademicsController', funct
     }
   };
 
+  var setGradingFlags = function(selectedTeachingSemester) {
+    $scope.containsMidpointClass = academicsService.containsMidpointClass(selectedTeachingSemester);
+    $scope.containsLawClass = academicsService.containsLawClass(selectedTeachingSemester);
+    $scope.isSummerSemester = academicsService.isSummerSemester(selectedTeachingSemester);
+  };
+
   var fillSemesterSpecificPage = function(semesterSlug, data) {
     var isOnlyInstructor = !!$routeParams.teachingSemesterSlug;
     var selectedStudentSemester = academicsService.findSemester(data.semesters, semesterSlug, selectedStudentSemester);
@@ -122,8 +128,7 @@ angular.module('calcentral.controllers').controller('AcademicsController', funct
     }
     $scope.selectedStudentSemester = selectedStudentSemester;
     $scope.selectedTeachingSemester = selectedTeachingSemester;
-    $scope.containsMidpointClass = academicsService.containsMidpointClass($scope.selectedTeachingSemester);
-    $scope.isSummerSemester = academicsService.isSummerSemester($scope.selectedTeachingSemester);
+    setGradingFlags(selectedTeachingSemester);
 
     // Get selected course from URL params and extract data from selected semester schedule
     if ($routeParams.classSlug) {
@@ -197,8 +202,7 @@ angular.module('calcentral.controllers').controller('AcademicsController', funct
         // Show the current semester, or the most recent semester, since otherwise the instructor
         // landing page will be grimly bare.
         $scope.selectedTeachingSemester = academicsService.chooseDefaultSemester(response.data.teachingSemesters);
-        $scope.containsMidpointClass = academicsService.containsMidpointClass($scope.selectedTeachingSemester);
-        $scope.isSummerSemester = academicsService.isSummerSemester($scope.selectedTeachingSemester);
+        setGradingFlags($scope.selectedTeachingSemester);
         $scope.widgetSemesterName = $scope.selectedTeachingSemester.name;
       }
     }
