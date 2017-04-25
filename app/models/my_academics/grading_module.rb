@@ -18,7 +18,7 @@ module MyAcademics
           gradingPeriodNotSet: :periodNotStarted
         },
         GRD: {
-          beforeGradingPeriod: :periodNotStarted,
+          beforeGradingPeriod: :periodStarted,
           inGradingPeriod: :periodStarted,
           afterGradingPeriod: :gradesOverdue,
           gradingPeriodNotSet: :periodStarted
