@@ -17,10 +17,8 @@ module DegreeProgress
           if should_exclude progress
             next
           end
-
-          result.push(progress).last.tap do |prog|
-            prog[:requirements] = normalize(prog.fetch(:requirements))
-          end
+          progress[:requirements] = normalize(progress.fetch(:requirements))
+          result.push(progress) unless progress[:requirements].blank?
         end
       end
       result
