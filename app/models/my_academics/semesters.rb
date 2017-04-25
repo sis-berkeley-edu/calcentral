@@ -30,7 +30,8 @@ module MyAcademics
     end
 
     def semester_feed(enrollment_terms, transcript_terms, withdrawal_data)
-      (enrollment_terms.keys | transcript_terms.keys).sort.reverse.map do |term_key|
+      withdrawal_terms = withdrawal_data.map {|row| Berkeley::TermCodes.edo_id_to_code(row['term_id'])}
+      (enrollment_terms.keys | transcript_terms.keys | withdrawal_terms).sort.reverse.map do |term_key|
         semester = semester_info term_key
         semester.delete :slug if @filtered
         if enrollment_terms[term_key]
@@ -40,37 +41,42 @@ module MyAcademics
           semester[:hasEnrolledClasses] = has_enrolled_classes?(enrollment_terms[term_key])
           merge_grades(semester, transcript_terms[term_key])
           merge_withdrawals(semester, withdrawal_data)
-        elsif Settings.features.allow_legacy_fallback
+        elsif transcript_terms[term_key] && Settings.features.allow_legacy_fallback
           semester[:hasEnrollmentData] = false
           semester[:summaryFromTranscript] = true
           semester[:hasEnrolledClasses] = false
           semester[:classes] = map_transcripts transcript_terms[term_key][:courses]
           semester[:notation] = translate_notation transcript_terms[term_key][:notations]
+        else
+          merge_withdrawals(semester, withdrawal_data)
         end
-        semester unless semester[:classes].empty?
+        semester unless semester[:classes].empty? && !semester[:hasWithdrawalData]
       end
     end
 
     def merge_withdrawals (semester, withdrawal_data)
       withdrawal_data.each do |row|
         if row['term_id'] == Berkeley::TermCodes.slug_to_edo_id(semester[:slug])
-          withdrawal_status =
-            {
-              hasWithdrawalData: true,
-              withdrawalStatus:
-                {
-                  acadcareerCode: row['acadcareer_code'],
-                  withcnclTypeCode: row['withcncl_type_code'],
-                  withcnclTypeDescr: row['withcncl_type_descr'],
-                  withcnclReasonCode: row['withcncl_reason_code'],
-                  withcnclReasonDescr: row['withcncl_reason_descr'],
-                  withcnclFromDate:  row['withcncl_fromdate'].to_date.strftime('%b %d, %Y'),
-                  withcnclLastAttenDate:  row['withcncl_lastattendate'].to_date.strftime('%b %d, %Y'),
-                }
-            }
+          withdrawal_status = map_withdrawal_status(row)
           semester.merge! withdrawal_status
         end
       end
+    end
+
+    def map_withdrawal_status(row)
+      {
+        hasWithdrawalData: true,
+        withdrawalStatus:
+          {
+            acadcareerCode: row['acadcareer_code'],
+            withcnclTypeCode: row['withcncl_type_code'],
+            withcnclTypeDescr: row['withcncl_type_descr'],
+            withcnclReasonCode: row['withcncl_reason_code'],
+            withcnclReasonDescr: row['withcncl_reason_descr'],
+            withcnclFromDate:  row['withcncl_fromdate']? row['withcncl_fromdate'].to_date.strftime('%b %d, %Y') : nil,
+            withcnclLastAttenDate:  row['withcncl_lastattendate']? row['withcncl_lastattendate'].to_date.strftime('%b %d, %Y'): nil,
+          }
+      }
     end
 
     def has_enrolled_classes?(enrollment_term)
