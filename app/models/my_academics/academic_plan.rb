@@ -88,7 +88,9 @@ module MyAcademics
         enrolledClasses:  semester.try(:[], :classes),
         notation:  semester.try(:[], :notation),
         hasWaitlisted: has_waitlisted_classes?(semester),
-        hasClassTranscript: has_class_transcript?(semester)
+        hasClassTranscript: has_class_transcript?(semester),
+        hasWithdrawalData: semester.try(:[], :hasWithdrawalData),
+        withdrawalStatus:  semester.try(:[], :withdrawalStatus)
       }.merge calc_enrolled_units(semester)
     end
 
