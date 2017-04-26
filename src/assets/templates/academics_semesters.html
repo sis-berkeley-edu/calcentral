@@ -111,6 +111,10 @@
         </table>
       </div>
     </div>
+    <span data-ng-if="pastSemestersCount <= 1 || (pastSemestersCount > 1 && pastSemestersLimit === 'Infinity')">
+      <strong>Note: </strong>Enrollment data for current term and back to Spring 2010 (where applicable) is displayed. <button class="cc-button-link" data-ng-show="!showMore" data-ng-click="showMore=!showMore">Show more</button>
+      <span data-ng-if="showMore"> If enrollments exist in terms prior to Spring 2010, the data will be displayed in Summer 2017. If you require a full record now, please order a transcript.</span>
+    </span>
     <div data-ng-if="pastSemestersCount > 1" data-cc-show-infinite-directive data-cc-show-infinite-limit="pastSemestersLimit"></div>
   </div>
 </div>

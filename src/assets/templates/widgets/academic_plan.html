@@ -2,27 +2,33 @@
   <div class="cc-widget-title">
     <h2 class="cc-left">Academic Plan</h2>
   </div>
-  <div class="cc-widget-padding" data-ng-if="legacyReportStatus && legacyReportStatus.code !== 'NONE'">
-    <p class="cc-academic-plan-card-legacy-report-status">
-      <i class="fa fa-exclamation-circle cc-icon-red"></i>
-      <span data-ng-bind="legacyReportStatus.message"></span>
-    </p>
-    <a data-cc-campus-solutions-link-directive="legacyReportStatus.link" data-ng-if="legacyReportStatus.link.url"></a>
-  </div>
+  <div data-cc-spinner-directive="planSemestersInfo.isLoading">
+    <div class="cc-widget-padding" data-ng-if="legacyReportStatus && legacyReportStatus.code !== 'NONE'">
+      <p class="cc-academic-plan-card-legacy-report-status">
+        <i class="fa fa-exclamation-circle cc-icon-red"></i>
+        <span data-ng-bind="legacyReportStatus.message"></span>
+      </p>
+      <a data-cc-campus-solutions-link-directive="legacyReportStatus.link" data-ng-if="legacyReportStatus.link.url"></a>
+    </div>
 
-  <div class="cc-widget-padding" data-ng-if="advisorLinks.updatePlanUrl.url">
-    <h3>
-      <a data-cc-campus-solutions-link-directive="advisorLinks.updatePlanUrl"
-        data-cc-campus-solutions-link-directive-cc-page-name="currentPage.name"
-        data-cc-campus-solutions-link-directive-cc-page-url="currentPage.url"
-        data-cc-campus-solutions-link-directive-cc-cache="advisingAcademics"
-        data-ng-click="expireAcademicsCache()"
-      >Update Multi-Year Planner</a>
-    </h3>
-  </div>
+    <div class="cc-widget-padding" data-ng-if="advisorLinks.updatePlanUrl.url">
+      <h3>
+        <a data-cc-campus-solutions-link-directive="advisorLinks.updatePlanUrl"
+          data-cc-campus-solutions-link-directive-cc-page-name="currentPage.name"
+          data-cc-campus-solutions-link-directive-cc-page-url="currentPage.url"
+          data-cc-campus-solutions-link-directive-cc-cache="advisingAcademics"
+          data-ng-click="expireAcademicsCache()"
+        >Update Multi-Year Planner</a>
+      </h3>
+    </div>
 
-  <div class="cc-flex-space-between-vertical-15">
-    <ul class="cc-widget-list cc-widget-list-border-top">
+    <div class="cc-academic-plan-card-oldest-terms-note">
+      <strong>Note: </strong>Historical enrollment data up to and including Spring 2010 is available for viewing at this time. <button class="cc-button-link" data-ng-show="!showMore" data-ng-click="showMore=!showMore">Show more</button>
+      <span data-ng-if="showMore"> If additional terms exist, they will be included during Summer 2017.  If you require a full record now, an Archived Transcript can be process via the link in Advising Resources Card.</span>
+    </div>
+
+    <div class="cc-flex-space-between-vertical-15">
+      <ul class="cc-widget-list cc-widget-list-border-top">
         <li
           data-ng-repeat="semester in planSemesters"
           class="cc-widget-list-hover cc-table"
@@ -212,6 +218,7 @@
             </div>
           </div>
         </li>
-      </div>
-    </ul>
+      </ul>
+    </div>
+  </div>
 </div>
