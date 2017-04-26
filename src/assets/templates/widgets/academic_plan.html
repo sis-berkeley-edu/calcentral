@@ -38,7 +38,7 @@
                 <span data-ng-bind="semester.name"></span>.
               </div>
               <div class="cc-widget-text" data-ng-if="semester.hasWithdrawalData">
-                Withdrew
+                <span data-ng-bind="semester.withdrawalStatus.withcnclTypeDescr"></span>
                 <span data-ng-bind="semester.withdrawalStatus.withcnclFromDate"></span> (Reason:<span data-ng-bind="semester.withdrawalStatus.withcnclReasonDescr"></span>)
               </div>
               <div data-ng-if="semester.plannedClasses.length">
