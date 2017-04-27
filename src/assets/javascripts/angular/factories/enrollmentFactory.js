@@ -10,7 +10,6 @@ var _ = require('lodash');
 angular.module('calcentral.factories').factory('enrollmentFactory', function(apiService, $route, $routeParams) {
   var urlEnrollmentInstructions = '/api/my/class_enrollments';
   // var urlEnrollmentInstructions = '/dummy/json/enrollment_instructions.json';
-  // var urlEnrollmentInstructions = '/dummy/json/enrollment_instructions_2172.json';
   var urlAdvisingEnrollmentInstructions = '/api/advising/class_enrollments/';
   // var urlAdvisingEnrollmentInstructions = '/dummy/json/enrollment_instructions.json';
 

@@ -1,24 +1,45 @@
 {
   "enrollmentTermAcademicPlanner": {
-    "2168": {
+    "2172": {
       "academicplanner": [
         {
-          "term": "2168",
-          "termDescr": "2016 Fall",
-          "classes": [{
-            "id": "124039",
-            "subjectCatalog": "PSYCHC115B",
-            "title": null,
-            "units": 4.0
-          }],
-          "totalUnits": 4.0
+          "term": "2172",
+          "termDescr": "2017 Spring"
         }
       ],
-      "studentId": "12701798",
+      "studentId": "11667051",
       "updateAcademicPlanner": {
         "isCsLink": true,
         "name": "Update",
-        "url": "https://bcs-web-dev-03.is.berkeley.edu:8443/psc/bcsdev/EMPLOYEE/HRMS/c/SCI_PLNR_FL.SCI_PLNR_FL.GBL?ucInstitution=UCB01"
+        "url": "https://bcswebqat.is.berkeley.edu/psp/bcsqat/EMPLOYEE/HRMS/c/SCI_PLNR_FL.SCI_PLNR_FL.GBL?ucInstitution=UCB01"
+      }
+    },
+    "2175": {
+      "academicplanner": [
+        {
+          "term": "2175",
+          "termDescr": "2017 Summer"
+        }
+      ],
+      "studentId": "11667051",
+      "updateAcademicPlanner": {
+        "isCsLink": true,
+        "name": "Update",
+        "url": "https://bcswebqat.is.berkeley.edu/psp/bcsqat/EMPLOYEE/HRMS/c/SCI_PLNR_FL.SCI_PLNR_FL.GBL?ucInstitution=UCB01"
+      }
+    },
+    "2178": {
+      "academicplanner": [
+        {
+          "term": "2178",
+          "termDescr": "2017 Fall"
+        }
+      ],
+      "studentId": "11667051",
+      "updateAcademicPlanner": {
+        "isCsLink": true,
+        "name": "Update",
+        "url": "https://bcswebqat.is.berkeley.edu/psp/bcsqat/EMPLOYEE/HRMS/c/SCI_PLNR_FL.SCI_PLNR_FL.GBL?ucInstitution=UCB01"
       }
     }
   },
@@ -34,6 +55,10 @@
               },
               "college": "Undergrad Natural Resources",
               "enrollmentRole": "default",
+              "expectedGraduationTerm": {
+                "code": "2192",
+                "name": "Spring 2019"
+              },
               "plan": {
                 "code": "04606U",
                 "description": "Nutritional Science BS"
@@ -60,162 +85,265 @@
             "termIsSummer": false,
             "termName": "Spring 2017"
           }
+        },
+        {
+          "academicPlans": [
+            {
+              "career": {
+                "code": "UGRD",
+                "description": "Undergraduate"
+              },
+              "college": "Undergrad Natural Resources",
+              "enrollmentRole": "default",
+              "expectedGraduationTerm": {
+                "code": "2192",
+                "name": "Spring 2019"
+              },
+              "plan": {
+                "code": "04606U",
+                "description": "Nutritional Science BS"
+              },
+              "primary": true,
+              "program": {
+                "code": "UCNR",
+                "description": "Undergrad Natural Resources"
+              },
+              "role": "default",
+              "subPlan": {},
+              "type": {
+                "category": "Major",
+                "code": "MAJ",
+                "description": "Major - Regular Acad/Prfnl"
+              }
+            }
+          ],
+          "careerCode": "UGRD",
+          "role": "default",
+          "term": {
+            "termDescr": "2017 Summer",
+            "termId": "2175",
+            "termIsSummer": true,
+            "termName": "Summer 2017"
+          }
+        },
+        {
+          "academicPlans": [
+            {
+              "career": {
+                "code": "UGRD",
+                "description": "Undergraduate"
+              },
+              "college": "Undergrad Natural Resources",
+              "enrollmentRole": "default",
+              "expectedGraduationTerm": {
+                "code": "2192",
+                "name": "Spring 2019"
+              },
+              "plan": {
+                "code": "04606U",
+                "description": "Nutritional Science BS"
+              },
+              "primary": true,
+              "program": {
+                "code": "UCNR",
+                "description": "Undergrad Natural Resources"
+              },
+              "role": "default",
+              "subPlan": {},
+              "type": {
+                "category": "Major",
+                "code": "MAJ",
+                "description": "Major - Regular Acad/Prfnl"
+              }
+            }
+          ],
+          "careerCode": "UGRD",
+          "role": "default",
+          "term": {
+            "termDescr": "2017 Fall",
+            "termId": "2178",
+            "termIsSummer": false,
+            "termName": "Fall 2017"
+          }
         }
       ]
     }
   ],
   "enrollmentTermInstructions": {
-    "2168": {
+    "2172": {
       "advisors": [
         {
-          "id": "123456",
-          "name": "Dai Smith",
-          "emailAddress": "DaiSmith@yahoo.com",
-          "title": "Major Advisor",
-          "program": "College of Engineering"
-        },
-        {
-          "id": "1337",
-          "name": "Marsh Man",
-          "emailAddress": "man@marsh.com",
-          "title": "College Advisor",
-          "program": "College of Letters & Science"
+          "emailAddress": "mscott@berkeley.edu",
+          "id": "123321",
+          "name": "Michael Scott",
+          "plan": "Nutritional Science BS",
+          "program": "Undergrad Natural Resources",
+          "title": "Advisor Only"
         }
       ],
+      "concurrentApplyDeadline": "02/17/2017",
       "enrolledClasses": [
         {
           "acadCareer": "UGRD",
           "acadCareerDescr": "Undergrad",
-          "id": "18258",
+          "id": "18776",
           "ssrComponent": "DIS",
           "ssrComponentDescr": "Discussion",
-          "subjectCatalog": "MATH 53",
-          "title": "Multivar Calculus",
+          "subjectCatalog": "MCELLBI 102",
+          "title": "SURV BIOCHEM & MOBI",
           "units": 0.0,
-          "when": "MWF 3:00P-3:59P"
+          "when": "M 10:00A-10:59A"
         },
         {
           "acadCareer": "UGRD",
           "acadCareerDescr": "Undergrad",
-          "id": "18122",
+          "id": "18775",
           "ssrComponent": "LEC",
           "ssrComponentDescr": "Lecture",
-          "subjectCatalog": "MATH 53",
-          "title": "Multivar Calculus",
+          "subjectCatalog": "MCELLBI 102",
+          "title": "SURV BIOCHEM & MOBI",
           "units": 4.0,
-          "when": "MW 5:00P-6:29P"
+          "when": "MWF 11:00A-11:59A"
         },
         {
           "acadCareer": "UGRD",
           "acadCareerDescr": "Undergrad",
-          "id": "21148",
+          "id": "32081",
           "ssrComponent": "DIS",
           "ssrComponentDescr": "Discussion",
-          "subjectCatalog": "PHYSICS 8B",
-          "title": "Intro Physics",
+          "subjectCatalog": "PLANTBI 40",
+          "title": "SECRET LIFE PLANTS",
           "units": 0.0,
-          "when": "F 8:00A-9:59A"
+          "when": "Tu 4:00P-4:59P"
         },
         {
           "acadCareer": "UGRD",
           "acadCareerDescr": "Undergrad",
-          "id": "32028",
+          "id": "25382",
           "ssrComponent": "LEC",
           "ssrComponentDescr": "Lecture",
-          "subjectCatalog": "PHYSICS 8B",
-          "title": "Intro Physics",
-          "units": 4.0,
-          "when": "TuTh 12:30P-1:59P"
+          "subjectCatalog": "PLANTBI 40",
+          "title": "SECRET LIFE PLANTS",
+          "units": 3.0,
+          "when": "TuTh 2:00P-2:59P"
         },
         {
           "acadCareer": "UGRD",
           "acadCareerDescr": "Undergrad",
-          "id": "21149",
+          "id": "23467",
+          "ssrComponent": "LEC",
+          "ssrComponentDescr": "Lecture",
+          "subjectCatalog": "STAT 133",
+          "title": "COMPUTING DATA",
+          "units": 3.0,
+          "when": "TuTh 11:00A-12:29P"
+        },
+        {
+          "acadCareer": "UGRD",
+          "acadCareerDescr": "Undergrad",
+          "id": "23470",
           "ssrComponent": "LAB",
           "ssrComponentDescr": "Laboratory",
-          "subjectCatalog": "PHYSICS 8B",
-          "title": "Intro Physics",
+          "subjectCatalog": "STAT 133",
+          "title": "COMPUTING DATA",
           "units": 0.0,
-          "when": "W 8:00A-9:59A"
+          "when": "W 12:00P-1:59P"
+        },
+        {
+          "acadCareer": "UGRD",
+          "acadCareerDescr": "Undergrad",
+          "id": "23479",
+          "ssrComponent": "LEC",
+          "ssrComponentDescr": "Lecture",
+          "subjectCatalog": "STAT 134",
+          "title": "CONCEPTS OF PROB",
+          "units": 3.0,
+          "when": "TuTh 9:30A-10:59A"
+        },
+        {
+          "acadCareer": "UGRD",
+          "acadCareerDescr": "Undergrad",
+          "id": "23480",
+          "ssrComponent": "DIS",
+          "ssrComponentDescr": "Discussion",
+          "subjectCatalog": "STAT 134",
+          "title": "CONCEPTS OF PROB",
+          "units": 0.0,
+          "when": "MW 9:00A-9:59A"
         }
       ],
-      "enrolledClassesTotalUnits": 8.0,
+      "enrolledClassesTotalUnits": 13.0,
       "enrollmentPeriod": [
-        {
-          "date": {
-            "datestring": "4/18",
-            "datetime": "2016-04-18T15:00:00-07:00",
-            "epoch": 1461016800
+          {
+            "date": {
+              "datestring": "10/17",
+              "datetime": "2016-10-17T11:00:00-07:00",
+              "epoch": 1476727200
+            },
+            "id": "PRI1",
+            "name": "Phase 1 Begins"
           },
-          "id": "PRI1",
-          "name": "Phase 1 Begins"
-        },
-        {
-          "date": {
-            "datestring": "7/18",
-            "datetime": "2016-07-18T15:00:00-07:00",
-            "epoch": 1468879200
+          {
+            "date": {
+              "datestring": "11/14",
+              "datetime": "2016-11-14T11:00:00-08:00",
+              "epoch": 1479150000
+            },
+            "id": "PRI2",
+            "name": "Phase 2 Begins"
           },
-          "id": "PRI2",
-          "name": "Phase 2 Begins"
-        },
-        {
-          "date": {
-            "datestring": "8/15",
-            "datetime": "2016-08-15T09:00:00-07:00",
-            "epoch": 1471276800
-          },
-          "id": "ADJ",
-          "name": "Adjustment Begins"
-        }
+          {
+            "date": {
+              "datestring": "1/09",
+              "datetime": "2017-01-09T09:00:00-08:00",
+              "epoch": 1483981200
+            },
+            "id": "ADJ",
+            "name": "Adjustment Begins"
+          }
       ],
       "isClassScheduleAvailable": true,
-      "isGradeBaseAvailable": false,
+      "isGradeBaseAvailable": true,
       "links": {
         "addEnrolledClasses": {
           "isCsLink": true,
           "name": "Add enrolled classes",
-          "url": "https://bcs-web-dev-03.is.berkeley.edu:8443/psc/bcsdev/EMPLOYEE/HRMS/c/SA_LEARNER_SERVICES_2.SSR_SSENRL_CART.GBL?"
+          "url": "https://bcswebqat.is.berkeley.edu/psp/bcsqat/EMPLOYEE/HRMS/c/SA_LEARNER_SERVICES_2.SSR_SSENRL_CART.GBL?"
         },
         "chooseClasses": {
           "isCsLink": true,
-          "name": "Choose your classes",
-          "url": "https://bcs-web-dev-03.is.berkeley.edu:8443/psc/bcsdev/EMPLOYEE/HRMS/c/SA_LEARNER_SERVICES_2.SSR_SSENRL_CART.GBL?"
+          "name": "Choose classes",
+          "url": "https://bcswebqat.is.berkeley.edu/psp/bcsqat/EMPLOYEE/HRMS/c/SA_LEARNER_SERVICES_2.SSR_SSENRL_CART.GBL?"
         },
         "courseCatalog": {
           "isCsLink": true,
           "name": "Course Catalog",
-          "url": "https://bcs-web-dev-03.is.berkeley.edu:8443/psc/bcsdev/EMPLOYEE/HRMS/c/UC_FA_AWD_MGT_FLU.UC_FA_AWD_MGT_FLU.GBL"
+          "url": "https://bcswebqat.is.berkeley.edu/psp/bcsqat/EMPLOYEE/HRMS/c/SA_LEARNER_SERVICES.SSS_BROWSE_CATLG.GBL?"
         },
         "dropEnrolledClasses": {
           "isCsLink": true,
           "name": "Drop enrolled classes",
-          "url": "https://bcs-web-dev-03.is.berkeley.edu:8443/psc/bcsdev/EMPLOYEE/HRMS/c/SA_LEARNER_SERVICES.SSR_SSENRL_DROP.GBL?"
-        },
-        "dropWaitlistedClasses": {
-          "isCsLink": true,
-          "name": "Drop waitlisted classes",
-          "url": "https://bcs-web-dev-03.is.berkeley.edu:8443/psc/bcsdev/EMPLOYEE/HRMS/c/UC_FA_AWD_MGT_FLU.UC_FA_AWD_MGT_FLU.GBL"
+          "url": "https://bcswebqat.is.berkeley.edu/psp/bcsqat/EMPLOYEE/HRMS/c/SA_LEARNER_SERVICES.SSR_SSENRL_DROP.GBL?"
         },
         "gradeBase": {
           "isCsLink": true,
           "name": "Grade Base URL",
-          "url": "https://bcs-web-dev-03.is.berkeley.edu:8443/psc/bcsdev/EMPLOYEE/HRMS/c/SA_LEARNER_SERVICES.SSR_SSENRL_EDIT.GBL?"
+          "url": "https://bcswebqat.is.berkeley.edu/psp/bcsqat/EMPLOYEE/HRMS/c/SA_LEARNER_SERVICES.SSR_SSENRL_EDIT.GBL?"
         },
         "scheduleClasses": {
           "isCsLink": true,
-          "name": "Schedule of Classes",
-          "url": "https://bcs-web-dev-03.is.berkeley.edu:8443/psc/bcsdev/EMPLOYEE/HRMS/c/UC_FA_AWD_MGT_FLU.UC_FA_AWD_MGT_FLU.GBL"
+          "name": "Schedule of Classes - SIS",
+          "url": "https://bcswebqat.is.berkeley.edu/psp/bcsqat/EMPLOYEE/HRMS/c/SA_LEARNER_SERVICES.CLASS_SEARCH.GBL?Page=SSR_CLSRCH_ENTRY&Action=U"
         },
         "swapEnrolledClasses": {
           "isCsLink": true,
           "name": "Swap enrolled classes",
-          "url": "https://bcs-web-dev-03.is.berkeley.edu:8443/psc/bcsdev/EMPLOYEE/HRMS/c/SA_LEARNER_SERVICES.SSR_SSENRL_SWAP.GBL?"
+          "url": "https://bcswebqat.is.berkeley.edu/psp/bcsqat/EMPLOYEE/HRMS/c/SA_LEARNER_SERVICES.SSR_SSENRL_SWAP.GBL?"
         },
         "updateEnrolledClasses": {
           "isCsLink": true,
           "name": "Update enrolled classes",
-          "url": "https://bcs-web-dev-03.is.berkeley.edu:8443/psc/bcsdev/EMPLOYEE/HRMS/c/SA_LEARNER_SERVICES.SSR_SSENRL_EDIT.GBL?"
+          "url": "https://bcswebqat.is.berkeley.edu/psp/bcsqat/EMPLOYEE/HRMS/c/SA_LEARNER_SERVICES.SSR_SSENRL_EDIT.GBL?"
         },
         "withdrawFromSemester": {
           "isCsLink": false,
@@ -225,65 +353,294 @@
       },
       "scheduleOfClassesPeriod": {
         "date": {
-          "datestring": "3/28",
-          "datetime": "2016-03-28T00:00:00-07:00",
-          "epoch": 1459148400
+          "datestring": "10/05",
+          "datetime": "2016-10-05T00:00:00-07:00",
+          "epoch": 1475650800
         }
       },
-      "studentId": "12701798",
-      "term": "2168",
-      "termDescr": "Fall 2016",
-      "waitlistedClasses": [
+      "studentId": "11667051",
+      "term": "2172",
+      "termDescr": "Spring 2017",
+      "termIsSummer": false,
+      "waitlistedClasses": [],
+      "waitlistedClassesTotalUnits": 0.0
+    },
+    "2175": {
+      "advisors": [
         {
-          "acadCareer": "UGRD",
-          "acadCareerDescr": "Undergrad",
-          "id": "10917",
-          "position": null,
-          "ssrComponent": "LAB",
-          "ssrComponentDescr": "Laboratory",
-          "subjectCatalog": "CHEM 3BL",
-          "title": "Organic Chem Lab",
-          "units": 0.0,
-          "when": "M 9:00 AM-12:59 PM"
-        },
-        {
-          "acadCareer": "UGRD",
-          "acadCareerDescr": "Undergrad",
-          "id": "10915",
-          "position": 4.0,
-          "ssrComponent": "LEC",
-          "ssrComponentDescr": "Lecture",
-          "subjectCatalog": "CHEM 3BL",
-          "title": "Organic Chem Lab",
-          "units": 2.0,
-          "when": "F 4:00 PM-4:59 PM"
+          "emailAddress": "nlowy@berkeley.edu",
+          "id": "270614",
+          "name": "Nicole Lowy",
+          "plan": "Nutritional Science BS",
+          "program": "Undergrad Natural Resources",
+          "title": "Advisor Only"
         }
       ],
-      "waitlistedClassesTotalUnits": 2.0
+      "concurrentApplyDeadline": "TBD",
+      "enrolledClasses": [],
+      "enrolledClassesTotalUnits": 0.0,
+      "enrollmentPeriod": [
+        {
+          "date": {
+            "datestring": "2/01",
+            "datetime": "2017-02-01T09:00:00-08:00",
+            "epoch": 1485968400
+          },
+          "id": "SPRI B",
+          "name": "Session B Begins"
+        },
+        {
+          "date": {
+            "datestring": "2/01",
+            "datetime": "2017-02-01T09:00:00-08:00",
+            "epoch": 1485968400
+          },
+          "id": "SPRI E",
+          "name": "Session E Begins"
+        },
+        {
+          "date": {
+            "datestring": "2/01",
+            "datetime": "2017-02-01T09:00:00-08:00",
+            "epoch": 1485968400
+          },
+          "id": "SPRI C",
+          "name": "Session C Begins"
+        },
+        {
+          "date": {
+            "datestring": "2/01",
+            "datetime": "2017-02-01T09:00:00-08:00",
+            "epoch": 1485968400
+          },
+          "id": "SPRI D",
+          "name": "Session D Begins"
+        },
+        {
+          "date": {
+            "datestring": "2/01",
+            "datetime": "2017-02-01T09:00:00-08:00",
+            "epoch": 1485968400
+          },
+          "id": "SPRI A",
+          "name": "Session A Begins"
+        }
+      ],
+      "isClassScheduleAvailable": true,
+      "isGradeBaseAvailable": false,
+      "links": {
+          "addEnrolledClasses": {
+              "isCsLink": true,
+              "name": "Add enrolled classes",
+              "url": "https://bcswebqat.is.berkeley.edu/psp/bcsqat/EMPLOYEE/HRMS/c/SA_LEARNER_SERVICES_2.SSR_SSENRL_CART.GBL?"
+          },
+          "chooseClasses": {
+              "isCsLink": true,
+              "name": "Choose classes",
+              "url": "https://bcswebqat.is.berkeley.edu/psp/bcsqat/EMPLOYEE/HRMS/c/SA_LEARNER_SERVICES_2.SSR_SSENRL_CART.GBL?"
+          },
+          "courseCatalog": {
+              "isCsLink": true,
+              "name": "Course Catalog",
+              "url": "https://bcswebqat.is.berkeley.edu/psp/bcsqat/EMPLOYEE/HRMS/c/SA_LEARNER_SERVICES.SSS_BROWSE_CATLG.GBL?"
+          },
+          "dropEnrolledClasses": {
+              "isCsLink": true,
+              "name": "Drop enrolled classes",
+              "url": "https://bcswebqat.is.berkeley.edu/psp/bcsqat/EMPLOYEE/HRMS/c/SA_LEARNER_SERVICES.SSR_SSENRL_DROP.GBL?"
+          },
+          "gradeBase": {
+              "isCsLink": true,
+              "name": "Grade Base URL",
+              "url": "https://bcswebqat.is.berkeley.edu/psp/bcsqat/EMPLOYEE/HRMS/c/SA_LEARNER_SERVICES.SSR_SSENRL_EDIT.GBL?"
+          },
+          "scheduleClasses": {
+              "isCsLink": true,
+              "name": "Schedule of Classes - SIS",
+              "url": "https://bcswebqat.is.berkeley.edu/psp/bcsqat/EMPLOYEE/HRMS/c/SA_LEARNER_SERVICES.CLASS_SEARCH.GBL?Page=SSR_CLSRCH_ENTRY&Action=U"
+          },
+          "swapEnrolledClasses": {
+              "isCsLink": true,
+              "name": "Swap enrolled classes",
+              "url": "https://bcswebqat.is.berkeley.edu/psp/bcsqat/EMPLOYEE/HRMS/c/SA_LEARNER_SERVICES.SSR_SSENRL_SWAP.GBL?"
+          },
+          "updateEnrolledClasses": {
+              "isCsLink": true,
+              "name": "Update enrolled classes",
+              "url": "https://bcswebqat.is.berkeley.edu/psp/bcsqat/EMPLOYEE/HRMS/c/SA_LEARNER_SERVICES.SSR_SSENRL_EDIT.GBL?"
+          },
+          "withdrawFromSemester": {
+              "isCsLink": false,
+              "name": "Withdraw from semester",
+              "url": "http://studentcentral.berkeley.edu/withdraw"
+          }
+      },
+      "scheduleOfClassesPeriod": {
+        "date": {
+          "datestring": "12/05",
+          "datetime": "2016-12-05T00:00:00-08:00",
+          "epoch": 1480924800
+        }
+      },
+      "studentId": "11667051",
+      "term": "2175",
+      "termDescr": "Summer 2017",
+      "termIsSummer": true,
+      "waitlistedClasses": [],
+      "waitlistedClassesTotalUnits": 0.0
+    },
+    "2178": {
+      "advisors": [
+        {
+          "emailAddress": "nlowy@berkeley.edu",
+          "id": "270614",
+          "name": "Nicole Lowy",
+          "plan": "Nutritional Science BS",
+          "program": "Undergrad Natural Resources",
+          "title": "Advisor Only"
+        }
+      ],
+      "concurrentApplyDeadline": "TBD",
+      "enrolledClasses": [],
+      "enrolledClassesTotalUnits": 0.0,
+      "enrollmentPeriod": [
+          {
+            "date": {
+              "datestring": "4/17",
+              "datetime": "2017-04-17T10:30:00-07:00",
+              "epoch": 1492450200
+            },
+            "id": "PRI1",
+            "name": "Phase 1 Begins"
+          },
+          {
+            "date": {
+              "datestring": "7/19",
+              "datetime": "2017-07-19T10:30:00-07:00",
+              "epoch": 1500485400
+            },
+            "id": "PRI2",
+            "name": "Phase 2 Begins"
+          },
+          {
+            "date": {
+              "datestring": "8/14",
+              "datetime": "2017-08-14T09:00:00-07:00",
+              "epoch": 1502726400
+            },
+            "id": "ADJ",
+            "name": "Adjustment Begins"
+          }
+      ],
+      "isClassScheduleAvailable": true,
+      "isGradeBaseAvailable": false,
+      "links": {
+        "addEnrolledClasses": {
+          "isCsLink": true,
+          "name": "Add enrolled classes",
+          "url": "https://bcswebqat.is.berkeley.edu/psp/bcsqat/EMPLOYEE/HRMS/c/SA_LEARNER_SERVICES_2.SSR_SSENRL_CART.GBL?"
+        },
+        "chooseClasses": {
+          "isCsLink": true,
+          "name": "Choose classes",
+          "url": "https://bcswebqat.is.berkeley.edu/psp/bcsqat/EMPLOYEE/HRMS/c/SA_LEARNER_SERVICES_2.SSR_SSENRL_CART.GBL?"
+        },
+        "courseCatalog": {
+          "isCsLink": true,
+          "name": "Course Catalog",
+          "url": "https://bcswebqat.is.berkeley.edu/psp/bcsqat/EMPLOYEE/HRMS/c/SA_LEARNER_SERVICES.SSS_BROWSE_CATLG.GBL?"
+        },
+        "dropEnrolledClasses": {
+          "isCsLink": true,
+          "name": "Drop enrolled classes",
+          "url": "https://bcswebqat.is.berkeley.edu/psp/bcsqat/EMPLOYEE/HRMS/c/SA_LEARNER_SERVICES.SSR_SSENRL_DROP.GBL?"
+        },
+        "gradeBase": {
+          "isCsLink": true,
+          "name": "Grade Base URL",
+          "url": "https://bcswebqat.is.berkeley.edu/psp/bcsqat/EMPLOYEE/HRMS/c/SA_LEARNER_SERVICES.SSR_SSENRL_EDIT.GBL?"
+        },
+        "scheduleClasses": {
+          "isCsLink": true,
+          "name": "Schedule of Classes - SIS",
+          "url": "https://bcswebqat.is.berkeley.edu/psp/bcsqat/EMPLOYEE/HRMS/c/SA_LEARNER_SERVICES.CLASS_SEARCH.GBL?Page=SSR_CLSRCH_ENTRY&Action=U"
+        },
+        "swapEnrolledClasses": {
+          "isCsLink": true,
+          "name": "Swap enrolled classes",
+          "url": "https://bcswebqat.is.berkeley.edu/psp/bcsqat/EMPLOYEE/HRMS/c/SA_LEARNER_SERVICES.SSR_SSENRL_SWAP.GBL?"
+        },
+        "updateEnrolledClasses": {
+          "isCsLink": true,
+          "name": "Update enrolled classes",
+          "url": "https://bcswebqat.is.berkeley.edu/psp/bcsqat/EMPLOYEE/HRMS/c/SA_LEARNER_SERVICES.SSR_SSENRL_EDIT.GBL?"
+        },
+        "withdrawFromSemester": {
+          "isCsLink": false,
+          "name": "Withdraw from semester",
+          "url": "http://studentcentral.berkeley.edu/withdraw"
+        }
+      },
+      "scheduleOfClassesPeriod": {
+        "date": {
+          "datestring": "3/27",
+          "datetime": "2017-03-27T00:00:00-07:00",
+          "epoch": 1490598000
+        }
+      },
+      "studentId": "11667051",
+      "term": "2178",
+      "termDescr": "Fall 2017",
+      "termIsSummer": false,
+      "waitlistedClasses": [],
+      "waitlistedClassesTotalUnits": 0.0
     }
   },
   "hasHolds": false,
   "links": {
     "ucAddClassEnrollment": {
+      "iSCsLink": true,
+      "isCsLink": true,
       "name": "Apply to a Class",
-      "showNewWindow": true,
       "title": "Complete your class enrollment application.",
+      "ucFrom": "CalCentral",
+      "ucFromLink": "https://calcentral-sis-dev-01.ist.berkeley.edu/",
+      "ucFromText": "CalCentral",
       "url": "https://bcswebqat.is.berkeley.edu/psp/bcsqat/EMPLOYEE/HRMS/c/G3FRAME.G3SEARCH.GBL?&G3FORM_FAMILY=STUDENT&G3FORM_TYPE=SSCNTENRL&G3FORM_CONDITION=Default&G3FORM_TASK=ADD",
       "urlId": "UC_CX_GT_SSCNTENRL_ADD"
     },
     "ucEditClassEnrollment": {
+      "iSCsLink": true,
+      "isCsLink": true,
       "name": "Edit Class Applications",
-      "showNewWindow": true,
       "title": "Edit your submited class enrollment application.",
+      "ucFrom": "CalCentral",
+      "ucFromLink": "https://calcentral-sis-dev-01.ist.berkeley.edu/",
+      "ucFromText": "CalCentral",
       "url": "https://bcswebqat.is.berkeley.edu/psp/bcsqat/EMPLOYEE/HRMS/c/G3FRAME.G3SEARCH.GBL?&G3FORM_FAMILY=STUDENT&G3FORM_TYPE=SSCNTENRL&G3FORM_CONDITION=Default&G3FORM_TASK=UPD",
       "urlId": "UC_CX_GT_SSCNTENRL_UPD"
     },
     "ucViewClassEnrollment": {
+      "iSCsLink": true,
+      "isCsLink": true,
       "name": "Submitted Class Applications",
-      "showNewWindow": true,
       "title": "View your submitted class enrollment application.",
+      "ucFrom": "CalCentral",
+      "ucFromLink": "https://calcentral-sis-dev-01.ist.berkeley.edu/",
+      "ucFromText": "CalCentral",
       "url": "https://bcswebqat.is.berkeley.edu/psp/bcsqat/EMPLOYEE/HRMS/c/G3FRAME.G3SEARCH.GBL?&G3FORM_FAMILY=STUDENT&G3FORM_TYPE=SSCNTENRL&G3FORM_CONDITION=Default&G3FORM_TASK=VWS",
       "urlId": "UC_CX_GT_SSCNTENRL_VIEW"
+    },
+    "requestLateClassChanges": {
+      "iSCsLink": true,
+      "isCsLink": true,
+      "name": "Petition for Late Change of Class Schedule",
+      "title": "Request late add, drop, grading basis, or unit value changes to class schedule",
+      "ucFrom": "CalCentral",
+      "ucFromLink": "https://calcentral-sis-dev-01.ist.berkeley.edu/",
+      "ucFromText": "CalCentral",
+      "url": "https://bcswebqat.is.berkeley.edu/psp/bcsqat/EMPLOYEE/HRMS/c/G3FRAME.G3SEARCH.GBL?&G3FORM_FAMILY=STUDENT&G3FORM_TYPE=GRADEOPT&G3FORM_CONDITION=Default&G3FORM_TASK=ADD",
+      "urlId": "UC_CX_GT_GRADEOPT_ADD"
     }
   }
 }
