@@ -62,7 +62,7 @@ module CalnetCrosswalk
         statusCode: response.code,
         feed: response.parsed_response
       }
-      if response.code == 404 && response.parsed_response.nil?
+      if response.code == 404 && response.parsed_response['status'] == 404
         logger.info "Requested #{self.class.id_type} #{@uid} not found in Crosswalk"
         internal_response[:notFound] = true
       end
