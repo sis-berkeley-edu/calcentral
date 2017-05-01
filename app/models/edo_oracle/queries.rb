@@ -125,18 +125,6 @@ module EdoOracle
       SQL
     end
 
-    # EDO equivalent of #CampusOracle::Queries.get_course_secondary_sections
-    # see #self.get_course_sections
-    def self.get_course_secondary_sections(term_id, department, catalog_id)
-      get_course_sections(term_id, department, catalog_id, true)
-    end
-
-    # EDO equivalent of #CampusOracle::Queries.get_all_course_sections
-    # see #self.get_course_sections
-    def self.get_all_course_sections(term_id, department, catalog_id)
-      get_course_sections(term_id, department, catalog_id, false)
-    end
-
     # EDO equivalent of CampusOracle::Queries.get_section_schedules
     # Changes:
     #   - 'course_cntl_num' is replaced with 'section_id'
@@ -407,31 +395,24 @@ module EdoOracle
       end
     end
 
-    private
-
-    # EDO equivalent of #CampusOracle::Queries.get_course_sections
-    # Changes:
-    #   - 'course_cntl_num' is replaced with 'section_id'
-    #   - 'term_yr' and 'term_cd' replaced by 'term_id'
-    #   - See more info at #SECTION_COLUMNS
-    def self.get_course_sections(term_id, department, catalog_id, only_secondary_sections)
-      section_type_restriction = only_secondary_sections ? ' AND sec."primary" = \'false\' ' : ''
-      safe_query <<-SQL
+    # Used to create mapping between Legacy CCNs and CS Section IDs.
+    def self.get_section_id(term_id, department, catalog_id, instruction_format, section_num)
+      compressed_dept = SubjectAreas.compress department
+      uglified_course_name = "#{compressed_dept} #{catalog_id}"
+      rows = safe_query <<-SQL
         SELECT
-          #{SECTION_COLUMNS}
+          sec."id" AS section_id
         FROM
           SISEDO.CLASSSECTIONALLV00_MVW sec
-        #{JOIN_SECTION_TO_COURSE}
         WHERE
           sec."term-id" = '#{term_id}' AND
-          crs."subjectArea" = '#{department}' AND
-          crs."catalogNumber-formatted" = '#{catalog_id}' AND
-          sec."status-code" IN ('A','S')
-          #{section_type_restriction}
-        ORDER BY
-          sec."component-code",
-          sec."sectionNumber"
+          sec."component-code" = '#{instruction_format}' AND
+          sec."displayName" = '#{uglified_course_name}' AND
+          sec."sectionNumber" = '#{section_num}'
       SQL
+      if (row = rows.first)
+        row['section_id']
+      end
     end
 
     def self.get_withdrawal_status (person_id)

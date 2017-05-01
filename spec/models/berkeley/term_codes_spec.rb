@@ -32,6 +32,31 @@ describe Berkeley::TermCodes do
     end
   end
 
+  describe '#legacy?' do
+    before { allow(Settings.terms).to receive(:legacy_cutoff).and_return legacy_cutoff }
+    let(:term_yr) {'2014'}
+    let(:term_cd) {'B'}
+    subject { Berkeley::TermCodes.legacy?(term_yr, term_cd) }
+    context 'term is before legacy cutoff' do
+      let(:legacy_cutoff) { 'summer-2014' }
+      it 'reports legacy status' do
+        expect(subject).to eq true
+      end
+    end
+    context 'term is equal to legacy cutoff' do
+      let(:legacy_cutoff) { 'spring-2014' }
+      it 'reports legacy status' do
+        expect(subject).to eq true
+      end
+    end
+    context 'term is after legacy cutoff' do
+      let(:legacy_cutoff) { 'fall-2013' }
+      it 'reports Campus Solutions status' do
+        expect(subject).to eq false
+      end
+    end
+  end
+
   it "should convert code and year into nice English" do
     Berkeley::TermCodes.to_english("2013", "B").should == "Spring 2013"
   end
