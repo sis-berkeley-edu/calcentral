@@ -1,0 +1,73 @@
+{
+  "feed": {
+    "resources": {
+      "emergencyLoanFormAdd": {
+        "iSCsLink": true,
+        "isCsLink": true,
+        "name": "Apply for an Emergency Loan",
+        "title": "Complete this form to apply for an emergency loan.",
+        "ucFrom": "CalCentral",
+        "ucFromLink": "https://calcentral-sis-dev-01.ist.berkeley.edu/",
+        "ucFromText": "CalCentral",
+        "url": "https://bcswebqat.is.berkeley.edu/psp/bcsqat/EMPLOYEE/HRMS/c/G3FRAME.G3SEARCH.GBL?&G3FORM_FAMILY=FAEMRLOAN&G3FORM_TYPE=FAEMRLAON&G3FORM_CONDITION=Default&G3FORM_TASK=ADD",
+        "urlId": "UC_CX_GT_FAEMRLAON_ADD"
+      },
+      "emergencyLoanFormView": {
+        "iSCsLink": true,
+        "isCsLink": true,
+        "name": "Submitted Emergency Loan Forms",
+        "title": "View your submitted emergency loan forms.",
+        "ucFrom": "CalCentral",
+        "ucFromLink": "https://calcentral-sis-dev-01.ist.berkeley.edu/",
+        "ucFromText": "CalCentral",
+        "url": "https://bcswebqat.is.berkeley.edu/psp/bcsqat/EMPLOYEE/HRMS/c/G3FRAME.G3SEARCH.GBL?&G3FORM_FAMILY=FAEMRLOAN&G3FORM_TYPE=FAEMRLAON&G3FORM_CONDITION=Default&G3FORM_TASK=VWS",
+        "urlId": "UC_CX_GT_FAEMRLAON_VIEW"
+      },
+      "specialEnrollmentPetition": {
+        "iSCsLink": true,
+        "isCsLink": true,
+        "name": "Special Enrollment Petition",
+        "title": "Special Enrollment Petition form",
+        "ucFrom": "CalCentral",
+        "ucFromLink": "https://calcentral-sis-dev-01.ist.berkeley.edu/",
+        "ucFromText": "CalCentral",
+        "url": "https://bcswebqat.is.berkeley.edu/psp/bcsqat/EMPLOYEE/HRMS/c/G3FRAME.G3SEARCH.GBL?&G3FORM_FAMILY=STUDENT&G3FORM_TYPE=SRSEP&G3FORM_CONDITION=Default&G3FORM_TASK=ADD",
+        "urlId": "UC_CX_GT_SRSEP_ADD"
+      },
+      "updatePendingForms": {
+        "iSCsLink": true,
+        "isCsLink": true,
+        "name": "Update Pending Forms",
+        "title": "Modify and update your pending forms",
+        "ucFrom": "CalCentral",
+        "ucFromLink": "https://calcentral-sis-dev-01.ist.berkeley.edu/",
+        "ucFromText": "CalCentral",
+        "url": "https://bcswebqat.is.berkeley.edu/psp/bcsqat/EMPLOYEE/HRMS/c/G3FRAME.G3SEARCH.GBL?&G3FORM_FAMILY=STUDENT&G3FORM_CONDITION=Default&G3FORM_TASK=UPD",
+        "urlId": "UC_CX_GT_STUDENT_UPDATE"
+      },
+      "viewSubmittedForms": {
+        "iSCsLink": true,
+        "isCsLink": true,
+        "name": "View Submitted Forms",
+        "title": "View the status of the forms you have submitted.",
+        "ucFrom": "CalCentral",
+        "ucFromLink": "https://calcentral-sis-dev-01.ist.berkeley.edu/",
+        "ucFromText": "CalCentral",
+        "url": "https://bcswebqat.is.berkeley.edu/psp/bcsqat/EMPLOYEE/HRMS/c/G3FRAME.G3SEARCH.GBL?&G3FORM_FAMILY=STUDENT&G3FORM_CONDITION=Default&G3FORM_TASK=VWS",
+        "urlId": "UC_CX_GT_STUDENT_VIEW"
+      },
+      "withdrawFromSemesterAdd": {
+        "iSCsLink": true,
+        "isCsLink": true,
+        "name": "Add a Withdrawal Request",
+        "title": "Complete this form to withdraw from UC Berkeley.",
+        "ucFrom": "CalCentral",
+        "ucFromLink": "https://calcentral-sis-dev-01.ist.berkeley.edu/",
+        "ucFromText": "CalCentral",
+        "url": "https://bcswebqat.is.berkeley.edu/psp/bcsqat/EMPLOYEE/HRMS/c/G3FRAME.G3SEARCH.GBL?&G3FORM_FAMILY=STUDENT&G3FORM_TYPE=SRWITHDRL&G3FORM_CONDITION=Default&G3FORM_TASK=ADD",
+        "urlId": "UC_CX_SRWITHDRL_ADD"
+      }
+    }
+  },
+  "statusCode": 200
+}
