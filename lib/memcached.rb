@@ -39,6 +39,12 @@ module Memcached
     parsed
   end
 
+  def exception_message(server_id, e)
+    basic_message = "ERROR: Unable to connect to #{server_id} - #{e}"
+    Rails.logger.error basic_message + e.backtrace.join("\n ")
+    basic_message
+  end
+
   def all_stats
     summary = {}
     by_slabs = {}
@@ -48,7 +54,7 @@ module Memcached
         summary[server_id] = general_stats server
         by_slabs[server_id] = slab_stats server
       rescue => e
-        return "ERROR: Unable to connect to #{server_id} - #{e}"
+        return exception_message(server_id, e)
       end
     end
     {
@@ -66,7 +72,7 @@ module Memcached
         send(server, 'stats reset', 'RESET')
         summary[server_id] = 'Cache invalidated and stats reset'
       rescue => e
-        return "ERROR: Unable to connect to #{server_id} - #{e}"
+        return exception_message(server_id, e)
       end
       summary
     end
@@ -79,7 +85,7 @@ module Memcached
       begin
         summary[server_id] = slab_cachedump(server, slab)
       rescue => e
-        return "ERROR: Unable to connect to #{server_id} - #{e}"
+        return exception_message(server_id, e)
       end
     end
     summary
@@ -112,6 +118,7 @@ module Memcached
     response = send(server, 'stats slabs')
     matches = response.map {|line| line.gsub('STAT ', '').strip.split ':'}
     matches.inject({slabs: {}}) do |h, slab_stat|
+      Rails.logger.debug "raw_stats_slabs h = #{h}, slab_stat = #{slab_stat}"
       if slab_stat.size > 1
         slab = slab_stat[0]
         stat = Hash[*(slab_stat[1].split ' ')]
@@ -128,6 +135,7 @@ module Memcached
     response = send(server, 'stats items')
     matches = response.map {|line| line.gsub('STAT items:', '').strip.split ':'}
     matches.inject({}) do |h, slab_stat|
+      Rails.logger.debug "raw_stats_items h = #{h}, slab_stat = #{slab_stat}"
       slab = slab_stat[0]
       stat = Hash[*(slab_stat[1].split ' ')]
       h[slab] ||= {}; h[slab].merge!(stat)
