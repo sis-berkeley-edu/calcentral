@@ -111,34 +111,6 @@ describe EdoOracle::Queries, :ignore => true do
     end
   end
 
-  describe '.get_all_course_sections', testext: true do
-    it 'returns all sections per department and catalog_id' do
-      results = EdoOracle::Queries.get_all_course_sections '2168', 'XASTRON', '10'
-      expect(results).to be_present
-      expected_keys = %w(course_title course_title_short dept_name catalog_id primary section_num instruction_format primary_associated_section_id catalog_root catalog_prefix catalog_suffix)
-      results.each do |result|
-        expect(result).to have_keys(expected_keys)
-        expect(result['section_display_name']).to eq 'XASTRON 10'
-        expect(result['term_id']).to eq fall_term_id
-      end
-    end
-  end
-
-  describe '.get_course_secondary_sections', testext: true do
-    it 'returns secondary sections per department and catalog_id' do
-      results = EdoOracle::Queries.get_course_secondary_sections '2168', 'XASTRON', '10'
-      expect(results).to be_present
-      expected_keys = %w(course_title course_title_short dept_name catalog_id primary section_num instruction_format primary_associated_section_id catalog_root catalog_prefix catalog_suffix)
-      results.each do |result|
-        expect(result).to have_keys(expected_keys)
-        expect(result['section_display_name']).to eq 'XASTRON 10'
-        expect(result['instruction_format']).to eq 'DIS'
-        expect(result['primary']).to eq 'false'
-        expect(result['term_id']).to eq fall_term_id
-      end
-    end
-  end
-
   describe '.get_section_meetings', :testext => true do
     it 'returns meetings for section id specified' do
       results = EdoOracle::Queries.get_section_meetings(fall_term_id, section_ids[0])

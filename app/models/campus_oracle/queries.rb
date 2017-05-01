@@ -242,7 +242,6 @@ module CampusOracle
     end
 
     def self.get_sections_from_ccns(term_yr, term_cd, ccns)
-      logger.warn 'Calling get_sections_from_ccns on campus_oracle when allow_legacy_fallback flag set to false' unless Settings.features.allow_legacy_fallback
       result = {}
       use_pooled_connection {
         sql = <<-SQL

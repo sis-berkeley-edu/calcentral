@@ -135,7 +135,7 @@ module Berkeley
     end
 
     def legacy?
-      @campus_solutions_id <= TermCodes.slug_to_edo_id(Settings.terms.legacy_cutoff)
+      TermCodes.legacy?(@year, @code)
     end
 
     # Most final grades should appear on the transcript by this date.

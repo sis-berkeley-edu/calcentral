@@ -116,6 +116,10 @@ module Berkeley
       end
     end
 
+    def legacy?(term_yr, term_cd)
+      to_edo_id(term_yr, term_cd) <= slug_to_edo_id(Settings.terms.legacy_cutoff)
+    end
+
     private
 
     def init_names

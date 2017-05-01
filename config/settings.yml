@@ -253,6 +253,7 @@ cache:
     MyAcademics::GpaUnits: NEXT_08_00
 
     Berkeley::Terms: NEXT_08_00
+    Berkeley::LegacyTerms: <%= 29.days %>
     Finaid::TimeRange: <%= 4.hours %>
 
     CampusOracle::CourseSections: NEXT_08_00
