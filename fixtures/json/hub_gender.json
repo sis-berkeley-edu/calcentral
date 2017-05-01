@@ -1,0 +1,87 @@
+{
+  "apiResponse": {
+    "source": "UCB-SIS-STUDENT",
+    "correlationId": "84fb90f0-3837-475f-b802-36ad7cc2333f",
+    "responseType": "http://bmeta.berkeley.edu/student/studentV0.xsd/students",
+    "response": {
+      "any": {
+        "students": [
+          {
+            "identifiers": [
+              {
+                "type": "student-id",
+                "id": "11667051",
+                "disclose": true
+              },
+              {
+                "type": "campus-uid",
+                "id": "61889",
+                "disclose": true
+              },
+              {
+                "type": "Social Security Number",
+                "id": "***-**-****",
+                "disclose": false
+              },
+              {
+                "type": "DB2",
+                "id": "11667051",
+                "disclose": false,
+                "fromDate": "1902-02-01"
+              }
+            ],
+            "gender": {
+              "genderOfRecord": {
+                "code": "M",
+                "description": "Male"
+              },
+              "discloseGenderOfRecord": true,
+              "discloseSexAtBirth": false,
+              "discloseGenderIdentity": false,
+              "fromDate": "2016-05-10"
+            },
+            "affiliations": [
+              {
+                "type": {
+                  "code": "ADMT_UX",
+                  "description": "Admitted student's access to Cal Central"
+                },
+                "detail": "Admitted",
+                "status": {
+                  "code": "ACT",
+                  "description": "Active"
+                },
+                "fromDate": "2017-03-01"
+              },
+              {
+                "type": {
+                  "code": "STUDENT",
+                  "description": ""
+                },
+                "detail": "",
+                "status": {
+                  "code": "ACT",
+                  "description": "Active"
+                },
+                "fromDate": "2016-03-19"
+              },
+              {
+                "type": {
+                  "code": "UNDERGRAD",
+                  "description": "Undergraduate Student"
+                },
+                "detail": "Active",
+                "status": {
+                  "code": "ACT",
+                  "description": "Active"
+                },
+                "fromDate": "2016-03-19"
+              }
+            ],
+            "confidential": false
+          }
+        ]
+      }
+    }
+  }
+}

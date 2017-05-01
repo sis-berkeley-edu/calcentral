@@ -12,7 +12,7 @@ module HubEdos
     end
 
     def whitelist_fields
-      %w(ethnicities languages usaCountry foreignCountries birth gender residency)
+      %w(ethnicities languages usaCountry foreignCountries birth residency)
     end
 
   end

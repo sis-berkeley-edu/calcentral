@@ -12,7 +12,7 @@ describe HubEdoController do
     context 'view-as session' do
       context 'advisor-view-as' do
         let(:view_as_key) { SessionKey.original_advisor_user_id }
-        let(:expected_elements) { %w(addresses affiliations emails emergencyContacts identifiers names phones urls residency) }
+        let(:expected_elements) { %w(addresses affiliations emails emergencyContacts identifiers names phones urls residency gender) }
         it_behaves_like 'a successful feed during view-as session'
       end
     end

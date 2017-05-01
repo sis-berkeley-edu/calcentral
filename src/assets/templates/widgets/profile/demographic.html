@@ -5,7 +5,7 @@
 
   <div data-ng-if="!demographicInformation.isErrored">
     <!-- Gender -->
-    <div data-ng-include="'widgets/profile/demographic_gender.html'" data-ng-if="!api.user.profile.advisorActingAsUid"></div>
+    <div data-ng-include="'widgets/profile/demographic_gender.html'" data-ng-if="!api.user.profile.delegateActingAsUid"></div>
     <!-- Ethnicity -->
     <div data-ng-include="'widgets/profile/demographic_ethnicity.html'"></div>
     <!-- Veteran Status -->
