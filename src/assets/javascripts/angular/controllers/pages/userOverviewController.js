@@ -302,8 +302,15 @@ angular.module('calcentral.controllers').controller('UserOverviewController', fu
 
     var termGpas = [];
     _.forEach(_.get(response, 'data.termGpa'), function(term) {
+      console.log('inside forEach... term:');
+      console.dir(term);
+
+      console.log('isActiveCareer: ' + isActiveCareer(term));
+
       if (term.termGpa && isActiveCareer(term)) {
         termGpas.push(term);
+        console.log('added term to termGpas list:');
+        console.dir(termGpas);
       }
     });
     console.log('termGpas:');
@@ -338,7 +345,10 @@ angular.module('calcentral.controllers').controller('UserOverviewController', fu
    * This is a temporary fix aimed for GoLive 7.5, but should be refactored for GoLive 8.
    */
   var isActiveCareer = function(term) {
-    return _.includes($scope.studentSuccess.activeCareers, toLowerCase(term.career));
+    console.log('in isActiveCareer, term.career = ' + term.career);
+    var test = _.includes($scope.studentSuccess.activeCareers, toLowerCase(term.career));
+    console.log(test);
+    return test;
   };
 
   var toLowerCase = function(text) {
