@@ -306,7 +306,12 @@ angular.module('calcentral.controllers').controller('UserOverviewController', fu
         termGpas.push(term);
       }
     });
-    $scope.studentSuccess.termGpa = _.sortBy(termGpas, ['termId']);
+    console.log('termGpas:');
+    console.dir(termGpas);
+    console.log('sorted termGpas:');
+    console.dir(_.sortBy(termGpas, ['termId']));
+    $scope.studentSuccess.termGpa = termGpas;
+    console.log('scope:');
     console.dir($scope);
 
     if (termGpas.length > 2) {
