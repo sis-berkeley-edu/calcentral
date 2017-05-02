@@ -7,7 +7,7 @@
 ></div>
 
 <div class="cc-enrollment-card-section-content" data-ng-if="section.show">
-  <div data-ng-if="api.user.profile.actAsOptions.canSeeCSLinks && !isInstructionType(enrollmentInstruction, ['law'])">
+  <div data-ng-if="api.user.profile.actAsOptions.canSeeCSLinks && !isInstructionType(enrollmentInstruction, ['law','haasEveningWeekendMba','haasFullTimeMba'])">
     <div data-ng-if="enrollmentInstruction.isClassScheduleAvailable">
       <a data-cc-campus-solutions-link-directive
         data-cc-campus-solutions-link-directive-url="enrollmentInstruction.links.chooseClasses.url"
@@ -22,10 +22,10 @@
       ></a> for the upcoming semester.<br>
     </div>
   </div>
-  <div data-ng-if="!enrollmentInstruction.isClassScheduleAvailable">
+  <div data-ng-if="!enrollmentInstruction.isClassScheduleAvailable && !isInstructionType(enrollmentInstruction, ['haasEveningWeekendMba','haasFullTimeMba'])">
     Ability to enroll coming soon. Please try again later.
   </div>
-  <div data-ng-if="!isInstructionType(enrollmentInstruction, ['law', 'summerVisitor'])">
+  <div data-ng-if="!isInstructionType(enrollmentInstruction, ['law', 'summerVisitor','haasEveningWeekendMba','haasFullTimeMba'])">
     Learn more about <a href="http://registrar.berkeley.edu/Records/tbinfo.html">enrollment rules and information</a>.
   </div>
   <div data-ng-if="isInstructionType(enrollmentInstruction, ['summerVisitor'])">

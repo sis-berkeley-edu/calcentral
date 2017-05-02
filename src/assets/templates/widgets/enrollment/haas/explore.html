@@ -1,0 +1,43 @@
+<div
+  data-cc-enrollment-card-header-directive
+  data-count="$index + 1"
+  data-date="{{enrollmentInstruction.enrollmentPeriod[0] ? 'Prior to ' + (enrollmentInstruction.enrollmentPeriod[0].date.epoch * 1000 | date:'MMM d'): ''}}"
+  data-title="section.title"
+></div>
+
+<div class="cc-enrollment-card-section-content" data-ng-if="section.show">
+  <div>
+    <h4 data-ng-if="isInstructionType(enrollmentInstruction, ['haasFullTimeMba'])">MBA Electives</h4>
+    <h4 data-ng-if="isInstructionType(enrollmentInstruction, ['haasEveningWeekendMba'])">EWMBA Electives</h4>
+    <ul class="cc-list-links">
+      <li><a href="https://olr.haas.berkeley.edu/">OLR: Bidding and Add/Drop</a></li>
+    </ul>
+  </div>
+
+  <div>
+    <h4>Non-Haas Electives</h4>
+    <ul class="cc-list-links">
+      <li data-ng-if="isInstructionType(enrollmentInstruction, ['haasFullTimeMba'])">
+        <a href="http://www.haas.berkeley.edu/MBA/academics/non-haas-courses.html">Non-Haas Course Restrictions</a>
+      </li>
+      <li data-ng-if="isInstructionType(enrollmentInstruction, ['haasEveningWeekendMba'])">
+        <a href="http://www.haas.berkeley.edu/EWMBA/academics/non-haas-courses.html">Non-Haas Course Restrictions</a>
+      </li>
+      <li data-ng-if="api.user.profile.actAsOptions.canSeeCSLinks && enrollmentInstruction.isClassScheduleAvailable">
+        <div>
+          <a
+            data-cc-campus-solutions-link-directive
+            data-cc-campus-solutions-link-directive-name="enrollmentInstruction.links.scheduleClasses.name"
+            data-cc-campus-solutions-link-directive-url="enrollmentInstruction.links.scheduleClasses.url"
+            data-cc-campus-solutions-link-directive-cc-cache="enrollment"
+            data-cc-campus-solutions-link-directive-uc-from="true"
+            data-cc-campus-solutions-link-directive-uc-from-link="true"
+            data-cc-campus-solutions-link-directive-uc-from-text="true"
+            data-cc-campus-solutions-link-directive-cc-page-name="currentPage.name"
+            data-cc-campus-solutions-link-directive-cc-page-url="currentPage.url"
+          >UC Berkeley Schedule of Classes</a>
+        </div>
+      </li>
+    </ul>
+  </div>
+</div>

@@ -1,0 +1,33 @@
+<div class="cc-enrollment-card-notifications">
+
+  <p class="cc-enrollment-card-notifications-paragraph" data-ng-if="enrollmentInstruction.hasHolds && !isInstructionType(enrollmentInstruction, ['haasExecMba'])">
+    <i class="fa fa-exclamation-circle cc-icon-red cc-enrollment-card-icon"></i>
+    You have a hold that may affect your ability to enroll in classes.
+    View your "Active Holds" for more details.
+  </p>
+
+  <div data-ng-if="isInstructionType(enrollmentInstruction, ['haasFullTimeMba', 'haasEveningWeekendMba'])">
+    Please reach out to the
+    <a data-ng-if="isInstructionType(enrollmentInstruction, ['haasFullTimeMba'])"
+      href="mailto:ftacademics@haas.berkeley.edu">
+      MBA Program Ofice
+    </a>
+    <a data-ng-if="isInstructionType(enrollmentInstruction, ['haasEveningWeekendMba'])"
+      href="mailto:ewmba_office@haas.berkeley.edu">
+      EWMBA Program Ofice
+    </a>
+    if you have any questions.
+  </div>
+
+  <div data-ng-if="isInstructionType(enrollmentInstruction, ['haasExecMba'])">
+    <p class="cc-enrollment-card-notifications-paragraph">
+      Please refer to the
+      <a href="http://www.haas.berkeley.edu/EMBA/">Program Office website</a>
+      for calendars, FAQs, resources, and Bear Necessities archives.
+    </p>
+    <p class="cc-enrollment-card-notifications-paragraph">
+      For additional questions, please contact the
+      <a href="http://www.haas.berkeley.edu/EMBA/contacts/">Program Office</a>.
+    </p>
+  </div>
+</div>

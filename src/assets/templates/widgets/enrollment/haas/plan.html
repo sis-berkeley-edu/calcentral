@@ -1,0 +1,26 @@
+<div
+  data-cc-enrollment-card-header-directive
+  data-count="$index + 1"
+  data-date="{{(enrollmentInstruction.enrollmentPeriod[0] && api.user.profile.features.csAcademicPlanner) ? 'Prior to ' + (enrollmentInstruction.enrollmentPeriod[0].date.epoch * 1000 | date:'MMM d'): ''}}"
+  data-title="section.title"
+></div>
+
+<div class="cc-enrollment-card-section-content" data-ng-if="section.show">
+  <ul class="cc-list-links">
+    <li>
+      <a href="http://www.haas.berkeley.edu/MBA/academics/graduation-requirements.html">
+        Graduation Requirements
+      </a>
+    </li>
+    <li data-ng-if="isInstructionType(enrollmentInstruction, ['haasFullTimeMba'])">
+      <a href="http://www.haas.berkeley.edu/MBA/academics/areas-of-emphasis.html">
+        Areas of Emphasis
+      </a>
+    </li>
+    <li data-ng-if="isInstructionType(enrollmentInstruction, ['haasEveningWeekendMba'])">
+      <a href="http://www.haas.berkeley.edu/EWMBA/academics/course-planning.html">
+        Course Planning
+      </a>
+    </li>
+  </ul>
+</div>

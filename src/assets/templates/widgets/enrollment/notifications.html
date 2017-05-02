@@ -1,4 +1,4 @@
-<div class="cc-enrollment-card-advisors-consult">
+<div class="cc-enrollment-card-notifications">
 
   <div data-ng-if="enrollmentInstruction.hasHolds">
     <span>
@@ -28,5 +28,9 @@
         <a href="mailto:mrodriguez@law.berkeley.edu">mrodriguez@law.berkeley.edu</a>.
       </li>
     </ul>
+  </div>
+
+  <div data-ng-if="!enrollmentInstruction.enrollmentPeriod[0]">
+    Please check back regularly for your assigned dates.
   </div>
 </div>

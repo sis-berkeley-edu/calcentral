@@ -5,6 +5,16 @@
   data-title="section.title"
 ></div>
 
+<div data-ng-if="isInstructionType(enrollmentInstruction, ['haasFullTimeMba','haasEveningWeekendMba'])">
+  <p class="cc-enrollment-card-notifications-paragraph">
+    You may change your non-Haas classes during or after your enrollment period.
+  </p>
+  <p class="cc-enrollment-card-notifications-paragraph">
+    Do not drop or change Haas classes here. Use
+    <a href="https://olr.haas.berkeley.edu/">OLR</a> instead.
+  </p>
+</div>
+
 <div class="cc-enrollment-card-section-content" data-ng-if="section.show">
   <div
     data-ng-include="'widgets/enrollment/adjust_enrolled.html'">
