@@ -4,7 +4,7 @@
 # set up environment
 export RAILS_ENV=${RAILS_ENV:="testext"}
 export DISPLAY=":99"
-export JRUBY_OPTS="-Xcompile.invokedynamic=false -Xcext.enabled=true -J-Xmx900m -J-Djruby.compile.mode=OFF"
+export JRUBY_OPTS="-Xcompile.invokedynamic=false -J-Xmx900m -J-Djruby.compile.mode=OFF"
 
 cd $( dirname "${BASH_SOURCE[0]}" )/..
 
