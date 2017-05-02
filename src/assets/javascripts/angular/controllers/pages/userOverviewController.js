@@ -298,6 +298,7 @@ angular.module('calcentral.controllers').controller('UserOverviewController', fu
 
   var parseTermGpa = function(response) {
     console.log('Parsing term GPA');
+    console.dir($scope);
     console.dir(_.get(response, 'data.termGpa'));
 
     var termGpas = [];
@@ -345,6 +346,8 @@ angular.module('calcentral.controllers').controller('UserOverviewController', fu
    * This is a temporary fix aimed for GoLive 7.5, but should be refactored for GoLive 8.
    */
   var isActiveCareer = function(term) {
+    console.log('active careers = ' + $scope.studentSuccess.activeCareers);
+    console.log('lowercased term.career = ' + toLowerCase(term.career));
     console.log('in isActiveCareer, term.career = ' + term.career);
     var test = _.includes($scope.studentSuccess.activeCareers, toLowerCase(term.career));
     console.log(test);
