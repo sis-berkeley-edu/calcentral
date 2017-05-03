@@ -57,16 +57,6 @@ module MyAcademics
       response.try(:[], :feed).try(:[], 'student').try(:[], 'roles')
     end
 
-    def parse_hub_careers(statuses)
-      [].tap do |careers|
-        statuses.each do |status|
-          if (career = status['studentCareer'].try(:[], 'academicCareer').try(:[], 'description'))
-            careers << career
-          end
-        end
-      end.uniq.reject { |level| level.to_s.empty? }
-    end
-
     def parse_hub_level(statuses)
       level = statuses.collect do |status|
         status['currentRegistration'].try(:[], 'academicLevel').try(:[], 'level').try(:[], 'description')
