@@ -211,10 +211,12 @@ angular.module('calcentral.controllers').controller('UserOverviewController', fu
   };
 
   var loadStudentAttributes = function() {
+    console.log('calling studentAttributesFactory.getStudentAttributes');
     studentAttributesFactory.getStudentAttributes({
       uid: $routeParams.uid
     }).then(
       function successCallback(response) {
+        console.log('processing studentAttributesFactory.getStudentAttributes response');
         var studentAttributes = _.get(response, 'data.feed.student.studentAttributes.studentAttributes');
         // Strip all positive student indicators from student attributes feed.
         _.forEach(studentAttributes, function(attribute) {
@@ -227,6 +229,8 @@ angular.module('calcentral.controllers').controller('UserOverviewController', fu
         $scope.hasShownRegistrations = statusHoldsService.checkShownRegistrations($scope.regStatus.registrations);
       }
     ).finally(function() {
+      console.log('finishing studentAttributesFactory.getStudentAttributes loading');
+      console.dir($scope);
       $scope.regStatus.isLoading = false;
     });
   };
@@ -237,12 +241,12 @@ angular.module('calcentral.controllers').controller('UserOverviewController', fu
       uid: $routeParams.uid
     }).then(
       function successCallback(response) {
-        console.log('executing successCallback');
+        console.log('executing advisingFactory.getStudentSuccess successCallback');
         $scope.studentSuccess.outstandingBalance = _.get(response, 'data.outstandingBalance');
         parseTermGpa(response);
       }
     ).finally(function() {
-      console.log('finished parsing');
+      console.log('finished parsing advisingFactory.getStudentSuccess');
       console.dir($scope);
       $scope.studentSuccess.isLoading = false;
       console.log('All done... finally');
