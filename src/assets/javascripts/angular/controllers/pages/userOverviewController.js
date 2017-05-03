@@ -137,12 +137,10 @@ angular.module('calcentral.controllers').controller('UserOverviewController', fu
   };
 
   var loadAcademics = function() {
-    console.log('calling advisingFactory.getStudentAcademics');
     advisingFactory.getStudentAcademics({
       uid: $routeParams.uid
     }).then(
       function successCallback(response) {
-        console.log('processing advisingFactory.getStudentAcademics response');
         angular.extend($scope, _.get(response, 'data'));
         _.forEach($scope.planSemesters, function(semester) {
           angular.extend(
@@ -174,15 +172,11 @@ angular.module('calcentral.controllers').controller('UserOverviewController', fu
 
         // prepare Student Success filtering of inactive careers
         $scope.studentSuccess.activeCareers = _.map(_.get($scope, 'collegeAndLevel.careers'), toLowerCase);
-        console.log('studentSuccess.activeCareers loaded');
-        console.dir($scope.studentSuccess.activeCareers);
       },
       function errorCallback(response) {
         $scope.academics.error = errorReport(_.get(response, 'status'), _.get(response, 'data.error'));
       }
     ).finally(function() {
-      console.log('finishing advisingFactory.getStudentAcademics processing');
-      console.dir($scope);
       $scope.academics.isLoading = false;
       $scope.planSemestersInfo.isLoading = false;
     });
@@ -238,20 +232,15 @@ angular.module('calcentral.controllers').controller('UserOverviewController', fu
   };
 
   var loadStudentSuccess = function() {
-    console.log('calling advisingFactory.getStudentSuccess');
     advisingFactory.getStudentSuccess({
       uid: $routeParams.uid
     }).then(
       function successCallback(response) {
-        console.log('executing advisingFactory.getStudentSuccess successCallback');
         $scope.studentSuccess.outstandingBalance = _.get(response, 'data.outstandingBalance');
         parseTermGpa(response);
       }
     ).finally(function() {
-      console.log('finished parsing advisingFactory.getStudentSuccess');
-      console.dir($scope);
       $scope.studentSuccess.isLoading = false;
-      console.log('All done... finally');
     });
   };
 
@@ -277,7 +266,6 @@ angular.module('calcentral.controllers').controller('UserOverviewController', fu
   };
 
   var chartGpaTrend = function(termGpas) {
-    console.log('Building highcharts data');
     var chartData = _.map(termGpas, 'termGpa');
 
     // The last element of the data series must also contain custom marker information to show the GPA.
@@ -297,36 +285,17 @@ angular.module('calcentral.controllers').controller('UserOverviewController', fu
         symbol: 'circle'
       }
     };
-    console.log('Setting highcharts data into scope: ');
     $scope.highCharts.dataSeries.push(chartData);
-    console.dir($scope);
   };
 
   var parseTermGpa = function(response) {
-    console.log('Parsing term GPA');
-    console.dir($scope);
-    console.dir(_.get(response, 'data.termGpa'));
-
     var termGpas = [];
     _.forEach(_.get(response, 'data.termGpa'), function(term) {
-      console.log('inside forEach... term:');
-      console.dir(term);
-
-      console.log('isActiveCareer: ' + isActiveCareer(term));
-
       if (term.termGpa && isActiveCareer(term)) {
         termGpas.push(term);
-        console.log('added term to termGpas list:');
-        console.dir(termGpas);
       }
     });
-    console.log('termGpas:');
-    console.dir(termGpas);
-    console.log('sorted termGpas:');
-    console.dir(_.sortBy(termGpas, ['termId']));
-    $scope.studentSuccess.termGpa = termGpas;
-    console.log('scope:');
-    console.dir($scope);
+    $scope.studentSuccess.termGpa = _.sortBy(termGpas, ['termId']);
 
     if (termGpas.length > 2) {
       chartGpaTrend(termGpas);
@@ -352,12 +321,7 @@ angular.module('calcentral.controllers').controller('UserOverviewController', fu
    * This is a temporary fix aimed for GoLive 7.5, but should be refactored for GoLive 8.
    */
   var isActiveCareer = function(term) {
-    console.log('active careers = ' + $scope.studentSuccess.activeCareers);
-    console.log('lowercased term.career = ' + toLowerCase(term.career));
-    console.log('in isActiveCareer, term.career = ' + term.career);
-    var test = _.includes($scope.studentSuccess.activeCareers, toLowerCase(term.career));
-    console.log(test);
-    return test;
+    return _.includes($scope.studentSuccess.activeCareers, toLowerCase(term.career));
   };
 
   var toLowerCase = function(text) {
