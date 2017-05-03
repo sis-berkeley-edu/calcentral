@@ -137,10 +137,12 @@ angular.module('calcentral.controllers').controller('UserOverviewController', fu
   };
 
   var loadAcademics = function() {
+    console.log('calling advisingFactory.getStudentAcademics');
     advisingFactory.getStudentAcademics({
       uid: $routeParams.uid
     }).then(
       function successCallback(response) {
+        console.log('processing advisingFactory.getStudentAcademics response');
         angular.extend($scope, _.get(response, 'data'));
         _.forEach($scope.planSemesters, function(semester) {
           angular.extend(
@@ -172,11 +174,15 @@ angular.module('calcentral.controllers').controller('UserOverviewController', fu
 
         // prepare Student Success filtering of inactive careers
         $scope.studentSuccess.activeCareers = _.map(_.get($scope, 'collegeAndLevel.careers'), toLowerCase);
+        console.log('studentSuccess.activeCareers loaded');
+        console.dir($scope.studentSuccess.activeCareers);
       },
       function errorCallback(response) {
         $scope.academics.error = errorReport(_.get(response, 'status'), _.get(response, 'data.error'));
       }
     ).finally(function() {
+      console.log('finishing advisingFactory.getStudentAcademics processing');
+      console.dir($scope);
       $scope.academics.isLoading = false;
       $scope.planSemestersInfo.isLoading = false;
     });
@@ -211,12 +217,10 @@ angular.module('calcentral.controllers').controller('UserOverviewController', fu
   };
 
   var loadStudentAttributes = function() {
-    console.log('calling studentAttributesFactory.getStudentAttributes');
     studentAttributesFactory.getStudentAttributes({
       uid: $routeParams.uid
     }).then(
       function successCallback(response) {
-        console.log('processing studentAttributesFactory.getStudentAttributes response');
         var studentAttributes = _.get(response, 'data.feed.student.studentAttributes.studentAttributes');
         // Strip all positive student indicators from student attributes feed.
         _.forEach(studentAttributes, function(attribute) {
@@ -229,8 +233,6 @@ angular.module('calcentral.controllers').controller('UserOverviewController', fu
         $scope.hasShownRegistrations = statusHoldsService.checkShownRegistrations($scope.regStatus.registrations);
       }
     ).finally(function() {
-      console.log('finishing studentAttributesFactory.getStudentAttributes loading');
-      console.dir($scope);
       $scope.regStatus.isLoading = false;
     });
   };
