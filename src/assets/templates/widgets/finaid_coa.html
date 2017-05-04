@@ -6,10 +6,12 @@
     <div data-ng-if="coa.errored" data-ng-include="'widgets/finaid_errored.html'"></div>
     <div data-ng-if="!coa.errored">
       <div data-ng-bind="coa.message"></div>
-      <div data-ng-if="!coa[coa.currentView].data.length" class="cc-widget-finaid-coa-text-padding">Currently we don't have your data available for this aid year.</div>
+      <div data-ng-if="!coa[coa.currentView].data.length" class="cc-widget-finaid-coa-text-padding">
+        Currently we don't have your data available for this aid year.
+      </div>
       <div data-ng-if="coa[coa.currentView].data.length">
         <div class="cc-widget-finaid-coa-text-padding">
-          <button data-ng-click="toggleView()" class="cc-button-link">
+          <button data-ng-click="toggleView()" class="cc-button-link" data-ng-if="coa.validViewKeys.length > 1">
             View
             <span data-ng-if="coa.currentView === 'fullyear'">Term</span>
             <span data-ng-if="coa.currentView !== 'fullyear'">Annual</span>

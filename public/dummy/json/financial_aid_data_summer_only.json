@@ -1,0 +1,295 @@
+{
+  "feed": {
+    "coa": {
+      "fullyear": {
+        "data": [
+          {
+            "headers": []
+          }
+        ]
+      },
+      "message": "Your budget is the estimated average and reasonable cost of completing an academic year at UC Berkeley",
+      "semester": {
+        "data": [
+          {
+            "headers": [
+              "Summer",
+              "Total"
+            ],
+            "items": [
+              {
+                "amounts": [
+                  29906.0
+                ],
+                "subItems": [
+                  {
+                    "amounts": [
+                      29454.0
+                    ],
+                    "title": "Summer Course Fees, MPA Program",
+                    "total": 29454.0
+                  },
+                  {
+                    "amounts": [
+                      452.0
+                    ],
+                    "title": "Summer Campus Fees + Class Pass + Doc Fees for MPA Program - New",
+                    "total": 452.0
+                  }
+                ],
+                "title": "Tuition and Fees",
+                "total": 29906.0
+              },
+              {
+                "amounts": [
+                  6579.0
+                ],
+                "subItems": [
+                  {
+                    "amounts": [
+                      6579.0
+                    ],
+                    "title": "Summer Living Expenses, MPA Program",
+                    "total": 6579.0
+                  }
+                ],
+                "title": "Housing and Food",
+                "total": 6579.0
+              },
+              {
+                "amounts": [
+                  264.0
+                ],
+                "subItems": [
+                  {
+                    "amounts": [
+                      264.0
+                    ],
+                    "title": "Summer Books & Supplies - Grad",
+                    "total": 264.0
+                  }
+                ],
+                "title": "Books and Supplies",
+                "total": 264.0
+              },
+              {
+                "amounts": [
+                  924.0
+                ],
+                "subItems": [
+                  {
+                    "amounts": [
+                      924.0
+                    ],
+                    "title": "Summer Health Insurance - MPA Program",
+                    "total": 924.0
+                  }
+                ],
+                "title": "Health Insurance",
+                "total": 924.0
+              },
+              {
+                "totals": [
+                  37673.0,
+                  37673.0
+                ]
+              }
+            ],
+            "title": "Standard Budget Items"
+          }
+        ]
+      },
+      "title": "Estimated Cost of Attendance"
+    },
+    "communications": {
+      "unsolicitedResourcesUrl": "https://bcswebqat.is.berkeley.edu/psp/bcsqat/EMPLOYEE/HRMS/c/UC_CC_CHKLST_UPLOAD_FLU.UC_CC_FILE_UPL_FLU.GBL?ucAdminFunction=FINA&ucAidYear=2017"
+    },
+    "financialAidSummary": {
+      "fundingOffered": {
+        "categories": [
+          {
+            "total": {
+              "amount": 0.0,
+              "title": "Gift Aid and Outside Resources"
+            }
+          },
+          {
+            "total": {
+              "amount": 0.0,
+              "title": "Waivers and Other Funding"
+            }
+          },
+          {
+            "items": [
+              {
+                "amount": 37673.0,
+                "title": "Loans"
+              }
+            ],
+            "total": {
+              "amount": 37673.0,
+              "title": "Loans and Work-Study"
+            }
+          }
+        ],
+        "total": {
+          "amount": 37673.0,
+          "title": "Funding Offered"
+        }
+      },
+      "netCost": {
+        "items": [
+          {
+            "amount": 37673.0,
+            "title": "Estimated Cost of Attendance"
+          },
+          {
+            "amount": 0.0,
+            "subTitle": "(MONEY YOU DON'T REPAY)",
+            "title": "Gift Aid and Waivers"
+          }
+        ],
+        "total": {
+          "amount": 37673.0,
+          "title": "Net Cost"
+        }
+      }
+    },
+    "fundingSources": {
+      "links": [
+        {
+          "title": "Additional Resources",
+          "url": "https://bcswebqat.is.berkeley.edu/psp/bcsqat/EMPLOYEE/HRMS/c/UC_FA_ADDL_SRC_FLU.UC_FA_ADDL_SRC_FLU.GBL?ucInstitution=UCB01&ucAidYear=2017"
+        },
+        {
+          "title": "Convert Loan to Workstudy",
+          "url": "https://bcswebqat.is.berkeley.edu/psp/bcsqat/EMPLOYEE/HRMS/c/UC_FA_CONV_AID_FLU.UC_FA_CONV_AID_FLU.GBL?ucInstitution=UCB01&ucAidYear=2017&ucConvertType=LoanToWKS"
+        },
+        {
+          "title": "Convert Workstudy to Loan",
+          "url": "https://bcswebqat.is.berkeley.edu/psp/bcsqat/EMPLOYEE/HRMS/c/UC_FA_CONV_AID_FLU.UC_FA_CONV_AID_FLU.GBL?ucInstitution=UCB01&ucAidYear=2017&ucConvertType=WKSToLoan"
+        },
+        {
+          "title": "Award Management (Accept/Decline Loan)",
+          "url": "https://bcswebqat.is.berkeley.edu/psp/bcsqat/EMPLOYEE/HRMS/c/UC_FA_AWD_MGT_FLU.UC_FA_AWD_MGT_FLU.GBL?ucInstitution=UCB01&ucAidYear=2017"
+        }
+      ]
+    },
+    "shoppingSheet": null,
+    "status": {
+      "categories": [
+        {
+          "itemGroups": [
+            [
+              {
+                "title": "Academic Career",
+                "value": "Graduate"
+              },
+              {
+                "title": "Level",
+                "values": [
+                  {
+                    "subvalue": [
+                      "Summer",
+                      "Graduate/Professional"
+                    ]
+                  }
+                ]
+              },
+              {
+                "title": "Expected Graduation",
+                "value": "2017 Fall"
+              }
+            ],
+            [
+              {
+                "title": "SAP Status",
+                "value": "SAP Undetermined"
+              },
+              {
+                "title": "Award Status",
+                "value": "Packaged"
+              },
+              {
+                "title": "Verification Status",
+                "value": "Non Select"
+              }
+            ],
+            [
+              {
+                "title": "Dependency Status",
+                "value": "Independent"
+              },
+              {
+                "title": "Expected Family Contribution (EFC)",
+                "value": "14046"
+              },
+              {
+                "title": "Berkeley Parent Contribution",
+                "value": "0"
+              },
+              {
+                "title": "Family Members in College",
+                "value": "1"
+              }
+            ],
+            [
+              {
+                "title": "Residency",
+                "values": [
+                  {
+                    "subvalue": "Summer"
+                  }
+                ]
+              }
+            ],
+            [
+              {
+                "title": "Enrollment",
+                "values": [
+                  {
+                    "subvalue": [
+                      "Summer",
+                      "8"
+                    ]
+                  }
+                ]
+              }
+            ],
+            [
+              {
+                "link": null,
+                "title": "Housing",
+                "values": []
+              }
+            ],
+            [
+              {
+                "title": "SHIP Health Insurance",
+                "values": []
+              }
+            ]
+          ],
+          "title": "Financial Aid Profile"
+        },
+        {
+          "itemGroups": [
+            [
+              {
+                "title": "Title IV",
+                "value": "Not Authorized"
+              },
+              {
+                "title": "Terms & Conditions",
+                "value": "Not Accepted"
+              }
+            ]
+          ],
+          "title": "Terms and Conditions"
+        }
+      ],
+      "message": "We take many factors into consideration when determining your funding package. Updates made elsewhere to your personal information may affect the amount of aid provided to you."
+    }
+  },
+  "statusCode": 200
+}
