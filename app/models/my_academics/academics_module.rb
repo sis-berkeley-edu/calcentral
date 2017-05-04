@@ -37,6 +37,16 @@ module MyAcademics
       status if status.present?
     end
 
+    def parse_hub_careers(statuses)
+      [].tap do |careers|
+        statuses.each do |status|
+          if (career = status['studentCareer'].try(:[], 'academicCareer').try(:[], 'description'))
+            careers << career
+          end
+        end
+      end.uniq.reject { |level| level.to_s.empty? }
+    end
+
     def course_info(campus_course)
       campus_course.slice(:role, :sections, :slug, :session_code).merge({
         title: campus_course[:name],

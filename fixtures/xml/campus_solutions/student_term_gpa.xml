@@ -1,55 +1,124 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0"?>
 <UC_AA_TERM_DATA>
   <UC_AA_TERM_GPA type="array">
     <TERM_GPA_DATA>
-      <TERM_ID>2128</TERM_ID>
-      <TERM_NAME>2012 Fall</TERM_NAME>
-      <TERM_CUM_GPA type="float">3.6</TERM_CUM_GPA>
+      <TERM_ID>1915</TERM_ID>
+      <CAREER>Undergraduate</CAREER>
+      <TERM_NAME>1991 Summer</TERM_NAME>
+      <TERM_GPA type="float">2.000</TERM_GPA>
+      <TERM_GPA_UNITS type="float">4.0</TERM_GPA_UNITS>
     </TERM_GPA_DATA>
     <TERM_GPA_DATA>
-      <TERM_ID>2132</TERM_ID>
-      <TERM_NAME>2013 Spring</TERM_NAME>
-      <TERM_CUM_GPA type="float">3.4</TERM_CUM_GPA>
+      <TERM_ID>1928</TERM_ID>
+      <CAREER>Undergraduate</CAREER>
+      <TERM_NAME>1992 Fall</TERM_NAME>
+      <TERM_GPA type="float">3.700</TERM_GPA>
+      <TERM_GPA_UNITS type="float">8.0</TERM_GPA_UNITS>
     </TERM_GPA_DATA>
     <TERM_GPA_DATA>
-      <TERM_ID>2138</TERM_ID>
-      <TERM_NAME>2013 Fall</TERM_NAME>
-      <TERM_CUM_GPA type="float">3.4</TERM_CUM_GPA>
+      <TERM_ID>1932</TERM_ID>
+      <CAREER>Undergraduate</CAREER>
+      <TERM_NAME>1993 Spring</TERM_NAME>
+      <TERM_GPA type="float">0.000</TERM_GPA>
+      <TERM_GPA_UNITS type="float">0.0</TERM_GPA_UNITS>
+    </TERM_GPA_DATA>
+    <TERM_GPA_DATA>
+      <TERM_ID>1952</TERM_ID>
+      <CAREER>Undergraduate</CAREER>
+      <TERM_NAME>1995 Spring</TERM_NAME>
+      <TERM_GPA type="float">3.000</TERM_GPA>
+      <TERM_GPA_UNITS type="float">8.0</TERM_GPA_UNITS>
+    </TERM_GPA_DATA>
+    <TERM_GPA_DATA>
+      <TERM_ID>1968</TERM_ID>
+      <CAREER>Undergraduate</CAREER>
+      <TERM_NAME>1996 Fall</TERM_NAME>
+      <TERM_GPA type="float">3.000</TERM_GPA>
+      <TERM_GPA_UNITS type="float">4.0</TERM_GPA_UNITS>
+    </TERM_GPA_DATA>
+    <TERM_GPA_DATA>
+      <TERM_ID>1978</TERM_ID>
+      <CAREER>Undergraduate</CAREER>
+      <TERM_NAME>1997 Fall</TERM_NAME>
+      <TERM_GPA type="float">3.000</TERM_GPA>
+      <TERM_GPA_UNITS type="float">3.0</TERM_GPA_UNITS>
+    </TERM_GPA_DATA>
+    <TERM_GPA_DATA>
+      <TERM_ID>1988</TERM_ID>
+      <CAREER>Undergraduate</CAREER>
+      <TERM_NAME>1998 Fall</TERM_NAME>
+      <TERM_GPA type="float">0.900</TERM_GPA>
+      <TERM_GPA_UNITS type="float">12.0</TERM_GPA_UNITS>
+    </TERM_GPA_DATA>
+    <TERM_GPA_DATA>
+      <TERM_ID>1998</TERM_ID>
+      <CAREER>Undergraduate</CAREER>
+      <TERM_NAME>1999 Fall</TERM_NAME>
+      <TERM_GPA type="float">2.781</TERM_GPA>
+      <TERM_GPA_UNITS type="float">11.0</TERM_GPA_UNITS>
+    </TERM_GPA_DATA>
+    <TERM_GPA_DATA>
+      <TERM_ID>2028</TERM_ID>
+      <CAREER>Undergraduate</CAREER>
+      <TERM_NAME>2002 Fall</TERM_NAME>
+      <TERM_GPA type="float">0.000</TERM_GPA>
+      <TERM_GPA_UNITS type="float">4.0</TERM_GPA_UNITS>
+    </TERM_GPA_DATA>
+    <TERM_GPA_DATA>
+      <TERM_ID>2058</TERM_ID>
+      <CAREER>Undergraduate</CAREER>
+      <TERM_NAME>2005 Fall</TERM_NAME>
+      <TERM_GPA type="float">2.500</TERM_GPA>
+      <TERM_GPA_UNITS type="float">8.0</TERM_GPA_UNITS>
+    </TERM_GPA_DATA>
+    <TERM_GPA_DATA>
+      <TERM_ID>2072</TERM_ID>
+      <CAREER>Undergraduate</CAREER>
+      <TERM_NAME>2007 Spring</TERM_NAME>
+      <TERM_GPA type="float">3.000</TERM_GPA>
+      <TERM_GPA_UNITS type="float">3.0</TERM_GPA_UNITS>
+    </TERM_GPA_DATA>
+    <TERM_GPA_DATA>
+      <TERM_ID>2122</TERM_ID>
+      <CAREER>Undergraduate</CAREER>
+      <TERM_NAME>2012 Spring</TERM_NAME>
+      <TERM_GPA type="float">3.300</TERM_GPA>
+      <TERM_GPA_UNITS type="float">7.0</TERM_GPA_UNITS>
     </TERM_GPA_DATA>
     <TERM_GPA_DATA>
       <TERM_ID>2168</TERM_ID>
+      <CAREER>Undergraduate</CAREER>
       <TERM_NAME>2016 Fall</TERM_NAME>
-      <TERM_CUM_GPA type="float">3.4</TERM_CUM_GPA>
+      <TERM_GPA type="float">0.000</TERM_GPA>
+      <TERM_GPA_UNITS type="float">0.0</TERM_GPA_UNITS>
     </TERM_GPA_DATA>
     <TERM_GPA_DATA>
-      <TERM_ID>2142</TERM_ID>
-      <TERM_NAME>2014 Spring</TERM_NAME>
-      <TERM_CUM_GPA type="float">3.3</TERM_CUM_GPA>
+      <TERM_ID>2172</TERM_ID>
+      <CAREER>Graduate</CAREER>
+      <TERM_NAME>2017 Spring</TERM_NAME>
+      <TERM_GPA type="float">0.000</TERM_GPA>
+      <TERM_GPA_UNITS type="float">0.0</TERM_GPA_UNITS>
     </TERM_GPA_DATA>
     <TERM_GPA_DATA>
-      <TERM_ID>2145</TERM_ID>
-      <TERM_NAME>2014 Summer</TERM_NAME>
-      <TERM_CUM_GPA type="float">3.2</TERM_CUM_GPA>
+      <TERM_ID>2172</TERM_ID>
+      <CAREER>Undergraduate</CAREER>
+      <TERM_NAME>2017 Spring</TERM_NAME>
+      <TERM_GPA type="float">0.000</TERM_GPA>
+      <TERM_GPA_UNITS type="float">0.0</TERM_GPA_UNITS>
     </TERM_GPA_DATA>
     <TERM_GPA_DATA>
-      <TERM_ID>2148</TERM_ID>
-      <TERM_NAME>2014 Fall</TERM_NAME>
-      <TERM_CUM_GPA type="float">3.3</TERM_CUM_GPA>
+      <TERM_ID>2175</TERM_ID>
+      <CAREER>Undergraduate</CAREER>
+      <TERM_NAME>2017 Summer</TERM_NAME>
+      <TERM_GPA type="float">0.000</TERM_GPA>
+      <TERM_GPA_UNITS type="float">0.0</TERM_GPA_UNITS>
     </TERM_GPA_DATA>
     <TERM_GPA_DATA>
-      <TERM_ID>2152</TERM_ID>
-      <TERM_NAME>2015 Spring</TERM_NAME>
-      <TERM_CUM_GPA type="float">3.4</TERM_CUM_GPA>
-    </TERM_GPA_DATA>
-    <TERM_GPA_DATA>
-      <TERM_ID>2158</TERM_ID>
-      <TERM_NAME>2015 Fall</TERM_NAME>
-      <TERM_CUM_GPA type="float">3.4</TERM_CUM_GPA>
-    </TERM_GPA_DATA>
-    <TERM_GPA_DATA>
-      <TERM_ID>2162</TERM_ID>
-      <TERM_NAME>2016 Spring</TERM_NAME>
-      <TERM_CUM_GPA type="float">3.4</TERM_CUM_GPA>
+      <TERM_ID>2178</TERM_ID>
+      <CAREER>Undergraduate</CAREER>
+      <TERM_NAME>2017 Fall</TERM_NAME>
+      <TERM_GPA type="float">0.000</TERM_GPA>
+      <TERM_GPA_UNITS type="float">0.0</TERM_GPA_UNITS>
     </TERM_GPA_DATA>
   </UC_AA_TERM_GPA>
 </UC_AA_TERM_DATA>

@@ -41,7 +41,6 @@ angular.module('calcentral.controllers').controller('UserOverviewController', fu
     dataSeries: []
   };
   $scope.studentSuccess = {
-    activeCareers: null,
     gpaChart: {
       series: {
         className: 'cc-student-success-color-blue'
@@ -169,9 +168,6 @@ angular.module('calcentral.controllers').controller('UserOverviewController', fu
         if (!!_.get($scope, 'updatePlanUrl.url')) {
           linkService.addCurrentPagePropertiesToLink($scope.updatePlanUrl, $scope.currentPage.name, $scope.currentPage.url);
         }
-
-        // prepare Student Success filtering of inactive careers
-        $scope.studentSuccess.activeCareers = _.map(_.get($scope, 'collegeAndLevel.careers'), toLowerCase);
       },
       function errorCallback(response) {
         $scope.academics.error = errorReport(_.get(response, 'status'), _.get(response, 'data.error'));
@@ -289,12 +285,7 @@ angular.module('calcentral.controllers').controller('UserOverviewController', fu
   };
 
   var parseTermGpa = function(response) {
-    var termGpas = [];
-    _.forEach(_.get(response, 'data.termGpa'), function(term) {
-      if (term.termGpa && isActiveCareer(term)) {
-        termGpas.push(term);
-      }
-    });
+    var termGpas = _.get(response, 'data.termGpa');
     $scope.studentSuccess.termGpa = _.sortBy(termGpas, ['termId']);
 
     if (termGpas.length > 2) {
@@ -314,20 +305,6 @@ angular.module('calcentral.controllers').controller('UserOverviewController', fu
         }
       }
     );
-  };
-
-  /**
-   * This should be done in back-end, but requires a refactoring of MyAcademics::FilteredForAdvisor and StudentSuccess::Merged.
-   * This is a temporary fix aimed for GoLive 7.5, but should be refactored for GoLive 8.
-   */
-  var isActiveCareer = function(term) {
-    return _.includes($scope.studentSuccess.activeCareers, toLowerCase(term.career));
-  };
-
-  var toLowerCase = function(text) {
-    if (text) {
-      return text.toLowerCase();
-    }
   };
 
   $scope.expireAcademicsCache = function() {
