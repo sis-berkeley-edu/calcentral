@@ -94,49 +94,98 @@ module User
     end
 
     def is_delegate_user?
+      return false if is_delegate_user_emulating_student?
       authentication_state.directly_authenticated? && !@delegate_students.nil? && @delegate_students.any?
     end
 
-    def has_academics_tab?(roles, has_instructor_history, has_student_history)
+    def is_delegate_user_emulating_student?
+      authentication_state.authenticated_as_delegate?
+    end
+
+    def super_user?
+      authentication_state.policy.can_administrate? && !is_delegate_user_emulating_student?
+    end
+
+    def viewer?(current_user_policy)
+      return false if is_delegate_user_emulating_student?
+      current_user_policy.can_view_as?
+    end
+
+    def can_act_on_finances?
+      return authentication_state.directly_authenticated? unless is_delegate_user_emulating_student?
+      !!authentication_state.delegated_privileges[:financial]
+    end
+
+    def can_view_grades?(can_view_academics)
+      return !!authentication_state.delegated_privileges[:viewGrades] if is_delegate_user_emulating_student?
+      can_view_academics || !!@user_attributes[:roles][:advisor]
+    end
+
+    def has_dashboard_tab?
+      return false if is_delegate_user_emulating_student?
+      @user_attributes[:roles].values.any? || super_user?
+    end
+
+    def has_academics_tab?(has_instructor_history, has_student_history)
+      if is_delegate_user_emulating_student?
+        return !!authentication_state.delegated_privileges[:viewEnrollments] || !!authentication_state.delegated_privileges[:viewGrades]
+      end
+      roles = @user_attributes[:roles]
       roles[:student] || roles[:faculty] || roles[:applicant] || has_instructor_history || has_student_history
     end
 
-    def has_financials_tab?(roles, has_student_history)
+    def has_financials_tab?(has_student_history)
+      if is_delegate_user_emulating_student?
+        return !!authentication_state.delegated_privileges[:financial]
+      end
+      roles = @user_attributes[:roles]
       roles[:student] || roles[:exStudent] || roles[:applicant] || has_student_history
     end
 
-    def has_toolbox_tab?(policy, roles)
-      return false unless authentication_state.directly_authenticated? && authentication_state.user_auth.active?
-      policy.can_administrate? || authentication_state.real_user_auth.is_viewer? || is_delegate_user? || !!roles[:advisor]
+    def has_campus_tab?
+      @user_attributes[:roles].values.any? || super_user?
     end
 
-    def filter_user_api_for_delegator(feed)
-      view_as_privileges = authentication_state.delegated_privileges
-      feed[:delegateViewAsPrivileges] = view_as_privileges
-      # Delegate users get a pared-down UX.
-      feed[:hasDashboardTab] = false
-      feed[:showSisProfileUI] = false
-      # Delegate users do not have access to preferred name and similar sensitive data.
-      feed[:firstName] = feed[:givenFirstName]
-      feed[:fullName] = feed[:givenFullName]
-      feed[:preferredName] = feed[:givenFullName]
-      feed.delete :firstLoginAt
-      # Extraordinary privileges are set to false.
-      feed[:isDelegateUser] = false
-      feed[:isViewer] = false
-      feed[:isSuperuser] = false
-      # Filter based on delegation rights chosen by the student.
-      feed[:canViewGrades] = false unless view_as_privileges[:viewGrades]
-      feed[:hasFinancialsTab] = false unless view_as_privileges[:financial]
-      feed[:hasAcademicsTab] = false unless view_as_privileges[:viewEnrollments] || view_as_privileges[:viewGrades]
-      feed[:canActOnFinances] = !!view_as_privileges[:financial]
-      feed
+    def has_toolbox_tab?(policy)
+      return false unless authentication_state.directly_authenticated? && authentication_state.user_auth.active?
+      policy.can_administrate? || authentication_state.real_user_auth.is_viewer? || is_delegate_user? || !!@user_attributes[:roles][:advisor]
+    end
+
+    def show_sis_profile_ui?
+      return false if is_delegate_user_emulating_student?
+      return @user_attributes[:sisProfileVisible] if @user_attributes[:roles].values.any? || super_user?
+      false
+    end
+
+    def person_names
+      given_first_name = @user_attributes[:givenFirstName]
+      last_name = @user_attributes[:lastName]
+      given_full_name = given_first_name + ' ' + @user_attributes[:familyName]
+      if is_delegate_user_emulating_student?
+        first_name = given_first_name
+        full_name = given_full_name
+        preferred_name = given_full_name
+      else
+        first_name = @user_attributes[:firstName]
+        full_name = first_name + ' ' + last_name
+        preferred_name = self.preferred_name
+      end
+      {
+        first_name: first_name,
+        last_name: last_name,
+        full_name: full_name,
+        given_first_name: given_first_name,
+        given_full_name: given_full_name,
+        preferred_name: preferred_name
+      }
+    end
+
+    def first_login_at
+      @first_login_at unless is_delegate_user_emulating_student?
     end
 
     def get_feed_internal
-      given_first_name = @user_attributes[:givenFirstName]
-      first_name = @user_attributes[:firstName]
-      last_name = @user_attributes[:lastName]
+      names = person_names
       google_mail = User::Oauth2Data.get_google_email @uid
       current_user_policy = authentication_state.policy
       is_google_reminder_dismissed = User::Oauth2Data.is_google_reminder_dismissed(@uid)
@@ -145,50 +194,49 @@ module User
       has_instructor_history = User::HasInstructorHistory.new(@uid).has_instructor_history?
       roles = @user_attributes[:roles]
       logger.error "UID #{@uid} has active student role but no CS ID" if @user_attributes[:campusSolutionsId].blank? && roles[:student] && !Berkeley::Terms.fetch.current.legacy?
-      can_view_academics = has_academics_tab?(roles, has_instructor_history, has_student_history)
+      can_view_academics = has_academics_tab?(has_instructor_history, has_student_history)
       directly_authenticated = authentication_state.directly_authenticated?
       # This tangled logic is a historical artifact of divergent approaches to View-As and LTI-based authentication.
       acting_as_uid = directly_authenticated || authentication_state.authenticated_as_delegate? || authentication_state.authenticated_as_advisor? ?
         false : authentication_state.real_user_id
-      feed = {
-        isSuperuser: current_user_policy.can_administrate?,
-        isViewer: current_user_policy.can_view_as?,
-        firstLoginAt: @first_login_at,
-        firstName: first_name,
-        lastName: last_name,
-        fullName: first_name + ' ' + last_name,
-        givenFirstName: given_first_name,
-        givenFullName: given_first_name + ' ' + @user_attributes[:familyName],
-        isGoogleReminderDismissed: is_google_reminder_dismissed,
-        hasGoogleAccessToken: GoogleApps::Proxy.access_granted?(@uid),
-        hasStudentHistory: has_student_history,
-        hasInstructorHistory: has_instructor_history,
-        hasDashboardTab: true,
-        hasAcademicsTab: can_view_academics,
-        canViewGrades: can_view_academics || !!roles[:advisor],
-        hasFinancialsTab: has_financials_tab?(roles, has_student_history),
-        hasToolboxTab: has_toolbox_tab?(current_user_policy, roles),
-        inEducationAbroadProgram: @user_attributes[:educationAbroad],
-        googleEmail: google_mail,
-        officialBmailAddress: @user_attributes[:officialBmailAddress],
-        primaryEmailAddress: @user_attributes[:primaryEmailAddress],
-        preferredName: self.preferred_name,
-        roles: roles,
-        uid: @uid,
-        sid: @user_attributes[:studentId],
-        campusSolutionsID: @user_attributes[:campusSolutionsId],
-        isLegacyStudent: @user_attributes[:isLegacyStudent],
-        isDelegateUser: is_delegate_user?,
-        showSisProfileUI: @user_attributes[:sisProfileVisible],
-        isDirectlyAuthenticated: directly_authenticated,
+      {
         actingAsUid: acting_as_uid,
         advisorActingAsUid: !directly_authenticated && authentication_state.original_advisor_user_id,
-        delegateActingAsUid: !directly_authenticated && authentication_state.original_delegate_user_id,
+        campusSolutionsID: @user_attributes[:campusSolutionsId],
+        canActOnFinances: can_act_on_finances?,
         canSeeCSLinks: directly_authenticated || authentication_state.classic_viewing_as?,
-        canActOnFinances: directly_authenticated
+        canViewGrades: can_view_grades?(can_view_academics),
+        delegateActingAsUid: !directly_authenticated && authentication_state.original_delegate_user_id,
+        firstLoginAt: first_login_at,
+        firstName: names[:first_name],
+        fullName: names[:full_name],
+        givenFirstName: names[:given_first_name],
+        givenFullName: names[:given_full_name],
+        googleEmail: google_mail,
+        hasAcademicsTab: can_view_academics,
+        hasCampusTab: has_campus_tab?,
+        hasDashboardTab: has_dashboard_tab?,
+        hasFinancialsTab: has_financials_tab?(has_student_history),
+        hasGoogleAccessToken: GoogleApps::Proxy.access_granted?(@uid),
+        hasInstructorHistory: has_instructor_history,
+        hasStudentHistory: has_student_history,
+        hasToolboxTab: has_toolbox_tab?(current_user_policy),
+        inEducationAbroadProgram: @user_attributes[:educationAbroad],
+        isDelegateUser: is_delegate_user?,
+        isDirectlyAuthenticated: directly_authenticated,
+        isGoogleReminderDismissed: is_google_reminder_dismissed,
+        isLegacyStudent: @user_attributes[:isLegacyStudent],
+        isSuperuser: super_user?,
+        isViewer: viewer?(current_user_policy),
+        lastName: names[:last_name],
+        officialBmailAddress: @user_attributes[:officialBmailAddress],
+        primaryEmailAddress: @user_attributes[:primaryEmailAddress],
+        preferredName: names[:preferred_name],
+        roles: roles,
+        showSisProfileUI: show_sis_profile_ui?,
+        sid: @user_attributes[:studentId],
+        uid: @uid
       }
-      filter_user_api_for_delegator(feed) if authentication_state.authenticated_as_delegate?
-      feed
     end
 
   end
