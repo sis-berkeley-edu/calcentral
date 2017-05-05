@@ -7,8 +7,8 @@ var angular = require('angular');
  * Academic Status Factory
  */
 angular.module('calcentral.factories').factory('academicStatusFactory', function(apiService, $route, $routeParams) {
-  // var urlAcademicStatus = '/dummy/json/hub_academic_status.json';
   var urlAcademicStatus = '/api/edos/academic_status';
+  // urlAcademicStatus = '/dummy/json/hub_academic_status.json';
   var urlAdvisingAcademicStatus = '/api/advising/academic_status/';
 
   var parseAcademicRoles = function(response) {

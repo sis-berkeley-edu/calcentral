@@ -3,7 +3,7 @@
 var angular = require('angular');
 var _ = require('lodash');
 
-angular.module('calcentral.controllers').controller('AcademicRecordsController', function(academicRecordsFactory, apiService, csLinkFactory, userService, $scope, $window) {
+angular.module('calcentral.controllers').controller('AcademicRecordsController', function(academicRecordsFactory, userService, $scope, $window) {
 
   $scope.officialTranscript = {
     postParams: {},
@@ -21,6 +21,8 @@ angular.module('calcentral.controllers').controller('AcademicRecordsController',
     title: 'Request your University Extension Transcript'
   };
   $scope.lawUnofficialTranscriptLink = {};
+  $scope.academicRoles = {};
+  $scope.userRoles = userService.profile.roles;
 
   /**
    * Constructs a post request to Credentials Solutions, as outlined by the Credentials Solutions documentation seen in
@@ -53,34 +55,18 @@ angular.module('calcentral.controllers').controller('AcademicRecordsController',
   };
 
   var parseData = function(response) {
-    var transcriptData = _.get(response, 'data.feed.transcriptOrder');
-    $scope.officialTranscript.postUrl = _.get(transcriptData, 'credSolLink');
-    _.forOwn(transcriptData, function(value, key) {
-      if (key !== 'credSolLink' && key !== 'debugDbname') {
-        _.set($scope.officialTranscript.postParams, key, value);
-      }
-    });
+    $scope.lawUnofficialTranscriptLink = _.get(response, 'data.lawUnofficialTranscriptLink');
+    $scope.academicRoles = _.get(response, 'data.academicRoles');
+    var transcriptData = _.get(response, 'data.officialTranscriptRequestData');
+    $scope.officialTranscript.postUrl = _.get(transcriptData, 'postUrl');
+    $scope.officialTranscript.postParams = _.get(transcriptData, 'postParams');
   };
 
-  var fetchLawUnofficialTranscriptLink = function() {
-    csLinkFactory.getLink({
-      urlId: 'UC_CX_RQST_UNOFF_LAW_TRANSCRPT',
-      placeholders: {
-        EMPLID: userService.profile.sid
-      }
-    }).then(
-      function successCallback(response) {
-        $scope.lawUnofficialTranscriptLink = _.get(response, 'data.link');
-      }
-    );
-  };
-
-  var loadTranscriptData = function() {
+  var loadAcademicRecordsData = function() {
     academicRecordsFactory.getTranscriptData()
       .then(function(response) {
         parseData(response);
       })
-      .then(fetchLawUnofficialTranscriptLink)
       .finally(function() {
         $scope.officialTranscript.isLoading = false;
       });
@@ -94,5 +80,5 @@ angular.module('calcentral.controllers').controller('AcademicRecordsController',
     }
   };
 
-  loadTranscriptData();
+  loadAcademicRecordsData();
 });

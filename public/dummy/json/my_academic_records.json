@@ -1,0 +1,45 @@
+{
+  "academicRoles": {
+    "concurrent": false,
+    "fpf": false,
+    "grad": true,
+    "haasEveningWeekendMba": false,
+    "haasExecMba": false,
+    "haasFullTimeMba": false,
+    "haasMastersFinEng": false,
+    "haasMbaJurisDoctor": false,
+    "haasMbaPublicHealth": false,
+    "law": true,
+    "summerVisitor": false,
+    "ugrd": false,
+    "ugrdUrbanStudies": false
+  },
+  "lawUnofficialTranscriptLink": null,
+  "officialTranscriptRequestData": {
+    "postParams": {
+      "a1": "1234 4th Street",
+      "a2": "Unit G",
+      "attfr": "2014",
+      "attto": "2017",
+      "ccps": "USA",
+      "city": "Berkeley",
+      "debugMaxTerm": "2178",
+      "debugMinTerm": "2148",
+      "email": "michaelscott@example.com",
+      "emplid": "11236543",
+      "fice": "XX1312",
+      "formid": "SHA",
+      "shahash": "r5L+w5BG2n8vyNx16VybEeyiubkvMaKQrzSWPXhaIab=",
+      "shalvls": "GRAD*LAW",
+      "snf": "Michael",
+      "snl": "Scott",
+      "snlo": null,
+      "snm": "Kevin Malone",
+      "state": "CA",
+      "studid": "18568178",
+      "tel25": "555-206-6097",
+      "zip": "94705"
+    },
+    "postUrl": "https://www.credentials-inc.com/CGI-BIN/dvcgitp.pgm"
+  }
+}

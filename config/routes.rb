@@ -82,6 +82,7 @@ Calcentral::Application.routes.draw do
     get '/api/my/activities' => 'my_activities#get_feed', :as => :my_activities, :defaults => { :format => 'json' }
     get '/api/my/badges' => 'my_badges#get_feed', :as => :my_badges, :defaults => { :format => 'json' }
     get '/api/my/academics' => 'my_academics#get_feed', :as => :my_academics, :defaults => { :format => 'json' }
+    get '/api/my/academic_records' => 'my_academic_records#get_feed', :defaults => { :format => 'json' }
     get '/api/my/class_enrollments' => 'my_class_enrollments#get_feed', :defaults => { :format => 'json' }
     get '/api/my/residency' => 'my_academics#residency', :defaults => { :format => 'json' }
     get '/api/my/eft_enrollment' => 'my_eft_enrollment#get_feed', :as => :my_eft_enrollment, :defaults => { :format => 'json' }
@@ -91,6 +92,7 @@ Calcentral::Application.routes.draw do
     get '/api/my/campuslinks/expire' => 'my_campus_links#expire'
     get '/api/my/campuslinks/refresh' => 'my_campus_links#refresh', :defaults => { :format => 'json' }
     get '/api/my/registrations' => 'my_registrations#get_feed', :defaults => { :format => 'json' }
+    get '/api/academics/enrollment_verification' => 'enrollment_verification#get_feed', :defaults => { :format => 'json' }
     get '/api/academics/degree_progress/ugrd' => 'my_degree_progress#get_undergraduate_requirements', :defaults => { :format => 'json' }
     get '/api/academics/degree_progress/grad' => 'my_degree_progress#get_graduate_milestones', :defaults => { :format => 'json' }
     get '/api/my/updated_feeds' => 'is_updated#list', :defaults => {:format => 'json'}
@@ -157,7 +159,6 @@ Calcentral::Application.routes.draw do
     get '/api/campus_solutions/financial_aid_funding_sources' => 'campus_solutions/financial_aid_funding_sources#get', :defaults => { :format => 'json' }
     get '/api/campus_solutions/financial_aid_funding_sources_term' => 'campus_solutions/financial_aid_funding_sources_term#get', :defaults => { :format => 'json' }
     get '/api/campus_solutions/holds' => 'campus_solutions/holds#get', :defaults => { :format => 'json' }
-    get '/api/campus_solutions/enrollment_verification_messages' => 'campus_solutions/enrollment_verification_messages#get', :defaults => {:format => 'json'}
     get '/api/campus_solutions/advising_resources' => 'campus_solutions/advising_resources#get', :defaults => { :format => 'json' }
     get '/api/campus_solutions/billing' => 'campus_solutions/billing#get', :defaults => { :format => 'json' }
     get '/api/campus_solutions/slr_deeplink' => 'campus_solutions/slr_deeplink#get', :defaults => { :format => 'json' }
@@ -165,7 +166,6 @@ Calcentral::Application.routes.draw do
     get '/api/campus_solutions/emergency_contacts' => 'campus_solutions/emergency_contacts#get', :defaults => { :format => 'json' }
     get '/api/campus_solutions/link' => 'campus_solutions/link#get', :defaults => { :format => 'json' }
     get '/api/campus_solutions/student_resources' => 'campus_solutions/student_resources#get', :defaults => { :format => 'json' }
-    get '/api/campus_solutions/cs_official_transcript' => 'campus_solutions/cs_official_transcript#get', :defaults => { :format => 'json' }
     get '/api/campus_solutions/confidential_student_message' => 'campus_solutions/confidential_student#get_message', :defaults => { :format => 'json' }
     post '/api/campus_solutions/address' => 'campus_solutions/address#post', :defaults => { :format => 'json' }
     post '/api/campus_solutions/email' => 'campus_solutions/email#post', :defaults => { :format => 'json' }

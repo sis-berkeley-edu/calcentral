@@ -566,6 +566,35 @@
     <COMMENTS>This link does not need any special parameters passed except for the ucFrom strings.</COMMENTS>
   </Link>
   <Link>
+    <URL_ID>UC_CX_RQST_UNOFF_LAW_TRANSCRPT</URL_ID>
+    <Description>Transcript (Unofficial) - Law School Students</Description>
+    <HOVER_OVER_TEXT>Request your Law Unofficial Transcript</HOVER_OVER_TEXT>
+    <PROPERTIES type="array">
+      <PROPERTY>
+        <NAME>CALCENTRAL</NAME>
+        <value>TRANSCRIPT</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>UCFROM</NAME>
+        <value>CalCentral</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>UCFROMLINK</NAME>
+        <value>https://calcentral-sis-dev-01.ist.berkeley.edu/</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>UCFROMTEXT</NAME>
+        <value>CalCentral</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>URI_TYPE</NAME>
+        <value>PL</value>
+      </PROPERTY>
+    </PROPERTIES>
+    <URL>https://bcswebqat.is.berkeley.edu/psp/bcsqat/EMPLOYEE/HRMS/c/SA_LEARNER_SERVICES.SSS_TSRQST_UNOFF.GBL?EMPLID={EMPLID}</URL>
+    <COMMENTS>Students land on a CS page where they may request their unofficial transcripts. Only Law is available.</COMMENTS>
+  </Link>
+  <Link>
     <URL_ID>UC_CX_SSS_GRADE_ROSTER</URL_ID>
     <Description>Course Grades</Description>
     <HOVER_OVER_TEXT>Enter, edit, and approve final grades for this course.</HOVER_OVER_TEXT>

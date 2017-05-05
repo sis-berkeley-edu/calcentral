@@ -4,8 +4,8 @@ var angular = require('angular');
 
 angular.module('calcentral.factories').factory('academicRecordsFactory', function(apiService) {
 
-  var url = '/api/campus_solutions/cs_official_transcript';
-  // var url = '/dummy/json/cs_official_transcript.json';
+  var url = '/api/my/academic_records';
+  // var url = '/dummy/json/my_academic_records.json';
 
   var getTranscriptData = function(options) {
     return apiService.http.request(options, url);

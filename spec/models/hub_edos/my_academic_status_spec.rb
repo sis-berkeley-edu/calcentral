@@ -13,7 +13,9 @@ describe HubEdos::MyAcademicStatus do
       it 'translates roles' do
         roles = subject[:feed]['student']['roles']
         expect(roles).to be
-        expect(roles.keys.count).to eq 11
+        expect(roles.keys.count).to eq 13
+        expect(roles['ugrd']).to eq false
+        expect(roles['grad']).to eq false
         expect(roles['fpf']).to eq false
         expect(roles['law']).to eq has_law_role
         expect(roles['concurrent']).to eq false
@@ -155,6 +157,42 @@ describe HubEdos::MyAcademicStatus do
         [academic_plan_summer_visitor]
       }
       it_behaves_like 'a translator that maps academic status to roles'
+    end
+
+    context 'get roles' do
+      let(:feed) do
+        {
+          feed: {
+            'student' => student
+          }
+        }
+      end
+      subject { described_class.get_roles(random_id) }
+      before { allow_any_instance_of(described_class).to receive(:get_feed_internal).and_return(feed) }
+      context 'no feed' do
+        let(:feed) { nil }
+        it 'returns nil' do
+          expect(subject).to be_nil
+        end
+      end
+      context 'no student present' do
+        let(:student) { nil }
+        it 'returns nil' do
+          expect(subject).to be_nil
+        end
+      end
+      context 'student with roles present' do
+        let(:student) do
+          {
+            'roles' => {
+              'fpf' => false
+            }
+          }
+        end
+        it 'returns roles' do
+          expect(subject['fpf']).to eq false
+        end
+      end
     end
 
   end

@@ -1,4 +1,4 @@
-<div class="cc-page-academics" data-ng-if="api.user.profile.features.enrollmentVerification && (api.user.profile.isDirectlyAuthenticated || api.user.profile.actingAsUid)">
+<div class="cc-page-academics" data-ng-if="api.user.profile.features.enrollmentVerification && (api.user.profile.isDirectlyAuthenticated || api.user.profile.actingAsUid || api.user.profile.advisorActingAsUid)">
   <div class="row">
     <div class="column">
       <h1 class="cc-heading-page-title cc-print-hide">
@@ -16,4 +16,4 @@
     </div>
   </div>
 </div>
-<div data-ng-include="'404.html'" data-ng-if="!api.user.profile.features.enrollmentVerification || (!api.user.profile.isDirectlyAuthenticated && !api.user.profile.actingAsUid)"></div>
+<div data-ng-include="'404.html'" data-ng-if="!api.user.profile.features.enrollmentVerification || (!api.user.profile.isDirectlyAuthenticated && !api.user.profile.actingAsUid && !api.user.profile.advisorActingAsUid)"></div>
