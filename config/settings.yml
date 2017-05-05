@@ -143,14 +143,6 @@ cal_groups_proxy:
   password: 'secret'
   base_url: 'https://group-test.berkeley.edu/gws/servicesRest/json/v2_2_100'
 
-calmail_proxy:
-  fake: false
-  api_key: '99999'
-  base_url: 'https://example.com/manage/api1'
-  domain: 'bcourses-lists.berkeley.edu'
-  owner_address: 'owner@example.com'
-  owner_uid: '211159'
-
 clearing_house_proxy:
   fake: false
   base_url: 'https://secure.studentclearinghouse.org/sssportalui/authenticate'

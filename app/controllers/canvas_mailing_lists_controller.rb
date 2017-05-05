@@ -27,17 +27,10 @@ class CanvasMailingListsController < ApplicationController
   end
 
   # POST /api/academics/canvas/mailing_lists/:canvas_course_id/create
-  # Unlike other CRUD actions, list creation must specify which type of list is being created.
 
   def create
-    list_type = params['listType'] || 'CalmailList'
-    list_class = MailingLists.const_get(list_type) rescue nil
-    if MailingLists::SiteMailingList.subclasses.include? list_class
-      list = list_class.create canvas_site_id: canvas_course_id.to_s, list_name: params['listName']
-      render json: list.to_json
-    else
-      raise Errors::BadRequestError, "Unrecognized list type '#{list_type}'"
-    end
+    list = MailingLists::MailgunList.create canvas_site_id: canvas_course_id.to_s, list_name: params['listName']
+    render json: list.to_json
   end
 
   # POST /api/academics/canvas/mailing_lists/:canvas_course_id/populate
