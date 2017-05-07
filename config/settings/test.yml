@@ -43,9 +43,6 @@ cal_link_proxy:
 cal1card_proxy:
   fake: true
 
-calmail_proxy:
-  fake: true
-
 calnet_crosswalk_proxy:
   fake: true
 

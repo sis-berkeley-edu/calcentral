@@ -29,17 +29,10 @@ angular.module('calcentral.controllers').controller('CanvasSiteMailingListsContr
     };
     angular.extend($scope, data);
     $scope.siteSelected = (data.canvasSite && !!data.canvasSite.canvasCourseId);
-    $scope.listRegistered = (data.mailingList && data.mailingList.state !== 'unregistered');
     $scope.listCreated = (data.mailingList && data.mailingList.state === 'created');
-    $scope.listPending = $scope.listRegistered && !$scope.listCreated;
 
     if ($scope.siteSelected) {
       setCodeAndTerm($scope.canvasSite);
-    }
-
-    if (!$scope.listRegistered) {
-      // For Fall 2016, the list admin tool should continue to default to CalMail.
-      $scope.mailingList.listType = 'CalmailList';
     }
 
     if ($scope.listCreated) {
@@ -83,20 +76,6 @@ angular.module('calcentral.controllers').controller('CanvasSiteMailingListsContr
       $scope.alerts.error = $scope.alerts.error.concat(results.messages);
       $scope.alerts.error.push('You can attempt to correct the errors by running the update again.');
     }
-  };
-
-  $scope.confirmCreation = function() {
-    $scope.isConfirmingCreation = true;
-    return canvasSiteMailingListsFactory.getSiteMailingList($scope.canvasSite.canvasCourseId).then(
-      function successCallback(response) {
-        $scope.isConfirmingCreation = false;
-        setStateFromData(response.data);
-        if (!$scope.listCreated && !$scope.alerts.error.count) {
-          $scope.alerts.error.push('You cannot update memberships before the list is created in CalMail.');
-        }
-      },
-      errorCallback
-    );
   };
 
   $scope.findSiteMailingList = function() {
