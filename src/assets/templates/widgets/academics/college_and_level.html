@@ -1,8 +1,9 @@
 <div data-cc-academic-plans-directive data-plans="collegeAndLevel.majors" data-options="{labels: {'1': 'Major', 'other': 'Majors'}}" data-type="major"> </div>
+<div data-cc-academic-plans-directive data-plans="collegeAndLevel.majors" data-options="{labels: {'1': 'Major', 'other': 'Majors'}}" data-type="major"> </div>
 <div data-cc-academic-plans-directive data-plans="collegeAndLevel.minors" data-options="{labels: {'1': 'Minor', 'other': 'Minors'}}" data-type="minor"> </div>
 <div data-cc-academic-plans-directive data-plans="collegeAndLevel.designatedEmphases" data-options="{labels: {'1': 'Designated Emphasis', 'other': 'Designated Emphases'}}" data-type="designatedEmphasis"> </div>
 
-<div class="cc-table cc-table-top-border cc-clearfix" data-ng-if="!collegeAndLevel.roles.summerVisitor && collegeAndLevel.careers.length">
+<div class="cc-table cc-table-top-border cc-clearfix" data-ng-if="collegeAndLevel.careers.length">
   <table class="cc-widget-profile-table">
     <tbody>
     <tr>
@@ -15,7 +16,7 @@
   </table>
 </div>
 
-<div class="cc-table cc-table-top-border cc-clearfix" data-ng-if="!collegeAndLevel.roles.summerVisitor && collegeAndLevel.level">
+<div class="cc-table cc-table-top-border cc-clearfix" data-ng-if="collegeAndLevel.level">
   <table class="cc-widget-profile-table">
     <tbody>
       <tr>
@@ -40,7 +41,7 @@
 </div>
 
 <div class="cc-table cc-table-top-border cc-clearfix"
-  data-ng-if="!collegeAndLevel.roles.summerVisitor && (collegeAndLevel.termsInAttendance || expectedGradTerm(collegeAndLevel))">
+  data-ng-if="collegeAndLevel.termsInAttendance || expectedGradTerm(collegeAndLevel)">
   <table class="cc-widget-profile-table">
     <tbody>
       <tr>
