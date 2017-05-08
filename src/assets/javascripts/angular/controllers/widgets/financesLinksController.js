@@ -116,8 +116,7 @@ angular.module('calcentral.controllers').controller('FinancesLinksController', f
   var loadAcademicStatus = function(roles) {
     if (!_.isEmpty(roles)) {
       $scope.canViewEftLink = $scope.api.user.profile.roles.student &&
-        ($scope.api.user.profile.roles.undergrad || $scope.api.user.profile.roles.graduate || $scope.api.user.profile.roles.law) &&
-        !roles.summerVisitor;
+        ($scope.api.user.profile.roles.undergrad || $scope.api.user.profile.roles.graduate || $scope.api.user.profile.roles.law);
       $scope.canViewEmergencyLoanLink = !roles.summerVisitor;
     }
   };
