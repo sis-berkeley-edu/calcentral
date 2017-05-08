@@ -41,7 +41,7 @@
 
       <div data-ng-include="'widgets/final_exam_schedule.html'" data-ng-if="canViewFinalExamSchedule && api.user.profile.features.finalExamSchedule"></div>
 
-      <div data-ng-include="'widgets/my_advising.html'" data-ng-if="showAdvising && !collegeAndLevel.roles.summerVisitor"></div>
+      <div data-ng-include="'widgets/my_advising.html'" data-ng-if="showAdvising"></div>
 
       <div data-ng-include="'widgets/transfer_credit.html'" data-ng-if="!collegeAndLevel.roles.summerVisitor"></div>
     </div>
