@@ -71,7 +71,7 @@
 
       <div data-ng-include="'widgets/academics/college_and_level.html'"></div>
 
-      <div class="cc-table cc-table-top-border cc-clearfix" data-ng-if="!collegeAndLevel.roles.summerVisitor && gpaUnits.totalUnits > 0">
+      <div class="cc-table cc-table-top-border cc-clearfix" data-ng-if="gpaUnits.totalUnits > 0">
         <table>
           <tbody>
             <tr>
@@ -82,7 +82,7 @@
         </table>
       </div>
 
-      <div class="cc-table cc-table-top-border cc-clearfix" data-ng-if="!collegeAndLevel.roles.summerVisitor && gpaUnits.cumulativeGpa > 0 && !api.user.profile.roles.law">
+      <div class="cc-table cc-table-top-border cc-clearfix" data-ng-if="gpaUnits.cumulativeGpa > 0 && !api.user.profile.roles.law">
         <table>
           <tbody>
             <tr>
