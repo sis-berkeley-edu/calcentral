@@ -106,6 +106,10 @@ module User
       authentication_state.authenticated_as_delegate?
     end
 
+    def has_campus_role?
+      @user_attributes[:roles].values.any?
+    end
+
     def super_user?
       authentication_state.policy.can_administrate? && !is_delegate_user_emulating_student?
     end
@@ -127,7 +131,7 @@ module User
 
     def has_dashboard_tab?
       return false if is_delegate_user_emulating_student?
-      @user_attributes[:roles].values.any? || super_user?
+      has_campus_role? || super_user?
     end
 
     def has_academics_tab?(has_instructor_history, has_student_history)
@@ -140,7 +144,7 @@ module User
 
     def has_badges?
       return false if is_delegate_user_emulating_student? || is_advisor_user_emulating_student?
-      @user_attributes[:roles].values.any? || super_user?
+      has_campus_role? || super_user?
     end
 
     def has_financials_tab?(has_student_history)
@@ -152,7 +156,7 @@ module User
     end
 
     def has_campus_tab?
-      @user_attributes[:roles].values.any? || super_user?
+      has_campus_role? || super_user?
     end
 
     def has_toolbox_tab?(policy)
@@ -162,7 +166,7 @@ module User
 
     def show_sis_profile_ui?
       return false if is_delegate_user_emulating_student?
-      return @user_attributes[:sisProfileVisible] if @user_attributes[:roles].values.any? || super_user?
+      return @user_attributes[:sisProfileVisible] if has_campus_role? || super_user?
       false
     end
 
