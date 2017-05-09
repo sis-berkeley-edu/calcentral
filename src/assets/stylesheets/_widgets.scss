@@ -19,6 +19,14 @@
     clear: both;
   }
 }
+@supports (display: flow-root) {
+  .cc-widget {
+    display: flow-root;
+    &::after {
+      content: none;
+    }
+  }
+}
 .cc-column-3 {
   .cc-widget {
     margin-right: 0;

@@ -35,6 +35,14 @@
 .cc-clearfix-container::after {
   clear: both;
 }
+@supports (display: flow-root) {
+  .cc-clearfix {
+    display: flow-root;
+    &::after {
+      content: none;
+    }
+  }
+}
 .cc-clickable {
   cursor: pointer;
 }
