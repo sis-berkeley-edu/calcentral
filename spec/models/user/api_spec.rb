@@ -91,7 +91,7 @@ describe User::Api do
     let(:feed) { User::Api.new(uid).get_feed }
     include_context 'has no delegate students'
 
-    it 'should return a user data structure' do
+    it 'should return a user data structure with default values' do
       expect(feed[:preferredName]).to eq ''
       expect(feed[:isLegacyStudent]).to be false
       expect(feed[:isDelegateUser]).to be false
@@ -99,6 +99,7 @@ describe User::Api do
       expect(feed[:hasAcademicsTab]).to be false
       expect(feed[:canViewGrades]).to be false
       expect(feed[:hasToolboxTab]).to be false
+      expect(feed[:hasBadges]).to be false
       expect(feed[:officialBmailAddress]).to eq nil
       expect(feed[:campusSolutionsID]).to eq '1234567890'
       expect(feed[:sid]).to eq nil
@@ -116,6 +117,9 @@ describe User::Api do
       it 'shows My Academics tab' do
         expect(feed[:hasAcademicsTab]).to be true
       end
+      it 'shows bConnected badges' do
+        expect(feed[:hasBadges]).to be true
+      end
       it 'shows profile' do
         expect(feed[:showSisProfileUI]).to be true
       end
@@ -128,6 +132,9 @@ describe User::Api do
       let(:has_advisor_role) { true }
       it 'hides My Academics tab' do
         expect(feed[:hasAcademicsTab]).to be false
+      end
+      it 'shows bConnected badges' do
+        expect(feed[:hasBadges]).to be true
       end
       it 'shows profile' do
         expect(feed[:showSisProfileUI]).to be true
@@ -173,6 +180,9 @@ describe User::Api do
         it 'hides My Toolbox tab' do
           expect(feed[:hasToolboxTab]).to be false
         end
+        it 'hides bConnected badges' do
+          expect(feed[:hasBadges]).to be false
+        end
         it 'hides profile' do
           expect(feed[:showSisProfileUI]).to be false
         end
@@ -195,6 +205,9 @@ describe User::Api do
         end
         it 'hides profile' do
           expect(feed[:showSisProfileUI]).to be false
+        end
+        it 'hides bConnected badges' do
+          expect(feed[:hasBadges]).to be false
         end
         it 'withholds delegate role' do
           expect(feed[:isDelegateUser]).to be false
@@ -221,6 +234,9 @@ describe User::Api do
           it 'hides profile' do
             expect(feed[:showSisProfileUI]).to be false
           end
+          it 'hides bConnected badges' do
+            expect(feed[:hasBadges]).to be false
+          end
           it 'assigns delegate role' do
             expect(feed[:isDelegateUser]).to be true
           end
@@ -240,6 +256,9 @@ describe User::Api do
             end
             it 'shows profile' do
               expect(feed[:showSisProfileUI]).to be true
+            end
+            it 'shows bConnected badges' do
+              expect(feed[:hasBadges]).to be true
             end
             it 'assigns privileges relevant to both delegates and advisors' do
               expect(feed[:canViewGrades]).to be true
@@ -263,6 +282,9 @@ describe User::Api do
             it 'hides profile' do
               expect(feed[:showSisProfileUI]).to be false
             end
+            it 'hides bConnected badges' do
+              expect(feed[:hasBadges]).to be false
+            end
             it 'withholds delegate role' do
               expect(feed[:isDelegateUser]).to be false
             end
@@ -281,6 +303,9 @@ describe User::Api do
             end
             it 'hides profile' do
               expect(feed[:showSisProfileUI]).to be false
+            end
+            it 'hides bConnected badges' do
+              expect(feed[:hasBadges]).to be false
             end
             it 'assigns privileges relevant to the student' do
               expect(feed[:canViewGrades]).to be false

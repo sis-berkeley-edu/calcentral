@@ -1,5 +1,4 @@
 class MyBadgesController < ApplicationController
-  include AllowDelegateViewAs
 
   before_filter :api_authenticate
 

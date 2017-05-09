@@ -98,6 +98,10 @@ module User
       authentication_state.directly_authenticated? && !@delegate_students.nil? && @delegate_students.any?
     end
 
+    def is_advisor_user_emulating_student?
+      authentication_state.authenticated_as_advisor?
+    end
+
     def is_delegate_user_emulating_student?
       authentication_state.authenticated_as_delegate?
     end
@@ -132,6 +136,11 @@ module User
       end
       roles = @user_attributes[:roles]
       roles[:student] || roles[:faculty] || roles[:applicant] || has_instructor_history || has_student_history
+    end
+
+    def has_badges?
+      return false if is_delegate_user_emulating_student? || is_advisor_user_emulating_student?
+      @user_attributes[:roles].values.any? || super_user?
     end
 
     def has_financials_tab?(has_student_history)
@@ -197,7 +206,7 @@ module User
       can_view_academics = has_academics_tab?(has_instructor_history, has_student_history)
       directly_authenticated = authentication_state.directly_authenticated?
       # This tangled logic is a historical artifact of divergent approaches to View-As and LTI-based authentication.
-      acting_as_uid = directly_authenticated || authentication_state.authenticated_as_delegate? || authentication_state.authenticated_as_advisor? ?
+      acting_as_uid = directly_authenticated || is_delegate_user_emulating_student? || is_advisor_user_emulating_student? ?
         false : authentication_state.real_user_id
       {
         actingAsUid: acting_as_uid,
@@ -214,6 +223,7 @@ module User
         givenFullName: names[:given_full_name],
         googleEmail: google_mail,
         hasAcademicsTab: can_view_academics,
+        hasBadges: has_badges?,
         hasCampusTab: has_campus_tab?,
         hasDashboardTab: has_dashboard_tab?,
         hasFinancialsTab: has_financials_tab?(has_student_history),

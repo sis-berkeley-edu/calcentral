@@ -9,7 +9,7 @@
     </a>
   </div>
   <nav class="cc-header-icons" data-ng-cloak data-ng-show="api.user.events.isAuthenticated">
-    <div class="cc-left" data-ng-include="'widgets/badges_popover.html'" data-ng-if="!api.user.profile.delegateActingAsUid && !api.user.profile.advisorActingAsUid"></div>
+    <div class="cc-left" data-ng-include="'widgets/badges_popover.html'" data-ng-if="api.user.profile.hasBadges"></div>
     <div class="cc-left" data-ng-include="'widgets/gear_popover.html'"></div>
   </nav>
 </header>
