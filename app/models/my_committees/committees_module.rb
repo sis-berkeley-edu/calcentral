@@ -95,6 +95,7 @@ module MyCommittees::CommitteesModule
 
   def committee_member_photo_url (cs_committee_member)
     empl_id = cs_committee_member[:memberEmplid]
+    return nil if is_non_berkeley_committee_member? empl_id
     user_id = CalnetCrosswalk::ByCsId.new(user_id: empl_id).lookup_ldap_uid
     "/api/my/committees/photo/member/#{user_id}"
   end
@@ -183,6 +184,10 @@ module MyCommittees::CommitteesModule
       else
         :additionalReps
     end
+  end
+
+  def is_non_berkeley_committee_member?(empl_id)
+    empl_id.to_s.include? 'GCMT'
   end
 
   def is_active?(cs_committee)

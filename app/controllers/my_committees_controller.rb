@@ -19,9 +19,9 @@ class MyCommitteesController < ApplicationController
   end
 
   def member_photo
-    member_id = Integer(params['member_id'], 10)
+    member_id = Integer(params['member_id'], 10) if params['member_id']
     my_committees = MyCommittees::Merged.from_session(session)
-    if  my_committees.get_feed_as_json.include? "member/#{member_id}"
+    if  member_id && (my_committees.get_feed_as_json.include? "member/#{member_id}")
       member_photo = my_committees.photo_data_or_file(member_id)
       serve_photo(member_photo)
     else
