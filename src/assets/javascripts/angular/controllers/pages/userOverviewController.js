@@ -15,6 +15,7 @@ angular.module('calcentral.controllers').controller('UserOverviewController', fu
     excludeLinksToRegistrar: true
   };
   $scope.ucAdvisingResources = {
+    links: {},
     isLoading: true
   };
   $scope.planSemestersInfo = {
@@ -79,15 +80,10 @@ angular.module('calcentral.controllers').controller('UserOverviewController', fu
   });
 
   var parseAdvisingResources = function(response) {
-    var resources = $scope.ucAdvisingResources;
-    angular.extend(resources, _.get(response, 'data.feed'));
-    if (_.get(resources, 'links')) {
-      linkService.addCurrentPagePropertiesToResources(resources.links, $scope.currentPage.name, $scope.currentPage.url);
-    }
-    if (_.get(resources, 'csLinks')) {
-      linkService.addCurrentPagePropertiesToResources(resources.csLinks, $scope.currentPage.name, $scope.currentPage.url);
-    }
-    resources.isLoading = false;
+    var links = $scope.ucAdvisingResources.links;
+    angular.extend(links, _.get(response, 'data.feed'));
+    linkService.addCurrentPagePropertiesToResources(links, $scope.currentPage.name, $scope.currentPage.url);
+    $scope.ucAdvisingResources.isLoading = false;
   };
 
   var defaultErrorDescription = function(status) {

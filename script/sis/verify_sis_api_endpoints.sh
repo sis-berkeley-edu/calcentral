@@ -217,7 +217,6 @@ verify_crosswalk \
 
 if [ "${APP_MODE}" == "calcentral" ] ; then
   verify_cs 'always_enabled' true \
-    "/UC_AA_ADVISING_RESOURCES.v1/UC_ADVISING_RESOURCES?EMPLID=${CAMPUS_SOLUTIONS_ID}" \
     "/UC_CC_COMM_DB_URL.v1/dashboard/url/" \
     "/UC_SR_SLR_LINKS.v1/UC_SR_SLR_LINKS_GET" \
     "/UC_LINK_API.v1/get?PROPNAME=CALCENTRAL" \

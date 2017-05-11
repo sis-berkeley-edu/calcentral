@@ -22,28 +22,10 @@ describe CampusSolutions::AdvisingResourcesController do
       let(:feed_key) { 'ucAdvisingResources' }
 
       shared_examples 'a feed with advising resources' do
-        it 'contains advising links and csLinks' do
+        it 'contains data' do
           get feed
           json = JSON.parse response.body
-          expect(json['feed']['links']).to_not be_nil
-          expect(json['feed']['csLinks']).to_not be_nil
-        end
-      end
-
-      context 'links from the CS advising resources API' do
-        let(:key) { 'ucAcademicRequirements' }
-        let(:expected_name) { 'Academic Requirements' }
-
-        it_behaves_like 'a feed with advising resources'
-
-        it 'returns feed with links' do
-          get feed
-          json = JSON.parse response.body
-          links = json['feed']['links']
-
-          expect(link = links[key]).to_not be_nil
-          expect(link['isCsLink']).to be true
-          expect(link['name']).to eq expected_name
+          expect(json['feed']).to_not be_nil
         end
       end
 
@@ -56,7 +38,8 @@ describe CampusSolutions::AdvisingResourcesController do
         it 'returns feed with CS links' do
           get feed
           json = JSON.parse response.body
-          cs_links = json['feed']['csLinks']
+          puts json.pretty_inspect
+          cs_links = json['feed']
 
           expect(link = cs_links[key]).to_not be_nil
           expect(link['isCsLink']).to be true

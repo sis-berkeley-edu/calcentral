@@ -47,6 +47,15 @@ module MyAcademics
       end.uniq.reject { |level| level.to_s.empty? }
     end
 
+    def newest_career(statuses)
+      newest_career_status = statuses.try(:sort) do |this_status, that_status|
+        this_from_date = this_status['studentCareer'].try(:[], 'fromDate').to_s
+        that_from_date = that_status['studentCareer'].try(:[], 'fromDate').to_s
+        this_from_date <=> that_from_date
+      end.try(:last)
+      newest_career_status.try(:[], 'studentCareer').try(:[], 'academicCareer')
+    end
+
     def course_info(campus_course)
       campus_course.slice(:role, :sections, :slug, :session_code).merge({
         title: campus_course[:name],

@@ -5,7 +5,7 @@ module CampusSolutions
     before_action :authorize_advisor_access
 
     def get
-      json_passthrough CampusSolutions::AdvisingResources, user_id: session['user_id'], student_uid: params['student_uid']
+      render json: AdvisingResources.generic_links
     end
 
     private
