@@ -3,27 +3,28 @@
     <h2>Academic Records</h2>
   </div>
   <div>
+    <!-- If Law true, show law links, do not show general or concurrent -->
     <div class="cc-list-link-container" data-cc-spinner-directive="officialTranscript.isLoading">
       <ul class="cc-list-links">
-        <li>
+        <li data-ng-if="academicRoles.law || userRoles.exStudent">
           <a data-ng-href="{{lawTranscriptLink.link}}" data-ng-attr-title="{{lawTranscriptLink.title}}">Transcript - Law School students</a>
         </li>
-        <li data-ng-if="lawUnofficialTranscriptLink.url">
+        <li data-ng-if="(academicRoles.law || userRoles.exStudent) && lawUnofficialTranscriptLink.url">
           <a data-cc-campus-solutions-link-directive="lawUnofficialTranscriptLink"
             data-cc-campus-solutions-link-directive-cc-page-name="currentPage.name"
             data-cc-campus-solutions-link-directive-cc-page-url="currentPage.url"
           ></a>
         </li>
-        <li>
+        <li data-ng-if="userRoles.exStudent || (!academicRoles.law && (academicRoles.concurrent || academicRoles.ugrd || academicRoles.grad))">
           <a data-ng-href="{{ucbxTranscriptLink.link}}" data-ng-attr-title="{{ucbxTranscriptLink.title}}">Transcript - Concurrent Enrollment students</a>
         </li>
-        <li>
+        <li data-ng-if="userRoles.exStudent || (!academicRoles.law && (academicRoles.ugrd || academicRoles.grad))">
           <a data-ng-class="{'cc-academics-link-disabled':(api.user.profile.delegateActingAsUid)}"
             data-ng-click="requestTranscript()"
             data-ng-disabled="api.user.profile.delegateActingAsUid"
             data-ng-attr-title="{{officialTranscript.postUrlHover}}">Transcript - General students (not Law, not Concurrent)</a>
         </li>
-        <li data-ng-if="api.user.profile.features.enrollmentVerification && (api.user.profile.isDirectlyAuthenticated || api.user.profile.actingAsUid)">
+        <li data-ng-if="api.user.profile.features.enrollmentVerification && (api.user.profile.isDirectlyAuthenticated || api.user.profile.actingAsUid || api.user.profile.advisorActingAsUid)">
           <a title="Request Enrollment Verification" href="academics/enrollment_verification">Enrollment Verification</a>
         </li>
       </ul>

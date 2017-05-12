@@ -1,0 +1,107 @@
+{
+  "academicRoles": {
+    "concurrent": false,
+    "fpf": false,
+    "grad": true,
+    "haasEveningWeekendMba": false,
+    "haasExecMba": false,
+    "haasFullTimeMba": false,
+    "haasMastersFinEng": false,
+    "haasMbaJurisDoctor": false,
+    "haasMbaPublicHealth": false,
+    "law": true,
+    "summerVisitor": false,
+    "ugrd": false,
+    "ugrdUrbanStudies": false
+  },
+  "messages": [
+    {
+      "descrlong": "<p>This is a free and secure service provided by the National Student Clearinghouse.  It\u2019s available to students who are officially registered (enrolled, have no blocks, and paid at least 20% of tuition & fees) for the current term.  Verifications for any given term are available only after instruction begins for the term.</p>\n<p>With this service, you can:</p>\n<ul>\n<p><li>Print an Enrollment Verification Certificate: proof of registration, enrollment status and anticipated graduation date for grants, scholarships, services, etc.</li>\n<li>Print a Good Student Discount Certificate: proof of registration, enrollment status and eligibility for grants, scholarships, and discounts and services that require a GPA of 3.00 or higher</li>\n<li>View and print your enrollment history (enrollment prior to summer 2013 may not be available) </li>\n<li>Check information about your student loan deferments and electronic notices sent to lenders</li></p></ul>\n<p>Registered students may access Student Self-Service Verifications for:</p>\n<ul><li>Summer 2016: via  <a href=https://bearfacts.berkeley.edu/bearfacts/ target=\"\"_blank\"\"> Bear Facts</a> (under Academic Records >> Verifications >> Self-Service Verifications) </li>\n<li>Fall 2016: This service will be available beginning August 24, 2016. </li></p><p><i></ul>\nNote: Student Self-Service is updated weekly every Tuesday afternoon to reflect your registration status as of 5 p.m. the preceding Friday.</i></p>",
+      "messageNbr": "1",
+      "messageSetNbr": "32500",
+      "messageText": "<b>View or Print My Enrollment Verification Online</b>",
+      "msgSeverity": "M"
+    },
+    {
+      "descrlong": "<p>Use this service if you need to provide more detailed information such as your school or college at UC Berkeley, major(s), degree(s) earned, term(s) enrolled, units carried for each term, GPA, class level, etc. There is no fee for this service.</p>\n<p>You must be officially registered (enrolled, no blocks, and paid at least 20% of tuition & fees) before your attendance can be verified for any given term.</p>\n<p>The information on these verifications reflect your record at the time it is produced, generally 3 business days after you submit your request.</p>\n<p>Your verification will be sent to the address of your choice via first-class mail.</p>\nUpdated to:\n<p><b>The University is closed</b> on winter break from December 23 until January 3, 1017. Verification requests submitted after December 22 will be processed when normal business operations resume in the New Year.</p>\n<p>Use this service if you need to provide more detailed information such as your school or college at UC Berkeley, major(s), degree(s) earned, term(s) enrolled, units carried for each term, GPA, class level, etc. There is no fee for this service.</p>\n<p>You must be officially registered (enrolled, no blocks, and paid at least 20% of tuition & fees) before your attendance can be verified for any given term.</p>\n<p>The information on these verifications reflect your record at the time it is produced, generally 3 business days after you submit your request.</p>\n<p>Your verification will be sent to the address of your choice via first-class mail.</p>",
+      "messageNbr": "2",
+      "messageSetNbr": "32500",
+      "messageText": "<b>Request an Official Verification of Attendance and Degrees</b>",
+      "msgSeverity": "M"
+    },
+    {
+      "descrlong": "<p>To receive enrollment verification for your law classes you must  visit <a href=\"https://www.law.berkeley.edu/academics/registrar/verification-of-attendance/\" target=\"_blank\">Berkeley Law enrollment verification</a>.</p>",
+      "messageNbr": "3",
+      "messageSetNbr": "32500",
+      "messageText": "Berkeley Law enrollment verification",
+      "msgSeverity": "M"
+    },
+    {
+      "descrlong": "Click the FINISH button below to submit your request. \n\nThe address box below will be blank if you select print from browser.",
+      "messageNbr": "4",
+      "messageSetNbr": "32500",
+      "messageText": "Enrollment Verification Saved Message",
+      "msgSeverity": "M"
+    },
+    {
+      "descrlong": "<p>You may have limited access to campus services until you are officially registered. </p>\n<p>To become officially registered, pay your tuition and fees and clear all outstanding holds.</p>",
+      "messageNbr": "100",
+      "messageSetNbr": "32500",
+      "messageText": "Not Officially Registered",
+      "msgSeverity": "M"
+    },
+    {
+      "descrlong": "<p>Be sure you are taking the necessary steps to become a registered student this semester!</p> <p>Payment of tuition and fees is due the Friday before the first day of instruction. Failure to pay your tuition and fees by the deadline may result in you being dropped from your classes per the <a href=\"http://registrar.berkeley.edu/cnp\" target=\"_blank\">Cancel for Non-Payment policy</a>.</p> <p>Financial aid awards are released no earlier than 10 days before the start of instruction.  <a href=\"http://financialaid.berkeley.edu/financial-aid-payments-and-refunds\" target=\"_blank\">Financial aid payment and refund</a> information is available online.</p>",
+      "messageNbr": "101",
+      "messageSetNbr": "32500",
+      "messageText": "CNP Notification (UGRD)",
+      "msgSeverity": "M"
+    },
+    {
+      "descrlong": "<p>Payment of tuition and fees is due the Friday before instruction begins. Late payment may have consequences, including being dropped from your classes at the end of fifth week if a payment of at least 20% of your tuition/fees has not been received.</p>\n\n<p>If you are expecting a Fee Remission to pay a portion or all of your tuition and fees, check with the <i>hiring department</i> to determine when your fee remission will credit your account.</p>\n\n<p>If you are expecting a Fellowship Award to pay your tuition and fees, contact your departmental graduate advisor to ensure payment is in process.</p>\n\n<p>Learn more about UC Berkeley's <a href=\"http://registrar.berkeley.edu/cnp\" target=\"_blank\">Cancel for Non-Payment policy</a>.</p>",
+      "messageNbr": "102",
+      "messageSetNbr": "32500",
+      "messageText": "CNP Notification (GRAD)",
+      "msgSeverity": "M"
+    },
+    {
+      "descrlong": "<p>Your tuition and fees have not been paid. Failure to pay your tuition and fees by the Friday before the start of instruction may result in you being dropped from your classes per the <a href=\"\"http://registrar.berkeley.edu/cnp\"\" target=\"\"_blank\"\">Cancel for Non-Payment policy</a>.</p><p>To maintain your current course schedule and avoid cancellation, please pay your <a href=\"\"http://studentcentral.berkeley.edu/paymentstuition and fees\"\" target=\"\"_blank\"\">tuition and fees</a>.</p><p>Financial aid awards are released no earlier than 10 days before the start of instruction. <a href=\"http://financialaid.berkeley.edu/financial-aid-payments-and-refunds\" target=\"_blank\">Financial aid payment and refund</a> information is available online.</p>",
+      "messageNbr": "103",
+      "messageSetNbr": "32500",
+      "messageText": "CNP Warning (UGRD)",
+      "msgSeverity": "M"
+    },
+    {
+      "descrlong": "<p>Your tuition and fees have not been paid. Payment of tuition and fees is due the Friday before instruction begins. Late payment may have consequences, including being dropped from your classes at the end of fifth week if a payment of at least 20% of your tuition/fees has not been received.</p>\n\n<p>If you are expecting a Fee Remission to pay a portion or all of your tuition and fees, check with the <i>hiring department</i> to determine when your fee remission will credit your account.</p>\n\n<p>If you are expecting a Fellowship Award to pay your tuition and fees, contact your departmental graduate advisor to ensure payment is in process.</p>\n\n<p>Learn more about UC Berkeley's <a href=\"http://registrar.berkeley.edu/cnp\" target=\"_blank\">Cancel for Non-Payment policy</a>.</p>",
+      "messageNbr": "104",
+      "messageSetNbr": "32500",
+      "messageText": "CNP Warning (GRAD)",
+      "msgSeverity": "M"
+    },
+    {
+      "descrlong": "<p>You are not enrolled in any classes for this term.</p>",
+      "messageNbr": "105",
+      "messageSetNbr": "32500",
+      "messageText": "Not Enrolled (UGRD)",
+      "msgSeverity": "M"
+    },
+    {
+      "descrlong": "<p>You are not enrolled in any classes for this term. Fees will not be assessed, and any expected fee remissions or fee payment credits cannot be applied until you are enrolled in classes.</p>\n<p>For more information, please contact your departmental graduate advisor.</p>",
+      "messageNbr": "106",
+      "messageSetNbr": "32500",
+      "messageText": "Not Enrolled (Grad)",
+      "msgSeverity": "M"
+    }
+  ],
+  "requestUrl": {
+    "IS_CS_LINK": true,
+    "isCsLink": true,
+    "name": "Request Official Verification",
+    "title": "Request Other Verifications",
+    "ucFrom": "CalCentral",
+    "ucFromLink": "https://calcentral-sis-dev-01.ist.berkeley.edu/",
+    "ucFromText": "CalCentral",
+    "url": "https://bcswebqat.is.berkeley.edu/psp/bcsqat/EMPLOYEE/HRMS/c/SA_LEARNER_SERVICES.SS_ENRL_VER_REQ.GBL",
+    "urlId": "UC_CX_SS_ENRL_VER_REQ"
+  }
+}

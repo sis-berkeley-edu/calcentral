@@ -21,6 +21,8 @@ module Berkeley
 
     # Role(s) assigned to a user if they are in a career associated with that role.
     ACADEMIC_CAREER_ROLES = [
+      {role_code: 'ugrd', match: ['UGRD'], types: []},
+      {role_code: 'grad', match: ['GRAD'], types: []},
       {role_code: 'law', match: ['LAW'], types: [:enrollment]},
       {role_code: 'concurrent', match: ['UCBX'], types: [:enrollment]}
     ]

@@ -4,6 +4,12 @@ module HubEdos
     include Cache::UserCacheExpiry
     include Berkeley::AcademicRoles
 
+    def self.get_roles(uid)
+      if feed = self.new(uid).get_feed
+        feed.try(:[], :feed).try(:[], 'student').try(:[], 'roles')
+      end
+    end
+
     def get_feed_internal
       feed = HubEdos::AcademicStatus.new({user_id: @uid}).get
       if (academic_statuses = feed.try(:[], :feed).try(:[], 'student').try(:[], 'academicStatuses'))

@@ -296,9 +296,9 @@ angular.module('calcentral.controllers').controller('UserOverviewController', fu
   };
 
   var getRegMessages = function() {
-    enrollmentVerificationFactory.getEnrollmentVerificationMessages().then(
+    enrollmentVerificationFactory.getEnrollmentVerificationData().then(
       function(response) {
-        var messages = _.get(response, 'data.feed.root.getMessageCatDefn');
+        var messages = _.get(response, 'data.messages');
         if (messages) {
           $scope.regStatus.messages = {};
           _.merge($scope.regStatus.messages, statusHoldsService.getRegStatusMessages(messages));

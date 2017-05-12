@@ -6,62 +6,65 @@ var angular = require('angular');
 /**
  * Enrollment Verification Controller
  */
-angular.module('calcentral.controllers').controller('EnrollmentVerificationController', function(apiService, csLinkFactory, enrollmentVerificationFactory, linkService, $scope) {
+angular.module('calcentral.controllers').controller('EnrollmentVerificationController', function(apiService, enrollmentVerificationFactory, linkService, $scope) {
   linkService.addCurrentRouteSettings($scope);
   apiService.util.setTitle($scope.currentPage.name);
 
-  $scope.enrollmentMessages = {
+  $scope.enrollVerification = {
     isLoading: true,
     hasMessages: false,
     messages: {
       lawVerification: {},
       requestOfficial: {},
       viewOnline: {}
-    }
+    },
+    profile: apiService.user.profile
   };
   $scope.enrollmentVerificationServices = {
     url: 'http://registrar.berkeley.edu/academic-records/verification-enrollment-degrees',
     title: 'Learn more about enrollment verification services'
   };
 
-  var parseMessages = function(data) {
-    var messages = data.data.feed.root.getMessageCatDefn;
+  var isRoleExclusive = function(roleKey, roles) {
+    if (!_.get(roles, roleKey)) {
+      return false;
+    }
+    return !_.find(roles, function(roleValue, currentRoleKey) {
+      return (currentRoleKey !== roleKey && roleValue);
+    });
+  };
 
+  var parseEnrollmentVerificationData = function(response) {
+    $scope.enrollVerification.requestOfficialVerificationLink = _.get(response, 'data.requestUrl');
+    $scope.enrollVerification.academicRoles = _.get(response, 'data.academicRoles');
+
+    /* summarize logic for exclusive law role */
+    if (_.isPlainObject($scope.enrollVerification.academicRoles)) {
+      $scope.enrollVerification.academicRoles.lawExclusive = isRoleExclusive('law', $scope.enrollVerification.academicRoles);
+    }
+
+    var messages = _.get(response, 'data.messages');
     if (messages) {
-      $scope.enrollmentMessages.messages.viewOnline = _.find(messages, {
+      $scope.enrollVerification.messages.viewOnline = _.find(messages, {
         'messageNbr': '1'
       });
-      $scope.enrollmentMessages.messages.requestOfficial = _.find(messages, {
+      $scope.enrollVerification.messages.requestOfficial = _.find(messages, {
         'messageNbr': '2'
       });
-      $scope.enrollmentMessages.messages.lawVerification = _.find(messages, {
+      $scope.enrollVerification.messages.lawVerification = _.find(messages, {
         'messageNbr': '3'
       });
-      $scope.enrollmentMessages.hasMessages = true;
+      $scope.enrollVerification.hasMessages = true;
     }
   };
 
-  var getCsLink = function() {
-    csLinkFactory.getLink({
-      urlId: 'UC_CX_SS_ENRL_VER_REQ'
-    }).then(
-      function successCallback(response) {
-        $scope.requestOfficialVerificationLink = _.get(response, 'data.link');
-      },
-      function errorCallback() {
-        $scope.requestOfficialVerificationLink = null;
-      }
-    );
-  };
-
-  var getMessages = function() {
-    enrollmentVerificationFactory.getEnrollmentVerificationMessages()
-      .then(parseMessages)
-      .then(getCsLink)
+  var loadEnrollmentVerificationFeed = function() {
+    enrollmentVerificationFactory.getEnrollmentVerificationData()
+      .then(parseEnrollmentVerificationData)
       .finally(function() {
-        $scope.enrollmentMessages.isLoading = false;
+        $scope.enrollVerification.isLoading = false;
       });
   };
 
-  getMessages();
+  loadEnrollmentVerificationFeed();
 });

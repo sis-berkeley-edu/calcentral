@@ -2,23 +2,15 @@
   <div class="cc-widget-title">
     <h2>Select Enrollment Verification Method</h2>
   </div>
-  <div data-cc-spinner-directive="enrollmentMessages.isLoading">
-    <div data-ng-if="enrollmentMessages.hasMessages">
+  <div data-cc-spinner-directive="enrollVerification.isLoading">
+    <div data-ng-if="enrollVerification.hasMessages">
       <ul class="cc-widget-list">
-        <li>
-          <div class="cc-enrollment-verification-subtitle">
-            <h3>Law Enrollment Verification</h3>
-          </div>
-          <div class="cc-enrollment-verification-message">
-            <span data-ng-bind-html="enrollmentMessages.messages.lawVerification.descrlong"></span>
-          </div>
-        </li>
         <li>
           <div class="cc-enrollment-verification-subtitle">
             <h3>View or Print My Enrollment Verification Online</h3>
           </div>
           <div class="cc-enrollment-verification-message">
-            <span data-ng-bind-html="enrollmentMessages.messages.viewOnline.descrlong"></span>
+            <span data-ng-bind-html="enrollVerification.messages.viewOnline.descrlong"></span>
           </div>
           <div class="cc-enrollment-verification-link">
             <div data-ng-if="api.user.profile.isDirectlyAuthenticated">
@@ -31,12 +23,20 @@
             </div>
           </div>
         </li>
-        <li>
+        <li data-ng-if="enrollVerification.academicRoles.law || enrollVerification.profile.roles.exStudent">
+          <div class="cc-enrollment-verification-subtitle">
+            <h3>Personalized Letters of Verification for Law Students</h3>
+          </div>
+          <div class="cc-enrollment-verification-message">
+            <span data-ng-bind-html="enrollVerification.messages.lawVerification.descrlong"></span>
+          </div>
+        </li>
+        <li data-ng-if="!enrollVerification.academicRoles.lawExclusive">
           <div class="cc-enrollment-verification-subtitle">
             <h3>Request an Official Verification of Attendance and Degrees</h3>
           </div>
           <div class="cc-enrollment-verification-message">
-            <span data-ng-bind-html="enrollmentMessages.messages.requestOfficial.descrlong"></span>
+            <span data-ng-bind-html="enrollVerification.messages.requestOfficial.descrlong"></span>
           </div>
           <div class="cc-enrollment-verification-link">
             <div data-ng-if="api.user.profile.isDirectlyAuthenticated">
@@ -54,14 +54,14 @@
             </div>
           </div>
         </li>
-        <li>
+        <li data-ng-if="!enrollVerification.academicRoles.lawExclusive">
           <div class="cc-enrollment-verification-message cc-enrollment-verification-footer">
             <p>Learn more about <a data-ng-href="{{enrollmentVerificationServices.url}}" data-ng-attr-title="{{enrollmentVerificationServices.title}}">enrollment verification services.</a></p>
           </div>
         </li>
       </ul>
     </div>
-    <div class="cc-widget-text" data-ng-if="!enrollmentMessages.hasMessages">
+    <div class="cc-widget-text" data-ng-if="!enrollVerification.hasMessages">
       There was a problem reaching campus services.  Please try again later.
     </div>
   </div>
