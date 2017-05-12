@@ -206,7 +206,7 @@ angular.module('calcentral.controllers').controller('StatusController', function
       var statusGets = [loadHolds(), getRegistrations, getStudentAttributes];
 
       // Only fetch financial data for delegates who have been given explicit permssion.
-      var includeFinancial = (!apiService.user.profile.delegateActingAsUid || apiService.user.profile.delegateViewAsPrivileges.financial);
+      var includeFinancial = (!apiService.user.profile.delegateActingAsUid || apiService.user.profile.canActOnFinances);
       if (includeFinancial) {
         var getCarsFinances = financesFactory.getFinances().then(loadCarsFinances);
         var getCsFinances = financesFactory.getCsFinances().then(loadCsFinances);

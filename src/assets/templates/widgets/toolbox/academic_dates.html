@@ -2,27 +2,15 @@
   <div class="cc-widget-title">
     <h2>Academic Dates &amp; Deadlines</h2>
   </div>
-  <div class="cc-widget-list">
-    <ul class="cc-toolbox-widget-academic-calendar">
-      <li class="cc-toolbox-widget-academic-calendar-item" data-ng-repeat="item in academicDates.items">
-        <strong class="cc-nowrap">
-          <span data-ng-bind="item.date | dateInYearFilter:'Mmm dd'"></span>:
-        </strong>
-        <span data-ng-bind="item.title" data-ng-if="!item.isList"></span>
-        <ul class="cc-list-bullets" data-ng-if="item.isList">
-          <li data-ng-repeat="title in item.title">
-            <span data-ng-bind="title"></span>
-          </li>
-        </ul>
-      </li>
-    </ul>
-  </div>
-  <hr>
   <div class="cc-list-link-container">
-    <h3>Links</h3>
     <ul class="cc-list-links">
       <li>
-        <a href="http://registrar.berkeley.edu/CalendarDisp.aspx">
+        <a href="http://registrar.berkeley.edu/calendar">
+          View the Academic Calendar
+        </a>
+      </li>
+      <li>
+        <a href="http://registrar.berkeley.edu/add-academic-calendar-bcal">
           Subscribe to the Academic Calendar
         </a>
       </li>

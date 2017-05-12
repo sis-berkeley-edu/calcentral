@@ -29,8 +29,10 @@ angular.module('calcentral.services').service('userService', function($http, $lo
           utilService.redirect('academics');
         } else if (profile.hasFinancialsTab) {
           utilService.redirect('finances');
-        } else {
+        } else if (profile.hasCampusTab) {
           utilService.redirect('campus');
+        } else {
+          utilService.redirect('toolbox');
         }
       } else {
         utilService.redirect('toolbox');
