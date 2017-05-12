@@ -1,212 +1,409 @@
 {
-  "statusCode": 200,
   "feed": {
     "coa": {
-      "fullyear": null,
+      "fullyear": {
+        "data": [
+          {
+            "headers": [
+              "Cost"
+            ],
+            "items": [
+              {
+                "subItems": [
+                  {
+                    "title": "UC Systemwide Tuition & Fees",
+                    "total": 12294.0
+                  },
+                  {
+                    "title": "Campus Fees & Class Pass",
+                    "total": 1224.0
+                  },
+                  {
+                    "title": "Summer Course Fees",
+                    "total": null
+                  },
+                  {
+                    "title": "Summer Campus Fees",
+                    "total": null
+                  }
+                ],
+                "title": "Tuition and Fees",
+                "total": 13518.0
+              },
+              {
+                "subItems": [
+                  {
+                    "title": "Housing - On Campus Apartments",
+                    "total": 12050.0
+                  },
+                  {
+                    "title": "Food - On Campus Apartments",
+                    "total": 2624.0
+                  },
+                  {
+                    "title": "Summer Living Expenses",
+                    "total": null
+                  }
+                ],
+                "title": "Housing and Food",
+                "total": 14674.0
+              },
+              {
+                "subItems": [
+                  {
+                    "title": "Books & Supplies",
+                    "total": 1262.0
+                  },
+                  {
+                    "title": "Summer Books & Supplies",
+                    "total": null
+                  }
+                ],
+                "title": "Books and Supplies",
+                "total": 1262.0
+              },
+              {
+                "subItems": [
+                  {
+                    "title": "Transportation - Living On Campus",
+                    "total": 373.0
+                  },
+                  {
+                    "title": "Transportation - On Campus Apartment",
+                    "total": 373.0
+                  }
+                ],
+                "title": "Transportation",
+                "total": 746.0
+              },
+              {
+                "subItems": [
+                  {
+                    "title": "Health Insurance",
+                    "total": 2612.0
+                  }
+                ],
+                "title": "Health Insurance",
+                "total": 2612.0
+              },
+              {
+                "subItems": [
+                  {
+                    "title": "Personal - On Campus Apartments",
+                    "total": 2174.0
+                  }
+                ],
+                "title": "Personal Expenses",
+                "total": 2174.0
+              },
+              {
+                "totals": [
+                  34986.0
+                ]
+              }
+            ],
+            "title": "Standard Budget Items"
+          }
+        ]
+      },
       "message": "Your budget is the estimated average and reasonable cost of completing an academic year at UC Berkeley",
-      "semesterOptions": [
-        {
-          "data": [
-            {
-              "headers": [
-                "Fall",
-                "Spring",
-                "Summer",
-                "Total"
-              ],
-              "items": [
-                {
-                  "amounts": [
-                    6657,
-                    6657,
-                    710
-                  ],
-                  "total": 14024,
-                  "title": "Tuition/Fees",
-                  "subitems": [
-                    {
-                      "amounts": [
-                        6120,
-                        6120,
-                        0
-                      ],
-                      "total": 12240,
-                      "title": "Fees"
-                    },
-                    {
-                      "amounts": [
-                        537,
-                        537,
-                        0
-                      ],
-                      "total": 1074,
-                      "title": "Campus Fees & Class Pass"
-                    },
-                    {
-                      "amounts": [
-                        0,
-                        0,
-                        710
-                      ],
-                      "total": 710,
-                      "title": "Summer Course Fees"
-                    }
-                  ]
-                },
-                {
-                  "amounts": [
-                    7711,
-                    7711,
-                    0
-                  ],
-                  "total": 15422,
-                  "title": "Housing",
-                  "subitems": [
-                    {
-                      "amounts": [
-                        7194,
-                        7194,
-                        0
-                      ],
-                      "total": 14388,
-                      "title": "Room & Board - Res. Hall"
-                    },
-                    {
-                      "amounts": [
-                        517,
-                        517,
-                        0
-                      ],
-                      "total": 1034,
-                      "title": "Food - Res. Hall"
-                    }
-                  ]
-                },
-                {
-                  "amounts": [
-                    620,
-                    620,
-                    0
-                  ],
-                  "total": 1240,
-                  "title": "Books and Supplies",
-                  "subitems": [
-                    {
-                      "amounts": [
-                        620,
-                        620,
-                        0
-                      ],
-                      "total": 1240,
-                      "title": "Books & Supplies"
-                    }
-                  ]
-                },
-                {
-                  "amounts": [
-                    267,
-                    267,
-                    0
-                  ],
-                  "total": 534,
-                  "title": "Transportation",
-                  "subitems": [
-                    {
-                      "amounts": [
-                        267,
-                        267,
-                        0
-                      ],
-                      "total": 534,
-                      "title": "Transportation-Res. Hall"
-                    }
-                  ]
-                },
-                {
-                  "amounts": [
-                    1290,
-                    1290,
-                    0
-                  ],
-                  "total": 2580,
-                  "title": "Health Insurance",
-                  "subitems": [
-                    {
-                      "amounts": [
-                        1290,
-                        1290,
-                        0
-                      ],
-                      "total": 2580,
-                      "title": "Health Insurance - UG"
-                    }
-                  ]
-                },
-                {
-                  "amounts": [
-                    1009,
-                    1009,
-                    0
-                  ],
-                  "total": 2018,
-                  "title": "Personal Expenses",
-                  "subitems": [
-                    {
-                      "amounts": [
-                        1009,
-                        1009,
-                        0
-                      ],
-                      "total": 2018,
-                      "title": "Personal - Res. Hall"
-                    }
-                  ]
-                },
-                {
-                  "totals": [
-                    17554,
-                    17554,
-                    710,
-                    35818
-                  ]
-                }
-              ],
-              "title": "Standard Budget Items"
-            },
-            {
-              "headers": [
-                "Fall",
-                "Spring",
-                "Summer",
-                "Total"
-              ],
-              "items": [
-                {
-                  "amounts": [
-                    17554,
-                    17554,
-                    710
-                  ],
-                  "total": 35818
-                }
-              ],
-              "title": "Term Grand Total"
-            }
-          ],
-          "id": "fall-spring-summer"
-        }
-      ],
+      "semester": {
+        "data": [
+          {
+            "headers": [
+              "Fall",
+              "Spring",
+              "Summer",
+              "Total"
+            ],
+            "items": [
+              {
+                "amounts": [
+                  6759.0,
+                  6759.0,
+                  0.0
+                ],
+                "subItems": [
+                  {
+                    "amounts": [
+                      6147.0,
+                      6147.0,
+                      0.0
+                    ],
+                    "title": "UC Systemwide Tuition & Fees",
+                    "total": 12294.0
+                  },
+                  {
+                    "amounts": [
+                      612.0,
+                      612.0,
+                      0.0
+                    ],
+                    "title": "Campus Fees & Class Pass",
+                    "total": 1224.0
+                  },
+                  {
+                    "amounts": [
+                      0.0,
+                      0.0,
+                      0.0
+                    ],
+                    "title": "Summer Course Fees",
+                    "total": null
+                  },
+                  {
+                    "amounts": [
+                      0.0,
+                      0.0,
+                      0.0
+                    ],
+                    "title": "Summer Campus Fees",
+                    "total": null
+                  }
+                ],
+                "title": "Tuition and Fees",
+                "total": 13518.0
+              },
+              {
+                "amounts": [
+                  7337.0,
+                  7337.0,
+                  0.0
+                ],
+                "subItems": [
+                  {
+                    "amounts": [
+                      6025.0,
+                      6025.0,
+                      0.0
+                    ],
+                    "title": "Housing - On Campus Apartments",
+                    "total": 12050.0
+                  },
+                  {
+                    "amounts": [
+                      1312.0,
+                      1312.0,
+                      0.0
+                    ],
+                    "title": "Food - On Campus Apartments",
+                    "total": 2624.0
+                  },
+                  {
+                    "amounts": [
+                      0.0,
+                      0.0,
+                      0.0
+                    ],
+                    "title": "Summer Living Expenses",
+                    "total": null
+                  }
+                ],
+                "title": "Housing and Food",
+                "total": 14674.0
+              },
+              {
+                "amounts": [
+                  631.0,
+                  631.0,
+                  0.0
+                ],
+                "subItems": [
+                  {
+                    "amounts": [
+                      631.0,
+                      631.0,
+                      0.0
+                    ],
+                    "title": "Books & Supplies",
+                    "total": 1262.0
+                  },
+                  {
+                    "amounts": [
+                      0.0,
+                      0.0,
+                      0.0
+                    ],
+                    "title": "Summer Books & Supplies",
+                    "total": null
+                  }
+                ],
+                "title": "Books and Supplies",
+                "total": 1262.0
+              },
+              {
+                "amounts": [
+                  373.0,
+                  373.0,
+                  0.0
+                ],
+                "subItems": [
+                  {
+                    "amounts": [
+                      373.0,
+                      0.0,
+                      0.0
+                    ],
+                    "title": "Transportation - Living On Campus",
+                    "total": 373.0
+                  },
+                  {
+                    "amounts": [
+                      0.0,
+                      373.0,
+                      0.0
+                    ],
+                    "title": "Transportation - On Campus Apartment",
+                    "total": 373.0
+                  }
+                ],
+                "title": "Transportation",
+                "total": 746.0
+              },
+              {
+                "amounts": [
+                  1306.0,
+                  1306.0,
+                  0.0
+                ],
+                "subItems": [
+                  {
+                    "amounts": [
+                      1306.0,
+                      1306.0,
+                      0.0
+                    ],
+                    "title": "Health Insurance",
+                    "total": 2612.0
+                  }
+                ],
+                "title": "Health Insurance",
+                "total": 2612.0
+              },
+              {
+                "amounts": [
+                  1087.0,
+                  1087.0,
+                  0.0
+                ],
+                "subItems": [
+                  {
+                    "amounts": [
+                      1087.0,
+                      1087.0,
+                      0.0
+                    ],
+                    "title": "Personal - On Campus Apartments",
+                    "total": 2174.0
+                  }
+                ],
+                "title": "Personal Expenses",
+                "total": 2174.0
+              },
+              {
+                "totals": [
+                  17493.0,
+                  17493.0,
+                  0.0,
+                  34986.0
+                ]
+              }
+            ],
+            "title": "Standard Budget Items"
+          }
+        ]
+      },
       "title": "Estimated Cost of Attendance"
     },
+    "communications": {
+      "unsolicitedResourcesUrl": "https://bcswebqat.is.berkeley.edu/psp/bcsqat/EMPLOYEE/HRMS/c/UC_CC_CHKLST_UPLOAD_FLU.UC_CC_FILE_UPL_FLU.GBL?ucAdminFunction=FINA&ucAidYear=2017"
+    },
+    "financialAidSummary": {
+      "fundingOffered": {
+        "categories": [
+          {
+            "items": [
+              {
+                "amount": 7500.0,
+                "title": "Grants and Scholarships"
+              }
+            ],
+            "total": {
+              "amount": 7500.0,
+              "title": "Gift Aid and Outside Resources"
+            }
+          },
+          {
+            "items": [
+              {
+                "amount": 2612.0,
+                "title": "Fee Waivers"
+              }
+            ],
+            "total": {
+              "amount": 2612.0,
+              "title": "Waivers and Other Funding"
+            }
+          },
+          {
+            "items": [],
+            "total": {
+              "amount": 0.0,
+              "title": "Loans and Work-Study"
+            }
+          }
+        ],
+        "total": {
+          "amount": 10112.0,
+          "title": "Funding Offered"
+        }
+      },
+      "netCost": {
+        "items": [
+          {
+            "amount": 34986.0,
+            "title": "Estimated Cost of Attendance"
+          },
+          {
+            "amount": 10112.0,
+            "subTitle": "(MONEY YOU DON'T REPAY)",
+            "title": "Gift Aid and Waivers"
+          }
+        ],
+        "total": {
+          "amount": 24874.0,
+          "title": "Net Cost"
+        }
+      }
+    },
+    "fundingSources": {
+      "links": [
+        {
+          "title": "Additional Resources",
+          "url": "https://bcswebqat.is.berkeley.edu/psp/bcsqat/EMPLOYEE/HRMS/c/UC_FA_ADDL_SRC_FLU.UC_FA_ADDL_SRC_FLU.GBL?ucInstitution=UCB01&ucAidYear=2017"
+        },
+        {
+          "title": "Convert Loan to Workstudy",
+          "url": "https://bcswebqat.is.berkeley.edu/psp/bcsqat/EMPLOYEE/HRMS/c/UC_FA_CONV_AID_FLU.UC_FA_CONV_AID_FLU.GBL?ucInstitution=UCB01&ucAidYear=2017&ucConvertType=LoanToWKS"
+        },
+        {
+          "title": "Convert Workstudy to Loan",
+          "url": "https://bcswebqat.is.berkeley.edu/psp/bcsqat/EMPLOYEE/HRMS/c/UC_FA_CONV_AID_FLU.UC_FA_CONV_AID_FLU.GBL?ucInstitution=UCB01&ucAidYear=2017&ucConvertType=WKSToLoan"
+        },
+        {
+          "title": "Award Management (Accept/Decline Loan)",
+          "url": "https://bcswebqat.is.berkeley.edu/psp/bcsqat/EMPLOYEE/HRMS/c/UC_FA_AWD_MGT_FLU.UC_FA_AWD_MGT_FLU.GBL?ucInstitution=UCB01&ucAidYear=2017"
+        }
+      ]
+    },
+    "shoppingSheet": null,
     "status": {
-      "message": "We take many factors into consideration when determining your funding package. Updates made elsewhere to your personal information may affect the amount of aid provided to you.",
       "categories": [
         {
-          "title": "Aid Package Factors",
           "itemGroups": [
             [
               {
-                "title": "Student Standing",
+                "title": "Academic Career",
                 "value": "Undergraduate"
               },
               {
@@ -215,44 +412,77 @@
                   {
                     "subvalue": [
                       "Fall",
-                      "1st Year - Never Attended"
+                      "4th Year"
                     ]
                   },
                   {
                     "subvalue": [
                       "Spring",
-                      "1st Year - Previously Attended"
+                      "4th Year"
+                    ]
+                  },
+                  {
+                    "subvalue": [
+                      "Summer",
+                      "4th Year"
                     ]
                   }
                 ]
+              },
+              {
+                "title": "Expected Graduation",
+                "value": "2019 Spring"
               }
             ],
             [
               {
                 "title": "SAP Status",
-                "value": "SAP Undetermined"
+                "value": "Meeting Sat Acadm Progress"
               },
               {
-                "title": "Candidacy Status",
-                "value": "To Be Determined"
-              },
-              {
-                "title": "Filing Fee Status",
-                "value": "To Be Determined"
+                "title": "Award Status",
+                "value": "Packaged"
               },
               {
                 "title": "Verification Status",
-                "value": "Required to be Performed|Incomplete"
+                "value": "Non Select"
+              }
+            ],
+            [
+              {
+                "title": "Dependency Status",
+                "value": "Dependent"
+              },
+              {
+                "title": "Expected Family Contribution (EFC)",
+                "value": "35177"
+              },
+              {
+                "title": "Berkeley Parent Contribution",
+                "value": "35177"
+              },
+              {
+                "title": "Family Members in College",
+                "value": "2"
               }
             ],
             [
               {
                 "title": "Residency",
-                "values": []
-              },
-              {
-                "title": "Tax Withholding (GLACIER)",
-                "value": "To Be Determined"
+                "values": [
+                  {
+                    "subvalue": [
+                      "Fall",
+                      "Resident"
+                    ]
+                  },
+                  {
+                    "subvalue": [
+                      "Spring",
+                      "Resident"
+                    ]
+                  }
+                ]
               }
             ],
             [
@@ -262,19 +492,19 @@
                   {
                     "subvalue": [
                       "Fall",
-                      "0"
+                      "14"
                     ]
                   },
                   {
                     "subvalue": [
                       "Spring",
-                      "0"
+                      "13"
                     ]
                   },
                   {
                     "subvalue": [
                       "Summer",
-                      "6"
+                      "0"
                     ]
                   }
                 ]
@@ -282,18 +512,23 @@
             ],
             [
               {
+                "link": {
+                  "isCsLink": true,
+                  "title": "Update",
+                  "url": "https://bcswebqat.is.berkeley.edu/psp/bcsqat/EMPLOYEE/HRMS/c/UC_PERSON_PROFILE.UC_STD_HOUSOPT_FLU.GBL?ucInstitution=UCB01&ucAidYear=2017"
+                },
                 "title": "Housing",
                 "values": [
                   {
                     "subvalue": [
                       "Fall",
-                      "Room & Board - Res. Hall"
+                      "Housing - On Campus Apartments"
                     ]
                   },
                   {
                     "subvalue": [
                       "Spring",
-                      "Room & Board - Res. Hall"
+                      "Housing - On Campus Apartments"
                     ]
                   }
                 ]
@@ -306,38 +541,22 @@
                   {
                     "subvalue": [
                       "Fall",
-                      "To Be Determined"
+                      "Waived"
+                    ]
+                  },
+                  {
+                    "subvalue": [
+                      "Spring",
+                      "Waived"
                     ]
                   }
                 ]
               }
-            ],
-            [
-              {
-                "title": "Package Status",
-                "value": "Packaged"
-              },
-              {
-                "title": "Dependency Status",
-                "value": "Dependent w/Primary EFC"
-              },
-              {
-                "title": "Family Members in College",
-                "value": "4"
-              },
-              {
-                "title": "Expected Family Contribution (EFC)",
-                "value": "1059"
-              },
-              {
-                "title": "Berkeley Parent Contribution",
-                "value": "To Be Determined"
-              }
             ]
-          ]
+          ],
+          "title": "Financial Aid Profile"
         },
         {
-          "title": "Terms and Conditions",
           "itemGroups": [
             [
               {
@@ -349,67 +568,12 @@
                 "value": "Accepted"
               }
             ]
-          ]
+          ],
+          "title": "Terms and Conditions"
         }
-      ]
-    },
-    "shoppingSheet": {
-      "url": "https://bcs-web-dev-03.is.berkeley.edu:8443/psc/bcsdev/EMPLOYEE/HRMS/s/WEBLIB_SFA.SFA_SHOPPING_SHEET.FieldFormula.IScript_ShoppingSheet"
-    },
-    "financialAidSummary": {
-      "netCost": {
-        "items": [
-          {
-            "amount": 35108,
-            "title": "Estimated Cost of Attendance"
-          },
-          {
-            "amount": 5725,
-            "title": "Gift Aid",
-            "subTitle": "(MONEY YOU DON'T REPAY)"
-          }
-        ],
-        "total": {
-          "amount": 29383,
-          "title": "Net Cost",
-          "subTitle": "(YOUR ESTIMATED COST)"
-        }
-      },
-      "fundingOffered": {
-        "total": {
-          "amount": 8225,
-          "title": "Funding Offered"
-        }
-      }
-    },
-    "fundingSources": {
-      "links": [
-        {
-          "url": "https://bcs-web-dev-03.is.berkeley.edu:8443/psc/bcsdev/EMPLOYEE/HRMS/c/UC_FA_ADDL_SRC_FLU.UC_FA_ADDL_SRC_FLU.GBL?ucInstitution=UCB01&ucAidYear=2016",
-          "title": "Additional Resources"
-        },
-        {
-          "url": "https://bcs-web-dev-03.is.berkeley.edu:8443/psc/bcsdev/EMPLOYEE/HRMS/c/UC_FA_CONV_AID_FLU.UC_FA_CONV_AID.GBL?ucInstitution=UCB01&ucAidYear=2016&ucConvertType=LoanToWKS",
-          "title": "Convert Loan to Workstudy"
-        },
-        {
-          "url": "https://bcs-web-dev-03.is.berkeley.edu:8443/psc/bcsdev/EMPLOYEE/HRMS/c/UC_FA_CONV_AID_FLU.UC_FA_CONV_AID.GBL?ucInstitution=UCB01&ucAidYear=2016&ucConvertType=WKSToLoan",
-          "title": "Convert Workstudy to Loan"
-        },
-        {
-          "url": "https://bcs-web-dev-03.is.berkeley.edu:8443/psc/bcsdev/EMPLOYEE/HRMS/c/UC_FA_AWD_MGT_FLU.UC_FA_AWD_MGT_FLU.GBL?ucInstitution=UCB01&ucAidYear=2016",
-          "title": "Award Management (Accept/Decline Loan)"
-        }
-      ]
+      ],
+      "message": "We take many factors into consideration when determining your funding package. Updates made elsewhere to your personal information may affect the amount of aid provided to you."
     }
   },
-  "lastModified": {
-    "hash": "e9f994649c374cbcd98bbac58d2860f3a0203d17",
-    "timestamp": {
-      "epoch": 1439938741,
-      "dateTime": "2015-08-18T15:59:01-07:00",
-      "dateString": "8/18"
-    }
-  },
-  "feedName": "CampusSolutions::MyFinancialAidData"
+  "statusCode": 200
 }
