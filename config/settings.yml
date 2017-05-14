@@ -69,6 +69,10 @@ terms:
   # Can also be used to force selection of a "current term" different
   # from the default.
   fake_now:
+  # If hub term API is disabled (see hub_term_api in features flags),
+  # use /public/json/terms.json or this file
+  use_term_definitions_json_file: false
+  term_definitions_json_file:
 
 test_sqlite:
   pool: 3

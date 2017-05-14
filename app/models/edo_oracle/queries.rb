@@ -52,6 +52,8 @@ module EdoOracle
     #   - 'cred_cd' and 'pnp_flag' replaced by 'grading_basis'
     def self.get_enrolled_sections(person_id, terms = nil)
       # The push_pred hint below alerts Oracle to use indexes on SISEDO.API_COURSEV00_VW, aka crs.
+      # Reduce performance hit and only add Terms whare clause if limiting number of terms pulled
+      in_term_where_clause = "enr.\"TERM_ID\" IN (#{terms_query_list terms}) AND " if Settings.features.hub_term_api
       safe_query <<-SQL
         SELECT
           #{SECTION_COLUMNS},
@@ -69,8 +71,8 @@ module EdoOracle
           enr."CLASS_SECTION_ID" = sec."id" AND
           sec."status-code" IN ('A','S') )
         #{JOIN_SECTION_TO_COURSE}
-        WHERE enr."TERM_ID" IN (#{terms_query_list terms})
-          AND enr."CAMPUS_UID" = '#{person_id}'
+        WHERE  #{in_term_where_clause}
+          enr."CAMPUS_UID" = '#{person_id}'
           AND enr."STDNT_ENRL_STATUS_CODE" != 'D'
         ORDER BY term_id DESC, #{CANONICAL_SECTION_ORDERING}
       SQL
@@ -80,6 +82,8 @@ module EdoOracle
     # Changes:
     #   - 'cs-course-id' added.
     def self.get_instructing_sections(person_id, terms = nil)
+      # Reduce performance hit and only add Terms whare clause if limiting number of terms pulled
+      in_term_where_clause = " AND instr.\"term-id\" IN (#{terms_query_list terms})" if Settings.features.hub_term_api
       safe_query <<-SQL
         SELECT
           #{SECTION_COLUMNS},
@@ -97,7 +101,7 @@ module EdoOracle
           instr."number" = sec."sectionNumber")
         #{JOIN_SECTION_TO_COURSE}
         WHERE sec."status-code" IN ('A','S')
-          AND instr."term-id" IN (#{terms_query_list terms})
+          #{in_term_where_clause}
           AND instr."campus-uid" = '#{person_id}'
         ORDER BY term_id DESC, #{CANONICAL_SECTION_ORDERING}
       SQL

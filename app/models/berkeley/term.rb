@@ -91,6 +91,32 @@ module Berkeley
       self
     end
 
+    def from_json_file(term)
+      @campus_solutions_id = term['campus_solutions_id']
+      @year = term['year'].to_i
+      @slug = term['slug']
+      @name = term['name']
+      @start = term['start'].to_date.in_time_zone.to_datetime
+      @end = term['end'].to_date.in_time_zone.to_datetime
+      (_, @code) = TermCodes.from_edo_id(@campus_solutions_id).values
+      if @code == 'C'
+        @is_summer = true
+        @classes_start = @start
+        @classes_end = @end
+        @instruction_end = @end
+        @end_drop_add = false
+      else
+        @is_summer = false
+        @classes_start = term['classes_start'].to_date.in_time_zone.to_datetime
+        @instruction_end = term['instruction_end'].to_date.in_time_zone.to_datetime
+        @classes_end = term['classes_end'].to_date.in_time_zone.to_datetime
+        @final_exam_week_start = term['final_exam_week_start'].to_date.in_time_zone.to_datetime
+        @final_exam_cs_data_available = @end.advance(days: -56)
+        @end_drop_add =term['end_drop_add'] if term['end_drop_add'].present?
+      end
+      self
+    end
+
     def from_legacy_db(db_row)
       term_cd = db_row['term_cd']
       term_yr = db_row['term_yr'].to_i
