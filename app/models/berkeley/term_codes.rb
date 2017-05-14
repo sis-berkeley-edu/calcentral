@@ -33,9 +33,17 @@ module Berkeley
     end
 
     def from_edo_id(edo_term_id)
+      # CS term ID is a compressed 4 digit representation of the year and term.
+      # This ID compresses the year by removing the hundreds place in the year number.
+      # For example, year 2017 would be compassed to "217" and year 1965 would be compressed to "165"
+      # Finally, the term code is appended to the end. For example fall 1965 would be compressed to "1658"
+      # because fall term code is "8"
+
       edo_term_id = edo_term_id.to_s
+      # To reverse out the year from the CS term ID, the hundreds place digit needs to be added back
+      hundreds_digit =  edo_term_id >= '2000' ? '0' : '9'
       legacy_term_cd = edo_to_legacy_code.fetch(edo_term_id[3])
-      legacy_term_yr = edo_term_id[0] + '0' + edo_term_id[1..2]
+      legacy_term_yr = edo_term_id[0] + hundreds_digit + edo_term_id[1..2]
       {:term_yr => legacy_term_yr, :term_cd => legacy_term_cd}
     end
 
@@ -136,6 +144,7 @@ module Berkeley
         'B' => '2',
         'C' => '5',
         'D' => '8',
+        'A' => '0',
       }
     end
 
