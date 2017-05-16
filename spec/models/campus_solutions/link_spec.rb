@@ -34,6 +34,23 @@ describe CampusSolutions::Link do
         expect(link_set_response[:feed][:ucLinkResources][:links]).not_to be
         expect(link_set_response[:feed][:ucLinkResources][:status][:details][:msgs][:msg][:messageSeverity]).to eq "E"
       end
+      it 'returns a parsed response with the expected structure' do
+        expect(link_get_url_response[:link]).not_to be
+        expect(link_get_url_response[:status]).not_to be
+      end
+    end
+
+    context 'returns an empty response' do
+      let(:filename) { 'link_api_empty.xml' }
+
+      it_should_behave_like 'a proxy that gets data'
+      it 'returns data with the expected structure' do
+        expect(link_set_response[:feed][:ucLinkResources]).not_to be
+      end
+      it 'returns a parsed response with the expected structure' do
+        expect(link_get_url_response[:link]).not_to be
+        expect(link_get_url_response[:status]).to eq 500
+      end
     end
 
     context 'returns links as an array' do
