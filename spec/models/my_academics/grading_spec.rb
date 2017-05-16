@@ -5,6 +5,7 @@ describe MyAcademics::Grading do
   let(:fake_grading_url) { 'http://fake.grading.com' }
   let(:link_proxy_class) { CampusSolutions::Link }
   let(:link_fake_proxy) { link_proxy_class.new(fake: true) }
+  let(:fake_spring_term) { double(is_summer: false, :year => 2015, :code => 'B') }
 
   subject do
     MyAcademics::Grading.new(uid)
@@ -192,11 +193,12 @@ describe MyAcademics::Grading do
   context 'when grading returns statuses for a teaching semester' do
     let(:uid) { '238382' }
     let(:grading_proxy) { CampusSolutions::Grading.new(user_id: uid, fake: fake) }
-    let(:feed) { {}.tap { |feed| MyAcademics::Teaching.new(uid).merge feed } }
+    let(:teaching_proxy) { MyAcademics::Teaching.new(uid) }
+    before { allow(teaching_proxy).to receive(:current_term).and_return(fake_spring_term) }
+    let(:feed) { {}.tap { |feed| teaching_proxy.merge feed } }
 
     before do
       allow(Settings.terms).to receive(:legacy_cutoff).and_return 'summer-2014'
-      allow(Settings.features).to receive(:hub_term_api).and_return true
       allow(CampusSolutions::Grading).to receive(:new).and_return(grading_proxy)
       allow(subject).to receive(:get_grading_period_status).and_return(:gradingPeriodNotSet)
       stub_const("MyAcademics::Grading::ACTIVE_GRADING_TERMS", ['2138'])
@@ -217,11 +219,12 @@ describe MyAcademics::Grading do
 
     let(:uid) { '904715' }
     let(:grading_proxy) { CampusSolutions::Grading.new(user_id: uid, fake: fake) }
-    let(:feed) { {}.tap { |feed| MyAcademics::Teaching.new(uid).merge feed } }
+    let(:teaching_proxy) { MyAcademics::Teaching.new(uid) }
+    before { allow(teaching_proxy).to receive(:current_term).and_return(fake_spring_term) }
+    let(:feed) { {}.tap { |feed| teaching_proxy.merge feed } }
 
     before do
       allow(Settings.terms).to receive(:legacy_cutoff).and_return 'summer-2014'
-      allow(Settings.features).to receive(:hub_term_api).and_return true
       allow(CampusSolutions::Grading).to receive(:new).and_return(grading_proxy)
       allow(subject).to receive(:parse_cs_grading_status).and_return ({ finalStatus: :GRD })
       allow(subject).to receive(:get_grading_period_status_summer).and_return :afterGradingPeriod
