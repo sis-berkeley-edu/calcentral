@@ -463,11 +463,6 @@ describe Oec::SisImportTask do
 
     include_context 'local-write mode and no follow-up diff'
 
-    it 'filters by course-code department names' do
-      expect(Oec::CourseCode).to receive(:by_dept_code).with(dept_name: %w(BIOLOGY MCELLBI)).and_return({})
-      Oec::SisImportTask.new(default_opts.merge(dept_names: 'BIOLOGY MCELLBI')).run
-    end
-
     it 'filters by department codes' do
       expect(Oec::CourseCode).to receive(:by_dept_code).with(dept_code: %w(IBIBI IMMCB)).and_return({})
       Oec::SisImportTask.new(default_opts.merge(dept_codes: 'IBIBI IMMCB')).run

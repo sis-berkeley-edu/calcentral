@@ -23,7 +23,7 @@ module Oec
       merged_course_confirmations = Oec::SisImportSheet.new(export_name: 'Merged course confirmations')
       merged_supervisor_confirmations = Oec::Supervisors.new(export_name: 'Merged supervisor confirmations')
 
-      department_names = Oec::CourseCode.by_dept_code(@course_code_filter).keys.map { |code| Berkeley::Departments.get(code, concise: true) }
+      department_names = Oec::CourseCode.by_dept_code(@departments_filter).keys.map { |code| Berkeley::Departments.get(code, concise: true) }
 
       @remote_drive.get_items_in_folder(confirmations_folder.id).each do |department_item|
         next unless department_names.include? department_item.title
