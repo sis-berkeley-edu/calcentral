@@ -30,6 +30,8 @@ cas_server: 'https://auth.berkeley.edu/cas'
 
 cas_logout_url: 'https://auth.berkeley.edu/cas/logout'
 
+cas_use_name_identifier: false
+
 # Database settings
 postgres:
   database: <%= ENV['DB_ENV_POSTGRESQL_DB'] || 'calcentral_production' %>

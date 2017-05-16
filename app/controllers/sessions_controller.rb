@@ -23,6 +23,10 @@ class SessionsController < ApplicationController
         logger.debug "Caching Campus Solutions ID #{cs_id} for UID #{auth_uid} based on SAML assertion"
         User::Identifiers.cache(auth_uid, cs_id)
       end
+      if !auth_uid.present? && Settings.cas_use_name_identifier
+        auth_uid = auth.extra['nameIdentifier']
+        logger.info "nameIdentifier used to obtain UID from Omniauth auth nameIdentifier = #{auth_uid}"
+      end
     end
 
     if params['renew'] == 'true'
