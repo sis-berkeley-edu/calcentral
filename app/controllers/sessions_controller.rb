@@ -7,7 +7,9 @@ class SessionsController < ApplicationController
 
   def lookup
     auth = request.env['omniauth.auth']
+    logger.info "Omniauth auth hash from SAML = #{auth.inspect}"
     auth_uid = auth['uid']
+    logger.info "UID obtained from Omniauth auth hash = #{auth_uid}"
 
     # Save crosswalk some work by caching critical IDs if they were asserted to us via SAML.
     if auth.respond_to?(:extra)
