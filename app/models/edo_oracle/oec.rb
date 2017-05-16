@@ -131,10 +131,14 @@ module EdoOracle
       subclauses = course_codes.group_by(&:dept_name).map do |dept_name, codes|
         subclause = ''
         if (default_code = codes.find { |code| code.catalog_id.blank? }) && (default_code.include_in_oec || import_all)
-          # All catalog IDs are included by default; note explicit exclusions.
+          # All catalog IDs are included by default; note explicit exclusions which happen to be included in the input list.
           excluded_codes = codes.reject &:include_in_oec
-          # Also exclude any catalog IDs that are explicitly mapped to other departments.
-          excluded_codes.concat ::Oec::CourseCode.catalog_id_specific_mappings(dept_name)
+          # Also exclude any catalog IDs that are explicitly mapped to other departments, or which have been
+          # explicitly excluded from OEC.
+          rejected_mappings = ::Oec::CourseCode.catalog_id_specific_mappings(dept_name).select do |m|
+            (m.dept_code != default_code.dept_code) || !m.include_in_oec
+          end
+          excluded_codes.concat rejected_mappings
           subclause << "sec.\"displayName\" LIKE '#{SubjectAreas.compress dept_name} %'"
           if !import_all && excluded_codes.any?
             excluded_codes.each do |code|
