@@ -1547,7 +1547,7 @@ INSERT INTO oec_course_codes VALUES (13, 'ARMENI', '', 'LTSLL', false, '2015-08-
 INSERT INTO oec_course_codes VALUES (14, 'ASAMST', '', 'SBETH', true, '2015-08-13 23:26:35.49', '2015-08-13 23:26:35.49');
 INSERT INTO oec_course_codes VALUES (15, 'ASIANST', '', 'QIIAS', false, '2015-08-13 23:26:35.498', '2015-08-13 23:26:35.498');
 INSERT INTO oec_course_codes VALUES (16, 'AST', '', 'EDDNO', true, '2015-08-13 23:26:35.506', '2015-08-13 23:26:35.506');
-INSERT INTO oec_course_codes VALUES (17, 'ASTRON', '', 'PAAST', false, '2015-08-13 23:26:35.513', '2015-08-13 23:26:35.513');
+INSERT INTO oec_course_codes VALUES (17, 'ASTRON', '', 'PAAST', true, '2015-08-13 23:26:35.513', '2015-08-13 23:26:35.513');
 INSERT INTO oec_course_codes VALUES (18, 'BANGLA', '', 'HVSSA', false, '2015-08-13 23:26:35.52', '2015-08-13 23:26:35.52');
 INSERT INTO oec_course_codes VALUES (19, 'BIO ENG', '', 'EFBIO', true, '2015-08-13 23:26:35.528', '2015-08-13 23:26:35.528');
 INSERT INTO oec_course_codes VALUES (20, 'BIOLOGY', '1A', 'IMMCB', true, '2015-08-13 23:26:35.534', '2015-08-13 23:26:35.534');
