@@ -11,7 +11,7 @@ class HubEdoController < ApplicationController
                 when current_user.authenticated_as_delegate?
                   { include_fields: %w(affiliations identifiers) }
                 when current_user.authenticated_as_advisor?
-                  { include_fields: %w(addresses affiliations emails emergencyContacts identifiers names phones urls residency) }
+                  { include_fields: %w(addresses affiliations emails emergencyContacts identifiers names phones urls residency gender) }
                 else
                   # Rely on the defaults per proxy class
                   {}
