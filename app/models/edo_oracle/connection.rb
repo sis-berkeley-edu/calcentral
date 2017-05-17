@@ -15,7 +15,7 @@ module EdoOracle
     end
 
     def self.safe_query(sql, opts={})
-      query
+      query(sql, opts)
     rescue => e
       logger.error "Query failed: #{e.class}: #{e.message}\n #{e.backtrace.join("\n ")}"
       []
