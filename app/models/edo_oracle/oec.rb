@@ -124,10 +124,12 @@ module EdoOracle
       safe_query(sql, do_not_stringify: true)
     end
 
+    # Used to generate the Oec::SisImportTask query.
     # Awkward substring matches on sec."displayName" are necessary because the better-parsed dept_name and catalog_id
     # fields are derived from a join and not guaranteed to be present.
-    def self.depts_clause(course_codes, import_all)
+    def self.depts_clause(term_code, course_codes, import_all)
       return if course_codes.blank?
+      department_mappings = ::Oec::DepartmentMappings.new(term_code: term_code)
       subclauses = course_codes.group_by(&:dept_name).map do |dept_name, codes|
         subclause = ''
         if (default_code = codes.find { |code| code.catalog_id.blank? }) && (default_code.include_in_oec || import_all)
@@ -135,10 +137,7 @@ module EdoOracle
           excluded_codes = codes.reject &:include_in_oec
           # Also exclude any catalog IDs that are explicitly mapped to other departments, or which have been
           # explicitly excluded from OEC.
-          rejected_mappings = ::Oec::CourseCode.catalog_id_specific_mappings(dept_name).select do |m|
-            (m.dept_code != default_code.dept_code) || !m.include_in_oec
-          end
-          excluded_codes.concat rejected_mappings
+          excluded_codes.concat department_mappings.excluded_courses(dept_name, default_code.dept_code)
           subclause << "sec.\"displayName\" LIKE '#{SubjectAreas.compress dept_name} %'"
           if !import_all && excluded_codes.any?
             excluded_codes.each do |code|

@@ -39,7 +39,7 @@ describe Oec::SisImportTask do
 
   describe 'CSV export' do
     subject do
-      allow(Oec::CourseCode).to receive(:by_dept_code).and_return({ dept_code: fake_code_mapping })
+      allow_any_instance_of(Oec::DepartmentMappings).to receive(:by_dept_code).and_return({ dept_code: fake_code_mapping })
       allow(Oec::CourseCode).to receive(:dept_names_for_code).and_return([dept_name])
       allow(Oec::CourseCode).to receive(:participating_dept_names).and_return(l4_codes.keys)
       allow(Oec::SisImportSheet).to receive(:new).and_return courses
@@ -328,7 +328,7 @@ describe Oec::SisImportTask do
 
       before do
         allow(DateTime).to receive(:now).and_return DateTime.strptime("#{today} #{now}", '%F %H:%M:%S')
-        allow(Oec::CourseCode).to receive(:by_dept_code).and_return({l4_codes[dept_name] => fake_code_mapping})
+        allow_any_instance_of(Oec::DepartmentMappings).to receive(:by_dept_code).and_return({l4_codes[dept_name] => fake_code_mapping})
         allow(fake_remote_drive).to receive(:find_nested)
         allow(fake_remote_drive).to receive(:export_csv)
       end
@@ -464,7 +464,7 @@ describe Oec::SisImportTask do
     include_context 'local-write mode and no follow-up diff'
 
     it 'filters by department codes' do
-      expect(Oec::CourseCode).to receive(:by_dept_code).with(dept_code: %w(IBIBI IMMCB)).and_return({})
+      expect_any_instance_of(Oec::DepartmentMappings).to receive(:by_dept_code).with(dept_code: %w(IBIBI IMMCB)).and_return({})
       Oec::SisImportTask.new(default_opts.merge(dept_codes: 'IBIBI IMMCB')).run
     end
   end

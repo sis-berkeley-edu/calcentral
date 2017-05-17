@@ -47,7 +47,7 @@ describe Oec::MergeConfirmationSheetsTask do
     @mock_sheets = []
 
     allow(Oec::RemoteDrive).to receive(:new).and_return fake_remote_drive
-    allow(Oec::CourseCode).to receive(:by_dept_code).and_return(departments.inject({}) { |hash, dept| hash[dept] = []; hash })
+    allow_any_instance_of(Oec::DepartmentMappings).to receive(:by_dept_code).and_return(departments.inject({}) { |hash, dept| hash[dept] = []; hash })
     allow(Oec::CourseCode).to receive(:participating_dept_names).and_return %w(GWS MCELLBI LGBT)
     allow(Settings.terms).to receive(:fake_now).and_return DateTime.parse('2015-03-09')
 

@@ -2,7 +2,7 @@ describe EdoOracle::Oec do
   let(:term_code) { '2016-D' }
   let(:term_id) { '2168' }
 
-  let(:depts_clause) { EdoOracle::Oec.depts_clause(course_codes, import_all) }
+  let(:depts_clause) { EdoOracle::Oec.depts_clause(term_code, course_codes, import_all) }
 
   context 'department-specific queries' do
     subject { depts_clause }
@@ -107,7 +107,7 @@ describe EdoOracle::Oec do
 
   context 'course code lookup', testext: true do
     subject do
-      EdoOracle::Oec.get_courses(term_id, EdoOracle::Oec.depts_clause(course_codes, import_all))
+      EdoOracle::Oec.get_courses(term_id, EdoOracle::Oec.depts_clause(term_code, course_codes, import_all))
     end
 
     context 'a department participating in OEC' do

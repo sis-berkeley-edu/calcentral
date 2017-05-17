@@ -14,7 +14,7 @@ describe Oec::CreateConfirmationSheetsTask do
   let(:supervisors_csv) { File.read Rails.root.join('fixtures', 'oec', 'supervisors.csv') }
 
   before(:each) do
-    allow(Oec::CourseCode).to receive(:by_dept_code).and_return({'IMMCB' => [double(dept_name: 'MCELLBI')]})
+    allow_any_instance_of(Oec::DepartmentMappings).to receive(:by_dept_code).and_return({'IMMCB' => [double(dept_name: 'MCELLBI')]})
     allow(Oec::RemoteDrive).to receive(:new).and_return fake_remote_drive
     allow(Settings.terms).to receive(:fake_now).and_return DateTime.parse('2015-03-09')
 

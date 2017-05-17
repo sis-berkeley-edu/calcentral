@@ -25,7 +25,7 @@ describe Oec::ReportDiffTask do
     end
 
     before do
-      allow(Oec::CourseCode).to receive(:by_dept_code).and_return dept_code_mappings
+      allow_any_instance_of(Oec::DepartmentMappings).to receive(:by_dept_code).and_return dept_code_mappings
       allow(Oec::RemoteDrive).to receive(:new).and_return fake_remote_drive
       allow(fake_remote_drive).to receive(:check_conflicts_and_upload)
       fake_csv_hash = {}
