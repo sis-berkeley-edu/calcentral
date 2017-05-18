@@ -24,7 +24,7 @@ module ResponseWrapper
     else
       message_lines = ["#{e.class} #{e.message}", "Associated key: #{key}"]
     end
-    message_lines << e.backtrace.join("\n ")
+    message_lines << e.backtrace.join("\n ") unless Rails.env == "test"
     Rails.logger.error message_lines.join("\n")
 
     response || default_response(opts)
