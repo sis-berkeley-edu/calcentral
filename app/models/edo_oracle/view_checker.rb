@@ -2,15 +2,6 @@ class EdoOracle::ViewChecker
 
   VIEW_DEPENDENCIES = [
     {
-      :id => 'SISEDO.TERM_TBL_VW',
-      :columns => [
-        'STRM',
-        'DESCR',
-        'TERM_BEGIN_DT',
-        'TERM_END_DT',
-      ]
-    },
-    {
       :id => 'SISEDO.API_COURSEV00_MVW',
       :columns => [
         'catalogNumber-formatted',
@@ -164,22 +155,9 @@ class EdoOracle::ViewChecker
 
   def check_view(view)
     results = EdoOracle::Queries.query "SELECT #{to_query_columns(view[:columns])} FROM #{view[:id]} WHERE rownum=1"
-    check_results(view[:columns], view[:id], results)
+    log_result(:successes, "#{view[:id]} has no issues") if results
   rescue => e
     log_result(:errors, "Failure to query #{view[:id]} - #{e.to_s}")
-  end
-
-  def check_results(column_array, view_name, results)
-    errors = 0
-    column_array.each do |column|
-      if results[0][column.downcase].blank?
-        errors += 1
-        log_result(:errors, "#{column} column value blank in #{view_name} results")
-      end
-    end
-    if errors == 0
-      log_result(:successes, "#{view_name} has no issues")
-    end
   end
 
   def log_result(type, message)
