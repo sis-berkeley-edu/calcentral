@@ -6,7 +6,7 @@ module Oec
     def run_internal
       log :info, "Will import SIS data for term #{@term_code}"
       imports_now = find_or_create_now_subfolder Oec::Folder.sis_imports
-      Oec::DepartmentMappings.new.by_dept_code(@departments_filter).each do |dept_code, course_codes|
+      Oec::DepartmentMappings.new(term_code: @term_code).by_dept_code(@departments_filter).each do |dept_code, course_codes|
         @term_dates ||= default_term_dates
         worksheet = Oec::SisImportSheet.new(dept_code: dept_code)
         import_courses(worksheet, course_codes)
@@ -127,7 +127,8 @@ module Oec
     def set_dept_form(worksheet, course)
       return if course['cross_listed_flag'].present?
 
-      # Sets 'dept_form' to either 'MCELLBI' or 'INTEGBI' for BIOLOGY courses; otherwise uses 'dept_name'.
+      # Sets 'dept_form' to either 'MCELLBI' or 'INTEGBI' for BIOLOGY courses; to 'FSSEM' for Freshman & Sophomore
+      # Seminars; otherwise uses 'dept_name'.
       # Expressing this with our data is a bit complicated because the system consuming the data expects "department
       # names" to appear as they appear in course codes, but our mappings use L4 codes (IMMCB, IBIBI) and full
       # names ("Molecular and Cell Biology", "Integrative Biology") indicating actual campus departments.

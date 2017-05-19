@@ -164,6 +164,40 @@ module EdoOracle
       end
     end
 
+    # Find courses associated with Freshman & Sophomore Seminars, which have no direct expression in the Oracle DB.
+    # If another RegExp-based "virtual department" ever shows up, we should generalize support.
+    def self.get_fssem_course_codes(term_id)
+      filter_clause = <<-FLTR
+        (
+          REGEXP_LIKE( sec."displayName", ' (39|24|84)[A-Z]*$') OR
+          REGEXP_LIKE( sec."displayName", '(MCELLBI|NATAMST) 90[A-Z]*$')
+        )
+      FLTR
+      rows = safe_query <<-SQL
+        SELECT DISTINCT
+          sec."displayName" AS course_display_name
+        FROM
+          SISEDO.CLASSSECTIONALLV00_MVW sec
+          LEFT OUTER JOIN SISEDO.DISPLAYNAMEXLAT_MVW xlat ON (
+            xlat."classDisplayName" = sec."displayName")
+          LEFT OUTER JOIN SISEDO.API_COURSEV00_MVW crs ON (
+            xlat."courseDisplayName" = crs."displayName"
+            AND crs."status-code" = 'ACTIVE')
+          WHERE
+            sec."term-id" = '#{term_id}'
+            AND #{filter_clause}
+            AND sec."status-code" IN ('A','S')
+          ORDER BY course_display_name ASC
+      SQL
+      # TODO A number of classes outside the EdoOracle::UserCourses module now rely on the parse_course_code method.
+      # Shouldn't it be moved to a more central location?
+      parser = EdoOracle::UserCourses::Base.new
+      rows.collect do |row|
+        dept_name, dept_code, catalog_id = parser.parse_course_code row
+        {dept_name: dept_name, catalog_id: catalog_id}
+      end
+    end
+
     def self.course_ccn_column
       'sec."id"'
     end
