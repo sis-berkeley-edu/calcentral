@@ -303,6 +303,8 @@ cache:
     # Merge of independently cached feeds.
     HubEdos::MyStudent: <%= 5.minutes %>
 
+    Oec::DepartmentMappings: <%= 4.hours %>
+
 # Cache warmer settings
 cache_warmer:
   # Number to decrement db pool to limit the number of warmer threads

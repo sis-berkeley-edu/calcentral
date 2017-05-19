@@ -78,7 +78,7 @@ module Oec
 
     def generate_course_confirmation(dept_import_sheet)
       course_confirmation = Oec::CourseConfirmation.new
-      sis_import_sheet = Oec::SisImportSheet.from_csv @remote_drive.export_csv(dept_import_sheet)
+      sis_import_sheet = Oec::SisImportSheet.from_csv(@remote_drive.export_csv(dept_import_sheet), term_code: @term_code)
       sis_import_sheet.each do |row|
         validate_and_add(course_confirmation, row, %w(COURSE_ID LDAP_UID))
       end

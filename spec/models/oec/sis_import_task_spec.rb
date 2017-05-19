@@ -40,8 +40,8 @@ describe Oec::SisImportTask do
   describe 'CSV export' do
     subject do
       allow_any_instance_of(Oec::DepartmentMappings).to receive(:by_dept_code).and_return({ dept_code: fake_code_mapping })
-      allow(Oec::CourseCode).to receive(:dept_names_for_code).and_return([dept_name])
-      allow(Oec::CourseCode).to receive(:participating_dept_names).and_return(l4_codes.keys)
+      allow_any_instance_of(Oec::DepartmentMappings).to receive(:dept_names_for_code).and_return([dept_name])
+      allow_any_instance_of(Oec::DepartmentMappings).to receive(:participating_dept_names).and_return(l4_codes.keys)
       allow(Oec::SisImportSheet).to receive(:new).and_return courses
       task.run_internal
       courses.write_csv
@@ -142,7 +142,7 @@ describe Oec::SisImportTask do
       let(:dept_name) { 'MATH' }
       let(:friendly_dept_name) { 'MATHEMATICS' }
       let(:expected_ids) { %w(2015-B-54432 2015-B-54441 2015-B-87672 2015-B-87675 2015-B-87675_GSI) }
-      before { allow(Oec::CourseCode).to receive(:included?).with('STAT', anything).and_return true  }
+      before { allow_any_instance_of(Oec::DepartmentMappings).to receive(:included?).with('STAT', anything).and_return true  }
       include_examples 'expected CSV structure'
       include_examples 'expected DEPT_FORM and EVALUATION_TYPE'
     end
@@ -223,7 +223,7 @@ describe Oec::SisImportTask do
       let(:dept_name) { 'STAT' }
       let(:friendly_dept_name) { 'STATISTICS' }
       let(:expected_ids) { %w(2015-B-87672 2015-B-87673 2015-B-87675 2015-B-87675_GSI 2015-B-54432 2015-B-54441 2015-B-72199 2015-B-87690 2015-B-87693) }
-      before { allow(Oec::CourseCode).to receive(:included?).with('MATH', anything).and_return math_included  }
+      before { allow_any_instance_of(Oec::DepartmentMappings).to receive(:included?).with('MATH', anything).and_return math_included  }
       let(:math_included) { true }
 
       include_examples 'expected CSV structure'

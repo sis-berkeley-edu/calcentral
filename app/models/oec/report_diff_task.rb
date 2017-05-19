@@ -147,7 +147,7 @@ module Oec
       return unless (file = @remote_drive.find_nested(folder_titles, @opts))
       hash = {}
       csv = @remote_drive.export_csv file
-      klass.from_csv(csv, dept_code: dept_code).each do |row|
+      klass.from_csv(csv, dept_code: dept_code, term_code: @term_code).each do |row|
         begin
           row = Oec::Worksheet.capitalize_keys row
           if (id = extract_id row)

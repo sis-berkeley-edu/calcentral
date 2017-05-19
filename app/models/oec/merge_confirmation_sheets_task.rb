@@ -20,7 +20,7 @@ module Oec
 
       supervisors = Oec::Supervisors.from_csv @remote_drive.export_csv(supervisors_sheet)
 
-      merged_course_confirmations = Oec::SisImportSheet.new(export_name: 'Merged course confirmations')
+      merged_course_confirmations = Oec::SisImportSheet.new(export_name: 'Merged course confirmations', term_code: @term_code)
       merged_supervisor_confirmations = Oec::Supervisors.new(export_name: 'Merged supervisor confirmations')
 
       department_names = Oec::DepartmentMappings.new(term_code: @term_code).by_dept_code(@departments_filter).keys.map { |code| Berkeley::Departments.get(code, concise: true) }
@@ -29,7 +29,7 @@ module Oec
         next unless department_names.include? department_item.title
 
         if (sis_import_sheet = @remote_drive.find_first_matching_item(department_item.title, most_recent_import))
-          sis_import = Oec::SisImportSheet.from_csv @remote_drive.export_csv(sis_import_sheet)
+          sis_import = Oec::SisImportSheet.from_csv(@remote_drive.export_csv(sis_import_sheet), term_code: @term_code)
         else
           raise UnexpectedDataError, "Could not find sheet '#{department_item.title}' in folder '#{most_recent_import.title}'"
         end

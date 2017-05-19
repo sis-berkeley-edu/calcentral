@@ -130,4 +130,13 @@ describe Oec::DepartmentMappings do
     end
   end
 
+  describe '#dept_names_for_code' do
+    it 'includes all mapped departments, even if catalog-ID-specific' do
+      expect(subject.dept_names_for_code 'MBARC').to include(
+        'A,RESEC',
+        'PORTUG'
+      )
+    end
+  end
+
 end

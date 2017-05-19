@@ -3,6 +3,8 @@ module Oec
     extend Cache::Cacheable
     include ClassLogger
 
+    # This cached class merges explicitly defined OEC departments from our CourseCode DB table with
+    # a dynamic query-based "virtual department."
     # At present (and, we hope, forever), Freshman & Sophomore Seminars is the only RegExp-based
     # "virtual department" we need to handle, so we treat it as an explicit exception.
     FSSEM_CODE = 'FSSEM'
@@ -43,16 +45,37 @@ module Oec
       all_mappings.select {|c| c.catalog_id.present?}
     end
 
+    # Only used for cross-listings sort.
+    def dept_names_for_code(dept_code)
+      all_mappings.map {|c| c[:dept_name] if c[:dept_code] == dept_code}.uniq.compact
+    end
+
+    # Only used for cross-listings inclusion.
+    def included?(dept_name, catalog_id)
+      all_mappings.first {|c| c[:dept_name] == dept_name && c[:catalog_id] == catalog_id && c[:include_in_oec]} ||
+        all_mappings.first {|c| c[:dept_name] == dept_name && c[:catalog_id] == '' && c[:include_in_oec]}
+    end
+
+    # Only used for cross-listings sort.
+    def self.participating_dept_names
+      all_mappings.map {|c| c[:dept_name] if c[:include_in_oec]}.uniq.compact
+    end
+
+
     private
 
     def all_mappings
-      self.class.fetch_from_cache @term_code do
+      @all_mappings ||= self.class.fetch_from_cache @term_code do
         mappings = Oec::CourseCode.all
-        mappings.concat create_virtural_department_mappings @term_code
+        if @term_code.present?
+          mappings.concat create_virtual_department_mappings @term_code
+        else
+          mappings
+        end
       end
     end
 
-    def create_virtural_department_mappings(term_code)
+    def create_virtual_department_mappings(term_code)
       term_id = EdoOracle::Adapters::Oec.term_id(term_code)
       fssem_root = Oec::CourseCode.where(dept_code: FSSEM_CODE, catalog_id: '').first
       fssem_courses = EdoOracle::Oec.get_fssem_course_codes(term_id)

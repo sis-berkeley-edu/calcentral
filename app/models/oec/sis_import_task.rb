@@ -8,7 +8,7 @@ module Oec
       imports_now = find_or_create_now_subfolder Oec::Folder.sis_imports
       Oec::DepartmentMappings.new(term_code: @term_code).by_dept_code(@departments_filter).each do |dept_code, course_codes|
         @term_dates ||= default_term_dates
-        worksheet = Oec::SisImportSheet.new(dept_code: dept_code)
+        worksheet = Oec::SisImportSheet.new(dept_code: dept_code, term_code: @term_code)
         import_courses(worksheet, course_codes)
         export_sheet(worksheet, imports_now)
       end
@@ -79,7 +79,8 @@ module Oec
     end
 
     def should_include_cross_listing?(cross_listing)
-      if cross_listing['cross_listed_flag'].present? || Oec::CourseCode.included?(cross_listing['dept_name'], cross_listing['catalog_id'])
+      if cross_listing['cross_listed_flag'].present? ||
+          Oec::DepartmentMappings.new(term_code: @term_code).included?(cross_listing['dept_name'], cross_listing['catalog_id'])
         true
       else
         skip_course cross_listing, 'non-participating cross_listing'
