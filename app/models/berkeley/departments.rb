@@ -41,6 +41,10 @@ module Berkeley
         'EKMEG' =>  'Department of Mechanical Engineering',
         'ELNUC' =>  'Department of Nuclear Engineering',
         'EUNEU' =>  'Helen Wills Neuroscience Institute',
+        # Freshman and Sophomore Seminars cut across multiple department names but are treated as a
+        # single pseudo-department to administer online course evaluations. The "department code"
+        # is more or less arbitrary, and does not appear in the BFS General Ledger.
+        'FSSEM' =>  'Freshman and Sophomore Seminars',
         'HARTH' =>  'History of Art Department',
         'HCPHI' =>  'Department of Philosophy',
         'HDRAM' =>  'Department of Theater, Dance and Performance Studies',
@@ -83,7 +87,6 @@ module Berkeley
         'PHYSI' =>  'Department of Physics',
         'PMATH' =>  'Department of Mathematics',
         'PSTAT' =>  'Department of Statistics',
-        'QHINS' =>  'Freshman and Sophomore Seminars',
         'QHUIS' =>  'Office of Undergraduate and Interdisciplinary Studies',
         'QIIAS' =>  'International and Area Studies Academic Program',
         'QKCWP' =>  'College Writing Programs',
