@@ -1,17 +1,14 @@
 <div class="cc-enrollment-card-notifications">
 
-  <div data-ng-if="enrollmentInstruction.hasHolds">
-    <span>
-      <i class="fa fa-exclamation-circle cc-icon-red cc-enrollment-card-icon"></i>
-    </span>
-    <span>
-      You have a hold that may affect your ability to enroll in classes. Consult with an advisor.
-    </span>
-  </div>
+  <p class="cc-enrollment-card-notifications-paragraph" data-ng-if="enrollmentInstruction.hasHolds">
+    <i class="fa fa-exclamation-circle cc-icon-red cc-enrollment-card-icon"></i>
+    You have a hold that may affect your ability to enroll in classes.
+    View your "Active Holds" for more details.
+  </p>
 
-  <div data-ng-if="!enrollmentInstruction.hasHolds">
+  <p class="cc-enrollment-card-notifications-paragraph" data-ng-if="!enrollmentInstruction.hasHolds">
     Consult with an advisor if you have any questions.
-  </div>
+  </p>
 
   <div data-ng-if="isInstructionType(enrollmentInstruction, ['law'])">
     <ul class="cc-list-bullets">
@@ -30,7 +27,7 @@
     </ul>
   </div>
 
-  <div data-ng-if="!enrollmentInstruction.enrollmentPeriod[0]">
+  <p class="cc-enrollment-card-notifications-paragraph" data-ng-if="!enrollmentInstruction.enrollmentPeriod[0]">
     Please check back regularly for your assigned dates.
-  </div>
+  </p>
 </div>
