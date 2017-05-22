@@ -64,6 +64,7 @@ describe MyActivities::Webcasts do
           term_cd: 'B',
           course_code: 'PB HLTH 142',
           slug: 'pb_hlth-142',
+          id: 'pb_hlth-142',
           name: 'Intro to Probability and Statistics',
           sections: sections
         }

@@ -10,7 +10,7 @@ module MyAcademics
     # This URL is internally routed by JavaScript code rather than Rails.
     def class_to_url(campus_course)
       teaching_str = (campus_course[:role] == 'Instructor') ? 'teaching-' : ''
-      "/academics/#{teaching_str}semester/#{Berkeley::TermCodes.to_slug(campus_course[:term_yr], campus_course[:term_cd])}/class/#{campus_course[:slug]}"
+      "/academics/#{teaching_str}semester/#{Berkeley::TermCodes.to_slug(campus_course[:term_yr], campus_course[:term_cd])}/class/#{campus_course[:id]}"
     end
 
     def semester_info(term_key)

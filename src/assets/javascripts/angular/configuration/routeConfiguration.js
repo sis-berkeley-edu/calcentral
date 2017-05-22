@@ -35,12 +35,12 @@ angular.module('calcentral.config').config(function($routeProvider, calcentralCo
       controller: 'AcademicsController',
       pageName: 'My Academics'
     }).
-    when('/academics/semester/:semesterSlug/class/:classSlug', {
+    when('/academics/semester/:semesterSlug/class/:classId', {
       templateUrl: 'academics_classinfo.html',
       controller: 'AcademicsController',
       pageName: 'My Academics'
     }).
-    when('/academics/semester/:semesterSlug/class/:classSlug/:sectionSlug', {
+    when('/academics/semester/:semesterSlug/class/:classId/:sectionSlug', {
       templateUrl: 'academics_classinfo.html',
       controller: 'AcademicsController',
       pageName: 'My Academics'
@@ -50,12 +50,12 @@ angular.module('calcentral.config').config(function($routeProvider, calcentralCo
       controller: 'AcademicsController',
       pageName: 'My Academics'
     }).
-    when('/academics/teaching-semester/:teachingSemesterSlug/class/:classSlug', {
+    when('/academics/teaching-semester/:teachingSemesterSlug/class/:classId', {
       templateUrl: 'academics_classinfo.html',
       controller: 'AcademicsController',
       pageName: 'My Academics'
     }).
-    when('/academics/teaching-semester/:teachingSemesterSlug/class/:classSlug/:category', {
+    when('/academics/teaching-semester/:teachingSemesterSlug/class/:classId/:category', {
       templateUrl: 'academics_classinfo.html',
       controller: 'AcademicsController',
       pageName: 'My Academics'

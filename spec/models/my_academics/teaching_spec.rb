@@ -32,14 +32,14 @@ describe MyAcademics::Teaching do
         course_id: 'biology-1a-2013-D',
         dept: 'BIOLOGY'
       })
-      expect(bio1a[:url]).to eq '/academics/teaching-semester/fall-2013/class/biology-1a'
+      expect(bio1a[:url]).to eq '/academics/teaching-semester/fall-2013/class/biology-1a-2013-D'
     end
     it 'should properly translate sample COG SCI course' do
       cogsci = teaching[0][:classes].find {|course| course[:listings].find {|listing| listing[:course_code] == 'COG SCI C147'}}
       expect(cogsci).not_to be_empty
       expect(cogsci).to include({
         title: 'Language Disorders',
-        url: '/academics/teaching-semester/fall-2013/class/cog_sci-c147'
+        url: '/academics/teaching-semester/fall-2013/class/cog_sci-c147-2013-D'
       })
       expect(cogsci[:listings].map {|listing| listing[:dept]}).to include 'COG SCI'
     end

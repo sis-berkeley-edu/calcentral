@@ -117,7 +117,7 @@ angular.module('calcentral.controllers').controller('AcademicsController', funct
     updatePrevNextSemester([data.semesters, data.teachingSemesters], selectedSemester);
 
     $scope.selectedSemester = selectedSemester;
-    if (selectedStudentSemester && !$routeParams.classSlug) {
+    if (selectedStudentSemester && !$routeParams.classId) {
       $scope.selectedCourses = selectedStudentSemester.classes;
       if (!isOnlyInstructor) {
         $scope.allCourses = academicsService.getAllClasses(data.semesters);
@@ -131,7 +131,7 @@ angular.module('calcentral.controllers').controller('AcademicsController', funct
     setGradingFlags(selectedTeachingSemester);
 
     // Get selected course from URL params and extract data from selected semester schedule
-    if ($routeParams.classSlug) {
+    if ($routeParams.classId) {
       $scope.isInstructorOrGsi = isOnlyInstructor;
       var classSemester = selectedStudentSemester;
       if (isOnlyInstructor) {
@@ -139,7 +139,7 @@ angular.module('calcentral.controllers').controller('AcademicsController', funct
       }
       for (var i = 0; i < classSemester.classes.length; i++) {
         var course = classSemester.classes[i];
-        if (course.slug === $routeParams.classSlug) {
+        if (course.course_id === $routeParams.classId) {
           if ($routeParams.sectionSlug) {
             $scope.selectedSection = academicsService.filterBySectionSlug(course, $routeParams.sectionSlug);
           }
