@@ -40,7 +40,7 @@ shared_context 'OEC enrollment data merge' do
 
     allow(Settings.terms).to receive(:fake_now).and_return DateTime.parse('2015-03-09 12:00:00')
 
-    allow(Oec::CourseCode).to receive(:participating_dept_names).and_return %w(GWS LGBT)
+    allow_any_instance_of(Oec::DepartmentMappings).to receive(:participating_dept_names).and_return %w(GWS LGBT)
 
     allow(Oec::Queries).to receive(:get_enrollments).and_return enrollment_data
     allow_any_instance_of(Oec::Task).to receive(:default_term_dates).and_return({'START_DATE' => '01-26-2015', 'END_DATE' => '05-11-2015'})

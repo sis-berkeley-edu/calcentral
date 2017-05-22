@@ -5,7 +5,7 @@ module Oec
 
     def build_and_validate_export_sheets
       course_confirmations_file = @remote_drive.find_nested [@term_code, Oec::Folder.merged_confirmations, 'Merged course confirmations'], on_failure: :error
-      course_confirmations = Oec::SisImportSheet.from_csv(@remote_drive.export_csv(course_confirmations_file), dept_code: nil)
+      course_confirmations = Oec::SisImportSheet.from_csv(@remote_drive.export_csv(course_confirmations_file), dept_code: nil, term_code: @term_code)
 
       supervisor_confirmations_file = @remote_drive.find_nested [@term_code, Oec::Folder.merged_confirmations, 'Merged supervisor confirmations'], on_failure: :error
       supervisor_confirmations = Oec::Supervisors.from_csv @remote_drive.export_csv(supervisor_confirmations_file)
@@ -41,7 +41,7 @@ module Oec
       suffixed_ccns = {}
 
       default_dates = default_term_dates
-      participating_dept_names = Oec::CourseCode.participating_dept_names
+      participating_dept_names = Oec::DepartmentMappings.new(term_code: @term_code).participating_dept_names
 
       log :info, "Validating #{supervisor_confirmations.count} supervisor confirmation rows"
       supervisor_confirmations.each do |confirmation|

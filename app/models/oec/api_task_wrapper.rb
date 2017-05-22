@@ -46,7 +46,7 @@ module Oec
     ]
 
     def self.department_list
-      participating_department_codes = Oec::CourseCode.by_dept_code(include_in_oec: true).keys
+      participating_department_codes = Oec::CourseCode.participating_dept_codes
       departments = Berkeley::Departments.department_map.map do |k,v|
         {
           code: k,

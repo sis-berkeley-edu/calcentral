@@ -11,7 +11,7 @@ module Oec
       @confirmations_folder = @remote_drive.find_nested([@term_code, Oec::Folder.confirmations])
       raise UnexpectedDataError, "No department confirmations folder found for term #{@term_code}" unless @confirmations_folder
 
-      Oec::CourseCode.by_dept_code(@course_code_filter).keys.each do |dept_code|
+      Oec::DepartmentMappings.new(term_code: @term_code).by_dept_code(@departments_filter).keys.each do |dept_code|
         if (diff_report = diff_for_department dept_code)
           update_departmental_diff(diff_report, dept_code)
         end
@@ -147,7 +147,7 @@ module Oec
       return unless (file = @remote_drive.find_nested(folder_titles, @opts))
       hash = {}
       csv = @remote_drive.export_csv file
-      klass.from_csv(csv, dept_code: dept_code).each do |row|
+      klass.from_csv(csv, dept_code: dept_code, term_code: @term_code).each do |row|
         begin
           row = Oec::Worksheet.capitalize_keys row
           if (id = extract_id row)

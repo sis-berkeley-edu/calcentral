@@ -4,12 +4,11 @@ module Oec
     on_success_run Oec::ReportDiffTask, if: proc { !@opts[:local_write] }
 
     def run_internal
-      @dept_forms = {}
       log :info, "Will import SIS data for term #{@term_code}"
       imports_now = find_or_create_now_subfolder Oec::Folder.sis_imports
-      Oec::CourseCode.by_dept_code(@course_code_filter).each do |dept_code, course_codes|
+      Oec::DepartmentMappings.new(term_code: @term_code).by_dept_code(@departments_filter).each do |dept_code, course_codes|
         @term_dates ||= default_term_dates
-        worksheet = Oec::SisImportSheet.new(dept_code: dept_code)
+        worksheet = Oec::SisImportSheet.new(dept_code: dept_code, term_code: @term_code)
         import_courses(worksheet, course_codes)
         export_sheet(worksheet, imports_now)
       end
@@ -80,7 +79,8 @@ module Oec
     end
 
     def should_include_cross_listing?(cross_listing)
-      if cross_listing['cross_listed_flag'].present? || Oec::CourseCode.included?(cross_listing['dept_name'], cross_listing['catalog_id'])
+      if cross_listing['cross_listed_flag'].present? ||
+          Oec::DepartmentMappings.new(term_code: @term_code).included?(cross_listing['dept_name'], cross_listing['catalog_id'])
         true
       else
         skip_course cross_listing, 'non-participating cross_listing'
@@ -128,13 +128,13 @@ module Oec
     def set_dept_form(worksheet, course)
       return if course['cross_listed_flag'].present?
 
-      # Sets 'dept_form' to either 'MCELLBI' or 'INTEGBI' for BIOLOGY courses; otherwise uses 'dept_name'.
+      # Sets 'dept_form' to either 'MCELLBI' or 'INTEGBI' for BIOLOGY courses; to 'FSSEM' for Freshman & Sophomore
+      # Seminars; otherwise uses 'dept_name'.
       # Expressing this with our data is a bit complicated because the system consuming the data expects "department
       # names" to appear as they appear in course codes, but our mappings use L4 codes (IMMCB, IBIBI) and full
       # names ("Molecular and Cell Biology", "Integrative Biology") indicating actual campus departments.
-      if (mapping = Oec::CourseCode.catalog_id_specific_mapping(course['dept_name'], course['catalog_id']))
-        @dept_forms[mapping] ||= Oec::CourseCode.where(dept_code: mapping.dept_code, catalog_id: '').pluck(:dept_name).first
-        course['dept_form'] = @dept_forms[mapping]
+      if (course_specific_department = Oec::DepartmentMappings.new(term_code: @term_code).catalog_id_home_department(course['dept_name'], course['catalog_id']))
+        course['dept_form'] = course_specific_department
       # The Spanish and Portuguese department is another special case where all courses use the SPANISH department form,
       # regardless of subject area.
       elsif worksheet.dept_code == 'LPSPP'
@@ -177,7 +177,10 @@ module Oec
       update_columns = worksheet.headers - select_columns
 
       overrides_sheet.each do |overrides_row|
-        next if (type == Oec::Courses) && !course_codes.find { |code| code.matches_row? overrides_row }
+        next if (type == Oec::Courses) && !course_codes.find do |code|
+          code.dept_name == overrides_row['DEPT_NAME'] &&
+            (code.catalog_id == overrides_row['CATALOG_ID'] || code.catalog_id.blank?)
+        end
 
         rows_to_update = select_columns.inject(worksheet) do |worksheet_selection, column|
           if overrides_row[column].blank? || worksheet_selection.none?

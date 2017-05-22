@@ -25,7 +25,7 @@ describe Oec::ReportDiffTask do
     end
 
     before do
-      allow(Oec::CourseCode).to receive(:by_dept_code).and_return dept_code_mappings
+      allow_any_instance_of(Oec::DepartmentMappings).to receive(:by_dept_code).and_return dept_code_mappings
       allow(Oec::RemoteDrive).to receive(:new).and_return fake_remote_drive
       allow(fake_remote_drive).to receive(:check_conflicts_and_upload)
       fake_csv_hash = {}
@@ -61,7 +61,7 @@ describe Oec::ReportDiffTask do
             expect(fake_remote_drive).to receive(:find_nested).with(path, anything).and_return (remote_file = double)
             expect(fake_remote_drive).to receive(:export_csv).with(remote_file).and_return (import_csv = double)
             spreadsheet = fake_csv_hash[dept_name][index]
-            allow(sheet_classes[index]).to receive(:from_csv).with(import_csv, dept_code: dept_code).and_return spreadsheet
+            allow(sheet_classes[index]).to receive(:from_csv).with(import_csv, dept_code: dept_code, term_code: term_code).and_return spreadsheet
           end
         end
       end

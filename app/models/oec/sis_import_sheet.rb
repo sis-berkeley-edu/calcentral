@@ -7,6 +7,7 @@ module Oec
       if (@dept_code = opts.delete :dept_code)
         opts[:export_name] = Berkeley::Departments.get(@dept_code, concise: true)
       end
+      @term_code = opts.delete :term_code
       super(opts)
     end
 
@@ -49,8 +50,9 @@ module Oec
       rows_by_cross_listing = @rows.values.group_by { |row| row['CROSS_LISTED_NAME'] }
       non_cross_listed_rows = rows_by_cross_listing.delete(nil) || []
 
-      home_dept_names = Oec::CourseCode.dept_names_for_code(@dept_code) if @dept_code
-      participating_dept_names = Oec::CourseCode.participating_dept_names
+      department_mappings = Oec::DepartmentMappings.new(term_code: @term_code)
+      home_dept_names = department_mappings.dept_names_for_code(@dept_code) if @dept_code
+      participating_dept_names = department_mappings.participating_dept_names
 
       rows_by_cross_listing.values.each do |rows|
         # If a home department is defined, move home-department rows to the top within each group of cross-listings;

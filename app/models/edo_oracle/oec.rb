@@ -124,17 +124,20 @@ module EdoOracle
       safe_query(sql, do_not_stringify: true)
     end
 
+    # Used to generate the Oec::SisImportTask query.
     # Awkward substring matches on sec."displayName" are necessary because the better-parsed dept_name and catalog_id
     # fields are derived from a join and not guaranteed to be present.
-    def self.depts_clause(course_codes, import_all)
+    def self.depts_clause(term_code, course_codes, import_all)
       return if course_codes.blank?
+      department_mappings = ::Oec::DepartmentMappings.new(term_code: term_code)
       subclauses = course_codes.group_by(&:dept_name).map do |dept_name, codes|
         subclause = ''
         if (default_code = codes.find { |code| code.catalog_id.blank? }) && (default_code.include_in_oec || import_all)
-          # All catalog IDs are included by default; note explicit exclusions.
+          # All catalog IDs are included by default; note explicit exclusions which happen to be included in the input list.
           excluded_codes = codes.reject &:include_in_oec
-          # Also exclude any catalog IDs that are explicitly mapped to other departments.
-          excluded_codes.concat ::Oec::CourseCode.catalog_id_specific_mappings(dept_name)
+          # Also exclude any catalog IDs that are explicitly mapped to other departments, or which have been
+          # explicitly excluded from OEC.
+          excluded_codes.concat department_mappings.excluded_courses(dept_name, default_code.dept_code)
           subclause << "sec.\"displayName\" LIKE '#{SubjectAreas.compress dept_name} %'"
           if !import_all && excluded_codes.any?
             excluded_codes.each do |code|
@@ -158,6 +161,40 @@ module EdoOracle
           "(#{subclauses.first})"
         else
           "(#{subclauses.map { |subclause| "(#{subclause})" }.join(' or ')})"
+      end
+    end
+
+    # Find courses associated with Freshman & Sophomore Seminars, which have no direct expression in the Oracle DB.
+    # If another RegExp-based "virtual department" ever shows up, we should generalize support.
+    def self.get_fssem_course_codes(term_id)
+      filter_clause = <<-FLTR
+        (
+          REGEXP_LIKE( sec."displayName", ' (39|24|84)[A-Z]*$') OR
+          REGEXP_LIKE( sec."displayName", '(MCELLBI|NATAMST) 90[A-Z]*$')
+        )
+      FLTR
+      rows = safe_query <<-SQL
+        SELECT DISTINCT
+          sec."displayName" AS course_display_name
+        FROM
+          SISEDO.CLASSSECTIONALLV00_MVW sec
+          LEFT OUTER JOIN SISEDO.DISPLAYNAMEXLAT_MVW xlat ON (
+            xlat."classDisplayName" = sec."displayName")
+          LEFT OUTER JOIN SISEDO.API_COURSEV00_MVW crs ON (
+            xlat."courseDisplayName" = crs."displayName"
+            AND crs."status-code" = 'ACTIVE')
+          WHERE
+            sec."term-id" = '#{term_id}'
+            AND #{filter_clause}
+            AND sec."status-code" IN ('A','S')
+          ORDER BY course_display_name ASC
+      SQL
+      # TODO A number of classes outside the EdoOracle::UserCourses module now rely on the parse_course_code method.
+      # Shouldn't it be moved to a more central location?
+      parser = EdoOracle::UserCourses::Base.new
+      rows.collect do |row|
+        dept_name, dept_code, catalog_id = parser.parse_course_code row
+        {dept_name: dept_name, catalog_id: catalog_id}
       end
     end
 

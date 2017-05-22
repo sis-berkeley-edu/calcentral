@@ -62,7 +62,7 @@ module Oec
     def generate_confirmations(imports, supervisors)
       confirmations = {}
       import_items = @remote_drive.get_items_in_folder imports.id
-      Oec::CourseCode.by_dept_code(@course_code_filter).each do |dept_code, course_codes|
+      Oec::DepartmentMappings.new(term_code: @term_code).by_dept_code(@departments_filter).each do |dept_code, course_codes|
         dept_name = Berkeley::Departments.get(dept_code, concise: true)
         unless (dept_import_sheet = import_items.find { |f| f.title == dept_name })
           log :warn, "No sheet found for #{dept_name} in import folder '#{imports.title}'; skipping confirmation sheet creation."
@@ -78,7 +78,7 @@ module Oec
 
     def generate_course_confirmation(dept_import_sheet)
       course_confirmation = Oec::CourseConfirmation.new
-      sis_import_sheet = Oec::SisImportSheet.from_csv @remote_drive.export_csv(dept_import_sheet)
+      sis_import_sheet = Oec::SisImportSheet.from_csv(@remote_drive.export_csv(dept_import_sheet), term_code: @term_code)
       sis_import_sheet.each do |row|
         validate_and_add(course_confirmation, row, %w(COURSE_ID LDAP_UID))
       end

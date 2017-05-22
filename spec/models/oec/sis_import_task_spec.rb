@@ -39,9 +39,9 @@ describe Oec::SisImportTask do
 
   describe 'CSV export' do
     subject do
-      allow(Oec::CourseCode).to receive(:by_dept_code).and_return({ dept_code: fake_code_mapping })
-      allow(Oec::CourseCode).to receive(:dept_names_for_code).and_return([dept_name])
-      allow(Oec::CourseCode).to receive(:participating_dept_names).and_return(l4_codes.keys)
+      allow_any_instance_of(Oec::DepartmentMappings).to receive(:by_dept_code).and_return({ dept_code: fake_code_mapping })
+      allow_any_instance_of(Oec::DepartmentMappings).to receive(:dept_names_for_code).and_return([dept_name])
+      allow_any_instance_of(Oec::DepartmentMappings).to receive(:participating_dept_names).and_return(l4_codes.keys)
       allow(Oec::SisImportSheet).to receive(:new).and_return courses
       task.run_internal
       courses.write_csv
@@ -142,7 +142,7 @@ describe Oec::SisImportTask do
       let(:dept_name) { 'MATH' }
       let(:friendly_dept_name) { 'MATHEMATICS' }
       let(:expected_ids) { %w(2015-B-54432 2015-B-54441 2015-B-87672 2015-B-87675 2015-B-87675_GSI) }
-      before { allow(Oec::CourseCode).to receive(:included?).with('STAT', anything).and_return true  }
+      before { allow_any_instance_of(Oec::DepartmentMappings).to receive(:included?).with('STAT', anything).and_return true  }
       include_examples 'expected CSV structure'
       include_examples 'expected DEPT_FORM and EVALUATION_TYPE'
     end
@@ -223,7 +223,7 @@ describe Oec::SisImportTask do
       let(:dept_name) { 'STAT' }
       let(:friendly_dept_name) { 'STATISTICS' }
       let(:expected_ids) { %w(2015-B-87672 2015-B-87673 2015-B-87675 2015-B-87675_GSI 2015-B-54432 2015-B-54441 2015-B-72199 2015-B-87690 2015-B-87693) }
-      before { allow(Oec::CourseCode).to receive(:included?).with('MATH', anything).and_return math_included  }
+      before { allow_any_instance_of(Oec::DepartmentMappings).to receive(:included?).with('MATH', anything).and_return math_included  }
       let(:math_included) { true }
 
       include_examples 'expected CSV structure'
@@ -328,7 +328,7 @@ describe Oec::SisImportTask do
 
       before do
         allow(DateTime).to receive(:now).and_return DateTime.strptime("#{today} #{now}", '%F %H:%M:%S')
-        allow(Oec::CourseCode).to receive(:by_dept_code).and_return({l4_codes[dept_name] => fake_code_mapping})
+        allow_any_instance_of(Oec::DepartmentMappings).to receive(:by_dept_code).and_return({l4_codes[dept_name] => fake_code_mapping})
         allow(fake_remote_drive).to receive(:find_nested)
         allow(fake_remote_drive).to receive(:export_csv)
       end
@@ -463,13 +463,8 @@ describe Oec::SisImportTask do
 
     include_context 'local-write mode and no follow-up diff'
 
-    it 'filters by course-code department names' do
-      expect(Oec::CourseCode).to receive(:by_dept_code).with(dept_name: %w(BIOLOGY MCELLBI)).and_return({})
-      Oec::SisImportTask.new(default_opts.merge(dept_names: 'BIOLOGY MCELLBI')).run
-    end
-
     it 'filters by department codes' do
-      expect(Oec::CourseCode).to receive(:by_dept_code).with(dept_code: %w(IBIBI IMMCB)).and_return({})
+      expect_any_instance_of(Oec::DepartmentMappings).to receive(:by_dept_code).with(dept_code: %w(IBIBI IMMCB)).and_return({})
       Oec::SisImportTask.new(default_opts.merge(dept_codes: 'IBIBI IMMCB')).run
     end
   end

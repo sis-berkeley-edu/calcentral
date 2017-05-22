@@ -30,7 +30,6 @@ module Oec
         allow_past_term: ENV['allow_past_term'].present?,
         local_write: ENV['local_write'].present?,
         import_all: ENV['import_all'].present?,
-        dept_names: ENV['dept_names'],
         dept_codes: ENV['dept_codes']
       }
     end
@@ -52,9 +51,7 @@ module Oec
       set_term_dates
 
       @date_time = opts[:date_time] || default_date_time
-      @course_code_filter = if opts[:dept_names]
-                             {dept_name: opts[:dept_names].split.map { |name| name.tr('_', ' ') }}
-                           elsif opts[:dept_codes]
+      @departments_filter = if opts[:dept_codes]
                              {dept_code: opts[:dept_codes].split}
                            else
                              {include_in_oec: true}

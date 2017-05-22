@@ -172,7 +172,7 @@ describe Oec::ValidationTask do
     end
 
     context 'DEPT_FORM specifies non-participating department' do
-      before { allow(Oec::CourseCode).to receive(:participating_dept_names).and_return %w(BIOLOGY INTEGBI MCELLBI) }
+      before { allow_any_instance_of(Oec::DepartmentMappings).to receive(:participating_dept_names).and_return %w(BIOLOGY INTEGBI MCELLBI) }
       let(:invalid_row) { '2015-B-99999,2015-B-99999,GWS 150 LEC 001 VINDICATION OF RIGHTS,,,GWS,150,LEC,001,P,155555,UID:155555,Zachary,Zzzz,zzzz@berkeley.edu,23,Y,GWS,F,,01-26-2015,05-11-2015' }
       let(:key) { '2015-B-99999' }
       let(:expected_message) { 'DEPT_FORM GWS not found among participating departments' }

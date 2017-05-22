@@ -2,11 +2,38 @@ describe EdoOracle::Oec do
   let(:term_code) { '2016-D' }
   let(:term_id) { '2168' }
 
-  let(:depts_clause) { EdoOracle::Oec.depts_clause(course_codes, import_all) }
+  let(:depts_clause) { EdoOracle::Oec.depts_clause(term_code, course_codes, import_all) }
 
   context 'department-specific queries' do
     subject { depts_clause }
     let(:import_all) { false }
+
+    context 'complex exceptions' do
+      let(:fake_dept_code) {'FAKECODE'}
+      let(:fake_dept_name) {'FAKEDEPT'}
+      let(:id_in_other_dept) {'66OT'}
+      let(:explicitly_excluded_id) {'86EX'}
+      let(:explicitly_included_id) {'42IN'}
+      # The EdoOracle::Oec.depts_clause method currently queries Junction's Oec::CourseCode table, as well
+      # as accepting an input list of CourseCode records. We therefore need to load some test data.
+      before do
+        Oec::CourseCode.create(dept_name: fake_dept_name, catalog_id: '', dept_code: fake_dept_code, include_in_oec: true)
+        Oec::CourseCode.create(dept_name: fake_dept_name, catalog_id: id_in_other_dept, dept_code: 'LPSPP', include_in_oec: true)
+        Oec::CourseCode.create(dept_name: fake_dept_name, catalog_id: explicitly_excluded_id, dept_code: fake_dept_code, include_in_oec: false)
+        Oec::CourseCode.create(dept_name: fake_dept_name, catalog_id: explicitly_included_id, dept_code: fake_dept_code, include_in_oec: true)
+      end
+      let(:course_codes) do
+        [
+          Oec::CourseCode.new(dept_name: fake_dept_name, catalog_id: '', dept_code: fake_dept_code, include_in_oec: true)
+        ]
+      end
+      it { should include(
+        "sec.\"displayName\" LIKE '#{fake_dept_name} %'",
+        "sec.\"displayName\" != '#{fake_dept_name} #{id_in_other_dept}'",
+        "sec.\"displayName\" != '#{fake_dept_name} #{explicitly_excluded_id}'"
+      ) }
+      it { should_not include "sec.\"displayName\" != '#{fake_dept_name} #{explicitly_included_id}'" }
+    end
 
     context 'limiting query by department code' do
       let(:course_codes) do
@@ -80,7 +107,7 @@ describe EdoOracle::Oec do
 
   context 'course code lookup', testext: true do
     subject do
-      EdoOracle::Oec.get_courses(term_id, EdoOracle::Oec.depts_clause(course_codes, import_all))
+      EdoOracle::Oec.get_courses(term_id, EdoOracle::Oec.depts_clause(term_code, course_codes, import_all))
     end
 
     context 'a department participating in OEC' do
