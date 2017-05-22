@@ -134,6 +134,20 @@ class EdoOracle::ViewChecker
       ]
     },
     {
+      :id => 'SISEDO.STUDENT_REGISTRATIONV00_VW',
+      :columns => [
+        'STUDENT_ID',
+        'ACADCAREER_CODE',
+        'TERM_ID',
+        'WITHCNCL_TYPE_CODE',
+        'WITHCNCL_TYPE_DESCR',
+        'WITHCNCL_REASON_CODE',
+        'WITHCNCL_REASON_DESCR',
+        'WITHCNCL_FROMDATE',
+        'WITHCNCL_LASTATTENDDATE',
+      ]
+    },
+    {
       :id => 'SISEDO.API_COURSEIDENTIFIERSV00_VW',
       :columns => ['subjectArea']
     }
@@ -154,7 +168,8 @@ class EdoOracle::ViewChecker
   end
 
   def check_view(view)
-    results = EdoOracle::Queries.query "SELECT #{to_query_columns(view[:columns])} FROM #{view[:id]} WHERE rownum=1"
+    query_string = "SELECT #{to_query_columns(view[:columns])} FROM #{view[:id]} WHERE rownum=1"
+    results = EdoOracle::Queries.query(query_string)
     log_result(:successes, "#{view[:id]} has no issues") if results
   rescue => e
     log_result(:errors, "Failure to query #{view[:id]} - #{e.to_s}")
