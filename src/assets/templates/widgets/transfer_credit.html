@@ -74,7 +74,7 @@
             </td>
           </tr>
         </tbody>
-        <tbody data-ng-if="studentLinks.tcReportLink.url && api.user.profile.roles.student">
+        <tbody data-ng-if="studentLinks.tcReportLink.url && !api.user.profile.roles.advisor">
           <tr><td class="cc-transfer-credit-table-border" colspan="3"></td></tr>
           <tr class="cc-transfer-credit-table-parent-row">
             <td colspan="3">
