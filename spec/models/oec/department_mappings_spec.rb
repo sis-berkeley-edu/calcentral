@@ -1,4 +1,4 @@
-describe Oec::DepartmentMappings do
+describe Oec::DepartmentMappings, if: in_memory_database? do
 
   let(:term_id) {'2172'}
   let(:term_code) {'2017-B'}
