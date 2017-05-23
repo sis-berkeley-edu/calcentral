@@ -33,6 +33,7 @@ angular.module('calcentral.controllers').controller('AdvisingResourcesController
       linkIds: [
         'ucAcademicProgressReport',
         'ucAdministrativeTranscript',
+        'ucAdministrativeTranscriptBatch',
         'ucAdvisingAssignments',
         'ucArchivedTranscripts',
         'ucChangeCourseLoad',
