@@ -52,16 +52,7 @@ class AdvisingStudentController < ApplicationController
   end
 
   def resources
-    json = CampusSolutions::AdvisingResources.new(user_id: session['user_id'], student_uid: student_uid_param).get
-    links = json[:feed] && json[:feed][:ucAdvisingResources] && json[:feed][:ucAdvisingResources][:ucAdvisingLinks]
-    if links
-      # Advisors get only a subset of links
-      keys = [:ucServiceIndicator, :ucStudentAdvisor, :multiYearAcademicPlannerStudentSpecific, :schedulePlannerStudentSpecific,
-              :studentAppointments, :studentAdvisorNotes, :studentWebnowDocuments]
-      advising_links = links.select { |key| keys.include? key }
-      json[:feed][:ucAdvisingResources][:ucAdvisingLinks] = advising_links
-    end
-    render json: json
+    render json: AdvisingResources.student_specific_links(student_uid_param)
   end
 
   def student_attributes

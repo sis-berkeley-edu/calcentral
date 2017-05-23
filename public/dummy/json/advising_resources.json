@@ -1,206 +1,137 @@
 {
   "feed": {
-    "csLinks": {
-      "ucAcademicProgressReport": {
-        "isCsLink": true,
-        "iscslink": true,
-        "linkdescription": "Access a student's Academic Progress Report, What-If Report, or Administrative Transcript",
-        "linkdescriptiondisplay": true,
-        "name": "Advisee Student Center",
-        "title": "Access to Campus Solutions Tools",
-        "ucfrom": "CalCentral",
-        "ucfromlink": "https://calcentral-sis-dev-01.ist.berkeley.edu/",
-        "ucfromtext": "CalCentral",
-        "url": "https://bcswebqat.is.berkeley.edu/psp/bcsqat/EMPLOYEE/PSFT_CS/c/SSR_ADVISEE_OVRD.SSS_STUDENT_CENTER.GBL",
-        "urlid": "UC_CX_APR_RPT"
-      },
-      "ucAdvisingAssignments": {
-        "isCsLink": true,
-        "iscslink": true,
-        "name": "Advising Assignments",
-        "title": "Attach an advisor to a student.",
-        "ucfrom": "CalCentral",
-        "ucfromlink": "https://calcentral-sis-dev-01.ist.berkeley.edu/",
-        "ucfromtext": "CalCentral",
-        "url": "https://bcswebqat.is.berkeley.edu/psp/bcsqat/EMPLOYEE/HRMS/c/TRACK_STUDENT_CAREERS.STDNT_ADVISOR.GBL",
-        "urlid": "UC_CX_STUDENT_ADVISOR"
-      },
-      "ucAppointmentSystem": {
-        "isCsLink": true,
-        "iscslink": true,
-        "name": "My Appointments",
-        "title": "View your appointments.",
-        "ucfrom": "CalCentral",
-        "ucfromlink": "https://calcentral-sis-dev-01.ist.berkeley.edu/",
-        "ucfromtext": "CalCentral",
-        "url": "https://bcswebqat.is.berkeley.edu/psp/bcsqat/EMPLOYEE/HRMS/c/SCI_APPT_ADVSS.SCI_APPT_ADV_APPTS.GBL",
-        "urlid": "UC_CX_APPOINTMENT_ADV_MY_APPTS"
-      },
-      "ucArchivedTranscripts": {
-        "isCsLink": true,
-        "iscslink": true,
-        "linkdescription": "Pre-1995",
-        "linkdescriptiondisplay": true,
-        "name": "Archived DB2 Transcripts",
-        "title": "Access a student's archived Pre-1995 DB2 transcript",
-        "ucfrom": "CalCentral",
-        "ucfromlink": "https://calcentral-sis-dev-01.ist.berkeley.edu/",
-        "ucfromtext": "CalCentral",
-        "url": "https://bcswebqat.is.berkeley.edu/psp/bcsqat/EMPLOYEE/HRMS/c/UC_SR_TSCRPT.UC_SR_TSCRP.GBL",
-        "urlid": "UC_CX_ARCH_TSCRPT_ADVISOR"
-      },
-      "ucClassSearch": {
-        "isCsLink": true,
-        "iscslink": true,
-        "name": "Class Search",
-        "title": "Search for classes.",
-        "ucfrom": "CalCentral",
-        "ucfromlink": "https://calcentral-sis-dev-01.ist.berkeley.edu/",
-        "ucfromtext": "CalCentral",
-        "url": "https://bcswebqat.is.berkeley.edu/psp/bcsqat/EMPLOYEE/HRMS/c/COMMUNITY_ACCESS.CLASS_SEARCH.GBL",
-        "urlid": "UC_CX_CLASS_SEARCH"
-      },
-      "ucEformsActionCenter": {
-        "isCsLink": true,
-        "iscslink": true,
-        "name": "eForms Action Center",
-        "title": "View online forms that require evaluation.",
-        "ucfrom": "CalCentral",
-        "ucfromlink": "https://calcentral-sis-dev-01.ist.berkeley.edu/",
-        "ucfromtext": "CalCentral",
-        "url": "https://bcswebqat.is.berkeley.edu/psp/bcsqat/EMPLOYEE/HRMS/c/G3ACTION_CENTER.G3ACTION_CENTER.GBL",
-        "urlid": "UC_CX_GT_ACTION_CENTER"
-      },
-      "ucEformsWorkCenter": {
-        "isCsLink": true,
-        "iscslink": true,
-        "name": "eForms Work Center",
-        "title": "View your WorkCenter online forms main dashboard.",
-        "url": "https://bcswebqat.is.berkeley.edu/psp/bcsqat/EMPLOYEE/HRMS/s/WEBLIB_PTAL.ISCRIPT1.FieldFormula.IScript_PTAL_DASHBOARD?tab=G3WORKCENTER",
-        "urlid": "UC_CX_GT_WORK_CENTER"
-      },
-      "ucMilestones": {
-        "isCsLink": true,
-        "iscslink": true,
-        "name": "Manage Milestones",
-        "title": "Look up a student's milestones",
-        "ucfrom": "CalCentral",
-        "ucfromlink": "https://calcentral-sis-dev-01.ist.berkeley.edu/",
-        "ucfromtext": "CalCentral",
-        "url": "https://bcswebqat.is.berkeley.edu/psp/bcsqat/EMPLOYEE/PSFT_CS/c/MANAGE_ACADEMIC_RECORDS.STUDENT_MILESTONE1.GBL",
-        "urlid": "UC_CX_AA_MILESTONE"
-      },
-      "ucMultiYearAcademicPlannerGeneric": {
-        "isCsLink": true,
-        "iscslink": true,
-        "name": "Multi-Year Planner",
-        "title": "View upcoming semester classes built from a multi-year academic plan.",
-        "ucfrom": "CalCentral",
-        "ucfromlink": "https://calcentral-sis-dev-01.ist.berkeley.edu/",
-        "ucfromtext": "CalCentral",
-        "url": "https://bcswebqat.is.berkeley.edu/psp/bcsqat/EMPLOYEE/HRMS/c/SCI_PLNR_ADMIN.SCI_PLNR_LAUNCH.GBL",
-        "urlid": "UC_CX_PLANNER_ADV"
-      },
-      "ucReportingCenter": {
-        "isCsLink": true,
-        "iscslink": true,
-        "name": "Reporting Center",
-        "title": "Access the centralized list of report queries.",
-        "ucfrom": "CalCentral",
-        "ucfromlink": "https://calcentral-sis-dev-01.ist.berkeley.edu/",
-        "ucfromtext": "CalCentral",
-        "url": "https://bcswebqat.is.berkeley.edu/psp/bcsqat/EMPLOYEE/HRMS/s/WEBLIB_PTAL.ISCRIPT1.FieldFormula.IScript_PTAL_DASHBOARD?tab=UC_CS_RP_RC_RPT_DASHBOARD&FolderPath=PORTAL_ROOT_OBJECT.UC_CMPONENTS.UC_CUSTOM_RP.UC_CS_RP_RC_RPT_DASHBOARD_LINK&IsFolder=false&IgnoreParamTempl=FolderPath%2cIsFolder",
-        "urlid": "UC_CX_REPORTING_CENTER"
-      },
-      "ucServiceIndicators": {
-        "isCsLink": true,
-        "iscslink": true,
-        "name": "Service Indicators",
-        "title": "Manage student service indicators.",
-        "ucfrom": "CalCentral",
-        "ucfromlink": "https://calcentral-sis-dev-01.ist.berkeley.edu/",
-        "ucfromtext": "CalCentral",
-        "url": "https://bcswebqat.is.berkeley.edu/psp/bcsqat/EMPLOYEE/HRMS/c/MAINTAIN_SERVICE_IND_STDNT.ACTIVE_SRVC_INDICA.GBL",
-        "urlid": "UC_CX_SERVICE_IND_DATA"
-      },
-      "ucTransferCreditReport": {
-        "isCsLink": true,
-        "iscslink": true,
-        "name": "Transfer Credit Reports",
-        "title": "Detailed report of student's transfer credit",
-        "ucfrom": "CalCentral",
-        "ucfromlink": "https://calcentral-sis-dev-01.ist.berkeley.edu/",
-        "ucfromtext": "CalCentral",
-        "url": "https://bcswebqat.is.berkeley.edu/psp/bcsqat/EMPLOYEE/HRMS/c/SSR_ADVISEE_OVRD.CSU_DA_TRN_CDT.GBL",
-        "urlid": "UC_CX_CSU_DA_TRN_CDT"
-      }
+    "ucAcademicProgressReport": {
+      "isCsLink": true,
+      "iscslink": true,
+      "linkdescription": "Access a student's Academic Progress Report, What-If Report, or Administrative Transcript",
+      "linkdescriptiondisplay": true,
+      "name": "Advisee Student Center",
+      "title": "Access to Campus Solutions Tools",
+      "ucfrom": "CalCentral",
+      "ucfromlink": "https://calcentral-sis-dev-01.ist.berkeley.edu/",
+      "ucfromtext": "CalCentral",
+      "url": "https://bcswebqat.is.berkeley.edu/psp/bcsqat/EMPLOYEE/PSFT_CS/c/SSR_ADVISEE_OVRD.SSS_STUDENT_CENTER.GBL",
+      "urlid": "UC_CX_APR_RPT"
     },
-    "links": {
-      "classSearch": {
-        "isCsLink": true,
-        "name": "Class Search",
-        "url": "https://bcswebqat.is.berkeley.edu/psp/bcsqat/EMPLOYEE/HRMS/c/ESTABLISH_COURSES.CLASS_SEARCH.GBL?Page=SSR_CLSRCH_ENTRY&Action=U"
-      },
-      "scheduleClasses": {
-        "isCsLink": true,
-        "name": "Schedule of Classes",
-        "url": "https://bcswebqat.is.berkeley.edu/psp/bcsqat/EMPLOYEE/HRMS/c/COMMUNITY_ACCESS.CLASS_SEARCH.GBL"
-      },
-      "ucAcademicProgressReport": {
-        "isCsLink": true,
-        "name": "Academic Progress Report",
-        "url": "https://bcswebqat.is.berkeley.edu/psp/bcsqat/EMPLOYEE/HRMS/c/DEFINE_ACADEMIC_REQUIREMENTS.SAA_RPT_RQST.GBL?"
-      },
-      "ucAdviseeMultiPlannerLink": {
-        "isCsLink": true,
-        "name": "Advisee Multi-Year Academic Planner",
-        "url": "https://bcswebqat.is.berkeley.edu/psp/bcsqat/EMPLOYEE/HRMS/c/SCI_PLNR_FL.SCI_PLNR_FL.GBL"
-      },
-      "ucAdviseeSchedPlannerLink": {
-        "isCsLink": true,
-        "name": "Advisee Schedule Planner",
-        "url": "https://bcswebqat.is.berkeley.edu/psp/bcsqat/EMPLOYEE/HRMS/c/SSR_ADVISEE_OVRD.SSS_STUDENT_CENTER.GBL"
-      },
-      "ucAdviseeStudentCenter": {
-        "isCsLink": true,
-        "name": "Advisee Student Center",
-        "url": "https://bcswebqat.is.berkeley.edu/psp/bcsqat/EMPLOYEE/HRMS/c/SSR_ADVISEE_OVRD.SSS_STUDENT_CENTER.GBL?"
-      },
-      "ucAdvisingMultiPlannerLink": {
-        "isCsLink": true,
-        "name": "Multi-Year Academic Planner",
-        "url": "https://bcswebqat.is.berkeley.edu/psp/bcsqat/EMPLOYEE/HRMS/c/SCI_PLNR_ADMIN.SCI_PLNR_LAUNCH.GBL"
-      },
-      "ucAdvisingSchedPlannerLink": {
-        "isCsLink": true,
-        "name": "Schedule Planner",
-        "url": "https://bcswebqat.is.berkeley.edu/psp/bcsqat/EMPLOYEE/HRMS/c/SSR_ADVISEE_OVRD.SSS_STUDENT_CENTER.GBL"
-      },
-      "ucEnrollmentLimit": {
-        "isCsLink": true,
-        "name": "Enrollment Limit",
-        "url": "https://bcswebqat.is.berkeley.edu/psp/bcsqat/EMPLOYEE/HRMS/c/MANAGE_ACADEMIC_RECORDS.STDNT_ACTIVATION.GBL?"
-      },
-      "ucGteformsWorkcenter": {
-        "isCsLink": true,
-        "name": "GT eForms Work Center",
-        "url": "https://bcswebqat.is.berkeley.edu/psp/bcsqat/EMPLOYEE/HRMS/s/WEBLIB_PTAL.ISCRIPT1.FieldFormula.IScript_PTAL_DASHBOARD?tab=G3WORKCENTER"
-      },
-      "ucReportingCenter": {
-        "isCsLink": true,
-        "name": "Reporting Center",
-        "url": "https://bcswebqat.is.berkeley.edu/psp/bcsqat/EMPLOYEE/HRMS/s/WEBLIB_PTAL.ISCRIPT1.FieldFormula.IScript_PTAL_DASHBOARD?tab=UC_CS_RP_RC_RPT_DASHBOARD"
-      },
-      "ucServiceIndicator": {
-        "isCsLink": true,
-        "name": "Service Indicators",
-        "url": "https://bcswebqat.is.berkeley.edu/psp/bcsqat/EMPLOYEE/HRMS/c/MAINTAIN_SERVICE_IND_STDNT.ACTIVE_SRVC_INDICA.GBL?"
-      },
-      "ucStudentAdvisor": {
-        "isCsLink": true,
-        "name": "Student Advisor",
-        "url": "https://bcswebqat.is.berkeley.edu/psp/bcsqat/EMPLOYEE/HRMS/c/TRACK_STUDENT_CAREERS.STDNT_ADVISOR.GBL?"
-      }
+    "ucAdvisingAssignments": {
+      "isCsLink": true,
+      "iscslink": true,
+      "name": "Advising Assignments",
+      "title": "Attach an advisor to a student.",
+      "ucfrom": "CalCentral",
+      "ucfromlink": "https://calcentral-sis-dev-01.ist.berkeley.edu/",
+      "ucfromtext": "CalCentral",
+      "url": "https://bcswebqat.is.berkeley.edu/psp/bcsqat/EMPLOYEE/HRMS/c/TRACK_STUDENT_CAREERS.STDNT_ADVISOR.GBL",
+      "urlid": "UC_CX_STUDENT_ADVISOR"
+    },
+    "ucAppointmentSystem": {
+      "isCsLink": true,
+      "iscslink": true,
+      "name": "My Appointments",
+      "title": "View your appointments.",
+      "ucfrom": "CalCentral",
+      "ucfromlink": "https://calcentral-sis-dev-01.ist.berkeley.edu/",
+      "ucfromtext": "CalCentral",
+      "url": "https://bcswebqat.is.berkeley.edu/psp/bcsqat/EMPLOYEE/HRMS/c/SCI_APPT_ADVSS.SCI_APPT_ADV_APPTS.GBL",
+      "urlid": "UC_CX_APPOINTMENT_ADV_MY_APPTS"
+    },
+    "ucArchivedTranscripts": {
+      "isCsLink": true,
+      "iscslink": true,
+      "linkdescription": "Pre-1995",
+      "linkdescriptiondisplay": true,
+      "name": "Archived DB2 Transcripts",
+      "title": "Access a student's archived Pre-1995 DB2 transcript",
+      "ucfrom": "CalCentral",
+      "ucfromlink": "https://calcentral-sis-dev-01.ist.berkeley.edu/",
+      "ucfromtext": "CalCentral",
+      "url": "https://bcswebqat.is.berkeley.edu/psp/bcsqat/EMPLOYEE/HRMS/c/UC_SR_TSCRPT.UC_SR_TSCRP.GBL",
+      "urlid": "UC_CX_ARCH_TSCRPT_ADVISOR"
+    },
+    "ucClassSearch": {
+      "isCsLink": true,
+      "iscslink": true,
+      "name": "Class Search",
+      "title": "Search for classes.",
+      "ucfrom": "CalCentral",
+      "ucfromlink": "https://calcentral-sis-dev-01.ist.berkeley.edu/",
+      "ucfromtext": "CalCentral",
+      "url": "https://bcswebqat.is.berkeley.edu/psp/bcsqat/EMPLOYEE/HRMS/c/COMMUNITY_ACCESS.CLASS_SEARCH.GBL",
+      "urlid": "UC_CX_CLASS_SEARCH"
+    },
+    "ucEformsActionCenter": {
+      "isCsLink": true,
+      "iscslink": true,
+      "name": "eForms Action Center",
+      "title": "View online forms that require evaluation.",
+      "ucfrom": "CalCentral",
+      "ucfromlink": "https://calcentral-sis-dev-01.ist.berkeley.edu/",
+      "ucfromtext": "CalCentral",
+      "url": "https://bcswebqat.is.berkeley.edu/psp/bcsqat/EMPLOYEE/HRMS/c/G3ACTION_CENTER.G3ACTION_CENTER.GBL",
+      "urlid": "UC_CX_GT_ACTION_CENTER"
+    },
+    "ucEformsWorkCenter": {
+      "isCsLink": true,
+      "iscslink": true,
+      "name": "eForms Work Center",
+      "title": "View your WorkCenter online forms main dashboard.",
+      "url": "https://bcswebqat.is.berkeley.edu/psp/bcsqat/EMPLOYEE/HRMS/s/WEBLIB_PTAL.ISCRIPT1.FieldFormula.IScript_PTAL_DASHBOARD?tab=G3WORKCENTER",
+      "urlid": "UC_CX_GT_WORK_CENTER"
+    },
+    "ucMilestones": {
+      "isCsLink": true,
+      "iscslink": true,
+      "name": "Manage Milestones",
+      "title": "Look up a student's milestones",
+      "ucfrom": "CalCentral",
+      "ucfromlink": "https://calcentral-sis-dev-01.ist.berkeley.edu/",
+      "ucfromtext": "CalCentral",
+      "url": "https://bcswebqat.is.berkeley.edu/psp/bcsqat/EMPLOYEE/PSFT_CS/c/MANAGE_ACADEMIC_RECORDS.STUDENT_MILESTONE1.GBL",
+      "urlid": "UC_CX_AA_MILESTONE"
+    },
+    "ucMultiYearAcademicPlannerGeneric": {
+      "isCsLink": true,
+      "iscslink": true,
+      "name": "Multi-Year Planner",
+      "title": "View upcoming semester classes built from a multi-year academic plan.",
+      "ucfrom": "CalCentral",
+      "ucfromlink": "https://calcentral-sis-dev-01.ist.berkeley.edu/",
+      "ucfromtext": "CalCentral",
+      "url": "https://bcswebqat.is.berkeley.edu/psp/bcsqat/EMPLOYEE/HRMS/c/SCI_PLNR_ADMIN.SCI_PLNR_LAUNCH.GBL",
+      "urlid": "UC_CX_PLANNER_ADV"
+    },
+    "ucReportingCenter": {
+      "isCsLink": true,
+      "iscslink": true,
+      "name": "Reporting Center",
+      "title": "Access the centralized list of report queries.",
+      "ucfrom": "CalCentral",
+      "ucfromlink": "https://calcentral-sis-dev-01.ist.berkeley.edu/",
+      "ucfromtext": "CalCentral",
+      "url": "https://bcswebqat.is.berkeley.edu/psp/bcsqat/EMPLOYEE/HRMS/s/WEBLIB_PTAL.ISCRIPT1.FieldFormula.IScript_PTAL_DASHBOARD?tab=UC_CS_RP_RC_RPT_DASHBOARD&FolderPath=PORTAL_ROOT_OBJECT.UC_CMPONENTS.UC_CUSTOM_RP.UC_CS_RP_RC_RPT_DASHBOARD_LINK&IsFolder=false&IgnoreParamTempl=FolderPath%2cIsFolder",
+      "urlid": "UC_CX_REPORTING_CENTER"
+    },
+    "ucServiceIndicators": {
+      "isCsLink": true,
+      "iscslink": true,
+      "name": "Service Indicators",
+      "title": "Manage student service indicators.",
+      "ucfrom": "CalCentral",
+      "ucfromlink": "https://calcentral-sis-dev-01.ist.berkeley.edu/",
+      "ucfromtext": "CalCentral",
+      "url": "https://bcswebqat.is.berkeley.edu/psp/bcsqat/EMPLOYEE/HRMS/c/MAINTAIN_SERVICE_IND_STDNT.ACTIVE_SRVC_INDICA.GBL",
+      "urlid": "UC_CX_SERVICE_IND_DATA"
+    },
+    "ucTransferCreditReport": {
+      "isCsLink": true,
+      "iscslink": true,
+      "name": "Transfer Credit Reports",
+      "title": "Detailed report of student's transfer credit",
+      "ucfrom": "CalCentral",
+      "ucfromlink": "https://calcentral-sis-dev-01.ist.berkeley.edu/",
+      "ucfromtext": "CalCentral",
+      "url": "https://bcswebqat.is.berkeley.edu/psp/bcsqat/EMPLOYEE/HRMS/c/SSR_ADVISEE_OVRD.CSU_DA_TRN_CDT.GBL",
+      "urlid": "UC_CX_CSU_DA_TRN_CDT"
     }
   },
   "statusCode": 200

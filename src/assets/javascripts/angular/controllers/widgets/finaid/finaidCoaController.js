@@ -70,7 +70,6 @@ angular.module('calcentral.controllers').controller('FinaidCoaController', funct
       adaptCategoryTitles($scope.coa[viewKey]);
     });
     $scope.coa.currentView = $scope.coa.validViewKeys[0];
-    console.log($scope.coa.validViewKeys);
   };
 
   var processCoaData = function(response) {
