@@ -40,21 +40,30 @@ describe MailingLists::MailgunList do
         'first_name' => 'Oliver',
         'last_name' => 'Heyer',
         'email' => 'oheyer@berkeley.edu',
-        'enrollments' => [{'role' => 'TeacherEnrollment'}]
+        'enrollments' => [{
+          'enrollment_state' => 'active',
+          'role' => 'TeacherEnrollment'
+        }]
       } end
       let(:ray) do {
         'login_id' => '67890',
         'first_name' => 'Ray',
         'last_name' => 'Davis',
         'email' => 'raydavis@berkeley.edu',
-        'enrollments' => [{'role' => 'StudentEnrollment'}]
+        'enrollments' => [{
+          'enrollment_state' => 'active',
+          'role' => 'StudentEnrollment'
+        }]
       } end
       let(:paul) do {
         'login_id' => '65536',
         'first_name' => 'Paul',
         'last_name' => 'Kerschen',
         'email' => 'kerschen@berkeley.edu',
-        'enrollments' => [{'role' => 'StudentEnrollment'}]
+        'enrollments' => [{
+          'enrollment_state' => 'active',
+          'role' => 'StudentEnrollment'
+        }]
       } end
 
       def basic_attributes(user)
@@ -119,13 +128,17 @@ describe MailingLists::MailgunList do
             [
               oliver.merge('email' => 'oheyer@compuserve.com'),
               ray.merge('email' => 'raydavis@altavista.digital.com'),
-              paul.merge('email' => 'kerschen@lycos.com')
+              paul.merge(
+                'email' => nil,
+                'enrollments' => [{
+                  'enrollment_state' => 'invited',
+                  'role' => 'TaEnrollment'
+                }]
+              )
             ]
           end
           let(:campus_member_attributes) do
-            canvas_site_members.map do |user|
-              basic_attributes(user).merge(email_address: user['email'].sub(/@.*/, '@berkeley.edu'))
-            end
+            [oliver, ray, paul].map { |user| basic_attributes user }
           end
           let(:member_addresses) { list.members.reload.map { |member| member.email_address} }
 
@@ -143,8 +156,8 @@ describe MailingLists::MailgunList do
 
           context 'Canvas email addresses preferred' do
             let(:canvas_email_preferred) { true }
-            it 'should use Canvas addresses' do
-              expect(member_addresses).to match_array %w(oheyer@compuserve.com raydavis@altavista.digital.com kerschen@lycos.com)
+            it 'should use Canvas addresses if available but skip pending invitees' do
+              expect(member_addresses).to match_array %w(oheyer@compuserve.com raydavis@altavista.digital.com)
             end
           end
         end

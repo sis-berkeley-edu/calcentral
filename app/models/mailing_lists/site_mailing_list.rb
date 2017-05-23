@@ -232,6 +232,8 @@ module MailingLists
 
           # In general we want to use official berkeley.edu email addresses sourced from User::BasicAttributes.
           # However, we may wish to override with Canvas-sourced email addresses for testing purposes.
+          # Note that the course_users list will not include email addresses for any members with
+          # "enrollment_state": "invited".
           if Settings.canvas_mailing_lists.prefer_canvas_email_addresses
             if (canvas_user = course_users.find { |course_user| course_user['login_id'] == user[:ldap_uid] })
               logger.info "Setting email address for UID #{user[:ldap_uid]} to Canvas-sourced address #{canvas_user['email']}"
