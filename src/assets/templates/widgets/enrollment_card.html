@@ -35,14 +35,12 @@
         <div data-ng-repeat="enrollmentInstruction in enrollmentDeck.cards"
           data-ng-if="enrollmentDeck.selectedCardIndex==$index && enrollmentInstruction.enrollmentPeriod">
 
-          <div class="cc-widget-text cc-enrollment-card-advisors-container">
-            <div data-ng-include="'widgets/enrollment/consult_advisor.html'"></div>
+          <div class="cc-widget-text" data-ng-if="enrollmentInstruction.notificationTemplate">
+            <div data-ng-include="'widgets/enrollment/' + enrollmentInstruction.notificationTemplate + '.html'"></div>
           </div>
           <div class="cc-widget-text cc-enrollment-card-head">
-            <div data-ng-if="!enrollmentInstruction.enrollmentPeriod[0]">
-              Please check back regularly for your assigned dates.
-            </div>
             <div
+              data-ng-if="!isInstructionType(enrollmentInstruction, ['haasExecMba'])"
               class="cc-flex cc-flex-space-between cc-text-light"
               data-ng-class="{'cc-enrollment-card-margin-top':(!enrollmentInstruction.enrollmentPeriod[0])}">
               <div>

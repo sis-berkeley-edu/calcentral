@@ -5,9 +5,9 @@ module Berkeley
     # Role(s) assigned to a user if they are in an academic plan associated with that role.
     ACADEMIC_PLAN_ROLES = [
       {role_code: 'fpf', match: ['25000FPFU'], types: [:enrollment]},
-      {role_code: 'haasFullTimeMba', match: ['70141MBAG'], types: []},
-      {role_code: 'haasEveningWeekendMba', match: ['701E1MBAG'], types: []},
-      {role_code: 'haasExecMba', match: ['70364MBAG'], types: []},
+      {role_code: 'haasFullTimeMba', match: ['70141MBAG'], types: [:enrollment]},
+      {role_code: 'haasEveningWeekendMba', match: ['701E1MBAG'], types: [:enrollment]},
+      {role_code: 'haasExecMba', match: ['70364MBAG'], types: [:enrollment]},
       {role_code: 'haasMastersFinEng', match: ['701F1MFEG'], types: []},
       {role_code: 'haasMbaPublicHealth', match: ['70141BAPHG'], types: []},
       {role_code: 'haasMbaJurisDoctor', match: ['70141BAJDG'], types: []},

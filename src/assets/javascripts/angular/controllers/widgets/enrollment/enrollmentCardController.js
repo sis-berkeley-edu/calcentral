@@ -42,7 +42,7 @@ angular.module('calcentral.controllers').controller('EnrollmentCardController', 
   ];
   var sectionsLaw = [
     {
-      id: 'plan_law',
+      id: 'law/plan',
       title: 'Plan',
       show: true
     },
@@ -59,7 +59,7 @@ angular.module('calcentral.controllers').controller('EnrollmentCardController', 
   ];
   var sectionsConcurrent = [
     {
-      id: 'decide_concurrent',
+      id: 'concurrent/decide',
       title: 'Enroll',
       show: true
     },
@@ -74,7 +74,7 @@ angular.module('calcentral.controllers').controller('EnrollmentCardController', 
       show: true
     },
     {
-      id: 'sites_concurrent',
+      id: 'concurrent/sites',
       title: 'UC Extension Sites',
       show: true
     }
@@ -99,6 +99,50 @@ angular.module('calcentral.controllers').controller('EnrollmentCardController', 
       show: true
     }
   ];
+  var sectionsHaasFullTimeMba = [
+    {
+      id: 'haas/plan',
+      title: 'Academic Planning',
+      show: true
+    },
+    {
+      id: 'haas/explore',
+      title: 'Enrollment Types',
+      show: true
+    },
+    {
+      id: 'decide',
+      title: 'Non-Haas Appointment Time',
+      show: true
+    },
+    {
+      id: 'adjust',
+      title: 'Non-Haas Enrollment',
+      show: true
+    }
+  ];
+  var sectionsHaasEveningWeekendMba = [
+    {
+      id: 'haas/plan',
+      title: 'Academic Planning',
+      show: true
+    },
+    {
+      id: 'haas/explore',
+      title: 'Enrollment Types',
+      show: true
+    },
+    {
+      id: 'decide',
+      title: 'Non-Haas Appointment Time',
+      show: true
+    },
+    {
+      id: 'adjust',
+      title: 'Non-Haas Enrollment',
+      show: true
+    }
+  ];
 
   /**
    * Groups enrolled and waitlisted classes by career description
@@ -116,6 +160,7 @@ angular.module('calcentral.controllers').controller('EnrollmentCardController', 
    * Determines the sections displayed for card by instruction type
    */
   var setSections = function(enrollmentInstruction) {
+    enrollmentInstruction.notificationTemplate = 'notifications';
     switch (enrollmentInstruction.role) {
       case 'law': {
         enrollmentInstruction.sections = angular.copy(sectionsLaw);
@@ -127,6 +172,21 @@ angular.module('calcentral.controllers').controller('EnrollmentCardController', 
       }
       case 'summerVisitor': {
         enrollmentInstruction.sections = angular.copy(sectionsSummerVisitor);
+        break;
+      }
+      case 'haasFullTimeMba': {
+        enrollmentInstruction.notificationTemplate = 'haas/notifications';
+        enrollmentInstruction.sections = angular.copy(sectionsHaasFullTimeMba);
+        break;
+      }
+      case 'haasEveningWeekendMba': {
+        enrollmentInstruction.notificationTemplate = 'haas/notifications';
+        enrollmentInstruction.sections = angular.copy(sectionsHaasEveningWeekendMba);
+        break;
+      }
+      case 'haasExecMba': {
+        enrollmentInstruction.notificationTemplate = 'haas/notifications';
+        enrollmentInstruction.sections = [];
         break;
       }
       default: {
