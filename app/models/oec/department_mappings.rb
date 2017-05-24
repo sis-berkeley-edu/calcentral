@@ -57,7 +57,7 @@ module Oec
     end
 
     # Only used for cross-listings sort.
-    def self.participating_dept_names
+    def participating_dept_names
       all_mappings.map {|c| c[:dept_name] if c[:include_in_oec]}.uniq.compact
     end
 

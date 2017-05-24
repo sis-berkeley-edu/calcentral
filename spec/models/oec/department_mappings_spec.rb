@@ -139,4 +139,29 @@ describe Oec::DepartmentMappings, if: in_memory_database? do
     end
   end
 
+  describe '#participating_dept_names' do
+    it 'does not contain excluded departments' do
+      expect(subject.participating_dept_names).to include(
+        'A,RESEC',
+        'BIOLOGY',
+        'CATALAN',
+        'CHEM',
+        'INTEGBI'
+      )
+      expect(subject.participating_dept_names).not_to include(
+        'CLASSIC',
+        'FSSEM'
+      )
+    end
+    context 'with FSSEM' do
+      let(:include_fssem) {true}
+      it 'contains all included departments, even if only catalog-ID-specific and not in local DB' do
+        expect(subject.participating_dept_names).to include(
+          'CLASSIC',
+          'FSSEM'
+        )
+      end
+    end
+  end
+
 end
