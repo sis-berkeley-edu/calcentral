@@ -24,8 +24,8 @@ describe MyAcademics::AdvisorLinks do
 
     # stub CS Link proxy responses
     fake_cs_link_proxy = double
-    allow(fake_cs_link_proxy).to receive(:get_url).with('UC_CX_XFER_CREDIT_REPORT_ADVSR', {:EMPLID => user_cs_id}).and_return(tcReportLink)
-    allow(fake_cs_link_proxy).to receive(:get_url).with('UC_CX_PLANNER_ADV_STDNT', {:EMPLID => user_cs_id}).and_return(updatePlanUrl)
+    allow(fake_cs_link_proxy).to receive(:get_url).with('UC_CX_XFER_CREDIT_REPORT_ADVSR').and_return(tcReportLink)
+    allow(fake_cs_link_proxy).to receive(:get_url).with('UC_CX_PLANNER_ADV_STDNT').and_return(updatePlanUrl)
     allow(CampusSolutions::Link).to receive(:new).and_return(fake_cs_link_proxy)
   end
 
