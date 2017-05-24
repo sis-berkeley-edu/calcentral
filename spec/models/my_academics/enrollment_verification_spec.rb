@@ -35,7 +35,6 @@ describe MyAcademics::EnrollmentVerification do
     end
 
     it 'provides academic roles' do
-      puts "feed: #{feed.inspect}"
       expect(feed[:academicRoles]).to be
       expect(feed[:academicRoles]['ugrd']).to eq true
       expect(feed[:academicRoles]['law']).to eq false

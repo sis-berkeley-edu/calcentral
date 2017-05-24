@@ -13,7 +13,7 @@ describe MyAcademics::StudentLinks do
   before do
     # stub CS Link proxy responses
     fake_cs_link_proxy = double
-    allow(fake_cs_link_proxy).to receive(:get_url).with('UC_CX_XFER_CREDIT_REPORT_STDNT', {}).and_return(tcReportLink)
+    allow(fake_cs_link_proxy).to receive(:get_url).with('UC_CX_XFER_CREDIT_REPORT_STDNT').and_return(tcReportLink)
     allow(CampusSolutions::Link).to receive(:new).and_return(fake_cs_link_proxy)
   end
 
