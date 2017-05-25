@@ -303,6 +303,10 @@ angular.module('calcentral.controllers').controller('UserOverviewController', fu
     );
   };
 
+  $scope.totalTransferUnits = function() {
+    return academicsService.totalTransferUnits($scope.transferCredit.ucTransferCrseSch.unitsNonAdjusted, $scope.transferCredit.ucTestComponent.totalTestUnits);
+  };
+
   $scope.expireAcademicsCache = function() {
     advisingFactory.expireAcademicsCache({
       uid: $routeParams.uid
