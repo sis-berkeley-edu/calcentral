@@ -319,6 +319,12 @@ angular.module('calcentral.services').service('academicsService', function() {
     return (termCode === 'C');
   };
 
+  var totalTransferUnits = function(transferUnits, testUnits) {
+    var numericTransferUnits = transferUnits || 0;
+    var numericTestUnits = testUnits || 0;
+    return numericTransferUnits + numericTestUnits;
+  };
+
   // Expose methods
   return {
     chooseDefaultSemester: chooseDefaultSemester,
@@ -336,6 +342,7 @@ angular.module('calcentral.services').service('academicsService', function() {
     isLSStudent: isLSStudent,
     isSummerSemester: isSummerSemester,
     normalizeGradingData: normalizeGradingData,
-    textbookRequestInfo: textbookRequestInfo
+    textbookRequestInfo: textbookRequestInfo,
+    totalTransferUnits: totalTransferUnits
   };
 });
