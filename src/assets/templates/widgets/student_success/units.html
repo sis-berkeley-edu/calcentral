@@ -20,10 +20,10 @@
           <span data-ng-bind="gpaUnits.totalUnitsPassedNotForGpa | number:1"></span>
         </td>
       </tr>
-      <tr data-ng-if="gpaUnits.transferUnitsAccepted">
+      <tr data-ng-if="totalTransferUnits()">
         <td>Transfer Units</td>
         <td class="cc-table-right" colspan="2">
-          <span data-ng-bind="gpaUnits.transferUnitsAccepted | number:1"></span>
+          <span data-ng-bind="totalTransferUnits() | number:1"></span>
         </td>
       </tr>
     </tbody>
