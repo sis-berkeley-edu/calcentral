@@ -1,13 +1,14 @@
 <div class="cc-widget cc-enrollment-verification">
   <div class="cc-widget-title">
-    <h2>Select Enrollment Verification Method</h2>
+    <h2 data-ng-if="!enrollVerification.academicRoles.lawExclusive">Select Enrollment Verification Method</h2>
+    <h2 data-ng-if="enrollVerification.academicRoles.lawExclusive">Law Enrollment Verification</h2>
   </div>
   <div data-cc-spinner-directive="enrollVerification.isLoading">
     <div data-ng-if="enrollVerification.hasMessages">
       <ul class="cc-widget-list">
         <li>
           <div class="cc-enrollment-verification-subtitle">
-            <h3>View or Print My Enrollment Verification Online</h3>
+            <h3 data-ng-bind-html="enrollVerification.messages.viewOnline.messageText"></h3>
           </div>
           <div class="cc-enrollment-verification-message">
             <span data-ng-bind-html="enrollVerification.messages.viewOnline.descrlong"></span>
@@ -25,7 +26,7 @@
         </li>
         <li data-ng-if="enrollVerification.academicRoles.law || enrollVerification.profile.roles.exStudent">
           <div class="cc-enrollment-verification-subtitle">
-            <h3>Personalized Letters of Verification for Law Students</h3>
+            <h3 data-ng-bind-html="enrollVerification.messages.lawVerification.messageText"></h3>
           </div>
           <div class="cc-enrollment-verification-message">
             <span data-ng-bind-html="enrollVerification.messages.lawVerification.descrlong"></span>
@@ -33,7 +34,7 @@
         </li>
         <li data-ng-if="!enrollVerification.academicRoles.lawExclusive">
           <div class="cc-enrollment-verification-subtitle">
-            <h3>Request an Official Verification of Attendance and Degrees</h3>
+            <h3 data-ng-bind-html="enrollVerification.messages.requestOfficial.messageText"></h3>
           </div>
           <div class="cc-enrollment-verification-message">
             <span data-ng-bind-html="enrollVerification.messages.requestOfficial.descrlong"></span>
