@@ -45,9 +45,15 @@ angular.module('calcentral.controllers').controller('EnrollmentVerificationContr
 
     var messages = _.get(response, 'data.messages');
     if (messages) {
-      $scope.enrollVerification.messages.viewOnline = _.find(messages, {
-        'messageNbr': '1'
-      });
+      if ($scope.enrollVerification.academicRoles.lawExclusive) {
+        $scope.enrollVerification.messages.viewOnline = _.find(messages, {
+          'messageNbr': '5'
+        });
+      } else {
+        $scope.enrollVerification.messages.viewOnline = _.find(messages, {
+          'messageNbr': '1'
+        });
+      }
       $scope.enrollVerification.messages.requestOfficial = _.find(messages, {
         'messageNbr': '2'
       });
