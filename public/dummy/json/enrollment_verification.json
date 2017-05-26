@@ -19,21 +19,21 @@
       "descrlong": "<p>This is a free and secure service provided by the National Student Clearinghouse.  It\u2019s available to students who are officially registered (enrolled, have no blocks, and paid at least 20% of tuition & fees) for the current term.  Verifications for any given term are available only after instruction begins for the term.</p>\n<p>With this service, you can:</p>\n<ul>\n<p><li>Print an Enrollment Verification Certificate: proof of registration, enrollment status and anticipated graduation date for grants, scholarships, services, etc.</li>\n<li>Print a Good Student Discount Certificate: proof of registration, enrollment status and eligibility for grants, scholarships, and discounts and services that require a GPA of 3.00 or higher</li>\n<li>View and print your enrollment history (enrollment prior to summer 2013 may not be available) </li>\n<li>Check information about your student loan deferments and electronic notices sent to lenders</li></p></ul>\n<p>Registered students may access Student Self-Service Verifications for:</p>\n<ul><li>Summer 2016: via  <a href=https://bearfacts.berkeley.edu/bearfacts/ target=\"\"_blank\"\"> Bear Facts</a> (under Academic Records >> Verifications >> Self-Service Verifications) </li>\n<li>Fall 2016: This service will be available beginning August 24, 2016. </li></p><p><i></ul>\nNote: Student Self-Service is updated weekly every Tuesday afternoon to reflect your registration status as of 5 p.m. the preceding Friday.</i></p>",
       "messageNbr": "1",
       "messageSetNbr": "32500",
-      "messageText": "<b>View or Print My Enrollment Verification Online</b>",
+      "messageText": "View or Print My Enrollment Verification Online",
       "msgSeverity": "M"
     },
     {
       "descrlong": "<p>Use this service if you need to provide more detailed information such as your school or college at UC Berkeley, major(s), degree(s) earned, term(s) enrolled, units carried for each term, GPA, class level, etc. There is no fee for this service.</p>\n<p>You must be officially registered (enrolled, no blocks, and paid at least 20% of tuition & fees) before your attendance can be verified for any given term.</p>\n<p>The information on these verifications reflect your record at the time it is produced, generally 3 business days after you submit your request.</p>\n<p>Your verification will be sent to the address of your choice via first-class mail.</p>\nUpdated to:\n<p><b>The University is closed</b> on winter break from December 23 until January 3, 1017. Verification requests submitted after December 22 will be processed when normal business operations resume in the New Year.</p>\n<p>Use this service if you need to provide more detailed information such as your school or college at UC Berkeley, major(s), degree(s) earned, term(s) enrolled, units carried for each term, GPA, class level, etc. There is no fee for this service.</p>\n<p>You must be officially registered (enrolled, no blocks, and paid at least 20% of tuition & fees) before your attendance can be verified for any given term.</p>\n<p>The information on these verifications reflect your record at the time it is produced, generally 3 business days after you submit your request.</p>\n<p>Your verification will be sent to the address of your choice via first-class mail.</p>",
       "messageNbr": "2",
       "messageSetNbr": "32500",
-      "messageText": "<b>Request an Official Verification of Attendance and Degrees</b>",
+      "messageText": "Request an Official Verification of Attendance and Degrees",
       "msgSeverity": "M"
     },
     {
-      "descrlong": "<p>To receive enrollment verification for your law classes you must  visit <a href=\"https://www.law.berkeley.edu/academics/registrar/verification-of-attendance/\" target=\"_blank\">Berkeley Law enrollment verification</a>.</p>",
+      "descrlong": "<p>If you require a more detailed or specific verification, please request personalized letters of verification from the Law School.</p><p><a href=\"https://www.law.berkeley.edu/academics/registrar/verification-of-attendance/\" target=\"_blank\"><b>Berkeley Law enrollment verification</b></a></p>",
       "messageNbr": "3",
       "messageSetNbr": "32500",
-      "messageText": "Berkeley Law enrollment verification",
+      "messageText": "Personalized Letters of Verification",
       "msgSeverity": "M"
     },
     {
@@ -41,6 +41,13 @@
       "messageNbr": "4",
       "messageSetNbr": "32500",
       "messageText": "Enrollment Verification Saved Message",
+      "msgSeverity": "M"
+    },
+    {
+      "descrlong": "<p>Law students can print free enrollment verification certificates through the National Student Clearinghouse. The certificates include proof of registration, enrollment status, and anticipated graduation dates. Please note that the dates of enrollment included on the certificates reflect the main campus academic calendar, not that of the Law School.</p>",
+      "messageNbr": "5",
+      "messageSetNbr": "32500",
+      "messageText": "Self Service Verifications",
       "msgSeverity": "M"
     },
     {
