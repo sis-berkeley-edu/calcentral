@@ -82,10 +82,17 @@ angular.module('calcentral.services').factory('linkService', function($location,
     }
   };
 
+  /* Temporary hack to get CalCentral through testing of 9.2 - See SISRP-33544 */
+  var addQueryStringParameterEncodedAmpersand = function(uri, key, value) {
+    var separator = uri.indexOf('?') !== -1 ? '%26' : '?';
+    return uri + separator + key + '=' + value;
+  };
+
   return {
     addCurrentPagePropertiesToLink: addCurrentPagePropertiesToLink,
     addCurrentPagePropertiesToResources: addCurrentPagePropertiesToResources,
     addCurrentRouteSettings: addCurrentRouteSettings,
+    addQueryStringParameterEncodedAmpersand: addQueryStringParameterEncodedAmpersand,
     fixLastQuestionMark: fixLastQuestionMark,
     makeOutboundlink: makeOutboundlink,
     updateQueryStringParameter: updateQueryStringParameter

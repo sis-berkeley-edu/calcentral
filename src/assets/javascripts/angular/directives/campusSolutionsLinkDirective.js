@@ -157,17 +157,17 @@ angular.module('calcentral.directives').directive('ccCampusSolutionsLinkDirectiv
       linkUrl = linkService.fixLastQuestionMark(linkUrl);
 
       if (includeUcFrom) {
-        linkUrl = linkService.updateQueryStringParameter(linkUrl, 'ucFrom', 'CalCentral');
+        linkUrl = linkService.addQueryStringParameterEncodedAmpersand(linkUrl, 'ucFrom', 'CalCentral');
       }
       if (includeUcFromText) {
-        linkUrl = linkService.updateQueryStringParameter(linkUrl, 'ucFromText', ccPageName);
+        linkUrl = linkService.addQueryStringParameterEncodedAmpersand(linkUrl, 'ucFromText', ccPageName);
       }
       if (includeUcFromLink) {
         if (ccCacheString) {
-          ccPageUrl = linkService.updateQueryStringParameter(ccPageUrl, 'ucUpdateCache', ccCacheString);
+          ccPageUrl = linkService.addQueryStringParameterEncodedAmpersand(ccPageUrl, 'ucUpdateCache', ccCacheString);
         }
         var urlEncodedCcPageUrl = encodeURIComponent(ccPageUrl);
-        linkUrl = linkService.updateQueryStringParameter(linkUrl, 'ucFromLink', urlEncodedCcPageUrl);
+        linkUrl = linkService.addQueryStringParameterEncodedAmpersand(linkUrl, 'ucFromLink', urlEncodedCcPageUrl);
       }
     }
     return linkUrl;
