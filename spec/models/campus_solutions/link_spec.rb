@@ -1,5 +1,4 @@
 describe CampusSolutions::Link do
-  let(:placeholder_empl_id) { "1234567" }
   let(:proxy) { CampusSolutions::Link.new(fake: fake_proxy) }
   let(:url_id) { "UC_CX_APPOINTMENT_ADV_SETUP" }
 
@@ -12,13 +11,10 @@ describe CampusSolutions::Link do
 
   context 'mock proxy' do
     let(:fake_proxy) { true }
-    let(:placeholders) { {:EMPLID => placeholder_empl_id, :IGNORED_PLACEHOLDER => "not used"} }
 
     let(:link_set_response) { proxy.get }
     let(:link_get_url_response) { proxy.get_url(url_id) }
-    let(:link_get_url_with_bad_placeholder_response) { proxy.get_url(url_id, {:BAD_PLACEHOLDER => nil}) }
-    let(:link_get_url_with_bad_url_id_response) { proxy.get_url('BAD_URL_ID', {:BAD_PLACEHOLDER => nil}) }
-    let(:link_get_url_and_replace_placeholders_response) { proxy.get_url(url_id, placeholders) }
+    let(:link_get_url_with_bad_url_id_response) { proxy.get_url('BAD_URL_ID') }
     let(:link_get_url_for_properties_response) { proxy.get_url(url_id) }
 
     before do
@@ -53,7 +49,7 @@ describe CampusSolutions::Link do
       end
     end
 
-    context 'returns links as an array' do
+    context 'when returning links as an array' do
       context 'with multiple links' do
         let(:filename) { 'link_api_multiple.xml' }
 
@@ -73,56 +69,30 @@ describe CampusSolutions::Link do
       end
     end
 
-    context 'returns a single link by its urlId' do
+    context 'when returning a single link by its urlId' do
       let(:filename) { 'link_api_multiple.xml' }
 
       it_should_behave_like 'a proxy that gets data'
       it 'returns data with the expected structure' do
         expect(link_get_url_response[:link][:urlId]).to eq url_id
-        # Verify that {placeholder} text is present
-        expect(link_get_url_response[:link][:url]).to include("EMPLID={EMPLID}")
       end
-    end
 
-    context 'no matching url_id' do
-      let(:filename) { 'link_api.xml' }
-
-      it_should_behave_like 'a proxy that gets data'
-      it 'returns data with the expected structure' do
-        expect(link_get_url_with_bad_url_id_response[:link]).not_to be
-      end
-    end
-
-    context 'returns empty link when a placeholder value is blank' do
-      let(:filename) { 'link_api.xml' }
-
-      it_should_behave_like 'a proxy that gets data'
-      it 'returns data with the expected structure' do
-        expect(link_get_url_with_bad_placeholder_response[:link]).not_to be
-      end
-    end
-
-    context 'replaces matching placeholders' do
-      let(:filename) { 'link_api_multiple.xml' }
-
-      it_should_behave_like 'a proxy that gets data'
-      it 'returns data with the expected structure' do
-        # Verify that {placeholder} text is replaced
-        expect(link_get_url_and_replace_placeholders_response[:link][:url]).to include("EMPLID=#{placeholder_empl_id}")
-      end
-    end
-
-    context 'replaces the properties hash with only certain properties' do
-      let(:filename) { 'link_api_multiple.xml' }
-
-      it_should_behave_like 'a proxy that gets data'
-      it 'returns data with the expected structure' do
+      it 'replaces the properties hash with only certain properties' do
         expect(link_get_url_response[:link][:properties]).not_to be
         expect(link_get_url_for_properties_response[:link][:ucFrom]).to eq 'CalCentral'
         expect(link_get_url_for_properties_response[:link][:ucFromLink]).to eq 'https://calcentral-sis-dev-01.ist.berkeley.edu/'
         expect(link_get_url_for_properties_response[:link][:ucFromText]).to eq 'CalCentral'
         expect(link_get_url_for_properties_response[:link][:linkDescription]).to eq 'May your hats fly as high as your dreams'
         expect(link_get_url_for_properties_response[:link][:linkDescriptionDisplay]).to eq true
+      end
+    end
+
+    context 'when no matching url_id' do
+      let(:filename) { 'link_api.xml' }
+
+      it_should_behave_like 'a proxy that gets data'
+      it 'returns data with the expected structure' do
+        expect(link_get_url_with_bad_url_id_response[:link]).not_to be
       end
     end
   end

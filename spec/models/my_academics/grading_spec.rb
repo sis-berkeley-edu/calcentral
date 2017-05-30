@@ -2,7 +2,11 @@ describe MyAcademics::Grading do
 
   let(:uid) { '123456' }
   let(:fake) { true }
-  let(:fake_grading_url) { 'http://fake.grading.com' }
+  let(:fake_grading_url) do
+    {
+      url: 'http://fake.grading.com'
+    }
+  end
   let(:link_proxy_class) { CampusSolutions::Link }
   let(:link_fake_proxy) { link_proxy_class.new(fake: true) }
   let(:fake_spring_term) { double(is_summer: false, :year => 2015, :code => 'B') }

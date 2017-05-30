@@ -30,7 +30,7 @@ module CampusSolutions
       container
     end
 
-    def get_url(url_id, placeholders = {})
+    def get_url(url_id)
       # get cached response
       link_resources = get
       status = link_resources[:status]
@@ -40,11 +40,11 @@ module CampusSolutions
         link_id = url_id.downcase.camelize(:lower).to_sym
         links = link_resources.try(:[], :feed).try(:[], :ucLinkResources)
         if links.blank?
-          logger.error "Empty response from CS Link API for link id #{url_id}, with parameters #{placeholders}"
+          logger.error "Empty response from CS Link API for link id #{url_id}"
           status = 500
         else
           entry = links.try(:[], :links).try(:[], link_id)
-          link = parse_link(url_id, entry, placeholders)
+          link = parse_link(url_id, entry)
         end
       end
       {
@@ -53,25 +53,15 @@ module CampusSolutions
       }
     end
 
-    def parse_link(url_id, entry, placeholders)
+    def parse_link(url_id, entry)
       if entry.nil?
-        logger.debug "Could not retrieve CS link by id #{url_id}, with parameters #{placeholders}"
+        logger.debug "Could not retrieve CS link by id #{url_id}"
         return nil
       end
 
       link = entry.slice(:url, :urlId, :description, :hoverOverText)
 
-      placeholders.try(:each) do |k, v|
-        if v.nil?
-          logger.debug "Could not set placeholder for #{k} on link id #{url_id}"
-          link = nil
-          break
-        else
-          link[:url] = link[:url].gsub("{#{k}}", v)
-        end
-      end
-
-      if !link.nil?
+      if link.present?
         # promote properties we're interested in
         entry[:properties].each do |property|
           if property[:name] == 'NEW_WINDOW' && property[:value] == 'Y'
