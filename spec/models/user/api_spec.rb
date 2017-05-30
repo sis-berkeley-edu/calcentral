@@ -1,771 +1,506 @@
 describe User::Api do
+  let(:testee) { User::Api.new(uid) }
   let(:uid) { random_id }
   let(:original_delegate_user_id) { nil }
-  let(:preferred_name) { 'Sid Vicious' }
+  let(:original_advisor_user_id) { nil }
+  let(:can_administrate) { false }
+  let(:can_view_as) { false }
+  let(:directly_authenticated) { false }
+  let(:authenticated_as_advisor) { false }
+  let(:authenticated_as_delegate) { false }
+  let(:delegated_privileges) { {} }
+  let(:is_viewer) { false }
+  let(:classic_viewing_as) { false }
   let(:has_advisor_role) { false }
   let(:has_student_role) { false }
-  let(:edo_roles) do
+  let(:has_staff_role) { false }
+  let(:has_applicant_role) { false }
+  let(:has_exstudent_role) { false }
+  let(:has_faculty_role) { false }
+  let(:roles) do
     {
       advisor: has_advisor_role,
-      student: has_student_role
+      student: has_student_role,
+      staff: has_staff_role,
+      applicant: has_applicant_role,
+      exStudent: has_exstudent_role,
+      faculty: has_faculty_role
     }
   end
-  let(:edo_attributes) do
+  let(:has_instructor_history) { false }
+  let(:has_student_history) { false }
+  let(:default_name) { 'Default Name' }
+  let(:override_name) { nil }
+  let(:first_name) { 'First' }
+  let(:last_name) { 'Last' }
+  let(:given_first_name) { 'Given' }
+  let(:family_name) { 'Family' }
+  let(:user_attributes) do
     {
-      person_name: preferred_name,
-      student_id: '1234567890',
-      campus_solutions_id: '1234567890',
-      is_legacy_student: false,
-      official_bmail_address: 'foo@foo.com',
-      roles: edo_roles
+      isLegacyStudent: false,
+      sisProfileVisible: sis_profile_visible,
+      roles: roles,
+      defaultName: default_name,
+      firstName: first_name,
+      lastName: last_name,
+      givenFirstName: given_first_name,
+      familyName: family_name,
+      studentId: '1234567890',
+      campusSolutionsId: '1234567890',
+      primaryEmailAddress: 'foo@foo.com',
+      officialBmailAddress: 'foo@berkeley.edu',
+      educationAbroad: false
     }
   end
-  let(:ldap_attributes) { {} }
-
-  shared_context 'has no delegate students' do
-    let(:delegate_students) { {} }
-  end
-
-  shared_context 'has delegate students' do
-    let(:delegate_students) {
-      {
-        feed: {
-          students: [
-            {
-              campusSolutionsId: campus_solutions_id,
-              uid: uid,
-              privileges: {
-                financial: privilege_financial,
-                viewEnrollments: privilege_view_enrollments,
-                viewGrades: privilege_view_grades,
-                phone: privilege_phone
-              }
+  let(:sis_profile_visible) { false }
+  let(:campus_solutions_id) { random_id }
+  let(:privilege_view_grades) { false }
+  let(:privilege_view_enrollments) { false }
+  let(:privilege_financial) { false }
+  let(:privilege_phone) { false }
+  let(:delegate_students) do
+    {
+      feed: {
+        students: [
+          {
+            campusSolutionsId: campus_solutions_id,
+            uid: uid,
+            privileges: {
+              financial: privilege_financial,
+              viewEnrollments: privilege_view_enrollments,
+              viewGrades: privilege_view_grades,
+              phone: privilege_phone
             }
-          ]
-        }
+          }
+        ]
       }
     }
   end
+  let(:is_calcentral) { true }
+  let(:login_time) { DateTime.new(2017, 5, 26, 12, 6, 0) }
 
   before(:each) do
-    allow(HubEdos::UserAttributes).to receive(:new).with(user_id: uid).and_return double(get: edo_attributes)
-    allow(CalnetLdap::UserAttributes).to receive(:new).with(user_id: uid).and_return double(get_feed: ldap_attributes)
-    delegate_uid = original_delegate_user_id || uid
-    allow(CampusSolutions::DelegateStudents).to receive(:new).with(user_id: delegate_uid).and_return double(get: delegate_students)
-    unless CampusOracle::Queries.test_data?
-      # Protect against random UID matches in testext Oracle DB.
-      allow(CampusOracle::UserAttributes).to receive(:new).with(user_id: uid).and_return double(get_feed: {})
-    end
+    configure_mocks
+    testee.init
   end
 
   describe '#preferred_name' do
-    include_context 'has no delegate students'
-    let(:has_student_role) { true }
+    subject { testee.preferred_name }
 
-    describe 'setting user attributes' do
-      it 'should find user with default name' do
-        u = User::Api.new uid
-        u.init
-        expect(u.preferred_name).to eq preferred_name
+    it 'uses default name' do
+      puts subject
+      expect(subject).to eq default_name
+    end
+    context 'when override name exists' do
+      let(:override_name) { 'Override Name' }
+      it 'uses override name' do
+        expect(subject).to eq override_name
       end
-      it 'should override the default name' do
-        u = User::Api.new uid
-        u.update_attributes preferred_name: 'Herr Heyer'
-        u = User::Api.new uid
-        u.init
-        expect(u.preferred_name).to eq 'Herr Heyer'
+    end
+    context 'when neither default nor override name exist' do
+      let(:default_name) { nil }
+      it 'returns an empty string' do
+        expect(subject).to eq ''
       end
-      it 'should revert to the default name' do
-        u = User::Api.new uid
-        u.update_attributes preferred_name: 'Herr Heyer'
-        u = User::Api.new uid
-        u.update_attributes preferred_name: ''
-        u = User::Api.new uid
-        u.init
-        expect(u.preferred_name).to eq preferred_name
+    end
+  end
+
+  describe '#update_attributes' do
+    before(:each) do
+      testee.update_attributes(attributes)
+    end
+    let(:attributes) { {preferred_name: new_name} }
+    let(:new_name) { 'New Name' }
+
+    it 'saves the preferred name' do
+      expect(testee.preferred_name).to eq new_name
+    end
+    context 'when preferred name is not provided' do
+      let(:attributes) { {unrelated: 'attribute'} }
+      it 'saves without changing the preferred name' do
+        expect(testee.preferred_name).to eq default_name
       end
+    end
+  end
+
+  describe '#record_first_login' do
+    before(:each) do
+      allow(DateTime).to receive(:now).and_return login_time
+      testee.record_first_login
+    end
+
+    it 'sets the login time' do
+      expect(testee.first_login_at).to eq login_time
+    end
+  end
+
+  describe '#get_delegate_students' do
+    subject { testee.get_delegate_students }
+
+    shared_context 'it doesn\'t find any students' do
+      it 'returns nil' do
+        expect(subject).to be nil
+      end
+    end
+
+    context 'when user is not a delegate' do
+      it_behaves_like 'it doesn\'t find any students'
+    end
+    context 'when user is a delegate' do
+      let(:original_delegate_user_id) { random_id }
+      it 'returns a list of students' do
+        expect(subject).to eq delegate_students[:feed][:students]
+      end
+      context 'when delegate has no students' do
+        let(:delegate_students) {}
+        it_behaves_like 'it doesn\'t find any students'
+      end
+    end
+    context 'when request is not coming from CalCentral' do
+      let(:is_calcentral) { false }
+      it_behaves_like 'it doesn\'t find any students'
     end
   end
 
   describe '#get_feed' do
-    let(:feed) { User::Api.new(uid).get_feed }
-    include_context 'has no delegate students'
+    subject { testee.get_feed }
+    let(:expected_acting_as_uid) { uid }
+    let(:match_expected_advisor_acting_as_uid) { be_falsey }
+    let(:expected_can_act_on_finances) { false }
+    let(:expected_can_see_cs_links) { false }
+    let(:expected_can_view_grades) { false }
+    let(:match_expected_delegate_acting_as_uid) { be_falsey }
+    let(:expected_first_login_at) { '2017-04-19T11:54:29.086-07:00' }
+    let(:expected_first_name) { first_name }
+    let(:expected_full_name) { first_name + ' ' + last_name }
+    let(:expected_given_first_name) { given_first_name }
+    let(:expected_given_full_name) { given_first_name + ' ' + family_name }
+    let(:expected_can_view_academics) { false }
+    let(:expected_has_badges) { false }
+    let(:expected_has_campus_tab) { false }
+    let(:expected_has_dashboard_tab) { false }
+    let(:expected_has_financials_tab) { false }
+    let(:expected_has_toolbox_tab) { false }
+    let(:expected_is_delegate_user) { false }
+    let(:expected_is_super_user) { false }
+    let(:expected_is_viewer) { false }
+    let(:expected_last_name) { last_name }
+    let(:expected_preferred_name) { default_name }
+    let(:expected_show_sis_profile_ui) { false }
 
-    it 'should return a user data structure with default values' do
-      expect(feed[:preferredName]).to eq ''
-      expect(feed[:isLegacyStudent]).to be false
-      expect(feed[:isDelegateUser]).to be false
-      expect(feed[:showSisProfileUI]).to be false
-      expect(feed[:hasAcademicsTab]).to be false
-      expect(feed[:canViewGrades]).to be false
-      expect(feed[:hasToolboxTab]).to be false
-      expect(feed[:hasBadges]).to be false
-      expect(feed[:officialBmailAddress]).to eq nil
-      expect(feed[:campusSolutionsID]).to eq '1234567890'
-      expect(feed[:sid]).to eq nil
-      expect(feed[:isDirectlyAuthenticated]).to be true
-      expect(feed[:canActOnFinances]).to be true
+    shared_examples 'a well-tempered feed' do
+      it 'contains the expected data' do
+        expect(subject[:actingAsUid]).to eq expected_acting_as_uid
+        expect(subject[:advisorActingAsUid]).to match_expected_advisor_acting_as_uid
+        expect(subject[:canActOnFinances]).to eq expected_can_act_on_finances
+        expect(subject[:canSeeCSLinks]).to eq expected_can_see_cs_links
+        expect(subject[:canViewGrades]).to eq expected_can_view_grades
+        expect(subject[:delegateActingAsUid]).to match_expected_delegate_acting_as_uid
+        expect(subject[:firstLoginAt]).to eq expected_first_login_at
+        expect(subject[:firstName]).to eq expected_first_name
+        expect(subject[:fullName]).to eq expected_full_name
+        expect(subject[:givenFirstName]).to eq expected_given_first_name
+        expect(subject[:givenFullName]).to eq expected_given_full_name
+        expect(subject[:hasAcademicsTab]).to eq expected_can_view_academics
+        expect(subject[:hasBadges]).to eq expected_has_badges
+        expect(subject[:hasCampusTab]).to eq expected_has_campus_tab
+        expect(subject[:hasDashboardTab]).to eq expected_has_dashboard_tab
+        expect(subject[:hasFinancialsTab]).to eq expected_has_financials_tab
+        expect(subject[:hasToolboxTab]).to eq expected_has_toolbox_tab
+        expect(subject[:isDelegateUser]).to eq expected_is_delegate_user
+        expect(subject[:isSuperuser]).to eq expected_is_super_user
+        expect(subject[:isViewer]).to eq expected_is_viewer
+        expect(subject[:lastName]).to eq expected_last_name
+        expect(subject[:preferredName]).to eq expected_preferred_name
+        expect(subject[:showSisProfileUI]).to eq expected_show_sis_profile_ui
+      end
     end
 
-    context 'student user' do
-      let(:has_student_role) { true }
-      it 'sets student-specific attributes' do
-        expect(feed[:preferredName]).to eq preferred_name
-        expect(feed[:officialBmailAddress]).to eq 'foo@foo.com'
-        expect(feed[:sid]).to eq '1234567890'
+    it_behaves_like 'a well-tempered feed'
+
+    context 'when user is a delegate' do
+      let(:directly_authenticated) { true }
+      let(:original_delegate_user_id) { random_id }
+      let(:expected_acting_as_uid) { false }
+      let(:expected_can_act_on_finances) { true }
+      let(:expected_can_see_cs_links) { true }
+      let(:expected_is_delegate_user) { true }
+      let(:expected_has_toolbox_tab) { true }
+      it_behaves_like 'a well-tempered feed'
+
+      context 'and show profile flag is true' do
+        let(:sis_profile_visible) { true }
+        let(:expected_show_sis_profile_ui) { false }
+        it_behaves_like 'a well-tempered feed'
       end
-      it 'shows My Academics tab' do
-        expect(feed[:hasAcademicsTab]).to be true
+
+      context 'and viewing as a student' do
+        let(:authenticated_as_delegate) { true }
+        let(:directly_authenticated) { false }
+        let(:expected_can_act_on_finances) { false }
+        let(:expected_can_see_cs_links) { false }
+        let(:expected_has_toolbox_tab) { false }
+        let(:match_expected_delegate_acting_as_uid) { eq original_delegate_user_id }
+        let(:expected_first_name) { given_first_name }
+        let(:expected_full_name) { expected_given_full_name }
+        let(:expected_preferred_name) { expected_given_full_name }
+        let(:expected_is_delegate_user) { false }
+        let(:expected_first_login_at) { nil }
+        let(:expected_acting_as_uid) { false }
+        it_behaves_like 'a well-tempered feed'
+
+        context 'and has privilege to see other users\' finances' do
+          let(:delegated_privileges) { {financial: true} }
+          let(:expected_can_act_on_finances) { true }
+          let(:expected_has_financials_tab) { true }
+          it_behaves_like 'a well-tempered feed'
+        end
+
+        context 'and has privilege to see other users\' grades' do
+          let(:delegated_privileges) { {viewGrades: true} }
+          let(:expected_can_view_academics) { true }
+          let(:expected_can_view_grades) { true }
+          it_behaves_like 'a well-tempered feed'
+        end
+
+        context 'and has privilege to see other users\' enrollments' do
+          let(:delegated_privileges) { {viewEnrollments: true} }
+          let(:expected_can_view_academics) { true }
+          it_behaves_like 'a well-tempered feed'
+        end
       end
-      it 'shows bConnected badges' do
-        expect(feed[:hasBadges]).to be true
+
+      context 'and has no students assigned' do
+        let(:delegate_students) { {} }
+        let(:expected_is_delegate_user) { false }
+        let(:expected_has_toolbox_tab) { false }
+        it_behaves_like 'a well-tempered feed'
       end
-      it 'shows profile' do
-        expect(feed[:showSisProfileUI]).to be true
-      end
-      it 'allows viewing grades' do
-        expect(feed[:canViewGrades]).to be true
+
+      context 'and is also an advisor' do
+        let(:has_advisor_role) { true }
+        let(:expected_can_view_grades) { true }
+        let(:expected_has_badges) { true }
+        let(:expected_has_campus_tab) { true }
+        let(:expected_has_dashboard_tab) { true }
+        let(:expected_has_toolbox_tab) { true }
+        it_behaves_like 'a well-tempered feed'
       end
     end
 
-    context 'advisor user' do
+    context 'when user is an advisor' do
+      let(:directly_authenticated) { true }
       let(:has_advisor_role) { true }
-      it 'hides My Academics tab' do
-        expect(feed[:hasAcademicsTab]).to be false
+      let(:original_advisor_user_id) { random_id }
+      let(:expected_acting_as_uid) { false }
+      let(:expected_can_act_on_finances) { true }
+      let(:expected_can_see_cs_links) { true }
+      let(:expected_can_view_grades) { true }
+      let(:expected_has_badges) { true }
+      let(:expected_has_campus_tab) { true }
+      let(:expected_has_dashboard_tab) { true }
+      let(:expected_has_toolbox_tab) { true }
+      it_behaves_like 'a well-tempered feed'
+
+      context 'and show profile flag is true' do
+        let(:sis_profile_visible) { true }
+        let(:expected_show_sis_profile_ui) { true }
+        it_behaves_like 'a well-tempered feed'
       end
-      it 'shows bConnected badges' do
-        expect(feed[:hasBadges]).to be true
-      end
-      it 'shows profile' do
-        expect(feed[:showSisProfileUI]).to be true
-      end
-      it 'allows viewing grades' do
-        expect(feed[:canViewGrades]).to be true
+
+      context 'and viewing as a student' do
+        let(:authenticated_as_advisor) { true }
+        let(:directly_authenticated) { false }
+        let(:match_expected_advisor_acting_as_uid) { eq original_advisor_user_id }
+        let(:expected_can_act_on_finances) { false }
+        let(:expected_can_see_cs_links) { false }
+        let(:expected_has_badges) { false }
+        let(:expected_has_toolbox_tab) { false }
+        it_behaves_like 'a well-tempered feed'
+
+        context 'and show profile flag is true' do
+          let(:sis_profile_visible) { true }
+          let(:expected_show_sis_profile_ui) { true }
+          it_behaves_like 'a well-tempered feed'
+        end
       end
     end
 
-    context 'delegate user' do
-      let(:privilege_view_grades) { false }
-      let(:privilege_view_enrollments) { false }
-      let(:privilege_financial) { false }
-      let(:privilege_phone) { false }
-      let(:feed) {
-        session = {
-          'user_id' => uid,
-          SessionKey.original_delegate_user_id => original_delegate_user_id
-        }
-        User::Api.from_session(session).get_feed
-      }
+    context 'when user is a superuser' do
+      let(:can_administrate) { true }
+      let(:expected_can_act_on_finances) { false }
+      let(:expected_has_badges) { true }
+      let(:expected_has_campus_tab) { true }
+      let(:expected_has_dashboard_tab) { true }
+      let(:expected_is_super_user) { true }
+      it_behaves_like 'a well-tempered feed'
 
-      shared_examples 'a user viewing their own data' do
-        it 'is directly authenticated' do
-          expect(feed[:isDirectlyAuthenticated]).to be true
-        end
+      context 'and show profile flag is true' do
+        let(:sis_profile_visible) { true }
+        let(:expected_show_sis_profile_ui) { true }
+        it_behaves_like 'a well-tempered feed'
       end
-      shared_examples 'a user emulating someone else' do
-        it 'is not directly authenticated' do
-          expect(feed[:isDirectlyAuthenticated]).to be false
-        end
-      end
+    end
 
-      before do
-        allow(Cal1card::Photo).to receive(:new).and_call_original
-        allow(Cal1card::Photo).to receive(:new).with(uid).and_return double(get_feed: {})
-      end
+    context 'when user is a student' do
+      let(:has_student_role) { true }
+      let(:expected_can_view_academics) { true }
+      let(:expected_can_view_grades) { true }
+      let(:expected_has_badges) { true }
+      let(:expected_has_campus_tab) { true }
+      let(:expected_has_dashboard_tab) { true }
+      let(:expected_has_financials_tab) { true }
+      it_behaves_like 'a well-tempered feed'
 
-      context 'never nominated as delegate' do
-        include_context 'has no delegate students'
-        let(:response) { nil }
-        it_behaves_like 'a user viewing their own data'
-        it 'hides My Toolbox tab' do
-          expect(feed[:hasToolboxTab]).to be false
-        end
-        it 'hides bConnected badges' do
-          expect(feed[:hasBadges]).to be false
-        end
-        it 'hides profile' do
-          expect(feed[:showSisProfileUI]).to be false
-        end
-        it 'withholds delegate role' do
-          expect(feed[:isDelegateUser]).to be false
-          expect(feed[:delegateActingAsUid]).to be false
-        end
-        it 'assigns privileges relevant to the delegate' do
-          expect(feed[:canViewGrades]).to be false
-          expect(feed[:canActOnFinances]).to be true
-        end
+      context 'and show profile flag is true' do
+        let(:sis_profile_visible) { true }
+        let(:expected_show_sis_profile_ui) { true }
+        it_behaves_like 'a well-tempered feed'
+      end
+    end
+
+    context 'when user is staff' do
+      let(:has_staff_role) { true }
+      let(:expected_has_badges) { true }
+      let(:expected_has_campus_tab) { true }
+      let(:expected_has_dashboard_tab) { true }
+      it_behaves_like 'a well-tempered feed'
+
+      context 'and has instructor history' do
+        let(:has_instructor_history) { true }
+        let(:expected_can_view_academics) { true }
+        let(:expected_can_view_grades) { true }
+        it_behaves_like 'a well-tempered feed'
       end
 
-      context 'formerly nominated as delegate' do
-        include_context 'has no delegate students'
-        let(:response) { { feed: { students: [] } } }
-        it_behaves_like 'a user viewing their own data'
-        it 'hides My Toolbox tab' do
-          expect(feed[:hasToolboxTab]).to be false
-        end
-        it 'hides profile' do
-          expect(feed[:showSisProfileUI]).to be false
-        end
-        it 'hides bConnected badges' do
-          expect(feed[:hasBadges]).to be false
-        end
-        it 'withholds delegate role' do
-          expect(feed[:isDelegateUser]).to be false
-        end
-        it 'assigns privileges relevant to the delegate' do
-          expect(feed[:canViewGrades]).to be false
-          expect(feed[:canActOnFinances]).to be true
+      context 'and has student history' do
+        let(:has_student_history) { true }
+        let(:expected_can_view_academics) { true }
+        let(:expected_can_view_grades) { true }
+        let(:expected_has_financials_tab) { true }
+        it_behaves_like 'a well-tempered feed'
+      end
+    end
+
+    context 'when user is an applicant' do
+      let(:has_applicant_role) { true }
+      let(:expected_can_view_academics) { true }
+      let(:expected_can_view_grades) { true }
+      let(:expected_has_badges) { true }
+      let(:expected_has_campus_tab) { true }
+      let(:expected_has_dashboard_tab) { true }
+      let(:expected_has_financials_tab) { true }
+      it_behaves_like 'a well-tempered feed'
+    end
+
+    context 'when user is an ex-student' do
+      let(:has_exstudent_role) { true }
+      let(:expected_has_financials_tab) { true }
+      let(:expected_has_badges) { true }
+      let(:expected_has_campus_tab) { true }
+      let(:expected_has_dashboard_tab) { true }
+      it_behaves_like 'a well-tempered feed'
+    end
+
+    context 'when user is faculty' do
+      let(:has_faculty_role) { true }
+      let(:expected_can_view_academics) { true }
+      let(:expected_can_view_grades) { true }
+      let(:expected_has_badges) { true }
+      let(:expected_has_campus_tab) { true }
+      let(:expected_has_dashboard_tab) { true }
+      it_behaves_like 'a well-tempered feed'
+    end
+
+    context 'when user has view-as privilege' do
+      let(:can_view_as) { true }
+      let(:expected_is_viewer) { true }
+      it_behaves_like 'a well-tempered feed'
+
+      context 'and user is a delegate' do
+        let(:directly_authenticated) { true }
+        let(:original_delegate_user_id) { random_id }
+        let(:expected_acting_as_uid) { false }
+        let(:expected_can_act_on_finances) { true }
+        let(:expected_can_see_cs_links) { true }
+        let(:expected_has_toolbox_tab) { true }
+        let(:expected_is_delegate_user) { true }
+        let(:expected_is_viewer) { true }
+        it_behaves_like 'a well-tempered feed'
+
+        context 'viewing as a student' do
+          let(:authenticated_as_delegate) { true }
+          let(:directly_authenticated) { false }
+          let(:expected_can_act_on_finances) { false }
+          let(:match_expected_delegate_acting_as_uid) { eq original_delegate_user_id }
+          let(:expected_can_see_cs_links) { false }
+          let(:expected_first_name) { given_first_name }
+          let(:expected_full_name) { expected_given_full_name }
+          let(:expected_preferred_name) { expected_given_full_name }
+          let(:expected_first_login_at) { nil }
+          let(:expected_has_toolbox_tab) { false }
+          let(:expected_is_delegate_user) { false }
+          let(:expected_is_viewer) { false }
+          it_behaves_like 'a well-tempered feed'
         end
       end
+    end
 
-      context 'currently a delegate' do
-        include_context 'has delegate students'
-        let(:campus_solutions_id) { random_id }
+    context 'when user has privilege to see other users\' finances' do
+      let(:delegated_privileges) { {financial: true} }
+      it_behaves_like 'a well-tempered feed'
+    end
 
-        context 'before view-as session' do
-          it_behaves_like 'a user viewing their own data'
-          it 'shows My Toolbox tab' do
-            expect(feed[:hasToolboxTab]).to be true
-            expect(feed[:hasDashboardTab]).to be false
-            expect(feed[:hasAcademicsTab]).to be false
-            expect(feed[:hasFinancialsTab]).to be false
-            expect(feed[:hasCampusTab]).to be false
-          end
-          it 'hides profile' do
-            expect(feed[:showSisProfileUI]).to be false
-          end
-          it 'hides bConnected badges' do
-            expect(feed[:hasBadges]).to be false
-          end
-          it 'assigns delegate role' do
-            expect(feed[:isDelegateUser]).to be true
-          end
-          it 'assigns privileges relevant to the delegate' do
-            expect(feed[:canViewGrades]).to be false
-            expect(feed[:canActOnFinances]).to be true
-          end
+    context 'when user has privilege to see other users\' grades' do
+      let(:delegated_privileges) { {viewGrades: true} }
+      it_behaves_like 'a well-tempered feed'
+    end
 
-          context 'also has another role' do
-            let(:has_advisor_role) { true }
-            it 'shows tabs relevant to both delegates and advisors' do
-              expect(feed[:hasToolboxTab]).to be true
-              expect(feed[:hasDashboardTab]).to be true
-              expect(feed[:hasAcademicsTab]).to be false
-              expect(feed[:hasFinancialsTab]).to be false
-              expect(feed[:hasCampusTab]).to be true
-            end
-            it 'shows profile' do
-              expect(feed[:showSisProfileUI]).to be true
-            end
-            it 'shows bConnected badges' do
-              expect(feed[:hasBadges]).to be true
-            end
-            it 'assigns privileges relevant to both delegates and advisors' do
-              expect(feed[:canViewGrades]).to be true
-              expect(feed[:canActOnFinances]).to be true
-            end
-          end
-        end
-        context 'view-as session' do
-          let(:original_delegate_user_id) { random_id }
-          let(:ldap_attributes) { {roles: {student: true}} }
-          it_behaves_like 'a user emulating someone else'
+    context 'when user has privilege to see other users\' enrollments' do
+      let(:delegated_privileges) { {viewEnrollments: true} }
+      it_behaves_like 'a well-tempered feed'
+    end
 
-          context 'is allowed to see student\'s grades' do
-            let(:privilege_view_grades) { true }
-            it 'shows My Academics tab' do
-              expect(feed[:hasDashboardTab]).to be false
-              expect(feed[:hasToolboxTab]).to be false
-              expect(feed[:hasAcademicsTab]).to be true
-              expect(feed[:hasFinancialsTab]).to be false
-            end
-            it 'hides profile' do
-              expect(feed[:showSisProfileUI]).to be false
-            end
-            it 'hides bConnected badges' do
-              expect(feed[:hasBadges]).to be false
-            end
-            it 'withholds delegate role' do
-              expect(feed[:isDelegateUser]).to be false
-            end
-            it 'assigns privileges relevant to the student' do
-              expect(feed[:canViewGrades]).to be true
-              expect(feed[:canActOnFinances]).to be false
-            end
-          end
-          context 'is allowed to see student\'s enrollments' do
-            let(:privilege_view_enrollments) { true }
-            it 'shows My Academics tab' do
-              expect(feed[:hasDashboardTab]).to be false
-              expect(feed[:hasToolboxTab]).to be false
-              expect(feed[:hasAcademicsTab]).to be true
-              expect(feed[:hasFinancialsTab]).to be false
-            end
-            it 'hides profile' do
-              expect(feed[:showSisProfileUI]).to be false
-            end
-            it 'hides bConnected badges' do
-              expect(feed[:hasBadges]).to be false
-            end
-            it 'assigns privileges relevant to the student' do
-              expect(feed[:canViewGrades]).to be false
-              expect(feed[:canActOnFinances]).to be false
-            end
-          end
-          context 'is allowed to see student\'s finances' do
-            let(:privilege_financial) { true }
-            it 'shows My Finances tab' do
-              expect(feed[:hasDashboardTab]).to be false
-              expect(feed[:hasToolboxTab]).to be false
-              expect(feed[:hasAcademicsTab]).to be false
-              expect(feed[:hasFinancialsTab]).to be true
-            end
-            it 'hides profile' do
-              expect(feed[:showSisProfileUI]).to be false
-            end
-            it 'assigns privileges relevant to the student' do
-              expect(feed[:canViewGrades]).to be false
-              expect(feed[:canActOnFinances]).to be true
-            end
-          end
-        end
-      end
+    context 'when show profile flag is true but user doesn\'t have the right role' do
+      let(:sis_profile_visible) { true }
+      let(:expected_show_sis_profile_ui) { false }
+      it_behaves_like 'a well-tempered feed'
     end
   end
+  def configure_mocks
+    calcentral_user_data = double('User::Data record', :preferred_name => override_name, :first_login_at => '2017-04-19T11:54:29.086-07:00', :update_attribute => false)
+    mock_user_model = double('User::Data model', :first => calcentral_user_data, :first_or_create => calcentral_user_data)
+    allow(User::Data).to receive(:where).with(uid: uid).and_return mock_user_model
 
-  context 'with legacy data' do
-    include_context 'has no delegate students'
-    let(:feed) { User::Api.new(uid).get_feed }
-    let(:edo_attributes) do
-      {
-        person_name: preferred_name,
-        campus_solutions_id: '12345678', # 8-digit ID means legacy
-        is_legacy_student: true,
-        roles: {
-          student: true,
-          exStudent: false,
-          faculty: false,
-          staff: false
-        }
-      }
-    end
-    it 'should show SIS profile for legacy students' do
-      expect(feed[:isLegacyStudent]).to be true
-      expect(feed[:showSisProfileUI]).to be true
-    end
-  end
+    allow(User::Oauth2Data).to receive(:get_google_email).with(uid).and_return ''
+    allow(User::Oauth2Data).to receive(:is_google_reminder_dismissed).with(uid).and_return false
 
-  context 'session metadata' do
-    include_context 'has no delegate students'
-    it 'should have a null first_login time for a new user' do
-      feed = User::Api.new(uid).get_feed
-      expect(feed[:firstLoginAt]).to be_nil
-    end
-    it 'should properly register a call to record_first_login' do
-      user_api = User::Api.new uid
-      user_api.get_feed
-      user_api.record_first_login
-      updated_data = user_api.get_feed
-      expect(updated_data[:firstLoginAt]).to_not be_nil
-    end
-    it 'should delete a user and all his dependent parts' do
-      user_api = User::Api.new uid
-      user_api.record_first_login
-      user_api.get_feed
+    allow(User::HasStudentHistory).to receive(:new).with(uid).and_return double(has_student_history?: has_student_history)
+    allow(User::HasInstructorHistory).to receive(:new).with(uid).and_return double(has_instructor_history?: has_instructor_history)
 
-      expect(User::Oauth2Data).to receive :destroy_all
-      expect(Notifications::Notification).to receive :destroy_all
-      expect(Cache::UserCacheExpiry).to receive :notify
+    allow(GoogleApps::Proxy).to receive(:access_granted?).and_return false
 
-      User::Api.delete uid
+    allow(User::AggregatedAttributes).to receive(:new).with(uid).and_return double(get_feed: user_attributes)
 
-      expect(User::Data.where :uid => uid).to eq []
-    end
+    allow(AuthenticationStatePolicy).to receive(:new).and_return double(can_administrate?: can_administrate, can_view_as?: can_view_as)
+    allow(User::Auth).to receive(:get).with(uid).and_return double(active?: true, is_viewer?: is_viewer)
+    allow(AuthenticationState).to receive(:new).with('user_id' => uid).and_return double(
+                                                                                    original_delegate_user_id: original_delegate_user_id,
+                                                                                    original_advisor_user_id: original_advisor_user_id,
+                                                                                    directly_authenticated?: directly_authenticated,
+                                                                                    authenticated_as_delegate?: authenticated_as_delegate,
+                                                                                    authenticated_as_advisor?: authenticated_as_advisor,
+                                                                                    delegated_privileges: delegated_privileges,
+                                                                                    real_user_id: uid,
+                                                                                    classic_viewing_as?: classic_viewing_as,
+                                                                                    policy: AuthenticationStatePolicy.new(nil, nil),
+                                                                                    user_auth: User::Auth.get(uid),
+                                                                                    real_user_auth: User::Auth.get(uid)
+                                                                                  )
 
-    context 'a staff member with no academic history' do
-      let(:edo_attributes) do
-        {
-          person_name: preferred_name,
-          roles: {}
-        }
-      end
-      let(:ldap_attributes) do
-        {
-          person_name: preferred_name,
-          roles: {
-            student: false,
-            faculty: false,
-            staff: true
-          }
-        }
-      end
-      before do
-        allow(User::HasInstructorHistory).to receive(:new).and_return double(has_instructor_history?: false)
-        allow(User::HasStudentHistory).to receive(:new).and_return double(has_student_history?: false)
-      end
-      it 'should deny academics tab' do
-        feed = User::Api.new(uid).get_feed
-        expect(feed[:hasAcademicsTab]).to eq false
-        expect(feed[:canViewGrades]).to be false
-      end
-    end
-  end
+    allow(CampusSolutions::DelegateStudents).to receive(:new).with(user_id: uid).and_return double(get: {})
+    allow(CampusSolutions::DelegateStudents).to receive(:new).with(user_id: original_delegate_user_id).and_return double(get: delegate_students)
 
-  describe 'profile source of record' do
-    include_context 'has no delegate students'
-    let(:has_student_role) { true }
-    subject { User::Api.new(uid).get_feed }
-    let(:ldap_attributes) do
-      {
-        official_bmail_address: 'bar@bar.edu',
-        roles: {
-          student: is_active_student,
-          exStudent: !is_active_student,
-          faculty: false,
-          staff: true
-        }
-      }
-    end
-    context 'active student' do
-      let(:is_active_student) { true }
-      it 'relies on CS data' do
-        expect(subject[:officialBmailAddress]).to eq 'foo@foo.com'
-      end
-    end
-    context 'former student' do
-      let(:is_active_student) { false }
-      let(:edo_attributes) do
-        {
-          person_name: preferred_name,
-          campus_solutions_id: '12345678', # 8-digit ID means legacy
-          is_legacy_student: true,
-          roles: {
-          }
-        }
-      end
-      it 'relies on LDAP and Oracle' do
-        expect(subject[:officialBmailAddress]).to eq 'bar@bar.edu'
-      end
-    end
-    context 'applicant' do
-      let(:edo_attributes) do
-        {
-          person_name: preferred_name,
-          student_id: '1234567890',
-          campus_solutions_id: 'CC12345678',
-          official_bmail_address: 'foo@foo.com',
-          roles: {
-            student: false,
-            exStudent: false,
-            faculty: false,
-            staff: true,
-            applicant: true
-          }
-        }
-      end
-      let(:is_active_student) { false }
-      it 'relies on CS data' do
-        expect(subject[:officialBmailAddress]).to eq 'foo@foo.com'
-      end
-    end
-    context 'broken Hub API' do
-      let(:is_active_student) { true }
-      let(:edo_attributes) do
-        {
-          body: 'An unknown server error occurred',
-          statusCode: 503
-        }
-      end
-      it 'relies on LDAP and Oracle' do
-        expect(subject[:officialBmailAddress]).to eq 'bar@bar.edu'
-      end
-    end
-  end
-
-  describe 'My Finances tab' do
-    include_context 'has no delegate students'
-    let(:has_student_history) { false }
-    before {
-      allow(User::HasStudentHistory).to receive(:new).and_return(model = double)
-      allow(model).to receive(:has_student_history?).and_return has_student_history
-    }
-
-    subject { User::Api.new(uid).get_feed[:hasFinancialsTab] }
-
-    context 'active student' do
-      let(:ldap_attributes) { {roles: { :student => true, :exStudent => false, :faculty => false, :staff => false }} }
-      let(:edo_attributes) { {roles: { student: true } } }
-      it { should be true }
-    end
-    context 'applicant' do
-      let(:ldap_attributes) { {roles: { :student => false, :exStudent => false, :faculty => false, :staff => false }} }
-      let(:edo_attributes) { {roles: { applicant: true } } }
-      it { should be true }
-    end
-    context 'staff' do
-      let(:ldap_attributes) { {roles: { :student => false, :exStudent => false, :faculty => false, :staff => true }} }
-      let(:edo_attributes) { {roles: {}} }
-      it { should be false }
-    end
-    context 'former student' do
-      let(:ldap_attributes) { {roles: { :student => false, :exStudent => true, :faculty => false, :staff => false }} }
-      let(:edo_attributes) { {roles: {}} }
-      it { should be true }
-    end
-    context 'has student history' do
-      let(:ldap_attributes) { {roles: { :student => false, :exStudent => false, :faculty => false, :staff => false }} }
-      let(:edo_attributes) { {roles: {}} }
-      let(:has_student_history) { true }
-      it { should be true }
-    end
-  end
-
-  describe 'My Toolbox tab' do
-    include_context 'has no delegate students'
-    context 'superuser' do
-      before { User::Auth.new_or_update_superuser! uid }
-      it 'should show My Toolbox tab' do
-        user_api = User::Api.new uid
-        expect(user_api.get_feed[:hasToolboxTab]).to be true
-      end
-    end
-    context 'can_view_as' do
-      before {
-        user = User::Auth.new uid: uid
-        user.is_viewer = true
-        user.active = true
-        user.save
-      }
-      subject { User::Api.new(uid).get_feed[:hasToolboxTab] }
-      it { should be true }
-    end
-    context 'ordinary profiles' do
-      let(:profiles) do
-        {
-          :student   => { :student => true,  :exStudent => false, :faculty => false, :advisor => false, :staff => false },
-          :faculty   => { :student => false, :exStudent => false, :faculty => true,  :advisor => false, :staff => false },
-          :advisor   => { :student => false, :exStudent => false, :faculty => true,  :advisor => true,  :staff => true },
-          :staff     => { :student => false, :exStudent => false, :faculty => true,  :advisor => false, :staff => true }
-        }
-      end
-      let(:ldap_attributes) { {roles: user_roles} }
-      let(:edo_attributes) { {} }
-      subject { User::Api.new(uid).get_feed[:hasToolboxTab] }
-      context 'student' do
-        let(:user_roles) { profiles[:student] }
-        it { should be false }
-      end
-      context 'faculty' do
-        let(:user_roles) { profiles[:faculty] }
-        it { should be false }
-      end
-      context 'advisor' do
-        let(:user_roles) { profiles[:advisor] }
-        it { should be true }
-      end
-      context 'staff' do
-        let(:user_roles) { profiles[:staff] }
-        it { should be false }
-      end
-    end
-  end
-
-  context 'HubEdos errors', if: CampusOracle::Queries.test_data? do
-    let(:uid) { '1151855' }
-    let(:feed) { User::Api.new(uid).get_feed }
-    include_context 'has no delegate students'
-    let(:expected_values_from_campus_oracle) {
-      {
-        preferredName: 'Eugene V Debs',
-        firstName: 'Eugene V',
-        lastName: 'Debs',
-        fullName: 'Eugene V Debs',
-        givenFirstName: 'Eugene V',
-        givenFullName: 'Eugene V Debs',
-        uid: uid,
-        sid: '18551926',
-        isLegacyStudent: true,
-        roles: {
-          student: true,
-          registered: true,
-          exStudent: false,
-          faculty: false,
-          staff: false,
-          guest: false,
-          expiredAccount: false
-        }
-      }
-    }
-    let(:expected_values_from_ldap) {
-      {
-        preferredName: 'Offissa Pupp',
-        firstName: 'Offissa',
-        lastName: 'Pupp',
-        fullName: 'Offissa Pupp',
-        givenFirstName: 'Offissa',
-        givenFullName: 'Offissa Pupp',
-        uid: uid,
-        sid: '17154428',
-        isLegacyStudent: true,
-        roles: {
-          student: false,
-          registered: false,
-          exStudent: true,
-          faculty: true,
-          staff: false,
-          guest: false,
-          expiredAccount: false
-        }
-      }
-    }
-
-    shared_examples 'handling bad behavior' do
-      context 'LDAP attributes found' do
-        let(:ldap_attributes) do
-          {
-            first_name: 'Offissa',
-            last_name: 'Pupp',
-            ldap_uid: uid,
-            person_name: 'Offissa Pupp',
-            roles: {
-              student: false,
-              registered: false,
-              exStudent: true,
-              faculty: true,
-              staff: false,
-              guest: false
-            },
-            student_id: '17154428'
-          }
-        end
-        it 'should trust LDAP' do
-          expect(feed).to include expected_values_from_ldap
-        end
-      end
-      context 'LDAP attributes not found' do
-        let(:ldap_attributes) { {roles: {}} }
-        it 'should fall back to campus Oracle' do
-          expect(feed).to include expected_values_from_campus_oracle
-        end
-      end
-    end
-
-    context 'empty response' do
-      let(:edo_attributes) { {} }
-      include_examples 'handling bad behavior'
-    end
-
-    context 'ID lookup errors' do
-      let(:edo_attributes) do
-        {
-          student_id: {
-            body: 'An unknown server error occurred',
-            statusCode: 503
-          }
-        }
-      end
-      include_examples 'handling bad behavior'
-    end
-
-    context 'name lookup errors' do
-      let(:edo_attributes) do
-        {
-          first_name: nil,
-          last_name: nil,
-          person_name: {
-            body: 'An unknown server error occurred',
-            statusCode: 503
-          }
-        }
-      end
-      include_examples 'handling bad behavior'
-    end
-
-    context 'role lookup errors' do
-      let(:edo_attributes) do
-        {
-          roles: {}
-        }
-      end
-      include_examples 'handling bad behavior'
-    end
-
-    context 'when ex-student is reported by CS as now again active' do
-      let(:uid) { '2040' }
-      let(:edo_attributes) do
-        {
-          roles: {
-            student: true
-          }
-        }
-      end
-      it 'should give precedence to CS' do
-        expect(feed[:roles][:exStudent]).to be_falsey
-        expect(feed[:roles][:student]).to eq true
-      end
-    end
-  end
-
-  context 'permissions' do
-    include_context 'has no delegate students'
-    context 'proper cache handling' do
-      it 'should update the last modified hash when content changes' do
-        user_api = User::Api.new uid
-        user_api.get_feed
-        original_last_modified = User::Api.get_last_modified uid
-        old_hash = original_last_modified[:hash]
-        old_timestamp = original_last_modified[:timestamp]
-
-        sleep 1
-
-        user_api.preferred_name = 'New Name'
-        user_api.save
-        feed = user_api.get_feed
-        new_last_modified = User::Api.get_last_modified uid
-        expect(new_last_modified[:hash]).to_not eq old_hash
-        expect(new_last_modified[:timestamp]).to_not eq old_timestamp
-        expect(new_last_modified[:timestamp][:epoch]).to eq feed[:lastModified][:timestamp][:epoch]
-      end
-
-      it 'should not update the last modified hash when content has not changed' do
-        user_api = User::Api.new uid
-        user_api.get_feed
-        original_last_modified = User::Api.get_last_modified uid
-
-        sleep 1
-
-        Cache::UserCacheExpiry.notify uid
-        feed = user_api.get_feed
-        unchanged_last_modified = User::Api.get_last_modified uid
-        expect(original_last_modified).to eq unchanged_last_modified
-        expect(original_last_modified[:timestamp][:epoch]).to eq feed[:lastModified][:timestamp][:epoch]
-      end
-    end
-    context 'proper handling of superuser permissions' do
-      before { User::Auth.new_or_update_superuser! uid }
-      subject { User::Api.new(uid).get_feed }
-      it 'should pass the superuser status' do
-        expect(subject[:isSuperuser]).to be true
-        expect(subject[:isViewer]).to be true
-        expect(subject[:hasToolboxTab]).to be true
-        expect(subject[:hasAcademicsTab]).to be false
-        expect(subject[:canViewGrades]).to be false
-      end
-    end
-    context 'proper handling of viewer permissions' do
-      before {
-        user = User::Auth.new uid: uid
-        user.is_viewer = true
-        user.active = true
-        user.save
-      }
-      subject { User::Api.new(uid).get_feed }
-      it 'should pass the viewer status' do
-        expect(subject[:isSuperuser]).to be false
-        expect(subject[:isViewer]).to be true
-        expect(subject[:hasToolboxTab]).to be true
-        expect(subject[:canViewGrades]).to be false
-      end
-    end
+    allow(ProvidedServices).to receive(:calcentral?).and_return is_calcentral
   end
 end
