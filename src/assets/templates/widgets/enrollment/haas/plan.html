@@ -7,8 +7,13 @@
 
 <div class="cc-enrollment-card-section-content" data-ng-if="section.show">
   <ul class="cc-list-links">
-    <li>
+    <li data-ng-if="isInstructionType(enrollmentInstruction, ['haasFullTimeMba'])">
       <a href="http://www.haas.berkeley.edu/MBA/academics/graduation-requirements.html">
+        Graduation Requirements
+      </a>
+    </li>
+    <li data-ng-if="isInstructionType(enrollmentInstruction, ['haasEveningWeekendMba'])">
+      <a href="http://www.haas.berkeley.edu/EWMBA/academics/graduation.html">
         Graduation Requirements
       </a>
     </li>
