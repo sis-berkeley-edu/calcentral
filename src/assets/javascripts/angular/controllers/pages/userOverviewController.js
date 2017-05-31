@@ -145,11 +145,6 @@ angular.module('calcentral.controllers').controller('UserOverviewController', fu
             });
         });
 
-        // add current page properties to DB2 archived transcript link
-        if (!!_.get($scope, 'legacyReportStatus.link')) {
-          linkService.addCurrentPagePropertiesToLink($scope.legacyReportStatus.link, $scope.currentPage.name, $scope.currentPage.url);
-        }
-
         // prepare schedule planner link data
         var studentPlans = _.get($scope, 'collegeAndLevel.plans');
         var uniqueCareerCodes = academicsService.getUniqueCareerCodes(studentPlans);
@@ -315,20 +310,6 @@ angular.module('calcentral.controllers').controller('UserOverviewController', fu
 
   $scope.showCNP = function(registration) {
     return statusHoldsService.showCNP(registration);
-  };
-
-  /**
-   * Determines if the Academic Plan card should be displayed
-   * Displays if planSemester data present, or if legacy report code is present in the feed
-   * @return {Boolean} boolean
-   */
-  $scope.showAcademicPlanCard = function() {
-    var planSemestersPresent = _.get($scope, 'planSemesters.length');
-    var legacyReportCode = _.get($scope, 'legacyReportStatus.code');
-    if (planSemestersPresent || legacyReportCode !== 'NONE') {
-      return true;
-    }
-    return false;
   };
 
   $scope.targetUser.actAs = function() {
