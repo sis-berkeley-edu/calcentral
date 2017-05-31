@@ -5,7 +5,6 @@ describe MyAcademics::AcademicPlan do
   let(:fake) { true }
 
   let(:plan_proxy) { CampusSolutions::AdvisingAcademicPlan.new(user_id: uid, fake: fake) }
-  let(:attribute_proxy) { HubEdos::StudentAttributes.new(user_id: uid, fake: fake) }
   let(:semesters_data) {
     { semesters: [
       {
@@ -74,44 +73,8 @@ describe MyAcademics::AcademicPlan do
     }
   }
 
-  let(:arch_attribute) { nil }
-  let(:student_attributes) do
-    [
-      get_attribute('+REG', 'Officially Registered', 'REG', 'You are officially registered for this term and may access campus services.'),
-      get_attribute('+S09', 'Tuition Calculated', 'TCALC', 'Tuition and fees have been calculated for the term.'),
-      arch_attribute
-    ]
-  end
-  let(:attribute_proxy_response_json) do
-    {
-      apiResponse: {
-        correlationId: "954511bf-fd38-4aef-ad9f-2525d4005407",
-        response: {
-          any: {
-            students: [
-              {
-                affiliations: [],
-                confidential: false,
-                identifiers: [],
-                studentAttributes: student_attributes.compact,
-              }
-            ]
-          }
-        },
-        responseType: "http://bmeta.berkeley.edu/student/studentV0.xsd/students",
-        source: "UCB-SIS-STUDENT"
-      }
-    }.to_json
-  end
-
   before do
-    attribute_proxy.set_response({
-      status: 200,
-      headers: {'Content-Type' => 'application/json'},
-      body: attribute_proxy_response_json
-    })
     allow(CampusSolutions::AdvisingAcademicPlan).to receive(:get).and_return(plan_proxy)
-    allow(HubEdos::StudentAttributes).to receive(:new).and_return(attribute_proxy)
     allow(CalnetCrosswalk::ByUid).to receive(:new).with(user_id: uid).and_return(
       double(lookup_campus_solutions_id: user_cs_id))
   end
@@ -141,7 +104,7 @@ describe MyAcademics::AcademicPlan do
       expect(subject[:planSemesters][2][:plannedClasses].length).to eq 0
     end
 
-    it 'it should parse hasWaitlisted flag correctly' do
+    it 'it should parse hasWaitlisted flag  correctly' do
       expect(subject[:planSemesters][0][:hasWaitlisted]).to eq false
       expect(subject[:planSemesters][1][:hasWaitlisted]).to eq false
       expect(subject[:planSemesters][2][:hasWaitlisted]).to eq true
@@ -164,55 +127,7 @@ describe MyAcademics::AcademicPlan do
       expect(subject[:planSemesters][1][:waitlistedUnits]).to eq '0.0'
       expect(subject[:planSemesters][2][:waitlistedUnits]).to eq '4.0'
     end
-  end
 
-  context 'legacy report status' do
-    context 'when student has no archived academic records prior to 1995' do
-      let(:arch_attribute) { nil }
-      it 'includes the reason code and message' do
-        expect(subject[:legacyReportStatus][:code]).to eq 'NONE'
-        expect(subject[:legacyReportStatus][:message]).to eq 'Legacy report not present'
-        expect(subject[:legacyReportStatus][:link]).to eq nil
-      end
-    end
-
-    context 'when student has only archived academic records prior to 1995' do
-      let(:reason_code) { 'ARCH' }
-      let(:reason_description) { 'This student has a historic academic summary report. Use the link below to view the April 30th, 2017 snapshot of this student\'s record.' }
-      let(:arch_attribute) { get_attribute('+R11', 'Archived Transcript Processing', reason_code, reason_description) }
-      it 'includes the reason code and message' do
-        expect(subject[:legacyReportStatus][:code]).to eq reason_code
-        expect(subject[:legacyReportStatus][:message]).to eq reason_description
-        expect(subject[:legacyReportStatus][:link][:url]).to eq "https://bcswebqat.is.berkeley.edu/psp/bcsqat/EMPLOYEE/HRMS/c/UC_SR_TSCRPT.UC_SR_TSCRP.GBL?UC_CTS_EMPLID8=#{user_cs_id}"
-      end
-    end
-
-    context 'when student both pre and post 1995 academic records' do
-      let(:reason_code) { 'BOTH' }
-      let(:reason_description) { 'This student has a historic summary report as well as recent records. Use the link below to view the April 30th, 2017 snapshot of this student\'s record.' }
-      let(:arch_attribute) { get_attribute('+R11', 'Archived Transcript Processing', reason_code, reason_description) }
-      it 'includes the reason code and message' do
-        expect(subject[:legacyReportStatus][:code]).to eq reason_code
-        expect(subject[:legacyReportStatus][:message]).to eq reason_description
-        expect(subject[:legacyReportStatus][:link][:url]).to eq "https://bcswebqat.is.berkeley.edu/psp/bcsqat/EMPLOYEE/HRMS/c/UC_SR_TSCRPT.UC_SR_TSCRP.GBL?UC_CTS_EMPLID8=#{user_cs_id}"
-      end
-    end
-  end
-
-  def get_attribute(type_code, type_desc, reason_code, reason_desc)
-    {
-      comments: '',
-      fromDate: '2017-04-30',
-      reason: {
-        code: reason_code,
-        description: 'some description',
-        formalDescription: reason_desc
-      },
-      type: {
-        code: type_code,
-        description: type_desc
-      }
-    }
   end
 
 end
