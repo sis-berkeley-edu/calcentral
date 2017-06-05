@@ -6,10 +6,7 @@
   <div class="cc-widget-padding">
     <div data-cc-spinner-directive="regStatus.isLoading">
       <div data-ng-if="(statusHoldsBlocks.enabledSections.indexOf('Status') !== -1)">
-        <h3 class="cc-status-holds-status-header">Status</h3>
-        <div class="cc-status-holds-section" data-ng-if="!hasShownRegistrations">
-          <div class="cc-status-holds-list-item">You are not registered for any upcoming semesters.</div>
-        </div>
+        <h3 class="cc-status-holds-status-header" data-ng-if="hasShownRegistrations">Status</h3>
         <div class="cc-status-holds-section" data-ng-repeat="registration in regStatus.registrations | orderBy:'-id'">
           <div data-ng-if="registration.isShown">
             <h4 data-ng-bind="registration.name"></h4>
