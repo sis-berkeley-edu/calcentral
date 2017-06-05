@@ -185,6 +185,7 @@ else
 fi
 
 # --------------------
+CROSSWALK_ENABLED="${yml_calnet_crosswalk_proxy_enabled//\'}"
 CROSSWALK_BASE_URL="${yml_calnet_crosswalk_proxy_base_url//\'}"
 CROSSWALK_CREDENTIALS="${yml_calnet_crosswalk_proxy_username//\'}:${yml_calnet_crosswalk_proxy_password//\'}"
 
@@ -210,10 +211,12 @@ echo "  Crosswalk: ${CROSSWALK_BASE_URL}"
 echo "  Hub: ${HUB_BASE_URL}"
 echo; echo
 
-verify_crosswalk \
-  "/CAMPUS_SOLUTIONS_ID/${CAMPUS_SOLUTIONS_ID}" \
-  "/LEGACY_SIS_STUDENT_ID/${SID}" \
-  "/UID/${UID_CROSSWALK}"
+if [ "${CROSSWALK_ENABLED}" == "true" ] ; then
+  verify_crosswalk \
+    "/CAMPUS_SOLUTIONS_ID/${CAMPUS_SOLUTIONS_ID}" \
+    "/LEGACY_SIS_STUDENT_ID/${SID}" \
+    "/UID/${UID_CROSSWALK}"
+fi
 
 if [ "${APP_MODE}" == "calcentral" ] ; then
   verify_cs 'always_enabled' true \
