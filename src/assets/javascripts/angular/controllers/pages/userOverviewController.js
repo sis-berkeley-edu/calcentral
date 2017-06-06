@@ -304,7 +304,9 @@ angular.module('calcentral.controllers').controller('UserOverviewController', fu
   };
 
   $scope.totalTransferUnits = function() {
-    return academicsService.totalTransferUnits($scope.transferCredit.ucTransferCrseSch.unitsNonAdjusted, $scope.transferCredit.ucTestComponent.totalTestUnits);
+    var unitsNonAdjusted = _.get($scope, 'transferCredit.ucTransferCrseSch.unitsNonAdjusted');
+    var totalTestUnits = _.get($scope, 'transferCredit.ucTestComponent.totalTestUnits');
+    return academicsService.totalTransferUnits(unitsNonAdjusted, totalTestUnits);
   };
 
   $scope.expireAcademicsCache = function() {
