@@ -7,7 +7,6 @@ describe Advising::MyAdvising do
       proxies = {}
       [
         CampusSolutions::AdvisorStudentActionItems,
-        CampusSolutions::AdvisorStudentAppointmentCalendar,
         CampusSolutions::AdvisorStudentRelationship,
         CampusSolutions::Link
       ].each do |proxy_class|
@@ -19,7 +18,6 @@ describe Advising::MyAdvising do
     end
     let(:cs_advisor_student_action_items_proxy) { fake_proxies[CampusSolutions::AdvisorStudentActionItems] }
     let(:cs_advisor_student_relationship_proxy) { fake_proxies[CampusSolutions::AdvisorStudentRelationship] }
-    let(:cs_advisor_student_appointment_calendar_proxy) { fake_proxies[CampusSolutions::AdvisorStudentAppointmentCalendar] }
     let(:cs_link_proxy) { fake_proxies[CampusSolutions::Link] }
 
     let(:manage_appts_link) { 'https://bcs-web-dev-03.is.berkeley.edu:8443/psc/bcsdev/EMPLOYEE/HRMS/c/SCI_APPT_STUSS.SCI_APPT_MY_APPTS.GBL'}
@@ -76,20 +74,6 @@ describe Advising::MyAdvising do
           dateString: '7/25',
           dateTime: '2016-07-25T00:00:00-07:00',
           epoch: 1469430000
-        })
-      end
-      it 'should include expected advising appointments' do
-        expect(subject[:feed][:appointments]).to have(23).items
-        expect(subject[:feed][:appointments].first).to include({
-          apptAdvisorId: '3030312345',
-          apptAdvisorName: 'Jane Smith',
-          apptCategory: 'Academic Advising',
-          apptDate: '2016-07-25',
-          apptDuration: '30',
-          apptReason: 'Add',
-          apptScheduledTime: '08.00.00.000000',
-          apptStatus: 'CANCEL',
-          apptType: 'Drop-in'
         })
       end
       it 'should include expected advisors' do
@@ -174,7 +158,7 @@ describe Advising::MyAdvising do
 
     context 'proxy returns an error' do
       before do
-        allow(cs_advisor_student_appointment_calendar_proxy).to receive(:get).and_return(errored: true)
+        allow(cs_advisor_student_action_items_proxy).to receive(:get).and_return(errored: true)
       end
       it_should_behave_like 'a good and proper error report'
     end

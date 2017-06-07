@@ -28,7 +28,6 @@ module Advising
       if Settings.features.advising
         merge_action_items advising_feed
         merge_advisors advising_feed
-        merge_appointments advising_feed
         merge_links advising_feed
       end
 
@@ -68,12 +67,6 @@ module Advising
       end
       sorted_advisors.concat(grouped_advisors.values.flatten) unless student_is_graduate?
       sorted_advisors
-    end
-
-    def merge_appointments(advising_feed)
-      merge_proxy_feed(advising_feed, CampusSolutions::AdvisorStudentAppointmentCalendar) do |proxy_feed|
-        advising_feed[:feed][:appointments] = proxy_feed.fetch(:ucAaAdvisingAppts, {}).fetch(:advisingAppts, nil)
-      end
     end
 
     def merge_links(advising_feed)
