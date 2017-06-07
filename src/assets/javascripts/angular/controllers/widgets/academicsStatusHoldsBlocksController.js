@@ -6,7 +6,7 @@ var _ = require('lodash');
 /**
  * Academics status, holds & blocks controller
  */
-angular.module('calcentral.controllers').controller('AcademicsStatusHoldsBlocksController', function(apiService, enrollmentVerificationFactory, academicsFactory, linkService, slrDeeplinkFactory, studentAttributesFactory, registrationsFactory, statusHoldsService, $scope) {
+angular.module('calcentral.controllers').controller('AcademicsStatusHoldsBlocksController', function(apiService, academicsFactory, linkService, slrDeeplinkFactory, registrationsFactory, statusHoldsService, $scope) {
   linkService.addCurrentRouteSettings($scope);
 
   // Data for csHolds is pulled by the AcademicsController that
@@ -14,23 +14,18 @@ angular.module('calcentral.controllers').controller('AcademicsStatusHoldsBlocksC
   // for changes in order to display the corresponding UI elements.
   $scope.statusHoldsBlocks = {};
   $scope.regStatus = {
-    messages: '',
-    terms: [],
     registrations: [],
-    positiveIndicators: [],
     isLoading: true
   };
 
-  $scope.$watchGroup(['(regStatus.registrations[0].summary && regStatus.registrations[0].academicCareer.code !== "UCBX")',
-                      '(regStatus.registrations[1].summary && regStatus.registrations[1].academicCareer.code !== "UCBX")',
-                      'api.user.profile.features.csHolds'], function(newValues) {
+  $scope.$watchGroup(['regStatus.registrations.length', 'api.user.profile.features.csHolds'], function(newValues) {
     var enabledSections = [];
 
-    if (newValues[0] || newValues[1]) {
+    if (newValues[0]) {
       enabledSections.push('Status');
     }
 
-    if (newValues[2]) {
+    if (newValues[1]) {
       enabledSections.push('Holds');
     }
 
@@ -48,69 +43,15 @@ angular.module('calcentral.controllers').controller('AcademicsStatusHoldsBlocksC
 
   var getRegistrations = function() {
     registrationsFactory.getRegistrations()
-      .then(parseRegistrations)
-      .then(getStudentAttributes);
+      .then(parseRegistrations);
   };
-
-  /**
-   * Checks to see whether the registration is on or before Settings.terms.legacy_cutoff.
-   * This code should be able to be removed by Fall 2016, when we should start getting term data exclusively from the hub.
-   * There is also the possibility of the hub bringing over more than one registration for a term.
-   */
   var parseRegistrations = function(response) {
-    _.forOwn(response.data.terms, function(value, key) {
-      if (key === 'current' || key === 'next') {
-        if (value) {
-          $scope.regStatus.terms.push(value);
-        }
+    var registrations = _.get(response, 'data.registrations');
+    _.forEach(registrations, function(registration) {
+      if (_.get(registration, 'showRegStatus')) {
+        $scope.regStatus.registrations.push(registration);
       }
     });
-    _.forEach($scope.regStatus.terms, function(term) {
-      var regStatus = response.data.registrations[term.id];
-
-      if (regStatus && regStatus[0]) {
-        _.merge(regStatus[0], term);
-        regStatus[0].isSummer = _.startsWith(term.name, 'Summer');
-
-        if (regStatus[0].isLegacy) {
-          $scope.regStatus.registrations.push(statusHoldsService.parseLegacyTerm(regStatus[0]));
-        } else {
-          $scope.regStatus.registrations.push(statusHoldsService.parseCsTerm(regStatus[0]));
-        }
-      }
-    });
-
-    return;
-  };
-
-  var getStudentAttributes = function() {
-    studentAttributesFactory.getStudentAttributes()
-    .then(parseStudentAttributes);
-  };
-
-  var parseStudentAttributes = function(response) {
-    var studentAttributes = _.get(response, 'data.feed.student.studentAttributes.studentAttributes');
-    // Strip all positive student indicators from student attributes feed.
-    _.forEach(studentAttributes, function(attribute) {
-      if (_.startsWith(attribute.type.code, '+')) {
-        $scope.regStatus.positiveIndicators.push(attribute);
-      }
-    });
-
-    statusHoldsService.matchTermIndicators($scope.regStatus.positiveIndicators, $scope.regStatus.registrations);
-    $scope.hasShownRegistrations = statusHoldsService.checkShownRegistrations($scope.regStatus.registrations);
-  };
-
-  var getMessages = function() {
-    enrollmentVerificationFactory.getEnrollmentVerificationData().then(
-      function(response) {
-        var messages = _.get(response, 'data.messages');
-        if (messages) {
-          $scope.regStatus.messages = {};
-          _.merge($scope.regStatus.messages, statusHoldsService.getRegStatusMessages(messages));
-        }
-      }
-    );
   };
 
   var getSlrDeeplink = function() {
@@ -145,16 +86,13 @@ angular.module('calcentral.controllers').controller('AcademicsStatusHoldsBlocksC
     angular.merge($scope.residency, residency);
   };
 
-  $scope.showCNP = function(registration) {
-    return statusHoldsService.showCNP(registration);
-  };
+  $scope.cnpStatusIcon = statusHoldsService.cnpStatusIcon;
 
   var loadStatusInformation = function() {
     getCalResidency()
     .then(parseCalResidency)
     .then(getSlrDeeplink)
     .then(getRegistrations)
-    .then(getMessages)
     .finally(function() {
       $scope.residency.isLoading = false;
       $scope.regStatus.isLoading = false;

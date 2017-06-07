@@ -6,7 +6,7 @@ var _ = require('lodash');
 /**
  * Preview of user profile prior to viewing-as
  */
-angular.module('calcentral.controllers').controller('UserOverviewController', function(academicsService, adminService, advisingFactory, academicStatusFactory, apiService, enrollmentVerificationFactory, linkService, statusHoldsService, studentAttributesFactory, $route, $routeParams, $scope) {
+angular.module('calcentral.controllers').controller('UserOverviewController', function(academicsService, adminService, advisingFactory, apiService, enrollmentVerificationFactory, linkService, statusHoldsService, $route, $routeParams, $scope) {
   linkService.addCurrentRouteSettings($scope);
 
   $scope.expectedGradTerm = academicsService.expectedGradTerm;
@@ -26,9 +26,7 @@ angular.module('calcentral.controllers').controller('UserOverviewController', fu
   };
   $scope.isAdvisingStudentLookup = $route.current.isAdvisingStudentLookup;
   $scope.regStatus = {
-    terms: [],
     registrations: [],
-    positiveIndicators: [],
     isLoading: true
   };
   $scope.residency = {
@@ -65,10 +63,10 @@ angular.module('calcentral.controllers').controller('UserOverviewController', fu
     isLoading: true
   };
 
-  $scope.$watchGroup(['regStatus.registrations[0].summary', 'api.user.profile.features.csHolds'], function(newValues) {
+  $scope.$watchGroup(['regStatus.registrations.length', 'api.user.profile.features.csHolds'], function(newValues) {
     var enabledSections = [];
 
-    if (newValues[0] !== null && newValues[0] !== undefined) {
+    if (newValues[0]) {
       enabledSections.push('Status');
     }
 
@@ -178,47 +176,13 @@ angular.module('calcentral.controllers').controller('UserOverviewController', fu
     advisingFactory.getStudentRegistrations({
       uid: $routeParams.uid
     }).then(function(response) {
-      _.forOwn(response.data.terms, function(value, key) {
-        if (key === 'current' || key === 'next') {
-          if (value) {
-            $scope.regStatus.terms.push(value);
-          }
+      var registrations = _.get(response, 'data.registrations');
+      _.forEach(registrations, function(registration) {
+        if (_.get(registration, 'showRegStatus')) {
+          $scope.regStatus.registrations.push(registration);
         }
       });
-      _.forEach($scope.regStatus.terms, function(term) {
-        var regStatus = response.data.registrations[term.id];
-
-        if (regStatus && regStatus[0]) {
-          _.merge(regStatus[0], term);
-          regStatus[0].isSummer = _.startsWith(term.name, 'Summer');
-
-          if (regStatus[0].isLegacy) {
-            $scope.regStatus.registrations.push(statusHoldsService.parseLegacyTerm(regStatus[0]));
-          } else {
-            $scope.regStatus.registrations.push(statusHoldsService.parseCsTerm(regStatus[0]));
-          }
-        }
-      });
-    }).then(loadStudentAttributes);
-  };
-
-  var loadStudentAttributes = function() {
-    studentAttributesFactory.getStudentAttributes({
-      uid: $routeParams.uid
-    }).then(
-      function successCallback(response) {
-        var studentAttributes = _.get(response, 'data.feed.student.studentAttributes.studentAttributes');
-        // Strip all positive student indicators from student attributes feed.
-        _.forEach(studentAttributes, function(attribute) {
-          if (_.startsWith(attribute.type.code, '+')) {
-            $scope.regStatus.positiveIndicators.push(attribute);
-          }
-        });
-
-        statusHoldsService.matchTermIndicators($scope.regStatus.positiveIndicators, $scope.regStatus.registrations);
-        $scope.hasShownRegistrations = statusHoldsService.checkShownRegistrations($scope.regStatus.registrations);
-      }
-    ).finally(function() {
+    }).finally(function() {
       $scope.regStatus.isLoading = false;
     });
   };
@@ -291,18 +255,6 @@ angular.module('calcentral.controllers').controller('UserOverviewController', fu
     }
   };
 
-  var getRegMessages = function() {
-    enrollmentVerificationFactory.getEnrollmentVerificationData().then(
-      function(response) {
-        var messages = _.get(response, 'data.messages');
-        if (messages) {
-          $scope.regStatus.messages = {};
-          _.merge($scope.regStatus.messages, statusHoldsService.getRegStatusMessages(messages));
-        }
-      }
-    );
-  };
-
   $scope.totalTransferUnits = function() {
     var unitsNonAdjusted = _.get($scope, 'transferCredit.ucTransferCrseSch.unitsNonAdjusted');
     var totalTestUnits = _.get($scope, 'transferCredit.ucTestComponent.totalTestUnits');
@@ -313,10 +265,6 @@ angular.module('calcentral.controllers').controller('UserOverviewController', fu
     advisingFactory.expireAcademicsCache({
       uid: $routeParams.uid
     });
-  };
-
-  $scope.showCNP = function(registration) {
-    return statusHoldsService.showCNP(registration);
   };
 
   /**
@@ -337,6 +285,8 @@ angular.module('calcentral.controllers').controller('UserOverviewController', fu
     adminService.actAs($scope.targetUser);
   };
 
+  $scope.cnpStatusIcon = statusHoldsService.cnpStatusIcon;
+
   $scope.$on('calcentral.api.user.isAuthenticated', function(event, isAuthenticated) {
     if (isAuthenticated) {
       // Refresh user properties because the canSeeCSLinks property is sensitive to the current route.
@@ -345,8 +295,7 @@ angular.module('calcentral.controllers').controller('UserOverviewController', fu
       .then(loadAcademics)
       .then(loadStudentSuccess)
       .then(loadRegistrations)
-      .then(loadDegreeProgresses)
-      .then(getRegMessages);
+      .then(loadDegreeProgresses);
     }
   });
 });

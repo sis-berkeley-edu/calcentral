@@ -6,12 +6,11 @@ var angular = require('angular');
 /**
  * Status controller
  */
-angular.module('calcentral.controllers').controller('StatusController', function(academicStatusFactory, activityFactory, apiService, statusHoldsService, badgesFactory, financesFactory, registrationsFactory, studentAttributesFactory, $http, $scope, $q) {
+angular.module('calcentral.controllers').controller('StatusController', function(academicStatusFactory, activityFactory, apiService, statusHoldsService, badgesFactory, financesFactory, registrationsFactory, $http, $scope, $q) {
   $scope.finances = {};
   $scope.regStatus = {
-    terms: [],
+    hasData: false,
     registrations: [],
-    positiveIndicators: [],
     isLoading: true
   };
 
@@ -75,62 +74,46 @@ angular.module('calcentral.controllers').controller('StatusController', function
   };
 
   var parseRegistrations = function(response) {
-    _.forOwn(response.data.terms, function(value, key) {
-      if (key === 'current' || key === 'next') {
-        if (value) {
-          $scope.regStatus.terms.push(value);
-        }
-      }
-    });
-    _.forEach($scope.regStatus.terms, function(term) {
-      var regStatus = response.data.registrations[term.id];
-
-      if (regStatus && regStatus[0]) {
-        _.merge(regStatus[0], term);
-        regStatus[0].isSummer = _.startsWith(term.name, 'Summer');
-
-        if (regStatus[0].isLegacy) {
-          $scope.regStatus.registrations.push(statusHoldsService.parseLegacyTerm(regStatus[0]));
-        } else {
-          $scope.regStatus.registrations.push(statusHoldsService.parseCsTerm(regStatus[0]));
-        }
+    var registrations = _.get(response, 'data.registrations');
+    _.forEach(registrations, function(registration) {
+      if (_.get(registration, 'showRegStatus')) {
+        $scope.regStatus.registrations.push(registration);
       }
     });
 
-    if (_.first($scope.regStatus.registrations)) {
-      $scope.hasRegistrationData = true;
+    if (registrations.length) {
+      _.forEach(registrations, function(registration) {
+        var registrationStatus = _.get(registration, 'regStatus.summary');
+        if (registrationStatus !== 'Officially Registered') {
+          $scope.regStatus.hasData = true;
+        }
+      });
     }
-    return;
-  };
-
-  var parseStudentAttributes = function(response) {
-    var studentAttributes = _.get(response, 'data.feed.student.studentAttributes.studentAttributes');
-    // Strip all positive student indicators from student attributes feed.
-    _.forEach(studentAttributes, function(attribute) {
-      if (_.startsWith(attribute.type.code, '+')) {
-        $scope.regStatus.positiveIndicators.push(attribute);
-      }
-    });
   };
 
   var parseRegistrationCounts = function() {
     _.forEach($scope.regStatus.registrations, function(registration) {
-      if (!registration.isShown) {
-        return;
-      }
+      var positiveIndicators = _.get(registration, 'positiveIndicators');
+      var indicatorTypes = [];
+      var career = _.get(registration, 'academicCareer.code');
+      _.forEach(positiveIndicators, function(indicator) {
+        var indicatorType = _.get(indicator, 'type.code');
+        indicatorTypes.push(indicatorType);
+      });
+
       // Count for registration status
-      if (registration.summary !== 'Officially Registered') {
+      if (registration.regStatus.summary !== 'Officially Registered') {
         $scope.count++;
         $scope.hasAlerts = true;
       }
       // Count for CNP status.  Per design, we do not want an alert for CNP if a student is "Not Enrolled" or "Officially Registered".
-      if (registration.summary === 'Not Officially Registered') {
-        if (!registration.positiveIndicators.ROP && !registration.positiveIndicators.R99 && registration.pastFinancialDisbursement) {
-          if ((registration.academicCareer.code === 'UGRD') && (!registration.pastClassesStart || (registration.term.id === '2168' && !registration.pastFall2016Extension))) {
+      if (registration.regStatus.summary === 'Not Officially Registered') {
+        if (!_.includes(indicatorTypes, '+ROP') && !_.includes(indicatorTypes, '+R99') && registration.termFlags.pastFinancialDisbursement) {
+          if ((career === 'UGRD') && !registration.termFlags.pastClassesStart) {
             $scope.count++;
             $scope.hasAlerts = true;
           }
-          if ((registration.academicCareer.code !== 'UGRD') && !registration.pastAddDrop) {
+          if ((career !== 'UGRD') && !registration.pastAddDrop) {
             $scope.count++;
             $scope.hasAlerts = true;
           }
@@ -172,6 +155,8 @@ angular.module('calcentral.controllers').controller('StatusController', function
     $scope.statusLoading = '';
   };
 
+  $scope.cnpStatusIcon = statusHoldsService.cnpStatusIcon;
+
   /**
    * Listen for this event in order to make a refresh request which updates the
    * displayed `api.user.profile.firstName` in the gear_popover.
@@ -202,8 +187,7 @@ angular.module('calcentral.controllers').controller('StatusController', function
 
       // Get all the necessary data from the different factories
       var getRegistrations = registrationsFactory.getRegistrations().then(parseRegistrations);
-      var getStudentAttributes = studentAttributesFactory.getStudentAttributes().then(parseStudentAttributes);
-      var statusGets = [loadHolds(), getRegistrations, getStudentAttributes];
+      var statusGets = [loadHolds(), getRegistrations];
 
       // Only fetch financial data for delegates who have been given explicit permssion.
       var includeFinancial = (!apiService.user.profile.delegateActingAsUid || apiService.user.profile.canActOnFinances);
@@ -215,8 +199,6 @@ angular.module('calcentral.controllers').controller('StatusController', function
 
       // Make sure to hide the spinner when everything is loaded
       $q.all(statusGets).then(function() {
-        statusHoldsService.matchTermIndicators($scope.regStatus.positiveIndicators, $scope.regStatus.registrations);
-        statusHoldsService.checkShownRegistrations($scope.regStatus.registrations);
         parseRegistrationCounts();
         if (includeFinancial) {
           parseFinances();

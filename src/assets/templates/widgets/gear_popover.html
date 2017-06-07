@@ -30,7 +30,7 @@
         data-cc-loading-process="Loading..."
         data-ng-if="statusLoading">
       </div>
-      <div data-ng-if="!statusLoading && !api.user.profile.delegateActingAsUid && (count !== 0 || hasBillingData || hasRegistrationData)">
+      <div data-ng-if="!statusLoading && !api.user.profile.delegateActingAsUid && (count !== 0 || hasBillingData || regStatus.hasData)">
         <div class="cc-popover-title">
           <h4>Status</h4>
         </div>

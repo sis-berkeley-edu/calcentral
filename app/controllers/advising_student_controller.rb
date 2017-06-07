@@ -32,7 +32,7 @@ class AdvisingStudentController < ApplicationController
   end
 
   def registrations
-    render json: MyAcademics::Registrations.new(student_uid_param).get_feed_as_json
+    render json: MyRegistrations::Statuses.new(student_uid_param).get_feed_as_json
   end
 
   def advising
@@ -53,10 +53,6 @@ class AdvisingStudentController < ApplicationController
 
   def resources
     render json: AdvisingResources.student_specific_links(student_uid_param)
-  end
-
-  def student_attributes
-    render json: HubEdos::StudentAttributes.new(user_id: student_uid_param).get
   end
 
   def academics_cache_expiry

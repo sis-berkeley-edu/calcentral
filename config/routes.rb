@@ -119,7 +119,6 @@ Calcentral::Application.routes.draw do
     get '/api/advising/registrations/:student_uid' => 'advising_student#registrations', :defaults => { :format => 'json' }
     get '/api/advising/resources/:student_uid' => 'advising_student#resources', :defaults => { :format => 'json' }
     get '/api/advising/student/:student_uid' => 'advising_student#profile', :defaults => { :format => 'json' }
-    get '/api/advising/student_attributes/:student_uid' => 'advising_student#student_attributes', :defaults => { :format => 'json' }
     get '/api/advising/advising/:student_uid' => 'advising_student#advising', :defaults => { :format => 'json' }
     get '/api/advising/student_success/:student_uid' => 'advising_student#student_success', :defaults => { :format => 'json' }
     get '/api/advising/degree_progress/grad/:student_uid' => 'advising_student#degree_progress_graduate', :defaults => { :format => 'json' }
@@ -202,7 +201,6 @@ Calcentral::Application.routes.draw do
     # EDOs from integration hub
     get '/api/edos/academic_status' => 'hub_edo#academic_status', :defaults => { :format => 'json' }
     get '/api/edos/student' => 'hub_edo#student', :defaults => { :format => 'json' }
-    get '/api/edos/student_attributes' => 'hub_edo#student_attributes', :defaults => { :format => 'json' }
     get '/api/edos/work_experience' => 'hub_edo#work_experience', :defaults => { :format => 'json' }
   end
 

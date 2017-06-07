@@ -1,5 +1,5 @@
-describe MyAcademics::Registrations do
-  let(:model) { MyAcademics::Registrations.new('61889') }
+describe MyRegistrations::Statuses do
+  let(:model) { MyRegistrations::Statuses.new('61889') }
   # TODO: Update the registrations to reflect actual data returned by EDO Hub
   let(:hub_student_registrations) do
     {
