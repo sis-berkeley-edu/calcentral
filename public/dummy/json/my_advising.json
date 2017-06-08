@@ -85,68 +85,6 @@
         }
       }
     ],
-    "appointments": [
-      {
-        "apptAdvisorId": "3030312345",
-        "apptAdvisorName": "Jane Smith",
-        "apptCategory": "Academic Advising",
-        "apptDate": "2016-07-25",
-        "apptDuration": "30",
-        "apptReason": "Add",
-        "apptReasonAddl": null,
-        "apptScheduledTime": "08.00.00.000000",
-        "apptStatus": "CANCEL",
-        "apptType": "Drop-in",
-        "apptTypeDetail": null,
-        "debug": {
-          "apptCategoryCode": "ADV",
-          "apptReasonCode": "A",
-          "sciApptAdvUnit": null,
-          "sciApptEnd": "08.30.00.000000",
-          "sciApptSeq": "4"
-        }
-      },
-      {
-        "apptAdvisorId": "3030312345",
-        "apptAdvisorName": "Jane Smith",
-        "apptCategory": "Academic Advising",
-        "apptDate": "2016-07-29",
-        "apptDuration": "30",
-        "apptReason": "Add",
-        "apptReasonAddl": "hello, some more information.",
-        "apptScheduledTime": "10.00.00.000000",
-        "apptStatus": "CANCEL",
-        "apptType": "Skype",
-        "apptTypeDetail": null,
-        "debug": {
-          "apptCategoryCode": "ADV",
-          "apptReasonCode": "A",
-          "sciApptAdvUnit": null,
-          "sciApptEnd": "10.30.00.000000",
-          "sciApptSeq": "2"
-        }
-      },
-      {
-        "apptAdvisorId": "3030312345",
-        "apptAdvisorName": "Jane Smith",
-        "apptCategory": "Academic Advising",
-        "apptDate": "2016-07-26",
-        "apptDuration": "30",
-        "apptReason": "Add",
-        "apptReasonAddl": null,
-        "apptScheduledTime": "13.00.00.000000",
-        "apptStatus": "CANCEL",
-        "apptType": "In Person",
-        "apptTypeDetail": null,
-        "debug": {
-          "apptCategoryCode": "ADV",
-          "apptReasonCode": "A",
-          "sciApptAdvUnit": null,
-          "sciApptEnd": "13.30.00.000000",
-          "sciApptSeq": "2"
-        }
-      }
-    ],
     "links": {
       "manageAppointments": {
         "IS_CS_LINK": true,
