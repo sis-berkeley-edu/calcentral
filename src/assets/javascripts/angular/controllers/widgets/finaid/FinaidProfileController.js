@@ -20,6 +20,9 @@ angular.module('calcentral.controllers').controller('FinaidProfileController', f
         angular.extend($scope.finaidProfile, _.get(response, 'data.feed.status'));
         $scope.finaidProfileInfo.errored = _.get(response, 'data.errored');
         $scope.finaidProfileInfo.isLoading = false;
+        if ($scope.finaidProfile.categories[0]) {
+          _.set($scope.finaidProfile.categories[0], 'show', true);
+        }
       }
     );
   };
