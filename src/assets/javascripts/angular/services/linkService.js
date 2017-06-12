@@ -82,17 +82,26 @@ angular.module('calcentral.services').factory('linkService', function($location,
     }
   };
 
-  /* Temporary hack to get CalCentral through testing of 9.2 - See SISRP-33544 */
-  var addQueryStringParameterEncodedAmpersand = function(uri, key, value) {
-    var separator = uri.indexOf('?') !== -1 ? '%26' : '?';
-    return uri + separator + key + '=' + value;
+  /* Temporary hack to make GL 9.2 CS links work - See SISRP-33544 */
+  var encodeQueryStringAmpersands = function(url) {
+    if (url.indexOf('?')) {
+      var parser = document.createElement('a');
+      parser.href = url;
+      var queryString = parser.search;
+      queryString = queryString.replace(/&/g, '%26');
+      parser.search = queryString;
+      url = parser.href;
+      return url;
+    } else {
+      return url;
+    }
   };
 
   return {
     addCurrentPagePropertiesToLink: addCurrentPagePropertiesToLink,
     addCurrentPagePropertiesToResources: addCurrentPagePropertiesToResources,
     addCurrentRouteSettings: addCurrentRouteSettings,
-    addQueryStringParameterEncodedAmpersand: addQueryStringParameterEncodedAmpersand,
+    encodeQueryStringAmpersands: encodeQueryStringAmpersands,
     fixLastQuestionMark: fixLastQuestionMark,
     makeOutboundlink: makeOutboundlink,
     updateQueryStringParameter: updateQueryStringParameter
