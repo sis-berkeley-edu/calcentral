@@ -1635,7 +1635,7 @@ INSERT INTO oec_course_codes VALUES (101, 'ISF', '', 'QHUIS', true, '2015-08-13 
 INSERT INTO oec_course_codes VALUES (102, 'ITALIAN', '', 'HITAL', false, '2015-08-13 23:26:36.132', '2015-08-13 23:26:36.132');
 INSERT INTO oec_course_codes VALUES (103, 'JAPAN', '', 'HGEAL', false, '2015-08-13 23:26:36.139', '2015-08-13 23:26:36.139');
 INSERT INTO oec_course_codes VALUES (104, 'JEWISH', '', 'KDCJS', false, '2015-08-13 23:26:36.143', '2015-08-13 23:26:36.143');
-INSERT INTO oec_course_codes VALUES (105, 'JOURN', '', 'DJOUR', false, '2015-08-13 23:26:36.148', '2015-08-13 23:26:36.148');
+INSERT INTO oec_course_codes VALUES (105, 'JOURN', '', 'DJOUR', true, '2015-08-13 23:26:36.148', '2015-08-13 23:26:36.148');
 INSERT INTO oec_course_codes VALUES (106, 'KHMER', '', 'HVSSA', false, '2015-08-13 23:26:36.152', '2015-08-13 23:26:36.152');
 INSERT INTO oec_course_codes VALUES (107, 'KOREAN', '', 'HGEAL', false, '2015-08-13 23:26:36.157', '2015-08-13 23:26:36.157');
 INSERT INTO oec_course_codes VALUES (108, 'L&S', '', 'QHUIS', true, '2015-08-13 23:26:36.16', '2015-08-13 23:26:36.16');
