@@ -157,19 +157,22 @@ angular.module('calcentral.directives').directive('ccCampusSolutionsLinkDirectiv
       linkUrl = linkService.fixLastQuestionMark(linkUrl);
 
       if (includeUcFrom) {
-        linkUrl = linkService.addQueryStringParameterEncodedAmpersand(linkUrl, 'ucFrom', 'CalCentral');
+        linkUrl = linkService.updateQueryStringParameter(linkUrl, 'ucFrom', 'CalCentral');
       }
       if (includeUcFromText) {
-        linkUrl = linkService.addQueryStringParameterEncodedAmpersand(linkUrl, 'ucFromText', ccPageName);
+        var urlEncodedCcPageText = encodeURIComponent(ccPageName);
+        linkUrl = linkService.updateQueryStringParameter(linkUrl, 'ucFromText', urlEncodedCcPageText);
       }
       if (includeUcFromLink) {
         if (ccCacheString) {
-          ccPageUrl = linkService.addQueryStringParameterEncodedAmpersand(ccPageUrl, 'ucUpdateCache', ccCacheString);
+          ccPageUrl = linkService.updateQueryStringParameter(ccPageUrl, 'ucUpdateCache', ccCacheString);
         }
         var urlEncodedCcPageUrl = encodeURIComponent(ccPageUrl);
-        linkUrl = linkService.addQueryStringParameterEncodedAmpersand(linkUrl, 'ucFromLink', urlEncodedCcPageUrl);
+        linkUrl = linkService.updateQueryStringParameter(linkUrl, 'ucFromLink', urlEncodedCcPageUrl);
       }
     }
+    /* Temporary hack to make GL 9.2 CS links work - See SISRP-33544 */
+    linkUrl = linkService.encodeQueryStringAmpersands(linkUrl);
     return linkUrl;
   };
 
