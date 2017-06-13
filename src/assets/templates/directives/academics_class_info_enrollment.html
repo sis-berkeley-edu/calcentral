@@ -126,7 +126,7 @@
             <th data-cc-sortable-column-directive="majors" data-column-heading="Majors" class="show-for-medium-up"></th>
             <th class="show-for-medium-up"
               data-ng-repeat="column in columnHeaders"
-              data-cc-sortable-column-directive="{{column.instruction_format}}"
+              data-cc-sortable-column-directive="columns[{{$index}}].section_number"
               data-column-heading="{{column.instruction_format}}"></th>
             <th data-cc-sortable-column-directive="terms_in_attendance" data-column-heading="Terms" class="show-for-large-up"></th>
             <th data-cc-sortable-column-directive="units" data-column-heading="Units" class="show-for-large-up"></th>
