@@ -2,14 +2,14 @@
   <li class="cc-popover-item"
     data-ng-repeat="registration in regStatus.registrations | orderBy:'-id'"
     data-ng-if="api.user.profile.roles.student && api.user.profile.features.regstatus">
-    <a href="/academics" data-ng-if="registration.regStatus.summary !== 'Officially Registered'">
+    <a href="/academics" data-ng-if="registration.regStatus.summary !== 'Officially Registered' && registration.regStatus.explanation">
       <div class="cc-launcher-status-description">
-        <i class="fa fa-exclamation-circle cc-icon-red"></i>
+        <i class="cc-icon fa" data-ng-class="regStatusIcon(registration.regStatus.summary)"></i>
         <strong><span data-ng-bind="registration.term.name"></span>: </strong> <span data-ng-bind="registration.regStatus.summary"></span><br>
       </div>
       <div class="cc-launcher-status-description" data-ng-if="registration.showCnp">
         <div>
-          <i class="fa" data-ng-class="cnpStatusIcon(registration)"></i>
+          <i class="cc-icon fa" data-ng-class="cnpStatusIcon(registration)"></i>
           <span data-ng-bind-html="registration.cnpStatus.popoverSummary"></span>
         </div>
       </div>

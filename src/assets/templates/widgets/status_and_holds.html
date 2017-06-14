@@ -12,20 +12,29 @@
             <h4 data-ng-bind="registration.term.name"></h4>
             <ul class="cc-widget-list cc-status-holds-list">
               <li class="cc-widget-list-hover"
+                  data-ng-if="registration.regStatus.explanation"
                   data-ng-class="{'cc-widget-list-hover-opened':(registration.regStatus.show)}"
                   data-cc-accessible-focus-directive
                   data-ng-click="api.widget.toggleShow($event, null, registration.regStatus, 'My Academics - Status and Holds')">
                 <div class="cc-status-holds-list-section">
                   <div class="cc-status-holds-list-item">
                     <span>
-                      <i class="cc-icon fa"
-                         data-ng-class="{true:'fa-check-circle cc-icon-green',false:'fa-exclamation-circle cc-icon-red'}[registration.regStatus.summary == 'Officially Registered']">
-                      </i>
+                      <i class="cc-icon fa" data-ng-class="regStatusIcon(registration.regStatus.summary)"></i>
                     </span>
                     <span data-ng-bind="registration.regStatus.summary"></span>
                   </div>
                   <div class="cc-status-holds-expanded-text" data-ng-show="registration.regStatus.show">
                     <span data-ng-bind-html="registration.regStatus.explanation"></span>
+                  </div>
+                </div>
+              </li>
+              <li data-ng-if="!registration.regStatus.explanation">
+                <div class="cc-status-holds-list-section">
+                  <div class="cc-status-holds-list-item">
+                    <span>
+                      <i class="cc-icon fa" data-ng-class="regStatusIcon(registration.regStatus.summary)"></i>
+                    </span>
+                    <span data-ng-bind="registration.regStatus.summary"></span>
                   </div>
                 </div>
               </li>

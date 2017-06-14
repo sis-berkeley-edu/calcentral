@@ -20,7 +20,7 @@ module MyRegistrations
       {
         notOfficiallyRegistered: find_message_by_number(100),
         cnpNotificationUndergrad: find_message_by_number(101),
-        cnpNotificationGrad: find_message_by_number(102),
+        feesUnpaidGrad: find_message_by_number(102),
         cnpWarningUndergrad: find_message_by_number(103),
         cnpWarningGrad: find_message_by_number(104),
         notEnrolledUndergrad: find_message_by_number(105),
@@ -144,11 +144,13 @@ module MyRegistrations
       pos_indicators = positive_service_indicators.clone
       term_registrations.each do |term_id, term_values|
         term_values[:positiveIndicators] = [].tap do |term_indicators|
-          pos_indicators.each do |indicator|
-            # Each indicator has a "fromTerm" and a "toTerm", but UC Berkeley usage of the positive service indicator is
-            # term-specific, so these should always be the same.
-            if term_id == indicator.try(:[], 'fromTerm').try(:[], 'id')
-              term_indicators << pos_indicators.delete(indicator)
+          # Each indicator has a "fromTerm" and a "toTerm", but UC Berkeley usage of the positive service indicator is
+          # term-specific, so these should always be the same.
+          pos_indicators.delete_if do |indicator|
+            if term_id.try(:to_i) == indicator.try(:[], 'fromTerm').try(:[], 'id').try(:to_i)
+              term_indicators << indicator
+              # Delete the indicator from our array so we don't have to process it again
+              true
             end
           end
         end

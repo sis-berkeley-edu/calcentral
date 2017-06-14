@@ -64,36 +64,70 @@ module MyRegistrations
 
     def set_regstatus_messaging(term_registrations)
       term_registrations.each do |term_id, term_value|
-        regstatus_summary = set_regstatus_summary(term_value)
+        undergrad = term_value.try(:[], 'academicCareer').try(:[], 'code') == 'UGRD'
+        registered = {isActive: term_includes_indicator?(term_value, '+REG')}
+        registered.merge!({message: extract_indicator_message(term_value, '+REG')}) if registered[:isActive]
+
+        regstatus_summary = undergrad ? set_regstatus_summary_undergrad(term_value, registered) : set_regstatus_summary_grad(term_value, registered)
         term_value[:regStatus] = {
           summary: regstatus_summary,
-          explanation: set_regstatus_explanation(term_value, regstatus_summary)
+          explanation: undergrad ? set_regstatus_explanation_undergrad(term_value, regstatus_summary, registered) : set_regstatus_explanation_grad(term_value, regstatus_summary)
         }
       end
     end
 
-    def set_regstatus_summary(term)
-      registered = term_includes_indicator?(term, '+REG')
+    def set_regstatus_summary_grad(term, registered)
       enrolled = enrolled?(term)
-      if registered && enrolled
-        summary = 'Officially Registered'
-      elsif !registered && enrolled
-        summary = 'Not Officially Registered'
+      has_r99_sf20 = term_includes_r99_sf20?(term)
+      if enrolled
+        if registered[:isActive]
+          summary = 'You have access to campus services.'
+        else
+          if has_r99_sf20
+            summary = 'You may not have access to campus services due to a hold. Please address your holds to become entitled to campus services.'
+          else
+            summary = 'Fees Unpaid'
+          end
+        end
+      else
+        summary = 'Not Enrolled in Classes'
+      end
+      summary
+    end
+
+    def set_regstatus_explanation_grad(term, summary)
+      case summary
+        when 'Fees Unpaid'
+          return regstatus_messages[:feesUnpaidGrad]
+        when 'Not Enrolled'
+          return regstatus_messages[:notEnrolledGrad]
+        else
+          return nil
+      end
+    end
+
+    def set_regstatus_summary_undergrad(term, registered)
+      enrolled = enrolled?(term)
+      if enrolled
+        if registered[:isActive]
+          summary = 'Officially Registered'
+        else
+          summary = 'Not Officially Registered'
+        end
       else
         summary = 'Not Enrolled'
       end
-      return summary
+      summary
     end
 
-    def set_regstatus_explanation(term, summary)
+    def set_regstatus_explanation_undergrad(term, summary, registered)
       summer = term.try(:[], :isSummer)
-      undergrad = term.try(:[], 'academicCareer').try(:[], 'code') == 'UGRD'
       case summary
         when 'Officially Registered'
           if summer
             return 'You are officially registered for this term.'
           else
-            return 'You are officially registered and are entitled to access campus services.'
+            return registered[:message]
           end
         when 'Not Officially Registered'
           if summer
@@ -102,11 +136,7 @@ module MyRegistrations
             return regstatus_messages[:notOfficiallyRegistered]
           end
         when 'Not Enrolled'
-          if undergrad
-            return regstatus_messages[:notEnrolledUndergrad]
-          else
-            return regstatus_messages[:notEnrolledGrad]
-          end
+          return regstatus_messages[:notEnrolledUndergrad]
       end
     end
 
@@ -118,64 +148,57 @@ module MyRegistrations
 
     def set_cnp_messaging(term_registrations)
       term_registrations.each do |term_id, term_value|
-        undergrad = term_value.try(:[], 'academicCareer').try(:[], 'code') == 'UGRD'
-        has_r99 = term_includes_indicator?(term_value, '+R99')
-        has_rop = term_includes_indicator?(term_value, '+ROP')
-        past_financial_disbursement = term_value.try(:[], :termFlags).try(:[], :pastFinancialDisbursement)
+        show_cnp = term_value.try(:[], :showCnp)
 
-        term_value[:cnpStatus] = {
-          summary: set_cnp_summary(has_r99, has_rop, past_financial_disbursement),
-          explanation: set_cnp_explanation(has_r99, has_rop, past_financial_disbursement, undergrad),
-          popoverSummary: set_cnp_popover_summary(has_r99, has_rop, past_financial_disbursement)
-        }
+        if show_cnp
+          r99 = {isActive: term_includes_indicator?(term_value, '+R99')}
+          rop = {isActive: term_includes_indicator?(term_value, '+ROP')}
+          r99.merge!({message: extract_indicator_message(term_value, '+R99')}) if r99[:isActive]
+          rop.merge!({message: extract_indicator_message(term_value, '+ROP')}) if rop[:isActive]
+          past_financial_disbursement = get_term_flag(term_value, :pastFinancialDisbursement)
+          term_value[:cnpStatus] = {
+            summary: set_cnp_summary(r99, rop),
+            explanation: set_cnp_explanation(r99, rop, past_financial_disbursement),
+            popoverSummary: set_cnp_popover_summary(r99, rop, past_financial_disbursement)
+          }
+        end
       end
     end
 
-    def set_cnp_summary(has_r99, has_rop, past_financial_disbursement)
-      if has_r99
+    def set_cnp_summary(r99, rop)
+      if r99[:isActive]
         return 'You Will Not Be Canceled for Non-Payment'
-      elsif !has_r99 && has_rop
-        return 'Temporary Protection from Cancel for Non-Payment'
-      elsif !has_r99 && !has_rop && !past_financial_disbursement
-        return 'Cancel for Non-Payment Notification'
-      elsif !has_r99 && !has_rop && past_financial_disbursement
-        return 'Cancel for Non-Payment Warning'
+      elsif !r99[:isActive] && rop[:isActive]
+        return 'You Are Subject to Cancel for Non-Payment - Deadline Extended'
+      elsif !r99[:isActive] && !rop[:isActive]
+        return 'You Are Subject to Cancel for Non-Payment'
       end
     end
 
-    def set_cnp_popover_summary(has_r99, has_rop, past_financial_disbursement)
-      if has_r99
-        return '<strong>Exception: </strong>Your enrollment is not subject to cancellation this semester.'
-      elsif !has_r99 && has_rop
+    def set_cnp_popover_summary(r99, rop, past_financial_disbursement)
+      if r99[:isActive]
+        return 'You Will Not Be Canceled for Non-Payment'
+      elsif !r99[:isActive] && rop[:isActive]
         return 'Temporary Protection from Cancel for Non-Payment'
-      elsif !has_r99 && !has_rop && !past_financial_disbursement
-        return 'Cancel for Non-Payment Notification'
-      elsif !has_r99 && !has_rop && past_financial_disbursement
-        return '<strong>Warning: </strong>Your enrollment is not subject to cancellation this semester.'
-      end
-    end
-
-    def set_cnp_explanation(has_r99, has_rop, past_financial_disbursement, undergrad)
-      if has_r99
-        'You have an exception from Cancellation for Non-Payment (CNP) for this term.  You will not be dropped from your classes for this term.
-         You remain financially responsible for all charges on your Student Account.  Please monitor your communications and tasks in CalCentral for updates.'
-      elsif !has_r99 && has_rop
-        'The deadline to pay for this term has been extended.  To maintain enrollment in your current class schedule and avoid an administrative withdrawal, please pay
-         at least 20% of your tuition and fees by August 30th.  Note that if you are dropped for non-payment you will be subject to the pro-rated fee schedule.
-         <br><br>
-         To learn more about the consequences of withdrawal please visit <a href="http://registrar.berkeley.edu/registration/cancellation-withdrawal/refunds-after-withdrawl">refunds after
-         withdrawal.</a>'
-      elsif !has_r99 && !has_rop
-        if !past_financial_disbursement && undergrad
-          return regstatus_messages[:cnpNotificationUndergrad]
-        elsif !past_financial_disbursement && !undergrad
-          return regstatus_messages[:cnpNotificationGrad]
-        elsif past_financial_disbursement && undergrad
-          return regstatus_messages[:cnpWarningUndergrad]
-        elsif past_financial_disbursement && !undergrad
-          return regstatus_messages[:cnpWarningGrad]
+      elsif !r99[:isActive] && !rop[:isActive]
+        if past_financial_disbursement
+          return '<strong>Warning: </strong>You Are Subject to Cancel for Non-Payment.'
         else
-          return 'You may be subject to <a href="http://registrar.berkeley.edu/cnp">Cancel for Non-Payment.</a>'
+          return 'You Are Subject to Cancel for Non-Payment'
+        end
+      end
+    end
+
+    def set_cnp_explanation(r99, rop, past_financial_disbursement)
+      if r99[:isActive]
+        return r99[:message]
+      elsif !r99[:isActive] && rop[:isActive]
+        return rop[:message]
+      elsif !r99[:isActive] && !rop[:isActive]
+        if !past_financial_disbursement
+          return regstatus_messages[:cnpNotificationUndergrad]
+        else past_financial_disbursement
+          return regstatus_messages[:cnpWarningUndergrad]
         end
       end
     end
@@ -185,17 +208,15 @@ module MyRegistrations
       regstatus = term.try(:[], :regStatus).try(:[], :summary)
       undergrad = term.try(:[], 'academicCareer').try(:[], 'code') == 'UGRD'
       past_classes_start = get_term_flag(term, :pastClassesStart)
-      past_add_drop = get_term_flag(term, :pastAddDrop)
 
-      # Only consider showing CNP status for non-summer terms in which a student is not already Officially Registered
-      if !summer && regstatus != 'Officially Registered'
+      # Only consider showing CNP status for undergraduate non-summer terms in which the student is not already Officially Registered
+      if undergrad && !summer && regstatus != 'Officially Registered'
         # If a student is Not Enrolled and does not have CNP protection through R99 or ROP, do not show CNP warning as there are no classes to be dropped from.
-        # We need to run this block first, as it is possible for these conditions to be met and still return 'true' in the next block.
         return false if regstatus == 'Not Enrolled' && (!term_includes_indicator?(term, '+R99') && !term_includes_indicator?(term, '+ROP'))
 
-        # If a student is not Officially Registered but is protected from CNP via R99, show protected status regardless of where we are in the term timeline.
-        # Otherwise, show CNP status until CNP action is taken (start of classes for undergrads, 5 weeks into the term for grad/law)
-        if (regstatus != 'Officially Registered' && term_includes_indicator?(term, '+R99')) || (undergrad && !past_classes_start) || (!undergrad && !past_add_drop)
+        # If a student is not Officially Registered but is protected from CNP via R99, show protected status regardless of where we are in the term.
+        # Otherwise, show CNP status until CNP action is taken (start of classes)
+        if (regstatus != 'Officially Registered' && term_includes_indicator?(term, '+R99')) || !past_classes_start
           return true
         else
           return false
@@ -210,12 +231,6 @@ module MyRegistrations
       term.try(:[], :termFlags).try(:[], flag)
     end
 
-    def term_includes_indicator?(term, indicator_type)
-      !!term.try(:[], :positiveIndicators).find do |indicator|
-        indicator.try(:[], 'type').try(:[], 'code') == indicator_type
-      end
-    end
-
     def enrolled?(term)
       term_units = term.try(:[], 'termUnits').find do |units|
         units.try(:[], 'type').try(:[], 'description') == 'Total'
@@ -223,6 +238,25 @@ module MyRegistrations
       enrolled_units = term_units.try(:[], 'unitsEnrolled')
       taken_units = term_units.try(:[], 'unitsTaken')
       (!enrolled_units.nil? && enrolled_units != 0) || (!taken_units.nil? && taken_units != 0)
+    end
+
+    def term_includes_indicator?(term, indicator_type)
+      !!term.try(:[], :positiveIndicators).find do |indicator|
+        indicator.try(:[], 'type').try(:[], 'code') == indicator_type
+      end
+    end
+
+    # Graduate students receive R99 service indicators, but it's only related to their registration status if it has a reason code of 'SF20%'
+    def term_includes_r99_sf20?(term)
+      !!term.try(:[], :positiveIndicators).find do |indicator|
+        indicator.try(:[], 'type').try(:[], 'code') == '+R99' && indicator.try(:[], 'reason').try(:[], 'code') == 'SF20%'
+      end
+    end
+
+    def extract_indicator_message(term, indicator_type)
+      term.try(:[], :positiveIndicators).find do |indicator|
+        indicator.try(:[], 'type').try(:[], 'code') == indicator_type
+      end.try(:[], 'reason').try(:[], 'formalDescription')
     end
 
   end

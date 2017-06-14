@@ -87,6 +87,7 @@ angular.module('calcentral.controllers').controller('AcademicsStatusHoldsBlocksC
   };
 
   $scope.cnpStatusIcon = statusHoldsService.cnpStatusIcon;
+  $scope.regStatusIcon = statusHoldsService.regStatusIcon;
 
   var loadStatusInformation = function() {
     getCalResidency()

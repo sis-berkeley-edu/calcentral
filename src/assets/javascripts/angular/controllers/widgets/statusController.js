@@ -84,7 +84,8 @@ angular.module('calcentral.controllers').controller('StatusController', function
     if (registrations.length) {
       _.forEach(registrations, function(registration) {
         var registrationStatus = _.get(registration, 'regStatus.summary');
-        if (registrationStatus !== 'Officially Registered') {
+        var registrationExplanation = _.get(registration, 'regStatus.explanation');
+        if (registrationStatus !== 'Officially Registered' && registrationExplanation) {
           $scope.regStatus.hasData = true;
         }
       });
@@ -102,18 +103,15 @@ angular.module('calcentral.controllers').controller('StatusController', function
       });
 
       // Count for registration status
-      if (registration.regStatus.summary !== 'Officially Registered') {
+      // Graduates can have a regStatus that is not equal to 'Officially Registered', but if it's not accompanied by an explanation, then it should not count as an alert.
+      if (registration.regStatus.summary !== 'Officially Registered' && registration.regStatus.explanation) {
         $scope.count++;
         $scope.hasAlerts = true;
       }
       // Count for CNP status.  Per design, we do not want an alert for CNP if a student is "Not Enrolled" or "Officially Registered".
-      if (registration.regStatus.summary === 'Not Officially Registered') {
+      if (career === 'UGRD' && registration.regStatus.summary === 'Not Officially Registered') {
         if (!_.includes(indicatorTypes, '+ROP') && !_.includes(indicatorTypes, '+R99') && registration.termFlags.pastFinancialDisbursement) {
-          if ((career === 'UGRD') && !registration.termFlags.pastClassesStart) {
-            $scope.count++;
-            $scope.hasAlerts = true;
-          }
-          if ((career !== 'UGRD') && !registration.pastAddDrop) {
+          if (!registration.termFlags.pastClassesStart) {
             $scope.count++;
             $scope.hasAlerts = true;
           }
@@ -156,6 +154,7 @@ angular.module('calcentral.controllers').controller('StatusController', function
   };
 
   $scope.cnpStatusIcon = statusHoldsService.cnpStatusIcon;
+  $scope.regStatusIcon = statusHoldsService.regStatusIcon;
 
   /**
    * Listen for this event in order to make a refresh request which updates the

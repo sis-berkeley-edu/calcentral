@@ -25,7 +25,20 @@ angular.module('calcentral.services').service('statusHoldsService', function() {
     }
   };
 
+  var regStatusIcon = function(regStatusSummary) {
+    var icon = '';
+    if (regStatusSummary === 'Officially Registered' || regStatusSummary === 'You have access to campus services.') {
+      icon = 'fa-check-circle cc-icon-green';
+    } else if (regStatusSummary === 'Not Officially Registered' || regStatusSummary === 'Not Enrolled') {
+      icon = 'fa-exclamation-circle cc-icon-red';
+    } else {
+      icon = 'fa-exclamation-triangle cc-icon-gold';
+    }
+    return icon;
+  };
+
   return {
-    cnpStatusIcon: cnpStatusIcon
+    cnpStatusIcon: cnpStatusIcon,
+    regStatusIcon: regStatusIcon
   };
 });

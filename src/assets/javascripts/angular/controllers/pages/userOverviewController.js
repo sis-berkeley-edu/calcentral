@@ -286,6 +286,7 @@ angular.module('calcentral.controllers').controller('UserOverviewController', fu
   };
 
   $scope.cnpStatusIcon = statusHoldsService.cnpStatusIcon;
+  $scope.regStatusIcon = statusHoldsService.regStatusIcon;
 
   $scope.$on('calcentral.api.user.isAuthenticated', function(event, isAuthenticated) {
     if (isAuthenticated) {
