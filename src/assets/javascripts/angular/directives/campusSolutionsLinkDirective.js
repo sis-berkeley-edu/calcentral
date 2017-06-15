@@ -171,8 +171,6 @@ angular.module('calcentral.directives').directive('ccCampusSolutionsLinkDirectiv
         linkUrl = linkService.updateQueryStringParameter(linkUrl, 'ucFromLink', urlEncodedCcPageUrl);
       }
     }
-    /* Temporary hack to make GL 9.2 CS links work - See SISRP-33544 */
-    linkUrl = linkService.encodeQueryStringAmpersands(linkUrl);
     return linkUrl;
   };
 
