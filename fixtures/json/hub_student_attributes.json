@@ -1,141 +1,334 @@
 {
-   "apiResponse":{
-      "source":"UCB-SIS-STUDENT",
-      "correlationId":"efec2be8-0198-495c-93f8-922a76dc2193",
-      "responseType":"http://bmeta.berkeley.edu/student/studentV0.xsd/students",
-      "response":{
-         "any":{
-            "students":[
-               {
-                  "identifiers":[
-                     {
-                        "type":"student-id",
-                        "id":"11667051",
-                        "disclose":false
-                     },
-                     {
-                        "type":"campus-uid",
-                        "id":"61889",
-                        "disclose":true
-                     },
-                     {
-                        "type":"Social Security Number",
-                        "id":"***-**-****",
-                        "disclose":false
-                     },
-                     {
-                        "type":"DB2",
-                        "id":"11667051",
-                        "disclose":false,
-                        "fromDate":"1902-02-01"
-                     }
-                  ],
-                  "affiliations":[
-                     {
-                        "type":{
-                           "code":"STUDENT",
-                           "description":""
-                        },
-                        "detail":"",
-                        "status":{
-                           "code":"ACT",
-                           "description":"Active"
-                        },
-                        "fromDate":"2016-03-19"
-                     },
-                     {
-                        "type":{
-                           "code":"UNDERGRAD",
-                           "description":"Undergraduate Student"
-                        },
-                        "detail":"Active",
-                        "status":{
-                           "code":"ACT",
-                           "description":"Active"
-                        },
-                        "fromDate":"2016-03-19"
-                     }
-                  ],
-                  "confidential":false,
-                  "studentAttributes":{
-                     "studentAttributes":[
-                        {
-                           "type":{
-                              "code":"AHI",
-                              "description":"American Hist & Inst Waiver"
-                           },
-                           "fromDate":"2001-01-01",
-                           "comments":""
-                        },
-                        {
-                           "type":{
-                              "code":"R5TA",
-                              "description":"5 Terms in Attendance"
-                           },
-                           "fromDate":"2016-03-21",
-                           "comments":""
-                        },
-                        {
-                           "type":{
-                              "code":"RL4",
-                              "description":"EOP Recalc based on FASFA"
-                           },
-                           "fromDate":"2016-03-21",
-                           "comments":""
-                        },
-                        {
-                           "type":{
-                              "code":"RL5",
-                              "description":"EOP Pool for GB"
-                           },
-                           "fromDate":"2016-03-21",
-                           "comments":""
-                        },
-                        {
-                           "type":{
-                              "code":"RPRI",
-                              "description":"Priority Enrollment"
-                           },
-                           "fromDate":"2016-03-21",
-                           "comments":""
-                        },
-                        {
-                           "type":{
-                              "code":"RVT",
-                              "description":"Veteran - Priority Enrollment"
-                           },
-                           "fromDate":"2016-03-21",
-                           "comments":""
-                        },
-                        {
-                           "type":{
-                              "code":"RZA",
-                              "description":"Active Athlete"
-                           },
-                           "fromDate":"2016-05-25",
-                           "comments":""
-                        },
-                        {
-                           "type":{
-                              "code":"VAC",
-                              "description":"American Cultures"
-                           },
-                           "fromDate":"2001-01-01",
-                           "comments":""
-                        },
-                        {
-                           "type":{
-                              "code":"VELW",
-                              "description":"Entry Level Writing"
-                           },
-                           "fromDate":"2001-01-01",
-                           "comments":""
-                        }
-                     ]
-                  }
-               }
+  "apiResponse": {
+    "source": "UCB-SIS-STUDENT",
+    "correlationId": "04055c69-e3b4-4982-9aca-e6fd5fca7ec4",
+    "responseType": "http://bmeta.berkeley.edu/student/studentV0.xsd/students",
+    "response": {
+      "any": {
+        "students": [
+          {
+            "identifiers": [
+              {
+                "type": "student-id",
+                "id": "11667051",
+                "disclose": true
+              },
+              {
+                "type": "campus-uid",
+                "id": "61889",
+                "disclose": true
+              },
+              {
+                "type": "Social Security Number",
+                "id": "***-**-****",
+                "disclose": false
+              },
+              {
+                "type": "DB2",
+                "id": "11667051",
+                "disclose": false,
+                "fromDate": "1902-02-01"
+              }
+            ],
+            "affiliations": [
+              {
+                "type": {
+                  "code": "ADMT_UX",
+                  "description": "Admitted student's access to Cal Central"
+                },
+                "detail": "Admitted",
+                "status": {
+                  "code": "ACT",
+                  "description": "Active"
+                },
+                "fromDate": "2017-03-01"
+              },
+              {
+                "type": {
+                  "code": "STUDENT",
+                  "description": ""
+                },
+                "detail": "",
+                "status": {
+                  "code": "ACT",
+                  "description": "Active"
+                },
+                "fromDate": "2016-03-19"
+              },
+              {
+                "type": {
+                  "code": "UNDERGRAD",
+                  "description": "Undergraduate Student"
+                },
+                "detail": "Active",
+                "status": {
+                  "code": "ACT",
+                  "description": "Active"
+                },
+                "fromDate": "2016-03-19"
+              }
+            ],
+            "confidential": false,
+            "studentAttributes": [
+              {
+                "type": {
+                  "code": "AHC",
+                  "description": "American History - Completed"
+                },
+                "reason": {},
+                "fromDate": "2017-04-18",
+                "comments": ""
+              },
+              {
+                "type": {
+                  "code": "AIC",
+                  "description": "Amer Institutions - Completed"
+                },
+                "reason": {},
+                "fromDate": "2017-04-18",
+                "comments": ""
+              },
+              {
+                "type": {
+                  "code": "R8TA",
+                  "description": "8+ Terms in Attendance"
+                },
+                "reason": {},
+                "fromDate": "2017-04-01",
+                "comments": ""
+              },
+              {
+                "type": {
+                  "code": "RL4",
+                  "description": "EOP Recalc based on FASFA"
+                },
+                "reason": {},
+                "fromDate": "2016-03-21",
+                "comments": ""
+              },
+              {
+                "type": {
+                  "code": "RL5",
+                  "description": "EOP Pool for GB"
+                },
+                "reason": {},
+                "fromDate": "2016-03-21",
+                "comments": ""
+              },
+              {
+                "type": {
+                  "code": "RVT",
+                  "description": "Veteran - Priority Enrollment"
+                },
+                "reason": {},
+                "fromDate": "2016-03-21",
+                "comments": ""
+              },
+              {
+                "type": {
+                  "code": "UAP",
+                  "description": "University Affiliate Program"
+                },
+                "reason": {},
+                "fromDate": "2016-10-18",
+                "comments": ""
+              },
+              {
+                "type": {
+                  "code": "VAC",
+                  "description": "American Cultures"
+                },
+                "reason": {},
+                "fromDate": "2001-01-01",
+                "comments": ""
+              },
+              {
+                "type": {
+                  "code": "VELW",
+                  "description": "Entry Level Writing"
+                },
+                "reason": {},
+                "fromDate": "2001-01-01",
+                "comments": ""
+              },
+              {
+                "type": {
+                  "code": "+R99",
+                  "description": "CNP Exception"
+                },
+                "reason": {
+                  "code": "FARVW",
+                  "description": "Exception from CNP",
+                  "formalDescription": "You have an exception from Cancellation for Non Payment (CNP) for this term. You will not be dropped from your classes for this term. You remain financially responsible for all charges on your Student Account. Please monitor your communications and tasks in CalCentral for updates."
+                },
+                "fromTerm": {
+                  "id": "2172",
+                  "name": "2017 Spring",
+                  "category": {
+                    "code": "R",
+                    "description": "Regular Term"
+                  },
+                  "academicYear": "2017",
+                  "beginDate": "2017-01-10",
+                  "endDate": "2017-05-12"
+                },
+                "toTerm": {
+                  "id": "2172",
+                  "name": "2017 Spring",
+                  "category": {
+                    "code": "R",
+                    "description": "Regular Term"
+                  },
+                  "academicYear": "2017",
+                  "beginDate": "2017-01-10",
+                  "endDate": "2017-05-12"
+                },
+                "fromDate": "2017-01-12",
+                "comments": "FARVW"
+              },
+              {
+                "type": {
+                  "code": "+REG",
+                  "description": "Officially Registered"
+                },
+                "reason": {
+                  "code": "REG",
+                  "description": "Officially Registered",
+                  "formalDescription": "You are officially registered for this term and may access campus services."
+                },
+                "fromTerm": {
+                  "id": "2168",
+                  "name": "2016 Fall",
+                  "category": {
+                    "code": "R",
+                    "description": "Regular Term"
+                  },
+                  "academicYear": "2017",
+                  "beginDate": "2016-08-17",
+                  "endDate": "2016-12-16"
+                },
+                "toTerm": {
+                  "id": "2168",
+                  "name": "2016 Fall",
+                  "category": {
+                    "code": "R",
+                    "description": "Regular Term"
+                  },
+                  "academicYear": "2017",
+                  "beginDate": "2016-08-17",
+                  "endDate": "2016-12-16"
+                },
+                "comments": "REG"
+              },
+              {
+                "type": {
+                  "code": "+S09",
+                  "description": "Tuition Calculated"
+                },
+                "reason": {
+                  "code": "TCALC",
+                  "description": "Tuition Calculated for term",
+                  "formalDescription": "Tuition and fees have been calculated for the term."
+                },
+                "fromTerm": {
+                  "id": "2172",
+                  "name": "2017 Spring",
+                  "category": {
+                    "code": "R",
+                    "description": "Regular Term"
+                  },
+                  "academicYear": "2017",
+                  "beginDate": "2017-01-10",
+                  "endDate": "2017-05-12"
+                },
+                "toTerm": {
+                  "id": "2172",
+                  "name": "2017 Spring",
+                  "category": {
+                    "code": "R",
+                    "description": "Regular Term"
+                  },
+                  "academicYear": "2017",
+                  "beginDate": "2017-01-10",
+                  "endDate": "2017-05-12"
+                },
+                "fromDate": "2017-01-25",
+                "comments": "TCALC"
+              },
+              {
+                "type": {
+                  "code": "+S09",
+                  "description": "Tuition Calculated"
+                },
+                "reason": {
+                  "code": "TCALC",
+                  "description": "Tuition Calculated for term",
+                  "formalDescription": "Tuition and fees have been calculated for the term."
+                },
+                "fromTerm": {
+                  "id": "2168",
+                  "name": "2016 Fall",
+                  "category": {
+                    "code": "R",
+                    "description": "Regular Term"
+                  },
+                  "academicYear": "2017",
+                  "beginDate": "2016-08-17",
+                  "endDate": "2016-12-16"
+                },
+                "toTerm": {
+                  "id": "2168",
+                  "name": "2016 Fall",
+                  "category": {
+                    "code": "R",
+                    "description": "Regular Term"
+                  },
+                  "academicYear": "2017",
+                  "beginDate": "2016-08-17",
+                  "endDate": "2016-12-16"
+                },
+                "fromDate": "2016-07-23",
+                "comments": "TCALC"
+              },
+              {
+                "type": {
+                  "code": "+S09",
+                  "description": "Tuition Calculated"
+                },
+                "reason": {
+                  "code": "TCALC",
+                  "description": "Tuition Calculated for term",
+                  "formalDescription": "Tuition and fees have been calculated for the term."
+                },
+                "fromTerm": {
+                  "id": "2182",
+                  "name": "2018 Spring",
+                  "category": {
+                    "code": "R",
+                    "description": "Regular Term"
+                  },
+                  "academicYear": "2017",
+                  "beginDate": "2016-08-17",
+                  "endDate": "2016-12-16"
+                },
+                "toTerm": {
+                  "id": "2168",
+                  "name": "2016 Fall",
+                  "category": {
+                    "code": "R",
+                    "description": "Regular Term"
+                  },
+                  "academicYear": "2017",
+                  "beginDate": "2016-08-17",
+                  "endDate": "2016-12-16"
+                },
+                "fromDate": "2016-07-23",
+                "comments": "TCALC"
+              }
             ]
-         }
+          }
+        ]
       }
-   }
+    }
+  }
 }
