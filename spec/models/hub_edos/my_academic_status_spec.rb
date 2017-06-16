@@ -13,7 +13,7 @@ describe HubEdos::MyAcademicStatus do
       it 'translates roles' do
         roles = subject[:feed]['student']['roles']
         expect(roles).to be
-        expect(roles.keys.count).to eq 13
+        expect(roles.keys.count).to eq 14
         expect(roles['ugrd']).to eq false
         expect(roles['grad']).to eq false
         expect(roles['fpf']).to eq false
@@ -27,6 +27,7 @@ describe HubEdos::MyAcademicStatus do
         expect(roles['haasMbaJurisDoctor']).to eq false
         expect(roles['ugrdUrbanStudies']).to eq false
         expect(roles['summerVisitor']).to eq has_summer_visitor_role
+        expect(roles['courseworkOnly']).to eq has_coursework_only_role
       end
     end
 
@@ -123,8 +124,26 @@ describe HubEdos::MyAcademicStatus do
         }
       }
     }
+    let(:academic_plan_coursework_only) {
+      {
+        'academicPlan' => {
+          'plan' => {
+            'code' => '00975CWOG',
+            'description' => 'Integrative Biology CWO',
+            'fromDate' => '2011-05-23'
+          }
+        },
+        'statusInPlan' => {
+          'status' => {
+            'code' => 'AC',
+            'description' => 'Active in Program'
+          }
+        }
+      }
+    }
 
     let(:has_summer_visitor_role) { false }
+    let(:has_coursework_only_role) { false }
     let(:has_law_role) { false }
 
     context 'when student has no career and no plans' do
@@ -155,6 +174,14 @@ describe HubEdos::MyAcademicStatus do
       let(:has_summer_visitor_role) { true }
       let(:academic_plans) {
         [academic_plan_summer_visitor]
+      }
+      it_behaves_like 'a translator that maps academic status to roles'
+    end
+
+    context 'when student has a coursework-only plan' do
+      let(:has_coursework_only_role) { true }
+      let(:academic_plans) {
+        [academic_plan_coursework_only]
       }
       it_behaves_like 'a translator that maps academic status to roles'
     end
