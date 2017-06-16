@@ -86,9 +86,6 @@ angular.module('calcentral.controllers').controller('AcademicsStatusHoldsBlocksC
     angular.merge($scope.residency, residency);
   };
 
-  $scope.cnpStatusIcon = statusHoldsService.cnpStatusIcon;
-  $scope.regStatusIcon = statusHoldsService.regStatusIcon;
-
   var loadStatusInformation = function() {
     getCalResidency()
     .then(parseCalResidency)
@@ -101,4 +98,6 @@ angular.module('calcentral.controllers').controller('AcademicsStatusHoldsBlocksC
   };
 
   loadStatusInformation();
+  $scope.cnpStatusIcon = statusHoldsService.cnpStatusIcon;
+  $scope.regStatusIcon = statusHoldsService.regStatusIcon;
 });

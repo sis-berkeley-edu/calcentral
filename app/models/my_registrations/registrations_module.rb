@@ -58,7 +58,7 @@ module MyRegistrations
 
     def set_summer_flags(term_registrations)
       term_registrations.each do |term_id, term_value|
-        term_value[:isSummer] = term_value.try(:[], 'term').try(:[], 'name').include?('Summer')
+        term_value[:isSummer] = edo_id_is_summer?(term_id)
       end
     end
 
@@ -203,25 +203,24 @@ module MyRegistrations
       end
     end
 
+    # Only consider showing CNP status for undergraduate non-summer terms in which the student is not already Officially Registered
+    # If a student is Not Enrolled and does not have CNP protection through R99 or ROP, do not show CNP warning as there are no classes to be dropped from.
+    # If a student is not Officially Registered but is protected from CNP via R99, show protected status regardless of where we are in the term.
+    # Otherwise, show CNP status until CNP action is taken (start of classes)
+    # If none of these conditions are met, do not show CNP status
     def show_cnp?(term)
       summer = term.try(:[], :isSummer)
       regstatus = term.try(:[], :regStatus).try(:[], :summary)
       undergrad = term.try(:[], 'academicCareer').try(:[], 'code') == 'UGRD'
       past_classes_start = get_term_flag(term, :pastClassesStart)
 
-      # Only consider showing CNP status for undergraduate non-summer terms in which the student is not already Officially Registered
       if undergrad && !summer && regstatus != 'Officially Registered'
-        # If a student is Not Enrolled and does not have CNP protection through R99 or ROP, do not show CNP warning as there are no classes to be dropped from.
         return false if regstatus == 'Not Enrolled' && (!term_includes_indicator?(term, '+R99') && !term_includes_indicator?(term, '+ROP'))
-
-        # If a student is not Officially Registered but is protected from CNP via R99, show protected status regardless of where we are in the term.
-        # Otherwise, show CNP status until CNP action is taken (start of classes)
         if (regstatus != 'Officially Registered' && term_includes_indicator?(term, '+R99')) || !past_classes_start
           return true
         else
           return false
         end
-      # If none of these conditions are met, do not show CNP status
       else
         return false
       end

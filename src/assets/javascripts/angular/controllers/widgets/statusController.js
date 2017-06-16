@@ -153,9 +153,6 @@ angular.module('calcentral.controllers').controller('StatusController', function
     $scope.statusLoading = '';
   };
 
-  $scope.cnpStatusIcon = statusHoldsService.cnpStatusIcon;
-  $scope.regStatusIcon = statusHoldsService.regStatusIcon;
-
   /**
    * Listen for this event in order to make a refresh request which updates the
    * displayed `api.user.profile.firstName` in the gear_popover.
@@ -180,6 +177,10 @@ angular.module('calcentral.controllers').controller('StatusController', function
       if (!apiService.user.profile.delegateActingAsUid && !apiService.user.profile.advisorActingAsUid) {
         $scope.statusLoading = 'Process';
       }
+
+      // Set necessary function definitions.
+      $scope.cnpStatusIcon = statusHoldsService.cnpStatusIcon;
+      $scope.regStatusIcon = statusHoldsService.regStatusIcon;
 
       // Will contain loadError flag if image cannot be fetched.
       $scope.photo = {};

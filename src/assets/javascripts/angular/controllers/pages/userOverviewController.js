@@ -285,10 +285,11 @@ angular.module('calcentral.controllers').controller('UserOverviewController', fu
     adminService.actAs($scope.targetUser);
   };
 
-  $scope.cnpStatusIcon = statusHoldsService.cnpStatusIcon;
-  $scope.regStatusIcon = statusHoldsService.regStatusIcon;
-
   $scope.$on('calcentral.api.user.isAuthenticated', function(event, isAuthenticated) {
+    // Set necessary function declarations.
+    $scope.cnpStatusIcon = statusHoldsService.cnpStatusIcon;
+    $scope.regStatusIcon = statusHoldsService.regStatusIcon;
+
     if (isAuthenticated) {
       // Refresh user properties because the canSeeCSLinks property is sensitive to the current route.
       apiService.user.fetch()
