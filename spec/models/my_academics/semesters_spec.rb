@@ -162,6 +162,12 @@ describe MyAcademics::Semesters do
         end
       end
     end
+
+    it 'should not flag it as filtered for delegate' do
+      feed[:semesters].each do |s|
+        expect(s[:filteredForDelegate]).to eq false
+      end
+    end
   end
 
   shared_examples 'a legacy semester with additional credits' do
@@ -527,6 +533,7 @@ describe MyAcademics::Semesters do
       feed[:semesters].each do |s|
         expect(s[:hasEnrollmentData]).to eq true
         expect(s[:summaryFromTranscript]).to eq (s[:timeBucket] == 'past')
+        expect(s).to include :slug
         enrollment_semester = enrollment_summary_data["#{s[:termYear]}-#{s[:termCode]}"]
         expect(s[:classes].length).to eq enrollment_semester.length
         s[:classes].each do |course|
@@ -549,9 +556,9 @@ describe MyAcademics::Semesters do
       end
     end
 
-    it 'should filter out semester slugs' do
+    it 'should flag it as filtered for delegate' do
       feed[:semesters].each do |s|
-        expect(s).not_to include :slug
+        expect(s[:filteredForDelegate]).to eq true
       end
     end
 

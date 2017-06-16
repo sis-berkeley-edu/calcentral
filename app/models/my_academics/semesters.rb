@@ -33,7 +33,7 @@ module MyAcademics
       withdrawal_terms = withdrawal_data.map {|row| Berkeley::TermCodes.edo_id_to_code(row['term_id'])}
       (enrollment_terms.keys | transcript_terms.keys | withdrawal_terms).sort.reverse.map do |term_key|
         semester = semester_info term_key
-        semester.delete :slug if @filtered
+        semester[:filteredForDelegate] = !!@filtered
         if enrollment_terms[term_key]
           semester[:hasEnrollmentData] = true
           semester[:summaryFromTranscript] = (semester[:timeBucket] == 'past')
