@@ -25,9 +25,10 @@ angular.module('calcentral.directives').directive('ccTelPhoneInputDirective', fu
   var space = ' ';
   var blank = '';
 
-  var validPhone = function(phone) {
+  var validPhone = function(phone, valueRequired) {
     var value = (phone || blank).replace(/[\W]{1,}/gm, space).trim();
     var valid = reUsPhone.test(value) || reIntlPhone.test(value);
+    valid = valueRequired && value === '' ? false : valid;
 
     return {
       valid: valid,
@@ -42,7 +43,7 @@ angular.module('calcentral.directives').directive('ccTelPhoneInputDirective', fu
       var validateAndUpdate = function(options) {
         var showMessage = options && options.showMessage;
         var value = elm.val();
-        var phone = validPhone(value);
+        var phone = validPhone(value, attr.required);
         var valid = phone.valid;
 
         if (valid || (!valid && showMessage)) {

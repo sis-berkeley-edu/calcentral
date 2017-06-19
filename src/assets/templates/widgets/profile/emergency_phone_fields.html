@@ -26,42 +26,69 @@
 
   <div>
     <label for="cc_page_widget_profile_emergency_phone">
-      <strong>Phone Number</strong>
+      <strong>Phone Number</strong> <span class="cc-text-light">(Required)</span>
     </label>
   </div>
   <div>
     <div data-ng-if="!phone && emergencyPhone.isAdding">
-      <input type="text" name="cc_page_widget_profile_emergency_phone_add" required aria-required="true"
+      <input
+        aria-required="true"
         data-cc-tel-phone-input-directive
         data-ng-model="emergencyPhone.currentObject.data.phone"
+        name="cc_page_widget_profile_emergency_phone_add"
+        required
+        type="text"
       >
       <p class="cc-page-widget-profile-section-input-error-message cc-text-red"
         data-ng-show="cc_page_widget_profile_emergency_contact.$error.invalidPhoneNumber">
         <i class="cc-icon-red fa fa-exclamation-circle"></i>
-        The phone number, <span data-ng-bind="cc_page_widget_profile_emergency_contact.cc_page_widget_profile_emergency_phone_add.$viewValue"></span>, is incomplete or formatted incorrectly.
+        The phone number
+        <span
+          data-ng-bind-template="' {{cc_page_widget_profile_emergency_contact.cc_page_widget_profile_emergency_phone_add.$viewValue}}' "
+          data-ng-if="cc_page_widget_profile_emergency_contact.cc_page_widget_profile_emergency_phone_add.$viewValue"
+        ></span>
+        is incomplete or formatted incorrectly.
       </p>
     </div>
     <div data-ng-if="phone.isModifying">
-      <input type="text" name="cc_page_widget_profile_emergency_phone_edit" required aria-required="true"
+      <input
+        aria-required="true"
         data-cc-tel-phone-input-directive
         data-ng-model="phone.phone"
+        name="cc_page_widget_profile_emergency_phone_edit"
+        type="text"
+        required="required"
       >
       <p class="cc-page-widget-profile-section-input-error-message cc-text-red"
         data-ng-show="cc_page_widget_profile_emergency_contact.$error.invalidPhoneNumber">
         <i class="cc-icon-red fa fa-exclamation-circle"></i>
-        The phone number, <span data-ng-bind="cc_page_widget_profile_emergency_contact.cc_page_widget_profile_emergency_phone_edit.$viewValue"></span>, is incomplete or formatted incorrectly.
+        The phone number
+        <span
+          data-ng-bind-template="' {{cc_page_widget_profile_emergency_contact.cc_page_widget_profile_emergency_phone_edit.$viewValue}}'"
+          data-ng-if="cc_page_widget_profile_emergency_contact.cc_page_widget_profile_emergency_phone_edit.$viewValue"
+        ></span>
+        is incomplete or formatted incorrectly.
       </p>
     </div>
     <div data-ng-if="phone && !phone.isModifying">
-      <input type="text" name="cc_page_widget_profile_emergency_phone"
+      <input
+        aria-required="true"
         data-cc-tel-phone-input-directive
         data-ng-disabled="emergencyPhone.isAdding || emergencyPhone.isModifying"
         data-ng-model="phone.phone"
+        name="cc_page_widget_profile_emergency_phone"
+        type="text"
+        required
       >
       <p class="cc-page-widget-profile-section-input-error-message cc-text-red"
         data-ng-show="!emergencyPhone.isAdding && !emergencyPhone.isModifying && cc_page_widget_profile_emergency_contact.$error.invalidPhoneNumber">
         <i class="cc-icon-red fa fa-exclamation-circle"></i>
-        The phone number, <span data-ng-bind="cc_page_widget_profile_emergency_contact.cc_page_widget_profile_emergency_phone.$viewValue"></span>, is incomplete or formatted incorrectly.
+        The phone number
+        <span
+          data-ng-bind-template="'{{cc_page_widget_profile_emergency_contact.cc_page_widget_profile_emergency_phone.$viewValue}}'"
+          data-ng-if="cc_page_widget_profile_emergency_contact.cc_page_widget_profile_emergency_phone.$viewValue"
+        ></span>
+        is incomplete or formatted incorrectly.
       </p>
     </div>
   </div>
