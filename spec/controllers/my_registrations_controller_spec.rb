@@ -8,7 +8,8 @@ describe MyRegistrationsController do
     session['user_id'] = '0'
     get :get_feed
     json_response = JSON.parse(response.body)
-    expect(json_response['registrations']).to eq({})
+    expect(json_response['terms']).not_to be_nil
+    expect(json_response['registrations']).not_to be_nil
   end
 
 end
