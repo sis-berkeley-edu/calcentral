@@ -13,12 +13,12 @@
     </div>
     <div data-ng-switch="facultyCommittees.activeToggle">
       <div data-ng-switch-when="true">
-        <div class="cc=button-link cc-widget-padding cc-higher-degree-committee-toggle-link" data-ng-click="facultyCommittees.activeToggle = false">View Completed Committees</div>
+        <div class="cc-button-link cc-widget-padding cc-higher-degree-committee-toggle-link" data-ng-click="facultyCommittees.activeToggle = false">View Completed Committees</div>
         <div class="cc-widget-subtitle cc-higher-degree-committee-subtitle">Active Committees</div>
         <div class="cc-widget-padding" data-ng-if="facultyCommittees.active.length == 0">You are not a member of any active committees.</div>
       </div>
       <div data-ng-switch-when="false">
-        <div class="cc=button-link cc-widget-padding cc-higher-degree-committee-toggle-link" data-ng-click="facultyCommittees.activeToggle = true">View Active Committees</div>
+        <div class="cc-button-link cc-widget-padding cc-higher-degree-committee-toggle-link" data-ng-click="facultyCommittees.activeToggle = true">View Active Committees</div>
         <div class="cc-widget-subtitle cc-higher-degree-committee-subtitle">Completed Committees</div>
         <div class="cc-widget-padding" data-ng-if="facultyCommittees.active.length == 0">You are not a member of any completed committees.</div>
       </div>
