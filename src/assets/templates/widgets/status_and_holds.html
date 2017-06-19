@@ -4,86 +4,54 @@
   </div>
 
   <div class="cc-widget-padding">
-    <div data-cc-spinner-directive="regStatus.isLoading">
-      <div data-ng-if="(statusHoldsBlocks.enabledSections.indexOf('Status') !== -1)">
-        <h3 class="cc-status-holds-status-header" data-ng-if="hasShownRegistrations">Status</h3>
-        <div class="cc-status-holds-section" data-ng-repeat="registration in regStatus.registrations | orderBy:'-id'">
-          <div data-ng-if="registration.isShown">
-            <h4 data-ng-bind="registration.name"></h4>
-            <ul class="cc-widget-list cc-status-holds-list" data-ng-if="api.user.profile.features.regstatus">
+    <div data-ng-if="api.user.profile.features.regstatus">
+      <div data-cc-spinner-directive="regStatus.isLoading">
+        <div data-ng-if="(statusHoldsBlocks.enabledSections.indexOf('Status') !== -1)">
+          <h3 class="cc-status-holds-status-header">Status</h3>
+          <div class="cc-status-holds-section" data-ng-repeat="registration in regStatus.registrations | orderBy:'-id'">
+            <h4 data-ng-bind="registration.term.name"></h4>
+            <ul class="cc-widget-list cc-status-holds-list">
               <li class="cc-widget-list-hover"
-                  data-ng-class="{'cc-widget-list-hover-opened':(registration.show)}"
+                  data-ng-if="registration.regStatus.explanation"
+                  data-ng-class="{'cc-widget-list-hover-opened':(registration.regStatus.show)}"
                   data-cc-accessible-focus-directive
-                  data-ng-click="api.widget.toggleShow($event, null, registration, 'My Academics - Status and Holds')">
+                  data-ng-click="api.widget.toggleShow($event, null, registration.regStatus, 'My Academics - Status and Holds')">
                 <div class="cc-status-holds-list-section">
                   <div class="cc-status-holds-list-item">
-                    <span data-ng-hide="registration.isSummer && registration.summary === 'Not Officially Registered'">
-                      <i class="cc-icon fa"
-                         data-ng-class="{true:'fa-check-circle cc-icon-green',false:'fa-exclamation-circle cc-icon-red'}[registration.summary=='Officially Registered']">
-                      </i>
+                    <span>
+                      <i class="cc-icon fa" data-ng-class="regStatusIcon(registration.regStatus.summary)"></i>
                     </span>
-                    <span data-ng-bind="registration.summary"></span>
+                    <span data-ng-bind="registration.regStatus.summary"></span>
                   </div>
-                  <div class="cc-status-holds-expanded-text" data-ng-show="registration.show">
-                    <div data-ng-if="registration.summary === 'Officially Registered' || registration.isSummer">
-                      <span data-ng-bind="registration.explanation"></span>
-                    </div>
-                    <div data-ng-if="registration.summary !== 'Officially Registered' && !registration.isSummer">
-                      <div data-ng-if="$parent.regStatus.messages">
-                        <span data-ng-if="registration.summary === 'Not Officially Registered'" data-ng-bind-html="$parent.regStatus.messages.notRegistered.descrlong"></span>
-                        <span data-ng-if="registration.summary === 'Not Enrolled' && (registration.academicCareer.code === 'UGRD')" data-ng-bind-html="$parent.regStatus.messages.notEnrolledUndergrad.descrlong"></span>
-                        <span data-ng-if="registration.summary === 'Not Enrolled' && (registration.academicCareer.code !== 'UGRD')" data-ng-bind-html="$parent.regStatus.messages.notEnrolledGrad.descrlong"></span>
-                      </div>
-                      <span data-ng-if="!$parent.regStatus.messages" data-ng-bind="registration.explanation"></span>
-                    </div>
+                  <div class="cc-status-holds-expanded-text" data-ng-show="registration.regStatus.show">
+                    <span data-ng-bind-html="registration.regStatus.explanation"></span>
+                  </div>
+                </div>
+              </li>
+              <li data-ng-if="!registration.regStatus.explanation">
+                <div class="cc-status-holds-list-section">
+                  <div class="cc-status-holds-list-item">
+                    <span>
+                      <i class="cc-icon fa" data-ng-class="regStatusIcon(registration.regStatus.summary)"></i>
+                    </span>
+                    <span data-ng-bind="registration.regStatus.summary"></span>
                   </div>
                 </div>
               </li>
               <li class="cc-widget-list-hover"
-                  data-ng-if="showCNP(registration)"
-                  data-ng-class="{'cc-widget-list-hover-opened':(registration.positiveIndicators.show)}"
+                  data-ng-if="registration.showCnp"
+                  data-ng-class="{'cc-widget-list-hover-opened':(registration.cnpStatus.show)}"
                   data-cc-accessible-focus-directive
-                  data-ng-click="api.widget.toggleShow($event, null, registration.positiveIndicators, 'My Academics - Status and Holds')">
+                  data-ng-click="api.widget.toggleShow($event, null, registration.cnpStatus, 'My Academics - Status and Holds')">
                 <div class="cc-status-holds-list-section">
                   <div class="cc-status-holds-list-item">
-                      <i class="cc-icon fa fa-check-circle cc-icon-green"
-                         data-ng-if="registration.positiveIndicators.R99">
-                      </i>
-                      <i class="cc-icon fa fa-exclamation-triangle cc-icon-gold"
-                         data-ng-if="registration.positiveIndicators.ROP && !registration.positiveIndicators.R99">
-                      </i>
-                      <i class="cc-icon fa"
-                         data-ng-if="!registration.positiveIndicators.ROP && !registration.positiveIndicators.R99"
-                         data-ng-class="{true:'fa-exclamation-circle cc-icon-red',false:'fa-exclamation-triangle cc-icon-gold'}[registration.pastFinancialDisbursement]">
-                      </i>
+                    <span>
+                      <i class="cc-icon fa" data-ng-class="cnpStatusIcon(registration)"></i>
                     </span>
-                    <span data-ng-if="registration.positiveIndicators.R99">You Will Not Be Canceled for Non-Payment</span>
-                    <span data-ng-if="registration.positiveIndicators.ROP && !registration.positiveIndicators.R99">Temporary Protection from Cancel for Non-Payment</span>
-                    <span data-ng-if="!registration.positiveIndicators.ROP && !registration.positiveIndicators.R99 && !registration.pastFinancialDisbursement">Cancel for Non-Payment Notification</span>
-                    <span data-ng-if="!registration.positiveIndicators.ROP && !registration.positiveIndicators.R99 && registration.pastFinancialDisbursement">Cancel for Non-Payment Warning</span>
+                    <span data-ng-bind="registration.cnpStatus.summary"></span>
                   </div>
-                  <div class="cc-status-holds-expanded-text" data-ng-show="registration.positiveIndicators.show">
-                    <span data-ng-if="registration.positiveIndicators.R99">
-                      You have an exception from Cancellation for Non-Payment (CNP) for this term.  You will not be dropped from your classes for this term.
-                      You remain financially responsible for all charges on your Student Account.  Please monitor your communications and tasks in CalCentral for updates.
-                    </span>
-                    <span data-ng-if="registration.positiveIndicators.ROP && !registration.positiveIndicators.R99">
-                      The deadline to pay for this term has been extended.  To maintain enrollment in your current class schedule and avoid an administrative withdrawal, please pay
-                      at least 20% of your tuition and fees by August 30th.  Note that if you are dropped for non-payment you will be subject to the pro-rated fee schedule.
-                      <br>
-                      <br>
-                      To learn more about the consequences of withdrawal please visit <a href="http://registrar.berkeley.edu/registration/cancellation-withdrawal/refunds-after-withdrawl">refunds after
-                      withdrawal.</a>
-                    </span>
-                    <div data-ng-if="!registration.positiveIndicators.ROP && !registration.positiveIndicators.R99">
-                      <span data-ng-if="$parent.regStatus.messages">
-                        <span data-ng-if="!registration.pastFinancialDisbursement && (registration.academicCareer.code === 'UGRD')" data-ng-bind-html="$parent.regStatus.messages.cnpNotificationUndergrad.descrlong"></span>
-                        <span data-ng-if="!registration.pastFinancialDisbursement && (registration.academicCareer.code !== 'UGRD')" data-ng-bind-html="$parent.regStatus.messages.cnpNotificationGrad.descrlong"></span>
-                        <span data-ng-if="registration.pastFinancialDisbursement && (registration.academicCareer.code === 'UGRD')" data-ng-bind-html="$parent.regStatus.messages.cnpWarningUndergrad.descrlong"></span>
-                        <span data-ng-if="registration.pastFinancialDisbursement && (registration.academicCareer.code !== 'UGRD')" data-ng-bind-html="$parent.regStatus.messages.cnpWarningGrad.descrlong"></span>
-                      </span>
-                      <span data-ng-if="!$parent.regStatus.messages">You may be subject to <a href="http://registrar.berkeley.edu/cnp">Cancel for Non-Payment.</a></span>
-                    </div>
+                  <div class="cc-status-holds-expanded-text" data-ng-show="registration.cnpStatus.show">
+                    <span data-ng-bind-html="registration.cnpStatus.explanation"></span>
                   </div>
                 </div>
               </li>

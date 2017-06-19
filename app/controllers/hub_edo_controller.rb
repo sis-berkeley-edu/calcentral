@@ -19,10 +19,6 @@ class HubEdoController < ApplicationController
     json_passthrough HubEdos::MyStudent, options
   end
 
-  def student_attributes
-    json_proxy_passthrough HubEdos::StudentAttributes
-  end
-
   def work_experience
     # Delegates get an empty feed.
     if current_user.authenticated_as_delegate?

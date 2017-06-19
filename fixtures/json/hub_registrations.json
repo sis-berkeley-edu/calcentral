@@ -1,52 +1,28 @@
 {
   "apiResponse": {
     "source": "UCB-SIS-STUDENT",
-    "correlationId": "cccccccc-cccc-cccc-cccc-cccccccccccc",
+    "correlationId": "053940a9-9067-489e-ad32-47c87b48fe6a",
     "responseType": "http://bmeta.berkeley.edu/student/studentV0.xsd/studentRegistrations",
     "response": {
       "any": {
         "identifier": {
           "type": "student-id",
           "id": "11667051",
-          "disclose": false
+          "disclose": true
         },
         "confidential": false,
         "affiliations": [
           {
             "type": {
-              "code": "EMPLOYEE",
-              "description": "Employee"
+              "code": "ADMT_UX",
+              "description": "Admitted student's access to Cal Central"
             },
-            "detail": "Active",
+            "detail": "Admitted",
             "status": {
               "code": "ACT",
               "description": "Active"
             },
-            "fromDate": "2016-04-20"
-          },
-          {
-            "type": {
-              "code": "INSTRUCTOR",
-              "description": "Instructor"
-            },
-            "detail": "Inactive",
-            "status": {
-              "code": "INA",
-              "description": "Inactive"
-            },
-            "fromDate": "2016-02-26"
-          },
-          {
-            "type": {
-              "code": "LAW",
-              "description": "Law School Student"
-            },
-            "detail": "Active",
-            "status": {
-              "code": "ACT",
-              "description": "Active"
-            },
-            "fromDate": "2015-12-17"
+            "fromDate": "2017-03-01"
           },
           {
             "type": {
@@ -58,21 +34,33 @@
               "code": "ACT",
               "description": "Active"
             },
-            "fromDate": "2015-12-17"
+            "fromDate": "2016-03-19"
+          },
+          {
+            "type": {
+              "code": "UNDERGRAD",
+              "description": "Undergraduate Student"
+            },
+            "detail": "Active",
+            "status": {
+              "code": "ACT",
+              "description": "Active"
+            },
+            "fromDate": "2016-03-19"
           }
         ],
         "registrations": [
           {
             "term": {
-              "id": "2168",
-              "name": "2016 Fall",
+              "id": "2172",
+              "name": "2017 Spring",
               "academicYear": "2017"
             },
             "academicCareer": {
-              "code": "LAW",
-              "description": "Law"
+              "code": "GRAD",
+              "description": "Graduate"
             },
-            "eligibleToRegister": true,
+            "eligibleToRegister": false,
             "registered": false,
             "disabled": false,
             "athlete": false,
@@ -86,39 +74,1306 @@
             "termUnits": [
               {
                 "type": {
+                  "code": "Total",
                   "description": "Total"
                 },
                 "unitsMin": 0,
                 "unitsMax": 0,
                 "unitsEnrolled": 0,
-                "unitsWaitlisted": 0
+                "unitsWaitlisted": 0,
+                "unitsTaken": 0,
+                "unitsPassed": 0,
+                "unitsIncomplete": 0,
+                "unitsTransferEarned": 0,
+                "unitsTransferAccepted": 0,
+                "unitsTest": 0,
+                "unitsOther": 0
               },
               {
                 "type": {
+                  "code": "For GPA",
                   "description": "For GPA"
                 },
+                "unitsMin": 0,
+                "unitsMax": 0,
                 "unitsEnrolled": 0,
-                "unitsWaitlisted": 0
+                "unitsWaitlisted": 0,
+                "unitsTaken": 0,
+                "unitsPassed": 0,
+                "unitsIncomplete": 0,
+                "unitsTransferEarned": 0
               },
               {
                 "type": {
+                  "code": "Not For GPA",
                   "description": "Not For GPA"
                 },
+                "unitsMin": 0,
+                "unitsMax": 0,
                 "unitsEnrolled": 0,
-                "unitsWaitlisted": 0
+                "unitsWaitlisted": 0,
+                "unitsTaken": 0,
+                "unitsPassed": 0,
+                "unitsIncomplete": 0,
+                "unitsTransferEarned": 0
               }
             ],
             "termGPA": {
               "type": {
                 "description": "Term GPA"
               },
-              "average": 0
+              "average": 0,
+              "source": "UCB"
             },
             "specialStudyPrograms": [],
-            "withdrawalCancel": {
-              "type": {},
-              "reason": {}
+            "new": true
+          },
+          {
+            "term": {
+              "id": "1915",
+              "name": "1991 Summer",
+              "academicYear": "1992"
             },
+            "academicCareer": {
+              "code": "UGRD",
+              "description": "Undergraduate"
+            },
+            "eligibleToRegister": true,
+            "registered": false,
+            "disabled": false,
+            "athlete": false,
+            "intendsToGraduate": false,
+            "academicLevel": {
+              "level": {
+                "code": "10",
+                "description": "Freshman"
+              }
+            },
+            "termUnits": [
+              {
+                "type": {
+                  "code": "Total",
+                  "description": "Total"
+                },
+                "unitsMin": 0,
+                "unitsMax": 0,
+                "unitsEnrolled": 4,
+                "unitsWaitlisted": 0,
+                "unitsTaken": 4,
+                "unitsPassed": 4,
+                "unitsIncomplete": 0,
+                "unitsTransferEarned": 0,
+                "unitsTransferAccepted": 0,
+                "unitsTest": 0,
+                "unitsOther": 0
+              },
+              {
+                "type": {
+                  "code": "For GPA",
+                  "description": "For GPA"
+                },
+                "unitsMin": 0,
+                "unitsMax": 0,
+                "unitsEnrolled": 0,
+                "unitsWaitlisted": 0,
+                "unitsTaken": 4,
+                "unitsPassed": 4,
+                "unitsIncomplete": 0,
+                "unitsTransferEarned": 0
+              },
+              {
+                "type": {
+                  "code": "Not For GPA",
+                  "description": "Not For GPA"
+                },
+                "unitsMin": 0,
+                "unitsMax": 0,
+                "unitsEnrolled": 4,
+                "unitsWaitlisted": 0,
+                "unitsTaken": 0,
+                "unitsPassed": 0,
+                "unitsIncomplete": 0,
+                "unitsTransferEarned": 0
+              }
+            ],
+            "termGPA": {
+              "type": {
+                "description": "Term GPA"
+              },
+              "average": 2,
+              "source": "UCB"
+            },
+            "specialStudyPrograms": [],
+            "new": true
+          },
+          {
+            "term": {
+              "id": "1928",
+              "name": "1992 Fall",
+              "academicYear": "1993"
+            },
+            "academicCareer": {
+              "code": "UGRD",
+              "description": "Undergraduate"
+            },
+            "eligibleToRegister": true,
+            "registered": false,
+            "disabled": false,
+            "athlete": false,
+            "intendsToGraduate": false,
+            "academicLevel": {
+              "level": {
+                "code": "10",
+                "description": "Freshman"
+              }
+            },
+            "termUnits": [
+              {
+                "type": {
+                  "code": "Total",
+                  "description": "Total"
+                },
+                "unitsMin": 0,
+                "unitsMax": 0,
+                "unitsEnrolled": 0,
+                "unitsWaitlisted": 0,
+                "unitsTaken": 8,
+                "unitsPassed": 8,
+                "unitsIncomplete": 0,
+                "unitsTransferEarned": 0,
+                "unitsTransferAccepted": 0,
+                "unitsTest": 0,
+                "unitsOther": 0
+              },
+              {
+                "type": {
+                  "code": "For GPA",
+                  "description": "For GPA"
+                },
+                "unitsMin": 0,
+                "unitsMax": 0,
+                "unitsEnrolled": 0,
+                "unitsWaitlisted": 0,
+                "unitsTaken": 8,
+                "unitsPassed": 8,
+                "unitsIncomplete": 0,
+                "unitsTransferEarned": 0
+              },
+              {
+                "type": {
+                  "code": "Not For GPA",
+                  "description": "Not For GPA"
+                },
+                "unitsMin": 0,
+                "unitsMax": 0,
+                "unitsEnrolled": 0,
+                "unitsWaitlisted": 0,
+                "unitsTaken": 0,
+                "unitsPassed": 0,
+                "unitsIncomplete": 0,
+                "unitsTransferEarned": 0
+              }
+            ],
+            "termGPA": {
+              "type": {
+                "description": "Term GPA"
+              },
+              "average": 3.7,
+              "source": "UCB"
+            },
+            "specialStudyPrograms": [],
+            "new": false
+          },
+          {
+            "term": {
+              "id": "1932",
+              "name": "1993 Spring",
+              "academicYear": "1993"
+            },
+            "academicCareer": {
+              "code": "UGRD",
+              "description": "Undergraduate"
+            },
+            "eligibleToRegister": true,
+            "registered": false,
+            "disabled": false,
+            "athlete": false,
+            "intendsToGraduate": false,
+            "academicLevel": {
+              "level": {
+                "code": "10",
+                "description": "Freshman"
+              }
+            },
+            "termUnits": [
+              {
+                "type": {
+                  "code": "Total",
+                  "description": "Total"
+                },
+                "unitsMin": 0,
+                "unitsMax": 0,
+                "unitsEnrolled": 0,
+                "unitsWaitlisted": 0,
+                "unitsTaken": 3,
+                "unitsPassed": 0,
+                "unitsIncomplete": 0,
+                "unitsTransferEarned": 0,
+                "unitsTransferAccepted": 0,
+                "unitsTest": 0,
+                "unitsOther": 0
+              },
+              {
+                "type": {
+                  "code": "For GPA",
+                  "description": "For GPA"
+                },
+                "unitsMin": 0,
+                "unitsMax": 0,
+                "unitsEnrolled": 0,
+                "unitsWaitlisted": 0,
+                "unitsTaken": 0,
+                "unitsPassed": 0,
+                "unitsIncomplete": 0,
+                "unitsTransferEarned": 0
+              },
+              {
+                "type": {
+                  "code": "Not For GPA",
+                  "description": "Not For GPA"
+                },
+                "unitsMin": 0,
+                "unitsMax": 0,
+                "unitsEnrolled": 0,
+                "unitsWaitlisted": 0,
+                "unitsTaken": 3,
+                "unitsPassed": 0,
+                "unitsIncomplete": 0,
+                "unitsTransferEarned": 0
+              }
+            ],
+            "termGPA": {
+              "type": {
+                "description": "Term GPA"
+              },
+              "average": 0,
+              "source": "UCB"
+            },
+            "specialStudyPrograms": [],
+            "new": false
+          },
+          {
+            "term": {
+              "id": "1952",
+              "name": "1995 Spring",
+              "academicYear": "1995"
+            },
+            "academicCareer": {
+              "code": "UGRD",
+              "description": "Undergraduate"
+            },
+            "eligibleToRegister": true,
+            "registered": false,
+            "disabled": false,
+            "athlete": false,
+            "intendsToGraduate": false,
+            "academicLevel": {
+              "level": {
+                "code": "10",
+                "description": "Freshman"
+              }
+            },
+            "termUnits": [
+              {
+                "type": {
+                  "code": "Total",
+                  "description": "Total"
+                },
+                "unitsMin": 0,
+                "unitsMax": 0,
+                "unitsEnrolled": 0,
+                "unitsWaitlisted": 0,
+                "unitsTaken": 8,
+                "unitsPassed": 8,
+                "unitsIncomplete": 0,
+                "unitsTransferEarned": 0,
+                "unitsTransferAccepted": 0,
+                "unitsTest": 0,
+                "unitsOther": 0
+              },
+              {
+                "type": {
+                  "code": "For GPA",
+                  "description": "For GPA"
+                },
+                "unitsMin": 0,
+                "unitsMax": 0,
+                "unitsEnrolled": 0,
+                "unitsWaitlisted": 0,
+                "unitsTaken": 8,
+                "unitsPassed": 8,
+                "unitsIncomplete": 0,
+                "unitsTransferEarned": 0
+              },
+              {
+                "type": {
+                  "code": "Not For GPA",
+                  "description": "Not For GPA"
+                },
+                "unitsMin": 0,
+                "unitsMax": 0,
+                "unitsEnrolled": 0,
+                "unitsWaitlisted": 0,
+                "unitsTaken": 0,
+                "unitsPassed": 0,
+                "unitsIncomplete": 0,
+                "unitsTransferEarned": 0
+              }
+            ],
+            "termGPA": {
+              "type": {
+                "description": "Term GPA"
+              },
+              "average": 3,
+              "source": "UCB"
+            },
+            "specialStudyPrograms": [],
+            "new": false
+          },
+          {
+            "term": {
+              "id": "1968",
+              "name": "1996 Fall",
+              "academicYear": "1997"
+            },
+            "academicCareer": {
+              "code": "UGRD",
+              "description": "Undergraduate"
+            },
+            "eligibleToRegister": true,
+            "registered": false,
+            "disabled": false,
+            "athlete": false,
+            "intendsToGraduate": false,
+            "academicLevel": {
+              "level": {
+                "code": "10",
+                "description": "Freshman"
+              }
+            },
+            "termUnits": [
+              {
+                "type": {
+                  "code": "Total",
+                  "description": "Total"
+                },
+                "unitsMin": 0,
+                "unitsMax": 0,
+                "unitsEnrolled": 0,
+                "unitsWaitlisted": 0,
+                "unitsTaken": 4,
+                "unitsPassed": 4,
+                "unitsIncomplete": 0,
+                "unitsTransferEarned": 0,
+                "unitsTransferAccepted": 0,
+                "unitsTest": 0,
+                "unitsOther": 0
+              },
+              {
+                "type": {
+                  "code": "For GPA",
+                  "description": "For GPA"
+                },
+                "unitsMin": 0,
+                "unitsMax": 0,
+                "unitsEnrolled": 0,
+                "unitsWaitlisted": 0,
+                "unitsTaken": 4,
+                "unitsPassed": 4,
+                "unitsIncomplete": 0,
+                "unitsTransferEarned": 0
+              },
+              {
+                "type": {
+                  "code": "Not For GPA",
+                  "description": "Not For GPA"
+                },
+                "unitsMin": 0,
+                "unitsMax": 0,
+                "unitsEnrolled": 0,
+                "unitsWaitlisted": 0,
+                "unitsTaken": 0,
+                "unitsPassed": 0,
+                "unitsIncomplete": 0,
+                "unitsTransferEarned": 0
+              }
+            ],
+            "termGPA": {
+              "type": {
+                "description": "Term GPA"
+              },
+              "average": 3,
+              "source": "UCB"
+            },
+            "specialStudyPrograms": [],
+            "new": false
+          },
+          {
+            "term": {
+              "id": "1978",
+              "name": "1997 Fall",
+              "academicYear": "1998"
+            },
+            "academicCareer": {
+              "code": "UGRD",
+              "description": "Undergraduate"
+            },
+            "eligibleToRegister": true,
+            "registered": false,
+            "disabled": false,
+            "athlete": false,
+            "intendsToGraduate": false,
+            "academicLevel": {
+              "level": {
+                "code": "10",
+                "description": "Freshman"
+              }
+            },
+            "termUnits": [
+              {
+                "type": {
+                  "code": "Total",
+                  "description": "Total"
+                },
+                "unitsMin": 0,
+                "unitsMax": 0,
+                "unitsEnrolled": 0,
+                "unitsWaitlisted": 0,
+                "unitsTaken": 3,
+                "unitsPassed": 3,
+                "unitsIncomplete": 0,
+                "unitsTransferEarned": 0,
+                "unitsTransferAccepted": 0,
+                "unitsTest": 0,
+                "unitsOther": 0
+              },
+              {
+                "type": {
+                  "code": "For GPA",
+                  "description": "For GPA"
+                },
+                "unitsMin": 0,
+                "unitsMax": 0,
+                "unitsEnrolled": 0,
+                "unitsWaitlisted": 0,
+                "unitsTaken": 3,
+                "unitsPassed": 3,
+                "unitsIncomplete": 0,
+                "unitsTransferEarned": 0
+              },
+              {
+                "type": {
+                  "code": "Not For GPA",
+                  "description": "Not For GPA"
+                },
+                "unitsMin": 0,
+                "unitsMax": 0,
+                "unitsEnrolled": 0,
+                "unitsWaitlisted": 0,
+                "unitsTaken": 0,
+                "unitsPassed": 0,
+                "unitsIncomplete": 0,
+                "unitsTransferEarned": 0
+              }
+            ],
+            "termGPA": {
+              "type": {
+                "description": "Term GPA"
+              },
+              "average": 3,
+              "source": "UCB"
+            },
+            "specialStudyPrograms": [],
+            "new": false
+          },
+          {
+            "term": {
+              "id": "1988",
+              "name": "1998 Fall",
+              "academicYear": "1999"
+            },
+            "academicCareer": {
+              "code": "UGRD",
+              "description": "Undergraduate"
+            },
+            "eligibleToRegister": true,
+            "registered": false,
+            "disabled": false,
+            "athlete": false,
+            "intendsToGraduate": false,
+            "academicLevel": {
+              "level": {
+                "code": "10",
+                "description": "Freshman"
+              }
+            },
+            "termUnits": [
+              {
+                "type": {
+                  "code": "Total",
+                  "description": "Total"
+                },
+                "unitsMin": 0,
+                "unitsMax": 0,
+                "unitsEnrolled": 0,
+                "unitsWaitlisted": 0,
+                "unitsTaken": 12,
+                "unitsPassed": 4,
+                "unitsIncomplete": 0,
+                "unitsTransferEarned": 0,
+                "unitsTransferAccepted": 0,
+                "unitsTest": 0,
+                "unitsOther": 0
+              },
+              {
+                "type": {
+                  "code": "For GPA",
+                  "description": "For GPA"
+                },
+                "unitsMin": 0,
+                "unitsMax": 0,
+                "unitsEnrolled": 0,
+                "unitsWaitlisted": 0,
+                "unitsTaken": 12,
+                "unitsPassed": 4,
+                "unitsIncomplete": 0,
+                "unitsTransferEarned": 0
+              },
+              {
+                "type": {
+                  "code": "Not For GPA",
+                  "description": "Not For GPA"
+                },
+                "unitsMin": 0,
+                "unitsMax": 0,
+                "unitsEnrolled": 0,
+                "unitsWaitlisted": 0,
+                "unitsTaken": 0,
+                "unitsPassed": 0,
+                "unitsIncomplete": 0,
+                "unitsTransferEarned": 0
+              }
+            ],
+            "termGPA": {
+              "type": {
+                "description": "Term GPA"
+              },
+              "average": 0.9,
+              "source": "UCB"
+            },
+            "specialStudyPrograms": [],
+            "new": false
+          },
+          {
+            "term": {
+              "id": "1998",
+              "name": "1999 Fall",
+              "academicYear": "2000"
+            },
+            "academicCareer": {
+              "code": "UGRD",
+              "description": "Undergraduate"
+            },
+            "eligibleToRegister": true,
+            "registered": false,
+            "disabled": false,
+            "athlete": false,
+            "intendsToGraduate": false,
+            "academicLevel": {
+              "level": {
+                "code": "20",
+                "description": "Sophomore"
+              }
+            },
+            "termUnits": [
+              {
+                "type": {
+                  "code": "Total",
+                  "description": "Total"
+                },
+                "unitsMin": 0,
+                "unitsMax": 0,
+                "unitsEnrolled": 0,
+                "unitsWaitlisted": 0,
+                "unitsTaken": 11,
+                "unitsPassed": 11,
+                "unitsIncomplete": 0,
+                "unitsTransferEarned": 0,
+                "unitsTransferAccepted": 0,
+                "unitsTest": 0,
+                "unitsOther": 0
+              },
+              {
+                "type": {
+                  "code": "For GPA",
+                  "description": "For GPA"
+                },
+                "unitsMin": 0,
+                "unitsMax": 0,
+                "unitsEnrolled": 0,
+                "unitsWaitlisted": 0,
+                "unitsTaken": 11,
+                "unitsPassed": 11,
+                "unitsIncomplete": 0,
+                "unitsTransferEarned": 0
+              },
+              {
+                "type": {
+                  "code": "Not For GPA",
+                  "description": "Not For GPA"
+                },
+                "unitsMin": 0,
+                "unitsMax": 0,
+                "unitsEnrolled": 0,
+                "unitsWaitlisted": 0,
+                "unitsTaken": 0,
+                "unitsPassed": 0,
+                "unitsIncomplete": 0,
+                "unitsTransferEarned": 0
+              }
+            ],
+            "termGPA": {
+              "type": {
+                "description": "Term GPA"
+              },
+              "average": 2.781,
+              "source": "UCB"
+            },
+            "specialStudyPrograms": [],
+            "new": false
+          },
+          {
+            "term": {
+              "id": "2028",
+              "name": "2002 Fall",
+              "academicYear": "2003"
+            },
+            "academicCareer": {
+              "code": "UGRD",
+              "description": "Undergraduate"
+            },
+            "eligibleToRegister": true,
+            "registered": false,
+            "disabled": false,
+            "athlete": false,
+            "intendsToGraduate": false,
+            "academicLevel": {
+              "level": {
+                "code": "20",
+                "description": "Sophomore"
+              }
+            },
+            "termUnits": [
+              {
+                "type": {
+                  "code": "Total",
+                  "description": "Total"
+                },
+                "unitsMin": 0,
+                "unitsMax": 0,
+                "unitsEnrolled": 0,
+                "unitsWaitlisted": 0,
+                "unitsTaken": 4,
+                "unitsPassed": 0,
+                "unitsIncomplete": 0,
+                "unitsTransferEarned": 0,
+                "unitsTransferAccepted": 0,
+                "unitsTest": 0,
+                "unitsOther": 0
+              },
+              {
+                "type": {
+                  "code": "For GPA",
+                  "description": "For GPA"
+                },
+                "unitsMin": 0,
+                "unitsMax": 0,
+                "unitsEnrolled": 0,
+                "unitsWaitlisted": 0,
+                "unitsTaken": 4,
+                "unitsPassed": 0,
+                "unitsIncomplete": 0,
+                "unitsTransferEarned": 0
+              },
+              {
+                "type": {
+                  "code": "Not For GPA",
+                  "description": "Not For GPA"
+                },
+                "unitsMin": 0,
+                "unitsMax": 0,
+                "unitsEnrolled": 0,
+                "unitsWaitlisted": 0,
+                "unitsTaken": 0,
+                "unitsPassed": 0,
+                "unitsIncomplete": 0,
+                "unitsTransferEarned": 0
+              }
+            ],
+            "termGPA": {
+              "type": {
+                "description": "Term GPA"
+              },
+              "average": 0,
+              "source": "UCB"
+            },
+            "specialStudyPrograms": [],
+            "new": false
+          },
+          {
+            "term": {
+              "id": "2058",
+              "name": "2005 Fall",
+              "academicYear": "2006"
+            },
+            "academicCareer": {
+              "code": "UGRD",
+              "description": "Undergraduate"
+            },
+            "eligibleToRegister": true,
+            "registered": false,
+            "disabled": false,
+            "athlete": false,
+            "intendsToGraduate": false,
+            "academicLevel": {
+              "level": {
+                "code": "20",
+                "description": "Sophomore"
+              }
+            },
+            "termUnits": [
+              {
+                "type": {
+                  "code": "Total",
+                  "description": "Total"
+                },
+                "unitsMin": 0,
+                "unitsMax": 0,
+                "unitsEnrolled": 0,
+                "unitsWaitlisted": 0,
+                "unitsTaken": 8,
+                "unitsPassed": 8,
+                "unitsIncomplete": 0,
+                "unitsTransferEarned": 0,
+                "unitsTransferAccepted": 0,
+                "unitsTest": 0,
+                "unitsOther": 0
+              },
+              {
+                "type": {
+                  "code": "For GPA",
+                  "description": "For GPA"
+                },
+                "unitsMin": 0,
+                "unitsMax": 0,
+                "unitsEnrolled": 0,
+                "unitsWaitlisted": 0,
+                "unitsTaken": 8,
+                "unitsPassed": 8,
+                "unitsIncomplete": 0,
+                "unitsTransferEarned": 0
+              },
+              {
+                "type": {
+                  "code": "Not For GPA",
+                  "description": "Not For GPA"
+                },
+                "unitsMin": 0,
+                "unitsMax": 0,
+                "unitsEnrolled": 0,
+                "unitsWaitlisted": 0,
+                "unitsTaken": 0,
+                "unitsPassed": 0,
+                "unitsIncomplete": 0,
+                "unitsTransferEarned": 0
+              }
+            ],
+            "termGPA": {
+              "type": {
+                "description": "Term GPA"
+              },
+              "average": 2.5,
+              "source": "UCB"
+            },
+            "specialStudyPrograms": [],
+            "new": false
+          },
+          {
+            "term": {
+              "id": "2072",
+              "name": "2007 Spring",
+              "academicYear": "2007"
+            },
+            "academicCareer": {
+              "code": "UGRD",
+              "description": "Undergraduate"
+            },
+            "eligibleToRegister": true,
+            "registered": false,
+            "disabled": false,
+            "athlete": false,
+            "intendsToGraduate": false,
+            "academicLevel": {
+              "level": {
+                "code": "20",
+                "description": "Sophomore"
+              }
+            },
+            "termUnits": [
+              {
+                "type": {
+                  "code": "Total",
+                  "description": "Total"
+                },
+                "unitsMin": 0,
+                "unitsMax": 0,
+                "unitsEnrolled": 0,
+                "unitsWaitlisted": 0,
+                "unitsTaken": 3,
+                "unitsPassed": 3,
+                "unitsIncomplete": 0,
+                "unitsTransferEarned": 0,
+                "unitsTransferAccepted": 0,
+                "unitsTest": 0,
+                "unitsOther": 0
+              },
+              {
+                "type": {
+                  "code": "For GPA",
+                  "description": "For GPA"
+                },
+                "unitsMin": 0,
+                "unitsMax": 0,
+                "unitsEnrolled": 0,
+                "unitsWaitlisted": 0,
+                "unitsTaken": 3,
+                "unitsPassed": 3,
+                "unitsIncomplete": 0,
+                "unitsTransferEarned": 0
+              },
+              {
+                "type": {
+                  "code": "Not For GPA",
+                  "description": "Not For GPA"
+                },
+                "unitsMin": 0,
+                "unitsMax": 0,
+                "unitsEnrolled": 0,
+                "unitsWaitlisted": 0,
+                "unitsTaken": 0,
+                "unitsPassed": 0,
+                "unitsIncomplete": 0,
+                "unitsTransferEarned": 0
+              }
+            ],
+            "termGPA": {
+              "type": {
+                "description": "Term GPA"
+              },
+              "average": 3,
+              "source": "UCB"
+            },
+            "specialStudyPrograms": [],
+            "new": false
+          },
+          {
+            "term": {
+              "id": "2122",
+              "name": "2012 Spring",
+              "academicYear": "2012"
+            },
+            "academicCareer": {
+              "code": "UGRD",
+              "description": "Undergraduate"
+            },
+            "eligibleToRegister": true,
+            "registered": false,
+            "disabled": false,
+            "athlete": false,
+            "intendsToGraduate": false,
+            "academicLevel": {
+              "level": {
+                "code": "20",
+                "description": "Sophomore"
+              }
+            },
+            "termUnits": [
+              {
+                "type": {
+                  "code": "Total",
+                  "description": "Total"
+                },
+                "unitsMin": 0,
+                "unitsMax": 0,
+                "unitsEnrolled": 0,
+                "unitsWaitlisted": 0,
+                "unitsTaken": 7,
+                "unitsPassed": 7,
+                "unitsIncomplete": 0,
+                "unitsTransferEarned": 0,
+                "unitsTransferAccepted": 0,
+                "unitsTest": 0,
+                "unitsOther": 0
+              },
+              {
+                "type": {
+                  "code": "For GPA",
+                  "description": "For GPA"
+                },
+                "unitsMin": 0,
+                "unitsMax": 0,
+                "unitsEnrolled": 0,
+                "unitsWaitlisted": 0,
+                "unitsTaken": 7,
+                "unitsPassed": 7,
+                "unitsIncomplete": 0,
+                "unitsTransferEarned": 0
+              },
+              {
+                "type": {
+                  "code": "Not For GPA",
+                  "description": "Not For GPA"
+                },
+                "unitsMin": 0,
+                "unitsMax": 0,
+                "unitsEnrolled": 0,
+                "unitsWaitlisted": 0,
+                "unitsTaken": 0,
+                "unitsPassed": 0,
+                "unitsIncomplete": 0,
+                "unitsTransferEarned": 0
+              }
+            ],
+            "termGPA": {
+              "type": {
+                "description": "Term GPA"
+              },
+              "average": 3.3,
+              "source": "UCB"
+            },
+            "specialStudyPrograms": [],
+            "new": false
+          },
+          {
+            "term": {
+              "id": "2168",
+              "name": "2016 Fall",
+              "academicYear": "2017"
+            },
+            "academicCareer": {
+              "code": "UGRD",
+              "description": "Undergraduate"
+            },
+            "eligibleToRegister": true,
+            "registered": true,
+            "disabled": false,
+            "athlete": false,
+            "intendsToGraduate": false,
+            "academicLevel": {
+              "level": {
+                "code": "30",
+                "description": "Junior"
+              }
+            },
+            "termUnits": [
+              {
+                "type": {
+                  "code": "Total",
+                  "description": "Total"
+                },
+                "unitsMin": 12,
+                "unitsMax": 25,
+                "unitsEnrolled": 0,
+                "unitsWaitlisted": 0,
+                "unitsTaken": 0,
+                "unitsPassed": 0,
+                "unitsIncomplete": 0,
+                "unitsTransferEarned": 0,
+                "unitsTransferAccepted": 0,
+                "unitsTest": 13.3,
+                "unitsOther": 0
+              },
+              {
+                "type": {
+                  "code": "For GPA",
+                  "description": "For GPA"
+                },
+                "unitsMin": 12,
+                "unitsMax": 4.5,
+                "unitsEnrolled": 0,
+                "unitsWaitlisted": 0,
+                "unitsTaken": 0,
+                "unitsPassed": 0,
+                "unitsIncomplete": 0,
+                "unitsTransferEarned": 0
+              },
+              {
+                "type": {
+                  "code": "Not For GPA",
+                  "description": "Not For GPA"
+                },
+                "unitsMin": 12,
+                "unitsMax": 20.5,
+                "unitsEnrolled": 0,
+                "unitsWaitlisted": 0,
+                "unitsTaken": 0,
+                "unitsPassed": 0,
+                "unitsIncomplete": 0,
+                "unitsTransferEarned": 0
+              }
+            ],
+            "termGPA": {
+              "type": {
+                "description": "Term GPA"
+              },
+              "average": 0,
+              "source": "UCB"
+            },
+            "specialStudyPrograms": [],
+            "new": true
+          },
+          {
+            "term": {
+              "id": "2172",
+              "name": "2017 Spring",
+              "academicYear": "2017"
+            },
+            "academicCareer": {
+              "code": "UGRD",
+              "description": "Undergraduate"
+            },
+            "eligibleToRegister": false,
+            "registered": false,
+            "disabled": false,
+            "athlete": false,
+            "intendsToGraduate": false,
+            "academicLevel": {
+              "level": {
+                "code": "30",
+                "description": "Junior"
+              }
+            },
+            "termUnits": [
+              {
+                "type": {
+                  "code": "Total",
+                  "description": "Total"
+                },
+                "unitsMin": 0,
+                "unitsMax": 0,
+                "unitsEnrolled": 0,
+                "unitsWaitlisted": 0,
+                "unitsTaken": 0,
+                "unitsPassed": 0,
+                "unitsIncomplete": 0,
+                "unitsTransferEarned": 0,
+                "unitsTransferAccepted": 0,
+                "unitsTest": 0,
+                "unitsOther": 0
+              },
+              {
+                "type": {
+                  "code": "For GPA",
+                  "description": "For GPA"
+                },
+                "unitsMin": 0,
+                "unitsMax": 0,
+                "unitsEnrolled": 0,
+                "unitsWaitlisted": 0,
+                "unitsTaken": 0,
+                "unitsPassed": 0,
+                "unitsIncomplete": 0,
+                "unitsTransferEarned": 0
+              },
+              {
+                "type": {
+                  "code": "Not For GPA",
+                  "description": "Not For GPA"
+                },
+                "unitsMin": 0,
+                "unitsMax": 0,
+                "unitsEnrolled": 0,
+                "unitsWaitlisted": 0,
+                "unitsTaken": 0,
+                "unitsPassed": 0,
+                "unitsIncomplete": 0,
+                "unitsTransferEarned": 0
+              }
+            ],
+            "termGPA": {
+              "type": {
+                "description": "Term GPA"
+              },
+              "average": 0,
+              "source": "UCB"
+            },
+            "specialStudyPrograms": [],
+            "new": false
+          },
+          {
+            "term": {
+              "id": "2175",
+              "name": "2017 Summer",
+              "academicYear": "2018"
+            },
+            "academicCareer": {
+              "code": "UGRD",
+              "description": "Undergraduate"
+            },
+            "eligibleToRegister": true,
+            "registered": false,
+            "disabled": false,
+            "athlete": false,
+            "intendsToGraduate": false,
+            "academicLevel": {
+              "level": {
+                "code": "30",
+                "description": "Junior"
+              }
+            },
+            "termUnits": [
+              {
+                "type": {
+                  "code": "Total",
+                  "description": "Total"
+                },
+                "unitsMin": 0,
+                "unitsMax": 0,
+                "unitsEnrolled": 12,
+                "unitsWaitlisted": 0,
+                "unitsTaken": 0,
+                "unitsPassed": 0,
+                "unitsIncomplete": 0,
+                "unitsTransferEarned": 0,
+                "unitsTransferAccepted": 0,
+                "unitsTest": 0,
+                "unitsOther": 0
+              },
+              {
+                "type": {
+                  "code": "For GPA",
+                  "description": "For GPA"
+                },
+                "unitsMin": 0,
+                "unitsMax": 0,
+                "unitsEnrolled": 12,
+                "unitsWaitlisted": 0,
+                "unitsTaken": 0,
+                "unitsPassed": 0,
+                "unitsIncomplete": 0,
+                "unitsTransferEarned": 0
+              },
+              {
+                "type": {
+                  "code": "Not For GPA",
+                  "description": "Not For GPA"
+                },
+                "unitsMin": 0,
+                "unitsMax": 0,
+                "unitsEnrolled": 0,
+                "unitsWaitlisted": 0,
+                "unitsTaken": 0,
+                "unitsPassed": 0,
+                "unitsIncomplete": 0,
+                "unitsTransferEarned": 0
+              }
+            ],
+            "termGPA": {
+              "type": {
+                "description": "Term GPA"
+              },
+              "average": 0,
+              "source": "UCB"
+            },
+            "specialStudyPrograms": [],
+            "new": false
+          },
+          {
+            "term": {
+              "id": "2182",
+              "name": "2018 Spring",
+              "academicYear": "2018"
+            },
+            "academicCareer": {
+              "code": "UGRD",
+              "description": "Undergraduate"
+            },
+            "eligibleToRegister": true,
+            "registered": false,
+            "disabled": false,
+            "athlete": false,
+            "intendsToGraduate": false,
+            "academicLevel": {
+              "level": {
+                "code": "30",
+                "description": "Junior"
+              }
+            },
+            "termUnits": [
+              {
+                "type": {
+                  "code": "Total",
+                  "description": "Total"
+                },
+                "unitsMin": 0,
+                "unitsMax": 0,
+                "unitsEnrolled": 0,
+                "unitsWaitlisted": 0,
+                "unitsTaken": 0,
+                "unitsPassed": 0,
+                "unitsIncomplete": 0,
+                "unitsTransferEarned": 0,
+                "unitsTransferAccepted": 0,
+                "unitsTest": 0,
+                "unitsOther": 0
+              },
+              {
+                "type": {
+                  "code": "For GPA",
+                  "description": "For GPA"
+                },
+                "unitsMin": 0,
+                "unitsMax": 0,
+                "unitsEnrolled": 0,
+                "unitsWaitlisted": 0,
+                "unitsTaken": 0,
+                "unitsPassed": 0,
+                "unitsIncomplete": 0,
+                "unitsTransferEarned": 0
+              },
+              {
+                "type": {
+                  "code": "Not For GPA",
+                  "description": "Not For GPA"
+                },
+                "unitsMin": 0,
+                "unitsMax": 0,
+                "unitsEnrolled": 0,
+                "unitsWaitlisted": 0,
+                "unitsTaken": 0,
+                "unitsPassed": 0,
+                "unitsIncomplete": 0,
+                "unitsTransferEarned": 0
+              }
+            ],
+            "termGPA": {
+              "type": {
+                "description": "Term GPA"
+              },
+              "average": 0,
+              "source": "UCB"
+            },
+            "specialStudyPrograms": [],
             "new": false
           }
         ]
