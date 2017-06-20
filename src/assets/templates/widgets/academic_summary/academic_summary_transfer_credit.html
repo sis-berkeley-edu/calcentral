@@ -27,12 +27,13 @@
             <td class="cc-text-center" data-ng-if="showPointsColumn && credit.ucbGradePoints" data-ng-bind="credit.ucbGradePoints | number:3"></td>
             <td class="cc-text-center" data-ng-if="showPointsColumn && !credit.ucbGradePoints">&mdash;</td>
           </tr>
+          <!-- TODO: Fix course unit counts in SISRP-34230 after API fix in SISRP-34229 -->
           <tr>
-            <td class="cc-text-right" colspan="2">Total Course Units: <strong data-ng-bind="transferCredit.ucTransferCrseSch.unitsTotal | number:3"></strong></td>
+            <td class="cc-text-right" colspan="2">Total Course Units: <strong data-ng-bind="transferCredit.ucTransferCrseSch.unitsNonAdjusted | number:3"></strong></td>
             <td></td>
           </tr>
           <tr>
-            <td class="cc-text-right" colspan="2" data-ng-if="transferCredit.ucTransferCrseSch.unitsNonAdjusted" data-ng-bind-template="Non-Adjusted Course Units: {{transferCredit.ucTransferCrseSch.unitsNonAdjusted | number:3}}"></td>
+            <td class="cc-text-right" colspan="2" data-ng-if="transferCredit.ucTransferCrseSch.unitsTotal" data-ng-bind-template="Non-Adjusted Course Units: {{transferCredit.ucTransferCrseSch.unitsTotal | number:3}}"></td>
             <td></td>
           </tr>
         </tbody>
