@@ -51,8 +51,7 @@ module MyRegistrations
 
     def set_regstatus_flags(term_registrations)
       term_registrations.each do |term_id, term_value|
-        past_end_of_instruction = get_term_flag(term_value, :pastEndOfInstruction)
-        term_value[:showRegStatus] = term_includes_indicator?(term_value, '+S09') && !past_end_of_instruction
+        term_value[:showRegStatus] = show_regstatus? term_value
       end
     end
 
@@ -64,15 +63,19 @@ module MyRegistrations
 
     def set_regstatus_messaging(term_registrations)
       term_registrations.each do |term_id, term_value|
-        undergrad = term_value.try(:[], 'academicCareer').try(:[], 'code') == 'UGRD'
-        registered = {isActive: term_includes_indicator?(term_value, '+REG')}
-        registered.merge!({message: extract_indicator_message(term_value, '+REG')}) if registered[:isActive]
+        show_regstatus = term_value.try(:[], :showRegStatus)
 
-        regstatus_summary = undergrad ? set_regstatus_summary_undergrad(term_value, registered) : set_regstatus_summary_grad(term_value, registered)
-        term_value[:regStatus] = {
-          summary: regstatus_summary,
-          explanation: undergrad ? set_regstatus_explanation_undergrad(term_value, regstatus_summary, registered) : set_regstatus_explanation_grad(term_value, regstatus_summary)
-        }
+        if show_regstatus
+          undergrad = term_value.try(:[], 'academicCareer').try(:[], 'code') == 'UGRD'
+          registered = {isActive: term_includes_indicator?(term_value, '+REG')}
+          registered.merge!({message: extract_indicator_message(term_value, '+REG')}) if registered[:isActive]
+
+          regstatus_summary = undergrad ? set_regstatus_summary_undergrad(term_value, registered) : set_regstatus_summary_grad(term_value, registered)
+          term_value[:regStatus] = {
+            summary: regstatus_summary,
+            explanation: undergrad ? set_regstatus_explanation_undergrad(term_value, regstatus_summary, registered) : set_regstatus_explanation_grad(term_value, regstatus_summary)
+          }
+        end
       end
     end
 
@@ -203,18 +206,25 @@ module MyRegistrations
       end
     end
 
+    def show_regstatus?(term)
+      past_end_of_instruction = get_term_flag(term, :pastEndOfInstruction)
+      term_career = get_term_career(term)
+      term_includes_indicator?(term, '+S09') && !past_end_of_instruction && (term_career != 'UCBX')
+    end
+
     # Only consider showing CNP status for undergraduate non-summer terms in which the student is not already Officially Registered
     # If a student is Not Enrolled and does not have CNP protection through R99 or ROP, do not show CNP warning as there are no classes to be dropped from.
     # If a student is not Officially Registered but is protected from CNP via R99, show protected status regardless of where we are in the term.
     # Otherwise, show CNP status until CNP action is taken (start of classes)
     # If none of these conditions are met, do not show CNP status
     def show_cnp?(term)
+      show_regstatus = term.try(:[], :showRegStatus)
       summer = term.try(:[], :isSummer)
       regstatus = term.try(:[], :regStatus).try(:[], :summary)
       undergrad = term.try(:[], 'academicCareer').try(:[], 'code') == 'UGRD'
       past_classes_start = get_term_flag(term, :pastClassesStart)
 
-      if undergrad && !summer && regstatus != 'Officially Registered'
+      if show_regstatus && undergrad && !summer && regstatus != 'Officially Registered'
         return false if regstatus == 'Not Enrolled' && (!term_includes_indicator?(term, '+R99') && !term_includes_indicator?(term, '+ROP'))
         if (regstatus != 'Officially Registered' && term_includes_indicator?(term, '+R99')) || !past_classes_start
           return true
@@ -228,6 +238,10 @@ module MyRegistrations
 
     def get_term_flag(term, flag)
       term.try(:[], :termFlags).try(:[], flag)
+    end
+
+    def get_term_career(term)
+      term.try(:[], 'academicCareer').try(:[], 'code')
     end
 
     def enrolled?(term)
