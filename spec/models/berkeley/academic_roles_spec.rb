@@ -109,7 +109,7 @@ describe Berkeley::AcademicRoles do
     subject { described_class.role_defaults }
 
     it 'returns all possible roles set to false' do
-      expect(subject.keys.count).to eq (13)
+      expect(subject.keys.count).to eq (14)
       expect(subject['ugrd']).to eq false
       expect(subject['grad']).to eq false
       expect(subject['fpf']).to eq false
@@ -123,6 +123,7 @@ describe Berkeley::AcademicRoles do
       expect(subject['haasMbaJurisDoctor']).to eq false
       expect(subject['ugrdUrbanStudies']).to eq false
       expect(subject['summerVisitor']).to eq false
+      expect(subject['courseworkOnly']).to eq false
     end
   end
   end
