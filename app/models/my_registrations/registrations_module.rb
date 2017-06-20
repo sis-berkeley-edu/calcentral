@@ -90,7 +90,7 @@ module MyRegistrations
           end
         end
       else
-        summary = 'Not Enrolled in Classes'
+        summary = 'Not Enrolled'
       end
       summary
     end
