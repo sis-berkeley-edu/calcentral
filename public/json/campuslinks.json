@@ -2485,9 +2485,9 @@
       ]
     },
     {
-      "name": "New Student Services (includes CalSO)",
+      "name": "New Student Services (includes Golden Bear Orientation)",
       "description": "Helping new undergrads get the most out of Cal",
-      "url": "http://nss.berkeley.edu/",
+      "url": "http://orientation.berkeley.edu/",
       "roles": {
         "student": true,
         "applicant": true,
@@ -2753,7 +2753,7 @@
     {
       "name": "Policies \u0026 Procedures A-Z",
       "description": "A-Z of campuswide policies and procedures",
-      "url": "http://campuspol.chance.berkeley.edu/Home/AtoZPolicies.cfm?long_page=yes",
+      "url": "https://compliance.berkeley.edu/campus-policies",
       "roles": {
         "student": true,
         "applicant": true,
@@ -2903,25 +2903,6 @@
         {
           "topcategory": "Tools \u0026 Resources",
           "subcategory": "Computing"
-        }
-      ]
-    },
-    {
-      "name": "Resource Guide for Students",
-      "description": "Comprehensive campus guide for students",
-      "url": "http://resource.berkeley.edu/",
-      "roles": {
-        "student": true,
-        "applicant": true,
-        "staff": false,
-        "faculty": false,
-        "exStudent": true,
-        "summerVisitor": true
-      },
-      "categories": [
-        {
-          "topcategory": "Support Services",
-          "subcategory": "Students"
         }
       ]
     },
