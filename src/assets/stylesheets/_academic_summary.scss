@@ -36,12 +36,15 @@
     margin-left: 10px;
   }
   .cc-academic-summary-table {
-    margin: 0 15px;
+    margin: 0 15px 10px;
     .cc-academic-summary-table-spacing {
       padding: 0;
     }
     .cc-academic-summary-table-units {
       padding-right: 15px;
+    }
+    .cc-academic-summary-table-multiple {
+      padding-left: 10px;
     }
     td {
       padding-top: 0;
