@@ -42,24 +42,24 @@
     <div class="cc-academic-summary-table-spacing" data-ng-if="transferCredit.ucTestComponent.totalTestUnits" data-ng-class="{'small-6 columns': transferCredit.ucTransferCrseSch.unitsTotal}">
       <table>
         <thead>
-          <th>Test Credit</th>
+          <th data-ng-class="{'cc-academic-summary-table-multiple':(transferCredit.ucTransferCrseSch.unitsTotal && transferCredit.ucTestComponent.totalTestUnits)}">Test Credit</th>
           <th class="cc-table-right">Units</th>
         </thead>
         <tbody>
           <tr data-ng-if="transferCredit.ucTestComponent.apUnits">
-            <td>Advanced Placement (AP)</td>
+            <td data-ng-class="{'cc-academic-summary-table-multiple':(transferCredit.ucTransferCrseSch.unitsTotal && transferCredit.ucTestComponent.totalTestUnits)}">Advanced Placement (AP)</td>
             <td class="cc-text-right" data-ng-bind="transferCredit.ucTestComponent.apUnits | number:3"></td>
           </tr>
           <tr data-ng-if="transferCredit.ucTestComponent.ibUnits">
-            <td>International Baccalaureate (IB)</td>
+            <td data-ng-class="{'cc-academic-summary-table-multiple':(transferCredit.ucTransferCrseSch.unitsTotal && transferCredit.ucTestComponent.totalTestUnits)}">International Baccalaureate (IB)</td>
             <td class="cc-text-right" data-ng-bind="transferCredit.ucTestComponent.ibUnits | number:3"></td>
           </tr>
           <tr data-ng-if="transferCredit.ucTestComponent.alevelUnits">
-            <td>GCE Advanced-Level (A-level)</td>
+            <td data-ng-class="{'cc-academic-summary-table-multiple':(transferCredit.ucTransferCrseSch.unitsTotal && transferCredit.ucTestComponent.totalTestUnits)}">GCE Advanced-Level (A-level)</td>
             <td class="cc-text-right" data-ng-bind="transferCredit.ucTestComponent.alevelUnits | number:3"></td>
           </tr>
           <tr>
-            <td class="cc-text-right" colspan="2">Total Test Units: <strong data-ng-bind="transferCredit.ucTestComponent.totalTestUnits"></strong></td>
+            <td class="cc-text-right" colspan="2">Total Test Units: <strong data-ng-bind="transferCredit.ucTestComponent.totalTestUnits | number:3"></strong></td>
           </tr>
         </tbody>
       </table>
