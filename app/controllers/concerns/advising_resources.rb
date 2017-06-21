@@ -17,7 +17,8 @@ module AdvisingResources
     { feed_key: :uc_transfer_credit_report, cs_link_key: 'UC_CX_CSU_DA_TRN_CDT' },
     { feed_key: :uc_what_if_reports, cs_link_key: 'UC_CX_WHIF_RPT'},
     { feed_key: :uc_archived_transcripts, cs_link_key: 'UC_CX_ARCH_TSCRPT_ADVISOR'},
-    { feed_key: :uc_change_course_load, cs_link_key: 'UC_CX_ADV_CHG_CRS_LOAD'}
+    { feed_key: :uc_change_course_load, cs_link_key: 'UC_CX_ADV_CHG_CRS_LOAD'},
+    { feed_key: :uc_cross_campus_enroll_approval, cs_link_key: 'UC_CX_ADV_CRSCAMPENR_APRV'},
   ]
 
   def self.generic_links

@@ -641,6 +641,15 @@
       "ucFromText": "CalCentral",
       "url": "https://bcswebqat.is.berkeley.edu/psp/bcsqat/EMPLOYEE/HRMS/c/G3FRAME.G3SEARCH.GBL?&G3FORM_FAMILY=STUDENT&G3FORM_TYPE=GRADEOPT&G3FORM_CONDITION=Default&G3FORM_TASK=ADD",
       "urlId": "UC_CX_GT_GRADEOPT_ADD"
+    },
+    "crossCampusEnroll": {
+      "iSCsLink": true,
+      "isCsLink": true,
+      "name": "UC Online Courses: Cross-Campus Enrollment",
+      "title": "UC Online Courses for Cross-Campus Enrollment",
+      "newWindow": true,
+      "url": "https://crossenroll.universityofcalifornia.edu/",
+      "urlId": "UC_CX_STDNT_CRSCAMPENR"
     }
   }
 }

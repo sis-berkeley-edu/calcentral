@@ -132,6 +132,13 @@
       "ucfromtext": "CalCentral",
       "url": "https://bcswebqat.is.berkeley.edu/psp/bcsqat/EMPLOYEE/HRMS/c/SSR_ADVISEE_OVRD.CSU_DA_TRN_CDT.GBL",
       "urlid": "UC_CX_CSU_DA_TRN_CDT"
+    },
+    "ucCrossCampusEnrollApproval": {
+      "name": "UC Online: Cross-Campus Enrollment Approval",
+      "title": "UC Online Login for Approving UC Cross-Campus Enrollment",
+      "url": "https://uconline.force.com/login",
+      "urlid": "UC_CX_ADV_CRSCAMPENR_APRV",
+      "newWindow": true
     }
   },
   "statusCode": 200
