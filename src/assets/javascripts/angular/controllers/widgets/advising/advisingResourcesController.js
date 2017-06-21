@@ -24,7 +24,8 @@ angular.module('calcentral.controllers').controller('AdvisingResourcesController
         'ucClassSearch',
         'ucEformsActionCenter',
         'ucEformsWorkCenter',
-        'ucReportingCenter'
+        'ucReportingCenter',
+        'ucCrossCampusEnrollApproval'
       ],
       links: []
     },

@@ -26,7 +26,7 @@
         <value>PL</value>
       </PROPERTY>
     </PROPERTIES>
-    <URL>https://bcs-web-dev-03.is.berkeley.edu:8443/psp/bcsdev/EMPLOYEE/HRMS/c/G3FRAME.G3SEARCH.GBL?&amp;G3FORM_FAMILY=STUDENT&amp;G3FORM_TYPE=GRADEOPT&amp;G3FORM_CONDITION=Default&amp;G3FORM_TASK=ADD</URL>
+    <URL>https://bcswebqat.is.berkeley.edu/psp/bcsdev/EMPLOYEE/HRMS/c/G3FRAME.G3SEARCH.GBL?&amp;G3FORM_FAMILY=STUDENT&amp;G3FORM_TYPE=GRADEOPT&amp;G3FORM_CONDITION=Default&amp;G3FORM_TASK=ADD</URL>
     <COMMENTS/>
   </Link>
   <Link>
@@ -55,7 +55,7 @@
         <value>PL</value>
       </PROPERTY>
     </PROPERTIES>
-  <URL>https://bcs-web-dev-03.is.berkeley.edu:8443/psp/bcsdev/EMPLOYEE/HRMS/c/G3FRAME.G3SEARCH.GBL?&amp;G3FORM_FAMILY=STUDENT&amp;G3FORM_TYPE=SRDCR&amp;G3FORM_CONDITION=Default&amp;G3FORM_TASK=ADD</URL>
+  <URL>https://bcswebqat.is.berkeley.edu/psp/bcsdev/EMPLOYEE/HRMS/c/G3FRAME.G3SEARCH.GBL?&amp;G3FORM_FAMILY=STUDENT&amp;G3FORM_TYPE=SRDCR&amp;G3FORM_CONDITION=Default&amp;G3FORM_TASK=ADD</URL>
     <COMMENTS>Apply to gain veteran's educational benefits.</COMMENTS>
   </Link>
   <Link>
@@ -76,7 +76,7 @@
         <value>PL</value>
       </PROPERTY>
     </PROPERTIES>
-    <URL>https://bcs-web-dev-03.is.berkeley.edu:8443/psp/bcsdev/EMPLOYEE/HRMS/c/G3FRAME.G3SEARCH.GBL?&amp;G3FORM_FAMILY=STUDENT&amp;G3FORM_TYPE=SRVAONCE&amp;G3FORM_CONDITION=Default&amp;G3FORM_TASK=ADD</URL>
+    <URL>https://bcswebqat.is.berkeley.edu/psp/bcsdev/EMPLOYEE/HRMS/c/G3FRAME.G3SEARCH.GBL?&amp;G3FORM_FAMILY=STUDENT&amp;G3FORM_TYPE=SRVAONCE&amp;G3FORM_CONDITION=Default&amp;G3FORM_TASK=ADD</URL>
     <COMMENTS>Apply to gain veteran's educational benefits.</COMMENTS>
   </Link>
   <Link>
@@ -206,7 +206,7 @@
       </PROPERTY>
     </PROPERTIES>
     <URL>
-    https://bcs-web-dev-03.is.berkeley.edu:8443/psp/bcsdev/EMPLOYEE/HRMS/c/G3FRAME.G3SEARCH.GBL?&amp;G3FORM_FAMILY=STUDENT&amp;G3FORM_TYPE=AAQEAPPLIC&amp;G3FORM_CONDITION=Default&amp;G3FORM_TASK=ADD&amp;cmd=login&amp;errorCode=105&amp;languageCd=ENG
+    https://bcswebqat.is.berkeley.edu/psp/bcsdev/EMPLOYEE/HRMS/c/G3FRAME.G3SEARCH.GBL?&amp;G3FORM_FAMILY=STUDENT&amp;G3FORM_TYPE=AAQEAPPLIC&amp;G3FORM_CONDITION=Default&amp;G3FORM_TASK=ADD&amp;cmd=login&amp;errorCode=105&amp;languageCd=ENG
     </URL>
     <COMMENTS></COMMENTS>
   </Link>
@@ -237,7 +237,7 @@
       </PROPERTY>
     </PROPERTIES>
     <URL>
-    https://bcs-web-dev-03.is.berkeley.edu:8443/psp/bcsdev/EMPLOYEE/HRMS/c/G3FRAME.G3SEARCH.GBL?&amp;G3FORM_FAMILY=STUDENT&amp;G3FORM_TYPE=AAQEAPPLIC&amp;G3FORM_CONDITION=Default&amp;G3FORM_TASK=ADD&amp;cmd=login&amp;errorCode=105&amp;languageCd=ENG
+    https://bcswebqat.is.berkeley.edu/psp/bcsdev/EMPLOYEE/HRMS/c/G3FRAME.G3SEARCH.GBL?&amp;G3FORM_FAMILY=STUDENT&amp;G3FORM_TYPE=AAQEAPPLIC&amp;G3FORM_CONDITION=Default&amp;G3FORM_TASK=ADD&amp;cmd=login&amp;errorCode=105&amp;languageCd=ENG
     </URL>
     <COMMENTS></COMMENTS>
   </Link>
@@ -260,7 +260,7 @@
       </PROPERTY>
     </PROPERTIES>
     <URL>
-    https://bcs-web-dev-03.is.berkeley.edu:8443/psp/bcsdev/EMPLOYEE/HRMS/c/G3FRAME.G3SEARCH.GBL?&amp;G3FORM_FAMILY=STUDENT&amp;G3FORM_TYPE=AAQEAPPLIC&amp;G3FORM_CONDITION=Default&amp;G3FORM_TASK=ADD&amp;cmd=login&amp;errorCode=105&amp;languageCd=ENG
+    https://bcswebqat.is.berkeley.edu/psp/bcsdev/EMPLOYEE/HRMS/c/G3FRAME.G3SEARCH.GBL?&amp;G3FORM_FAMILY=STUDENT&amp;G3FORM_TYPE=AAQEAPPLIC&amp;G3FORM_CONDITION=Default&amp;G3FORM_TASK=ADD&amp;cmd=login&amp;errorCode=105&amp;languageCd=ENG
     </URL>
     <COMMENTS></COMMENTS>
   </Link>
@@ -283,7 +283,7 @@
       </PROPERTY>
     </PROPERTIES>
     <URL>
-      https://bcs-web-dev-03.is.berkeley.edu:8443/psp/bcsdev/EMPLOYEE/HRMS/c/G3FRAME.G3SEARCH.GBL?&amp;G3FORM_FAMILY=STUDENT&amp;G3FORM_TYPE=AAQEAPPLIC&amp;G3FORM_CONDITION=Default&amp;G3FORM_TASK=VWS
+      https://bcswebqat.is.berkeley.edu/psp/bcsdev/EMPLOYEE/HRMS/c/G3FRAME.G3SEARCH.GBL?&amp;G3FORM_FAMILY=STUDENT&amp;G3FORM_TYPE=AAQEAPPLIC&amp;G3FORM_CONDITION=Default&amp;G3FORM_TASK=VWS
     </URL>
     <COMMENTS></COMMENTS>
   </Link>
@@ -632,22 +632,6 @@ This link should take an instructor to the Grade Roster in BCS of the identified
       <PROPERTY>
         <NAME>CALCENTRAL</NAME>
         <value>FORM</value>
-      </PROPERTY>
-      <PROPERTY>
-        <NAME>DEV_NODE</NAME>
-        <value>bcs-web-dev-03.is.berkeley.edu:8443/psp/bcsdev/</value>
-      </PROPERTY>
-      <PROPERTY>
-        <NAME>PRD_NODE</NAME>
-        <value>bcsweb.is.berkeley.edu/psp/bcsprd/</value>
-      </PROPERTY>
-      <PROPERTY>
-        <NAME>QAT_NODE</NAME>
-        <value>bcswebqat.is.berkeley.edu/psp/bcsqat/</value>
-      </PROPERTY>
-      <PROPERTY>
-        <NAME>TST_NODE</NAME>
-        <value>bcs-web-test-01.ist.1918.berkeley.edu:8443/psp/bcstst/</value>
       </PROPERTY>
       <PROPERTY>
         <NAME>UCFROM</NAME>
@@ -1947,6 +1931,48 @@ This link should take an instructor to the Grade Roster in BCS of the identified
       </PROPERTY>
     </PROPERTIES>
     <URL>https://bcswebqat.is.berkeley.edu/psp/bcsqat/EMPLOYEE/HRMS/c/UC_SR_TSCRPT.UC_SR_TSCRP.GBL?UC_CTS_EMPLID8={EMPLID}</URL>
+    <COMMENTS/>
+  </Link>
+  <Link>
+    <URL_ID>UC_CX_STDNT_CRSCAMPENR</URL_ID>
+    <Description>UC Online Courses: Cross-Campus Enrollment</Description>
+    <HOVER_OVER_TEXT>UC Online Courses for Cross-Campus Enrollment</HOVER_OVER_TEXT>
+    <PROPERTIES type="array">
+      <PROPERTY>
+        <NAME>CALCENTRAL</NAME>
+        <value>GENERIC</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>NEW_WINDOW</NAME>
+        <value>Y</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>DEV_NODE</NAME>
+        <value>crossenroll.universityofcalifornia.edu</value>
+      </PROPERTY>
+    </PROPERTIES>
+    <URL>https://crossenroll.universityofcalifornia.edu/</URL>
+    <COMMENTS/>
+  </Link>
+  <Link>
+    <URL_ID>UC_CX_ADV_CRSCAMPENR_APRV</URL_ID>
+    <Description>UC Online: Cross-Campus Enrollment Approval</Description>
+    <HOVER_OVER_TEXT>UC Online Login for Approving UC Cross-Campus Enrollment</HOVER_OVER_TEXT>
+    <PROPERTIES type="array">
+      <PROPERTY>
+        <NAME>CALCENTRAL</NAME>
+        <value>ADVISOR</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>NEW_WINDOW</NAME>
+        <value>Y</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>DEV_NODE</NAME>
+        <value>uconline.force.com</value>
+      </PROPERTY>
+    </PROPERTIES>
+    <URL>https://uconline.force.com/login</URL>
     <COMMENTS/>
   </Link>
 </UC_LINK_RESOURCES>

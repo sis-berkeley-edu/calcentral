@@ -72,7 +72,7 @@ describe AdvisingResources do
     subject { described_class.generic_links }
 
     it 'uses the generic link config to fetch links and return them in a list' do
-      expect(subject[:feed].count).to eq 17
+      expect(subject[:feed].count).to eq 18
       expect(subject[:feed][:ucAcademicProgressReport]).to eq mock_link
       expect(subject[:feed][:webNowDocuments]).to eq mock_link
       expect(subject[:feed][:ucAdministrativeTranscript]).to eq mock_link
@@ -90,6 +90,7 @@ describe AdvisingResources do
       expect(subject[:feed][:ucWhatIfReports]).to eq mock_link
       expect(subject[:feed][:ucArchivedTranscripts]).to eq mock_link
       expect(subject[:feed][:ucChangeCourseLoad]).to eq mock_link
+      expect(subject[:feed][:ucCrossCampusEnrollApproval]).to eq mock_link
     end
   end
 

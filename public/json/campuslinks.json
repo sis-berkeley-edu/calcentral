@@ -3299,6 +3299,25 @@
       ]
     },
     {
+      "name": "UC Online Courses: Cross-Campus Enrollment",
+      "description": "UC Online Courses for Cross-Campus Enrollment",
+      "url": "https://crossenroll.universityofcalifornia.edu/",
+      "roles": {
+        "student": true,
+        "applicant": false,
+        "staff": false,
+        "faculty": false,
+        "exStudent": false,
+        "summerVisitor": false
+      },
+      "categories": [
+        {
+          "topcategory": "Academic Planning",
+          "subcategory": "Planning"
+        }
+      ]
+    },
+    {
       "name": "Teaching Resources",
       "description": "Resources that promotes teaching and learning including consultation and program facilitation",
       "url": "http://teaching.berkeley.edu/teaching.html",
