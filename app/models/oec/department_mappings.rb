@@ -52,8 +52,8 @@ module Oec
 
     # Only used for cross-listings inclusion.
     def included?(dept_name, catalog_id)
-      all_mappings.first {|c| c[:dept_name] == dept_name && c[:catalog_id] == catalog_id && c[:include_in_oec]} ||
-        all_mappings.first {|c| c[:dept_name] == dept_name && c[:catalog_id] == '' && c[:include_in_oec]}
+      all_mappings.select {|c| c[:dept_name] == dept_name && c[:catalog_id] == catalog_id && c[:include_in_oec]}.present? ||
+        all_mappings.select {|c| c[:dept_name] == dept_name && c[:catalog_id] == '' && c[:include_in_oec]}.present?
     end
 
     # Only used for cross-listings sort.
