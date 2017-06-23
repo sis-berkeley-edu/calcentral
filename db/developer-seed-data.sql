@@ -1668,7 +1668,7 @@ INSERT INTO oec_course_codes VALUES (134, 'NE STUD', '', 'HNNES', false, '2015-0
 INSERT INTO oec_course_codes VALUES (135, 'NEUROSC', '', 'EUNEU', true, '2015-08-13 23:26:36.282', '2015-08-13 23:26:36.282');
 INSERT INTO oec_course_codes VALUES (136, 'NORWEGN', '', 'HSCAN', false, '2015-08-13 23:26:36.286', '2015-08-13 23:26:36.286');
 INSERT INTO oec_course_codes VALUES (137, 'NSE', '', 'EDDNO', true, '2015-08-13 23:26:36.29', '2015-08-13 23:26:36.29');
-INSERT INTO oec_course_codes VALUES (138, 'NUCENG', '', 'ELNUC', true, '2015-08-13 23:26:36.294', '2015-08-13 23:26:36.294');
+INSERT INTO oec_course_codes VALUES (138, 'NUC ENG', '', 'ELNUC', true, '2015-08-13 23:26:36.294', '2015-08-13 23:26:36.294');
 INSERT INTO oec_course_codes VALUES (139, 'NUSCTX', '', 'MDNST', true, '2015-08-13 23:26:36.297', '2015-08-13 23:26:36.297');
 INSERT INTO oec_course_codes VALUES (140, 'NWMEDIA', '', 'BTCNM', true, '2015-08-13 23:26:36.302', '2015-08-13 23:26:36.302');
 INSERT INTO oec_course_codes VALUES (141, 'OPTOM', '', 'BOOPT', false, '2015-08-13 23:26:36.307', '2015-08-13 23:26:36.307');
