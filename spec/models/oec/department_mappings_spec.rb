@@ -164,4 +164,14 @@ describe Oec::DepartmentMappings, if: in_memory_database? do
     end
   end
 
+  describe '#included?' do
+    let(:include_fssem) {true}
+    it 'affirms included courses' do
+      expect(subject.included?('CLASSIC', '24')).to be_truthy
+    end
+    it 'disclaims excluded courses' do
+      expect(subject.included?('CLASSIC', '101')).to be_falsey
+    end
+  end
+
 end

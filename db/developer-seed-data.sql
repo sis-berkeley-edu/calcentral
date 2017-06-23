@@ -1635,7 +1635,7 @@ INSERT INTO oec_course_codes VALUES (101, 'ISF', '', 'QHUIS', true, '2015-08-13 
 INSERT INTO oec_course_codes VALUES (102, 'ITALIAN', '', 'HITAL', false, '2015-08-13 23:26:36.132', '2015-08-13 23:26:36.132');
 INSERT INTO oec_course_codes VALUES (103, 'JAPAN', '', 'HGEAL', false, '2015-08-13 23:26:36.139', '2015-08-13 23:26:36.139');
 INSERT INTO oec_course_codes VALUES (104, 'JEWISH', '', 'KDCJS', false, '2015-08-13 23:26:36.143', '2015-08-13 23:26:36.143');
-INSERT INTO oec_course_codes VALUES (105, 'JOURN', '', 'DJOUR', false, '2015-08-13 23:26:36.148', '2015-08-13 23:26:36.148');
+INSERT INTO oec_course_codes VALUES (105, 'JOURN', '', 'DJOUR', true, '2015-08-13 23:26:36.148', '2015-08-13 23:26:36.148');
 INSERT INTO oec_course_codes VALUES (106, 'KHMER', '', 'HVSSA', false, '2015-08-13 23:26:36.152', '2015-08-13 23:26:36.152');
 INSERT INTO oec_course_codes VALUES (107, 'KOREAN', '', 'HGEAL', false, '2015-08-13 23:26:36.157', '2015-08-13 23:26:36.157');
 INSERT INTO oec_course_codes VALUES (108, 'L&S', '', 'QHUIS', true, '2015-08-13 23:26:36.16', '2015-08-13 23:26:36.16');
@@ -1668,7 +1668,7 @@ INSERT INTO oec_course_codes VALUES (134, 'NE STUD', '', 'HNNES', false, '2015-0
 INSERT INTO oec_course_codes VALUES (135, 'NEUROSC', '', 'EUNEU', true, '2015-08-13 23:26:36.282', '2015-08-13 23:26:36.282');
 INSERT INTO oec_course_codes VALUES (136, 'NORWEGN', '', 'HSCAN', false, '2015-08-13 23:26:36.286', '2015-08-13 23:26:36.286');
 INSERT INTO oec_course_codes VALUES (137, 'NSE', '', 'EDDNO', true, '2015-08-13 23:26:36.29', '2015-08-13 23:26:36.29');
-INSERT INTO oec_course_codes VALUES (138, 'NUCENG', '', 'ELNUC', true, '2015-08-13 23:26:36.294', '2015-08-13 23:26:36.294');
+INSERT INTO oec_course_codes VALUES (138, 'NUC ENG', '', 'ELNUC', true, '2015-08-13 23:26:36.294', '2015-08-13 23:26:36.294');
 INSERT INTO oec_course_codes VALUES (139, 'NUSCTX', '', 'MDNST', true, '2015-08-13 23:26:36.297', '2015-08-13 23:26:36.297');
 INSERT INTO oec_course_codes VALUES (140, 'NWMEDIA', '', 'BTCNM', true, '2015-08-13 23:26:36.302', '2015-08-13 23:26:36.302');
 INSERT INTO oec_course_codes VALUES (141, 'OPTOM', '', 'BOOPT', false, '2015-08-13 23:26:36.307', '2015-08-13 23:26:36.307');
