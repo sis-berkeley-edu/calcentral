@@ -1909,31 +1909,6 @@ This link should take an instructor to the Grade Roster in BCS of the identified
     <COMMENTS/>
   </Link>
   <Link>
-    <URL_ID>UC_CX_ARCH_TSCRPT_ADVSTDNT</URL_ID>
-    <Description>Archived DB2 Transcript</Description>
-    <HOVER_OVER_TEXT>Access this student's archived Pre-1995 DB2 transcript</HOVER_OVER_TEXT>
-    <PROPERTIES type="array">
-      <PROPERTY>
-        <NAME>CALCENTRAL</NAME>
-        <value>FORM</value>
-      </PROPERTY>
-      <PROPERTY>
-        <NAME>UCFROM</NAME>
-        <value>CalCentral</value>
-      </PROPERTY>
-      <PROPERTY>
-        <NAME>UCFROMLINK</NAME>
-        <value>https://calcentral-sis-dev-01.ist.berkeley.edu/</value>
-      </PROPERTY>
-      <PROPERTY>
-        <NAME>UCFROMTEXT</NAME>
-        <value>CalCentral</value>
-      </PROPERTY>
-    </PROPERTIES>
-    <URL>https://bcswebqat.is.berkeley.edu/psp/bcsqat/EMPLOYEE/HRMS/c/UC_SR_TSCRPT.UC_SR_TSCRP.GBL?UC_CTS_EMPLID8={EMPLID}</URL>
-    <COMMENTS/>
-  </Link>
-  <Link>
     <URL_ID>UC_CX_STDNT_CRSCAMPENR</URL_ID>
     <Description>UC Online Courses: Cross-Campus Enrollment</Description>
     <HOVER_OVER_TEXT>UC Online Courses for Cross-Campus Enrollment</HOVER_OVER_TEXT>

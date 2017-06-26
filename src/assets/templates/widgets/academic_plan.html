@@ -3,13 +3,6 @@
     <h2 class="cc-left">Academic Plan</h2>
   </div>
   <div data-cc-spinner-directive="planSemestersInfo.isLoading">
-    <div class="cc-widget-padding" data-ng-if="legacyReportStatus && legacyReportStatus.code !== 'NONE'">
-      <p class="cc-academic-plan-card-legacy-report-status">
-        <i class="fa fa-exclamation-circle cc-icon-red"></i>
-        <span data-ng-bind="legacyReportStatus.message"></span>
-      </p>
-      <a data-cc-campus-solutions-link-directive="legacyReportStatus.link" data-ng-if="legacyReportStatus.link.url"></a>
-    </div>
 
     <div class="cc-widget-padding" data-ng-if="advisorLinks.updatePlanUrl.url">
       <h3>
