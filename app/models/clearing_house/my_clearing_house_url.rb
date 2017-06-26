@@ -26,6 +26,7 @@ module ClearingHouse
       url = "#{@settings.base_url}"
       options = {
         method: :post,
+        ssl_version: 'TLSv1_2',
         headers: {
           "Referer" => 'https://calcentral.berkeley.edu/academics/enrollment_verification',
           "User-Agent" => " "
