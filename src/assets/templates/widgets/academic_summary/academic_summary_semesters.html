@@ -48,7 +48,7 @@
           <td data-ng-bind="class.title"></td>
           <td class="cc-text-right cc-academic-summary-table-units" data-ng-bind="section.units | number:1"></td>
           <td data-ng-if="api.user.profile.canViewGrades">&mdash;</td>
-          <td data-ng-if="api.user.profile.canViewGrades">&mdash;</td>
+          <td class="cc-text-right" data-ng-if="api.user.profile.canViewGrades">&mdash;</td>
         </tr>
         <tr data-ng-if="class.transcript" data-ng-repeat="transcript in class.transcript">
           <td data-ng-if="class.url"><a data-ng-href="{{class.url}}" data-ng-bind="class.course_code"></a>
