@@ -2,7 +2,7 @@
   <div class="cc-widget cc-higher-degree-committee">
     <div class="cc-widget-title">
       <h2>
-        <span data-ng-pluralize count="facultyCommittees.length" when="
+        <span data-ng-pluralize count="facultyCommittees.active.length + facultyCommittees.completed.length" when="
             {
               '0': 'Higher Degree Committee',
               'one': 'Higher Degree Committee',
