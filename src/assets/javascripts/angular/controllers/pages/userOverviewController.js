@@ -243,7 +243,7 @@ angular.module('calcentral.controllers').controller('UserOverviewController', fu
     var termGpas = _.get(response, 'data.termGpa');
     $scope.studentSuccess.termGpa = _.sortBy(termGpas, ['termId']);
 
-    if (termGpas.length > 2) {
+    if (termGpas.length >= 2) {
       chartGpaTrend(termGpas);
     } else {
       $scope.studentSuccess.showChart = false;
