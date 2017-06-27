@@ -66,6 +66,17 @@
         "ucFromText": "CalCentral",
         "url": "https://bcswebqat.is.berkeley.edu/psp/bcsqat/EMPLOYEE/HRMS/c/G3FRAME.G3SEARCH.GBL?&G3FORM_FAMILY=STUDENT&G3FORM_TYPE=SRWITHDRL&G3FORM_CONDITION=Default&G3FORM_TASK=ADD",
         "urlId": "UC_CX_SRWITHDRL_ADD"
+      },
+      "higherDegreesCommitteeForm": {
+        "iSCsLink": true,
+        "isCsLink": true,
+        "name": "Higher Degree Committees Form",
+        "title": "Advance to Candidacy, apply for the qualifying exam, or modify your Committee.",
+        "ucFrom": "CalCentral",
+        "ucFromLink": "https://calcentral-sis-dev-01.ist.berkeley.edu/",
+        "ucFromText": "CalCentral",
+        "url": "https://bcswebqat.is.berkeley.edu/psp/bcsqat/EMPLOYEE/HRMS/c/G3FRAME.G3SEARCH.GBL?&G3FORM_FAMILY=STUDENT&G3FORM_TYPE=AAQEAPPLIC&G3FORM_CONDITION=Default&G3FORM_TASK=ADD&cmd=login&errorCode=105&languageCd=ENG",
+        "urlId": "UC_CX_GT_AAQEAPPLIC_ADD"
       }
     }
   },
