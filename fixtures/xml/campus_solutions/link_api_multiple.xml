@@ -243,8 +243,8 @@
   </Link>
   <Link>
     <URL_ID>UC_CX_GT_AAQEAPPLIC_ADD</URL_ID>
-    <Description>Submit an Advancement Form</Description>
-    <HOVER_OVER_TEXT/>
+    <Description>Higher Degree Committees Form</Description>
+    <HOVER_OVER_TEXT>Advance to Candidacy, apply for the qualifying exam, or modify your Committee.</HOVER_OVER_TEXT>
     <PROPERTIES type="array">
       <PROPERTY>
         <NAME>CALCENTRAL</NAME>
