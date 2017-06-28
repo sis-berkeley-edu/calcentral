@@ -18,14 +18,14 @@ angular.module('calcentral.controllers').controller('AcademicsStatusHoldsBlocksC
     isLoading: true
   };
 
-  $scope.$watchGroup(['regStatus.registrations', 'api.user.profile.features.csHolds'], function(newValues) {
+  $scope.$watchGroup(['regStatus.registrations', 'residency.official.description', 'api.user.profile.features.csHolds'], function(newValues) {
     var enabledSections = [];
 
-    if (newValues[0]) {
+    if (newValues[0] || newValues[1]) {
       enabledSections.push('Status');
     }
 
-    if (newValues[1]) {
+    if (newValues[2]) {
       enabledSections.push('Holds');
     }
 
