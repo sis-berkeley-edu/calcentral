@@ -30,35 +30,6 @@
     <COMMENTS/>
   </Link>
   <Link>
-    <URL_ID>UC_CX_GT_SRDCR_ADD_DP</URL_ID>
-    <Description>Submit a Doctoral Degree Candidacy Review</Description>
-    <HOVER_OVER_TEXT>View your submitted doctoral candidacy reviews</HOVER_OVER_TEXT>
-    <PROPERTIES type="array">
-      <PROPERTY>
-        <NAME>CALCENTRAL</NAME>
-        <value>FORM</value>
-      </PROPERTY>
-      <PROPERTY>
-        <NAME>UCFROM</NAME>
-        <value>CalCentral</value>
-      </PROPERTY>
-      <PROPERTY>
-        <NAME>UCFROMLINK</NAME>
-        <value>https://calcentral-sis-dev-01.ist.berkeley.edu/</value>
-      </PROPERTY>
-      <PROPERTY>
-        <NAME>UCFROMTEXT</NAME>
-        <value>CalCentral</value>
-      </PROPERTY>
-      <PROPERTY>
-        <NAME>URI_TYPE</NAME>
-        <value>PL</value>
-      </PROPERTY>
-    </PROPERTIES>
-  <URL>https://bcswebqat.is.berkeley.edu/psp/bcsdev/EMPLOYEE/HRMS/c/G3FRAME.G3SEARCH.GBL?&amp;G3FORM_FAMILY=STUDENT&amp;G3FORM_TYPE=SRDCR&amp;G3FORM_CONDITION=Default&amp;G3FORM_TASK=ADD</URL>
-    <COMMENTS>Apply to gain veteran's educational benefits.</COMMENTS>
-  </Link>
-  <Link>
     <URL_ID>UC_CX_GT_SRVAONCE_ADD</URL_ID>
     <Description>Veteran’s Benefits Intake Form</Description>
     <HOVER_OVER_TEXT>Complete this form to initiate Veterans Affairs benefits at UC Berkeley.</HOVER_OVER_TEXT>
@@ -178,68 +149,6 @@
     </PROPERTIES>
     <URL>https://bcswebqat.is.berkeley.edu/psp/bcsqat/EMPLOYEE/HRMS/c/G3FRAME.G3SEARCH.GBL?&amp;G3FORM_FAMILY=SRCPPSTCK&amp;G3FORM_TYPE=CPPSTACK&amp;G3FORM_CONDITION=Default&amp;G3FORM_TASK=VWS</URL>
     <COMMENTS>Form to view your Academic Plan change requests which includes your major, minor, subplan, graduation date, designated emphasis, or degree</COMMENTS>
-  </Link>
-  <Link>
-    <URL_ID>UC_CX_GT_GRAD_ADVC</URL_ID>
-    <Description>Apply for Advancement to Candidacy</Description>
-    <HOVER_OVER_TEXT>Apply for Advancement to Candidacy</HOVER_OVER_TEXT>
-    <PROPERTIES type="array">
-      <PROPERTY>
-        <NAME>CALCENTRAL</NAME>
-        <value>FORM</value>
-      </PROPERTY>
-      <PROPERTY>
-        <NAME>UCFROM</NAME>
-        <value>CalCentral</value>
-      </PROPERTY>
-      <PROPERTY>
-        <NAME>UCFROMLINK</NAME>
-        <value>https://calcentral-sis-dev-01.ist.berkeley.edu/</value>
-      </PROPERTY>
-      <PROPERTY>
-        <NAME>UCFROMTEXT</NAME>
-        <value>CalCentral</value>
-      </PROPERTY>
-      <PROPERTY>
-        <NAME>URI_TYPE</NAME>
-        <value>PL</value>
-      </PROPERTY>
-    </PROPERTIES>
-    <URL>
-    https://bcswebqat.is.berkeley.edu/psp/bcsdev/EMPLOYEE/HRMS/c/G3FRAME.G3SEARCH.GBL?&amp;G3FORM_FAMILY=STUDENT&amp;G3FORM_TYPE=AAQEAPPLIC&amp;G3FORM_CONDITION=Default&amp;G3FORM_TASK=ADD&amp;cmd=login&amp;errorCode=105&amp;languageCd=ENG
-    </URL>
-    <COMMENTS></COMMENTS>
-  </Link>
-  <Link>
-    <URL_ID>UC_CX_GT_GRAD_APPQE</URL_ID>
-    <Description>Apply for the Doctoral Qualifying Exam</Description>
-    <HOVER_OVER_TEXT>Apply for the Doctoral Qualifying Exam</HOVER_OVER_TEXT>
-    <PROPERTIES type="array">
-      <PROPERTY>
-        <NAME>CALCENTRAL</NAME>
-        <value>FORM</value>
-      </PROPERTY>
-      <PROPERTY>
-        <NAME>UCFROM</NAME>
-        <value>CalCentral</value>
-      </PROPERTY>
-      <PROPERTY>
-        <NAME>UCFROMLINK</NAME>
-        <value>https://calcentral-sis-dev-01.ist.berkeley.edu/</value>
-      </PROPERTY>
-      <PROPERTY>
-        <NAME>UCFROMTEXT</NAME>
-        <value>CalCentral</value>
-      </PROPERTY>
-      <PROPERTY>
-        <NAME>URI_TYPE</NAME>
-        <value>PL</value>
-      </PROPERTY>
-    </PROPERTIES>
-    <URL>
-    https://bcswebqat.is.berkeley.edu/psp/bcsdev/EMPLOYEE/HRMS/c/G3FRAME.G3SEARCH.GBL?&amp;G3FORM_FAMILY=STUDENT&amp;G3FORM_TYPE=AAQEAPPLIC&amp;G3FORM_CONDITION=Default&amp;G3FORM_TASK=ADD&amp;cmd=login&amp;errorCode=105&amp;languageCd=ENG
-    </URL>
-    <COMMENTS></COMMENTS>
   </Link>
   <Link>
     <URL_ID>UC_CX_GT_AAQEAPPLIC_ADD</URL_ID>
@@ -677,35 +586,6 @@ This link should take an instructor to the Grade Roster in BCS of the identified
     </PROPERTIES>
     <URL>https://bcswebqat.is.berkeley.edu/psp/bcsqat/EMPLOYEE/HRMS/c/G3FRAME.G3SEARCH.GBL?&amp;G3FORM_FAMILY=STUDENT&amp;G3FORM_CONDITION=Default&amp;G3FORM_TASK=VWS</URL>
     <COMMENTS>View search page for all student forms.</COMMENTS>
-  </Link>
-  <Link>
-    <URL_ID>UC_CX_GT_STUDENT_VIEW_DP</URL_ID>
-    <Description>View Submitted Forms</Description>
-    <HOVER_OVER_TEXT>View the status of the forms you have submitted.</HOVER_OVER_TEXT>
-    <PROPERTIES type="array">
-      <PROPERTY>
-        <NAME>CALCENTRAL</NAME>
-        <value>FORM</value>
-      </PROPERTY>
-      <PROPERTY>
-        <NAME>UCFROM</NAME>
-        <value>CalCentral</value>
-      </PROPERTY>
-      <PROPERTY>
-        <NAME>UCFROMLINK</NAME>
-        <value>https://calcentral-sis-dev-01.ist.berkeley.edu/</value>
-      </PROPERTY>
-      <PROPERTY>
-        <NAME>UCFROMTEXT</NAME>
-        <value>CalCentral</value>
-      </PROPERTY>
-      <PROPERTY>
-        <NAME>URI_TYPE</NAME>
-        <value>PL</value>
-      </PROPERTY>
-    </PROPERTIES>
-    <URL>https://bcswebqat.is.berkeley.edu/psp/bcsqat/EMPLOYEE/HRMS/c/G3FRAME.G3SEARCH.GBL?&amp;G3FORM_FAMILY=STUDENT&amp;G3FORM_CONDITION=Default&amp;G3FORM_TASK=VWS</URL>
-    <COMMENTS>Used in CalCentral My Academics page, Degree Progress card</COMMENTS>
   </Link>
   <Link>
     <URL_ID>UC_CX_GT_ACTION_CENTER</URL_ID>
