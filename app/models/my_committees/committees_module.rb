@@ -1,8 +1,6 @@
 module MyCommittees::CommitteesModule
   extend self
 
-  include LinkFetcher
-
   COMMITTEE_TYPES = {
     QE: {
       code: 'QE',
