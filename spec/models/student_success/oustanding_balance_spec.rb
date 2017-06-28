@@ -6,7 +6,7 @@ describe StudentSuccess::OutstandingBalance do
     end
     it 'correctly parses the feed' do
       result = StudentSuccess::OutstandingBalance.new(user_id: 61889).merge
-      expect(result).to eq '$153.00'
+      expect(result).to eq 153.0
     end
   end
 

@@ -16,7 +16,11 @@ module StudentSuccess
 
     def parse_outstanding_balance(response)
       balance = response.try(:[], :feed).try(:[], :ucSfAccountData).try(:[], :outstandingBalance)
-      balance if balance.present?
+      if balance
+        balance = balance.gsub(/[$,]/, '')
+        return balance.to_f
+      end
+      nil
     end
   end
 end
