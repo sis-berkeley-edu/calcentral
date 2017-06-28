@@ -146,13 +146,11 @@ angular.module('calcentral.controllers').controller('AcademicsHigherDegreeCommit
     var studentCommittees = parseCommitteeData(committeeData.studentCommittees, false);
     var facultyActiveCommittiees = parseCommitteeData(committeeData.facultyCommittees.active, true);
     var facultyCompletedCommittiees = parseCommitteeData(committeeData.facultyCommittees.completed, true);
-    var committeeRequestChangeLink = committeeData.committeeRequestChangeLink;
 
     /**
     * Add committee data to $scope
     */
     angular.extend($scope, {
-      committeeRequestChangeLink: committeeRequestChangeLink,
       studentCommittees: studentCommittees,
       facultyCommittees: {
         active: facultyActiveCommittiees,
