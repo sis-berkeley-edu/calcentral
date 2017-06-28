@@ -18,7 +18,7 @@ angular.module('calcentral.controllers').controller('AcademicsStatusHoldsBlocksC
     isLoading: true
   };
 
-  $scope.$watchGroup(['regStatus.registrations.length', 'api.user.profile.features.csHolds'], function(newValues) {
+  $scope.$watchGroup(['regStatus.registrations', 'api.user.profile.features.csHolds'], function(newValues) {
     var enabledSections = [];
 
     if (newValues[0]) {
