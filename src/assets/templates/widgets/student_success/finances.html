@@ -10,7 +10,7 @@
         <td>Amount Due Now</td>
         <td class="cc-table-right" colspan="2">
           <span data-ng-if="!studentSuccess.outstandingBalance">&mdash;</span>
-          <span data-ng-if="studentSuccess.outstandingBalance" data-ng-bind="studentSuccess.outstandingBalance"></span>
+          <span data-ng-if="studentSuccess.outstandingBalance" data-ng-bind="studentSuccess.outstandingBalance | currency:'$':2"></span>
         </td>
       </tr>
     </tbody>
