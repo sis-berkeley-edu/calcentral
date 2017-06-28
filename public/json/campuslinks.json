@@ -1380,7 +1380,7 @@
     {
       "name": "Class Enrollment Rules and Guides",
       "description": "Registrar guide to Tele-BEARS, enrollment periods, add-drop deadlines, and other tips",
-      "url": " http://registrar.berkeley.edu/registration/enrollment",
+      "url": "http://registrar.berkeley.edu/registration/enrollment",
       "roles": {
         "student": true,
         "applicant": true,
