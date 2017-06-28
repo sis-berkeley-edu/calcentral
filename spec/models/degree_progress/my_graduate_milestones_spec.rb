@@ -21,14 +21,6 @@ describe DegreeProgress::MyGraduateMilestones do
 
       it_behaves_like 'a proxy that returns graduate milestone data'
       it_behaves_like 'a proxy that properly observes the graduate degree progress for student feature flag'
-
-      it 'includes links in the response' do
-        expect(subject[:feed][:links]).to be
-        expect(subject[:feed][:links][:applyForAdvancementToCandidacy]).to be
-        expect(subject[:feed][:links][:applyDoctorsQualifyingExam]).to be
-        expect(subject[:feed][:links][:submitDoctoralDegreeCandidacyReview]).to be
-        expect(subject[:feed][:links][:viewSubmittedForms]).to be
-      end
     end
 
     context 'when user is a law student' do
@@ -37,14 +29,6 @@ describe DegreeProgress::MyGraduateMilestones do
 
       it_behaves_like 'a proxy that returns graduate milestone data'
       it_behaves_like 'a proxy that properly observes the graduate degree progress for student feature flag'
-
-      it 'includes links in the response' do
-        expect(subject[:feed][:links]).to be
-        expect(subject[:feed][:links][:applyForAdvancementToCandidacy]).to be
-        expect(subject[:feed][:links][:applyDoctorsQualifyingExam]).to be
-        expect(subject[:feed][:links][:submitDoctoralDegreeCandidacyReview]).to be
-        expect(subject[:feed][:links][:viewSubmittedForms]).to be
-      end
     end
 
     context 'when user is neither Graduate nor Law' do
