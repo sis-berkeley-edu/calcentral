@@ -30,7 +30,7 @@ module Memcached
     hostname = server[:host]
     port = server[:port]
     parsed = nil
-    connected_host = Net::Telnet::new('Host' => hostname, 'Port' => port, 'Timeout' => 3)
+    connected_host = Net::Telnet::new('Host' => hostname, 'Port' => port, 'Telnetmode' => false, 'Timeout' => 3)
     connected_host.cmd('String' => command, 'Match' => /^#{response_over}/) do |c|
       parsed = c.split(/\r?\n/)
       parsed.slice!(-1)
