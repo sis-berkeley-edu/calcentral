@@ -2,25 +2,33 @@
 'use strict';
 
 var angular = require('angular');
+var _ = require('lodash');
 
 /**
  * Academics GPA controller
  */
 angular.module('calcentral.controllers').controller('AcademicsFinalGradesController', function($scope) {
-  var hasTranscripts = function() {
-    // On page load, set default values and calculate starter GPA
-    var response = false;
-
+  var hasGrades = function() {
+    var hasGrades = false;
     var selectedCourses = $scope.selectedCourses;
+    _.forEach(selectedCourses, function(course) {
+      var sections = _.get(course, 'sections');
 
-    for (var i = 0; i < selectedCourses.length; i++) {
-      if (selectedCourses[i].transcript) {
-        response = true;
-        break;
+      _.forEach(sections, function(section) {
+        if (section.is_primary_section && section.grading.grade) {
+          hasGrades = true;
+          // Lodash uses 'return false' to break from a loop.
+          return false;
+        }
+      });
+
+      // If we found a grade, break from the loop.
+      if (hasGrades) {
+        return false;
       }
-    }
-    return response;
+    });
+    return hasGrades;
   };
 
-  $scope.semesterHasTranscripts = hasTranscripts();
+  $scope.semesterHasGrades = hasGrades();
 });

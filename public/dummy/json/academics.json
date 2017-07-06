@@ -1,406 +1,210 @@
 {
-  "additionalCredits": [
-    {
-      "title": "AP ENGL C/L, 05-10",
-      "units": "5.3"
-    },
-    {
-      "title": "AP BIO, 05-11",
-      "units": "5.3"
-    },
-    {
-      "title": "AP MATH AB, 05-10",
-      "units": "2.7"
-    }
-  ],
   "collegeAndLevel": {
+    "statusCode": 200,
+    "studentNotFound": null,
+    "holds": {
+      "hasHolds": false
+    },
+    "roles": {
+      "fpf": false,
+      "haasFullTimeMba": false,
+      "haasEveningWeekendMba": false,
+      "haasExecMba": false,
+      "haasMastersFinEng": false,
+      "haasMbaPublicHealth": false,
+      "haasMbaJurisDoctor": false,
+      "ugrdUrbanStudies": true,
+      "summerVisitor": false,
+      "courseworkOnly": false,
+      "ugrd": false,
+      "grad": false,
+      "law": false,
+      "concurrent": false
+    },
     "careers": [
       "Undergraduate"
     ],
-    "empty": false,
-    "errored": false,
-    "level": "Senior",
+    "level": "Junior",
+    "termName": "Summer 2017",
+    "termId": "2175",
+    "termsInAttendance": "1",
     "majors": [
       {
-        "college": "ENGR",
-        "major": "Civil Engineering BS"
+        "college": "Undergrad Environmental Design",
+        "major": "Urban Studies BA",
+        "subPlan": null
       }
     ],
-    "nonApLevel": "Junior",
-    "noStudentId": false,
+    "minors": [],
+    "designatedEmphases": [],
     "plans": [
-        {
-            "code": "16300U",
-            "expectedGraduationTerm": {
-                "id": "2172",
-                "name": "2017 Spring"
-            },
-            "primary": true
-        }
+      {
+        "career": {
+          "code": "UGRD",
+          "description": "Undergraduate"
+        },
+        "program": {
+          "code": "UCED",
+          "description": "Undergrad Environmental Design"
+        },
+        "plan": {
+          "code": "19912U",
+          "description": "Urban Studies BA"
+        },
+        "subPlan": {},
+        "role": "ugrdUrbanStudies",
+        "enrollmentRole": "default",
+        "primary": true,
+        "type": {
+          "code": "MAJ",
+          "description": "Major - Regular Acad/Prfnl",
+          "category": "Major"
+        },
+        "college": "Undergrad Environmental Design"
+      }
     ],
-    "termName": "Fall 2013",
-    "termsInAttendance": "4",
     "lastExpectedGraduationTerm": {
-      "code": "2172",
-      "description": "2017 Spring",
-      "name": "Spring 2017"
-    }
+      "code": null,
+      "name": null
+    },
+    "isCurrent": true
   },
   "gpaUnits": {
-    "cumulativeGpa": 2.4,
-    "totalUnits": 65.6,
-    "totalUnitsAttempted": 55
+    "errored": null,
+    "cumulativeGpa": "2.445",
+    "totalUnits": 73.3,
+    "transferUnitsAccepted": 0,
+    "testingUnits": 13.3,
+    "totalUnitsAttempted": 72,
+    "totalUnitsForGpa": 60,
+    "totalUnitsTakenNotForGpa": 3,
+    "totalUnitsPassedNotForGpa": 0
   },
-  "requirements": [
-    {
-      "name": "UC Entry Level Writing",
-      "status": "met"
-    },
-    {
-      "name": "American History",
-      "status": "met"
-    },
-    {
-      "name": "American Institutions",
-      "status": "met"
-    },
-    {
-      "name": "American Cultures",
-      "status": "met"
-    }
-  ],
   "semesters": [
     {
-      "name": "Spring 2016",
-      "slug": "spring-2016",
-      "termCode": "B",
-      "termYear": "2016",
-      "timeBucket": "future",
-      "hasEnrollmentData": true,
-      "hasEnrolledClasses": true,
-      "campusSolutionsTerm": true,
-      "classes": [
-        {
-          "courseCatalog": "1A",
-          "course_code": "BIOLOGY 1A",
-          "course_id": "biology-1a-2014-B",
-          "dept": "BIOLOGY",
-          "dept_desc": "Biology",
-          "slug": "biology-1a",
-          "title": "General Biology Lecture",
-          "sections": [
-            {
-              "ccn": "07309",
-              "enroll_limit": "105",
-              "gradeOption": "Letter",
-              "instruction_format": "LEC",
-              "instructors": [],
-              "is_primary_section": true,
-              "schedules": {
-                "oneTime": [],
-                "recurring": []
-              },
-              "section_label": "LEC 003",
-              "section_number": "003",
-              "units": "5.0",
-              "waitlist_position": "29"
-            },
-            {
-              "ccn": "07311",
-              "enroll_limit": "35",
-              "instruction_format": "DIS",
-              "instructors": [],
-              "is_primary_section": false,
-              "schedules": {
-                "oneTime": [],
-                "recurring": []
-              },
-              "section_label": "DIS 005",
-              "section_number": "005",
-              "waitlisted": true,
-              "waitlistPosition": "3"
-            },
-            {
-              "ccn": "07310",
-              "instruction_format": "LEC",
-              "instructors": [],
-              "is_primary_section": false,
-              "schedules": {
-                "oneTime": [],
-                "recurring": []
-              },
-              "section_label": "LEC 004",
-              "section_number": "004"
-            }
-          ],
-          "url": "/academics/semester/spring-2016/class/biology-1a"
-        }
-      ]
-    },
-    {
-      "name": "Fall 2016",
-      "slug": "fall-2016",
+      "name": "Fall 2017",
+      "slug": "fall-2017",
       "termCode": "D",
-      "termYear": "2016",
-      "timeBucket": "current",
+      "termYear": "2017",
+      "timeBucket": "future",
       "campusSolutionsTerm": true,
-      "hasEnrollmentData": true,
-      "hasEnrolledClasses": true,
+      "gradingInProgress": null,
       "classes": [
         {
-          "courseCatalog": "1A",
-          "course_code": "BIOLOGY 1A",
-          "course_id": "biology-1a-2013-D",
-          "dept": "BIOLOGY",
-          "dept_desc": "Biology",
-          "slug": "biology-1a",
-          "title": "General Biology Lecture",
+          "role": "Student",
           "sections": [
             {
-              "ccn": "07309",
-              "gradeOption": "Letter",
-              "instruction_format": "LEC",
-              "is_primary_section": true,
-              "section_label": "LEC 003",
-              "section_number": "003",
-              "instructors": [
-                {
-                  "name": "Bernadette Geuy",
-                  "uid": "238382"
-                },
-                {
-                  "name": "Chris Tweney",
-                  "uid": "904715"
-                }
-              ],
-              "schedules": {
-                "oneTime": [],
-                "recurring": [
-                  {
-                    "buildingName": "Valley Life Sciences",
-                    "roomNumber": "2030",
-                    "schedule": "M 4:00P-5:00P"
-                  }
-                ]
-              },
-              "units": "5.0"
-            },
-            {
-              "ccn": "07310",
-              "instruction_format": "DIS",
-              "is_primary_section": false,
-              "section_label": "DIS 201",
-              "section_number": "201",
-              "instructors": [
-                {
-                  "email": "scrapeit@berkeley.edu",
-                  "name": "Christian Vuerings",
-                  "uid": "978966"
-                }
-              ],
-              "schedules": {
-                "oneTime": [],
-                "recurring": [
-                  {
-                    "buildingName": "Pimentel",
-                    "roomNumber": "1",
-                    "schedule": "M 2:00P-3:00P"
-                  }
-                ]
-              }
-            }
-          ],
-          "url": "/academics/semester/fall-2016/class/biology-1a"
-        },
-        {
-          "courseCatalog": "C147",
-          "course_code": "COG SCI C147",
-          "course_id": "cog_sci-c147-2013-D",
-          "dept": "COG SCI",
-          "dept_desc": "Cognitive Science",
-          "slug": "cog_sci-c147",
-          "title": "Language Disorders",
-          "sections": [
-            {
-              "ccn": "16171",
-              "gradeOption": "Letter",
+              "ccn": "22030",
               "instruction_format": "LEC",
               "is_primary_section": true,
               "section_label": "LEC 001",
               "section_number": "001",
+              "units": "4.0",
+              "session_id": "1",
+              "grading": {
+                "grade": null,
+                "grade_points": "0.0",
+                "grading_basis": "GRD"
+              },
               "instructors": [
                 {
-                  "name": "Bernadette Geuy",
-                  "uid": "238382"
+                  "name": "Junko HABU",
+                  "role": "PI",
+                  "gradeRosterAccess": " ",
+                  "uid": "80231",
+                  "printInSchedule": "Y",
+                  "csGradeAccessCode": " ",
+                  "csDelegateRole": "PI",
+                  "ccGradingAccess": "noGradeAccess",
+                  "ccDelegateRole": "Instr. of Record",
+                  "ccDelegateRoleOrder": 1
                 }
               ],
               "schedules": {
                 "oneTime": [],
                 "recurring": [
                   {
-                    "buildingName": "Wheeler",
-                    "roomNumber": "0210",
-                    "schedule": "TuTh 2:00P-3:30P"
-                  },
-                  {
-                    "buildingName": "Dwinelle",
-                    "roomNumber": "117",
-                    "schedule": "W 4:00P-5:30P"
+                    "buildingName": "2251 College",
+                    "roomNumber": "101",
+                    "schedule": "TuTh 2:00P-3:29P"
                   }
                 ]
               },
-              "units": "3.0"
+              "final_exams": [
+                {
+                  "exam_type": "Y",
+                  "location": null,
+                  "exam_date": null,
+                  "exam_start_time": null,
+                  "exam_end_time": null
+                }
+              ],
+              "gradeOption": "Letter"
             }
           ],
-          "url": "/academics/semester/fall-2016/class/cog_sci-c147"
-        },
+          "slug": "anthro-c125a",
+          "session_code": null,
+          "title": "Archaeology of East Asia",
+          "url": "/academics/semester/fall-2017/class/anthro-c125a-2017-D",
+          "course_code": "ANTHRO C125A",
+          "dept": "ANTHRO",
+          "dept_code": "ANTHRO",
+          "courseCatalog": "C125A",
+          "course_id": "anthro-c125a-2017-D"
+        }
+      ],
+      "filteredForDelegate": false,
+      "hasEnrollmentData": true,
+      "hasEnrolledClasses": true
+    },
+    {
+      "name": "Summer 2017",
+      "slug": "summer-2017",
+      "termCode": "C",
+      "termYear": "2017",
+      "timeBucket": "current",
+      "campusSolutionsTerm": true,
+      "gradingInProgress": null,
+      "classes": [
         {
-          "courseCatalog": "1",
-          "course_code": "PHYS ED 1",
-          "course_id": "phys_ed-1-2013-d",
-          "dept": "PHYS ED",
-          "dept_desc": "Physical Education",
-          "multiplePrimaries": true,
-          "slug": "phys_ed-1",
-          "title": "Physical Education Activities",
+          "role": "Student",
           "sections": [
             {
-              "ccn": "72910",
-              "gradeOption": "Letter",
-              "instruction_format": "LAB",
+              "ccn": "16124",
+              "instruction_format": "LEC",
               "is_primary_section": true,
-              "section_label": "LAB 002",
-              "section_number": "002",
-              "schedules": {
-                "oneTime": [],
-                "recurring": [
-                  {
-                    "buildingName": "HEARST GYM",
-                    "roomNumber": "234",
-                    "schedule": "MTuWTh 8:30A-10:00A"
-                  }
-                ]
+              "section_label": "LEC 999",
+              "section_number": "999",
+              "units": "1.0",
+              "session_id": "8W",
+              "grading": {
+                "grade": null,
+                "grade_points": "0.0",
+                "grading_basis": "GRD"
               },
-              "slug": "lab-002",
-              "siteIds": [
-                "11108107"
-              ],
-              "instructors": [
-                {
-                  "name": "Louis Pasteur",
-                  "uid": "938382"
-                }
-              ],
-              "units": ".5",
-              "url": "/academics/semester/fall-2016/class/phys_ed-1/lab-002"
-            },
-            {
-              "ccn": "72945",
-              "gradeOption": "P/NP",
-              "instruction_format": "LAB",
-              "is_primary_section": true,
-              "section_label": "LAB 104",
-              "section_number": "104",
-              "schedules": {
-                "oneTime": [],
-                "recurring": [
-                  {
-                    "buildingName": "HEARST GYM",
-                    "roomNumber": "230",
-                    "schedule": "TuWTh 5:00P-7:00P"
-                  }
-                ]
-              },
-              "slug": "lab-104",
-              "instructors": [
-                {
-                  "name": "Richard Emanuel IVES",
-                  "uid": "38383737"
-                }
-              ],
-              "units": "1.5",
-              "url": "/academics/semester/fall-2013/class/phys_ed-1/lab-104"
-            },
-            {
-              "ccn": "72946",
-              "instruction_format": "IND",
-              "is_primary_section": false,
-              "section_label": "IND 201",
-              "section_number": "201",
-              "associatedWithPrimary": "lab-002",
+              "instructors": [],
               "schedules": {
                 "oneTime": [],
                 "recurring": []
               },
-              "instructors": [
-                {
-                  "name": "Louis Pasteur",
-                  "uid": "938382"
-                }
-              ]
+              "final_exams": [],
+              "gradeOption": "Letter"
             }
           ],
-          "class_sites": [
-            {
-              "id": "11108107",
-              "shortDescription": "Lift With Louis",
-              "name": "PHYS ED 1 LAB 002",
-              "emitter": "bCourses",
-              "site_url": "https://ucberkeley.beta.instructure.com/courses/11108107"
-            }
-          ],
-          "url": "/academics/semester/fall-2016/class/phys_ed-1"
+          "slug": "pseudo-1",
+          "session_code": "C",
+          "title": "OR Pseudo Course",
+          "url": "/academics/semester/summer-2017/class/pseudo-1-2017-C-C",
+          "course_code": "PSEUDO 1",
+          "dept": "PSEUDO",
+          "dept_code": "PSEUDO",
+          "courseCatalog": "1",
+          "course_id": "pseudo-1-2017-C-C"
         }
-      ]
-    },
-    {
-      "name": "Spring 2016",
-      "notation": "Education Abroad",
-      "slug": "spring-2013",
-      "termCode": "B",
-      "termYear": "2016",
-      "timeBucket": "past",
-      "campusSolutionsTerm": false,
-      "hasEnrollmentData": false,
-      "hasEnrolledClasses": false,
-      "classes": [
-        {
-          "courseCatalog": "105",
-          "course_code": "EGYPT 105",
-          "dept": "EGYPT",
-          "title": "MIDDLE KINGDOM HIST & CULT",
-          "transcript": [
-            {
-              "units": "5.0",
-              "grade": "A-"
-            }
-          ]
-        },
-        {
-          "courseCatalog": "50B",
-          "course_code": "ARABIC 50B",
-          "dept": "ARABIC",
-          "title": "INT MOD ARABIC",
-          "transcript": [
-            {
-              "units": "4.5",
-              "grade": "A"
-            }
-          ]
-        },
-        {
-          "courseCatalog": "399",
-          "course_code": "ARCH 399",
-          "dept": "ARCH",
-          "title": "FIELD EXCAVATION",
-          "transcript": [
-            {
-              "units": "3.9",
-              "grade": "P"
-            }
-          ]
-        }
-      ]
+      ],
+      "filteredForDelegate": false,
+      "hasEnrollmentData": true,
+      "hasEnrolledClasses": true
     },
     {
       "name": "Spring 2012",
@@ -408,1045 +212,173 @@
       "termCode": "B",
       "termYear": "2012",
       "timeBucket": "past",
-      "hasEnrollmentData": true,
-      "hasEnrolledClasses": true,
+      "campusSolutionsTerm": false,
+      "gradingInProgress": null,
       "classes": [
         {
-          "courseCatalog": "1A",
-          "course_code": "BIOLOGY 1A",
-          "course_id": "biology-1a-2012-B",
-          "dept": "BIOLOGY",
-          "dept_desc": "Biology",
-          "slug": "biology-1a",
-          "title": "General Biology Lecture",
-          "class_sites": [
-            {
-              "id": "11866397",
-              "shortDescription": "Confessions of a Biotician",
-              "name": "BIO 1A Everyone",
-              "emitter": "bCourses",
-              "site_url": "https://ucberkeley.beta.instructure.com/courses/11866397"
-            }
-          ],
+          "role": "Student",
           "sections": [
             {
-              "ccn": "07366",
-              "gradeOption": "Letter",
-              "instruction_format": "DIS",
-              "is_primary_section": true,
-              "section_label": "DIS 201",
-              "section_number": "201",
-              "schedules": {
-                "oneTime": [],
-                "recurring": []
-              },
-              "instructors": [
-                {
-                  "name": "Bernadette Geuy",
-                  "uid": "238382"
-                }
-              ],
-              "units": "5.0"
-            }
-          ],
-          "transcript": [
-            {
-              "grade": "B",
-              "units": "5.0"
-            }
-          ],
-          "url": "/academics/semester/spring-2012/class/biology-1a"
-        },
-        {
-          "courseCatalog": "C147",
-          "course_code": "COG SCI C147",
-          "course_id": "cog_sci-c147-2012-B",
-          "dept": "COG SCI",
-          "dept_desc": "Cognitive Science",
-          "slug": "cog_sci-c147",
-          "title": "Language Disorders",
-          "sections": [
-            {
-              "ccn": "16171",
-              "gradeOption": "Letter",
+              "ccn": "44277",
               "instruction_format": "LEC",
               "is_primary_section": true,
-              "section_label": "LEC 001",
-              "section_number": "001",
+              "section_label": "LEC X001",
+              "section_number": "X001",
+              "units": "4.0",
+              "session_id": "1",
+              "grading": {
+                "grade": "B",
+                "grade_points": "12.0",
+                "grading_basis": "GRD"
+              },
+              "instructors": [],
               "schedules": {
                 "oneTime": [],
                 "recurring": []
               },
-              "instructors": [
-                {
-                  "name": "Bernadette Geuy",
-                  "uid": "238382"
-                }
-              ],
-              "units": "3.0"
+              "final_exams": [],
+              "gradeOption": "Letter"
             }
           ],
-          "transcript": [
-            {
-              "grade": "C+",
-              "units": "3.0"
-            }
-          ],
-          "url": "/academics/semester/spring-2012/class/cog_sci-c147"
+          "slug": "history-7a",
+          "session_code": null,
+          "title": "Introduction to the History of the United States: The United States from Settlement to Civil War",
+          "url": "/academics/semester/spring-2012/class/history-7a-2012-B",
+          "course_code": "HISTORY 7A",
+          "dept": "HISTORY",
+          "dept_code": "HISTORY",
+          "courseCatalog": "7A",
+          "course_id": "history-7a-2012-B"
         },
         {
-          "courseCatalog": "297",
-          "course_code": "PB HLTH 297",
-          "course_id": "pb_hlth-297-2012-B",
-          "dept": "PB HLTH",
-          "dept_desc": "Public Health",
-          "multiplePrimaries": true,
-          "slug": "pb_hlth-297",
-          "title": "Field Study in Public Health",
+          "role": "Student",
           "sections": [
             {
-              "ccn": "78171",
-              "gradeOption": "Letter",
-              "instruction_format": "FLD",
+              "ccn": "44276",
+              "instruction_format": "LEC",
               "is_primary_section": true,
-              "section_label": "FLD 004",
-              "section_number": "004",
-              "schedules": {
-                "oneTime": [],
-                "recurring": []
-              },
-              "slug": "fld-004",
-              "instructors": [
-                {
-                  "name": "Louis Pasteur",
-                  "uid": "938382"
-                }
-              ],
+              "section_label": "LEC X001",
+              "section_number": "X001",
               "units": "3.0",
-              "url": "/academics/semester/spring-2012/class/pb_hlth-297/fld-004"
-            },
-            {
-              "ccn": "78172",
-              "gradeOption": "P/NP",
-              "instruction_format": "FLD",
-              "is_primary_section": true,
-              "section_label": "FLD 015",
-              "section_number": "015",
+              "session_id": "1",
+              "grading": {
+                "grade": "A-",
+                "grade_points": "11.1",
+                "grading_basis": "GRD"
+              },
+              "instructors": [],
               "schedules": {
                 "oneTime": [],
                 "recurring": []
               },
-              "slug": "fld-015",
-              "instructors": [
-                {
-                  "name": "Jean-Joseph Henri Toussaint",
-                  "uid": "938383"
-                }
-              ],
-              "units": "2.0",
-              "url": "/academics/semester/spring-2012/class/pb_hlth-297/fld-015"
+              "final_exams": [],
+              "gradeOption": "Letter"
             }
           ],
-          "transcript": [
-            {
-              "grade": "A-",
-              "units": "3.0"
-            },
-            {
-              "grade": "P",
-              "units": "2.0"
-            }
-          ],
-          "url": "/academics/semester/spring-2012/class/pb_hlth-297"
+          "slug": "history-156b",
+          "session_code": null,
+          "title": "Topics in Medieval History: Medieval Intellectual History, c. 1050-1270",
+          "url": "/academics/semester/spring-2012/class/history-156b-2012-B",
+          "course_code": "HISTORY 156B",
+          "dept": "HISTORY",
+          "dept_code": "HISTORY",
+          "courseCatalog": "156B",
+          "course_id": "history-156b-2012-B"
         }
       ],
-      "hasWithdrawalData": true,
-      "withdrawalStatus":
-      {
-        "acadcareerCode": "UGRD",
-        "withcnclTypeCode": "WDR",
-        "withcnclTypeDescr": "Withdrew",
-        "withcnclReasonCode": "RETR",
-        "withcnclReasonDescr": "Retroactive",
-        "withcnclFromDate": "Feb 16, 2013",
-        "withcnclLastAttenDate": "Dec 14, 2012"
-      }
+      "filteredForDelegate": false,
+      "hasEnrollmentData": true,
+      "hasEnrolledClasses": true
     }
   ],
-  "teachingSemesters": [
-    {
-      "name": "Fall 2016",
-      "slug": "fall-2016",
-      "termCode": "D",
-      "termYear": "2016",
-      "timeBucket": "current",
-      "campusSolutionsTerm": true,
-      "gradingInProgress": null,
-      "gradingAssistanceLink": "#",
-      "gradingAssistanceLinkLaw": "#",
-      "gradingPeriodStart": "Dec 12",
-      "gradingPeriodEnd": "Jan 6",
-      "classes": [
-        {
-          "role": "Instructor",
-          "sections": [
-            {
-              "ccn": "10707",
-              "instruction_format": "LEC",
-              "is_primary_section": true,
-              "gradingLink": "https://bcs-web-dev-03.is.berkeley.edu:8443/psc/bcsdev/EMPLOYEE/HRMS/c/SA_LEARNING_MANAGEMENT.SS_GRADE_RSTR.GBL?INSTRUCTOR_ID=9898989&INSTITUTION={INSTITUTION}&amp;STRM=8216&CLASS_NBR={CLASS_NBR}",
-              "ccGradingStatus": "gradesOverdue",
-              "csGradingStatus": "RDY",
-              "section_label": "LEC 003",
-              "section_number": "003",
-              "units": null,
-              "enroll_limit": 115,
-              "waitlist_limit": 0,
-              "instructors": [
-                {
-                  "name": "Tiffany Rasmussen",
-                  "role": "PI",
-                  "uid": "921283",
-                  "csGradeAccessCode": "G",
-                  "csDelegateRole": "PI",
-                  "ccGradingAccess": "approveGrades",
-                  "ccDelegateRole": "Instr. of Record",
-                  "ccDelegateRoleOrder": "1"
-                },
-                {
-                  "name": "Tiffany Rasmussen",
-                  "role": "APRX",
-                  "uid": "921283",
-                  "csGradeAccessCode": "G",
-                  "csDelegateRole": "APRX",
-                  "ccGradingAccess": "enterGrades",
-                  "ccDelegateRole": "Proxy",
-                  "ccDelegateRoleOrder": "2"
-                }
-              ],
-              "estimated_final_exam": [
-                {
-                  "time": "MWF 4:00P-4:59P",
-                  "exam_location": "Scheduled Final Exam",
-                  "exam_time": "8-11A",
-                  "exam_date": "Th 12/15"
-                }
-              ],
-              "schedules": {
-                "oneTime": [],
-                "recurring": [
-                  {
-                    "buildingName": "Cheit",
-                    "roomNumber": "C230",
-                    "schedule": "TuTh 9:30A-10:59A"
-                  }
-                ]
-              },
-              "slug": "lec-003",
-              "url": "/academics/teaching-semester/fall-2016/class/ugba-102a/lec-003",
-              "courseCode": "UGBA 102A",
-              "siteIds": [
-                "1452406"
-              ]
-            },
-            {
-              "ccn": "10708",
-              "instruction_format": "LEC",
-              "is_primary_section": true,
-              "gradingLink": "https://bcs-web-dev-03.is.berkeley.edu:8443/psc/bcsdev/EMPLOYEE/HRMS/c/SA_LEARNING_MANAGEMENT.SS_GRADE_RSTR.GBL?INSTRUCTOR_ID=9898989&INSTITUTION={INSTITUTION}&amp;STRM=8216&CLASS_NBR={CLASS_NBR}",
-              "ccGradingStatus": "gradesOverdue",
-              "csGradingStatus": "RDY",
-              "section_label": "LEC 004",
-              "section_number": "004",
-              "units": null,
-              "enroll_limit": 0,
-              "waitlist_limit": 0,
-              "estimated_final_exam": [
-                {
-                  "time": "MWF 4:00P-4:59P",
-                  "exam_location": "Scheduled Final Exam",
-                  "exam_time": "8-11A",
-                  "exam_date": "Th 12/15"
-                }
-              ],
-              "instructors": [
-                {
-                  "name": "Tiffany Rasmussen",
-                  "role": "PI",
-                  "uid": "921283",
-                  "csGradeAccessCode": "G",
-                  "csDelegateRole": "PI",
-                  "ccHasGradingAccees": true,
-                  "ccDelegateRole": "Instr. of Record",
-                  "ccDelegateRoleOrder": "1"
-                }
-              ],
-              "schedules": {
-                "oneTime": [],
-                "recurring": []
-              },
-              "slug": "lec-004",
-              "url": "/academics/teaching-semester/fall-2016/class/ugba-102a/lec-004",
-              "courseCode": "UGBA 102A",
-              "siteIds": [
-                "1452406"
-              ]
-            },
-            {
-              "ccn": "10685",
-              "instruction_format": "DIS",
-              "is_primary_section": false,
-              "gradingLink": null,
-              "ccGradingStatus": null,
-              "csGradingStatus": null,
-              "section_label": "DIS 301",
-              "section_number": "301",
-              "associated_primary_id": "10707.0",
-              "enroll_limit": 0,
-              "waitlist_limit": 0,
-              "instructors": [],
-              "schedules": {
-                "oneTime": [],
-                "recurring": [
-                  {
-                    "buildingName": "Cheit",
-                    "roomNumber": "C220",
-                    "schedule": "F 8:00A-8:59A"
-                  }
-                ]
-              },
-              "associatedWithPrimary": null,
-              "courseCode": "UGBA 102A"
-            },
-            {
-              "ccn": "10666",
-              "instruction_format": "DIS",
-              "is_primary_section": false,
-              "gradingLink": null,
-              "ccGradingStatus": null,
-              "csGradingStatus": null,
-              "section_label": "DIS 302",
-              "section_number": "302",
-              "associated_primary_id": "10707.0",
-              "enroll_limit": 0,
-              "waitlist_limit": 0,
-              "instructors": [],
-              "schedules": {
-                "oneTime": [],
-                "recurring": [
-                  {
-                    "buildingName": "Cheit",
-                    "roomNumber": "C220",
-                    "schedule": "F 9:00A-9:59A"
-                  }
-                ]
-              },
-              "associatedWithPrimary": null,
-              "courseCode": "UGBA 102A"
-            },
-            {
-              "ccn": "10667",
-              "instruction_format": "DIS",
-              "is_primary_section": false,
-              "gradingLink": null,
-              "ccGradingStatus": null,
-              "csGradingStatus": null,
-              "section_label": "DIS 401",
-              "section_number": "401",
-              "associated_primary_id": "10708.0",
-              "enroll_limit": 0,
-              "waitlist_limit": 0,
-              "instructors": [],
-              "schedules": {
-                "oneTime": [],
-                "recurring": [
-                  {
-                    "buildingName": "Cheit",
-                    "roomNumber": "C220",
-                    "schedule": "F 12:00P-12:59P"
-                  }
-                ]
-              },
-              "associatedWithPrimary": null,
-              "courseCode": "UGBA 102A"
-            },
-            {
-              "ccn": "10668",
-              "instruction_format": "DIS",
-              "is_primary_section": false,
-              "gradingLink": null,
-              "ccGradingStatus": null,
-              "csGradingStatus": null,
-              "section_label": "DIS 402",
-              "section_number": "402",
-              "associated_primary_id": "10708.0",
-              "enroll_limit": 0,
-              "waitlist_limit": 0,
-              "instructors": [],
-              "schedules": {
-                "oneTime": [],
-                "recurring": []
-              },
-              "associatedWithPrimary": null,
-              "courseCode": "UGBA 102A"
-            }
-          ],
-          "slug": "ugba-102a",
-          "listings": [
-            {
-              "course_code": "UGBA 102A",
-              "dept": "UGBA",
-              "courseCatalog": "102A",
-              "course_id": "ugba-102a-2016-D"
-            }
-          ],
-          "title": "Introduction to Financial Accounting",
-          "url": "/academics/teaching-semester/fall-2016/class/ugba-102a",
-          "enrollLimit": 115,
-          "waitlistLimit": 0,
-          "multiplePrimaries": true,
-          "scheduledSectionCount": 6,
-          "scheduledSections": [
-            {
-              "format": "lecture",
-              "count": 2
-            },
-            {
-              "format": "discussion",
-              "count": 4
-            }
-          ],
-          "course_code": "UGBA 102A",
-          "dept": "UGBA",
-          "courseCatalog": "102A",
-          "course_id": "ugba-102a-2016-D",
-          "class_sites": [
-            {
-              "emitter": "bCourses",
-              "id": "1452406",
-              "name": "UGBA 102A",
-              "shortDescription": "Introduction to Financial Accounting",
-              "site_url": "https://bcourses.berkeley.edu/courses/1452406",
-              "siteType": "course",
-              "sections": [
-                {
-                  "ccn": "10707"
-                },
-                {
-                  "ccn": "10708"
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "role": "Instructor",
-          "sections": [
-            {
-              "ccn": "10702",
-              "instruction_format": "LEC",
-              "is_primary_section": true,
-              "gradingLink": "https://bcs-web-dev-03.is.berkeley.edu:8443/psc/bcsdev/EMPLOYEE/HRMS/c/SA_LEARNING_MANAGEMENT.SS_GRADE_RSTR.GBL?INSTRUCTOR_ID=9898989&INSTITUTION={INSTITUTION}&amp;STRM=8216&CLASS_NBR={CLASS_NBR}",
-              "ccGradingStatus": "gradesOverdue",
-              "csGradingStatus": "RDY",
-              "section_label": "LEC 001",
-              "section_number": "001",
-              "units": null,
-              "enroll_limit": 12,
-              "waitlist_limit": 0,
-              "instructors": [
-                {
-                  "name": "Tiffany Rasmussen",
-                  "role": "PI",
-                  "uid": "921283"
-                }
-              ],
-              "schedules": {
-                "oneTime": [],
-                "recurring": [
-                  {
-                    "buildingName": "Cheit",
-                    "roomNumber": "C210",
-                    "schedule": "TuTh 12:30P-1:59P"
-                  }
-                ]
-              },
-              "courseCode": "UGBA 126"
-            },
-            {
-              "ccn": "10703",
-              "instruction_format": "DIS",
-              "is_primary_section": false,
-              "gradingLink": null,
-              "ccGradingStatus": null,
-              "csGradingStatus": null,
-              "section_label": "DIS 101",
-              "section_number": "101",
-              "associated_primary_id": "10702.0",
-              "enroll_limit": 0,
-              "waitlist_limit": 0,
-              "instructors": [],
-              "schedules": {
-                "oneTime": [],
-                "recurring": [
-                  {
-                    "buildingName": "Cheit",
-                    "roomNumber": "C330",
-                    "schedule": "F 8:00A-9:59A"
-                  }
-                ]
-              },
-              "courseCode": "UGBA 126"
-            }
-          ],
-          "slug": "ugba-126",
-          "listings": [
-            {
-              "course_code": "UGBA 126",
-              "dept": "UGBA",
-              "courseCatalog": "126",
-              "course_id": "ugba-126-2016-D"
-            }
-          ],
-          "title": "Auditing",
-          "url": "/academics/teaching-semester/fall-2016/class/ugba-126",
-          "enrollLimit": 12,
-          "waitlistLimit": 0,
-          "scheduledSectionCount": 2,
-          "scheduledSections": [
-            {
-              "format": "lecture",
-              "count": 1
-            },
-            {
-              "format": "discussion",
-              "count": 1
-            }
-          ],
-          "course_code": "UGBA 126",
-          "dept": "UGBA",
-          "courseCatalog": "126",
-          "course_id": "ugba-126-2016-D",
-          "class_sites": [
-            {
-              "emitter": "bCourses",
-              "id": "1452407",
-              "name": "UGBA 126 - LEC 001",
-              "shortDescription": "Auditing",
-              "site_url": "https://bcourses.berkeley.edu/courses/1452407",
-              "siteType": "course",
-              "sections": [
-                {
-                  "ccn": "10702"
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "role": "Instructor",
-          "sections": [
-            {
-              "ccn": "32961",
-              "instruction_format": "LEC",
-              "is_primary_section": true,
-              "gradingLink": "https://bcs-web-dev-03.is.berkeley.edu:8443/psc/bcsdev/EMPLOYEE/HRMS/c/SA_LEARNING_MANAGEMENT.SS_GRADE_RSTR.GBL?INSTRUCTOR_ID=9898989&INSTITUTION={INSTITUTION}&amp;STRM=8216&CLASS_NBR={CLASS_NBR}",
-              "ccGradingStatus": "gradesOverdue",
-              "csGradingStatus": "RDY",
-              "section_label": "LEC 002",
-              "section_number": "002",
-              "units": null,
-              "enroll_limit": 21,
-              "waitlist_limit": 0,
-              "instructors": [
-                {
-                  "name": "Tiffany Rasmussen",
-                  "role": "PI",
-                  "uid": "921283"
-                }
-              ],
-              "schedules": {
-                "oneTime": [],
-                "recurring": [
-                  {
-                    "buildingName": "Cheit",
-                    "roomNumber": "C330",
-                    "schedule": "TuTh 2:00P-3:29P"
-                  }
-                ]
-              },
-              "courseCode": "UGBA 127"
-            }
-          ],
-          "slug": "ugba-127",
-          "listings": [
-            {
-              "course_code": "UGBA 127",
-              "dept": "UGBA",
-              "courseCatalog": "127",
-              "course_id": "ugba-127-2016-D"
-            }
-          ],
-          "title": "Special Topics in Accounting",
-          "url": "/academics/teaching-semester/fall-2016/class/ugba-127",
-          "enrollLimit": 21,
-          "waitlistLimit": 0,
-          "scheduledSectionCount": 1,
-          "scheduledSections": [
-            {
-              "format": "lecture",
-              "count": 1
-            }
-          ],
-          "course_code": "UGBA 127",
-          "dept": "UGBA",
-          "courseCatalog": "127",
-          "course_id": "ugba-127-2016-D",
-          "class_sites": [
-            {
-              "emitter": "bCourses",
-              "id": "1452408",
-              "name": "UGBA 127 - LEC 002",
-              "shortDescription": "Ethics in Accounting",
-              "site_url": "https://bcourses.berkeley.edu/courses/1452408",
-              "siteType": "course",
-              "sections": [
-                {
-                  "ccn": "32961"
-                }
-              ]
-            }
-          ]
-        }
-      ]
+  "pastSemestersLimit": 3,
+  "pastSemestersCount": 1,
+  "transferCredit": {
+    "ucTransferCrseSch": {
+      "items": [],
+      "tcAdjust": null,
+      "unitsAdjusted": 0,
+      "unitsTotal": 0
     },
+    "ucTestComponent": {
+      "apUnits": 13.3,
+      "ibUnits": null,
+      "alevelUnits": null,
+      "totalTestUnits": 13.3
+    }
+  },
+  "examSchedule": [
     {
-      "name": "Fall 2016",
-      "slug": "fall-2016",
+      "cs_data_available": false,
+      "name": "Fall 2017",
       "termCode": "D",
-      "termYear": "2016",
-      "campusSolutionsTerm": true,
-      "gradingAssistanceLink": "#",
-      "gradingAssistanceLinkLaw": "#",
-      "gradingPeriodStart": "",
-      "gradingPeriodEnd": "",
-      "classes": [
+      "courses": [
         {
-          "role": "GSI",
-          "slug": "biology-123a",
-          "title": "General Biology and the Cambrian Biota",
-          "listings": [
-            {
-              "course_code": "BIOLOGY 123A",
-              "dept": "BIOLOGY"
-            },
-            {
-              "course_code": "INTEGBI 183A",
-              "dept": "INTEGBI"
-            }
-          ],
-          "class_sites": [
-            {
-              "id": "11866397",
-              "shortDescription": "Confessions of a Biotician",
-              "name": "BIO 123A Everyone",
-              "emitter": "bCourses",
-              "site_url": "https://ucberkeley.beta.instructure.com/courses/11866397",
-              "sections": [
-                {
-                  "ccn": "27606"
-                },
-                {
-                  "ccn": "27619"
-                },
-                {
-                  "ccn": "49713"
-                }
-              ]
-            }
-          ],
-          "enrollLimit": 150,
-          "waitlistLimit": 10,
-          "scheduledSectionCount": 3,
-          "scheduledSections": [
-            {
-              "format": "lecture",
-              "count": 1
-            },
-            {
-              "format": "discussion",
-              "count": 1
-            },
-            {
-              "format": "laboratory",
-              "count": 1
-            }
-          ],
-          "sections": [
-            {
-              "ccn": "27606",
-              "courseCode": "BIOLOGY 123A",
-              "enroll_limit": 150,
-              "waitlist_limit": 10,
-              "instruction_format": "LEC",
-              "section_label": "LEC 002",
-              "section_number": "002",
-              "is_primary_section": true,
-              "gradingLink": "https://bcs-web-dev-03.is.berkeley.edu:8443/psc/bcsdev/EMPLOYEE/HRMS/c/SA_LEARNING_MANAGEMENT.SS_GRADE_RSTR.GBL?INSTRUCTOR_ID=9898989&INSTITUTION={INSTITUTION}&amp;STRM=8216&CLASS_NBR={CLASS_NBR}",
-              "ccGradingStatus": "gradesOverdue",
-              "csGradingStatus": "RDY",
-              "schedules": {
-                "oneTime": [],
-                "recurring": [
-                  {
-                    "buildingName": "Pimentel",
-                    "roomNumber": "1",
-                    "schedule": "MWF 8:00A-9:00A"
-                  }
-                ]
-              },
-              "instructors": [
-                {
-                  "name": "Mary Salinger",
-                  "email": "mary@example.edu",
-                  "uid": "9898989"
-                }
-              ]
-            },
-            {
-              "ccn": "27619",
-              "courseCode": "BIOLOGY 123A",
-              "enroll_limit": 40,
-              "waitlist_limit": 5,
-              "instruction_format": "LAB",
-              "section_label": "LAB 201",
-              "section_number": "201",
-              "is_primary_section": false,
-              "gradingLink": null,
-              "ccGradingStatus": null,
-              "csGradingStatus": null,
-              "instructors": [
-                {
-                  "name": "Mary Salinger",
-                  "email": "mary@example.edu",
-                  "uid": "9898989"
-                }
-              ],
-              "schedules": {
-                "oneTime": [],
-                "recurring": [
-                  {
-                    "buildingName": "LeConte",
-                    "roomNumber": "0004",
-                    "schedule": "F 12:00P-1:00P"
-                  }
-                ]
-              }
-            },
-            {
-              "section_label": "DIS 008",
-              "ccn": "49713",
-              "courseCode": "BIOLOGY 123A",
-              "enroll_limit": 40,
-              "waitlist_limit": 5,
-              "instruction_format": "DIS",
-              "section_number": "008",
-              "is_primary_section": false,
-              "gradingLink": null,
-              "ccGradingStatus": null,
-              "csGradingStatus": null,
-              "schedules": {
-                "oneTime": [],
-                "recurring": []
-              },
-              "instructors": [
-                {
-                  "name": "Oski Bear",
-                  "email": "oski@example.edu",
-                  "uid": "61889"
-                },
-                {
-                  "name": "Mary Salinger",
-                  "email": "mary@example.edu",
-                  "uid": "9898989"
-                }
-              ]
-            },
-            {
-              "ccn": "37606",
-              "courseCode": "INTEGBI 183A",
-              "enroll_limit": 150,
-              "waitlist_limit": 10,
-              "instruction_format": "LEC",
-              "section_label": "LEC 002",
-              "section_number": "002",
-              "scheduledWithCcn": "27606",
-              "is_primary_section": true,
-              "gradingLink": "https://bcs-web-dev-03.is.berkeley.edu:8443/psc/bcsdev/EMPLOYEE/HRMS/c/SA_LEARNING_MANAGEMENT.SS_GRADE_RSTR.GBL?INSTRUCTOR_ID=9898989&INSTITUTION={INSTITUTION}&amp;STRM=8216&CLASS_NBR={CLASS_NBR}",
-              "ccGradingStatus": "gradesOverdue",
-              "csGradingStatus": "RDY",
-              "schedules": {
-                "oneTime": [],
-                "recurring": [
-                  {
-                    "buildingName": "Pimentel",
-                    "roomNumber": "1",
-                    "schedule": "MWF 8:00A-9:00A"
-                  }
-                ]
-              },
-              "instructors": [
-                {
-                  "name": "Mary Salinger",
-                  "email": "mary@example.edu",
-                  "uid": "9898989"
-                }
-              ]
-            },
-            {
-              "ccn": "37619",
-              "courseCode": "INTEGBI 183A",
-              "instruction_format": "LAB",
-              "section_label": "LAB 201",
-              "enroll_limit": 40,
-              "waitlist_limit": 5,
-              "section_number": "201",
-              "scheduledWithCcn": "29713",
-              "is_primary_section": false,
-              "gradingLink": null,
-              "ccGradingStatus": null,
-              "csGradingStatus": null,
-              "instructors": [
-                {
-                  "name": "Mary Salinger",
-                  "email": "mary@example.edu",
-                  "uid": "9898989"
-                }
-              ],
-              "schedules": {
-                "oneTime": [],
-                "recurring": [
-                  {
-                    "buildingName": "LeConte",
-                    "roomNumber": "0004",
-                    "schedule": "F 12:00P-1:00P"
-                  }
-                ]
-              }
-            },
-            {
-              "section_label": "DIS 008",
-              "ccn": "59713",
-              "courseCode": "INTEGBI 183A",
-              "instruction_format": "DIS",
-              "section_number": "008",
-              "enroll_limit": 40,
-              "waitlist_limit": 5,
-              "is_primary_section": false,
-              "gradingLink": null,
-              "ccGradingStatus": null,
-              "csGradingStatus": null,
-              "schedules": {
-                "oneTime": [],
-                "recurring": []
-              },
-              "scheduledWithCcn": "49713",
-              "instructors": [
-                {
-                  "name": "Oski Bear",
-                  "email": "oski@example.edu",
-                  "uid": "61889"
-                },
-                {
-                  "name": "Mary Salinger",
-                  "email": "mary@example.edu",
-                  "uid": "9898989"
-                }
-              ]
-            }
-          ],
-          "url": "/academics/teaching-semester/fall-2016/class/biology-123a"
+          "name": "ANTHRO C125A",
+          "number": 125,
+          "time": "TuTh 2:00P-3:29P",
+          "waitlisted": null,
+          "exam_location": "",
+          "exam_time": "8-11A",
+          "exam_slot": 5,
+          "exam_date": "Tue 12/12"
         }
-      ]
-    },
-    {
-      "name": "Summer 2016",
-      "slug": "summer-2016",
-      "termCode": "C",
-      "termYear": "2016",
-      "campusSolutionsTerm": false,
-      "gradingAssistanceLink": "#",
-      "gradingAssistanceLinkLaw": "#",
-      "gradingPeriodStart": "",
-      "gradingPeriodEnd": "",
-      "classes": [
-        {
-          "role": "Instructor",
-          "slug": "bio-123a",
-          "title": "General Biology and the Cambrian Biota",
-          "listings": [
-            {
-              "course_code": "BIO 123A",
-              "dept": "BIO"
-            }
-          ],
-          "scheduledSectionCount": 1,
-          "scheduledSections": [
-            {
-              "format": "lecture",
-              "count": 1
-            }
-          ],
-          "sections": [
-            {
-              "ccn": "27607",
-              "courseCode": "BIOLOGY 123A",
-              "instruction_format": "LEC",
-              "section_label": "LEC 003",
-              "section_number": "003",
-              "enroll_limit": 150,
-              "waitlist_limit": 10,
-              "is_primary_section": false,
-              "gradingLink": null,
-              "ccGradingStatus": null,
-              "csGradingStatus": null,
-              "instructors": [
-                {
-                  "name": "Mary Salinger",
-                  "email": "mary@example.edu",
-                  "uid": "9898989"
-                }
-              ],
-              "schedules": {
-                "oneTime": [],
-                "recurring": [
-                  {
-                    "buildingName": "Pimentel",
-                    "roomNumber": "12",
-                    "schedule": "MWF 11:00A-12:00P"
-                  }
-                ]
-              }
-            }
-          ],
-          "url": "/academics/teaching-semester/summer-2016/class/bio-123a"
-        }
-      ]
+      ],
+      "timeBucket": "future",
+      "slug": "fall-2017",
+      "exams": {
+        "5": [
+          {
+            "name": "ANTHRO C125A",
+            "number": 125,
+            "time": "TuTh 2:00P-3:29P",
+            "waitlisted": null,
+            "exam_location": "",
+            "exam_time": "8-11A",
+            "exam_slot": 5,
+            "exam_date": "Tue 12/12"
+          }
+        ]
+      }
     }
   ],
   "otherSiteMemberships": [
     {
-      "name": "Summer 2013",
-      "slug": "summer-2013",
-      "termCode": "C",
+      "name": "Fall 2013",
+      "slug": "fall-2013",
+      "termCode": "D",
       "termYear": "2013",
       "sites": [
         {
-          "id": "1093166",
-          "shortDescription": "Psych GSI hangout",
-          "name": "Monitor Psych 1A",
           "emitter": "bCourses",
-          "site_url": "https://ucberkeley.beta.instructure.com/courses/1093166"
+          "id": "767330",
+          "name": "API101",
+          "shortDescription": "API Testing and Design 101",
+          "site_url": "#",
+          "siteType": "course"
+        },
+        {
+          "emitter": "bCourses",
+          "id": "833382",
+          "name": "EE 20N",
+          "shortDescription": "Structure and Interpretation of Systems and Signals",
+          "site_url": "#",
+          "siteType": "course"
         }
       ]
     }
   ],
-  "exam_schedule": [
-    {
-      "date": {
-        "epoch": 1387324800,
-        "dateTime": "2013-12-18T00:00:00+00:00",
-        "dateString": "Wed December 18"
-      },
-      "time": "8:00A",
-      "location": {
-        "rawLocation": "390 HEARST MIN",
-        "display": "Hearst Memorial Mining Building",
-        "lat": "37.874459999999999",
-        "lon": "-122.25727000000001",
-        "roomNumber": "390"
-      },
-      "course_code": "Psychology C120"
-    },
-    {
-      "date": {
-        "epoch": 1387324800,
-        "dateTime": "2013-12-18T00:00:00+00:00",
-        "dateString": "Wed December 18"
-      },
-      "time": "3:00P",
-      "location": {
-        "rawLocation": "100 GPB",
-        "display": "Genetics & Plant Biology Building",
-        "lat": "37.873429999999999",
-        "lon": "-122.26473",
-        "roomNumber": "100"
-      },
-      "course_code": "Psychology 133"
-    },
-    {
-      "date": {
-        "epoch": 1387324800,
-        "dateTime": "2013-12-18T00:00:00+00:00",
-        "dateString": "Wed December 18"
-      },
-      "time": "3:00P",
-      "location": {
-        "rawLocation": "2060 VALLEY LSB",
-        "display": "Valley Life Sciences Building",
-        "lat": "37.871479999999998",
-        "lon": "-122.26211000000001",
-        "roomNumber": "2060"
-      },
-      "course_code": "Education 140"
-    }
-  ],
-  "telebears": [
-    {
-      "term": "Spring",
-      "year": 2014,
-      "slug": "spring-2014",
-      "advisorCodeRequired": {
-        "required": true,
-        "type": "revoked"
-      },
-      "phases": [
-        {
-          "period": "Tele-BEARS Phase I",
-          "startTime": {
-            "epoch": 1365442200,
-            "dateTime": "2013-10-13T09:30:00-08:00",
-            "dateString": "10/13"
-          },
-          "endTime": {
-            "epoch": 1365528600,
-            "dateTime": "2013-10-14T09:30:00-08:00",
-            "dateString": "10/14"
-          }
-        },
-        {
-          "period": "Tele-BEARS Phase II",
-          "startTime": {
-            "epoch": 1373389200,
-            "dateTime": "2014-02-09T09:00:00-08:00",
-            "dateString": "2/09"
-          },
-          "endTime": {
-            "epoch": 1373475600,
-            "dateTime": "2014-02-10T09:00:00-08:00",
-            "dateString": "2/10"
-          }
-        }
-      ],
-      "url": "http://registrar.berkeley.edu/tbfaqs.html"
-    }
-  ],
-  "lastModified": {
-    "hash": "af8f7132a5d2efdf8bd3d88c2d1fa5d37086c389",
-    "timestamp": {
-      "epoch": 1383947240,
-      "dateTime": "2013-11-08T13:47:20-08:00",
-      "dateString": "11/08"
+  "studentLinks": {
+    "tcReportLink": {
+      "url": "https://bcswebqat.is.berkeley.edu/psp/bcsqat/EMPLOYEE/SA/c/CSU_DA_TRN_CDT_STD.CSU_DA_TRN_CDT_STD.GBL",
+      "urlId": "UC_CX_XFER_CREDIT_REPORT_STDNT",
+      "ucFrom": "CalCentral",
+      "ucFromLink": "https://calcentral-sis-dev-01.ist.berkeley.edu/",
+      "ucFromText": "CalCentral",
+      "name": "Transfer Credit Report",
+      "title": "Detailed Transfer Credit Report",
+      "isCsLink": true,
+      "IS_CS_LINK": true
     }
   }
 }

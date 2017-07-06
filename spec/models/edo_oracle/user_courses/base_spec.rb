@@ -138,7 +138,7 @@ describe EdoOracle::UserCourses::Base do
         expect(section[:section_label]).to eq "#{enrollment['instruction_format']} #{enrollment['section_num']}"
         expect(section[:section_number]).to eq enrollment['section_num']
         if (enrollment['primary'] == 'true')
-          expect(section[:grading_basis]).to eq enrollment['grading_basis']
+          expect(section[:grading][:grading_basis]).to eq enrollment['grading_basis']
           expect(section[:is_primary_section]).to eq true
           expect(section[:units]).to eq enrollment['units']
         else
@@ -156,8 +156,8 @@ describe EdoOracle::UserCourses::Base do
       end
     end
     it 'includes only non-blank grades' do
-      expect(course[:sections][0][:grade]).to eq 'B'
-      expect(course[:sections][1]).not_to include(:grade)
+      expect(course[:sections][0][:grading][:grade]).to eq 'B'
+      expect(course[:sections][1][:grading][:grade]).to be_nil
     end
     context 'when cross-listed course is missing title' do
       before do

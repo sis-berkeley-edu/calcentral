@@ -28,13 +28,12 @@
           data-ng-class="{'cc-widget-list-hover-opened':(semester.show)}"
           data-cc-accessible-focus-directive
           data-ng-click="api.widget.toggleShow($event,  null, semester, 'Student Overview - Academic Plan')">
-          <div>
             <h3 class="cc-left">
               <span data-ng-bind="semester.name"></span> <span data-ng-bind="semester.notation" class="cc-text-red"></span>
             </h3>
             <br>
             <div data-ng-show="semester.show">
-              <div class="cc-widget-text" data-ng-if="!semester.plannedClasses.length && !semester.hasEnrolledClasses && !semester.summaryFromTranscript && !semester.hasWithdrawalData">
+              <div class="cc-widget-text" data-ng-if="!semester.plannedClasses.length && !semester.hasEnrolledClasses && !semester.hasWithdrawalData">
                 No Plan Provided
                 <span data-ng-bind="semester.name"></span>.
               </div>
@@ -46,75 +45,59 @@
                 <table>
                   <thead>
                     <tr>
-                      <th width="60%" scope="col">Planned</th>
-                      <th width="40%" scope="col" title="Units">Units</th>
+                      <th width="70%" scope="col">Planned</th>
+                      <th class="cc-table-right cc-academic-plan-card-units" width="15%" scope="col" title="Units">Units</th>
+                      <th width="15%" scope="col"></th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr data-ng-repeat="class in semester.plannedClasses">
                       <td data-ng-bind-template="{{class.subjectArea.code}} {{class.catalogNumber.formatted}}"></td>
-                      <td data-ng-bind="class.units | number:1"></td>
+                      <td class="cc-table-right cc-academic-plan-card-units" data-ng-bind="class.units | number:1"></td>
+                      <td></td>
                     </tr>
                   </tbody>
                 </table>
                 <table>
                   <tr>
-                      <td width="60%" scope="col" class="cc-table-right">Total Units: </td>
-                      <td width="25%" scope="col"><strong><span data-ng-bind="semester.plannedUnits | number:1"></span></strong></td>
+                      <td class="cc-table-right" width="70%" scope="col">Total Units: </td>
+                      <td class="cc-table-right cc-academic-plan-card-units" width="15%" scope="col"><strong><span data-ng-bind="semester.plannedUnits | number:1"></span></strong></td>
                       <td width="15%" scope="col"></td>
                   </tr>
                 </table>
                 <br>
               </div>
-              <div data-ng-if="semester.hasEnrolledClasses || semester.summaryFromTranscript">
-                <table data-ng-if="semester.summaryFromTranscript && semester.hasClassTranscript">
+              <div data-ng-if="semester.hasEnrollmentData">
+                <table>
                   <thead>
                     <tr>
-                      <th width="60%" scope="col">Enrolled</th>
-                      <th width="25%" scope="col" title="Units">Units</th>
+                      <th width="70%" scope="col">Enrolled</th>
+                      <th class="cc-table-right cc-academic-plan-card-units" width="15%" scope="col" title="Units">Units</th>
                       <th data-ng-if="api.user.profile.canViewGrades" width="15%" scope="col" title="Grades">Grade</th>
                     </tr>
                   </thead>
                   <tbody data-ng-repeat="class in semester.enrolledClasses">
-                    <tr data-ng-if="class.transcript" data-ng-repeat="transcript in class.transcript">
+                    <tr data-ng-if="section.is_primary_section" data-ng-repeat-start="section in class.sections">
                       <td>
                         <span data-ng-bind="class.course_code"></span>
                         <span data-ng-if="class.session_code" data-ng-bind-template="(Session {{class.session_code}})"></span>
                       </td>
-                      <td data-ng-bind="transcript.units | number:1"></td>
-                      <td data-ng-bind="transcript.grade" data-ng-if="api.user.profile.canViewGrades"></td>
-                    </tr>
-                  </tbody>
-                </table>
-                <table data-ng-if="semester.summaryFromTranscript && !semester.hasClassTranscript">
-                  <thead>
-                    <tr>
-                      <th width="60%" scope="col">Enrolled</th>
-                      <th width="25%" scope="col" title="Units">Units</th>
-                      <th data-ng-if="api.user.profile.canViewGrades" width="15%" scope="col" title="Grades">Grade</th>
-                    </tr>
-                  </thead>
-                  <tbody data-ng-repeat="class in semester.enrolledClasses">
-                    <tr data-ng-if="!class.transcript && section.is_primary_section" data-ng-repeat-start="section in class.sections">
-                      <td>
-                        <span data-ng-bind="class.course_code"></span>
-                        <span data-ng-if="class.session_code" data-ng-bind-template="(Session {{class.session_code}})"></span>
-                      </td>
-                      <td data-ng-bind="section.units | number:1" ></td>
-                      <td data-ng-if="api.user.profile.canViewGrades && class.midpointGrade">
+                      <td class="cc-table-right cc-academic-plan-card-units" data-ng-bind="section.units | number:1" ></td>
+                      <td data-ng-if="api.user.profile.canViewGrades && section.grading.grade" data-ng-bind="section.grading.grade"></td>
+                      <td data-ng-if="api.user.profile.canViewGrades && !section.grading.grade && section.grading.midpointGrade">
                         <span data-ng-click="api.util.preventBubble($event);api.widget.toggleShow($event, null, section, 'Student Overview - Academic Plan')" class="cc-non-anchored-link">
                           <i class="fa fa-exclamation-triangle cc-icon-gold"></i> ?
                         </span>
                       </td>
-                      <td data-ng-if="api.user.profile.canViewGrades && !class.midpointGrade">&mdash;</td>
+                      <td data-ng-if="api.user.profile.canViewGrades && !section.grading.grade && !section.grading.midpointGrade">&mdash;</td>
                     </tr>
-                    <tr data-ng-repeat-end data-ng-if="class.midpointGrade && section.show">
+                    <tr data-ng-repeat-end data-ng-if="api.user.profile.canViewGrades && !section.grading.grade && section.grading.midpointGrade && section.show">
                       <td colspan="3">
                         <table>
                           <tr>
                             <td>
                               <i class="fa fa-exclamation-triangle cc-icon-gold"></i>
-                              Your midpoint grade is: <strong><span data-ng-bind="class.midpointGrade"></span></strong><br />
+                              Your midpoint grade is: <strong><span data-ng-bind="section.grading.midpointGrade"></span></strong><br />
                               Your success is important to us.  Midpoint grades do not appear on transcripts. <br />
                               Please contact your instructor or an advisor as soon as possible. <br />
                               <span data-ng-click="api.util.preventBubble($event);api.widget.toggleShow($event, null, section, 'Student Overview - Academic Plan')" class="cc-non-anchored-link">Hide</span>
@@ -122,61 +105,13 @@
                           </tr>
                         </table>
                       </td>
-                    </tr>
-                  </tbody>
-                </table>
-                <table data-ng-if="!semester.summaryFromTranscript">
-                  <thead>
-                    <tr>
-                      <th width="60%" scope="col">Enrolled</th>
-                      <th width="25%" scope="col" title="Units">Units</th>
-                      <th data-ng-if="api.user.profile.canViewGrades" width="15%" scope="col" title="Grades">Grade</th>
-                    </tr>
-                  </thead>
-                  <tbody data-ng-repeat="class in semester.enrolledClasses">
-                    <tr data-ng-repeat-start="section in class.sections" data-ng-if="section.is_primary_section && !section.waitlisted && !class.transcript">
-                      <td>
-                        <span data-ng-bind="class.course_code"></span>
-                        <span data-ng-if="class.multiplePrimaries && section.section_label" data-ng-bind="section.section_label"></span>
-                        <span data-ng-if="class.session_code" data-ng-bind-template="(Session {{class.session_code}})"></span>
-                      </td>
-                      <td data-ng-bind="section.units | number:1"></td>
-                      <td data-ng-if="api.user.profile.canViewGrades && class.midpointGrade">
-                        <span data-ng-click="api.util.preventBubble($event);api.widget.toggleShow($event, null, section, 'Student Overview - Academic Plan')" class="cc-non-anchored-link">
-                          <i class="fa fa-exclamation-triangle cc-icon-gold"></i> ?
-                        </span>
-                      </td>
-                      <td data-ng-if="api.user.profile.canViewGrades && !class.midpointGrade">&mdash;</td>
-                    </tr>
-                    <tr data-ng-repeat-end data-ng-if="class.midpointGrade && section.show">
-                      <td colspan="3">
-                        <table>
-                          <tr>
-                            <td>
-                              <i class="fa fa-exclamation-triangle cc-icon-gold"></i>
-                              Your midpoint grade is: <strong><span data-ng-bind="class.midpointGrade"></span></strong><br />
-                              Your success is important to us.  Midpoint grades do not appear on transcripts. <br />
-                              Please contact your instructor or an advisor as soon as possible. <br />
-                              <span data-ng-click="api.util.preventBubble($event);api.widget.toggleShow($event, null, section, 'Student Overview - Academic Plan')" class="cc-non-anchored-link">Hide</span>
-                            </td>
-                          </tr>
-                        </table>
-                      </td>
-                    </tr>
-                    <tr data-ng-if="class.transcript" data-ng-repeat="transcript in class.transcript">
-                      <td>
-                        <span data-ng-bind="class.course_code"></span>
-                        <span data-ng-if="class.session_code" data-ng-bind-template="(Session {{class.session_code}})"></span>
-                      </td>
-                      <td data-ng-bind="transcript.units | number:1"></td>
-                      <td data-ng-bind="transcript.grade" data-ng-if="api.user.profile.canViewGrades"></td>
                     </tr>
                   </tbody>
                 </table>
                 <table>
                   <tr>
-                      <td width="60%" scope="col" class="cc-table-right">Total Units: </td>
-                      <td width="25%" scope="col"><strong><span data-ng-bind="semester.enrolledUnits | number:1"></strong></td>
+                      <td class="cc-table-right" width="70%" scope="col">Total Units: </td>
+                      <td class="cc-table-right cc-academic-plan-card-units" width="15%" scope="col"><strong><span data-ng-bind="semester.enrolledUnits | number:1"></strong></td>
                       <td width="15%" scope="col"></td>
                   </tr>
                 </table>
@@ -186,27 +121,27 @@
                 <table>
                   <thead>
                     <tr>
-                      <th width="60%" scope="col">Waitlisted</th>
-                      <th width="25%" scope="col" title="Units">Units</th>
+                      <th width="70%" scope="col">Waitlisted</th>
+                      <th class="cc-table-right cc-academic-plan-card-units" width="15%" scope="col" title="Units">Units</th>
                       <th data-ng-if="api.user.profile.canViewGrades" width="15%" scope="col" title="Position">Position</th>
                     </tr>
                   </thead>
-                  <tbody data-ng-if="!semester.summaryFromTranscript" data-ng-repeat="class in semester.enrolledClasses">
-                    <tr data-ng-repeat="section in class.sections" data-ng-if="section.waitlisted">
+                  <tbody data-ng-repeat="class in semester.enrolledClasses">
+                    <tr data-ng-repeat="section in class.sections" data-ng-if="section.is_primary_section && section.waitlisted">
                       <td>
                         <span data-ng-bind="class.course_code"></span>
                         <span data-ng-if="class.multiplePrimaries && section.section_label" data-ng-bind="section.section_label"></span>
                         <span data-ng-if="class.session_code" data-ng-bind-template="(Session {{class.session_code}})"></span>
                       </td>
-                      <td data-ng-bind="section.units | number:1"></td>
-                      <td data-ng-bind="section.waitlistPosition" class="cc-table-right"></td>
+                      <td class="cc-table-right cc-academic-plan-card-units" data-ng-bind="section.units | number:1"></td>
+                      <td data-ng-bind="section.waitlistPosition"></td>
                     </tr>
                   </tbody>
                 </table>
                 <table>
                   <tr>
-                      <td width="60%" scope="col" class="cc-table-right">Total Units: </td>
-                      <td width="25%" scope="col"><strong><span data-ng-bind="semester.waitlistedUnits | number:1"></strong></td>
+                      <td class="cc-table-right" width="70%" scope="col">Total Units: </td>
+                      <td class="cc-table-right cc-academic-plan-card-units" width="15%" scope="col"><strong><span data-ng-bind="semester.waitlistedUnits | number:1"></strong></td>
                       <td width="15%" scope="col"></td>
                   </tr>
                 </table>

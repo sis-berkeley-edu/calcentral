@@ -2,6 +2,7 @@
 'use strict';
 
 var angular = require('angular');
+var _ = require('lodash');
 
 /**
  * Academics GPA controller
@@ -81,21 +82,26 @@ angular.module('calcentral.controllers').controller('AcademicsGpaController', fu
   };
 
   var accumulateUnits = function(courses, accumulator) {
-    angular.forEach(courses, function(course) {
-      var gradingSource = course.transcript || course.estimatedTranscript;
-      angular.forEach(gradingSource, function(gradingData) {
-        if (gradingData.units) {
+    var gradingSource;
+    _.forEach(courses, function(course) {
+      _.forEach(course.sections, function(section) {
+        if (section.is_primary_section && section.grading.grade) {
+          gradingSource = section.grading;
+        } else if (section.is_primary_section && !section.grading.grade) {
+          gradingSource = section.estimatedGrading;
+        }
+        if (gradingSource.units) {
           var grade;
-          if (gradingData.grade) {
-            grade = findWeight(gradingData.grade);
+          if (_.isNaN(gradingSource.grade)) {
+            grade = findWeight(gradingSource.grade);
           } else {
-            grade = gradingData.estimatedGrade;
+            grade = gradingSource.grade;
           }
-          if ((grade || grade === 0) && grade !== -1) {
-            gradingData.score = parseFloat(grade, 10) * gradingData.units;
-            accumulator.units += parseFloat(gradingData.units, 10);
-            accumulator.score += gradingData.score;
-          }
+        }
+        if ((grade || grade === 0) && grade !== -1) {
+          gradingSource.score = parseFloat(grade, 10) * gradingSource.units;
+          accumulator.units += parseFloat(gradingSource.units, 10);
+          accumulator.score += gradingSource.score;
         }
       });
     });
@@ -115,33 +121,29 @@ angular.module('calcentral.controllers').controller('AcademicsGpaController', fu
         ($scope.gpaUnits.totalUnitsAttempted + selectedSemesterTotals.units);
   };
 
-  $scope.gpaUpdateCourse = function(course, estimatedGrade) {
+  $scope.gpaUpdateCourse = function(sectionEstimatedGrading, estimatedGrade) {
     // Update course object on scope and recalculate overall GPA
-    course.estimatedGrade = estimatedGrade;
+    sectionEstimatedGrading.estimatedGrade = estimatedGrade;
     gpaCalculate();
   };
 
   var gpaInit = function() {
     if ($scope.selectedSemester.timeBucket !== 'past' || $scope.selectedSemester.gradingInProgress) {
-      angular.forEach($scope.selectedCourses, function(course) {
-        if (!course.transcript) {
-          var estimatedTranscript = [];
-          angular.forEach(course.sections, function(section) {
-            if (section.is_primary_section) {
-              var transcriptRow = {
-                'gradeOption': section.gradeOption,
-                'units': section.units
-              };
-              if (transcriptRow.gradeOption === 'Letter') {
-                transcriptRow.estimatedGrade = 4;
-              } else if (transcriptRow.gradeOption === 'P/NP' || transcriptRow.gradeOption === 'S/U' || transcriptRow.gradeOption === 'C/NC') {
-                transcriptRow.estimatedGrade = -1;
-              }
-              estimatedTranscript.push(transcriptRow);
+      _.forEach($scope.selectedCourses, function(course) {
+        _.forEach(course.sections, function(section) {
+          if (section.is_primary_section && !section.grading.grade) {
+            var gradingRow = {
+              'gradeOption': section.grading.grading_basis,
+              'units': section.units
+            };
+            if (gradingRow.gradeOption === 'GRD') {
+              gradingRow.grade = 4;
+            } else if (gradingRow.gradeOption === 'P/NP' || gradingRow.gradeOption === 'S/U' || gradingRow.gradeOption === 'C/NC') {
+              gradingRow.grade = -1;
             }
-          });
-          course.estimatedTranscript = estimatedTranscript;
-        }
+            section.estimatedGrading = gradingRow;
+          }
+        });
       });
     }
     gpaCalculate();

@@ -134,38 +134,6 @@ describe CampusOracle::Queries do
     end
   end
 
-  it 'should find where a person is enrolled, with grades where available' do
-    sections = CampusOracle::Queries.get_enrolled_sections('300939')
-    expect(sections).to have_at_least(8).items
-    transcripts = CampusOracle::Queries.get_transcript_grades('300939')
-    %w(term_yr term_cd dept_name catalog_id grade transcript_unit line_type memo_or_title).each do |column|
-      expect(transcripts).to all(include column)
-    end
-    if CampusOracle::Queries.test_data?
-      sections.length.should == 9
-      sections.each do |s|
-        if s['primary_secondary_cd'] == 'P' && s['term_yr'] < '2014'
-          expect(s['grade']).to be_present
-        else
-          expect(s['grade']).to be_blank
-        end
-      end
-      transcripts.length.should == 4
-      expected_grades = {5 => 'B', 6 => 'C+'}
-      expected_grades.keys.each do |idx|
-        section = sections[idx]
-        transcript = transcripts.find do |t|
-          t['term_yr'] == section['term_yr'] &&
-            t['term_cd'] == section['term_cd'] &&
-            t['dept_name'] == section['dept_name'] &&
-            t['catalog_id'] == section['catalog_id']
-        end
-        expect(transcript).to_not be_nil
-        transcript['grade'].should == expected_grades[idx]
-      end
-    end
-  end
-
   context 'confined to current term' do
     it 'should be able to limit enrollment queries' do
       sections = CampusOracle::Queries.get_enrolled_sections('300939', [current_term])

@@ -7,46 +7,30 @@ module MyAcademics
     end
 
     def merge(data)
-
       if (@filtered = data[:filteredForDelegate])
         enrollments = EdoOracle::UserCourses::All.new(user_id: @uid).get_enrollments_summary
-        enrollments.merge!(CampusOracle::UserCourses::All.new(user_id: @uid).get_enrollments_summary) if Settings.features.allow_legacy_fallback
       else
         enrollments = EdoOracle::UserCourses::All.new(user_id: @uid).get_all_campus_courses
-        enrollments.merge!(CampusOracle::UserCourses::All.new(user_id: @uid).get_all_campus_courses) if Settings.features.allow_legacy_fallback
       end
 
       campus_solution_id = CalnetCrosswalk::ByUid.new(user_id: @uid).lookup_campus_solutions_id
       withdrawal_data = EdoOracle::Queries.get_withdrawal_status(campus_solution_id)
 
-      if Settings.features.allow_legacy_fallback
-        transcripts =  CampusOracle::UserCourses::Transcripts.new(user_id: @uid).get_all_transcripts
-        data[:additionalCredits] = transcripts[:additional_credits] if transcripts[:additional_credits].any?
-      end
-
-      transcript_terms = transcripts ? transcripts[:semesters] : {}
-      data[:semesters] = semester_feed(enrollments, transcript_terms, withdrawal_data).compact
+      data[:semesters] = semester_feed(enrollments, withdrawal_data).compact
       merge_semesters_count data
     end
 
-    def semester_feed(enrollment_terms, transcript_terms, withdrawal_data)
+    def semester_feed(enrollment_terms, withdrawal_data)
       withdrawal_terms = withdrawal_data.map {|row| Berkeley::TermCodes.edo_id_to_code(row['term_id'])}
-      (enrollment_terms.keys | transcript_terms.keys | withdrawal_terms).sort.reverse.map do |term_key|
+      (enrollment_terms.keys | withdrawal_terms).sort.reverse.map do |term_key|
         semester = semester_info term_key
         semester[:filteredForDelegate] = !!@filtered
         if enrollment_terms[term_key]
           semester[:hasEnrollmentData] = true
-          semester[:summaryFromTranscript] = (semester[:timeBucket] == 'past')
           semester[:classes] = map_enrollments(enrollment_terms[term_key]).compact
           semester[:hasEnrolledClasses] = has_enrolled_classes?(enrollment_terms[term_key])
-          merge_grades(semester, transcript_terms[term_key])
+          merge_grades(semester)
           merge_withdrawals(semester, withdrawal_data)
-        elsif transcript_terms[term_key] && Settings.features.allow_legacy_fallback
-          semester[:hasEnrollmentData] = false
-          semester[:summaryFromTranscript] = true
-          semester[:hasEnrolledClasses] = false
-          semester[:classes] = map_transcripts transcript_terms[term_key][:courses]
-          semester[:notation] = translate_notation transcript_terms[term_key][:notations]
         else
           merge_withdrawals(semester, withdrawal_data)
         end
@@ -91,7 +75,6 @@ module MyAcademics
       if data[:semesters]
         past_semesters_count = data[:semesters].select {|sem| sem[:timeBucket] == 'past'}.length
         data[:pastSemestersLimit] = data[:semesters].length - past_semesters_count + 1
-        past_semesters_count += 1 if data[:additionalCredits]
         data[:pastSemestersCount] = past_semesters_count
       end
       data
@@ -121,35 +104,7 @@ module MyAcademics
       end
     end
 
-    def map_transcripts(transcript_courses)
-      return [] if !transcript_courses
-      transcript_courses.map do |course|
-        course.slice(:title, :dept, :courseCatalog).merge({
-          course_code: [course[:dept], course[:courseCatalog]].select(&:present?).join(' '),
-          sections: [],
-          transcript: [course.slice(:units, :grade)]
-        })
-      end
-    end
-
-    def merge_grades(semester, transcript_term)
-      semester[:classes].each do |course|
-        grade_sources = nil
-        if use_enrollment_grades?(semester)
-          grade_sources = course[:sections].select { |s| s[:is_primary_section] && s[:grade] }
-        elsif use_transcript_grades?(semester) && transcript_term && transcript_term[:courses]
-          grade_sources = transcript_term[:courses].select { |t| t[:dept] == course[:dept] && t[:courseCatalog] == course[:courseCatalog] }
-        end
-        course[:transcript] = grade_sources.map { |e| e.slice(:units, :grade, :grade_points) } if grade_sources.present?
-      end
-
-      if transcript_term && transcript_term[:courses]
-        incomplete_removals = transcript_term[:courses].select { |t| t[:title] == 'Incomplete Removed' }
-        if incomplete_removals.any?
-          semester[:classes].concat map_transcripts(incomplete_removals)
-        end
-      end
-
+    def merge_grades(semester)
       if semester.try(:[], :timeBucket) == 'current' && semester.try(:[], :classes).length
         semester[:classes].each do |course|
           add_midpoint_grade(course) if course[:role] == 'Student'
@@ -159,17 +114,18 @@ module MyAcademics
 
     def add_midpoint_grade(course)
       current_enrollments = hub_current_enrollments.try(:[], :feed)
-      primary_section = course.try(:[], :sections).try(:find) do |section|
-        section.try(:[], :is_primary_section)
+      course.try(:[], :sections).try(:each) do |section|
+        if section.try(:[], :is_primary_section)
+          section_midpoint_grade = current_enrollments.try(:find) do |enrollment|
+            # Find the relevant enrollment object, matching on CCN
+            enrollment.try(:[], 'classSection').try(:[], 'id').try(:to_i) == section.try(:[], :ccn).try(:to_i)
+          end.try(:[], 'grades').try(:find) do |grade|
+            # Return the object containing the midpoint grade
+            grade.try(:[], 'type').try(:[], 'code') == 'MID'
+          end.try(:[], 'mark')
+          section[:grading].merge!({midpointGrade: section_midpoint_grade}) if section_midpoint_grade.present?
+        end
       end
-      section_midpoint_grade = current_enrollments.try(:find) do |enrollment|
-        # Find the relevant enrollment object, matching on CCN
-        enrollment.try(:[], 'classSection').try(:[], 'id').try(:to_i) == primary_section.try(:[], :ccn).try(:to_i)
-      end.try(:[], 'grades').try(:find) do |grade|
-        # Return the object containing the midpoint grade
-        grade.try(:[], 'type').try(:[], 'code') == 'MID'
-      end.try(:[], 'mark')
-      course.merge!({midpointGrade: section_midpoint_grade})
     end
 
     def hub_current_enrollments
@@ -178,24 +134,6 @@ module MyAcademics
       else
         {}
       end
-    end
-
-    def translate_notation(transcript_notations)
-      return unless transcript_notations
-      if transcript_notations.include? 'extension'
-        'UC Extension'
-      elsif transcript_notations.include? 'abroad'
-        'Education Abroad'
-      end
-    end
-
-    def use_enrollment_grades?(semester)
-      return true unless Settings.features.allow_legacy_fallback
-      semester[:timeBucket] == 'current' || semester[:gradingInProgress] || semester[:campusSolutionsTerm] ||  semester[:slug] == Settings.terms.legacy_cutoff
-    end
-
-    def use_transcript_grades?(semester)
-      semester[:timeBucket] == 'past' && !semester[:gradingInProgress] && !semester[:campusSolutionsTerm] && Settings.features.allow_legacy_fallback
     end
 
   end
