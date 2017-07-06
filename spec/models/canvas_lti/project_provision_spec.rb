@@ -44,6 +44,7 @@ describe CanvasLti::ProjectProvision do
         'name'=> project_name,
         'course_code'=> project_name,
         'sis_course_id'=>"PROJ:#{unique_sis_project_id}",
+        'default_view'=> 'modules',
         'workflow_state'=>'unpublished'
       }
     end
@@ -68,6 +69,7 @@ describe CanvasLti::ProjectProvision do
       allow(subject).to receive(:unique_sis_project_id).and_return(unique_sis_project_id)
       allow_any_instance_of(Canvas::Course).to receive(:create).and_return(success_response)
       allow_any_instance_of(CanvasLti::CourseAddUser).to receive(:add_user_to_course).and_return(add_user_to_course_response)
+      allow_any_instance_of(Canvas::CourseSettings).to receive(:fix_default_view).with(new_course)
     end
 
     it 'raises exception if error encountered with API request' do
@@ -87,5 +89,12 @@ describe CanvasLti::ProjectProvision do
       result = subject.create_project(project_name)
       expect(result[:enrollment_id]).to eq 20959
     end
+
+    it 'resets the site home page if needed' do
+      expect_any_instance_of(Canvas::CourseSettings).to receive(:fix_default_view).with(new_course)
+      result = subject.create_project(project_name)
+      expect(result[:projectSiteId]).to eq 23
+    end
+
   end
 end
