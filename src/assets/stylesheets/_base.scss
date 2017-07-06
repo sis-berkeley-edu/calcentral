@@ -5,7 +5,7 @@ html {
 
 // Body
 body {
-  background-color: $cc-color-main-background;
+  background-color: $cc-color-white-smoke;
   color: $body-font-color;
   cursor: auto;
   font-family: Arial, sans-serif;
@@ -37,7 +37,7 @@ div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, form, p, blockquote, t
 }
 
 h1, h2, h3, h4, h5, h6 {
-  color: $cc-color-heading;
+  color: $cc-color-night-rider;
   font-family: $header-font-family;
   font-style: normal;
   font-weight: 500;
@@ -70,7 +70,7 @@ h1 {
   font-size: 22px;
 }
 .cc-heading-page-title {
-  color: $cc-color-medium-grey;
+  color: $cc-color-night-rider;
   font-weight: normal;
   margin: 10px 0 0 10px;
   @media #{$small-only} {
@@ -111,7 +111,7 @@ a {
 // Horizontal rule
 hr {
   border: 0;
-  border-bottom: 1px solid $cc-color-widget-background;
+  border-bottom: 1px solid $cc-color-whisper;
   margin: 15px 0;
 }
 .cc-hr-spacing-5 {
@@ -120,8 +120,8 @@ hr {
 
 // Form
 form {
-  background: $cc-color-widget-more-background;
-  border: 1px solid $cc-color-form-border;
+  background: $cc-color-white-smoke;
+  border: 1px solid $cc-color-whisper;
   padding: 10px 5px;
 
   input[type="number"],
@@ -131,16 +131,16 @@ form {
     -moz-appearance: none;
     -webkit-appearance: none;
     background: $cc-color-white;
-    border: 1px solid $cc-color-button-border;
+    border: 1px solid $cc-color-very-light-grey;
     border-radius: 0;
-    box-shadow: inset 0 1px 2px $cc-color-lighter-grey;
+    box-shadow: inset 0 1px 2px $cc-color-whisper;
     font-family: Arial;
     font-size: 12px;
     margin: 0 0 8px;
     padding: 3px;
     width: 100%;
     &:focus {
-      border: 1px solid $cc-color-lighter-medium-grey;
+      border: 1px solid $cc-color-nobel;
     }
   }
 
@@ -161,7 +161,7 @@ form {
   }
 
   ::placeholder {
-    color: $cc-color-placeholder;
+    color: $cc-color-nobel;
   }
 
 }

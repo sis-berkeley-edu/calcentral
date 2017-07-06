@@ -21,7 +21,7 @@
         vertical-align: top;
       }
       th {
-        color: $cc-color-light-medium-grey;
+        color: $cc-color-dim-gray;
         font-weight: bold;
         text-align: left;
       }
@@ -66,7 +66,7 @@
     table-layout: fixed;
     tr {
       td, th {
-        border-bottom: 1px solid $cc-color-widget-background;
+        border-bottom: 1px solid $cc-color-whisper;
         font-size: 12px;
         padding: 4px;
       }
@@ -88,7 +88,7 @@
   }
 }
 .cc-table-top-border {
-  border-top: 1px solid $cc-color-popover-border;
+  border-top: 1px solid $cc-color-very-light-grey;
   margin-top: 5px;
   padding-top: 5px;
 }

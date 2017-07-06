@@ -1,7 +1,3 @@
-$cc-color-amount-deleted-color: #c10006;
-$cc-color-amount-added-color: #008040;
-$cc-color-amount-changed-color: #a79526;
-
 .cc-finaid-compare-awards-margin-top {
   margin-top: 10px;
 }
@@ -10,7 +6,7 @@ $cc-color-amount-changed-color: #a79526;
 }
 
 .cc-finaid-compare-awards-current-prior-headers > div {
-  background: $cc-color-dark-blue;
+  background: $cc-color-lynch;
   color: $cc-color-white;
   flex-basis: 50%;
   padding: 10px 15px;
@@ -51,12 +47,12 @@ $cc-color-amount-changed-color: #a79526;
 
 .cc-finaid-compare-change-icons {
   &.cc-amount-deleted-icon {
-    color: $cc-color-amount-deleted-color;
+    color: $cc-color-venetian-red;
   }
   &.cc-amount-added-icon {
-    color: $cc-color-amount-added-color;
+    color: $cc-color-salem;
   }
   &.cc-amount-changed-icon {
-    color: $cc-color-amount-changed-color;
+    color: $cc-color-lucky;
   }
 }

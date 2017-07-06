@@ -74,7 +74,7 @@
       margin: 0;
     }
     .cc-widget-tasks-title-sub {
-      color: $cc-color-lighter-medium-grey;
+      color: $cc-color-nobel;
       font-size: 11px;
       text-transform: uppercase;
     }
@@ -92,33 +92,33 @@
     }
   }
   .cc-widget-tasks-no-items-first {
-    border-top: 1px solid $cc-color-widget-background;
+    border-top: 1px solid $cc-color-whisper;
     margin-bottom: 12px;
     margin-top: 12px;
     padding-top: 12px;
   }
   .cc-widget-tasks-section-label {
     clear: both;
-    color: $cc-color-widget-section-label;
+    color: $cc-color-dim-gray;
     font-size: 14px;
     margin: 10px 30px 0 10px;
     overflow: hidden;
   }
   .cc-widget-tasks-section-label-red {
-    color: $cc-color-red;
+    color: $cc-color-harley-davidson-orange;
   }
   .cc-widget-tasks-section-label-count {
-    background: $cc-color-button-grey;
+    background: $cc-color-very-light-grey;
     color: $cc-color-white;
     font-size: 13px;
     font-weight: bold;
     padding: 5px;
   }
   .cc-widget-tasks-section-label-count-green {
-    background: $cc-color-green-label;
+    background: $cc-color-zanah;
   }
   .cc-widget-tasks-section-label-count-red {
-    background: $cc-color-red;
+    background: $cc-color-harley-davidson-orange;
   }
   .cc-widget-tasks-taskslider {
     margin: 10px 0;

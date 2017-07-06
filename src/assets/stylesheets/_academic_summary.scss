@@ -1,13 +1,13 @@
 .cc-academic-summary {
   .cc-academic-summary-border-bottom {
     td,th {
-      border-bottom: 1px solid $cc-color-popover-border;
+      border-bottom: 1px solid $cc-color-very-light-grey;
       margin-top: 5px;
       padding-top: 5px;
     }
   }
   .cc-academic-summary-border-wrapper {
-    border: 1px solid $cc-color-list-border;
+    border: 1px solid $cc-color-very-light-grey;
     margin: 15px;
   }
   .cc-academic-summary-enrollment-header {
@@ -18,12 +18,12 @@
     margin-bottom: 15px;
   }
   .cc-academic-summary-row-header {
-    color: $cc-color-light-medium-grey;
+    color: $cc-color-dim-gray;
   }
   .cc-academic-summary-row-title {
     width: 20%;
     h4 {
-      color: $cc-color-light-medium-grey;
+      color: $cc-color-dim-gray;
       font-size: 14px;
       margin: 0;
       padding: 2px 2px 2px 0;

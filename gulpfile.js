@@ -22,13 +22,15 @@
 
   // Browserify dependencies
   var browserify = require('browserify');
+  var concat = require('gulp-concat');
   var watchify = require('watchify');
   var bulkify = require('bulkify');
   var source = require('vinyl-source-stream');
   var addStream = require('add-stream');
   var streamify = require('gulp-streamify');
   var ngAnnotate = require('gulp-ng-annotate');
-  var concat = require('gulp-concat');
+  var opn = require('opn');
+  var runSequence = require('run-sequence');
   var uglify = require('gulp-uglify');
   var util = require('gulp-util');
 
@@ -128,7 +130,8 @@
       css: 'public/assets/stylesheets',
       fonts: 'public/assets/fonts',
       img: 'public/assets/images',
-      js: 'public/assets/javascripts'
+      js: 'public/assets/javascripts',
+      styleguide: 'public/styleguide'
     }
   };
 
@@ -153,6 +156,52 @@
   gulp.task('images', function() {
     return gulp.src(paths.src.img)
       .pipe(gulp.dest(paths.dist.img));
+  });
+
+  /**
+   * Styleguide Tasks
+   * See https://github.com/SC5/sc5-styleguide
+   */
+  var styleguide = require('sc5-styleguide');
+  gulp.task('styleguide:generate', function() {
+    return gulp.src(paths.src.cssWatch)
+      .pipe(styleguide.generate({
+          title: 'CalCentral',
+          server: !isProduction,
+          port: 3006,
+          rootPath: paths.dist.styleguide,
+          overviewPath: 'docs/styleguide.md',
+          watch: true
+        }))
+      .pipe(gulp.dest(paths.dist.styleguide));
+  });
+  gulp.task('styleguide:applystyles', function() {
+    var sass = require('gulp-sass');
+    return gulp.src('public/assets/stylesheets/application.css')
+      .pipe(sass({
+        errLogToConsole: true
+      }))
+      .pipe(styleguide.applyStyles())
+      .pipe(gulp.dest(paths.dist.styleguide));
+  });
+  gulp.task('styleguide:images', function() {
+    // Do image sprites, optimizations etc.
+    gulp.src(paths.src.img)
+      .pipe(gulp.dest(paths.dist.styleguide + '/images'));
+  });
+  gulp.task('styleguide:monitor', function() {
+    if (isProduction) {
+      return;
+    }
+    gulp.watch([paths.src.cssWatch], ['styleguide:build']);
+    opn('http://localhost:3006');
+  });
+  gulp.task('styleguide:build', ['styleguide:generate', 'styleguide:applystyles', 'styleguide:images']);
+  gulp.task('styleguide', function() {
+    runSequence(
+      'styleguide:build',
+      'styleguide:monitor'
+    );
   });
 
   /**
@@ -464,8 +513,6 @@
    * happens before everything else
    */
   gulp.task('build', function(callback) {
-    var runSequence = require('run-sequence');
-
     runSequence(
       'build-clean',
       [

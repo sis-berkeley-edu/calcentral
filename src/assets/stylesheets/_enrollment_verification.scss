@@ -2,7 +2,7 @@
   .cc-enrollment-verification-link {
     margin-bottom: 12px;
     .cc-enrollment-verification-link-disabled {
-      color: $cc-color-light-medium-grey;
+      color: $cc-color-dim-gray;
     }
   }
   .cc-enrollment-verification-footer {
@@ -16,7 +16,7 @@
   .cc-enrollment-verification-message {
     padding-bottom: 12px;
     li::before {
-      color: $cc-color-list-block;
+      color: $cc-color-air-force-blue;
       content: '\25A0';
       float: left;
       margin-left: -16px;

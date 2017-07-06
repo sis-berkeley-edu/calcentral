@@ -20,13 +20,13 @@
     padding: 0 15px;
 
     > li {
-      border-bottom: 1px solid $cc-color-widget-background;
+      border-bottom: 1px solid $cc-color-whisper;
       &:last-child {
         border-bottom: 0;
       }
     }
     .cc-widget-activities-list-undated {
-      border-bottom: 2px solid $cc-color-shadow-color;
+      border-bottom: 2px solid $cc-color-very-light-grey;
     }
   }
 
@@ -37,7 +37,7 @@
   }
 
   .cc-widget-activities-sub-activity {
-    border-top: 1px solid $cc-color-light-grey;
+    border-top: 1px solid $cc-color-whisper;
     padding: 6px 0 6px 15px;
     position: relative;
   }
@@ -81,7 +81,7 @@
     margin-top: 15px;
     li {
       .cc-widget-activities-sub-activity-date-string {
-        color: $cc-color-lighter-medium-grey;
+        color: $cc-color-nobel;
         float: right;
         font-size: 10px;
         text-align: right;
@@ -96,7 +96,7 @@
   .cc-widget-activities-text-column {
     line-height: 1.4;
     i {
-      color: $cc-color-popover-icon;
+      color: $cc-color-spindle;
       font-size: 20px;
     }
     .fa-usd {

@@ -1,6 +1,6 @@
 .cc-undergrad-degree-progress-card {
   .cc-degree-progress-report-date {
-    color: $cc-color-lighter-medium-grey;
+    color: $cc-color-nobel;
     font-size: 13px;
     margin-bottom: 10px;
   }
@@ -32,7 +32,7 @@
       margin-left: 20px;
 
       ul.cc-milestone-attempts {
-        color: $cc-color-lighter-medium-grey;
+        color: $cc-color-nobel;
         margin-left: 0;
 
         li:first-child {
@@ -42,7 +42,7 @@
     }
   }
   .cc-degree-progress-graduate-links-section {
-    border-top: 1px solid $cc-color-widget-background;
+    border-top: 1px solid $cc-color-whisper;
     margin-top: 15px;
     padding-top: 10px;
   }

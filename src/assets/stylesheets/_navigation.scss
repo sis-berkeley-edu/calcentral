@@ -1,5 +1,5 @@
 .cc-navigation-bar {
-  background-color: $cc-color-navigation;
+  background-color: $cc-color-bahama-blue;
   clear: both;
   ul {
     float: left;
@@ -11,7 +11,7 @@
       margin: 0;
       padding: 0;
       &.active a, a:hover, a:focus {
-        background: $cc-color-navigation-hover-background;
+        background: $cc-color-air-force-blue;
         border-radius: 5px;
         color: $cc-color-white;
       }
@@ -19,7 +19,7 @@
         font-weight: bold;
       }
       > a {
-        color: $cc-color-lighter-grey;
+        color: $cc-color-whisper;
         display: block;
         float: left;
         margin: 5px 0 5px 10px;

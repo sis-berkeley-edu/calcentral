@@ -1,14 +1,14 @@
 .cc-transfer-credit {
   .cc-transfer-credit-table {
     h3 {
-      color: $cc-color-light-medium-grey;
+      color: $cc-color-dim-gray;
       font-size: 14px;
     }
     tbody {
       padding-bottom: 6px;
     }
     .cc-transfer-credit-table-border {
-      border-top: 1px solid $cc-color-popover-border;
+      border-top: 1px solid $cc-color-very-light-grey;
       margin-top: 8px;
     }
     .cc-transfer-credit-table-parent-row {

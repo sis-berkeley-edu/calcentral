@@ -2,13 +2,13 @@
   .cc-toolbox-apitest-list {
     margin-top: 10px;
     .cc-toolbox-apitest-pending {
-      color: $cc-color-dark-grey;
+      color: $cc-color-night-rider;
     }
     .cc-toolbox-apitest-failed {
-      color: $cc-color-red;
+      color: $cc-color-harley-davidson-orange;
     }
     .cc-toolbox-apitest-success {
-      color: $cc-color-green-plus;
+      color: $cc-color-salem;
     }
     .cc-toolbox-apitest-icon {
       margin-right: 5px;
@@ -23,7 +23,7 @@
   .cc-toolbox-table {
     margin-top: 20px;
     td, th {
-      border-bottom: 1px solid $cc-color-widget-background;
+      border-bottom: 1px solid $cc-color-whisper;
       font-size: 12px;
       padding: 4px;
     }
@@ -47,7 +47,7 @@
     .cc-toolbox-widget-delegate-student-profile {
       margin: 0 0 10px;
       .cc-toolbox-widget-delegate-student-profile-img {
-        border: 1px solid $cc-color-lighter-medium-grey;
+        border: 1px solid $cc-color-nobel;
         height: 96px;
         width: 72px;
       }

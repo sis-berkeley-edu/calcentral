@@ -1,8 +1,6 @@
-$cc-color-splash-blue-dark: #025a86;
-
 .cc-page-splash {
   h1 {
-    color: $cc-color-splash-blue-dark;
+    color: $cc-color-dark-cerulean;
     font-family: Arial;
     font-size: 23px;
     font-weight: bold;
@@ -19,13 +17,13 @@ $cc-color-splash-blue-dark: #025a86;
     padding: 30px;
   }
   .cc-page-splash-blog-panel {
-    background: $cc-color-main-background;
+    background: $cc-color-white-smoke;
     margin: 135px 0 0 !important;
     padding: 10px;
     .cc-page-splash-blog-date {
       padding: 0;
       p {
-        color: $cc-color-launcher-border;
+        color: $cc-color-dark-cerulean;
         font-size: 15px;
         font-weight: bold;
       }
@@ -61,7 +59,7 @@ $cc-color-splash-blue-dark: #025a86;
     }
   }
   .cc-page-splash-container-left {
-    border-right: 2px solid $cc-color-widget-background;
+    border-right: 2px solid $cc-color-whisper;
     height: 100%;
     padding-top: 10px;
   }
@@ -98,8 +96,8 @@ $cc-color-splash-blue-dark: #025a86;
     margin: 20px 10px 0;
   }
   .cc-page-splash-info-image, .cc-page-splash-video>button, .cc-page-splash-video>div {
-    border: 1px solid $cc-color-button-border;
-    box-shadow: 3px 3px 5px $cc-color-placeholder;
+    border: 1px solid $cc-color-very-light-grey;
+    box-shadow: 3px 3px 5px $cc-color-nobel;
     margin-bottom: 20px;
   }
   .cc-page-splash-info-image {
@@ -147,5 +145,4 @@ $cc-color-splash-blue-dark: #025a86;
       padding-bottom: 40px;
     }
   }
-
 }
