@@ -23,10 +23,12 @@ module CanvasLti
       worker = Canvas::Course.new(user_id: @uid)
       response = worker.create(project_account_id, project_name, project_name, term_id, unique_sis_project_id)
       if (course_details = response[:body])
+        site_id = course_details['id']
+        Canvas::CourseSettings.new(course_id: site_id).fix_default_view course_details
         enrollment = CanvasLti::CourseAddUser.new(user_id: @uid, canvas_course_id: course_details['id']).add_user_to_course(@uid, 'Owner')
         {
-          projectSiteId: course_details['id'],
-          projectSiteUrl: "#{Settings.canvas_proxy.url_root}/courses/#{course_details['id']}",
+          projectSiteId: site_id,
+          projectSiteUrl: "#{Settings.canvas_proxy.url_root}/courses/#{site_id}",
           enrollment_id: enrollment['id']
         }
       else

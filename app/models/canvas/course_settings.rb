@@ -1,5 +1,8 @@
 module Canvas
   class CourseSettings < Proxy
+    include ClassLogger
+
+    DEFAULT_HOME_PAGE = 'feed'
 
     def initialize(options = {})
       super(options)
@@ -21,6 +24,25 @@ module Canvas
           'grading_standard_id' => grading_scheme_id
         }
       }
+    end
+
+    # WARNING: This is currently undocumented. Described at "https://community.canvaslms.com/thread/11645".
+    def set_default_view(default_view)
+      wrapped_put request_path, {
+        'course' => {
+          'default_view' => default_view
+        }
+      }
+    end
+
+    # If necessary, reset a site to use ETS's preferred default landing page.
+    def fix_default_view(course_properties)
+      if course_properties['default_view'] != DEFAULT_HOME_PAGE
+        logger.info "Will change default view for site ID #{@course_id} from '#{course_properties['default_view']}' to '#{DEFAULT_HOME_PAGE}'"
+        results = set_default_view DEFAULT_HOME_PAGE
+        logger.error "Could not change default view for site ID #{@course_id}" if results[:statusCode] != 200
+        results
+      end
     end
 
     private

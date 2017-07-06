@@ -81,4 +81,32 @@ describe Canvas::CourseSettings do
     end
   end
 
+  describe '#fix_default_view' do
+    let(:default_home_page) { 'modules' }
+    let(:preferred_home_page) { 'feed' }
+    let(:original_course_properties) do
+      {
+        'id'=>canvas_course_id,
+        'default_view'=> default_home_page,
+        'workflow_state'=>'unpublished'
+      }
+    end
+    let(:change_request) do
+      stub_request(:put, /.*\/courses\/#{canvas_course_id}/)
+        .with(body: "#{URI.encode_www_form_component('course[default_view]')}=#{preferred_home_page}")
+        .to_return(status: 200, body: {id: canvas_course_id, default_view: preferred_home_page}.to_json)
+    end
+    it 'sets the site home page to Activity Stream if needed' do
+      subject.fix_default_view original_course_properties
+      expect(change_request).to have_been_requested
+    end
+    context 'when the site home page is initialized in our preferred way' do
+      let(:default_home_page) { preferred_home_page }
+      it 'leaves well enough alone' do
+        subject.fix_default_view original_course_properties
+        expect(change_request).not_to have_been_requested
+      end
+    end
+  end
+
 end
