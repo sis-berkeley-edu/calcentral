@@ -203,11 +203,15 @@ module CanvasCsv
 
     def retrieve_course_site_details
       raise RuntimeError, 'Unable to retrieve course site details. SIS Course ID not present.' if @import_data['sis_course_id'].blank?
-      canvas_course_id = Canvas::SisCourse.new(sis_course_id: @import_data['sis_course_id']).canvas_course_id
-      raise RuntimeError, "Unexpected error obtaining course site URL for #{@import_data['sis_course_id']}" if canvas_course_id.blank?
-      @import_data['canvas_course_id'] = canvas_course_id
-      @import_data['course_site_url'] = "#{Settings.canvas_proxy.url_root}/courses/#{canvas_course_id}"
-      background_job_complete_step 'Retrieved new course site details'
+      response = Canvas::SisCourse.new(sis_course_id: @import_data['sis_course_id']).course
+      if response[:statusCode] == 200 && (course_properties = response[:body]) && (canvas_course_id = course_properties['id'])
+        Canvas::CourseSettings.new(course_id: canvas_course_id).fix_default_view course_properties
+        @import_data['canvas_course_id'] = canvas_course_id
+        @import_data['course_site_url'] = "#{Settings.canvas_proxy.url_root}/courses/#{canvas_course_id}"
+        background_job_complete_step 'Retrieved new course site details'
+      else
+        raise RuntimeError, "Unexpected error obtaining course site URL for #{@import_data['sis_course_id']}"
+      end
     end
 
     def expire_instructor_sites_cache

@@ -534,9 +534,22 @@ describe CanvasCsv::ProvideCourseSite do
     context 'when SIS course ID is present' do
       before { subject.instance_eval { @import_data['sis_course_id'] = 'CRS:ENGIN-7-2015-B' } }
       let(:sis_course_proxy) { Canvas::SisCourse.new }
+      let(:new_course_properties) do
+        {
+          'id' => canvas_course_id,
+          'name' => site_name,
+          'course_code' => site_course_code,
+          'sis_course_id' => sis_course_id,
+          'default_view' => 'modules'
+        }
+      end
+
       before do
         expect(Canvas::SisCourse).to receive(:new).with(sis_course_id: sis_course_id).and_return sis_course_proxy
-        expect(sis_course_proxy).to receive(:canvas_course_id).and_return canvas_course_id
+        expect(sis_course_proxy).to receive(:course).and_return({
+          statusCode: 200,
+          body: new_course_properties
+        })
         allow(Settings.canvas_proxy).to receive(:url_root).and_return 'https://berkeley.instructure.com'
       end
 
@@ -557,6 +570,12 @@ describe CanvasCsv::ProvideCourseSite do
         cached_object = BackgroundJob.find(subject.background_job_id)
         expect(cached_object.background_job_report[:completedSteps]).to eq ['Retrieved new course site details']
       end
+
+      it 'resets the site home page if needed' do
+        expect_any_instance_of(Canvas::CourseSettings).to receive(:fix_default_view).with(new_course_properties)
+        subject.retrieve_course_site_details
+      end
+
     end
   end
 
