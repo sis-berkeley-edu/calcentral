@@ -28,7 +28,7 @@ export RAILS_ENV=${RAILS_ENV:-production}
 echo | ${LOGIT}
 echo "------------------------------------------" | ${LOGIT}
 echo "`date`: Starting CalCentral..." | ${LOGIT}
-OPTS=${CALCENTRAL_JRUBY_OPTS:="-Xcompile.invokedynamic=false -Xcext.enabled=true -J-Djruby.thread.pool.enabled=true -J-Djava.io.tmpdir=${PWD}/tmp"}
+OPTS=${CALCENTRAL_JRUBY_OPTS:="-J-Djruby.openssl.x509.lookup.cache=8 -Xcompile.invokedynamic=false -J-Djruby.thread.pool.enabled=true -J-Djava.io.tmpdir=${PWD}/tmp"}
 export JRUBY_OPTS=${OPTS}
 
 # The CALCENTRAL_JVM_OPTS env variable (optional) will override default JVM args

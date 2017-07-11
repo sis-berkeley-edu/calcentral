@@ -18,7 +18,7 @@ source .rvmrc
 export RAILS_ENV=${RAILS_ENV:-production}
 export LOGGER_STDOUT=only
 export LOGGER_LEVEL=INFO
-export JRUBY_OPTS="-Xcompile.invokedynamic=false -Xcext.enabled=true -J-XX:+UseConcMarkSweepGC -J-XX:+CMSPermGenSweepingEnabled -J-XX:+CMSClassUnloadingEnabled -J-Xmx1024m"
+export JRUBY_OPTS="-Xcompile.invokedynamic=false -J-XX:+UseConcMarkSweepGC -J-XX:+CMSPermGenSweepingEnabled -J-XX:+CMSClassUnloadingEnabled -J-Xmx1024m"
 
 echo | $LOGIT
 echo "------------------------------------------" | $LOGIT
