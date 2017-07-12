@@ -32,9 +32,9 @@ angular.module('calcentral.controllers').controller('AcademicSummaryController',
   var parseGpaUnits = function() {
     // Testing units are lumped in with Transfer Units on the academic summary
     if ($scope.gpaUnits && !$scope.gpaUnits.errored) {
-      var unitsNonAdjusted = _.get($scope, 'transferCredit.ucTransferCrseSch.unitsNonAdjusted');
+      var unitsAdjusted = _.get($scope, 'transferCredit.ucTransferCrseSch.unitsAdjusted');
       var totalTestUnits = _.get($scope, 'transferCredit.ucTestComponent.totalTestUnits');
-      var totalTransferAndTestingUnits = academicsService.totalTransferUnits(unitsNonAdjusted, totalTestUnits);
+      var totalTransferAndTestingUnits = academicsService.totalTransferUnits(unitsAdjusted, totalTestUnits);
       _.set($scope.gpaUnits, 'testingAndTransferUnits', totalTransferAndTestingUnits);
     }
   };

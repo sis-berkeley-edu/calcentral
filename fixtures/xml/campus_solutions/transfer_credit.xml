@@ -5,23 +5,27 @@
         <ITEMS type="array">
           <ITEM>
             <INSTITUTION>LOS ANGELES CITY COLL</INSTITUTION>
-            <UCB_UNITS type="float">27.0</UCB_UNITS>
+            <TRANSFER_UNITS type="float">27.0</TRANSFER_UNITS>
+            <UCB_GRADE_POINTS type="float">.000</UCB_GRADE_POINTS>
           </ITEM>
           <ITEM>
             <INSTITUTION>LOS ANGELES VALLEY COLL</INSTITUTION>
-            <UCB_UNITS type="float">42.0</UCB_UNITS>
+            <TRANSFER_UNITS type="float">42.0</TRANSFER_UNITS>
+            <UCB_GRADE_POINTS type="float">.000</UCB_GRADE_POINTS>
           </ITEM>
           <ITEM>
             <INSTITUTION>MOORPARK COLL</INSTITUTION>
-            <UCB_UNITS type="float">3.0</UCB_UNITS>
+            <TRANSFER_UNITS type="float">3.0</TRANSFER_UNITS>
+            <UCB_GRADE_POINTS type="float">.000</UCB_GRADE_POINTS>
           </ITEM>
           <ITEM>
             <INSTITUTION>PASADENA CITY COLL</INSTITUTION>
-            <UCB_UNITS type="float">27.0</UCB_UNITS>
+            <TRANSFER_UNITS type="float">27.0</TRANSFER_UNITS>
+            <UCB_GRADE_POINTS type="float">.000</UCB_GRADE_POINTS>
           </ITEM>
         </ITEMS>
-        <UNITS_ADJUST type="float">29.0</UNITS_ADJUST>
-        <UNITS_NON_ADJUSTED type="float">70.0</UNITS_NON_ADJUSTED>
+        <TC_ADJUST type="float">29.0</TC_ADJUST>
+        <UNITS_ADJUSTED type="float">70.0</UNITS_ADJUSTED>
       </UC_TRANSFER_CRSE_SCH>
       <UC_TEST_COMPONENT>
         <AP_UNITS type="float">5.2</AP_UNITS>
