@@ -125,12 +125,14 @@ module MyAcademics
       if semester[:cs_data_available]
         # brings none exam_slots to the bottom
         semester[:exams] = semester[:courses].sort do |a,b|
-          if a[:exam_slot] == 'none'
+          this_exam_slot = a[:exam_slot].try(:strftime, '%Y-%m-%d')
+          that_exam_slot = b[:exam_slot].try(:strftime, '%Y-%m-%d')
+          if this_exam_slot.blank?
             1
-          elsif b[:exam_slot] == 'none'
+          elsif that_exam_slot.blank?
             -1
           else
-            a[:exam_slot] <=> b[:exam_slot]
+            this_exam_slot <=> that_exam_slot
           end
         end
       else # interim
