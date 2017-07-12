@@ -40,7 +40,7 @@ describe Canvas::CourseEnrollments do
     before { subject.on_request(method: :post).set_response(status: 200, body: add_enrollment_response_body) }
 
     it 'raises exception if canvas_user_id is not an integer' do
-      expect { subject.enroll_user('not_an_integer', 1774) }.to raise_error(NoMethodError, 'undefined method `to_int\' for "not_an_integer":String')
+      expect { subject.enroll_user('not_an_integer', 1774) }.to raise_error(NoMethodError, /undefined method `to_int' for "not_an_integer":String/)
     end
 
     it 'returns confirmation of enrollment' do
