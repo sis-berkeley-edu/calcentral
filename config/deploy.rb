@@ -1,6 +1,6 @@
 require "rvm/capistrano"
 require "bundler/capistrano"
-require "config/settings/server_config"
+require_relative "settings/server_config"
 
 settings = ServerConfig.get_settings(Dir.home + "/.calcentral_config/server_config.yml")
 
