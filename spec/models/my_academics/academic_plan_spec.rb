@@ -30,7 +30,6 @@ describe MyAcademics::AcademicPlan do
 
           }],
         :hasEnrollmentData => true,
-        :summaryFromTranscript => false,
         :hasEnrolledClasses => true
       },
       {
@@ -66,7 +65,6 @@ describe MyAcademics::AcademicPlan do
             ]
           }],
         :hasEnrollmentData => true,
-        :summaryFromTranscript => false,
         :hasEnrolledClasses => true
       }
     ]

@@ -38,7 +38,6 @@ describe MyAcademics::FacultyDelegate do
 
           }],
         :hasEnrollmentData => true,
-        :summaryFromTranscript => false,
         :hasEnrolledClasses => true
       },
       {
@@ -74,7 +73,6 @@ describe MyAcademics::FacultyDelegate do
             ]
           }],
         :hasEnrollmentData => true,
-        :summaryFromTranscript => false,
         :hasEnrolledClasses => true
       }
     ]

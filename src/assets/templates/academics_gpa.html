@@ -21,27 +21,27 @@
             <th scope="col">Grade</th>
           </thead>
           <tbody data-ng-repeat="course in selectedCourses">
-            <tr data-ng-repeat="estimated in course.estimatedTranscript">
+            <tr data-ng-repeat="section in course.sections" data-ng-if="section.is_primary_section && !section.grading.grade">
               <td data-ng-bind="course.course_code"></td>
-              <td class="cc-table-right cc-table-right-spacing" data-ng-bind="estimated.units | number:1"></td>
-              <td data-ng-if="!estimated.units">--</td>
+              <td class="cc-table-right cc-table-right-spacing" data-ng-bind="section.estimatedGrading.units | number:1"></td>
+              <td class="cc-table-right cc-table-right-spacing" data-ng-if="!section.estimatedGrading.units">&mdash;</td>
               <td>
-                <span data-ng-if="estimated.units === '0' && selectedSemester.timeBucket === 'current'" data-ng-bind="estimated.gradeOption"></span>
+                <span data-ng-if="section.estimatedGrading.units === '0' && selectedSemester.timeBucket === 'current'" data-ng-bind="section.estimatedGrading.gradeOption"></span>
                 <select
-                  data-ng-if="estimated.units && !estimated.grade && estimated.units !== '0'"
-                  data-ng-model="estimated.estimatedGrade"
-                  data-ng-change="gpaUpdateCourse(estimated, estimated.estimatedGrade)"
+                  data-ng-if="section.estimatedGrading.units !== '0' && !section.grading.grade"
+                  data-ng-model="section.estimatedGrading.grade"
+                  data-ng-change="gpaUpdateCourse(section.grading, section.estimatedGrading.grade)"
                   data-ng-options="g.weight as g.grade for g in gradeOptions"
                 >
                 </select>
               </td>
             </tr>
-            <tr data-ng-repeat="transcript in course.transcript">
+            <tr data-ng-repeat="section in course.sections" data-ng-if="section.is_primary_section && section.grading.grade">
               <td data-ng-bind="course.course_code"></td>
-              <td class="cc-table-right cc-table-right-spacing" data-ng-bind="transcript.units | number:1"></td>
-              <td data-ng-if="!transcript.units">--</td>
+              <td class="cc-table-right cc-table-right-spacing" data-ng-bind="section.units | number:1"></td>
+              <td class="cc-table-right cc-table-right-spacing" data-ng-if="!section.units">&mdash;</td>
               <td>
-                <span data-ng-bind="transcript.grade"></span>
+                <span data-ng-bind="section.grading.grade"></span>
               </td>
             </tr>
           </tbody>

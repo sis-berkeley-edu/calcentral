@@ -18,11 +18,11 @@
         <h4 class="cc-left" data-ng-if="semester.notation" data-ng-bind="semester.notation"></h4>
         <a class="cc-right cc-academics-semester-title-link" data-ng-href="/academics/booklist/{{semester.slug}}" data-ng-if="semester.hasEnrollmentData && !semester.filteredForDelegate && semester.timeBucket !== 'past' && !isAdvisingStudentLookup">Book List</a>
         <br>
-        <div class="cc-widget-text" data-ng-if="!semester.hasEnrolledClasses && !semester.summaryFromTranscript && !semester.hasWithdrawalData">
+        <div class="cc-widget-text" data-ng-if="!semester.hasEnrolledClasses && !semester.hasWithdrawalData">
           You are currently not enrolled in any classes for
           <span data-ng-bind="semester.name"></span>.
         </div>
-        <table data-ng-if="!semester.hasWithdrawalData && (semester.hasEnrolledClasses || semester.summaryFromTranscript)">
+        <table data-ng-if="semester.hasEnrolledClasses && !semester.hasWithdrawalData">
           <thead>
             <tr>
               <th width="30%" scope="col">Class</th>
@@ -32,7 +32,7 @@
               <th data-ng-if="api.user.profile.canViewGrades" width="10%" scope="col" title="Grades" class="cc-table-center">Gr.</th>
             </tr>
           </thead>
-          <tbody data-ng-if="!semester.summaryFromTranscript" data-ng-repeat="class in semester.classes">
+          <tbody data-ng-repeat="class in semester.classes">
               <tr data-ng-repeat-start="section in class.sections" data-ng-if="section.is_primary_section && !section.waitlisted && !class.transcript">
                 <td>
                   <span data-ng-if="class.multiplePrimaries && section.url && !isAdvisingStudentLookup">
@@ -61,21 +61,22 @@
                 </td>
                 <td data-ng-bind="class.title"></td>
                 <td data-ng-bind="section.units | number:1" class="cc-table-center"></td>
-                <td data-ng-if="api.user.profile.canViewGrades && class.midpointGrade" class="cc-table-center">
+                <td data-ng-if="api.user.profile.canViewGrades && section.grading.grade" class="cc-table-center" data-ng-bind="section.grading.grade"></td>
+                <td data-ng-if="api.user.profile.canViewGrades && !section.grading.grade && section.grading.midpointGrade" class="cc-table-center">
                   <span data-ng-click="api.widget.toggleShow($event, null, section, 'My Academics - Semesters')" class="cc-non-anchored-link">
                     <i class="fa fa-exclamation-triangle cc-icon-gold"></i> ?
                   </span>
                 </td>
-                <td data-ng-if="api.user.profile.canViewGrades && !class.midpointGrade" class="cc-table-center">&mdash;</td>
+                <td data-ng-if="api.user.profile.canViewGrades && !section.grading.grade && !section.grading.midpointGrade" class="cc-table-center">&mdash;</td>
               </tr>
-              <tr data-ng-repeat-end data-ng-if="section.is_primary_section && !section.waitlisted && class.midpointGrade && section.show">
+              <tr data-ng-repeat-end data-ng-if="section.is_primary_section && !section.waitlisted && section.grading.midpointGrade && section.show">
                 <td></td>
                 <td colspan="3">
                   <table>
                     <tr>
                       <td><i class="fa fa-exclamation-triangle cc-icon-gold"></i></td>
                       <td>
-                        Your midpoint grade is: <strong><span data-ng-bind="class.midpointGrade"></span></strong><br />
+                        Your midpoint grade is: <strong><span data-ng-bind="section.grading.midpointGrade"></span></strong><br />
                         Your success is important to us.  Midpoint grades do not appear on transcripts. <br />
                         Please contact your instructor or an advisor as soon as possible. <br />
                         <span data-ng-click="api.widget.toggleShow($event, null, section, 'My Academics - Semesters')" class="cc-non-anchored-link">Hide</span>
@@ -84,29 +85,6 @@
                   </table>
                 </td>
               </tr>
-              <tr data-ng-if="class.transcript" data-ng-repeat="transcript in class.transcript">
-                <td data-ng-if="class.url && !isAdvisingStudentLookup"><a data-ng-href="{{class.url}}" data-ng-bind="class.course_code"></a>
-                <td data-ng-if="!class.url || isAdvisingStudentLookup" data-ng-bind="class.course_code"></td>
-                <td data-ng-bind="class.title"></td>
-                <td data-ng-bind="transcript.units | number:1" class="cc-table-center"></td>
-                <td data-ng-if="api.user.profile.canViewGrades" data-ng-bind="transcript.grade" class="cc-table-center"></td>
-              </tr>
-          </tbody>
-          <tbody data-ng-if="semester.summaryFromTranscript" data-ng-repeat="class in semester.classes">
-            <tr data-ng-if="class.transcript" data-ng-repeat="transcript in class.transcript">
-              <td data-ng-if="class.url && !isAdvisingStudentLookup"><a data-ng-href="{{class.url}}" data-ng-bind="class.course_code"></a>
-              <td data-ng-if="!class.url || isAdvisingStudentLookup" data-ng-bind="class.course_code"></td>
-              <td data-ng-bind="class.title"></td>
-              <td data-ng-bind="transcript.units | number:1" class="cc-table-center"></td>
-              <td data-ng-if="api.user.profile.canViewGrades" data-ng-bind="transcript.grade" class="cc-table-center"></td>
-            </tr>
-            <tr data-ng-if="!class.transcript && section.is_primary_section" data-ng-repeat="section in class.sections">
-              <td data-ng-if="class.url && !isAdvisingStudentLookup"><a data-ng-href="{{class.url}}" data-ng-bind="class.course_code"></a>
-              <td data-ng-if="!class.url || isAdvisingStudentLookup" data-ng-bind="class.course_code"></td>
-              <td data-ng-bind="class.title"></td>
-              <td data-ng-bind="section.units | number:1" class="cc-table-center"></td>
-              <td data-ng-if="api.user.profile.canViewGrades" class="cc-table-center">&mdash;</td>
-            </tr>
           </tbody>
         </table>
       </div>

@@ -4,7 +4,7 @@
   </div>
   <div class="cc-widget-padding">
     <div>
-      <div data-ng-if="semesterHasTranscripts">
+      <div data-ng-if="semesterHasGrades">
         <h4>Grades for <span data-ng-bind="selectedSemester.name"></span></h4>
         <div class="cc-table">
           <table>
@@ -14,19 +14,19 @@
               <th scope="col">Grade</th>
             </thead>
             <tbody data-ng-repeat="course in selectedCourses">
-              <tr data-ng-repeat="transcript in course.transcript">
+              <tr data-ng-repeat="section in course.sections" data-ng-if="section.is_primary_section">
                 <td data-ng-bind="course.course_code"></td>
-                <td class="cc-table-right cc-table-right-spacing" data-ng-bind="transcript.units | number:1"></td>
-                <td data-ng-if="!transcript.units">--</td>
+                <td class="cc-table-right cc-table-right-spacing" data-ng-bind="section.units | number:1"></td>
+                <td data-ng-if="!section.units">&mdash;</td>
                 <td>
-                  <span data-ng-bind="transcript.grade"></span>
+                  <span data-ng-bind="section.grading.grade"></span>
                 </td>
               </tr>
             </tbody>
           </table>
         </div>
       </div>
-      <div data-ng-if="!semesterHasTranscripts">
+      <div data-ng-if="!semesterHasGrades">
         <h4>No grade data available for <span data-ng-bind="selectedSemester.name"></span></h4>
       </div>
       <div class="row collapse cc-academics-calculator-disclaimer" data-ng-if="selectedCourses.length">

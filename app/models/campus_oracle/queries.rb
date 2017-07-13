@@ -288,24 +288,6 @@ module CampusOracle
       stringify_ints! result
     end
 
-    def self.get_transcript_grades(person_id, terms = nil)
-      logger.warn 'Calling get_transcript_grades on campus_oracle when allow_legacy_fallback flag set to false' unless Settings.features.allow_legacy_fallback
-      result = []
-      terms_clause = terms_query_clause('t', terms)
-      use_pooled_connection {
-        sql = <<-SQL
-      select t.term_yr, t.term_cd, trim(t.dept_cd) as dept_name, trim(t.course_num) as catalog_id,
-        trim(t.grade) as grade, t.unit as transcript_unit, t.transf_passed_unit as transfer_unit, t.line_type, trim(t.memo_or_title) as memo_or_title
-      from calcentral_transcript_vw t where
-        t.student_ldap_uid = #{person_id.to_i}
-          #{terms_clause}
-      order by t.term_yr desc, t.term_cd desc, t.line_num
-        SQL
-        result = connection.select_all(sql)
-      }
-      stringify_ints! result
-    end
-
     def self.get_instructing_sections(person_id, terms = nil)
       logger.warn 'Calling get_instructing_sections on campus_oracle when allow_legacy_fallback flag set to false' unless Settings.features.allow_legacy_fallback
       result = []

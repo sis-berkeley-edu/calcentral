@@ -84,11 +84,9 @@ module MyAcademics
         campusSolutionsTerm: semester.try(:[], :campusSolutionsTerm),
         hasEnrollmentData:  semester.try(:[], :hasEnrollmentData),
         hasEnrolledClasses:  semester.try(:[], :hasEnrolledClasses),
-        summaryFromTranscript:  semester.try(:[], :summaryFromTranscript),
         enrolledClasses:  semester.try(:[], :classes),
         notation:  semester.try(:[], :notation),
         hasWaitlisted: has_waitlisted_classes?(semester),
-        hasClassTranscript: has_class_transcript?(semester),
         hasWithdrawalData: semester.try(:[], :hasWithdrawalData),
         withdrawalStatus:  semester.try(:[], :withdrawalStatus)
       }.merge calc_enrolled_units(semester)
@@ -98,11 +96,10 @@ module MyAcademics
       enrolled_units = 0.0
       waitlisted_units = 0.0
       semester.try(:[], :classes).try(:each) do |cls|
-        enrolled_units += cls.try(:[], :transcript).try(:map){ |tran| tran[:units].to_f }.try(:sum).to_f
         cls.try(:[], :sections).try(:each) do |section|
           if section[:waitlisted] && section[:is_primary_section]
             waitlisted_units += section[:units].to_f
-          elsif section[:is_primary_section] && !semester[:summaryFromTranscript]
+          elsif section[:is_primary_section]
             enrolled_units += section[:units].to_f
           end
         end
@@ -114,18 +111,11 @@ module MyAcademics
     end
 
     def has_waitlisted_classes?(semester)
-      return false unless semester && !semester[:summaryFromTranscript] && semester[:hasEnrolledClasses]
+      return false unless semester && semester[:hasEnrolledClasses]
       !!semester.try(:[], :classes).try(:find) do |cls|
           !!cls[:sections].try(:find) do |section|
             section[:waitlisted]
           end
-      end
-    end
-
-    def has_class_transcript?(semester)
-      return false unless semester && semester[:summaryFromTranscript]
-      !!semester.try(:[], :classes).try(:find) do |cls|
-        cls[:transcript].present?
       end
     end
 
