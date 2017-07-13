@@ -1,4 +1,4 @@
-require 'lib/calcentral_config'
+require_relative '../../lib/calcentral_config'
 require 'yaml'
 
 module ServerConfig
