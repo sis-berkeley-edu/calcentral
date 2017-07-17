@@ -203,6 +203,7 @@ class ApplicationController < ActionController::Base
   def initialize_calcentral_config
     @uid = session['user_id'] ? session['user_id'].to_s : ''
     @calcentral_config ||= {
+      applicationLayer: Settings.application.layer,
       applicationVersion: ServerRuntime.get_settings['versions']['application'],
       clientHostname: ServerRuntime.get_settings['hostname'],
       googleAnalyticsId: Settings.google_analytics_id,

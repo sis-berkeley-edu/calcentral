@@ -11,7 +11,9 @@ angular.module('calcentral.services').service('analyticsService', function(calce
    * More info on https://developers.google.com/analytics/devguides/collection/analyticsjs/events
    */
   var sendEvent = function(category, action, label) {
-    window.ga('send', 'event', category, action, label);
+    if (isProduction()) {
+      window.ga('send', 'event', category, action, label);
+    }
   };
 
   /**
@@ -39,7 +41,9 @@ angular.module('calcentral.services').service('analyticsService', function(calce
    * e.g. /, /dashboard
    */
   var trackPageview = function() {
-    window.ga('send', 'pageview', $location.path());
+    if (isProduction()) {
+      window.ga('send', 'pageview', $location.path());
+    }
   };
 
   /* jshint ignore:start */
@@ -62,11 +66,19 @@ angular.module('calcentral.services').service('analyticsService', function(calce
    * Load the Google Analytics service
    */
   var load = function() {
-    /* jshint ignore:start */
-    injectAnalyticsCode(calcentralConfig.googleAnalyticsId);
-    /* jshint ignore:end */
+    if (isProduction()) {
+      /* jshint ignore:start */
+      injectAnalyticsCode(calcentralConfig.googleAnalyticsId);
+      /* jshint ignore:end */
+      setUserId(calcentralConfig.uid);
+    }
+  };
 
-    setUserId(calcentralConfig.uid);
+  /**
+   * Returns true if application is running in actual production environment
+   */
+  var isProduction = function() {
+    return calcentralConfig.applicationLayer === 'production';
   };
 
   // Whenever we're changing the content loaded, we need to track which page we're viewing.
