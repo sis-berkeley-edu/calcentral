@@ -20,6 +20,7 @@ describe MyAcademics::CollegeAndLevel do
       "student" => {
         "academicStatuses" => hub_academic_statuses,
         "holds" => hub_holds,
+        "awardHonors" => hub_award_honors,
         "degrees" => hub_degrees,
         "roles" => {
           'fpf' => false,
@@ -52,6 +53,52 @@ describe MyAcademics::CollegeAndLevel do
         "reference" => "",
         "type" => {}
       }
+    ]
+  end
+
+  let(:hub_award_honors) do
+    [
+      {
+        "awardDate" => '2012-10-14',
+        "term" => {
+          "id" => '2128'
+        },
+        "type" => {
+          "code" => 'DEANS',
+          "description" => 'Dean\'s List'
+        }
+      },
+      {
+        "awardDate" => '2013-04-14',
+        "term" => {
+          "id" => '2132'
+        },
+        "type" => {
+          "code" => 'HONRDT',
+          "description" => 'Honors to Date'
+        }
+      },
+      {
+        "awardDate" => '2012-10-14',
+        "term" => {
+          "id" => '2128'
+        },
+        "type" => {
+          "code" => 'HONRDT',
+          "description" => 'Honors to Date'
+        }
+      },
+      {
+        "awardDate" => '2013-04-14',
+        "term" => {
+          "id" => '2132'
+        },
+        "type" => {
+          "code" => 'DEANS',
+          "description" => 'Dean\'s List'
+        }
+      }
+
     ]
   end
 
@@ -624,7 +671,33 @@ describe MyAcademics::CollegeAndLevel do
     end
   end
 
-  context 'when flattening a student academic plan' do
+  context '#parse_hub_award_honors' do
+    subject { described_class.new(uid).parse_hub_award_honors hub_academic_status_response }
+
+    it 'groups and orders award honors by term' do
+      expect(subject.count).to eq(2)
+      expect(subject['2128'].count).to eq(2)
+      expect(subject['2132'].count).to eq(2)
+    end
+
+    it 'contains the expected data for each award honor' do
+      expect(subject['2128'][0][:awardDate]).to eq 'Oct 14, 2012'
+      expect(subject['2128'][0][:code]).to eq 'HONRDT'
+      expect(subject['2128'][0][:description]).to eq 'Honors to Date'
+      expect(subject['2128'][1][:awardDate]).to eq 'Oct 14, 2012'
+      expect(subject['2128'][1][:code]).to eq 'DEANS'
+      expect(subject['2128'][1][:description]).to eq 'Dean\'s List'
+
+      expect(subject['2132'][0][:awardDate]).to eq 'Apr 14, 2013'
+      expect(subject['2132'][0][:code]).to eq 'DEANS'
+      expect(subject['2132'][0][:description]).to eq 'Dean\'s List'
+      expect(subject['2132'][1][:awardDate]).to eq 'Apr 14, 2013'
+      expect(subject['2132'][1][:code]).to eq 'HONRDT'
+      expect(subject['2132'][1][:description]).to eq 'Honors to Date'
+    end
+  end
+
+  context '#flatten_plan' do
     let(:flattened_status) { subject.flatten_plan(undergrad_student_plan_major) }
 
     context 'when input is empty' do
@@ -684,7 +757,7 @@ describe MyAcademics::CollegeAndLevel do
     end
   end
 
-  context 'when filtering inactive academic status data' do
+  context '#filter_inactive_status_plans' do
     let(:undergrad_student_plan_specialization) do
       hub_edo_academic_status_student_plan({
         career_code: 'UGRD',
@@ -700,18 +773,15 @@ describe MyAcademics::CollegeAndLevel do
         status_in_plan_status_description: 'Invalid Status'
       })
     end
-
-    context 'when filtering out inactive plans from statuses' do
-      let(:filtered_academic_statuses) { subject.filter_inactive_status_plans(hub_academic_statuses) }
-      it 'removes inactive plans from each status' do
-        expect(filtered_academic_statuses[0]['studentPlans'].count).to eq 3
-        expect(filtered_academic_statuses[0]['studentPlans'][0]['statusInPlan']['status']['code']).to eq 'AC'
-        expect(filtered_academic_statuses[0]['studentPlans'][1]['statusInPlan']['status']['code']).to eq 'AC'
-        expect(filtered_academic_statuses[0]['studentPlans'][2]['statusInPlan']['status']['code']).to eq 'AC'
-        expect(filtered_academic_statuses[0]['studentPlans'][0]['academicPlan']['plan']['code']).to eq '25345U'
-        expect(filtered_academic_statuses[0]['studentPlans'][1]['academicPlan']['plan']['code']).to eq '25090U'
-        expect(filtered_academic_statuses[0]['studentPlans'][2]['academicPlan']['plan']['code']).to eq '00E017G'
-      end
+    let(:filtered_academic_statuses) { subject.filter_inactive_status_plans(hub_academic_statuses) }
+    it 'removes inactive plans from each status' do
+      expect(filtered_academic_statuses[0]['studentPlans'].count).to eq 3
+      expect(filtered_academic_statuses[0]['studentPlans'][0]['statusInPlan']['status']['code']).to eq 'AC'
+      expect(filtered_academic_statuses[0]['studentPlans'][1]['statusInPlan']['status']['code']).to eq 'AC'
+      expect(filtered_academic_statuses[0]['studentPlans'][2]['statusInPlan']['status']['code']).to eq 'AC'
+      expect(filtered_academic_statuses[0]['studentPlans'][0]['academicPlan']['plan']['code']).to eq '25345U'
+      expect(filtered_academic_statuses[0]['studentPlans'][1]['academicPlan']['plan']['code']).to eq '25090U'
+      expect(filtered_academic_statuses[0]['studentPlans'][2]['academicPlan']['plan']['code']).to eq '00E017G'
     end
   end
 

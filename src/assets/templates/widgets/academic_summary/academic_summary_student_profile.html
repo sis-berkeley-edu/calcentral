@@ -1,4 +1,4 @@
-<div class="cc-table cc-academic-summary-table">
+<div class="cc-table cc-academic-summary-content">
   <table>
     <tbody>
       <tr class="cc-academic-summary-border-bottom">
@@ -8,7 +8,7 @@
     </tbody>
   </table>
 </div>
-<div class="cc-table cc-academic-summary-table">
+<div class="cc-table cc-academic-summary-content">
   <table>
     <tbody>
       <tr class="cc-academic-summary-border-bottom">
@@ -18,7 +18,7 @@
     </tbody>
   </table>
 </div>
-<div data-ng-if="collegeAndLevel.majors.length" class="cc-table cc-academic-summary-table">
+<div data-ng-if="collegeAndLevel.majors.length" class="cc-table cc-academic-summary-content">
   <table>
     <tbody>
       <tr>
@@ -32,7 +32,7 @@
     </tbody>
   </table>
 </div>
-<div data-ng-if="collegeAndLevel.minors.length" class="cc-table cc-academic-summary-table">
+<div data-ng-if="collegeAndLevel.minors.length" class="cc-table cc-academic-summary-content">
   <table>
     <tbody>
       <tr>
@@ -46,7 +46,7 @@
     </tbody>
   </table>
 </div>
-<div data-ng-if="collegeAndLevel.designatedEmphases.length" class="cc-table cc-academic-summary-table">
+<div data-ng-if="collegeAndLevel.designatedEmphases.length" class="cc-table cc-academic-summary-content">
   <table>
     <tbody>
       <tr>
@@ -60,7 +60,7 @@
     </tbody>
   </table>
 </div>
-<div data-ng-if="!collegeAndLevel.roles.summerVisitor && collegeAndLevel.careers.length" class="cc-table cc-academic-summary-table">
+<div data-ng-if="!collegeAndLevel.roles.summerVisitor && collegeAndLevel.careers.length" class="cc-table cc-academic-summary-content">
   <table>
     <tbody>
       <tr class="cc-academic-summary-border-bottom">
@@ -70,7 +70,7 @@
     </tbody>
   </table>
 </div>
-<div class="cc-table cc-academic-summary-table" data-ng-if="!collegeAndLevel.roles.summerVisitor && collegeAndLevel.level">
+<div class="cc-table cc-academic-summary-content" data-ng-if="!collegeAndLevel.roles.summerVisitor && collegeAndLevel.level">
   <table>
     <tbody>
       <tr data-ng-class="{'cc-academic-summary-border-bottom': !collegeAndLevel.nonApLevel}">
@@ -87,7 +87,7 @@
     </tbody>
   </table>
 </div>
-<div class="cc-table cc-academic-summary-table" data-ng-if="!collegeAndLevel.roles.summerVisitor && (collegeAndLevel.termsInAttendance || expectedGradTerm(collegeAndLevel))">
+<div class="cc-table cc-academic-summary-content" data-ng-if="!collegeAndLevel.roles.summerVisitor && (collegeAndLevel.termsInAttendance || expectedGradTerm(collegeAndLevel))">
   <table>
     <tbody>
       <tr>
@@ -103,7 +103,7 @@
     </tbody>
   </table>
 </div>
-<div class="cc-table cc-academic-summary-table" data-ng-if="!collegeAndLevel.roles.summerVisitor && gpaUnits.totalUnits > 0">
+<div class="cc-table cc-academic-summary-content" data-ng-if="!collegeAndLevel.roles.summerVisitor && gpaUnits.totalUnits > 0">
   <table>
     <tbody>
       <tr>
@@ -123,7 +123,7 @@
     </tbody>
   </table>
 </div>
-<div class="cc-table cc-academic-summary-table" data-ng-if="!collegeAndLevel.roles.summerVisitor && gpaUnits.cumulativeGpa > 0 && !api.user.profile.roles.law">
+<div class="cc-table cc-academic-summary-content" data-ng-if="!collegeAndLevel.roles.summerVisitor && gpaUnits.cumulativeGpa > 0 && !api.user.profile.roles.law">
   <table>
     <tbody>
       <tr>
@@ -137,7 +137,7 @@
     </tbody>
   </table>
 </div>
-<div class="cc-table cc-academic-summary-table" data-ng-if="collegeAndLevel.degrees">
+<div class="cc-table cc-academic-summary-content" data-ng-if="collegeAndLevel.degrees">
   <table>
     <tbody>
       <tr class="cc-academic-summary-border-bottom">

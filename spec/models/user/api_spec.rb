@@ -88,7 +88,6 @@ describe User::Api do
     subject { testee.preferred_name }
 
     it 'uses default name' do
-      puts subject
       expect(subject).to eq default_name
     end
     context 'when override name exists' do

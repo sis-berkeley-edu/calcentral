@@ -2,6 +2,9 @@ module MyAcademics
   class CollegeAndLevel
     include AcademicsModule
     include ClassLogger
+    include DatedFeed
+
+    CS_DATE_FORMAT = "%Y-%m-%d"
 
     def merge(data)
       college_and_level = hub_college_and_level
@@ -23,6 +26,7 @@ module MyAcademics
       if (holds = parse_hub_holds academic_status)
         academic_status[:holds] = holds
       end
+      academic_status[:awardHonors] = parse_hub_award_honors academic_status
       academic_status[:roles] = parse_hub_roles academic_status
 
       if (statuses = parse_hub_academic_statuses academic_status)
@@ -51,6 +55,37 @@ module MyAcademics
         holds[:hasHolds] = true if holds_feed.to_a.length > 0
       end
       holds
+    end
+
+    def parse_hub_award_honors(response)
+      honors = sort_award_honors response.dig(:feed, 'student', 'awardHonors')
+      honors_by_term = {}
+      honors&.each do |honor|
+        term_id = honor.dig('term', 'id')
+        honors_by_term[term_id] ||= []
+        honors_by_term[term_id] << {
+          awardDate: parse_date(honor.dig('awardDate')),
+          code: honor.dig('type', 'code'),
+          description: honor.dig('type', 'description')
+        }
+      end
+      honors_by_term
+    end
+
+    def sort_award_honors(honors)
+      honors.try(:sort_by) do |honor|
+        honor.dig('term', 'id')
+      end.try(:reverse)
+    end
+
+    def parse_date(date)
+      pretty_date = ''
+      begin
+        pretty_date = format_date(strptime_in_time_zone(date, CS_DATE_FORMAT), '%b %d, %Y')[:dateString] unless date.blank?
+      rescue => e
+        logger.error "Error parsing date: #{date} for uid = #{@uid}; caused by: #{e}"
+      end
+      pretty_date
     end
 
     def parse_hub_roles(response)

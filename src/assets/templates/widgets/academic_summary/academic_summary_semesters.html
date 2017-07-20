@@ -7,7 +7,17 @@
       </h4>
     </div>
   </div>
-  <div class="cc-table cc-academic-summary-table">
+  <div class="cc-academic-summary-content cc-clearfix">
+    <ul class="cc-right cc-text-right">
+      <li data-ng-if="semester.honors.DEANS">
+        <span data-ng-bind="semester.honors.DEANS.description"></span>
+      </li>
+      <li data-ng-if="semester.honors.HONRDT">
+        <span data-ng-bind="semester.honors.HONRDT.description"></span>&nbsp;<span data-ng-bind="semester.honors.HONRDT.awardDate"></span>
+      </li>
+    </ul>
+  </div>
+  <div class="cc-table cc-academic-summary-content">
     <table>
       <thead>
         <tr>
