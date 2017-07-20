@@ -121,7 +121,7 @@ group :development, :test , :testext do
   gem 'rspec-core', '~> 3.1.7'
   gem 'rspec-rails', '~> 3.1.0'
   gem 'rspec-mocks', '~> 3.1.3'
-  gem 'rspec-support', '~> 3.1.2'
+  gem 'rspec-support', '~> 3.1.0'
   gem 'rspec-its', '~> 1.1.0'
   gem 'rspec-collection_matchers', '~> 1.1.2'
   gem 'minitest-reporters', '~> 1.0.8'
