@@ -10,7 +10,7 @@
 * [Git](https://help.github.com/articles/set-up-git)
 * [JDBC Oracle driver](http://www.oracle.com/technetwork/database/enterprise-edition/jdbc-112010-090769.html)
 * [Java 7 SDK](http://www.oracle.com/technetwork/java/javase/downloads/index.html)
-* [JRuby 1.7.x](http://jruby.org/)
+* [JRuby 9.1.5.0](http://jruby.org/)
 * [Node.js >=0.10.30](http://nodejs.org/)
 * [PostgreSQL](http://www.postgresql.org/)
 * [Rails 3.2.x](http://rubyonrails.org/download)
@@ -94,7 +94,7 @@ http://www.oracle.com/technetwork/java/javase/downloads/index.html
 
     ```bash
     rvm get head
-    rvm install jruby-1.7.19
+    rvm install jruby-9.1.5.0
     cd ..
     cd calcentral
     # Answer "yes" again if it asks you to trust a new .rvmrc file.
