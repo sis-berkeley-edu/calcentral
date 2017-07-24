@@ -63,12 +63,20 @@ module DegreeProgress
     end
 
     def parse_milestone_attempts(requirement)
-      attempts = requirement[:attempts].try(:map) do |attempt|
-        parse_milestone_attempt(attempt)
+      qualifying_exam_attempts = []
+      if qualifying_exam?(requirement)
+        qualifying_exam_attempts = requirement[:attempts].try(:map) do |attempt|
+          parse_milestone_attempt(attempt)
+        end
+        qualifying_exam_attempts.try(:sort_by!) do |attempt|
+          attempt[:sequenceNumber]
+        end.try(:reverse!)
       end
-      attempts.try(:sort_by) do |attempt|
-        attempt[:sequenceNumber]
-      end.try(:reverse)
+      qualifying_exam_attempts
+    end
+
+    def qualifying_exam?(requirement)
+      requirement[:code].to_s.strip.upcase === Berkeley::GraduateMilestones::QE_RESULTS_MILESTONE
     end
 
     def parse_milestone_attempt(milestone_attempt)
