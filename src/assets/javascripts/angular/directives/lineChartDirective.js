@@ -2,6 +2,7 @@
 
 var angular = require('angular');
 var Highcharts = require('highcharts');
+var _ = require('lodash');
 
 angular.module('calcentral.directives').directive('ccLineChartDirective', function() {
   return {
@@ -46,7 +47,7 @@ angular.module('calcentral.directives').directive('ccLineChartDirective', functi
       };
 
       // Merge any custom options defined in the Controller.
-      angular.merge(chartOptions, scope.options);
+      _.merge(chartOptions, scope.options);
       // Unless there is already a set of series data defined in the controller, this will render a blank chart.
       var chart = new Highcharts.Chart(element[0], chartOptions, function() {
         // Watch for new data coming in via API, and update chart with new data series.

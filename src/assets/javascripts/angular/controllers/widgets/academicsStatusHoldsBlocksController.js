@@ -83,7 +83,7 @@ angular.module('calcentral.controllers').controller('AcademicsStatusHoldsBlocksC
   var getCalResidency = academicsFactory.getResidency;
   var parseCalResidency = function(response) {
     var residency = _.get(response, 'data.residency');
-    angular.merge($scope.residency, residency);
+    _.merge($scope.residency, residency);
   };
 
   var loadStatusInformation = function() {
