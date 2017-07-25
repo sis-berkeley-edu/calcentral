@@ -1553,25 +1553,6 @@
       ]
     },
     {
-      "name": "DARS",
-      "description": "Degree requirements and track progress",
-      "url": "https://marin.berkeley.edu/darsweb/servlet/ListAuditsServlet ",
-      "roles": {
-        "student": true,
-        "applicant": true,
-        "staff": false,
-        "faculty": false,
-        "exStudent": true,
-        "summerVisitor": true
-      },
-      "categories": [
-        {
-          "topcategory": "Academic Planning",
-          "subcategory": "Planning"
-        }
-      ]
-    },
-    {
       "name": "DeCal Courses",
       "description": "Catalog of student-led courses",
       "url": "http://www.decal.org/ ",
