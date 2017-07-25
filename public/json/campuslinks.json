@@ -2983,29 +2983,6 @@
       ]
     },
     {
-      "name": "Schedule of Classes",
-      "description": "Classes offerings by semester",
-      "url": "http://schedule.berkeley.edu/",
-      "roles": {
-        "student": true,
-        "applicant": true,
-        "staff": true,
-        "faculty": true,
-        "exStudent": true,
-        "summerVisitor": true
-      },
-      "categories": [
-        {
-          "topcategory": "Academic Planning",
-          "subcategory": "Planning"
-        },
-        {
-          "topcategory": "Classes",
-          "subcategory": "Classes"
-        }
-      ]
-    },
-    {
       "name": "Schedule of Classes - Berkeley Law",
       "description": "Law School classes offerings by semester",
       "url": "https://www.law.berkeley.edu/php-programs/courses/courseSearch.php",
