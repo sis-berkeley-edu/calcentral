@@ -13,6 +13,6 @@ matrix:
     - { rvm: jruby-9.1.5.0 }
 
 env:
-  - JRUBY_OPTS="--dev" DISPLAY=:99.0 LOGGER_LEVEL=WARN TRAVIS_NODE_VERSION="4"
+  - JRUBY_OPTS="--dev -J-Xmx900m" DISPLAY=:99.0 LOGGER_LEVEL=WARN TRAVIS_NODE_VERSION="4"
 
 before_script: "./script/front-end-test.sh"
