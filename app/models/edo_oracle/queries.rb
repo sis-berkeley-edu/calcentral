@@ -333,15 +333,19 @@ module EdoOracle
           TRIM(enroll."GRADING_BASIS_CODE") AS grading_basis,
           plan."ACADPLAN_DESCR" AS major,
           plan."STATUSINPLAN_STATUS_CODE",
-          stdgroup."STDNT_GROUP" AS terms_in_attendance_group
+          stdgroup."HIGHEST_STDNT_GROUP" AS terms_in_attendance_group
           #{email_col}
         FROM SISEDO.ENROLLMENTV00_VW enroll
         LEFT OUTER JOIN
           SISEDO.STUDENT_PLAN_CC_V00_VW plan ON enroll."STUDENT_ID" = plan."STUDENT_ID" AND
           plan."ACADPLAN_TYPE_CODE" IN ('CRT', 'HS', 'MAJ', 'SP', 'SS')
         LEFT OUTER JOIN
-          SISEDO.STUDENT_GROUPV00_VW stdgroup ON enroll."STUDENT_ID" = stdgroup."STUDENT_ID" AND
-          stdgroup."STDNT_GROUP" IN ('R1TA', 'R2TA', 'R3TA', 'R4TA', 'R5TA', 'R6TA', 'R7TA', 'R8TA')
+          (
+            SELECT s."STUDENT_ID", Max(s."STDNT_GROUP") AS "HIGHEST_STDNT_GROUP" FROM SISEDO.STUDENT_GROUPV00_VW s
+            WHERE s."STDNT_GROUP" IN ('R1TA', 'R2TA', 'R3TA', 'R4TA', 'R5TA', 'R6TA', 'R7TA', 'R8TA')
+            GROUP BY s."STUDENT_ID"
+          ) stdgroup
+          ON enroll."STUDENT_ID" = stdgroup."STUDENT_ID"
         #{join_roster_to_email}
         WHERE
           enroll."CLASS_SECTION_ID" IN ('#{ccns.join "','"}')
