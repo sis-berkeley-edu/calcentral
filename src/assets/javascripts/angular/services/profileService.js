@@ -162,10 +162,10 @@ angular.module('calcentral.services').service('profileService', function() {
    */
   var showSaveAdd = function($scope, item, config) {
     closeEditors($scope);
-    _.merge($scope.currentObject, {
+    angular.merge($scope.currentObject, {
       data: item
     });
-    _.merge($scope.currentObject, config);
+    angular.merge($scope.currentObject, config);
     item.isModifying = true;
     $scope.errorMessage = '';
     $scope.items.editorEnabled = true;
@@ -177,7 +177,7 @@ angular.module('calcentral.services').service('profileService', function() {
   var showAdd = function($scope, item) {
     var initObject = angular.copy(item);
     if (_.get($scope, 'types[0].fieldvalue')) {
-      _.merge(initObject, {
+      angular.merge(initObject, {
         type: {
           // Select the first item in the dropdown
           code: _.get($scope, 'types[0].fieldvalue')

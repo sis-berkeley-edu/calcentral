@@ -81,7 +81,7 @@ angular.module('calcentral.controllers').controller('FinancesLinksController', f
    so we parse it the same way we would an 'inactive' student.
    **/
   var parseEftEnrollment = function(response) {
-    _.merge($scope.eft, response);
+    angular.merge($scope.eft, response);
     if (_.get($scope.eft, 'data.statusCode') === 404 || _.get($scope.eft, 'data.data.eftStatus') === 'inactive') {
       $scope.eft.studentActive = false;
     }
