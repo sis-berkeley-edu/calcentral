@@ -56,7 +56,7 @@ angular.module('calcentral.controllers').controller('ProfileAddressController', 
   var parseStates = function(response) {
     $scope.states = _.sortBy(_.get(response, 'data.feed.states'), 'descr');
     if ($scope.states && $scope.states.length) {
-      _.merge($scope.currentObject, {
+      angular.merge($scope.currentObject, {
         data: {
           state: initialEdit.state
         }
