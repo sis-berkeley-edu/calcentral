@@ -1,85 +1,85 @@
-<div class="cc-table cc-academic-summary-table">
+<div class="cc-table cc-academic-summary-content">
   <table>
     <tbody>
-      <tr class="cc-academic-summary-border-bottom">
+      <tr>
         <th class="cc-academic-summary-row-title"><h4>Name</h4></th>
         <td data-ng-bind="primaryName.formattedName"></td>
       </tr>
     </tbody>
   </table>
 </div>
-<div class="cc-table cc-academic-summary-table">
+<div class="cc-table cc-table-top-border cc-academic-summary-content">
   <table>
     <tbody>
-      <tr class="cc-academic-summary-border-bottom">
+      <tr>
         <th class="cc-academic-summary-row-title"><h4>Student ID</h4></th>
         <td data-ng-bind="api.user.profile.sid"></td>
       </tr>
     </tbody>
   </table>
 </div>
-<div data-ng-if="collegeAndLevel.majors.length" class="cc-table cc-academic-summary-table">
+<div data-ng-if="collegeAndLevel.majors.length" class="cc-table cc-table-top-border cc-academic-summary-content">
   <table>
     <tbody>
       <tr>
         <th class="cc-academic-summary-row-title"><h4 data-ng-pluralize count="collegeAndLevel.majors.length" when="{'1': 'Major', 'other': 'Majors'}"></h4></th>
         <th data-ng-repeat="plan in collegeAndLevel.majors" class="cc-academic-summary-row-header" data-ng-bind="plan.college"></th>
       </tr>
-      <tr class="cc-academic-summary-border-bottom">
+      <tr>
         <td></td>
         <td data-ng-repeat="plan in collegeAndLevel.majors"><span data-ng-bind="plan.major"></span><span class="cc-academic-summary-sub-plan" data-ng-if="plan.subPlan" data-ng-bind="plan.subPlan"></span></td>
       </tr>
     </tbody>
   </table>
 </div>
-<div data-ng-if="collegeAndLevel.minors.length" class="cc-table cc-academic-summary-table">
+<div data-ng-if="collegeAndLevel.minors.length" class="cc-table cc-table-top-border cc-academic-summary-content">
   <table>
     <tbody>
       <tr>
         <th class="cc-academic-summary-row-title"><h4 data-ng-pluralize count="collegeAndLevel.minors.length" when="{'1': 'Minor', 'other': 'Minors'}"></h4></th>
         <th data-ng-repeat="plan in collegeAndLevel.minors" class="cc-academic-summary-row-header" data-ng-bind="plan.college"></th>
       </tr>
-      <tr class="cc-academic-summary-border-bottom">
+      <tr>
         <td></td>
         <td data-ng-repeat="plan in collegeAndLevel.minors"><span data-ng-bind="plan.minor"></span></td>
       </tr>
     </tbody>
   </table>
 </div>
-<div data-ng-if="collegeAndLevel.designatedEmphases.length" class="cc-table cc-academic-summary-table">
+<div data-ng-if="collegeAndLevel.designatedEmphases.length" class="cc-table cc-table-top-border cc-academic-summary-content">
   <table>
     <tbody>
       <tr>
         <th class="cc-academic-summary-row-title"><h4 data-ng-pluralize count="collegeAndLevel.designatedEmphases.length" when="{'1': 'Designated Emphasis', 'other': 'Designated Emphases'}"></h4></th>
         <th data-ng-repeat="plan in collegeAndLevel.designatedEmphases" class="cc-academic-summary-row-header" data-ng-bind="plan.college"></th>
       </tr>
-      <tr class="cc-academic-summary-border-bottom">
+      <tr>
         <td></td>
         <td data-ng-repeat="plan in collegeAndLevel.designatedEmphases"><span data-ng-bind="plan.designatedEmphasis"></span></td>
       </tr>
     </tbody>
   </table>
 </div>
-<div data-ng-if="!collegeAndLevel.roles.summerVisitor && collegeAndLevel.careers.length" class="cc-table cc-academic-summary-table">
+<div data-ng-if="!collegeAndLevel.roles.summerVisitor && collegeAndLevel.careers.length" class="cc-table cc-table-top-border cc-academic-summary-content">
   <table>
     <tbody>
-      <tr class="cc-academic-summary-border-bottom">
+      <tr>
         <th class="cc-academic-summary-row-title"><h4 data-ng-pluralize count="collegeAndLevel.careers.length" when="{'1': 'Academic Career', 'other': 'Academic Careers'}"></h4></th>
         <td data-ng-repeat="career in collegeAndLevel.careers"><span data-ng-bind="career"></span></td>
       </tr>
     </tbody>
   </table>
 </div>
-<div class="cc-table cc-academic-summary-table" data-ng-if="!collegeAndLevel.roles.summerVisitor && collegeAndLevel.level">
+<div class="cc-table cc-table-top-border cc-academic-summary-content" data-ng-if="!collegeAndLevel.roles.summerVisitor && collegeAndLevel.level">
   <table>
     <tbody>
-      <tr data-ng-class="{'cc-academic-summary-border-bottom': !collegeAndLevel.nonApLevel}">
+      <tr>
         <th class="cc-academic-summary-row-title"><h4>Level</h4></th>
         <th class="cc-academic-summary-row-header" data-ng-if="collegeAndLevel.nonApLevel">Including AP</th>
         <th class="cc-academic-summary-row-header" data-ng-if="collegeAndLevel.nonApLevel"><h4>Not Including AP</h4></th>
         <td data-ng-if="!collegeAndLevel.nonApLevel"><span data-ng-bind="collegeAndLevel.level"></span></td>
       </tr>
-      <tr class="cc-academic-summary-border-bottom" data-ng-if="collegeAndLevel.nonApLevel">
+      <tr data-ng-if="collegeAndLevel.nonApLevel">
         <td></td>
         <td><span data-ng-bind="collegeAndLevel.level"></span></td>
         <td><span data-ng-bind="collegeAndLevel.nonApLevel"></span></td>
@@ -87,7 +87,7 @@
     </tbody>
   </table>
 </div>
-<div class="cc-table cc-academic-summary-table" data-ng-if="!collegeAndLevel.roles.summerVisitor && (collegeAndLevel.termsInAttendance || expectedGradTerm(collegeAndLevel))">
+<div class="cc-table cc-table-top-border cc-academic-summary-content" data-ng-if="!collegeAndLevel.roles.summerVisitor && (collegeAndLevel.termsInAttendance || expectedGradTerm(collegeAndLevel))">
   <table>
     <tbody>
       <tr>
@@ -95,7 +95,7 @@
         <th class="cc-academic-summary-row-header" data-ng-if="collegeAndLevel.termsInAttendance">Terms in Attendance</th>
         <th class="cc-academic-summary-row-header" data-ng-if="expectedGradTerm(collegeAndLevel)">Expected Graduation</th>
       </tr>
-      <tr class="cc-academic-summary-border-bottom">
+      <tr>
         <td></td>
         <td data-ng-if="collegeAndLevel.termsInAttendance"><span data-ng-bind="collegeAndLevel.termsInAttendance"></span></td>
         <td data-ng-if="expectedGradTerm(collegeAndLevel)"><span data-ng-bind="expectedGradTerm(collegeAndLevel)"></span></td>
@@ -103,7 +103,7 @@
     </tbody>
   </table>
 </div>
-<div class="cc-table cc-academic-summary-table" data-ng-if="!collegeAndLevel.roles.summerVisitor && gpaUnits.totalUnits > 0">
+<div class="cc-table cc-table-top-border cc-academic-summary-content" data-ng-if="!collegeAndLevel.roles.summerVisitor && gpaUnits.totalUnits > 0">
   <table>
     <tbody>
       <tr>
@@ -113,7 +113,7 @@
         <th data-ng-if="gpaUnits.totalUnitsTakenNotForGpa" class="cc-academic-summary-row-header">P/NP Total</th>
         <th data-ng-if="gpaUnits.totalUnitsPassedNotForGpa" class="cc-academic-summary-row-header">P/NP Passed</th>
       </tr>
-      <tr class="cc-academic-summary-border-bottom">
+      <tr>
         <td></td>
         <td><span data-ng-bind="gpaUnits.totalUnits"></span></td>
         <td data-ng-if="gpaUnits.testingAndTransferUnits"><span data-ng-bind="gpaUnits.testingAndTransferUnits"></span></td>
@@ -123,33 +123,18 @@
     </tbody>
   </table>
 </div>
-<div class="cc-table cc-academic-summary-table" data-ng-if="!collegeAndLevel.roles.summerVisitor && gpaUnits.cumulativeGpa > 0 && !api.user.profile.roles.law">
+<div class="cc-table cc-table-top-border cc-academic-summary-content" data-ng-if="!collegeAndLevel.roles.summerVisitor && gpaUnits.cumulativeGpa > 0 && !api.user.profile.roles.law">
   <table>
     <tbody>
       <tr>
         <th class="cc-academic-summary-row-title"><h4>GPA</h4></th>
         <th class="cc-academic-summary-row-header">Cumulative</th>
       </tr>
-      <tr class="cc-academic-summary-border-bottom">
+      <tr>
         <td></td>
         <td><span data-ng-bind="gpaUnits.cumulativeGpa | number:3"></span></td>
       </tr>
     </tbody>
   </table>
 </div>
-<div class="cc-table cc-academic-summary-table" data-ng-if="collegeAndLevel.degrees">
-  <table>
-    <tbody>
-      <tr class="cc-academic-summary-border-bottom">
-        <th class="cc-academic-summary-row-title"><h4 data-ng-pluralize count="collegeAndLevel.degrees.length" when="{'1': 'Degree Conferred', 'other': 'Degrees Conferred'}"></h4></th>
-        <td>
-          <div data-ng-repeat="degree in collegeAndLevel.degrees">
-            <div data-ng-repeat="academicPlan in degree.academicPlans">
-              <strong data-ng-bind="academicPlan.plan.description"></strong>&nbsp;awarded on&nbsp;<strong data-ng-bind="degree.dateAwarded | date:'MMM dd, yyyy'"></strong>
-            </div>
-          </div>
-        </td>
-      </tr>
-    </tbody>
-  </table>
-</div>
+<div data-ng-include="'widgets/academics/degrees_conferred.html'" class="cc-academic-summary-border-bottom"></div>

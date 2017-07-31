@@ -38,7 +38,6 @@ describe CampusSolutions::AdvisingResourcesController do
         it 'returns feed with CS links' do
           get feed
           json = JSON.parse response.body
-          puts json.pretty_inspect
           cs_links = json['feed']
 
           expect(link = cs_links[key]).to_not be_nil

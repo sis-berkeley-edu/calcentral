@@ -48,9 +48,21 @@ angular.module('calcentral.controllers').controller('AcademicSummaryController',
     }
   };
 
+  var mergeTermHonors = function(semester) {
+    var honors = $scope.collegeAndLevel.awardHonors[semester.termId] || [];
+    semester.honors = _.keyBy(honors, function(honor) {
+      return honor.code;
+    });
+  };
+
+  var parseTermHonors = function() {
+    _.each($scope.semesters, mergeTermHonors);
+  };
+
   var parseAcademics = function(response) {
     angular.extend($scope, _.get(response, 'data'));
     $scope.showSemesters = showSemesters();
+    parseTermHonors();
     parseGpaUnits();
     parseTransferCredit();
   };

@@ -1,6 +1,7 @@
 module MyAcademics
   module AcademicsModule
     extend self
+    include ClassLogger
 
     def initialize(uid)
       @uid = uid
@@ -14,11 +15,17 @@ module MyAcademics
     end
 
     def semester_info(term_key)
-      term_yr, term_cd = term_key.split '-'
+      term_yr, term_cd = term_key.try(:split, '-')
+      if (term_yr.blank? || term_cd.blank?)
+        logger.warn "Unable to parse term key: #{term_key}"
+        return {}
+      end
+
       slug = Berkeley::TermCodes.to_slug(term_yr, term_cd)
       {
         name: Berkeley::TermCodes.to_english(term_yr, term_cd),
         slug: slug,
+        termId: Berkeley::TermCodes.to_edo_id(term_yr, term_cd),
         termCode: term_cd,
         termYear: term_yr,
         timeBucket: time_bucket(term_yr, term_cd),
