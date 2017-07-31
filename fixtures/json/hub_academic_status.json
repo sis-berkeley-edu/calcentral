@@ -281,7 +281,14 @@
                     }
                   }
                 ],
-                "honors": {},
+                "honors": {
+                  "honors": [
+                    {
+                      "code": "C2",
+                      "description": "High Distinction: CNR"
+                    }
+                  ]
+                },
                 "dateAwarded": "2010-05-14",
                 "status": {
                   "code": "A"

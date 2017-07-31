@@ -1,11 +1,4 @@
 .cc-academic-summary {
-  .cc-academic-summary-border-bottom {
-    td,th {
-      border-bottom: 1px solid $cc-color-very-light-grey;
-      margin-top: 5px;
-      padding-top: 5px;
-    }
-  }
   .cc-academic-summary-border-wrapper {
     border: 1px solid $cc-color-very-light-grey;
     margin: 15px;
@@ -20,7 +13,7 @@
   .cc-academic-summary-row-header {
     color: $cc-color-dim-gray;
   }
-  .cc-academic-summary-row-title {
+  .cc-academic-summary-row-title, .cc-degrees-conferred-title {
     width: 20%;
     h4 {
       color: $cc-color-dim-gray;
@@ -35,7 +28,7 @@
   .cc-academic-summary-sub-plan {
     margin-left: 10px;
   }
-  .cc-academic-summary-content {
+  .cc-academic-summary-content, .cc-degrees-conferred {
     margin: 0 15px 10px;
 
     .cc-academic-summary-table-spacing {
