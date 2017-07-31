@@ -25,8 +25,12 @@ echo "`date`: Updating and rebuilding CalCentral..." | $LOGIT
 echo "`date`: bundle install..." | $LOGIT
 bundle install --deployment --local || { echo "ERROR: bundle install failed" ; exit 1 ; }
 
-# Rebuild static assets (HTML, JS, etc.) after update.
-echo "`date`: Rebuilding static assets..." | $LOGIT
+# Ensure that front-end static assets (HTML, JS, etc.) are in place and fingerprinted.
+echo "`date`: Rebuilding static assets with npm..." | $LOGIT
+./script/front-end-build.sh || { echo "ERROR: front-end build failed" ; exit 1 ; }
+
+# The rails-admin gem requires that we also run the older Rails assets:precompile.
+echo "`date`: Rebuilding static assets with rake..." | $LOGIT
 bundle exec rake assets:precompile || { echo "ERROR: asset compilation failed" ; exit 1 ; }
 bundle exec rake fix_assets || { echo "ERROR: asset fix failed" ; exit 1 ; }
 

@@ -15,4 +15,9 @@ matrix:
 env:
   - JRUBY_OPTS="--dev -J-Xmx900m" DISPLAY=:99.0 LOGGER_LEVEL=WARN TRAVIS_NODE_VERSION="4"
 
-before_script: "./script/front-end-test.sh"
+before_script:
+  - ./script/front-end-build.sh
+
+script:
+  - ./script/front-end-tests.sh
+  - RAILS_ENV=test bundle exec rspec
