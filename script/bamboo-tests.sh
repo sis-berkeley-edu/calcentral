@@ -20,7 +20,7 @@ rvm gemset use $GEMSET
 # get Ruby deps
 bundle install --local --retry 3 || { echo "WARNING: bundle install --local failed, running bundle install"; bundle install --retry 3 || { echo "ERROR: bundle install failed"; exit 1; } }
 bundle package --all || { echo "WARNING: bundle package failed"; exit 1; }
-./scripts/front-end-build.sh
+./script/front-end-build.sh
 
 # set up Xvfb for headless browser testing
 if [ ! -f /tmp/.X99-lock ];
