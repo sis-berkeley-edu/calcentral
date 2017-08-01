@@ -22,6 +22,7 @@
 #   * OEC :
 #       - Still manually configured for now.
 
+
 module Berkeley
   class Terms
     include ActiveAttrModel, ClassLogger, DatedFeed
@@ -90,6 +91,7 @@ module Berkeley
           future_terms.push term
         elsif term.end >= @current_date
           @running = term
+          @sis_current_term = term
         else
           @previous ||= term
           @grading_in_progress ||= term if term.grades_entered >= @current_date
@@ -111,6 +113,21 @@ module Berkeley
       self
     end
 
+    def load_terms_from_file
+      cs_terms = []
+      filename = Settings.terms.term_definitions_json_file
+      begin
+        filename = Settings.terms.term_definitions_json_file || "#{Rails.root}/public/json/terms.json"
+        contents = File.read(filename)
+        json_terms = JSON.parse(contents)
+      end
+      json_terms.each do |term|
+        new_term = Berkeley::Term.new.from_json_file(term)
+        cs_terms << new_term
+      end
+      cs_terms
+    end
+
     def fetch_terms_from_api
       # Unlike the legacy database view, the HubTerm API does not support bulk queries. We have to
       # loop through enough API calls to find:
@@ -123,7 +140,14 @@ module Berkeley
       # For backwards compatibility, we will stash the Term objects in descending chronological order.
       # Because there is a possibility that no academic term is current today, the loop starts from the next term.
       cs_terms = []
-      return cs_terms if @hub_api_disabled
+      # If hub term API is disabled, load terms from json file if enabled
+      if @hub_api_disabled
+        if Settings.terms.use_term_definitions_json_file
+          return load_terms_from_file
+        else
+          return cs_terms
+        end
+      end
       feed = HubTerm::Proxy.new(temporal_position: HubTerm::Proxy::NEXT_TERM).get_term
       if feed.blank?
         logger.error "No Next term found from HubTerm::Proxy; no non-legacy academic terms are available"
