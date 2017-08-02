@@ -11,13 +11,11 @@ SET client_min_messages = warning;
 SET search_path = public, pg_catalog;
 
 DROP INDEX public.index_user_auths_on_uid;
-DROP INDEX public.index_summer_sub_terms_on_year_and_sub_term_code;
 DROP INDEX public.index_service_alerts_on_display_and_created_at;
 DROP INDEX public.index_canvas_site_mailing_lists_on_canvas_site_id;
 DROP INDEX public.mailing_list_membership_index;
 ALTER TABLE ONLY public.user_roles DROP CONSTRAINT user_roles_pkey;
 ALTER TABLE ONLY public.user_auths DROP CONSTRAINT user_auths_pkey;
-ALTER TABLE ONLY public.summer_sub_terms DROP CONSTRAINT summer_sub_terms_pkey;
 ALTER TABLE ONLY public.service_alerts DROP CONSTRAINT service_alerts_pkey;
 DROP INDEX public.index_oec_course_codes_on_dept_name_and_catalog_id;
 DROP INDEX public.index_oec_course_codes_on_dept_code;
@@ -29,7 +27,6 @@ ALTER TABLE ONLY public.canvas_site_mailing_lists DROP CONSTRAINT canvas_site_ma
 ALTER TABLE ONLY public.canvas_site_mailing_list_members DROP CONSTRAINT canvas_site_mailing_list_members_pkey;
 ALTER TABLE public.user_roles ALTER COLUMN id DROP DEFAULT;
 ALTER TABLE public.user_auths ALTER COLUMN id DROP DEFAULT;
-ALTER TABLE public.summer_sub_terms ALTER COLUMN id DROP DEFAULT;
 ALTER TABLE public.service_alerts ALTER COLUMN id DROP DEFAULT;
 ALTER TABLE public.oec_course_codes ALTER COLUMN id DROP DEFAULT;
 ALTER TABLE public.links ALTER COLUMN id DROP DEFAULT;
@@ -41,8 +38,6 @@ DROP SEQUENCE public.user_roles_id_seq;
 DROP TABLE public.user_roles;
 DROP SEQUENCE public.user_auths_id_seq;
 DROP TABLE public.user_auths;
-DROP SEQUENCE public.summer_sub_terms_id_seq;
-DROP TABLE public.summer_sub_terms;
 DROP SEQUENCE public.service_alerts_id_seq;
 DROP TABLE public.service_alerts;
 DROP SEQUENCE public.oec_course_codes_id_seq;
@@ -341,40 +336,6 @@ ALTER SEQUENCE service_alerts_id_seq OWNED BY service_alerts.id;
 
 
 --
--- Name: summer_sub_terms; Type: TABLE; Schema: public; Owner: -; Tablespace:
---
-
-CREATE TABLE summer_sub_terms (
-    id integer NOT NULL,
-    year integer NOT NULL,
-    sub_term_code integer NOT NULL,
-    start date NOT NULL,
-    "end" date NOT NULL,
-    created_at timestamp without time zone,
-    updated_at timestamp without time zone
-);
-
-
---
--- Name: summer_sub_terms_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE summer_sub_terms_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: summer_sub_terms_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE summer_sub_terms_id_seq OWNED BY summer_sub_terms.id;
-
-
---
 -- Name: user_auths; Type: TABLE; Schema: public; Owner: -; Tablespace:
 --
 
@@ -486,13 +447,6 @@ ALTER TABLE ONLY oec_course_codes ALTER COLUMN id SET DEFAULT nextval('oec_cours
 --
 
 ALTER TABLE ONLY service_alerts ALTER COLUMN id SET DEFAULT nextval('service_alerts_id_seq'::regclass);
-
-
---
--- Name: id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY summer_sub_terms ALTER COLUMN id SET DEFAULT nextval('summer_sub_terms_id_seq'::regclass);
 
 
 --
@@ -613,12 +567,6 @@ INSERT INTO link_categories VALUES (931, 'News & Information', 'news & informati
 --
 
 SELECT pg_catalog.setval('link_categories_id_seq', 931, true);
-
-
---
--- Data for Name: link_categories_link_sections; Type: TABLE DATA; Schema: public; Owner: -
---
-
 
 
 --
@@ -1729,40 +1677,6 @@ INSERT INTO oec_course_codes VALUES (191, 'BIC', '', 'QHUIS', true, '2017-09-27 
 
 SELECT pg_catalog.setval('oec_course_codes_id_seq', 238, true);
 
-
---
--- Data for Name: summer_sub_terms; Type: TABLE DATA; Schema: public; Owner: -
---
-
-INSERT INTO summer_sub_terms VALUES (1, 2015, 5, '2015-05-26', '2015-07-02', '2015-02-23 14:01:54.282', '2015-02-23 14:01:54.282');
-INSERT INTO summer_sub_terms VALUES (2, 2015, 8, '2015-06-08', '2015-08-14', '2015-02-23 14:01:54.31', '2015-02-23 14:01:54.31');
-INSERT INTO summer_sub_terms VALUES (3, 2015, 7, '2015-06-22', '2015-08-14', '2015-02-23 14:01:54.318', '2015-02-23 14:01:54.318');
-INSERT INTO summer_sub_terms VALUES (4, 2015, 6, '2015-07-06', '2015-08-14', '2015-02-23 14:01:54.326', '2015-02-23 14:01:54.326');
-INSERT INTO summer_sub_terms VALUES (5, 2015, 9, '2015-07-27', '2015-08-14', '2015-02-23 14:01:54.334', '2015-02-23 14:01:54.334');
-INSERT INTO summer_sub_terms VALUES (6, 2016, 5, '2016-05-23', '2016-07-01', '2015-02-23 14:01:54.344', '2015-02-23 14:01:54.344');
-INSERT INTO summer_sub_terms VALUES (7, 2016, 8, '2016-06-06', '2016-08-12', '2015-02-23 14:01:54.352', '2015-02-23 14:01:54.352');
-INSERT INTO summer_sub_terms VALUES (8, 2016, 7, '2016-06-20', '2016-08-12', '2015-02-23 14:01:54.361', '2015-02-23 14:01:54.361');
-INSERT INTO summer_sub_terms VALUES (9, 2016, 6, '2016-07-05', '2016-08-12', '2015-02-23 14:01:54.369', '2015-02-23 14:01:54.369');
-INSERT INTO summer_sub_terms VALUES (10, 2016, 9, '2016-07-25', '2016-08-12', '2015-02-23 14:01:54.377', '2015-02-23 14:01:54.377');
-INSERT INTO summer_sub_terms VALUES (11, 2017, 5, '2017-05-22', '2017-06-30', '2015-02-23 14:01:54.385', '2015-02-23 14:01:54.385');
-INSERT INTO summer_sub_terms VALUES (12, 2017, 8, '2017-06-05', '2017-08-11', '2015-02-23 14:01:54.393', '2015-02-23 14:01:54.393');
-INSERT INTO summer_sub_terms VALUES (13, 2017, 7, '2017-06-19', '2017-08-11', '2015-02-23 14:01:54.401', '2015-02-23 14:01:54.401');
-INSERT INTO summer_sub_terms VALUES (14, 2017, 6, '2017-07-03', '2017-08-11', '2015-02-23 14:01:54.408', '2015-02-23 14:01:54.408');
-INSERT INTO summer_sub_terms VALUES (15, 2017, 9, '2017-07-24', '2017-08-11', '2015-02-23 14:01:54.418', '2015-02-23 14:01:54.418');
-INSERT INTO summer_sub_terms VALUES (16, 2018, 5, '2018-05-21', '2018-06-29', '2015-02-23 14:01:54.427', '2015-02-23 14:01:54.427');
-INSERT INTO summer_sub_terms VALUES (17, 2018, 8, '2018-06-04', '2018-08-10', '2015-02-23 14:01:54.434', '2015-02-23 14:01:54.434');
-INSERT INTO summer_sub_terms VALUES (18, 2018, 7, '2018-06-18', '2018-08-10', '2015-02-23 14:01:54.442', '2015-02-23 14:01:54.442');
-INSERT INTO summer_sub_terms VALUES (19, 2018, 6, '2018-07-02', '2018-08-10', '2015-02-23 14:01:54.45', '2015-02-23 14:01:54.45');
-INSERT INTO summer_sub_terms VALUES (20, 2018, 9, '2018-07-23', '2018-08-10', '2015-02-23 14:01:54.457', '2015-02-23 14:01:54.457');
-
-
---
--- Name: summer_sub_terms_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
---
-
-SELECT pg_catalog.setval('summer_sub_terms_id_seq', 20, true);
-
-
 --
 -- Data for Name: user_auths; Type: TABLE DATA; Schema: public; Owner: -
 --
@@ -1842,20 +1756,11 @@ ALTER TABLE ONLY oec_course_codes
 
 
 --
--- Name: summer_sub_terms_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
+-- Name: service_alerts_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
 --
 
 ALTER TABLE ONLY service_alerts
     ADD CONSTRAINT service_alerts_pkey PRIMARY KEY (id);
-
-
---
--- Name: summer_sub_terms_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
---
-
-ALTER TABLE ONLY summer_sub_terms
-    ADD CONSTRAINT summer_sub_terms_pkey PRIMARY KEY (id);
-
 
 --
 -- Name: user_auths_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
@@ -1899,13 +1804,6 @@ CREATE UNIQUE INDEX index_oec_course_codes_on_dept_name_and_catalog_id ON oec_co
 --
 
 CREATE INDEX index_service_alerts_on_display_and_created_at ON service_alerts USING btree (display, created_at);
-
-
---
--- Name: index_summer_sub_terms_on_year_and_sub_term_code; Type: INDEX; Schema: public; Owner: -; Tablespace:
---
-
-CREATE INDEX index_summer_sub_terms_on_year_and_sub_term_code ON summer_sub_terms USING btree (year, sub_term_code);
 
 
 --
