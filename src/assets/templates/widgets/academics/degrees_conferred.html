@@ -10,6 +10,9 @@
           <div data-ng-repeat="academicPlan in degree.academicPlans">
             <strong data-ng-bind="academicPlan.plan.description"></strong>&nbsp;awarded on&nbsp;<strong data-ng-bind="degree.dateAwarded | date:'MMM dd, yyyy'"></strong>
           </div>
+          <div data-ng-repeat="degreeHonor in degree.honors">
+            <span data-ng-bind="degreeHonor.description"></span>
+          </div>
         </div>
       </td>
     </tr>
