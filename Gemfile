@@ -66,7 +66,7 @@ gem 'jruby-activemq', '~> 5.13.0', git: 'https://github.com/ets-berkeley-edu/jru
 # To support SSL TLSv1.2.
 # jruby-openssl versions 0.9.8 through 0.9.16 trigger runaway memory consumption in CalCentral.
 # Track progress at https://github.com/jruby/jruby-openssl/issues/86 and SISRP-18781.
-gem 'jruby-openssl', '0.9.19'
+gem 'jruby-openssl', '0.9.14'
 
 # Addressable is a replacement for the URI implementation that is part of Ruby's standard library.
 # https://github.com/sporkmonger/addressable
