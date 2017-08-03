@@ -28,6 +28,14 @@
   .cc-academic-summary-sub-plan {
     margin-left: 10px;
   }
+  .cc-academic-summary-content {
+    td {
+      padding-top: 0;
+    }
+    td,th {
+      vertical-align: bottom;
+    }
+  }
   .cc-academic-summary-content, .cc-degrees-conferred {
     margin: 0 15px 10px;
 
@@ -40,14 +48,12 @@
     .cc-academic-summary-table-multiple {
       padding-left: 10px;
     }
+  }
+  .cc-degrees-conferred {
     td {
-      padding-top: 0;
-    }
-    td,th {
-      vertical-align: bottom;
+      padding-top: 6px;
     }
   }
-
   @media print {
     a[href]::after {
       content: "";
