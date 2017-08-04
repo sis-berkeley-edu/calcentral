@@ -215,7 +215,7 @@ GEM
     jquery-ui-rails (5.0.0)
       railties (>= 3.2.16)
     jruby-openssl (0.9.7-java)
-    json (1.8.6-java)
+    json (1.8.3-java)
     jwt (1.5.4)
     kaminari (0.16.1)
       actionpack (>= 3.0.0)
