@@ -58,15 +58,15 @@ module MyAcademics
     end
 
     def parse_hub_award_honors(response)
-      honors = sort_award_honors response.dig(:feed, 'student', 'awardHonors')
+      honors = sort_award_honors response.try(:[], :feed).try(:[], 'student').try(:[], 'awardHonors')
       honors_by_term = {}
-      honors&.each do |honor|
-        term_id = honor.dig('term', 'id')
+      honors.try(:each) do |honor|
+        term_id = honor.try(:[], 'term').try(:[], 'id')
         honors_by_term[term_id] ||= []
         honors_by_term[term_id] << {
-          awardDate: parse_date(honor.dig('awardDate')),
-          code: honor.dig('type', 'code'),
-          description: honor.dig('type', 'description')
+          awardDate: parse_date(honor.try(:[], 'awardDate')),
+          code: honor.try(:[], 'type').try(:[], 'code'),
+          description: honor.try(:[], 'type').try(:[], 'description')
         }
       end
       honors_by_term
@@ -74,7 +74,7 @@ module MyAcademics
 
     def sort_award_honors(honors)
       honors.try(:sort_by) do |honor|
-        honor.dig('term', 'id')
+        honor.try(:[], 'term').try(:[], 'id')
       end.try(:reverse)
     end
 
