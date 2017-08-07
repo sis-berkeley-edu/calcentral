@@ -16,9 +16,6 @@ gem 'rails-perftest', '~>0.0.5'
 
 gem 'activerecord-jdbc-adapter', '~> 1.3.16'
 
-# Needed for rails_admin in Ruby 2
-gem 'safe_yaml', '~> 1.0.4'
-
 # Postgresql adapter
 gem 'activerecord-jdbcpostgresql-adapter', '~> 1.3.16'
 
@@ -85,9 +82,9 @@ gem 'rails_admin', '0.6.5'
 gem 'bootstrap-sass', '~> 3.3.1.0'
 
 # TorqueBox app server
-gem 'torquebox', '~> 3.2.0'
-gem 'torquebox-server', '~> 3.2.0'
-gem 'torquebox-messaging', '~> 3.2.0'
+gem 'torquebox', '~> 3.1.2'
+gem 'torquebox-server', '~> 3.1.2'
+gem 'torquebox-messaging', '~> 3.1.2'
 gem 'jmx', '~> 1.0'
 
 # for trying, and trying again, and then giving up.
@@ -113,6 +110,7 @@ gem 'closure-compiler', '~> 1.1.11'
 # Oracle adapter
 # Purposely excluding this for test environments since folks have to install ojdbc6
 group :development, :testext, :production do
+  gem 'activerecord-oracle_enhanced-adapter', '~> 1.5.6'
   gem 'rvm-capistrano', '~> 1.3.1'
   gem 'capistrano', '~> 2.15.4'
 end
@@ -121,7 +119,7 @@ group :development, :test , :testext do
   gem 'rspec-core', '~> 3.1.7'
   gem 'rspec-rails', '~> 3.1.0'
   gem 'rspec-mocks', '~> 3.1.3'
-  gem 'rspec-support', '~> 3.1.0'
+  gem 'rspec-support', '~> 3.1.2'
   gem 'rspec-its', '~> 1.1.0'
   gem 'rspec-collection_matchers', '~> 1.1.2'
   gem 'minitest-reporters', '~> 1.0.8'
