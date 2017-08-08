@@ -351,6 +351,7 @@ GEM
       rspec-core (~> 3.1.0)
       rspec-expectations (~> 3.1.0)
       rspec-mocks (~> 3.1.0)
+      rspec-support (~> 3.1.0)
     rspec-support (3.1.2)
     ruby-debug (0.10.5.rc9)
       columnize (>= 0.1)
