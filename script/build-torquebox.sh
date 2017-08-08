@@ -21,6 +21,12 @@ echo | $LOGIT
 echo "------------------------------------------" | $LOGIT
 echo "`date`: Updating and rebuilding CalCentral..." | $LOGIT
 
+GEMSET="$1"
+if [ -z "$1" ]; then
+  GEMSET="calcentral"
+fi
+rvm gemset use $GEMSET
+
 # Load all dependencies.
 echo "`date`: bundle install..." | $LOGIT
 bundle install --deployment --local || { echo "ERROR: bundle install failed" ; exit 1 ; }
