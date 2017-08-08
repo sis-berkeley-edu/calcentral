@@ -30,7 +30,7 @@ angular.module('calcentral.directives').directive('ccAcademicsClassInfoEnrollmen
       var requestMessages = function() {
         var sortingNote = '';
         var action = scope.displayedSection;
-        var enrollStatus = scope.enrollStatus;
+        var enrollStatus = scope.searchFilters.enrollStatus;
         var semesterName = scope.semesterName;
         var subjectEnd = scope.className + ' class for ' + semesterName;
         if (enrollStatus === 'waitlisted') {
@@ -148,7 +148,7 @@ angular.module('calcentral.directives').directive('ccAcademicsClassInfoEnrollmen
       var textStudentList = function(students, includeSections) {
         var includeSectionsList = (typeof includeSections !== 'undefined') ? includeSections : false;
         var list = '';
-        var isWaitlist = scope.enrollStatus === 'waitlisted';
+        var isWaitlist = scope.searchFilters.enrollStatus === 'waitlisted';
         var sortMethod = 'last_name';
         if (isWaitlist) {
           sortMethod = 'waitlist_position';
@@ -174,7 +174,7 @@ angular.module('calcentral.directives').directive('ccAcademicsClassInfoEnrollmen
        * Refreshes list of displayed students and statistics
        */
       var refreshFilteredStudents = function() {
-        var useWaitlistCounts = (scope.enrollStatus === 'waitlisted');
+        var useWaitlistCounts = (scope.searchFilters.enrollStatus === 'waitlisted');
         scope.filteredStudents = rosterService.getFilteredStudents(scope.students, scope.sections, scope.searchFilters, useWaitlistCounts);
       };
 
