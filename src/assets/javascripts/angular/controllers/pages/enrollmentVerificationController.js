@@ -72,5 +72,12 @@ angular.module('calcentral.controllers').controller('EnrollmentVerificationContr
       });
   };
 
+  // Wait until user profile is fully loaded before hitting academics data
+  $scope.$on('calcentral.api.user.isAuthenticated', function(event, isAuthenticated) {
+    if (isAuthenticated) {
+      $scope.canViewAcademics = $scope.api.user.profile.hasAcademicsTab;
+    }
+  });
+
   loadEnrollmentVerificationFeed();
 });
