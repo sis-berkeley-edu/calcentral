@@ -108,16 +108,21 @@ describe CanvasCsv::SiteMembershipsMaintainer do
       end
     end
 
-    describe 'teacher roles based on section types' do
+    describe 'teacher roles based on section types and instructor role' do
       # CCNs in sis_section_ids may or may not be zero-padded, but the browser always shows CCNs of length 5.
-      let(:ccn_to_uid) { {rand(9999).to_s => random_id, rand(9999).to_s => random_id} }
-      let(:padded_ccns) { ccn_to_uid.keys.collect {|ccn| sprintf('%05d', ccn)} }
-      let(:sis_section_ids) { ["SEC:2014-B-0#{ccn_to_uid.keys[0]}", "SEC:2014-B-#{ccn_to_uid.keys[1]}"] }
+      let(:ccn_to_uids) { {rand(9999).to_s => [random_id, random_id], rand(9999).to_s => [random_id, random_id]} }
+      let(:padded_ccns) { ccn_to_uids.keys.collect {|ccn| sprintf('%05d', ccn)} }
+      let(:sis_section_ids) { ["SEC:2014-B-0#{ccn_to_uids.keys[0]}", "SEC:2014-B-#{ccn_to_uids.keys[1]}"] }
       before do
         allow(CampusOracle::Queries).to receive(:get_enrolled_students).and_return([])
         allow(CampusOracle::Queries).to receive(:get_section_instructors) do |term_yr, term_cd, ccn|
           if term_yr == '2014' && term_cd == 'B'
-            [{'ldap_uid' => ccn_to_uid[ccn.to_i.to_s]}]
+            [
+              # Teaching and In Charge role
+              {'ldap_uid' => ccn_to_uids[ccn.to_i.to_s][0], 'instructor_func' => '1'},
+              # Administrative Proxy role
+              {'ldap_uid' => ccn_to_uids[ccn.to_i.to_s][1], 'instructor_func' => '5'}
+            ]
           end
         end
       end
@@ -131,21 +136,30 @@ describe CanvasCsv::SiteMembershipsMaintainer do
         context 'when a mix of primary and secondary sections' do
           let(:first_section_type) {'P'}
           it 'assigns TA role for secondary sections' do
-            expect(subject.length).to eq(2)
-            expect(enrollments_for(ccn_to_uid.values[0]).first['role']).to eq 'teacher'
-            expect(enrollments_for(ccn_to_uid.values[1]).first['role']).to eq 'ta'
-            expect(known_users.length).to eq 2
-            expect(users_csv.length).to eq 2
+            expect(subject.length).to eq(4)
+            expect(enrollments_for(ccn_to_uids.values[0][0]).first['role']).to eq 'teacher'
+            expect(enrollments_for(ccn_to_uids.values[1][0]).first['role']).to eq 'ta'
+            expect(known_users.length).to eq 4
+            expect(users_csv.length).to eq 4
+          end
+          it 'maps Administrative Proxies to the Lead TA role in primary sections' do
+            expect(subject.length).to eq(4)
+            expect(enrollments_for(ccn_to_uids.values[0][1]).first['role']).to eq 'Lead TA'
+            expect(enrollments_for(ccn_to_uids.values[1][1]).first['role']).to eq 'ta'
+            expect(known_users.length).to eq 4
+            expect(users_csv.length).to eq 4
           end
         end
         context 'when all secondary sections' do
           let(:first_section_type) {'S'}
           it 'assigns teacher role for secondary sections' do
-            expect(subject.length).to eq(2)
-            expect(enrollments_for(ccn_to_uid.values[0]).first['role']).to eq 'teacher'
-            expect(enrollments_for(ccn_to_uid.values[1]).first['role']).to eq 'teacher'
-            expect(known_users.length).to eq 2
-            expect(users_csv.length).to eq 2
+            expect(subject.length).to eq(4)
+            expect(enrollments_for(ccn_to_uids.values[0][0]).first['role']).to eq 'teacher'
+            expect(enrollments_for(ccn_to_uids.values[1][0]).first['role']).to eq 'teacher'
+            expect(enrollments_for(ccn_to_uids.values[0][1]).first['role']).to eq 'teacher'
+            expect(enrollments_for(ccn_to_uids.values[1][1]).first['role']).to eq 'teacher'
+            expect(known_users.length).to eq 4
+            expect(users_csv.length).to eq 4
           end
         end
       end
@@ -183,11 +197,11 @@ describe CanvasCsv::SiteMembershipsMaintainer do
           ])
         end
         it 'assigns TA role for secondary sections' do
-          expect(subject.length).to eq(2)
-          expect(enrollments_for(ccn_to_uid.values[0]).first['role']).to eq 'ta'
-          expect(enrollments_for(ccn_to_uid.values[1]).first['role']).to eq 'ta'
-          expect(known_users.length).to eq 2
-          expect(users_csv.length).to eq 2
+          expect(subject.length).to eq(4)
+          expect(enrollments_for(ccn_to_uids.values[0][0]).first['role']).to eq 'ta'
+          expect(enrollments_for(ccn_to_uids.values[1][0]).first['role']).to eq 'ta'
+          expect(known_users.length).to eq 4
+          expect(users_csv.length).to eq 4
         end
       end
     end
