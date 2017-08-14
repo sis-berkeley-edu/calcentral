@@ -13,7 +13,6 @@ module CanvasCsv
       'TaEnrollment' => 'ta',
       'TeacherEnrollment' => 'teacher'
     }
-    CANVAS_SIS_ROLE_TO_CANVAS_API_ROLE = CANVAS_API_ROLE_TO_CANVAS_SIS_ROLE.invert
 
     def self.process(sis_course_id, sis_section_ids, enrollments_csv_output, users_csv_output, known_users, batch_mode = false, cached_enrollments_provider = nil, sis_user_id_changes = {})
       logger.info "Processing refresh of enrollments for SIS Course ID '#{sis_course_id}'"
@@ -110,15 +109,13 @@ module CanvasCsv
 
     def refresh_sections_in_course
       logger.debug "Refreshing sections: #{sis_section_ids.to_sentence}"
-      section_to_instructor_role = instructor_role_for_sections(@all_site_sections)
+      primary_sections = site_primary_sections(@all_site_sections)
       @sis_sections.each do |sis_section|
         sis_section_id = sis_section['sis_section_id']
         if (campus_section = Canvas::Terms.sis_section_id_to_ccn_and_term(sis_section_id))
           logger.debug "Refreshing section: #{sis_section_id}"
-          instructor_role = section_to_instructor_role[campus_section]
-          logger.debug "Instructor role detected for section: #{instructor_role}"
           canvas_section_id = "sis_section_id:#{sis_section_id}"
-          refresh_enrollments_in_section(campus_section, sis_section_id, instructor_role, canvas_section_id)
+          refresh_enrollments_in_section(campus_section, sis_section_id, primary_sections, canvas_section_id)
         end
       end
     end
@@ -140,10 +137,10 @@ module CanvasCsv
       end
     end
 
-    def refresh_enrollments_in_section(campus_section, section_id, teacher_role, canvas_section_id)
+    def refresh_enrollments_in_section(campus_section, section_id, primary_sections, canvas_section_id)
       canvas_enrollments = canvas_section_enrollments(canvas_section_id)
       refresh_students_in_section(campus_section, section_id, canvas_enrollments)
-      refresh_teachers_in_section(campus_section, section_id, teacher_role, canvas_enrollments)
+      refresh_teachers_in_section(campus_section, section_id, primary_sections, canvas_enrollments)
       # Handle enrollments remaining in Canvas enrollment list
       logger.debug "Deleting remaining enrollments for Section ID #{section_id} - count: #{canvas_enrollments.count}"
       canvas_enrollments.each { |uid, remaining_enrollments| handle_missing_enrollments(uid, section_id, remaining_enrollments) }
@@ -163,13 +160,36 @@ module CanvasCsv
       end
     end
 
-    def refresh_teachers_in_section(campus_section, section_id, teacher_role, canvas_section_enrollments)
+    def determine_instructor_role(primary_sections, section, campus_instructor_row)
+      if primary_sections.present?
+        if primary_sections.include? section
+          # Teacher permissions for the course site are generally determined by primary section assignment.
+          # Administrative Proxy assignments (instructor role "APRX"/"5") are treated as Lead TAs.
+          if (campus_instructor_row['instructor_func'] == '5')
+            'Lead TA'
+          else
+            'TeacherEnrollment'
+          end
+        else
+          # Although the SIS marks them as 'instructors', when someone is explicitly assigned to a secondary
+          # section, they are generally a GSI, and top-level bCourses Teacher access will be determined by assignment
+          # to a primary section.
+          'TaEnrollment'
+        end
+      else
+        # However, if there are no primary sections in the course site, the site still needs at least one
+        # member with Teacher access.
+        'TeacherEnrollment'
+      end
+    end
+
+    def refresh_teachers_in_section(campus_section, section_id, primary_sections, canvas_section_enrollments)
       logger.debug "Refreshing teachers in section: #{section_id}"
-      canvas_api_role = CANVAS_SIS_ROLE_TO_CANVAS_API_ROLE[teacher_role]
       campus_data_rows = CanvasLti::SisAdapter.get_section_instructors(campus_section[:ccn], campus_section[:term_yr], campus_section[:term_cd])
       logger.debug "#{campus_data_rows.count} instructor enrollments found for #{section_id}"
       campus_data_rows.each do |campus_data_row|
         if campus_data_row['ldap_uid'].present?
+          canvas_api_role = determine_instructor_role(primary_sections, campus_section, campus_data_row)
           update_section_enrollment_from_campus(canvas_api_role, section_id, campus_data_row, canvas_section_enrollments)
         else
           logger.error "Instructor LDAP UID not present in campus data: #{campus_data_row.inspect}"
@@ -271,7 +291,7 @@ module CanvasCsv
     # instructors should be given the "teacher" role. However, it's important that *someone* play the
     # "teacher" role, and so if no primary sections are included, secondary-section instructors should
     # receive it.
-    def instructor_role_for_sections(campus_sections)
+    def site_primary_sections(campus_sections)
       # Our campus data query for sections specifies CCNs in a specific term.
       # At this level of code, we're working section-by-section and can't guarantee that all sections
       # are in the same term. In real life, we expect them to be, but ensuring that and throwing an
@@ -280,9 +300,8 @@ module CanvasCsv
       terms_to_sections = campus_sections.group_by {|sec| sec.slice(:term_yr, :term_cd)}
       logger.warn "Multiple terms in course site #{@sis_course_id}!" if terms_to_sections.size > 1
 
-      # This will hold a map whose keys are term_yr/term_cd/ccn hashes and whose values are the role
-      # for instructors of that section.
-      sections_map = {}
+      # This will hold a set of term_yr/term_cd/ccn hashes for primary sections.
+      primary_sections = Set.new
 
       # For each term, ask campus data sources for the section types (primary or secondary).
       # Since the list we get back from campus data may be in a different order from our starting
@@ -292,25 +311,18 @@ module CanvasCsv
         ccns = sections.collect {|sec| sec[:ccn]}
         data_rows = CanvasLti::SisAdapter.get_sections_by_ids(ccns, term[:term_yr], term[:term_cd])
         data_rows.each do |row|
-          sec = term.merge(ccn: row['course_cntl_num'])
-          sections_map[sec] = row['primary_secondary_cd']
+          if row['primary_secondary_cd'] == 'P'
+            primary_sections << term.merge(ccn: row['course_cntl_num'])
+          end
         end
       end
-      # Now see if the course site's sections are of more than one section type. That will determine
-      # what role is given to secondary-section instructors.
-      section_types = sections_map.values.uniq
-      secondary_section_role = section_types.size > 1 ? 'ta' : 'teacher'
 
       # Project leadership has expressed curiosity about this.
-      if section_types == ['S']
+      if primary_sections.blank?
         logger.info "Course site #{@sis_course_id} contains only secondary sections"
       end
 
-      # Finalize the section-to-instructor-role hash.
-      sections_map.each_key do |sec|
-        sections_map[sec] = (sections_map[sec] == 'P') ? 'teacher' : secondary_section_role
-      end
-      sections_map
+      primary_sections
     end
 
   end
