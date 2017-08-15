@@ -85,7 +85,6 @@ module SpecHelperModule
         }
       },
       :role => cpp_hash[:role],
-      :enrollmentRole => cpp_hash[:enrollmentRole]
     }
     if (cpp_hash[:expected_grad_term_id] && cpp_hash[:expected_grad_term_name])
       plan.merge!({

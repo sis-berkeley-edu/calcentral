@@ -7,7 +7,7 @@ var _ = require('lodash');
  * Enrollment Card Controller
  * Main controller for the enrollment card on the My Academics and Student Overview pages
  */
-angular.module('calcentral.controllers').controller('EnrollmentCardController', function(apiService, enrollmentFactory, linkService, $route, $scope) {
+angular.module('calcentral.controllers').controller('EnrollmentCardController', function(apiService, academicStatusFactory, enrollmentFactory, linkService, $route, $scope) {
   $scope.accessibilityAnnounce = apiService.util.accessibilityAnnounce;
   linkService.addCurrentRouteSettings($scope);
 
@@ -225,11 +225,24 @@ angular.module('calcentral.controllers').controller('EnrollmentCardController', 
     $scope.enrollmentInstructionDecks = enrollmentInstructionDecks;
   };
 
+  var loadEnrollmentInstructionDecks = function() {
+    return enrollmentFactory.getEnrollmentInstructionDecks();
+  };
+
+  var loadAcademicRoles = function() {
+    return academicStatusFactory.getAcademicRoles().then(
+      function(parsedAcademicRoles) {
+        $scope.isGrad = _.get(parsedAcademicRoles, 'roles.grad');
+      }
+    );
+  };
+
   /**
    * Load the enrollment data and fire off subsequent events
    */
   var loadEnrollmentData = function() {
-    enrollmentFactory.getEnrollmentInstructionDecks()
+    loadAcademicRoles()
+      .then(loadEnrollmentInstructionDecks)
       .then(parseEnrollmentInstructionDecks)
       .then(stopMainSpinner);
   };

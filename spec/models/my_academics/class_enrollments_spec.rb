@@ -20,101 +20,118 @@ describe MyAcademics::ClassEnrollments do
       waitlistedClassesTotalUnits: 2.0,
     }
   end
-  let(:college_and_level_feed) do
+  let(:academic_status_feed) do
     {
-      collegeAndLevel: {
-        statusCode: 200,
-        studentNotFound: nil,
-        holds: college_and_level_holds,
-        careers: ["Undergraduate"],
-        level: "Senior",
-        termName: "Fall 2016",
-        termsInAttendance: "3",
-        majors: college_and_level_majors,
-        minors: college_and_level_minors,
-        plans: college_and_level_plans,
-        lastExpectedGraduationTerm: college_and_level_last_expected_grad_term,
-        isCurrent: true
+      feed: {
+        'student'=> {
+          'holds'=> holds,
+          'academicStatuses'=> academic_statuses
+        }
       }
     }
   end
-  let(:college_and_level_holds) { { hasHolds: false } }
-  let(:college_and_level_majors) { [undergrad_nutritional_science_major] }
-  let(:college_and_level_minors) { [] }
-  let(:college_and_level_last_expected_grad_term) { { code: nil, description: nil, name: nil} }
-  let(:college_and_level_plans) { [undergrad_nutritional_science_plan] }
-  let(:undergrad_nutritional_science_major) do
-    {:college=>"Undergrad Natural Resources", :major=>"Nutritional Science BS"}
+  let(:holds) { [] }
+  let(:academic_statuses) { [] }
+  let(:student_plans) { [undergrad_nutritional_science_plan] }
+  let(:undergrad_career) do
+    {
+      'academicCareer' => { 'code' => 'UGRD', 'description' => 'Undergraduate' },
+      :role => 'ugrd'
+    }
+  end
+  let(:grad_career) do
+    {
+      'academicCareer' => { 'code' => 'GRAD', 'description' => 'Graduate' },
+      :role => 'grad'
+    }
+  end
+  let(:law_career) do
+    {
+      'academicCareer' => { 'code' => 'LAW', 'description' => 'Law' },
+      :role => 'law'
+    }
   end
   let(:undergrad_nutritional_science_plan) do
     {
-      career: { code: "UGRD", description: "Undergraduate" },
-      program: { code: "UCNR", description: "Undergrad Natural Resources" },
-      plan: { code: "04606U", description: "Nutritional Science BS" },
-      type: { code: "MAJ", description: "Major - Regular Acad/Prfnl", category: "Major" },
-      college: "Undergrad Natural Resources",
-      role: "default",
-      enrollmentRole: "default",
+      career: undergrad_career,
+      program: { code: 'UCNR', description: 'Undergrad Natural Resources' },
+      plan: { code: '04606U', description: 'Nutritional Science BS' },
+      type: { code: 'MAJ', description: 'Major - Regular Acad/Prfnl', category: 'Major' },
+      college: 'Undergrad Natural Resources',
+      role: nil,
+      statusInPlan: {
+        status: { code: 'AC' }
+      },
       primary: true,
     }
   end
   let(:undergrad_computer_science_plan) do
     {
-      career: { code: "UGRD", description: "Undergraduate" },
-      program: { code: "UCLS", description: "Undergrad Letters & Science" },
-      plan: { code: "25201U", description: "Computer Science BA" },
-      type: { code: "MAJ", description: "Major - Regular Acad/Prfnl", category: "Major" },
-      college: "Undergrad Letters & Science",
-      role: "default",
-      enrollmentRole: "default",
+      career: undergrad_career,
+      program: { code: 'UCLS', description: 'Undergrad Letters & Science' },
+      plan: { code: '25201U', description: 'Computer Science BA' },
+      type: { code: 'MAJ', description: 'Major - Regular Acad/Prfnl', category: 'Major' },
+      college: 'Undergrad Letters & Science',
+      role: nil,
+      statusInPlan: {
+        status: { code: 'AC' }
+      },
       primary: true,
     }
   end
   let(:undergrad_cognitive_science_plan) do
     {
-      career: { code: "UGRD", description: "Undergraduate" },
-      program: { code: "UCLS", description: "Undergrad Letters & Science" },
-      plan: { code: "25179U", description: "Cognitive Science BA" },
-      type: { code: "MAJ", description: "Major - Regular Acad/Prfnl", category: "Major"},
-      college: "Undergrad Letters & Science",
-      role: "default",
-      enrollmentRole: "default",
+      career: undergrad_career,
+      program: { code: 'UCLS', description: 'Undergrad Letters & Science' },
+      plan: { code: '25179U', description: 'Cognitive Science BA' },
+      type: { code: 'MAJ', description: 'Major - Regular Acad/Prfnl', category: 'Major'},
+      college: 'Undergrad Letters & Science',
+      role: nil,
+      statusInPlan: {
+        status: { code: 'AC' }
+      },
       primary: true,
     }
   end
   let(:undergrad_fall_program_for_freshmen_plan) do
     {
-      career: { code: "UGRD", description: "Undergraduate" },
-      program: { code: "UCLS", description: "Undergrad Letters & Science" },
-      plan: { code: "25000FPFU", description: "L&S Undcl Fall Pgm Freshmen UG" },
-      type: { code: "MAJ", description: "Major - Regular Acad/Prfnl", category: "Major"},
-      college: "Undergrad Letters & Science",
-      role: "fpf",
-      enrollmentRole: "fpf",
+      career: undergrad_career,
+      program: { code: 'UCLS', description: 'Undergrad Letters & Science' },
+      plan: { code: '25000FPFU', description: 'L&S Undcl Fall Pgm Freshmen UG' },
+      type: { code: 'MAJ', description: 'Major - Regular Acad/Prfnl', category: 'Major'},
+      college: 'Undergrad Letters & Science',
+      role: 'fpf',
+      statusInPlan: {
+        status: { code: 'AC' }
+      },
       primary: true,
     }
   end
   let(:graduate_electrical_engineering_plan) do
     {
-      career: { code: "GRAD", description: "Graduate" },
-      program: { code: "GACAD", description: "Graduate Academic Programs" },
-      plan: { code: "16290PHDG", description: "Electrical Eng & Comp Sci PhD" },
-      type: { code: "MAJ", description: "Major - Regular Acad/Prfnl", category: "Major" },
-      college: "Graduate Academic Programs",
-      role: "default",
-      enrollmentRole: "default",
+      career: grad_career,
+      program: { code: 'GACAD', description: 'Graduate Academic Programs' },
+      plan: { code: '16290PHDG', description: 'Electrical Eng & Comp Sci PhD' },
+      type: { code: 'MAJ', description: 'Major - Regular Acad/Prfnl', category: 'Major' },
+      college: 'Graduate Academic Programs',
+      role: nil,
+      statusInPlan: {
+        status: { code: 'AC' }
+      },
       primary: true,
     }
   end
   let(:law_jsp_plan) do
     {
-      career: { code: "LAW", description: "Law" },
-      program: { code: "LACAD", description: "Law Academic Programs" },
-      plan: { code: "84485PHDG", description: "JSP PhD" },
-      type: { code: "MAJ", description: "Major - Regular Acad/Prfnl", category: "Major" },
-      college: "Law Academic Programs",
-      role: "law",
-      enrollmentRole: "law",
+      career: law_career,
+      program: { code: 'LACAD', description: 'Law Academic Programs' },
+      plan: { code: '84485PHDG', description: 'JSP PhD' },
+      type: { code: 'MAJ', description: 'Major - Regular Acad/Prfnl', category: 'Major' },
+      college: 'Law Academic Programs',
+      role: nil,
+      statusInPlan: {
+        status: { code: 'AC' }
+      },
       primary: true,
     }
   end
@@ -135,9 +152,7 @@ describe MyAcademics::ClassEnrollments do
   before do
     allow(subject).to receive(:is_feature_enabled).and_return(is_feature_enabled_flag)
     allow(subject).to receive(:user_is_student?).and_return(user_is_student)
-    allow_any_instance_of(MyAcademics::CollegeAndLevel).to receive(:merge) do |feed_hash|
-      feed_hash.merge!(college_and_level_feed)
-    end
+    allow_any_instance_of(HubEdos::MyAcademicStatus).to receive(:get_feed).and_return(academic_status_feed)
     allow(CampusSolutions::MyEnrollmentTerms).to receive(:get_terms).and_return(cs_enrollment_career_terms)
     allow(CampusSolutions::MyEnrollmentTerm).to receive(:get_term) do |uid, term_id|
       cs_enrollment_term_detail.merge({:term => term_id})
@@ -159,7 +174,11 @@ describe MyAcademics::ClassEnrollments do
     end
 
     context 'when the user is a student' do
-      let(:college_and_level_plans) { [undergrad_computer_science_plan] }
+      let(:academic_statuses) do
+        [
+          { 'studentCareer'=> undergrad_career, 'studentPlans'=> [undergrad_computer_science_plan] }
+        ]
+      end
       let(:cs_enrollment_career_terms) { [{ termId: '2168', termDescr: '2016 Fall', acadCareer: 'UGRD' }] }
       let(:user_is_student) { true }
       let(:feed) { subject.get_feed }
@@ -202,13 +221,12 @@ describe MyAcademics::ClassEnrollments do
   context 'when determining the users hold status' do
     let(:user_holds_status) { subject.user_has_holds? }
     context 'when no holds present' do
-      let(:college_and_level_holds) { { hasHolds: false } }
       it 'should return false' do
         expect(user_holds_status).to eq false
       end
     end
     context 'when holds are present' do
-      let(:college_and_level_holds) { { hasHolds: true } }
+      let(:holds) { ['a hold'] }
       it 'should return true' do
         expect(user_holds_status).to eq true
       end
@@ -217,7 +235,13 @@ describe MyAcademics::ClassEnrollments do
 
   context 'when grouping student plans by role' do
     let(:student_plan_roles) { subject.grouped_student_plan_roles }
-    let(:college_and_level_plans) { [undergrad_computer_science_plan, graduate_electrical_engineering_plan, law_jsp_plan] }
+    let(:academic_statuses) do
+      [
+        { 'studentCareer'=> undergrad_career, 'studentPlans'=> [undergrad_computer_science_plan] },
+        { 'studentCareer'=> grad_career, 'studentPlans'=> [graduate_electrical_engineering_plan] },
+        { 'studentCareer'=> law_career, 'studentPlans'=> [law_jsp_plan] }
+      ]
+    end
     it 'groups plans by role and career code' do
       expect(student_plan_roles[:data]).to have_keys([ ['default','UGRD'], ['default','GRAD'], ['law','LAW'] ])
     end
@@ -245,7 +269,13 @@ describe MyAcademics::ClassEnrollments do
   end
 
   context 'when providing career term role decks' do
-    let(:college_and_level_plans) { [undergrad_computer_science_plan, law_jsp_plan, graduate_electrical_engineering_plan] }
+    let(:academic_statuses) do
+      [
+        { 'studentCareer'=> undergrad_career, 'studentPlans'=> [undergrad_computer_science_plan] },
+        { 'studentCareer'=> grad_career, 'studentPlans'=> [graduate_electrical_engineering_plan] },
+        { 'studentCareer'=> law_career, 'studentPlans'=> [law_jsp_plan] }
+      ]
+    end
     let(:decks) { subject.get_career_term_role_decks }
     context 'when more than one role in any term' do
       let(:cs_enrollment_career_terms) do
@@ -272,8 +302,8 @@ describe MyAcademics::ClassEnrollments do
       let(:cs_enrollment_career_terms) do
         [
           { termId: '2168', termDescr: '2016 Fall', acadCareer: 'UGRD' },
-          { termId: '2172', termDescr: '2017 Spring', acadCareer: 'GRAD' },
-          { termId: '2175', termDescr: '2017 Summer', acadCareer: 'GRAD' },
+          { termId: '2172', termDescr: '2017 Spring', acadCareer: 'UGRD' },
+          { termId: '2175', termDescr: '2017 Summer', acadCareer: 'UGRD' },
         ]
       end
       it 'groups roles into single deck' do
@@ -289,7 +319,11 @@ describe MyAcademics::ClassEnrollments do
       end
     end
     context 'when no plans present for student' do
-      let(:college_and_level_plans) { [] }
+      let(:academic_statuses) do
+        [
+          { 'studentCareer'=> undergrad_career, 'studentPlans'=> [] }
+        ]
+      end
       it 'returns empty array' do
         expect(decks).to be_an_instance_of Array
         expect(decks.length).to eq 0
@@ -355,7 +389,12 @@ describe MyAcademics::ClassEnrollments do
       ]
     end
     context 'when multiple student plan roles match a career code for an active career-term' do
-      let(:college_and_level_plans) { [undergrad_computer_science_plan, undergrad_cognitive_science_plan, law_jsp_plan] }
+      let(:academic_statuses) do
+        [
+          { 'studentCareer'=> undergrad_career, 'studentPlans'=> [undergrad_computer_science_plan, undergrad_cognitive_science_plan] },
+          { 'studentCareer'=> law_career, 'studentPlans'=> [law_jsp_plan] }
+        ]
+      end
       let(:cs_enrollment_career_terms) { [{ termId: '2168', termDescr: '2016 Fall', acadCareer: 'UGRD' }] }
       it 'excludes student plan roles with non-matching career code' do
         expect(career_term_roles.count).to eq 1
@@ -373,7 +412,11 @@ describe MyAcademics::ClassEnrollments do
     end
 
     context 'when a student plan role matches a career code for multiple active career-terms' do
-      let(:college_and_level_plans) { [law_jsp_plan] }
+      let(:academic_statuses) do
+        [
+          { 'studentCareer'=> law_career, 'studentPlans'=> [law_jsp_plan] }
+        ]
+      end
       let(:cs_enrollment_career_terms) {
         [
           { termId: '2168', termDescr: '2016 Fall', acadCareer: 'LAW' },
@@ -394,7 +437,11 @@ describe MyAcademics::ClassEnrollments do
     end
 
     context 'when a student plan role does not match the career code for any active career-term' do
-      let(:college_and_level_plans) { [law_jsp_plan] }
+      let(:academic_statuses) do
+        [
+          { 'studentCareer'=> law_career, 'studentPlans'=> [law_jsp_plan] }
+        ]
+      end
       let(:cs_enrollment_career_terms) { [{ termId: '2168', termDescr: '2016 Fall', acadCareer: 'UGRD' }] }
       it 'does not include an career term role object for the student plan role' do
         expect(career_term_roles.count).to eq 0
@@ -402,7 +449,11 @@ describe MyAcademics::ClassEnrollments do
     end
 
     context 'when a student plan role is fpf and matches multiple career-terms' do
-      let(:college_and_level_plans) { [undergrad_fall_program_for_freshmen_plan] }
+      let(:academic_statuses) do
+        [
+          { 'studentCareer'=> undergrad_career, 'studentPlans'=> [undergrad_fall_program_for_freshmen_plan] }
+        ]
+      end
       let(:cs_enrollment_career_terms) { [
         { termId: '2168', termDescr: '2016 Fall', acadCareer: 'UGRD' },
         { termId: '2172', termDescr: '2017 Spring', acadCareer: 'UGRD' },
@@ -431,7 +482,11 @@ describe MyAcademics::ClassEnrollments do
     end
 
     context 'when a student plan roles are fpf and default and both match multiple career-terms' do
-      let(:college_and_level_plans) { [undergrad_fall_program_for_freshmen_plan, undergrad_nutritional_science_plan] }
+      let(:academic_statuses) do
+        [
+          { 'studentCareer'=> undergrad_career, 'studentPlans'=> [undergrad_fall_program_for_freshmen_plan, undergrad_nutritional_science_plan] }
+        ]
+      end
       let(:cs_enrollment_career_terms) { [
         { termId: '2168', termDescr: '2016 Fall', acadCareer: 'UGRD' },
         { termId: '2172', termDescr: '2017 Spring', acadCareer: 'UGRD' }

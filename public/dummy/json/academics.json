@@ -53,7 +53,6 @@
         },
         "subPlan": {},
         "role": "ugrdUrbanStudies",
-        "enrollmentRole": "default",
         "primary": true,
         "type": {
           "code": "MAJ",

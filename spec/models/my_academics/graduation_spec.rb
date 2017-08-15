@@ -1,5 +1,5 @@
 describe MyAcademics::Graduation do
-  def student_plan(grad_term_id, grad_term_name)
+  def student_plan(grad_term_id, grad_term_name, is_active = true)
     {
       'expectedGraduationTerm' => {
         'id' => grad_term_id,
@@ -7,7 +7,7 @@ describe MyAcademics::Graduation do
       },
       'statusInPlan' => {
         'status' => {
-          'code' => 'AC'
+          'code' => is_active ? 'AC' : nil
         }
       }
     }
@@ -111,6 +111,20 @@ describe MyAcademics::Graduation do
         result = subject.get_feed
         expect(result[:lastExpectedGraduationTerm][:code]).to eq '2207'
         expect(result[:lastExpectedGraduationTerm][:name]).to eq 'Fall 2020'
+      end
+    end
+    context 'when student has an inactive plan' do
+      let(:second_career_academic_status) do
+        {
+          "studentPlans" => [
+            student_plan('2207', '2020 Fall', false)
+          ]
+        }
+      end
+      it 'does not include the inactive plan in determining latest expected graduation term' do
+        result = subject.get_feed
+        expect(result[:lastExpectedGraduationTerm][:code]).to eq '2205'
+        expect(result[:lastExpectedGraduationTerm][:name]).to eq 'Summer 2020'
       end
     end
   end

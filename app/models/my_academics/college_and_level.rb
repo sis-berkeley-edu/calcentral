@@ -53,7 +53,7 @@ module MyAcademics
       holds = {hasHolds: false}
       holds_feed = response[:feed] && response[:feed]['student'] && response[:feed]['student']['holds']
       if holds_feed.present?
-        holds[:hasHolds] = true if holds_feed.to_a.length > 0
+        holds[:hasHolds] = has_holds?(holds_feed)
       end
       holds
     end
@@ -152,6 +152,15 @@ module MyAcademics
       end
     end
 
+    def filter_inactive_status_plans(statuses)
+      statuses.each do |status|
+        status['studentPlans'].select! do |plan|
+          active? plan
+        end
+      end
+      statuses
+    end
+
     def parse_hub_term_name(term)
       if term
         term['name'] = Berkeley::TermCodes.normalized_english term.try(:[], 'name')
@@ -207,7 +216,6 @@ module MyAcademics
           }
         end
         flat_plan[:role] = hub_plan[:role]
-        flat_plan[:enrollmentRole] = hub_plan[:enrollmentRole]
         flat_plan[:primary] = !!hub_plan['primary']
         flat_plan[:type] = categorize_plan_type(academic_plan['type'])
 
