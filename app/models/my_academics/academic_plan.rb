@@ -111,7 +111,7 @@ module MyAcademics
     end
 
     def has_waitlisted_classes?(semester)
-      return false unless semester && semester[:hasEnrolledClasses]
+      return false unless semester
       !!semester.try(:[], :classes).try(:find) do |cls|
           !!cls[:sections].try(:find) do |section|
             section[:waitlisted]
