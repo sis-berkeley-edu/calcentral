@@ -58,7 +58,6 @@ module CanvasLti
       end
       canvas_section_enrollments_proxy = Canvas::SectionEnrollments.new(:section_id => canvas_course_section_id)
       canvas_section_enrollments_proxy.enroll_user(canvas_user_profile['id'], role_id)
-      true
     end
 
     def add_user_to_course(ldap_user_id, role_label)

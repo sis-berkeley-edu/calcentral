@@ -2,7 +2,7 @@ module CanvasCsv
   class ProvideCourseSite < Base
     include BackgroundJob
 
-    attr_reader :uid, :cache_key, :section_definitions
+    attr_reader :uid, :cache_key, :section_definitions, :import_data
 
     # Currently this depends on an instructor's point of view.
     def initialize(uid, options = {})
@@ -140,7 +140,13 @@ module CanvasCsv
       department = @import_data['courses'][0][:dept]
 
       # Check that we have a departmental location for this course.
-      @import_data['subaccount'] = subaccount_for_department(department)
+      account_id = subaccount_for_department(department)
+      @import_data['subaccount'] = account_id
+
+      # Get Teacher and Lead TA Role IDs for later use.
+      defined_roles = Canvas::AccountRoles.new(account_id: "sis_account_id:#{account_id}").defined_course_roles
+      @import_data['teacher_role_id'] = (defined_roles.find {|r| r['label'] == 'Teacher'})['id']
+      @import_data['lead_ta_role_id'] = (defined_roles.find {|r| r['label'] == 'Lead TA'})['id']
 
       background_job_complete_step 'Identified department sub-account'
     end
@@ -190,13 +196,14 @@ module CanvasCsv
 
     def add_instructor_to_section(canvas_section)
       worker = CanvasLti::CourseAddUser.new(user_id: @uid, canvas_course_id: @import_data['canvas_course_id'])
-      teacher_role = (worker.defined_course_roles.select {|r| r['label'] == 'Teacher'}).first
-      if canvas_section && teacher_role &&
-        worker.add_user_to_course_section(@uid, teacher_role['id'], "sis_section_id:#{canvas_section['section_id']}")
-        logger.warn "Successfully added instructor to section #{canvas_section['section_id']} as a teacher"
+      section_id = canvas_section['section_id']
+      # Check for a specific role mapping of the current user for this section. If none, default to "Teacher".
+      role_id = @import_data['section_roles'][section_id] || @import_data['teacher_role_id']
+      if (new_enrollment = worker.add_user_to_course_section(@uid, role_id, "sis_section_id:#{section_id}"))
+        logger.warn "Successfully added instructor to section #{section_id} as a #{new_enrollment['role']}"
         background_job_complete_step 'Added instructor to course site'
       else
-        logger.error "Imported course from #{@import_data['courses_csv_file']} but could not add #{@uid} as teacher to section #{canvas_section['section_id']}"
+        logger.error "Imported course from #{@import_data['courses_csv_file']} but could not add #{@uid} as teacher to section #{section_id}"
         raise RuntimeError, 'Course site was created but the teacher could not be added!'
       end
     end
@@ -333,11 +340,20 @@ module CanvasCsv
       end
     end
 
+    def determine_instructor_role(instructing_assignment)
+      if instructing_assignment[:role] == 'APRX'
+        @import_data['lead_ta_role_id']
+      else
+        @import_data['teacher_role_id']
+      end
+    end
+
     def generate_section_definitions(term_yr, term_cd, sis_course_id, campus_section_data)
       raise ArgumentError, "'campus_section_data' argument is empty" if campus_section_data.empty?
       existence_proxy = Canvas::ExistenceCheck.new
       section_definitions = []
       @import_data['explicit_sections_for_instructor'] = []
+      @import_data['section_roles'] = {}
       campus_section_data.each do |course|
         course[:sections].each do |section|
           if (sis_section_id = generate_unique_sis_section_id(existence_proxy, section[:ccn], term_yr, term_cd))
@@ -348,8 +364,10 @@ module CanvasCsv
               'status' => 'active'
             }
             section_definitions << section_definition
-            if !@import_data['is_admin_by_ccns'] && section[:instructors].map{|instructor| instructor[:uid]}.include?(@uid)
+            if !@import_data['is_admin_by_ccns'] &&
+              (instructing_assignment = section[:instructors].find{|instructor| instructor[:uid] == @uid})
               @import_data['explicit_sections_for_instructor'] << section_definition
+              @import_data['section_roles'][sis_section_id] = determine_instructor_role instructing_assignment
             end
           else
             logger.error "Unable to generate unique Canvas section SIS ID for CCN #{section[:ccn]} in #{source}; will NOT create section"

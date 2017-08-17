@@ -9,6 +9,9 @@ describe CanvasCsv::ProvideCourseSite do
     {:yr=>'2014', :cd=>'D', :slug=>'fall-2014', :name=>'Fall 2014'},
     {:yr=>'2015', :cd=>'B', :slug=>'spring-2015', :name=>'Spring 2015'},
   ] }
+  # Copied from canvas_account_role fixture as a convenience.
+  let(:teacher_role_id) { 1773 }
+  let(:lead_ta_role_id) { 1820 }
   subject do
     subj = CanvasCsv::ProvideCourseSite.new uid
     subj.background_job_initialize
@@ -26,7 +29,7 @@ describe CanvasCsv::ProvideCourseSite do
     end
     its(:uid)       { should eq uid }
     it 'initializes the import data hash' do
-      expect(subject.instance_eval { @import_data }).to eq({})
+      expect(subject.import_data).to eq({})
     end
   end
 
@@ -69,10 +72,10 @@ describe CanvasCsv::ProvideCourseSite do
 
     it 'sets term and ccns for import' do
       subject.create_course_site(site_name, site_course_code, 'fall-2014', ['21136', '21204'])
-      expect(subject.instance_eval { @import_data['term_slug'] }).to eq 'fall-2014'
-      expect(subject.instance_eval { @import_data['term'][:yr] }).to eq '2014'
-      expect(subject.instance_eval { @import_data['term'][:cd] }).to eq 'D'
-      expect(subject.instance_eval { @import_data['ccns'] }).to eq ['21136', '21204']
+      expect(subject.import_data['term_slug']).to eq 'fall-2014'
+      expect(subject.import_data['term'][:yr]).to eq '2014'
+      expect(subject.import_data['term'][:cd]).to eq 'D'
+      expect(subject.import_data['ccns']).to eq ['21136', '21204']
     end
 
     it 'sets job type to course_creation' do
@@ -228,11 +231,11 @@ describe CanvasCsv::ProvideCourseSite do
 
   describe '#prepare_users_courses_list' do
     before do
-      subject.instance_eval do
-        @import_data['term_slug'] = 'fall-2013'
-        @import_data['term'] = {yr: '2013', cd: 'D'}
-        @import_data['ccns'] = ['21136', '21204']
-      end
+      subject.import_data.merge!(
+        'term_slug' => 'fall-2013',
+        'term' => {yr: '2013', cd: 'D'},
+        'ccns' => ['21136', '21204']
+      )
       @filtered_courses_list = [
         {
           :course_code=>'COMPSCI 10',
@@ -241,23 +244,23 @@ describe CanvasCsv::ProvideCourseSite do
           :title=>'The Beauty and Joy of Computing',
           :role=>'Instructor',
           :sections=>[
-            {:ccn=>'21136', :instruction_format=>'DIS', :is_primary_section=>false, :section_label=>'DIS 102', :section_number=>'102', :schedules=>{oneTime: [], recurring: [{:buildingName=>'SODA', :room_number=>'0320', :schedule=>'M 8:00A-9:00A'}]}, :instructors=>[{:name=>'Seth Mark Beckley', :uid=>'937403'}]},
-            {:ccn=>'21204', :instruction_format=>'DIS', :is_primary_section=>false, :section_label=>'DIS 109', :section_number=>'109', :schedules=>{oneTime: [], recurring: [{:buildingName=>'SODA', :room_number=>'0320', :schedule=>'M 12:00P-1:00P'}]}, :instructors=>[{:name=>'Seth Mark Beckley', :uid=>'937403'}]}
+            {:ccn=>'21136', :instruction_format=>'DIS', :is_primary_section=>false, :section_label=>'DIS 102', :section_number=>'102', :schedules=>{oneTime: [], recurring: [{:buildingName=>'SODA', :room_number=>'0320', :schedule=>'M 8:00A-9:00A'}]},
+              :instructors=>[{:name=>'Seth Mark Beckley', :uid=>'937403'}]},
+            {:ccn=>'21204', :instruction_format=>'DIS', :is_primary_section=>false, :section_label=>'DIS 109', :section_number=>'109', :schedules=>{oneTime: [], recurring: [{:buildingName=>'SODA', :room_number=>'0320', :schedule=>'M 12:00P-1:00P'}]},
+              :instructors=>[{:name=>'Seth Mark Beckley', :uid=>'937403'}]}
           ]
         }
       ]
     end
 
     it 'raises exception if term slug not present in import data set' do
-      subject.instance_eval do
-        @import_data['term_slug'] = nil
-        @import_data['term'] = nil
-      end
+      subject.import_data['term_slug'] = nil
+      subject.import_data['term'] = nil
       expect { subject.prepare_users_courses_list }.to raise_error(RuntimeError, 'Unable to prepare course list. Term code not present.')
     end
 
     it 'raises exception if course control numbers are not present in import data set' do
-      subject.instance_eval { @import_data['ccns'] = nil }
+      subject.import_data['ccns'] = nil
       expect { subject.prepare_users_courses_list }.to raise_error(RuntimeError, 'Unable to prepare course list. CCNs not present.')
     end
 
@@ -265,7 +268,7 @@ describe CanvasCsv::ProvideCourseSite do
       allow(subject).to receive(:candidate_courses_list).and_return(true)
       expect(subject).to receive(:filter_courses_by_ccns).and_return(@filtered_courses_list)
       subject.prepare_users_courses_list
-      assigned_courses = subject.instance_eval { @import_data['courses'] }
+      assigned_courses = subject.import_data['courses']
       expect(assigned_courses).to be_an_instance_of Array
       expect(assigned_courses.count).to eq 1
       expect(assigned_courses[0]).to be_an_instance_of Hash
@@ -276,7 +279,7 @@ describe CanvasCsv::ProvideCourseSite do
       fake_formatter = instance_double(MyAcademics::Teaching)
       expect(MyAcademics::Teaching).to receive(:new).with(uid).and_return(fake_formatter)
       expect(fake_formatter).to receive(:courses_list_from_ccns).and_return(@filtered_courses_list)
-      subject.instance_eval { @import_data['is_admin_by_ccns'] = true }
+      subject.import_data['is_admin_by_ccns'] = true
       expect(subject).to_not receive(:candidate_courses_list)
       expect(subject).to_not receive(:filter_courses_by_ccns)
       subject.prepare_users_courses_list
@@ -294,17 +297,23 @@ describe CanvasCsv::ProvideCourseSite do
   describe '#identify_department_subaccount' do
     before do
       allow(subject).to receive(:subaccount_for_department).and_return('ACCT:COMPSCI')
-      subject.instance_eval { @import_data['courses'] = [{:course_code => 'ENGIN 7', :dept => 'COMPSCI', :sections => []}] }
+      subject.import_data['courses'] = [{:course_code => 'ENGIN 7', :dept => 'COMPSCI', :sections => []}]
     end
 
     it 'raises exception if import courses not present' do
-      subject.instance_eval { @import_data['courses'] = nil }
+      subject.import_data['courses'] = nil
       expect { subject.identify_department_subaccount }.to raise_error(RuntimeError, 'Unable identify department subaccount. Course list not loaded or empty.')
     end
 
     it 'adds department id to import data' do
       subject.identify_department_subaccount
-      expect(subject.instance_eval { @import_data['subaccount'] }).to eq 'ACCT:COMPSCI'
+      expect(subject.import_data['subaccount']).to eq 'ACCT:COMPSCI'
+    end
+
+    it 'adds Teacher and Lead TA roles to import data' do
+      subject.identify_department_subaccount
+      expect(subject.import_data['teacher_role_id']).to eq teacher_role_id
+      expect(subject.import_data['lead_ta_role_id']).to eq lead_ta_role_id
     end
 
     it 'updates completed steps list' do
@@ -316,22 +325,20 @@ describe CanvasCsv::ProvideCourseSite do
 
   describe '#prepare_course_site_definition' do
     before do
-      subject.instance_eval do
-        @import_data['term'] = {yr: '2013', cd: 'D', slug: 'fall-2013'}
-        @import_data['subaccount'] = 'ACCT:COMPSCI'
-        @import_data['courses'] = [
-          {
-            :course_code => 'MEC ENG 98',
-            :slug => 'mec_eng-98',
-            :dept => 'MEC ENG',
-            :title => 'Supervised Independent Group Studies',
-            :role => 'Instructor',
-            :sections => [
-              { :ccn => rand(99999).to_s, :instruction_format => 'GRP', :is_primary_section => true, :section_label => 'GRP 015', :section_number => '015' }
-            ]
-          }
-        ]
-      end
+      subject.import_data['term'] = {yr: '2013', cd: 'D', slug: 'fall-2013'}
+      subject.import_data['subaccount'] = 'ACCT:COMPSCI'
+      subject.import_data['courses'] = [
+        {
+          :course_code => 'MEC ENG 98',
+          :slug => 'mec_eng-98',
+          :dept => 'MEC ENG',
+          :title => 'Supervised Independent Group Studies',
+          :role => 'Instructor',
+          :sections => [
+            { :ccn => rand(99999).to_s, :instruction_format => 'GRP', :is_primary_section => true, :section_label => 'GRP 015', :section_number => '015' }
+          ]
+        }
+      ]
       course_site_definition = {
         'course_id' => 'CRS:MEC_ENG-98-2013-D',
         'short_name' => 'MEC ENG 98 GRP 015',
@@ -344,23 +351,23 @@ describe CanvasCsv::ProvideCourseSite do
     end
 
     it 'raises exception if course term is not present' do
-      subject.instance_eval { @import_data['term'] = nil }
+      subject.import_data['term'] = nil
       expect { subject.prepare_course_site_definition }.to raise_error(RuntimeError, 'Unable to prepare course site definition. Term data is not present.')
     end
 
     it 'raises exception if department subaccount is not present' do
-      subject.instance_eval { @import_data['subaccount'] = nil }
+      subject.import_data['subaccount'] = nil
       expect { subject.prepare_course_site_definition }.to raise_error(RuntimeError, 'Unable to prepare course site definition. Department subaccount ID not present.')
     end
 
     it 'raises exception if courses list is not present' do
-      subject.instance_eval { @import_data['courses'] = nil }
+      subject.import_data['courses'] = nil
       expect { subject.prepare_course_site_definition }.to raise_error(RuntimeError, 'Unable to prepare course site definition. Courses list is not present.')
     end
 
     it 'populates the course site definition' do
       subject.prepare_course_site_definition
-      course_site_definition = subject.instance_eval { @import_data['course_site_definition'] }
+      course_site_definition = subject.import_data['course_site_definition']
       expect(course_site_definition).to be_an_instance_of Hash
       expect(course_site_definition['status']).to eq 'active'
       expect(course_site_definition['course_id']).to eq 'CRS:MEC_ENG-98-2013-D'
@@ -372,13 +379,13 @@ describe CanvasCsv::ProvideCourseSite do
 
     it 'sets the sis course id' do
       subject.prepare_course_site_definition
-      sis_course_id = subject.instance_eval { @import_data['sis_course_id'] }
+      sis_course_id = subject.import_data['sis_course_id']
       expect(sis_course_id).to eq 'CRS:MEC_ENG-98-2013-D'
     end
 
     it 'sets the course site short name' do
       subject.prepare_course_site_definition
-      course_site_short_name = subject.instance_eval { @import_data['course_site_short_name'] }
+      course_site_short_name = subject.import_data['course_site_short_name']
       expect(course_site_short_name).to eq 'MEC ENG 98 GRP 015'
     end
 
@@ -391,43 +398,41 @@ describe CanvasCsv::ProvideCourseSite do
 
   describe '#prepare_section_definitions' do
     before do
-      subject.instance_eval do
-        @import_data['term'] = {yr: '2013', cd: 'D', slug: 'fall-2013'}
-        @import_data['sis_course_id'] = 'CRS:MEC_ENG-98-2013-D'
-        @import_data['courses'] = [
-          {
-            :course_code => 'MEC ENG 98',
-            :slug => 'mec_eng-98',
-            :dept => 'MEC ENG',
-            :title => 'Supervised Independent Group Studies',
-            :role => 'Instructor',
-            :sections => [{
-              ccn: '12345',
-              instruction_format: 'GRP',
-              instructors: [{uid: uid, instructor_func: 1}],
-              is_primary_section: true,
-              section_label: 'GRP 015',
-              section_number: '015'
-            }]
-          }
-        ]
-      end
+      subject.import_data['term'] = {yr: '2013', cd: 'D', slug: 'fall-2013'}
+      subject.import_data['sis_course_id'] = 'CRS:MEC_ENG-98-2013-D'
+      subject.import_data['courses'] = [
+        {
+          :course_code => 'MEC ENG 98',
+          :slug => 'mec_eng-98',
+          :dept => 'MEC ENG',
+          :title => 'Supervised Independent Group Studies',
+          :role => 'Instructor',
+          :sections => [{
+            ccn: '12345',
+            instruction_format: 'GRP',
+            instructors: [{uid: uid, role: 'PI'}],
+            is_primary_section: true,
+            section_label: 'GRP 015',
+            section_number: '015'
+          }]
+        }
+      ]
       section_definitions = [{'name' => 'MEC ENG 98 GRP 015', 'course_id' => 'CRS:MEC_ENG-98-2013-D', 'section_id' => 'SEC:2013-D-12345', 'status' => 'active'}]
       allow(subject).to receive(:generate_section_definitions).and_return(section_definitions)
     end
 
     it 'raises exception if course term is not present' do
-      subject.instance_eval { @import_data['term'] = nil }
+      subject.import_data['term'] = nil
       expect { subject.prepare_section_definitions }.to raise_error(RuntimeError, 'Unable to prepare section definitions. Term data is not present.')
     end
 
     it 'raises exception if SIS course ID is not present' do
-      subject.instance_eval { @import_data['sis_course_id'] = nil }
+      subject.import_data['sis_course_id'] = nil
       expect { subject.prepare_section_definitions }.to raise_error(RuntimeError, 'Unable to prepare section definitions. SIS Course ID is not present.')
     end
 
     it 'raises exception if courses list is not present' do
-      subject.instance_eval { @import_data['courses'] = nil }
+      subject.import_data['courses'] = nil
       expect { subject.prepare_section_definitions }.to raise_error(RuntimeError, 'Unable to prepare section definitions. Courses list is not present.')
     end
 
@@ -465,7 +470,7 @@ describe CanvasCsv::ProvideCourseSite do
     it 'sets sections csv file path' do
       allow(Canvas::SisImport).to receive(:new).and_return(canvas_sis_import_proxy)
       subject.import_course_site(@course_row)
-      filepath = subject.instance_eval { @import_data['courses_csv_file'] }
+      filepath = subject.import_data['courses_csv_file']
       expect(filepath).to eq '/csv/filepath'
     end
 
@@ -497,7 +502,7 @@ describe CanvasCsv::ProvideCourseSite do
     it 'sets sections csv file path' do
       allow(Canvas::SisImport).to receive(:new).and_return(canvas_sis_import_proxy)
       subject.import_sections(@section_rows)
-      filepath = subject.instance_eval { @import_data['sections_csv_file'] }
+      filepath = subject.import_data['sections_csv_file']
       expect(filepath).to eq '/csv/filepath'
     end
 
@@ -514,25 +519,52 @@ describe CanvasCsv::ProvideCourseSite do
     let(:section_definition) do
       {'section_id' => section_id}
     end
-    let(:teacher_role_id) { 1773 }
-    before { subject.instance_eval { @import_data['canvas_course_id'] = 99999 } }
-    it 'adds teacher enrollments to section' do
-      expect_any_instance_of(CanvasLti::CourseAddUser).to receive(:add_user_to_course_section).with(uid, teacher_role_id,
-        "sis_section_id:#{section_id}").and_return({'role' => 'TeacherEnrollment', 'role_id' => teacher_role_id})
-      subject.add_instructor_to_section section_definition
+    before do
+      subject.import_data['canvas_course_id'] = 99999
+      subject.import_data['teacher_role_id'] = teacher_role_id
+    end
+    context 'when user is not explicitly assigned an instructor role for the section' do
+      before do
+        subject.import_data['section_roles'] = {}
+      end
+      it 'adds teacher enrollment to section' do
+        expect_any_instance_of(CanvasLti::CourseAddUser).to receive(:add_user_to_course_section).with(uid, teacher_role_id,
+          "sis_section_id:#{section_id}").and_return({'role' => 'TeacherEnrollment', 'role_id' => teacher_role_id})
+        subject.add_instructor_to_section section_definition
+      end
+    end
+    context 'when user is explicitly assigned a full instructor role' do
+      before do
+        subject.import_data['section_roles'] = {section_id => teacher_role_id}
+      end
+      it 'adds teacher enrollment to section' do
+        expect_any_instance_of(CanvasLti::CourseAddUser).to receive(:add_user_to_course_section).with(uid, teacher_role_id,
+          "sis_section_id:#{section_id}").and_return({'role' => 'TeacherEnrollment', 'role_id' => teacher_role_id})
+        subject.add_instructor_to_section section_definition
+      end
+    end
+    context 'when user is an Administrative Proxy for a section' do
+      before do
+        subject.import_data['section_roles'] = {section_id => lead_ta_role_id}
+      end
+      it 'adds Lead TA enrollment to section' do
+        expect_any_instance_of(CanvasLti::CourseAddUser).to receive(:add_user_to_course_section).with(uid, lead_ta_role_id,
+          "sis_section_id:#{section_id}").and_return({'role' => 'Lead TA', 'role_id' => lead_ta_role_id})
+        subject.add_instructor_to_section section_definition
+      end
     end
   end
 
   describe '#retrieve_course_site_details' do
     context 'when SIS course ID is not present' do
-      before { subject.instance_eval { @import_data['sis_course_id'] = nil } }
+      before { subject.import_data['sis_course_id'] = nil }
       it 'raises exception' do
         expect { subject.retrieve_course_site_details }.to raise_error(RuntimeError, 'Unable to retrieve course site details. SIS Course ID not present.')
       end
     end
 
     context 'when SIS course ID is present' do
-      before { subject.instance_eval { @import_data['sis_course_id'] = 'CRS:ENGIN-7-2015-B' } }
+      before { subject.import_data['sis_course_id'] = 'CRS:ENGIN-7-2015-B' }
       let(:sis_course_proxy) { Canvas::SisCourse.new }
       let(:new_course_properties) do
         {
@@ -562,7 +594,7 @@ describe CanvasCsv::ProvideCourseSite do
 
       it 'sets course site URL' do
         subject.retrieve_course_site_details
-        expect(subject.instance_eval { @import_data['course_site_url'] }).to eq "https://berkeley.instructure.com/courses/#{canvas_course_id}"
+        expect(subject.import_data['course_site_url']).to eq "https://berkeley.instructure.com/courses/#{canvas_course_id}"
       end
 
       it 'updates completed steps list' do
@@ -866,7 +898,7 @@ describe CanvasCsv::ProvideCourseSite do
   describe '#generate_section_definitions' do
     let(:term_yr) { '2013' }
     let(:term_cd) { 'D' }
-    let(:ccns) { 3.times.map { random_ccn } }
+    let(:ccns) { 4.times.map { random_ccn } }
     let(:sis_course_id) { 'CRS:ENGIN-7-2013-D-8383' }
     let(:courses_list) do
       [{
@@ -878,7 +910,9 @@ describe CanvasCsv::ProvideCourseSite do
           ccn: ccns[0],
           courseCode: 'ENGIN 7',
           instruction_format: 'LEC',
-          instructors: [{uid: lecture_instructor_id, instructor_func: 1}],
+          instructors: [
+            {uid: lecture_instructor_id, role: 'PI'}
+          ],
           is_primary_section: true,
           section_label: 'LEC 002',
           section_number: '002'
@@ -887,7 +921,10 @@ describe CanvasCsv::ProvideCourseSite do
           ccn: ccns[1],
           courseCode: 'ENGIN 7',
           instruction_format: 'DIS',
-          instructors: [{uid: discussion_instructor_1_id, instructor_func: 1}, {uid: discussion_instructor_2_id, instructor_func: 1}],
+          instructors: [
+            {uid: random_id, role: 'PI'},
+            {uid: discussion_instructor_2_id, role: 'PI'}
+          ],
           is_primary_section: false,
           section_label: 'DIS 102',
           section_number: '102'
@@ -902,17 +939,41 @@ describe CanvasCsv::ProvideCourseSite do
           ccn: ccns[2],
           courseCode: 'MEC ENG 98',
           instruction_format: 'GRP',
-          instructors: [{uid: group_instructor_id, instructor_func: 1}],
+          instructors: [
+            {uid: group_instructor_id, role: 'PI'}
+          ],
           is_primary_section: true,
           section_label: 'GRP 015',
           section_number: '015'
         }]
+      },
+      {
+        course_code: 'CHEM 196',
+        slug: 'chem-196',
+        title: 'Special Laboratory Study',
+        role: 'Instructor',
+        sections: [{
+          ccn: ccns[3],
+          courseCode: 'CHEM 196',
+          instruction_format: 'IND',
+          instructors: [
+            {uid: random_id, role: 'PI'},
+            {uid: administrative_proxy_id, role: 'APRX'}
+          ],
+          is_primary_section: true,
+          section_label: 'IND 015',
+          section_number: '015'
+        }]
       }]
     end
-    [:lecture_instructor_id, :discussion_instructor_1_id, :discussion_instructor_2_id, :group_instructor_id].each do |id|
+    [:lecture_instructor_id, :discussion_instructor_2_id, :administrative_proxy_id, :group_instructor_id].each do |id|
       let(id) { random_id }
     end
-    before { allow_any_instance_of(Canvas::ExistenceCheck).to receive(:section_defined?).and_return(false) }
+    before do
+      allow_any_instance_of(Canvas::ExistenceCheck).to receive(:section_defined?).and_return(false)
+      subject.import_data['teacher_role_id'] = teacher_role_id
+      subject.import_data['lead_ta_role_id'] = lead_ta_role_id
+    end
 
     it 'should raise exception if campus_section_data argument is empty' do
       expect do
@@ -922,7 +983,7 @@ describe CanvasCsv::ProvideCourseSite do
 
     it 'should generate Canvas Section import CSV rows for the selected courses' do
       canvas_sections_list = subject.generate_section_definitions(term_yr, term_cd, sis_course_id, courses_list)
-      expect(canvas_sections_list.length).to eq 3
+      expect(canvas_sections_list.length).to eq 4
       canvas_sections_list.each do |row|
         expect(row['course_id']).to eq sis_course_id
         expect(row['status']).to eq 'active'
@@ -934,6 +995,21 @@ describe CanvasCsv::ProvideCourseSite do
       expect(canvas_sections_list[0]['name']).to eq 'ENGIN 7 LEC 002'
       expect(canvas_sections_list[1]['name']).to eq 'ENGIN 7 DIS 102'
       expect(canvas_sections_list[2]['name']).to eq 'MEC ENG 98 GRP 015'
+      expect(canvas_sections_list[3]['name']).to eq 'CHEM 196 IND 015'
+    end
+
+    context 'site creator is explicit instructor for multiple sections' do
+      [:lecture_instructor_id, :discussion_instructor_2_id, :administrative_proxy_id, :group_instructor_id].each do |id|
+        let(id) { uid }
+      end
+      it 'remembers section membership roles for later use' do
+        canvas_sections_list = subject.generate_section_definitions(term_yr, term_cd, sis_course_id, courses_list)
+        teaching_section_id = canvas_sections_list[0]['section_id']
+        proxying_section_id = canvas_sections_list[3]['section_id']
+        section_roles_hash = subject.import_data['section_roles']
+        expect(section_roles_hash[teaching_section_id]).to eq teacher_role_id
+        expect(section_roles_hash[proxying_section_id]).to eq lead_ta_role_id
+      end
     end
 
     it 'should generate a unique parsable Section SIS ID for the selected sections' do
@@ -949,7 +1025,7 @@ describe CanvasCsv::ProvideCourseSite do
            :role => 'Instructor',
            :sections =>
                [{:ccn => ccn,
-                 :instructors => [{uid: uid, instructor_func: 1}],
+                 :instructors => [{uid: uid, role: 'PI'}],
                  :instruction_format => 'DIS',
                  :is_primary_section => false,
                  :section_label => 'DIS 102',
@@ -982,7 +1058,7 @@ describe CanvasCsv::ProvideCourseSite do
     context 'site creator is not explicit instructor for any section' do
       it 'stores no explicitly instructed sections' do
         subject.generate_section_definitions(term_yr, term_cd, sis_course_id, courses_list)
-        expect(subject.instance_eval { @import_data['explicit_sections_for_instructor'] }).to be_empty
+        expect(subject.import_data['explicit_sections_for_instructor']).to be_empty
       end
     end
 
@@ -990,7 +1066,7 @@ describe CanvasCsv::ProvideCourseSite do
       let(:discussion_instructor_2_id) { uid }
       it 'stores explicitly instructed section' do
         subject.generate_section_definitions(term_yr, term_cd, sis_course_id, courses_list)
-        explicitly_instructed = subject.instance_eval { @import_data['explicit_sections_for_instructor'] }
+        explicitly_instructed = subject.import_data['explicit_sections_for_instructor']
         expect(explicitly_instructed).to have(1).item
         expect(explicitly_instructed.first).to include({
           'course_id' => sis_course_id,
