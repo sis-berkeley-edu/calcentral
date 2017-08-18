@@ -184,11 +184,10 @@
 
         <div class="row collapse">
           <div class="medium-12 columns">
-
             <form name="createCourseSiteForm" data-ng-submit="createCourseSiteJob()" class="bc-canvas-page-form">
+
               <div class="row">
                 <div class="small-12 medium-6 end">
-
                   <div class="bc-page-create-course-site-form-fields-container">
                     <div class="row">
                       <div class="medium-offset-1 medium-4 columns">
@@ -207,11 +206,14 @@
                         <label for="siteAbbreviation" class="right">Site Abbreviation:</label>
                       </div>
                       <div class="medium-7 columns">
-                        <input type="text" id="siteAbbreviation" data-ng-model="siteAbbreviation">
+                        <input type="text" name="siteAbbreviation" id="siteAbbreviation" data-ng-model="siteAbbreviation" data-ng-required="true">
+                        <div data-ng-if="createCourseSiteForm.siteAbbreviation.$error.required" class="bc-alert bc-notice-error">
+                          <i class="cc-left fa fa-exclamation-circle cc-icon-red bc-canvas-notice-icon"></i>
+                          Please fill out a site abbreviation.
+                        </div>
                       </div>
                     </div>
                   </div>
-
                 </div>
               </div>
 
@@ -224,8 +226,8 @@
                   </div>
                 </div>
               </div>
-            </form>
 
+            </form>
           </div>
         </div>
       </div>
