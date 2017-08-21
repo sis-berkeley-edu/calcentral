@@ -37,7 +37,9 @@ module Canvas
     end
 
     def mock_interactions
-      mock_paged_interaction("canvas_account_roles_#{@account_id}", uri_matching: request_path, method: :get)
+      # Point 'sis_account_id' strings at our main fake Account.
+      account_id = @account_id.is_a?(Fixnum) ? @account_id : 128847
+      mock_paged_interaction("canvas_account_roles_#{account_id}", uri_matching: request_path, method: :get)
     end
 
   end

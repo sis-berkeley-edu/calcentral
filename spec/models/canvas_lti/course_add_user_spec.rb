@@ -189,7 +189,7 @@ describe CanvasLti::CourseAddUser do
         expect(Canvas::SisUserProfile).to receive(:expire).with('260506')
         expect_any_instance_of(CanvasCsv::UserProvision).to receive(:import_users).with(['260506']).and_return true
         result = subject.add_user_to_course_section('260506', role_id, '864215')
-        expect(result).to eq true
+        expect(result).to be_truthy
       end
     end
   end
