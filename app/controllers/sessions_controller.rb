@@ -85,9 +85,13 @@ class SessionsController < ApplicationController
     url = request.protocol + ApplicationController.correct_port(request.host_with_port, request.env['HTTP_REFERER'])
 
     url = "#{Settings.campus_solutions_proxy.logout_url}&redirect_url=#{CGI.escape url}" if Settings.features.cs_logout
+    cas_logout_url = "#{Settings.cas_logout_url}?service=#{CGI.escape url}"
+
+    # CCAdmin uses Delete request route that does not use JS redirect mechanism
+    return redirect_to cas_logout_url if request.delete?
 
     render :json => {
-      :redirectUrl => "#{Settings.cas_logout_url}?service=#{CGI.escape url}"
+      :redirectUrl => cas_logout_url
     }.to_json
   end
 
