@@ -3,7 +3,7 @@ module CampusSolutions
     module UndergradRequirementsExpiry
       def self.expire(uids=[])
         uids.each do |uid|
-          [::DegreeProgress::UndergradRequirements].each do |klass|
+          [::DegreeProgress::UndergradRequirements, ::DegreeProgress::MyUndergradRequirements].each do |klass|
             klass.expire uid
           end
         end
