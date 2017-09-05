@@ -11,7 +11,6 @@ describe Oec::ApiTaskWrapper do
     end
     it 'should not populate department options' do
       expect(translated_params[:dept_codes]).to be_nil
-      expect(translated_params[:import_all]).to be_nil
     end
   end
 
@@ -20,7 +19,6 @@ describe Oec::ApiTaskWrapper do
     let(:params) { {'term' => 'Summer 2014', 'departmentCode' => 'SYPSY'} }
     it 'should translate params to task options' do
       expect(translated_params[:dept_codes]).to eq 'SYPSY'
-      expect(translated_params[:import_all]).to eq true
       expect(translated_params[:validate_without_export]).to be_nil
     end
   end

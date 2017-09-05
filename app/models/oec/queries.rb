@@ -3,8 +3,8 @@ module Oec
     extend self
 
     # Only used in SisImportTask.import_courses
-    def courses_for_codes(term_code, course_codes, import_all = false)
-      return [] unless (filter = EdoOracle::Oec.depts_clause(term_code, course_codes, import_all))
+    def courses_for_codes(term_code, course_codes)
+      return [] unless (filter = EdoOracle::Oec.depts_clause(term_code, course_codes))
       get_courses(term_code, filter)
     end
 

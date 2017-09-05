@@ -35,9 +35,12 @@ module Oec
       end
     end
 
+    # This means "excluded so far as the specified dept_name is concerned." The mapping row
+    # which defines the dept_name itself will not be excluded, even if (in a wider context)
+    # it is not participating in OEC.
     def excluded_courses(dept_name, home_dept_code)
       catalog_id_specific_mappings.select do |m|
-        (m.dept_name == dept_name) && (m.dept_code != home_dept_code || !m.include_in_oec)
+        (m.dept_name == dept_name) && (m.dept_code != home_dept_code || (m.catalog_id.present? && !m.include_in_oec))
       end
     end
 
