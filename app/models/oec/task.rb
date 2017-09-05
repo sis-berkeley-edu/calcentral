@@ -29,7 +29,6 @@ module Oec
         term_code: term_code,
         allow_past_term: ENV['allow_past_term'].present?,
         local_write: ENV['local_write'].present?,
-        import_all: ENV['import_all'].present?,
         dept_codes: ENV['dept_codes']
       }
     end
