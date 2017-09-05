@@ -90,10 +90,10 @@ angular.module('calcentral.services').factory('rosterService', function($filter)
   var doesStudentMatchEnrollStatus = function(student, enrollStatus) {
     switch (enrollStatus) {
       case 'enrolled': {
-        return (!_.get(student, 'waitlist_position'));
+        return (_.get(student, 'enroll_status') === 'E');
       }
       case 'waitlisted': {
-        return (_.get(student, 'waitlist_position'));
+        return (_.get(student, 'enroll_status') === 'W');
       }
       default: {
         return true;
