@@ -45,6 +45,7 @@ Calcentral::Application.routes.draw do
   get '/auth/cas/callback' => 'sessions#lookup'
   get '/auth/failure' => 'sessions#failure'
   get '/reauth/admin' => 'sessions#reauth_admin', :as => :reauth_admin
+  delete '/logout' => 'sessions#destroy', :as => :logout_ccadmin
   if Settings.developer_auth.enabled
     # the backdoor for http basic auth (bypasses CAS) only on development environments.
     get '/basic_auth_login' => 'sessions#basic_lookup'
