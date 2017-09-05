@@ -2,11 +2,10 @@ describe EdoOracle::Oec do
   let(:term_code) { '2016-D' }
   let(:term_id) { '2168' }
 
-  let(:depts_clause) { EdoOracle::Oec.depts_clause(term_code, course_codes, import_all) }
+  let(:depts_clause) { EdoOracle::Oec.depts_clause(term_code, course_codes) }
 
   context 'department-specific queries' do
     subject { depts_clause }
-    let(:import_all) { false }
 
     context 'complex exceptions' do
       let(:fake_dept_code) {'FAKECODE'}
@@ -49,12 +48,8 @@ describe EdoOracle::Oec do
         "(sec.\"displayName\" LIKE 'PORTUG %'",
         "(sec.\"displayName\" LIKE 'SPANISH %'"
       ) }
-      it { should_not include "(sec.\"displayName\" LIKE 'ILA %')" }
-      it { should_not include 'NOT' }
-
-      context 'with import_all flag' do
-        let(:import_all) { true }
-        it { should include "(sec.\"displayName\" LIKE 'ILA %')" }
+      it 'includes an explicitly selected department even if it is not participating' do
+        expect(subject).to include "(sec.\"displayName\" LIKE 'ILA %')"
       end
     end
 
@@ -107,14 +102,13 @@ describe EdoOracle::Oec do
 
   context 'course code lookup', testext: true do
     subject do
-      EdoOracle::Oec.get_courses(term_id, EdoOracle::Oec.depts_clause(term_code, course_codes, import_all))
+      EdoOracle::Oec.get_courses(term_id, EdoOracle::Oec.depts_clause(term_code, course_codes))
     end
 
     context 'a department participating in OEC' do
       let(:course_codes) do
         [Oec::CourseCode.new(dept_name: 'PORTUG', catalog_id: nil, dept_code: 'LPSPP', include_in_oec: true)]
       end
-      let (:import_all) { false }
       include_examples 'expected result structure'
     end
 
@@ -122,16 +116,7 @@ describe EdoOracle::Oec do
       let(:course_codes) do
         [Oec::CourseCode.new(dept_name: 'FRENCH', catalog_id: nil, dept_code: 'HFREN', include_in_oec: false)]
       end
-
-      context 'without import_all flag' do
-        let (:import_all) { false }
-        it { should be_empty }
-      end
-
-      context 'with import_all flag' do
-        let (:import_all) { true }
-        include_examples 'expected result structure'
-      end
+      include_examples 'expected result structure'
     end
   end
 

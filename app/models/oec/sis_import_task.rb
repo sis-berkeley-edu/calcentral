@@ -19,7 +19,7 @@ module Oec
       course_codes_by_ccn = {}
       cross_listed_ccns = Set.new
 
-      home_dept_rows = Oec::Queries.courses_for_codes(@term_code, course_codes, @opts[:import_all])
+      home_dept_rows = Oec::Queries.courses_for_codes(@term_code, course_codes)
       home_dept_rows_imported = 0
       log :info, "SIS data returned #{home_dept_rows.count} course-instructor pairings under home department"
       home_dept_rows.each do |course_row|

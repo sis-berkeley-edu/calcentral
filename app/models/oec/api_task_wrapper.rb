@@ -101,8 +101,7 @@ module Oec
       }
       if params['departmentCode'].present?
         translated_params.merge!({
-          dept_codes: Array.wrap(params['departmentCode']).join(' '),
-          import_all: true
+          dept_codes: Array.wrap(params['departmentCode']).join(' ')
         })
       end
       translated_params
