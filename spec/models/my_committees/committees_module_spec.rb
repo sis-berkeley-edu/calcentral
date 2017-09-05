@@ -81,4 +81,65 @@ describe MyCommittees::CommitteesModule do
       end
     end
   end
+
+  describe '#member_active?' do
+    subject { described_class.member_active?(committee_member) }
+
+    context 'when committee member is nil' do
+      let(:committee_member) { nil }
+      it 'returns false' do
+        expect(subject).to be false
+      end
+    end
+    context 'when committee member service end date is missing' do
+      let(:committee_member) do
+        {
+          csMemberEndDate: nil,
+        }
+      end
+      it 'returns false' do
+        expect(subject).to be false
+      end
+    end
+    context 'when committee member service end date is malformed' do
+      let(:committee_member) do
+        {
+          csMemberEndDate: 'Present',
+        }
+      end
+      it 'returns false' do
+        expect(subject).to be false
+      end
+    end
+    context 'when committee member service end date is in the past' do
+      let(:committee_member) do
+        {
+          csMemberEndDate: '2009-01-01',
+        }
+      end
+      it 'returns false' do
+        expect(subject).to be false
+      end
+    end
+    context 'when committee member service end date is today' do
+      let(:committee_member) do
+        {
+          csMemberEndDate: DateTime.now.strftime('%F'),
+        }
+      end
+      it 'returns false' do
+        expect(subject).to be false
+      end
+    end
+    context 'when committee member service end date is in the future' do
+      let(:committee_member) do
+        {
+          csMemberEndDate: '2999-01-01',
+        }
+      end
+      it 'returns true' do
+        expect(subject).to be true
+      end
+    end
+  end
 end

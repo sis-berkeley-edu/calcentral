@@ -37,7 +37,7 @@ module MyCommittees
             csMemberEndDate: cs_faculty_committee_svc[:memberEndDate],
             csMemberStartDate: cs_faculty_committee_svc[:memberStartDate]
           )
-          if is_active? cs_committee
+          if member_active? faculty_committee
             committees_result[:active] << faculty_committee
           else
             committees_result[:completed] << faculty_committee
