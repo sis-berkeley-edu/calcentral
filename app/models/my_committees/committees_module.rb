@@ -1,5 +1,6 @@
 module MyCommittees::CommitteesModule
   extend self
+  include ClassLogger
 
   COMMITTEE_TYPES = {
     QE: {
@@ -81,6 +82,16 @@ module MyCommittees::CommitteesModule
       photo: committee_member_photo_url(cs_committee_member),
       primaryDepartment:  cs_committee_member[:memberDeptDescr]
     }
+  end
+
+  def member_active?(committee_member)
+    active = false
+    begin
+      active = Time.zone.parse(committee_member[:csMemberEndDate].to_s).to_datetime.try(:future?)
+    rescue
+      logger.error "Bad Format for committee member end date; uid = #{@uid}"
+    end
+    active
   end
 
   def parse_cs_committee_student (cs_committee)
