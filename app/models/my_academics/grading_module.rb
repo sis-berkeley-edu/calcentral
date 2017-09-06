@@ -2,12 +2,12 @@ module MyAcademics
   module GradingModule
     extend self
 
-    LAW_2168 = "Law Fall 2016"
     LAW_2172 = "Law Spring 2017"
-    GEN_2168 = "General Fall 2016"
+    LAW_2178 = "Law Fall 2017"
+    GEN_MID_2178 = "General Midpoint Fall 2017"
+    GEN_FIN_2178 = "General Final Fall 2017"
     GEN_MID_2172 = "General Midpoint Spring 2017"
     GEN_FIN_2172 = "General Final Spring 2017"
-
 
     def grading_status_mapping
       {
@@ -137,7 +137,7 @@ module MyAcademics
 
     def valid_grading_period?(is_law, term_id)
       # Use class level var to reduce noise in log on invalid grading period
-      return @valid_grading_period if !is_law  && @valid_grading_period.present?
+      return @valid_grading_period if !is_law && @valid_grading_period.present?
       return @valid_grading_period_law if is_law && @valid_grading_period_law.present?
       @valid_grading_period = valid_grading_period_dates?(is_law, term_id) unless is_law
       @valid_grading_period_law = valid_grading_period_dates?(is_law, term_id) if is_law
@@ -152,16 +152,17 @@ module MyAcademics
 
     def period_dates_bad_format?(is_law, term_id)
       if is_law
-        if term_id == '2168'
-          return dates_badly_formatted?(grading_period.dates.law.fall_2016, LAW_2168)
+        if term_id == '2178'
+          return dates_badly_formatted?(grading_period.dates.law.fall_2017, LAW_2178)
         elsif term_id == '2172'
           return dates_badly_formatted?(grading_period.dates.law.spring_2017, LAW_2172)
         else
           return true
         end
       else
-        if term_id == '2168'
-          return dates_badly_formatted?(grading_period.dates.general.fall_2016, GEN_2168)
+        if term_id == '2178'
+          return dates_badly_formatted?(grading_period.dates.general.fall_2017.midpoint, GEN_MID_2178) ||
+            dates_badly_formatted?(grading_period.dates.general.fall_2017.final, GEN_FIN_2178)
         elsif term_id == '2172'
           return dates_badly_formatted?(grading_period.dates.general.spring_2017.midpoint, GEN_MID_2172) ||
             dates_badly_formatted?(grading_period.dates.general.spring_2017.final, GEN_FIN_2172)
@@ -173,16 +174,17 @@ module MyAcademics
 
     def period_dates_bad_order?(is_law, term_id)
       if is_law
-        if term_id == '2168'
-          return dates_out_of_order?(grading_period.dates.law.fall_2016, LAW_2168)
+        if term_id == '2178'
+          return dates_out_of_order?(grading_period.dates.law.fall_2017, LAW_2178)
         elsif term_id == '2172'
           return dates_out_of_order?(grading_period.dates.law.spring_2017, LAW_2172)
         else
           return true
         end
       else
-        if term_id == '2168'
-          return dates_out_of_order?(grading_period.dates.general.fall_2016, GEN_2168)
+        if term_id == '2178'
+          return dates_out_of_order?(grading_period.dates.general.fall_2017.midpoint, GEN_MID_2178) ||
+            dates_out_of_order?(grading_period.dates.general.fall_2017.final, GEN_FIN_2178)
         elsif term_id == '2172'
           return dates_out_of_order?(grading_period.dates.general.spring_2017.midpoint, GEN_MID_2172) ||
             dates_out_of_order?(grading_period.dates.general.spring_2017.final, GEN_FIN_2172)
@@ -193,9 +195,11 @@ module MyAcademics
     end
 
     def dates_badly_formatted?(dates, datetype)
-      dates.try(:each_value) do |date|
+      start_date = dates.try(:start)
+      end_date = dates.try(:end)
+      [start_date, end_date].each do |date|
         begin
-          DateTime.parse(date.to_s)
+          parsed_date = DateTime.parse(date.to_s)
         rescue
           logger.error "Bad Format for Grading Period #{datetype} in Settings for Class #{self.class.name} feed, uid = #{@uid}"
           return true
