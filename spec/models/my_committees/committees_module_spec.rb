@@ -82,6 +82,50 @@ describe MyCommittees::CommitteesModule do
     end
   end
 
+  describe '#format_member_service_dates' do
+    subject { described_class.format_member_service_dates(committee_member) }
+
+    context 'when committee member is nil' do
+      let(:committee_member) { nil }
+      it 'returns nil' do
+        expect(subject).to be nil
+      end
+    end
+    context 'when committee member service start and end dates are missing' do
+      let(:committee_member) do
+        {
+          memberEndDate: nil,
+          memberStartDate: nil
+        }
+      end
+      it 'returns nil' do
+        expect(subject).to be nil
+      end
+    end
+    context 'when one of the committee member service dates is missing' do
+      let(:committee_member) do
+        {
+          memberEndDate: '2016-01-01',
+          memberStartDate: nil
+        }
+      end
+      it 'returns nil' do
+        expect(subject).to be nil
+      end
+    end
+    context 'when committee member service start and end dates are populated' do
+      let(:committee_member) do
+        {
+          memberEndDate: '2016-01-01',
+          memberStartDate: '2015-01-01'
+        }
+      end
+      it 'returns a formatted date range' do
+        expect(subject).to eq 'Jan 01, 2015 - Jan 01, 2016'
+      end
+    end
+  end
+
   describe '#member_active?' do
     subject { described_class.member_active?(committee_member) }
 
@@ -139,6 +183,29 @@ describe MyCommittees::CommitteesModule do
       end
       it 'returns true' do
         expect(subject).to be true
+      end
+    end
+
+    describe '#to_display' do
+      subject { described_class.to_display(date) }
+
+      context 'when date is missing' do
+        let(:date) { nil }
+        it 'returns empty string' do
+          expect(subject).to eq ''
+        end
+      end
+      context 'when date is the special Campus Solutions representation of a null date' do
+        let(:date) { '2999-01-01' }
+        it 'returns Present' do
+          expect(subject).to eq 'Present'
+        end
+      end
+      context 'when date is a valid date' do
+        let(:date) { '2998-12-31' }
+        it 'returns a formatted date' do
+          expect(subject).to eq 'Dec 31, 2998'
+        end
       end
     end
   end

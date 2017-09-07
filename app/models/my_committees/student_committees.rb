@@ -58,6 +58,16 @@ module MyCommittees
       milestone_attempt[:sequenceNumber] === 1 && milestone_attempt[:result] == Berkeley::GraduateMilestones::QE_RESULTS_STATUS_PASSED
     end
 
+    def parse_cs_committee_member (cs_committee_member)
+      {
+        name: "#{cs_committee_member[:memberNameFirst]} #{cs_committee_member[:memberNameLast]}",
+        email: cs_committee_member[:memberEmail],
+        photo: committee_member_photo_url(cs_committee_member),
+        primaryDepartment:  cs_committee_member[:memberDeptDescr],
+        serviceRange: format_member_service_dates(cs_committee_member)
+      }
+    end
+
     def remove_inactive_members(cs_committee)
       cs_committee[:committeeMembers].try(:reject!) do |member|
         inactive?(member)
