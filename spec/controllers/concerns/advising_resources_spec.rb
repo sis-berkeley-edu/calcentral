@@ -1,18 +1,32 @@
 describe AdvisingResources do
-
   let(:empl_id) { 123 }
-  let(:student_career_code) { 'LAW' }
-  let(:student_career) do
-    {
-      'code' => student_career_code,
-      'description' => 'Law'
-    }
-  end
   let(:mock_link) { 'here is your link' }
+  let(:academic_statuses) do
+    [
+      {
+        'studentCareer' => {
+          'academicCareer' => {'code' => 'LAW', 'description' => 'Law'},
+          'fromDate' => '2017-08-09'
+        }
+      },
+      {
+        'studentCareer' => {
+          'academicCareer' => {'code' => 'UGRD', 'description' => 'Undergraduate'},
+          'fromDate' => '2011-01-12'
+        }
+      },
+      {
+        'studentCareer' => {
+          'academicCareer' => {'code' => 'GRAD', 'description' => 'Graduate'},
+          'fromDate' => '2015-02-24'
+        }
+      },
+    ]
+  end
+
   before do
     allow(User::Identifiers).to receive(:lookup_campus_solutions_id).and_return empl_id
-    # allow(MyAcademics::AcademicsModule).to receive(:parse_hub_academic_statuses).and_return {}
-    allow(MyAcademics::AcademicsModule).to receive(:newest_career).and_return student_career
+    allow(HubEdos::MyAcademicStatus).to receive(:get_statuses).and_return(academic_statuses)
     allow(LinkFetcher).to receive(:fetch_link).and_return mock_link
   end
 
@@ -26,7 +40,7 @@ describe AdvisingResources do
   describe '#lookup_student_career' do
     subject { described_class.lookup_student_career random_id }
     it 'returns the career code' do
-      expect(subject).to eq student_career_code
+      expect(subject).to eq 'LAW'
     end
   end
 

@@ -7,7 +7,11 @@ describe MyAcademics::Merged do
       MyAcademics::Teaching,
       MyAcademics::TransferCredit,
       MyAcademics::Exams,
-      MyAcademics::CanvasSites
+      MyAcademics::CanvasSites,
+      MyAcademics::FacultyDelegate,
+      MyAcademics::Grading,
+      MyAcademics::Graduation,
+      MyAcademics::StudentLinks
     ]
   end
 

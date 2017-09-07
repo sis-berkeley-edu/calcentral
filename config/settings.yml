@@ -247,9 +247,6 @@ cache:
 
     Advising::MyAdvising: <%= 2.hours %>
 
-    MyAcademics::CollegeAndLevel: NEXT_08_00
-    MyAcademics::GpaUnits: NEXT_08_00
-
     Berkeley::Terms: NEXT_08_00
     Berkeley::LegacyTerms: <%= 29.days %>
     Finaid::TimeRange: <%= 4.hours %>

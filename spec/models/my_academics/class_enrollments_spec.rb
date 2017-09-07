@@ -3,35 +3,21 @@ describe MyAcademics::ClassEnrollments do
   let(:student_emplid) { '12000001' }
   let(:is_feature_enabled_flag) { true }
   let(:user_is_student) { false }
-  let(:cs_enrollment_career_terms_feed) do
+  let(:cs_enrollment_term_detail) do
     {
-      statusCode: 200,
-      feed: {
-        enrollmentTerms: cs_enrollment_career_terms,
-        studentId: student_emplid
-      }
-    }
-  end
-  let(:cs_enrollment_term_detail_feed) do
-    {
-      statusCode: 200,
-      feed: {
-        enrollmentTerm: {
-          studentId: student_emplid,
-          term: '216X',
-          termDescr: 'Afterlithe 2016',
-          isClassScheduleAvailable: true,
-          isGradeBaseAvailable: false,
-          links: {},
-          advisors: [],
-          enrollmentPeriod: [],
-          scheduleOfClassesPeriod: {},
-          enrolledClasses: [],
-          waitlistedClasses: [],
-          enrolledClassesTotalUnits: 8.0,
-          waitlistedClassesTotalUnits: 2.0,
-        }
-      }
+      studentId: student_emplid,
+      term: '216X',
+      termDescr: 'Afterlithe 2016',
+      isClassScheduleAvailable: true,
+      isGradeBaseAvailable: false,
+      links: {},
+      advisors: [],
+      enrollmentPeriod: [],
+      scheduleOfClassesPeriod: {},
+      enrolledClasses: [],
+      waitlistedClasses: [],
+      enrolledClassesTotalUnits: 8.0,
+      waitlistedClassesTotalUnits: 2.0,
     }
   end
   let(:college_and_level_feed) do
@@ -132,7 +118,12 @@ describe MyAcademics::ClassEnrollments do
       primary: true,
     }
   end
-  let(:cs_enrollment_career_terms) { [cs_career_term_ugrd_summer_2016, cs_career_term_grad_fall_2016, cs_career_term_law_fall_2016] }
+  let(:cs_enrollment_career_terms) {
+    [
+      cs_career_term_ugrd_summer_2016,
+      cs_career_term_grad_fall_2016,
+      cs_career_term_law_fall_2016]
+  }
   let(:cs_career_term_ugrd_summer_2016) { { termId: '2165', termDescr: '2016 Summer', acadCareer: 'UGRD' } }
   let(:cs_career_term_ugrd_fall_2016) { { termId: '2168', termDescr: '2016 Fall', acadCareer: 'UGRD' } }
   let(:cs_career_term_ugrd_spring_2017) { { termId: '2172', termDescr: '2017 Spring', acadCareer: 'UGRD' } }
@@ -147,11 +138,9 @@ describe MyAcademics::ClassEnrollments do
     allow_any_instance_of(MyAcademics::CollegeAndLevel).to receive(:merge) do |feed_hash|
       feed_hash.merge!(college_and_level_feed)
     end
-    allow_any_instance_of(CampusSolutions::EnrollmentTerms).to receive(:get).and_return(cs_enrollment_career_terms_feed)
-    allow(CampusSolutions::EnrollmentTerm).to receive(:new) do |args|
-      custom_feed = cs_enrollment_term_detail_feed.deep_dup
-      custom_feed[:feed][:enrollmentTerm][:term] = args[:term_id]
-      double('CampusSolutions::EnrollmentTerm', get: custom_feed)
+    allow(CampusSolutions::MyEnrollmentTerms).to receive(:get_terms).and_return(cs_enrollment_career_terms)
+    allow(CampusSolutions::MyEnrollmentTerm).to receive(:get_term) do |uid, term_id|
+      cs_enrollment_term_detail.merge({:term => term_id})
     end
   end
 
@@ -539,28 +528,6 @@ describe MyAcademics::ClassEnrollments do
       let(:cs_enrollment_career_terms) { [] }
       it 'returns empty array' do
         expect(active_career_terms).to eq []
-      end
-    end
-
-    context 'when active terms are returned in non-chronological order' do
-      let(:cs_enrollment_career_terms) { [cs_career_term_ugrd_fall_2016, cs_career_term_ugrd_spring_2017, cs_career_term_ugrd_summer_2016] }
-      it 'returns active terms in order of term ID' do
-        expect(active_career_terms.count).to eq 3
-        expect(active_career_terms[0][:termId]).to eq '2165'
-        expect(active_career_terms[1][:termId]).to eq '2168'
-        expect(active_career_terms[2][:termId]).to eq '2172'
-      end
-
-      it 'includes normalized english term name' do
-        expect(active_career_terms[0][:termName]).to eq 'Summer 2016'
-        expect(active_career_terms[1][:termName]).to eq 'Fall 2016'
-        expect(active_career_terms[2][:termName]).to eq 'Spring 2017'
-      end
-
-      it 'indicates if term is summer' do
-        expect(active_career_terms[0][:termIsSummer]).to eq true
-        expect(active_career_terms[1][:termIsSummer]).to eq false
-        expect(active_career_terms[2][:termIsSummer]).to eq false
       end
     end
 

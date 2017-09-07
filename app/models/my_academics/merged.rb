@@ -21,6 +21,7 @@ module MyAcademics
         CanvasSites,
         FacultyDelegate,
         Grading,
+        Graduation,
         StudentLinks
       ]
     end

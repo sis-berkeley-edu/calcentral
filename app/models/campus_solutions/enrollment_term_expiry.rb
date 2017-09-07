@@ -2,6 +2,8 @@ module CampusSolutions
   module EnrollmentTermExpiry
     def self.expire(uid=nil)
       [
+        CampusSolutions::MyEnrollmentTerm,
+        CampusSolutions::MyEnrollmentTerms,
         EdoOracle::UserCourses::All,
         MyAcademics::Merged,
         MyAcademics::ClassEnrollments,

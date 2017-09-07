@@ -35,6 +35,19 @@
     "totalUnits":114.3,
     "totalUnitsAttempted":38
   },
+  "graduation": {
+    "activeTermsWithEnrollmentAppointments": [
+      "2178",
+      "2182",
+      "2185"
+    ],
+    "lastExpectedGraduationTerm": {
+      "code": "2188",
+      "name": "Fall 2018"
+    },
+    "isNotGraduateOrLawStudent": true,
+    "appointmentsInGraduatingTerm": false
+  },
   "requirements":[
     {
       "name":"UC Entry Level Writing",

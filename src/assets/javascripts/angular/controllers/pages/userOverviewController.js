@@ -9,7 +9,7 @@ var _ = require('lodash');
 angular.module('calcentral.controllers').controller('UserOverviewController', function(academicsService, adminService, advisingFactory, apiService, enrollmentVerificationFactory, linkService, statusHoldsService, $route, $routeParams, $scope) {
   linkService.addCurrentRouteSettings($scope);
 
-  $scope.expectedGradTerm = academicsService.expectedGradTerm;
+  $scope.expectedGradTermName = academicsService.expectedGradTermName;
   $scope.academics = {
     isLoading: true,
     excludeLinksToRegistrar: true

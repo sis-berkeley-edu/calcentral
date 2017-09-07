@@ -39,21 +39,6 @@ module MyAcademics
       }
     end
 
-    def parse_hub_academic_statuses(response)
-      status = response[:feed] && response[:feed]['student'] && response[:feed]['student']['academicStatuses']
-      status if status.present?
-    end
-
-    def parse_hub_careers(statuses)
-      [].tap do |careers|
-        statuses.each do |status|
-          if (career = status['studentCareer'].try(:[], 'academicCareer').try(:[], 'description'))
-            careers << career
-          end
-        end
-      end.uniq.reject { |level| level.to_s.empty? }
-    end
-
     def newest_career(statuses)
       newest_career_status = statuses.try(:sort) do |this_status, that_status|
         this_from_date = this_status['studentCareer'].try(:[], 'fromDate').to_s
@@ -61,6 +46,15 @@ module MyAcademics
         this_from_date <=> that_from_date
       end.try(:last)
       newest_career_status.try(:[], 'studentCareer').try(:[], 'academicCareer')
+    end
+
+    def filter_inactive_status_plans(statuses)
+      statuses.each do |status|
+        status['studentPlans'].select! do |plan|
+          plan.try(:[], 'statusInPlan').try(:[], 'status').try(:[], 'code') == 'AC'
+        end
+      end
+      statuses
     end
 
     def course_info(campus_course)
