@@ -75,13 +75,11 @@ module MyCommittees::CommitteesModule
     milestone_attempt
   end
 
-  def parse_cs_committee_member (cs_committee_member)
-    {
-      name: "#{cs_committee_member[:memberNameFirst]} #{cs_committee_member[:memberNameLast]}",
-      email: cs_committee_member[:memberEmail],
-      photo: committee_member_photo_url(cs_committee_member),
-      primaryDepartment:  cs_committee_member[:memberDeptDescr]
-    }
+  def format_member_service_dates(committee_member)
+    start_date = to_display committee_member.try(:[], :memberStartDate)
+    end_date = to_display committee_member.try(:[], :memberEndDate)
+    service_range = "#{ start_date } - #{ end_date }" if start_date.present? && end_date.present?
+    service_range
   end
 
   def member_active?(committee_member)
@@ -92,14 +90,6 @@ module MyCommittees::CommitteesModule
       logger.error "Bad Format for committee member end date; uid = #{@uid}"
     end
     active
-  end
-
-  def parse_cs_committee_student (cs_committee)
-    {
-      name: "#{cs_committee[:studentNameFirst]} #{cs_committee[:studentNameLast]}",
-      email: cs_committee[:studentEmail],
-      photo: committee_student_photo_url(cs_committee)
-    }
   end
 
   def committee_member_photo_url (cs_committee_member)
@@ -203,6 +193,14 @@ module MyCommittees::CommitteesModule
     cs_committee.try(:[], :committeeFinishingMilestoneComplete) != 'Y'
   end
 
+  def to_display(date)
+    if date === '2999-01-01'
+      'Present'
+    else
+      format_date date
+    end
+  end
+
   def format_date(unformatted_date)
     formatted_date = ''
     begin
@@ -212,5 +210,4 @@ module MyCommittees::CommitteesModule
     end
     formatted_date
   end
-
 end

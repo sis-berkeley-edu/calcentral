@@ -1,10 +1,8 @@
 require 'spec_helper'
 
 describe MyCommittees::FacultyCommittees do
-  let(:feed) { described_class.new(uid).get_feed }
   let(:uid) { random_id }
   let(:user_cs_id) { random_id }
-  let(:fake_faculty_committees_proxy) { CampusSolutions::FacultyCommittees.new(fake: true, user_id: uid) }
 
   context 'fake data' do
     before do
@@ -13,6 +11,8 @@ describe MyCommittees::FacultyCommittees do
       allow(CalnetCrosswalk::ByUid).to receive(:new).with(user_id: uid).and_return(
         double(lookup_campus_solutions_id: user_cs_id))
     end
+    let(:fake_faculty_committees_proxy) { CampusSolutions::FacultyCommittees.new(fake: true, user_id: uid) }
+    let(:feed) { described_class.new(uid).get_feed }
 
     it 'categorizes committees as active or inactive based on faculty member\'s service end date' do
       expect(feed[:facultyCommittees][:active].count).to eq 1
@@ -129,6 +129,61 @@ describe MyCommittees::FacultyCommittees do
     it 'replaces bogus dates with text' do
       committee = feed[:facultyCommittees][:active][0]
       expect(committee[:serviceRange]).to eq 'Aug 31, 2016 - Present'
+    end
+  end
+
+  describe '#parse_cs_faculty_committee_svc' do
+    subject { described_class.new(uid).parse_cs_faculty_committee_svc(cs_committee) }
+
+    context 'when committee is missing' do
+      let(:cs_committee) { nil }
+      it 'returns an object populated with nil values' do
+        expect(subject).to be
+        expect(subject[:serviceRange]).to be nil
+        expect(subject[:csMemberEndDate]).to be nil
+        expect(subject[:csMemberStartDate]).to be nil
+      end
+    end
+    context 'when committee members list is missing' do
+      let(:cs_committee) do
+        {
+          committeeMembers: nil
+        }
+      end
+      it 'returns an object populated with nil values' do
+        expect(subject).to be
+        expect(subject[:serviceRange]).to be nil
+        expect(subject[:csMemberEndDate]).to be nil
+        expect(subject[:csMemberStartDate]).to be nil
+      end
+    end
+    context 'when committee members list is empty' do
+      let(:cs_committee) do
+        {
+          committeeMembers: []
+        }
+      end
+      it 'returns an object populated with nil values' do
+        expect(subject).to be
+        expect(subject[:serviceRange]).to be nil
+        expect(subject[:csMemberEndDate]).to be nil
+        expect(subject[:csMemberStartDate]).to be nil
+      end
+    end
+    context 'when committee members list does not contain the current user' do
+      let(:cs_committee) do
+        {
+          committeeMembers: [
+            memberEmplid: 123
+          ]
+        }
+      end
+      it 'returns an object populated with nil values' do
+        expect(subject).to be
+        expect(subject[:serviceRange]).to be nil
+        expect(subject[:csMemberEndDate]).to be nil
+        expect(subject[:csMemberStartDate]).to be nil
+      end
     end
   end
 end
