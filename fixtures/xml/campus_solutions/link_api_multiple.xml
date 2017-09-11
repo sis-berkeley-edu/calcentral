@@ -733,6 +733,35 @@ This link should take an instructor to the Grade Roster in BCS of the identified
     <COMMENTS>This should take an advisor to a student's student center page where they may select a drop down to find the Academic Progress Report in CS.</COMMENTS>
   </Link>
   <Link>
+    <URL_ID>UC_CX_APR_RPT_FOR_STDNT</URL_ID>
+    <Description>Academic Progress Report</Description>
+    <HOVER_OVER_TEXT>Academic Progress Report</HOVER_OVER_TEXT>
+    <PROPERTIES type="array">
+      <PROPERTY>
+        <NAME>CALCENTRAL</NAME>
+        <value>ADVISOR</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>UCFROM</NAME>
+        <value>CalCentral</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>UCFROMLINK</NAME>
+        <value>https://calcentral-sis-dev-01.ist.berkeley.edu/</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>UCFROMTEXT</NAME>
+        <value>CalCentral</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>URI_TYPE</NAME>
+        <value>PL</value>
+      </PROPERTY>
+    </PROPERTIES>
+    <URL>https://bcswebqat.is.berkeley.edu/psp/bcsqat/EMPLOYEE/PSFT_CS/c/SA_LEARNER_SERVICES.SAA_SS_DPR_ADB.GBL?EMPLID={EMPLID}</URL>
+    <COMMENTS>This should take a student to page where they can see their newly generated Academic Progress Report in CS.</COMMENTS>
+  </Link>
+  <Link>
     <URL_ID>UC_CX_AA_MILESTONE</URL_ID>
     <Description>Milestones</Description>
     <HOVER_OVER_TEXT>Look up a student's milestones</HOVER_OVER_TEXT>

@@ -1,12 +1,12 @@
 module DegreeProgress
   class UndergradRequirements < UserSpecificModel
     # This model provides an advisor-specific version of milestone data for UGRD career.
-
     include Cache::CachedFeed
     include Cache::JsonifiedFeed
     include Cache::UserCacheExpiry
     include RequirementsModule
-    include LinkFetcher
+
+    LINK_ID = 'UC_CX_APR_RPT_STDNT'
 
     def get_feed_internal
       return {} unless is_feature_enabled?
@@ -20,24 +20,6 @@ module DegreeProgress
         })
       end
       response
-    end
-
-    private
-
-    def student_empl_id
-      User::Identifiers.lookup_campus_solutions_id @uid
-    end
-
-    def get_links
-      links = {}
-      links_config = [
-        { feed_key: :academic_progress_report, cs_link_key: 'UC_CX_APR_RPT_STDNT', cs_link_params: { :EMPLID => student_empl_id } }
-      ]
-      links_config.each do |setting|
-        link = fetch_link setting[:cs_link_key], setting[:cs_link_params]
-        links[setting[:feed_key]] = link unless link.blank?
-      end
-      links
     end
 
     def is_feature_enabled?
