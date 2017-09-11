@@ -448,9 +448,6 @@ grading_period:
     law:  ''
   dates:
     general:
-      fall_2016:
-        start: ''
-        end: ''
       spring_2017:
         midpoint:
           start: ''
@@ -458,13 +455,33 @@ grading_period:
         final:
           start: ''
           end: ''
+      fall_2017:
+        midpoint:
+          start: ''
+          end: ''
+        final:
+          start: ''
+          end: ''
     law:
-      fall_2016:
-        start: ''
-        end: ''
       spring_2017:
         start: ''
         end: ''
+      fall_2017:
+        start: ''
+        end: ''
+      summer_2017:
+        Q1:
+          start: ''
+          end: ''
+        Q2:
+          start: ''
+          end: ''
+        Q3:
+          start: ''
+          end: ''
+        Q4:
+          start: ''
+          end: ''
 
 # A feature will be disabled if the corresponding feature-flag is false or nil.
 features:
