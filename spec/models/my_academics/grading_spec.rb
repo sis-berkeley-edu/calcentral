@@ -24,8 +24,10 @@ describe MyAcademics::Grading do
   context 'grading period configuration validation' do
     context 'when grading period from settings is set' do
       before do
-        allow(Settings.grading_period.dates.general.fall_2017.midpoint).to receive(:start).and_return '2017-12-12 0:0:0'
-        allow(Settings.grading_period.dates.general.fall_2017.midpoint).to receive(:end).and_return '2017-12-12 23:59:59'
+        allow(Settings.grading_period.dates.general.fall_2017.midpoint).to receive(:start).and_return '2017-10-30 0:0:0'
+        allow(Settings.grading_period.dates.general.fall_2017.midpoint).to receive(:end).and_return '2017-12-01 23:59:59'
+        allow(Settings.grading_period.dates.general.fall_2017.final).to receive(:start).and_return '2017-12-12 0:0:0'
+        allow(Settings.grading_period.dates.general.fall_2017.final).to receive(:end).and_return '2017-12-21 23:59:59'
       end
       it 'it succeeds on grading period validation' do
         expect(subject.valid_grading_period?(false, '2178')).to eq true
@@ -35,7 +37,9 @@ describe MyAcademics::Grading do
     context 'when grading period start is bad format' do
       before do
         allow(Settings.grading_period.dates.general.fall_2017.midpoint).to receive(:start).and_return 'notadate'
-        allow(Settings.grading_period.dates.general.fall_2017.midpoint).to receive(:end).and_return '2017-12-12 23:59:59'
+        allow(Settings.grading_period.dates.general.fall_2017.midpoint).to receive(:end).and_return '2017-12-01 23:59:59'
+        allow(Settings.grading_period.dates.general.fall_2017.final).to receive(:start).and_return '2017-12-12 0:0:0'
+        allow(Settings.grading_period.dates.general.fall_2017.final).to receive(:end).and_return '2017-12-21 23:59:59'
       end
       it 'it fails on grading period validation' do
         expect(subject.valid_grading_period?(false, '2178')).to eq false
@@ -44,6 +48,8 @@ describe MyAcademics::Grading do
 
     context 'when grading period end is bad format' do
       before do
+        allow(Settings.grading_period.dates.general.fall_2017.midpoint).to receive(:start).and_return '2017-10-30 0:0:0'
+        allow(Settings.grading_period.dates.general.fall_2017.midpoint).to receive(:end).and_return '2017-12-01 23:59:59'
         allow(Settings.grading_period.dates.general.fall_2017.final).to receive(:start).and_return '2017-12-12 0:0:0'
         allow(Settings.grading_period.dates.general.fall_2017.final).to receive(:end).and_return 'notadate'
       end
@@ -55,7 +61,9 @@ describe MyAcademics::Grading do
     context 'when grading period start is not set' do
       before do
         allow(Settings.grading_period.dates.general.fall_2017.midpoint).to receive(:start).and_return ''
-        allow(Settings.grading_period.dates.general.fall_2017.midpoint).to receive(:end).and_return '2017-12-12 23:59:59'
+        allow(Settings.grading_period.dates.general.fall_2017.midpoint).to receive(:end).and_return '2017-12-01 23:59:59'
+        allow(Settings.grading_period.dates.general.fall_2017.final).to receive(:start).and_return '2017-12-12 0:0:0'
+        allow(Settings.grading_period.dates.general.fall_2017.final).to receive(:end).and_return '2017-12-21 23:59:59'
       end
       it 'it fails on grading period validation' do
         expect(subject.valid_grading_period?(false, '2178')).to eq false
@@ -64,6 +72,8 @@ describe MyAcademics::Grading do
 
     context 'when grading period end is not set' do
       before do
+        allow(Settings.grading_period.dates.general.fall_2017.midpoint).to receive(:start).and_return '2017-10-30 0:0:0'
+        allow(Settings.grading_period.dates.general.fall_2017.midpoint).to receive(:end).and_return '2017-12-01 23:59:59'
         allow(Settings.grading_period.dates.general.fall_2017.final).to receive(:start).and_return '2017-12-12 0:0:0'
         allow(Settings.grading_period.dates.general.fall_2017.final).to receive(:end).and_return ''
       end
@@ -76,6 +86,8 @@ describe MyAcademics::Grading do
       before do
         allow(Settings.grading_period.dates.general.fall_2017.midpoint).to receive(:start).and_return '2017-12-12 23:59:59'
         allow(Settings.grading_period.dates.general.fall_2017.midpoint).to receive(:end).and_return '2017-12-12 0:0:0'
+        allow(Settings.grading_period.dates.general.fall_2017.final).to receive(:start).and_return '2017-12-12 0:0:0'
+        allow(Settings.grading_period.dates.general.fall_2017.final).to receive(:end).and_return '2017-12-21 23:59:59'
       end
       it 'it fails on grading period validation' do
         expect(subject.valid_grading_period?(false, '2178')).to eq false
@@ -94,8 +106,10 @@ describe MyAcademics::Grading do
 
   context 'when current date is before grading period' do
     before do
-      allow(Settings.grading_period.dates.general.fall_2017.midpoint).to receive(:start).and_return '2017-12-12 00:00:00 -0800'
-      allow(Settings.grading_period.dates.general.fall_2017.midpoint).to receive(:end).and_return '2017-12-12 23:59:59 -0800'
+      allow(Settings.grading_period.dates.general.fall_2017.midpoint).to receive(:start).and_return '2017-10-30 0:0:0'
+      allow(Settings.grading_period.dates.general.fall_2017.midpoint).to receive(:end).and_return '2017-12-01 23:59:59'
+      allow(Settings.grading_period.dates.general.fall_2017.final).to receive(:start).and_return '2017-12-12 0:0:0'
+      allow(Settings.grading_period.dates.general.fall_2017.final).to receive(:end).and_return '2017-12-21 23:59:59'
       allow(DateTime).to receive(:now).and_return '2017-1-1 0:0:0'.to_datetime
     end
     it 'it should return correct grading period status' do
@@ -105,8 +119,10 @@ describe MyAcademics::Grading do
 
   context 'when current date is in grading period' do
     before do
+      allow(Settings.grading_period.dates.general.fall_2017.midpoint).to receive(:start).and_return '2017-10-30 0:0:0'
+      allow(Settings.grading_period.dates.general.fall_2017.midpoint).to receive(:end).and_return '2017-12-01 23:59:59'
       allow(Settings.grading_period.dates.general.fall_2017.final).to receive(:start).and_return '2017-12-12 0:0:0'
-      allow(Settings.grading_period.dates.general.fall_2017.final).to receive(:end).and_return '2017-12-12 23:59:59'
+      allow(Settings.grading_period.dates.general.fall_2017.final).to receive(:end).and_return '2017-12-21 23:59:59'
       allow(DateTime).to receive(:now).and_return '2017-12-12 7:7:7'.to_datetime
     end
     it 'it should return correct grading period status' do
@@ -116,6 +132,8 @@ describe MyAcademics::Grading do
 
   context 'when current date is in grading period for Law' do
     before do
+      allow(Settings.grading_period.dates.general.fall_2017.midpoint).to receive(:start).and_return 'notadate'
+      allow(Settings.grading_period.dates.general.fall_2017.midpoint).to receive(:end).and_return 'notadate'
       allow(Settings.grading_period.dates.general.fall_2017.final).to receive(:start).and_return 'notadate'
       allow(Settings.grading_period.dates.general.fall_2017.final).to receive(:end).and_return 'notadate'
       allow(Settings.grading_period.dates.law.fall_2017).to receive(:start).and_return '2017-12-12 0:0:0'
