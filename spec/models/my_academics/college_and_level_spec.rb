@@ -144,7 +144,20 @@ describe MyAcademics::CollegeAndLevel do
           }
         }
       ],
-      'honors' => {},
+      'honors' => {
+        'honors' => [
+        {
+        'code' => 'C2',
+        'description' => 'High Distinction: CNR',
+        'formalDescription' => 'High Distinction: College of Natural Resources'
+      },
+      {
+        'code' => 'P1',
+        'description' => 'Honors in Society and Environment',
+        'formalDescription' => 'Honors in Society and Environment'
+      }
+    ]
+    },
       'dateAwarded' => '2012-12-14',
       'status' => {
         'code' => 'Awarded'
@@ -154,29 +167,29 @@ describe MyAcademics::CollegeAndLevel do
   end
   let(:hub_degree_not_awarded) do
     {
-      :academicDegree => {
-        :type => {
-          :code => 'PD',
-          :description => 'Doctor of Philosophy'
+      'academicDegree' => {
+        'type' => {
+          'code' => 'PD',
+          'description' => 'Doctor of Philosophy'
         }
       },
-      :completionTerm => {
-        :name => '2010 Spring'
+      'completionTerm' => {
+        'name' => '2010 Spring'
       },
-      :academicPlans => [
+      'academicPlans' => [
         {
-          :plan => {
-            :code => '00345PHDG',
-            :description => 'English PhD'
+          'plan' => {
+            'code' => '00345PHDG',
+            'description' => 'English PhD'
           }
         }
       ],
-        :honors => {},
-        :dateAwarded => '2010-05-14',
-        :status => {
-        :code => 'Not Awarded'
+        'honors' => {},
+        'dateAwarded' => '2010-05-14',
+        'status' => {
+        'code' => 'Not Awarded'
       },
-      :statusDate => '2015-12-12'
+      'statusDate' => '2015-12-12'
     }
   end
 
@@ -528,6 +541,13 @@ describe MyAcademics::CollegeAndLevel do
         expect(feed[:collegeAndLevel][:degrees][0]['academicPlans'][0]['plan']['description']).to eq 'Education MA'
 
         expect(feed[:collegeAndLevel][:degrees][0]['honors']).to be
+        expect(feed[:collegeAndLevel][:degrees][0]['honors']['honors']).to be
+        expect(feed[:collegeAndLevel][:degrees][0]['honors']['honors'].count).to eq 2
+        expect(feed[:collegeAndLevel][:degrees][0]['honors']['honors'][0]['code']).to eq 'C2'
+        expect(feed[:collegeAndLevel][:degrees][0]['honors']['honors'][0]['formalDescription']).to eq 'High Distinction: College of Natural Resources'
+        expect(feed[:collegeAndLevel][:degrees][0]['honors']['honors'][1]['code']).to eq 'P1'
+        expect(feed[:collegeAndLevel][:degrees][0]['honors']['honors'][1]['formalDescription']).to eq 'Honors in Society and Environment'
+
         expect(feed[:collegeAndLevel][:degrees][0]['dateAwarded']).to eq '2012-12-14'
         expect(feed[:collegeAndLevel][:degrees][0]['status']).to be
         expect(feed[:collegeAndLevel][:degrees][0]['status']['code']).to eq 'Awarded'

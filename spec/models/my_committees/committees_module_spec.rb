@@ -171,6 +171,7 @@ describe MyCommittees::CommitteesModule do
           csMemberEndDate: DateTime.now.strftime('%F'),
         }
       end
+
       it 'returns false' do
         expect(subject).to be false
       end
