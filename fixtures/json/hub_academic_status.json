@@ -281,12 +281,20 @@
                     }
                   }
                 ],
-                "honors": [
-                  {
-                    "code": "C2",
-                    "description": "High Distinction: CNR"
-                  }
-                ],
+                "honors": {
+                  "honors": [
+                    {
+                      "code": "C2",
+                      "description": "High Distinction: CNR",
+                      "formalDescription": "High Distinction: College of Natural Resources"
+                    },
+                    {
+                      "code": "P1",
+                      "description": "Honors in Society and Environment",
+                      "formalDescription": "Honors in Society and Environment"
+                    }
+                  ]
+                },
                 "dateAwarded": "2010-05-14",
                 "status": {
                   "code": "Awarded"
