@@ -24,6 +24,11 @@ module Berkeley
       },
     ]
 
+    # Role(s) assigned to a user if they are in a program associated with that role.
+    ACADEMIC_PROGRAM_ROLES = [
+      {role_code: 'lettersAndScience', match: ['UCLS'], types: []}
+    ]
+
     # Role(s) assigned to a user if they are in a career associated with that role.
     ACADEMIC_CAREER_ROLES = [
       {role_code: 'ugrd', match: ['UGRD'], types: []},
@@ -34,6 +39,10 @@ module Berkeley
 
     def get_academic_plan_role_code(plan_code, type = nil)
       get_role_code(ACADEMIC_PLAN_ROLES, plan_code, type)
+    end
+
+    def get_academic_program_role_code(program_code, type = nil)
+      get_role_code(ACADEMIC_PROGRAM_ROLES, program_code, type)
     end
 
     def get_academic_career_role_code(career_code, type = nil)
@@ -56,7 +65,7 @@ module Berkeley
     end
 
     def role_codes
-      (ACADEMIC_PLAN_ROLES | ACADEMIC_CAREER_ROLES).collect do |matcher|
+      (ACADEMIC_PLAN_ROLES | ACADEMIC_CAREER_ROLES | ACADEMIC_PROGRAM_ROLES).collect do |matcher|
         matcher[:role_code]
       end
     end

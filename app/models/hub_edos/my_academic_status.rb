@@ -43,8 +43,10 @@ module HubEdos
       status.try(:[], 'studentPlans').each do |plan|
         if active? plan
           plan_code = plan.try(:[], 'academicPlan').try(:[], 'plan').try(:[], 'code')
+          program_code = plan.try(:[], 'academicPlan').try(:[], 'academicProgram').try(:[], 'program').try(:[], 'code')
           plan[:role] = find_role(plan_code, career_code)
           plan[:enrollmentRole] = find_role(plan_code, career_code, :enrollment)
+          plan[:programRole] = get_academic_program_role_code(program_code) || 'default'
         end
       end
     end
@@ -59,9 +61,10 @@ module HubEdos
     end
 
     def collect_roles(status)
-      status.try(:[], 'studentPlans').collect do |plan|
-        plan[:role]
+      roles = status.try(:[], 'studentPlans').collect do |plan|
+        [plan[:role], plan[:programRole]]
       end
+      roles.flatten
     end
   end
 end

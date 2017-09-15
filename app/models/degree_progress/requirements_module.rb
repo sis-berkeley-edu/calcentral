@@ -1,6 +1,7 @@
 module DegreeProgress
   module RequirementsModule
     include DatedFeed
+    include LinkFetcher
 
     def process(response)
       degree_progress = response.try(:[], :feed).try(:[], :ucAaProgress)
@@ -59,6 +60,22 @@ module DegreeProgress
         Berkeley::DegreeProgressUndergrad.get_order(req[:code])
       end
       requirements
+    end
+
+    def student_empl_id
+      User::Identifiers.lookup_campus_solutions_id @uid
+    end
+
+    def get_links
+      links = {}
+      links_config = [
+        { feed_key: :academic_progress_report, cs_link_key: self.class::LINK_ID, cs_link_params: { :EMPLID => student_empl_id } }
+      ]
+      links_config.each do |setting|
+        link = fetch_link setting[:cs_link_key], setting[:cs_link_params]
+        links[setting[:feed_key]] = link unless link.blank?
+      end
+      links
     end
   end
 end

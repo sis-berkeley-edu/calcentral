@@ -42,6 +42,12 @@ describe Berkeley::AcademicRoles do
     it_behaves_like 'a map of academic status codes to roles'
   end
 
+  context 'when defining program roles' do
+    subject { described_class::ACADEMIC_PROGRAM_ROLES }
+
+    it_behaves_like 'a map of academic status codes to roles'
+  end
+
   context 'when defining career roles' do
     subject { described_class::ACADEMIC_CAREER_ROLES }
 
@@ -79,6 +85,17 @@ describe Berkeley::AcademicRoles do
     end
   end
 
+  describe '#get_academic_program_role_code' do
+    subject { described_class.get_academic_program_role_code(code, type) }
+
+    it_behaves_like 'a translator that returns the role corresponding to an academic status'
+
+    context 'when a match is found' do
+      let(:code) { 'UCLS' }
+      it { should eq 'lettersAndScience' }
+    end
+  end
+
   describe '#get_academic_career_role_code' do
     subject { described_class.get_academic_career_role_code(code, type) }
 
@@ -109,12 +126,13 @@ describe Berkeley::AcademicRoles do
     subject { described_class.role_defaults }
 
     it 'returns all possible roles set to false' do
-      expect(subject.keys.count).to eq (14)
+      expect(subject.keys.count).to eq (15)
       expect(subject['ugrd']).to eq false
       expect(subject['grad']).to eq false
-      expect(subject['fpf']).to eq false
       expect(subject['law']).to eq false
       expect(subject['concurrent']).to eq false
+      expect(subject['lettersAndScience']).to eq false
+      expect(subject['fpf']).to eq false
       expect(subject['haasFullTimeMba']).to eq false
       expect(subject['haasEveningWeekendMba']).to eq false
       expect(subject['haasExecMba']).to eq false

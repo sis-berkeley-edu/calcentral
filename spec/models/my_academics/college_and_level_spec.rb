@@ -24,8 +24,11 @@ describe MyAcademics::CollegeAndLevel do
         "degrees" => hub_degrees,
         "roles" => {
           'fpf' => false,
+          'ugrd' => false,
+          'grad' => false,
           'law' => false,
           'concurrent' => false,
+          'lettersAndScience' => false,
           'haasFullTimeMba' => false,
           'haasEveningWeekendMba' => false,
           'haasExecMba' => false,
@@ -33,7 +36,8 @@ describe MyAcademics::CollegeAndLevel do
           'haasMbaPublicHealth' => false,
           'haasMbaJurisDoctor' => false,
           'ugrdUrbanStudies' => false,
-          'summerVisitor' => false
+          'summerVisitor' => false,
+          'courseworkOnly' => false,
         }
       }
     }

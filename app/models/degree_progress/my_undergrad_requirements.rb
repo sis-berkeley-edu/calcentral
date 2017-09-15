@@ -7,20 +7,35 @@ module DegreeProgress
     include Cache::UserCacheExpiry
     include RequirementsModule
 
+    LINK_ID = 'UC_CX_APR_RPT_FOR_STDNT'
+
     def get_feed_internal
       return {} unless is_feature_enabled?
       response = CampusSolutions::DegreeProgress::UndergradRequirements.new(user_id: @uid).get
       if response[:errored] || response[:noStudentId]
         response[:feed] = {}
       else
-        response[:feed] = HashConverter.camelize({
-          degree_progress: process(response),
-        })
+        response[:feed] = {
+          degree_progress: process(response)
+        }
+        add_links response
       end
-      response
+      HashConverter.camelize response
     end
 
-    private
+    def add_links(response)
+      if should_see_links?
+        response[:feed][:links] = get_links
+      end
+    end
+
+    def should_see_links?
+      academic_status.try(:[], :feed).try(:[], 'student').try(:[], 'roles').try(:[], 'lettersAndScience')
+    end
+
+    def academic_status
+      @academic_status ||= HubEdos::MyAcademicStatus.new(@uid).get_feed
+    end
 
     def is_feature_enabled?
       Settings.features.cs_degree_progress_ugrd_student
