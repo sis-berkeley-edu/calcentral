@@ -14,7 +14,7 @@
           <thead>
             <th scope="col" class="cc-table-right-spacing">Course</th>
             <th scope="col">Title</th>
-            <th scope="col">Grade Option</th>
+            <th scope="col">Grade Basis</th>
             <th class="cc-table-right" scope="col">Units</th>
           </thead>
           <tbody data-ng-repeat="course in enrolledCourses" data-ng-class-even="'cc-academics-even'">
@@ -27,7 +27,11 @@
                 </div>
               </td>
               <td data-ng-bind="course.title"></td>
-              <td data-ng-bind="course.gradeOption"></td>
+              <td>
+                <div data-ng-repeat="section in course.sections">
+                  <span data-ng-bind="section.grading.grading_basis"></span>
+                </div>
+              </td>
               <td class="cc-table-right" data-ng-bind="course.units | number:1"></td>
             </tr>
           </tbody>
