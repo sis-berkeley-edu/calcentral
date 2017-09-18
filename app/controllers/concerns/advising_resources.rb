@@ -53,9 +53,9 @@ module AdvisingResources
     User::Identifiers.lookup_campus_solutions_id user_id unless user_id.blank?
   end
 
-  def self.lookup_student_career(student_empl_id)
-    feed = HubEdos::MyAcademicStatus.new(student_empl_id).get_feed unless student_empl_id.blank?
-    statuses = MyAcademics::AcademicsModule.parse_hub_academic_statuses feed
+  def self.lookup_student_career(user_id)
+    return nil if user_id.blank?
+    statuses = HubEdos::MyAcademicStatus.get_statuses(user_id)
     career = MyAcademics::AcademicsModule.newest_career statuses
     career.try(:[], 'code')
   end

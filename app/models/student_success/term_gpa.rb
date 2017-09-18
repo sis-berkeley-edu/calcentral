@@ -35,13 +35,8 @@ module StudentSuccess
     end
 
     def get_active_careers
-      if (statuses = parse_hub_academic_statuses academic_status)
-        parse_hub_careers statuses
-      end
-    end
-
-    def academic_status
-      @academic_status ||= HubEdos::MyAcademicStatus.new(@student_uid_param).get_feed
+      careers = HubEdos::MyAcademicStatus.get_careers(@student_uid_param)
+      careers.collect {|c| c.try(:[], 'description') }.uniq
     end
 
     def current_term

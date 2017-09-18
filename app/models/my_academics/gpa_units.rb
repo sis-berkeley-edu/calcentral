@@ -16,7 +16,7 @@ module MyAcademics
       #copy needed feilds from response obj
       result[:errored] = response[:errored]
       # TODO: Consult with SR concerning GPA displayed when multiple academic careers present
-      if (status = parse_hub_academic_statuses(response).try :first)
+      if (status = HubEdos::MyAcademicStatus.parse_academic_statuses(response).try(:first))
         # GPA is passed as a string to force a decimal point for whole values.
         result[:cumulativeGpa] = (cumulativeGpa = parse_hub_cumulative_gpa status) && cumulativeGpa.to_s
         if (totalUnits = parse_hub_total_units status) && totalUnits.present?

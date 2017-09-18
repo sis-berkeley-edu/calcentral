@@ -122,8 +122,7 @@ module MyAcademics
     def get_enrollment_term_instructions
       instructions = {}
       get_active_term_ids.each do |term_id|
-        term_details = CampusSolutions::EnrollmentTerm.new(user_id: @uid, term_id: term_id).get
-        instructions[term_id] = term_details.try(:[], :feed).try(:[], :enrollmentTerm)
+        instructions[term_id] = CampusSolutions::MyEnrollmentTerm.get_term(@uid, term_id)
         instructions[term_id][:concurrentApplyDeadline] = get_concurrent_apply_deadline(term_id)
         instructions[term_id][:termIsSummer] = Berkeley::TermCodes.edo_id_is_summer?(term_id)
       end
@@ -155,8 +154,7 @@ module MyAcademics
 
     def get_active_career_terms
       get_career_terms = Proc.new do
-        terms = CampusSolutions::EnrollmentTerms.new({user_id: @uid}).get
-        terms = Array.wrap(terms.try(:[], :feed).try(:[], :enrollmentTerms)).sort_by { |term| term.try(:[], :termId) }
+        terms = CampusSolutions::MyEnrollmentTerms.get_terms(@uid)
         terms.collect do |term|
           term[:termName] = Berkeley::TermCodes.normalized_english(term[:termDescr])
           term[:termIsSummer] = Berkeley::TermCodes.edo_id_is_summer?(term[:termId])

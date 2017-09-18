@@ -422,13 +422,6 @@ describe MyAcademics::CollegeAndLevel do
         expect(feed[:collegeAndLevel][:termsInAttendance]).to eq '2'
       end
 
-      it 'includes the farthest graduation term available from all plans' do
-        expect(feed[:collegeAndLevel][:lastExpectedGraduationTerm]).to eq({
-          code: "2202",
-          name: 'Spring 2020'
-        })
-      end
-
       it 'specifies term name' do
         expect(feed[:collegeAndLevel][:termName]).to eq 'Fall 2016'
       end

@@ -80,6 +80,19 @@
     "totalUnitsTakenNotForGpa": 3,
     "totalUnitsPassedNotForGpa": 0
   },
+  "graduation": {
+    "activeTermsWithEnrollmentAppointments": [
+      "2178",
+      "2182",
+      "2185"
+    ],
+    "lastExpectedGraduationTerm": {
+      "code": "2188",
+      "name": "Fall 2018"
+    },
+    "isNotGraduateOrLawStudent": true,
+    "appointmentsInGraduatingTerm": false
+  },
   "semesters": [
     {
       "name": "Fall 2017",

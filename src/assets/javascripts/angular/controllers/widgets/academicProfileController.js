@@ -7,5 +7,5 @@ var angular = require('angular');
  */
 angular.module('calcentral.controllers').controller('AcademicProfileController', function(academicsService, $scope) {
   $scope.profilePicture = {};
-  $scope.expectedGradTerm = academicsService.expectedGradTerm;
+  $scope.expectedGradTermName = academicsService.expectedGradTermName;
 });

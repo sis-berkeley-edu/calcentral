@@ -29,10 +29,11 @@ module MyAcademics
       academic_status[:awardHonors] = parse_hub_award_honors academic_status
       academic_status[:roles] = parse_hub_roles academic_status
 
-      if (statuses = parse_hub_academic_statuses academic_status)
+      if (statuses = HubEdos::MyAcademicStatus.parse_academic_statuses(academic_status))
         status = statuses.first
         registration_term = status['currentRegistration'].try(:[], 'term')
-        academic_status[:careers] = parse_hub_careers statuses
+        careers = HubEdos::MyAcademicStatus.parse_careers(statuses)
+        academic_status[:careers] = careers.collect {|career| career.try(:[], 'description') }.uniq
         academic_status[:level] = parse_hub_level statuses
         academic_status[:termName] = parse_hub_term_name(registration_term).try(:[], 'name')
         academic_status[:termId] = registration_term.try(:[], 'id')
@@ -104,8 +105,7 @@ module MyAcademics
         majors: [],
         minors: [],
         designatedEmphases: [],
-        plans: [],
-        lastExpectedGraduationTerm: { code: nil, name: nil }
+        plans: []
       }
 
       filtered_statuses = filter_inactive_status_plans(statuses)
@@ -116,11 +116,6 @@ module MyAcademics
           plan_set[:plans] << flattened_plan
 
           group_plans_by_type(plan_set, flattened_plan)
-
-          # Catch Last Expected Graduation Date
-          if (plan_set[:lastExpectedGraduationTerm].try(:[], :code).to_i < flattened_plan[:expectedGraduationTerm].try(:[], :code).to_i)
-            plan_set[:lastExpectedGraduationTerm] = flattened_plan[:expectedGraduationTerm]
-          end
         end
       end
       plan_set
@@ -155,15 +150,6 @@ module MyAcademics
             subPlan: plan[:subPlan].try(:[], :description)
           })
       end
-    end
-
-    def filter_inactive_status_plans(statuses)
-      statuses.each do |status|
-        status['studentPlans'].select! do |plan|
-          plan.try(:[], 'statusInPlan').try(:[], 'status').try(:[], 'code') == 'AC'
-        end
-      end
-      statuses
     end
 
     def parse_hub_term_name(term)

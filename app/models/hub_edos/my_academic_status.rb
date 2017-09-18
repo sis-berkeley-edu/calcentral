@@ -4,18 +4,44 @@ module HubEdos
     include Cache::UserCacheExpiry
     include Berkeley::AcademicRoles
 
-    def self.get_roles(uid)
-      if feed = self.new(uid).get_feed
-        feed.try(:[], :feed).try(:[], 'student').try(:[], 'roles')
+    def self.get_statuses(uid)
+      if response = self.new(uid).get_feed
+        parse_academic_statuses(response)
       end
     end
 
-    def get_feed_internal
-      feed = HubEdos::AcademicStatus.new({user_id: @uid}).get
-      if (academic_statuses = feed.try(:[], :feed).try(:[], 'student').try(:[], 'academicStatuses'))
-        feed[:feed]['student']['roles'] = roles(academic_statuses)
+    def self.get_roles(uid)
+      if response = self.new(uid).get_feed
+        response.try(:[], :feed).try(:[], 'student').try(:[], 'roles')
       end
-      feed
+    end
+
+    def self.get_careers(uid)
+      if statuses = self.get_statuses(uid)
+        parse_careers(statuses)
+      end
+    end
+
+    def self.parse_academic_statuses(response)
+      response.try(:[], :feed).try(:[], 'student').try(:[], 'academicStatuses')
+    end
+
+    def self.parse_careers(statuses)
+      [].tap do |careers|
+        statuses.each do |status|
+          if (career = status['studentCareer'].try(:[], 'academicCareer'))
+            careers << career
+          end
+        end
+      end.uniq
+    end
+
+    def get_feed_internal
+      response = HubEdos::AcademicStatus.new({user_id: @uid}).get
+      if (academic_statuses = self.class.parse_academic_statuses(response))
+        response[:feed]['student']['roles'] = roles(academic_statuses)
+      end
+      response
     end
 
     def roles(statuses)

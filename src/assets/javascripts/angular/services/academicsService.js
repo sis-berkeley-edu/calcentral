@@ -45,19 +45,6 @@ angular.module('calcentral.services').service('academicsService', function() {
     return count;
   };
 
-  /**
-   * Returns last expected graduation term name when student is not an undergrad
-   * @param  {Object} collegeAndLevel College And Level node of My Academics feed
-   * @return {String}                 Name for graduation term
-   */
-  var expectedGradTerm = function(collegeAndLevel) {
-    var careers = _.get(collegeAndLevel, 'careers');
-    if (isNotGradOrLawStudent(careers) && collegeAndLevel.lastExpectedGraduationTerm) {
-      return collegeAndLevel.lastExpectedGraduationTerm.name;
-    }
-    return '';
-  };
-
   var filterBySectionSlug = function(course, sectionSlug) {
     if (!course.multiplePrimaries) {
       return null;
@@ -197,14 +184,18 @@ angular.module('calcentral.services').service('academicsService', function() {
   };
 
   /**
-   * Returns true if student is not a Graduate or Law student
+   * Returns expected graduation term name if student is not a graduate or law student
+   * @param  {Object} graduation      Graduation node of My Academics feed
+   * @return {String}                 expected graduation term name string
    */
-  var isNotGradOrLawStudent = function(careers) {
-    if (_.get(careers, 'length')) {
-      var matches = _.intersection(careers, ['Graduate', 'Law']);
-      return matches.length === 0;
+  var expectedGradTermName = function(graduation) {
+    var lastExpectedGraduationTermName = _.get(graduation, 'lastExpectedGraduationTerm.name');
+    var isNotGraduateOrLawStudent = _.get(graduation, 'isNotGraduateOrLawStudent');
+    if (isNotGraduateOrLawStudent && lastExpectedGraduationTermName) {
+      return lastExpectedGraduationTermName;
+    } else {
+      return '';
     }
-    return false;
   };
 
   var normalizeGradingData = function(course) {
@@ -331,7 +322,7 @@ angular.module('calcentral.services').service('academicsService', function() {
     containsLawClass: containsLawClass,
     containsMidpointClass: containsMidpointClass,
     countSectionItem: countSectionItem,
-    expectedGradTerm: expectedGradTerm,
+    expectedGradTermName: expectedGradTermName,
     filterBySectionSlug: filterBySectionSlug,
     findSemester: findSemester,
     getAllClasses: getAllClasses,

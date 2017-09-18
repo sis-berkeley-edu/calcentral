@@ -14,7 +14,8 @@ module MyAcademics
         TransferCredit,
         Exams,
         AcademicPlan,
-        AdvisorLinks
+        AdvisorLinks,
+        Graduation
       ]
     end
 
