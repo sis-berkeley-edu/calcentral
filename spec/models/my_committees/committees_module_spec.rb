@@ -187,8 +187,9 @@ describe MyCommittees::CommitteesModule do
       end
     end
 
-    describe '#to_display' do
-      subject { described_class.to_display(date) }
+    describe '#format_date' do
+      subject { described_class.format_date(date, replace_future) }
+      let(:replace_future) { nil }
 
       context 'when date is missing' do
         let(:date) { nil }
@@ -196,16 +197,29 @@ describe MyCommittees::CommitteesModule do
           expect(subject).to eq ''
         end
       end
-      context 'when date is the special Campus Solutions representation of a null date' do
-        let(:date) { '2999-01-01' }
-        it 'returns Present' do
-          expect(subject).to eq 'Present'
+      context 'when date is in the future' do
+        let(:date) { '2900-10-01' }
+
+        it 'returns a formatted date' do
+          expect(subject).to eq 'Oct 01, 2900'
+        end
+        context 'when replacing future dates with text' do
+          let(:replace_future) { true }
+          it 'returns Present' do
+            expect(subject).to eq 'Present'
+          end
         end
       end
-      context 'when date is a valid date' do
-        let(:date) { '2998-12-31' }
+      context 'when date is in the past' do
+        let(:date) { '2008-12-31' }
         it 'returns a formatted date' do
-          expect(subject).to eq 'Dec 31, 2998'
+          expect(subject).to eq 'Dec 31, 2008'
+        end
+        context 'when replacing future dates with text' do
+          let(:replace_future) { true }
+          it 'returns a formatted date' do
+            expect(subject).to eq 'Dec 31, 2008'
+          end
         end
       end
     end

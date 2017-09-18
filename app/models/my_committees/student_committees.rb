@@ -30,9 +30,8 @@ module MyCommittees
     end
 
     def parse_student_cs_committee(cs_committee)
-      remove_inactive_members(cs_committee) if (is_active = is_active?(cs_committee))
       committee = parse_cs_committee(cs_committee)
-      committee[:isActive] = is_active
+      committee[:isActive] = is_active? cs_committee
       committee
     end
 
@@ -67,22 +66,5 @@ module MyCommittees
         serviceRange: format_member_service_dates(cs_committee_member)
       }
     end
-
-    def remove_inactive_members(cs_committee)
-      cs_committee[:committeeMembers].try(:reject!) do |member|
-        inactive?(member)
-      end
-    end
-
-    def inactive?(committee_member)
-      inactive = false
-      begin
-        inactive = Time.zone.parse(committee_member[:memberEndDate].to_s).to_datetime.try(:past?)
-      rescue
-        logger.error "Bad Format for committee member end date; Class #{self.class.name} feed, uid = #{@uid}"
-      end
-      inactive
-    end
-
   end
 end

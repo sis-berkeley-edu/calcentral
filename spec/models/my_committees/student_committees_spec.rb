@@ -21,8 +21,8 @@ describe MyCommittees::StudentCommittees do
         committee = feed[:studentCommittees][2]
         expect(committee[:isActive]).to be true
       end
-      it 'filters out committee members with service end date in the past' do
-        expect(committee[:committeeMembers][:chair].count).to eq 1
+      it 'includes both active members and members who have completed service' do
+        expect(committee[:committeeMembers][:chair].count).to eq 2
       end
     end
 
@@ -32,7 +32,7 @@ describe MyCommittees::StudentCommittees do
       it 'correctly identifies a completed committee' do
         expect(committee[:isActive]).to be false
       end
-      it 'retains all committee members regardless of service end date' do
+      it 'includes both active members and members who have completed service' do
         expect(committee[:committeeMembers][:chair].count).to eq 3
       end
     end
@@ -112,15 +112,21 @@ describe MyCommittees::StudentCommittees do
 
     it 'contains the expected student committee data for chairs' do
       members = feed[:studentCommittees][0][:committeeMembers]
-      expect(members[:chair][0][:name]).to eq 'MEMBERFIRSTNAME1 MEMBERLASTNAME1'
-      expect(members[:chair][0][:email]).to eq 'MEMBER@EMAIL.1'
-      expect(members[:chair][0][:primaryDepartment]).to eq 'MEMBERDEPTDESCR1'
-      expect(members[:chair][0][:serviceRange]).to eq 'Jan 01, 2021 - Oct 10, 2100'
 
-      expect(members[:chair][1][:name]).to eq 'MEMBERFIRSTNAME2 MEMBERLASTNAME2'
-      expect(members[:chair][1][:email]).to eq 'MEMBER@EMAIL.2'
-      expect(members[:chair][1][:primaryDepartment]).to eq 'MEMBERDEPTDESCR2'
-      expect(members[:chair][1][:serviceRange]).to eq 'Jan 01, 2022 - Oct 10, 2100'
+      expect(members[:chair][0][:name]).to eq 'MEMBERFIRSTNAME0 MEMBERLASTNAME0'
+      expect(members[:chair][0][:email]).to eq 'MEMBER@EMAIL.0'
+      expect(members[:chair][0][:primaryDepartment]).to eq 'MEMBERDEPTDESCR0'
+      expect(members[:chair][0][:serviceRange]).to eq 'Jan 01, 2001 - Oct 10, 2001'
+
+      expect(members[:chair][1][:name]).to eq 'MEMBERFIRSTNAME1 MEMBERLASTNAME1'
+      expect(members[:chair][1][:email]).to eq 'MEMBER@EMAIL.1'
+      expect(members[:chair][1][:primaryDepartment]).to eq 'MEMBERDEPTDESCR1'
+      expect(members[:chair][1][:serviceRange]).to eq 'Jan 01, 2021 - Present'
+
+      expect(members[:chair][2][:name]).to eq 'MEMBERFIRSTNAME2 MEMBERLASTNAME2'
+      expect(members[:chair][2][:email]).to eq 'MEMBER@EMAIL.2'
+      expect(members[:chair][2][:primaryDepartment]).to eq 'MEMBERDEPTDESCR2'
+      expect(members[:chair][2][:serviceRange]).to eq 'Jan 01, 2022 - Present'
     end
 
     it 'contains the expected student committee data for co-chairs' do
@@ -128,12 +134,12 @@ describe MyCommittees::StudentCommittees do
       expect(members[:coChair][0][:name]).to eq 'MEMBERFIRSTNAME3 MEMBERLASTNAME3'
       expect(members[:coChair][0][:email]).to eq 'MEMBER@EMAIL.3'
       expect(members[:coChair][0][:primaryDepartment]).to eq 'MEMBERDEPTDESCR3'
-      expect(members[:coChair][0][:serviceRange]).to eq 'Jan 01, 2023 - Oct 10, 2100'
+      expect(members[:coChair][0][:serviceRange]).to eq 'Jan 01, 2023 - Present'
 
       expect(members[:coChair][1][:name]).to eq 'MEMBERFIRSTNAME4 MEMBERLASTNAME4'
       expect(members[:coChair][1][:email]).to eq 'MEMBER@EMAIL.4'
       expect(members[:coChair][1][:primaryDepartment]).to eq 'MEMBERDEPTDESCR4'
-      expect(members[:coChair][1][:serviceRange]).to eq 'Jan 01, 2024 - Oct 10, 2100'
+      expect(members[:coChair][1][:serviceRange]).to eq 'Jan 01, 2024 - Present'
     end
 
     it 'contains the expected student committee data for additional reps' do
@@ -141,12 +147,12 @@ describe MyCommittees::StudentCommittees do
       expect(members[:additionalReps][0][:name]).to eq 'MEMBERFIRSTNAME5 MEMBERLASTNAME5'
       expect(members[:additionalReps][0][:email]).to eq 'MEMBER@EMAIL.5'
       expect(members[:additionalReps][0][:primaryDepartment]).to eq 'MEMBERDEPTDESCR5'
-      expect(members[:additionalReps][0][:serviceRange]).to eq 'Jan 01, 2025 - Oct 10, 2100'
+      expect(members[:additionalReps][0][:serviceRange]).to eq 'Jan 01, 2025 - Present'
 
       expect(members[:additionalReps][1][:name]).to eq 'MEMBERFIRSTNAME6 MEMBERLASTNAME6'
       expect(members[:additionalReps][1][:email]).to eq 'MEMBER@EMAIL.6'
       expect(members[:additionalReps][1][:primaryDepartment]).to eq 'MEMBERDEPTDESCR6'
-      expect(members[:additionalReps][1][:serviceRange]).to eq 'Jan 01, 2026 - Oct 10, 2999'
+      expect(members[:additionalReps][1][:serviceRange]).to eq 'Jan 01, 2026 - Present'
     end
 
     it 'contains the expected student committee data for academic senate' do
@@ -154,37 +160,7 @@ describe MyCommittees::StudentCommittees do
       expect(members[:academicSenate][0][:name]).to eq 'MEMBERFIRSTNAME7 MEMBERLASTNAME7'
       expect(members[:academicSenate][0][:email]).to eq 'MEMBER@EMAIL.7'
       expect(members[:academicSenate][0][:primaryDepartment]).to eq 'MEMBERDEPTDESCR7'
-      expect(members[:academicSenate][0][:serviceRange]).to eq 'Jan 01, 2027 - Oct 10, 2999'
-    end
-  end
-
-  describe '#inactive?' do
-    let(:committee_member) do
-      {
-        :memberEndDate => end_date
-      }
-    end
-    let(:result) { described_class.new(uid).inactive?(committee_member) }
-
-    context 'valid future date' do
-      let(:end_date) { '2999-01-01' }
-      it 'parses date and flags member as active' do
-        expect(result).to be false
-      end
-    end
-
-    context 'valid past date' do
-      let(:end_date) { '1999-01-01' }
-      it 'parses date and flags member as inactive' do
-        expect(result).to be true
-      end
-    end
-
-    context 'invalid date' do
-      let(:end_date) { 'bogus' }
-      it 'fails the date parsing but assumes member is active' do
-        expect(result).to be false
-      end
+      expect(members[:academicSenate][0][:serviceRange]).to eq 'Jan 01, 2027 - Present'
     end
   end
 end

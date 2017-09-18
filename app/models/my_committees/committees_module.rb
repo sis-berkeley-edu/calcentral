@@ -76,8 +76,8 @@ module MyCommittees::CommitteesModule
   end
 
   def format_member_service_dates(committee_member)
-    start_date = to_display committee_member.try(:[], :memberStartDate)
-    end_date = to_display committee_member.try(:[], :memberEndDate)
+    start_date = format_date committee_member.try(:[], :memberStartDate)
+    end_date = format_date(committee_member.try(:[], :memberEndDate), true)
     service_range = "#{ start_date } - #{ end_date }" if start_date.present? && end_date.present?
     service_range
   end
@@ -201,10 +201,15 @@ module MyCommittees::CommitteesModule
     end
   end
 
-  def format_date(unformatted_date)
+  def format_date(unformatted_date, replace_future = false)
     formatted_date = ''
     begin
-      formatted_date = DateTime.parse(unformatted_date.to_s).strftime(DATE_FORMAT)
+      date = DateTime.parse(unformatted_date.to_s)
+      if replace_future && date.try(:future?)
+        formatted_date = 'Present'
+      elsif
+        formatted_date = date.strftime(DATE_FORMAT)
+      end
     rescue
       logger.error "Bad Format For Committees Date for Class #{self.class.name} feed, uid = #{@uid}"
     end
