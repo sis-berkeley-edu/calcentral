@@ -148,7 +148,7 @@ describe MyAcademics::Semesters do
       allow(Settings.terms).to receive(:legacy_cutoff).and_return 'fall-2009'
       expect(CampusOracle::Queries).not_to receive :get_enrolled_sections
       allow_any_instance_of(EdoOracle::UserCourses::All).to receive(:get_all_campus_courses).and_return enrollment_data
-      allow(EdoOracle::Queries).to receive(:get_withdrawal_status).and_return withdrawal_data
+      allow(EdoOracle::Queries).to receive(:get_registration_status).and_return withdrawal_data
     end
     let(:withdrawal_data) do
       [
@@ -170,6 +170,57 @@ describe MyAcademics::Semesters do
       expect([feed[:semesters][3]]).to all include({hasWithdrawalData: true})
     end
   end
+
+  context 'Has Absentia data' do
+    before do
+      allow(Settings.terms).to receive(:fake_now).and_return '2016-04-01'
+      allow(Settings.terms).to receive(:legacy_cutoff).and_return 'fall-2009'
+      expect(CampusOracle::Queries).not_to receive :get_enrolled_sections
+      allow_any_instance_of(EdoOracle::UserCourses::All).to receive(:get_all_campus_courses).and_return enrollment_data
+      allow(EdoOracle::Queries).to receive(:get_registration_status).and_return study_prog_data
+    end
+    let(:study_prog_data) do
+      [
+        {
+          'student_id'=>'25259127',
+          'acadcareer_code'=>'UGRD',
+          'term_id'=>'2158',
+          'splstudyprog_type_code'=>'OGPFABSENT',
+          'splstudyprog_type_descr'=>'In Absentia'
+        }
+      ]
+    end
+    let(:enrollment_data) { generate_enrollment_data }
+    it 'should add study program  data' do
+      expect([feed[:semesters][3]]).to all include({hasStudyProgData: true})
+    end
+  end
+
+  context 'Has Filing Fee data' do
+    before do
+      allow(Settings.terms).to receive(:fake_now).and_return '2016-04-01'
+      allow(Settings.terms).to receive(:legacy_cutoff).and_return 'fall-2009'
+      expect(CampusOracle::Queries).not_to receive :get_enrolled_sections
+      allow_any_instance_of(EdoOracle::UserCourses::All).to receive(:get_all_campus_courses).and_return enrollment_data
+      allow(EdoOracle::Queries).to receive(:get_registration_status).and_return study_prog_data
+    end
+    let(:study_prog_data) do
+      [
+        {
+          'student_id'=>'25259127',
+          'acadcareer_code'=>'UGRD',
+          'term_id'=>'2158',
+          'splstudyprog_type_code'=>'BGNNFILING',
+          'splstudyprog_type_descr'=>'Filing Fee'
+        }
+      ]
+    end
+    let(:enrollment_data) { generate_enrollment_data }
+    it 'should add study program data' do
+      expect([feed[:semesters][3]]).to all include({hasStudyProgData: true})
+    end
+  end
+
 
   shared_examples 'a good and proper multiple-primary munge' do
     let(:term_keys) { ['2013-D'] }

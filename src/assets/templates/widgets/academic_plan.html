@@ -33,13 +33,16 @@
             </h3>
             <br>
             <div data-ng-show="semester.show">
-              <div class="cc-widget-text" data-ng-if="!semester.plannedClasses.length && !semester.hasEnrolledClasses && !semester.hasWithdrawalData">
+              <div class="cc-widget-text" data-ng-if="!semester.plannedClasses.length && !semester.hasEnrolledClasses && !semester.hasWithdrawalData && !semester.hasStudyProgData">
                 No Plan Provided
                 <span data-ng-bind="semester.name"></span>.
               </div>
               <div class="cc-widget-text" data-ng-if="semester.hasWithdrawalData">
                 <span data-ng-bind="semester.withdrawalStatus.withcnclTypeDescr"></span>
                 <span data-ng-bind="semester.withdrawalStatus.withcnclFromDate"></span> (Reason:<span data-ng-bind="semester.withdrawalStatus.withcnclReasonDescr"></span>)
+              </div>
+              <div class="cc-widget-text" data-ng-if="semester.hasStudyProgData">
+                <span data-ng-bind="semester.studyProg.studyprogTypeDescr"></span>
               </div>
               <div data-ng-if="semester.plannedClasses.length">
                 <table>

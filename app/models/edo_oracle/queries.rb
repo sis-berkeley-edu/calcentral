@@ -3,6 +3,10 @@ module EdoOracle
     include ActiveRecordHelper
     include ClassLogger
 
+
+    ABSENTIA_CODE = 'OGPFABSENT'.freeze
+    FILING_FEE_CODE = 'BGNNFILING'.freeze
+
     CANONICAL_SECTION_ORDERING = 'section_display_name, primary DESC, instruction_format, section_num'
 
     # Changes from CampusOracle::Queries section columns:
@@ -423,7 +427,7 @@ module EdoOracle
       end
     end
 
-    def self.get_withdrawal_status (person_id)
+    def self.get_registration_status (person_id)
       safe_query <<-SQL
         SELECT STUDENT_ID as student_id,
           ACADCAREER_CODE as acadcareer_code,
@@ -433,12 +437,16 @@ module EdoOracle
           WITHCNCL_REASON_CODE as withcncl_reason_code,
           WITHCNCL_REASON_DESCR as withcncl_reason_descr,
           WITHCNCL_FROMDATE as withcncl_fromdate,
-          WITHCNCL_LASTATTENDDATE as withcncl_lastattendate
+          WITHCNCL_LASTATTENDDATE as withcncl_lastattendate,
+          SPLSTUDYPROG_TYPE_CODE as splstudyprog_type_code,
+          SPLSTUDYPROG_TYPE_DESCR as splstudyprog_type_descr
         FROM
           SISEDO.STUDENT_REGISTRATIONV00_VW
         WHERE
           STUDENT_ID = '#{person_id}' AND
-          WITHCNCL_TYPE_CODE IS NOT NULL
+          (WITHCNCL_TYPE_CODE IS NOT NULL
+            OR SPLSTUDYPROG_TYPE_CODE = '#{ABSENTIA_CODE}'
+            OR SPLSTUDYPROG_TYPE_CODE = '#{FILING_FEE_CODE}')
       SQL
     end
 

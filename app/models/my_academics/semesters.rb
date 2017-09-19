@@ -14,15 +14,21 @@ module MyAcademics
       end
 
       campus_solution_id = CalnetCrosswalk::ByUid.new(user_id: @uid).lookup_campus_solutions_id
-      withdrawal_data = EdoOracle::Queries.get_withdrawal_status(campus_solution_id)
+      reg_status_data = EdoOracle::Queries.get_registration_status(campus_solution_id)
 
-      data[:semesters] = semester_feed(enrollments, withdrawal_data).compact
+      data[:semesters] = semester_feed(enrollments, reg_status_data).compact
       merge_semesters_count data
     end
 
-    def semester_feed(enrollment_terms, withdrawal_data)
+    def semester_feed(enrollment_terms, reg_status_data)
+      study_prog_data = reg_status_data.select { |row| row['splstudyprog_type_code'].present? }
+      withdrawal_data = reg_status_data.select { |row| row['withcncl_type_code'].present? }
+
       withdrawal_terms = withdrawal_data.map {|row| Berkeley::TermCodes.edo_id_to_code(row['term_id'])}
-      (enrollment_terms.keys | withdrawal_terms).sort.reverse.map do |term_key|
+      study_prog_terms = study_prog_data.map {|row| Berkeley::TermCodes.edo_id_to_code(row['term_id'])}
+
+      # Note: a student should never have withdrawl and absentia or filling fee for same term
+      (enrollment_terms.keys | withdrawal_terms | study_prog_terms).sort.reverse.map do |term_key|
         semester = semester_info term_key
         semester[:filteredForDelegate] = !!@filtered
         if enrollment_terms[term_key]
@@ -30,12 +36,31 @@ module MyAcademics
           semester[:classes] = map_enrollments(enrollment_terms[term_key]).compact
           semester[:hasEnrolledClasses] = has_enrolled_classes?(enrollment_terms[term_key])
           merge_grades(semester)
-          merge_withdrawals(semester, withdrawal_data)
-        else
-          merge_withdrawals(semester, withdrawal_data)
         end
-        semester unless semester[:classes].empty? && !semester[:hasWithdrawalData]
+        merge_study_prog(semester, study_prog_data)
+        merge_withdrawals(semester, withdrawal_data)
+        semester unless semester[:classes].empty? && !semester[:hasWithdrawalData] && !semester[:hasStudyProgData]
       end
+    end
+
+
+    def merge_study_prog (semester, filing_fee_data)
+      filing_fee_data.each do |row|
+        if row['term_id'] == Berkeley::TermCodes.slug_to_edo_id(semester[:slug])
+          semester.merge! map_study_prog(row)
+        end
+      end
+    end
+
+    def map_study_prog(row)
+      {
+        hasStudyProgData: true,
+        studyProg:
+          {
+            studyprogTypeCode: row['splstudyprog_type_code'],
+            studyprogTypeDescr: row['splstudyprog_type_descr'],
+          }
+      }
     end
 
     def merge_withdrawals (semester, withdrawal_data)
