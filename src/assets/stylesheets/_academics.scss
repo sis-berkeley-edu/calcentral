@@ -357,7 +357,7 @@
   }
   .cc-academics-teaching-button-group {
     float: right;
-    margin-right: 10px;
+    margin: 10px 5px 0;
     width: 300px;
   }
   .cc-academics-teaching-class {
@@ -367,6 +367,14 @@
   }
   .cc-academics-teaching-course-number {
     padding-bottom: 5px;
+  }
+  .cc-academics-teaching-grading-link {
+    font-size: 11px;
+    font-weight: bold;
+  }
+  .cc-academics-teaching-grading-link-container {
+    float: right;
+    margin: 12px 10px 0;
   }
   .cc-academics-teaching-semester {
     margin-bottom: 20px;
@@ -386,6 +394,15 @@
   .cc-academics-semester-books {
     .cc-textbook-category-separator {
       display: none;
+    }
+  }
+  @media #{$small-only} {
+    .cc-academics-teaching-grading-link-container {
+      margin: 10px;
+    }
+    .cc-academics-teaching-button-group {
+      margin: 0;
+      width: 100%;
     }
   }
 

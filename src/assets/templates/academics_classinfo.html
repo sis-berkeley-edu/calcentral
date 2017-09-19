@@ -4,12 +4,21 @@
   data-ng-show="canViewAcademics"
   data-ng-switch data-on="currentCategory.title"
 >
-  <div>
-    <h1 class="cc-heading-page-title">
-      <a href="/academics">My Academics</a> &raquo;
-      <a data-ng-href="/academics/semester/{{selectedSemester.slug}}"><span data-ng-bind="selectedSemester.name"></span></a> &raquo;
-      <span data-ng-bind="selectedCourse.course_code"></span>
-      <span data-ng-if="selectedSection" data-ng-bind-template=" &raquo; {{selectedSection.section_label}}"></span>
+  <div class="row collapse">
+    <div class="medium-8 columns">
+      <h1 class="cc-heading-page-title">
+        <a href="/academics">My Academics</a> &raquo;
+        <a data-ng-href="/academics/semester/{{selectedSemester.slug}}"><span data-ng-bind="selectedSemester.name"></span></a> &raquo;
+        <span data-ng-bind="selectedCourse.course_code"></span>
+        <span data-ng-if="selectedSection" data-ng-bind-template=" &raquo; {{selectedSection.section_label}}"></span>
+      </h1>
+    </div>
+
+    <div class="medium-4 columns">
+      <div class="cc-academics-teaching-grading-link-container">
+        <a class="cc-academics-teaching-grading-link" data-ng-click="gotoGrading(selectedSemester.slug)">Grading</a>
+      </div>
+
       <div class="cc-academics-teaching-button-group cc-print-hide" data-ng-if="isInstructorOrGsi">
         <ul class="cc-button-group cc-even-{{classInfoCategories.length}}" role="tablist">
           <li data-ng-repeat="classInfoCategory in classInfoCategories">
@@ -24,7 +33,7 @@
           </li>
         </ul>
       </div>
-    </h1>
+    </div>
   </div>
 
   <div data-ng-switch-when="Class Info" role="tabpanel" aria-live="polite">
@@ -325,50 +334,6 @@
         <h2>Roster</h2>
       </div>
       <div data-ng-include src="'widgets/roster.html'"></div>
-    </div>
-  </div>
-
-  <div data-ng-switch-when="Grading" role="tabpanel" aria-live="polite" class="cc-clearfix cc-column-3">
-    <div class="cc-widget">
-      <div class="cc-widget-title">
-        <h2>Grading</h2>
-      </div>
-      <div class="cc-widget-padding">
-        <div>
-          <span><h2>Entering Final Grades</h2></span>
-          <span>For {{selectedSemester.name}}, final grades will be entered via the new <strong>Enter Grades</strong> on the <strong>{{selectedSemester.name}}</strong> page.</span>
-        </div>
-        <br>
-        <div>
-          <button class="cc-button cc-button-blue" data-ng-click="gotoGrading(selectedSemester.slug)">
-            <span class="cc-academics-class-info-grading-button-text">Go to Grading Links</span>
-          </button>
-        </div>
-      </div>
-      <div class="cc-widget-padding cc-academics-class-info-grading">
-         <span><h2>More Info</h2></span>
-         <div data-ng-if="selectedTeachingSemester.gradingAssistanceLinkMidpoint">
-           <span>
-             <a data-ng-href="{{selectedTeachingSemester.gradingAssistanceLinkMidpoint}}" title="Assistance with midpoint grading for general classes">
-               &#9632; Assistance with Midpoint Grading: General
-             </a>
-           </span>
-         </div>
-        <div data-ng-if="selectedTeachingSemester.gradingAssistanceLink">
-          <span>
-            <a data-ng-href="{{selectedTeachingSemester.gradingAssistanceLink}}" title="Assistance with grading for general classes">
-              &#9632; Assistance with Grading: General
-            </a>
-          </span>
-        </div>
-        <div data-ng-if="selectedTeachingSemester.gradingAssistanceLinkLaw">
-          <span>
-            <a data-ng-href="{{selectedTeachingSemester.gradingAssistanceLinkLaw}}" title="Assistance with grading for Law classes">
-              &#9632; Assistance with Grading: Law
-            </a>
-          </span>
-        </div>
-      </div>
     </div>
   </div>
 </div>
