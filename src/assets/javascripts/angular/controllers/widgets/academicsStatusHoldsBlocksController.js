@@ -9,28 +9,13 @@ var _ = require('lodash');
 angular.module('calcentral.controllers').controller('AcademicsStatusHoldsBlocksController', function(apiService, academicsFactory, linkService, slrDeeplinkFactory, registrationsFactory, statusHoldsService, $scope) {
   linkService.addCurrentRouteSettings($scope);
 
-  // Data for csHolds is pulled by the AcademicsController that
-  // governs the academics template. The statusHoldsBlocks segment watches those
-  // for changes in order to display the corresponding UI elements.
-  $scope.statusHoldsBlocks = {};
-  $scope.regStatus = {
-    registrations: [],
+  $scope.statusHolds = {
     isLoading: true
   };
-
-  $scope.$watchGroup(['regStatus.registrations', 'residency.official.description', 'api.user.profile.features.csHolds'], function(newValues) {
-    var enabledSections = [];
-
-    if (newValues[0] || newValues[1]) {
-      enabledSections.push('Status');
-    }
-
-    if (newValues[2]) {
-      enabledSections.push('Holds');
-    }
-
-    $scope.statusHoldsBlocks.enabledSections = enabledSections;
-  });
+  $scope.regStatus = {
+    registrations: [],
+    show: false
+  };
 
   // Request-and-parse sequence for the Statement of Legal Residency deeplink
   var fetchSlrDeeplink = slrDeeplinkFactory.getUrl;
@@ -52,6 +37,9 @@ angular.module('calcentral.controllers').controller('AcademicsStatusHoldsBlocksC
         $scope.regStatus.registrations.push(registration);
       }
     });
+    if ($scope.regStatus.registrations.length) {
+      $scope.regStatus.show = true;
+    }
   };
 
   var getSlrDeeplink = function() {
@@ -92,8 +80,7 @@ angular.module('calcentral.controllers').controller('AcademicsStatusHoldsBlocksC
     .then(getSlrDeeplink)
     .then(getRegistrations)
     .finally(function() {
-      $scope.residency.isLoading = false;
-      $scope.regStatus.isLoading = false;
+      $scope.statusHolds.isLoading = false;
     });
   };
 

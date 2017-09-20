@@ -6,7 +6,7 @@ var _ = require('lodash');
 /**
  * Preview of user profile prior to viewing-as
  */
-angular.module('calcentral.controllers').controller('UserOverviewController', function(academicsService, adminService, advisingFactory, apiService, enrollmentVerificationFactory, linkService, statusHoldsService, $route, $routeParams, $scope) {
+angular.module('calcentral.controllers').controller('UserOverviewController', function(academicsService, academicStatusFactory, adminService, advisingFactory, apiService, enrollmentVerificationFactory, linkService, statusHoldsService, $route, $routeParams, $scope) {
   linkService.addCurrentRouteSettings($scope);
 
   $scope.expectedGradTermName = academicsService.expectedGradTermName;
@@ -27,15 +27,15 @@ angular.module('calcentral.controllers').controller('UserOverviewController', fu
   $scope.isAdvisingStudentLookup = $route.current.isAdvisingStudentLookup;
   $scope.regStatus = {
     registrations: [],
-    isLoading: true
+    show: false
   };
-  $scope.residency = {
-    isLoading: true
-  };
+  $scope.residency = {};
   $scope.targetUser = {
     isLoading: true
   };
-  $scope.statusHoldsBlocks = {};
+  $scope.statusHolds = {
+    isLoading: true
+  };
   $scope.highCharts = {
     dataSeries: []
   };
@@ -62,20 +62,6 @@ angular.module('calcentral.controllers').controller('UserOverviewController', fu
     undergraduate: {},
     isLoading: true
   };
-
-  $scope.$watchGroup(['regStatus.registrations', 'api.user.profile.features.csHolds'], function(newValues) {
-    var enabledSections = [];
-
-    if (newValues[0]) {
-      enabledSections.push('Status');
-    }
-
-    if (newValues[1]) {
-      enabledSections.push('Holds');
-    }
-
-    $scope.statusHoldsBlocks.enabledSections = enabledSections;
-  });
 
   var parseAdvisingResources = function(response) {
     var links = $scope.ucAdvisingResources.links;
@@ -124,7 +110,6 @@ angular.module('calcentral.controllers').controller('UserOverviewController', fu
         $scope.targetUser.error = errorReport(_.get(response, 'data.status'), _.get(response, 'data.error'));
       }
     ).finally(function() {
-      $scope.residency.isLoading = false;
       $scope.targetUser.isLoading = false;
     });
   };
@@ -167,6 +152,14 @@ angular.module('calcentral.controllers').controller('UserOverviewController', fu
     });
   };
 
+  var loadAcademicRoles = function() {
+    academicStatusFactory.getAcademicRoles({
+      uid: $routeParams.uid
+    }).then(function(response) {
+      $scope.showResidency = $scope.targetUser.roles.student && academicsService.showResidency(_.get(response, 'roles'));
+    });
+  };
+
   var loadRegistrations = function() {
     advisingFactory.getStudentRegistrations({
       uid: $routeParams.uid
@@ -177,8 +170,11 @@ angular.module('calcentral.controllers').controller('UserOverviewController', fu
           $scope.regStatus.registrations.push(registration);
         }
       });
+      if ($scope.regStatus.registrations.length) {
+        $scope.regStatus.show = true;
+      }
     }).finally(function() {
-      $scope.regStatus.isLoading = false;
+      $scope.statusHolds.isLoading = false;
     });
   };
 
@@ -276,6 +272,7 @@ angular.module('calcentral.controllers').controller('UserOverviewController', fu
       apiService.user.fetch()
       .then(loadProfile)
       .then(loadAcademics)
+      .then(loadAcademicRoles)
       .then(loadStudentSuccess)
       .then(loadRegistrations)
       .then(loadDegreeProgresses);

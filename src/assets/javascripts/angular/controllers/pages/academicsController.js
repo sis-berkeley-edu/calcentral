@@ -217,7 +217,7 @@ angular.module('calcentral.controllers').controller('AcademicsController', funct
                                  ($scope.numberOfHolds));
     $scope.showAdvising = !$scope.filteredForDelegate && apiService.user.profile.features.advising && apiService.user.profile.roles.student && isMbaJdOrNotLaw();
     $scope.showProfileMessage = (!$scope.isAcademicInfoAvailable || !$scope.collegeAndLevel || _.isEmpty($scope.collegeAndLevel.careers));
-    $scope.showResidency = apiService.user.profile.roles.student && !$scope.academicStatus.roles.summerVisitor && hasResidency();
+    $scope.showResidency = apiService.user.profile.roles.student && academicsService.showResidency($scope.academicStatus.roles);
   };
 
   /**
@@ -229,10 +229,6 @@ angular.module('calcentral.controllers').controller('AcademicsController', funct
       return true;
     }
     return false;
-  };
-
-  var hasResidency = function() {
-    return (!$scope.academicStatus.roles.haasMastersFinEng && !$scope.academicStatus.roles.haasExecMba && !$scope.academicStatus.roles.haasEveningWeekendMba);
   };
 
   var loadAcademicRoles = function() {
