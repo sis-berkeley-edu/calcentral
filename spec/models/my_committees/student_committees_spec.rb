@@ -41,70 +41,40 @@ describe MyCommittees::StudentCommittees do
       committee = feed[:studentCommittees][0]
       expect(committee[:committeeType]).to eq 'Qualifying Exam Committee'
       expect(committee[:program]).to eq 'STUDENTACADPLAN1'
-      expect(committee[:statusIcon]).to eq 'check'
-      expect(committee[:statusMessage]).to eq nil
+      expect(committee[:statusIcon]).not_to be
+      expect(committee[:statusMessage]).not_to be
+      expect(committee[:milestoneAttempts]).not_to be
     end
 
     it 'correctly parses a qualifying exam committee when student has failed the exam' do
       committee = feed[:studentCommittees][2]
       expect(committee[:committeeType]).to eq 'Qualifying Exam Committee'
       expect(committee[:program]).to eq 'STUDENTACADPLAN3'
-      expect(committee[:statusIcon]).to eq 'exclamation-triangle'
-      expect(committee[:statusMessage]).to be nil
+      expect(committee[:statusIcon]).not_to be
+      expect(committee[:statusMessage]).not_to be
+      expect(committee[:milestoneAttempts]).not_to be
     end
 
     it 'contains the expected student data for a dissertation committee' do
       committee = feed[:studentCommittees][3]
       expect(committee[:committeeType]).to eq 'Dissertation Committee'
       expect(committee[:program]).to eq 'STUDENTACADPLAN4'
-      expect(committee[:statusIcon]).to eq 'check'
-      expect(committee[:statusMessage]).to eq 'Filing Date: Jun 16, 2025'
-      expect(committee[:milestoneAttempts]).to eq []
+      expect(committee[:statusIcon]).not_to be
+      expect(committee[:statusMessage]).not_to be
+      expect(committee[:milestoneAttempts]).not_to be
     end
 
     it 'contains the expected student data for a Masters Thesis committee' do
       committee = feed[:studentCommittees][5]
       expect(committee[:committeeType]).to eq 'Master\'s Thesis Committee'
       expect(committee[:program]).to eq 'STUDENTACADPLAN6'
-      expect(committee[:statusIcon]).to eq nil
-      expect(committee[:statusMessage]).to eq 'Advanced: Jun 16, 2018'
-      expect(committee[:milestoneAttempts]).to eq []
-    end
-
-    context 'when student has attempted the Qualifying Exam milestone' do
-      it 'contains only the most recent attempt' do
-        qualifying_exam_attempts = feed[:studentCommittees][0][:milestoneAttempts]
-        expect(qualifying_exam_attempts.count).to eq 1
-        expect(qualifying_exam_attempts[0][:sequenceNumber]).to eq 2
-        expect(qualifying_exam_attempts[0][:date]).to eq 'Jan 01, 2015'
-        expect(qualifying_exam_attempts[0][:result]).to eq 'Passed'
-      end
-
-      context 'when building a string to represent the attempt' do
-        it 'includes the attempt number if student did not pass the first attempt' do
-          qualifying_exam_attempts = feed[:studentCommittees][2][:milestoneAttempts]
-          expect(qualifying_exam_attempts[0][:display]).to eq 'Exam 1: Failed Jan 01, 2014'
-        end
-        it 'does not include the attempt number if student passed the first attempt' do
-          qualifying_exam_attempts = feed[:studentCommittees][4][:milestoneAttempts]
-          expect(qualifying_exam_attempts[0][:display]).to eq 'Passed Jan 01, 2016'
-        end
-      end
-
-      it 'has a blank status message' do
-        expect(feed[:studentCommittees][0][:statusMessage]).to be nil
-        expect(feed[:studentCommittees][2][:statusMessage]).to be nil
-        expect(feed[:studentCommittees][4][:statusMessage]).to be nil
-      end
+      expect(committee[:statusIcon]).not_to be
+      expect(committee[:statusMessage]).not_to be
+      expect(committee[:milestoneAttempts]).not_to be
     end
 
     context 'when student has not yet attempted the Qualifying Exam milestone' do
       let(:qe_committee_with_proposed_exam) { feed[:studentCommittees][6] }
-
-      it 'has an empty attempts list' do
-        expect(qe_committee_with_proposed_exam[:milestoneAttempts]).to eq []
-      end
-
       it 'populates the status message with the proposed exam date' do
         expect(qe_committee_with_proposed_exam[:statusMessage]).to eq 'Proposed Exam Date: Dec 10, 2020'
       end

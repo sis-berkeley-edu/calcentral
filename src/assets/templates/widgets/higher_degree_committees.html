@@ -25,16 +25,7 @@
             <div>
               <h3 data-ng-bind="committee.header.type"></h3>
               <h4 data-ng-bind="committee.header.program"></h4>
-              <div data-ng-if="!committee.milestoneAttempts.length">
-                <i data-ng-class="committee.header.statusIcon"></i>
-                <strong><span data-ng-bind="committee.header.statusMessage"></span></strong>
-              </div>
-              <ul class="cc-milestone-attempts">
-                <li data-ng-repeat="attempt in committee.milestoneAttempts">
-                  <i data-ng-class="committee.header.statusIcon"></i>
-                  <strong><span data-ng-bind="attempt.display"></span></strong>
-                </li>
-              </ul>
+
               <div data-ng-include="'widgets/academics/higher_degree_committee.html'"></div>
             </div>
           </li>

@@ -35,26 +35,10 @@ module MyCommittees
       committee
     end
 
-    def parse_cs_milestone_attempts(cs_committee)
-      attempts = cs_committee[:studentApprovalMilestoneAttempts].try(:map) do |attempt|
-        parse_cs_milestone_attempt(attempt)
+    def set_committee_status(cs_committee, committee)
+      if qualifying_exam?(cs_committee)
+        committee[:statusMessage] = determine_qualifying_exam_status_message(cs_committee)
       end
-      return [] unless attempts
-      attempts.try(:sort_by) do |attempt|
-        attempt[:sequenceNumber]
-      end.last(1)
-    end
-
-    def format_milestone_attempt(milestone_attempt)
-      if first_attempt_exam_passed?(milestone_attempt)
-        "#{milestone_attempt[:result]} #{milestone_attempt[:date]}"
-      else
-        "Exam #{milestone_attempt[:sequenceNumber]}: #{milestone_attempt[:result]} #{milestone_attempt[:date]}"
-      end
-    end
-
-    def first_attempt_exam_passed?(milestone_attempt)
-      milestone_attempt[:sequenceNumber] === 1 && milestone_attempt[:result] == Berkeley::GraduateMilestones::QE_RESULTS_STATUS_PASSED
     end
 
     def parse_cs_committee_member (cs_committee_member)

@@ -38,7 +38,7 @@ describe MyCommittees::FacultyCommittees do
 
     it 'correctly parses a committee with no members' do
       committee = feed[:facultyCommittees][:completed][0]
-      expect(committee[:serviceRange]).to be nil
+      expect(committee[:serviceRange]).not_to be
     end
 
     it 'correctly parses a Dissertation committee' do
@@ -46,7 +46,7 @@ describe MyCommittees::FacultyCommittees do
       expect(committee[:committeeType]).to eq 'Dissertation Committee'
       expect(committee[:program]).to eq 'Education PhD'
       expect(committee[:statusMessage]).to eq 'Advanced: Oct 06, 2017'
-      expect(committee[:statusIcon]).to eq nil
+      expect(committee[:statusIcon]).not_to be
       expect(committee[:serviceRange]).to eq 'Aug 31, 2016 - Present'
       expect(committee[:milestoneAttempts]).to eq []
     end
@@ -55,8 +55,8 @@ describe MyCommittees::FacultyCommittees do
       committee = feed[:facultyCommittees][:completed][1]
       expect(committee[:committeeType]).to eq 'Qualifying Exam Committee'
       expect(committee[:program]).to eq 'Civil Environmental Eng MS'
-      expect(committee[:statusMessage]).to eq nil
-      expect(committee[:statusIcon]).to eq 'check'
+      expect(committee[:statusMessage]).not_to be
+      expect(committee[:statusIcon]).to eq ''
       expect(committee[:serviceRange]).to eq 'Aug 30, 2016 - Aug 30, 2017'
     end
 
@@ -64,9 +64,9 @@ describe MyCommittees::FacultyCommittees do
       committee = feed[:facultyCommittees][:completed][0]
       expect(committee[:committeeType]).to eq 'Qualifying Exam Committee'
       expect(committee[:program]).to eq 'Underwater Basket Weaving PhD'
-      expect(committee[:statusMessage]).to eq nil
-      expect(committee[:statusIcon]).to eq 'exclamation-circle'
-      expect(committee[:serviceRange]).to eq nil
+      expect(committee[:statusMessage]).not_to be
+      expect(committee[:statusIcon]).to eq ''
+      expect(committee[:serviceRange]).not_to be
     end
 
     it 'correctly parses a Masters Thesis committee' do
