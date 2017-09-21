@@ -450,5 +450,20 @@ module EdoOracle
       SQL
     end
 
+    def self.get_pnp_unit_count (student_id)
+      result = safe_query <<-SQL
+        SELECT STUDENT_ID,
+               PNP_TOT_UNITS_TAKEN as pnp_taken,
+               PNP_TOT_UNITS_PASSED as pnp_passed
+        FROM (
+          SELECT *
+          FROM SISEDO.STUCAR_TERMV00_VW
+          WHERE STUDENT_ID = #{student_id}
+          ORDER BY term_id DESC)
+        WHERE rownum = 1
+      SQL
+      result.first
+    end
+
   end
 end

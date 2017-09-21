@@ -45,7 +45,7 @@ describe 'MyAcademics::GpaUnits' do
     context 'empty status feed' do
       before { status_proxy.set_response(status: 200, body: '{}') }
       it 'reports empty' do
-        expect(feed[:gpaUnits][:empty]).to eq true
+        expect(feed[:gpaUnits][:hub_empty]).to eq true
       end
     end
 
