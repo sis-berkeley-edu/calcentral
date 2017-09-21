@@ -229,7 +229,6 @@ describe MyAcademics::CollegeAndLevel do
       plan_code: '25345U',
       plan_description: 'English BA',
       role: 'default',
-      enrollmentRole: 'default',
       admin_owners: [{org_code: 'ENGLISH', org_description: 'English', percentage: 100}],
       expected_grad_term_id: '2202',
       expected_grad_term_name: '2020 Spring'
@@ -244,7 +243,6 @@ describe MyAcademics::CollegeAndLevel do
       plan_code: '25971U',
       plan_description: 'MCB-Cell & Dev Biology BA',
       role: 'default',
-      enrollmentRole: 'default',
       type_code: 'SP',
       type_description: 'Major - UG Specialization',
       sub_plan_code: '25966SA02U',
@@ -262,7 +260,6 @@ describe MyAcademics::CollegeAndLevel do
       plan_code: '25090U',
       plan_description: 'Art BA',
       role: 'default',
-      enrollmentRole: 'default',
       type_code: 'MIN',
       type_description: 'Major - UG Specialization',
       admin_owners: [{org_code: 'MCELLBI', org_description: 'Molecular & Cell Biology', percentage: 100}],
@@ -279,7 +276,6 @@ describe MyAcademics::CollegeAndLevel do
       plan_code: '00E017G',
       plan_description: 'Women, Gender and Sexuality DE',
       role: 'default',
-      enrollmentRole: 'default',
       type_code: 'DE',
       type_description: 'Designated Emphasis',
       admin_owners: [{org_code: 'MCELLBI', org_description: 'Molecular & Cell Biology', percentage: 100}],
@@ -295,7 +291,6 @@ describe MyAcademics::CollegeAndLevel do
       plan_code: '82790PPJDG',
       plan_description: 'Public Policy MPP-JD CDP',
       role: 'default',
-      enrollmentRole: 'default',
       admin_owners: [
         {org_code: 'LAW', org_description: 'School of Law', percentage: 50},
         {org_code: 'PUBPOL', org_description: 'Goldman School Public Policy', percentage: 50},
@@ -311,7 +306,6 @@ describe MyAcademics::CollegeAndLevel do
       plan_code: '84501JDPPG',
       plan_description: 'Law JD-MPP CDP',
       role: 'law',
-      enrollmentRole: 'law',
       admin_owners: [
         {org_code: 'LAW', org_description: 'School of Law', percentage: 50},
         {org_code: 'PUBPOL', org_description: 'Goldman School Public Policy', percentage: 50},
@@ -341,7 +335,6 @@ describe MyAcademics::CollegeAndLevel do
       plan_code: '70141BAPHG',
       plan_description: 'Business Admin MBA-MPH CDP',
       role: 'haasMbaPublicHealth',
-      enrollmentRole: 'default',
       admin_owners: [
         {org_code: 'BUS', org_description: 'Haas School of Business', percentage: 50},
         {org_code: 'PUBHEALTH', org_description: 'School of Public Health', percentage: 50},
@@ -460,7 +453,6 @@ describe MyAcademics::CollegeAndLevel do
         expect(feed[:collegeAndLevel][:plans][0][:expectedGraduationTerm][:code]).to eq '2202'
         expect(feed[:collegeAndLevel][:plans][0][:expectedGraduationTerm][:name]).to eq 'Spring 2020'
         expect(feed[:collegeAndLevel][:plans][0][:role]).to eq 'default'
-        expect(feed[:collegeAndLevel][:plans][0][:enrollmentRole]).to eq 'default'
         expect(feed[:collegeAndLevel][:plans][0][:primary]).to eq true
         expect(feed[:collegeAndLevel][:plans][0][:type][:code]).to eq 'MAJ'
         expect(feed[:collegeAndLevel][:plans][0][:type][:category]).to eq 'Major'
@@ -471,7 +463,6 @@ describe MyAcademics::CollegeAndLevel do
         expect(feed[:collegeAndLevel][:plans][1][:plan][:code]).to eq '25971U'
         expect(feed[:collegeAndLevel][:plans][1][:expectedGraduationTerm]).to eq nil
         expect(feed[:collegeAndLevel][:plans][1][:role]).to eq 'default'
-        expect(feed[:collegeAndLevel][:plans][1][:enrollmentRole]).to eq 'default'
         expect(feed[:collegeAndLevel][:plans][1][:primary]).to eq false
         expect(feed[:collegeAndLevel][:plans][1][:type][:code]).to eq 'SP'
         expect(feed[:collegeAndLevel][:plans][1][:type][:category]).to eq 'Major'
@@ -482,7 +473,6 @@ describe MyAcademics::CollegeAndLevel do
         expect(feed[:collegeAndLevel][:plans][2][:plan][:code]).to eq '25090U'
         expect(feed[:collegeAndLevel][:plans][2][:expectedGraduationTerm]).to eq nil
         expect(feed[:collegeAndLevel][:plans][2][:role]).to eq 'default'
-        expect(feed[:collegeAndLevel][:plans][2][:enrollmentRole]).to eq 'default'
         expect(feed[:collegeAndLevel][:plans][2][:primary]).to eq false
         expect(feed[:collegeAndLevel][:plans][2][:type][:code]).to eq 'MIN'
         expect(feed[:collegeAndLevel][:plans][2][:type][:category]).to eq 'Minor'
@@ -493,7 +483,6 @@ describe MyAcademics::CollegeAndLevel do
         expect(feed[:collegeAndLevel][:plans][3][:plan][:code]).to eq '00E017G'
         expect(feed[:collegeAndLevel][:plans][3][:expectedGraduationTerm]).to eq nil
         expect(feed[:collegeAndLevel][:plans][3][:role]).to eq 'default'
-        expect(feed[:collegeAndLevel][:plans][3][:enrollmentRole]).to eq 'default'
         expect(feed[:collegeAndLevel][:plans][3][:primary]).to eq false
         expect(feed[:collegeAndLevel][:plans][3][:type][:code]).to eq 'DE'
         expect(feed[:collegeAndLevel][:plans][3][:type][:category]).to eq 'Designated Emphasis'
@@ -632,7 +621,6 @@ describe MyAcademics::CollegeAndLevel do
         expect(feed[:collegeAndLevel][:plans][0][:plan][:code]).to eq '84501JDPPG'
         expect(feed[:collegeAndLevel][:plans][0][:expectedGraduationTerm]).to eq nil
         expect(feed[:collegeAndLevel][:plans][0][:role]).to eq 'law'
-        expect(feed[:collegeAndLevel][:plans][0][:enrollmentRole]).to eq 'law'
         expect(feed[:collegeAndLevel][:plans][0][:primary]).to eq true
         expect(feed[:collegeAndLevel][:plans][0][:type][:code]).to eq 'MAJ'
         expect(feed[:collegeAndLevel][:plans][0][:type][:category]).to eq 'Major'
@@ -643,7 +631,6 @@ describe MyAcademics::CollegeAndLevel do
         expect(feed[:collegeAndLevel][:plans][1][:plan][:code]).to eq '82790PPJDG'
         expect(feed[:collegeAndLevel][:plans][1][:expectedGraduationTerm]).to eq nil
         expect(feed[:collegeAndLevel][:plans][1][:role]).to eq 'default'
-        expect(feed[:collegeAndLevel][:plans][1][:enrollmentRole]).to eq 'default'
         expect(feed[:collegeAndLevel][:plans][1][:primary]).to eq true
         expect(feed[:collegeAndLevel][:plans][1][:type][:code]).to eq 'MAJ'
         expect(feed[:collegeAndLevel][:plans][1][:type][:category]).to eq 'Major'
@@ -755,10 +742,6 @@ describe MyAcademics::CollegeAndLevel do
       expect(flattened_status[:role]).to eq 'default'
     end
 
-    it 'includes the students plan enrollment role' do
-      expect(flattened_status[:enrollmentRole]).to eq 'default'
-    end
-
     it 'includes the primary plan boolean' do
       expect(flattened_status[:primary]).to eq true
     end
@@ -784,7 +767,6 @@ describe MyAcademics::CollegeAndLevel do
         plan_code: '25971U',
         plan_description: 'MCB-Cell & Dev Biology BA',
         role: 'default',
-        enrollmentRole: 'default',
         is_primary: false,
         status_in_plan_status_code: 'X',
         status_in_plan_status_description: 'Invalid Status'

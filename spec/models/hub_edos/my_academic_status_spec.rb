@@ -17,9 +17,9 @@ describe HubEdos::MyAcademicStatus do
         expect(roles['ugrd']).to eq false
         expect(roles['grad']).to eq false
         expect(roles['fpf']).to eq false
-        expect(roles['law']).to eq has_law_role
+        expect(roles['law']).to eq has_law_career
         expect(roles['concurrent']).to eq false
-        expect(roles['lettersAndScience']).to eq has_ucls_role
+        expect(roles['lettersAndScience']).to eq has_ucls_program
         expect(roles['haasFullTimeMba']).to eq false
         expect(roles['haasEveningWeekendMba']).to eq false
         expect(roles['haasExecMba']).to eq false
@@ -27,8 +27,30 @@ describe HubEdos::MyAcademicStatus do
         expect(roles['haasMbaPublicHealth']).to eq false
         expect(roles['haasMbaJurisDoctor']).to eq false
         expect(roles['ugrdUrbanStudies']).to eq false
-        expect(roles['summerVisitor']).to eq has_summer_visitor_role
-        expect(roles['courseworkOnly']).to eq has_coursework_only_role
+        expect(roles['summerVisitor']).to eq has_summer_visitor_plan
+        expect(roles['courseworkOnly']).to eq has_coursework_only_plan
+      end
+
+      it 'maps a plan-based role onto the corresponding plan' do
+        academic_statuses = subject[:feed]['student']['academicStatuses']
+        academic_statuses.each do |status|
+          first_plan = status['studentPlans'].try(:[], 0)
+          second_plan = status['studentPlans'].try(:[], 1)
+
+          expect(first_plan[:role]).to be nil if first_plan && !has_summer_visitor_plan
+          expect(first_plan[:role]).to eq 'summerVisitor' if first_plan && has_summer_visitor_plan
+
+          expect(second_plan[:role]).to be nil if second_plan && !has_coursework_only_plan
+          expect(second_plan[:role]).to eq 'courseworkOnly' if second_plan && has_coursework_only_plan
+        end
+      end
+
+      it 'maps a career-based role onto the corresponding career' do
+        academic_statuses = subject[:feed]['student']['academicStatuses']
+        academic_statuses.each do |status|
+          expect(status['studentCareer'][:role]).to be nil unless has_law_career
+          expect(status['studentCareer'][:role]).to eq 'law' if has_law_career
+        end
       end
     end
 
@@ -226,16 +248,17 @@ describe HubEdos::MyAcademicStatus do
       }
     }
 
-    let(:has_summer_visitor_role) { false }
-    let(:has_coursework_only_role) { false }
-    let(:has_law_role) { false }
-    let(:has_ucls_role) { false }
+    let(:has_summer_visitor_plan) { false }
+    let(:has_coursework_only_plan) { false }
+    let(:has_law_career) { false }
+    let(:has_ucls_program) { false }
 
     context 'when student has no career and no plans' do
       it_behaves_like 'a translator that maps academic status to roles'
     end
 
-    context 'when student has a law career' do
+    context 'when student has a career that maps to a role' do
+      let(:has_law_career) { true }
       let(:academic_career) {
         {
           'code' => 'LAW',
@@ -246,33 +269,48 @@ describe HubEdos::MyAcademicStatus do
         it_behaves_like 'a translator that maps academic status to roles'
       end
 
-      context 'when student has a plan' do
-        let(:has_law_role) { true }
+      context 'when student has a plan that doesn\'t map to a role' do
         let(:academic_plans) {
           [academic_plan_generic]
+        }
+        it_behaves_like 'a translator that maps academic status to roles'
+      end
+
+      context 'when student has a plan that maps to a role' do
+        let(:has_summer_visitor_plan) { true }
+        let(:academic_plans) {
+          [academic_plan_summer_visitor]
+        }
+        it_behaves_like 'a translator that maps academic status to roles'
+      end
+
+      context 'when student has multiple plans that map to a role' do
+        let(:has_summer_visitor_plan) { true }
+        let(:has_coursework_only_plan) { true }
+        let(:academic_plans) {
+          [academic_plan_summer_visitor, academic_plan_coursework_only]
         }
         it_behaves_like 'a translator that maps academic status to roles'
       end
     end
 
     context 'when student has a summer visitor plan' do
-      let(:has_summer_visitor_role) { true }
+      let(:has_summer_visitor_plan) { true }
       let(:academic_plans) {
         [academic_plan_summer_visitor]
       }
       it_behaves_like 'a translator that maps academic status to roles'
-    end
 
-    context 'when student has a coursework-only plan' do
-      let(:has_coursework_only_role) { true }
-      let(:academic_plans) {
-        [academic_plan_coursework_only]
-      }
-      it_behaves_like 'a translator that maps academic status to roles'
+      context 'when student has another plan that doesn\'t map to a role' do
+        let(:academic_plans) {
+          [academic_plan_summer_visitor, academic_plan_generic]
+        }
+        it_behaves_like 'a translator that maps academic status to roles'
+      end
     end
 
     context 'when student has a coursework-only plan but is not active in the plan' do
-      let(:has_coursework_only_role) { false }
+      let(:has_coursework_only_plan) { false }
       let(:academic_plans) {
         [academic_plan_not_active]
       }
@@ -280,7 +318,7 @@ describe HubEdos::MyAcademicStatus do
     end
 
     context 'when student is active in the UCLS program' do
-      let(:has_ucls_role) { true }
+      let(:has_ucls_program) { true }
       let(:academic_plans) {
         [academic_program_ucls]
       }
@@ -288,7 +326,7 @@ describe HubEdos::MyAcademicStatus do
     end
 
     context 'when student is in the UCLS program but is not active' do
-      let(:has_ucls_role) { false }
+      let(:has_ucls_program) { false }
       let(:academic_plans) {
         [academic_program_not_active]
       }

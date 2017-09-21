@@ -54,7 +54,6 @@
                 "description": "Undergraduate"
               },
               "college": "Undergrad Natural Resources",
-              "enrollmentRole": "default",
               "expectedGraduationTerm": {
                 "code": "2192",
                 "name": "Spring 2019"
@@ -94,7 +93,6 @@
                 "description": "Undergraduate"
               },
               "college": "Undergrad Natural Resources",
-              "enrollmentRole": "default",
               "expectedGraduationTerm": {
                 "code": "2192",
                 "name": "Spring 2019"
@@ -134,7 +132,6 @@
                 "description": "Undergraduate"
               },
               "college": "Undergrad Natural Resources",
-              "enrollmentRole": "default",
               "expectedGraduationTerm": {
                 "code": "2192",
                 "name": "Spring 2019"

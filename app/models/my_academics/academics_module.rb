@@ -48,13 +48,12 @@ module MyAcademics
       newest_career_status.try(:[], 'studentCareer').try(:[], 'academicCareer')
     end
 
-    def filter_inactive_status_plans(statuses)
-      statuses.each do |status|
-        status['studentPlans'].select! do |plan|
-          plan.try(:[], 'statusInPlan').try(:[], 'status').try(:[], 'code') == 'AC'
-        end
-      end
-      statuses
+    def active?(plan)
+      plan.try(:[], 'statusInPlan').try(:[], 'status').try(:[], 'code') == 'AC'
+    end
+
+    def has_holds?(holds)
+      holds.to_a.length > 0
     end
 
     def course_info(campus_course)

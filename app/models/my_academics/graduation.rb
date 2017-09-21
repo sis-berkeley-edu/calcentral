@@ -25,10 +25,9 @@ module MyAcademics
     def last_expected_graduation_term
       expected_graduation_term = { code: nil, name: nil }
       if (statuses = HubEdos::MyAcademicStatus.get_statuses(@uid))
-        filtered_statuses = filter_inactive_status_plans(statuses)
-        filtered_statuses.each do |status|
+        statuses.each do |status|
           Array.wrap(status.try(:[], 'studentPlans')).each do |plan|
-            current_expected_graduation_term = get_expected_graduation_term(plan)
+            current_expected_graduation_term = get_expected_graduation_term(plan) if MyAcademics::AcademicsModule.active? plan
 
             # Catch Last Expected Graduation Date
             if (expected_graduation_term.try(:[], :code).to_i < current_expected_graduation_term.try(:[], :code).to_i)

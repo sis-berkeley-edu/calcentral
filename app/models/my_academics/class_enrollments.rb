@@ -6,6 +6,8 @@ module MyAcademics
     include CampusSolutions::EnrollmentCardFeatureFlagged
     include LinkFetcher
 
+    ENROLLMENT_DECK_KEYS = ['fpf', 'haasFullTimeMba', 'haasEveningWeekendMba', 'haasExecMba', 'summerVisitor', 'law', 'concurrent']
+
     def get_feed_internal
       return {} unless is_feature_enabled && user_is_student?
       HashConverter.camelize({
@@ -25,15 +27,28 @@ module MyAcademics
           :includes_fpf => false
         }
       }
-      active_plans.to_a.each do |plan|
-        role_code = plan[:enrollmentRole]
-        career_code = plan[:career][:code]
-        role_key = [role_code, career_code]
-        grouped_roles[:data][role_key] = { role: role_code, career_code: career_code, academic_plans: [] } if grouped_roles[:data][role_key].blank?
-        grouped_roles[:data][role_key][:academic_plans] << plan
-        grouped_roles[:metadata][:includes_fpf] = true if role_code == 'fpf'
+      academic_status.try(:[], :feed).try(:[], 'student').try(:[], 'academicStatuses').each do |status|
+        career_role = status.try(:[], 'studentCareer').try(:[], :role)
+        career_code = status.try(:[], 'studentCareer').try(:[], 'academicCareer').try(:[], 'code')
+
+        status.try(:[], 'studentPlans').each do |plan|
+          role = determine_enrollment_specific_role(plan[:role], career_role)
+          role_key = [role, career_code]
+          grouped_roles[:data][role_key] = { role: role, career_code: career_code, academic_plans: [] } if grouped_roles[:data][role_key].blank?
+          grouped_roles[:data][role_key][:academic_plans] << plan
+          grouped_roles[:metadata][:includes_fpf] = true if role == 'fpf'
+        end
       end
       grouped_roles
+    end
+
+    def determine_enrollment_specific_role(plan_based_role, career_based_role)
+      if ENROLLMENT_DECK_KEYS.include? plan_based_role
+        return plan_based_role
+      elsif ENROLLMENT_DECK_KEYS.include? career_based_role
+        return career_based_role
+      end
+      'default'
     end
 
     def get_career_term_role_decks
@@ -130,20 +145,23 @@ module MyAcademics
     end
 
     def user_has_holds?
-      !!college_and_level.try(:[], :holds).try(:[], :hasHolds)
+      holds = academic_status.try(:[], :feed).try(:[], 'student').try(:[], 'holds')
+      AcademicsModule.has_holds?(holds)
     end
 
-    def college_and_level
-      worker = Proc.new do
-        feed = {}
-        MyAcademics::CollegeAndLevel.new(@uid).merge(feed)
-        feed.try(:[], :collegeAndLevel)
-      end
-      @college_and_level ||= worker.call
+    def academic_status
+      model = HubEdos::MyAcademicStatus.new(@uid)
+      @academic_status ||= model.get_feed
     end
 
     def active_plans
-      college_and_level.try(:[], :plans)
+      plans = []
+      academic_status.try(:[], :feed).try(:[], 'student').try(:[], 'academicStatuses').each do |status|
+        plans.concat status.try(:[], 'studentPlans')
+      end
+      @active_plans ||= plans.select do |plan|
+        AcademicsModule.active? plan
+      end
     end
 
     def get_active_term_ids

@@ -64,32 +64,39 @@ module HubEdos
     # Beware: roles may be used as a whitelist (to show certain info), a blacklist (to hide certain info),
     #  or as some combination of the two in custom logic.
     def assign_roles(status)
-      career_code = status.try(:[], 'studentCareer').try(:[], 'academicCareer').try(:[], 'code')
-
+      assign_career_based_role(status.try(:[], 'studentCareer'))
       status.try(:[], 'studentPlans').each do |plan|
-        if active? plan
-          plan_code = plan.try(:[], 'academicPlan').try(:[], 'plan').try(:[], 'code')
-          program_code = plan.try(:[], 'academicPlan').try(:[], 'academicProgram').try(:[], 'program').try(:[], 'code')
-          plan[:role] = find_role(plan_code, career_code)
-          plan[:enrollmentRole] = find_role(plan_code, career_code, :enrollment)
-          plan[:programRole] = get_academic_program_role_code(program_code) || 'default'
+        if MyAcademics::AcademicsModule.active? plan
+          assign_plan_based_role plan
+          assign_program_based_role plan.try(:[], 'academicPlan').try(:[], 'academicProgram')
         end
       end
+    end
+
+    def assign_career_based_role(studentCareer)
+      career_code = studentCareer.try(:[], 'academicCareer').try(:[], 'code')
+      studentCareer[:role] = get_academic_career_role_code(career_code)
+    end
+
+    def assign_plan_based_role(studentPlan)
+      plan_code = studentPlan.try(:[], 'academicPlan').try(:[], 'plan').try(:[], 'code')
+      studentPlan[:role] = get_academic_plan_role_code(plan_code)
+    end
+
+    def assign_program_based_role(studentProgram)
+      program_code = studentProgram.try(:[], 'program').try(:[], 'code')
+      studentProgram[:role] = get_academic_program_role_code(program_code) || 'default'
     end
 
     def active?(plan)
       plan.try(:[], 'statusInPlan').try(:[], 'status').try(:[], 'code') == 'AC'
     end
 
-    def find_role(plan_code, career_code, enrollment = nil)
-      role = get_academic_plan_role_code(plan_code, enrollment) || get_academic_career_role_code(career_code, enrollment)
-      role || 'default'
-    end
-
     def collect_roles(status)
       roles = status.try(:[], 'studentPlans').collect do |plan|
-        [plan[:role], plan[:programRole]]
+        [plan[:role], plan.try(:[], 'academicPlan').try(:[], 'academicProgram').try(:[], :role)]
       end
+      roles << status.try(:[], 'studentCareer').try(:[], :role)
       roles.flatten
     end
   end
