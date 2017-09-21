@@ -316,6 +316,19 @@ angular.module('calcentral.services').service('academicsService', function() {
     return numericTransferUnits + numericTestUnits;
   };
 
+  var showResidency = function(academicRoles) {
+    var show = true;
+    var blacklistedRoles = ['summerVisitor', 'haasMastersFinEng', 'haasExecMba', 'haasEveningWeekendMba'];
+    _.forEach(blacklistedRoles, function(role) {
+      if (_.get(academicRoles, role)) {
+        show = false;
+        // Break the loop if we get a hit on a blacklisted role
+        return false;
+      }
+    });
+    return show;
+  };
+
   // Expose methods
   return {
     chooseDefaultSemester: chooseDefaultSemester,
@@ -333,6 +346,7 @@ angular.module('calcentral.services').service('academicsService', function() {
     isLSStudent: isLSStudent,
     isSummerSemester: isSummerSemester,
     normalizeGradingData: normalizeGradingData,
+    showResidency: showResidency,
     textbookRequestInfo: textbookRequestInfo,
     totalTransferUnits: totalTransferUnits
   };
