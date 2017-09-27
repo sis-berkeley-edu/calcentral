@@ -1721,6 +1721,7 @@ INSERT INTO oec_course_codes VALUES (187, 'XMBA', '', 'BAHSB', false, '2015-08-1
 INSERT INTO oec_course_codes VALUES (188, 'YIDDISH', '', 'HZGER', true, '2015-08-13 23:26:36.502', '2015-08-13 23:26:36.502');
 INSERT INTO oec_course_codes VALUES (189, 'FSSEM', '', 'FSSEM', true, '2017-05-19 17:40:36.502', '2017-05-19 17:40:36.502');
 INSERT INTO oec_course_codes VALUES (190, 'GLOBAL', '', 'QIIAS', true, '2017-08-10 17:40:36.502', '2017-08-10 17:40:36.502');
+INSERT INTO oec_course_codes VALUES (191, 'BIC', '', 'QHUIS', true, '2017-09-27 23:26:36.16', '2017-09-27 23:26:36.16');
 
 --
 -- Name: oec_course_codes_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
