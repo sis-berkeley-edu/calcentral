@@ -1,11 +1,9 @@
 <div class="cc-academic-summary-border-wrapper">
-  <div class="row">
-    <div class="small-6 columns">
-      <h4 class="cc-academic-summary-enrollment-header">
-        <a data-ng-if="semester.hasEnrollmentData && semester.slug" data-ng-bind="semester.name" data-ng-href="/academics/semester/{{semester.slug}}"></a>
-        <span data-ng-if="!semester.hasEnrollmentData || !semester.slug" data-ng-bind="semester.name"></span>
-      </h4>
-    </div>
+  <div class="row cc-academic-summary-content cc-clearfix" >
+    <h4 data-ng-if="!semester.hasWithdrawalData && semester.hasEnrollmentData "><a class="cc-left" data-ng-href="/academics/semester/{{semester.slug}}" data-ng-bind="semester.name"></a></h4>
+    <h4 class="cc-left" data-ng-if="(!semester.hasEnrollmentData && semester.hasStudyProgData) || semester.hasWithdrawalData || !semester.hasEnrollmentData " data-ng-bind="semester.name"></h4>
+    <span class="cc-academics-semester-notation" data-ng-if="semester.hasWithdrawalData" data-ng-bind="semester.withdrawalStatus.withcnclTypeDescr"></span>
+    <span class="cc-academics-semester-notation" data-ng-if="semester.hasStudyProgData" data-ng-bind="semester.studyProg.studyprogTypeDescr"></span>
   </div>
   <div class="cc-academic-summary-content cc-clearfix">
     <ul class="cc-right cc-text-right">
@@ -18,7 +16,7 @@
     </ul>
   </div>
   <div class="cc-table cc-academic-summary-content">
-    <table>
+    <table data-ng-if="semester.hasEnrolledClasses && !semester.hasWithdrawalData">
       <thead>
         <tr>
           <th width="20%">Class</th>
