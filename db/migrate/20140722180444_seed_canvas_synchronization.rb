@@ -1,9 +1,14 @@
 class SeedCanvasSynchronization < ActiveRecord::Migration
+
+  class CanvasSynchronizationMigrationModel < ActiveRecord::Base
+    self.table_name = 'canvas_synchronization'
+  end
+
   def up
-    Canvas::Synchronization.create(:last_guest_user_sync => 1.weeks.ago.utc)
+    CanvasSynchronizationMigrationModel.create(:last_guest_user_sync => 1.weeks.ago.utc)
   end
 
   def down
-    Canvas::Synchronization.delete_all
+    CanvasSynchronizationMigrationModel.delete_all
   end
 end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170519185448) do
+ActiveRecord::Schema.define(version: 20170929212505) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -162,17 +162,6 @@ ActiveRecord::Schema.define(version: 20170519185448) do
   end
 
   add_index "service_alerts", ["display", "created_at"], name: "index_service_alerts_on_display_and_created_at", using: :btree
-
-  create_table "summer_sub_terms", force: true do |t|
-    t.integer  "year",          null: false
-    t.integer  "sub_term_code", null: false
-    t.date     "start",         null: false
-    t.date     "end",           null: false
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "summer_sub_terms", ["year", "sub_term_code"], name: "index_summer_sub_terms_on_year_and_sub_term_code", using: :btree
 
   create_table "user_auths", force: true do |t|
     t.string   "uid",                          null: false

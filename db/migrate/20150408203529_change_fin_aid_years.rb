@@ -1,15 +1,19 @@
 class ChangeFinAidYears < ActiveRecord::Migration
-  reversible do |dir|
-    dir.up do
-      if (row = Finaid::FinAidYear.find_by(current_year: 2015))
-        row.update_attribute(:upcoming_start_date, Date.new(2015, 4, 25))
-      end
-      Finaid::FinAidYear.where('current_year > 2015').each do |row|
-        row.update_attribute(:upcoming_start_date, Date.new(row.current_year, 5, 1))
-      end
+
+  class FinAidYearMigrationModel < ActiveRecord::Base
+    self.table_name = 'fin_aid_years'
+  end
+
+  def up
+    if (row = FinAidYearMigrationModel.find_by(current_year: 2015))
+      row.update_attribute(:upcoming_start_date, Date.new(2015, 4, 25))
     end
-    dir.down do
-      # Downgrades should be managed through ccadmin.
+    FinAidYearMigrationModel.where('current_year > 2015').each do |row2|
+      row2.update_attribute(:upcoming_start_date, Date.new(row.current_year, 5, 1))
     end
+  end
+
+  def down
+    # Downgrades should be managed through ccadmin.
   end
 end
