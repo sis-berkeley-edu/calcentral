@@ -54,11 +54,28 @@
     </div>
     <div data-ng-if="!api.user.profile.roles.advisor" class="cc-degree-progress-footer">
       <span data-ng-if="isLettersAndScience && degreeProgress.undergraduate.links.academicProgressReport.url">
-        Run your
-        <a data-cc-campus-solutions-link-directive="degreeProgress.undergraduate.links.academicProgressReport"
-           data-cc-campus-solutions-link-directive-cc-page-name="currentPage.name"
-           data-cc-campus-solutions-link-directive-cc-page-url="currentPage.url"
-        ></a> to view your College of Letters and Science requirements. Contact your major advisor with questions about your major requirements.
+        <p>Run your
+          <a data-cc-campus-solutions-link-directive="degreeProgress.undergraduate.links.academicProgressReport"
+             data-cc-campus-solutions-link-directive-cc-page-name="currentPage.name"
+             data-cc-campus-solutions-link-directive-cc-page-url="currentPage.url"
+          ></a> to view your College of Letters and Science requirements. Major requirements may not be updated.
+        </p>
+        <p>
+          Please contact your
+          <a href="https://ls.berkeley.edu/advising/about-undergraduate-advising-services"
+            data-cc-outbound-enabled="true"
+            title="How to contact your L&amp;S college advisor">
+            college advisor
+          </a>
+          with college requirement questions or your
+          <a
+            href="https://ls.berkeley.edu/sites/default/files/umalist.pdf"
+            data-cc-outbound-enabled="true"
+            title="List of major advisors">
+            major advisor
+          </a>
+          with major requirement questions.
+        </p>
       </span>
       <span data-ng-if="!isLettersAndScience || !degreeProgress.undergraduate.links.academicProgressReport.url">If this information is out of date, please contact your advisor.</span>
     </div>
