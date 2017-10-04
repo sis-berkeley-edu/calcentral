@@ -63,7 +63,6 @@ angular.module('calcentral.controllers').controller('AcademicsStatusHoldsBlocksC
   // Request-and-parse sequence on the student feed for California Residency status.
   angular.extend($scope, {
     residency: {
-      isLoading: true,
       message: {}
     }
   });
