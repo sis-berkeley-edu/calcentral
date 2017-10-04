@@ -244,9 +244,7 @@
       // Base 64 encode certain images
       .pipe(gulpif(isProduction, base64()))
       // Minify CSS
-      .pipe(gulpif(isProduction, cleanCSS({
-        debug: true
-      })))
+      .pipe(gulpif(isProduction, cleanCSS()))
       // Combine the files
       .pipe(concat('application.css'))
       // Output to the correct directory
@@ -429,7 +427,7 @@
 
     var path = require('path');
     var RevAll = require('gulp-rev-all');
-    var revAllAssets = new RevAll({
+    var revAllOptions = {
       // Since we only run this in production mode, add some extra logging
       debug: true,
       dontGlobal: [
@@ -447,7 +445,7 @@
         // filename-6546259a4f83fd81debc.extension
         return path.basename(file.path, extension) + '-' + hash.substr(0, 20) + extension;
       }
-    });
+    };
 
     return gulp.src([
         paths.src.assetsPublic,
@@ -455,10 +453,10 @@
         paths.src.mainTemplates.indexPublic,
         paths.src.mainTemplates.indexJunctionPublic
       ])
-      .pipe(revAllAssets.revision())
+      .pipe(RevAll.revision(revAllOptions))
       .pipe(gulp.dest('public/'))
       // Will add a manifest file at public/rev-manifest.json for debugging purposes
-      .pipe(revAllAssets.manifestFile())
+      .pipe(RevAll.manifestFile())
       .pipe(gulp.dest('public/')
     );
 
