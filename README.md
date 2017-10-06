@@ -9,7 +9,7 @@
 * [Bundler](http://gembundler.com/rails3.html)
 * [Git](https://help.github.com/articles/set-up-git)
 * [JDBC Oracle driver](http://www.oracle.com/technetwork/database/enterprise-edition/jdbc-112010-090769.html)
-* [Java 7 SDK](http://www.oracle.com/technetwork/java/javase/downloads/index.html)
+* [Java 8 SDK](http://www.oracle.com/technetwork/java/javase/downloads/index.html)
 * [JRuby 1.7.19](http://jruby.org/)
 * [Node.js >=0.10.30](http://nodejs.org/)
 * [PostgreSQL](http://www.postgresql.org/)
@@ -20,7 +20,7 @@
 
 ## Installation
 
-1. Install Java 7 JDK:
+1. Install Java 8 JDK:
 http://www.oracle.com/technetwork/java/javase/downloads/index.html
 
 1. Install Postgres:
@@ -114,7 +114,7 @@ http://www.oracle.com/technetwork/java/javase/downloads/index.html
 1. Download the appropriate gems with [Bundler](http://gembundler.com/rails3.html):
 
     ```bash
-    gem install bundler
+    gem install bundler -v "1.11.2"
     bundle install
     ```
 
@@ -130,10 +130,10 @@ http://www.oracle.com/technetwork/java/javase/downloads/index.html
     You can also create Ruby configuration files like "settings.local.rb" and "development.local.rb" to amend the standard `config/environments/*.rb` files.
 
 1. Install JDBC driver (for Oracle connection)
-  * Download [ojdbc6.jar](http://svn.media.berkeley.edu/nexus/content/repositories/myberkeley/com/oracle/ojdbc6/11.2.0.3/ojdbc6-11.2.0.3.jar) [Alternative download](http://www.oracle.com/technetwork/apps-tech/jdbc-112010-090769.html)
+  * Download [ojdbc7_g.jar](http://www.oracle.com/technetwork/database/features/jdbc/jdbc-drivers-12c-download-1958347.html)
   * Note: You do not have to open the file.
-  * Rename the file to `ojdbc6.jar`
-  * Copy `ojdbc6.jar` to `calcentral/lib`
+  * Rename the file to `ojdbc7.jar`
+  * Copy `ojdbc7.jar` to `~/.rvm/rubies/jruby-1.7.19/lib/`
 
 1. Initialize PostgreSQL database tables:
 
@@ -151,6 +151,7 @@ http://www.oracle.com/technetwork/java/javase/downloads/index.html
 1. Install the front-end tools:
 
     ```bash
+    brew install node
     npm install
     npm install -g gulp
     ```
