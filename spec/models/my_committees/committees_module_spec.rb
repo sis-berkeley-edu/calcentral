@@ -168,7 +168,7 @@ describe MyCommittees::CommitteesModule do
     context 'when committee member service end date is today' do
       let(:committee_member) do
         {
-          csMemberEndDate: DateTime.now.strftime('%F'),
+          csMemberEndDate: DateTime.now.to_date.strftime('%F'),
         }
       end
 
