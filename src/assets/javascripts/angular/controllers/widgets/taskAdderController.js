@@ -1,6 +1,7 @@
 'use strict';
 
 var angular = require('angular');
+var _ = require('lodash');
 
 /**
  * Task adder controller
@@ -10,13 +11,14 @@ angular.module('calcentral.controllers').controller('TaskAdderController', funct
   $scope.addTaskPanelState = taskAdderService.getState();
 
   $scope.addTaskCompleted = function(data) {
+    var task = _.get(data, 'data');
     taskAdderService.resetState();
 
-    $scope.tasks.push(data);
+    $scope.tasks.push(task);
     $scope.updateTaskLists();
 
     // Go the the right tab when adding a task
-    if (data.dueDate) {
+    if (task.dueDate) {
       $scope.switchTasksMode('scheduled');
     } else {
       $scope.switchTasksMode('unscheduled');
