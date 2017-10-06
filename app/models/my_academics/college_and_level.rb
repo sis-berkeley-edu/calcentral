@@ -75,7 +75,7 @@ module MyAcademics
 
     def sort_award_honors(honors)
       honors.try(:sort_by) do |honor|
-        honor.try(:[], 'term').try(:[], 'id')
+        honor.try(:[], 'term').try(:[], 'id').to_s
       end.try(:reverse)
     end
 
