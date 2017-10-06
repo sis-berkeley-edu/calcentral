@@ -101,8 +101,15 @@ describe MyAcademics::CollegeAndLevel do
           "code" => 'DEANS',
           "description" => 'Dean\'s List'
         }
+      },
+      {
+        "awardDate"=>"2016-05-18",
+        "term"=>{},
+        "type" => {
+          "code" => "L127",
+          "description" => "Written & Oral Advocacy: Best"
+        }
       }
-
     ]
   end
 
@@ -679,9 +686,10 @@ describe MyAcademics::CollegeAndLevel do
     subject { described_class.new(uid).parse_hub_award_honors hub_academic_status_response }
 
     it 'groups and orders award honors by term' do
-      expect(subject.count).to eq(2)
+      expect(subject.count).to eq(3)
       expect(subject['2128'].count).to eq(2)
       expect(subject['2132'].count).to eq(2)
+      expect(subject[nil].count).to eq(1)
     end
 
     it 'contains the expected data for each award honor' do
