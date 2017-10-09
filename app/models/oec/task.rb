@@ -180,7 +180,7 @@ module Oec
 
     def find_previous_term_folder
       if (folders = @remote_drive.find_folders)
-        folders.select { |f| f.title.match(/\d{4}-[A-D]/) && f.title < @term_code }.sort_by(&:title).last
+        folders.select { |f| f.title.match(/\A\d{4}-[A-D]\Z/) && f.title < @term_code }.sort_by(&:title).last
       end
     end
 
