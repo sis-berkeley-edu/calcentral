@@ -151,8 +151,8 @@ GEM
     faraday_middleware (0.9.1)
       faraday (>= 0.7.4, < 0.10)
     ffi (1.9.14-java)
-    font-awesome-rails (4.2.0.0)
-      railties (>= 3.2, < 5.0)
+    font-awesome-rails (4.7.0.0)
+      railties (>= 3.2, < 5.1)
     formatador (0.2.5)
     google-api-client (0.8.6)
       activesupport (>= 3.2)
@@ -528,3 +528,6 @@ DEPENDENCIES
   torquebox-messaging (~> 3.1.2)
   torquebox-server (~> 3.1.2)
   webmock (~> 1.20.4)
+
+BUNDLED WITH
+   1.15.4
