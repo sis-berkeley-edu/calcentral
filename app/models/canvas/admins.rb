@@ -24,7 +24,7 @@ module Canvas
 
     def admin_user?(uid, options = {})
       admins = admins_list options
-      admins[:body].present? && admins[:body].index {|acct| acct['user']['sis_login_id'] == uid.to_s}.present?
+      admins[:body].present? && admins[:body].index {|acct| acct['user']['login_id'] == uid.to_s}.present?
     end
 
     def admins_list(options)
