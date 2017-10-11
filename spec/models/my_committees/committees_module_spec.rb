@@ -165,17 +165,6 @@ describe MyCommittees::CommitteesModule do
         expect(subject).to be false
       end
     end
-    context 'when committee member service end date is today' do
-      let(:committee_member) do
-        {
-          csMemberEndDate: DateTime.now.to_date.strftime('%F'),
-        }
-      end
-
-      it 'returns false' do
-        expect(subject).to be false
-      end
-    end
     context 'when committee member service end date is in the future' do
       let(:committee_member) do
         {
