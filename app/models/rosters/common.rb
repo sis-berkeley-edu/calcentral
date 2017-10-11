@@ -22,27 +22,6 @@ module Rosters
       end
     end
 
-    # Serves rosters in CSV format
-    def get_csv
-      CSV.generate do |csv|
-        csv << ['Name','Student ID','User ID','Role','Email Address','Sections','Majors','Terms in Attendance','Units','Grading Basis','Waitlist Position']
-        get_feed[:students].each do |student|
-          name = student[:last_name] + ', ' + student[:first_name]
-          user_id = student[:login_id]
-          student_id = student[:student_id]
-          email_address = student[:email]
-          role = ENROLL_STATUS_TO_CSV_ROLE[student[:enroll_status]]
-          sections = sections_to_name_string(student[:sections])
-          majors = student[:majors].try(:sort).try(:join, ', ')
-          terms_in_attendance = student[:terms_in_attendance]
-          units = student[:units]
-          grade_option = student[:grade_option]
-          waitlist_position = student[:waitlist_position] || ''
-          csv << [name, student_id, user_id, role, email_address, sections, majors, terms_in_attendance, units, grade_option, waitlist_position]
-        end
-      end
-    end
-
     def photo_data_or_file(student_id)
       return nil unless roster = get_feed
       if (student = roster[:students].find { |stu| stu[:id].to_s == student_id.to_s }) && student[:enroll_status] == 'E'
