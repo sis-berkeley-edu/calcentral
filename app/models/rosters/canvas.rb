@@ -73,6 +73,21 @@ module Rosters
       feed
     end
 
+    def get_csv
+      CSV.generate do |csv|
+        csv << ['Name','Student ID','User ID','Role','Email Address','Sections']
+        get_feed[:students].each do |student|
+          name = student[:last_name] + ', ' + student[:first_name]
+          user_id = student[:login_id]
+          student_id = student[:student_id]
+          email_address = student[:email]
+          role = ENROLL_STATUS_TO_CSV_ROLE[student[:enroll_status]]
+          sections = sections_to_name_string(student[:sections])
+          csv << [name, student_id, user_id, role, email_address, sections]
+        end
+      end
+    end
+
     def profile_url_for_ldap_id(ldap_id)
       if (user_profile = ::Canvas::SisUserProfile.new(user_id: ldap_id).get) && user_profile['id']
         "#{Settings.canvas_proxy.url_root}/courses/#{@canvas_course_id}/users/#{user_profile['id']}"
