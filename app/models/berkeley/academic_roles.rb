@@ -54,6 +54,7 @@ module Berkeley
     private
 
     def get_role_code(roles, academic_code)
+      return nil if academic_code.nil?
       matched_role_codes = roles.select do |matcher|
         matcher[:match].include?(academic_code)
       end

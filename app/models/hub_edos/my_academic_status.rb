@@ -65,27 +65,35 @@ module HubEdos
     #  or as some combination of the two in custom logic.
     def assign_roles(status)
       assign_career_based_role(status.try(:[], 'studentCareer'))
-      status.try(:[], 'studentPlans').each do |plan|
-        if MyAcademics::AcademicsModule.active? plan
-          assign_plan_based_role plan
-          assign_program_based_role plan.try(:[], 'academicPlan').try(:[], 'academicProgram')
+      if plans = status.try(:[], 'studentPlans')
+        plans.each do |plan|
+          if MyAcademics::AcademicsModule.active? plan
+            assign_plan_based_role plan
+            assign_program_based_role plan.try(:[], 'academicPlan').try(:[], 'academicProgram')
+          end
         end
       end
     end
 
     def assign_career_based_role(studentCareer)
-      career_code = studentCareer.try(:[], 'academicCareer').try(:[], 'code')
-      studentCareer[:role] = get_academic_career_role_code(career_code)
+      if studentCareer
+        career_code = studentCareer.try(:[], 'academicCareer').try(:[], 'code')
+        studentCareer[:role] = get_academic_career_role_code(career_code)
+      end
     end
 
     def assign_plan_based_role(studentPlan)
-      plan_code = studentPlan.try(:[], 'academicPlan').try(:[], 'plan').try(:[], 'code')
-      studentPlan[:role] = get_academic_plan_role_code(plan_code)
+      if studentPlan
+        plan_code = studentPlan.try(:[], 'academicPlan').try(:[], 'plan').try(:[], 'code')
+        studentPlan[:role] = get_academic_plan_role_code(plan_code)
+      end
     end
 
     def assign_program_based_role(studentProgram)
-      program_code = studentProgram.try(:[], 'program').try(:[], 'code')
-      studentProgram[:role] = get_academic_program_role_code(program_code) || 'default'
+      if studentProgram
+        program_code = studentProgram.try(:[], 'program').try(:[], 'code')
+        studentProgram[:role] = (get_academic_program_role_code(program_code) || 'default')
+      end
     end
 
     def active?(plan)
@@ -93,11 +101,14 @@ module HubEdos
     end
 
     def collect_roles(status)
-      roles = status.try(:[], 'studentPlans').collect do |plan|
-        [plan[:role], plan.try(:[], 'academicPlan').try(:[], 'academicProgram').try(:[], :role)]
+      if plans = status.try(:[], 'studentPlans')
+        roles = plans.collect do |plan|
+          [plan[:role], plan.try(:[], 'academicPlan').try(:[], 'academicProgram').try(:[], :role)]
+        end
+        roles << status.try(:[], 'studentCareer').try(:[], :role)
+        return roles.flatten
       end
-      roles << status.try(:[], 'studentCareer').try(:[], :role)
-      roles.flatten
+      []
     end
   end
 end
