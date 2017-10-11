@@ -370,15 +370,15 @@ describe Rosters::Canvas do
     end
     include_examples 'a good and proper roster'
 
-    it 'includes waitlist position, units, and grading basis' do
-      feed = subject.get_feed
-      expect(feed[:students].length).to eq 2
-      expect(feed[:students][0][:grade_option]).to eq 'Letter'
-      expect(feed[:students][0][:units]).to eq '4.0'
-      expect(feed[:students][0][:waitlist_position]).to eq nil
-      expect(feed[:students][1][:grade_option]).to eq 'Letter'
-      expect(feed[:students][1][:units]).to eq '4.0'
-      expect(feed[:students][1][:waitlist_position]).to eq nil
+    describe '#get_csv' do
+      it "does not include columns for CalCentral-only data" do
+        rosters_csv_string = subject.get_csv
+        expect(rosters_csv_string).to be_an_instance_of String
+        rosters_csv = CSV.parse(rosters_csv_string, {headers: true})
+        expect(rosters_csv.count).to eq 2
+        expect(rosters_csv.headers()).to include('Name', 'User ID', 'Student ID', 'Email Address', 'Role', 'Sections')
+        expect(rosters_csv.headers()).not_to include('Majors', 'Terms in Attendance', 'Units', 'Grading Basis', 'Waitlist Position')
+      end
     end
   end
 
