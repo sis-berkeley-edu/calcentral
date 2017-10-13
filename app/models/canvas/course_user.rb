@@ -35,6 +35,14 @@ module Canvas
       false
     end
 
+    def self.is_course_lead_ta?(canvas_course_user)
+      return false if canvas_course_user.blank?
+      canvas_course_user['enrollments'].each do |enrollment|
+        return true if enrollment['role'] == 'Lead TA'
+      end
+      false
+    end
+
     def self.is_course_teachers_assistant?(canvas_course_user)
       return false if canvas_course_user.blank?
       canvas_course_user['enrollments'].each do |enrollment|

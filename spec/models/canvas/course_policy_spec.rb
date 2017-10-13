@@ -40,6 +40,7 @@ describe Canvas::CoursePolicy do
   end
   let(:course_teacher_hash)   { course_user_hash.merge({'enrollments' => [{'type' => 'TeacherEnrollment', 'role' => 'TeacherEnrollment'}]}) }
   let(:course_ta_hash)        { course_user_hash.merge({'enrollments' => [{'type' => 'TaEnrollment', 'role' => 'TaEnrollment'}]}) }
+  let(:course_lead_ta_hash)        { course_user_hash.merge({'enrollments' => [{'type' => 'TaEnrollment', 'role' => 'Lead TA'}]}) }
   let(:course_reader_hash)  { course_user_hash.merge({'enrollments' => [{'type' => 'Reader', 'role' => 'Reader'}]}) }
   let(:course_observer_hash)  { course_user_hash.merge({'enrollments' => [{'type' => 'ObserverEnrollment', 'role' => 'ObserverEnrollment'}]}) }
   let(:course_designer_hash)  { course_user_hash.merge({'enrollments' => [{'type' => 'DesignerEnrollment', 'role' => 'DesignerEnrollment'}]}) }
@@ -177,6 +178,10 @@ describe Canvas::CoursePolicy do
       let(:invariable_course_user_hash) { course_ta_hash }
       it { should be_truthy }
     end
+    context 'Lead TA' do
+      let(:invariable_course_user_hash) { course_lead_ta_hash }
+      it { should be_truthy }
+    end
     context 'designer' do
       let(:invariable_course_user_hash) { course_designer_hash }
       it { should be_truthy }
@@ -212,6 +217,11 @@ describe Canvas::CoursePolicy do
         let(:has_sections) { false }
         it { should be_falsey }
       end
+    end
+    context 'Lead TA' do
+      before { allow_any_instance_of(Canvas::CurrentTeacher).to receive(:user_currently_teaching?).and_return(true) }
+      let(:invariable_course_user_hash) { course_lead_ta_hash }
+      it { should be_truthy }
     end
     context 'ta' do
       let(:invariable_course_user_hash) { course_ta_hash }
