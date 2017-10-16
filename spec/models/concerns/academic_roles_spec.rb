@@ -1,4 +1,4 @@
-describe Berkeley::AcademicRoles do
+describe Concerns::AcademicRoles do
 
   shared_examples 'a map of academic status codes to roles' do
     it 'includes plans and career matchers' do

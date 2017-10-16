@@ -26,7 +26,7 @@ describe AdvisingResources do
 
   before do
     allow(User::Identifiers).to receive(:lookup_campus_solutions_id).and_return empl_id
-    allow(HubEdos::MyAcademicStatus).to receive(:get_statuses).and_return(academic_statuses)
+    allow_any_instance_of(MyAcademics::MyAcademicStatus).to receive(:get_feed).and_return({:feed=> { 'student'=> { 'academicStatuses'=> academic_statuses } } })
     allow(LinkFetcher).to receive(:fetch_link).and_return mock_link
   end
 

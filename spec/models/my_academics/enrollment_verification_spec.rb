@@ -5,7 +5,7 @@ describe MyAcademics::EnrollmentVerification do
   subject { MyAcademics::EnrollmentVerification.new(uid) }
 
   before do
-    allow(HubEdos::MyAcademicStatus).to receive(:get_roles).and_return(roles)
+    allow_any_instance_of(MyAcademics::MyAcademicRoles).to receive(:get_feed).and_return(roles)
   end
 
   context 'when providing feed' do

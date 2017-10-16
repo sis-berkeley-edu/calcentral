@@ -17,7 +17,7 @@ module MyActivities
         ccn = course_code.sub("#{term_code}-", '').rjust(5, '0')
         if (campus_course = courses_by_ccn[ccn])
           activity = course_attributes(campus_course, uid)
-          course_url = MyAcademics::AcademicsModule.class_to_url campus_course
+          course_url = Concerns::AcademicsModule.class_to_url campus_course
           each_recent_recording(webcast_course) do |recording|
             activities << activity.merge(recording_attributes(recording, course_url))
           end

@@ -46,7 +46,7 @@ module Notifications
       'sis:student:finaid' => CampusSolutions::FinancialAidExpiry,
       'sis:student:financials' => CampusSolutions::MyBilling,
       'sis:student:messages' => MyActivities::Merged,
-      'sis:student:serviceindicator' => HubEdos::MyAcademicStatus,
+      'sis:student:serviceindicator' => MyAcademics::MyAcademicStatus,
       'sis:class:grade-roster' => CampusSolutions::SectionGradesExpiry
     }
   end

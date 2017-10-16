@@ -1,6 +1,6 @@
 module MyAcademics
-  class CanvasSites
-    include AcademicsModule
+  class CanvasSites < UserSpecificModel
+    include Concerns::AcademicsModule
 
     def merge(data)
       if Canvas::Proxy.access_granted?(@uid) && (canvas_sites = Canvas::MergedUserSites.new(@uid).get_feed)

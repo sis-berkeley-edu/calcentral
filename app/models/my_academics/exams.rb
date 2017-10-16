@@ -1,6 +1,5 @@
 module MyAcademics
-  class Exams
-    include AcademicsModule
+  class Exams < UserSpecificModel
     include ClassLogger
     include DatedFeed
     include FinalExamsFeatureFlagged

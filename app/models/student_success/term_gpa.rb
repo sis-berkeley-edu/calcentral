@@ -1,6 +1,7 @@
 module StudentSuccess
   class TermGpa
-    include MyAcademics::AcademicsModule
+    include Concerns::AcademicsModule
+    include Concerns::AcademicStatus
 
     def initialize(opts={})
       @student_uid_param = opts[:user_id]
@@ -35,7 +36,7 @@ module StudentSuccess
     end
 
     def get_active_careers
-      careers = HubEdos::MyAcademicStatus.get_careers(@student_uid_param)
+      careers = careers(academic_statuses MyAcademics::MyAcademicStatus.new(@student_uid_param).get_feed)
       careers.collect {|c| c.try(:[], 'description') }.uniq
     end
 

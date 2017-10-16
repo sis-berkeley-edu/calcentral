@@ -1,6 +1,6 @@
 module MyAcademics
-  class Teaching
-    include AcademicsModule
+  class Teaching < UserSpecificModel
+    include Concerns::AcademicsModule
 
     def merge(data)
       feed = EdoOracle::UserCourses::All.new(user_id: @uid).get_all_campus_courses

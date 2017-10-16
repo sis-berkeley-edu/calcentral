@@ -8,7 +8,7 @@ module MyAcademics
       {
         officialTranscriptRequestData: get_official_transcript_request_data,
         lawUnofficialTranscriptLink: law_unofficial_transcript_link,
-        academicRoles: HubEdos::MyAcademicStatus.get_roles(@uid),
+        academicRoles: MyAcademics::MyAcademicRoles.new(@uid).get_feed,
       }
     end
 

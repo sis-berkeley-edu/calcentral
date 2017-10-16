@@ -1,11 +1,7 @@
-module MyAcademics
+module Concerns
   module AcademicsModule
     extend self
     include ClassLogger
-
-    def initialize(uid)
-      @uid = uid
-    end
 
     # Link campus course data to the corresponding Academics class info page.
     # This URL is internally routed by JavaScript code rather than Rails.
@@ -37,23 +33,6 @@ module MyAcademics
         gradingInProgress: (terms.grading_in_progress && (slug == terms.grading_in_progress.slug)),
         classes: []
       }
-    end
-
-    def newest_career(statuses)
-      newest_career_status = statuses.try(:sort) do |this_status, that_status|
-        this_from_date = this_status['studentCareer'].try(:[], 'fromDate').to_s
-        that_from_date = that_status['studentCareer'].try(:[], 'fromDate').to_s
-        this_from_date <=> that_from_date
-      end.try(:last)
-      newest_career_status.try(:[], 'studentCareer').try(:[], 'academicCareer')
-    end
-
-    def active?(plan)
-      plan.try(:[], 'statusInPlan').try(:[], 'status').try(:[], 'code') == 'AC'
-    end
-
-    def has_holds?(holds)
-      holds.to_a.length > 0
     end
 
     def course_info(campus_course)

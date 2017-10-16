@@ -7,7 +7,7 @@ describe MyAcademics::AcademicRecords do
 
   before do
     allow(CalnetCrosswalk::ByUid).to receive(:new).and_return(double(lookup_campus_solutions_id: emplid))
-    allow(HubEdos::MyAcademicStatus).to receive(:get_roles).and_return(roles)
+    allow_any_instance_of(MyAcademics::MyAcademicRoles).to receive(:get_feed).and_return(roles)
   end
 
   context 'when providing feed' do

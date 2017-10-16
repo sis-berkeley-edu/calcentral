@@ -23,15 +23,15 @@ describe StudentSuccess::TermGpa do
 
   context 'get_active_careers' do
     let(:subject) { StudentSuccess::TermGpa.new(user_id: user_id) }
-    let(:careers) do
+    let(:academic_statuses) do
       [
-        {"code"=>"GRAD", "description"=>"Graduate"},
-        {"code"=>"LAW", "description"=>"Law"},
-        {"code"=>"GRAD", "description"=>"Graduate"},
+        { 'studentCareer' => { 'academicCareer' => {'code'=>'GRAD', 'description'=>'Graduate'} } },
+        { 'studentCareer' => { 'academicCareer' => {'code'=>'LAW', 'description'=>'Law'} } },
+        { 'studentCareer' => { 'academicCareer' => {'code'=>'GRAD', 'description'=>'Graduate'} } }
       ]
     end
     before do
-      allow(HubEdos::MyAcademicStatus).to receive(:get_careers).and_return careers
+      allow_any_instance_of(MyAcademics::MyAcademicStatus).to receive(:get_feed).and_return({:feed=> { 'student'=> { 'academicStatuses'=> academic_statuses } } })
     end
     it 'return unique career descriptions' do
       expect(subject.get_active_careers).to eq ['Graduate', 'Law']

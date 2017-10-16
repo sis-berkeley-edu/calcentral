@@ -27,7 +27,7 @@ module MyAcademics
         slug: slug,
         termCode: term_codes[:term_cd],
         termYear: term_codes[:term_yr],
-        timeBucket: MyAcademics::AcademicsModule.time_bucket(term_codes[:term_yr], term_codes[:term_cd]),
+        timeBucket: Concerns::AcademicsModule.time_bucket(term_codes[:term_yr], term_codes[:term_cd]),
       }
       semester.merge! parse_planned_classes(term_id, plans)
       semester.merge parse_enrolled_classes(slug, semesters)

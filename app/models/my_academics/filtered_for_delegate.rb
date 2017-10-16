@@ -1,6 +1,5 @@
 module MyAcademics
   class FilteredForDelegate < UserSpecificModel
-
     include Cache::CachedFeed
     include CampusSolutions::DelegatedAccessFeatureFlagged
     include MergedModel

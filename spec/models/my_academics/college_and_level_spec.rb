@@ -21,24 +21,7 @@ describe MyAcademics::CollegeAndLevel do
         "academicStatuses" => hub_academic_statuses,
         "holds" => hub_holds,
         "awardHonors" => hub_award_honors,
-        "degrees" => hub_degrees,
-        "roles" => {
-          'fpf' => false,
-          'ugrd' => false,
-          'grad' => false,
-          'law' => false,
-          'concurrent' => false,
-          'lettersAndScience' => false,
-          'haasFullTimeMba' => false,
-          'haasEveningWeekendMba' => false,
-          'haasExecMba' => false,
-          'haasMastersFinEng' => false,
-          'haasMbaPublicHealth' => false,
-          'haasMbaJurisDoctor' => false,
-          'ugrdUrbanStudies' => false,
-          'summerVisitor' => false,
-          'courseworkOnly' => false,
-        }
+        "degrees" => hub_degrees
       }
     }
   end
@@ -351,7 +334,7 @@ describe MyAcademics::CollegeAndLevel do
 
   before do
     allow_any_instance_of(CalnetCrosswalk::ByUid).to receive(:lookup_campus_solutions_id).and_return campus_solutions_id
-    allow_any_instance_of(HubEdos::MyAcademicStatus).to receive(:get_feed).and_return hub_academic_status_response
+    allow_any_instance_of(MyAcademics::MyAcademicStatus).to receive(:get_feed).and_return hub_academic_status_response
   end
 
   context 'data sourcing' do
@@ -394,7 +377,7 @@ describe MyAcademics::CollegeAndLevel do
     context 'failed response' do
       let(:failure_response) { {:errored=>true, :statusCode=>503, :body=>"An unknown server error occurred"} }
       before do
-        allow_any_instance_of(HubEdos::MyAcademicStatus).to receive(:get_feed).and_return(failure_response)
+        allow_any_instance_of(MyAcademics::MyAcademicStatus).to receive(:get_feed).and_return(failure_response)
       end
       it 'reports failure' do
         expect(feed[:collegeAndLevel][:statusCode]).to eq 503
@@ -500,10 +483,6 @@ describe MyAcademics::CollegeAndLevel do
         expect(feed[:collegeAndLevel][:plans][1][:subPlan]).to be
         expect(feed[:collegeAndLevel][:plans][1][:subPlan][:code]).to eq '25966SA02U'
         expect(feed[:collegeAndLevel][:plans][1][:subPlan][:description]).to eq 'Biological Chemistry'
-      end
-
-      it 'translates roles' do
-        expect(feed[:collegeAndLevel][:roles]).to be
       end
 
       it 'translates holds' do
@@ -642,10 +621,6 @@ describe MyAcademics::CollegeAndLevel do
         expect(feed[:collegeAndLevel][:plans][1][:type][:code]).to eq 'MAJ'
         expect(feed[:collegeAndLevel][:plans][1][:type][:category]).to eq 'Major'
         expect(feed[:collegeAndLevel][:plans][1][:college]).to eq 'Graduate Professional Programs'
-      end
-
-      it 'translates roles' do
-        expect(feed[:collegeAndLevel][:roles]).to be
       end
     end
 
