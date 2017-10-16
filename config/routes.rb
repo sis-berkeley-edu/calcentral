@@ -16,7 +16,6 @@ Calcentral::Application.routes.draw do
   get '/api/cache/clear' => 'cache#clear', :defaults => { :format => 'json' }
   get '/api/cache/delete' => 'cache#delete', :defaults => { :format => 'json' }
   get '/api/cache/delete/:key' => 'cache#delete', :defaults => { :format => 'json' }
-  get '/api/cache/warm/:uid' => 'cache#warm', :defaults => { :format => 'json' }
   get '/api/config' => 'config#get', :defaults => { :format => 'json' }
   get '/api/ping' => 'ping#do', :defaults => {:format => 'json'}
   get '/api/reload_yaml_settings' => 'yaml_settings#reload', :defaults => { :format => 'json' }

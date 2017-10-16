@@ -59,9 +59,6 @@ ist_jms:
   fake: true
   enabled: false
 
-hot_plate:
-  enabled: false
-
 eft_proxy:
   fake: true
 

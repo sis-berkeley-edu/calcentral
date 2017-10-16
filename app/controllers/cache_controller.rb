@@ -17,23 +17,6 @@ class CacheController < ApplicationController
     render json: {deleted: deleted}
   end
 
-  def warm
-    who = params['uid']
-    if who.blank? || who == 'all'
-      logger.warn 'Will warm cache for all users'
-      HotPlate.request_warmups_for_all
-    else
-      begin
-        uid = Integer(who, 10).to_s
-      rescue ArgumentError
-        raise Errors::BadRequestError, "Bad UID parameter '#{who}'"
-      end
-      logger.warn "Will warm cache for user #{uid}"
-      HotPlate.request_warmup uid
-    end
-    render :json => {warmed: true}
-  end
-
   private
 
   def check_permission

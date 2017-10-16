@@ -18,14 +18,6 @@ describe CacheController do
       expect(response.body.blank?).to be_truthy
     end
 
-    it 'should not allow non-admin users to warmup caches' do
-      HotPlate.should_not_receive(:request_warmup)
-      HotPlate.should_not_receive(:request_warmups_for_all)
-      get :warm, {:uid => '1234', :format => 'json'}
-      expect(response.status).to eq(403)
-      expect(response.body.blank?).to be_truthy
-    end
-
     it 'should not allow non-admin users to delete a specific key' do
       expect(Rails.cache).to receive(:delete).never
       get :delete, {key: 'Canvas::ExternalTools'}
@@ -45,29 +37,6 @@ describe CacheController do
       expect(response.status).to eq(200)
       expect(response.body).to be
       expect(response.body['cache_cleared']).to be_truthy
-    end
-
-    it 'should allow superusers users to warmup a single users cache' do
-      HotPlate.should_receive(:request_warmup).once.with('1234')
-      get :warm, {:uid => '1234', :format => 'json'}
-      expect(response.status).to eq(200)
-      expect(response.body).to be
-      expect(response.body['warmed']).to be_truthy
-    end
-
-    it 'should allow superusers to warmup everyones cache' do
-      HotPlate.should_receive(:request_warmups_for_all).once
-      get :warm, {:uid => 'all', :format => 'json'}
-      expect(response.status).to eq(200)
-      expect(response.body).to be
-      expect(response.body['warmed']).to be_truthy
-    end
-
-    it 'should not take action when given bad parameters' do
-      HotPlate.should_not_receive(:request_warmups_for_all)
-      get :warm, {:uid => 'some_other_thing', :format => 'json'}
-      expect(response.status).to eq(400)
-      expect(response.body).to include('some_other_thing')
     end
 
     it 'should delete a specific key' do
