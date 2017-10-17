@@ -48,21 +48,22 @@ module EdoOracle
     SQL
 
     def self.where_course_term_updated_date(with_career_filter = true)
-      enroll_acad_career_filter = with_career_filter ? 'term2.ACAD_CAREER = enr."ACAD_CAREER" AND' : ''
+      enroll_acad_career_filter = with_career_filter ? 'AND term2.ACAD_CAREER = enr."ACAD_CAREER"' : ''
       sql_clause = <<-SQL
-        AND (crs."updatedDate" = (
-          SELECT
-            MAX(crs2."updatedDate")
-          FROM
-            SISEDO.API_COURSEV01_MVW crs2, SISEDO.EXTENDED_TERM_MVW term2
-          WHERE
-            crs2."cms-version-independent-id" = crs."cms-version-independent-id" AND
-            crs2."displayName" = crs."displayName" AND
-            #{enroll_acad_career_filter}
-            term2.STRM = sec."term-id" AND
-            CAST(crs2."fromDate" AS DATE) <= term2.TERM_BEGIN_DT AND
-            CAST(crs2."toDate" AS DATE) >= term2.TERM_END_DT)
-            OR ( CAST(crs."updatedDate" AS DATE) = TO_DATE('1901-01-01', 'YYYY-MM-DD') )
+        AND crs."updatedDate" = (
+          SELECT MAX(crs2."updatedDate")
+          FROM SISEDO.API_COURSEV01_MVW crs2, SISEDO.EXTENDED_TERM_MVW term2
+          WHERE crs2."cms-version-independent-id" = crs."cms-version-independent-id"
+          AND crs2."displayName" = crs."displayName"
+          #{enroll_acad_career_filter}
+          AND term2.STRM = sec."term-id"
+          AND (
+            (
+              CAST(crs2."fromDate" AS DATE) <= term2.TERM_BEGIN_DT
+              AND CAST(crs2."toDate" AS DATE) >= term2.TERM_END_DT
+            )
+            OR CAST(crs."updatedDate" AS DATE) = TO_DATE('1901-01-01', 'YYYY-MM-DD')
+          )
         )
       SQL
       sql_clause
@@ -78,7 +79,7 @@ module EdoOracle
       # Reduce performance hit and only add Terms whare clause if limiting number of terms pulled
       in_term_where_clause = "enr.\"TERM_ID\" IN (#{terms_query_list terms}) AND " if Settings.features.hub_term_api
       safe_query <<-SQL
-        SELECT
+        SELECT DISTINCT
           #{SECTION_COLUMNS},
           sec."maxEnroll" AS enroll_limit,
           enr."STDNT_ENRL_STATUS_CODE" AS enroll_status,
@@ -139,7 +140,7 @@ module EdoOracle
     #   - 'cs-course-id' added.
     def self.get_associated_secondary_sections(term_id, section_id)
       safe_query <<-SQL
-        SELECT
+        SELECT DISTINCT
           #{SECTION_COLUMNS},
           sec."cs-course-id" AS cs_course_id,
           sec."maxEnroll" AS enroll_limit,
@@ -233,7 +234,7 @@ module EdoOracle
     #   - 'primary_secondary_cd' replaced by Boolean 'primary'
     def self.get_sections_by_ids(term_id, section_ids)
       safe_query <<-SQL
-        SELECT
+        SELECT DISTINCT
           #{SECTION_COLUMNS}
         FROM SISEDO.CLASSSECTIONALLV00_MVW sec
         #{JOIN_SECTION_TO_COURSE}
