@@ -13,23 +13,7 @@ TorqueBox.configure do
   # CALCENTRAL-ONLY
   service JmsWorker
 
-  # warm up active users caches once a day
-  # CALCENTRAL-ONLY
-  job HotPlate do
-    cron '0 1 8 * * ? *'
-    singleton true
-  end
-
   # set up messaging queues
-  # CALCENTRAL-ONLY
-  queue '/queues/hot_plate' do
-    durable false
-    processor HotPlate do
-      if ENV['RAILS_ENV'] == 'production'
-        concurrency 3
-      end
-    end
-  end
   # CALCENTRAL-ONLY
   queue '/queues/warmup_request' do
     durable false

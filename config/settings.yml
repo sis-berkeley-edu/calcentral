@@ -329,10 +329,6 @@ developer_auth:
   enabled: false
   password: topsecret!
 
-hot_plate:
-  last_visit_cutoff: <%= 10.days %>
-  enabled: true
-
 background_jobs_check:
   time_between_pings: <%= 5.minutes %>
 
