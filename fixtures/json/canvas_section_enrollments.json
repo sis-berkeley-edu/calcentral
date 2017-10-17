@@ -28,7 +28,6 @@
       "sortable_name": "Dick, Carlos",
       "short_name": "Carlos Dick",
       "sis_user_id": "21563990",
-      "sis_login_id": "754321",
       "login_id": "754321"
     }
   },
@@ -61,7 +60,6 @@
       "sortable_name": "Kilpatrick, Rosa",
       "short_name": "Rosa Kilpatrick",
       "sis_user_id": "UID:300001",
-      "sis_login_id": "300001",
       "login_id": "300001"
     }
   },
@@ -94,7 +92,6 @@
       "sortable_name": "Hoover, Letitia",
       "short_name": "Letitia Hoover",
       "sis_user_id": "UID:175007",
-      "sis_login_id": "175007",
       "login_id": "175007"
     }
   },
@@ -127,7 +124,6 @@
       "sortable_name": "Bolinger, Pamela",
       "short_name": "Pamela Bolinger",
       "sis_user_id": "24989156",
-      "sis_login_id": "1038222",
       "login_id": "1038222"
     }
   },
@@ -160,7 +156,6 @@
       "sortable_name": "Rosen, Tod W",
       "short_name": "Tod W Rosen",
       "sis_user_id": "22261855",
-      "sis_login_id": "800806",
       "login_id": "800806"
     }
   },
@@ -193,7 +188,6 @@
       "sortable_name": "Kruger, Lillian",
       "short_name": "Lillian Kruger",
       "sis_user_id": "UID:800807",
-      "sis_login_id": "800807",
       "login_id": "800807"
     }
   },
@@ -226,7 +220,6 @@
       "sortable_name": "Wilbur Ammons, Darwin",
       "short_name": "Darwin Wilbur Ammons",
       "sis_user_id": "UID:800808",
-      "sis_login_id": "800808",
       "login_id": "800808"
     }
   },
@@ -259,7 +252,6 @@
       "sortable_name": "Farrand, Joy",
       "short_name": "Joy Farrand",
       "sis_user_id": "13227001",
-      "sis_login_id": "800809",
       "login_id": "800809"
     }
   },
@@ -291,7 +283,6 @@
       "sortable_name": "HERMAN, KIRSTY W",
       "short_name": "KIRSTY HERMAN",
       "sis_user_id": "UID:800810",
-      "sis_login_id": "800810",
       "login_id": "800810"
     }
   },
@@ -324,7 +315,6 @@
       "sortable_name": "TEST-800811, STUDENT",
       "short_name": "Akiko TestStudent",
       "sis_user_id": "UID:800811",
-      "sis_login_id": "800811",
       "login_id": "800811"
     }
   },
@@ -356,7 +346,6 @@
       "sortable_name": "TEST-800812, STUDENT",
       "short_name": "Brynn TestStudent",
       "sis_user_id": "UID:800812",
-      "sis_login_id": "800812",
       "login_id": "800812"
     }
   },
@@ -389,7 +378,6 @@
       "sortable_name": "Cornett, Doreen",
       "short_name": "Doreen Cornett",
       "sis_user_id": "13227002",
-      "sis_login_id": "800813",
       "login_id": "800813"
     }
   },
@@ -421,7 +409,6 @@
       "sortable_name": "Thurlow, Stephany",
       "short_name": "Stephany",
       "sis_user_id": "UID:800814",
-      "sis_login_id": "800814",
       "login_id": "800814"
     }
   },
@@ -477,7 +464,6 @@
       "sortable_name": "Sizemore, Pedro",
       "short_name": "Pedro Sizemore",
       "sis_user_id": "UID:800815",
-      "sis_login_id": "800815",
       "login_id": "800815"
     }
   },
@@ -503,7 +489,6 @@
       "sortable_name": "JANSON, THEO",
       "short_name": "Theo Janson",
       "sis_user_id": "13227003",
-      "sis_login_id": "800816",
       "login_id": "800816"
     }
   },
@@ -529,7 +514,6 @@
       "sortable_name": "Weldy, Cecile",
       "short_name": "Cecile Weldy",
       "sis_user_id": "UID:800817",
-      "sis_login_id": "800817",
       "login_id": "800817"
     }
   },
@@ -555,7 +539,6 @@
       "sortable_name": "Hambleton, Ellie",
       "short_name": "Ellie Hambleton",
       "sis_user_id": "UID:800818",
-      "sis_login_id": "800818",
       "login_id": "800818"
     }
   },
@@ -581,7 +564,6 @@
       "sortable_name": "Miller, Jason",
       "short_name": "Jason Miller",
       "sis_user_id": "UID:800819",
-      "sis_login_id": "800819",
       "login_id": "800819"
     }
   },
@@ -607,7 +589,6 @@
       "sortable_name": "White, Tara",
       "short_name": "Tara White",
       "sis_user_id": "UID:800820",
-      "sis_login_id": "800820",
       "login_id": "800820"
     }
   }

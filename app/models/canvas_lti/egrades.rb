@@ -71,7 +71,7 @@ module CanvasLti
         course_users.map do |course_user|
           student_grade(course_user['enrollments']).slice(:current_grade, :final_grade).merge(
             name: course_user['sortable_name'],
-            sis_login_id: course_user['sis_login_id']
+            sis_login_id: course_user['login_id']
           )
         end
       end

@@ -303,8 +303,8 @@ describe CanvasCsv::SiteMembershipsMaintainer do
       let(:cached_enrollments_provider) { CanvasCsv::TermEnrollments.new }
       let(:cached_enrollments_hash) do
         [
-          {'course_section_id'=>'1413864','sis_section_id'=>'SEC:2014-C-24111', 'user_id'=>'4906376', 'role'=>'StudentEnrollment', 'enrollment_state' => 'active', 'sis_import_id'=>'101', 'user'=>{'sis_user_id' => 'UID:7977', 'sis_login_id'=>'7977', 'login_id'=>'7977'}},
-          {'course_section_id'=>'1413864','sis_section_id'=>'SEC:2014-C-24111', 'user_id'=>'4906377', 'role'=>'StudentEnrollment', 'enrollment_state' => 'active', 'sis_import_id'=>'101', 'user'=>{'sis_user_id' => 'UID:7978', 'sis_login_id'=>'7978', 'login_id'=>'7978'}},
+          {'course_section_id'=>'1413864','sis_section_id'=>'SEC:2014-C-24111', 'user_id'=>'4906376', 'role'=>'StudentEnrollment', 'enrollment_state' => 'active', 'sis_import_id'=>'101', 'user'=>{'sis_user_id' => 'UID:7977', 'login_id'=>'7977'}},
+          {'course_section_id'=>'1413864','sis_section_id'=>'SEC:2014-C-24111', 'user_id'=>'4906377', 'role'=>'StudentEnrollment', 'enrollment_state' => 'active', 'sis_import_id'=>'101', 'user'=>{'sis_user_id' => 'UID:7978', 'login_id'=>'7978'}},
         ]
       end
       before do
