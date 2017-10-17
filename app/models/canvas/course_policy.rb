@@ -24,7 +24,8 @@ module Canvas
     end
 
     def can_edit_official_sections?
-      is_canvas_course_teacher? && can_add_current_official_sections?
+      (is_canvas_course_teacher? || Canvas::CourseUser.is_course_lead_ta?(canvas_course_user)) &&
+        can_add_current_official_sections?
     end
 
     def can_view_official_sections?
