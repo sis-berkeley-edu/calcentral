@@ -209,7 +209,7 @@ describe CanvasLti::Egrades do
         ['4000199', 81.25, 87.5, 'B-', 'B+']
       ].collect do |u|
         {
-          'sis_login_id' => u[0],
+          'login_id' => u[0],
           'enrollments' => [
             {
               'type' => 'StudentEnrollment',

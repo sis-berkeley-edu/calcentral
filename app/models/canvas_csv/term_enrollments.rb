@@ -94,7 +94,7 @@ module CanvasCsv
         'role' => api_enrollment_hash['role'],
         'sis_import_id' => api_enrollment_hash['sis_import_id'],
         'sis_user_id' => api_enrollment_hash['user']['sis_user_id'],
-        'sis_login_id' => api_enrollment_hash['user']['sis_login_id'],
+        'sis_login_id' => api_enrollment_hash['user']['login_id'],
         'enrollment_state' => api_enrollment_hash['enrollment_state'],
       }
     end
@@ -112,7 +112,6 @@ module CanvasCsv
         'enrollment_state' => csv_enrollment_hash['enrollment_state'],
         'user' => {
           'sis_user_id' => csv_enrollment_hash['sis_user_id'],
-          'sis_login_id' => csv_enrollment_hash['sis_login_id'],
           'login_id' => csv_enrollment_hash['sis_login_id']
         }
       }

@@ -7,7 +7,6 @@ describe Canvas::CourseUser do
       'id' => 4321321,
       'name' => 'Michael Steven OWEN',
       'sis_user_id' => 'UID:105431',
-      'sis_login_id' => '105431',
       'login_id' => '105431',
       'enrollments' => [
         {'course_id' => 767330, 'course_section_id' => 1312468, 'id' => 20241907, 'type' => 'StudentEnrollment', 'role' => 'StudentEnrollment'},
@@ -43,7 +42,6 @@ describe Canvas::CourseUser do
         expect(user['id']).to eq 4321321
         expect(user['name']).to eq 'Michael Steven OWEN'
         expect(user['sis_user_id']).to eq 'UID:105431'
-        expect(user['sis_login_id']).to eq '105431'
         expect(user['login_id']).to eq '105431'
         expect(user['enrollments'].count).to eq 1
         expect(user['enrollments'][0]['course_id']).to eq 767330
