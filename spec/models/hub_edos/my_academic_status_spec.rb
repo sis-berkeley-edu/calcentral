@@ -75,44 +75,61 @@ describe HubEdos::MyAcademicStatus do
     let(:student) do
       {
         'academicStatuses' => [
-          {
-            'studentCareer' => {
-              'academicCareer' => academic_career,
-              'fromDate' => '2011-05-23'
-            },
-            'studentPlans' => academic_plans,
-            'currentRegistration' => {
-              'term' => {
-                'id' => '2115',
-                'name' => '2011 Summer'
-              },
-              'academicCareer' => {
-                'code' => 'UGRD',
-                'description' => 'Undergraduate'
-              },
-              'eligibleToRegister' => false,
-              'registered' => false,
-              'disabled' => false,
-              'athlete' => false,
-              'intendsToGraduate' => false,
-              'academicLevel' => {
-                'type' => {
-                  'code' => 'Self Reported'
-                },
-                'level' => {
-                  'code' => '',
-                  'description' => ''
-                }
-              },
-              'termUnits' => [],
-              'termGPA' => {},
-              'new' => true
-            }
-          }
+          ugrd_academic_status
         ],
         'holds' => [],
         'awardHonors' => [],
         'degrees' => []
+      }
+    end
+    let(:ugrd_academic_status) do
+      status = {}
+      status.merge!(student_career)
+      status.merge!(student_plans)
+      status.merge!(current_registration)
+    end
+    let(:student_career) do
+      {
+        'studentCareer' => {
+          'academicCareer' => academic_career,
+          'fromDate' => '2011-05-23'
+        }
+      }
+    end
+    let(:student_plans) do
+      {
+        'studentPlans' => academic_plans
+      }
+    end
+    let(:current_registration) do
+      {
+        'currentRegistration' => {
+          'term' => {
+            'id' => '2115',
+            'name' => '2011 Summer'
+          },
+          'academicCareer' => {
+            'code' => 'UGRD',
+            'description' => 'Undergraduate'
+          },
+          'eligibleToRegister' => false,
+          'registered' => false,
+          'disabled' => false,
+          'athlete' => false,
+          'intendsToGraduate' => false,
+          'academicLevel' => {
+            'type' => {
+              'code' => 'Self Reported'
+            },
+            'level' => {
+              'code' => '',
+              'description' => ''
+            }
+          },
+          'termUnits' => [],
+          'termGPA' => {},
+          'new' => true
+        }
       }
     end
     let(:academic_plans) {
@@ -291,6 +308,36 @@ describe HubEdos::MyAcademicStatus do
           [academic_plan_summer_visitor, academic_plan_coursework_only]
         }
         it_behaves_like 'a translator that maps academic status to roles'
+      end
+    end
+
+    context 'when student career is not present' do
+      let(:student_career) { {} }
+      it 'returns feed without career' do
+        academic_statuses = subject[:feed]['student']['academicStatuses']
+        academic_statuses.each do |status|
+          expect(status['studentCareer']).to be nil
+        end
+      end
+    end
+
+    context 'when academic career is not present' do
+      let(:academic_career) { {} }
+      it 'returns student career with nil role' do
+        academic_statuses = subject[:feed]['student']['academicStatuses']
+        academic_statuses.each do |status|
+          expect(status['studentCareer'][:role]).to be nil
+        end
+      end
+    end
+
+    context 'when student academic plans are not present' do
+      let(:student_plans) { {} }
+      it 'returns feed without plans' do
+        academic_statuses = subject[:feed]['student']['academicStatuses']
+        academic_statuses.each do |status|
+          expect(status['studentPlans']).to be nil
+        end
       end
     end
 
