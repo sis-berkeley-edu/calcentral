@@ -58,7 +58,6 @@ describe Canvas::SectionEnrollments do
       expect(enrollments[0]['user']['sortable_name']).to eq 'Dick, Carlos'
       expect(enrollments[0]['user']['short_name']).to eq 'Carlos Dick'
       expect(enrollments[0]['user']['sis_user_id']).to eq '21563990'
-      expect(enrollments[0]['user']['sis_login_id']).to eq '754321'
       expect(enrollments[0]['user']['login_id']).to eq '754321'
       expect(enrollments[0]['grades']).to be_an_instance_of Hash
       expect(enrollments[0]['grades']['html_url']).to eq 'https://ucberkeley.beta.instructure.com/courses/1050123/grades/4000025'

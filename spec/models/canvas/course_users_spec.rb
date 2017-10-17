@@ -10,7 +10,6 @@ describe Canvas::CourseUsers do
     expect(users[0]['id']).to eq 4862319
     expect(users[0]['name']).to eq 'Ted Andrew Greenwald'
     expect(users[0]['sis_user_id']).to eq 'UID:4000123'
-    expect(users[0]['sis_login_id']).to eq '4000123'
     expect(users[0]['login_id']).to eq '4000123'
     expect(users[0]['enrollments'].count).to eq 1
     expect(users[0]['enrollments'][0]['course_id']).to eq 1276293

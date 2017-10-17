@@ -23,8 +23,7 @@ describe Canvas::UserProfile do
         expect(result['id']).to eq 3323890
         expect(result['name']).to eq 'STUDENT TEST-300846'
         expect(result['sis_user_id']).to eq 'UID:300846'
-        expect(result['sis_login_id']).to eq '300846'
-        # note: use login_id, as sis_login_id will eventually be deprecated
+        # note: use login_id, as sis_login_id will eventually be deprecated and removed
         expect(result['login_id']).to eq '300846'
       end
     end
