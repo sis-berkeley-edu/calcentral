@@ -62,7 +62,6 @@ angular.module('calcentral.controllers').controller('TasksController', function(
 
   var getTasks = function(options) {
     return tasksFactory.getTasks(options).then(function(data) {
-      apiService.updatedFeeds.feedLoaded(data);
       angular.extend($scope, data);
       if (_.get($scope, 'tasks')) {
         linkService.addCurrentPagePropertiesToResources($scope.tasks, $scope.currentPage.name, $scope.currentPage.url);
@@ -73,13 +72,6 @@ angular.module('calcentral.controllers').controller('TasksController', function(
     });
   };
 
-  $scope.$on('calcentral.api.updatedFeeds.updateServices', function(event, services) {
-    if (services && services['MyTasks::Merged']) {
-      getTasks({
-        refreshCache: true
-      });
-    }
-  });
   getTasks();
 
   var toggleStatus = function(task) {

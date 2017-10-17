@@ -23,6 +23,5 @@ angular.module('calcentral.controllers').controller('CalcentralController', func
     apiService.analytics.load();
     apiService.util.hideOffCanvasMenu();
     apiService.auth.isLoggedInRedirect();
-    apiService.updatedFeeds.initiate(current.$$route, $rootScope);
   });
 });
