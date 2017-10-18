@@ -13,22 +13,6 @@ TorqueBox.configure do
   # CALCENTRAL-ONLY
   service JmsWorker
 
-  # set up messaging queues
-  # CALCENTRAL-ONLY
-  queue '/queues/warmup_request' do
-    durable false
-    processor LiveUpdatesWarmer do
-      if ENV['RAILS_ENV'] == 'production'
-        concurrency 3
-      end
-    end
-  end
-  # CALCENTRAL-ONLY
-  queue '/queues/feed_changed' do
-    durable false
-    processor Cache::FeedUpdateWhiteboard
-  end
-
   # Check the health of the background-job processor and the cache.
   service BackgroundJobsCheck
   topic '/topics/background_jobs_check' do

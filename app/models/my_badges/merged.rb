@@ -1,7 +1,7 @@
 module MyBadges
   class Merged < UserSpecificModel
-    include Cache::LiveUpdatesEnabled
-    include Cache::FreshenOnWarm
+    include Cache::CachedFeed
+    include Cache::UserCacheExpiry
     include Cache::FilterJsonOutput
     include MergedModel
 

@@ -6,10 +6,6 @@ module Cache
       base.extend ClassMethods
     end
 
-    def warm_cache
-      get_feed_as_json(freshen_on_warm)
-    end
-
     def get_feed_as_json(force_cache_write=false)
       self.class.fetch_from_cache(self.class.json_key(instance_key), force_cache_write) do
         get_feed(force_cache_write).to_json

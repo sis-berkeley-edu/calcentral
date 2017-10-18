@@ -223,14 +223,12 @@ cache:
   expiration:
     default: <%= 35.minutes %>
     failure: <%= 30.seconds %>
-    Cache::FeedUpdateWhiteboard: <%= 5.minutes %>
-    LiveUpdatesWarmer: <%= 4.minutes %>
     BackgroundJobsCheck: <%= 29.days %>
     MyAcademics::Merged: <%= 15.minutes %>
     MyActivities::Merged: <%= 10.minutes %>
     MyBadges::Merged: <%= 2.hours %>
     MyCampusLinksController: NEXT_08_00
-    MyClasses::Merged: NEXT_08_00
+    MyClasses::Merged: <%= 10.minutes %>
     MyTasks::Merged: <%= 10.minutes %>
     UpNext::MyUpNext: NEXT_00_00
     User::Api: NEXT_08_00
@@ -372,7 +370,6 @@ ui_selenium:
   google_task_timeout: 12
   page_event_timeout: 10
   page_load_timeout: 20
-  live_update_timeout_delta: 180
   academics_timeout: 20
   canvas_update_timeout: 60
   canvas_username: secret
