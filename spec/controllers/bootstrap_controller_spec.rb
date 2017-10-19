@@ -1,23 +1,6 @@
 describe BootstrapController do
   let(:user_id) { random_id }
 
-  context 'when not authenticated' do
-    it 'should not make a warmup request' do
-      expect(LiveUpdatesWarmer).to receive(:warmup_request).never
-      get :index
-    end
-  end
-
-  context 'when authenticated' do
-    before do
-      session['user_id'] = user_id
-    end
-    it 'makes a warmup request' do
-      expect(LiveUpdatesWarmer).to receive(:warmup_request).with(user_id).once
-      get :index
-    end
-  end
-
   context 'when previously authenticated by LTI' do
     before do
       session['user_id'] = user_id

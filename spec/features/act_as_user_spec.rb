@@ -11,8 +11,6 @@ feature 'act_as_user' do
 
   scenario 'switch to another user and back while using a super-user' do
     # disabling the cache_warmer while we're switching back and forth between users
-    # The switching back triggers a cache invalidation, while the warming thread is still running.
-    allow(Cache::UserCacheWarmer).to receive(:warm).and_return nil
     login_with_cas '238382'
     suppress_rails_logging {
       act_as_user '2040'
@@ -34,7 +32,6 @@ feature 'act_as_user' do
   end
 
   scenario 'make sure admin users can act as a user who has never signed in before' do
-    allow(Cache::UserCacheWarmer).to receive(:warm).and_return nil
     super_user_uid = '238382'
     act_as_uid = @target_uid
     # act_as user has never logged in
@@ -52,7 +49,6 @@ feature 'act_as_user' do
 
 
   scenario 'make sure admin users don\'t modify database records of the users they view' do
-    allow(Cache::UserCacheWarmer).to receive(:warm).and_return nil
 
     # you don't want the admin user to record a first log for a 'viewed as' user that does not exist in the database
     impossible_uid = '78903478484358033984502345858034583043548034580'
@@ -72,9 +68,6 @@ feature 'act_as_user' do
   end
 
   scenario 'check the footer message for a user that has logged in' do
-    # disabling the cache_warmer while we're switching back and forth between users
-    # The switching back triggers a cache invalidation, while the warming thread is still running.
-    allow(Cache::UserCacheWarmer).to receive(:warm).and_return nil
 
     login_with_cas '238382'
     act_as_user '2040'
@@ -115,9 +108,6 @@ feature 'act_as_user' do
   end
 
   scenario 'check the act-as footer text' do
-    # disabling the cache_warmer while we're switching back and forth between users
-    # The switching back triggers a cache invalidation, while the warming thread is still running.
-    allow(Cache::UserCacheWarmer).to receive(:warm).and_return nil
     login_with_cas '238382'
     act_as_user '2040'
     visit '/api/my/status'
@@ -152,7 +142,6 @@ feature 'act_as_user' do
   end
 
   scenario 'provide faulty param while switching users' do
-    allow(Cache::UserCacheWarmer).to receive(:warm).and_return nil
     login_with_cas '238382'
     suppress_rails_logging {
       act_as_user 'gobbly-gook'
@@ -164,7 +153,6 @@ feature 'act_as_user' do
   end
 
   scenario 'making sure act_as doesn\'t expose google data', :testext => true do
-    allow(Cache::UserCacheWarmer).to receive(:warm).and_return nil
     allow(GoogleApps::Proxy).to receive(:access_granted?).and_return true
     allow(GoogleApps::EventsList).to receive(:new).and_return @fake_events_list
     %w(238382 2040 11002820).each do |user|
@@ -190,7 +178,6 @@ feature 'act_as_user' do
       allow(User::AggregatedAttributes).to receive(:new).with(invalid_uid).and_return(fake_uid_finder)
     end
     scenario 'make sure you cannot act as an invalid user' do
-      allow(Cache::UserCacheWarmer).to receive(:warm).and_return nil
       login_with_cas '238382'
       suppress_rails_logging {
         act_as_user invalid_uid

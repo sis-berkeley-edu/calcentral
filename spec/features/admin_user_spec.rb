@@ -5,7 +5,6 @@ feature "authentication" do
   end
 
   scenario "Successful admin access" do
-    Cache::UserCacheWarmer.stub(:warm).and_return(nil)
     login_with_cas "238382"
     visit "/dashboard"
     expect(Capybara.current_session.driver.request.cookies['reauthenticated']).to eq nil
