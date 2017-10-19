@@ -7,9 +7,9 @@ angular.module('calcentral.services').service('widgetService', function(analytic
    * Toggle whether an item for a widget should be shown or not
    */
   var toggleShow = function(event, items, item, widget) {
-    var tagName = (event && event.toElement && event.toElement.tagName);
-    // Ignore toggling on Anchor events
-    if (['A', 'INPUT', 'TEXTAREA'].indexOf(tagName) !== -1) {
+    var ignoreTogglingTags = ['A', 'INPUT', 'TEXTAREA'];
+    var nodeName = (event && event.target && event.target.nodeName);
+    if (nodeName && ignoreTogglingTags.indexOf(nodeName) !== -1) {
       return;
     }
     // Toggle the current item
