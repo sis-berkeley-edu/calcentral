@@ -3,8 +3,9 @@ describe HubEdos::AcademicStatus do
   let(:student_feed) { subject[:feed]['student'] }
 
   context 'mock proxy' do
+    let(:proxy) { HubEdos::AcademicStatus.new(fake: true, user_id: random_id) }
+
     context 'successful response' do
-      let(:proxy) { HubEdos::AcademicStatus.new(fake: true, user_id: '61889') }
       it_should_behave_like 'a simple proxy that returns errors'
 
       it 'includes academic data' do
@@ -35,10 +36,53 @@ describe HubEdos::AcademicStatus do
         expect(status['studentPlans'][0]['expectedGraduationTerm']['name']).to eq '2020 Spring'
         expect(status['termsInAttendance']).to eq 4
       end
+
+      it 'returns degrees with expected structure' do
+        degrees = student_feed['degrees']
+        expect(degrees.count).to eq 4
+
+        degrees.each do |degree|
+          expect(degree['academicDegree']).to be
+          expect(degree['academicDegree']['type']).to be
+          expect(degree['academicDegree']['type']['code']).to be
+          expect(degree['academicDegree']['type']['description']).to be
+
+          expect(degree['completionTerm']).to be
+          expect(degree['completionTerm']['name']).to be
+
+          academicPlans = degree['academicPlans']
+          expect(academicPlans).to be
+          academicPlans.each do |academicPlan|
+            expect(academicPlan['plan']).to be
+            expect(academicPlan['plan']['code']).to be
+            expect(academicPlan['plan']['description']).to be
+            expect(academicPlan['plan']['formalDescription']).to be
+
+            expect(academicPlan['type']).to be
+            expect(academicPlan['type']['code']).to be
+            expect(academicPlan['type']['description']).to be
+            expect(academicPlan['type']['formalDescription']).to be
+
+            expect(academicPlan['academicProgram']).to be
+            expect(academicPlan['academicProgram']['program']).to be
+            expect(academicPlan['academicProgram']['program']['code']).to be
+            expect(academicPlan['academicProgram']['program']['description']).to be
+            expect(academicPlan['academicProgram']['program']['formalDescription']).to be
+            expect(academicPlan['academicProgram']['academicGroup']).to be
+            expect(academicPlan['academicProgram']['academicGroup']['code']).to be
+            expect(academicPlan['academicProgram']['academicGroup']['description']).to be
+            expect(academicPlan['academicProgram']['academicGroup']['formalDescription']).to be
+            expect(academicPlan['academicProgram']['academicCareer']).to be
+            expect(academicPlan['academicProgram']['academicCareer']['code']).to be
+            expect(academicPlan['academicProgram']['academicCareer']['description']).to be
+            expect(academicPlan['academicProgram']['academicCareer']['formalDescription']).to be
+            expect(academicPlan['academicProgram']['academicCareer']['fromDate']).to be
+          end
+        end
+      end
     end
 
     context 'failed response' do
-      let(:proxy) { HubEdos::AcademicStatus.new(fake: true, user_id: '61889') }
       before do
         proxy.set_response({
           status: 503,
@@ -50,16 +94,6 @@ describe HubEdos::AcademicStatus do
         expect(subject[:statusCode]).to eq 503
         expect(subject[:body]).to eq 'An unknown server error occurred'
       end
-    end
-
-  end
-
-  context 'real proxy', testext: true do
-    let(:proxy) { HubEdos::AcademicStatus.new(fake: false, user_id: '242881') }
-    before { allow_any_instance_of(CalnetCrosswalk::ByUid).to receive(:lookup_campus_solutions_id).and_return '17154428' }
-
-    it 'returns known data with expected structure' do
-      expect(student_feed['degrees'][0]['academicDegree']['type']['description']).to eq 'Doctor of Philosophy'
     end
   end
 end

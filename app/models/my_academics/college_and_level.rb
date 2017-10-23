@@ -112,9 +112,16 @@ module MyAcademics
 
       filtered_statuses.each do |status|
         Array.wrap(status.try(:[], 'studentPlans')).each do |plan|
-          flattened_plan = flatten_plan(plan)
-          plan_set[:plans] << flattened_plan
+          flattened_plan = flatten_plan(plan.try(:[], 'academicPlan'))
+          add_sub_plan(flattened_plan, plan)
+          add_expected_graduation_term(flattened_plan, plan)
 
+          # TODO: Need to re-evaluate the proper field for college name. See adminOwners
+          flattened_plan[:college] = plan.try(:[], 'academicPlan').try(:[], 'academicProgram').try(:[], 'program').try(:[], 'description')
+          flattened_plan[:role] = plan[:role]
+          flattened_plan[:primary] = !!plan['primary']
+
+          plan_set[:plans] << flattened_plan
           group_plans_by_type(plan_set, flattened_plan)
         end
       end
@@ -123,9 +130,26 @@ module MyAcademics
 
     def parse_hub_degrees(response)
       if (degrees = response.try(:[], :feed).try(:[], 'student').try(:[], 'degrees'))
-        awarded_degrees = degrees.select do |degree|
-          status = degree.try(:[], 'status').try(:[], 'code')
-          status === 'Awarded'
+        awarded_degrees = []
+        degrees.each do |degree|
+          if degree.try(:[], 'status').try(:[], 'code') == 'Awarded'
+            plan_set = {
+              majors: [],
+              minors: [],
+              designatedEmphases: [],
+              plans: []
+            }
+            degree.try(:[], 'academicPlans').try(:each) do |academic_plan|
+              flattened_plan = flatten_plan(academic_plan)
+              flattened_plan[:college] = academic_plan.try(:[], 'academicProgram').try(:[], 'academicGroup').try(:[], 'formalDescription')
+              plan_set[:plans] << flattened_plan
+              group_plans_by_type(plan_set, flattened_plan)
+            end
+
+            degree.merge! plan_set
+            degree[:isUndergrad] = :UGRD == degree[:plans].try(:first).try(:[], :career).try(:[], :code).intern
+            awarded_degrees << degree
+          end
         end
         awarded_degrees unless awarded_degrees.empty?
       end
@@ -136,18 +160,24 @@ module MyAcademics
       case plan[:type].try(:[], :category)
         when 'Major'
           plan_set[:majors] << college_plan.merge({
-            major: plan[:plan].try(:[], :description),
-            subPlan: plan[:subPlan].try(:[], :description)
+            major: plan.try(:[], :plan).try(:[], :description),
+            description: plan.try(:[], :plan).try(:[], :formalDescription),
+            subPlan: plan.try(:[], :subPlan).try(:[], :description),
+            type: plan.try(:[], :type).try(:[], :code)
           })
         when 'Minor'
           plan_set[:minors] << college_plan.merge({
-            minor: plan[:plan].try(:[], :description),
-            subPlan: plan[:subPlan].try(:[], :description)
+            minor: plan.try(:[], :plan).try(:[], :description),
+            description: plan.try(:[], :plan).try(:[], :formalDescription),
+            subPlan: plan.try(:[], :subPlan).try(:[], :description),
+            type: plan.try(:[], :type).try(:[], :code)
           })
         when 'Designated Emphasis'
           plan_set[:designatedEmphases] << college_plan.merge({
-            designatedEmphasis: plan[:plan].try(:[], :description),
-            subPlan: plan[:subPlan].try(:[], :description)
+            designatedEmphasis: plan.try(:[], :plan).try(:[], :description),
+            description: plan.try(:[], :plan).try(:[], :formalDescription),
+            subPlan: plan.try(:[], :subPlan).try(:[], :description),
+            type: plan.try(:[], :type).try(:[], :code)
           })
       end
     end
@@ -175,14 +205,12 @@ module MyAcademics
         plan: {},
         subPlan: {}
       }
-      if (academic_plan = hub_plan['academicPlan'])
-        # Get CPP
-        academic_program = academic_plan.try(:[], 'academicProgram')
+      if (hub_plan)
+        academic_program = hub_plan.try(:[], 'academicProgram')
         career = academic_program.try(:[], 'academicCareer')
         program = academic_program.try(:[], 'program')
-        plan = academic_plan.try(:[], 'plan')
+        plan = hub_plan.try(:[], 'plan')
 
-        # Extract CPP
         flat_plan[:career].merge!({
           code: career.try(:[], 'code'),
           description: career.try(:[], 'description')
@@ -193,36 +221,37 @@ module MyAcademics
         })
         flat_plan[:plan].merge!({
           code: plan.try(:[], 'code'),
-          description: plan.try(:[], 'description')
+          description: plan.try(:[], 'description'),
+          formalDescription: plan.try(:[], 'formalDescription')
         })
 
-        if (academic_sub_plan = hub_plan['academicSubPlan'])
-          sub_plan = academic_sub_plan.try(:[], 'subPlan')
-          flat_plan[:subPlan].merge!({
-            code: sub_plan.try(:[], 'code'),
-            description: sub_plan.try(:[], 'description')
-          })
-        end
-
-        if (hub_plan['expectedGraduationTerm'])
-          expected_grad_term_name = hub_plan['expectedGraduationTerm'].try(:[], 'name')
-          flat_plan[:expectedGraduationTerm] = {
-            code: hub_plan['expectedGraduationTerm'].try(:[], 'id'),
-            name: Berkeley::TermCodes.normalized_english(expected_grad_term_name)
-          }
-        end
-        flat_plan[:role] = hub_plan[:role]
-        flat_plan[:primary] = !!hub_plan['primary']
-        flat_plan[:type] = categorize_plan_type(academic_plan['type'])
-
-        # TODO: Need to re-evaluate the proper field for college name. See adminOwners
-        flat_plan[:college] = academic_plan['academicProgram'].try(:[], 'program').try(:[], 'description')
+        flat_plan[:type] = categorize_plan_type(hub_plan.try(:[], 'type'))
       end
       flat_plan
     end
 
+    def add_sub_plan(flattened_plan, plan)
+      if (academic_sub_plan = plan.try(:[], 'academicSubPlan'))
+        sub_plan = academic_sub_plan.try(:[], 'subPlan')
+        flattened_plan[:subPlan].merge!({
+          code: sub_plan.try(:[], 'code'),
+          description: sub_plan.try(:[], 'description')
+        })
+      end
+    end
+
+    def add_expected_graduation_term(flattened_plan, plan)
+      if (expected_graduation_term = plan.try(:[], 'expectedGraduationTerm'))
+        expected_grad_term_name = expected_graduation_term.try(:[], 'name')
+        flattened_plan[:expectedGraduationTerm] = {
+          code: expected_graduation_term.try(:[], 'id'),
+          name: Berkeley::TermCodes.normalized_english(expected_grad_term_name)
+        }
+      end
+    end
+
     def categorize_plan_type(type)
-      case type.try(:[], 'code')
+      case (code = type.try(:[], 'code'))
         when 'MAJ', 'SS', 'SP', 'HS', 'CRT'
           category = 'Major'
         when 'MIN'
@@ -231,8 +260,8 @@ module MyAcademics
           category = 'Designated Emphasis'
       end
       {
-        code: type['code'],
-        description: type['description'],
+        code: code,
+        description: type.try(:[], 'description'),
         category: category
       }
     end
