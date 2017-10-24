@@ -70,7 +70,6 @@ angular.module('calcentral.config').config(function($routeProvider, calcentralCo
     when('/dashboard', {
       templateUrl: 'dashboard.html',
       controller: 'DashboardController',
-      fireUpdatedFeeds: true,
       pageName: 'My Dashboard'
     }).
     when('/delegate_landing', {

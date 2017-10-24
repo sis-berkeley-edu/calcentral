@@ -1,7 +1,8 @@
 module MyActivities
   class Merged < UserSpecificModel
 
-    include Cache::LiveUpdatesEnabled
+    include Cache::CachedFeed
+    include Cache::UserCacheExpiry
     include Cache::JsonAddedCacher
     include Cache::FilterJsonOutput
     include MergedModel

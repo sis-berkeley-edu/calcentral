@@ -14,7 +14,6 @@ angular.module('calcentral.services').service('apiService', function(
   httpService,
   popoverService,
   profileService,
-  updatedFeedsService,
   userService,
   utilService,
   widgetService) {
@@ -31,7 +30,6 @@ angular.module('calcentral.services').service('apiService', function(
     http: httpService,
     popover: popoverService,
     profile: profileService,
-    updatedFeeds: updatedFeedsService,
     user: userService,
     util: utilService,
     widget: widgetService

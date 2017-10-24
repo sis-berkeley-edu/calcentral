@@ -1,7 +1,8 @@
 module MyTasks
   class Merged < UserSpecificModel
     include MyTasks::ParamValidator
-    include Cache::LiveUpdatesEnabled
+    include Cache::CachedFeed
+    include Cache::UserCacheExpiry
     include Cache::FilterJsonOutput
     include MergedModel
 

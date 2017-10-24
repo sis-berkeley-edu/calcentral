@@ -20,11 +20,6 @@
         margin: 5px;
       }
     }
-    .cc-updated-feeds {
-      clear: both;
-      float: none;
-      width: 100%;
-    }
   }
   .cc-offcanvas-left, .cc-offcanvas-right {
     @include cc-column-sameheight-nopadding;

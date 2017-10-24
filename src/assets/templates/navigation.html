@@ -17,9 +17,4 @@
       <a href="/toolbox" data-ng-click="offCanvasMenu.show=false"><i class="fa fa-wrench"></i>My Toolbox</a>
     </li>
   </ul>
-  <div class="cc-updated-feeds" data-ng-cloak data-ng-controller="UpdatedFeedsController" data-ng-show="!api.user.profile.delegateActingAsUid && !api.user.profile.advisorActingAsUid && (controllerName === 'DashboardController')">
-    <div data-ng-show="hasUpdates">
-      New data is available. <button class="cc-button" data-ng-click="refreshFeeds()">Load</button>
-    </div>
-  </div>
 </div>

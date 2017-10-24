@@ -23,19 +23,11 @@ angular.module('calcentral.controllers').controller('UpNextController', function
         if (!_.get(response, 'data.items')) {
           return;
         }
-        apiService.updatedFeeds.feedLoaded(response.data);
         angular.extend($scope, response.data);
         setLastModifiedDate(response.data.lastModified.timestamp.epoch);
       }
     );
   };
 
-  $scope.$on('calcentral.api.updatedFeeds.updateServices', function(event, services) {
-    if (services && services['UpNext::MyUpNext']) {
-      getUpNext({
-        refreshCache: true
-      });
-    }
-  });
   getUpNext();
 });

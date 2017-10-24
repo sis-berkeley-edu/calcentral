@@ -4,7 +4,7 @@ class BootstrapController < ApplicationController
   include AllowLti
   before_filter :get_settings, :initialize_calcentral_config
   before_filter :check_lti_only
-  before_filter :check_databases_alive, :warmup_live_updates, :check_cache_clear_flag
+  before_filter :check_databases_alive, :check_cache_clear_flag
   layout false
 
   # View code is public/index-main.html (compiled by gulp build).
@@ -39,12 +39,6 @@ class BootstrapController < ApplicationController
     # so an error gets thrown if Oracle is dead.
     if !CampusOracle::Queries.database_alive?
       raise "Campus database is currently unavailable"
-    end
-  end
-
-  def warmup_live_updates
-    if @calcentral_config[:providedServices].include? 'calcentral'
-      LiveUpdatesWarmer.warmup_request session['user_id'] if session['user_id']
     end
   end
 

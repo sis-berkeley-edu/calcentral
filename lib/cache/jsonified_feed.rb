@@ -1,6 +1,5 @@
 # Return and cache only the JSONified version of the feed. This mix-in is best suited for
 # large complex data structures which do not need frequent parsing.
-# It cannot be combined with LiveUpdatesEnabled, which assumes the cached object will be a Hash.
 module Cache
   module JsonifiedFeed
 

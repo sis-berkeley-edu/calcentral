@@ -1,8 +1,8 @@
 module UpNext
   class MyUpNext < UserSpecificModel
     include DatedFeed
-    include Cache::LiveUpdatesEnabled
-    include Cache::FreshenOnWarm
+    include Cache::CachedFeed
+    include Cache::UserCacheExpiry
     include Cache::JsonAddedCacher
     include Cache::FilterJsonOutput
 

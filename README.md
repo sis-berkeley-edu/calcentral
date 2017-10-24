@@ -173,21 +173,6 @@ Do not use 127.0.0.1:3000, as you will not be able to grant access to bApps.
 
 **Note**: Usually you won't have to do any of the following steps when you're developing on CalCentral.
 
-## Enable live updates
-
-In order to have live updates you'll need to perform the following steps:
-
-1. Install and run [memcached](http://memcached.org/).
-
-1. Add the following lines to development.local.yml:
-
-  ```yml
-  cache:
-    store: "memcached"
-  ```
-
-1. Start the server with TorqueBox (see below).
-
 ## Back-end Testing
 
 Back-end (rspec) tests live in `spec/*`.
@@ -400,6 +385,21 @@ Fixture files can represent time information by tokens that are substituted with
 To view other rake task for the project: `rake -T`
 
 * `rake spec:xml` - Runs rake spec, but pipes the output to xml using the `rspec_junit_formatter` gem, for JUnit compatible test result reports
+
+## Installing Memcached:
+
+Dev, QA, and Production CalCentral environments use memcached as a cache store in place of the default ActiveSupport cache store.
+
+To set this up locally, perform the following steps:
+
+1. Install and run [memcached](http://memcached.org/).
+
+1. Add the following lines to development.local.yml:
+
+```yml
+cache: 
+  store: "memcached"
+```
 
 ## Memcached tasks:
 

@@ -60,14 +60,6 @@ class WebDriverUtils
     Settings.ui_selenium.page_event_timeout
   end
 
-  def self.mail_live_update_timeout
-    Settings.cache.expiration.marshal_dump["LiveUpdatesWarmer".to_sym] + Settings.ui_selenium.live_update_timeout_delta
-  end
-
-  def self.tasks_live_update_timeout
-    Settings.cache.expiration.marshal_dump["MyTasks::GoogleTasks".to_sym] + Settings.ui_selenium.live_update_timeout_delta
-  end
-
   def self.live_users
     File.join(CalcentralConfig.local_dir, "uids.json")
   end

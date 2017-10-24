@@ -123,7 +123,6 @@ angular.module('calcentral.controllers').controller('BadgesController', function
   var fetch = function(options) {
     badgesFactory.getBadges(options).then(
       function successCallback(response) {
-        apiService.updatedFeeds.feedLoaded(response.data);
         decorateBadges(processCalendarEvents(response.data.badges || {}));
       }
     );
@@ -142,12 +141,4 @@ angular.module('calcentral.controllers').controller('BadgesController', function
   });
 
   $scope.badges = orderBadges(defaults);
-
-  $scope.$on('calcentral.api.updatedFeeds.updateServices', function(event, services) {
-    if (services && services['MyBadges::Merged']) {
-      fetch({
-        refreshCache: true
-      });
-    }
-  });
 });
