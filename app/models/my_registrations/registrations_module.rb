@@ -4,6 +4,8 @@ module MyRegistrations
 
     include Berkeley::TermCodes
 
+    PRIORITIZED_CAREERS = ['LAW', 'GRAD', 'UGRD', 'UCBX']
+
     def is_positive_service_indicator?(attribute)
       attribute.try(:[], 'type').try(:[], 'code').try(:start_with?, '+')
     end
@@ -21,7 +23,7 @@ module MyRegistrations
     # and only show the most relevant one.  Prioritization of careers follows the pattern of LAW -> GRAD -> UGRD
     def find_relevant_career(registrations)
       if registrations.length > 1
-        find_law_career(registrations)
+        find_relevant_career_multiple(registrations)
       # If there is only one registration for the term, return that registration hash.
       elsif registrations.length == 1
         registrations[0]
@@ -31,22 +33,14 @@ module MyRegistrations
       end
     end
 
-    def find_law_career(registrations)
-      registrations.find(find_grad_career registrations) do |registration|
-        registration.try(:[], 'academicCareer').try(:[], 'code') == 'LAW'
+    def find_relevant_career_multiple(registrations)
+      PRIORITIZED_CAREERS.each do |career|
+        relevant_career = registrations.find do |registration|
+          registration.try(:[], 'academicCareer').try(:[], 'code') == career
+        end
+        return relevant_career if relevant_career
       end
-    end
-
-    def find_grad_career(registrations)
-      registrations.find(find_undergrad_career registrations) do |registration|
-        registration.try(:[], 'academicCareer').try(:[], 'code') == 'GRAD'
-      end
-    end
-
-    def find_undergrad_career(registrations)
-      registrations.find do |registration|
-        registration.try(:[], 'academicCareer').try(:[], 'code') == 'UGRD'
-      end
+      nil
     end
 
     def set_regstatus_flags(term_registrations)
