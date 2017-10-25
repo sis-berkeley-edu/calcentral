@@ -2,12 +2,11 @@ describe MyAcademics::AcademicRecords do
   let(:uid) { random_id }
   let(:emplid) { random_id }
   let(:feed) { subject.get_feed }
-  let(:roles) { {'fpf' => false } }
+
   subject { MyAcademics::AcademicRecords.new(uid) }
 
   before do
     allow(CalnetCrosswalk::ByUid).to receive(:new).and_return(double(lookup_campus_solutions_id: emplid))
-    allow_any_instance_of(MyAcademics::MyAcademicRoles).to receive(:get_feed).and_return(roles)
   end
 
   context 'when providing feed' do
@@ -41,12 +40,6 @@ describe MyAcademics::AcademicRecords do
         expect(feed[:lawUnofficialTranscriptLink][:ucFrom]).to be
         expect(feed[:lawUnofficialTranscriptLink][:ucFromLink]).to be
         expect(feed[:lawUnofficialTranscriptLink][:ucFromText]).to be
-      end
-    end
-
-    context 'academic roles' do
-      it 'includes academic roles' do
-        expect(feed[:academicRoles]['fpf']).to eq false
       end
     end
   end

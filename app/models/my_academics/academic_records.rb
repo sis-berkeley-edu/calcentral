@@ -7,8 +7,7 @@ module MyAcademics
     def get_feed_internal
       {
         officialTranscriptRequestData: get_official_transcript_request_data,
-        lawUnofficialTranscriptLink: law_unofficial_transcript_link,
-        academicRoles: MyAcademics::MyAcademicRoles.new(@uid).get_feed,
+        lawUnofficialTranscriptLink: law_unofficial_transcript_link
       }
     end
 
@@ -30,7 +29,7 @@ module MyAcademics
     end
 
     def campus_solutions_id
-      campus_solutions_id = CalnetCrosswalk::ByUid.new(user_id: @uid).lookup_campus_solutions_id
+      CalnetCrosswalk::ByUid.new(user_id: @uid).lookup_campus_solutions_id
     end
   end
 end

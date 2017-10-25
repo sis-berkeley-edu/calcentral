@@ -12,7 +12,7 @@ class AdvisingStudentController < ApplicationController
   def profile
     student_uid = student_uid_param
     render json: {
-      # TODO Fetch from cached endpoints.
+      academicRoles: MyAcademics::MyAcademicRoles.new(student_uid).get_feed,
       attributes: User::AggregatedAttributes.new(student_uid).get_feed,
       contacts: HubEdos::Contacts.new(user_id: student_uid, include_fields: %w(names addresses phones emails)).get,
       residency: MyAcademics::Residency.new(student_uid).get_feed

@@ -3,7 +3,7 @@
 var angular = require('angular');
 var _ = require('lodash');
 
-angular.module('calcentral.controllers').controller('AcademicRecordsController', function(academicRecordsFactory, userService, $scope, $window) {
+angular.module('calcentral.controllers').controller('AcademicRecordsController', function(academicRecordsFactory, apiService, $scope, $window) {
 
   $scope.officialTranscript = {
     postParams: {},
@@ -21,8 +21,6 @@ angular.module('calcentral.controllers').controller('AcademicRecordsController',
     title: 'Request your University Extension Transcript'
   };
   $scope.lawUnofficialTranscriptLink = {};
-  $scope.academicRoles = {};
-  $scope.userRoles = userService.profile.roles;
 
   /**
    * Constructs a post request to Credentials Solutions, as outlined by the Credentials Solutions documentation seen in
@@ -56,28 +54,25 @@ angular.module('calcentral.controllers').controller('AcademicRecordsController',
 
   var parseData = function(response) {
     $scope.lawUnofficialTranscriptLink = _.get(response, 'data.lawUnofficialTranscriptLink');
-    $scope.academicRoles = _.get(response, 'data.academicRoles');
     var transcriptData = _.get(response, 'data.officialTranscriptRequestData');
     $scope.officialTranscript.postUrl = _.get(transcriptData, 'postUrl');
     $scope.officialTranscript.postParams = _.get(transcriptData, 'postParams');
   };
 
-  var loadAcademicRecordsData = function() {
-    academicRecordsFactory.getTranscriptData()
-      .then(function(response) {
-        parseData(response);
-      })
-      .finally(function() {
-        $scope.officialTranscript.isLoading = false;
-      });
-  };
-
   $scope.requestTranscript = function() {
-    if (userService.profile.features.transcriptRequestLinkCredSolutions) {
+    if (apiService.user.profile.features.transcriptRequestLinkCredSolutions) {
       postRequest($scope.officialTranscript.postUrl, $scope.officialTranscript.postParams);
     } else {
       $window.open($scope.officialTranscript.defaultRequestLink, '_blank');
     }
+  };
+
+  var loadAcademicRecordsData = function() {
+    academicRecordsFactory.getTranscriptData()
+      .then(parseData)
+      .finally(function() {
+        $scope.officialTranscript.isLoading = false;
+      });
   };
 
   loadAcademicRecordsData();

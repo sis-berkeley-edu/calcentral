@@ -9,8 +9,7 @@ module MyAcademics
     def get_feed
       {
         messages: enrollment_verification_messages,
-        requestUrl: enrollment_verification_request_link,
-        academicRoles: MyAcademics::MyAcademicRoles.new(@uid).get_feed,
+        requestUrl: enrollment_verification_request_link
       }
     end
 

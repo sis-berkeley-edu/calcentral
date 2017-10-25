@@ -1,7 +1,7 @@
 <div class="cc-widget cc-enrollment-verification">
   <div class="cc-widget-title">
-    <h2 data-ng-if="!enrollVerification.academicRoles.lawExclusive">Select Enrollment Verification Method</h2>
-    <h2 data-ng-if="enrollVerification.academicRoles.lawExclusive">Law Enrollment Verification</h2>
+    <h2 data-ng-if="!enrollVerification.lawExclusive">Select Enrollment Verification Method</h2>
+    <h2 data-ng-if="enrollVerification.lawExclusive">Law Enrollment Verification</h2>
   </div>
   <div data-cc-spinner-directive="enrollVerification.isLoading">
     <div data-ng-if="enrollVerification.hasMessages">
@@ -24,7 +24,7 @@
             </div>
           </div>
         </li>
-        <li data-ng-if="enrollVerification.academicRoles.law || enrollVerification.profile.roles.exStudent">
+        <li data-ng-if="api.user.profile.academicRoles.law || api.user.profile.roles.exStudent">
           <div class="cc-enrollment-verification-subtitle">
             <h3 data-ng-bind-html="enrollVerification.messages.lawVerification.messageText"></h3>
           </div>
@@ -32,7 +32,7 @@
             <span data-ng-bind-html="enrollVerification.messages.lawVerification.descrlong"></span>
           </div>
         </li>
-        <li data-ng-if="!enrollVerification.academicRoles.lawExclusive">
+        <li data-ng-if="!api.user.profile.academicRoles.lawExclusive">
           <div class="cc-enrollment-verification-subtitle">
             <h3 data-ng-bind-html="enrollVerification.messages.requestOfficial.messageText"></h3>
           </div>
@@ -55,7 +55,7 @@
             </div>
           </div>
         </li>
-        <li data-ng-if="!enrollVerification.academicRoles.lawExclusive">
+        <li data-ng-if="!api.user.profile.academicRoles.lawExclusive">
           <div class="cc-enrollment-verification-message cc-enrollment-verification-footer">
             <p>Learn more about <a data-ng-href="{{enrollmentVerificationServices.url}}" data-ng-attr-title="{{enrollmentVerificationServices.title}}">enrollment verification services.</a></p>
           </div>

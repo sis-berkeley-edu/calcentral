@@ -1,4 +1,4 @@
-describe UserApiController do
+describe UserController do
   let (:user_id) { random_id }
   before do
     session['user_id'] = user_id
@@ -16,19 +16,20 @@ describe UserApiController do
   context 'when not logged in' do
     let(:user_id) { nil }
     it 'should not have a logged-in status' do
-      get :mystatus
+      get :my_status
       assert_response :success
       json_response = JSON.parse(response.body)
       json_response['isLoggedIn'].should == false
       json_response['uid'].should be_nil
       json_response['features'].should_not be_nil
+      json_response['academicRoles'].should be_nil
     end
   end
 
   context 'when a known real user' do
     let(:user_id) { '238382' }
     it 'should show status' do
-      get :mystatus
+      get :my_status
       json_response = JSON.parse(response.body)
       expect(json_response['isLoggedIn']).to be_truthy
       expect(json_response['uid']).to eq user_id
@@ -36,6 +37,8 @@ describe UserApiController do
       expect(json_response['features']).to be_present
       expect(json_response['isDirectlyAuthenticated']).to be true
       expect(json_response['canActOnFinances']).to be true
+      expect(json_response['academicRoles']).to be_present
+
       visit = User::Visit.where(:uid => session['user_id'])[0]
       expect(visit.last_visit_at).to be_present
     end
@@ -43,25 +46,28 @@ describe UserApiController do
       let(:uid) { user_id }
       include_context 'LTI authenticated'
       it 'succeeds' do
-        get :mystatus
+        get :my_status
         json_response = JSON.parse(response.body)
         expect(json_response['isLoggedIn']).to be_truthy
         expect(json_response['uid']).to eq user_id
         expect(json_response['preferredName']).to be_present
         expect(json_response['features']).to be_present
         expect(json_response['isDirectlyAuthenticated']).to be false
+        expect(json_response['academicRoles']).to be_present
       end
     end
   end
 
   context 'when a new user' do
     it 'should record the first login' do
-      get :mystatus
+      get :my_status
       json_response = JSON.parse(response.body)
       expect(json_response['firstLoginAt']).to be_nil
+
       get :record_first_login
       expect(response.status).to eq 204
-      get :mystatus
+
+      get :my_status
       json_response = JSON.parse(response.body)
       expect(json_response['firstLoginAt']).to be_present
     end
@@ -69,7 +75,7 @@ describe UserApiController do
 
   describe '#acting_as_uid' do
     subject do
-      get :mystatus
+      get :my_status
       JSON.parse(response.body)['actingAsUid']
     end
     context 'when normally authenticated' do
@@ -96,7 +102,7 @@ describe UserApiController do
 
   describe '#delegate_acting_as_uid' do
     subject do
-      get :mystatus
+      get :my_status
       JSON.parse response.body
     end
     context 'normally authenticated' do
@@ -141,7 +147,7 @@ describe UserApiController do
 
   describe '#advisor_acting_as_uid' do
     subject do
-      get :mystatus
+      get :my_status
       JSON.parse response.body
     end
     context 'viewing as' do
@@ -179,7 +185,7 @@ describe UserApiController do
     end
     context 'getting status as a superuser' do
       subject do
-        get :mystatus
+        get :my_status
         JSON.parse(response.body)['isSuperuser']
       end
       context 'when normally authenticated' do
@@ -217,7 +223,7 @@ describe UserApiController do
 
       context 'when viewing as' do
         subject do
-          get :mystatus
+          get :my_status
           JSON.parse response.body
         end
         let(:original_user_id) { random_id }

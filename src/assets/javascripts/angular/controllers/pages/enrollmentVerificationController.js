@@ -17,8 +17,7 @@ angular.module('calcentral.controllers').controller('EnrollmentVerificationContr
       lawVerification: {},
       requestOfficial: {},
       viewOnline: {}
-    },
-    profile: apiService.user.profile
+    }
   };
   $scope.enrollmentVerificationServices = {
     url: 'http://registrar.berkeley.edu/academic-records/verification-enrollment-degrees',
@@ -35,17 +34,11 @@ angular.module('calcentral.controllers').controller('EnrollmentVerificationContr
   };
 
   var parseEnrollmentVerificationData = function(response) {
-    $scope.enrollVerification.requestOfficialVerificationLink = _.get(response, 'data.requestUrl');
-    $scope.enrollVerification.academicRoles = _.get(response, 'data.academicRoles');
-
-    /* summarize logic for exclusive law role */
-    if (_.isPlainObject($scope.enrollVerification.academicRoles)) {
-      $scope.enrollVerification.academicRoles.lawExclusive = isRoleExclusive('law', $scope.enrollVerification.academicRoles);
-    }
-
     var messages = _.get(response, 'data.messages');
+    $scope.enrollVerification.requestOfficialVerificationLink = _.get(response, 'data.requestUrl');
+
     if (messages) {
-      if ($scope.enrollVerification.academicRoles.lawExclusive) {
+      if ($scope.enrollVerification.lawExclusive) {
         $scope.enrollVerification.messages.viewOnline = _.find(messages, {
           'messageNbr': '5'
         });
@@ -64,18 +57,22 @@ angular.module('calcentral.controllers').controller('EnrollmentVerificationContr
     }
   };
 
+  var parseRoles = function() {
+    $scope.enrollVerification.lawExclusive = isRoleExclusive('law', apiService.user.profile.academicRoles);
+  };
+
   var loadEnrollmentVerificationFeed = function() {
     enrollmentVerificationFactory.getEnrollmentVerificationData()
+      .then(parseRoles)
       .then(parseEnrollmentVerificationData)
       .finally(function() {
         $scope.enrollVerification.isLoading = false;
       });
   };
 
-  // Wait until user profile is fully loaded before hitting academics data
   $scope.$on('calcentral.api.user.isAuthenticated', function(event, isAuthenticated) {
     if (isAuthenticated) {
-      $scope.canViewAcademics = $scope.api.user.profile.hasAcademicsTab;
+      $scope.canViewAcademics = apiService.user.profile.hasAcademicsTab;
     }
   });
 

@@ -43,7 +43,7 @@
 
       <div data-ng-include="'widgets/my_advising.html'" data-ng-if="showAdvising"></div>
 
-      <div data-ng-include="'widgets/transfer_credit.html'" data-ng-if="!collegeAndLevel.roles.summerVisitor"></div>
+      <div data-ng-include="'widgets/transfer_credit.html'" data-ng-if="!api.user.profile.academicRoles.summerVisitor"></div>
     </div>
   </div>
 </div>

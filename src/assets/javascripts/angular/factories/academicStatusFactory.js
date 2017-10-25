@@ -11,15 +11,6 @@ angular.module('calcentral.factories').factory('academicStatusFactory', function
   // urlAcademicStatus = '/dummy/json/hub_academic_status.json';
   var urlAdvisingAcademicStatus = '/api/advising/academic_status/';
 
-  var parseAcademicRoles = function(response) {
-    var roles = _.get(response, 'data.feed.student.roles');
-    var isError = _.get(response, 'data.errored');
-    return {
-      roles: roles || {},
-      isError: isError
-    };
-  };
-
   var parseHolds = function(response) {
     var holds = _.get(response, 'data.feed.student.holds');
     var isError = _.get(response, 'data.errored');
@@ -34,16 +25,11 @@ angular.module('calcentral.factories').factory('academicStatusFactory', function
     return apiService.http.request(options, url);
   };
 
-  var getAcademicRoles = function(options) {
-    return fetch(options).then(parseAcademicRoles);
-  };
-
   var getHolds = function(options) {
     return fetch(options).then(parseHolds);
   };
 
   return {
-    getAcademicRoles: getAcademicRoles,
     getHolds: getHolds
   };
 });

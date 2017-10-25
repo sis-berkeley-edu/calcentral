@@ -96,10 +96,8 @@ module Advising
     end
 
     def student_is_graduate?
-      college_and_level = MyAcademics::CollegeAndLevel.new(@uid)
-      plans = college_and_level.hub_college_and_level[:plans]
-      career_codes = plans.to_a.collect {|plan| plan[:career].try(:[], :code) }
-      career_codes.include?('GRAD')
+      roles = MyAcademics::MyAcademicRoles.new(@uid).get_feed
+      roles[:grad]
     end
   end
 end

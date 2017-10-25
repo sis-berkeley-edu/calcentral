@@ -8,9 +8,9 @@ Calcentral::Application.routes.draw do
   root :to => 'bootstrap#index'
 
   # User management/status endpoints, currently used by all services.
-  get '/api/my/am_i_logged_in' => 'user_api#am_i_logged_in', :as => :am_i_logged_in, :defaults => { :format => 'json' }
-  get '/api/my/status' => 'user_api#mystatus', :as => :mystatus, :defaults => { :format => 'json' }
-  post '/api/my/record_first_login' => 'user_api#record_first_login', :as => :record_first_login, :defaults => { :format => 'json' }
+  get '/api/my/am_i_logged_in' => 'user#am_i_logged_in', :as => :am_i_logged_in, :defaults => { :format => 'json' }
+  get '/api/my/status' => 'user#my_status', :defaults => { :format => 'json' }
+  post '/api/my/record_first_login' => 'user#record_first_login', :as => :record_first_login, :defaults => { :format => 'json' }
 
   # System utility endpoints
   get '/api/cache/clear' => 'cache#clear', :defaults => { :format => 'json' }

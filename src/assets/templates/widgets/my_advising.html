@@ -2,7 +2,7 @@
   <div class="cc-widget-title">
     <h2 class="cc-left">Advising</h2>
     <a class="cc-button cc-right cc-widget-title-button"
-      data-ng-if="showAppointmentLinks()"
+      data-ng-if="showAppointmentLinks"
       data-ng-disabled="!myAdvising.links.newAppointment.url || !api.user.profile.isDirectlyAuthenticated || isAdvisingStudentLookup"
       data-cc-campus-solutions-link-directive="myAdvising.links.newAppointment"
       data-cc-campus-solutions-link-directive-cc-cache="myAdvising"
@@ -23,32 +23,32 @@
 
       <div data-ng-if="!myAdvising.errored">
 
-        <div data-ng-if="!showAdvisorsList()">
-          <div data-ng-if="myAdvising.roles.haasFullTimeMba && !myAdvising.roles.haasMbaPublicHealth && !myAdvising.roles.haasMbaJurisDoctor">
+        <div data-ng-if="!showAdvisorsList">
+          <div data-ng-if="targetUser.academicRoles.haasFullTimeMba && !targetUser.academicRoles.haasMbaPublicHealth && !targetUser.academicRoles.haasMbaJurisDoctor">
             <a href="http://www.haas.berkeley.edu/MBA/contacts/index.html">
               Contact the Full-time MBA Program Office
             </a>
           </div>
 
-          <div data-ng-if="myAdvising.roles.haasEveningWeekendMba">
+          <div data-ng-if="targetUser.academicRoles.haasEveningWeekendMba">
             <a href="http://haas.berkeley.edu/EWMBA/contacts/">
               Contact the Evening and Weekend MBA Program Office
             </a>
           </div>
 
-          <div data-ng-if="myAdvising.roles.haasExecMba">
+          <div data-ng-if="targetUser.academicRoles.haasExecMba">
             <a href="http://haas.berkeley.edu/EMBA/contacts/">
               Contact the Berkeley MBA For Executives Program Office
             </a>
           </div>
 
-          <div data-ng-if="myAdvising.roles.haasMastersFinEng">
+          <div data-ng-if="targetUser.academicRoles.haasMastersFinEng">
             <a href="http://www.haas.berkeley.edu/MFE/">
               Contact the Master of Financial Engineering Program Office
             </a>
           </div>
 
-          <div data-ng-if="myAdvising.roles.haasMbaPublicHealth">
+          <div data-ng-if="targetUser.academicRoles.haasMbaPublicHealth">
             Contact the appropriate degree program office at Haas or Public Health:
             <ul class="cc-list-bullets">
               <li>
@@ -60,7 +60,7 @@
             </ul>
           </div>
 
-          <div data-ng-if="myAdvising.roles.haasMbaJurisDoctor">
+          <div data-ng-if="targetUser.academicRoles.haasMbaJurisDoctor">
             Contact the appropriate degree program office at Haas or Law:
             <ul class="cc-list-bullets">
               <li>
@@ -73,7 +73,7 @@
           </div>
         </div>
 
-        <div data-ng-if="showAdvisorsList()">
+        <div data-ng-if="showAdvisorsList">
           <div class="cc-widget-myadvising-section"
             data-ng-repeat="advisor in myAdvising.advisors"
             data-ng-if="myAdvising.advisors.length > 0">
@@ -122,7 +122,7 @@
         </div>
 
         <div class="cc-widget-myadvising-section"
-          data-ng-if="showAppointmentLinks()">
+          data-ng-if="showAppointmentLinks">
           <h3 class="cc-widget-myadvising-header">Appointments</h3>
           <div class="cc-widget-myadvising-link">
             <a data-cc-campus-solutions-link-directive="myAdvising.links.manageAppointments"
