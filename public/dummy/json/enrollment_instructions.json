@@ -596,7 +596,6 @@
   "hasHolds": false,
   "links": {
     "ucAddClassEnrollment": {
-      "iSCsLink": true,
       "isCsLink": true,
       "name": "Apply to a Class",
       "title": "Complete your class enrollment application.",
@@ -607,7 +606,6 @@
       "urlId": "UC_CX_GT_SSCNTENRL_ADD"
     },
     "ucEditClassEnrollment": {
-      "iSCsLink": true,
       "isCsLink": true,
       "name": "Edit Class Applications",
       "title": "Edit your submited class enrollment application.",
@@ -618,7 +616,6 @@
       "urlId": "UC_CX_GT_SSCNTENRL_UPD"
     },
     "ucViewClassEnrollment": {
-      "iSCsLink": true,
       "isCsLink": true,
       "name": "Submitted Class Applications",
       "title": "View your submitted class enrollment application.",
@@ -629,7 +626,6 @@
       "urlId": "UC_CX_GT_SSCNTENRL_VIEW"
     },
     "requestLateClassChanges": {
-      "iSCsLink": true,
       "isCsLink": true,
       "name": "Petition for Late Change of Class Schedule",
       "title": "Request late add, drop, grading basis, or unit value changes to class schedule",
@@ -640,7 +636,6 @@
       "urlId": "UC_CX_GT_GRADEOPT_ADD"
     },
     "crossCampusEnroll": {
-      "iSCsLink": true,
       "isCsLink": true,
       "name": "UC Online Courses: Cross-Campus Enrollment",
       "title": "UC Online Courses for Cross-Campus Enrollment",

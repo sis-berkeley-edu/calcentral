@@ -40,8 +40,7 @@
         "ucFromText": "CalCentral",
         "name": "Academic Progress Report",
         "title": "View this student's Academic Progress Report",
-        "isCsLink": true,
-        "iSCsLink": true
+        "isCsLink": true
       }
     }
   },
