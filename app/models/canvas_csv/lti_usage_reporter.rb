@@ -38,10 +38,12 @@ module CanvasCsv
       logger.warn "Summary LTI usage report for #{@sis_term_id} is at #{@summary_report}"
       logger.warn "Detailed LTI usage report for #{@sis_term_id} is at #{@courses_report}"
       if sheets_manager && reports_folder
-        sheets_file = sheets_manager.upload_to_spreadsheet("LTI Usage #{@sis_term_id} #{DateTime.now.strftime('%F')}",
-          @summary_report, reports_folder.id, 'Summary')
-        sheets_manager.upload_csv_to_worksheet(sheets_file, 'Courses', CSV.read(@courses_report))
-        logger.warn "Online LTI usage report in Google Drive at #{sheets_file.human_url}, folder = #{reports_folder.title}, title = #{sheets_file.title}"
+        sheets_file = sheets_manager.upload_to_spreadsheet("LTI Usage Summary #{@sis_term_id} #{DateTime.now.strftime('%F')}",
+                                                           @summary_report, reports_folder.id)
+        courses_file = sheets_manager.upload_to_spreadsheet("LTI Usage Course Details #{@sis_term_id} #{DateTime.now.strftime('%F')}",
+                                                            @courses_report, reports_folder.id)
+        logger.warn "Online LTI usage summary in Google Drive at #{sheets_file.human_url}, folder = #{reports_folder.title}, title = #{sheets_file.title}"
+        logger.warn "Online LTI usage details in Google Drive at #{courses_file.human_url}, folder = #{reports_folder.title}, title = #{courses_file.title}"
       end
     end
 
