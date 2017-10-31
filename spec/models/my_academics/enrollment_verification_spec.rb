@@ -1,12 +1,8 @@
 describe MyAcademics::EnrollmentVerification do
   let(:uid) { random_id }
   let(:feed) { subject.get_feed }
-  let(:roles) { {'ugrd' => true, 'grad' => false, 'law' => false} }
-  subject { MyAcademics::EnrollmentVerification.new(uid) }
 
-  before do
-    allow(HubEdos::MyAcademicStatus).to receive(:get_roles).and_return(roles)
-  end
+  subject { MyAcademics::EnrollmentVerification.new(uid) }
 
   context 'when providing feed' do
     context 'when message request succeeds' do
@@ -33,12 +29,5 @@ describe MyAcademics::EnrollmentVerification do
       expect(feed[:requestUrl][:url]).to eq 'https://bcswebqat.is.berkeley.edu/psp/bcsqat/EMPLOYEE/HRMS/c/SA_LEARNER_SERVICES.SS_ENRL_VER_REQ.GBL'
       expect(feed[:requestUrl][:urlId]).to eq 'UC_CX_SS_ENRL_VER_REQ'
     end
-
-    it 'provides academic roles' do
-      expect(feed[:academicRoles]).to be
-      expect(feed[:academicRoles]['ugrd']).to eq true
-      expect(feed[:academicRoles]['law']).to eq false
-    end
   end
-
 end

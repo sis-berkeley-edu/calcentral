@@ -152,7 +152,7 @@ describe MyAcademics::ClassEnrollments do
   before do
     allow(subject).to receive(:is_feature_enabled).and_return(is_feature_enabled_flag)
     allow(subject).to receive(:user_is_student?).and_return(user_is_student)
-    allow_any_instance_of(HubEdos::MyAcademicStatus).to receive(:get_feed).and_return(academic_status_feed)
+    allow_any_instance_of(MyAcademics::MyAcademicStatus).to receive(:get_feed).and_return(academic_status_feed)
     allow(CampusSolutions::MyEnrollmentTerms).to receive(:get_terms).and_return(cs_enrollment_career_terms)
     allow(CampusSolutions::MyEnrollmentTerm).to receive(:get_term) do |uid, term_id|
       cs_enrollment_term_detail.merge({:term => term_id})
@@ -214,21 +214,6 @@ describe MyAcademics::ClassEnrollments do
         expect(feed[:links][:ucViewClassEnrollment]).to be
         expect(feed[:links][:requestLateClassChanges]).to be
         expect(feed[:links][:crossCampusEnroll]).to be
-      end
-    end
-  end
-
-  context 'when determining the users hold status' do
-    let(:user_holds_status) { subject.user_has_holds? }
-    context 'when no holds present' do
-      it 'should return false' do
-        expect(user_holds_status).to eq false
-      end
-    end
-    context 'when holds are present' do
-      let(:holds) { ['a hold'] }
-      it 'should return true' do
-        expect(user_holds_status).to eq true
       end
     end
   end

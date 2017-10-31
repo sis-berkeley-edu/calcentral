@@ -3,7 +3,7 @@
 var angular = require('angular');
 var _ = require('lodash');
 
-angular.module('calcentral.controllers').controller('UndergraduateDegreeProgressController', function(academicStatusFactory, degreeProgressFactory, apiService, $scope) {
+angular.module('calcentral.controllers').controller('UndergraduateDegreeProgressController', function(degreeProgressFactory, apiService, $scope) {
   $scope.degreeProgress = {
     undergraduate: {
       isLoading: true
@@ -21,17 +21,8 @@ angular.module('calcentral.controllers').controller('UndergraduateDegreeProgress
     );
   };
 
-  var loadAcademicRoles = function() {
-    return academicStatusFactory.getAcademicRoles().then(
-      function(parsedAcademicRoles) {
-        $scope.isLettersAndScience = _.get(parsedAcademicRoles, 'roles.lettersAndScience');
-      }
-    );
-  };
-
   var loadInformation = function() {
-    loadAcademicRoles()
-      .then(loadDegreeProgress)
+    loadDegreeProgress()
       .finally(function() {
         $scope.degreeProgress.undergraduate.isLoading = false;
       });

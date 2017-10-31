@@ -7,7 +7,8 @@ var _ = require('lodash');
  * Enrollment Card Controller
  * Main controller for the enrollment card on the My Academics and Student Overview pages
  */
-angular.module('calcentral.controllers').controller('EnrollmentCardController', function(apiService, academicStatusFactory, enrollmentFactory, linkService, $route, $scope) {
+angular.module('calcentral.controllers').controller('EnrollmentCardController', function(apiService, enrollmentFactory, linkService, $route, $scope) {
+  $scope.isLoading = true;
   $scope.accessibilityAnnounce = apiService.util.accessibilityAnnounce;
   linkService.addCurrentRouteSettings($scope);
 
@@ -229,42 +230,6 @@ angular.module('calcentral.controllers').controller('EnrollmentCardController', 
     return enrollmentFactory.getEnrollmentInstructionDecks();
   };
 
-  var loadAcademicRoles = function() {
-    return academicStatusFactory.getAcademicRoles().then(
-      function(parsedAcademicRoles) {
-        $scope.isGrad = _.get(parsedAcademicRoles, 'roles.grad');
-      }
-    );
-  };
-
-  /**
-   * Load the enrollment data and fire off subsequent events
-   */
-  var loadEnrollmentData = function() {
-    loadAcademicRoles()
-      .then(loadEnrollmentInstructionDecks)
-      .then(parseEnrollmentInstructionDecks)
-      .then(stopMainSpinner);
-  };
-
-  /**
-   * We should check the roles of the current person since we should only load
-   * the enrollment card for students
-   */
-  var checkRoles = function(data) {
-    $scope.isLoading = true;
-    $scope.isAdvisingStudentLookup = $route.current.isAdvisingStudentLookup;
-    if ($scope.isAdvisingStudentLookup || _.get(data, 'student')) {
-      loadEnrollmentData();
-    } else {
-      stopMainSpinner();
-    }
-  };
-
-  var stopMainSpinner = function() {
-    $scope.isLoading = false;
-  };
-
   /**
    * Changes the card currently displayed within a class enrollment card deck
    */
@@ -294,8 +259,20 @@ angular.module('calcentral.controllers').controller('EnrollmentCardController', 
     }
   };
 
-  /*
-   * Runs on load and when roles are updated
-   */
-  $scope.$watch('api.user.profile.roles', checkRoles);
+  var loadEnrollmentData = function() {
+    $scope.isAdvisingStudentLookup = $route.current.isAdvisingStudentLookup;
+    $scope.isGrad = $scope.isAdvisingStudentLookup ? $scope.targetUser.academicRoles.grad : apiService.user.profile.academicRoles.grad;
+
+    if ($scope.isAdvisingStudentLookup || apiService.user.profile.roles.student) {
+      loadEnrollmentInstructionDecks()
+        .then(parseEnrollmentInstructionDecks)
+        .finally(function() {
+          $scope.isLoading = false;
+        });
+    } else {
+      $scope.isLoading = false;
+    }
+  };
+
+  loadEnrollmentData();
 });

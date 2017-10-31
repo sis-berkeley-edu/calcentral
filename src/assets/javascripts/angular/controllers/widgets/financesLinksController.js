@@ -8,7 +8,6 @@ var _ = require('lodash');
  */
 angular.module('calcentral.controllers').controller('FinancesLinksController', function(apiService, campusLinksFactory, csLinkFactory, financesLinksFactory, $scope) {
   $scope.isLoading = true;
-
   $scope.canViewEftLink = false;
   $scope.canViewEmergencyLoanLink = false;
 
@@ -113,17 +112,7 @@ angular.module('calcentral.controllers').controller('FinancesLinksController', f
     });
   };
 
-  var loadAcademicStatus = function(roles) {
-    if (!_.isEmpty(roles)) {
-      $scope.canViewEftLink = $scope.api.user.profile.roles.student &&
-        ($scope.api.user.profile.roles.undergrad || $scope.api.user.profile.roles.graduate || $scope.api.user.profile.roles.law);
-      $scope.canViewEmergencyLoanLink = !roles.summerVisitor;
-    }
-  };
-
   var initialize = function() {
-    $scope.$watch('academicStatus.roles', loadAcademicStatus, true);
-
     campusLinksFactory.getLinks({
       category: 'finances'
     }).then(parseCampusLinks)
@@ -131,6 +120,9 @@ angular.module('calcentral.controllers').controller('FinancesLinksController', f
       .then(loadFppEnrollment)
       .then(loadCsLinks)
       .finally(function() {
+        $scope.canViewEftLink = apiService.user.profile.roles.student &&
+          (apiService.user.profile.roles.undergrad || apiService.user.profile.roles.graduate || apiService.user.profile.academicRoles.law);
+        $scope.canViewEmergencyLoanLink = !apiService.user.profile.academicRoles.summerVisitor;
         $scope.isLoading = false;
       });
   };

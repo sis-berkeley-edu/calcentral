@@ -1,6 +1,6 @@
 module MyAcademics
-  class Semesters
-    include AcademicsModule
+  class Semesters < UserSpecificModel
+    include Concerns::AcademicsModule
 
     def initialize(uid)
       super(uid)

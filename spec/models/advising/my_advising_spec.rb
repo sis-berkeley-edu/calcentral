@@ -1,8 +1,9 @@
 describe Advising::MyAdvising do
   let(:uid) { random_id }
-  subject { described_class.new(uid).get_feed_internal }
 
   context 'fake proxies' do
+    subject { described_class.new(uid).get_feed_internal }
+
     let(:fake_proxies) do
       proxies = {}
       [
@@ -23,10 +24,6 @@ describe Advising::MyAdvising do
     let(:manage_appts_link) { 'https://bcs-web-dev-03.is.berkeley.edu:8443/psc/bcsdev/EMPLOYEE/HRMS/c/SCI_APPT_STUSS.SCI_APPT_MY_APPTS.GBL'}
     let(:new_appt_link) { 'https://bcs-web-dev-03.is.berkeley.edu:8443/psc/bcsdev/EMPLOYEE/HRMS/c/SCI_APPT_STUSS.SCI_APPT_SS_FLU.GBL'}
 
-    let(:hub_college_and_level_plans) { [] }
-    let(:hub_college_and_level) { {:plans => hub_college_and_level_plans} }
-    let(:fake_college_and_level) { double(:hub_college_and_level => hub_college_and_level) }
-
     before do
       cs_link_proxy.set_response({
         status: 200,
@@ -45,7 +42,6 @@ describe Advising::MyAdvising do
           </UC_LINK_RESOURCES>
         XML
       })
-      allow(MyAcademics::CollegeAndLevel).to receive(:new).and_return(fake_college_and_level)
     end
 
     context 'well-behaved proxies' do
@@ -92,13 +88,8 @@ describe Advising::MyAdvising do
     end
 
     context 'graduate advisor relationships' do
-      let(:hub_college_and_level_plans) {
-        [
-          {:career => {:code => 'GRAD'}},
-          {:career => {:code => 'LAW'}}
-        ]
-      }
       before do
+        allow_any_instance_of(MyAcademics::MyAcademicRoles).to receive(:get_feed).and_return({ :grad => true, :law => true })
         cs_advisor_student_relationship_proxy.set_response({
           status: 200,
           body: cs_advisor_student_relationship_proxy.read_file('fixtures', 'xml', 'campus_solutions', 'advisor_student_relationship_graduate.xml')
@@ -123,13 +114,8 @@ describe Advising::MyAdvising do
     end
 
     context 'undergraduate advisor relationships' do
-      let(:hub_college_and_level_plans) {
-        [
-          {:career => {:code => 'UGRD'}},
-          {:career => {:code => 'LAW'}}
-        ]
-      }
       before do
+        allow_any_instance_of(MyAcademics::MyAcademicRoles).to receive(:get_feed).and_return({ :ugrd => true, :law => true })
         cs_advisor_student_relationship_proxy.set_response({
           status: 200,
           body: cs_advisor_student_relationship_proxy.read_file('fixtures', 'xml', 'campus_solutions', 'advisor_student_relationship_undergraduate.xml')

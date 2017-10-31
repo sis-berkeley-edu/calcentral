@@ -60,7 +60,7 @@
     </tbody>
   </table>
 </div>
-<div data-ng-if="!collegeAndLevel.roles.summerVisitor && collegeAndLevel.careers.length" class="cc-table cc-table-top-border cc-academic-summary-content">
+<div data-ng-if="!api.user.profile.academicRoles.summerVisitor && collegeAndLevel.careers.length" class="cc-table cc-table-top-border cc-academic-summary-content">
   <table>
     <tbody>
       <tr>
@@ -70,7 +70,7 @@
     </tbody>
   </table>
 </div>
-<div class="cc-table cc-table-top-border cc-academic-summary-content" data-ng-if="!collegeAndLevel.roles.summerVisitor && collegeAndLevel.level">
+<div class="cc-table cc-table-top-border cc-academic-summary-content" data-ng-if="!api.user.profile.academicRoles.summerVisitor && collegeAndLevel.level">
   <table>
     <tbody>
       <tr>
@@ -87,7 +87,7 @@
     </tbody>
   </table>
 </div>
-<div class="cc-table cc-table-top-border cc-academic-summary-content" data-ng-if="!collegeAndLevel.roles.summerVisitor && (collegeAndLevel.termsInAttendance || expectedGradTerm(collegeAndLevel))">
+<div class="cc-table cc-table-top-border cc-academic-summary-content" data-ng-if="!api.user.profile.academicRoles.summerVisitor && (collegeAndLevel.termsInAttendance || expectedGradTerm(collegeAndLevel))">
   <table>
     <tbody>
       <tr>
@@ -107,7 +107,7 @@
     </tbody>
   </table>
 </div>
-<div class="cc-table cc-table-top-border cc-academic-summary-content" data-ng-if="!collegeAndLevel.roles.summerVisitor && gpaUnits.totalUnits > 0">
+<div class="cc-table cc-table-top-border cc-academic-summary-content" data-ng-if="!api.user.profile.academicRoles.summerVisitor && gpaUnits.totalUnits > 0">
   <table>
     <tbody>
       <tr>
@@ -127,7 +127,7 @@
     </tbody>
   </table>
 </div>
-<div class="cc-table cc-table-top-border cc-academic-summary-content" data-ng-if="!collegeAndLevel.roles.summerVisitor && gpaUnits.cumulativeGpa > 0 && !api.user.profile.roles.law">
+<div class="cc-table cc-table-top-border cc-academic-summary-content" data-ng-if="!api.user.profile.academicRoles.summerVisitor && gpaUnits.cumulativeGpa > 0 && !api.user.profile.roles.law">
   <table>
     <tbody>
       <tr>

@@ -23,7 +23,6 @@ describe CampusSolutions::MyEnrollmentTerm do
       before { allow_any_instance_of(described_class).to receive(:get_feed).and_return(api_response) }
       it 'returns enrollment term object' do
         result = described_class.get_term(user_id, term_id)
-        puts "result: #{result.inspect}"
         expect(result[:studentId]).to eq "1234567"
         expect(result[:term]).to eq "2178"
       end

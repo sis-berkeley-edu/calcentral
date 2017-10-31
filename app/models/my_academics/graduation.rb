@@ -3,7 +3,7 @@ module MyAcademics
     require 'set'
     include Cache::CachedFeed
     include Cache::UserCacheExpiry
-    include AcademicsModule
+    include Concerns::AcademicStatus
 
     def merge(data)
       data[:graduation] = get_feed
@@ -17,17 +17,17 @@ module MyAcademics
       HashConverter.camelize({
         lastExpectedGraduationTerm: exp_grad_term,
         activeTermsWithEnrollmentAppointments: terms_with_appts,
-        isNotGraduateOrLawStudent: isNotGraduateOrLawStudent,
+        isNotGraduateOrLawStudent: !isGraduateOrLawStudent,
         appointmentsInGraduatingTerm: appointmentsInGraduatingTerm(exp_grad_term, terms_with_appts),
       })
     end
 
     def last_expected_graduation_term
       expected_graduation_term = { code: nil, name: nil }
-      if (statuses = HubEdos::MyAcademicStatus.get_statuses(@uid))
+      if (statuses = academic_statuses MyAcademics::MyAcademicStatus.new(@uid).get_feed)
         statuses.each do |status|
           Array.wrap(status.try(:[], 'studentPlans')).each do |plan|
-            current_expected_graduation_term = get_expected_graduation_term(plan) if MyAcademics::AcademicsModule.active? plan
+            current_expected_graduation_term = get_expected_graduation_term(plan) if active? plan
 
             # Catch Last Expected Graduation Date
             if (expected_graduation_term.try(:[], :code).to_i < current_expected_graduation_term.try(:[], :code).to_i)
@@ -60,13 +60,9 @@ module MyAcademics
       end
     end
 
-    def isNotGraduateOrLawStudent
-      if (careers = HubEdos::MyAcademicStatus.get_careers(@uid))
-        codes = careers.map { |c| c.try(:[], 'code') }
-        intersection = codes.to_set.intersection(Set['GRAD', 'LAW'])
-        return intersection.length == 0
-      end
-      false
+    def isGraduateOrLawStudent
+      roles = MyAcademics::MyAcademicRoles.new(@uid).get_feed
+      roles['grad'] || roles['law']
     end
 
     def appointmentsInGraduatingTerm(last_expected_graduation_term, terms_with_appointments)

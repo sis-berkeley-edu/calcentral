@@ -1,8 +1,8 @@
 module MyAcademics
-  class CollegeAndLevel
-    include AcademicsModule
+  class CollegeAndLevel < UserSpecificModel
     include ClassLogger
     include DatedFeed
+    include Concerns::AcademicStatus
 
     CS_DATE_FORMAT = "%Y-%m-%d"
 
@@ -21,41 +21,36 @@ module MyAcademics
     end
 
     def hub_college_and_level
-      # academic_status is a pointer to an obj in memory and should not be modified, other functions may need to use it later
-      academic_status = get_academic_status.clone
-      if (holds = parse_hub_holds academic_status)
-        academic_status[:holds] = holds
-      end
-      academic_status[:awardHonors] = parse_hub_award_honors academic_status
-      academic_status[:roles] = parse_hub_roles academic_status
+      hub_response = MyAcademics::MyAcademicStatus.new(@uid).get_feed
+      college_and_level = {
+        holds: parse_hub_holds(hub_response),
+        awardHonors: parse_hub_award_honors(hub_response),
+        roles: parse_hub_roles(hub_response),
+        statusCode: hub_response.try(:[], :statusCode),
+        errored: hub_response.try(:[], :errored),
+        body: hub_response.try(:[], :body)
+      }
 
-      if (statuses = HubEdos::MyAcademicStatus.parse_academic_statuses(academic_status))
-        status = statuses.first
-        registration_term = status['currentRegistration'].try(:[], 'term')
-        careers = HubEdos::MyAcademicStatus.parse_careers(statuses)
-        academic_status[:careers] = careers.collect {|career| career.try(:[], 'description') }.uniq
-        academic_status[:level] = parse_hub_level statuses
-        academic_status[:termName] = parse_hub_term_name(registration_term).try(:[], 'name')
-        academic_status[:termId] = registration_term.try(:[], 'id')
-        academic_status[:termsInAttendance] = status['termsInAttendance'].to_s
-        academic_status.merge! parse_hub_plans statuses
+      statuses = academic_statuses hub_response
+      if (status = statuses.first)
+        registration_term = status.try(:[], 'currentRegistration').try(:[], 'term')
+        college_and_level[:careers] = parse_hub_careers statuses
+        college_and_level[:level] = parse_hub_level statuses
+        college_and_level[:termName] = parse_hub_term_name(registration_term).try(:[], 'name')
+        college_and_level[:termId] = registration_term.try(:[], 'id')
+        college_and_level[:termsInAttendance] = status.try(:[], 'termsInAttendance').try(:to_s)
+        college_and_level.merge! parse_hub_plans statuses
+        college_and_level[:degrees] = parse_hub_degrees hub_response
       else
-        academic_status[:empty] = true
+        college_and_level[:empty] = true
       end
-      if (degrees = parse_hub_degrees academic_status)
-        academic_status[:degrees] = degrees
-      end
-      academic_status.delete(:feed)
-      academic_status
+      college_and_level
     end
 
     def parse_hub_holds(response)
-      holds = {hasHolds: false}
-      holds_feed = response[:feed] && response[:feed]['student'] && response[:feed]['student']['holds']
-      if holds_feed.present?
-        holds[:hasHolds] = has_holds?(holds_feed)
-      end
-      holds
+      {
+        hasHolds: has_holds?(response)
+      }
     end
 
     def parse_hub_award_honors(response)
@@ -91,6 +86,11 @@ module MyAcademics
 
     def parse_hub_roles(response)
       response.try(:[], :feed).try(:[], 'student').try(:[], 'roles')
+    end
+
+    def parse_hub_careers(statuses)
+      careers = careers(statuses)
+      careers.collect {|career| career.try(:[], 'description') }.uniq
     end
 
     def parse_hub_level(statuses)
@@ -168,10 +168,6 @@ module MyAcademics
       term
     end
 
-    def get_academic_status
-      @academic_status ||= HubEdos::MyAcademicStatus.new(@uid).get_feed
-    end
-
     def flatten_plan(hub_plan)
       flat_plan = {
         career: {},
@@ -243,7 +239,7 @@ module MyAcademics
 
     def profile_in_past?(profile)
       if !profile[:empty] && (term = Berkeley::TermCodes.from_english profile[:termName])
-        time_bucket(term[:term_yr], term[:term_cd]) == 'past'
+        Concerns::AcademicsModule.time_bucket(term[:term_yr], term[:term_cd]) == 'past'
       else
         false
       end

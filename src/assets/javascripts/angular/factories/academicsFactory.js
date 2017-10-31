@@ -1,7 +1,6 @@
 'use strict';
 
 var angular = require('angular');
-var _ = require('lodash');
 
 /**
  * Academics Factory
@@ -21,15 +20,8 @@ angular.module('calcentral.factories').factory('academicsFactory', function(apiS
     return apiService.http.request(options, urlResidency);
   };
 
-  var getAcademicRoles = function() {
-    return getAcademics().then(function(response) {
-      return _.get(response, 'data.collegeAndLevel.roles');
-    });
-  };
-
   return {
     getAcademics: getAcademics,
-    getAcademicRoles: getAcademicRoles,
     getResidency: getResidency
   };
 });

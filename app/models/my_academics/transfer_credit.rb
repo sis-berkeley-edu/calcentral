@@ -1,6 +1,5 @@
 module MyAcademics
-  class TransferCredit
-    include AcademicsModule
+  class TransferCredit < UserSpecificModel
     include ClassLogger
 
     def merge(data)

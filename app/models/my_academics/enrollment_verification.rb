@@ -9,8 +9,7 @@ module MyAcademics
     def get_feed
       {
         messages: enrollment_verification_messages,
-        requestUrl: enrollment_verification_request_link,
-        academicRoles: HubEdos::MyAcademicStatus.get_roles(@uid),
+        requestUrl: enrollment_verification_request_link
       }
     end
 

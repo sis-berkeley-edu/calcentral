@@ -30,11 +30,8 @@ module DegreeProgress
     end
 
     def should_see_links?
-      academic_status.try(:[], :feed).try(:[], 'student').try(:[], 'roles').try(:[], 'lettersAndScience')
-    end
-
-    def academic_status
-      @academic_status ||= HubEdos::MyAcademicStatus.new(@uid).get_feed
+      roles = MyAcademics::MyAcademicRoles.new(@uid).get_feed
+      !!roles['lettersAndScience']
     end
 
     def is_feature_enabled?

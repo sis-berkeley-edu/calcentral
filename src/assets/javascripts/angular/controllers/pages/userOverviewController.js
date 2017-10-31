@@ -6,7 +6,7 @@ var _ = require('lodash');
 /**
  * Preview of user profile prior to viewing-as
  */
-angular.module('calcentral.controllers').controller('UserOverviewController', function(academicsService, academicStatusFactory, adminService, advisingFactory, apiService, enrollmentVerificationFactory, linkService, statusHoldsService, $route, $routeParams, $scope) {
+angular.module('calcentral.controllers').controller('UserOverviewController', function(academicsService, adminService, advisingFactory, apiService, enrollmentVerificationFactory, linkService, statusHoldsService, $route, $routeParams, $scope) {
   linkService.addCurrentRouteSettings($scope);
 
   $scope.expectedGradTermName = academicsService.expectedGradTermName;
@@ -93,6 +93,7 @@ angular.module('calcentral.controllers').controller('UserOverviewController', fu
       function successCallback(response) {
         angular.extend($scope.targetUser, _.get(response, 'data.attributes'));
         angular.extend($scope.residency, _.get(response, 'data.residency.residency'));
+        $scope.targetUser.academicRoles = _.get(response, 'data.academicRoles');
         $scope.targetUser.ldapUid = targetUserUid;
         $scope.targetUser.addresses = apiService.profile.fixFormattedAddresses(_.get(response, 'data.contacts.feed.student.addresses'));
         $scope.targetUser.phones = _.get(response, 'data.contacts.feed.student.phones');
@@ -114,31 +115,38 @@ angular.module('calcentral.controllers').controller('UserOverviewController', fu
     });
   };
 
+  var processSemesters = function(planSemesters) {
+    _.forEach(planSemesters, function(semester) {
+      angular.extend(
+        semester,
+        {
+          show: ['current', 'previous', 'next'].indexOf(semester.timeBucket) > -1
+        });
+    });
+  };
+
+  var prepareSchedulePlannerLink = function(studentPlans, currentRegistrationTermId) {
+    var uniqueCareerCodes = academicsService.getUniqueCareerCodes(studentPlans);
+    if (uniqueCareerCodes.length > 0 && currentRegistrationTermId) {
+      $scope.schedulePlanner = {
+        careerCode: _.first(uniqueCareerCodes),
+        termId: currentRegistrationTermId,
+        studentUid: $routeParams.uid
+      };
+    }
+  };
+
   var loadAcademics = function() {
     advisingFactory.getStudentAcademics({
       uid: $routeParams.uid
     }).then(
       function successCallback(response) {
         angular.extend($scope, _.get(response, 'data'));
-        _.forEach($scope.planSemesters, function(semester) {
-          angular.extend(
-            semester,
-            {
-              show: ['current', 'previous', 'next'].indexOf(semester.timeBucket) > -1
-            });
-        });
 
-        // prepare schedule planner link data
-        var studentPlans = _.get($scope, 'collegeAndLevel.plans');
-        var uniqueCareerCodes = academicsService.getUniqueCareerCodes(studentPlans);
-        var currentRegistrationTermId = _.get($scope, 'collegeAndLevel.termId');
-        if (uniqueCareerCodes.length > 0 && currentRegistrationTermId) {
-          $scope.schedulePlanner = {
-            careerCode: _.first(uniqueCareerCodes),
-            termId: currentRegistrationTermId,
-            studentUid: $routeParams.uid
-          };
-        }
+        processSemesters($scope.planSemesters);
+        prepareSchedulePlannerLink(_.get($scope, 'collegeAndLevel.plans'), _.get($scope, 'collegeAndLevel.termId'));
+        $scope.showResidency = $scope.targetUser.roles.student && academicsService.showResidency($scope.targetUser.academicRoles);
+
         if (!!_.get($scope, 'updatePlanUrl.url')) {
           linkService.addCurrentPagePropertiesToLink($scope.updatePlanUrl, $scope.currentPage.name, $scope.currentPage.url);
         }
@@ -149,14 +157,6 @@ angular.module('calcentral.controllers').controller('UserOverviewController', fu
     ).finally(function() {
       $scope.academics.isLoading = false;
       $scope.planSemestersInfo.isLoading = false;
-    });
-  };
-
-  var loadAcademicRoles = function() {
-    academicStatusFactory.getAcademicRoles({
-      uid: $routeParams.uid
-    }).then(function(response) {
-      $scope.showResidency = $scope.targetUser.roles.student && academicsService.showResidency(_.get(response, 'roles'));
     });
   };
 
@@ -205,8 +205,8 @@ angular.module('calcentral.controllers').controller('UserOverviewController', fu
         $scope.degreeProgress.undergraduate.links = _.get(response, 'data.feed.links');
         $scope.degreeProgress.undergraduate.errored = _.get(response, 'errored');
       }).finally(function() {
-        $scope.degreeProgress.undergraduate.showCard = apiService.user.profile.features.csDegreeProgressUgrdAdvising && ($scope.targetUser.roles.undergrad || $scope.degreeProgress.undergraduate.progresses.length);
-        $scope.degreeProgress.graduate.showCard = apiService.user.profile.features.csDegreeProgressGradAdvising && ($scope.degreeProgress.graduate.progresses.length || $scope.targetUser.roles.graduate || $scope.targetUser.roles.law);
+        $scope.degreeProgress.undergraduate.showCard = apiService.user.profile.features.csDegreeProgressUgrdAdvising && ($scope.targetUser.academicRoles.ugrd || $scope.degreeProgress.undergraduate.progresses.length);
+        $scope.degreeProgress.graduate.showCard = apiService.user.profile.features.csDegreeProgressGradAdvising && ($scope.degreeProgress.graduate.progresses.length || $scope.targetUser.academicRoles.grad || $scope.targetUser.academicRoles.law);
         $scope.degreeProgress.isLoading = false;
       });
     });
@@ -272,7 +272,6 @@ angular.module('calcentral.controllers').controller('UserOverviewController', fu
       apiService.user.fetch()
       .then(loadProfile)
       .then(loadAcademics)
-      .then(loadAcademicRoles)
       .then(loadStudentSuccess)
       .then(loadRegistrations)
       .then(loadDegreeProgresses);

@@ -53,7 +53,7 @@
       to refresh this data. Updates may take up to 24 hours.
     </div>
     <div data-ng-if="!api.user.profile.roles.advisor" class="cc-degree-progress-footer">
-      <span data-ng-if="isLettersAndScience && degreeProgress.undergraduate.links.academicProgressReport.url">
+      <span data-ng-if="degreeProgress.undergraduate.links.academicProgressReport.url">
         <p>Run your
           <a data-cc-campus-solutions-link-directive="degreeProgress.undergraduate.links.academicProgressReport"
              data-cc-campus-solutions-link-directive-cc-page-name="currentPage.name"
@@ -77,7 +77,7 @@
           with major requirement questions.
         </p>
       </span>
-      <span data-ng-if="!isLettersAndScience || !degreeProgress.undergraduate.links.academicProgressReport.url">If this information is out of date, please contact your advisor.</span>
+      <span data-ng-if="!degreeProgress.undergraduate.links.academicProgressReport.url">If this information is out of date, please contact your advisor.</span>
     </div>
   </div>
 </div>

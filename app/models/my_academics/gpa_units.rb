@@ -1,8 +1,8 @@
 module MyAcademics
-  class GpaUnits
-    include AcademicsModule
+  class GpaUnits < UserSpecificModel
     include ClassLogger
     include User::Identifiers
+    include Concerns::AcademicStatus
 
     def merge(data)
       gpa = hub_gpa_units
@@ -10,7 +10,7 @@ module MyAcademics
     end
 
     def hub_gpa_units
-      hub_response = HubEdos::MyAcademicStatus.new(@uid).get_feed
+      hub_response = MyAcademics::MyAcademicStatus.new(@uid).get_feed
       # P/NP units from the Hub are calculated differently than desired, so we grab them from an EDODB view instead
       # EDODB P/NP units take into account repeat courses, making them more accurate than the values obtained from the Hub
       edo_response = EdoOracle::Queries.get_pnp_unit_count(get_campus_solutions_id)
@@ -18,7 +18,7 @@ module MyAcademics
       #copy needed fields from response obj
       result[:errored] = hub_response[:errored]
       # TODO: Consult with SR concerning GPA displayed when multiple academic careers present
-      if (hub_status = HubEdos::MyAcademicStatus.parse_academic_statuses(hub_response).try(:first))
+      if (hub_status = academic_statuses(hub_response).try(:first))
         # GPA is passed as a string to force a decimal point for whole values.
         result[:cumulativeGpa] = (cumulativeGpa = parse_hub_cumulative_gpa hub_status) && cumulativeGpa.to_s
         if (totalUnits = parse_hub_total_units hub_status) && totalUnits.present?

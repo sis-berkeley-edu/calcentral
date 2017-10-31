@@ -6,10 +6,9 @@ var angular = require('angular');
 /**
  * Campus Links Factory
  */
-angular.module('calcentral.factories').factory('campusLinksFactory', function(apiService, academicStatusFactory, $http) {
+angular.module('calcentral.factories').factory('campusLinksFactory', function(apiService, $http) {
   // Data contains "links" and "navigation"
   var linkDataUrl = '/api/my/campuslinks';
-  var academicRoles = {};
 
   /**
    * Add to the subcategories list if it doesn't exist yet
@@ -41,6 +40,7 @@ angular.module('calcentral.factories').factory('campusLinksFactory', function(ap
   };
 
   var hasBlacklistedRole = function(linkRoles) {
+    var academicRoles = apiService.user.profile.academicRoles;
     return _.some(academicRoles, function(hasRole, role) {
       return hasRole && linkRoles[role] === false;
     });
@@ -138,12 +138,6 @@ angular.module('calcentral.factories').factory('campusLinksFactory', function(ap
     });
   };
 
-  var loadAcademicRoles = function() {
-    return academicStatusFactory.getAcademicRoles().then(function(parsedAcademicRoles) {
-      academicRoles = _.get(parsedAcademicRoles, 'roles');
-    });
-  };
-
   var getUserRoles = function() {
     return apiService.user.fetch();
   };
@@ -152,7 +146,6 @@ angular.module('calcentral.factories').factory('campusLinksFactory', function(ap
     apiService.http.clearCache(options, linkDataUrl);
 
     return getUserRoles()
-      .then(loadAcademicRoles)
       .then(getCampusLinks)
       .then(function(response) {
         return parseCampusLinks(response, options.category);

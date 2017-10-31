@@ -22,6 +22,10 @@ class ApiMyStatusPage
     @parsed['roles']
   end
 
+  def academicRoles
+    @parsed['academicRoles']
+  end
+
   def is_applicant?
     roles['applicant']
   end

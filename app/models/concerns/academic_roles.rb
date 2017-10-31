@@ -1,4 +1,4 @@
-module Berkeley
+module Concerns
   module AcademicRoles
     extend self
 

@@ -11,10 +11,6 @@ angular.module('calcentral.controllers').controller('AcademicsController', funct
   linkService.addCurrentRouteSettings($scope);
   apiService.util.setTitle($scope.currentPage.name);
 
-  $scope.academicStatus = {
-    roles: {}
-  };
-
   $scope.academics = {
     isLoading: true
   };
@@ -24,7 +20,8 @@ angular.module('calcentral.controllers').controller('AcademicsController', funct
   };
 
   $scope.redirectToHome = function() {
-    return apiService.util.redirectToHome();
+    apiService.util.redirectToHome();
+    return false;
   };
 
   var checkPageExists = function(page) {
@@ -187,7 +184,7 @@ angular.module('calcentral.controllers').controller('AcademicsController', funct
     $scope.isLSStudent = academicsService.isLSStudent($scope.collegeAndLevel);
     $scope.isUndergraduate = _.includes(_.get($scope.collegeAndLevel, 'careers'), 'Undergraduate');
     $scope.hasTeachingClasses = academicsService.hasTeachingClasses(_.get(response, 'data.teachingSemesters'));
-    $scope.canViewFinalExamSchedule = $scope.api.user.profile.roles.student && !$scope.api.user.profile.delegateActingAsUid && !$scope.academicStatus.roles.summerVisitor;
+    $scope.canViewFinalExamSchedule = apiService.user.profile.roles.student && !apiService.user.profile.delegateActingAsUid && !apiService.user.profile.academicRoles.summerVisitor;
 
     // Get selected semester from URL params and extract data from semesters array
     var semesterSlug = ($routeParams.semesterSlug || $routeParams.teachingSemesterSlug);
@@ -217,7 +214,7 @@ angular.module('calcentral.controllers').controller('AcademicsController', funct
                                  ($scope.numberOfHolds));
     $scope.showAdvising = !$scope.filteredForDelegate && apiService.user.profile.features.advising && apiService.user.profile.roles.student && isMbaJdOrNotLaw();
     $scope.showProfileMessage = (!$scope.isAcademicInfoAvailable || !$scope.collegeAndLevel || _.isEmpty($scope.collegeAndLevel.careers));
-    $scope.showResidency = apiService.user.profile.roles.student && academicsService.showResidency($scope.academicStatus.roles);
+    $scope.showResidency = apiService.user.profile.roles.student && academicsService.showResidency(apiService.user.profile.academicRoles);
   };
 
   /**
@@ -225,32 +222,22 @@ angular.module('calcentral.controllers').controller('AcademicsController', funct
    * @return {Boolean} Returns true when student is MBA/JD or Not a Law Student
    */
   var isMbaJdOrNotLaw = function() {
-    if (!$scope.academicStatus.roles.law || ($scope.academicStatus.roles.law && $scope.academicStatus.roles.haasMbaJurisDoctor)) {
-      return true;
-    }
-    return false;
-  };
-
-  var loadAcademicRoles = function() {
-    return academicStatusFactory.getAcademicRoles()
-      .then(function(data) {
-        $scope.academicStatus.roles = _.get(data, 'roles');
-      });
+    return !apiService.user.profile.academicRoles.law || apiService.user.profile.academicRoles.haasMbaJurisDoctor;
   };
 
   // Wait until user profile is fully loaded before hitting academics data
   $scope.$on('calcentral.api.user.isAuthenticated', function(event, isAuthenticated) {
     if (isAuthenticated) {
-      $scope.canViewAcademics = $scope.api.user.profile.hasAcademicsTab;
+      $scope.canViewAcademics = apiService.user.profile.hasAcademicsTab;
       if (!$scope.canViewAcademics) {
         apiService.user.redirectToHome();
       }
       var getAcademics = academicsFactory.getAcademics().then(parseAcademics);
       var getRegistrations = registrationsFactory.getRegistrations().then(loadRegistrations);
-      var requests = [loadAcademicRoles(), getAcademics, getRegistrations];
+      var requests = [getAcademics, getRegistrations];
 
-      if ($scope.api.user.profile.features.csHolds &&
-        ($scope.api.user.profile.roles.student || $scope.api.user.profile.roles.applicant)) {
+      if (apiService.user.profile.features.csHolds &&
+        (apiService.user.profile.roles.student || apiService.user.profile.roles.applicant)) {
         requests.push(loadNumberOfHolds());
       }
       $q.all(requests).then(filterWidgets);

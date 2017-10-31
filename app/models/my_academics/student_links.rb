@@ -1,6 +1,5 @@
 module MyAcademics
-  class StudentLinks
-    include AcademicsModule
+  class StudentLinks < UserSpecificModel
     include ClassLogger
     include LinkFetcher
 

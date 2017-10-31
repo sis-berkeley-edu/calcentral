@@ -4,6 +4,7 @@ module MyAcademics
     include Cache::CachedFeed
     include Cache::UserCacheExpiry
     include CampusSolutions::EnrollmentCardFeatureFlagged
+    include Concerns::AcademicStatus
     include LinkFetcher
 
     ENROLLMENT_DECK_KEYS = ['fpf', 'haasFullTimeMba', 'haasEveningWeekendMba', 'haasExecMba', 'summerVisitor', 'law', 'concurrent']
@@ -14,7 +15,7 @@ module MyAcademics
         enrollmentTermInstructionTypeDecks: get_career_term_role_decks,
         enrollmentTermInstructions: get_enrollment_term_instructions,
         enrollmentTermAcademicPlanner: get_enrollment_term_academic_planner,
-        hasHolds: user_has_holds?,
+        hasHolds: has_holds?(MyAcademics::MyAcademicStatus.new(@uid).get_feed),
         links: get_links
       })
     end
@@ -27,7 +28,7 @@ module MyAcademics
           :includes_fpf => false
         }
       }
-      academic_status.try(:[], :feed).try(:[], 'student').try(:[], 'academicStatuses').each do |status|
+      academic_statuses(MyAcademics::MyAcademicStatus.new(@uid).get_feed).each do |status|
         career_role = status.try(:[], 'studentCareer').try(:[], :role)
         career_code = status.try(:[], 'studentCareer').try(:[], 'academicCareer').try(:[], 'code')
 
@@ -142,26 +143,6 @@ module MyAcademics
         instructions[term_id][:termIsSummer] = Berkeley::TermCodes.edo_id_is_summer?(term_id)
       end
       instructions
-    end
-
-    def user_has_holds?
-      holds = academic_status.try(:[], :feed).try(:[], 'student').try(:[], 'holds')
-      AcademicsModule.has_holds?(holds)
-    end
-
-    def academic_status
-      model = HubEdos::MyAcademicStatus.new(@uid)
-      @academic_status ||= model.get_feed
-    end
-
-    def active_plans
-      plans = []
-      academic_status.try(:[], :feed).try(:[], 'student').try(:[], 'academicStatuses').each do |status|
-        plans.concat status.try(:[], 'studentPlans')
-      end
-      @active_plans ||= plans.select do |plan|
-        AcademicsModule.active? plan
-      end
     end
 
     def get_active_term_ids
