@@ -32,7 +32,7 @@
             <span data-ng-bind-html="enrollVerification.messages.lawVerification.descrlong"></span>
           </div>
         </li>
-        <li data-ng-if="!api.user.profile.academicRoles.lawExclusive">
+        <li data-ng-if="!enrollVerification.lawExclusive">
           <div class="cc-enrollment-verification-subtitle">
             <h3 data-ng-bind-html="enrollVerification.messages.requestOfficial.messageText"></h3>
           </div>
@@ -55,7 +55,7 @@
             </div>
           </div>
         </li>
-        <li data-ng-if="!api.user.profile.academicRoles.lawExclusive">
+        <li data-ng-if="!enrollVerification.lawExclusive">
           <div class="cc-enrollment-verification-message cc-enrollment-verification-footer">
             <p>Learn more about <a data-ng-href="{{enrollmentVerificationServices.url}}" data-ng-attr-title="{{enrollmentVerificationServices.title}}">enrollment verification services.</a></p>
           </div>

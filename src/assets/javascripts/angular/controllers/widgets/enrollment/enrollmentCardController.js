@@ -8,7 +8,9 @@ var _ = require('lodash');
  * Main controller for the enrollment card on the My Academics and Student Overview pages
  */
 angular.module('calcentral.controllers').controller('EnrollmentCardController', function(apiService, enrollmentFactory, linkService, $route, $scope) {
-  $scope.isLoading = true;
+  $scope.enrollment = {
+    isLoading: true
+  };
   $scope.accessibilityAnnounce = apiService.util.accessibilityAnnounce;
   linkService.addCurrentRouteSettings($scope);
 
@@ -227,7 +229,7 @@ angular.module('calcentral.controllers').controller('EnrollmentCardController', 
   };
 
   var loadEnrollmentInstructionDecks = function() {
-    return enrollmentFactory.getEnrollmentInstructionDecks();
+    return enrollmentFactory.getEnrollmentInstructionDecks().then(parseEnrollmentInstructionDecks);
   };
 
   /**
@@ -265,12 +267,11 @@ angular.module('calcentral.controllers').controller('EnrollmentCardController', 
 
     if ($scope.isAdvisingStudentLookup || apiService.user.profile.roles.student) {
       loadEnrollmentInstructionDecks()
-        .then(parseEnrollmentInstructionDecks)
         .finally(function() {
-          $scope.isLoading = false;
+          $scope.enrollment.isLoading = false;
         });
     } else {
-      $scope.isLoading = false;
+      $scope.enrollment.isLoading = false;
     }
   };
 
