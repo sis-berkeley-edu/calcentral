@@ -36,6 +36,7 @@ angular.module('calcentral.controllers').controller('EnrollmentVerificationContr
   var parseEnrollmentVerificationData = function(response) {
     var messages = _.get(response, 'data.messages');
     $scope.enrollVerification.requestOfficialVerificationLink = _.get(response, 'data.requestUrl');
+    $scope.enrollVerification.lawExclusive = isRoleExclusive('law', apiService.user.profile.academicRoles);
 
     if (messages) {
       if ($scope.enrollVerification.lawExclusive) {
@@ -57,13 +58,8 @@ angular.module('calcentral.controllers').controller('EnrollmentVerificationContr
     }
   };
 
-  var parseRoles = function() {
-    $scope.enrollVerification.lawExclusive = isRoleExclusive('law', apiService.user.profile.academicRoles);
-  };
-
   var loadEnrollmentVerificationFeed = function() {
     enrollmentVerificationFactory.getEnrollmentVerificationData()
-      .then(parseRoles)
       .then(parseEnrollmentVerificationData)
       .finally(function() {
         $scope.enrollVerification.isLoading = false;
