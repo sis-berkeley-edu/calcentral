@@ -16,6 +16,9 @@ gem 'rails-perftest', '~>0.0.5'
 
 gem 'activerecord-jdbc-adapter', '~> 1.3.16'
 
+# Needed for rails_admin in Ruby 2
+gem 'safe_yaml', '~> 1.0.4'
+
 # Postgresql adapter
 gem 'activerecord-jdbcpostgresql-adapter', '~> 1.3.16'
 
@@ -63,7 +66,7 @@ gem 'jruby-activemq', '~> 5.13.0', git: 'https://github.com/ets-berkeley-edu/jru
 # To support SSL TLSv1.2.
 # jruby-openssl versions 0.9.8 through 0.9.16 trigger runaway memory consumption in CalCentral.
 # Track progress at https://github.com/jruby/jruby-openssl/issues/86 and SISRP-18781.
-gem 'jruby-openssl', '0.9.7'
+gem 'jruby-openssl', '0.9.19'
 
 # Addressable is a replacement for the URI implementation that is part of Ruby's standard library.
 # https://github.com/sporkmonger/addressable
@@ -82,9 +85,9 @@ gem 'rails_admin', '0.6.5'
 gem 'bootstrap-sass', '~> 3.3.1.0'
 
 # TorqueBox app server
-gem 'torquebox', '~> 3.1.2'
-gem 'torquebox-server', '~> 3.1.2'
-gem 'torquebox-messaging', '~> 3.1.2'
+gem 'torquebox', '~> 3.2.0'
+gem 'torquebox-server', '~> 3.2.0'
+gem 'torquebox-messaging', '~> 3.2.0'
 gem 'jmx', '~> 1.0'
 
 # for trying, and trying again, and then giving up.
