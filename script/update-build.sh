@@ -57,7 +57,7 @@ cat versions/git.txt | ${LOGIT}
 
 # Fix permissions on files that need to be executable
 chmod u+x ./script/*
-chmod u+x ./vendor/bundle/jruby/1.9/bin/*
+chmod u+x ./vendor/bundle/jruby/2.3.0/bin/*
 find ./vendor/bundle -name standalone.sh | xargs chmod u+x
 
 echo | ${LOGIT}
