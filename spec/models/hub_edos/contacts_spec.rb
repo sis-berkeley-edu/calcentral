@@ -1,6 +1,9 @@
 describe HubEdos::Contacts do
 
   context 'mock proxy' do
+    before(:each) do
+      allow(Settings.terms).to receive(:fake_now).and_return('2017-11-07 00:00:00')
+    end
     let(:proxy) { HubEdos::Contacts.new(fake: true, user_id: '61889') }
     subject { proxy.get }
 
@@ -15,6 +18,10 @@ describe HubEdos::Contacts do
       expect(subject[:feed]['student']['addresses'][0]['country']).to eq 'USA'
       expect(subject[:feed]['student']['addresses'][0]['formattedAddress']).to eq "1234 56TH ST\nAPT 789, BOX 101112\nBERKELEY, California 94708"
       expect(subject[:feed]['student']['phones'].length).to eq 1
+    end
+
+    it 'properly removes inactive addresses' do
+      expect(subject[:feed]['student']['addresses'].length).to eq 2
     end
   end
 
