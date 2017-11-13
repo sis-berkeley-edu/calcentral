@@ -7,6 +7,12 @@
 ></div>
 
 <div class="cc-enrollment-card-section-content" data-ng-if="section.show">
+  <div data-ng-if="enrollmentInstruction.enrollmentPeriod.length">
+    <strong>
+      Note: Times for enrollment phases are in the Pacific Time zone.
+    </strong>
+  </div>
+
   <div data-ng-if="api.user.profile.actAsOptions.canSeeCSLinks && !enrollmentInstruction.isGradeBaseAvailable && !isInstructionType(enrollmentInstruction, ['law','haasEveningWeekendMba','haasFullTimeMba'])">
     <div data-ng-if="enrollmentInstruction.isClassScheduleAvailable">
       <a data-cc-campus-solutions-link-directive
