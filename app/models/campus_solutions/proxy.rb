@@ -93,7 +93,7 @@ module CampusSolutions
 
     def is_errored?(feed)
       error_key = error_response_root_xml_node.intern
-      !feed.is_a?(Hash) || feed[:errmsgtext].present? || feed[error_key].present?
+      !feed.is_a?(Hash) || feed.key?(:errmsgtext) || feed[error_key].present?
     end
 
     def request_options
