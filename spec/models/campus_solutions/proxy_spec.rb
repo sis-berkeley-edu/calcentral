@@ -17,8 +17,13 @@ describe CampusSolutions::Proxy do
       end
     end
 
-    context 'errmsgtext in response' do
+    context 'populated errmsgtext node in response' do
       let(:feed) { { 'ERRMSGTEXT' => 'Wicked problems' } }
+      it_behaves_like 'a proxy that handles errors'
+    end
+
+    context 'empty errmsgtext node in response' do
+      let(:feed) { { 'ERRMSGTEXT' => nil } }
       it_behaves_like 'a proxy that handles errors'
     end
 
