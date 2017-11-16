@@ -63,6 +63,15 @@
     margin-bottom: 10px;
     margin-top: 0;
   }
+  .cc-academics-classes-course-number {
+    width: 20%;
+  }
+  .cc-academics-ellipsis-cell {
+    max-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
   .cc-class-enrollment-formatted-content {
     height: 25em;
     width: 100%;

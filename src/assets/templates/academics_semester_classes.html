@@ -14,12 +14,13 @@
           <thead>
             <th scope="col" class="cc-table-right-spacing">Course</th>
             <th scope="col">Title</th>
+            <th scope="col" data-ng-if="enrolledCoursesHaveTopics">Topic</th>
             <th scope="col">Grade Basis</th>
             <th class="cc-table-right" scope="col">Units</th>
           </thead>
           <tbody data-ng-repeat="course in enrolledCourses" data-ng-class-even="'cc-academics-even'">
             <tr>
-              <td class="cc-table-right-spacing cc-academics-course-number">
+              <td class="cc-table-right-spacing cc-academics-course-number cc-academics-classes-course-number">
                 <a data-ng-href="{{course.url}}" data-ng-bind="course.course_code">
                 </a>
                 <div data-ng-repeat="section in course.sections">
@@ -27,6 +28,16 @@
                 </div>
               </td>
               <td data-ng-bind="course.title"></td>
+              <td data-ng-if="enrolledCoursesHaveTopics">
+                <div data-ng-if="!course.topics.length">
+                  &mdash;
+                </div>
+                <div data-ng-if="course.topics.length">
+                  <div data-ng-repeat="topic in course.topics">
+                    <span data-ng-bind="topic"></span>
+                  </div>
+                </div>
+              </td>
               <td>
                 <div data-ng-repeat="section in course.sections">
                   <span data-ng-bind="section.grading.grading_basis"></span>
@@ -47,6 +58,7 @@
             <thead>
               <th>Course Number &amp; Section</th>
               <th>Title</th>
+              <th data-ng-if="waitlistedCoursesHaveTopics">Topic</th>
               <th>Waitlist Position / Class Size</th>
             </thead>
             <tbody data-ng-repeat="course in waitlistedCourses">
@@ -57,6 +69,16 @@
                   <span data-ng-bind="section.section_label"></span>
                 </td>
                 <td data-ng-bind="course.title"></td>
+                <td data-ng-if="waitlistedCoursesHaveTopics">
+                  <div data-ng-if="!course.topics.length">
+                    &mdash;
+                  </div>
+                  <div data-ng-if="course.topics.length">
+                    <div data-ng-repeat="topic in course.topics">
+                      <span data-ng-bind="topic"></span>
+                    </div>
+                  </div>
+                </td>
                 <td>
                   <div data-ng-if="section.waitlisted && section.waitlistPosition">
                     <strong data-ng-bind="section.waitlistPosition"></strong> on list of class of <strong data-ng-bind="section.enroll_limit"></strong>

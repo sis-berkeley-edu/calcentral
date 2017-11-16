@@ -47,6 +47,18 @@
           <h3>Class Title</h3>
           <div data-ng-bind="selectedCourse.title"></div>
 
+          <h3 data-ng-if="selectedSection.topic_description">Topic</h3>
+          <div data-ng-if="selectedSection.topic_description">
+            <span data-ng-bind="selectedSection.topic_description"></span>
+          </div>
+
+          <h3 data-ng-if="!selectedSection.topic_description && selectedCourse.topics.length > 0">Topic</h3>
+          <div data-ng-if="!selectedSection.topic_description && selectedCourse.topics.length > 0">
+            <div data-ng-if="!selectedSection" data-ng-repeat="topic in selectedCourse.topics">
+              <span data-ng-bind="topic"></span>
+            </div>
+          </div>
+
           <h3 data-ng-if="selectedCourse.listings.length > 1">Cross-listed As</h3>
           <div data-ng-if="selectedCourse.listings.length > 1" data-ng-repeat="listing in selectedCourse.listings">
             <span data-ng-bind="listing.course_code"></span>

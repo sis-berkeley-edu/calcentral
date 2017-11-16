@@ -117,6 +117,8 @@ angular.module('calcentral.controllers').controller('AcademicsController', funct
         $scope.previousCourses = academicsService.getPreviousClasses(data.semesters);
         $scope.enrolledCourses = academicsService.getClassesSections(selectedStudentSemester.classes, false);
         $scope.waitlistedCourses = academicsService.getClassesSections(selectedStudentSemester.classes, true);
+        $scope.enrolledCoursesHaveTopics = academicsService.courseCollectionHasTopics($scope.enrolledCourses);
+        $scope.waitlistedCoursesHaveTopics = academicsService.courseCollectionHasTopics($scope.waitlistedCourses);
       }
     }
     $scope.selectedStudentSemester = selectedStudentSemester;
@@ -185,6 +187,11 @@ angular.module('calcentral.controllers').controller('AcademicsController', funct
     $scope.isUndergraduate = _.includes(_.get($scope.collegeAndLevel, 'careers'), 'Undergraduate');
     $scope.hasTeachingClasses = academicsService.hasTeachingClasses(_.get(response, 'data.teachingSemesters'));
     $scope.canViewFinalExamSchedule = apiService.user.profile.roles.student && !apiService.user.profile.delegateActingAsUid && !apiService.user.profile.academicRoles.summerVisitor;
+
+    // summarize section topics for courses
+    if ($scope.semesters) {
+      academicsService.summarizeStudentClassTopics($scope.semesters);
+    }
 
     // Get selected semester from URL params and extract data from semesters array
     var semesterSlug = ($routeParams.semesterSlug || $routeParams.teachingSemesterSlug);
