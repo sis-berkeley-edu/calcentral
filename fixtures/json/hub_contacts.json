@@ -77,6 +77,7 @@
                 "formattedAddress": "1234 56TH ST\nAPT 789, BOX 101112\nBERKELEY, California 94708",
                 "disclose": false,
                 "fromDate": "2015-01-12",
+                "toDate": "2142-01-01",
                 "type": {
                   "code": "DIPL",
                   "description": "Diploma"
@@ -106,6 +107,7 @@
                 "countryName": "United States",
                 "formattedAddress": "2111 BANCROFT WAY  #550\nBERKELEY, California 94720",
                 "fromDate": "2013-10-31",
+                "toDate": "2013-11-01",
                 "disclose": false,
                 "type": {
                   "code": "HOME",
