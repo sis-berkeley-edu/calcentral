@@ -15,6 +15,20 @@ angular.module('calcentral.directives').directive('ccAcademicsClassInfoEnrollmen
       };
 
       /**
+       * Maps selected students to an array of sections that will be
+       * affected by the request.
+       */
+      var extractAffectedSections = function(selectedStudents) {
+        var sections = [];
+        _.each(selectedStudents, function(student) {
+          _.each(student.sections, function(section) {
+            sections.push(section);
+          });
+        });
+        return _.uniqBy(sections, 'ccn');
+      };
+
+      /**
        * Indicates if a department is a LAW department or not
        * @param  {String}  deptCode department code
        * @return {Boolean} boolean
@@ -141,6 +155,19 @@ angular.module('calcentral.directives').directive('ccAcademicsClassInfoEnrollmen
         return list;
       };
 
+      /**
+       * Returns all unique affected sections in a formatted text string that
+       * includes name and ccn, to be used in rendered email for each action
+       */
+      var textSectionList = function(sections) {
+        var list = '';
+        _.each(sections, function(section) {
+          list = list.concat('Section: ' + section.name + '\n');
+          list = list.concat('Class Number: ' + section.ccn + '\n\n');
+        });
+        return list.slice(0, -1);
+      };
+
       /*
        * Returns tab spaced table of students. Sorted by waitlist position when enrollStatus is 'waitlisted'
        * @return {String}
@@ -215,12 +242,16 @@ angular.module('calcentral.directives').directive('ccAcademicsClassInfoEnrollmen
        */
       scope.messageForSelectedStudents = function() {
         var currentlySelectedStudents = selectedStudents();
+        var affectedSections = extractAffectedSections(currentlySelectedStudents);
         var messages = requestMessages();
         var bodyLines = [
           'BODY\n',
           'Schedule or enrollment manager,\n',
           'Within the constraints of pre-requisites (if normally enforced for this class), reserve capacity, overall class capacity and any other relevant concerns, please fulfill the following request for students enrolled or on the wait list for ' + scope.className + ' for ' + scope.semesterName + '.\n',
           'REQUEST: ' + messages.bodyRequest,
+          'Sections:\n',
+          textSectionList(affectedSections),
+          'Students:\n',
           textStudentList(currentlySelectedStudents, true) + messages.sortingNote + 'The students are also broken out by individual section and Class Number below.',
           'If this request cannot be fulfilled in a reasonable amount of time, please let me know.\n',
           'Thank you',
