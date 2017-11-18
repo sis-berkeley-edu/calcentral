@@ -3,7 +3,7 @@ describe CalnetLdap::Client do
   it 'should initialize with a configured Net::LDAP object' do
     ldap = subject.instance_variable_get :@ldap
     expect(ldap).to be_a Net::LDAP
-    expect(ldap.host).to eq 'nds-test.berkeley.edu'
+    expect(ldap.host).to eq 'ldap-test.berkeley.edu'
     expect(ldap.port).to eq 636
     if ENV['RAILS_ENV'] == 'test'
       auth = ldap.instance_variable_get :@auth
