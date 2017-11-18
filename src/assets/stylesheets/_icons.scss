@@ -161,6 +161,16 @@
   background-image: url('../images/icon_oskicat_16x16.png');
 }
 
+// Ribbon Icon
+//
+// markup:
+// <div class="cc-icon-22 cc-icon-ribbon"></div>
+//
+// Styleguide 3.2.12
+.cc-icon-ribbon {
+  background-image: url('../images/svg/icon_ribbon.svg');
+}
+
 // Coloring for Font Awesome Icons
 //
 // Styleguide 3.3
@@ -225,6 +235,16 @@
 // Styleguide 3.3.6
 .fa-stop {
   color: $cc-color-night-rider !important;
+}
+
+// Icon Color Blue
+//
+// markup:
+// <i class="fa fa-exclamation-triangle cc-icon-blue"></i>
+//
+// Styleguide 3.3.5
+.cc-icon-blue {
+  color: $cc-color-berkeley-blue;
 }
 
 // 3rd Party Icons

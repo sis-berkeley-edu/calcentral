@@ -147,6 +147,14 @@
                         "description": "Major - Regular Acad/Prfnl"
                       }
                     },
+                    "academicSubPlan": {
+                      "subPlan": {
+                        "code": "25169SA02U",
+                        "description": "Classical History & Culture"
+                      },
+                      "cipCode": "30.2202",
+                      "hegisCode": ""
+                    },
                     "statusInPlan": {
                       "status": {
                         "code": "AC",
@@ -165,6 +173,10 @@
                     "expectedGraduationTerm": {
                        "id": "2202",
                        "name": "2020 Spring"
+                    },
+                    "degreeCheckoutStatus": {
+                      "code": "EG",
+                      "description": "Eligible for Graduation"
                     }
                   },
                   {
@@ -271,13 +283,46 @@
                   }
                 },
                 "completionTerm": {
-                  "name": "2010 Spring"
+                  "id": "2142",
+                  "name": "2014 Spring",
+                  "category": {
+                    "code": "R",
+                    "description": "Regular Term"
+                  },
+                  "academicYear": "2014",
+                  "beginDate": "2014-01-14",
+                  "endDate": "2014-05-16"
                 },
                 "academicPlans": [
                   {
                     "plan": {
                       "code": "00345PHDG",
-                      "description": "English PhD"
+                      "description": "English PhD",
+                      "formalDescription": "English"
+                    },
+                    "type": {
+                      "code": "MAJ",
+                      "description": "formalDescription",
+                      "formalDescription": "Major - Regular Acad/Prfnl"
+                    },
+                    "academicProgram": {
+                      "program": {
+                        "code": "GACAD",
+                        "description": "GR Acd Pgm",
+                        "formalDescription": "Graduate Academic Programs"
+                      },
+                      "academicGroup": {
+                        "code": "MAJ",
+                        "description": "Grad Div",
+                        "formalDescription": "Graduate Division"
+                      },
+                      "academicCareer": {
+                        "code": "GRAD",
+                        "description": "Graduate",
+                        "formalDescription": "Graduate",
+                        "fromDate": "2012-08-16",
+                        "toDate": "2018-05-11"
+                      }
                     }
                   }
                 ],
@@ -323,7 +368,32 @@
                   {
                     "plan": {
                       "code": "79249MAG",
-                      "description": "Education MA"
+                      "description": "Education MA",
+                      "formalDescription": "Education"
+                    },
+                    "type": {
+                      "code": "MAJ",
+                      "description": "Major",
+                      "formalDescription": "Major - Regular Acad/Prfnl"
+                    },
+                    "academicProgram": {
+                      "program": {
+                        "code": "GACAD",
+                        "description": "GR Acd Pgm",
+                        "formalDescription": "Graduate Academic Programs"
+                      },
+                      "academicGroup": {
+                        "code": "MAJ",
+                        "description": "Grad Div",
+                        "formalDescription": "Graduate Division"
+                      },
+                      "academicCareer": {
+                        "code": "GRAD",
+                        "description": "Graduate",
+                        "formalDescription": "Graduate",
+                        "fromDate": "2012-08-16",
+                        "toDate": "2018-05-11"
+                      }
                     }
                   }
                 ],
@@ -333,6 +403,193 @@
                   "code": "Awarded"
                 },
                 "statusDate": "2016-03-12"
+              },
+              {
+                "academicDegree": {
+                  "type": {
+                    "code": "AB",
+                    "description": "Bachelor of Arts"
+                  }
+                },
+                "completionTerm": {
+                  "id": "2142",
+                  "name": "2014 Spring",
+                  "category": {
+                    "code": "R",
+                    "description": "Regular Term"
+                  },
+                  "academicYear": "2014",
+                  "beginDate": "2014-01-14",
+                  "endDate": "2014-05-16"
+                },
+                "academicPlans": [
+                  {
+                    "plan": {
+                      "code": "25628U",
+                      "description": "Interdisciplinary Studies BA",
+                      "formalDescription": "Interdisciplinary Studies"
+                    },
+                    "type": {
+                      "code": "MAJ",
+                      "description": "Major",
+                      "formalDescription": "Major - Regular Acad/Prfnl"
+                    },
+                    "academicProgram": {
+                      "program": {
+                        "code": "UCLS",
+                        "description": "UG L&S",
+                        "formalDescription": "Undergrad Letters & Science"
+                      },
+                      "academicGroup": {
+                        "code": "MAJ",
+                        "description": "L&S",
+                        "formalDescription": "College of Letters and Science"
+                      },
+                      "academicCareer": {
+                        "code": "UGRD",
+                        "description": "Undergrad",
+                        "formalDescription": "Undergraduate",
+                        "fromDate": "2011-05-23"
+                      }
+                    }
+                  },
+                  {
+                    "plan": {
+                      "code": "25153U",
+                      "description": "Chemistry BA",
+                      "formalDescription": "Chemistry"
+                    },
+                    "type": {
+                      "code": "MAJ",
+                      "description": "Major",
+                      "formalDescription": "Major - Regular Acad/Prfnl"
+                    },
+                    "academicProgram": {
+                      "program": {
+                        "code": "UCLS",
+                        "description": "UG L&S",
+                        "formalDescription": "Undergrad Letters & Science"
+                      },
+                      "academicGroup": {
+                        "code": "MAJ",
+                        "description": "L&S",
+                        "formalDescription": "College of Letters and Science"
+                      },
+                      "academicCareer": {
+                        "code": "UGRD",
+                        "description": "Undergrad",
+                        "formalDescription": "Undergraduate",
+                        "fromDate": "2011-08-18"
+                      }
+                    }
+                  },
+                  {
+                    "plan": {
+                      "code": "25I092U",
+                      "description": "Global Poverty & Prac UG",
+                      "formalDescription": "Minor in Global Poverty and Practice"
+                    },
+                    "type": {
+                      "code": "MIN",
+                      "description": "Minor",
+                      "formalDescription": "Minor"
+                    },
+                    "academicProgram": {
+                      "program": {
+                        "code": "",
+                        "description": "",
+                        "formalDescription": ""
+                      },
+                      "academicGroup": {
+                        "code": "MIN",
+                        "description": "",
+                        "formalDescription": ""
+                      },
+                      "academicCareer": {
+                        "code": "UGRD",
+                        "description": "Undergrad",
+                        "formalDescription": "Undergraduate",
+                        "fromDate": "2011-05-23"
+                      }
+                    }
+                  }
+                ],
+                "honors": {
+                  "honors": [
+                    {
+                      "code": "D3",
+                      "description": "Highest Distinction Gen Schol",
+                      "formalDescription": "Highest Distinction in General Scholarship"
+                    },
+                    {
+                      "code": "P2",
+                      "description": "High Honors in Interdisciplinary Studies",
+                      "formalDescription": "High Honors in Interdisciplinary Studies"
+                    }
+                  ]
+                },
+                "dateAwarded": "2014-05-16",
+                "status": {
+                  "code": "Awarded"
+                },
+                "statusDate": "2015-12-12"
+              },
+              {
+                "academicDegree": {
+                  "type": {
+                    "code": "87",
+                    "description": "Cert-Resident Studies"
+                  }
+                },
+                "completionTerm": {
+                  "id": "2138",
+                  "name": "2013 Fall",
+                  "category": {
+                    "code": "R",
+                    "description": "Regular Term"
+                  },
+                  "academicYear": "2014",
+                  "beginDate": "2013-08-22",
+                  "endDate": "2013-12-20"
+                },
+                "academicPlans": [
+                  {
+                    "plan": {
+                      "code": "701F1C87G",
+                      "description": "Financial Eng Res Studies Cert",
+                      "formalDescription": "Resident Studies Certificate in Financial Engineering"
+                    },
+                    "type": {
+                      "code": "CRT",
+                      "description": "Certificat",
+                      "formalDescription": "Graduate Certificate"
+                    },
+                    "academicProgram": {
+                      "program": {
+                        "code": "GSSDP",
+                        "description": "GR SSD Pgm",
+                        "formalDescription": "Graduate Self-Supporting Pgms"
+                      },
+                      "academicGroup": {
+                        "code": "CRT",
+                        "description": "Grad Div",
+                        "formalDescription": "Graduate Division"
+                      },
+                      "academicCareer": {
+                        "code": "GRAD",
+                        "description": "Graduate",
+                        "formalDescription": "Graduate",
+                        "fromDate": "2011-01-11"
+                      }
+                    }
+                  }
+                ],
+                "honors": {},
+                "dateAwarded": "2013-12-20",
+                "status": {
+                  "code": "Awarded"
+                },
+                "statusDate": "2015-12-12"
               }
             ],
             "holds": [

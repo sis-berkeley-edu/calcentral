@@ -1,9 +1,11 @@
 .cc-widget-profile {
   .cc-degrees-conferred {
-    .cc-degrees-conferred-title h4 {
-      color: $cc-color-dim-gray;
+    .cc-degrees-conferred-title {
       margin: 0;
       width: 92px;
+      h4 {
+        color: $cc-color-dim-gray;
+      }
     }
   }
   .cc-widget-profile-message-text {

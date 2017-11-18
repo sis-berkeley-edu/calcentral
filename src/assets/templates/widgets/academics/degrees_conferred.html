@@ -6,13 +6,38 @@
         <h4 data-ng-pluralize count="collegeAndLevel.degrees.length" when="{'1': 'Degree Conferred', 'other': 'Degrees Conferred'}"></h4>
       </th>
       <td class="cc-flex-space-between-vertical-15">
-        <div data-ng-repeat="degree in collegeAndLevel.degrees">
-          <div data-ng-repeat="academicPlan in degree.academicPlans">
-            <strong data-ng-bind="academicPlan.plan.description"></strong>&nbsp;awarded on&nbsp;<strong data-ng-bind="degree.dateAwarded | date:'MMM dd, yyyy'"></strong>
+        <div class="cc-degrees-conferred-container cc-clearfix" data-ng-repeat="degree in collegeAndLevel.degrees">
+          <div class="cc-degrees-conferred-data">
+            <div>
+              <strong data-ng-bind="degree.academicDegree.type.description"></strong>&nbsp;in&nbsp;<strong data-ng-repeat="major in degree.majors" data-ng-bind="major.description + ($last ? '' : ', ')"></strong>
+            </div>
+
+            <div data-ng-if="degree.designatedEmphases.length">
+              <span data-ng-pluralize count="degree.designatedEmphases.length" when="{'1': 'Designated Emphasis', 'other': 'Designated Emphases'}"></span>
+              <strong data-ng-repeat="designatedEmphasis in degree.designatedEmphases" data-ng-bind="designatedEmphasis.description"></strong>
+            </div>
+
+            <div>
+              Awarded&nbsp;<span data-ng-bind="degree.dateAwarded | date:'MMM dd, yyyy'"></span>
+            </div>
+
+            <div data-ng-if="degree.isUndergrad">
+              <span data-ng-bind="degree.plans[0].college"></span>
+            </div>
+
+            <div data-ng-if="degree.isUndergrad" data-ng-repeat="degreeHonor in degree.honors.honors">
+              <span data-ng-bind="degreeHonor.formalDescription"></span>
+            </div>
+
+            <div data-ng-if="degree.isUndergrad" data-ng-repeat="minor in degree.minors">
+              <span data-ng-bind="minor.description"></span>
+            </div>
           </div>
-          <div data-ng-repeat="degreeHonor in degree.honors.honors">
-            <span data-ng-bind="degreeHonor.formalDescription"></span>
+
+          <div class="cc-degrees-conferred-icon cc-left">
+            <span><i class="cc-icon cc-icon-blue" data-ng-class="{'fa fa-graduation-cap':(degree.majors[0].type !== 'CRT'), 'cc-icon-ribbon':(degree.majors[0].type === 'CRT')}"></i></span>
           </div>
+
         </div>
       </td>
     </tr>
