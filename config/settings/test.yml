@@ -16,7 +16,7 @@ edodb:
 
 ldap:
   fake: 'true'
-  host: 'nds-test.berkeley.edu'
+  host: 'ldap-test.berkeley.edu'
 
 google_proxy:
   fake: true

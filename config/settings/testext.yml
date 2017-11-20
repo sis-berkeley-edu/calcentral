@@ -9,7 +9,7 @@ edodb:
   fake: false
 
 ldap:
-  host: 'nds-test.berkeley.edu'
+  host: 'ldap-test.berkeley.edu'
 
 terms:
   fake_now: 2013-10-11 04:20:00
