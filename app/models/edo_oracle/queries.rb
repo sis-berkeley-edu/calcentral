@@ -27,6 +27,7 @@ module EdoOracle
       sec."component-code" as instruction_format,
       sec."primaryAssociatedSectionId" as primary_associated_section_id,
       sec."displayName" AS section_display_name,
+      sec."topic-descr" AS topic_description,
       xlat."courseDisplayName" AS course_display_name,
       crs."catalogNumber-formatted" AS catalog_id,
       crs."catalogNumber-number" AS catalog_root,
@@ -89,7 +90,7 @@ module EdoOracle
           enr."GRADE_POINTS" AS grade_points,
           enr."GRADING_BASIS_CODE" AS grading_basis
         FROM SISEDO.CC_ENROLLMENTV00_VW enr
-        JOIN SISEDO.CLASSSECTIONALLV00_MVW sec ON (
+        JOIN SISEDO.CLASSSECTIONALLV01_MVW sec ON (
           enr."TERM_ID" = sec."term-id" AND
           enr."SESSION_ID" = sec."session-id" AND
           enr."CLASS_SECTION_ID" = sec."id" AND
@@ -118,7 +119,7 @@ module EdoOracle
           sec."startDate" AS start_date,
           sec."endDate" AS end_date
         FROM SISEDO.ASSIGNEDINSTRUCTORV00_VW instr
-        JOIN SISEDO.CLASSSECTIONALLV00_MVW sec ON (
+        JOIN SISEDO.CLASSSECTIONALLV01_MVW sec ON (
           instr."term-id" = sec."term-id" AND
           instr."session-id" = sec."session-id" AND
           instr."cs-course-id" = sec."cs-course-id" AND
@@ -145,7 +146,7 @@ module EdoOracle
           sec."cs-course-id" AS cs_course_id,
           sec."maxEnroll" AS enroll_limit,
           sec."maxWaitlist" AS waitlist_limit
-        FROM SISEDO.CLASSSECTIONALLV00_MVW sec
+        FROM SISEDO.CLASSSECTIONALLV01_MVW sec
         #{JOIN_SECTION_TO_COURSE}
         WHERE sec."status-code" IN ('A','S')
           AND sec."primary" = 'false'
@@ -182,7 +183,7 @@ module EdoOracle
           mtg."endDate" AS meeting_end_date
         FROM
           SISEDO.MEETINGV00_VW mtg
-        JOIN SISEDO.CLASSSECTIONALLV00_MVW sec ON (
+        JOIN SISEDO.CLASSSECTIONALLV01_MVW sec ON (
           mtg."cs-course-id" = sec."cs-course-id" AND
           mtg."term-id" = sec."term-id" AND
           mtg."session-id" = sec."session-id" AND
@@ -210,7 +211,7 @@ module EdoOracle
           exam."location-descr" AS location
         FROM
           SISEDO.EXAMV00_VW exam
-        RIGHT JOIN SISEDO.CLASSSECTIONALLV00_MVW sec ON (
+        RIGHT JOIN SISEDO.CLASSSECTIONALLV01_MVW sec ON (
           exam."cs-course-id" = sec."cs-course-id" AND
           exam."term-id" = sec."term-id" AND
           exam."session-id" = sec."session-id" AND
@@ -236,7 +237,7 @@ module EdoOracle
       safe_query <<-SQL
         SELECT DISTINCT
           #{SECTION_COLUMNS}
-        FROM SISEDO.CLASSSECTIONALLV00_MVW sec
+        FROM SISEDO.CLASSSECTIONALLV01_MVW sec
         #{JOIN_SECTION_TO_COURSE}
         WHERE sec."term-id" = '#{term_id}'
           AND sec."id" IN (#{section_ids.collect { |id| id.to_i }.join(', ')})
@@ -266,7 +267,7 @@ module EdoOracle
           instr."printInScheduleOfClasses" AS print_in_schedule
         FROM
           SISEDO.ASSIGNEDINSTRUCTORV00_VW instr
-        JOIN SISEDO.CLASSSECTIONALLV00_MVW sec ON (
+        JOIN SISEDO.CLASSSECTIONALLV01_MVW sec ON (
           instr."cs-course-id" = sec."cs-course-id" AND
           instr."term-id" = sec."term-id" AND
           instr."session-id" = sec."session-id" AND
@@ -443,7 +444,7 @@ module EdoOracle
         SELECT
           sec."id" AS section_id
         FROM
-          SISEDO.CLASSSECTIONALLV00_MVW sec
+          SISEDO.CLASSSECTIONALLV01_MVW sec
         WHERE
           sec."term-id" = '#{term_id}' AND
           sec."component-code" = '#{instruction_format}' AND

@@ -22,7 +22,12 @@
           </thead>
           <tbody data-ng-repeat="course in selectedCourses">
             <tr data-ng-repeat="section in course.sections" data-ng-if="section.is_primary_section && !section.grading.grade">
-              <td data-ng-bind="course.course_code"></td>
+              <td class="cc-academics-ellipsis-cell">
+                <a data-ng-href="{{section.url}}"
+                   data-ng-bind="course.course_code">
+                </a>
+                <span data-ng-if="section.topic_description" data-ng-bind-template=" - {{section.topic_description}}"></span>
+              </td>
               <td class="cc-table-right cc-table-right-spacing" data-ng-bind="section.estimatedGrading.units | number:1"></td>
               <td class="cc-table-right cc-table-right-spacing" data-ng-if="!section.estimatedGrading.units">&mdash;</td>
               <td>
@@ -37,7 +42,15 @@
               </td>
             </tr>
             <tr data-ng-repeat="section in course.sections" data-ng-if="section.is_primary_section && section.grading.grade">
-              <td data-ng-bind="course.course_code"></td>
+              <td class="cc-academics-ellipsis-cell">
+                <a data-ng-if="course.multiplePrimaries" data-ng-href="{{section.url}}"
+                   data-ng-bind="course.course_code">
+                </a>
+                <a data-ng-if="!course.multiplePrimaries" data-ng-href="{{course.url}}"
+                   data-ng-bind="course.course_code">
+                </a>
+                <span data-ng-if="section.topic_description" data-ng-bind-template=" - {{section.topic_description}}"></span>
+              </td>
               <td class="cc-table-right cc-table-right-spacing" data-ng-bind="section.units | number:1"></td>
               <td class="cc-table-right cc-table-right-spacing" data-ng-if="!section.units">&mdash;</td>
               <td>

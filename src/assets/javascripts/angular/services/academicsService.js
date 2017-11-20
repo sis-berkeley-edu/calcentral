@@ -232,6 +232,9 @@ angular.module('calcentral.services').service('academicsService', function() {
         key = course.multiplePrimaries ? section.slug : 'default';
         course.sections = classes[key] ? classes[key].sections : [];
         course.sections.push(section);
+        if (course.topics.length) {
+          course.topics = [section.topic_description];
+        }
         classes[key] = course;
       } else {
         key = originalCourse.multiplePrimaries ? section.associatedWithPrimary : 'default';
@@ -243,6 +246,49 @@ angular.module('calcentral.services').service('academicsService', function() {
       }
     }
     return classes;
+  };
+
+  /**
+   * Collects section topics and adds to class objects
+   * Required for table presentation on semester page
+   *
+   * Example:
+   *   course.topics = {
+   *     present: true,
+   *     list: ["Topic 1", "Topic 2"]
+   *   }
+   */
+  var summarizeStudentClassTopics = function(semesters) {
+    _.forEach(semesters, function(semester) {
+      _.forEach(semester.classes, function(course) {
+        course.topics = getCourseTopics(course);
+      });
+    });
+    return semesters;
+  };
+
+  /**
+   * Collects unique course sections topics for course
+   */
+  var getCourseTopics = function(course) {
+    var topics = [];
+    _.forEach(course.sections, function(section) {
+      var sectionTopicString = _.trim(section.topic_description);
+      if (!_.isEmpty(sectionTopicString)) {
+        topics.push(section.topic_description);
+      }
+    });
+    return _.intersection(topics);
+  };
+
+  /**
+   * Determines if a collection of courses have topics present to display
+   * Required for table presentation on semester page
+   */
+  var courseCollectionHasTopics = function(courses) {
+    return !!_.find(courses, function(course) {
+      return course.topics.length > 0;
+    });
   };
 
   var textbookRequestInfo = function(course, semester) {
@@ -335,6 +381,7 @@ angular.module('calcentral.services').service('academicsService', function() {
     containsLawClass: containsLawClass,
     containsMidpointClass: containsMidpointClass,
     countSectionItem: countSectionItem,
+    courseCollectionHasTopics: courseCollectionHasTopics,
     expectedGradTermName: expectedGradTermName,
     filterBySectionSlug: filterBySectionSlug,
     findSemester: findSemester,
@@ -347,6 +394,7 @@ angular.module('calcentral.services').service('academicsService', function() {
     isSummerSemester: isSummerSemester,
     normalizeGradingData: normalizeGradingData,
     showResidency: showResidency,
+    summarizeStudentClassTopics: summarizeStudentClassTopics,
     textbookRequestInfo: textbookRequestInfo,
     totalTransferUnits: totalTransferUnits
   };

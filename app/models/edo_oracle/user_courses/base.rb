@@ -150,7 +150,8 @@ module EdoOracle
           instruction_format: row['instruction_format'],
           is_primary_section: to_boolean(row['primary']),
           section_label: "#{row['instruction_format']} #{row['section_num']}",
-          section_number: row['section_num']
+          section_number: row['section_num'],
+          topic_description: row['topic_description'],
         }
         if section_data[:is_primary_section]
           section_data[:units] = row['units']
