@@ -60,10 +60,10 @@ module EdoOracle
           AND term2.STRM = sec."term-id"
           AND (
             (
-              CAST(crs2."fromDate" AS DATE) <= term2.TERM_BEGIN_DT
-              AND CAST(crs2."toDate" AS DATE) >= term2.TERM_END_DT
+              CAST(crs2."fromDate" AS DATE) <= term2.TERM_END_DT AND
+              CAST(crs2."toDate" AS DATE) >= term2.TERM_END_DT
             )
-            OR CAST(crs."updatedDate" AS DATE) = TO_DATE('1901-01-01', 'YYYY-MM-DD')
+            OR CAST(crs2."updatedDate" AS DATE) = TO_DATE('1901-01-01', 'YYYY-MM-DD')
           )
         )
       SQL
