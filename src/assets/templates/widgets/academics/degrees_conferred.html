@@ -13,8 +13,7 @@
             </div>
 
             <div data-ng-if="degree.designatedEmphases.length">
-              <span data-ng-pluralize count="degree.designatedEmphases.length" when="{'1': 'Designated Emphasis', 'other': 'Designated Emphases'}"></span>
-              <strong data-ng-repeat="designatedEmphasis in degree.designatedEmphases" data-ng-bind="designatedEmphasis.description"></strong>
+              <span data-ng-repeat="designatedEmphasis in degree.designatedEmphases" data-ng-bind="designatedEmphasis.description"></span>
             </div>
 
             <div>
