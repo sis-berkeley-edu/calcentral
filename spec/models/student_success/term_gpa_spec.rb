@@ -25,9 +25,9 @@ describe StudentSuccess::TermGpa do
     let(:subject) { StudentSuccess::TermGpa.new(user_id: user_id) }
     let(:academic_statuses) do
       [
-        { 'studentCareer' => { 'academicCareer' => {'code'=>'GRAD', 'description'=>'Graduate'} } },
-        { 'studentCareer' => { 'academicCareer' => {'code'=>'LAW', 'description'=>'Law'} } },
-        { 'studentCareer' => { 'academicCareer' => {'code'=>'GRAD', 'description'=>'Graduate'} } }
+        { 'studentCareer' => { 'academicCareer' => {'code'=>'GRAD', 'description'=>'Graduate', 'formalDescription'=>'Graduate'} } },
+        { 'studentCareer' => { 'academicCareer' => {'code'=>'LAW', 'description'=>'Law', 'formalDescription'=>'Law'} } },
+        { 'studentCareer' => { 'academicCareer' => {'code'=>'GRAD', 'description'=>'Graduate', 'formalDescription'=>'Graduate'} } }
       ]
     end
     before do
