@@ -232,9 +232,7 @@ angular.module('calcentral.services').service('academicsService', function() {
         key = course.multiplePrimaries ? section.slug : 'default';
         course.sections = classes[key] ? classes[key].sections : [];
         course.sections.push(section);
-        if (course.topics.length) {
-          course.topics = [section.topic_description];
-        }
+        course.topics = section.topic_description ? [section.topic_description] : [];
         classes[key] = course;
       } else {
         key = originalCourse.multiplePrimaries ? section.associatedWithPrimary : 'default';
