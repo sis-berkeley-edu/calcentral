@@ -61,13 +61,13 @@
             <span data-ng-bind="period.name" class="cc-text-light"></span>
           </th>
           <td>
-            <strong data-ng-bind="period.date.epoch * 1000 | date:'EEE'"></strong>
+            <strong data-ng-bind="period.date.epoch * 1000 | date:'EEE':period.date.offset"></strong>
           </td>
           <td>
-            <strong data-ng-bind="period.date.epoch * 1000 | date:'MMM d'"></strong>
+            <strong data-ng-bind="period.date.epoch * 1000 | date:'MMM d':period.date.offset"></strong>
             <span aria-hidden>|</span>
             <span class="cc-visuallyhidden">at</span>
-            <span data-ng-bind="period.date.epoch * 1000 | date:'h:mm a'"></span>
+            <span data-ng-bind="period.date.epoch * 1000 | date:'h:mm a':period.date.offset"></span>
           </td>
         </tr>
       </table>
