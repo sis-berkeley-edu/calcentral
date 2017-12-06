@@ -37,7 +37,7 @@ module StudentSuccess
 
     def get_active_careers
       careers = careers(academic_statuses MyAcademics::MyAcademicStatus.new(@student_uid_param).get_feed)
-      careers.collect {|c| c.try(:[], 'description') }.uniq
+      careers.collect {|c| c.try(:[], 'formalDescription') }.uniq
     end
 
     def current_term
