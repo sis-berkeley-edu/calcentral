@@ -141,8 +141,20 @@ module MyAcademics
         instructions[term_id] = CampusSolutions::MyEnrollmentTerm.get_term(@uid, term_id)
         instructions[term_id][:concurrentApplyDeadline] = get_concurrent_apply_deadline(term_id)
         instructions[term_id][:termIsSummer] = Berkeley::TermCodes.edo_id_is_summer?(term_id)
+        apply_enrollment_period_timezones(instructions[term_id])
       end
       instructions
+    end
+
+    def apply_enrollment_period_timezones(instruction)
+      if enrollment_periods = instruction.try(:[], :enrollmentPeriod)
+        enrollment_periods.each_with_index do |period, index|
+          if period_datetime_string = period.try(:[], :date).try(:[], :datetime)
+            period_datetime = DateTime.parse(period_datetime_string)
+            instruction[:enrollmentPeriod][index][:date][:offset] = period_datetime.strftime('%z')
+          end
+        end
+      end
     end
 
     def get_active_term_ids
