@@ -12,7 +12,23 @@ describe MyAcademics::ClassEnrollments do
       isGradeBaseAvailable: false,
       links: {},
       advisors: [],
-      enrollmentPeriod: [],
+      enrollmentPeriod: [
+        {
+          :id=>"R8P1",
+          :name=>"Phase 1 Begins",
+          :date=>{:epoch=>1508276400, :datetime=>"2017-10-17T14:40:00-07:00", :datestring=>"10/17"}
+        },
+        {
+          :id=>"R8P2",
+          :name=>"Phase 2 Begins",
+          :date=>{:epoch=>1510785600, :datetime=>"2017-11-15T14:40:00-08:00", :datestring=>"11/15"}
+        },
+        {
+          :id=>"ADJ",
+          :name=>"Adjustment Begins",
+          :date=>{:epoch=>1515430800, :datetime=>"2018-01-08T09:00:00-08:00", :datestring=>"1/08"}
+        }
+      ],
       scheduleOfClassesPeriod: {},
       enrolledClasses: [],
       waitlistedClasses: [],
@@ -542,6 +558,15 @@ describe MyAcademics::ClassEnrollments do
           expect(term_instructions.keys.count).to eq 2
           expect(term_instructions['2165'][:concurrentApplyDeadline]).to eq '05/01/2016'
           expect(term_instructions['2168'][:concurrentApplyDeadline]).to eq '09/23/2016'
+        end
+        it 'includes enrollment period timezones' do
+          expect(term_instructions.keys.count).to eq 2
+          expect(term_instructions['2165'][:enrollmentPeriod][0][:date][:datetime]).to eq '2017-10-17T14:40:00-07:00'
+          expect(term_instructions['2165'][:enrollmentPeriod][0][:date][:offset]).to eq '-0700'
+          expect(term_instructions['2165'][:enrollmentPeriod][1][:date][:datetime]).to eq '2017-11-15T14:40:00-08:00'
+          expect(term_instructions['2165'][:enrollmentPeriod][1][:date][:offset]).to eq '-0800'
+          expect(term_instructions['2165'][:enrollmentPeriod][2][:date][:datetime]).to eq '2018-01-08T09:00:00-08:00'
+          expect(term_instructions['2165'][:enrollmentPeriod][2][:date][:offset]).to eq '-0800'
         end
         context 'when application deadline date not available for term' do
           before { Settings.class_enrollment.concurrent_apply_deadlines.delete_at(1) }
