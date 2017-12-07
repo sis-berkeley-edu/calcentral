@@ -141,33 +141,8 @@ module MyAcademics
         instructions[term_id] = CampusSolutions::MyEnrollmentTerm.get_term(@uid, term_id)
         instructions[term_id][:concurrentApplyDeadline] = get_concurrent_apply_deadline(term_id)
         instructions[term_id][:termIsSummer] = Berkeley::TermCodes.edo_id_is_summer?(term_id)
-        apply_period_timezones(instructions[term_id])
       end
       instructions
-    end
-
-    def apply_period_timezones(instruction)
-      if schedule_of_classes_period = instruction.try(:[], :scheduleOfClassesPeriod)
-        if soc_date = schedule_of_classes_period.try(:[], :date)
-          instruction[:scheduleOfClassesPeriod][:date][:offset] = get_timezone_offset(soc_date)
-        end
-      end
-      if enrollment_periods = instruction.try(:[], :enrollmentPeriod)
-        enrollment_periods.each_with_index do |period, index|
-          if period_date = period.try(:[], :date)
-            instruction[:enrollmentPeriod][index][:date][:offset] = get_timezone_offset(period_date)
-          end
-        end
-      end
-    end
-
-    def get_timezone_offset(cs_date_object)
-      return nil unless cs_date_object.present?
-      if datetime_string = cs_date_object.try(:[], :datetime)
-        datetime = DateTime.parse(datetime_string)
-        return datetime.strftime('%z')
-      end
-      nil
     end
 
     def get_active_term_ids
