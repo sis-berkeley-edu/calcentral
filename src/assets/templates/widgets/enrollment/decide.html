@@ -1,18 +1,12 @@
 <div
   data-cc-enrollment-card-header-directive
   data-count="$index + 1"
-  data-date="{{enrollmentInstruction.enrollmentPeriod[0] && !isInstructionType(enrollmentInstruction, ['law', 'concurrent']) ? (enrollmentInstruction.enrollmentPeriod[0].date.epoch * 1000 | date:'h:mm a':enrollmentInstruction.enrollmentPeriod[0].date.offset) : ''}}"
+  data-date="{{enrollmentInstruction.enrollmentPeriod[0] && !isInstructionType(enrollmentInstruction, ['law', 'concurrent']) ? (enrollmentInstruction.enrollmentPeriod[0].date.epoch * 1000 | date:'h:mm a') : ''}}"
   data-date-important="{{enrollmentInstruction.enrollmentPeriod[0] && !isInstructionType(enrollmentInstruction, ['law']) ? (enrollmentInstruction.enrollmentPeriod[0].date.epoch * 1000 | date:'EEE MMM d'): ''}}"
   data-title="section.title"
 ></div>
 
 <div class="cc-enrollment-card-section-content" data-ng-if="section.show">
-  <div data-ng-if="enrollmentInstruction.enrollmentPeriod.length">
-    <strong>
-      Note: Times for enrollment phases are in the Pacific Time zone.
-    </strong>
-  </div>
-
   <div data-ng-if="api.user.profile.actAsOptions.canSeeCSLinks && !enrollmentInstruction.isGradeBaseAvailable && !isInstructionType(enrollmentInstruction, ['law','haasEveningWeekendMba','haasFullTimeMba'])">
     <div data-ng-if="enrollmentInstruction.isClassScheduleAvailable">
       <a data-cc-campus-solutions-link-directive
@@ -61,13 +55,13 @@
             <span data-ng-bind="period.name" class="cc-text-light"></span>
           </th>
           <td>
-            <strong data-ng-bind="period.date.epoch * 1000 | date:'EEE':period.date.offset"></strong>
+            <strong data-ng-bind="period.date.epoch * 1000 | date:'EEE'"></strong>
           </td>
           <td>
-            <strong data-ng-bind="period.date.epoch * 1000 | date:'MMM d':period.date.offset"></strong>
+            <strong data-ng-bind="period.date.epoch * 1000 | date:'MMM d'"></strong>
             <span aria-hidden>|</span>
             <span class="cc-visuallyhidden">at</span>
-            <span data-ng-bind="period.date.epoch * 1000 | date:'h:mm a':period.date.offset"></span>
+            <span data-ng-bind="period.date.epoch * 1000 | date:'h:mm a'"></span>
           </td>
         </tr>
       </table>
