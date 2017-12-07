@@ -29,7 +29,13 @@ describe MyAcademics::ClassEnrollments do
           :date=>{:epoch=>1515430800, :datetime=>"2018-01-08T09:00:00-08:00", :datestring=>"1/08"}
         }
       ],
-      scheduleOfClassesPeriod: {},
+      scheduleOfClassesPeriod: {
+        :date => {
+          :epoch=>1506841200,
+          :datetime=>"2017-10-01T00:00:00-07:00",
+          :datestring=>"10/01"
+        }
+      },
       enrolledClasses: [],
       waitlistedClasses: [],
       enrolledClassesTotalUnits: 8.0,
@@ -559,8 +565,10 @@ describe MyAcademics::ClassEnrollments do
           expect(term_instructions['2165'][:concurrentApplyDeadline]).to eq '05/01/2016'
           expect(term_instructions['2168'][:concurrentApplyDeadline]).to eq '09/23/2016'
         end
-        it 'includes enrollment period timezones' do
+        it 'includes period timezone offsets' do
           expect(term_instructions.keys.count).to eq 2
+          expect(term_instructions['2165'][:scheduleOfClassesPeriod][:date][:datetime]).to eq '2017-10-01T00:00:00-07:00'
+          expect(term_instructions['2165'][:scheduleOfClassesPeriod][:date][:offset]).to eq '-0700'
           expect(term_instructions['2165'][:enrollmentPeriod][0][:date][:datetime]).to eq '2017-10-17T14:40:00-07:00'
           expect(term_instructions['2165'][:enrollmentPeriod][0][:date][:offset]).to eq '-0700'
           expect(term_instructions['2165'][:enrollmentPeriod][1][:date][:datetime]).to eq '2017-11-15T14:40:00-08:00'
