@@ -113,6 +113,8 @@ module CanvasCsv
       end
     end
 
+    # Instructure interprets a blank 'email' value in an import CSV as 'Leave the existing email alone.'
+    # This time-consuming API approach seems to be the only way to remove obsolete email addresses.
     def handle_email_deletions(canvas_user_ids)
       logger.warn "About to delete email addresses for #{canvas_user_ids.length} inactive users: #{canvas_user_ids}"
       canvas_user_ids.each do |canvas_user_id|
@@ -147,12 +149,14 @@ module CanvasCsv
           new_account_data = canvas_user_from_campus_attributes campus_user
           @known_users[ldap_uid.to_s] = new_account_data['user_id']
         else
+          # Check to see if there are obsolete email addresses to (potentially) delete.
+          if old_account_data['email'].present? &&
+            (inactive_account || Settings.canvas_proxy.inactivate_expired_users)
+            @user_email_deletions << old_account_data['canvas_user_id']
+          end
           if Settings.canvas_proxy.inactivate_expired_users
             # This LDAP UID no longer appears in campus data. Mark the Canvas user account as inactive.
             logger.warn "Inactivating account for LDAP UID #{ldap_uid}" unless inactive_account
-            if old_account_data['email'].present?
-              @user_email_deletions << old_account_data['canvas_user_id']
-            end
             new_account_data = old_account_data.merge(
               'login_id' => "inactive-#{ldap_uid}",
               'user_id' => "UID:#{ldap_uid}",
