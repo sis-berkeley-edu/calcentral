@@ -11,6 +11,8 @@ module Canvas
       wrapped_get "#{request_path}?as_user_id=#{@canvas_user_id}"
     end
 
+    # Warning: “Users can delete their institution-assigned email address” must be enabled in Canvas
+    # settings before attempting to delete communication channels.
     def delete(channel_id)
       wrapped_delete "#{request_path}/#{channel_id}?as_user_id=#{@canvas_user_id}"
     end

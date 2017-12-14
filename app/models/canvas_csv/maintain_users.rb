@@ -115,6 +115,8 @@ module CanvasCsv
 
     # Instructure interprets a blank 'email' value in an import CSV as 'Leave the existing email alone.'
     # This time-consuming API approach seems to be the only way to remove obsolete email addresses.
+    # Also, 'Users can delete their institution-assigned email address' must be enabled in Canvas
+    # settings before attempting to delete communication channels.
     def handle_email_deletions(canvas_user_ids)
       logger.warn "About to delete email addresses for #{canvas_user_ids.length} inactive users: #{canvas_user_ids}"
       canvas_user_ids.each do |canvas_user_id|
