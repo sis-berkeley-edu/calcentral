@@ -271,7 +271,13 @@
           var e = $('#' + id);
           if (e.length > 0) {
             $('[for=' + id + ']').addClass(modifiedMarker);
+
+            // For Production as of 2017-12-15
             var label = $('[for=' + id + '] span:first span:last');
+            if (label.length < 1) {
+              // For Beta as of 2017-12-15
+              label = $('[for=' + id + '] span:last');
+            }
             label.text(c[id].text);
             labelStyle = label[0].className;
           }
@@ -283,23 +289,20 @@
       document.addEventListener('click', onPeopleSearchRadioClick);
 
       // Instructional text in footer of dialog
-      var informational = $('.peoplesearch__instructions span:first span:first');
+      var informational = $('.peoplesearch__instructions span:first');
       if (informational.length > 0) {
         informational.text('Add user by Email Address, Berkeley UID or Student ID.');
       }
       getExternalToolId('globalTools', 'Find a Person to Add', function(toolId) {
-        var parentDiv = $('#' + defaultRadioButtonId).parents('div');
-        if (parentDiv.length > 0) {
-          var firstDiv = parentDiv.first();
-          if (!firstDiv.hasClass(modifiedMarker)) {
-            if (labelStyle) {
-              firstDiv.addClass(labelStyle);
-            } else {
-              firstDiv[0].setAttribute('style', 'font-family: \'Lato\', \'Helvetica Neue\'');
-            }
-            firstDiv.prepend(constructFindPersonLink(toolId));
-            firstDiv.addClass(modifiedMarker);
+        var firstDiv = $('div.addpeople__peoplesearch');
+        if (!firstDiv.hasClass(modifiedMarker)) {
+          if (labelStyle) {
+            firstDiv.addClass(labelStyle);
+          } else {
+            firstDiv[0].setAttribute('style', 'font-family: \'Lato\', \'Helvetica Neue\'');
           }
+          firstDiv.prepend(constructFindPersonLink(toolId));
+          firstDiv.addClass(modifiedMarker);
         }
       });
     });
