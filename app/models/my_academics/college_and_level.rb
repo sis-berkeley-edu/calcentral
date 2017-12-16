@@ -147,7 +147,7 @@ module MyAcademics
             end
 
             degree.merge! plan_set
-            degree[:isUndergrad] = :UGRD == degree[:plans].try(:first).try(:[], :career).try(:[], :code).intern
+            degree[:isUndergrad] = :UGRD == degree[:plans].try(:first).try(:[], :career).try(:[], :code).try(:intern)
             awarded_degrees << degree
           end
         end
