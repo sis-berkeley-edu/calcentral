@@ -7,11 +7,11 @@ cache: bundler
 dist: precise
 
 rvm:
-  - jruby-1.7.19
+  - jruby-9.1.5.0
 
 matrix:
   include:
-    - { rvm: jruby-1.7.19 }
+    - { rvm: jruby-9.1.5.0 }
 
 env:
   - JRUBY_OPTS="--dev -J-Xmx900m" DISPLAY=:99.0 LOGGER_LEVEL=WARN TRAVIS_NODE_VERSION="4"
