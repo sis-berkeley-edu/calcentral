@@ -2,8 +2,8 @@
   <div class="medium-5 large-3 columns">
     <div data-ng-include="'widgets/sir/sir.html'" data-ng-if="api.user.profile.features.csSir && !api.user.profile.delegateActingAsUid"></div>
     <div data-ng-include="'widgets/up_next.html'" data-ng-if="!api.user.profile.isApplicantOnly"></div>
-    <div data-ng-include="'widgets/my_classes.html'"></div>
-    <div data-ng-include="'widgets/my_groups.html'"></div>
+    <div data-ng-include="'widgets/my_classes.html'" data-ng-if="!api.user.profile.isApplicantOnly"></div>
+    <div data-ng-include="'widgets/my_groups.html'" data-ng-if="!api.user.profile.isApplicantOnly"></div>
   </div>
 
   <div class="medium-7 large-5 columns cc-column-2">
