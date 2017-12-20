@@ -248,7 +248,7 @@ module MyAcademics
 
     def parse_cs_grading_status(cs_grading_status, is_law, is_summer)
       if unexpected_cs_status?(cs_grading_status, is_law)
-        logger.warn "Unexpected CS Final Grading Status Received (Final: #{cs_grading_status[:finalStatus]}#{', Midpoint: ' + cs_grading_status[:midpointStatus] if cs_grading_status.key?(:midpointStatus)}) for Class #{self.class.name} feed, uid = #{@uid}"
+        logger.warn "Unexpected CS Final Grading Status Received (Final: #{cs_grading_status.try(:[], :finalStatus)}, Midpoint: #{cs_grading_status.try(:[], :midpointStatus)}) for uid #{@uid}"
         return {finalStatus: :noCsData, midpointStatus: :noCsData}
       end
       cs_grading_status[:finalStatus] = case cs_grading_status[:finalStatus]
