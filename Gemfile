@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 # The core framework
 # https://github.com/rails/rails
-gem 'rails', '4.1.11'
+gem 'rails', '4.1.16'
 
 gem 'actionpack-action_caching', '~>1.1.1'
 gem 'actionpack-page_caching', '~>1.0.2'
@@ -120,9 +120,9 @@ end
 
 group :development, :test , :testext do
   gem 'rspec-core', '~> 3.1.7'
-  gem 'rspec-rails', '~> 3.1.0'
-  gem 'rspec-mocks', '~> 3.1.3'
-  gem 'rspec-support', '~> 3.1.2'
+  gem 'rspec-rails', '~> 3.4.1'
+  gem 'rspec-mocks', '~> 3.4.0'
+  gem 'rspec-support', '~> 3.4.0'
   gem 'rspec-its', '~> 1.1.0'
   gem 'rspec-collection_matchers', '~> 1.1.2'
   gem 'minitest-reporters', '~> 1.0.8'
