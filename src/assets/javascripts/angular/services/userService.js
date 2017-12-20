@@ -75,7 +75,8 @@ angular.module('calcentral.services').service('userService', function($http, $lo
   var setExtraProperties = function(profile) {
     if (profile.roles) {
       // Set this boolean to true when they only have the applicant role
-      profile.isApplicantOnly = (_.size(profile.roles) === 1 && profile.roles.applicant);
+      var activeRoles = getActiveRoles(profile.roles);
+      profile.isApplicantOnly = (_.size(activeRoles) === 1 && activeRoles[0] === 'applicant');
     }
 
     // Set whether the current user can POST information when acting as someone
@@ -85,6 +86,21 @@ angular.module('calcentral.services').service('userService', function($http, $lo
     };
 
     return profile;
+  };
+
+  /**
+   * Returns array of active roles
+   * @param  {Object} roles   profile roles object
+   * @return {Array}          array of role keys that are true
+   */
+  var getActiveRoles = function(roles) {
+    var activeRoles = [];
+    _.forEach(roles, function(value, key) {
+      if (value) {
+        activeRoles.push(key);
+      }
+    });
+    return activeRoles;
   };
 
   /**
