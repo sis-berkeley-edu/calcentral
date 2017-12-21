@@ -92,6 +92,7 @@ Calcentral::Application.routes.draw do
     get '/api/my/campuslinks/expire' => 'my_campus_links#expire'
     get '/api/my/campuslinks/refresh' => 'my_campus_links#refresh', :defaults => { :format => 'json' }
     get '/api/my/registrations' => 'my_registrations#get_feed', :defaults => { :format => 'json' }
+    get '/api/my/sir_statuses' => 'sir_statuses#get_feed', :defaults => { :format => 'json' }
     get '/api/academics/enrollment_verification' => 'enrollment_verification#get_feed', :defaults => { :format => 'json' }
     get '/api/academics/degree_progress/ugrd' => 'my_degree_progress#get_undergraduate_requirements', :defaults => { :format => 'json' }
     get '/api/academics/degree_progress/grad' => 'my_degree_progress#get_graduate_milestones', :defaults => { :format => 'json' }
@@ -136,8 +137,6 @@ Calcentral::Application.routes.draw do
     post '/api/campus_solutions/delegate_access' => 'campus_solutions/delegate_access#post', :defaults => { :format => 'json' }
 
     # Campus Solutions general purpose endpoints
-    get '/api/campus_solutions/checklist' => 'campus_solutions/checklist#get', :defaults => { :format => 'json' }
-    get '/api/campus_solutions/sir_config' => 'campus_solutions/sir_config#get', :defaults => { :format => 'json' }
     get '/api/campus_solutions/deposit' => 'campus_solutions/deposit#get', :defaults => { :format => 'json' }
     get '/api/campus_solutions/higher_one_url' => 'campus_solutions/higher_one_url#get', :defaults => { :format => 'json' }
     get '/api/campus_solutions/country' => 'campus_solutions/country#get', :defaults => { :format => 'json' }

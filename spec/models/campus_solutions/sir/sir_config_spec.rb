@@ -1,4 +1,4 @@
-describe CampusSolutions::SirConfig do
+describe CampusSolutions::Sir::SirConfig do
 
   shared_examples 'a proxy that gets data' do
     subject { proxy.get }
@@ -12,7 +12,7 @@ describe CampusSolutions::SirConfig do
   end
 
   context 'mock proxy' do
-    let(:proxy) { CampusSolutions::SirConfig.new(fake: true) }
+    let(:proxy) { CampusSolutions::Sir::SirConfig.new(fake: true) }
     subject { proxy.get }
     it_should_behave_like 'a proxy that gets data'
     it 'gets specific mock data' do
@@ -22,7 +22,7 @@ describe CampusSolutions::SirConfig do
   end
 
   context 'real proxy', testext: true do
-    let(:proxy) { CampusSolutions::SirConfig.new(fake: false) }
+    let(:proxy) { CampusSolutions::Sir::SirConfig.new(fake: false) }
     it_should_behave_like 'a proxy that gets data'
   end
 

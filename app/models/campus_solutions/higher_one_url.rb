@@ -1,7 +1,7 @@
 module CampusSolutions
   class HigherOneUrl < Proxy
 
-    include SirFeatureFlagged
+    include Sir::SirFeatureFlagged
     include CampusSolutionsIdRequired
 
     def initialize(options = {})
