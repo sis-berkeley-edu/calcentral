@@ -9,21 +9,30 @@ describe UpNext::MyUpNext do
     allow(GoogleApps::Proxy).to receive(:access_granted?).and_return access_granted
   end
 
-  it 'should load nicely with the pre-recorded fake Google proxy feed for event#list' do
-    fake_google_events_array = fake_google_proxy.events_list(maxResults: 10)
-    allow(fake_google_proxy).to receive(:events_list).and_return fake_google_events_array
-    expect(up_next[:items]).to have(13).items
-    up_next[:items].each do |entry|
-      expect(entry[:status]).not_to eq 'cancelled'
-      if !entry[:start].blank?
-        expect(entry[:start][:epoch]).to be > Time.new(1970, 1, 1).to_i
+  context 'when using fake Google proxy feed for event#list' do
+    it 'should load nicely' do
+      fake_google_events_array = fake_google_proxy.events_list(maxResults: 10)
+      allow(fake_google_proxy).to receive(:events_list).and_return fake_google_events_array
+      expect(up_next[:items]).to have(13).items
+      up_next[:items].each do |entry|
+        expect(entry[:status]).not_to eq 'cancelled'
+        if !entry[:start].blank?
+          expect(entry[:start][:epoch]).to be > Time.new(1970, 1, 1).to_i
+        end
+        if !entry[:end].blank?
+          expect(entry[:end][:epoch]).to be > Time.new(1970, 1, 1).to_i
+        end
+        if !entry[:location].blank?
+          expect(entry[:location_url]).to be
+          expect(entry[:location_url]).to start_with 'https://maps.google.com/maps?q='
+        end
       end
-      if !entry[:end].blank?
-        expect(entry[:end][:epoch]).to be > Time.new(1970, 1, 1).to_i
-      end
+      expect(up_next[:date]).to be_present
+      expect(up_next[:date][:epoch]).to be > Time.new(1970, 1, 1).to_i
     end
-    expect(up_next[:date]).to be_present
-    expect(up_next[:date][:epoch]).to be > Time.new(1970, 1, 1).to_i
+    it 'correctly encodes location URL' do
+      expect(up_next[:items].first[:location_url]).to eq 'https://maps.google.com/maps?q=1%20LECONTE'
+    end
   end
 
   it 'should not include all-day events for tomorrow' do
@@ -97,5 +106,4 @@ describe UpNext::MyUpNext do
       expect(up_next[:items][0][:attendees]).to match_array(['Oski the Bear', 'Robert Herrick', 'kerschen@berkeley.edu'])
     end
   end
-
 end

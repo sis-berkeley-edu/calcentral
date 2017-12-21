@@ -33,6 +33,9 @@ Calcentral::Application.configure do
   # Print deprecation notices to the stderr
   config.active_support.deprecation = :stderr
 
+  # Specify order in which test cases are executed (:sorted or :random)
+  config.active_support.test_order = :sorted
+
   # Turn off all page, action, fragment caching
   config.action_controller.perform_caching = false
 

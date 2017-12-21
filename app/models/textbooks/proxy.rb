@@ -133,7 +133,6 @@ module Textbooks
     end
 
     def bookstore_link(section_numbers)
-      path = "/course-info"
       params = []
 
       section_numbers.each do |section_number|
@@ -146,9 +145,8 @@ module Textbooks
           }
         )
       end
-
-      uri = Addressable::URI.encode(params.to_json)
-      "#{Settings.textbooks_proxy.base_url}/course-info?courses=#{uri}"
+      uri_params = URI.encode(params.to_json)
+      "#{Settings.textbooks_proxy.base_url}/course-info?courses=#{uri_params}"
     end
 
     def request_bookstore_list(section_numbers)
