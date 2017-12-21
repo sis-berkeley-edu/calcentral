@@ -1,7 +1,7 @@
 module CampusSolutions
   class Deposit < Proxy
 
-    include SirFeatureFlagged
+    include Sir::SirFeatureFlagged
     include CampusSolutionsIdRequired
 
     def initialize(options = {})

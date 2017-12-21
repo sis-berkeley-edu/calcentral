@@ -6,7 +6,7 @@ module CampusSolutions
     include Cache::UserCacheExpiry
     include Cache::JsonifiedFeed
     include Cache::RelatedCacheKeyTracker
-    include CampusSolutions::SirFeatureFlagged
+    include CampusSolutions::Sir::SirFeatureFlagged
 
     attr_accessor :adm_appl_nbr
 

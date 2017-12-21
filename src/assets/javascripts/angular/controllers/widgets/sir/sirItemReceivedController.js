@@ -4,7 +4,7 @@ var angular = require('angular');
 var _ = require('lodash');
 
 /**
- * SIR (Statement of Intent to Register) item receid controller
+ * SIR (Statement of Intent to Register) item received controller
  * This controller will be executed when the current checklist item is in received status
  */
 angular.module('calcentral.controllers').controller('SirItemReceivedController', function(apiService, sirFactory, $interval, $scope, $q) {

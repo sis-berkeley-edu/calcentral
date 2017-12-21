@@ -1,7 +1,7 @@
 module CampusSolutions
   class Checklist < Proxy
 
-    include SirFeatureFlagged
+    include Sir::SirFeatureFlagged
     include CampusSolutionsIdRequired
 
     def initialize(options = {})
