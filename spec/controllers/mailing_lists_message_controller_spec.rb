@@ -78,17 +78,17 @@ describe MailingListsMessageController do
 
     context 'message with attachments' do
       let(:attachment_1) do
-        Rack::Test::UploadedFile.new(
-          content = File.new(Rails.root.join 'public', 'dummy', 'images', 'sample_student_72x96.jpg'),
-          content_type = 'image/jpg',
-          binary = false
+        ActionDispatch::Http::UploadedFile.new(
+          filename: 'sample_student_72x96.jpg',
+          tempfile: File.new(Rails.root.join 'public', 'dummy', 'images', 'sample_student_72x96.jpg'),
+          type: 'image/jpg'
         )
       end
       let(:attachment_2) do
-        Rack::Test::UploadedFile.new(
-          content = File.new(Rails.root.join 'public', 'dummy', 'json', 'academic_dates.json'),
-          content_type = 'application/json',
-          binary = false
+        ActionDispatch::Http::UploadedFile.new(
+          filename: 'academic_dates.json',
+          tempfile: File.new(Rails.root.join 'public', 'dummy', 'json', 'academic_dates.json'),
+          type: 'application/json'
         )
       end
       before do

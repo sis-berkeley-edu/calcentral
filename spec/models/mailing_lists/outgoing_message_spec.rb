@@ -89,15 +89,15 @@ describe MailingLists::OutgoingMessage do
         message_opts[:attachments] = {
           count: 2,
           data: {
-            'attachment-1' => Rack::Test::UploadedFile.new(
-              conteent = File.new(Rails.root.join 'public', 'dummy', 'images', 'sample_student_72x96.jpg'),
-              content_type = 'image/jpg',
-              binary = false
+            'attachment-1' => ActionDispatch::Http::UploadedFile.new(
+              filename: 'sample_student_72x96.jpg',
+              tempfile: File.new(Rails.root.join 'public', 'dummy', 'images', 'sample_student_72x96.jpg'),
+              type: 'image/jpg'
             ),
-            'attachment-2' => Rack::Test::UploadedFile.new(
-              conteent = File.new(Rails.root.join 'public', 'dummy', 'json', 'academic_dates.json'),
-              content_type = 'application/json',
-              binary = false
+            'attachment-2' => ActionDispatch::Http::UploadedFile.new(
+              filename: 'academic_dates.json',
+              tempfile: File.new(Rails.root.join 'public', 'dummy', 'json', 'academic_dates.json'),
+              type: 'application/json'
             )
           }
         }
@@ -128,10 +128,10 @@ describe MailingLists::OutgoingMessage do
             'EC2CE1CA-4686-4412-88C7-EC9A2176D97F' => 'attachment-1'
           },
           data: {
-            'attachment-1' => Rack::Test::UploadedFile.new(
-              content = File.new(Rails.root.join 'public', 'dummy', 'images', 'sample_student_72x96.jpg'),
-              content_type = 'image/jpg',
-              binary = false
+            'attachment-1' => ActionDispatch::Http::UploadedFile.new(
+              filename: 'sample_student_72x96.jpg',
+              tempfile: File.new(Rails.root.join 'public', 'dummy', 'images', 'sample_student_72x96.jpg'),
+              type: 'image/jpg'
             )
           }
         }

@@ -1,5 +1,5 @@
 module Webcast
-  class CourseSiteLog < ApplicationRecord
+  class CourseSiteLog < ActiveRecord::Base
 
     self.table_name = 'webcast_course_site_log'
 

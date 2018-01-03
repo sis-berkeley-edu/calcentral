@@ -1,5 +1,5 @@
 module User
-  class Auth < ApplicationRecord
+  class Auth < ActiveRecord::Base
     include ActiveRecordHelper
 
     self.table_name = 'user_auths'

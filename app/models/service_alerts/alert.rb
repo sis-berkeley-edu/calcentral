@@ -1,5 +1,5 @@
 module ServiceAlerts
-  class Alert < ApplicationRecord
+  class Alert < ActiveRecord::Base
     include DatedFeed
     include HtmlSanitizer
 

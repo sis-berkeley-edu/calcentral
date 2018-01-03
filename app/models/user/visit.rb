@@ -1,5 +1,5 @@
 module User
-  class Visit < ApplicationRecord
+  class Visit < ActiveRecord::Base
     extend Cache::Cacheable
     include ActiveRecordHelper
 

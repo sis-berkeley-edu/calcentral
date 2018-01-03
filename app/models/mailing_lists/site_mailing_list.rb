@@ -1,5 +1,5 @@
 module MailingLists
-  class SiteMailingList < ApplicationRecord
+  class SiteMailingList < ActiveRecord::Base
     include ActiveRecordHelper
     include ClassLogger
     include DatedFeed

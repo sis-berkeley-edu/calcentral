@@ -1,5 +1,5 @@
 module MailingLists
-  class Member < ApplicationRecord
+  class Member < ActiveRecord::Base
     include ActiveRecordHelper
     include ClassLogger
 

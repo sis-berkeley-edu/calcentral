@@ -1,5 +1,5 @@
 module User
-  class SavedUid < ApplicationRecord
+  class SavedUid < ActiveRecord::Base
     include ActiveRecordHelper
 
     self.table_name = 'saved_uids'

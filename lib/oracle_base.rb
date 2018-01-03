@@ -1,11 +1,11 @@
-class OracleBase < ApplicationRecord
+class OracleBase < ActiveRecord::Base
   def self.test_data?
     self.settings.adapter == "h2"
   end
 
   def self.fake?
     self.settings.fake
-  end8
+  end
 
   # Oracle and H2 have no timestamp formatting function in common.
   def self.timestamp_format(timestamp_column)
