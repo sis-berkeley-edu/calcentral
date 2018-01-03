@@ -1,4 +1,4 @@
-describe CampusSolutions::Deposit do
+describe CampusSolutions::Sir::Deposit do
 
   let(:user_id) { '12348' }
 
@@ -14,7 +14,7 @@ describe CampusSolutions::Deposit do
   end
 
   context 'mock proxy' do
-    let(:proxy) { CampusSolutions::Deposit.new(fake: true, user_id: user_id, adm_appl_nbr: '00000087') }
+    let(:proxy) { CampusSolutions::Sir::Deposit.new(fake: true, user_id: user_id, adm_appl_nbr: '00000087') }
     it_should_behave_like 'a proxy that gets data'
     subject { proxy.get }
     it 'should get specific mock data' do
@@ -26,7 +26,7 @@ describe CampusSolutions::Deposit do
   # TODO This UID and ADM_APPL_NBR no longer work with our upstream data source. New test data is needed.
   pending 'SISRP-13071' do
     context 'real proxy', testext: true do
-      let(:proxy) { CampusSolutions::Deposit.new(fake: false, user_id: user_id, adm_appl_nbr: '00000087') }
+      let(:proxy) { CampusSolutions::Sir::Deposit.new(fake: false, user_id: user_id, adm_appl_nbr: '00000087') }
       it_should_behave_like 'a proxy that gets data'
     end
   end

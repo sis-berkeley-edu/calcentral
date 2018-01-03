@@ -1,14 +1,14 @@
 {
    "sirStatuses":[
       {
-         "emplid":"26983489",
+         "emplid":"12345678",
          "seq3c":"1",
          "checklistSeq":"100",
          "chklstItemCd":"AUSIRF",
          "checkListDescr":"Accept Your Offer of Admission",
-         "itemStatus":"Initiated",
-         "itemStatusCode":"I",
-         "statusDt":"2017-12-20",
+         "itemStatus":"Received",
+         "itemStatusCode":"R",
+         "statusDt":"2018-01-02",
          "dueDt":"2018-05-01",
          "responsibleCntctName":"Office of Undergraduate Admissions",
          "responsibleCntctEmail":null,
@@ -139,6 +139,12 @@
             "title":"Assistant Vice Chancellor & Director",
             "background":"cc-widget-sir-background-berkeley",
             "picture":"cc-widget-sir-picture-ugrad"
+         },
+         "deposit":{
+            "emplid":"26983489",
+            "admApplNbr":"00111591",
+            "dueDt":"2018-05-01",
+            "dueAmt":250
          }
       }
    ]

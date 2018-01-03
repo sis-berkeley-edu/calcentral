@@ -11,10 +11,7 @@ angular.module('calcentral.controllers').controller('SirItemReceivedController',
   // The Higher One URL expires after 5 minutes, so we refresh it every 4.5 minutes
   var expireTimeMilliseconds = 4.5 * 60 * 1000;
 
-  $scope.sirReceivedItem = {
-    isLoading: true,
-    depositInfo: {}
-  };
+  $scope.higherOneUrl = '';
 
   /**
    * Get the HigherOne URL and update the scope
@@ -24,7 +21,7 @@ angular.module('calcentral.controllers').controller('SirItemReceivedController',
       refreshCache: true
     }).then(
       function successCallback(response) {
-        $scope.sirReceivedItem.higherOneUrl = _.get(response, 'data.feed.root.higherOneUrl.url');
+        $scope.higherOneUrl = _.get(response, 'data.feed.root.higherOneUrl.url');
       }
     );
   };
@@ -37,35 +34,12 @@ angular.module('calcentral.controllers').controller('SirItemReceivedController',
     $interval(getHigherOneUrl, expireTimeMilliseconds);
   };
 
-  /**
-   * Parse the deposit information.
-   * Contains the deposit amount & date
-   */
-  var parseDepositInformation = function(response) {
-    $scope.sirReceivedItem.depositInfo = _.get(response, 'data.feed.depositResponse.deposit');
-    $scope.sirReceivedItem.hasDeposit = !!_.get(response, 'data.feed.depositResponse.deposit.dueAmt');
-    $scope.sirReceivedItem.isLoading = false;
-
+  var init = function() {
     if (apiService.user.profile.canActOnFinances) {
       startHigherOneUrlInterval();
     }
 
-    return $q.resolve($scope.sirReceivedItem);
-  };
-
-  /**
-   * Get information about the deposit, whether you still need to pay or not
-   */
-  var getDepositInformation = function() {
-    return sirFactory.getDeposit({
-      params: {
-        'admApplNbr': _.get($scope, 'item.checkListMgmtAdmp.admApplNbr')
-      }
-    }).then(parseDepositInformation);
-  };
-
-  var init = function() {
-    getDepositInformation();
+    return $q.resolve($scope.higherOneUrl);
   };
 
   init();

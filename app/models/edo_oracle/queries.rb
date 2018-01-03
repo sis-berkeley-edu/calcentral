@@ -494,5 +494,22 @@ module EdoOracle
       result.first
     end
 
+    def self.get_new_admit_status (student_id, application_nbr)
+      result = safe_query <<-SQL
+        SELECT 
+          ACAD_PROG as applicant_program,
+          ACAD_PROG_DESCR as applicant_program_descr,
+          ADMIT_TYPE as admit_type,
+          ADMIT_TYPE_DESCR as admit_type_desc,
+          ATHLETE as athlete
+        FROM 
+          SISEDO.APPLICANT_ADMIT_DATA_UGV00_VW
+        WHERE 
+          STUDENT_ID = '#{student_id}' AND
+          APPLICATION_NBR = '#{application_nbr}'
+      SQL
+      result.first
+    end
+
   end
 end

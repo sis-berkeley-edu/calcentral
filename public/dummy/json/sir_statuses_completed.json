@@ -1,0 +1,165 @@
+{
+   "sirStatuses":[
+      {
+         "emplid":"12345678",
+         "seq3c":"1",
+         "checklistSeq":"100",
+         "chklstItemCd":"AUSIRF",
+         "checkListDescr":"Accept Your Offer of Admission",
+         "itemStatus":"Completed",
+         "itemStatusCode":"C",
+         "statusDt":"2018-01-04",
+         "dueDt":"2018-05-01",
+         "responsibleCntctName":"Office of Undergraduate Admissions",
+         "responsibleCntctEmail":null,
+         "associationIdName":null,
+         "itemComment":"Accept your Offer of Admission in CalCentral by 11:59pm PDT on your deadline.     \n\nIf you are required to pay the SIR Deposit, know that the $250.00 fee is non-refundable.                         \n                                                                                                                                               \nMore information about UC Berkeley's Honor Code can be found here:  https://asuc.org/honorcode/\n\nReview your Conditions of Admission here:  \nhttps://apply.berkeley.edu/apply/status",
+         "adminFunc":"ADMP",
+         "adminFuncDescr":"Admissions Program",
+         "checkListDocMgmt":{
+            "linkUrlLbl":null,
+            "linkUrl":null,
+            "displayStatusDt":true,
+            "displayDueDt":true,
+            "displayResponsibleCntct":true
+         },
+         "checkListMgmtAdmp":{
+            "varDataSeq":"1",
+            "acadCareer":"UGRD",
+            "stdntCarNbr":"0",
+            "admApplNbr":"00111591",
+            "applProgNbr":"0"
+         },
+         "config":{
+            "institution":"UCB01",
+            "acadCareer":"UGRD",
+            "ucSirFormCd":"FRESH",
+            "effdt":"1901-01-01",
+            "effStatus":"A",
+            "descrProgram":"Freshman Generic",
+            "descrProgramLong":"Undergraduate Offer of Admission",
+            "ucSirImageCd":"UGRD",
+            "descrLong":"This is UC Berkeley's process to formally indicate your acceptance of our admission offer.",
+            "chklstItemCd":"AUSIRF",
+            "sirConditions":[
+               {
+                  "institution":"UCB01",
+                  "acadCareer":"UGRD",
+                  "ucSirFormCd":"FRESH",
+                  "effdt":"1901-01-01",
+                  "seqnum":"1",
+                  "messageSetNbr":"24000",
+                  "messageNbr":"31",
+                  "messageText":"I pledge to abide by the university’s honor code: \"As a member of the UC Berkeley community, I act with honesty, integrity and respect for others\"."
+               },
+               {
+                  "institution":"UCB01",
+                  "acadCareer":"UGRD",
+                  "ucSirFormCd":"FRESH",
+                  "effdt":"1901-01-01",
+                  "seqnum":"2",
+                  "messageSetNbr":"24000",
+                  "messageNbr":"21",
+                  "messageText":"I agree to sustain a term and cumulative GPA of 3.0 or higher with no D or F grades in my senior coursework."
+               },
+               {
+                  "institution":"UCB01",
+                  "acadCareer":"UGRD",
+                  "ucSirFormCd":"FRESH",
+                  "effdt":"1901-01-01",
+                  "seqnum":"3",
+                  "messageSetNbr":"24000",
+                  "messageNbr":"20",
+                  "messageText":"I agree to complete all of my current self-reported coursework with passing grades.  If I cannot, I will contact the Office of Undergraduate Admissions before submitting my final transcript."
+               },
+               {
+                  "institution":"UCB01",
+                  "acadCareer":"UGRD",
+                  "ucSirFormCd":"FRESH",
+                  "effdt":"1901-01-01",
+                  "seqnum":"4",
+                  "messageSetNbr":"24000",
+                  "messageNbr":"24",
+                  "messageText":"I understand that it is my responsibility to contact the Office of Undergraduate Admissions if my courses have changed from what was self-reported on my application.\n\n*See your Conditions of Admission and FAQs"
+               },
+               {
+                  "institution":"UCB01",
+                  "acadCareer":"UGRD",
+                  "ucSirFormCd":"FRESH",
+                  "effdt":"1901-01-01",
+                  "seqnum":"5",
+                  "messageSetNbr":"24000",
+                  "messageNbr":"28",
+                  "messageText":"I understand that I must complete the final year of academic classes and/or the external examinations listed on my application.  If I will not be able to meet this expectation, I will contact the Office of Undergraduate Admissions with a written explanation."
+               },
+               {
+                  "institution":"UCB01",
+                  "acadCareer":"UGRD",
+                  "ucSirFormCd":"FRESH",
+                  "effdt":"1901-01-01",
+                  "seqnum":"6",
+                  "messageSetNbr":"24000",
+                  "messageNbr":"23",
+                  "messageText":"I agree to submit all required documents listed on my Tasks list, including test scores, certificates and transcripts by the deadlines."
+               },
+               {
+                  "institution":"UCB01",
+                  "acadCareer":"UGRD",
+                  "ucSirFormCd":"FRESH",
+                  "effdt":"1901-01-01",
+                  "seqnum":"7",
+                  "messageSetNbr":"24000",
+                  "messageNbr":"29",
+                  "messageText":"I agree to submit all exams eligible for University Credit."
+               }
+            ],
+            "sirOptions":[
+               {
+                  "institution":"UCB01",
+                  "acadCareer":"UGRD",
+                  "ucSirFormCd":"FRESH",
+                  "effdt":"1901-01-01",
+                  "seqnum":"1",
+                  "descrLong":"Yes, I accept my offer of Admission to UC Berkeley!",
+                  "progAction":"DEIN",
+                  "progActionDescr":"Intention to Matriculate",
+                  "progReason":null,
+                  "progReasonDescr":null,
+                  "messageSetNbr":"24000",
+                  "messageNbr":"25",
+                  "messageText":"Thank you for confirming your enrollment at Berkeley!"
+               }
+            ]
+         },
+         "responseReasons":[
+
+         ],
+         "isUndergraduate":true,
+         "newAdmitAttributes":{
+            "visible":true,
+            "links":{
+               "coaFreshmanLink":{
+                  "url":"#",
+                  "urlId":"UC_ADMT_COND_FRESH",
+                  "linkDescription":"Meet these conditions to secure your admission.",
+                  "linkDescriptionDisplay":true,
+                  "showNewWindow":true,
+                  "name":"Conditions of Admission",
+                  "title":"Conditions of Admission"
+               },
+               "coaTransferLink":false,
+               "firstYearPathwayLink":false
+            }
+         },
+         "header":{
+            "name":"Amy W. Jarich",
+            "title":"Assistant Vice Chancellor & Director",
+            "background":"cc-widget-sir-background-berkeley",
+            "picture":"cc-widget-sir-picture-ugrad"
+         },
+         "deposit":{
+            "required":false
+         }
+      }
+   ]
+}

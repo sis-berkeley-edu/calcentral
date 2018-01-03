@@ -33,6 +33,22 @@ describe CampusSolutions::Sir::SirStatuses do
     }
   }
 
+  let(:checklist_response_ugrd_completed) {
+    {
+      feed: {
+        checkListItems: [{
+           chklstItemCd: 'AUSIRF',
+           checkListMgmtAdmp: {
+             acadCareer: 'UGRD'
+           },
+           itemStatus: 'Completed',
+           itemStatusCode: 'C',
+           adminFunc: 'ADMP'
+         }]
+      }
+    }
+  }
+
   let(:checklist_response_multiple) {
     {
       feed: {
@@ -47,8 +63,71 @@ describe CampusSolutions::Sir::SirStatuses do
           itemStatus: 'Initiated',
           itemStatusCode: 'I',
           adminFunc: 'ADMP'
-        }]
+          },
+          {
+          chklstItemCd: 'AUSIRF',
+          itemStatus: 'Completed',
+          itemStatusCode: 'C',
+          adminFunc: 'ADMP'
+          }
+        ]
       }
+    }
+  }
+
+  let(:deposit_due_response) {
+    {
+      feed: {
+        depositResponse: {
+          deposit: {
+            emplid: '12345678',
+            admApplNbr: '11223345',
+            dueDt: '2018-05-01',
+            dueAmt: 250.0
+          }
+        }
+      }
+    }
+  }
+
+  let(:deposit_none_response) {
+    {
+      feed: {
+        depositResponse: {
+          deposit: {
+            emplid: '12345678',
+            admApplNbr: '11223345',
+            dueDt: nil,
+            dueAmt: 0.0
+          }
+        }
+      }
+    }
+  }
+
+  let(:new_admit_attributes_freshman_pathway) {
+    {
+      'applicant_program' => 'UCLS',
+      "applicant_program_descr" => 'College of Letters and Science',
+      'admit_type' => 'FYR',
+      'admit_type_desc' => 'First Year Student',
+      'athlete' => 'N'
+    }
+  }
+
+  let(:new_admit_attributes_transfer) {
+    {
+      'applicant_program' => 'UCLS',
+      "applicant_program_descr" => 'College of Letters and Science',
+      'admit_type' => 'TRN',
+      'admit_type_desc' => 'Transfer',
+      'athlete' => 'N'
+    }
+  }
+
+  let(:link_api_response) {
+    {
+      url: true
     }
   }
 
@@ -170,6 +249,25 @@ describe CampusSolutions::Sir::SirStatuses do
     it 'attaches header info' do
       expect(subject[0][:header]).to be
     end
+    context 'deposit due' do
+      before do
+        CampusSolutions::Sir::MyDeposit.stub_chain(:new, :get_feed).and_return  deposit_due_response
+      end
+      it 'correctly parses and adds deposit information' do
+        expect(subject[0][:deposit]).to be
+        expect(subject[0][:deposit][:required]).to be_truthy
+        expect(subject[0][:deposit][:dueAmt]).to eq(250.0)
+      end
+    end
+    context 'no deposit due' do
+      before do
+        CampusSolutions::Sir::MyDeposit.stub_chain(:new, :get_feed).and_return  deposit_none_response
+      end
+      it 'correctly parses and adds deposit information' do
+        expect(subject[0][:deposit]).to be
+        expect(subject[0][:deposit][:required]).to be_falsey
+      end
+    end
   end
 
   describe 'attempting to view SIR offer' do
@@ -185,6 +283,52 @@ describe CampusSolutions::Sir::SirStatuses do
 
       it 'returns an undergraduate sir application' do
         expect(subject[0][:chklstItemCd]).to eql('AUSIRF')
+      end
+    end
+
+    context 'as an undergraduate student with an already-completed offer' do
+      before do
+        CampusSolutions::MyChecklist.stub_chain(:new, :get_feed).and_return checklist_response_ugrd_completed
+        CampusSolutions::Sir::SirConfig.stub_chain(:new, :get).and_return sir_config_response_ugrd
+        Settings.stub(:sir_expiration_date).and_return('2018-02-22 12:00:00 -0700')
+        DateTime.stub(:now).and_return('2018-02-21 12:00:00 -0700')
+
+        allow_any_instance_of(LinkFetcher).to receive(:fetch_link).and_return link_api_response
+      end
+      subject { (proxy.new(uid).get_feed)[:sirStatuses]}
+
+      it 'does not query for a deposit due' do
+        expect(subject[0][:deposit][:required]).to be_falsey
+        expect(subject[0][:deposit][:dueAmt]).to be_nil
+      end
+
+      it 'correctly sets the visibility flag' do
+        expect(subject[0][:newAdmitAttributes][:visible]).to be_truthy
+      end
+
+      context 'as a freshman eligible for first year pathway' do
+        before do
+          EdoOracle::Queries.stub(:get_new_admit_status) { new_admit_attributes_freshman_pathway }
+        end
+        subject { (proxy.new(uid).get_feed)[:sirStatuses]}
+        it 'adds the correct links to the status' do
+          expect(subject[0][:newAdmitAttributes][:links][:coaFreshmanLink][:url]).to be_truthy
+          expect(subject[0][:newAdmitAttributes][:links][:firstYearPathwayLink][:url]).to be_truthy
+          expect(subject[0][:newAdmitAttributes][:links][:coaTransferLink]).to be_falsey
+        end
+      end
+
+      context 'as a transfer student' do
+        before do
+          EdoOracle::Queries.stub(:get_new_admit_status) { new_admit_attributes_transfer }
+        end
+        subject { (proxy.new(uid).get_feed)[:sirStatuses]}
+        it 'adds the correct links to the status' do
+          pp subject
+          expect(subject[0][:newAdmitAttributes][:links][:coaFreshmanLink]).to be_falsey
+          expect(subject[0][:newAdmitAttributes][:links][:firstYearPathwayLink]).to be_falsey
+          expect(subject[0][:newAdmitAttributes][:links][:coaTransferLink][:url]).to be_truthy
+        end
       end
     end
 
@@ -214,7 +358,7 @@ describe CampusSolutions::Sir::SirStatuses do
       end
       subject { (proxy.new(uid).get_feed)[:sirStatuses] }
       it 'returns multiple sir applications' do
-        expect(subject).to have(2).items
+        expect(subject).to have(3).items
       end
     end
 

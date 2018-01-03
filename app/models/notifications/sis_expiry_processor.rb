@@ -39,7 +39,7 @@ module Notifications
       'sis:student:affiliation' => CampusSolutions::UserApiExpiry,
       'sis:student:checklist' => CampusSolutions::ChecklistDataExpiry,
       'sis:student:delegate' => CampusSolutions::DelegateStudentsExpiry,
-      'sis:student:deposit' => CampusSolutions::MyDeposit,
+      'sis:student:deposit' => CampusSolutions::Sir::MyDeposit,
       'sis:student:enrollment' => CampusSolutions::EnrollmentTermExpiry,
       'sis:student:eft' => Eft::MyEftEnrollment,
       'sis:student:ferpa' => nil,
