@@ -1,5 +1,5 @@
 module Notifications
-  class Notification < ActiveRecord::Base
+  class Notification < ApplicationRecord
     include ActiveRecordHelper, SafeJsonParser
 
     after_initialize :log_access

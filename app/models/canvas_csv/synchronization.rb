@@ -1,6 +1,6 @@
 module CanvasCsv
   # Provides object used to store synchronization states between campus systems and Canvas
-  class Synchronization < ActiveRecord::Base
+  class Synchronization < ApplicationRecord
     include ActiveRecordHelper
 
     self.table_name = 'canvas_synchronization'

@@ -1,5 +1,5 @@
 
-  class PopulateCampusH2 < ActiveRecord::Base
+  class PopulateCampusH2 < ApplicationRecord
     Rails.application.config.after_initialize do
       if Settings.campusdb.adapter == "h2"
         establish_connection "campusdb"

@@ -1,5 +1,5 @@
 module Oec
-  class CourseCode < ActiveRecord::Base
+  class CourseCode < ApplicationRecord
 
     self.table_name = 'oec_course_codes'
     attr_accessible :dept_name, :catalog_id, :dept_code, :include_in_oec

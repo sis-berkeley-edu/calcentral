@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 # The core framework
 # https://github.com/rails/rails
-gem 'rails', '4.2.10'
+gem 'rails', '5.0.6'
 
 gem 'actionpack-action_caching', '~>1.1.1'
 gem 'actionpack-page_caching', '~>1.0.2'

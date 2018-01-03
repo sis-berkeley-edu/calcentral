@@ -1,5 +1,5 @@
 module User
-  class Data < ActiveRecord::Base
+  class Data < ApplicationRecord
     include ActiveRecordHelper
 
     self.table_name = 'user_data'

@@ -1,5 +1,5 @@
 module Links
-  class LinkSection < ActiveRecord::Base
+  class LinkSection < ApplicationRecord
 
     attr_accessible :link_root_cat_id
     attr_accessible :link_top_cat_id

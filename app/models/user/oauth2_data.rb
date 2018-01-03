@@ -1,5 +1,5 @@
 module User
-  class Oauth2Data < ActiveRecord::Base
+  class Oauth2Data < ApplicationRecord
     include ActiveRecordHelper, SafeJsonParser
     after_initialize :log_access, :log_threads
 

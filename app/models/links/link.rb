@@ -1,5 +1,5 @@
 module Links
-  class Link < ActiveRecord::Base
+  class Link < ApplicationRecord
 
     attr_accessible :description, :name, :published, :url, :link_section_ids, :user_role_ids
 

@@ -1,5 +1,5 @@
 module User
-  class RecentUid < ActiveRecord::Base
+  class RecentUid < ApplicationRecord
     include ActiveRecordHelper
 
     MAX_PER_OWNER_ID = 30
