@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 # The core framework
 # https://github.com/rails/rails
-gem 'rails', '4.2.10'
+gem 'rails', '4.1.16'
 
 gem 'actionpack-action_caching', '~>1.1.1'
 gem 'actionpack-page_caching', '~>1.0.2'
@@ -13,7 +13,6 @@ gem 'activeresource', '~>4.0.0'
 gem 'protected_attributes', '~> 1.0.8'
 gem 'rails-observers', '~>0.1.2'
 gem 'rails-perftest', '~>0.0.5'
-gem 'responders', '~> 2.0'
 
 gem 'activerecord-jdbc-adapter', '~> 1.3.16'
 
@@ -71,11 +70,11 @@ gem 'jruby-openssl', '0.9.19'
 
 # Addressable is a replacement for the URI implementation that is part of Ruby's standard library.
 # https://github.com/sporkmonger/addressable
-gem 'addressable', '~> 2.5.1'
+gem 'addressable', '~> 2.3.4'
 
 # for parsing formatted html
 # Do NOT update until https://github.com/sparklemotion/nokogiri/issues/1114 is fixed
-gem 'nokogiri', '~> 1.6.0', :platforms => :jruby
+gem 'nokogiri', '~> 1.5.9', :platforms => :jruby
 
 # for parsing paged feeds
 gem 'link_header', '~> 0.0.7'
@@ -120,7 +119,7 @@ group :development, :testext, :production do
 end
 
 group :development, :test , :testext do
-  gem 'rspec-core', '~> 3.4.0'
+  gem 'rspec-core', '~> 3.1.7'
   gem 'rspec-rails', '~> 3.4.1'
   gem 'rspec-mocks', '~> 3.4.0'
   gem 'rspec-support', '~> 3.4.0'

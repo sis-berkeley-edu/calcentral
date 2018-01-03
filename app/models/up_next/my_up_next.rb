@@ -67,7 +67,7 @@ module UpNext
           location_subset[:location] = entry_location
           uri = Addressable::URI.new
           uri.query_values = {:q => entry_location}
-          location_subset[:location_url] = "https://maps.google.com/maps?#{uri.query}"
+          location_subset[:location_url] = "https://maps.google.com/maps?" + uri.query
         end
       rescue => e
         logger.warn "#{self.class.name}: #{e} - Error handling location values #{entry_location}"
