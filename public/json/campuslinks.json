@@ -2964,7 +2964,7 @@
       ]
     },
     {
-      "name": "Schedule \u0026 Deadlines",
+      "name": "Summer Schedule \u0026 Deadlines",
       "description": "Key dates and deadlines for summer sessions",
       "url": "http://summer.berkeley.edu/registration/schedule",
       "roles": {
@@ -3177,7 +3177,7 @@
       ]
     },
     {
-      "name": "Summer Sessions",
+      "name": "Summer Sessions Website",
       "description": "Various programs and courses offered during summer for Berkeley students",
       "url": "http://summer.berkeley.edu/",
       "roles": {
@@ -3215,7 +3215,7 @@
       ]
     },
     {
-      "name": "Canceling and Withdrawing",
+      "name": "Canceling and Withdrawing from Summer",
       "description": "Dropping all classes for the summer session",
       "url": "http://summer.berkeley.edu/enrollment-changes/dropping-all-your-courses",
       "roles": {
@@ -3673,7 +3673,7 @@
         "staff": false,
         "faculty": false,
         "exStudent": true,
-        "summerVisitor": true
+        "summerVisitor": false
       },
       "categories": [
         {
