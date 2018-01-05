@@ -3,7 +3,6 @@ module CampusSolutions
     class MyDeposit < UserSpecificModel
 
       include ClassLogger
-      include SirFeatureFlagged
 
       def get_feed
         logger.debug "User #{@uid}; aid adm_appl_nbr #{@options[:adm_appl_nbr]}"

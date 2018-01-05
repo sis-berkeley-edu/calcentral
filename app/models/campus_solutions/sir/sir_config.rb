@@ -2,8 +2,6 @@ module CampusSolutions
   module Sir
     class SirConfig < GlobalCachedProxy
 
-      include SirFeatureFlagged
-
       def initialize(options = {})
         super options
         initialize_mocks if @fake

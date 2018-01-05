@@ -3,7 +3,6 @@ module CampusSolutions
     class Deposit < Proxy
 
       include CampusSolutions::CampusSolutionsIdRequired
-      include SirFeatureFlagged
 
       def initialize(options = {})
         super options

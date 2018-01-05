@@ -6,7 +6,6 @@ module CampusSolutions
       include Cache::UserCacheExpiry
       include Cache::RelatedCacheKeyTracker
       include LinkFetcher
-      include SirFeatureFlagged
       include User::Identifiers
 
       HEADER_DATA = {
@@ -97,7 +96,7 @@ module CampusSolutions
       end
 
       def add_visibility_flag
-        expiration_date = Settings.sir_expiration_date
+        expiration_date = Settings.new_admit_expiration_date
         current_date = Settings.terms.fake_now || DateTime.now
         current_date <= expiration_date
       end
@@ -126,7 +125,7 @@ module CampusSolutions
       def add_header_info(sir_checklist_items)
         sir_checklist_items.try(:each) do |item|
           header_cd = (item.try(:[], :config).try(:[], :ucSirImageCd)).try(:to_sym)
-          header_info = header_cd.nil? ? HEADER_DATA.try(:[], :DEFAULT) : HEADER_DATA.try(:[], header_cd)
+          header_info = header_cd.nil? ? HEADER_DATA.try(:[], :GENERIC) : HEADER_DATA.try(:[], header_cd)
           item[:header] = header_info
         end
         add_deposit_info(sir_checklist_items)

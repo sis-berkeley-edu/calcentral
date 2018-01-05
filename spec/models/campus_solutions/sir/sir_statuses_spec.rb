@@ -290,7 +290,7 @@ describe CampusSolutions::Sir::SirStatuses do
       before do
         CampusSolutions::MyChecklist.stub_chain(:new, :get_feed).and_return checklist_response_ugrd_completed
         CampusSolutions::Sir::SirConfig.stub_chain(:new, :get).and_return sir_config_response_ugrd
-        Settings.stub(:sir_expiration_date).and_return('2018-02-22 12:00:00 -0700')
+        Settings.stub(:new_admit_expiration_date).and_return('2018-02-22 12:00:00 -0700')
         DateTime.stub(:now).and_return('2018-02-21 12:00:00 -0700')
 
         allow_any_instance_of(LinkFetcher).to receive(:fetch_link).and_return link_api_response
