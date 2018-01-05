@@ -2,13 +2,13 @@ source 'https://rubygems.org'
 
 # The core framework
 # https://github.com/rails/rails
-gem 'rails', '4.2.0'
+gem 'rails', '4.2.9'
 
 gem 'actionpack-action_caching', '~>1.1.1'
 gem 'actionpack-page_caching', '~>1.0.2'
 gem 'actionpack-xml_parser', '~>1.0.1'
 gem 'actionview-encoded_mail_to', '~>1.0.5'
-gem 'activerecord-session_store', '~>0.1.1'
+gem 'activerecord-session_store', '~>1.1.0'
 gem 'activeresource', '~>4.0.0'
 gem 'protected_attributes', '~> 1.0.8'
 gem 'rails-observers', '~>0.1.2'
@@ -75,7 +75,7 @@ gem 'addressable', '~> 2.3.4'
 
 # for parsing formatted html
 # Do NOT update until https://github.com/sparklemotion/nokogiri/issues/1114 is fixed
-gem 'nokogiri', '~> 1.5.9', :platforms => :jruby
+gem 'nokogiri', '~> 1.6.0', :platforms => :jruby
 
 # for parsing paged feeds
 gem 'link_header', '~> 0.0.7'
@@ -120,7 +120,7 @@ group :development, :testext, :production do
 end
 
 group :development, :test , :testext do
-  gem 'rspec-core', '~> 3.1.7'
+  gem 'rspec-core', '~> 3.4.0'
   gem 'rspec-rails', '~> 3.4.1'
   gem 'rspec-mocks', '~> 3.4.0'
   gem 'rspec-support', '~> 3.4.0'
