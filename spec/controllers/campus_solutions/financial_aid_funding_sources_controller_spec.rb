@@ -18,7 +18,7 @@ describe CampusSolutions::FinancialAidFundingSourcesController do
       it 'has some field mapping info' do
         get feed, options
         json = JSON.parse(response.body)
-        expect(json['feed']['message']).to eq 'Financial aid awards are offered to meet your need up to your student budget (estimated cost of attendance).'
+        expect(json['message']).to eq 'YOU CANNOT REDUCE OR CANCEL THIS LOAN.'
       end
 
       context 'no aid year provided' do

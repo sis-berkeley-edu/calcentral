@@ -58,7 +58,7 @@ angular.module('calcentral.controllers').controller('FinaidAwardsController', fu
       finaidYearId: finaidService.options.finaidYear.id
     }).then(
       function successCallback(response) {
-        angular.extend($scope.finaidAwards, parseAwards(_.get(response, 'data.feed')));
+        angular.extend($scope.finaidAwards, parseAwards(_.get(response, 'data')));
         $scope.finaidAwardsInfo.errored = _.get(response, 'data.errored');
         $scope.finaidAwardsInfo.isLoading = false;
       }
