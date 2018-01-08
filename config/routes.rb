@@ -137,7 +137,6 @@ Calcentral::Application.routes.draw do
     post '/api/campus_solutions/delegate_access' => 'campus_solutions/delegate_access#post', :defaults => { :format => 'json' }
 
     # Campus Solutions general purpose endpoints
-    get '/api/campus_solutions/deposit' => 'campus_solutions/deposit#get', :defaults => { :format => 'json' }
     get '/api/campus_solutions/higher_one_url' => 'campus_solutions/higher_one_url#get', :defaults => { :format => 'json' }
     get '/api/campus_solutions/country' => 'campus_solutions/country#get', :defaults => { :format => 'json' }
     get '/api/campus_solutions/state' => 'campus_solutions/state#get', :defaults => { :format => 'json' }

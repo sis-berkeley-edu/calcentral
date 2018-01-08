@@ -26,6 +26,10 @@ angular.module('calcentral.controllers').controller('SirController', function(si
             sirStatusItem.checkListMgmtAdmp.applProgNbr === studentResponse.response.applProgNbr);
   };
 
+  /**
+  * Non-undergraduates:  Filters out any checklist item that is already "Completed" that the user has already seen
+  * Undergraduates:  Filters out any checklist item that is "Completed" and has passed the functionally-defined expiration date in YML config
+  */
   var parseSirStatuses = function(sirStatusesResponse, studentResponse) {
     var sirStatuses = _.get(sirStatusesResponse, 'data.sirStatuses');
     if (!sirStatuses || !sirStatuses.length) {
@@ -33,9 +37,9 @@ angular.module('calcentral.controllers').controller('SirController', function(si
     }
     var checkStatus = $scope.sir.statuses.length ? '' : 'C';
 
-    // Filter the checklists (will be Initiated or Received on initial load & completed after that)
     sirStatuses = sirStatuses.filter(function(status) {
-      return status.itemStatusCode !== checkStatus;
+      return (status.itemStatusCode !== checkStatus ||
+              _.get(status, 'newAdmitAttributes.visible'));
     });
 
     if (sirStatuses.length) {
@@ -89,6 +93,10 @@ angular.module('calcentral.controllers').controller('SirController', function(si
   };
 
   initWorkflow();
+
+  $scope.isReceivedUndergraduateNoDeposit = function(item) {
+    return _.get(item, 'itemStatusCode') === 'R' && !_.get(item, 'deposit.required');
+  };
 
   $scope.$on('calcentral.custom.api.sir.update', function(event, studentResponse) {
     initWorkflow({

@@ -52,11 +52,10 @@ angular.module('calcentral.controllers').controller('SirItemController', functio
 
     var response = getResponseObject();
     return sirFactory.postSirResponse(response).then(function(postResponse) {
-      $scope.sirItem.isSubmitting = false;
-
       // Check for errors
       if (_.get(postResponse, 'data.errored')) {
         $scope.sirItem.hasError = true;
+        $scope.sirItem.isSubmitting = false;
       } else {
         // Reload the checklistItem you were currently modifying
         $rootScope.$broadcast('calcentral.custom.api.sir.update', {

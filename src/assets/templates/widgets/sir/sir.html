@@ -1,7 +1,7 @@
 <div data-ng-controller="SirController">
   <div data-ng-repeat="item in sir.statuses" data-ng-if="sir.statuses.length">
     <div data-ng-include="'widgets/sir/sir_item.html'" data-ng-if="item.itemStatusCode === 'I'"></div>
-    <div data-ng-include="'widgets/sir/sir_item_received.html'" data-ng-if="item.itemStatusCode === 'R'"></div>
-    <div data-ng-include="'widgets/sir/sir_item_completed.html'" data-ng-if="item.itemStatusCode === 'C'"></div>
+    <div data-ng-include="'widgets/sir/sir_item_received.html'" data-ng-if="item.itemStatusCode === 'R' && !isReceivedUndergraduateNoDeposit(item)"></div>
+    <div data-ng-include="'widgets/sir/sir_item_completed.html'" data-ng-if="item.itemStatusCode === 'C' || isReceivedUndergraduateNoDeposit(item)"></div>
   </div>
 </div>

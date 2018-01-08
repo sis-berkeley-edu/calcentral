@@ -1,10 +1,33 @@
 <div class="cc-widget cc-widget-sir" data-ng-controller="SirItemController">
-  <div data-ng-include="'widgets/sir/sir_item_header.html'" data-ng-if="item.studentResponse.option.progAction !== 'WAPP'"></div>
-  <div class="cc-widget-title" data-ng-if="item.studentResponse.option.progAction === 'WAPP'">
-    <h2>Enrollment Declined</h2>
+  <div data-ng-include="'widgets/sir/sir_item_header.html'" data-ng-if="item.studentResponse.option.progAction !== 'WAPP' || item.isUndergraduate"></div>
+  <div data-ng-if="!item.isUndergraduate">
+    <div class="cc-widget-title" data-ng-if="item.studentResponse.option.progAction === 'WAPP'">
+      <h2>Enrollment Declined</h2>
+    </div>
+    <div class="cc-widget-text">
+      <h3 data-ng-bind="item.studentResponse.programDescription"></h3>
+      <div data-ng-bind-html="item.studentResponse.option.messageText | linky"></div>
+    </div>
   </div>
-  <div class="cc-widget-text">
-    <h3 data-ng-bind="item.studentResponse.programDescription"></h3>
-    <div data-ng-bind-html="item.studentResponse.option.messageText | linky"></div>
+  <div data-ng-if="item.isUndergraduate">
+    <div class="cc-widget-text">
+      <h3>Offer Accepted Confirmation</h3>
+      Welcome!  We're thrilled that you've chosen to join UC Berkeley! Thank you for accepting your Undergraduate Offer of Admission.
+      <br/>
+      <h3>Next Steps</h3>
+      <ul class="cc-list-bullets">
+        <li data-ng-if="item.newAdmitAttributes.links.coaFreshmanLink">Review your
+          <a data-ng-href="{{item.newAdmitAttributes.links.coaFreshmanLink.url}}" data-ng-attr-title="{{item.newAdmitAttributes.links.coaFreshmanLink.title}}" class="cc-outbound-link"> Conditions of Admission</a>
+        </li>
+        <li data-ng-if="item.newAdmitAttributes.links.coaTransferLink">Review your
+          <a data-ng-href="{{item.newAdmitAttributes.links.coaTransferLink.url}}" data-ng-attr-title="{{item.newAdmitAttributes.links.coaTransferLink.title}}" class="cc-outbound-link"> Conditions of Admission</a>
+        </li>
+        <li data-ng-if="item.newAdmitAttributes.links.firstYearPathwayLink">Select a
+          <a data-ng-href="{{item.newAdmitAttributes.links.firstYearPathwayLink.url}}" data-ng-attr-title="{{item.newAdmitAttributes.links.firstYearPathwayLink.title}}" class="cc-outbound-link"> First-Year Pathway</a>
+        </li>
+        <li>Create your CalNet ID (Required to access student services)</li>
+        <li>Review your Notifications and Tasks</li>
+      </ul>
+    </div>
   </div>
 </div>
