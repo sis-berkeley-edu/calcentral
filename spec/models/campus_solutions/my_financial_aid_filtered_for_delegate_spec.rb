@@ -28,7 +28,7 @@ describe CampusSolutions::MyFinancialAidFilteredForDelegate do
         end
         it 'includes expected items' do
           expect(json).to include 'SHIP Health Insurance'
-          expect(json).to include 'Student Standing'
+          expect(json).to include 'Academic Career'
           expect(json).to include 'Estimated Cost of Attendance'
           expect(json).to include 'Dependency Status'
           expect(json).to include 'Family Members in College'

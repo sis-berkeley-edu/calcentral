@@ -418,10 +418,10 @@
     </MESSAGE>
     <CATEGORIES type="array">
       <CATEGORY>
-        <TITLE>Aid Package Factors</TITLE>
+        <TITLE>Financial Aid Profile</TITLE>
         <ITEM_GROUPS type="array">
           <ITEM>
-            <TITLE>Student Standing</TITLE>
+            <TITLE>Academic Career</TITLE>
             <VALUE>Undergraduate</VALUE>
           </ITEM>
           <ITEM>
@@ -498,6 +498,11 @@
                 <SUBVALUE>Room &amp; Board - Res. Hall</SUBVALUE>
               </VALUE>
             </VALUES>
+            <LINK>
+              <URL>https://bcs-web-tst-01.is.berkeley.edu:8443/psp/bcstst/EMPLOYEE/SA/c/UC_PERSON_PROFILE.UC_STD_HOUSOPT_FLU.GBL?ucInstitution=UCB01&amp;ucAidYear=2016</URL>
+              <TITLE>Update</TITLE>
+              <IS_CS_LINK type="boolean">true</IS_CS_LINK>
+            </LINK>
           </ITEM>
         </ITEM_GROUPS>
         <ITEM_GROUPS type="array">
@@ -636,4 +641,7 @@
       </LINK>
     </LINKS>
   </FUNDING_SOURCES>
+  <COMMUNICATIONS>
+    <UNSOLICITED_RESOURCES_URL>https://bcs-web-tst-01.is.berkeley.edu:8443/psp/bcstst/EMPLOYEE/SA/c/UC_CC_CHKLST_UPLOAD_FLU.UC_CC_FILE_UPL_FLU.GBL?ucAdminFunction=FINA&amp;ucAidYear=2018</UNSOLICITED_RESOURCES_URL>
+  </COMMUNICATIONS>
 </ROOT>
