@@ -56,7 +56,7 @@ describe CampusSolutions::CollegeSchedulerController do
             get :get_advisor, options
             expect(response.status).to_not eq(302)
             expect(response.status).to eq(403)
-            expect(response.body).to eq " "
+            expect(response.body).to eq ''
           end
         end
       end

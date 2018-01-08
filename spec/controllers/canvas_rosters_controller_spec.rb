@@ -90,7 +90,7 @@ describe CanvasRostersController do
       it 'should respond with empty http 403' do
         get :get_csv, canvas_course_id: 'embedded', :format => :csv
         expect(response.status).to eq 403
-        expect(response.body).to eq ' '
+        expect(response.body).to eq ''
       end
     end
 
@@ -99,7 +99,7 @@ describe CanvasRostersController do
       it 'should respond with empty http 403' do
         get :get_csv, canvas_course_id: 'embedded', :format => :csv
         expect(response.status).to eq 403
-        expect(response.body).to eq ' '
+        expect(response.body).to eq ''
       end
     end
   end
@@ -149,7 +149,7 @@ describe CanvasRostersController do
       it 'should respond with empty http 403' do
         get :get_feed, canvas_course_id: 'embedded'
         expect(response.status).to eq 403
-        expect(response.body).to eq ' '
+        expect(response.body).to eq ''
       end
     end
 
@@ -158,7 +158,7 @@ describe CanvasRostersController do
       it 'should respond with empty http 403' do
         get :get_feed, canvas_course_id: 'embedded'
         expect(response.status).to eq 403
-        expect(response.body).to eq ' '
+        expect(response.body).to eq ''
       end
     end
   end
@@ -222,7 +222,7 @@ describe CanvasRostersController do
       it 'should respond with an empty HTTP 403' do
         get :profile, canvas_course_id: canvas_course_id, person_id: student_id
         expect(response.status).to eq 403
-        expect(response.body).to eq ' '
+        expect(response.body).to eq ''
       end
     end
 
@@ -231,7 +231,7 @@ describe CanvasRostersController do
       it 'should respond with an empty HTTP 403' do
         get :profile, canvas_course_id: 'embedded', person_id: student_id
         expect(response.status).to eq 403
-        expect(response.body).to eq ' '
+        expect(response.body).to eq ''
       end
     end
   end

@@ -46,8 +46,9 @@ describe MyClassEnrollmentsController do
       end
       it 'denies all access' do
         get :get_feed
+        puts response
         expect(response.status).to eq 403
-        expect(response.body).to eq ' '
+        expect(response.body).to eq ''
       end
     end
   end

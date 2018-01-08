@@ -27,7 +27,7 @@ shared_examples 'an authenticated endpoint' do
     it 'returns empty response' do
       make_request
       expect(response.status).to eq(401)
-      expect(response.body).to eq " "
+      expect(response.body).to eq ''
     end
   end
 end
@@ -40,7 +40,7 @@ shared_examples 'an unauthorized endpoint for delegates' do
   it 'denies all access' do
     make_request
     expect(response.status).to eq 403
-    expect(response.body).to eq ' '
+    expect(response.body).to eq ''
   end
 end
 
@@ -65,7 +65,7 @@ shared_examples 'an unauthorized endpoint for LTI' do
   it 'denies all access' do
     make_request
     expect(response.status).to eq 403
-    expect(response.body).to eq ' '
+    expect(response.body).to eq ''
   end
 end
 

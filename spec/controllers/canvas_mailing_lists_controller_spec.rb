@@ -22,7 +22,7 @@ describe CanvasMailingListsController do
       it 'should respond with empty http 403' do
         make_request
         expect(response.status).to eq 403
-        expect(response.body).to eq ' '
+        expect(response.body).to eq ''
       end
     end
   end

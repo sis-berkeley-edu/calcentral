@@ -229,7 +229,7 @@ describe CanvasCourseGradeExportController do
       it 'returns 403 error' do
         get :download_egrades_csv, canvas_course_id: 'embedded', :format => :csv, :term_cd => 'D', :term_yr => '2014', :ccn => '1234'
         expect(response.status).to eq(403)
-        expect(response.body).to eq " "
+        expect(response.body).to eq ''
       end
     end
 
@@ -238,7 +238,7 @@ describe CanvasCourseGradeExportController do
       it 'returns 403 error' do
         get :download_egrades_csv, canvas_course_id: 'embedded', :format => :csv, :term_cd => 'D', :term_yr => '2014', :ccn => '1234'
         expect(response.status).to eq(403)
-        expect(response.body).to eq ' '
+        expect(response.body).to eq ''
       end
     end
 
@@ -334,7 +334,7 @@ describe CanvasCourseGradeExportController do
       it 'returns 403 error' do
         get :is_official_course, :format => :csv
         expect(response.status).to eq(403)
-        expect(response.body).to eq ' '
+        expect(response.body).to eq ''
       end
     end
 
