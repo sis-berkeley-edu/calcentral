@@ -499,9 +499,11 @@ module EdoOracle
         SELECT 
           ACAD_PROG as applicant_program,
           ACAD_PROG_DESCR as applicant_program_descr,
+          ADMIT_TERM as admit_term,
           ADMIT_TYPE as admit_type,
           ADMIT_TYPE_DESCR as admit_type_desc,
-          ATHLETE as athlete
+          ATHLETE as athlete,
+          PROG_STATUS as admit_status
         FROM 
           SISEDO.APPLICANT_ADMIT_DATA_UGV00_VW
         WHERE 

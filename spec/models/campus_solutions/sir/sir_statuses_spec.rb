@@ -8,6 +8,9 @@ describe CampusSolutions::Sir::SirStatuses do
       feed: {
         checkListItems: [{
           chklstItemCd: 'AUSIRF',
+          checkListMgmtAdmp: {
+            acadCareer: 'UGRD'
+          },
           itemStatus: 'Initiated',
           itemStatusCode: 'I',
           adminFunc: 'ADMP'
@@ -108,7 +111,9 @@ describe CampusSolutions::Sir::SirStatuses do
   let(:new_admit_attributes_freshman_pathway) {
     {
       'applicant_program' => 'UCLS',
-      "applicant_program_descr" => 'College of Letters and Science',
+      'applicant_program_descr' => 'College of Letters and Science',
+      'admit_status' => 'AD',
+      'admit_term' => '2178',
       'admit_type' => 'FYR',
       'admit_type_desc' => 'First Year Student',
       'athlete' => 'N'
@@ -118,7 +123,9 @@ describe CampusSolutions::Sir::SirStatuses do
   let(:new_admit_attributes_transfer) {
     {
       'applicant_program' => 'UCLS',
-      "applicant_program_descr" => 'College of Letters and Science',
+      'applicant_program_descr' => 'College of Letters and Science',
+      'admit_status' => 'APP',
+      'admit_term' => '2165',
       'admit_type' => 'TRN',
       'admit_type_desc' => 'Transfer',
       'athlete' => 'N'
@@ -276,6 +283,7 @@ describe CampusSolutions::Sir::SirStatuses do
       before do
         CampusSolutions::MyChecklist.stub_chain(:new, :get_feed).and_return checklist_response_ugrd
         CampusSolutions::Sir::SirConfig.stub_chain(:new, :get).and_return sir_config_response_ugrd
+        EdoOracle::Queries.stub(:get_new_admit_status) { new_admit_attributes_freshman_pathway }
       end
       subject { (proxy.new(uid).get_feed)[:sirStatuses] }
 
@@ -284,12 +292,25 @@ describe CampusSolutions::Sir::SirStatuses do
       it 'returns an undergraduate sir application' do
         expect(subject[0][:chklstItemCd]).to eql('AUSIRF')
       end
+
+      it 'includes new admit roles' do
+        expect(subject[0][:newAdmitAttributes][:roles][:firstYearFreshman]).to eq true
+        expect(subject[0][:newAdmitAttributes][:roles][:transfer]).to eq false
+        expect(subject[0][:newAdmitAttributes][:roles][:athlete]).to eq false
+        expect(subject[0][:newAdmitAttributes][:roles][:firstYearPathway]).to eq true
+      end
+
+      it 'includes admit term and its correct type' do
+        expect(subject[0][:newAdmitAttributes][:admitTerm][:term]).to eq '2178'
+        expect(subject[0][:newAdmitAttributes][:admitTerm][:type]).to eq 'Fall'
+      end
     end
 
     context 'as an undergraduate student with an already-completed offer' do
       before do
         CampusSolutions::MyChecklist.stub_chain(:new, :get_feed).and_return checklist_response_ugrd_completed
         CampusSolutions::Sir::SirConfig.stub_chain(:new, :get).and_return sir_config_response_ugrd
+        EdoOracle::Queries.stub(:get_new_admit_status) { new_admit_attributes_freshman_pathway }
         Settings.stub(:new_admit_expiration_date).and_return('2018-02-22 12:00:00 -0700')
         DateTime.stub(:now).and_return('2018-02-21 12:00:00 -0700')
 
@@ -307,10 +328,6 @@ describe CampusSolutions::Sir::SirStatuses do
       end
 
       context 'as a freshman eligible for first year pathway' do
-        before do
-          EdoOracle::Queries.stub(:get_new_admit_status) { new_admit_attributes_freshman_pathway }
-        end
-        subject { (proxy.new(uid).get_feed)[:sirStatuses]}
         it 'adds the correct links to the status' do
           expect(subject[0][:newAdmitAttributes][:links][:coaFreshmanLink][:url]).to be_truthy
           expect(subject[0][:newAdmitAttributes][:links][:firstYearPathwayLink][:url]).to be_truthy
@@ -363,7 +380,4 @@ describe CampusSolutions::Sir::SirStatuses do
     end
 
   end
-
-
-
 end
