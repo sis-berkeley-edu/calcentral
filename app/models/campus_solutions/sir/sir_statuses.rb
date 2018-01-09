@@ -2,6 +2,7 @@ module CampusSolutions
   module Sir
     class SirStatuses < UserSpecificModel
 
+      include Berkeley::TermCodes
       include Cache::CachedFeed
       include Cache::UserCacheExpiry
       include Cache::RelatedCacheKeyTracker
@@ -82,15 +83,19 @@ module CampusSolutions
 
       def add_undergraduate_new_admit_attributes(sir_checklist_items)
         sir_checklist_items.try(:each) do |item|
-          if is_complete_undergraduate_item?(item)
-            application_nbr = item.try(:[], :checkListMgmtAdmp).try(:[], :admApplNbr).try(:to_s)
-            cs_id = lookup_campus_solutions_id
-            new_admit_attributes = {
-              visible: add_visibility_flag,
-              links: get_undergraduate_new_admit_links(cs_id, application_nbr)
-            }
-            item[:newAdmitAttributes] = new_admit_attributes
+          new_admit_attributes = {}
+          application_nbr = item.try(:[], :checkListMgmtAdmp).try(:[], :admApplNbr).try(:to_s)
+          cs_id = lookup_campus_solutions_id
+          if item.try(:[], :isUndergraduate)
+            new_admit_attributes.merge!(get_undergraduate_new_admit_roles(cs_id, application_nbr))
+            if is_complete_item? item
+              new_admit_attributes.merge!({
+                visible: add_visibility_flag,
+                links: get_undergraduate_new_admit_links(new_admit_attributes)
+              })
+            end
           end
+          item[:newAdmitAttributes] = new_admit_attributes
         end
         add_header_info(sir_checklist_items)
       end
@@ -101,12 +106,35 @@ module CampusSolutions
         current_date <= expiration_date
       end
 
-      def get_undergraduate_new_admit_links(campus_solutions_id, application_nbr)
-        new_admit_attributes = EdoOracle::Queries.get_new_admit_status(campus_solutions_id, application_nbr)
+      def get_undergraduate_new_admit_roles(campus_solutions_id, application_nbr)
+        status = EdoOracle::Queries.get_new_admit_status(campus_solutions_id, application_nbr)
+        return { errored: true } unless status.is_a?(Hash)
+        first_year_freshman = status.try(:[], 'admit_type') == 'FYR'
+        is_athlete = status.try(:[], 'athlete') == 'Y'
+        admit_term_code = from_edo_id(status.try(:[], 'admit_term'))
+        roles = {
+          athlete: is_athlete,
+          firstYearFreshman: first_year_freshman,
+          firstYearPathway: first_year_freshman && !is_athlete && ['UCLS', 'UCNR'].include?(status.try(:[], 'applicant_program')),
+          preMatriculated: ['AD', 'PM'].include?(status.try(:[], 'admit_status')),
+          transfer: status.try(:[], 'admit_type') == 'TRN'
+        }
+        admit_term = {
+          term: status.try(:[], 'admit_term'),
+          type: codes[admit_term_code.try(:[], :term_cd).to_sym]
+        }
+        {
+          roles: roles,
+          admitTerm: admit_term
+        }
+      end
+
+      def get_undergraduate_new_admit_links(new_admit_status)
+        admit_roles = new_admit_status[:roles]
         link_configuration = {
-          coaFreshmanLink: new_admit_attributes.try(:[], 'admit_type') == 'FYR' && new_admit_attributes.try(:[], 'athlete') == 'N',
-          coaTransferLink: new_admit_attributes.try(:[], 'admit_type') == 'TRN' || new_admit_attributes.try(:[], 'athlete') == 'Y',
-          firstYearPathwayLink: new_admit_attributes.try(:[], 'admit_type') == 'FYR' && new_admit_attributes.try(:[], 'athlete') == 'N' && ['UCLS', 'UCNR'].include?(new_admit_attributes.try(:[], 'applicant_program'))
+          coaFreshmanLink: admit_roles[:firstYearFreshman] && !admit_roles[:athlete],
+          coaTransferLink: admit_roles[:transfer] || admit_roles[:athlete],
+          firstYearPathwayLink: admit_roles[:firstYearPathway]
         }
         add_undergraduate_new_admit_links link_configuration
       end
@@ -148,8 +176,8 @@ module CampusSolutions
         ['I', 'R'].include?(checklist_item.try(:[], :itemStatusCode))
       end
 
-      def is_complete_undergraduate_item?(checklist_item)
-        checklist_item.try(:[], :itemStatusCode) == 'C' && checklist_item.try(:[], :isUndergraduate)
+      def is_complete_item?(checklist_item)
+        checklist_item.try(:[], :itemStatusCode) == 'C'
       end
 
       def unpack_deposit_response(deposit_response)
