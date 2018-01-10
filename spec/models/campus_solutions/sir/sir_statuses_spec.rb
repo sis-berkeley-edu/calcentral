@@ -341,7 +341,6 @@ describe CampusSolutions::Sir::SirStatuses do
         end
         subject { (proxy.new(uid).get_feed)[:sirStatuses]}
         it 'adds the correct links to the status' do
-          pp subject
           expect(subject[0][:newAdmitAttributes][:links][:coaFreshmanLink]).to be_falsey
           expect(subject[0][:newAdmitAttributes][:links][:firstYearPathwayLink]).to be_falsey
           expect(subject[0][:newAdmitAttributes][:links][:coaTransferLink][:url]).to be_truthy
