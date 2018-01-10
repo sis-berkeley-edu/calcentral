@@ -1,0 +1,132 @@
+{
+   "visible":true,
+   "links":{
+      "map":{
+         "status":{
+            "url":"https://apply.berkeley.edu/status",
+            "urlId":"UC_ADMT_MAP_STATUS",
+            "linkDescription":"Important admissions documents and forms are available in MAP@berkeley.edu.",
+            "linkDescriptionDisplay":true,
+            "showNewWindow":true,
+            "name":"MAP@berkeley.edu",
+            "title":"MAP@berkeley.edu"
+         }
+      },
+      "finAid":{
+         "fasoFaq":{
+            "url":"https://http://financialaid.berkeley.edu/newly-admitted-student-faq",
+            "urlId":"UC_ADMT_FA_FAQ",
+            "linkDescription":"Information about common financial aid topics.",
+            "linkDescriptionDisplay":true,
+            "showNewWindow":true,
+            "name":"Financial Aid & Scholarships FAQ",
+            "title":"Financial Aid & Scholarships FAQ"
+         },
+         "summerFinAid":{
+            "url":"https://financialaid.berkeley.edu/summer-aid",
+            "urlId":"UC_ADMT_SUM_FINAID",
+            "linkDescription":"Aid and scholarships information related to starting in the summer term.",
+            "linkDescriptionDisplay":true,
+            "showNewWindow":true,
+            "name":"Summer Financial Aid & Scholarships",
+            "title":"Summer Financial Aid & Scholarships"
+         },
+         "finAidAwards":{
+            "url":"/finances",
+            "linkDescription":"View your estimated cost of attendance and financial aid awards.",
+            "showNewWindow":false,
+            "name":"Your Financial Aid & Scholarships Awards",
+            "title":"Your Financial Aid & Scholarships Awards"
+         }
+      },
+      "admissions":{
+         "admissionsConditionsFreshman":{
+            "url":"https://apply.berkeley.edu/apply/form?id=d4bba55a-ce4f-4c5e-8c70-af5c814da58b",
+            "urlId":"UC_ADMT_COND_FRESH",
+            "linkDescription":"Meet these conditions to secure your admission.",
+            "linkDescriptionDisplay":true,
+            "showNewWindow":true,
+            "name":"Conditions of Admission",
+            "title":"Conditions of Admission"
+         },
+         "deferral":{
+            "url":"https://apply.berkeley.edu/apply/form?id=9c1a9370-c2a4-4022-8d25-b0aecb850d38",
+            "urlId":"UC_ADMT_DEFER",
+            "linkDescription":"Request a deferral of your enrollment.",
+            "linkDescriptionDisplay":true,
+            "showNewWindow":true,
+            "name":"Deferral Form",
+            "title":"Deferral Form"
+         },
+         "withdrawBeforeMatric":{
+            "url":"https://apply.berkeley.edu/apply/form?id=8af84e30-3cd9-4914-8840-226cc045d8e7",
+            "urlId":"UC_ADMT_WITHDR",
+            "linkDescription":"Cancel your admission.",
+            "linkDescriptionDisplay":true,
+            "showNewWindow":true,
+            "name":"Withdraw Form",
+            "title":"Withdraw Form"
+         }
+      },
+      "firstYearPathways":{
+         "pathwaysInfo":{
+            "url":"https://admissions.berkeley.edu/firstyearpathways",
+            "urlId":"UC_ADMT_FYPATH",
+            "linkDescription":"Learn about First-Year Pathways.",
+            "linkDescriptionDisplay":true,
+            "showNewWindow":true,
+            "name":"First-Year Pathways",
+            "title":"First-Year Pathways Learn More"
+         },
+         "selectionForm":{
+            "url":"https://apply.berkeley.edu/apply/form?id=ba3db23c-fd08-4e73-922e-374d6a4691e9",
+            "urlId":"UC_ADMT_FYP_SELECT",
+            "linkDescription":"Sign up for a pathway while space is available. Learn about First-Year Pathways.",
+            "linkDescriptionDisplay":true,
+            "showNewWindow":true,
+            "name":"First-Year Pathways Selection Form",
+            "title":"First-Year Pathways Selection Form"
+         },
+         "pathwaysFinAid":{
+            "url":"/finances",
+            "linkDescription":"Estimating your financial aid and scholarships based on your pathway choice.",
+            "showNewWindow":false,
+            "name":"First-Year Pathways Financial Aid",
+            "title":"First-Year Pathways Financial Aid"
+         }
+      },
+      "general":{
+         "admissionsFaq":{
+            "url":"https://apply.berkeley.edu/apply/form?id=fd3dad1e-6ba6-44bf-a9fd-8fc1152d0e2e",
+            "urlId":"UC_ADMT_ADMSSNS_FAQ",
+            "linkDescription":"Answers to common admissions questions.",
+            "linkDescriptionDisplay":true,
+            "showNewWindow":true,
+            "name":"Admissions FAQ",
+            "title":"Admissions FAQ"
+         },
+         "calStudentCentral":{
+            "url":"https://studentcentral.berkeley.edu/newlyadmitted",
+            "urlId":"UC_ADMT_CAL_STDNT_CNTRL",
+            "linkDescription":"Contact for questions about billing, financial aid, etc.",
+            "linkDescriptionDisplay":true,
+            "showNewWindow":true,
+            "name":"Cal Student Central",
+            "title":"Cal Student Central"
+         },
+         "contactUgrdAdmissions":{
+            "url":"https://admissions.berkeley.edu/contactus",
+            "urlId":"UC_ADMT_CNTCT_UGRD_ADMSSNS",
+            "linkDescription":"For specific questions about changing majors, deferment, withdrawal, transcripts, exams, etc.",
+            "linkDescriptionDisplay":true,
+            "showNewWindow":true,
+            "name":"Contact Office of Undergraduate Admissions",
+            "title":"Contact Office of Undergraduate Admissions"
+         }
+      }
+   },
+   "admissionsEvaluator":{
+      "name":"Scott Summers",
+      "email":"cyclops@xmen.edu"
+   }
+}

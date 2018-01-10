@@ -23,6 +23,7 @@ module CampusSolutions
         withdrawAfterMatric: 'UC_CX_SRWITHDRL_ADD'
       },
       firstYearPathways: {
+        pathwaysInfo: 'UC_ADMT_FYPATH',
         selectionForm: 'UC_ADMT_FYP_SELECT',
         pathwaysFinAid: 'UC_ADMT_FYPATH_FA_SPG'
       },
@@ -70,6 +71,7 @@ module CampusSolutions
           url: '/finances',
           linkDescription: 'View your estimated cost of attendance and financial aid awards.',
           showNewWindow: false,
+          name: 'Your Financial Aid & Scholarships Awards',
           title: 'Your Financial Aid & Scholarships Awards'
           }
         })
@@ -92,6 +94,7 @@ module CampusSolutions
           url: '/finances',
           linkDescription: pathways_links.try(:[], :pathwaysFinAid).try(:[], :linkDescription),
           showNewWindow: false,
+          name: pathways_links.try(:[], :pathwaysFinAid).try(:[], :name),
           title: pathways_links.try(:[], :pathwaysFinAid).try(:[], :title)
         }
         pathways_links[:pathwaysFinAid] = non_spring_pathways_fin_aid

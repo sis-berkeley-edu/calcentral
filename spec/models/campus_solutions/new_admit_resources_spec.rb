@@ -210,7 +210,6 @@ describe CampusSolutions::NewAdmitResources do
         end
         subject { proxy.new(uid).get_feed }
         it 'returns a simple response indicating expiration of the card' do
-          pp subject
           expect(subject[:visible]).to eq false
         end
       end
