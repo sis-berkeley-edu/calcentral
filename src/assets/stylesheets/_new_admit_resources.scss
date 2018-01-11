@@ -1,0 +1,18 @@
+.cc-widget-new-admit-resources {
+  .cc-widget-new-admit-resources-admissions-evaluator {
+    margin-bottom: 20px;
+    p {
+      margin: 0;
+    }
+  }
+  .cc-widget-new-admit-resources-section {
+    border-bottom: 1px solid $cc-color-whisper;
+    h3 {
+      margin: 0;
+    }
+    &:first-child {
+      padding-bottom: 10px;
+      padding-top: 0;
+    }
+  }
+}

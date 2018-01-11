@@ -1,0 +1,57 @@
+<div class="cc-widget cc-widget-new-admit-resources" data-ng-controller="NewAdmitResourcesController">
+  <div class="cc-widget-title">
+    <h2>New Admit Resources</h2>
+  </div>
+  <div class="cc-widget-text">
+    <div class="cc-widget-new-admit-resources-section">
+      Important admissions documents and forms are available in <a data-ng-href="{{newAdmitResources.links.map.status.url}}">MAP@berkeley.edu.</a>
+    </div>
+    <div class="cc-widget-new-admit-resources-section">
+      <data-cc-expandable-link-list-directive data-links="newAdmitResources.links.finAid" data-section-title="'Financial Aid &amp; Scholarships'"></data-cc-expandable-link-list-directive>
+    </div>
+    <div class="cc-widget-new-admit-resources-section">
+      <h3 class="cc-widget-list-hover"
+          data-ng-class="{'cc-widget-list-hover-opened':(newAdmitResources.admissionsSection.show)}"
+          data-ng-click="api.widget.toggleShow($event, null, newAdmitResources.admissionsSection, 'Dashboard - New Admit Resources')">Admissions Changes</h3>
+      <ul data-ng-if="newAdmitResources.admissionsSection.show" class="cc-list-bullets">
+        <li data-ng-repeat="(linkName, link) in newAdmitResources.links.admissions">
+          <a data-ng-href="{{link.url}}" data-ng-attr-title="{{link.title}}"><span data-ng-bind="link.name"></span></a>
+          <p data-ng-bind="link.linkDescription"></p>
+        </li>
+      </ul>
+      <div data-ng-if="newAdmitResources.admissionsEvaluator.name && newAdmitResources.admissionsEvaluator.email && newAdmitResources.admissionsSection.show" class="cc-widget-new-admit-resources-admissions-evaluator">
+        <h4>Admissions Officer</h4>
+        <p data-ng-bind="newAdmitResources.admissionsEvaluator.name"></p>
+        <a data-ng-href="mailto:{{newAdmitResources.admissionsEvaluator.email}}" data-ng-bind="newAdmitResources.admissionsEvaluator.email"></a>
+        <br/>
+        <br/>
+        <p>Contact if you have questions regarding your conditions of admission.</p>
+      </div>
+    </div>
+    <div data-ng-if="newAdmitResources.pathwaysSection.visible" class="cc-widget-new-admit-resources-section">
+      <h3 class="cc-widget-list-hover"
+          data-ng-class="{'cc-widget-list-hover-opened':(newAdmitResources.pathwaysSection.show)}"
+          data-ng-click="api.widget.toggleShow($event, null, newAdmitResources.pathwaysSection, 'Dashboard - New Admit Resources')">First-Year Pathways</h3>
+      <ul data-ng-if="newAdmitResources.pathwaysSection.show" class="cc-list-bullets">
+        <li data-ng-if="newAdmitResources.links.firstYearPathways.selectionForm.url">
+          <a data-ng-href="{{newAdmitResources.links.firstYearPathways.selectionForm.url}}"
+             data-ng-attr-title="{{newAdmitResources.links.firstYearPathways.selectionForm.title}}"><span data-ng-bind="newAdmitResources.links.firstYearPathways.selectionForm.name"></span>
+           </a>
+          <p>Sign up for a pathway while space is available. Learn about
+             <a data-ng-href="{{newAdmitResources.links.firstYearPathways.pathwaysInfo.url}}" data-ng-attr-title="newAdmitResources.links.firstYearPathways.pathwaysInfo.title">First-Year Pathways.</a>
+          </p>
+        </li>
+        <li data-ng-if="newAdmitResources.links.firstYearPathways.pathwaysFinAid.url">
+          <a data-ng-href="{{newAdmitResources.links.firstYearPathways.pathwaysFinAid.url}}"
+             data-ng-attr-title="{{newAdmitResources.links.firstYearPathways.pathwaysFinAid.title}}">
+             <span data-ng-bind="newAdmitResources.links.firstYearPathways.pathwaysFinAid.name"></span>
+          </a>
+          <p data-ng-bind="newAdmitResources.links.firstYearPathways.pathwaysFinAid.linkDescription"></p>
+        </li>
+      </ul>
+    </div>
+    <div class="cc-widget-new-admit-resources-section">
+      <data-cc-expandable-link-list-directive data-links="newAdmitResources.links.general" data-section-title="'Your Questions Answered Here'"></data-cc-expandable-link-list-directive>
+    </div>
+  </div>
+</div>

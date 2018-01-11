@@ -513,5 +513,19 @@ module EdoOracle
       result.first
     end
 
+    def self.get_new_admit_evaluator (student_id, application_nbr)
+      result = safe_query <<-SQL
+        SELECT
+          EVALUATOR_NAME as evaluator_name,
+          EVALUATOR_EMAIL as evaluator_email
+        FROM
+          SISEDO.APPLICANT_ADMIT_DATA_UGV00_VW
+        WHERE
+          STUDENT_ID = '#{student_id}' AND
+          APPLICATION_NBR = '#{application_nbr}'
+      SQL
+      result.first
+    end
+
   end
 end

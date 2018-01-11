@@ -93,6 +93,7 @@ Calcentral::Application.routes.draw do
     get '/api/my/campuslinks/refresh' => 'my_campus_links#refresh', :defaults => { :format => 'json' }
     get '/api/my/registrations' => 'my_registrations#get_feed', :defaults => { :format => 'json' }
     get '/api/my/sir_statuses' => 'sir_statuses#get_feed', :defaults => { :format => 'json' }
+    get '/api/my/new_admit_resources' =>'new_admit_resources#get_feed', :defaults => { :format => 'json' }
     get '/api/academics/enrollment_verification' => 'enrollment_verification#get_feed', :defaults => { :format => 'json' }
     get '/api/academics/degree_progress/ugrd' => 'my_degree_progress#get_undergraduate_requirements', :defaults => { :format => 'json' }
     get '/api/academics/degree_progress/grad' => 'my_degree_progress#get_graduate_milestones', :defaults => { :format => 'json' }
