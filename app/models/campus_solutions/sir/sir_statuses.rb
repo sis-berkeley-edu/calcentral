@@ -90,7 +90,7 @@ module CampusSolutions
             new_admit_attributes.merge!(get_undergraduate_new_admit_roles(cs_id, application_nbr))
             if is_complete_item? item
               new_admit_attributes.merge!({
-                visible: add_visibility_flag,
+                visible: add_visibility_flag(new_admit_attributes),
                 links: get_undergraduate_new_admit_links(new_admit_attributes)
               })
             end
@@ -100,10 +100,12 @@ module CampusSolutions
         add_header_info(sir_checklist_items)
       end
 
-      def add_visibility_flag
-        expiration_date = Settings.new_admit_expiration_date
+      def add_visibility_flag(new_admit_attributes)
+        start_term = Settings.new_admits.start_term
+        expiration_date = Settings.new_admits.expiration_date
+        student_admit_term = new_admit_attributes.try(:[], :admitTerm).try(:[], :term)
         current_date = Settings.terms.fake_now || DateTime.now
-        current_date <= expiration_date
+        student_admit_term.try(:to_i) >= start_term.try(:to_i) && current_date <= expiration_date
       end
 
       def get_undergraduate_new_admit_roles(campus_solutions_id, application_nbr)

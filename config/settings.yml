@@ -474,6 +474,10 @@ grading_period:
           start: ''
           end: ''
 
+new_admits:
+  start_term: 2185
+  expiration_date: 2018-08-22 23:59:59 -0700
+
 # A feature will be disabled if the corresponding feature-flag is false or nil.
 features:
   advising: false
