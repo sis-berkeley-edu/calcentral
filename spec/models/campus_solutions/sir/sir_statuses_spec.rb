@@ -113,7 +113,7 @@ describe CampusSolutions::Sir::SirStatuses do
       'applicant_program' => 'UCLS',
       'applicant_program_descr' => 'College of Letters and Science',
       'admit_status' => 'AD',
-      'admit_term' => '2178',
+      'admit_term' => '2185',
       'admit_type' => 'FYR',
       'admit_type_desc' => 'First Year Student',
       'athlete' => 'N'
@@ -301,8 +301,8 @@ describe CampusSolutions::Sir::SirStatuses do
       end
 
       it 'includes admit term and its correct type' do
-        expect(subject[0][:newAdmitAttributes][:admitTerm][:term]).to eq '2178'
-        expect(subject[0][:newAdmitAttributes][:admitTerm][:type]).to eq 'Fall'
+        expect(subject[0][:newAdmitAttributes][:admitTerm][:term]).to eq '2185'
+        expect(subject[0][:newAdmitAttributes][:admitTerm][:type]).to eq 'Summer'
       end
     end
 
@@ -311,7 +311,8 @@ describe CampusSolutions::Sir::SirStatuses do
         CampusSolutions::MyChecklist.stub_chain(:new, :get_feed).and_return checklist_response_ugrd_completed
         CampusSolutions::Sir::SirConfig.stub_chain(:new, :get).and_return sir_config_response_ugrd
         EdoOracle::Queries.stub(:get_new_admit_status) { new_admit_attributes_freshman_pathway }
-        Settings.stub(:new_admit_expiration_date).and_return('2018-02-22 12:00:00 -0700')
+        Settings.stub_chain(:new_admits, :expiration_date).and_return('2018-02-22 12:00:00 -0700')
+        Settings.stub_chain(:new_admits, :start_term).and_return(2185)
         DateTime.stub(:now).and_return('2018-02-21 12:00:00 -0700')
 
         allow_any_instance_of(LinkFetcher).to receive(:fetch_link).and_return link_api_response
