@@ -1,5 +1,17 @@
 module CampusSolutions
   class MessageCatalog < GlobalCachedProxy
+    include ClassLogger
+
+    def self.get_message_catalog_definition(message_set_nbr, message_nbr)
+      instance = self.new({message_set_nbr: message_set_nbr, message_nbr: message_nbr})
+      response = instance.get
+      if response.try(:[], :statusCode) == 200
+        return response.try(:[], :feed).try(:[], :root).try(:[], :getMessageCatDefn)
+      else
+        logger.warn "Failed to obtain message catalog definition: message_set_nbr: #{message_set_nbr}; message_nbr: #{message_nbr}"
+      end
+      nil
+    end
 
     def initialize(options = {})
       super options

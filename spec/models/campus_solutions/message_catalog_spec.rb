@@ -1,4 +1,49 @@
 describe CampusSolutions::MessageCatalog do
+
+  let(:message_set_nbr) { '26500' }
+  let(:message_nbr) { '112' }
+  let(:mocked_response) do
+    {
+      statusCode: status_code,
+      feed: feed
+    }
+  end
+  let(:status_code) { 200 }
+  let(:feed) { {root: root} }
+  let(:root) do
+    {
+      getMessageCatDefn: {
+        messageSetNbr: message_set_nbr,
+        messageNbr: message_nbr,
+        messageText: 'message text',
+        msgSeverity: 'M',
+        descrlong: 'long message description'
+      }
+    }
+  end
+
+  context '.get_message_catalog_definition' do
+    subject { described_class.get_message_catalog_definition(message_set_nbr, message_nbr) }
+    before { allow_any_instance_of(described_class).to receive(:get).and_return(mocked_response) }
+
+    context 'when failed response' do
+      let(:status_code) { 500 }
+      it { should be_nil }
+    end
+    context 'when message catalog definition not present' do
+      let(:root) { {} }
+      it { should be_nil }
+    end
+    context 'when message catalog definition is present' do
+      it 'returns definition' do
+        expect(subject).to have_key(:messageSetNbr)
+        expect(subject).to have_key(:messageNbr)
+        expect(subject).to have_key(:messageText)
+        expect(subject).to have_key(:descrlong)
+      end
+    end
+  end
+
   shared_examples 'a proxy that gets data' do
     let(:message_set_nbr) {'26500'}
     let(:message_nbr) {'112'}
