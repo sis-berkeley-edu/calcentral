@@ -67,6 +67,15 @@ describe 'MyAcademics::GpaUnits' do
         expect(feed[:gpaUnits][:totalUnits]).to be nil
       end
     end
+
+    context 'when campus solutions id lookup fails' do
+      before do
+        allow_any_instance_of(CalnetCrosswalk::ByUid).to receive(:lookup_campus_solutions_id).and_return nil
+      end
+      it 'cannot call the EDO query' do
+        expect(feed[:gpaUnits][:edo_empty]).to eq true
+      end
+    end
   end
 
 end

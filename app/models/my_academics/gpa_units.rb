@@ -13,7 +13,10 @@ module MyAcademics
       hub_response = MyAcademics::MyAcademicStatus.new(@uid).get_feed
       # P/NP units from the Hub are calculated differently than desired, so we grab them from an EDODB view instead
       # EDODB P/NP units take into account repeat courses, making them more accurate than the values obtained from the Hub
-      edo_response = EdoOracle::Queries.get_pnp_unit_count(get_campus_solutions_id)
+      if (campus_solutions_id = get_campus_solutions_id)
+        edo_response = EdoOracle::Queries.get_pnp_unit_count(campus_solutions_id)
+      end
+
       result = {}
       #copy needed fields from response obj
       result[:errored] = hub_response[:errored]
