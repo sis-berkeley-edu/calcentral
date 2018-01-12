@@ -12,7 +12,6 @@ module CampusSolutions
     def self.field_mappings
       @field_mappings ||= FieldMapping.to_hash(
         [
-          FieldMapping.required(:type, :NAME_TYPE),
           FieldMapping.required(:firstName, :FIRST_NAME),
           FieldMapping.required(:lastName, :LAST_NAME),
           FieldMapping.required(:initials, :NAME_INITIALS),
@@ -43,7 +42,8 @@ module CampusSolutions
     def default_post_params
       super.merge(
         {
-          COUNTRY_NM_FORMAT: '001'
+          COUNTRY_NM_FORMAT: '001',
+          NAME_TYPE: 'PRF'
         })
     end
 
