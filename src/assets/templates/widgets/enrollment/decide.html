@@ -31,12 +31,19 @@
   <div data-ng-if="!enrollmentInstruction.isClassScheduleAvailable && !isInstructionType(enrollmentInstruction, ['haasEveningWeekendMba','haasFullTimeMba'])">
     Ability to enroll coming soon. Please try again later.
   </div>
-  <div data-ng-if="!isInstructionType(enrollmentInstruction, ['law', 'summerVisitor','haasEveningWeekendMba','haasFullTimeMba'])">
-    Learn more about <a href="http://registrar.berkeley.edu/Records/tbinfo.html">enrollment rules and information</a>.
-  </div>
-  <div data-ng-if="isInstructionType(enrollmentInstruction, ['summerVisitor'])">
-    Enrollment and fee policies for Summer Sessions may differ from those in effect during the fall/spring semesters, and you will be subject to the <a href="http://summer.berkeley.edu/enrollment-changes/dropping-all-your-courses#cancellation" class="external-link" rel="nofollow" title="Follow link">$100 cancellation fee</a>
-    if you drop all classes even if those classes have not yet begun. Learn more about Summer Sessions enrollment and fee policies at <a href="http://summer.berkeley.edu/" class="external-link" rel="nofollow" title="Follow link">summer.berkeley.edu</a>.
+  <div data-ng-if="!isInstructionType(enrollmentInstruction, ['law','haasEveningWeekendMba','haasFullTimeMba'])">
+    <div data-ng-if="!enrollmentInstruction.termIsSummer">
+      Learn more about <a href="http://registrar.berkeley.edu/Records/tbinfo.html">enrollment rules and information</a>.
+    </div>
+    <div data-ng-if="enrollmentInstruction.termIsSummer">
+      Enrollment and fee policies for Summer Sessions may differ from those in effect during the fall/spring semesters,
+      and you will be subject to the
+      <a href="http://summer.berkeley.edu/enrollment-changes/dropping-all-your-courses#cancellation"
+        class="external-link" rel="nofollow" title="Follow link">$100 cancellation fee</a>
+      if you drop all classes even if those classes have not yet begun. Learn more about Summer Sessions enrollment and
+      fee policies at
+      <a href="http://summer.berkeley.edu/" class="external-link" rel="nofollow" title="Follow link">summer.berkeley.edu</a>.
+    </div>
   </div>
 
   <div
