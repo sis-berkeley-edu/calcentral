@@ -1,6 +1,5 @@
-<div class="cc-clearfix-container cc-text-small" data-ng-if="finaidSummary.finaidYears.length">
-  <div class="cc-left" data-ng-if="!finaidSummaryInfo.errored">
-    <a data-ng-href="{{finaidUrl}}" data-ng-if="(!shoppingSheet.url || !api.user.profile.actAsOptions.canSeeCSLinks) && !isMainFinaid">View Awards</a>
+<div class="cc-text-small" data-ng-if="finaidSummary.finaidYears.length">
+  <div data-ng-if="!finaidSummaryInfo.errored">
     <a data-ng-if="shoppingSheet.url && api.user.profile.actAsOptions.canSeeCSLinks"
       data-cc-campus-solutions-link-directive
       data-cc-campus-solutions-link-directive-url="shoppingSheet.url"
@@ -11,7 +10,7 @@
       data-cc-campus-solutions-link-directive-uc-from-text="true"
     ><i class="fa fa-file-text"></i> Shopping Sheet</a>
   </div>
-  <div class="cc-right">
+  <div>
     <a href="http://financialaid.berkeley.edu/">Learn more about Financial Aid</a>
   </div>
 </div>
