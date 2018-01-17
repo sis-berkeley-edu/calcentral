@@ -78,7 +78,9 @@
             data-ng-repeat="advisor in myAdvising.advisors"
             data-ng-if="myAdvising.advisors.length > 0">
             <div>
-              <strong data-ng-bind="advisor.assignedAdvisorType"></strong> (<span data-ng-bind="advisor.assignedAdvisorProgram"></span>)
+              <strong data-ng-bind="advisor.assignedAdvisorType"></strong>
+              <span data-ng-if="advisor.assignedAdvisorProgram"
+                data-ng-bind=" '(' + advisor.assignedAdvisorProgram + ')'"></span>
             </div>
             <div>
               <span data-ng-bind="advisor.assignedAdvisorName"></span>
