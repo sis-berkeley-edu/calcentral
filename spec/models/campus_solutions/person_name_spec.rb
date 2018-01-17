@@ -10,13 +10,15 @@ describe CampusSolutions::PersonName do
       let(:params) { {
         bogus: 1,
         invalid: 2,
+        type: 'LEG',
         firstName: 'Joe'
       } }
       subject { proxy.filter_updateable_params(params) }
-      it 'should strip out invalid fields' do
-        expect(subject.keys.length).to eq 16
+      it 'should strip out invalid and non-permitted fields' do
+        expect(subject.keys.length).to eq 15
         expect(subject[:bogus]).to be_nil
         expect(subject[:invalid]).to be_nil
+        expect(subject[:nameType]).to be_nil
         expect(subject[:firstName]).to eq 'Joe'
       end
     end
@@ -31,8 +33,10 @@ describe CampusSolutions::PersonName do
         MultiXml.parse(result)['NAMES']
       }
       it 'should convert the CalCentral params to Campus Solutions params without exploding on bogus fields' do
-        expect(subject['NAME_TYPE']).to eq 'LEG'
         expect(subject['FIRST_NAME']).to eq 'Joe'
+      end
+      it 'should force the type to be PRF (preferred)' do
+        expect(subject['NAME_TYPE']).to eq 'PRF'
       end
     end
 

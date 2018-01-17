@@ -59,7 +59,6 @@ angular.module('calcentral.controllers').controller('BasicPreferredNameControlle
 
   $scope.save = function(item) {
     apiService.profile.save($scope, profileFactory.postName, {
-      type: 'PRF',
       firstName: item.givenName,
       middleName: item.middleName,
       lastName: item.familyName,
