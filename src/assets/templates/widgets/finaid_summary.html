@@ -1,27 +1,30 @@
 <div class="cc-widget cc-widget-finaid-summary" data-ng-controller="FinaidSummaryController">
   <div class="cc-widget-title">
     <h2 class="cc-left">Financial Aid and Scholarships</h2>
-    <a data-ng-if="!isMainFinaid && finaidUrl && !finaidSummaryInfo.errored" class="cc-right cc-widget-title-link" data-ng-href="{{finaidUrl}}">
-      <strong>Details</strong>
-    </a>
   </div>
   <div class="cc-widget-text" data-cc-spinner-directive="finaidSummaryInfo.isLoadingOptions">
+    <a data-ng-if="!isMainFinaid && finaidUrl && !finaidSummaryInfo.errored" class="cc-button cc-button-blue" data-ng-href="{{finaidUrl}}">
+      <strong>View Awards</strong>
+    </a>
     <div data-ng-if="!finaidSummaryInfo.errored">
       <div data-ng-if="finaidSummary.finaidYears.length">
-        <ul class="cc-list-links">
-        <li data-ng-if="!selected.finaidYear.termsAndConditions.approved">
-          <a data-ng-href="{{finaidUrl}}/tc" class="cc-outbound-link" title="Accept terms and conditions">Accept terms and conditions</a>
-        </li>
-        <li data-ng-if="!finaidSummary.title4.approved">
-          <a data-ng-href="{{finaidUrl}}/t4" class="cc-outbound-link" title="Authorize Title IV authorization">Authorize Title IV authorization</a>
-        </li>
-      </ul>
-        <hr data-ng-if="!selected.finaidYear.termsAndConditions.approved || !finaidSummary.title4.approved" aria-hidden="true">
+        <ul class="cc-list-links" data-ng-if="api.user.profile.features.finaidSummaryTcT4Links">
+          <li data-ng-if="!selected.finaidYear.termsAndConditions.approved">
+            <a data-ng-href="{{finaidUrl}}/tc" class="cc-outbound-link" title="Accept terms and conditions">Accept terms and conditions</a>
+          </li>
+          <li data-ng-if="!finaidSummary.title4.approved">
+            <a data-ng-href="{{finaidUrl}}/t4" class="cc-outbound-link" title="Authorize Title IV authorization">Authorize Title IV authorization</a>
+          </li>
+        </ul>
+        <hr data-ng-if="!isMainFinaid || api.user.profile.features.finaidSummaryTcT4Links" aria-hidden="true">
         <div data-ng-include="'widgets/finaid_summary_aidyear.html'"></div>
+        <div data-ng-include="'widgets/finaid_summary_semester.html'"></div>
         <hr data-ng-if="selected.finaidYear.availableSemesters.length" aria-hidden="true">
         <div>
-          <div data-ng-include="'widgets/finaid_summary_semester.html'"></div>
           <div data-cc-spinner-directive="finaidSummaryInfo.isLoadingData">
+            <div data-ng-if="finaidSummaryInfo.tasksCount > 0">
+              <a data-ng-href="{{finaidUrl}}" data-ng-disabled="isMainFinaid"><i class="fa fa-bell cc-icon" data-ng-class="{'cc-icon-gold':(isMainFinaid), 'cc-icon-blue':(!isMainFinaid)}"></i><span data-ng-bind="finaidSummaryInfo.tasksCount"></span> incomplete</a> financial aid tasks
+            </div>
             <div data-ng-include="'widgets/finaid_summary_netcost.html'"></div>
             <hr data-ng-if="!finaidSummaryData.netCost" aria-hidden="true">
             <div data-ng-include="'widgets/finaid_summary_fundingoffered.html'"></div>
