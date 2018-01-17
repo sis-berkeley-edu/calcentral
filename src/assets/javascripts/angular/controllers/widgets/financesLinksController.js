@@ -15,7 +15,7 @@ angular.module('calcentral.controllers').controller('FinancesLinksController', f
     data: {},
     linkOrder: ['Payment Options', 'Tuition and Fees', 'Billing FAQ', 'FAFSA', 'Dream Act Application', 'Financial Aid & Scholarships Office',
                 'MyFinAid (aid prior to Fall 2016)', 'Cost of Attendance', 'Graduate Financial Support', 'Work-Study', 'Financial Literacy',
-                'National Student Loan Database System', 'Loan Repayment Calculator', 'Federal Student Loans', 'Student Advocates Office',
+                'National Student Loan Database System', 'Loan Repayment Calculator', 'Federal Student Loans', 'Student Advocate\'s Office',
                 'Berkeley International Office', 'Have a loan?', 'Withdrawing or Canceling?', 'Summer Fees', 'Canceling and Withdrawing from Summer',
                 'Summer Schedule & Deadlines', 'Summer Sessions Website', 'Cal Student Central']
   };
