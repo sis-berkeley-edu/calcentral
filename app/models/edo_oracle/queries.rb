@@ -494,9 +494,9 @@ module EdoOracle
       result.first
     end
 
-    def self.get_new_admit_status (student_id, application_nbr)
+    def self.get_new_admit_status(student_id, application_nbr)
       result = safe_query <<-SQL
-        SELECT 
+        SELECT
           ACAD_PROG as applicant_program,
           ACAD_PROG_DESCR as applicant_program_descr,
           ADMIT_TERM as admit_term,
@@ -504,9 +504,9 @@ module EdoOracle
           ADMIT_TYPE_DESCR as admit_type_desc,
           ATHLETE as athlete,
           PROG_STATUS as admit_status
-        FROM 
+        FROM
           SISEDO.APPLICANT_ADMIT_DATA_UGV00_VW
-        WHERE 
+        WHERE
           STUDENT_ID = '#{student_id}' AND
           APPLICATION_NBR = '#{application_nbr}'
       SQL

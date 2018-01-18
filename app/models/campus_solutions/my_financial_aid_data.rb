@@ -13,8 +13,9 @@ module CampusSolutions
     def get_feed_internal
       if is_feature_enabled && (self.aid_year ||= CampusSolutions::MyAidYears.new(@uid).default_aid_year)
         logger.debug "User #{@uid}; aid year #{aid_year}"
-        feed = CampusSolutions::FinancialAidData.new(user_id: @uid, aid_year: aid_year).get
-        CampusSolutions::FinancialAidDataHousingSegregator.segregate(feed)
+        finaid_feed = CampusSolutions::FinancialAidData.new(user_id: @uid, aid_year: aid_year).get
+        segregated_feed = CampusSolutions::FinancialAidDataHousingSegregator.segregate(finaid_feed)
+        CampusSolutions::FinancialAidHousing.append_housing(@uid, segregated_feed)
       else
         {}
       end
