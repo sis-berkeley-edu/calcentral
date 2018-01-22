@@ -142,6 +142,7 @@ describe CampusSolutions::NewAdmitResources do
       expect(subject[:links][:finAid][:fasoFaq][:url]).to be_truthy
       expect(subject[:links][:finAid][:summerFinAid][:url]).to be_truthy
       expect(subject[:links][:admissions][:deferral][:url]).to be_truthy
+      expect(subject[:links][:admissions][:ugrdUpdateForm][:url]).to be_truthy
       expect(subject[:links][:general][:admissionsFaq][:url]).to be_truthy
       expect(subject[:links][:general][:calStudentCentral][:url]).to be_truthy
       expect(subject[:links][:general][:contactUgrdAdmissions][:url]).to be_truthy
