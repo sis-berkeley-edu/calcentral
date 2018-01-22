@@ -6,7 +6,8 @@ var angular = require('angular');
 /**
  * Finaid Housing controller
  */
-angular.module('calcentral.controllers').controller('FinaidHousingController', function($scope, finaidFactory, finaidService) {
+angular.module('calcentral.controllers').controller('FinaidHousingController', function($scope, finaidFactory, finaidService, linkService) {
+  linkService.addCurrentRouteSettings($scope);
 
   var processHousingData = function(response) {
     $scope.housing = _.get(response, 'data.feed.housing');
