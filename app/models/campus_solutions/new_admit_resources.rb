@@ -69,7 +69,7 @@ module CampusSolutions
 
     def parse_fin_aid_links(fin_aid_links)
       fin_aid_links[:finAidAwards] = {
-         url: '/finances',
+         url: calcentral_financial_aid_link,
          linkDescription: 'View your estimated cost of attendance and financial aid awards.',
          showNewWindow: false,
          name: 'Your Financial Aid & Scholarships Awards',
@@ -92,7 +92,7 @@ module CampusSolutions
       return {} unless attributes.try(:[], :roles).try(:[], :firstYearPathway)
       if non_spring_admit(attributes.try(:[], :admitTerm))
         non_spring_pathways_fin_aid = {
-          url: '/finances',
+          url: calcentral_financial_aid_link,
           linkDescription: pathways_links.try(:[], :pathwaysFinAid).try(:[], :linkDescription),
           showNewWindow: false,
           name: pathways_links.try(:[], :pathwaysFinAid).try(:[], :name),
@@ -101,6 +101,23 @@ module CampusSolutions
         pathways_links[:pathwaysFinAid] = non_spring_pathways_fin_aid
       end
       pathways_links
+    end
+
+    def calcentral_financial_aid_link
+      latest_aid_year.present? ? '/finances/finaid/' + latest_aid_year.to_s : '/finances'
+    end
+
+    def latest_aid_year
+      @aid_year ||= get_latest_aid_year
+    end
+
+    def get_latest_aid_year
+      aid_years = []
+      aid_years_feed = CampusSolutions::MyAidYears.new(@uid).get_feed
+      aid_years_feed.try(:[], :feed).try(:[], :finaidSummary).try(:[], :finaidYears).try(:each) do |aid_year_obj|
+        aid_years.push(aid_year_obj.try(:[], :id).try(:to_i))
+      end
+      aid_years.max
     end
 
     def links

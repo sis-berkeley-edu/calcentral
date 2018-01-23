@@ -5,6 +5,7 @@ describe CampusSolutions::NewAdmitResources do
   let(:link_api_response) { {url: true} }
   before(:each) do
     allow_any_instance_of(LinkFetcher).to receive(:fetch_link).and_return link_api_response
+    CampusSolutions::MyAidYears.stub_chain(:new, :get_feed).and_return aid_years_response
   end
 
   let(:sir_statuses_incomplete_base_response) {
@@ -113,6 +114,16 @@ describe CampusSolutions::NewAdmitResources do
     }
   }
 
+  let(:aid_years_response) {
+    {
+      feed: {
+        finaidSummary: {
+          finaidYears: [{ id: 2018 }, { id: 2017 }, { id: 2016 }, { id:2009 }, { id: 2065 }]
+        }
+      }
+    }
+  }
+
   let(:evaluator_response) {
     {
       'evaluator_name' => 'James P. Sullivan',
@@ -192,8 +203,8 @@ describe CampusSolutions::NewAdmitResources do
           expect(subject[:links][:firstYearPathways][:selectionForm][:url]).to be_truthy
           expect(subject[:links][:firstYearPathways][:pathwaysFinAid][:url]).to be_truthy
         end
-        it 'shows the fall-admit first-year-pathway financial aid link' do
-          expect(subject[:links][:firstYearPathways][:pathwaysFinAid][:url]).to eq '/finances'
+        it 'shows the fall-admit first-year-pathway financial aid link attached to the latest aid year' do
+          expect(subject[:links][:firstYearPathways][:pathwaysFinAid][:url]).to eq '/finances/finaid/2065'
         end
         it 'does not contain admissions evaluator information' do
           expect(subject[:admissionsEvaluator][:name]).to be_nil
