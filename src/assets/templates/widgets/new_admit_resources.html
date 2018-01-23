@@ -16,7 +16,7 @@
             data-ng-click="api.widget.toggleShow($event, null, newAdmitResources.admissionsSection, 'Dashboard - New Admit Resources')">Admissions Changes</h3>
         <ul data-ng-if="newAdmitResources.admissionsSection.show" class="cc-list-bullets">
           <li data-ng-repeat="(linkName, link) in newAdmitResources.links.admissions">
-            <a data-ng-href="{{link.url}}" data-ng-attr-title="{{link.title}}"><span data-ng-bind="link.name"></span></a>
+            <a data-cc-campus-solutions-link-directive="link"></a>
             <p data-ng-bind="link.linkDescription"></p>
           </li>
         </ul>
@@ -35,18 +35,14 @@
             data-ng-click="api.widget.toggleShow($event, null, newAdmitResources.pathwaysSection, 'Dashboard - New Admit Resources')">First-Year Pathways</h3>
         <ul data-ng-if="newAdmitResources.pathwaysSection.show" class="cc-list-bullets">
           <li data-ng-if="newAdmitResources.links.firstYearPathways.selectionForm.url">
-            <a data-ng-href="{{newAdmitResources.links.firstYearPathways.selectionForm.url}}"
-               data-ng-attr-title="{{newAdmitResources.links.firstYearPathways.selectionForm.title}}"><span data-ng-bind="newAdmitResources.links.firstYearPathways.selectionForm.name"></span>
-             </a>
-            <p>Sign up for a pathway while space is available. Learn about
-               <a data-ng-href="{{newAdmitResources.links.firstYearPathways.pathwaysInfo.url}}" data-ng-attr-title="newAdmitResources.links.firstYearPathways.pathwaysInfo.title">First-Year Pathways.</a>
+            <a data-cc-campus-solutions-link-directive="newAdmitResources.links.firstYearPathways.selectionForm"></a>
+            <p>
+              Sign up for a pathway while space is available. Learn about
+              <a data-cc-campus-solutions-link-directive="newAdmitResources.links.firstYearPathways.pathwaysInfo"></a>
             </p>
           </li>
           <li data-ng-if="newAdmitResources.links.firstYearPathways.pathwaysFinAid.url">
-            <a data-ng-href="{{newAdmitResources.links.firstYearPathways.pathwaysFinAid.url}}"
-               data-ng-attr-title="{{newAdmitResources.links.firstYearPathways.pathwaysFinAid.title}}">
-               <span data-ng-bind="newAdmitResources.links.firstYearPathways.pathwaysFinAid.name"></span>
-            </a>
+            <a data-cc-campus-solutions-link-directive="newAdmitResources.links.firstYearPathways.pathwaysFinAid"></a>
             <p data-ng-bind="newAdmitResources.links.firstYearPathways.pathwaysFinAid.linkDescription"></p>
           </li>
         </ul>

@@ -4,7 +4,7 @@
     data-ng-bind="sectionTitle"></h3>
 <ul data-ng-if="section.show" class="cc-list-bullets">
   <li data-ng-repeat="(linkName, link) in links">
-    <a data-ng-href="{{link.url}}" data-ng-attr-title="{{link.title}}"><span data-ng-bind="link.name"></span></a>
+    <a data-cc-campus-solutions-link-directive="link"></a>
     <p data-ng-bind="link.linkDescription"></p>
   </li>
 </ul>
