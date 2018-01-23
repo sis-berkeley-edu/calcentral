@@ -18,6 +18,7 @@ module CampusSolutions
       admissions: {
         admissionsConditionsFreshman: 'UC_ADMT_COND_FRESH',
         admissionsConditionsTransfer: 'UC_ADMT_COND_TRANS',
+        ugrdUpdateForm: 'UC_ADMT_UGRD_UPDATE',
         deferral: 'UC_ADMT_DEFER',
         withdrawBeforeMatric: 'UC_ADMT_WITHDR',
         withdrawAfterMatric: 'UC_CX_SRWITHDRL_ADD'
