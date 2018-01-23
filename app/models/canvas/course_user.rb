@@ -1,5 +1,6 @@
 module Canvas
   class CourseUser < Proxy
+    include ClassLogger
 
     ADMIN_ROLES = ['TeacherEnrollment', 'TaEnrollment', 'DesignerEnrollment',
       'Owner', 'Maintainer', 'Lead TA']
@@ -16,7 +17,19 @@ module Canvas
 
     def course_user(options = {})
       response = optional_cache(options, key: "#{@course_id}/#{@user_id}", default: true) { user_response }
-      response[:body] if response[:statusCode] < 400
+      if response[:statusCode] < 400
+        feed = response[:body]
+        if feed['enrollments']
+          # CLC-6803 : An Instructure bug may have injected enrollments from other site memberships into this response.
+          # If so, weed them out.
+          fixed_enrollments = feed['enrollments'].select { |enr| enr['course_id'] == @course_id }
+          if fixed_enrollments.length <  feed['enrollments'].length
+            logger.warn("Extraneous enrollments found in Canvas Course User API for course #{@course_id}, user #{@user_id}")
+            feed['enrollments'] = fixed_enrollments
+          end
+        end
+        return feed
+      end
     end
 
     def self.is_course_admin?(canvas_course_user)
