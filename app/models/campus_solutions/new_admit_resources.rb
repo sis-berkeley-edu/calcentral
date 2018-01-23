@@ -12,6 +12,7 @@ module CampusSolutions
         status: 'UC_ADMT_MAP_STATUS',
       },
       finAid: {
+        finAidAwards: nil,
         fasoFaq: 'UC_ADMT_FA_FAQ',
         summerFinAid: 'UC_ADMT_SUM_FINAID'
       },
@@ -67,15 +68,14 @@ module CampusSolutions
     end
 
     def parse_fin_aid_links(fin_aid_links)
-      fin_aid_links.merge!({
-        finAidAwards: {
-          url: '/finances',
-          linkDescription: 'View your estimated cost of attendance and financial aid awards.',
-          showNewWindow: false,
-          name: 'Your Financial Aid & Scholarships Awards',
-          title: 'Your Financial Aid & Scholarships Awards'
-          }
-        })
+      fin_aid_links[:finAidAwards] = {
+         url: '/finances',
+         linkDescription: 'View your estimated cost of attendance and financial aid awards.',
+         showNewWindow: false,
+         name: 'Your Financial Aid & Scholarships Awards',
+         title: 'Your Financial Aid & Scholarships Awards'
+       }
+      fin_aid_links
     end
 
     def parse_admissions_links(admissions_links)
@@ -114,7 +114,7 @@ module CampusSolutions
     def get_section_links(link_collection)
       {}.tap do |section_links|
         link_collection.each do |link_descr, link_id|
-          section_links[link_descr] = fetch_link(link_id)
+          section_links[link_descr] =  link_id ? fetch_link(link_id) : nil
         end
       end
     end
