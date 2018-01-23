@@ -78,6 +78,20 @@ module CampusSolutions
           end
           relevant_sir_config.nil?
         end
+        add_deposit_info(sir_checklist_items)
+      end
+
+      def add_deposit_info(sir_checklist_items)
+        sir_checklist_items.try(:each) do |item|
+          deposit = { required: false }
+          if is_incomplete? item
+            adm_appl_nbr = item.try(:[], :checkListMgmtAdmp).try(:[], :admApplNbr).try(:to_s)
+            deposit_info = unpack_deposit_response MyDeposit.new(@uid, adm_appl_nbr: adm_appl_nbr).get_feed
+            deposit.merge!(deposit_info)
+            deposit[:required] = deposit_due? deposit.try(:[], :dueAmt)
+          end
+          item[:deposit] = deposit
+        end
         add_undergraduate_new_admit_attributes(sir_checklist_items)
       end
 
@@ -88,7 +102,7 @@ module CampusSolutions
           cs_id = lookup_campus_solutions_id
           if item.try(:[], :isUndergraduate)
             new_admit_attributes.merge!(get_undergraduate_new_admit_roles(cs_id, application_nbr))
-            if is_complete_item? item
+            if is_completed_undergraduate_item? item
               new_admit_attributes.merge!({
                 visible: add_visibility_flag(new_admit_attributes),
                 links: get_undergraduate_new_admit_links(new_admit_attributes)
@@ -158,28 +172,14 @@ module CampusSolutions
           header_info = header_cd.nil? ? HEADER_DATA.try(:[], :GENERIC) : HEADER_DATA.try(:[], header_cd)
           item[:header] = header_info
         end
-        add_deposit_info(sir_checklist_items)
-      end
-
-      def add_deposit_info(sir_checklist_items)
-        sir_checklist_items.try(:each) do |item|
-          deposit = { required: false }
-          if is_incomplete? item
-            adm_appl_nbr = item.try(:[], :checkListMgmtAdmp).try(:[], :admApplNbr).try(:to_s)
-            deposit_info = unpack_deposit_response MyDeposit.new(@uid, adm_appl_nbr: adm_appl_nbr).get_feed
-            deposit.merge!(deposit_info)
-            deposit[:required] = deposit_due? deposit.try(:[], :dueAmt)
-          end
-          item[:deposit] = deposit
-        end
       end
 
       def is_incomplete?(checklist_item)
         ['I', 'R'].include?(checklist_item.try(:[], :itemStatusCode))
       end
 
-      def is_complete_item?(checklist_item)
-        checklist_item.try(:[], :itemStatusCode) == 'C'
+      def is_completed_undergraduate_item?(checklist_item)
+        checklist_item.try(:[], :itemStatusCode) == 'C' || (checklist_item.try(:[], :itemStatusCode) == 'R' && !checklist_item.try(:[], :deposit).try(:[], :required))
       end
 
       def unpack_deposit_response(deposit_response)
