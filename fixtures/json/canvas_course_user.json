@@ -27,6 +27,28 @@
         "final_grade": null
       },
       "html_url": "https://ucberkeley.beta.instructure.com/courses/767330/users/4321321"
+    },
+    {
+      "associated_user_id": null,
+      "course_id": 99999999,
+      "course_section_id": 99999999,
+      "id": 99999999,
+      "limit_privileges_to_course_section": false,
+      "root_account_id": 90242,
+      "type": "TeacherEnrollment",
+      "updated_at": "2013-10-22T00:38:23Z",
+      "user_id": 4321321,
+      "enrollment_state": "active",
+      "role": "Teacher",
+      "last_activity_at": "2013-11-20T16:33:24Z",
+      "grades": {
+        "html_url": "https://ucberkeley.beta.instructure.com/courses/99999999/grades/4321321",
+        "current_score": null,
+        "final_score": null,
+        "current_grade": null,
+        "final_grade": null
+      },
+      "html_url": "https://ucberkeley.beta.instructure.com/courses/99999999/users/4321321"
     }
   ]
 }
