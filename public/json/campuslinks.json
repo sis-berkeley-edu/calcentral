@@ -3418,7 +3418,7 @@
         "staff": false,
         "faculty": false,
         "exStudent": true,
-        "summerVisitor": true
+        "summerVisitor": false
       },
       "categories": [
         {
