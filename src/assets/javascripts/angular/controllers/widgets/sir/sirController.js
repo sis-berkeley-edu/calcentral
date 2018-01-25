@@ -95,7 +95,7 @@ angular.module('calcentral.controllers').controller('SirController', function(si
   initWorkflow();
 
   $scope.isReceivedUndergraduateNoDeposit = function(item) {
-    return _.get(item, 'itemStatusCode') === 'R' && !_.get(item, 'deposit.required');
+    return _.get(item, 'itemStatusCode') === 'R' && !_.get(item, 'deposit.required') && _.get(item, 'isUndergraduate');
   };
 
   $scope.$on('calcentral.custom.api.sir.update', function(event, studentResponse) {
