@@ -148,8 +148,8 @@ module CampusSolutions
       def get_undergraduate_new_admit_links(new_admit_status)
         admit_roles = new_admit_status[:roles]
         link_configuration = {
-          coaFreshmanLink: admit_roles[:firstYearFreshman] && !admit_roles[:athlete],
-          coaTransferLink: admit_roles[:transfer] || admit_roles[:athlete],
+          coaFreshmanLink: admit_roles[:firstYearFreshman],
+          coaTransferLink: admit_roles[:transfer],
           firstYearPathwayLink: admit_roles[:firstYearPathway]
         }
         add_undergraduate_new_admit_links link_configuration

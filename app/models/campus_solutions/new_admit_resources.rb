@@ -81,8 +81,8 @@ module CampusSolutions
     def parse_admissions_links(admissions_links)
       roles = attributes.try(:[], :roles)
       admissions_links.try(:delete_if) do |link_key, link_value|
-        (link_key == :admissionsConditionsFreshman && is_transfer_or_athlete(roles)) ||
-        (link_key == :admissionsConditionsTransfer && is_freshman_non_athlete(roles)) ||
+        (link_key == :admissionsConditionsFreshman && !roles.try(:[], :firstYearFreshman)) ||
+        (link_key == :admissionsConditionsTransfer && !roles.try(:[], :transfer)) ||
         (link_key == :withdrawAfterMatric && roles.try(:[], :preMatriculated)) ||
         (link_key == :withdrawBeforeMatric && !roles.try(:[], :preMatriculated))
       end
@@ -153,14 +153,6 @@ module CampusSolutions
 
     def is_visible?(undergraduate_status)
       ['I', 'R'].include?(undergraduate_status.try(:[], :itemStatusCode)) || undergraduate_status.try(:[], :newAdmitAttributes).try(:[], :visible)
-    end
-
-    def is_freshman_non_athlete(roles)
-      roles.try(:[], :firstYearFreshman) && !roles.try(:[], :athlete)
-    end
-
-    def is_transfer_or_athlete(roles)
-      roles.try(:[], :transfer) || roles.try(:[], :athlete)
     end
 
     def non_spring_admit(admit_term)
