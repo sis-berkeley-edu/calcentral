@@ -23,7 +23,10 @@
         <div>
           <div data-cc-spinner-directive="finaidSummaryInfo.isLoadingData">
             <div data-ng-if="finaidSummaryInfo.tasksCount > 0">
-              <a data-ng-href="{{finaidUrl}}" data-ng-disabled="isMainFinaid"><i class="fa fa-bell cc-icon" data-ng-class="{'cc-icon-gold':(isMainFinaid), 'cc-icon-blue':(!isMainFinaid)}"></i><span data-ng-bind="finaidSummaryInfo.tasksCount"></span> incomplete</a> financial aid tasks
+              <a data-ng-href="{{finaidUrl}}" data-ng-disabled="isMainFinaid">
+                <i class="fa fa-bell cc-icon" data-ng-class="{'cc-icon-gold':(isMainFinaid), 'cc-non-anchored-link':(!isMainFinaid)}"></i><span data-ng-bind="finaidSummaryInfo.tasksCount"></span>&nbsp;incomplete
+              </a>
+              <span data-ng-pluralize count="finaidSummaryInfo.tasksCount" when="{'1': 'financial aid task', 'other': 'financial aid tasks'}"></span>
             </div>
             <div data-ng-include="'widgets/finaid_summary_netcost.html'"></div>
             <hr data-ng-if="!finaidSummaryData.netCost" aria-hidden="true">
