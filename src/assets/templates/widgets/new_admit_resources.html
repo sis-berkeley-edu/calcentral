@@ -16,7 +16,11 @@
             data-ng-click="api.widget.toggleShow($event, null, newAdmitResources.admissionsSection, 'Dashboard - New Admit Resources')">Admissions Changes</h3>
         <ul data-ng-if="newAdmitResources.admissionsSection.show" class="cc-list-bullets">
           <li data-ng-repeat="(linkName, link) in newAdmitResources.links.admissions">
-            <a data-cc-campus-solutions-link-directive="link"></a>
+            <a data-ng-if="linkName != 'withdrawAfterMatric'" data-cc-campus-solutions-link-directive="link"></a>
+            <a data-ng-if="linkName == 'withdrawAfterMatric'"
+               data-cc-campus-solutions-link-directive="link"
+               data-cc-campus-solutions-link-directive-cc-page-name="currentPage.name"
+               data-cc-campus-solutions-link-directive-cc-page-url="currentPage.url"></a>
             <p data-ng-bind="link.linkDescription"></p>
           </li>
         </ul>
