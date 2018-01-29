@@ -7,7 +7,7 @@ var angular = require('angular');
 /**
  * Academics controller
  */
-angular.module('calcentral.controllers').controller('AcademicsController', function(academicsFactory, academicsService, academicStatusFactory, apiService, badgesFactory, linkService, registrationsFactory, userService, $q, $routeParams, $scope, $location) {
+angular.module('calcentral.controllers').controller('AcademicsController', function(academicsFactory, academicsService, holdsFactory, apiService, badgesFactory, linkService, registrationsFactory, userService, $q, $routeParams, $scope, $location) {
   linkService.addCurrentRouteSettings($scope);
   apiService.util.setTitle($scope.currentPage.name);
 
@@ -168,7 +168,7 @@ angular.module('calcentral.controllers').controller('AcademicsController', funct
   };
 
   var loadNumberOfHolds = function() {
-    return academicStatusFactory.getHolds().then(
+    return holdsFactory.getHolds().then(
       function(parsedHolds) {
         $scope.numberOfHolds = _.get(parsedHolds, 'holds.length');
       }
@@ -243,8 +243,7 @@ angular.module('calcentral.controllers').controller('AcademicsController', funct
       var getRegistrations = registrationsFactory.getRegistrations().then(loadRegistrations);
       var requests = [getAcademics, getRegistrations];
 
-      if (apiService.user.profile.features.csHolds &&
-        (apiService.user.profile.roles.student || apiService.user.profile.roles.applicant)) {
+      if (apiService.user.profile.roles.student || apiService.user.profile.roles.applicant) {
         requests.push(loadNumberOfHolds());
       }
       $q.all(requests).then(filterWidgets);

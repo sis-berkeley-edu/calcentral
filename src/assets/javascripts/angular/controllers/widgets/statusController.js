@@ -6,7 +6,7 @@ var angular = require('angular');
 /**
  * Status controller
  */
-angular.module('calcentral.controllers').controller('StatusController', function(academicStatusFactory, activityFactory, apiService, statusHoldsService, badgesFactory, financesFactory, registrationsFactory, $http, $scope, $q) {
+angular.module('calcentral.controllers').controller('StatusController', function(holdsFactory, activityFactory, apiService, statusHoldsService, badgesFactory, financesFactory, registrationsFactory, $http, $scope, $q) {
   $scope.finances = {};
   $scope.regStatus = {
     hasData: false,
@@ -123,13 +123,12 @@ angular.module('calcentral.controllers').controller('StatusController', function
   var loadHolds = function() {
     var deferred;
 
-    if (!apiService.user.profile.features.csHolds ||
-      !(apiService.user.profile.roles.student || apiService.user.profile.roles.applicant)) {
+    if (!(apiService.user.profile.roles.student || apiService.user.profile.roles.applicant)) {
       deferred = $q.defer();
       deferred.resolve();
       return deferred.promise;
     }
-    return academicStatusFactory.getHolds().then(
+    return holdsFactory.getHolds().then(
       function(parsedHolds) {
         var holdsCount;
         if (parsedHolds.isError) {
