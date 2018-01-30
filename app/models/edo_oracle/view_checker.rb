@@ -134,6 +134,14 @@ class EdoOracle::ViewChecker
       ]
     },
     {
+      :id => 'SISEDO.STUCAR_TERMV00_VW',
+      :columns => [
+        'STUDENT_ID',
+        'PNP_TOT_UNITS_TAKEN',
+        'PNP_TOT_UNITS_PASSED'
+      ]
+    },
+    {
       :id => 'SISEDO.STUDENT_REGISTRATIONV00_VW',
       :columns => [
         'STUDENT_ID',
@@ -150,6 +158,22 @@ class EdoOracle::ViewChecker
     {
       :id => 'SISEDO.API_COURSEIDENTIFIERSV00_VW',
       :columns => ['subjectArea']
+    },
+    {
+      :id => 'SISEDO.APPLICANT_ADMIT_DATA_UGV00_VW',
+      :columns => [
+        'ACAD_PROG',
+        'ACAD_PROG_DESCR',
+        'ADMIT_TERM',
+        'ADMIT_TYPE',
+        'ADMIT_TYPE_DESCR',
+        'ATHLETE',
+        'PROG_STATUS',
+        'STUDENT_ID',
+        'APPLICATION_NBR',
+        'EVALUATOR_NAME',
+        'EVALUATOR_EMAIL'
+      ]
     }
   ]
 
