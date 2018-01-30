@@ -15,7 +15,7 @@ module MyAcademics
       cs_official_transcript = CampusSolutions::CsOfficialTranscript.new(user_id: @uid).get
       return {errored: true} if (cs_official_transcript[:statusCode] != 200)
       filtered_keys = [:debugDbname, :debugJavaString1, :debugJavaString2]
-      transcript_data = cs_official_transcript.try(:[], :feed).try(:[], :transcriptOrder)
+      transcript_data = cs_official_transcript.try(:[], :feed).try(:[], :transcriptOrder) || {}
       transcript_post_url = transcript_data.delete(:credSolLink).to_s.strip
       transcript_post_params = transcript_data.except(*filtered_keys)
       {
