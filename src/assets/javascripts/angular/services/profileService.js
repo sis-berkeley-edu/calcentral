@@ -8,7 +8,7 @@ angular.module('calcentral.services').service('profileService', function() {
    * Fired after an action (delete / save) has been completed
    */
   var actionCompleted = function($scope, response, callback) {
-    if (response.data.errored) {
+    if (response.data.error || response.data.errored) {
       $scope.errorMessage = _.get(response, 'data.feed.errmsgtext') || 'An error occurred while saving your data.';
     } else {
       $scope.closeEditor();

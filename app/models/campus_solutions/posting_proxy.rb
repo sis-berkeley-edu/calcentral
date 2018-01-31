@@ -1,5 +1,6 @@
 module CampusSolutions
   class PostingProxy < Proxy
+    include ClassLogger
 
     attr_reader :params
 
@@ -11,6 +12,18 @@ module CampusSolutions
 
     def mock_request
       super.merge(method: :post)
+    end
+
+    def post
+      if self.class.valid? params
+        get
+      else
+        raise Errors::BadRequestError, "Invalid request: #{params}"
+      end
+    end
+
+    def self.valid?(params)
+      true
     end
 
     def request_options

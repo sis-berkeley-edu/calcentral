@@ -167,7 +167,8 @@ angular.module('calcentral.controllers').controller('ProfileAddressController', 
 
     apiService.profile
       .save($scope, profileFactory.postAddress, merge)
-      .then(saveCompleted);
+      .then(saveCompleted)
+      .catch(saveCompleted);
   };
 
   $scope.showAdd = function() {
