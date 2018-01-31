@@ -4,24 +4,29 @@ describe CampusSolutions::MyFinancialAidFilteredForAdvisor do
 
   context 'mock proxy' do
     let(:state) { { 'fake' => true, 'user_id' => random_id } }
-    context 'no aid year provided' do
-      it 'should return empty' do
-        expect(subject.get_feed).to be_empty
+
+    context 'no advisor session' do
+      it 'should deny access' do
+        expect{
+          subject.get_feed
+        }.to raise_exception /Only advisors have access/
       end
     end
-    context 'aid year provided' do
-      before { subject.aid_year = '2016' }
-      context 'no advisor session' do
-        it 'should deny access' do
-          expect{
-            subject.get_feed
-          }.to raise_exception /Only advisors have access/
+    context 'advisor session' do
+      let(:state) { { 'fake' => true, 'user_id' => random_id, SessionKey.original_advisor_user_id => random_id } }
+      let(:feed) { subject.get_feed }
+      let(:json) { feed.to_json }
+
+      context 'no aid year provided' do
+        it 'should indicate feed as filtered for advisor' do
+          expect(feed[:filteredForAdvisor]).to be true
+        end
+        it 'should return an empty feed' do
+          expect(subject.get_feed[:feed]).not_to be
         end
       end
-      context 'advisor session' do
-        let(:state) { { 'fake' => true, 'user_id' => random_id, SessionKey.original_advisor_user_id => random_id } }
-        let(:feed) { subject.get_feed }
-        let(:json) { feed.to_json }
+      context 'aid year provided' do
+        before { subject.aid_year = '2016' }
         it 'should indicate feed as filtered for advisor' do
           expect(feed[:filteredForAdvisor]).to be true
         end

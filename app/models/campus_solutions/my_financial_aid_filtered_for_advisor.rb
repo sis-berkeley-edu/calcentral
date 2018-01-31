@@ -15,11 +15,9 @@ module CampusSolutions
     end
 
     def get_feed_internal
-      if is_feature_enabled && (self.aid_year ||= CampusSolutions::MyAidYears.new(@uid).default_aid_year)
-        apply_filter CampusSolutions::FinancialAidData.new(user_id: @uid, aid_year: aid_year).get
-      else
-        {}
-      end
+      model = CampusSolutions::MyFinancialAidData.new(@uid)
+      model.aid_year = aid_year
+      apply_filter model.get_feed
     end
 
     def apply_filter(feed)

@@ -11,7 +11,7 @@ describe CampusSolutions::MyFinancialAidData do
 
   context 'mock proxy' do
     let(:state) { { 'fake' => true, 'user_id' => random_id } }
-    let(:feed) { JSON.parse(subject.get_feed) }
+    let(:feed) { subject.get_feed }
     context 'no aid year provided' do
       it 'should return empty' do
         expect(feed).to be_empty
@@ -22,16 +22,14 @@ describe CampusSolutions::MyFinancialAidData do
       it 'should return feed' do
         expect(feed).to_not be_empty
       end
-      context 'housing data' do
-        it 'should include housing data' do
-          expect(feed['feed']['housing']['title']).to eq 'Housing'
-          expect(feed['feed']['housing']['values']).to be
-          expect(feed['feed']['housing']['link']).to be
-        end
-        it 'should append housing messaging and links' do
-          expect(feed['feed']['housing']['instruction']).to eq 'mock instructions'
-        end
+      it 'should include housing data' do
+        expect(feed[:feed][:housing][:title]).to eq 'Housing'
+        expect(feed[:feed][:housing][:values]).to be
+        expect(feed[:feed][:housing][:link]).to be
       end
-    end
+      it 'should append housing messaging and links' do
+        expect(feed[:feed][:housing][:instruction]).to eq 'mock instructions'
+      end
+  end
   end
 end

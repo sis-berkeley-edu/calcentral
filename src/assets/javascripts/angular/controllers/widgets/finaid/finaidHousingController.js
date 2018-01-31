@@ -13,7 +13,7 @@ angular.module('calcentral.controllers').controller('FinaidHousingController', f
   linkService.addCurrentRouteSettings($scope);
 
   var processHousingData = function(response) {
-    angular.extend($scope.housing, _.get(response, 'data.feed.housing'))
+    angular.extend($scope.housing, _.get(response, 'data.feed.housing'));
     $scope.housing.errored = _.get(response, 'data.errored');
   };
 
