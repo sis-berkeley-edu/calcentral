@@ -13,7 +13,7 @@ angular.module('calcentral.controllers').controller('HoldsController', function(
 
   var loadHolds = function() {
     return holdsFactory.getHolds().then(function(response) {
-      $scope.holds = _.get(response, 'holds');
+      $scope.holds = _.get(response, 'data.feed.holds');
     }).finally(function() {
       $scope.holdsInfo.isLoading = false;
     });

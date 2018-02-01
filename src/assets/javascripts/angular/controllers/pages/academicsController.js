@@ -169,8 +169,8 @@ angular.module('calcentral.controllers').controller('AcademicsController', funct
 
   var loadNumberOfHolds = function() {
     return holdsFactory.getHolds().then(
-      function(parsedHolds) {
-        $scope.numberOfHolds = _.get(parsedHolds, 'holds.length');
+      function(response) {
+        $scope.numberOfHolds = _.get(response, 'data.feed.holds.length');
       }
     );
   };

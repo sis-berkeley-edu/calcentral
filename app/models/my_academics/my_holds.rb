@@ -19,14 +19,17 @@ module MyAcademics
       hub_response = academic_status.try(:[], :feed).try(:[], 'student').try(:[], 'holds') || []
       hub_response.map do |hub_hold|
         {
-          'reason' => hub_hold.try(:[], 'reason'),
-          'amountRequired' => hub_hold.try(:[], 'amountRequired'),
-          'fromDate' => hub_hold.try(:[], 'fromDate'),
-          'fromTerm' => {
-            'name' => hub_hold.try(:[], 'fromTerm').try(:[], 'name')
+          :reason => {
+            :description => hub_hold.try(:[], 'reason').try(:[], 'description'),
+            :formalDescription => hub_hold.try(:[], 'reason').try(:[], 'formalDescription')
           },
-          'contact' => {
-            'description' => hub_hold.try(:[], 'contact').try(:[], 'description')
+          :amountRequired => hub_hold.try(:[], 'amountRequired'),
+          :fromDate => hub_hold.try(:[], 'fromDate'),
+          :fromTerm => {
+            :name => hub_hold.try(:[], 'fromTerm').try(:[], 'name')
+          },
+          :contact => {
+            :description => hub_hold.try(:[], 'contact').try(:[], 'description')
           }
         }
       end

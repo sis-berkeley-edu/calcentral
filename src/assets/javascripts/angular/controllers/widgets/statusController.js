@@ -129,17 +129,17 @@ angular.module('calcentral.controllers').controller('StatusController', function
       return deferred.promise;
     }
     return holdsFactory.getHolds().then(
-      function(parsedHolds) {
+      function(response) {
         var holdsCount;
-        if (parsedHolds.isError) {
+        if (_.get(response, 'data.errored')) {
           $scope.holds = {
             errored: true
           };
           $scope.count++;
           $scope.hasWarnings = true;
         } else {
-          $scope.holds = _.get(parsedHolds, 'holds');
-          holdsCount = _.get(parsedHolds, 'holds.length');
+          $scope.holds = _.get(response, 'data.feed.holds');
+          holdsCount = _.get(response, 'data.feed.holds.length');
           $scope.count += holdsCount;
           $scope.hasAlerts = (holdsCount > 0);
         }
