@@ -1,18 +1,53 @@
 {
-  "statusCode":200,
-  "feed":{
-    "serviceIndicators":[
+  "feed": {
+    "holds": [
       {
-        "serviceIndicatorDescr":"AA - Advising Holds",
-        "startTerm":"2168",
-        "startTermDescr":"2016 Fall",
-        "startDate":null,
-        "reasonDescr":"Advisor Hold",
-        "amount":0.0,
-        "contactName":null,
-        "contactEmail":null,
-        "instructions":"You must see your College advisor immediately."
+        "reason": {
+          "code": "UNDSR",
+          "description": "Undeclared Senior",
+          "formalDescription": "You have exceeded 90 units without a major, please see your College advisor."
+        },
+        "amountRequired": 0,
+        "fromDate": "2016-03-23",
+        "fromTerm": {
+          "name": "2018 Spring"
+        },
+        "contact": {
+          "description": ""
+        }
+      },
+      {
+        "reason": {
+          "code": "GRDSR",
+          "description": "Graduating Seniors",
+          "formalDescription": ""
+        },
+        "amountRequired": 0,
+        "fromDate": null,
+        "fromTerm": {
+          "name": "2020 Spring"
+        },
+        "contact": {
+          "description": ""
+        }
+      },
+      {
+        "reason": {
+          "code": "CARS",
+          "description": "Unpaid charges on account",
+          "formalDescription": "Our records indicate you have past due charges on your billing account. These charges are for terms through Spring/Summer 2016. Make payment through Bear Facts \u003e CARS \u003e e-Bill. For assistance, contact Cal Student Central at 510-664-9181 or open a case at http://studentcentral.berkeley.edu/."
+        },
+        "amountRequired": 0,
+        "fromDate": "2016-07-02",
+        "fromTerm": {
+          "name": null
+        },
+        "contact": {
+          "description": ""
+        }
       }
     ]
-  }
+  },
+  "errored": null,
+  "statusCode": 200
 }

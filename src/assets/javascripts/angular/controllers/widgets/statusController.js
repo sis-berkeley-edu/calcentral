@@ -6,7 +6,7 @@ var angular = require('angular');
 /**
  * Status controller
  */
-angular.module('calcentral.controllers').controller('StatusController', function(academicStatusFactory, activityFactory, apiService, statusHoldsService, badgesFactory, financesFactory, registrationsFactory, $http, $scope, $q) {
+angular.module('calcentral.controllers').controller('StatusController', function(holdsFactory, activityFactory, apiService, statusHoldsService, badgesFactory, financesFactory, registrationsFactory, $http, $scope, $q) {
   $scope.finances = {};
   $scope.regStatus = {
     hasData: false,
@@ -123,24 +123,23 @@ angular.module('calcentral.controllers').controller('StatusController', function
   var loadHolds = function() {
     var deferred;
 
-    if (!apiService.user.profile.features.csHolds ||
-      !(apiService.user.profile.roles.student || apiService.user.profile.roles.applicant)) {
+    if (!(apiService.user.profile.roles.student || apiService.user.profile.roles.applicant)) {
       deferred = $q.defer();
       deferred.resolve();
       return deferred.promise;
     }
-    return academicStatusFactory.getHolds().then(
-      function(parsedHolds) {
+    return holdsFactory.getHolds().then(
+      function(response) {
         var holdsCount;
-        if (parsedHolds.isError) {
+        if (_.get(response, 'data.errored')) {
           $scope.holds = {
             errored: true
           };
           $scope.count++;
           $scope.hasWarnings = true;
         } else {
-          $scope.holds = _.get(parsedHolds, 'holds');
-          holdsCount = _.get(parsedHolds, 'holds.length');
+          $scope.holds = _.get(response, 'data.feed.holds');
+          holdsCount = _.get(response, 'data.feed.holds.length');
           $scope.count += holdsCount;
           $scope.hasAlerts = (holdsCount > 0);
         }

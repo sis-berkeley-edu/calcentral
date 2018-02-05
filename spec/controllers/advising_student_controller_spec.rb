@@ -204,4 +204,51 @@ describe AdvisingStudentController do
       end
     end
   end
+
+  describe '#holds' do
+    let(:session_user_id) { random_id }
+    subject { get :holds, student_uid: student_uid }
+
+    context 'when not advisor authorized' do
+      it_behaves_like 'an endpoint refusing a request'
+    end
+    context 'when advisor authorized' do
+      let(:session_user_is_advisor) { true }
+
+      context 'when not viewing a student' do
+        it_behaves_like 'an endpoint refusing a request'
+      end
+      context 'when viewing a student' do
+        let(:student) { true }
+
+        it_behaves_like 'an endpoint receiving a valid request'
+        it 'should provide a filtered academics feed' do
+          feed = JSON.parse(body = subject.body)
+          expect(feed['feed']['holds']).to be
+        end
+      end
+      context 'when viewing an ex-student' do
+        let(:ex_student) { true }
+        it_behaves_like 'an endpoint receiving a valid request'
+        it 'should provide a filtered academics feed' do
+          feed = JSON.parse(body = subject.body)
+          expect(feed['feed']['holds']).to be
+        end
+      end
+      context 'when viewing an applicant' do
+        let(:applicant) { true }
+        it_behaves_like 'an endpoint receiving a valid request'
+        it 'should return data' do
+          feed = JSON.parse(body = subject.body)
+          puts feed.pretty_inspect
+          expect(feed['feed']['holds']).to be
+        end
+      end
+      context 'when viewing a confidential student' do
+        let(:student) { true }
+        let(:confidential) { true }
+        it_behaves_like 'an endpoint refusing a request'
+      end
+    end
+  end
 end

@@ -3,6 +3,11 @@ class ApiCSHoldsPage
   include PageObject
   include ClassLogger
 
+  def initialize(root, visit=false)
+    logger.warn 'DEPRECATION WARNING: ApiCSHoldsPage is deprecated. The CampusSolutions::Holds feed is not in use and the route \'/api/campus_solutions/holds\' has been deleted.'
+    super
+  end
+
   def get_json(driver)
     logger.info 'Fetching data from /api/campus_solutions/holds'
     navigate_to "#{WebDriverUtils.base_url}/api/campus_solutions/holds"
