@@ -1454,6 +1454,63 @@
       ]
     },
     {
+      "name": "Assistance with Grading: General",
+      "description": "Assistance with grading for general classes",
+      "url": "http://registrar.berkeley.edu/faculty-staff/grading/final-term-grades",
+      "roles": {
+        "student": false,
+        "applicant": false,
+        "staff": false,
+        "faculty": true,
+        "exStudent": false,
+        "summerVisitor": false
+      },
+      "categories": [
+        {
+          "topcategory": "Faculty",
+          "subcategory": "Grading"
+        }
+      ]
+    },
+    {
+      "name": "Assistance with Midpoint Grading: General",
+      "description": "Assistance with midpoint grading for general classes",
+      "url": "http://registrar.berkeley.edu/faculty-staff/grading/midterm-deficient-grades",
+      "roles": {
+        "student": false,
+        "applicant": false,
+        "staff": false,
+        "faculty": true,
+        "exStudent": false,
+        "summerVisitor": false
+      },
+      "categories": [
+        {
+          "topcategory": "Faculty",
+          "subcategory": "Grading"
+        }
+      ]
+    },
+    {
+      "name": "Assistance with Grading: Law",
+      "description": "Assistance with grading for Law classes",
+      "url": "https://www.law.berkeley.edu/administration/registrar/egrades/",
+      "roles": {
+        "student": false,
+        "applicant": false,
+        "staff": false,
+        "faculty": true,
+        "exStudent": false,
+        "summerVisitor": false
+      },
+      "categories": [
+        {
+          "topcategory": "Faculty",
+          "subcategory": "Grading"
+        }
+      ]
+    },
+    {
       "name": "Colleges \u0026 Schools",
       "description": "Different departments (colleges) that majors fall under",
       "url": "http://www.berkeley.edu/academics/school.shtml",

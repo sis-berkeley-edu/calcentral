@@ -440,5 +440,12 @@ describe EdoOracle::Queries do
         it {should eq false}
       end
     end
+
+    describe '.get_grading_dates', :testext => false do
+      subject { EdoOracle::Queries.get_grading_dates }
+      it 'returns grading dates' do
+        expect(subject.count).to eq 3
+      end
+    end
   end
 end

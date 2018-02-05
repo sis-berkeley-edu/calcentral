@@ -3,9 +3,11 @@ module MyAcademics
     include GradingModule
     include LinkFetcher
 
-    # This and the GradingModule involves static configuration and logic for the most recent terms.
-    # There can only be one Fall, Spring, and Summer term configured
-    ACTIVE_GRADING_TERMS = ['2175', '2178', '2182']
+    # TODO: Expand support for UGRD and GRAD separately in SISRP-40280
+    GRADING_TYPE_TO_CAREER_MAP = {
+      :general => 'UGRD',
+      :law => 'LAW'
+    }
 
     def merge(data)
       teaching_semesters = data[:teachingSemesters]
@@ -17,124 +19,98 @@ module MyAcademics
     def add_grading_to_semesters(teaching_semesters)
       teaching_semesters.try(:each) do |semester|
         term_id = Berkeley::TermCodes.slug_to_edo_id(semester[:slug])
-        add_grading_links semester
-        if ACTIVE_GRADING_TERMS.include? term_id
-          if is_summer_semester? semester
-            add_grading_dates_summer(semester[:classes])
-          else
-            add_grading_dates(semester, term_id)  if has_general?(semester[:classes])
-            add_grading_dates_law(semester, term_id) if has_law?(semester[:classes])
-          end
-        end
+        add_grading_information_links(semester)
+        add_grading_dates(semester, term_id)
         add_grading_to_classes(semester[:classes], term_id)
       end
     end
 
-    def add_grading_links(semester)
+    def add_grading_information_links(semester)
       if has_general?(semester[:classes])
-        # A termCode of 'C' denotes a summer term.  Every non-law term has midpoint grading, except summer.
+        # A termCode of 'C' denotes a summer term. Every non-law term has midpoint grading, except summer.
         if is_summer_semester? semester
           semester.merge!({
-            gradingAssistanceLink: grading_period.links.final
+            gradingAssistanceLink: grading_info_links[:general].url
           })
         else
           semester.merge!({
-            gradingAssistanceLinkMidpoint: grading_period.links.midpoint,
-            gradingAssistanceLink: grading_period.links.final
+            gradingAssistanceLinkMidpoint: grading_info_links[:midterm].url,
+            gradingAssistanceLink: grading_info_links[:general].url
           })
         end
       end
       if has_law?(semester[:classes])
         semester.merge!({
-          gradingAssistanceLinkLaw: grading_period.links.law
+          gradingAssistanceLinkLaw: grading_info_links[:law].url
         })
       end
     end
 
     def add_grading_dates(semester, term_id)
-      # This is a temp fix for Fall 2017 & Spring 2018 hardcoded from settings
-      fall_dates = grading_period.dates.general.fall_2017
-      spring_dates = grading_period.dates.general.spring_2018
-      if (term_id == '2178' || term_id == '2182') && valid_grading_period?(false, term_id)
-        semester.merge!(
-          {
-            gradingPeriodMidpointStart: term_id == '2182' ? format_period_start(spring_dates.midpoint.start) : format_period_start(fall_dates.midpoint.start),
-            gradingPeriodMidpointEnd: term_id == '2182' ? format_period_end(spring_dates.midpoint.end) : format_period_end(fall_dates.midpoint.end),
-            gradingPeriodFinalStart: term_id == '2182' ? format_period_start(spring_dates.final.start) : format_period_start(fall_dates.final.start),
-            gradingPeriodFinalEnd:  term_id == '2182' ? format_period_end(spring_dates.final.end) : format_period_end(fall_dates.final.end)
-          })
-      else
-        semester.merge!(
-          {
-            gradingPeriodMidpointStart: nil,
-            gradingPeriodMidpointEnd: nil,
-            gradingPeriodFinalStart: nil,
-            gradingPeriodFinalEnd: nil
-          })
+      if cs_grading_term? term_id
+        if is_summer_semester? semester
+          add_grading_dates_to_summer_classes(semester[:classes], term_id)
+        else
+          add_grading_dates_general(semester, term_id) if has_general?(semester[:classes])
+          add_grading_dates_law(semester, term_id) if has_law?(semester[:classes])
+        end
       end
+    end
+
+    def add_grading_dates_general(semester, term_id)
+      grading_dates = get_grading_dates(term_id, :general)
+      semester.merge!(
+        {
+          gradingPeriodMidpointStart: format_period_start(grading_dates.try(:[], :mid_term_begin_date)),
+          gradingPeriodMidpointEnd: format_period_end(grading_dates.try(:[], :mid_term_end_date)),
+          gradingPeriodFinalStart: format_period_start(grading_dates.try(:[], :final_begin_date)),
+          gradingPeriodFinalEnd: format_period_end(grading_dates.try(:[], :final_end_date))
+        }
+      )
     end
 
     def add_grading_dates_law(semester, term_id)
-      # This is a temp fix for Fall 2017 & Spring 2018 hardcoded from settings
-      # Law courses do not participate in midpoint grading
-      spring_dates = grading_period.dates.law.spring_2018
-      fall_dates = grading_period.dates.law.fall_2017
-      if (term_id == '2182' || term_id == '2178') && valid_grading_period?(true, term_id)
-        semester.merge!(
-          {
-            gradingPeriodStartLaw: term_id == '2182' ? format_period_start(spring_dates.start) : format_period_start(fall_dates.start),
-            gradingPeriodEndLaw: term_id == '2182' ? format_period_end(spring_dates.end) : format_period_end(fall_dates.end)
-          })
-      else
-        semester.merge!(
-          {
-            gradingPeriodStartLaw: nil,
-            gradingPeriodEndLaw: nil
-          })
-      end
+      grading_dates = get_grading_dates(term_id, :law)
+      semester.merge!(
+        {
+          gradingPeriodStartLaw: cs_grading_term?(term_id) ? format_period_start(grading_dates.try(:[], :final_begin_date)) : nil,
+          gradingPeriodEndLaw: cs_grading_term?(term_id) ? format_period_end(grading_dates.try(:[], :final_end_date)) : nil
+        }
+      )
     end
 
-    def add_grading_dates_summer(semester_classes)
+    def add_grading_dates_to_summer_classes(semester_classes, term_id)
       semester_classes.try(:each) do |semester_class|
         semester_class.try(:[], :sections).try(:each) do |section|
           if is_primary_section? section
-            if is_law_class? semester_class
-              add_grading_dates_summer_law(semester_class, section)
-            else
-              add_grading_dates_summer_general(semester_class, section)
-            end
+            add_grading_dates_to_summer_section(semester_class, section, term_id)
           end
         end
       end
     end
 
-    def add_grading_dates_summer_law(semester_class, section)
-      if section.try(:[], :session_id)
-        mapped_session_id = summer_law_session_mapping[section[:session_id]]
-        section.merge!({
-          mappedSessionId: mapped_session_id,
-          gradingPeriodStartDate: grading_period.dates.law.summer_2017.send(mapped_session_id).start,
-          gradingPeriodEndDate: grading_period.dates.law.summer_2017.send(mapped_session_id).end,
-          gradingPeriodEndDateFormatted: format_period_end_summer(grading_period.dates.law.summer_2017.send(mapped_session_id).end).to_s
-        })
+    def add_grading_dates_to_summer_section(semester_class, section, term_id)
+      if session_id = section.try(:[], :session_id)
+        grading_career_type = is_law_class?(semester_class) ? :law : :general
+        if grading_career_type == :law
+          mapped_session_id = summer_law_session_mapping[session_id].to_s
+        else
+          mapped_session_id = :session_id
+        end
+        grading_dates = get_grading_dates(term_id, grading_career_type, mapped_session_id)
+        if (grading_dates)
+          begin_date = grading_dates[:final_begin_date]
+          end_date = grading_dates[:final_end_date]
+          section.merge!({
+            gradingPeriodStartDate: begin_date,
+            gradingPeriodEndDate: end_date,
+            gradingPeriodEndDateFormatted: format_period_end_summer(end_date).to_s
+          })
+        else
+          logger.warn "No grading periods found for term: #{term_id}, career: #{GRADING_TYPE_TO_CAREER_MAP[grading_career_type]}"
+        end
       else
         logger.error "No session ID found for section #{section[:ccn]}, course ID #{semester_class[:course_id]}"
-      end
-    end
-
-    def add_grading_dates_summer_general(semester_class, section)
-      if section.try(:[], :end_date)
-        grading_start = Concerns::AcademicsModule.cast_utc_to_pacific(section[:end_date] - 4.days)
-        grading_end = Concerns::AcademicsModule.cast_utc_to_pacific(section[:end_date] + 8.days + 23.hours + 59.minutes + 59.seconds)
-        # Summer general grading periods are specific to the class start/end dates.
-        section.merge!(
-          {
-            gradingPeriodStartDate: grading_start,
-            gradingPeriodEndDate: grading_end,
-            gradingPeriodEndDateFormatted: format_period_end_summer(grading_end).to_s
-          })
-      else
-        logger.error "No end date found for section #{section[:ccn]}, course ID #{semester_class[:course_id]}"
       end
     end
 
@@ -146,12 +122,16 @@ module MyAcademics
 
     def add_grading_to_class(semester_class, term_id)
       is_law = is_law_class? semester_class
-      is_summer = is_summer_class? term_id
+      is_summer = is_summer_term? term_id
+      grading_type = is_law ? :law : :general
+      acad_career_code = GRADING_TYPE_TO_CAREER_MAP[grading_type]
+
       semester_class.try(:[],:sections).try(:each) do |section|
         # Only primary sections have grade rosters.
         if is_primary_section? section
-          # Only parse grading status for the active grading terms.
-          if ACTIVE_GRADING_TERMS.include? term_id
+          section_session_id = section.try(:[], :session_id)
+          # Only parse grading status for configured grading sessions
+          if cs_grading_session_config?(term_id, acad_career_code, section_session_id)
             ccn = section[:ccn]
             has_grade_access = has_grading_access?(section)
             cs_grading_status = parse_cs_grading_status(get_cs_status(ccn, is_law, term_id), is_law, is_summer)
@@ -161,13 +141,15 @@ module MyAcademics
                 {
                   csGradingStatus: cs_grading_status[:finalStatus],
                   ccGradingStatus: has_grade_access ? parse_cc_grading_status(cs_grading_status[:finalStatus], is_law, false, term_id) : nil
-                })
+                }
+              )
             elsif is_summer
               section.merge!(
                 {
                   csGradingStatus: cs_grading_status[:finalStatus],
-                  ccGradingStatus: has_grade_access ? parse_cc_grading_status_summer(section, cs_grading_status[:finalStatus], term_id) : nil
-                })
+                  ccGradingStatus: has_grade_access ? parse_cc_grading_status(cs_grading_status[:finalStatus], is_law, false, term_id, section) : nil
+                }
+              )
             else
               section.merge!(
                 {
@@ -175,14 +157,16 @@ module MyAcademics
                   ccMidpointGradingStatus: has_grade_access ? parse_cc_grading_status(cs_grading_status[:midpointStatus], is_law, true, term_id) : nil,
                   csGradingStatus: cs_grading_status[:finalStatus],
                   ccGradingStatus: has_grade_access ? parse_cc_grading_status(cs_grading_status[:finalStatus], is_law, false, term_id) : nil
-                })
+                }
+              )
             end
           end
           # We want to include the link to the grading roster if it exists, without regard for status or whether it's an active grading term
           section.merge!(
             {
               gradingLink: has_grade_access ? get_grading_link(ccn, term_id, cs_grading_status) : nil
-            })
+            }
+          )
         end
       end
     end
@@ -217,7 +201,7 @@ module MyAcademics
 
     def find_ccn_grading_statuses(grading_statuses, ccn, is_law, term_id)
       return nil unless grading_statuses && ccn && term_id
-      is_summer = is_summer_class? term_id
+      is_summer = is_summer_term? term_id
       status_array  = grading_statuses.try(:[], :classGradingStatus)
       # if feed returned single status it will not be wrapped in array
       # need to wrap in array for code to iterate correctly
@@ -274,61 +258,67 @@ module MyAcademics
       cs_grading_status
     end
 
-    def parse_cc_grading_status(cs_grading_status, is_law, is_midpoint, term_id)
-      grading_period_status = get_grading_period_status(is_law, is_midpoint, term_id)
-      grading_status_mapping[cs_grading_status][grading_period_status]
-    end
-
-    def parse_cc_grading_status_summer(section, cs_grading_status, term_id)
-      grading_period_status = get_grading_period_status_summer(section, term_id)
-      grading_status_mapping[cs_grading_status][grading_period_status]
-    end
-
-    def get_grading_period_status(is_law, is_midpoint, term_id)
-      return :gradingPeriodNotSet unless valid_grading_period?(is_law, term_id)
-      if is_law
-        if term_id == '2178'
-          return find_grading_period_status(grading_period.dates.law.fall_2017)
-        elsif term_id == '2182'
-          return find_grading_period_status(grading_period.dates.law.spring_2018)
+    def parse_cc_grading_status(cs_grading_status, is_law, is_midpoint, term_id, section = nil)
+      grading_type = is_law ? :law : :general
+      acad_career_code = GRADING_TYPE_TO_CAREER_MAP[grading_type]
+      session_id = section.try(:[], :session_id)
+      if cs_grading_session_config?(term_id, acad_career_code, session_id)
+        if section.present?
+          # summer has no midterm
+          summer_grading_window = {
+            final_begin_date: section[:gradingPeriodStartDate],
+            final_end_date: section[:gradingPeriodEndDate]
+          }
+          grading_status = find_grading_period_status(summer_grading_window, false)
+        else
+          grading_type = is_law ? :law : :general
+          grading_dates = get_grading_dates(term_id, grading_type)
+          grading_status = find_grading_period_status(grading_dates, is_midpoint)
         end
-      elsif !is_law
-        if term_id == '2178'
-          if is_midpoint
-            return find_grading_period_status(grading_period.dates.general.fall_2017.midpoint)
-          else
-            return find_grading_period_status(grading_period.dates.general.fall_2017.final)
-          end
-        elsif term_id == '2182'
-          if is_midpoint
-            return find_grading_period_status(grading_period.dates.general.spring_2018.midpoint)
-          else
-            return find_grading_period_status(grading_period.dates.general.spring_2018.final)
-          end
-        end
+      else
+        grading_status = :gradingPeriodNotSet
       end
+      grading_status_mapping[cs_grading_status][grading_status]
     end
 
-    def get_grading_period_status_summer(section, term_id)
-      if term_id == '2175'
-        grading_window = OpenStruct.new({
-          start: section[:gradingPeriodStartDate],
-          end: section[:gradingPeriodEndDate]
-        })
+    def find_grading_period_status(dates, is_midpoint)
+      if is_midpoint
+        begin_date = dates[:mid_term_begin_date]
+        end_date = dates[:mid_term_end_date]
+      else
+        begin_date = dates[:final_begin_date]
+        end_date = dates[:final_end_date]
       end
-      find_grading_period_status(grading_window)
-    end
-
-    def find_grading_period_status(dates)
       current_date = Settings.terms.fake_now || DateTime.now
-      return :beforeGradingPeriod if current_date < DateTime.parse(dates.start.to_s)
-      return :afterGradingPeriod if current_date > DateTime.parse(dates.end.to_s)
+      return :gradingPeriodNotSet if begin_date.blank? || end_date.blank?
+      return :beforeGradingPeriod if current_date < DateTime.parse(begin_date.to_s)
+      return :afterGradingPeriod if current_date > DateTime.parse(end_date.to_s)
       return :inGradingPeriod
     end
 
-    def grading_period
-      @grading_period ||= Settings.grading_period
+    def edo_grading_dates
+      @edo_grading_dates ||= MyAcademics::GradingDates.fetch
     end
 
+    def grading_info_links
+      @grading_info_links ||= MyAcademics::GradingInfoLinks.fetch
+    end
+
+    def get_grading_dates(term_id, grading_type, session_id = '1')
+      acad_career_code = GRADING_TYPE_TO_CAREER_MAP[grading_type]
+      edo_grading_dates.try(:[], term_id.to_s).try(:[], acad_career_code).try(:[], session_id)
+    end
+
+    def cs_grading_term?(term_id)
+      edo_grading_dates.keys.include? term_id
+    end
+
+    def cs_grading_session_config?(term_id, acad_career_code, session_id)
+      return false unless cs_grading_term?(term_id)
+      grading_term_config = edo_grading_dates[term_id.to_s]
+      return false unless grading_term_config.keys.include? acad_career_code
+      grading_career_term_config = grading_term_config[acad_career_code]
+      grading_career_term_config.keys.include? session_id
+    end
   end
 end

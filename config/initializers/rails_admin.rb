@@ -81,7 +81,6 @@ RailsAdmin.config do |config|
   # config.model Links::Link do
   # end
 
-
   ################  Model configuration  ################
 
   # Each model configuration can alternatively:
@@ -110,7 +109,6 @@ RailsAdmin.config do |config|
 
     field :link_top_cat
     field :link_sub_cat
-
   end
 
 # Represent instances of the Linksection model as:
