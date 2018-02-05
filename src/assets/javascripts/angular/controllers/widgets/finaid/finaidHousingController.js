@@ -7,10 +7,13 @@ var angular = require('angular');
  * Finaid Housing controller
  */
 angular.module('calcentral.controllers').controller('FinaidHousingController', function($scope, finaidFactory, finaidService, linkService) {
+  $scope.housing = {
+    isLoading: true
+  };
   linkService.addCurrentRouteSettings($scope);
 
   var processHousingData = function(response) {
-    $scope.housing = _.get(response, 'data.feed.housing');
+    angular.extend($scope.housing, _.get(response, 'data.feed.housing'));
     $scope.housing.errored = _.get(response, 'data.errored');
   };
 

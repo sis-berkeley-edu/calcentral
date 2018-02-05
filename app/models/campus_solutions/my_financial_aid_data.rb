@@ -3,7 +3,6 @@ module CampusSolutions
 
     include ClassLogger
     include Cache::CachedFeed
-    include Cache::JsonifiedFeed
     include Cache::UserCacheExpiry
     include Cache::RelatedCacheKeyTracker
     include CampusSolutions::FinaidFeatureFlagged
