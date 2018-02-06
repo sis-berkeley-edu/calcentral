@@ -32,6 +32,10 @@ module CampusSolutions
       )
     end
 
+    def self.valid?(params)
+      %w(DIPL LOCL MAIL HOME).include? params[:addressType]
+    end
+
     def request_root_xml_node
       'UC_CC_ADDR_UPD_REQ'
     end

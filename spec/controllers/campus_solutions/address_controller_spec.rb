@@ -31,6 +31,17 @@ describe CampusSolutions::AddressController do
         expect(json['feed']).to be
         expect(json['feed']['address']).to be
       end
+      it 'should reject a post that fails validation' do
+        post :post,
+             {
+               addressType: 'DORM',
+               address1: '1 Test Lane'
+             }
+        expect(response.status).to eq 400
+        json = JSON.parse(response.body)
+        expect(json['feed']).not_to be
+        expect(json['error']).to be
+      end
     end
   end
 

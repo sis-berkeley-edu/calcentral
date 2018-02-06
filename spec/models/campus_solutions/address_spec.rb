@@ -7,14 +7,14 @@ describe CampusSolutions::Address do
     let(:params) { {} }
     let(:proxy) { CampusSolutions::Address.new(fake: true, user_id: user_id, params: params) }
 
-    context 'filtering out fields not on the whitelist' do
+    context 'when given params not on the whitelist' do
       let(:params) { {
         bogus: 1,
         invalid: 2,
         address1: '1 Test Lane'
       } }
       subject { proxy.filter_updateable_params(params) }
-      it 'should strip out invalid fields' do
+      it 'should filter out the invalid params' do
         expect(subject.keys.length).to eq 16
         expect(subject[:bogus]).to be_nil
         expect(subject[:invalid]).to be_nil
@@ -22,7 +22,7 @@ describe CampusSolutions::Address do
       end
     end
 
-    context 'converting params to Campus Solutions field names' do
+    context 'when converting params to Campus Solutions field names' do
       let(:params) { {
         addressType: 'HOME',
         address1: '1 Test Lane'
@@ -37,13 +37,29 @@ describe CampusSolutions::Address do
       end
     end
 
-    context 'performing a post' do
+    context 'when posting a param with invalid values' do
+      let(:params) { {
+        addressType: 'DORM',
+        address1: '1 Test Lane'
+      } }
+      subject {
+        proxy.post
+      }
+      it 'raises an error and aborts' do
+        expect{
+          subject
+        }.to raise_error Errors::BadRequestError, /Invalid request: {:addressType=>"DORM", :address1=>"1 Test Lane"}/
+        expect(CampusSolutions::Proxy).to receive(:get).never
+      end
+    end
+
+    context 'when posting valid params' do
       let(:params) { {
         addressType: 'HOME',
         address1: '1 Test Lane'
       } }
       subject {
-        proxy.get
+        proxy.post
       }
       it_should_behave_like 'a simple proxy that returns errors'
       it_behaves_like 'a proxy that properly observes the profile feature flag'
