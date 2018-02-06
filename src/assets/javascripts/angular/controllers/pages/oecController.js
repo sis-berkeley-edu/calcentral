@@ -16,9 +16,6 @@ angular.module('calcentral.controllers').controller('OecController', function(ap
         $scope.oecTaskStatus = null;
         $scope.participatingDepartments = _.filter(response.data.oecDepartments, 'participating');
         $scope.taskParameters = {
-          selectedTask: {
-            name: null
-          },
           options: {
             term: response.data.currentTerm
           }
