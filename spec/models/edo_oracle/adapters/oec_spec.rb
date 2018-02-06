@@ -1,9 +1,19 @@
 describe EdoOracle::Adapters::Oec do
+  let(:uid) { '12345' }
   let(:term_code) { '2016-D' }
   let(:term_id) { '2168' }
   let(:course_id) { '32819' }
 
-  before { allow(Settings.terms).to receive(:fake_now).and_return '2016-07-14 01:00:00' }
+  before do
+    allow(Settings.terms).to receive(:fake_now).and_return '2016-07-14 01:00:00'
+    allow(User::BasicAttributes).to receive(:attributes_for_uids).with([uid]).and_return(
+      [{
+         ldap_uid: uid,
+         email_address: 'kaymcnulty@arl.army.mil',
+         first_name: 'Kay',
+         last_name: 'McNulty'
+       }])
+  end
 
   context 'adapting course data' do
     let(:row) do
@@ -13,12 +23,9 @@ describe EdoOracle::Adapters::Oec do
         'instruction_format'=>'LEC',
         'section_num'=>'001',
         'course_display_name'=>'COMPSCI 8',
-        'ldap_uid'=>'12345',
+        'ldap_uid'=>uid,
         'sis_id'=>'1234567890',
-        'first_name'=>'Kay',
-        'last_name'=>'McNulty',
         'role_code'=>'PI',
-        'email_address'=>'kaymcnulty@berkeley.edu',
         'start_date'=>Time.parse('2016-08-24 00:00:00 UTC'),
         'end_date'=>Time.parse('2016-12-09 00:00:00 UTC'),
         'course_title_short'=>'FOUNDATION DATA SCI',
@@ -83,7 +90,7 @@ describe EdoOracle::Adapters::Oec do
     include_examples 'affiliation-dependent data' do
       let(:affiliations) { 'INSTRUCTOR' }
       let(:evaluation_type) { 'F' }
-      let(:sis_id) { 'UID:12345' }
+      let(:sis_id) { "UID:#{uid}" }
     end
     include_examples 'affiliation-dependent data' do
       let(:affiliations) { 'STUDENT' }
@@ -98,7 +105,7 @@ describe EdoOracle::Adapters::Oec do
     include_examples 'affiliation-dependent data' do
       let(:affiliations) { nil }
       let(:evaluation_type) { nil }
-      let(:sis_id) { 'UID:12345' }
+      let(:sis_id) { "UID:#{uid}" }
     end
 
     context 'default course dates' do
@@ -121,21 +128,18 @@ describe EdoOracle::Adapters::Oec do
       end
     end
 
-    context 'missing email address' do
-      before { row['email_address'] = nil }
-      it 'fills in email address from attributes query' do
-        allow(User::BasicAttributes).to receive(:attributes_for_uids).and_call_original
-        expect(User::BasicAttributes).to receive(:attributes_for_uids).with(['12345']).and_return([{
-          ldap_uid: '12345',
-          email_address: 'kaymcnulty@arl.army.mil'
-        }])
-        expect(course['email_address']).to eq 'kaymcnulty@arl.army.mil'
-      end
+    it 'fills in CalNet attributes' do
+      expect(course['email_address']).to eq 'kaymcnulty@arl.army.mil'
+      expect(course['first_name']).to eq 'Kay'
+      expect(course['last_name']).to eq 'McNulty'
     end
 
     it 'leaves other values unchanged' do
-      %w(instruction_format section_num ldap_uid sis_id first_name last_name email_address enrollment_count).each do |key|
-        expect(course[key]).to eq row[key]
+      # The adapt_courses function modifies input rows directly, and so we need to preserve
+      # a copy of the raw-from-the-DB values.
+      orig_row = row.clone()
+      %w(instruction_format section_num ldap_uid enrollment_count).each do |key|
+        expect(course[key]).to eq orig_row[key]
       end
     end
   end

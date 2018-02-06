@@ -41,29 +41,19 @@ module EdoOracle
         first_name_key = columns ? columns.index('FIRST_NAME') : 'first_name'
         last_name_key = columns ? columns.index('LAST_NAME') : 'last_name'
 
-        rows_without_email = {}
-        rows_without_names = {}
+        rows_missing_attributes = {}
 
         rows.each do |row|
           next if row[ldap_uid_key].blank?
-          if row[email_address_key].blank?
-            rows_without_email[row[ldap_uid_key].to_s] ||= []
-            rows_without_email[row[ldap_uid_key].to_s] << row
-          end
-          if row[last_name_key].blank?
-            rows_without_names[row[ldap_uid_key].to_s] ||= []
-            rows_without_names[row[ldap_uid_key].to_s] << row
+          if row[email_address_key].blank? || row[last_name_key].blank?
+            rows_missing_attributes[row[ldap_uid_key].to_s] ||= []
+            rows_missing_attributes[row[ldap_uid_key].to_s] << row
           end
         end
 
-        User::BasicAttributes.attributes_for_uids(rows_without_email.keys).each do |attrs|
-          rows_without_email[attrs[:ldap_uid]].each do |row|
+        User::BasicAttributes.attributes_for_uids(rows_missing_attributes.keys).each do |attrs|
+          rows_missing_attributes[attrs[:ldap_uid]].each do |row|
             row[email_address_key] = attrs[:email_address]
-          end
-        end
-
-        User::BasicAttributes.attributes_for_uids(rows_without_names.keys).each do |attrs|
-          rows_without_names[attrs[:ldap_uid]].each do |row|
             row[first_name_key] = attrs[:first_name]
             row[last_name_key] = attrs[:last_name]
           end

@@ -5,7 +5,7 @@ module EdoOracle
     def self.get_courses(term_id, filter_clause)
       safe_query <<-SQL
       SELECT section_id, primary, instruction_format, section_num, course_display_name,
-        ldap_uid, sis_id, first_name, last_name, role_code, email_address, course_title_short, enrollment_count,
+        ldap_uid, sis_id, role_code, course_title_short, enrollment_count,
          affiliations, cross_listed_ccns, co_scheduled_ccns,
          MIN(start_date) AS start_date, MAX(end_date) AS end_date from
       (
@@ -17,10 +17,7 @@ module EdoOracle
           sec."displayName" AS course_display_name,
           instr."campus-uid" AS ldap_uid,
           instr."instructor-id" AS sis_id,
-          TRIM(instr."givenName") AS first_name,
-          TRIM(instr."familyName") AS last_name,
           instr."role-code" AS role_code,
-          instr."emailAddress" AS email_address,
           mtg."startDate" AS start_date,
           mtg."endDate" AS end_date,
           TRIM(crs."transcriptTitle") AS course_title_short,
@@ -84,7 +81,7 @@ module EdoOracle
             AND sec."status-code" IN ('A','S')
       )
       GROUP BY section_id, primary, instruction_format, section_num, course_display_name,
-        ldap_uid, sis_id, first_name, last_name, role_code, email_address, course_title_short, enrollment_count,
+        ldap_uid, sis_id, role_code, course_title_short, enrollment_count,
         affiliations, cross_listed_ccns, co_scheduled_ccns
       SQL
     end
@@ -100,17 +97,8 @@ module EdoOracle
             SELECT DISTINCT
               enroll."CLASS_SECTION_ID" as section_id,
               enroll."CAMPUS_UID" AS ldap_uid,
-              enroll."STUDENT_ID" AS sis_id,
-              TRIM(name."NAME_GIVENNAME" || ' ' || name."NAME_MIDDLENAME") AS first_name,
-              name."NAME_FAMILYNAME" AS last_name,
-              email."EMAIL_EMAILADDRESS" AS email_address
+              enroll."STUDENT_ID" AS sis_id
             FROM SISEDO.ENROLLMENTV00_VW enroll
-            LEFT OUTER JOIN SISEDO.PERSON_EMAILV00_VW email ON (
-              email."PERSON_KEY" = enroll."STUDENT_ID" AND
-              email."EMAIL_TYPE_CODE" = 'CAMP')
-            LEFT OUTER JOIN SISEDO.PERSON_NAMEV00_VW name ON (
-              name."PERSON_KEY" = enroll."STUDENT_ID" AND
-              name."NAME_TYPE_CODE" = 'PRF')
             WHERE
               enroll."TERM_ID" = '#{term_id}'
               AND (enroll."STDNT_ENRL_STATUS_CODE" = 'E')

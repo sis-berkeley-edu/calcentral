@@ -93,7 +93,7 @@ describe EdoOracle::Oec do
       expect_results(%w(course_title_short), allow_nil: true)
     end
     it 'should include instructor data' do
-      expect_results(%w(ldap_uid sis_id first_name last_name email_address role_code affiliations), allow_nil: true)
+      expect_results(%w(ldap_uid sis_id role_code affiliations), allow_nil: true)
     end
     it 'should include ccn subqueries' do
       expect_results(%w(cross_listed_ccns co_scheduled_ccns), allow_nil: true)
