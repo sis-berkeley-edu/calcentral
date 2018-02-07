@@ -24,31 +24,31 @@
       <div data-ng-if="!myAdvising.errored">
 
         <div data-ng-if="!showAdvisorsList">
-          <div data-ng-if="targetUser.academicRoles.haasFullTimeMba && !targetUser.academicRoles.haasMbaPublicHealth && !targetUser.academicRoles.haasMbaJurisDoctor">
+          <div data-ng-if="academicRoles.haasFullTimeMba && !academicRoles.haasMbaPublicHealth && !academicRoles.haasMbaJurisDoctor">
             <a href="http://www.haas.berkeley.edu/MBA/contacts/index.html">
               Contact the Full-time MBA Program Office
             </a>
           </div>
 
-          <div data-ng-if="targetUser.academicRoles.haasEveningWeekendMba">
+          <div data-ng-if="academicRoles.haasEveningWeekendMba">
             <a href="http://haas.berkeley.edu/EWMBA/contacts/">
               Contact the Evening and Weekend MBA Program Office
             </a>
           </div>
 
-          <div data-ng-if="targetUser.academicRoles.haasExecMba">
+          <div data-ng-if="academicRoles.haasExecMba">
             <a href="http://haas.berkeley.edu/EMBA/contacts/">
               Contact the Berkeley MBA For Executives Program Office
             </a>
           </div>
 
-          <div data-ng-if="targetUser.academicRoles.haasMastersFinEng">
+          <div data-ng-if="academicRoles.haasMastersFinEng">
             <a href="http://www.haas.berkeley.edu/MFE/">
               Contact the Master of Financial Engineering Program Office
             </a>
           </div>
 
-          <div data-ng-if="targetUser.academicRoles.haasMbaPublicHealth">
+          <div data-ng-if="academicRoles.haasMbaPublicHealth">
             Contact the appropriate degree program office at Haas or Public Health:
             <ul class="cc-list-bullets">
               <li>
@@ -60,7 +60,7 @@
             </ul>
           </div>
 
-          <div data-ng-if="targetUser.academicRoles.haasMbaJurisDoctor">
+          <div data-ng-if="academicRoles.haasMbaJurisDoctor">
             Contact the appropriate degree program office at Haas or Law:
             <ul class="cc-list-bullets">
               <li>
