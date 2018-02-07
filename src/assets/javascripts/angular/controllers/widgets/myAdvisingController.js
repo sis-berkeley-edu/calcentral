@@ -11,13 +11,13 @@ angular.module('calcentral.controllers').controller('MyAdvisingController', func
     isLoading: true
   };
 
-  var isHaasStudent = function() {
-    if ($scope.academicRoles.haasFullTimeMba ||
-      $scope.academicRoles.haasEveningWeekendMba ||
-      $scope.academicRoles.haasExecMba ||
-      $scope.academicRoles.haasMastersFinEng ||
-      $scope.academicRoles.haasMbaPublicHealth ||
-      $scope.academicRoles.haasMbaJurisDoctor) {
+  var isHaasStudent = function(academicRoles) {
+    if (academicRoles.haasFullTimeMba ||
+      academicRoles.haasEveningWeekendMba ||
+      academicRoles.haasExecMba ||
+      academicRoles.haasMastersFinEng ||
+      academicRoles.haasMbaPublicHealth ||
+      academicRoles.haasMbaJurisDoctor) {
       return true;
     }
     return false;
@@ -31,8 +31,9 @@ angular.module('calcentral.controllers').controller('MyAdvisingController', func
 
   var loadStudentAcademicRoles = function() {
     var isAdvisingStudentLookup = $route.current.isAdvisingStudentLookup;
-    $scope.academicRoles = isAdvisingStudentLookup ? $scope.targetUser.academicRoles : apiService.user.profile.academicRoles;
-    $scope.showAdvisorsList = !isHaasStudent();
+    var academicRoles = isAdvisingStudentLookup ? $scope.targetUser.academicRoles : apiService.user.profile.academicRoles;
+    $scope.academicRoles = academicRoles;
+    $scope.showAdvisorsList = !isHaasStudent(academicRoles);
   };
 
   var loadFeeds = function() {
