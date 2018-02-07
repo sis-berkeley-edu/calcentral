@@ -35,16 +35,21 @@ angular.module('calcentral.controllers').controller('SirController', function(si
     if (!sirStatuses || !sirStatuses.length) {
       return;
     }
-    var checkStatus = $scope.sir.statuses.length ? '' : 'C';
 
     sirStatuses = sirStatuses.filter(function(status) {
-      return (status.itemStatusCode !== checkStatus ||
-              _.get(status, 'newAdmitAttributes.visible'));
+      var visible = (status.itemStatusCode !== 'C' || _.get(status, 'newAdmitAttributes.visible'));
+      return studentResponse ? visible || recentlyCompletedSir(status, studentResponse) : visible;
     });
 
     if (sirStatuses.length) {
       updateScopeSirStatuses(sirStatuses, studentResponse);
     }
+  };
+
+  var recentlyCompletedSir = function(sirStatus, studentResponse) {
+    var sirApplicationNbr = _.get(sirStatus, 'checklistMgmtAdmp.admApplNbr');
+    var recentlyCompletedApplicationNbr = _.get(studentResponse, 'response.admApplNbr');
+    return _.get(sirStatus, 'itemStatusCode') === 'C' && (sirApplicationNbr === recentlyCompletedApplicationNbr);
   };
 
   /**
