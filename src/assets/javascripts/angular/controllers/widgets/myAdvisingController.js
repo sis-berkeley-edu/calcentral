@@ -6,7 +6,7 @@ var _ = require('lodash');
 /**
  * My Advising controller
  */
-angular.module('calcentral.controllers').controller('MyAdvisingController', function(myAdvisingFactory, apiService, $route, $routeParams, $scope) {
+angular.module('calcentral.controllers').controller('MyAdvisingController', function(myAdvisingFactory, advisingFactory, apiService, $route, $routeParams, $scope, $q) {
   $scope.myAdvising = {
     isLoading: true
   };
@@ -29,9 +29,25 @@ angular.module('calcentral.controllers').controller('MyAdvisingController', func
     $scope.showAppointmentLinks = apiService.user.profile.features.csAdvisingLinks && _.get(response, 'data.feed.links');
   };
 
-  var loadStudentAcademicRoles = function() {
-    var isAdvisingStudentLookup = $route.current.isAdvisingStudentLookup;
-    var academicRoles = isAdvisingStudentLookup ? $scope.targetUser.academicRoles : apiService.user.profile.academicRoles;
+  var getStudentAcademicRoles = function() {
+    var params;
+    var deferred;
+    if ($route.current.isAdvisingStudentLookup) {
+      params = {
+        uid: $routeParams.uid
+      };
+      return advisingFactory.getStudent(params);
+    } else {
+      deferred = $q.defer();
+      deferred.resolve({
+        data: apiService.user.profile
+      });
+      return deferred.promise;
+    }
+  };
+
+  var loadStudentAcademicRoles = function(response) {
+    var academicRoles = _.get(response, 'data.academicRoles');
     $scope.academicRoles = academicRoles;
     $scope.showAdvisorsList = !isHaasStudent(academicRoles);
   };
@@ -39,6 +55,7 @@ angular.module('calcentral.controllers').controller('MyAdvisingController', func
   var loadFeeds = function() {
     myAdvisingFactory.getStudentAdvisingInfo()
       .then(loadStudentAdvisingInfo)
+      .then(getStudentAcademicRoles)
       .then(loadStudentAcademicRoles)
       .finally(function() {
         $scope.myAdvising.isLoading = false;
