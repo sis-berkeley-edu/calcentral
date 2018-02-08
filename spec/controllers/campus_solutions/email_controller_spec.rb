@@ -17,7 +17,7 @@ describe CampusSolutions::EmailController do
         post :post,
              {
                bogus_field: 'abc',
-               type: 'CAMP',
+               type: 'OTHR',
                email: 'foo@foo.com',
                isPreferred: 'N'
              }
@@ -26,6 +26,18 @@ describe CampusSolutions::EmailController do
         expect(json['statusCode']).to eq 200
         expect(json['feed']).to be
         expect(json['feed']['status']).to be
+      end
+      it 'should reject a post that fails validation' do
+        post :post,
+             {
+               type: 'CAMP',
+               email: 'foo@foo.com',
+               isPreferred: 'N'
+             }
+        expect(response.status).to eq 400
+        json = JSON.parse(response.body)
+        expect(json['feed']).not_to be
+        expect(json['error']).to be
       end
     end
   end

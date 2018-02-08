@@ -139,13 +139,9 @@ angular.module('calcentral.controllers').controller('ProfileAddressController', 
     });
   };
 
-  var actionCompleted = function(response) {
-    apiService.profile.actionCompleted($scope, response, loadInformation);
-  };
-
   var deleteCompleted = function(response) {
     $scope.isDeleting = false;
-    actionCompleted(response);
+    apiService.profile.actionCompleted($scope, response, loadInformation);
   };
 
   $scope.delete = function(item) {
@@ -156,7 +152,12 @@ angular.module('calcentral.controllers').controller('ProfileAddressController', 
 
   var saveCompleted = function(response) {
     $scope.isSaving = false;
-    actionCompleted(response);
+    apiService.profile.actionCompleted($scope, response, loadInformation);
+  };
+
+  var saveFailed = function(response) {
+    $scope.isSaving = false;
+    apiService.profile.actionFailed($scope, response, loadInformation);
   };
 
   $scope.save = function(item) {
@@ -168,7 +169,7 @@ angular.module('calcentral.controllers').controller('ProfileAddressController', 
     apiService.profile
       .save($scope, profileFactory.postAddress, merge)
       .then(saveCompleted)
-      .catch(saveCompleted);
+      .catch(saveFailed);
   };
 
   $scope.showAdd = function() {
