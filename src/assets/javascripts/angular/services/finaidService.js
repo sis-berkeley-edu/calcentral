@@ -3,7 +3,7 @@
 var _ = require('lodash');
 var angular = require('angular');
 
-angular.module('calcentral.services').service('finaidService', function($rootScope) {
+angular.module('calcentral.services').service('finaidService', function($rootScope, userService) {
   var options = {
     finaidYear: false
   };
@@ -38,7 +38,11 @@ angular.module('calcentral.services').service('finaidService', function($rootSco
   var setDefaultFinaidYear = function(data, finaidYearId) {
     if (data && data.finaidSummary && data.finaidSummary.finaidYears) {
       if (finaidYearId) {
-        setFinaidYear(findFinaidYear(data, finaidYearId));
+        if (combinationExists(data, finaidYearId)) {
+          setFinaidYear(findFinaidYear(data, finaidYearId));
+        } else {
+          userService.redirectToPage('finances');
+        }
       } else {
         // If no aid year has been selected before, select the default one
         var finaidYear = findDefaultFinaidYear(data.finaidSummary.finaidYears);
@@ -56,7 +60,9 @@ angular.module('calcentral.services').service('finaidService', function($rootSco
 
   var setFinaidYear = function(finaidYear) {
     options.finaidYear = finaidYear;
-    $rootScope.$broadcast('calcentral.custom.api.finaid.finaidYear');
+    if (options.finaidYear) {
+      $rootScope.$broadcast('calcentral.custom.api.finaid.finaidYear');
+    }
   };
 
   // Expose the methods
