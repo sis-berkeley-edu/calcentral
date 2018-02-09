@@ -4,12 +4,17 @@ var angular = require('angular');
 var _ = require('lodash');
 
 angular.module('calcentral.services').service('profileService', function() {
+
+  var actionFailed = function($scope, response) {
+    $scope.errorMessage = _.get(response, 'data.feed.errmsgtext') || 'An error occurred while saving your data.';
+  };
+
   /**
    * Fired after an action (delete / save) has been completed
    */
   var actionCompleted = function($scope, response, callback) {
     if (response.data.error || response.data.errored) {
-      $scope.errorMessage = _.get(response, 'data.feed.errmsgtext') || 'An error occurred while saving your data.';
+      actionFailed();
     } else {
       $scope.closeEditor();
       callback({
@@ -200,6 +205,7 @@ angular.module('calcentral.services').service('profileService', function() {
 
   // Expose methods
   return {
+    actionFailed: actionFailed,
     actionCompleted: actionCompleted,
     closeEditor: closeEditor,
     delete: deleteItem,

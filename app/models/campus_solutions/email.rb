@@ -19,6 +19,10 @@ module CampusSolutions
       )
     end
 
+    def self.valid?(params)
+      %w(HOME OTHR).include? params[:type]
+    end
+
     def request_root_xml_node
       'EMAIL_ADDRESS'
     end

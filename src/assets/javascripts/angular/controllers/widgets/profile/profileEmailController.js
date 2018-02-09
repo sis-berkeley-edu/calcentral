@@ -50,13 +50,9 @@ angular.module('calcentral.controllers').controller('ProfileEmailController', fu
     });
   };
 
-  var actionCompleted = function(response) {
-    apiService.profile.actionCompleted($scope, response, loadInformation);
-  };
-
   var deleteCompleted = function(response) {
     $scope.isDeleting = false;
-    actionCompleted(response);
+    apiService.profile.actionCompleted($scope, response, loadInformation);
   };
 
   $scope.delete = function(item) {
@@ -67,7 +63,12 @@ angular.module('calcentral.controllers').controller('ProfileEmailController', fu
 
   var saveCompleted = function(response) {
     $scope.isSaving = false;
-    actionCompleted(response);
+    apiService.profile.actionCompleted($scope, response, loadInformation);
+  };
+
+  var saveFailed = function(response) {
+    $scope.isSaving = false;
+    apiService.profile.actionFailed($scope, response);
   };
 
   $scope.save = function(item) {
@@ -75,7 +76,8 @@ angular.module('calcentral.controllers').controller('ProfileEmailController', fu
       type: item.type.code,
       email: item.emailAddress,
       isPreferred: item.primary ? 'Y' : 'N'
-    }).then(saveCompleted);
+    }).then(saveCompleted)
+      .catch(saveFailed);
   };
 
   $scope.showAdd = function() {
