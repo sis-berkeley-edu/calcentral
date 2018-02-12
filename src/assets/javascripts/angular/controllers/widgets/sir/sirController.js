@@ -47,7 +47,7 @@ angular.module('calcentral.controllers').controller('SirController', function(si
   };
 
   var recentlyCompletedSir = function(sirStatus, studentResponse) {
-    var sirApplicationNbr = _.get(sirStatus, 'checklistMgmtAdmp.admApplNbr');
+    var sirApplicationNbr = _.get(sirStatus, 'checkListMgmtAdmp.admApplNbr');
     var recentlyCompletedApplicationNbr = _.get(studentResponse, 'response.admApplNbr');
     return _.get(sirStatus, 'itemStatusCode') === 'C' && (sirApplicationNbr === recentlyCompletedApplicationNbr);
   };
