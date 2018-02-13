@@ -41,7 +41,7 @@
                   <span class="cc-visuallyhidden" data-ng-bind="category.title"></span>
                 </a>
               </div>
-              <div class="cc-right" data-cc-amount-directive="item.value" data-cc-amount-directive-color="false" data-ng-if="item.value"></div>
+              <div class="cc-right" data-ng-bind="item.value" data-ng-if="item.value"></div>
               <div class="cc-right" data-ng-if="item.values">
                 <div data-ng-repeat="value in item.values" class="cc-text-right">
                   <div data-ng-bind="value.subvalue.join(' &bull; ')"></div>
