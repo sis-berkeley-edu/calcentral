@@ -62,7 +62,9 @@ module MyTasks
         cs: {
           responsibleContactEmail: result[:responsibleCntctEmail],
           organization: result[:associationIdName],
-          showStatus: result[:itemStatus] != 'Completed' ? result[:itemStatus] : ''
+          showStatus: result[:itemStatus] != 'Completed' ? result[:itemStatus] : '',
+          itemStatusCode: result[:itemStatusCode],
+          displayStatus: display_status(result[:itemStatusCode])
         }
       }
       if result[:checkListMgmtFina] && (Finaid::Shared::ADMIN_FUNCTION.include? result[:adminFunc])
@@ -109,5 +111,20 @@ module MyTasks
       formatted_entry
     end
 
+    # Maps status code to display status for task
+    def display_status(item_status_code)
+      case item_status_code
+        when 'I' # Initiated (Assigned)
+          'incomplete'
+        when 'A', 'R' # Active (Processing) / Received
+          'beingProcessed'
+        when 'C', 'W' # Completed / Waived
+          'completed'
+        when 'Z' # Incomplete
+          'furtherActionNeeded'
+        else
+          'incomplete'
+      end
+    end
   end
 end
