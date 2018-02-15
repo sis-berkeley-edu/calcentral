@@ -40,6 +40,37 @@ angular.module('calcentral.services').service('userService', function($http, $lo
     }
   };
 
+  var redirectToPage = function(page) {
+    var pageAccessible = false;
+    switch (page) {
+      case 'dashboard': {
+        pageAccessible = !!profile.hasDashboardTab;
+        break;
+      }
+      case 'academics': {
+        pageAccessible = !!profile.hasDashboardTab;
+        break;
+      }
+      case 'finances': {
+        pageAccessible = !!profile.hasFinancialsTab;
+        break;
+      }
+      case 'campus': {
+        pageAccessible = !!profile.hasCampusTab;
+        break;
+      }
+      case 'toolbox': {
+        pageAccessible = true;
+        break;
+      }
+    }
+    if (pageAccessible) {
+      utilService.redirect(page);
+    } else {
+      redirectToHome();
+    }
+  };
+
   /**
    * Set the user firstLoginAt attribute
    */
@@ -203,6 +234,7 @@ angular.module('calcentral.services').service('userService', function($http, $lo
     handleUserLoaded: handleUserLoaded,
     profile: profile,
     redirectToHome: redirectToHome,
+    redirectToPage: redirectToPage,
     removeOAuth: removeOAuth,
     setFirstLogin: setFirstLogin,
     signIn: signIn,
