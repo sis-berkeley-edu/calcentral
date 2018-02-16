@@ -502,6 +502,7 @@ module EdoOracle
           ADMIT_TERM as admit_term,
           ADMIT_TYPE as admit_type,
           ADMIT_TYPE_DESCR as admit_type_desc,
+          ADMITTED_GEP as global_edge_program,
           ATHLETE as athlete,
           PROG_STATUS as admit_status
         FROM
