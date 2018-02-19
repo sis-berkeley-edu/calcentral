@@ -106,7 +106,7 @@ angular.module('calcentral.config').config(function($routeProvider, calcentralCo
       controller: 'MyFinancesController',
       pageName: 'Financial Aid and Scholarships'
     }).
-    when('/finances/finaid/:finaidYearId?/t4', {
+    when('/finances/finaid/t4/auth', {
       templateUrl: 'finaid_t4.html',
       controller: 'MyFinancesController',
       pageName: 'Financial Aid and Scholarships'
