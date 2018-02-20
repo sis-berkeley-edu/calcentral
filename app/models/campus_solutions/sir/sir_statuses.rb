@@ -127,11 +127,12 @@ module CampusSolutions
         return { errored: true } unless status.is_a?(Hash)
         first_year_freshman = status.try(:[], 'admit_type') == 'FYR'
         is_athlete = status.try(:[], 'athlete') == 'Y'
+        is_global_edge = status.try(:[], 'global_edge_program') == 'Y'
         admit_term_code = from_edo_id(status.try(:[], 'admit_term'))
         roles = {
           athlete: is_athlete,
           firstYearFreshman: first_year_freshman,
-          firstYearPathway: first_year_freshman && !is_athlete && ['UCLS', 'UCNR'].include?(status.try(:[], 'applicant_program')),
+          firstYearPathway: first_year_freshman && !is_athlete && !is_global_edge && ['UCLS', 'UCNR'].include?(status.try(:[], 'applicant_program')),
           preMatriculated: ['AD', 'PM'].include?(status.try(:[], 'admit_status')),
           transfer: status.try(:[], 'admit_type') == 'TRN'
         }

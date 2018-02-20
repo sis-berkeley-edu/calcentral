@@ -167,6 +167,7 @@ class EdoOracle::ViewChecker
         'ADMIT_TERM',
         'ADMIT_TYPE',
         'ADMIT_TYPE_DESCR',
+        'ADMITTED_GEP',
         'ATHLETE',
         'PROG_STATUS',
         'STUDENT_ID',

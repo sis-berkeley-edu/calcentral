@@ -116,7 +116,21 @@ describe CampusSolutions::Sir::SirStatuses do
       'admit_term' => '2185',
       'admit_type' => 'FYR',
       'admit_type_desc' => 'First Year Student',
-      'athlete' => 'N'
+      'athlete' => 'N',
+      'global_edge_program' => 'N'
+    }
+  }
+
+  let(:new_admit_attributes_freshman_pathway_gep) {
+    {
+      'applicant_program' => 'UCLS',
+      'applicant_program_descr' => 'College of Letters and Science',
+      'admit_status' => 'AD',
+      'admit_term' => '2185',
+      'admit_type' => 'FYR',
+      'admit_type_desc' => 'First Year Student',
+      'athlete' => 'N',
+      'global_edge_program' => 'Y'
     }
   }
 
@@ -128,7 +142,8 @@ describe CampusSolutions::Sir::SirStatuses do
       'admit_term' => '2165',
       'admit_type' => 'TRN',
       'admit_type_desc' => 'Transfer',
-      'athlete' => 'N'
+      'athlete' => 'N',
+      'global_edge_program' => 'Y'
     }
   }
 
@@ -336,11 +351,26 @@ describe CampusSolutions::Sir::SirStatuses do
         end
       end
 
+      context 'as a freshman eligible for first year pathway admitted to the Global Edge Program' do
+        before do
+          EdoOracle::Queries.stub(:get_new_admit_status) {new_admit_attributes_freshman_pathway_gep}
+        end
+        subject { (proxy.new(uid).get_feed)[:sirStatuses] }
+        it 'denies first year pathway status due to GEP' do
+          expect(subject[0][:newAdmitAttributes][:roles][:firstYearPathway]).to be_falsey
+        end
+        it 'adds the correct links to the status' do
+          expect(subject[0][:newAdmitAttributes][:links][:coaFreshmanLink][:url]).to be_truthy
+          expect(subject[0][:newAdmitAttributes][:links][:firstYearPathwayLink]).to be_falsey
+          expect(subject[0][:newAdmitAttributes][:links][:coaTransferLink]).to be_falsey
+        end
+      end
+
       context 'as a transfer student' do
         before do
           EdoOracle::Queries.stub(:get_new_admit_status) { new_admit_attributes_transfer }
         end
-        subject { (proxy.new(uid).get_feed)[:sirStatuses]}
+        subject { (proxy.new(uid).get_feed)[:sirStatuses] }
         it 'adds the correct links to the status' do
           expect(subject[0][:newAdmitAttributes][:links][:coaFreshmanLink]).to be_falsey
           expect(subject[0][:newAdmitAttributes][:links][:firstYearPathwayLink]).to be_falsey
