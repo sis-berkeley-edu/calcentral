@@ -383,8 +383,8 @@ describe User::Api do
 
     context 'when user is an applicant' do
       let(:has_applicant_role) { true }
-      let(:expected_can_view_academics) { true }
-      let(:expected_can_view_grades) { true }
+      let(:expected_can_view_academics) { false }
+      let(:expected_can_view_grades) { false }
       let(:expected_has_badges) { true }
       let(:expected_has_campus_tab) { true }
       let(:expected_has_dashboard_tab) { true }
