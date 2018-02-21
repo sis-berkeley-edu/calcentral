@@ -6,25 +6,26 @@ var angular = require('angular');
 
 angular.module('calcentral.services').service('academicsService', function() {
 
-  // Selects the semester of most pressing interest. Choose the current semester if available.
+  // Selects the semester of most pressing interest.
+  // Choose the semester with grading in progress
+  // Otherwise choose the current semester, if available.
   // Otherwise choose the next semester in the future, if available.
-  // Otherwise,choose the most recent semester.
+  // Otherwise choose the most recent semester.
   var chooseDefaultSemester = function(semesters) {
-    var oldestFutureSemester = false;
-    for (var i = 0; i < semesters.length; i++) {
-      if (semesters[i].timeBucket === 'current') {
-        return semesters[i];
-      } else if (semesters[i].timeBucket === 'future') {
-        oldestFutureSemester = semesters[i];
-      } else {
-        if (oldestFutureSemester) {
-          return oldestFutureSemester;
-        } else {
-          return semesters[i];
-        }
-      }
-    }
-    return oldestFutureSemester;
+    var groupedSemesters = _.groupBy(semesters, 'timeBucket');
+    var gradingInProgress = _.find(semesters, ['gradingInProgress', true]);
+
+    // Create array with terms objects in preferred order
+    // (grading in progress, current, most recent future, most recent past)
+    var sortedSemesters = [
+      gradingInProgress,
+      _.head(groupedSemesters.current),
+      _.last(groupedSemesters.future),
+      _.head(groupedSemesters.past)
+    ];
+
+    // return first present in list
+    return _.head(_.compact(sortedSemesters));
   };
 
   var countSectionItem = function(selectedCourse, sectionItem) {
