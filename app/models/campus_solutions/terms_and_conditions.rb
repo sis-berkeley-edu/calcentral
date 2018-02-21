@@ -18,6 +18,15 @@ module CampusSolutions
       )
     end
 
+    def self.valid?(params)
+      aid_years = []
+      aid_years_feed = CampusSolutions::MyAidYears.new(@uid).get_feed
+      aid_years_feed.try(:[], :feed).try(:[], :finaidSummary).try(:[], :finaidYears).try(:each) do |aid_year|
+        aid_years.push(aid_year.try(:[], :id).try(:to_i))
+      end
+      aid_years.include?(params[:aidYear].try(:to_i))
+    end
+
     def request_root_xml_node
       'Terms_Conditions'
     end

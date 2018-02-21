@@ -5,6 +5,19 @@ describe CampusSolutions::TermsAndConditions do
   context 'post' do
     let(:params) { {} }
     let(:proxy) { CampusSolutions::TermsAndConditions.new(fake: true, user_id: user_id, params: params) }
+    let(:aid_years_response) {
+      {
+        feed: {
+          finaidSummary: {
+            finaidYears: [{ id: 2016 }, { id:2015 }]
+          }
+        }
+      }
+    }
+
+    before do
+      allow_any_instance_of(CampusSolutions::MyAidYears).to receive(:get_feed).and_return aid_years_response
+    end
 
     context 'filtering out fields not on the whitelist' do
       let(:params) { {
@@ -35,13 +48,29 @@ describe CampusSolutions::TermsAndConditions do
       end
     end
 
-    context 'performing a post' do
+    context 'performing a post with an invalid aid year' do
+      let(:params) { {
+        response: 'Y',
+        aidYear: '2018'
+      } }
+      subject {
+        proxy.post
+      }
+      it 'raises an error and aborts' do
+        expect{
+          subject
+        }.to raise_error Errors::BadRequestError, /Invalid request: {:response=>"Y", :aidYear=>"2018"}/
+        expect(CampusSolutions::Proxy).to receive(:get).never
+      end
+    end
+
+    context 'performing a post with a permitted aid year' do
       let(:params) { {
         response: 'Y',
         aidYear: '2016'
       } }
       subject {
-        proxy.get
+        proxy.post
       }
       it_should_behave_like 'a simple proxy that returns errors'
       it_behaves_like 'a proxy that properly observes the finaid feature flag'
