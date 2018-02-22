@@ -878,4 +878,38 @@ The SLR will open in a new window/tab. Please close the window/tab when you have
       <STRM>2188</STRM>
     </CHECK_LIST_MGMT_STRM>
   </CHECK_LIST_ITEM>
+  <CHECK_LIST_ITEM>
+    <EMPLID>9000006532</EMPLID>
+    <SEQ_3C>2</SEQ_3C>
+    <CHECKLIST_SEQ>100</CHECKLIST_SEQ>
+    <CHKLST_ITEM_CD>IGNIF</CHKLST_ITEM_CD>
+    <CHECK_LIST_DESCR>Non-Immigrant Info Form (NIF)</CHECK_LIST_DESCR>
+    <ITEM_STATUS>Initiated</ITEM_STATUS>
+    <ITEM_STATUS_CODE>I</ITEM_STATUS_CODE>
+    <DUE_DT>2018-04-17</DUE_DT>
+    <RESPONSIBLE_CNTCT_NAME>Michelle Caruso</RESPONSIBLE_CNTCT_NAME>
+    <RESPONSIBLE_CNTCT_EMAIL>mcaruso@berkeley.edu</RESPONSIBLE_CNTCT_EMAIL>
+    <ASSOCIATION_ID_NAME/>
+    <ITEM_COMMENT>WHAT IS NIF? The Non-Immigrant Information Form (NIF) collects information from international students to determine what type of U.S. immigration status you will hold while at UC Berkeley. NIF is also used to request a Certificate of Eligibility I-20 or DS-2019 for those who will have F-1 or J-1 student status while at UC Berkeley.
+
+WHO COMPLETES NIF? ALL admitted or readmitted international students are asked to complete NIF, regardless of visa status.
+
+SEVIS TRANSFER: If you are transferring your F/J from another US institution, you should complete the NIF now and consult with your school about your F/J release date. You will receive your I-20 or DS-2019 after your release date.
+
+This task will be completed when you have submitted your NIF, but BIO may follow up via email to request additional information.</ITEM_COMMENT>
+    <ADMIN_FUNC>SPRG</ADMIN_FUNC>
+    <ADMIN_FUNC_DESCR>Student Program</ADMIN_FUNC_DESCR>
+    <CHECK_LIST_DOC_MGMT>
+      <LINK_URL_LBL>Access the NIF</LINK_URL_LBL>
+      <LINK_URL>https://io.berkeley.edu/nif</LINK_URL>
+      <DISPLAY_STATUS_DT type="boolean">false</DISPLAY_STATUS_DT>
+      <DISPLAY_DUE_DT type="boolean">true</DISPLAY_DUE_DT>
+      <DISPLAY_RESPONSIBLE_CNTCT type="boolean">true</DISPLAY_RESPONSIBLE_CNTCT>
+    </CHECK_LIST_DOC_MGMT>
+    <CHECK_LIST_MGMT_SPRG>
+      <VAR_DATA_SEQ>1</VAR_DATA_SEQ>
+      <ACAD_CAREER>GRAD</ACAD_CAREER>
+      <STDNT_CAR_NBR>0</STDNT_CAR_NBR>
+    </CHECK_LIST_MGMT_SPRG>
+  </CHECK_LIST_ITEM>
 </CHECK_LIST_ITEMS>

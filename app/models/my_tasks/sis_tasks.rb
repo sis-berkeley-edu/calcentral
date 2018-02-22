@@ -64,7 +64,8 @@ module MyTasks
           organization: result[:associationIdName],
           showStatus: result[:itemStatus] != 'Completed' ? result[:itemStatus] : '',
           itemStatusCode: result[:itemStatusCode],
-          displayStatus: display_status(result[:itemStatusCode])
+          displayStatus: display_status(result[:itemStatusCode]),
+          displayCategory: display_category(result[:adminFunc], result[:chklstItemCd])
         }
       }
       if result[:checkListMgmtFina] && (Finaid::Shared::ADMIN_FUNCTION.include? result[:adminFunc])
@@ -124,6 +125,24 @@ module MyTasks
           'furtherActionNeeded'
         else
           'incomplete'
+      end
+    end
+
+    # Maps admin function code and checklist item code to the category
+    # in which the task should be displayed
+    def display_category(admin_func_code, checklist_item_code)
+      return 'residency' if checklist_item_code[0,2] == 'RR'
+      case admin_func_code
+        when 'ADMA' # Admissions Application
+          'newStudent'
+        when 'ADMP' # Admissions Program
+          'admission'
+        when 'FINA' # Financial Aid
+          'finaid'
+        when 'GEN', 'SPRG', 'STRM' # General, Student Program, Student Term
+          'student'
+        else
+          'student'
       end
     end
   end

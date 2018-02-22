@@ -6,7 +6,7 @@ describe MyTasks::SisTasks do
   context '#fetch_tasks' do
     let(:fetched_tasks) { subject.fetch_tasks }
     it 'returns formatted checklist items' do
-      expect(fetched_tasks.count).to eq 27
+      expect(fetched_tasks.count).to eq 28
       fetched_tasks.each do |checklist_item|
         expect(checklist_item[:emitter]).to eq 'Campus Solutions'
       end
@@ -56,6 +56,17 @@ describe MyTasks::SisTasks do
       expect(fetched_tasks[26][:cs][:displayStatus]).to eq 'beingProcessed'
       expect(fetched_tasks[22][:cs][:displayStatus]).to eq 'furtherActionNeeded'
     end
+
+    it 'maps admin function code and checklist item code to display category' do
+      fetched_tasks.each_with_index do |checklist_item, index|
+        expect(checklist_item[:cs]).to have_key(:displayCategory)
+      end
+      expect(fetched_tasks[0][:cs][:displayCategory]).to eq 'newStudent'
+      expect(fetched_tasks[1][:cs][:displayCategory]).to eq 'finaid'
+      expect(fetched_tasks[2][:cs][:displayCategory]).to eq 'student'
+      expect(fetched_tasks[11][:cs][:displayCategory]).to eq 'admission'
+      expect(fetched_tasks[21][:cs][:displayCategory]).to eq 'residency'
+    end
   end
 
   context '#display_status' do
@@ -69,6 +80,37 @@ describe MyTasks::SisTasks do
     end
     it 'defaults to incomplete status when status code is unknown' do
       expect(subject.instance_eval { display_status('B') }).to eq 'incomplete'
+    end
+  end
+
+  context '#display_category' do
+    it 'returns residency category when checklist item code begins with \'RR\'' do
+      expect(subject.instance_eval { display_category('STRM','RR54AF')}).to eq 'residency'
+      expect(subject.instance_eval { display_category('ADMA','RRSLRA')}).to eq 'residency'
+      expect(subject.instance_eval { display_category('SPRG','RRPPCP')}).to eq 'residency'
+      expect(subject.instance_eval { display_category('SPRG','RR54HS')}).to eq 'residency'
+      expect(subject.instance_eval { display_category('STRM','RRWUPP')}).to eq 'residency'
+    end
+    it 'returns admission category when admin function code is \'ADMP\'' do
+      expect(subject.instance_eval { display_category('ADMP', 'ACTSAT')}).to eq 'admission'
+    end
+    it 'returns financial aid category when admin function code is \'FINA\'' do
+      expect(subject.instance_eval { display_category('FINA', 'FAPFDB')}).to eq 'finaid'
+    end
+    it 'returns student category when admin function code is \'GEN\'' do
+      expect(subject.instance_eval { display_category('GEN', 'A10000')}).to eq 'student'
+    end
+    it 'returns student category when admin function code is \'SPRG\'' do
+      expect(subject.instance_eval { display_category('SPRG', 'IGNIF')}).to eq 'student'
+    end
+    it 'returns student category when admin function code is \'STRM\'' do
+      expect(subject.instance_eval { display_category('STRM', 'IGNIF')}).to eq 'student'
+    end
+    it 'returns new student category when admin function code is \'ADMA\'' do
+      expect(subject.instance_eval { display_category('ADMA', 'AL0001')}).to eq 'newStudent'
+    end
+    it 'returns student category when admin function code is unknown' do
+      expect(subject.instance_eval { display_category('ABCD', 'EFGH')}).to eq 'student'
     end
   end
 end
