@@ -1,0 +1,63 @@
+{
+   "studentCommittees":[
+      {
+         "committeeType":"Qualifying Exam Committee",
+         "program":"Env Sci, Policy, & Mgmt PhD",
+         "committeeMembers":{
+            "chair":[
+               {
+                  "name":"Neil Armstrong",
+                  "email":"moon_man@berkeley.edu",
+                  "photo":"/api/my/committees/photo/member/320343",
+                  "primaryDepartment":"Env Sci, Policy, & Mgmt",
+                  "serviceRange":"Apr 17, 2015 - Apr 30, 2015"
+               }
+            ],
+            "coChair":[
+
+            ],
+            "insideMembers":[
+
+            ],
+            "outsideMembers":[
+
+            ],
+            "additionalReps":[
+               {
+                  "name":"Gordon Ramsey",
+                  "email":"chef_man@berkeley.edu",
+                  "photo":"/api/my/committees/photo/member/739827",
+                  "primaryDepartment":"Env Sci, Policy, & Mgmt",
+                  "serviceRange":"Apr 17, 2015 - Apr 30, 2015"
+               },
+               {
+                  "name":"Daniel Day-Lewis",
+                  "email":"acting_man@berkeley.edu",
+                  "photo":"/api/my/committees/photo/member/170307",
+                  "primaryDepartment":"Env Sci, Policy, & Mgmt",
+                  "serviceRange":"Apr 17, 2015 - Apr 30, 2015"
+               }
+            ],
+            "academicSenate":[
+               {
+                  "name":"Johnny Cash",
+                  "email":"music_man@berkeley.edu",
+                  "photo":"/api/my/committees/photo/member/70369",
+                  "primaryDepartment":"Integrative Biology",
+                  "serviceRange":"Apr 17, 2015 - Apr 30, 2015"
+               }
+            ]
+         },
+         "statusMessage":null,
+         "isActive":false
+      }
+   ],
+   "facultyCommittees":{
+      "active":[
+
+      ],
+      "completed":[
+
+      ]
+   }
+}

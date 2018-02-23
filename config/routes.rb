@@ -116,17 +116,18 @@ Calcentral::Application.routes.draw do
 
     # Advisor endpoints
     get '/api/advising/academics/:student_uid' => 'advising_student#academics', :defaults => { :format => 'json' }
-    get '/api/advising/class_enrollments/:student_uid' => 'advising_student#enrollment_instructions', :defaults => { :format => 'json'}
     get '/api/advising/academic_status/:student_uid' => 'advising_student#academic_status', :defaults => { :format => 'json' }
-    get '/api/advising/registrations/:student_uid' => 'advising_student#registrations', :defaults => { :format => 'json' }
-    get '/api/advising/resources/:student_uid' => 'advising_student#resources', :defaults => { :format => 'json' }
-    get '/api/advising/student/:student_uid' => 'advising_student#profile', :defaults => { :format => 'json' }
     get '/api/advising/advising/:student_uid' => 'advising_student#advising', :defaults => { :format => 'json' }
-    get '/api/advising/student_success/:student_uid' => 'advising_student#student_success', :defaults => { :format => 'json' }
+    get '/api/advising/cache_expiry/academics/:student_uid' => 'advising_student#academics_cache_expiry', :defaults => { :format => 'json' }
+    get '/api/advising/class_enrollments/:student_uid' => 'advising_student#enrollment_instructions', :defaults => { :format => 'json'}
+    get '/api/advising/student_committees/:student_uid' => 'advising_student#student_committees', :defaults => { :format => 'json' }
     get '/api/advising/degree_progress/grad/:student_uid' => 'advising_student#degree_progress_graduate', :defaults => { :format => 'json' }
     get '/api/advising/degree_progress/ugrd/:student_uid' => 'advising_student#degree_progress_undergrad', :defaults => { :format => 'json' }
     get '/api/advising/holds/:student_uid' => 'advising_student#holds', :defaults => { :format => 'json' }
-    get '/api/advising/cache_expiry/academics/:student_uid' => 'advising_student#academics_cache_expiry', :defaults => { :format => 'json' }
+    get '/api/advising/registrations/:student_uid' => 'advising_student#registrations', :defaults => { :format => 'json' }
+    get '/api/advising/resources/:student_uid' => 'advising_student#resources', :defaults => { :format => 'json' }
+    get '/api/advising/student/:student_uid' => 'advising_student#profile', :defaults => { :format => 'json' }
+    get '/api/advising/student_success/:student_uid' => 'advising_student#student_success', :defaults => { :format => 'json' }
     get '/api/search_users/id_or_name/:input' => 'search_users#by_id_or_name', :defaults => { :format => 'json' }
     post '/advisor_act_as' => 'advisor_act_as#start'
     post '/stop_advisor_act_as' => 'advisor_act_as#stop'

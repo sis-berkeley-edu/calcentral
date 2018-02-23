@@ -39,6 +39,7 @@
         <div data-ng-include src="'widgets/academics/degree_progress_graduate.html'" data-ng-if="degreeProgress.graduate.showCard"></div>
         <div data-ng-include src="'widgets/academics/degree_progress_undergrad.html'" data-ng-if="degreeProgress.undergraduate.showCard"></div>
       </div>
+      <div data-ng-include src="'widgets/higher_degree_committees.html'" data-ng-if="api.user.profile.features.csCommittees && committees.showCommittees"></div>
       <div data-ng-include="'widgets/transfer_credit.html'" data-ng-if="!targetUser.academicRoles.summerVisitor"></div>
       <div data-ng-include="'widgets/student_success/student_success.html'" data-ng-if="api.user.profile.features.advisingStudentSuccess"></div>
       <div data-ng-include="'widgets/final_exam_schedule.html'" data-ng-if="!targetUser.academicRoles.summerVisitor && api.user.profile.features.finalExamSchedule && examSchedule.length"></div>
