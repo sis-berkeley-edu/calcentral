@@ -42,7 +42,7 @@ angular.module('calcentral.controllers').controller('FinaidController', function
   var getFinaidSummary = function(options) {
     return finaidFactory.getSummary(options).then(
       function successCallback(response) {
-        combinationExists(response.data.feed, _.get($scope, 'finaidYear.id'));
+        combinationExists(response.data.feed, $routeParams.finaidYearId);
         setFinaidYear(response.data.feed, $routeParams.finaidYearId);
         $scope.finaidSummary = response.data.feed.finaidSummary;
         $scope.finaid.isLoading = false;

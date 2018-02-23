@@ -26,6 +26,17 @@ describe CampusSolutions::TermsAndConditionsController do
         expect(json['feed']).to be
         expect(json['feed']['institution']).to eq 'UCB01'
       end
+      it 'should reject a post that fails validation' do
+        post :post,
+            {
+              response: 'Y',
+              aidYear: '2018'
+            }
+        expect(response.status).to eq 400
+        json = JSON.parse(response.body)
+        expect(json['feed']).not_to be
+        expect(json['error']).to be
+      end
     end
   end
 end
