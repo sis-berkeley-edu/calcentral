@@ -97,6 +97,15 @@
     margin-top: 12px;
     padding-top: 12px;
   }
+  .cc-widget-tasks-section-header {
+    border-top: 1px solid $cc-color-very-light-grey;
+    padding: 10px 15px;
+  }
+  .cc-widget-task-section-count {
+    background: $cc-color-azure;
+    color: $cc-color-chathams-blue;
+    padding: 3px;
+  }
   .cc-widget-tasks-section-label {
     clear: both;
     color: $cc-color-dim-gray;

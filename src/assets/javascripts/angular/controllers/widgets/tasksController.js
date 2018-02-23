@@ -8,21 +8,71 @@ var _ = require('lodash');
  */
 angular.module('calcentral.controllers').controller('TasksController', function(apiService, linkService, tasksFactory, $http, $interval, $filter, $scope) {
   // Initial mode for Tasks view
-  $scope.currentTaskMode = 'scheduled';
-  $scope.taskModes = ['scheduled', 'unscheduled', 'completed'];
+  $scope.currentTaskMode = 'incomplete';
+  $scope.taskModes = ['incomplete', 'scheduled', 'unscheduled', 'completed'];
+  $scope.taskSections = [
+    {
+      type: 'campusSolutions',
+      id: 'admission',
+      title: 'Admission Tasks',
+      show: false
+    },
+    {
+      type: 'campusSolutions',
+      id: 'residency',
+      title: 'Residency Tasks',
+      show: false
+    },
+    {
+      type: 'campusSolutions',
+      id: 'finaid',
+      title: 'Financial Aid Tasks',
+      show: false
+    },
+    {
+      type: 'campusSolutions',
+      id: 'student',
+      title: 'Student Tasks',
+      show: false
+    },
+    {
+      type: 'campusSolutions',
+      id: 'newStudent',
+      title: 'New Student Tasks',
+      show: false
+    },
+    {
+      type: 'google',
+      id: 'google',
+      title: 'bTasks',
+      show: false
+    },
+    {
+      type: 'canvas',
+      id: 'canvas',
+      title: 'bCourses Tasks',
+      show: false
+    }
+
+  ];
 
   var calculateCounts = function() {
     $scope.counts = {
-      scheduled: $scope.overdueTasks.length + $scope.dueTodayTasks.length + $scope.futureTasks.length,
-      unscheduled: $scope.unscheduledTasks.length
+      incomplete: $scope.lists.incomplete.count,
+      scheduled: $scope.lists.overdue.length + $scope.lists.today.length + $scope.lists.future.length,
+      unscheduled: $scope.lists.unscheduled.length,
+      completed: $scope.lists.completed.count
     };
     setCounts();
   };
 
   var setCounts = function() {
-    var isScheduled = ($scope.currentTaskMode === 'scheduled');
-    $scope.counts.current = isScheduled ? $scope.counts.scheduled : $scope.counts.unscheduled;
-    $scope.counts.opposite = isScheduled ? $scope.counts.unscheduled : $scope.counts.scheduled;
+    // var isScheduled = ($scope.currentTaskMode === 'scheduled');
+    // $scope.counts.current = isScheduled ? $scope.counts.scheduled : $scope.counts.unscheduled;
+    // $scope.counts.opposite = isScheduled ? $scope.counts.unscheduled : $scope.counts.scheduled;
+    var isIncomplete = ($scope.currentTaskMode === 'incomplete');
+    $scope.counts.current = isIncomplete ? $scope.counts.incomplete : $scope.counts.completed;
+    $scope.counts.opposite = isIncomplete ? $scope.counts.completed : $scope.counts.incomplete;
   };
 
   var sortByTitle = function(a, b) {
@@ -44,35 +94,26 @@ angular.module('calcentral.controllers').controller('TasksController', function(
   var sortByDueDate = function(a, b) {
     return sortByDate(a, b, 'dueDate', false);
   };
+
   var sortByUpdatedDateReverse = function(a, b) {
     return sortByDate(a, b, 'updatedDate', true);
   };
+
   var sortByCompletedDateReverse = function(a, b) {
     return sortByDate(a, b, 'completedDate', true);
   };
 
-  $scope.updateTaskLists = function() {
-    $scope.overdueTasks = $scope.tasks.filter(filterOverdue).sort(sortByDueDate);
-    $scope.dueTodayTasks = $scope.tasks.filter(filterDueToday).sort(sortByTitle);
-    $scope.futureTasks = $scope.tasks.filter(filterFuture).sort(sortByDueDate);
-    $scope.unscheduledTasks = $scope.tasks.filter(filterUnScheduled).sort(sortByUpdatedDateReverse);
-    $scope.completedTasks = $scope.tasks.filter(filterCompleted).sort(sortByCompletedDateReverse);
-    calculateCounts();
-  };
-
   var getTasks = function(options) {
     return tasksFactory.getTasks(options).then(function(data) {
-      angular.extend($scope, data);
-      if (_.get($scope, 'tasks')) {
+      var tasks = _.get(data, 'tasks');
+      if (tasks) {
+        $scope.tasks = tasks;
         linkService.addCurrentPagePropertiesToResources($scope.tasks, $scope.currentPage.name, $scope.currentPage.url);
-      }
-      if ($scope.tasks) {
         $scope.updateTaskLists();
+        $scope.isLoading = false;
       }
     });
   };
-
-  getTasks();
 
   var toggleStatus = function(task) {
     if (task.status === 'completed') {
@@ -80,6 +121,45 @@ angular.module('calcentral.controllers').controller('TasksController', function(
     } else {
       task.status = 'completed';
     }
+  };
+
+  var filterOverdue = function(task) {
+    return (task.bucket === 'Overdue');
+  };
+
+  var filterDueToday = function(task) {
+    return (task.bucket === 'Today');
+  };
+
+  var filterFuture = function(task) {
+    return (task.bucket === 'Future');
+  };
+
+  var filterUnScheduled = function(task) {
+    return (!task.dueDate && task.status !== 'completed');
+  };
+
+  var filterGoogle = function(task) {
+    return (task.emitter === 'Google');
+  };
+
+  var filterCanvas = function(task) {
+    return (task.emitter === 'bCourses');
+  };
+
+  var csCategoryFilterFactory = function(categoryString) {
+    return function(task) {
+      var category = categoryString;
+      return (task.emitter === 'Campus Solutions' && task.cs.displayCategory === category);
+    };
+  };
+
+  var filterIncomplete = function(task) {
+    return (task.status !== 'completed');
+  };
+
+  var filterCompleted = function(task) {
+    return (task.status === 'completed');
   };
 
   /**
@@ -117,13 +197,6 @@ angular.module('calcentral.controllers').controller('TasksController', function(
     );
   };
 
-  // Switch mode for scheduled/unscheduled/completed tasks
-  $scope.switchTasksMode = function(tasksMode) {
-    apiService.analytics.sendEvent('Tasks', 'Switch mode', tasksMode);
-    $scope.currentTaskMode = tasksMode;
-    setCounts();
-  };
-
   // Delete Google tasks
   $scope.deleteTask = function(task) {
     task.isDeleting = true;
@@ -154,23 +227,61 @@ angular.module('calcentral.controllers').controller('TasksController', function(
     );
   };
 
-  var filterOverdue = function(task) {
-    return (task.status !== 'completed' && task.bucket === 'Overdue');
+  // Switch mode for scheduled/unscheduled/completed tasks
+  $scope.switchTasksMode = function(tasksMode) {
+    apiService.analytics.sendEvent('Tasks', 'Switch mode', tasksMode);
+    $scope.currentTaskMode = tasksMode;
+    setCounts();
   };
 
-  var filterDueToday = function(task) {
-    return (task.status !== 'completed' && task.bucket === 'Today');
+  $scope.toggleTaskSection = function(taskSection) {
+    taskSection.show = !taskSection.show;
   };
 
-  var filterFuture = function(task) {
-    return (task.status !== 'completed' && task.bucket === 'Future');
+  $scope.updateTaskLists = function() {
+    var completedTasks = $scope.tasks.filter(filterCompleted).sort(sortByCompletedDateReverse);
+    var incompleteTasks = $scope.tasks.filter(filterIncomplete);
+
+    $scope.lists = {
+      incomplete: {
+        counts: incompleteTasks.length,
+        tasks: incompleteTasks
+      },
+      completed: {
+        counts: completedTasks.length,
+        tasks: completedTasks
+      },
+      overdue: incompleteTasks.filter(filterOverdue).sort(sortByDueDate),
+      today: incompleteTasks.filter(filterDueToday).sort(sortByTitle),
+      future: incompleteTasks.filter(filterFuture).sort(sortByDueDate),
+      unscheduled: incompleteTasks.filter(filterUnScheduled).sort(sortByUpdatedDateReverse)
+    };
+
+    // populate task sections
+    angular.forEach($scope.taskSections, function(taskSection) {
+      var taskFilter;
+      switch (taskSection.type) {
+        case 'campusSolutions': {
+          taskFilter = csCategoryFilterFactory(taskSection.id);
+          break;
+        }
+        case 'google': {
+          taskFilter = filterGoogle;
+          break;
+        }
+        case 'canvas': {
+          taskFilter = filterCanvas;
+          break;
+        }
+      }
+
+      var tasks = incompleteTasks.filter(taskFilter).sort(sortByDueDate);
+      taskSection.tasks = tasks;
+      taskSection.count = tasks.length;
+    });
+
+    calculateCounts();
   };
 
-  var filterUnScheduled = function(task) {
-    return (!task.dueDate && task.status !== 'completed');
-  };
-
-  var filterCompleted = function(task) {
-    return (task.status === 'completed');
-  };
+  getTasks();
 });

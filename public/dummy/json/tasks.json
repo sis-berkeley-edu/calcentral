@@ -10,135 +10,484 @@
   },
   "tasks": [
     {
-      "bucket": "Unscheduled",
-      "cs": {
-        "finaidYearId": "2017",
-        "isFinaid": true,
-        "organization": null,
-        "responsibleContactEmail": null,
-        "showStatus": "Incomplete"
-      },
-      "emitter": "Campus Solutions",
-      "linkDescription": "2016-17 Student Parent Cost of Attendance Adjustment Request",
-      "linkUrl": "http://financialaid.berkeley.edu/sites/default/files/docs/forms/Cost_of_Attendance_Appeal_Student_Parent_1617.pdf",
-      "notes": "We received your Cost of Attendance Adjustment Request. Processing times may vary based on our current volume of requests. Please monitor your messages in the My Finances section of Cal Central and respond to requests for additional information promptly to expedite our review. Note: Submitting a request does not guarantee approval.",
-      "sourceUrl": "http://sis-project.berkeley.edu",
-      "status": "inprogress",
-      "subTitle": null,
-      "title": "COA Adj Req - Student Parent",
-      "type": "task",
-      "updatedDate": {
-        "dateString": "1/08",
-        "dateTime": "2017-01-08T00:00:00-08:00",
-        "epoch": 1483862400
-      },
-      "uploadUrl": "https://bcswebqat.is.berkeley.edu/psc/bcsqat/EMPLOYEE/HRMS/c/UC_CC_CHKLST_UPLOAD_FLU.UC_CC_FILE_UPL_FLU.GBL?ucAdminFunction=FINA&ucSeq3C=136&ucChecklistSeq=100&ucAidYear=2017&ucChklstItemCd=FCRSA"
-    },
-    {
-      "bucket": "Unscheduled",
+      "bucket": "Overdue",
       "completedDate": {
-        "dateString": "11/14",
-        "dateTime": "2016-11-14T00:00:00-08:00",
-        "epoch": 1479110400,
+        "dateString": "3/29",
+        "dateTime": "2017-03-29T00:00:00-07:00",
+        "epoch": 1490770800,
         "hasTime": false
       },
       "cs": {
-        "finaidYearId": "2017",
-        "isFinaid": true,
+        "displayCategory": "admission",
+        "displayStatus": "completed",
+        "itemStatusCode": "C",
         "organization": null,
         "responsibleContactEmail": null,
         "showStatus": ""
       },
+      "dueDate": {
+        "dateString": "7/15",
+        "dateTime": "2017-07-15T23:59:59-07:00",
+        "epoch": 1500188399,
+        "hasTime": false
+      },
       "emitter": "Campus Solutions",
-      "linkDescription": "2016-17 Independence Appeal",
-      "linkUrl": "http://financialaid.berkeley.edu/sites/default/files/docs/otherforms/Independence_Appeal_2016-17.pdf",
-      "notes": "Please complete the Independence Appeal form and provide the requested supporting documentation as soon as possible.",
+      "linkDescription": null,
+      "linkUrl": null,
+      "notes": "Submit your official test scores for the SAT Reasoning OR the ACT plus Writing electronically.\n\nAll final, official results must be received by July 15th.\n\nTo request your scores, contact the College Board online at http://www.CollegeBoard.com, via phone at (866) 756-7346 OR the ACT online at www.ACTstudent.org, via phone at (319) 337-1313 for score report information.",
+      "sourceUrl": "http://sis-project.berkeley.edu",
+      "status": "completed",
+      "subTitle": "Office of Undergraduate Admissions",
+      "title": "SAT Reasoning/ACT Plus Writing",
+      "type": "task",
+      "uploadUrl": null
+    },
+    {
+      "bucket": "Future",
+      "cs": {
+        "displayCategory": "admission",
+        "displayStatus": "furtherActionNeeded",
+        "itemStatusCode": "Z",
+        "organization": null,
+        "responsibleContactEmail": "mcaruso@berkeley.edu",
+        "showStatus": "Incomplete"
+      },
+      "dueDate": {
+        "dateString": "3/30",
+        "dateTime": "2018-03-30T23:59:59-07:00",
+        "epoch": 1522479599,
+        "hasTime": false
+      },
+      "emitter": "Campus Solutions",
+      "linkDescription": null,
+      "linkUrl": null,
+      "notes": "Please submit final, official transcripts for all colleges/universities in which you have been enrolled in Fall 2016.\n\nYour final, official transcript(s) must be postmarked by December 15th.\n\nThe University of California, Berkeley accepts electronic transcripts.  Take steps to find out if your college issues electronic transcripts.\n\nIf your school does not issue electronic transcripts, you may mail official transcripts to:\n     UC Berkeley Undergraduate Admissions Transcripts\n     16 Sproul Hall, MC 0608 \n     Berkeley, CA 94720-0608",
+      "sourceUrl": "http://sis-project.berkeley.edu",
+      "status": "inprogress",
+      "subTitle": "Michelle Caruso",
+      "title": "Fall Transcript",
+      "type": "task",
+      "uploadUrl": null
+    },
+    {
+      "bucket": "Overdue",
+      "cs": {
+        "displayCategory": "admission",
+        "displayStatus": "incomplete",
+        "itemStatusCode": "I",
+        "organization": null,
+        "responsibleContactEmail": null,
+        "showStatus": "Initiated"
+      },
+      "dueDate": {
+        "dateString": "7/15",
+        "dateTime": "2017-07-15T23:59:59-07:00",
+        "epoch": 1500188399,
+        "hasTime": false
+      },
+      "emitter": "Campus Solutions",
+      "linkDescription": null,
+      "linkUrl": null,
+      "notes": "Please submit your official scores for all Advanced Placement exams for which you have earned a score of 3 or higher.\n\nALL final, official exam results must be received by July 15th.\n\nNote:  If you have\u00a0completed\u00a0Advanced Placement (AP), you must\u00a0submit an official report for all sittings, including exams from previous years. To arrange for AP scores to be sent to us, visit www.collegeboard.com.",
+      "sourceUrl": "http://sis-project.berkeley.edu",
+      "status": "inprogress",
+      "subTitle": "Office of Undergraduate Admissions",
+      "title": "English Literature & Compostn",
+      "type": "task",
+      "uploadUrl": null
+    },
+    {
+      "bucket": "Overdue",
+      "cs": {
+        "displayCategory": "admission",
+        "displayStatus": "incomplete",
+        "itemStatusCode": "I",
+        "organization": null,
+        "responsibleContactEmail": null,
+        "showStatus": "Initiated"
+      },
+      "dueDate": {
+        "dateString": "7/15",
+        "dateTime": "2017-07-15T23:59:59-07:00",
+        "epoch": 1500188399,
+        "hasTime": false
+      },
+      "emitter": "Campus Solutions",
+      "linkDescription": null,
+      "linkUrl": null,
+      "notes": "Please submit your official scores for all Advanced Placement exams for which you have earned a score of 3 or higher.\n\nALL final, official exam results must be received by July 15th.\n\nNote:  If you have\u00a0completed\u00a0Advanced Placement (AP), you must\u00a0submit an official report for all sittings, including exams from previous years. To arrange for AP scores to be sent to us, visit www.collegeboard.com.",
+      "sourceUrl": "http://sis-project.berkeley.edu",
+      "status": "inprogress",
+      "subTitle": "Office of Undergraduate Admissions",
+      "title": "Spanish Literature & Culture",
+      "type": "task",
+      "uploadUrl": null
+    },
+    {
+      "bucket": "Future",
+      "cs": {
+        "displayCategory": "student",
+        "displayStatus": "incomplete",
+        "itemStatusCode": "I",
+        "organization": null,
+        "responsibleContactEmail": null,
+        "showStatus": "Initiated"
+      },
+      "dueDate": {
+        "dateString": "6/30",
+        "dateTime": "2018-06-30T23:59:59-07:00",
+        "epoch": 1530428399,
+        "hasTime": false
+      },
+      "emitter": "Campus Solutions",
+      "linkDescription": null,
+      "linkUrl": null,
+      "notes": "CalCentral will be unavailable from July 1 to July 4, 2017. As soon as possible, by Friday, June 30, please print, take a screenshot, or make a copy of your Summer Session D class schedule. Summer Session D starts on Monday, July 3.\n \nVisit http://sis.berkeley.edu/9-2-upgrade for details. \n\u2014\nSummer Session D starts on Monday, July 3, 2017 and CalCentral will be down from 12:01 a.m. Saturday, July 1 to 11:59 p.m. Tuesday, July 4, 2017.\n \nYou will NOT be able to access your personal class schedule in CalCentral during the weekend prior to the first day of Summer Session D classes.\n \nThe Berkeley Academic Guide (http://classes.berkeley.edu/) will be available during the CalCentral outage. You can use this website while CalCentral is down to search for general UC Berkeley class information, such as meeting time and location. However, your personal class schedule is not posted on the Berkeley Academic Guide.\n \nFor Frequently Asked Questions (FAQ) and more information about the CalCentral system outage, please visit CalCentral 9.2 Upgrade (http://sis.berkeley.edu/9-2-upgrade).\n \nCalCentral will be back online Wednesday, July 5, 2017.",
+      "sourceUrl": "http://sis-project.berkeley.edu",
+      "status": "inprogress",
+      "subTitle": null,
+      "title": "Print Your Class Schedule Now",
+      "type": "task",
+      "uploadUrl": null
+    },
+    {
+      "bucket": "Overdue",
+      "completedDate": {
+        "dateString": "5/03",
+        "dateTime": "2017-05-03T00:00:00-07:00",
+        "epoch": 1493794800,
+        "hasTime": false
+      },
+      "cs": {
+        "displayCategory": "newStudent",
+        "displayStatus": "completed",
+        "itemStatusCode": "C",
+        "organization": null,
+        "responsibleContactEmail": null,
+        "showStatus": ""
+      },
+      "dueDate": {
+        "dateString": "5/01",
+        "dateTime": "2017-05-01T23:59:59-07:00",
+        "epoch": 1493708399,
+        "hasTime": false
+      },
+      "emitter": "Campus Solutions",
+      "linkDescription": "Create Account",
+      "linkUrl": "https://calmail.berkeley.edu/manage/account/create_account",
+      "notes": "bConnected gives you the official Berkeley email, calendaring, and document sharing services that are used across campus. Instructors, staff, fellow students, and employers use the @berkeley.edu email address to ensure they are communicating with members of the Berkeley community.",
       "sourceUrl": "http://sis-project.berkeley.edu",
       "status": "completed",
       "subTitle": null,
-      "title": "Independence Appeal",
+      "title": "bConnected",
       "type": "task",
-      "updatedDate": {
-        "dateString": "11/14",
-        "dateTime": "2016-11-14T00:00:00-08:00",
-        "epoch": 1479110400
-      },
-      "uploadUrl": "https://bcswebqat.is.berkeley.edu/psc/bcsqat/EMPLOYEE/HRMS/c/UC_CC_CHKLST_UPLOAD_FLU.UC_CC_FILE_UPL_FLU.GBL?"
-    },
-    {
-      "bucket": "Unscheduled",
-      "cs": {
-        "finaidYearId": "2017",
-        "isFinaid": true,
-        "organization": null,
-        "responsibleContactEmail": null,
-        "showStatus": "Received"
-      },
-      "emitter": "Campus Solutions",
-      "linkDescription": "2016-17 Independence Appeal",
-      "linkUrl": "http://financialaid.berkeley.edu/sites/default/files/docs/otherforms/Independence_Appeal_2016-17.pdf",
-      "notes": "Please complete the Independence Appeal form and provide the requested supporting documentation as soon as possible.",
-      "sourceUrl": "http://sis-project.berkeley.edu",
-      "status": "inprogress",
-      "subTitle": null,
-      "title": "Independence Appeal",
-      "type": "task",
-      "updatedDate": {
-        "dateString": "11/06",
-        "dateTime": "2016-11-06T00:00:00-07:00",
-        "epoch": 1478415600
-      },
-      "uploadUrl": "https://bcswebqat.is.berkeley.edu/psc/bcsqat/EMPLOYEE/HRMS/c/UC_CC_CHKLST_UPLOAD_FLU.UC_CC_FILE_UPL_FLU.GBL?"
-    },
-    {
-      "bucket": "Unscheduled",
-      "cs": {
-        "finaidYearId": "2017",
-        "isFinaid": true,
-        "organization": null,
-        "responsibleContactEmail": null,
-        "showStatus": "Received"
-      },
-      "emitter": "Campus Solutions",
-      "linkDescription": "Americorps",
-      "linkUrl": null,
-      "notes": "Received",
-      "sourceUrl": "http://sis-project.berkeley.edu",
-      "status": "inprogress",
-      "subTitle": null,
-      "title": "Americorps",
-      "type": "task",
-      "updatedDate": {
-        "dateString": "9/18",
-        "dateTime": "2016-09-18T00:00:00-07:00",
-        "epoch": 1474182000
-      },
       "uploadUrl": null
     },
     {
-      "bucket": "Unscheduled",
+      "bucket": "Future",
       "cs": {
-        "finaidYearId": "2017",
-        "isFinaid": true,
+        "displayCategory": "newStudent",
+        "displayStatus": "incomplete",
+        "itemStatusCode": "I",
+        "organization": null,
+        "responsibleContactEmail": "mcaruso@berkeley.edu",
+        "showStatus": "Initiated"
+      },
+      "dueDate": {
+        "dateString": "3/30",
+        "dateTime": "2018-03-30T23:59:59-07:00",
+        "epoch": 1522479599,
+        "hasTime": false
+      },
+      "emitter": "Campus Solutions",
+      "linkDescription": "Submit Your Photo",
+      "linkUrl": "https://cal1card.berkeley.edu/c1cphoto",
+      "notes": "The Cal 1 Card is the required official campus photo ID. The first step in obtaining a Cal 1 Card is to carefully review the applicable online photo submission instructions and submit a compliant photo here: https://cal1card.berkeley.edu/c1cphoto).  \n\nCal 1 Card issuance will occur when you arrive on campus. At that time, you will also be required to present an original valid government-issued photo ID (e.g. driver license, state ID, passport). Please be advised that a high school ID is not a valid government-issued photo ID. \n\nIf you encounter problems successfully uploading a compliant photo online or are unable to obtain a valid government-issued photo ID in advance of your arrival, please provide the pertinent details in an email to cal1card@berkeley.edu.",
+      "sourceUrl": "http://sis-project.berkeley.edu",
+      "status": "inprogress",
+      "subTitle": "Michelle Caruso",
+      "title": "Cal 1 Card Photo ID Card",
+      "type": "task",
+      "uploadUrl": null
+    },
+    {
+      "bucket": "Overdue",
+      "completedDate": {
+        "dateString": "5/03",
+        "dateTime": "2017-05-03T00:00:00-07:00",
+        "epoch": 1493794800,
+        "hasTime": false
+      },
+      "cs": {
+        "displayCategory": "newStudent",
+        "displayStatus": "completed",
+        "itemStatusCode": "C",
+        "organization": null,
+        "responsibleContactEmail": null,
+        "showStatus": ""
+      },
+      "dueDate": {
+        "dateString": "5/01",
+        "dateTime": "2017-05-01T23:59:59-07:00",
+        "epoch": 1493708399,
+        "hasTime": false
+      },
+      "emitter": "Campus Solutions",
+      "linkDescription": "Get CalNet ID",
+      "linkUrl": "https://calnet.berkeley.edu/activate/undergrad",
+      "notes": "In order to access UC Berkeley online services, you will need to establish your online identity \u2014 your CalNet ID and associated passphrase. Click below to get started.",
+      "sourceUrl": "http://sis-project.berkeley.edu",
+      "status": "completed",
+      "subTitle": "Cal 1 Card Office",
+      "title": "Berkeley CalNet ID",
+      "type": "task",
+      "uploadUrl": null
+    },
+    {
+      "bucket": "Future",
+      "completedDate": {
+        "dateString": "2/12",
+        "dateTime": "2018-02-12T00:00:00-08:00",
+        "epoch": 1518422400,
+        "hasTime": false
+      },
+      "cs": {
+        "displayCategory": "student",
+        "displayStatus": "completed",
+        "itemStatusCode": "C",
+        "organization": null,
+        "responsibleContactEmail": null,
+        "showStatus": ""
+      },
+      "dueDate": {
+        "dateString": "3/14",
+        "dateTime": "2018-03-14T23:59:59-07:00",
+        "epoch": 1521097199,
+        "hasTime": false
+      },
+      "emitter": "Campus Solutions",
+      "linkDescription": "Complete",
+      "linkUrl": "https://docs.google.com/a/berkeley.edu/forms/d/e/1FAIpQLSdvKiH5RS_zGeWnS47qputZ1Pe_WQoqmy6WjG55-Vo0A81drg/viewform",
+      "notes": "With the passage of the 2015 Wellness Referendum Fee, all UC Berkeley undergraduate and graduate students are granted memberships to the Cal Recreational Sports Facility. Please sign the linked waiver to ensure access to our facilities and services.",
+      "sourceUrl": "http://sis-project.berkeley.edu",
+      "status": "completed",
+      "subTitle": null,
+      "title": "Rec Sports Waiver",
+      "type": "task",
+      "uploadUrl": null
+    },
+    {
+      "bucket": "Future",
+      "completedDate": {
+        "dateString": "2/12",
+        "dateTime": "2018-02-12T00:00:00-08:00",
+        "epoch": 1518422400,
+        "hasTime": false
+      },
+      "cs": {
+        "displayCategory": "residency",
+        "displayStatus": "completed",
+        "itemStatusCode": "C",
+        "organization": null,
+        "responsibleContactEmail": null,
+        "showStatus": ""
+      },
+      "dueDate": {
+        "dateString": "12/15",
+        "dateTime": "2018-12-15T23:59:59-08:00",
+        "epoch": 1544947199,
+        "hasTime": false
+      },
+      "emitter": "Campus Solutions",
+      "linkDescription": null,
+      "linkUrl": null,
+      "notes": "Please provide a completed AB 540 (UC Nonresident Tuition Exemption) Application/Affidavit. To print out a copy of the Affidavit, please go to: http://registrar.berkeley.edu/sites/default/files/pdf/UCTE_for_Elig_CA_HSGrads.pdf",
+      "sourceUrl": "http://sis-project.berkeley.edu",
+      "status": "completed",
+      "subTitle": null,
+      "title": "AB 540 Affidavit",
+      "type": "task",
+      "uploadUrl": "https://bcswebqat.is.berkeley.edu/psc/bcsqat/EMPLOYEE/SA/c/UC_CC_CHKLST_UPLOAD_FLU.UC_CC_FILE_UPL_FLU.GBL?ucAdminFunction=STRM&ucSeq3C=33&ucChecklistSeq=100&ucChklstItemCd=RR54AF&ucAcadCareer=UGRD&ucStrm=2188"
+    },
+    {
+      "bucket": "Future",
+      "completedDate": {
+        "dateString": "2/12",
+        "dateTime": "2018-02-12T00:00:00-08:00",
+        "epoch": 1518422400,
+        "hasTime": false
+      },
+      "cs": {
+        "displayCategory": "residency",
+        "displayStatus": "completed",
+        "itemStatusCode": "C",
+        "organization": null,
+        "responsibleContactEmail": null,
+        "showStatus": ""
+      },
+      "dueDate": {
+        "dateString": "12/15",
+        "dateTime": "2018-12-15T23:59:59-08:00",
+        "epoch": 1544947199,
+        "hasTime": false
+      },
+      "emitter": "Campus Solutions",
+      "linkDescription": null,
+      "linkUrl": null,
+      "notes": "Please provide a copy of your official high school transcript. If you prefer to mail the transcript, please send it to: \n\nResidence Affairs\nOffice of the Registrar\n120 Sproul Hall,\nBerkeley, CA  94720-5404 \n\n(If you are still in high school, please submit your official transcript to Undergraduate Admissions after you have completed all high school courses and graduated.)",
+      "sourceUrl": "http://sis-project.berkeley.edu",
+      "status": "completed",
+      "subTitle": null,
+      "title": "AB 540 HS Transcript",
+      "type": "task",
+      "uploadUrl": "https://bcswebqat.is.berkeley.edu/psc/bcsqat/EMPLOYEE/SA/c/UC_CC_CHKLST_UPLOAD_FLU.UC_CC_FILE_UPL_FLU.GBL?ucAdminFunction=STRM&ucSeq3C=33&ucChecklistSeq=200&ucChklstItemCd=RR54HS&ucAcadCareer=UGRD&ucStrm=2188"
+    },
+    {
+      "bucket": "Future",
+      "completedDate": {
+        "dateString": "2/12",
+        "dateTime": "2018-02-12T00:00:00-08:00",
+        "epoch": 1518422400,
+        "hasTime": false
+      },
+      "cs": {
+        "displayCategory": "residency",
+        "displayStatus": "completed",
+        "itemStatusCode": "C",
+        "organization": null,
+        "responsibleContactEmail": null,
+        "showStatus": ""
+      },
+      "dueDate": {
+        "dateString": "12/15",
+        "dateTime": "2018-12-15T23:59:59-08:00",
+        "epoch": 1544947199,
+        "hasTime": false
+      },
+      "emitter": "Campus Solutions",
+      "linkDescription": null,
+      "linkUrl": null,
+      "notes": "Please provide a copy of your official high school transcript. If you prefer to mail the transcript, please send it to: \n\nResidence Affairs\nOffice of the Registrar\n120 Sproul Hall,\nBerkeley, CA  94720-5404 \n\n(If you are still in high school, please submit your official transcript to Undergraduate Admissions after you have completed all high school courses and graduated.)",
+      "sourceUrl": "http://sis-project.berkeley.edu",
+      "status": "completed",
+      "subTitle": null,
+      "title": "AB 540 HS Transcript",
+      "type": "task",
+      "uploadUrl": "https://bcswebqat.is.berkeley.edu/psc/bcsqat/EMPLOYEE/SA/c/UC_CC_CHKLST_UPLOAD_FLU.UC_CC_FILE_UPL_FLU.GBL?ucAdminFunction=STRM&ucSeq3C=33&ucChecklistSeq=200&ucChklstItemCd=RR54HS&ucAcadCareer=UGRD&ucStrm=2188"
+    },
+    {
+      "bucket": "Future",
+      "cs": {
+        "displayCategory": "residency",
+        "displayStatus": "beingProcessed",
+        "itemStatusCode": "R",
         "organization": null,
         "responsibleContactEmail": null,
         "showStatus": "Received"
       },
+      "dueDate": {
+        "dateString": "12/15",
+        "dateTime": "2018-12-15T23:59:59-08:00",
+        "epoch": 1544947199,
+        "hasTime": false
+      },
       "emitter": "Campus Solutions",
-      "linkDescription": "Americorps",
+      "linkDescription": null,
       "linkUrl": null,
-      "notes": "Received",
+      "notes": "In a Word document, please restate the dates of your parent's physical presence in California.  Provide specific dates, indicating when your parent first arrived in California and any departures from the state for more than a week.  Please also include their purpose and duration of travel.  If your parent has never left California, please indicate the year they came to California or that they have been present in the state since birth (if applicable).",
       "sourceUrl": "http://sis-project.berkeley.edu",
       "status": "inprogress",
       "subTitle": null,
-      "title": "Americorps",
+      "title": "Presence Clarification- Parent",
       "type": "task",
-      "updatedDate": {
-        "dateString": "6/26",
-        "dateTime": "2016-06-26T00:00:00-07:00",
-        "epoch": 1466924400
+      "uploadUrl": "https://bcswebqat.is.berkeley.edu/psc/bcsqat/EMPLOYEE/SA/c/UC_CC_CHKLST_UPLOAD_FLU.UC_CC_FILE_UPL_FLU.GBL?ucAdminFunction=STRM&ucSeq3C=34&ucChecklistSeq=200&ucChklstItemCd=RRPPCP&ucAcadCareer=UGRD&ucStrm=2188"
+    },
+    {
+      "bucket": "Overdue",
+      "completedDate": {
+        "dateString": "5/02",
+        "dateTime": "2017-05-02T00:00:00-07:00",
+        "epoch": 1493708400,
+        "hasTime": false
       },
+      "cs": {
+        "displayCategory": "residency",
+        "displayStatus": "completed",
+        "itemStatusCode": "C",
+        "organization": null,
+        "responsibleContactEmail": "orres@berkeley.edu",
+        "showStatus": ""
+      },
+      "dueDate": {
+        "dateString": "5/01",
+        "dateTime": "2017-05-01T23:59:59-07:00",
+        "epoch": 1493708399,
+        "hasTime": false
+      },
+      "emitter": "Campus Solutions",
+      "linkDescription": "Submit Statement of Legal Residence",
+      "linkUrl": "https://bcsweb.is.berkeley.edu/psc/bcsprd/EMPLOYEE/HRMS/c/UC_SR_SLR.UC_SLR_STDNT.GBL?ucFrom=CalCentral&ucFromLink=https%3A%2F%2Fcalcentral.berkeley.edu%2Facademics%3FucUpdateCache%3Dprofile&ucFromText=My%20Academics",
+      "notes": "ALL NEW STUDENTS MUST SUBMIT THE STATEMENT OF LEGAL RESIDENCE.\n\nTo determine your residency, you are required to submit the Statement of Legal Residence (SLR). If you do not submit the SLR by the deadline, you will be considered a nonresident and charged over $14,000 (for undergraduates; between $6000 and $8000 for graduate/professional students) for additional nonresident fees per semester (subject to change by the Regents of the University of California and could be affected by increases or reductions in State funding, or other developments).\n\nPLEASE NOTE: Failure to submit the SLR (or a pending residency status) will result in a delay in disbursement of university funds (i.e. financial aid, stipends, etc.).\n\nLegal Residence Information: http://registrar.berkeley.edu/Residency/legalinfo.html\nContact info - Residence Affairs:  orres@berkeley.edu | (510) 642-7209\n\nThe SLR will open in a new window/tab. Please close the window/tab when you have saved and/or finished your session.",
+      "sourceUrl": "http://sis-project.berkeley.edu",
+      "status": "completed",
+      "subTitle": "Residence Affairs Unit",
+      "title": "Statement of Legal Residence",
+      "type": "task",
       "uploadUrl": null
+    },
+    {
+      "bucket": "Future",
+      "cs": {
+        "displayCategory": "residency",
+        "displayStatus": "incomplete",
+        "itemStatusCode": "I",
+        "organization": null,
+        "responsibleContactEmail": "mcaruso@berkeley.edu",
+        "showStatus": "Initiated"
+      },
+      "dueDate": {
+        "dateString": "12/01",
+        "dateTime": "2018-12-01T23:59:59-08:00",
+        "epoch": 1543737599,
+        "hasTime": false
+      },
+      "emitter": "Campus Solutions",
+      "linkDescription": "Submit Statement of Legal Residence",
+      "linkUrl": "https://bcsweb.is.berkeley.edu/psc/bcsprd/EMPLOYEE/HRMS/c/UC_SR_SLR.UC_SLR_STDNT.GBL?ucFrom=CalCentral&ucFromLink=https%3A%2F%2Fcalcentral.berkeley.edu%2Facademics%3FucUpdateCache%3Dprofile&ucFromText=My%20Academics",
+      "notes": "ALL NEW STUDENTS MUST SUBMIT THE STATEMENT OF LEGAL RESIDENCE.\n\nTo determine your residency, you are required to submit the Statement of Legal Residence (SLR). If you do not submit the SLR by the deadline, you will be considered a nonresident and charged over $14,000 (for undergraduates; between $6000 and $8000 for graduate/professional students) for additional nonresident fees per semester (subject to change by the Regents of the University of California and could be affected by increases or reductions in State funding, or other developments).\n\nPLEASE NOTE: Failure to submit the SLR (or a pending residency status) will result in a delay in disbursement of university funds (i.e. financial aid, stipends, etc.).\n\nLegal Residence Information: http://registrar.berkeley.edu/Residency/legalinfo.html\nContact info - Residence Affairs:  orres@berkeley.edu | (510) 642-7209\n\nThe SLR will open in a new window/tab. Please close the window/tab when you have saved and/or finished your session.",
+      "sourceUrl": "http://sis-project.berkeley.edu",
+      "status": "inprogress",
+      "subTitle": "Michelle Caruso",
+      "title": "Statement of Legal Residence",
+      "type": "task",
+      "uploadUrl": null
+    },
+    {
+      "bucket": "Future",
+      "cs": {
+        "displayCategory": "residency",
+        "displayStatus": "beingProcessed",
+        "itemStatusCode": "R",
+        "organization": null,
+        "responsibleContactEmail": null,
+        "showStatus": "Received"
+      },
+      "dueDate": {
+        "dateString": "12/15",
+        "dateTime": "2018-12-15T23:59:59-08:00",
+        "epoch": 1544947199,
+        "hasTime": false
+      },
+      "emitter": "Campus Solutions",
+      "linkDescription": null,
+      "linkUrl": null,
+      "notes": "Please provide documentation confirming that your parent\u2019s primary residence is in California (i.e. current driver\u2019s license, current vehicle registration, taxes from the most recent tax filing year,  utility bills, lease agreement, mortgage payments, pay stubs, letter from employer confirming California employment, gym memberships, etc.).",
+      "sourceUrl": "http://sis-project.berkeley.edu",
+      "status": "inprogress",
+      "subTitle": null,
+      "title": "CWUP/PWUP Parent Info",
+      "type": "task",
+      "uploadUrl": "https://bcswebqat.is.berkeley.edu/psc/bcsqat/EMPLOYEE/SA/c/UC_CC_CHKLST_UPLOAD_FLU.UC_CC_FILE_UPL_FLU.GBL?ucAdminFunction=STRM&ucSeq3C=34&ucChecklistSeq=100&ucChklstItemCd=RRWUPP&ucAcadCareer=UGRD&ucStrm=2188"
     },
     {
       "type": "task",
