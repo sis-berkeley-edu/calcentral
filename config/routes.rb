@@ -140,52 +140,54 @@ Calcentral::Application.routes.draw do
     post '/api/campus_solutions/delegate_access' => 'campus_solutions/delegate_access#post', :defaults => { :format => 'json' }
 
     # Campus Solutions general purpose endpoints
-    get '/api/campus_solutions/higher_one_url' => 'campus_solutions/higher_one_url#get', :defaults => { :format => 'json' }
-    get '/api/campus_solutions/country' => 'campus_solutions/country#get', :defaults => { :format => 'json' }
-    get '/api/campus_solutions/state' => 'campus_solutions/state#get', :defaults => { :format => 'json' }
-    get '/api/campus_solutions/ethnicity_setup' => 'campus_solutions/ethnicity_setup#get', :defaults => { :format => 'json' }
     get '/api/campus_solutions/address_label' => 'campus_solutions/address_label#get', :defaults => { :format => 'json' }
     get '/api/campus_solutions/address_type' => 'campus_solutions/address_type#get', :defaults => { :format => 'json' }
-    get '/api/campus_solutions/name_type' => 'campus_solutions/name_type#get', :defaults => { :format => 'json' }
-    get '/api/campus_solutions/currency_code' => 'campus_solutions/currency_code#get', :defaults => { :format => 'json' }
-    get '/api/campus_solutions/language_code' => 'campus_solutions/language_code#get', :defaults => { :format => 'json' }
-    get '/api/campus_solutions/translate' => 'campus_solutions/translate#get', :defaults => { :format => 'json' }
+    get '/api/campus_solutions/advising_resources' => 'campus_solutions/advising_resources#get', :defaults => { :format => 'json' }
     get '/api/campus_solutions/aid_years' => 'campus_solutions/aid_years#get', :defaults => { :format => 'json' }
+    get '/api/campus_solutions/billing' => 'campus_solutions/billing#get', :defaults => { :format => 'json' }
+    get '/api/campus_solutions/confidential_student_message' => 'campus_solutions/confidential_student#get_message', :defaults => { :format => 'json' }
+    get '/api/campus_solutions/country' => 'campus_solutions/country#get', :defaults => { :format => 'json' }
+    get '/api/campus_solutions/currency_code' => 'campus_solutions/currency_code#get', :defaults => { :format => 'json' }
+    get '/api/campus_solutions/emergency_contacts' => 'campus_solutions/emergency_contacts#get', :defaults => { :format => 'json' }
+    get '/api/campus_solutions/ethnicity_setup' => 'campus_solutions/ethnicity_setup#get', :defaults => { :format => 'json' }
     get '/api/campus_solutions/financial_aid_compare_awards_current' => 'campus_solutions/financial_aid_compare_awards_current#get', :defaults => { :format => 'json' }
     get '/api/campus_solutions/financial_aid_compare_awards_list' => 'campus_solutions/financial_aid_compare_awards_list#get', :defaults => { :format => 'json' }
     get '/api/campus_solutions/financial_aid_compare_awards_prior' => 'campus_solutions/financial_aid_compare_awards_prior#get', :defaults => { :format => 'json' }
     get '/api/campus_solutions/financial_aid_data' => 'campus_solutions/financial_aid_data#get', :defaults => { :format => 'json' }
     get '/api/campus_solutions/financial_aid_funding_sources' => 'campus_solutions/financial_aid_funding_sources#get', :defaults => { :format => 'json' }
     get '/api/campus_solutions/financial_aid_funding_sources_term' => 'campus_solutions/financial_aid_funding_sources_term#get', :defaults => { :format => 'json' }
-    get '/api/campus_solutions/holds' => 'campus_solutions/holds#get', :defaults => { :format => 'json' }
-    get '/api/campus_solutions/advising_resources' => 'campus_solutions/advising_resources#get', :defaults => { :format => 'json' }
-    get '/api/campus_solutions/billing' => 'campus_solutions/billing#get', :defaults => { :format => 'json' }
-    get '/api/campus_solutions/slr_deeplink' => 'campus_solutions/slr_deeplink#get', :defaults => { :format => 'json' }
+    get '/api/campus_solutions/financial_resources_general' => 'campus_solutions/financial_resources#get_general', :defaults => { :format => 'json' }
+    get '/api/campus_solutions/financial_resources_parameterized/summer_estimator/:aid_year' => 'campus_solutions/financial_resources#get_parameterized', :defaults => { :format => 'json' }
     get '/api/campus_solutions/fpp_enrollment' => 'campus_solutions/fpp_enrollment#get', :defaults => { :format => 'json' }
-    get '/api/campus_solutions/emergency_contacts' => 'campus_solutions/emergency_contacts#get', :defaults => { :format => 'json' }
+    get '/api/campus_solutions/higher_one_url' => 'campus_solutions/higher_one_url#get', :defaults => { :format => 'json' }
+    get '/api/campus_solutions/holds' => 'campus_solutions/holds#get', :defaults => { :format => 'json' }
+    get '/api/campus_solutions/language_code' => 'campus_solutions/language_code#get', :defaults => { :format => 'json' }
     get '/api/campus_solutions/link' => 'campus_solutions/link#get', :defaults => { :format => 'json' }
+    get '/api/campus_solutions/name_type' => 'campus_solutions/name_type#get', :defaults => { :format => 'json' }
+    get '/api/campus_solutions/slr_deeplink' => 'campus_solutions/slr_deeplink#get', :defaults => { :format => 'json' }
+    get '/api/campus_solutions/state' => 'campus_solutions/state#get', :defaults => { :format => 'json' }
     get '/api/campus_solutions/student_resources' => 'campus_solutions/student_resources#get', :defaults => { :format => 'json' }
-    get '/api/campus_solutions/confidential_student_message' => 'campus_solutions/confidential_student#get_message', :defaults => { :format => 'json' }
+    get '/api/campus_solutions/translate' => 'campus_solutions/translate#get', :defaults => { :format => 'json' }
     post '/api/campus_solutions/address' => 'campus_solutions/address#post', :defaults => { :format => 'json' }
     post '/api/campus_solutions/email' => 'campus_solutions/email#post', :defaults => { :format => 'json' }
-    post '/api/campus_solutions/person_name' => 'campus_solutions/person_name#post', :defaults => { :format => 'json' }
-    post '/api/campus_solutions/phone' => 'campus_solutions/phone#post', :defaults => { :format => 'json' }
     post '/api/campus_solutions/emergency_contact' => 'campus_solutions/emergency_contact#post', :defaults => { :format => 'json' }
     post '/api/campus_solutions/emergency_phone' => 'campus_solutions/emergency_phone#post', :defaults => { :format => 'json' }
-    post '/api/campus_solutions/language' => 'campus_solutions/language#post', :defaults => { :format => 'json' }
-    post '/api/campus_solutions/work_experience' => 'campus_solutions/work_experience#post', :defaults => { :format => 'json' }
     post '/api/campus_solutions/ethnicity' => 'campus_solutions/ethnicity#post', :defaults => { :format => 'json' }
+    post '/api/campus_solutions/language' => 'campus_solutions/language#post', :defaults => { :format => 'json' }
+    post '/api/campus_solutions/person_name' => 'campus_solutions/person_name#post', :defaults => { :format => 'json' }
+    post '/api/campus_solutions/phone' => 'campus_solutions/phone#post', :defaults => { :format => 'json' }
+    post '/api/campus_solutions/sir_response' => 'campus_solutions/sir_response#post', :defaults => { :format => 'json' }
     post '/api/campus_solutions/terms_and_conditions' => 'campus_solutions/terms_and_conditions#post', :defaults => { :format => 'json' }
     post '/api/campus_solutions/title4' => 'campus_solutions/title4#post', :defaults => { :format => 'json' }
-    post '/api/campus_solutions/sir_response' => 'campus_solutions/sir_response#post', :defaults => { :format => 'json' }
+    post '/api/campus_solutions/work_experience' => 'campus_solutions/work_experience#post', :defaults => { :format => 'json' }
     delete '/api/campus_solutions/address/:type' => 'campus_solutions/address#delete', :defaults => { :format => 'json' }
     delete '/api/campus_solutions/email/:type' => 'campus_solutions/email#delete', :defaults => { :format => 'json' }
     delete '/api/campus_solutions/emergency_contact/:contactName' => 'campus_solutions/emergency_contact#delete', :defaults => { :format => 'json' }
     delete '/api/campus_solutions/emergency_phone/:contactName/:phoneType' => 'campus_solutions/emergency_phone#delete', :defaults => { :format => 'json' }
+    delete '/api/campus_solutions/ethnicity/:ethnicGroupCode/:regRegion' => 'campus_solutions/ethnicity#delete', :defaults => { :format => 'json' }
     delete '/api/campus_solutions/language/:languageCode' => 'campus_solutions/language#delete', :defaults => { :format => 'json' }
     delete '/api/campus_solutions/person_name/:type' => 'campus_solutions/person_name#delete', :defaults => { :format => 'json' }
     delete '/api/campus_solutions/phone/:type' => 'campus_solutions/phone#delete', :defaults => { :format => 'json' }
-    delete '/api/campus_solutions/ethnicity/:ethnicGroupCode/:regRegion' => 'campus_solutions/ethnicity#delete', :defaults => { :format => 'json' }
     delete '/api/campus_solutions/work_experience/:sequenceNbr' => 'campus_solutions/work_experience#delete', :defaults => { :format => 'json' }
 
     # Redirect to College Scheduler

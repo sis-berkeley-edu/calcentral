@@ -75,6 +75,13 @@
             data-cc-campus-solutions-link-directive-cc-page-url="currentPage.url"
           ></a>
         </li>
+        <li data-ng-if="subcategory === 'Summer Sessions' && summerEstimatorLink.url && canViewSummerEstimatorLink">
+          <a data-cc-campus-solutions-link-directive="summerEstimatorLink"
+            data-cc-campus-solutions-link-directive-cc-page-name="currentPage.name"
+            data-cc-campus-solutions-link-directive-cc-page-url="currentPage.url"
+          ></a>
+          <p class="cc-list-links-text" data-ng-bind="summerEstimatorLink.linkDescription"></p>
+        </li>
       </ul>
     </div>
     <div class="cc-widget-text" data-ng-if="campuslinks.data.links.length === 0">There are no links available.</div>

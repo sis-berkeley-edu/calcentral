@@ -6,10 +6,11 @@ var _ = require('lodash');
 /**
  * Footer controller
  */
-angular.module('calcentral.controllers').controller('FinancesLinksController', function(apiService, campusLinksFactory, csLinkFactory, financesLinksFactory, $scope) {
+angular.module('calcentral.controllers').controller('FinancesLinksController', function(apiService, campusLinksFactory, finaidService, financesLinksFactory, userService, $scope, $q) {
   $scope.isLoading = true;
   $scope.canViewEftLink = false;
   $scope.canViewEmergencyLoanLink = false;
+  $scope.canViewSummerEstimatorLink = false;
 
   $scope.campusLinks = {
     data: {},
@@ -55,10 +56,9 @@ angular.module('calcentral.controllers').controller('FinancesLinksController', f
     }
   };
 
-  var matchLinks = function(campusLinks, matchLink) {
-    return _.find(campusLinks, function(link) {
-      return link.name === matchLink;
-    });
+  var parseCampusLinks = function(response) {
+    angular.extend($scope.campusLinks.data, response);
+    $scope.campusLinks.data.links = sortCampusLinks(response.links);
   };
 
   var sortCampusLinks = function(campusLinks) {
@@ -70,9 +70,10 @@ angular.module('calcentral.controllers').controller('FinancesLinksController', f
     return _.filter(orderedLinks);
   };
 
-  var parseCampusLinks = function(response) {
-    angular.extend($scope.campusLinks.data, response);
-    $scope.campusLinks.data.links = sortCampusLinks(response.links);
+  var matchLinks = function(campusLinks, matchLink) {
+    return _.find(campusLinks, function(link) {
+      return link.name === matchLink;
+    });
   };
 
   /**
@@ -91,41 +92,59 @@ angular.module('calcentral.controllers').controller('FinancesLinksController', f
     angular.extend($scope.fpp.data, response.data.feed.ucSfFppEnroll);
   };
 
-  var loadEftEnrollment = function() {
-    financesLinksFactory.getEftEnrollment()
-      .then(parseEftEnrollment);
+  var parseGeneralCsLinks = function(response) {
+    var links = _.get(response, 'data');
+    $scope.emergencyLoanLink = _.get(links, 'emergencyLoan');
   };
 
-  var loadFppEnrollment = function() {
-    if (apiService.user.profile.isDirectlyAuthenticated) {
-      financesLinksFactory.getFppEnrollment()
-        .then(parseFppEnrollment);
+  var getSummerEstimatorLink = function() {
+    if ($scope.canViewSummerEstimatorLink) {
+      var options = aidYearOption();
+      financesLinksFactory.getSummerEstimator(options).then(parseSummerEstimator);
+    } else {
+      return;
     }
-    return;
   };
 
-  var loadCsLinks = function() {
-    csLinkFactory.getLink({
-      urlId: 'UC_CX_EMERGENCY_LOAN_FORM'
-    }).then(function(response) {
-      var link = _.get(response, 'data.link');
-      $scope.emergencyLoanLink = link;
-    });
+  var parseSummerEstimator = function(response) {
+    var links = _.get(response, 'data');
+    $scope.summerEstimatorLink = _.get(links, 'summerEstimator');
   };
+
+  var aidYearOption = function() {
+    var aidYear = finaidService.options.finaidYear;
+    var options = aidYear ? {
+      aidYear: aidYear.id
+    } : null;
+    return options;
+  };
+
+  var setLinkVisibilities = function() {
+    $scope.canViewSummerEstimatorLink = !userService.profile.academicRoles.concurrent && !userService.profile.academicRoles.summerVisitor;
+    $scope.canViewEftLink = userService.profile.roles.student && (userService.profile.roles.undergrad || userService.profile.roles.graduate || userService.profile.academicRoles.law);
+    $scope.canViewEmergencyLoanLink = !userService.profile.academicRoles.summerVisitor;
+  };
+
+  $scope.$on('calcentral.custom.api.finaid.finaidYear', getSummerEstimatorLink);
 
   var initialize = function() {
-    campusLinksFactory.getLinks({
+    setLinkVisibilities();
+
+    var getCampusLinks = campusLinksFactory.getLinks({
       category: 'finances'
-    }).then(parseCampusLinks)
-      .then(loadEftEnrollment)
-      .then(loadFppEnrollment)
-      .then(loadCsLinks)
-      .finally(function() {
-        $scope.canViewEftLink = apiService.user.profile.roles.student &&
-          (apiService.user.profile.roles.undergrad || apiService.user.profile.roles.graduate || apiService.user.profile.academicRoles.law);
-        $scope.canViewEmergencyLoanLink = !apiService.user.profile.academicRoles.summerVisitor;
-        $scope.isLoading = false;
-      });
+    }).then(parseCampusLinks);
+    var getEftEnrollment = financesLinksFactory.getEftEnrollment().then(parseEftEnrollment);
+    var getFppEnrollment = financesLinksFactory.getFppEnrollment().then(parseFppEnrollment);
+    var getGeneralCsLinks = financesLinksFactory.getGeneralCsLinks().then(parseGeneralCsLinks);
+
+    var requests = [getCampusLinks, getFppEnrollment, getGeneralCsLinks];
+    if ($scope.canViewEftLink) {
+      requests.push(getEftEnrollment);
+    }
+
+    $q.all(requests).finally(function() {
+      $scope.isLoading = false;
+    });
   };
 
   initialize();
