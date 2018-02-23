@@ -4,6 +4,29 @@
   </div>
   <div class="cc-widget-padding">
     <div data-ng-if="degreeProgress.graduate.errored">There was an error retrieving graduate degree progress data.</div>
+    <div data-ng-if="!api.user.profile.roles.advisor">
+      <div data-ng-if="degreeProgress.graduate.links.academicProgressReportLaw.url">
+        <a data-cc-campus-solutions-link-directive="degreeProgress.graduate.links.academicProgressReportLaw"
+           data-cc-campus-solutions-link-directive-cc-page-name="currentPage.name"
+           data-cc-campus-solutions-link-directive-cc-page-url="currentPage.url"
+        ></a>
+        <span data-ng-bind="degreeProgress.graduate.links.academicProgressReportLaw.linkDescription"></span>
+      </div>
+      <div data-ng-if="degreeProgress.graduate.links.academicProgressReportGrad.url">
+        <a data-cc-campus-solutions-link-directive="degreeProgress.graduate.links.academicProgressReportGrad"
+           data-cc-campus-solutions-link-directive-cc-page-name="currentPage.name"
+           data-cc-campus-solutions-link-directive-cc-page-url="currentPage.url"
+        ></a>
+        <span data-ng-bind="degreeProgress.graduate.links.academicProgressReportGrad.linkDescription"></span>
+      </div>
+      <div data-ng-if="degreeProgress.graduate.links.academicProgressReportHaas.url">
+        <a data-cc-campus-solutions-link-directive="degreeProgress.graduate.links.academicProgressReportHaas"
+           data-cc-campus-solutions-link-directive-cc-page-name="currentPage.name"
+           data-cc-campus-solutions-link-directive-cc-page-url="currentPage.url"
+        ></a>
+        <span data-ng-bind="degreeProgress.graduate.links.academicProgressReportHaas.linkDescription"></span>
+      </div>
+    </div>
     <div data-ng-if="!degreeProgress.graduate.progresses.length && !api.user.profile.roles.advisor">
       You have not completed any Graduate Division Milestones. Please contact your department if you believe this is an error.
     </div>

@@ -4,13 +4,19 @@ module Concerns
 
     # Role(s) assigned to a user if they are in an academic plan associated with that role.
     ACADEMIC_PLAN_ROLES = [
+      {role_code: 'doctorScienceLaw', match: ['842C1JSDG']},
       {role_code: 'fpf', match: ['25000FPFU']},
+      {role_code: 'haasBusinessAdminMasters', match: ['70141MSG']},
+      {role_code: 'haasBusinessAdminPhD', match: ['70141PHDG']},
       {role_code: 'haasFullTimeMba', match: ['70141MBAG']},
       {role_code: 'haasEveningWeekendMba', match: ['701E1MBAG']},
       {role_code: 'haasExecMba', match: ['70364MBAG']},
       {role_code: 'haasMastersFinEng', match: ['701F1MFEG']},
       {role_code: 'haasMbaPublicHealth', match: ['70141BAPHG']},
       {role_code: 'haasMbaJurisDoctor', match: ['70141BAJDG']},
+      {role_code: 'jurisSocialPolicyMasters', match: ['84485MAG']},
+      {role_code: 'jurisSocialPolicyPhC', match: ['84485CPHLG']},
+      {role_code: 'jurisSocialPolicyPhD', match: ['84485PHDG']},
       {role_code: 'ugrdUrbanStudies', match: ['19912U']},
       {
         role_code: 'summerVisitor',
