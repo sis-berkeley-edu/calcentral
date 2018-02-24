@@ -9,7 +9,7 @@ var _ = require('lodash');
 angular.module('calcentral.controllers').controller('TasksController', function(apiService, linkService, tasksFactory, $http, $interval, $filter, $scope) {
   // Initial mode for Tasks view
   $scope.currentTaskMode = 'incomplete';
-  $scope.taskModes = ['incomplete', 'scheduled', 'unscheduled', 'completed'];
+  $scope.taskModes = ['incomplete', 'completed'];
   $scope.taskSections = [
     {
       type: 'campusSolutions',
@@ -53,26 +53,41 @@ angular.module('calcentral.controllers').controller('TasksController', function(
       title: 'bCourses Tasks',
       show: false
     }
-
   ];
 
-  var calculateCounts = function() {
-    $scope.counts = {
-      incomplete: $scope.lists.incomplete.count,
-      scheduled: $scope.lists.overdue.length + $scope.lists.today.length + $scope.lists.future.length,
-      unscheduled: $scope.lists.unscheduled.length,
-      completed: $scope.lists.completed.count
+  var csCategoryFilterFactory = function(categoryString) {
+    return function(task) {
+      var category = categoryString;
+      return (task.emitter === 'Campus Solutions' && task.cs.displayCategory === category);
     };
-    setCounts();
   };
 
-  var setCounts = function() {
-    // var isScheduled = ($scope.currentTaskMode === 'scheduled');
-    // $scope.counts.current = isScheduled ? $scope.counts.scheduled : $scope.counts.unscheduled;
-    // $scope.counts.opposite = isScheduled ? $scope.counts.unscheduled : $scope.counts.scheduled;
-    var isIncomplete = ($scope.currentTaskMode === 'incomplete');
-    $scope.counts.current = isIncomplete ? $scope.counts.incomplete : $scope.counts.completed;
-    $scope.counts.opposite = isIncomplete ? $scope.counts.completed : $scope.counts.incomplete;
+  var getTasks = function(options) {
+    return tasksFactory.getTasks(options).then(function(data) {
+      var tasks = _.get(data, 'tasks');
+      if (tasks) {
+        $scope.tasks = tasks;
+        linkService.addCurrentPagePropertiesToResources($scope.tasks, $scope.currentPage.name, $scope.currentPage.url);
+        $scope.updateTaskLists();
+        $scope.isLoading = false;
+      }
+    });
+  };
+
+  var filterCanvas = function(task) {
+    return (task.emitter === 'bCourses');
+  };
+
+  var filterCompleted = function(task) {
+    return (task.status === 'completed');
+  };
+
+  var filterIncomplete = function(task) {
+    return (task.status !== 'completed');
+  };
+
+  var filterGoogle = function(task) {
+    return (task.emitter === 'Google');
   };
 
   var sortByTitle = function(a, b) {
@@ -91,28 +106,12 @@ angular.module('calcentral.controllers').controller('TasksController', function(
     }
   };
 
-  var sortByDueDate = function(a, b) {
-    return sortByDate(a, b, 'dueDate', false);
-  };
-
-  var sortByUpdatedDateReverse = function(a, b) {
-    return sortByDate(a, b, 'updatedDate', true);
-  };
-
   var sortByCompletedDateReverse = function(a, b) {
     return sortByDate(a, b, 'completedDate', true);
   };
 
-  var getTasks = function(options) {
-    return tasksFactory.getTasks(options).then(function(data) {
-      var tasks = _.get(data, 'tasks');
-      if (tasks) {
-        $scope.tasks = tasks;
-        linkService.addCurrentPagePropertiesToResources($scope.tasks, $scope.currentPage.name, $scope.currentPage.url);
-        $scope.updateTaskLists();
-        $scope.isLoading = false;
-      }
-    });
+  var sortByDueDate = function(a, b) {
+    return sortByDate(a, b, 'dueDate', false);
   };
 
   var toggleStatus = function(task) {
@@ -121,45 +120,6 @@ angular.module('calcentral.controllers').controller('TasksController', function(
     } else {
       task.status = 'completed';
     }
-  };
-
-  var filterOverdue = function(task) {
-    return (task.bucket === 'Overdue');
-  };
-
-  var filterDueToday = function(task) {
-    return (task.bucket === 'Today');
-  };
-
-  var filterFuture = function(task) {
-    return (task.bucket === 'Future');
-  };
-
-  var filterUnScheduled = function(task) {
-    return (!task.dueDate && task.status !== 'completed');
-  };
-
-  var filterGoogle = function(task) {
-    return (task.emitter === 'Google');
-  };
-
-  var filterCanvas = function(task) {
-    return (task.emitter === 'bCourses');
-  };
-
-  var csCategoryFilterFactory = function(categoryString) {
-    return function(task) {
-      var category = categoryString;
-      return (task.emitter === 'Campus Solutions' && task.cs.displayCategory === category);
-    };
-  };
-
-  var filterIncomplete = function(task) {
-    return (task.status !== 'completed');
-  };
-
-  var filterCompleted = function(task) {
-    return (task.status === 'completed');
   };
 
   /**
@@ -231,7 +191,14 @@ angular.module('calcentral.controllers').controller('TasksController', function(
   $scope.switchTasksMode = function(tasksMode) {
     apiService.analytics.sendEvent('Tasks', 'Switch mode', tasksMode);
     $scope.currentTaskMode = tasksMode;
-    setCounts();
+  };
+
+  $scope.taskModeCount = function(taskMode) {
+    if (_.get($scope, 'lists.' + taskMode)) {
+      return $scope.lists[taskMode].length;
+    } else {
+      return 0;
+    }
   };
 
   $scope.toggleTaskSection = function(taskSection) {
@@ -239,22 +206,9 @@ angular.module('calcentral.controllers').controller('TasksController', function(
   };
 
   $scope.updateTaskLists = function() {
-    var completedTasks = $scope.tasks.filter(filterCompleted).sort(sortByCompletedDateReverse);
-    var incompleteTasks = $scope.tasks.filter(filterIncomplete);
-
     $scope.lists = {
-      incomplete: {
-        counts: incompleteTasks.length,
-        tasks: incompleteTasks
-      },
-      completed: {
-        counts: completedTasks.length,
-        tasks: completedTasks
-      },
-      overdue: incompleteTasks.filter(filterOverdue).sort(sortByDueDate),
-      today: incompleteTasks.filter(filterDueToday).sort(sortByTitle),
-      future: incompleteTasks.filter(filterFuture).sort(sortByDueDate),
-      unscheduled: incompleteTasks.filter(filterUnScheduled).sort(sortByUpdatedDateReverse)
+      completed: $scope.tasks.filter(filterCompleted).sort(sortByCompletedDateReverse),
+      incomplete: $scope.tasks.filter(filterIncomplete)
     };
 
     // populate task sections
@@ -274,13 +228,11 @@ angular.module('calcentral.controllers').controller('TasksController', function(
           break;
         }
       }
-
-      var tasks = incompleteTasks.filter(taskFilter).sort(sortByDueDate);
-      taskSection.tasks = tasks;
-      taskSection.count = tasks.length;
+      taskSection.tasks = {
+        incomplete: $scope.lists.incomplete.filter(taskFilter).sort(sortByDueDate),
+        completed: $scope.lists.completed.filter(taskFilter).sort(sortByDueDate)
+      };
     });
-
-    calculateCounts();
   };
 
   getTasks();

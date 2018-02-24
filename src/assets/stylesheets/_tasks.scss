@@ -79,6 +79,13 @@
       text-transform: uppercase;
     }
   }
+  .cc-widget-tasks-list-header {
+    color: $cc-color-nobel;
+    font-size: 12px;
+    font-weight: bold;
+    margin-left: 4px;
+    padding: 10px;
+  }
   .cc-widget-tasks-more {
     padding: 5px 10px 0 30px;
     div {
@@ -97,14 +104,17 @@
     margin-top: 12px;
     padding-top: 12px;
   }
-  .cc-widget-tasks-section-header {
-    border-top: 1px solid $cc-color-very-light-grey;
-    padding: 10px 15px;
-  }
   .cc-widget-task-section-count {
     background: $cc-color-azure;
     color: $cc-color-chathams-blue;
     padding: 3px;
+  }
+  .cc-widget-tasks-section-header-completed {
+    padding: 20px 0 0 10px;
+  }
+  .cc-widget-tasks-section-header-incomplete {
+    border-top: 1px solid $cc-color-very-light-grey;
+    padding: 10px 15px;
   }
   .cc-widget-tasks-section-label {
     clear: both;
@@ -115,19 +125,6 @@
   }
   .cc-widget-tasks-section-label-red {
     color: $cc-color-harley-davidson-orange;
-  }
-  .cc-widget-tasks-section-label-count {
-    background: $cc-color-very-light-grey;
-    color: $cc-color-white;
-    font-size: 13px;
-    font-weight: bold;
-    padding: 5px;
-  }
-  .cc-widget-tasks-section-label-count-green {
-    background: $cc-color-zanah;
-  }
-  .cc-widget-tasks-section-label-count-red {
-    background: $cc-color-harley-davidson-orange;
   }
   .cc-widget-tasks-taskslider {
     margin: 10px 0;
