@@ -90,6 +90,14 @@ angular.module('calcentral.controllers').controller('TasksController', function(
     return (task.emitter === 'Google');
   };
 
+  var filterOverdue = function(task) {
+    return (task.bucket === 'Overdue');
+  };
+
+  var filterFurtherActionNeeded = function(task) {
+    return (task.emitter === 'Campus Solutions' && task.cs.displayStatus === 'furtherActionNeeded');
+  };
+
   var sortByTitle = function(a, b) {
     return apiService.util.naturalSort(a.title, b.title);
   };
@@ -187,6 +195,14 @@ angular.module('calcentral.controllers').controller('TasksController', function(
     );
   };
 
+  $scope.incompleteTaskTotal = function() {
+    if ($scope.lists && $scope.lists.incomplete && $scope.lists.furtherActionNeeded && $scope.lists.overdue) {
+      return $scope.lists.incomplete.length + $scope.lists.furtherActionNeeded.length && $scope.lists.overdue.length;
+    } else {
+      return 0;
+    }
+  };
+
   // Switch mode for scheduled/unscheduled/completed tasks
   $scope.switchTasksMode = function(tasksMode) {
     apiService.analytics.sendEvent('Tasks', 'Switch mode', tasksMode);
@@ -206,9 +222,30 @@ angular.module('calcentral.controllers').controller('TasksController', function(
   };
 
   $scope.updateTaskLists = function() {
+    var incompleteTasks = $scope.tasks.filter(filterIncomplete);
+    var remainingIncompleteTasks = [];
+    var furtherActionNeededTasks = [];
+    var overdueTasks = [];
+
+    // separate further action needed tasks
+    if (incompleteTasks.length > 0) {
+      var furtherActionNeededAndIncompleteTasks = _.partition(incompleteTasks, filterFurtherActionNeeded);
+      furtherActionNeededTasks = furtherActionNeededAndIncompleteTasks[0] || [];
+      remainingIncompleteTasks = furtherActionNeededAndIncompleteTasks[1] || [];
+    }
+
+    // separate overdue tasks
+    if (remainingIncompleteTasks.length > 0) {
+      var overdueAndIncompleteTasks = _.partition(remainingIncompleteTasks, filterOverdue);
+      overdueTasks = overdueAndIncompleteTasks[0] || [];
+      remainingIncompleteTasks = overdueAndIncompleteTasks[1] || [];
+    }
+
     $scope.lists = {
       completed: $scope.tasks.filter(filterCompleted).sort(sortByCompletedDateReverse),
-      incomplete: $scope.tasks.filter(filterIncomplete)
+      incomplete: remainingIncompleteTasks,
+      furtherActionNeeded: furtherActionNeededTasks,
+      overdue: overdueTasks
     };
 
     // populate task sections

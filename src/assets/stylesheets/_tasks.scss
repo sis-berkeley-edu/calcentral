@@ -52,6 +52,11 @@
     text-align: right;
     width: 90px;
   }
+  .cc-widget-tasks-header-col-title {
+    font-size: 14px;
+    padding: 0 95px 0 0;
+    width: 100%;
+  }
   .cc-widget-tasks-date-input .ng-invalid {
     margin-bottom: 2px;
   }
@@ -86,6 +91,19 @@
     margin-left: 4px;
     padding: 10px;
   }
+  .cc-widget-tasks-list-header-special {
+    .cc-widget-tasks-list-header-overdue-title {
+      color: $cc-color-harley-davidson-orange;
+    }
+    .cc-widget-tasks-list-header-further-action-needed-title {
+      color: $cc-color-night-rider;
+    }
+    color: $cc-color-nobel;
+    font-size: 12px;
+    font-weight: bold;
+    margin: 0 0 20px 4px;
+    padding: 10px;
+  }
   .cc-widget-tasks-more {
     padding: 5px 10px 0 30px;
     div {
@@ -109,12 +127,21 @@
     color: $cc-color-chathams-blue;
     padding: 3px;
   }
+  .cc-widget-tasks-section-bottom-margin {
+    margin-bottom: 10px;
+  }
   .cc-widget-tasks-section-header-completed {
     padding: 20px 0 0 10px;
   }
   .cc-widget-tasks-section-header-incomplete {
-    border-top: 1px solid $cc-color-very-light-grey;
+    border-bottom: 1px solid $cc-color-very-light-grey;
     padding: 10px 15px;
+  }
+  .cc-widget-tasks-section-header-incomplete-no-bottom-border {
+    border-bottom: 0;
+  }
+  .cc-widget-tasks-section-header-incomplete-top-border {
+    border-top: 1px solid $cc-color-very-light-grey;
   }
   .cc-widget-tasks-section-label {
     clear: both;
