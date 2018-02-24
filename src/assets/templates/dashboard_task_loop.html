@@ -5,9 +5,7 @@
 
   <span class="cc-visuallyhidden" data-ng-bind-template="Show {{task.show ? 'less' : 'more'}} information about {{task.title}}"></span>
 
-  <div
-    data-ng-hide="editorEnabled">
-
+  <div data-ng-hide="editorEnabled">
     <div class="cc-widget-tasks-col cc-widget-tasks-col-title">
       <div
         class="cc-widget-tasks-status-{{task.status}}"
@@ -49,20 +47,24 @@
 
     <div
       class="cc-widget-tasks-col cc-widget-tasks-col-date">
-      <span data-ng-if="task.bucket == 'Due Today'">TODAY</span>
-      <span data-ng-if="task.dueDate && task.bucket !== 'Due Today' && currentTaskMode !== 'completed'" data-ng-bind="task.dueDate.epoch * 1000 | dateInYearFilter:'MM/dd'">
+      <span data-ng-if="task.dueDate && currentTaskMode !== 'completed'"
+        data-ng-bind="task.dueDate.epoch * 1000 | dateInYearFilter:'MMM d':'MMM d, yyyy'">
       </span>
       <div data-ng-if="task.emitter=='bCourses' && task.dueDate.hasTime"
         class="cc-widget-tasks-timestamp" data-ng-bind="task.dueDate.epoch * 1000 | date:'h a'">
       </div>
-      <div data-ng-if="task.cs.showStatus && task.bucket !== 'Unscheduled'" data-ng-bind="task.cs.showStatus" class="cc-widget-tasks-title-sub"></div>
-      <span data-ng-if="currentTaskMode === 'completed'" data-ng-bind="task.completedDate.epoch * 1000 | dateInYearFilter:'MM/dd'"></span>
+      <div data-ng-if="task.cs.showStatus && task.bucket !== 'Unscheduled'"
+        data-ng-bind="task.cs.showStatus" class="cc-widget-tasks-title-sub">
+      </div>
+      <span data-ng-if="currentTaskMode === 'completed'"
+        data-ng-bind="task.completedDate.epoch * 1000 | dateInYearFilter:'MMM d':'MMM d, yyyy'">
+      </span>
     </div>
     <div
-      class="cc-widget-tasks-col cc-widget-tasks-col-date"
-      data-ng-if="task.updatedDate && task.bucket === 'Unscheduled'">
-      <div data-ng-bind="task.updatedDate.epoch * 1000 | dateInYearFilter:'MM/dd'"></div>
-      <div data-ng-if="task.cs.showStatus && task.bucket === 'Unscheduled'" data-ng-bind="task.cs.showStatus" class="cc-widget-tasks-title-sub"></div>
+      class="cc-widget-tasks-col cc-widget-tasks-col-date" data-ng-if="task.updatedDate && task.bucket === 'Unscheduled'">
+      <div data-ng-bind="task.updatedDate.epoch * 1000 | dateInYearFilter:'MMM d':'MMM d, yyyy'"></div>
+      <div data-ng-if="task.cs.showStatus && task.bucket === 'Unscheduled'"
+        data-ng-bind="task.cs.showStatus" class="cc-widget-tasks-title-sub"></div>
     </div>
   </div>
 
