@@ -6,23 +6,27 @@ var angular = require('angular');
  * Advising Factory
  */
 angular.module('calcentral.factories').factory('advisingFactory', function(apiService) {
-  var urlResources = '/api/campus_solutions/advising_resources';
-  // var urlResources = '/dummy/json/advising_resources.json';
-  var urlAdvisingStudent = '/api/advising/student/';
-  // var urlAdvisingStudent = '/dummy/json/advising_student_academics.json';
   var urlAdvisingAcademics = '/api/advising/academics/';
-  // var urlAdvisingAcademics = '/dummy/json/advising_student_academics.json?';
   var urlAdvisingAcademicsCacheExpiry = '/api/advising/cache_expiry/academics/';
-  var urlAdvisingResources = '/api/advising/resources/';
-  // var urlAdvisingResources = '/dummy/json/advising_resources.json';
-  var urlAdvisingRegistrations = '/api/advising/registrations/';
-  // var urlAdvisingRegistrations = 'dummy/json/advising_registrations.json';
-  var urlAdvisingStudentSuccess = '/api/advising/student_success/';
-  // var urlAdvisingStudentSuccess = '/dummy/json/advising_student_success.json';
+  var urlAdvisingCommittees = '/api/advising/student_committees/';
   var urlAdvisingDegreeProgressGraduate = '/api/advising/degree_progress/grad/';
-  // var urlAdvisingDegreeProgressGraduate = '/dummy/json/degree_progress_grad.json';
   var urlAdvisingDegreeProgressUndergrad = '/api/advising/degree_progress/ugrd/';
+  var urlAdvisingRegistrations = '/api/advising/registrations/';
+  var urlAdvisingResources = '/api/advising/resources/';
+  var urlAdvisingStudent = '/api/advising/student/';
+  var urlAdvisingStudentSuccess = '/api/advising/student_success/';
+  var urlResources = '/api/campus_solutions/advising_resources';
+
+  // Dummy feeds
+  // var urlAdvisingAcademics = '/dummy/json/advising_student_academics.json';
+  // var urlAdvisingCommittees = '/dummy/json/advising_committees.json';
+  // var urlAdvisingDegreeProgressGraduate = '/dummy/json/degree_progress_grad.json';
   // var urlAdvisingDegreeProgressUndergrad = '/dummy/json/degree_progress_ugrd.json';
+  // var urlAdvisingRegistrations = 'dummy/json/advising_registrations.json';
+  // var urlAdvisingResources = '/dummy/json/advising_resources.json';
+  // var urlAdvisingStudent = '/dummy/json/advising_student_academics.json';
+  // var urlAdvisingStudentSuccess = '/dummy/json/advising_student_success.json';
+  // var urlResources = '/dummy/json/advising_resources.json';
 
   var getResources = function(options) {
     return apiService.http.request(options, urlResources);
@@ -60,6 +64,10 @@ angular.module('calcentral.factories').factory('advisingFactory', function(apiSe
     return apiService.http.request(options, urlAdvisingAcademicsCacheExpiry + options.uid);
   };
 
+  var getStudentCommittees = function(options) {
+    return apiService.http.request(options, urlAdvisingCommittees + options.uid);
+  };
+
   return {
     getAdvisingResources: getAdvisingResources,
     getResources: getResources,
@@ -69,6 +77,7 @@ angular.module('calcentral.factories').factory('advisingFactory', function(apiSe
     getStudentSuccess: getStudentSuccess,
     getDegreeProgressGraduate: getDegreeProgressGraduate,
     getDegreeProgressUndergrad: getDegreeProgressUndergrad,
-    expireAcademicsCache: expireAcademicsCache
+    expireAcademicsCache: expireAcademicsCache,
+    getStudentCommittees: getStudentCommittees
   };
 });

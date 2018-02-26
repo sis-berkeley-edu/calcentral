@@ -6,13 +6,17 @@ var _ = require('lodash');
 /**
  * Preview of user profile prior to viewing-as
  */
-angular.module('calcentral.controllers').controller('UserOverviewController', function(academicsService, adminService, advisingFactory, apiService, enrollmentVerificationFactory, linkService, statusHoldsService, $route, $routeParams, $scope) {
+angular.module('calcentral.controllers').controller('UserOverviewController', function(academicsService, adminService, advisingFactory, apiService, committeesService, enrollmentVerificationFactory, linkService, statusHoldsService, $route, $routeParams, $scope) {
   linkService.addCurrentRouteSettings($scope);
 
   $scope.expectedGradTermName = academicsService.expectedGradTermName;
   $scope.academics = {
     isLoading: true,
     excludeLinksToRegistrar: true
+  };
+  $scope.committees = {
+    isLoading: true,
+    showCommittees: false
   };
   $scope.ucAdvisingResources = {
     links: {},
@@ -246,6 +250,25 @@ angular.module('calcentral.controllers').controller('UserOverviewController', fu
     }
   };
 
+  var loadCommittees = function() {
+    advisingFactory.getStudentCommittees({
+      uid: $routeParams.uid
+    }).then(function(response) {
+      var committeeData = _.get(response, 'data');
+      if (!committeeData) {
+        return;
+      }
+      var studentCommittees = committeesService.parseCommitteeData(committeeData.studentCommittees, false);
+
+      angular.extend($scope, {
+        studentCommittees: studentCommittees
+      });
+    }).finally(function() {
+      $scope.committees.isLoading = false;
+      $scope.committees.showCommittees = ($scope.targetUser.roles.student || $scope.targetUser.roles.exStudent) && $scope.studentCommittees.length > 0;
+    });
+  };
+
   $scope.totalTransferUnits = function() {
     var unitsAdjusted = _.get($scope, 'transferCredit.ucTransferCrseSch.unitsAdjusted');
     var totalTestUnits = _.get($scope, 'transferCredit.ucTestComponent.totalTestUnits');
@@ -274,7 +297,8 @@ angular.module('calcentral.controllers').controller('UserOverviewController', fu
       .then(loadAcademics)
       .then(loadStudentSuccess)
       .then(loadRegistrations)
-      .then(loadDegreeProgresses);
+      .then(loadDegreeProgresses)
+      .then(loadCommittees);
     }
   });
 });
