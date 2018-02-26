@@ -300,7 +300,7 @@
           }
       ],
       "isClassScheduleAvailable": true,
-      "isGradeBaseAvailable": true,
+      "isEndOfDropAddTimePeriod": true,
       "links": {
         "addEnrolledClasses": {
           "isCsLink": true,
@@ -424,7 +424,7 @@
         }
       ],
       "isClassScheduleAvailable": true,
-      "isGradeBaseAvailable": false,
+      "isEndOfDropAddTimePeriod": false,
       "links": {
           "addEnrolledClasses": {
               "isCsLink": true,
@@ -530,7 +530,7 @@
           }
       ],
       "isClassScheduleAvailable": true,
-      "isGradeBaseAvailable": false,
+      "isEndOfDropAddTimePeriod": false,
       "links": {
         "addEnrolledClasses": {
           "isCsLink": true,

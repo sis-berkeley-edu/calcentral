@@ -9,7 +9,7 @@ describe MyAcademics::ClassEnrollments do
       term: '216X',
       termDescr: 'Afterlithe 2016',
       isClassScheduleAvailable: true,
-      isGradeBaseAvailable: false,
+      isEndOfDropAddTimePeriod: false,
       links: {},
       advisors: [],
       enrollmentPeriod: [
