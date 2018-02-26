@@ -27,6 +27,8 @@ module CampusSolutions
         { feed_key: :veterans_benefits_add, cs_link_key: 'UC_CX_GT_SRVAONCE_ADD' },
         { feed_key: :view_submitted_forms, cs_link_key: 'UC_CX_GT_STUDENT_VIEW'},
         { feed_key: :withdraw_from_semester_add, cs_link_key: 'UC_CX_SRWITHDRL_ADD' },
+        { feed_key: :register_to_vote_ca, cs_link_key: 'UC_SR_VOTER_REG_CA' },
+        { feed_key: :register_to_vote_non_ca, cs_link_key: 'UC_SR_VOTER_REG_NON_CA' },
       ]
 
       campus_solutions_link_settings.each do |setting|

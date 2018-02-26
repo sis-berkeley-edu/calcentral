@@ -104,6 +104,32 @@
           </li>
         </ul>
       </div>
+
+      <div data-ng-if="studentResources.registerToVoteCa.url || studentResources.registerToVoteNonCa.url">
+        <h3>Co-Curricular</h3>
+        <ul class="cc-list-bullets">
+          <li data-ng-if="studentResources.registerToVoteCa.url">
+            <div class="cc-inline-block">
+              <a data-cc-campus-solutions-link-directive="studentResources.registerToVoteCa"
+                 data-cc-campus-solutions-link-directive-cc-page-name="currentPage.name"
+                 data-cc-campus-solutions-link-directive-cc-page-url="currentPage.url"
+              ></a>
+            </div>
+            <div class="cc-inline-block" data-ng-bind="studentResources.registerToVoteCa.linkDescription">
+            </div>
+          </li>
+          <li data-ng-if="studentResources.registerToVoteNonCa.url">
+            <div class="cc-inline-block">
+              <a data-cc-campus-solutions-link-directive="studentResources.registerToVoteNonCa"
+                 data-cc-campus-solutions-link-directive-cc-page-name="currentPage.name"
+                 data-cc-campus-solutions-link-directive-cc-page-url="currentPage.url"
+              ></a>
+            </div>
+            <div class="cc-inline-block" data-ng-bind="studentResources.registerToVoteNonCa.linkDescription">
+            </div>
+          </li>
+        </ul>
+      </div>
     </div>
   </div>
 </div>

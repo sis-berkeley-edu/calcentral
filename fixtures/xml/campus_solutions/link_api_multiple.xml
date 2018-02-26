@@ -1859,4 +1859,74 @@ This link should take an instructor to the Grade Roster in BCS of the identified
     <URL>https://uconline.force.com/login</URL>
     <COMMENTS/>
   </Link>
+  <Link>
+    <URL_ID>UC_SR_VOTER_REG_NON_CA</URL_ID>
+    <Description>Register to Vote (Outside California)</Description>
+    <HOVER_OVER_TEXT>Register to Vote (Outside California)</HOVER_OVER_TEXT>
+    <PROPERTIES type="array">
+      <PROPERTY>
+        <NAME>CALCENTRAL</NAME>
+        <value>DASHBOARD</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>LINK_DESCRIPTION</NAME>
+        <value>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris accumsan posuere aliquet. Sed finibus nec sem eu pretium. Ut ut ligula quis diam molestie placerat.</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>DEV_NODE</NAME>
+        <value>https://www.vote.org</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>NEW_WINDOW</NAME>
+        <value>Y</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>PRD_NODE</NAME>
+        <value>https://www.vote.org</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>QAT_NODE</NAME>
+        <value>https://www.vote.org</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>TST_NODE</NAME>
+        <value>https://www.vote.org</value>
+      </PROPERTY>
+    </PROPERTIES>
+    <URL>https://www.vote.org/</URL>
+    <COMMENTS></COMMENTS>
+  </Link>
+  <Link>
+    <URL_ID>UC_SR_VOTER_REG_CA</URL_ID>
+    <Description>Register to Vote (California)</Description>
+    <HOVER_OVER_TEXT>Register to Vote (California)</HOVER_OVER_TEXT>
+    <PROPERTIES type="array">
+      <PROPERTY>
+        <NAME>CALCENTRAL</NAME>
+        <value>DASHBOARD</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>DEV_NODE</NAME>
+        <value>http://www.sos.ca.gov/</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>NEW_WINDOW</NAME>
+        <value>Y</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>PRD_NODE</NAME>
+        <value>http://www.sos.ca.gov/</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>QAT_NODE</NAME>
+        <value>http://www.sos.ca.gov/</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>TST_NODE</NAME>
+        <value>http://www.sos.ca.gov/</value>
+      </PROPERTY>
+    </PROPERTIES>
+    <URL>http://www.sos.ca.gov/elections/voter-registration</URL>
+    <COMMENTS></COMMENTS>
+  </Link>
 </UC_LINK_RESOURCES>
