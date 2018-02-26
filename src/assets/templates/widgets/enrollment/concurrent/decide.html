@@ -12,7 +12,7 @@
           <a data-cc-campus-solutions-link-directive="enrollmentInstruction.csLinks.ucAddClassEnrollment"
             data-cc-campus-solutions-link-directive-cc-page-name="currentPage.name"
             data-cc-campus-solutions-link-directive-cc-page-url="currentPage.url"
-            data-ng-disabled="enrollmentInstruction.isGradeBaseAvailable || !enrollmentInstruction.csLinks.ucAddClassEnrollment"
+            data-ng-disabled="enrollmentInstruction.isEndOfDropAddTimePeriod || !enrollmentInstruction.csLinks.ucAddClassEnrollment"
           ></a>
         </div>
         <div data-ng-if="!enrollmentInstruction.csLinks.ucAddClassEnrollment.url">
@@ -20,8 +20,8 @@
         </div>
         <div data-ng-if="enrollmentInstruction.csLinks.ucAddClassEnrollment.url">
           The deadline to apply
-          <span data-ng-if="!enrollmentInstruction.isGradeBaseAvailable">is</span>
-          <span data-ng-if="enrollmentInstruction.isGradeBaseAvailable">was</span>
+          <span data-ng-if="!enrollmentInstruction.isEndOfDropAddTimePeriod">is</span>
+          <span data-ng-if="enrollmentInstruction.isEndOfDropAddTimePeriod">was</span>
           <span data-ng-bind="enrollmentInstruction.concurrentApplyDeadline"></span>
         </div>
       </div>

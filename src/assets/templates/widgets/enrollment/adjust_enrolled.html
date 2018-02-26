@@ -8,7 +8,7 @@
   data-ng-if="api.user.profile.actAsOptions.canSeeCSLinks"
   class="cc-flex cc-flex-wrap cc-enrollment-card-enrolled-links"
 >
-  <div data-ng-if="enrollmentInstruction.isClassScheduleAvailable && !enrollmentInstruction.isGradeBaseAvailable && !isInstructionType(enrollmentInstruction, ['concurrent'])">
+  <div data-ng-if="enrollmentInstruction.isClassScheduleAvailable && !enrollmentInstruction.isEndOfDropAddTimePeriod && !isInstructionType(enrollmentInstruction, ['concurrent'])">
     <a data-cc-campus-solutions-link-directive
       data-cc-campus-solutions-link-directive-name="'Add'"
       data-cc-campus-solutions-link-directive-title="enrollmentInstruction.links.addEnrolledClasses.name"
@@ -21,7 +21,7 @@
       data-cc-campus-solutions-link-directive-uc-from-text="true"
     ></a>
   </div>
-  <div data-ng-if="enrollmentInstruction.isClassScheduleAvailable && !enrollmentInstruction.isGradeBaseAvailable && !isInstructionType(enrollmentInstruction, ['concurrent'])">
+  <div data-ng-if="enrollmentInstruction.isClassScheduleAvailable && !enrollmentInstruction.isEndOfDropAddTimePeriod && !isInstructionType(enrollmentInstruction, ['concurrent'])">
     <a data-cc-campus-solutions-link-directive
       data-cc-campus-solutions-link-directive-name="'Drop'"
       data-cc-campus-solutions-link-directive-title="enrollmentInstruction.links.dropEnrolledClasses.name"
@@ -34,7 +34,7 @@
       data-cc-campus-solutions-link-directive-uc-from-text="true"
     ></a>
   </div>
-  <div data-ng-if="enrollmentInstruction.isClassScheduleAvailable && !enrollmentInstruction.isGradeBaseAvailable && !isInstructionType(enrollmentInstruction, ['concurrent'])">
+  <div data-ng-if="enrollmentInstruction.isClassScheduleAvailable && !enrollmentInstruction.isEndOfDropAddTimePeriod && !isInstructionType(enrollmentInstruction, ['concurrent'])">
     <a data-cc-campus-solutions-link-directive
       data-cc-campus-solutions-link-directive-name="'Swap'"
       data-cc-campus-solutions-link-directive-title="enrollmentInstruction.links.swapEnrolledClasses.name"
@@ -47,7 +47,7 @@
       data-cc-campus-solutions-link-directive-uc-from-text="true"
     ></a>
   </div>
-  <div data-ng-if="enrollmentInstruction.isClassScheduleAvailable && !enrollmentInstruction.isGradeBaseAvailable && !isInstructionType(enrollmentInstruction, ['concurrent'])">
+  <div data-ng-if="enrollmentInstruction.isClassScheduleAvailable && !enrollmentInstruction.isEndOfDropAddTimePeriod && !isInstructionType(enrollmentInstruction, ['concurrent'])">
     <a data-cc-campus-solutions-link-directive
       data-cc-campus-solutions-link-directive-name="'Options'"
       data-cc-campus-solutions-link-directive-title="'Change Grading Option'"
@@ -60,7 +60,7 @@
       data-cc-campus-solutions-link-directive-uc-from-text="true"
     ></a>
   </div>
-  <div data-ng-if="enrollmentInstruction.isGradeBaseAvailable && !isInstructionType(enrollmentInstruction, ['law', 'concurrent'])">
+  <div data-ng-if="enrollmentInstruction.isEndOfDropAddTimePeriod && !isInstructionType(enrollmentInstruction, ['law', 'concurrent'])">
     <a data-cc-campus-solutions-link-directive
       data-cc-campus-solutions-link-directive-name="'Change Grading Option'"
       data-cc-campus-solutions-link-directive-title="'Change Grading Option'"
