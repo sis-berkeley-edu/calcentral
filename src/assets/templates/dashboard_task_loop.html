@@ -6,7 +6,8 @@
   <span class="cc-visuallyhidden" data-ng-bind-template="Show {{task.show ? 'less' : 'more'}} information about {{task.title}}"></span>
 
   <div data-ng-hide="editorEnabled">
-    <div class="cc-widget-tasks-col cc-widget-tasks-col-title">
+    <div class="cc-widget-tasks-col cc-widget-tasks-col-title"
+      data-ng-class="{'cc-widget-tasks-item-no-action-needed':((task.status === 'completed' || task.cs.displayStatus === 'beingProcessed') && task.cs.itemStatusCode !== 'W')}">
       <div
         class="cc-widget-tasks-status-{{task.status}}"
         data-ng-class="{'cc-ellipsis':(!task.show),'cc-alert':(task.bucket === 'Overdue' && currentTaskMode !== 'completed'), 'cc-strikethrough':(task.editorIsProcessing)}">
@@ -46,7 +47,8 @@
     </div>
 
     <div
-      class="cc-widget-tasks-col cc-widget-tasks-col-date">
+      class="cc-widget-tasks-col cc-widget-tasks-col-date"
+      data-ng-class="{'cc-widget-tasks-item-no-action-needed':((task.status === 'completed' || task.cs.displayStatus == 'beingProcessed') && task.cs.itemStatusCode !== 'W')}">
       <span data-ng-if="task.dueDate && currentTaskMode !== 'completed'"
         data-ng-bind="task.dueDate.epoch * 1000 | dateInYearFilter:'MMM d':'MMM d, yyyy'">
       </span>

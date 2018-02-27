@@ -70,6 +70,9 @@
     line-height: 1;
     margin-top: 5px;
   }
+  .cc-widget-tasks-item-no-action-needed {
+    color: $cc-color-nobel;
+  }
   .cc-widget-tasks-list {
     input[type="checkbox"] {
       margin-left: 2px;
@@ -97,7 +100,6 @@
     margin-left: 4px;
     padding: 10px;
   }
-
   .cc-widget-tasks-list-header-special {
     .cc-widget-tasks-list-header-special-title {
       font-size: 16px;
@@ -150,7 +152,8 @@
     margin-bottom: 10px;
   }
   .cc-widget-tasks-section-header-completed {
-    padding: 20px 0 0 10px;
+    font-size: 15px;
+    padding: 25px 0 10px 10px;
   }
   .cc-widget-tasks-section-header-incomplete {
     border-bottom: 1px solid $cc-color-very-light-grey;
