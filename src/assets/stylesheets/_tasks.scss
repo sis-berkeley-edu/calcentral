@@ -32,7 +32,7 @@
     margin-bottom: 15px;
     margin-top: 15px;
   }
-  // d.alistapart.com/holygrail/example_3.html
+  // alistapart.com/article/holygrail#section3
   .cc-widget-tasks-col {
     float: left;
     position: relative;
@@ -42,20 +42,26 @@
     width: 30px;
   }
   .cc-widget-tasks-col-title {
-    padding: 0 90px 0 30px;
+    padding: 0 85px 0 30px;
     width: 100%;
   }
   .cc-widget-tasks-col-date {
     margin-right: -100%;
     padding-right: 10px;
-    right: 90px;
+    right: 85px;
     text-align: right;
-    width: 90px;
+    width: 85px;
   }
-  .cc-widget-tasks-header-col-title {
-    font-size: 14px;
-    padding: 0 95px 0 0;
+  .cc-widget-tasks-col-title-header {
+    padding: 0 150px 0 30px;
     width: 100%;
+  }
+  .cc-widget-tasks-col-date-header {
+    margin-right: -100%;
+    padding-right: 10px;
+    right: 150px;
+    text-align: right;
+    width: 140px;
   }
   .cc-widget-tasks-date-input .ng-invalid {
     margin-bottom: 2px;
@@ -91,7 +97,15 @@
     margin-left: 4px;
     padding: 10px;
   }
+
   .cc-widget-tasks-list-header-special {
+    .cc-widget-tasks-list-header-special-title {
+      font-size: 16px;
+      padding-left: 5px;
+    }
+    .cc-widget-tasks-list-header-special-date {
+      padding-right: 30px;
+    }
     .cc-widget-tasks-list-header-overdue-title {
       color: $cc-color-harley-davidson-orange;
     }
@@ -101,8 +115,13 @@
     color: $cc-color-nobel;
     font-size: 12px;
     font-weight: bold;
-    margin: 0 0 20px 4px;
-    padding: 10px;
+    margin-top: 20px;
+  }
+  .cc-widget-tasks-list-subsection-header {
+    color: $cc-color-nobel;
+    font-size: 12px;
+    font-weight: bold;
+    margin: 0 0 38px 10px;
   }
   .cc-widget-tasks-more {
     padding: 5px 10px 0 30px;
@@ -150,8 +169,22 @@
     margin: 10px 30px 0 10px;
     overflow: hidden;
   }
+  .cc-widget-tasks-section-label-count {
+    background: $cc-color-very-light-grey;
+    color: $cc-color-white;
+    font-size: 13px;
+    font-weight: bold;
+    padding: 5px;
+  }
   .cc-widget-tasks-section-label-red {
     color: $cc-color-harley-davidson-orange;
+  }
+  .cc-widget-tasks-subsection-label {
+    clear: both;
+    color: $cc-color-dim-gray;
+    font-size: 14px;
+    margin: 22px 30px 16px 10px;
+    overflow: hidden;
   }
   .cc-widget-tasks-taskslider {
     margin: 10px 0;

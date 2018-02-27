@@ -55,13 +55,14 @@
 
           <!-- Over Due Section -->
           <div data-ng-if="lists.overdue.length > 0" class="cc-widget-tasks-section-bottom-margin">
-            <div class="cc-widget-tasks-list-header-special">
-              <div class="cc-widget-tasks-col cc-widget-tasks-header-col-title">
+
+            <div class="cc-flex cc-flex-space-between cc-flex-align-base cc-widget-tasks-list-header-special">
+              <div class="cc-widget-tasks-list-header-special-title">
                 <strong class="cc-widget-tasks-list-header-overdue-title">Overdue</strong>
               </div>
-              <div class="cc-widget-tasks-col cc-widget-tasks-col-date">Due Date</div>
+              <div class="cc-widget-tasks-list-header-special-date">Due Date</div>
             </div>
-            <ul class="cc-widget-tasks-list cc-widget-list-color">
+            <ul class="cc-widget-tasks-list cc-widget-list-color cc-widget-list-color-red">
               <li
                 data-ng-repeat="task in lists.overdue"
                 data-ng-class="{'cc-widget-list-selected': task.show}">
@@ -72,11 +73,11 @@
 
           <!-- Further Action Needed Section -->
           <div data-ng-if="lists.furtherActionNeeded.length > 0" class="cc-widget-tasks-section-bottom-margin">
-            <div class="cc-widget-tasks-list-header-special">
-              <div class="cc-widget-tasks-col cc-widget-tasks-header-col-title">
-                <span class="cc-widget-tasks-list-header-further-action-needed-title">Further Action Needed</span>
+            <div class="cc-flex cc-flex-space-between cc-flex-align-base cc-widget-tasks-list-header-special">
+              <div class="cc-widget-tasks-list-header-special-title">
+                <strong class="cc-widget-tasks-list-header-further-action-needed-title">Further Action Needed</strong>
               </div>
-              <div class="cc-widget-tasks-col cc-widget-tasks-col-date">Due Date</div>
+              <div class="cc-widget-tasks-list-header-special-date">Due Date</div>
             </div>
             <ul class="cc-widget-tasks-list cc-widget-list-color">
               <li
@@ -115,13 +116,29 @@
 
             <div data-ng-show="taskSection.show">
               <div class="cc-widget-tasks-list-header">
-                <div class="cc-widget-tasks-col cc-widget-tasks-col-title">Title</div>
+                <div class="cc-widget-tasks-col cc-widget-tasks-col-title-header">Title</div>
                 <div class="cc-widget-tasks-col cc-widget-tasks-col-left">&nbsp;</div>
-                <div class="cc-widget-tasks-col cc-widget-tasks-col-date">Due Date</div>
+                <div class="cc-widget-tasks-col cc-widget-tasks-col-date-header">Due Date</div>
               </div>
               <ul class="cc-widget-tasks-list cc-widget-list-color">
                 <li
                   data-ng-repeat="task in taskSection.tasks.incomplete"
+                  data-ng-class="{'cc-widget-list-selected': task.show}">
+                  <div data-ng-include src="'dashboard_task_loop.html'"></div>
+                </li>
+                <li data-ng-if="taskSection.tasks.beingProcessed.length > 0">
+                  <h3 class="cc-widget-tasks-subsection-label">Being Processed
+                    <span class="cc-widget-tasks-section-label-count" data-ng-bind="taskSection.tasks.beingProcessed.length"></span>
+                  </h3>
+                  <div class="cc-widget-tasks-list-subsection-header">
+                    <div class="cc-widget-tasks-col cc-widget-tasks-col-title-header">Title</div>
+                    <div class="cc-widget-tasks-col cc-widget-tasks-col-left">&nbsp;</div>
+                    <div class="cc-widget-tasks-col cc-widget-tasks-col-date-header">Status / Date Updated</div>
+                  </div>
+                </li>
+                <li
+                  data-ng-if="taskSection.tasks.beingProcessed.length > 0"
+                  data-ng-repeat="task in taskSection.tasks.beingProcessed"
                   data-ng-class="{'cc-widget-list-selected': task.show}">
                   <div data-ng-include src="'dashboard_task_loop.html'"></div>
                 </li>
