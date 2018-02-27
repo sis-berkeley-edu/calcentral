@@ -62,11 +62,13 @@
         class="cc-widget-tasks-timestamp" data-ng-bind="task.dueDate.epoch * 1000 | date:'h a'">
       </div>
       <span data-ng-if="currentTaskMode === 'completed'"
-        data-ng-bind="task.completedDate.epoch * 1000 | dateInYearFilter:'MMM d':'MMM d, yyyy'">
+        data-ng-bind="task.completedDate.epoch * 1000 | dateInYearFilter:'MMM d':'MMM d, yyyy'"
+        class="cc-widget-tasks-item-completed-date">
       </span>
     </div>
     <div
-      class="cc-widget-tasks-col cc-widget-tasks-col-date" data-ng-if="task.updatedDate && task.bucket === 'Unscheduled'">
+      class="cc-widget-tasks-col cc-widget-tasks-col-date" data-ng-if="task.updatedDate && task.bucket === 'Unscheduled'"
+      data-ng-class="{'cc-widget-tasks-item-no-action-needed':((task.status === 'completed' || task.cs.displayStatus === 'beingProcessed') && task.cs.itemStatusCode !== 'W')}">
       <div data-ng-bind="task.updatedDate.epoch * 1000 | dateInYearFilter:'MMM d':'MMM d, yyyy'"></div>
       <div data-ng-if="task.cs.showStatus && task.bucket === 'Unscheduled'"
         data-ng-bind="task.cs.showStatus" class="cc-widget-tasks-title-sub"></div>
