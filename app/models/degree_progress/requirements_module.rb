@@ -28,11 +28,42 @@ module DegreeProgress
 
     def massage_requirements(progress)
       requirements = progress.fetch(:requirements)
+      is_new_admit_grace_period = new_admit? && in_grace_period?
       result = []
       requirements.each do |requirement|
-        result.push(normalize requirement) if should_include requirement
+        result.push normalize(requirement, is_new_admit_grace_period) if should_include requirement
       end
       sort result
+    end
+
+    def new_admit?
+      admit_term_id = EdoOracle::Queries.get_admit_term(student_empl_id).try(:[], 'admit_term')
+      current_term = Berkeley::Terms.fetch.current
+      admit_term_id == current_term.try(:campus_solutions_id)
+    end
+
+    def in_grace_period?
+      current_date = Settings.terms.fake_now || DateTime.now
+      current_term = Berkeley::Terms.fetch.current
+      grace_period = grace_periods[current_term.try(:name)]
+      current_date < current_term.try(grace_period[:from]) + grace_period[:days]
+    end
+
+    def grace_periods
+      @grace_periods ||= {
+        'Spring' => {
+          :days => 30,
+          :from => :start
+        },
+        'Summer' => {
+          :days => 60,
+          :from => :end
+        },
+        'Fall' => {
+          :days => 60,
+          :from => :start
+        }
+      }
     end
 
     def format_report_date(report_date_unformatted)
@@ -47,10 +78,10 @@ module DegreeProgress
       false
     end
 
-    def normalize(requirement)
+    def normalize(requirement, is_new_admit_grace_period)
       requirement.clone.tap do |req|
         req[:name] = Berkeley::DegreeProgressUndergrad.get_description req[:code]
-        req[:status] = Berkeley::DegreeProgressUndergrad.get_status(req[:status], req.delete(:inProgress))
+        req[:status] = Berkeley::DegreeProgressUndergrad.get_status(req[:status], req.delete(:inProgress), is_new_admit_grace_period)
       end
     end
 

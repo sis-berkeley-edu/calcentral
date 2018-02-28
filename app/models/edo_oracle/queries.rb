@@ -514,6 +514,19 @@ module EdoOracle
       result.first
     end
 
+    def self.get_admit_term(student_id)
+      result = safe_query <<-SQL
+        SELECT
+          ADMIT_TERM as admit_term
+        FROM
+          SISEDO.APPLICANT_ADMIT_DATA_UGV00_VW
+        WHERE
+          STUDENT_ID = '#{student_id}'
+        ORDER BY APPLICATION_NBR DESC
+      SQL
+      result.first
+    end
+
     def self.get_new_admit_evaluator (student_id, application_nbr)
       result = safe_query <<-SQL
         SELECT

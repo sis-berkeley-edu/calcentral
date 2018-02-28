@@ -31,7 +31,8 @@
                     <i class="fa" data-ng-class="{
                         'cc-icon fa fa-check cc-icon-green': requirement.status === 'Satisfied',
                         'cc-icon fa fa-exclamation-triangle cc-icon-gold': requirement.status === 'Not Satisfied',
-                        'cc-icon fa fa-clock-o cc-icon-grey': requirement.status === 'In Progress'
+                        'cc-icon fa fa-clock-o cc-icon-grey': requirement.status === 'In Progress',
+                        'cc-icon fa fa-refresh cc-icon-dark-grey': requirement.status === 'Under Review'
                     }"></i>
                     <span data-ng-bind="requirement.status"></span>
                   </td>
