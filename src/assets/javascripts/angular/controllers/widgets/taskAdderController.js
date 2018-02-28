@@ -13,16 +13,9 @@ angular.module('calcentral.controllers').controller('TaskAdderController', funct
   $scope.addTaskCompleted = function(data) {
     var task = _.get(data, 'data');
     taskAdderService.resetState();
-
     $scope.tasks.push(task);
     $scope.updateTaskLists();
-
-    // Go the the right tab when adding a task
-    if (task.dueDate) {
-      $scope.switchTasksMode('scheduled');
-    } else {
-      $scope.switchTasksMode('unscheduled');
-    }
+    $scope.switchTasksMode('incomplete');
   };
 
   $scope.addTask = function() {
