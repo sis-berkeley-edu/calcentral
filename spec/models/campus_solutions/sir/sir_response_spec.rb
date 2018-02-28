@@ -84,18 +84,4 @@ describe CampusSolutions::Sir::SirResponse do
     end
   end
 
-  context 'with a real external service', testext: true do
-    let(:proxy) { CampusSolutions::Sir::SirResponse.new(fake: false, user_id: user_id, params: params) }
-    subject { proxy.post }
-
-    context 'an invalid post' do
-      let(:params) { {
-        'studentCarNbr' => ''
-      } }
-      context 'performing a real but invalid post' do
-        it_should_behave_like 'a simple proxy that returns errors'
-        it_should_behave_like 'a proxy that responds to user error gracefully'
-      end
-    end
-  end
 end
