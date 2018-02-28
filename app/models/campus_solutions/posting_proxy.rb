@@ -15,14 +15,14 @@ module CampusSolutions
     end
 
     def post
-      if self.class.valid? params
+      if valid? params
         get
       else
         raise Errors::BadRequestError, "Invalid request: #{params}"
       end
     end
 
-    def self.valid?(params)
+    def valid?(params)
       true
     end
 

@@ -18,7 +18,7 @@ module CampusSolutions
       )
     end
 
-    def self.valid?(params)
+    def valid?(params)
       aid_years = []
       aid_years_feed = CampusSolutions::MyAidYears.new(@uid).get_feed
       aid_years_feed.try(:[], :feed).try(:[], :finaidSummary).try(:[], :finaidYears).try(:each) do |aid_year|

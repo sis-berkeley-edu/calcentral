@@ -2,10 +2,9 @@ module CampusSolutions
   module Sir
     class MySirResponse < UserSpecificModel
 
-      include CampusSolutions::PersonDataUpdatingModel
+      include CampusSolutions::ChecklistDataUpdatingModel
 
       def update(params = {})
-        CampusSolutions::ChecklistDataExpiry.expire @uid
         passthrough(CampusSolutions::Sir::SirResponse, params)
       end
 

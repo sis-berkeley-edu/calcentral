@@ -19,7 +19,7 @@ module CampusSolutions
       )
     end
 
-    def self.valid?(params)
+    def valid?(params)
       %w(HOME OTHR).include? params[:type]
     end
 

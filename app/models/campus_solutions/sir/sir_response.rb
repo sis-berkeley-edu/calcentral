@@ -6,7 +6,6 @@ module CampusSolutions
 
       def initialize(options = {})
         super(Settings.campus_solutions_proxy, options)
-        initialize_mocks if @fake
       end
 
       def self.field_mappings
@@ -23,6 +22,25 @@ module CampusSolutions
             FieldMapping.required(:responseDescription, :RESPONSE_DESCR)
           ]
         )
+      end
+
+      def valid?(params)
+        valid_statuses = []
+        sir_statuses_feed = CampusSolutions::Sir::SirStatuses.new(@uid).get_feed
+        sir_statuses_feed.try(:[], :sirStatuses).try(:each) do |status|
+          if status.try(:[], :itemStatusCode) != 'C'
+            valid_status = {
+              chklstItemCd: status.try(:[], :chklstItemCd),
+              admApplNbr: status.try(:[], :checkListMgmtAdmp).try(:[], :admApplNbr)
+            }
+            valid_statuses.push(valid_status)
+          end
+        end
+        posting_status = {
+          chklstItemCd: params.try(:[], 'chklstItemCd'),
+          admApplNbr: params.try(:[], 'admApplNbr')
+        }
+        valid_statuses.include?(posting_status)
       end
 
       def request_root_xml_node
