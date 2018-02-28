@@ -50,22 +50,17 @@
       class="cc-widget-tasks-col cc-widget-tasks-col-date"
       data-ng-class="{'cc-widget-tasks-item-no-action-needed':((task.status === 'completed' || task.cs.displayStatus == 'beingProcessed') && task.cs.itemStatusCode !== 'W')}">
 
-      <!-- Completed Tasks Status -->
       <div data-ng-if="task.status === 'completed'">
-        <!-- Statuses -->
         <span data-ng-if="!task.cs.itemStatusCode" class="cc-widget-tasks-title-sub cc-uppercase">Completed</span>
         <span data-ng-if="task.cs.itemStatusCode === 'C'" class="cc-widget-tasks-title-sub cc-uppercase">Completed</span>
         <span data-ng-if="task.cs.itemStatusCode === 'W'" class="cc-widget-tasks-title-sub cc-uppercase">Waived</span>
 
-        <!-- Completed Dates -->
         <div class="cc-widget-tasks-item-completed-date"
           data-ng-bind="task.completedDate.epoch * 1000 | dateInYearFilter:'MMM d':'MMM d, yyyy'">
         </div>
       </div>
 
-      <!-- Incomplete Tasks -->
       <div data-ng-if="task.status !== 'completed'">
-        <!-- Statuses -->
         <div data-ng-if="task.cs.displayStatus === 'beingProcessed' && task.cs.showStatus"
           data-ng-bind="task.cs.showStatus" class="cc-widget-tasks-title-sub">
         </div>
@@ -73,7 +68,6 @@
           <span data-ng-bind="task.cs.showStatus" class="cc-widget-tasks-title-sub"></span>
         </div>
 
-        <!-- Due Dates / Time -->
         <span data-ng-if="task.dueDate.withinOneWeek">
           <i class="fa fa-exclamation-triangle cc-icon-gold" aria-hidden="true"></i>
         </span>
