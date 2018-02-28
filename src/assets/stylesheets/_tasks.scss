@@ -90,8 +90,10 @@
       border: 0;
       margin: 0;
     }
+    .cc-widget-tasks-date-sub {
+      font-size: 11px;
+    }
     .cc-widget-tasks-title-sub {
-      color: $cc-color-nobel;
       font-size: 11px;
       text-transform: uppercase;
     }
@@ -104,6 +106,10 @@
     padding: 10px;
   }
   .cc-widget-tasks-list-header-special {
+    color: $cc-color-nobel;
+    font-size: 12px;
+    font-weight: bold;
+    margin-top: 20px;
     .cc-widget-tasks-list-header-special-title {
       font-size: 16px;
       padding-left: 5px;
@@ -117,10 +123,6 @@
     .cc-widget-tasks-list-header-further-action-needed-title {
       color: $cc-color-night-rider;
     }
-    color: $cc-color-nobel;
-    font-size: 12px;
-    font-weight: bold;
-    margin-top: 20px;
   }
   .cc-widget-tasks-list-subsection-header {
     color: $cc-color-nobel;

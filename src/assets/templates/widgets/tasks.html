@@ -77,7 +77,6 @@
               <div class="cc-widget-tasks-list-header-special-title">
                 <strong class="cc-widget-tasks-list-header-further-action-needed-title">Further Action Needed</strong>
               </div>
-              <div class="cc-widget-tasks-list-header-special-date">Due Date</div>
             </div>
             <ul class="cc-widget-tasks-list cc-widget-list-color">
               <li
@@ -118,7 +117,10 @@
               <div class="cc-widget-tasks-list-header">
                 <div class="cc-widget-tasks-col cc-widget-tasks-col-title-header">Title</div>
                 <div class="cc-widget-tasks-col cc-widget-tasks-col-left">&nbsp;</div>
-                <div class="cc-widget-tasks-col cc-widget-tasks-col-date-header">Due Date</div>
+                <div class="cc-widget-tasks-col cc-widget-tasks-col-date-header">
+                  <span data-ng-if="taskSection.id !== 'finaid'">Due Date</span>
+                  <span data-ng-if="taskSection.id === 'finaid'">Date Assigned</span>
+                </div>
               </div>
               <ul class="cc-widget-tasks-list cc-widget-list-color">
                 <li

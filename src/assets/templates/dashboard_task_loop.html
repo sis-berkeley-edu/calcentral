@@ -49,29 +49,43 @@
     <div
       class="cc-widget-tasks-col cc-widget-tasks-col-date"
       data-ng-class="{'cc-widget-tasks-item-no-action-needed':((task.status === 'completed' || task.cs.displayStatus == 'beingProcessed') && task.cs.itemStatusCode !== 'W')}">
-      <div data-ng-if="task.cs.displayStatus === 'beingProcessed' && task.cs.showStatus"
-        data-ng-bind="task.cs.showStatus" class="cc-widget-tasks-title-sub">
+
+      <!-- Completed Tasks Status -->
+      <div data-ng-if="task.status === 'completed'">
+        <!-- Statuses -->
+        <span data-ng-if="!task.cs.itemStatusCode" class="cc-widget-tasks-title-sub cc-uppercase">Completed</span>
+        <span data-ng-if="task.cs.itemStatusCode === 'C'" class="cc-widget-tasks-title-sub cc-uppercase">Completed</span>
+        <span data-ng-if="task.cs.itemStatusCode === 'W'" class="cc-widget-tasks-title-sub cc-uppercase">Waived</span>
+
+        <!-- Completed Dates -->
+        <div class="cc-widget-tasks-item-completed-date"
+          data-ng-bind="task.completedDate.epoch * 1000 | dateInYearFilter:'MMM d':'MMM d, yyyy'">
+        </div>
       </div>
-      <div data-ng-if="task.status === 'completed' && task.cs.itemStatusCode !== 'W' && task.cs.displayStatus"
-        class="cc-widget-tasks-title-sub cc-uppercase" data-ng-bind="task.cs.displayStatus">
+
+      <!-- Incomplete Tasks -->
+      <div data-ng-if="task.status !== 'completed'">
+        <!-- Statuses -->
+        <div data-ng-if="task.cs.displayStatus === 'beingProcessed' && task.cs.showStatus"
+          data-ng-bind="task.cs.showStatus" class="cc-widget-tasks-title-sub">
+        </div>
+        <div data-ng-if="task.cs.displayCategory === 'finaid' && task.cs.showStatus">
+          <span data-ng-bind="task.cs.showStatus" class="cc-widget-tasks-title-sub"></span>
+        </div>
+
+        <!-- Due Dates / Time -->
+        <span data-ng-if="task.cs.displayStatus === 'furtherActionNeeded'">Due </span>
+        <span data-ng-if="task.dueDate"
+          data-ng-bind="task.dueDate.epoch * 1000 | dateInYearFilter:'MMM d':'MMM d, yyyy'">
+        </span>
+        <div data-ng-if="task.emitter=='bCourses' && task.dueDate.hasTime"
+          class="cc-widget-tasks-timestamp" data-ng-bind="task.dueDate.epoch * 1000 | date:'h a'">
+        </div>
+        <div data-ng-if="task.cs.displayCategory === 'finaid' && task.updatedDate" class="cc-widget-tasks-date-sub">
+          <span data-ng-bind="task.updatedDate.epoch * 1000 | dateInYearFilter:'MMM d':'MMM d, yyyy'"></span>
+        </div>
       </div>
-      <span data-ng-if="task.dueDate && currentTaskMode !== 'completed'"
-        data-ng-bind="task.dueDate.epoch * 1000 | dateInYearFilter:'MMM d':'MMM d, yyyy'">
-      </span>
-      <div data-ng-if="task.emitter=='bCourses' && task.dueDate.hasTime"
-        class="cc-widget-tasks-timestamp" data-ng-bind="task.dueDate.epoch * 1000 | date:'h a'">
-      </div>
-      <span data-ng-if="currentTaskMode === 'completed'"
-        data-ng-bind="task.completedDate.epoch * 1000 | dateInYearFilter:'MMM d':'MMM d, yyyy'"
-        class="cc-widget-tasks-item-completed-date">
-      </span>
-    </div>
-    <div
-      class="cc-widget-tasks-col cc-widget-tasks-col-date" data-ng-if="task.updatedDate && task.bucket === 'Unscheduled'"
-      data-ng-class="{'cc-widget-tasks-item-no-action-needed':((task.status === 'completed' || task.cs.displayStatus === 'beingProcessed') && task.cs.itemStatusCode !== 'W')}">
-      <div data-ng-bind="task.updatedDate.epoch * 1000 | dateInYearFilter:'MMM d':'MMM d, yyyy'"></div>
-      <div data-ng-if="task.cs.showStatus && task.bucket === 'Unscheduled'"
-        data-ng-bind="task.cs.showStatus" class="cc-widget-tasks-title-sub"></div>
+
     </div>
   </div>
 
