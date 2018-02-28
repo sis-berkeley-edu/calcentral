@@ -69,7 +69,8 @@
         "dateString": "3/01",
         "dateTime": "2018-03-01T07:59:59+00:00",
         "epoch": 1519891199,
-        "hasTime": true
+        "hasTime": true,
+        "withinOneWeek":false
       },
       "emitter": "bCourses",
       "linkDescription": "View in bCourses",
@@ -90,7 +91,8 @@
       "dueDate": {
         "dateString": "2/01",
         "dateTime": "2018-02-01T23:59:59-08:00",
-        "epoch": 1517558399
+        "epoch": 1517558399,
+        "withinOneWeek":false
       },
       "emitter": "Google",
       "id": "MDU3NDE4MjQ0Mzk3NDk1MzYxODY6MDo0MDE4ODI3OTQ",
@@ -105,7 +107,8 @@
       "dueDate": {
         "dateString": "2/27",
         "dateTime": "2018-02-27T23:59:59-08:00",
-        "epoch": 1519804799
+        "epoch": 1519804799,
+        "withinOneWeek":false
       },
       "emitter": "Google",
       "id": "MDU3NDE4MjQ0Mzk3NDk1MzYxODY6MDoxOTc1NDIxMjcz",
@@ -155,7 +158,8 @@
       "dueDate": {
         "dateString": "2/24",
         "dateTime": "2018-02-24T23:59:59-08:00",
-        "epoch": 1519545599
+        "epoch": 1519545599,
+        "withinOneWeek":false
       },
       "emitter": "Google",
       "id": "MDU3NDE4MjQ0Mzk3NDk1MzYxODY6MDoxNzM3MTgyOTIw",
@@ -170,7 +174,8 @@
       "dueDate": {
         "dateString": "7/21",
         "dateTime": "2017-07-21T23:59:59-07:00",
-        "epoch": 1500706799
+        "epoch": 1500706799,
+        "withinOneWeek":false
       },
       "emitter": "Google",
       "id": "MDU3NDE4MjQ0Mzk3NDk1MzYxODY6MDoxNTEwNDA3OTg0",
@@ -209,7 +214,8 @@
         "epoch": 1500188399,
         "dateTime": "2017-07-15T23:59:59-07:00",
         "dateString": "7/15",
-        "hasTime": false
+        "hasTime": false,
+        "withinOneWeek":false
       },
       "bucket": "Overdue"
     },
@@ -236,7 +242,8 @@
         "epoch": 1522479599,
         "dateTime": "2018-03-30T23:59:59-07:00",
         "dateString": "3/30",
-        "hasTime": false
+        "hasTime": false,
+        "withinOneWeek":false
       },
       "bucket": "Future"
     },
@@ -269,7 +276,8 @@
         "epoch": 1498978799,
         "dateTime": "2017-07-01T23:59:59-07:00",
         "dateString": "7/01",
-        "hasTime": false
+        "hasTime": false,
+        "withinOneWeek":false
       },
       "bucket": "Overdue"
     },
@@ -296,7 +304,8 @@
         "epoch": 1500188399,
         "dateTime": "2017-07-15T23:59:59-07:00",
         "dateString": "7/15",
-        "hasTime": false
+        "hasTime": false,
+        "withinOneWeek":false
       },
       "bucket": "Overdue"
     },
@@ -323,7 +332,8 @@
         "epoch": 1500188399,
         "dateTime": "2017-07-15T23:59:59-07:00",
         "dateString": "7/15",
-        "hasTime": false
+        "hasTime": false,
+        "withinOneWeek":false
       },
       "bucket": "Overdue"
     },
@@ -350,7 +360,8 @@
         "epoch": 1500188399,
         "dateTime": "2017-07-15T23:59:59-07:00",
         "dateString": "7/15",
-        "hasTime": false
+        "hasTime": false,
+        "withinOneWeek":false
       },
       "bucket": "Overdue"
     },
@@ -377,7 +388,8 @@
         "epoch": 1500188399,
         "dateTime": "2017-07-15T23:59:59-07:00",
         "dateString": "7/15",
-        "hasTime": false
+        "hasTime": false,
+        "withinOneWeek":false
       },
       "bucket": "Overdue"
     },
@@ -404,7 +416,8 @@
         "epoch": 1500188399,
         "dateTime": "2017-07-15T23:59:59-07:00",
         "dateString": "7/15",
-        "hasTime": false
+        "hasTime": false,
+        "withinOneWeek":false
       },
       "bucket": "Overdue"
     },
@@ -437,7 +450,8 @@
         "epoch": 1493708399,
         "dateTime": "2017-05-01T23:59:59-07:00",
         "dateString": "5/01",
-        "hasTime": false
+        "hasTime": false,
+        "withinOneWeek":false
       },
       "bucket": "Overdue"
     },
@@ -464,7 +478,8 @@
         "epoch": 1522479599,
         "dateTime": "2018-03-30T23:59:59-07:00",
         "dateString": "3/30",
-        "hasTime": false
+        "hasTime": false,
+        "withinOneWeek":false
       },
       "bucket": "Future"
     },
@@ -491,7 +506,8 @@
         "epoch": 1530428399,
         "dateTime": "2018-06-30T23:59:59-07:00",
         "dateString": "6/30",
-        "hasTime": false
+        "hasTime": false,
+        "withinOneWeek": false
       },
       "bucket": "Future"
     },
@@ -524,7 +540,8 @@
         "epoch": 1493708399,
         "dateTime": "2017-05-01T23:59:59-07:00",
         "dateString": "5/01",
-        "hasTime": false
+        "hasTime": false,
+        "withinOneWeek": false
       },
       "bucket": "Overdue"
     },
@@ -551,7 +568,8 @@
         "epoch": 1522479599,
         "dateTime": "2018-03-30T23:59:59-07:00",
         "dateString": "3/30",
-        "hasTime": false
+        "hasTime": false,
+        "withinOneWeek": false
       },
       "bucket": "Future"
     },
@@ -584,7 +602,8 @@
         "epoch": 1493708399,
         "dateTime": "2017-05-01T23:59:59-07:00",
         "dateString": "5/01",
-        "hasTime": false
+        "hasTime": false,
+        "withinOneWeek": false
       },
       "bucket": "Overdue"
     },
@@ -617,7 +636,8 @@
         "epoch": 1497423599,
         "dateTime": "2017-06-13T23:59:59-07:00",
         "dateString": "6/13",
-        "hasTime": false
+        "hasTime": false,
+        "withinOneWeek": false
       },
       "bucket": "Overdue"
     },
@@ -650,7 +670,8 @@
         "epoch": 1495349999,
         "dateTime": "2017-05-20T23:59:59-07:00",
         "dateString": "5/20",
-        "hasTime": false
+        "hasTime": false,
+        "withinOneWeek": false
       },
       "bucket": "Overdue"
     },
@@ -683,7 +704,8 @@
         "epoch": 1528268399,
         "dateTime": "2018-06-05T23:59:59-07:00",
         "dateString": "6/05",
-        "hasTime": false
+        "hasTime": false,
+        "withinOneWeek": false
       },
       "bucket": "Future"
     },
@@ -716,7 +738,8 @@
         "epoch": 1493794799,
         "dateTime": "2017-05-02T23:59:59-07:00",
         "dateString": "5/02",
-        "hasTime": false
+        "hasTime": false,
+        "withinOneWeek": false
       },
       "bucket": "Overdue"
     },
@@ -749,7 +772,8 @@
         "epoch": 1521097199,
         "dateTime": "2018-03-14T23:59:59-07:00",
         "dateString": "3/14",
-        "hasTime": false
+        "hasTime": false,
+        "withinOneWeek": false
       },
       "bucket": "Future"
     },
@@ -782,7 +806,8 @@
         "epoch": 1544947199,
         "dateTime": "2018-12-15T23:59:59-08:00",
         "dateString": "12/15",
-        "hasTime": false
+        "hasTime": false,
+        "withinOneWeek": false
       },
       "bucket": "Future"
     },
@@ -815,7 +840,8 @@
         "epoch": 1544947199,
         "dateTime": "2018-12-15T23:59:59-08:00",
         "dateString": "12/15",
-        "hasTime": false
+        "hasTime": false,
+        "withinOneWeek": false
       },
       "bucket": "Future"
     },
@@ -842,7 +868,8 @@
         "epoch": 1544947199,
         "dateTime": "2018-12-15T23:59:59-08:00",
         "dateString": "12/15",
-        "hasTime": false
+        "hasTime": false,
+        "withinOneWeek": false
       },
       "bucket": "Future"
     },
@@ -875,7 +902,8 @@
         "epoch": 1493708399,
         "dateTime": "2017-05-01T23:59:59-07:00",
         "dateString": "5/01",
-        "hasTime": false
+        "hasTime": false,
+        "withinOneWeek": false
       },
       "bucket": "Overdue"
     },
@@ -902,7 +930,8 @@
         "epoch": 1543737599,
         "dateTime": "2018-12-01T23:59:59-08:00",
         "dateString": "12/01",
-        "hasTime": false
+        "hasTime": false,
+        "withinOneWeek": false
       },
       "bucket": "Future"
     },
@@ -929,7 +958,8 @@
         "epoch": 1544947199,
         "dateTime": "2018-12-15T23:59:59-08:00",
         "dateString": "12/15",
-        "hasTime": false
+        "hasTime": false,
+        "withinOneWeek": false
       },
       "bucket": "Future"
     }

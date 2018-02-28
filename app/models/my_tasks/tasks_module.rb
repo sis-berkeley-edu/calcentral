@@ -46,9 +46,13 @@ module MyTasks
       bucket
     end
 
-    def format_date_into_entry!(date, formatted_entry, field_name)
+    def format_date_into_entry!(date, formatted_entry, field_name, includeWithinOneWeek = false)
       if !date.blank?
-        formatted_entry[field_name] = format_date(date)
+        formatted_date = format_date(date)
+        if includeWithinOneWeek
+          formatted_date[:withinOneWeek] = (DateTime.now + 1.week >= date && DateTime.now <= date)
+        end
+        formatted_entry[field_name] = formatted_date
       end
     end
 

@@ -112,7 +112,7 @@
     margin-top: 20px;
     .cc-widget-tasks-list-header-special-title {
       font-size: 16px;
-      padding-left: 5px;
+      padding-left: 10px;
     }
     .cc-widget-tasks-list-header-special-date {
       padding-right: 30px;
@@ -148,7 +148,11 @@
     margin-top: 12px;
     padding-top: 12px;
   }
-  .cc-widget-task-section-count {
+  .cc-widget-task-section-due-within-week-count {
+    color: $cc-color-dark-orange;
+    padding: 3px;
+  }
+  .cc-widget-task-section-incomplete-count {
     background: $cc-color-azure;
     color: $cc-color-chathams-blue;
     padding: 3px;

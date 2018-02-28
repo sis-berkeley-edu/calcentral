@@ -53,7 +53,7 @@ module MyTasks
     end
 
     def format_date_and_bucket(formatted_entry, date)
-      format_date_into_entry!(date, formatted_entry, :dueDate)
+      format_date_into_entry!(date, formatted_entry, :dueDate, true)
       formatted_entry[:bucket] = determine_bucket(date, formatted_entry, @now_time, @starting_date)
     end
 

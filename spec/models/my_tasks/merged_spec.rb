@@ -73,6 +73,14 @@ describe 'MyTasks::Merged' do
       end
     end
 
+    it 'should include withinOneWeek indicator' do
+      tasks.each do |task|
+        next if task[:dueDate].blank?
+        dueDate = DateTime.parse(task[:dueDate][:dateTime].to_s)
+        expect(task[:dueDate][:withinOneWeek]).to eq (DateTime.now + 1.week >= dueDate && DateTime.now <= dueDate)
+      end
+    end
+
     it 'should include sensible link URLs and descriptions' do
       canvas_tasks = tasks.select { |task| task[:emitter] == Canvas::Proxy::APP_NAME }
       canvas_tasks.each do |task|

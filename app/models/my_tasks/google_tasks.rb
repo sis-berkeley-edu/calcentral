@@ -113,7 +113,7 @@ module MyTasks
         # the possibility of daylight savings transitions.
         Time.at((parsed_date + 1).in_time_zone.to_datetime.to_i - 1).to_datetime
       end
-      format_date_into_entry!(due_date, formatted_entry, :dueDate)
+      format_date_into_entry!(due_date, formatted_entry, :dueDate, true)
 
       formatted_entry[:bucket] = determine_bucket(due_date, formatted_entry, @now_time, @starting_date)
       logger.debug "Putting Google task with dueDate: #{formatted_entry[:dueDate]} in bucket: #{formatted_entry[:bucket]}"

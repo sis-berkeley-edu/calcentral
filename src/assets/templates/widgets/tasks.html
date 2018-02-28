@@ -99,11 +99,20 @@
                       <span data-ng-bind="taskSection.title"></span>
                     </strong>
                   </div>
-                  <div>
-                    <span class="cc-widget-task-section-count">
-                      <i class="fa fa-bell" aria-hidden="true"></i>
-                      <span data-ng-bind="taskSection.tasks.incomplete.length"></span> incomplete
-                    </span>
+                  <div class="cc-clearfix-container">
+                    <div class="cc-left">
+                      <span class="cc-widget-task-section-incomplete-count">
+                        <i class="fa fa-bell" aria-hidden="true"></i>
+                        <span data-ng-bind="taskSection.tasks.incomplete.length"></span> incomplete
+                      </span>
+                    </div>
+                    <div class="cc-left">
+                      <span class="cc-widget-task-section-due-within-week-count"
+                        data-ng-if="taskSection.dueWithinWeekCount > 0">
+                        <i class="fa fa-exclamation-triangle cc-icon-gold" aria-hidden="true"></i>
+                        <span data-ng-bind="taskSection.dueWithinWeekCount"></span> due within 1 week
+                      </span>
+                    </div>
                   </div>
                 </div>
                 <button class="cc-button cc-button-medium" data-ng-click="toggleTaskSection(taskSection)">

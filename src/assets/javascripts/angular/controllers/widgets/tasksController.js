@@ -102,6 +102,10 @@ angular.module('calcentral.controllers').controller('TasksController', function(
     return (task.emitter === 'Campus Solutions' && task.cs.displayStatus === 'beingProcessed');
   };
 
+  var isDueWithinOneWeekTask = function(task) {
+    return (task.dueDate && task.dueDate.withinOneWeek);
+  };
+
   var sortByTitle = function(a, b) {
     return apiService.util.naturalSort(a.title, b.title);
   };
@@ -273,6 +277,8 @@ angular.module('calcentral.controllers').controller('TasksController', function(
       var beingProcessedAndIncompleteSectionTasks = _.partition(incompleteSectionTasks, isCsBeingProcessedTask);
       var beingProcessedTasks = beingProcessedAndIncompleteSectionTasks[0] || 0;
       var remainingIncompleteSectionTasks = beingProcessedAndIncompleteSectionTasks[1] || 0;
+
+      taskSection.dueWithinWeekCount = remainingIncompleteSectionTasks.filter(isDueWithinOneWeekTask).length;
 
       taskSection.tasks = {
         incomplete: remainingIncompleteSectionTasks,
