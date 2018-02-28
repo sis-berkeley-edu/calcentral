@@ -247,6 +247,16 @@
   color: $cc-color-berkeley-blue;
 }
 
+// Icon Color Dark Grey
+//
+// markup:
+// <i class="fa fa-exclamation-triangle cc-icon-dark-grey"></i>
+//
+// Styleguide 3.3.8
+.cc-icon-dark-grey {
+  color: $cc-color-dim-gray;
+}
+
 // 3rd Party Icons
 //
 // Icons representing non-CalCentral websites or applications

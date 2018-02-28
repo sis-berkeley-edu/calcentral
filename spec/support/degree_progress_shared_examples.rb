@@ -117,12 +117,110 @@ shared_examples 'a proxy that returns undergraduate milestone data' do
   it 'replaces codes with descriptive names' do
     plan_level_data = subject[:feed][:degreeProgress][:progresses]
     expect(plan_level_data.first[:requirements][0][:name]).to eq('Entry Level Writing')
-    expect(plan_level_data.first[:requirements][0][:status]).to eq('Satisfied')
     expect(plan_level_data.first[:requirements][1][:name]).to eq('American History')
-    expect(plan_level_data.first[:requirements][1][:status]).to eq('Not Satisfied')
     expect(plan_level_data.first[:requirements][2][:name]).to eq('American Institutions')
-    expect(plan_level_data.first[:requirements][2][:status]).to eq('Not Satisfied')
     expect(plan_level_data.first[:requirements][3][:name]).to eq('American Cultures')
-    expect(plan_level_data.first[:requirements][3][:status]).to eq('In Progress')
+  end
+
+  context 'when translating the status codes' do
+    shared_examples 'it takes into account a lag in processing transfer credits' do
+      it 'masks failed and in progress' do
+        plan_level_data = subject[:feed][:degreeProgress][:progresses]
+        expect(plan_level_data.first[:requirements][0][:status]).to eq('Satisfied')
+        expect(plan_level_data.first[:requirements][1][:status]).to eq('Under Review')
+        expect(plan_level_data.first[:requirements][2][:status]).to eq('Under Review')
+        expect(plan_level_data.first[:requirements][3][:status]).to eq('Under Review')
+      end
+    end
+
+    shared_examples 'it assumes all transfer credits have been processed' do
+      it 'exposes failed and in progress' do
+        plan_level_data = subject[:feed][:degreeProgress][:progresses]
+        expect(plan_level_data.first[:requirements][0][:status]).to eq('Satisfied')
+        expect(plan_level_data.first[:requirements][1][:status]).to eq('Not Satisfied')
+        expect(plan_level_data.first[:requirements][2][:status]).to eq('Not Satisfied')
+        expect(plan_level_data.first[:requirements][3][:status]).to eq('In Progress')
+      end
+    end
+
+    let(:terms) { Berkeley::Terms.fetch(fake_now: fake_now) }
+    let(:admit_term_response) {
+      {
+        'admit_term'=> admit_term
+      }
+    }
+    before(:each) do
+      allow(EdoOracle::Queries).to receive(:get_admit_term).and_return admit_term_response
+      allow(Settings.terms).to receive(:fake_now).and_return fake_now
+      allow_any_instance_of(Berkeley::Terms).to receive(:fetch).and_return terms
+    end
+
+    context 'for a spring term new admit' do
+      let(:admit_term) { '2132' }
+      context 'before the term has started' do
+        let(:fake_now) { DateTime.parse('2013-01-14 00:00:00-08:00') }
+        it_behaves_like 'it takes into account a lag in processing transfer credits'
+      end
+      context 'in the first 30 days of the term' do
+        let(:fake_now) { DateTime.parse('2013-02-13 00:00:00-08:00') }
+        it_behaves_like 'it takes into account a lag in processing transfer credits'
+      end
+      context 'after the first 30 days of the term' do
+        let(:fake_now) { DateTime.parse('2013-02-14 00:00:00-08:00') }
+        it_behaves_like 'it assumes all transfer credits have been processed'
+      end
+    end
+
+    context 'for a summer term new admit' do
+      let(:admit_term) { '2135' }
+      context 'before the term has ended' do
+        let(:fake_now) { DateTime.parse('2013-08-15 00:00:00-08:00') }
+        it_behaves_like 'it takes into account a lag in processing transfer credits'
+      end
+      context 'in the first 60 days after the term has ended' do
+        let(:fake_now) { DateTime.parse('2013-08-16 00:00:00-08:00') }
+        it_behaves_like 'it takes into account a lag in processing transfer credits'
+      end
+      context 'more than 60 days after the term has ended' do
+        let(:fake_now) { DateTime.parse('2013-10-15 00:00:00-08:00') }
+        it_behaves_like 'it assumes all transfer credits have been processed'
+      end
+    end
+
+    context 'for a fall term new admit' do
+      let(:admit_term) { '2138' }
+      context 'before the term has started' do
+        let(:fake_now) { DateTime.parse('2013-08-21 00:00:00-08:00') }
+        it_behaves_like 'it takes into account a lag in processing transfer credits'
+      end
+      context 'in the first 60 days of the term' do
+        let(:fake_now) { DateTime.parse('2013-10-20 00:00:00-08:00') }
+        it_behaves_like 'it takes into account a lag in processing transfer credits'
+      end
+      context 'after the first 60 days of the term' do
+        let(:fake_now) { DateTime.parse('2013-10-21 00:00:00-08:00') }
+        it_behaves_like 'it assumes all transfer credits have been processed'
+      end
+    end
+
+    context 'when no admit term exists' do
+      let(:admit_term) { nil }
+      let(:fake_now) { DateTime.parse('2013-08-21 00:00:00-08:00') }
+      it_behaves_like 'it assumes all transfer credits have been processed'
+    end
+
+    context 'when no current term is found' do
+      before do
+        allow(Berkeley::Terms).to receive(:fetch).and_return (terms = double)
+        allow(terms).to receive(:current).and_return nil
+      end
+      context 'for a fall term new admit' do
+        let(:admit_term) { '2138' }
+        context 'before the term has started' do
+          let(:fake_now) { DateTime.parse('2013-08-21 00:00:00-08:00') }
+          it_behaves_like 'it assumes all transfer credits have been processed'
+        end
+      end
+    end
   end
 end

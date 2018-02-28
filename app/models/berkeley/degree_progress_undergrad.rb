@@ -2,14 +2,34 @@ module Berkeley
   class DegreeProgressUndergrad
     include ClassLogger
 
-    def self.get_status(status_code, in_progress_value)
+    STATUS_SATISFIED = 'Satisfied'
+    STATUS_NOT_SATISFIED = 'Not Satisfied'
+    STATUS_IN_PROGRESS = 'In Progress'
+    STATUS_UNDER_REVIEW = 'Under Review'
+
+    def self.get_status(status_code, in_progress_value, is_new_admit_grace_period)
       return nil if status_code.blank?
-      uniform_status_code = status_code.strip.upcase
-      in_progress = uniform_status_code == 'COMP' && in_progress_boolean(in_progress_value)
-      in_progress ? 'In Progress' : statuses[uniform_status_code]
+      if (is_new_admit_grace_period)
+        return grace_period_status(status_code.strip.upcase, in_progress_value)
+      end
+      self.status(status_code.strip.upcase, in_progress_value)
     end
 
-    def self.in_progress_boolean(in_progress_value)
+    def self.grace_period_status(code, in_progress_value)
+      complete?(code) && !in_progress?(in_progress_value) ? STATUS_SATISFIED : STATUS_UNDER_REVIEW
+    end
+
+    def self.status(code, in_progress_value)
+      in_progress = complete?(code) && in_progress?(in_progress_value)
+      return STATUS_IN_PROGRESS if in_progress
+      complete?(code) ? STATUS_SATISFIED : STATUS_NOT_SATISFIED
+    end
+
+    def self.complete?(code)
+      code == 'COMP'
+    end
+
+    def self.in_progress?(in_progress_value)
       in_progress_value == 'Y'
     end
 
@@ -49,13 +69,6 @@ module Berkeley
           description: 'American Cultures',
           order: 3
         }
-      }
-    end
-
-    def self.statuses
-      @statuses ||= {
-        'FAIL' => 'Not Satisfied',
-        'COMP' => 'Satisfied'
       }
     end
   end
