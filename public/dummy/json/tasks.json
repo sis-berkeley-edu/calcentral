@@ -1,45 +1,11 @@
 {
-  "feedName": "MyTasks::Merged",
-  "lastModified": {
-    "hash": "abc123def456abc123abc123456bcd3ce30237b2",
-    "timestamp": {
-      "dateString": "2/01",
-      "dateTime": "2017-02-01T15:55:17-08:00",
-      "epoch": 1485993317
-    }
-  },
   "tasks": [
     {
       "bucket": "Unscheduled",
-      "cs": {
-        "finaidYearId": "2017",
-        "isFinaid": true,
-        "organization": null,
-        "responsibleContactEmail": null,
-        "showStatus": "Incomplete"
-      },
-      "emitter": "Campus Solutions",
-      "linkDescription": "2016-17 Student Parent Cost of Attendance Adjustment Request",
-      "linkUrl": "http://financialaid.berkeley.edu/sites/default/files/docs/forms/Cost_of_Attendance_Appeal_Student_Parent_1617.pdf",
-      "notes": "We received your Cost of Attendance Adjustment Request. Processing times may vary based on our current volume of requests. Please monitor your messages in the My Finances section of Cal Central and respond to requests for additional information promptly to expedite our review. Note: Submitting a request does not guarantee approval.",
-      "sourceUrl": "http://sis-project.berkeley.edu",
-      "status": "inprogress",
-      "subTitle": null,
-      "title": "COA Adj Req - Student Parent",
-      "type": "task",
-      "updatedDate": {
-        "dateString": "1/08",
-        "dateTime": "2017-01-08T00:00:00-08:00",
-        "epoch": 1483862400
-      },
-      "uploadUrl": "https://bcswebqat.is.berkeley.edu/psc/bcsqat/EMPLOYEE/HRMS/c/UC_CC_CHKLST_UPLOAD_FLU.UC_CC_FILE_UPL_FLU.GBL?ucAdminFunction=FINA&ucSeq3C=136&ucChecklistSeq=100&ucAidYear=2017&ucChklstItemCd=FCRSA"
-    },
-    {
-      "bucket": "Unscheduled",
       "completedDate": {
-        "dateString": "11/14",
-        "dateTime": "2016-11-14T00:00:00-08:00",
-        "epoch": 1479110400,
+        "dateString": "02/14",
+        "dateTime": "2018-02-14T00:00:00-08:00",
+        "epoch": 1518595200,
         "hasTime": false
       },
       "cs": {
@@ -47,7 +13,10 @@
         "isFinaid": true,
         "organization": null,
         "responsibleContactEmail": null,
-        "showStatus": ""
+        "showStatus": "",
+        "itemStatusCode": "C",
+        "displayStatus": "complete",
+        "displayCategory": "finaid"
       },
       "emitter": "Campus Solutions",
       "linkDescription": "2016-17 Independence Appeal",
@@ -59,9 +28,9 @@
       "title": "Independence Appeal",
       "type": "task",
       "updatedDate": {
-        "dateString": "11/14",
-        "dateTime": "2016-11-14T00:00:00-08:00",
-        "epoch": 1479110400
+        "dateString": "02/14",
+        "dateTime": "2018-02-14T00:00:00-08:00",
+        "epoch": 1518595200
       },
       "uploadUrl": "https://bcswebqat.is.berkeley.edu/psc/bcsqat/EMPLOYEE/HRMS/c/UC_CC_CHKLST_UPLOAD_FLU.UC_CC_FILE_UPL_FLU.GBL?"
     },
@@ -72,204 +41,927 @@
         "isFinaid": true,
         "organization": null,
         "responsibleContactEmail": null,
-        "showStatus": "Received"
+        "showStatus": "Assigned",
+        "itemStatusCode": "I",
+        "displayStatus": "incomplete",
+        "displayCategory": "finaid"
       },
       "emitter": "Campus Solutions",
-      "linkDescription": "2016-17 Independence Appeal",
-      "linkUrl": "http://financialaid.berkeley.edu/sites/default/files/docs/otherforms/Independence_Appeal_2016-17.pdf",
-      "notes": "Please complete the Independence Appeal form and provide the requested supporting documentation as soon as possible.",
+      "linkDescription": "2016-17 Student Parent Cost of Attendance Adjustment Request",
+      "linkUrl": "http://financialaid.berkeley.edu/sites/default/files/docs/forms/Cost_of_Attendance_Appeal_Student_Parent_1617.pdf",
+      "notes": "We received your Cost of Attendance Adjustment Request. Processing times may vary based on our current volume of requests. Please monitor your messages in the My Finances section of Cal Central and respond to requests for additional information promptly to expedite our review. Note: Submitting a request does not guarantee approval.",
       "sourceUrl": "http://sis-project.berkeley.edu",
       "status": "inprogress",
       "subTitle": null,
-      "title": "Independence Appeal",
+      "title": "COA Adj Req - Student Parent",
       "type": "task",
       "updatedDate": {
-        "dateString": "11/06",
-        "dateTime": "2016-11-06T00:00:00-07:00",
-        "epoch": 1478415600
+        "dateString": "2/08",
+        "dateTime": "2018-02-08T00:00:00-08:00",
+        "epoch": 1518076800
       },
-      "uploadUrl": "https://bcswebqat.is.berkeley.edu/psc/bcsqat/EMPLOYEE/HRMS/c/UC_CC_CHKLST_UPLOAD_FLU.UC_CC_FILE_UPL_FLU.GBL?"
+      "uploadUrl": "https://bcswebqat.is.berkeley.edu/psc/bcsqat/EMPLOYEE/HRMS/c/UC_CC_CHKLST_UPLOAD_FLU.UC_CC_FILE_UPL_FLU.GBL?ucAdminFunction=FINA&ucSeq3C=136&ucChecklistSeq=100&ucAidYear=2017&ucChklstItemCd=FCRSA"
     },
     {
-      "bucket": "Unscheduled",
-      "cs": {
-        "finaidYearId": "2017",
-        "isFinaid": true,
-        "organization": null,
-        "responsibleContactEmail": null,
-        "showStatus": "Received"
+      "bucket": "Future",
+      "course_code": "Urban",
+      "dueDate": {
+        "dateString": "3/01",
+        "dateTime": "2018-03-01T07:59:59+00:00",
+        "epoch": 1519891199,
+        "hasTime": true,
+        "withinOneWeek":false
       },
-      "emitter": "Campus Solutions",
-      "linkDescription": "Americorps",
-      "linkUrl": null,
-      "notes": "Received",
-      "sourceUrl": "http://sis-project.berkeley.edu",
-      "status": "inprogress",
-      "subTitle": null,
-      "title": "Americorps",
-      "type": "task",
-      "updatedDate": {
-        "dateString": "9/18",
-        "dateTime": "2016-09-18T00:00:00-07:00",
-        "epoch": 1474182000
-      },
-      "uploadUrl": null
-    },
-    {
-      "bucket": "Unscheduled",
-      "cs": {
-        "finaidYearId": "2017",
-        "isFinaid": true,
-        "organization": null,
-        "responsibleContactEmail": null,
-        "showStatus": "Received"
-      },
-      "emitter": "Campus Solutions",
-      "linkDescription": "Americorps",
-      "linkUrl": null,
-      "notes": "Received",
-      "sourceUrl": "http://sis-project.berkeley.edu",
-      "status": "inprogress",
-      "subTitle": null,
-      "title": "Americorps",
-      "type": "task",
-      "updatedDate": {
-        "dateString": "6/26",
-        "dateTime": "2016-06-26T00:00:00-07:00",
-        "epoch": 1466924400
-      },
-      "uploadUrl": null
-    },
-    {
-      "type": "task",
-      "title": "Lunch with study group",
-      "status": "Overdue",
-      "due_date": {
-        "epoch": 1354320000,
-        "dateTime": "2012-12-01T00:00:00+00:00",
-        "dateString": "12/01"
-      },
-      "link_url": "https://mail.google.com/tasks/canvas?pli=1",
-      "source": "PLEO 22",
-      "id": "MTIyMzQ3NTIyMjUzODMyMTI2NTI6MDoxNzUxNjI4NTMw",
-      "sourceUrl": "https://www.googleapis.com/tasks/v1/lists/MTIyMzQ3NTIyMjUzODMyMTI2NTI6MDow/tasks/MTIyMzQ3NTIyMjUzODMyMTI2NTI6MDoxNzUxNjI4NTMw",
       "emitter": "bCourses",
-      "bucket": "Overdue",
-      "notes": "Everyone needs to bring something to read aloud, and a snack to share."
+      "linkDescription": "View in bCourses",
+      "linkUrl": "https://ucberkeley.test.instructure.com/courses/1050465/assignments/7874380",
+      "notes": "test assignment description",
+      "sourceUrl": "https://ucberkeley.test.instructure.com/courses/1050465/assignments/7874380",
+      "status": "inprogress",
+      "title": "Test Assignment Title",
+      "type": "assignment"
     },
     {
-      "type": "task",
-      "title": "test2",
-      "emitter": "Google",
       "bucket": "Overdue",
-      "notes": "Null and void",
-      "link_url": "https://mail.google.com/tasks/canvas?pli=1",
-      "id": "MTIyMzQ3NTIyMjUzODMyMTI2NTI6MDoxNzUxNjI4NTMw",
-      "sourceUrl": "https://www.googleapis.com/tasks/v1/lists/MDY0OTA0MjU4MDkyNTI0Mzc0OTI6MDow/tasks/MDY0OTA0MjU4MDkyNTI0Mzc0OTI6MDoyMDQxODM3NTEx",
-      "status": "Overdue",
-      "due_date": {
-        "epoch": 1354320000,
-        "dateTime": "2012-12-01T00:00:00+00:00",
-        "dateString": "12/01"
+      "completedDate": {
+        "dateString": "2/13",
+        "dateTime": "2018-02-13T00:19:43+00:00",
+        "epoch": 1518481183
+      },
+      "dueDate": {
+        "dateString": "2/01",
+        "dateTime": "2018-02-01T23:59:59-08:00",
+        "epoch": 1517558399,
+        "withinOneWeek":false
+      },
+      "emitter": "Google",
+      "id": "MDU3NDE4MjQ0Mzk3NDk1MzYxODY6MDo0MDE4ODI3OTQ",
+      "notes": "This task is unscheduled, yet it is complete",
+      "sourceUrl": "https://www.googleapis.com/tasks/v1/lists/MDU3NDE4MjQ0Mzk3NDk1MzYxODY6MDow/tasks/MDU3NDE4MjQ0Mzk3NDk1MzYxODY6MDo0MDE4ODI3OTQ",
+      "status": "completed",
+      "title": "Scheduled yet Complete",
+      "type": "task"
+    },
+    {
+      "bucket": "Today",
+      "dueDate": {
+        "dateString": "2/27",
+        "dateTime": "2018-02-27T23:59:59-08:00",
+        "epoch": 1519804799,
+        "withinOneWeek":false
+      },
+      "emitter": "Google",
+      "id": "MDU3NDE4MjQ0Mzk3NDk1MzYxODY6MDoxOTc1NDIxMjcz",
+      "notes": "This task is due in the future",
+      "sourceUrl": "https://www.googleapis.com/tasks/v1/lists/MDU3NDE4MjQ0Mzk3NDk1MzYxODY6MDow/tasks/MDU3NDE4MjQ0Mzk3NDk1MzYxODY6MDoxOTc1NDIxMjcz",
+      "status": "needsAction",
+      "title": "Due in the Future",
+      "type": "task"
+    },
+    {
+      "bucket": "Unscheduled",
+      "emitter": "Google",
+      "id": "MDU3NDE4MjQ0Mzk3NDk1MzYxODY6MDoxODQ2ODY2NTE4",
+      "notes": "This task is unscheduled, yet not complete",
+      "sourceUrl": "https://www.googleapis.com/tasks/v1/lists/MDU3NDE4MjQ0Mzk3NDk1MzYxODY6MDow/tasks/MDU3NDE4MjQ0Mzk3NDk1MzYxODY6MDoxODQ2ODY2NTE4",
+      "status": "needsAction",
+      "title": "Test Unscheduled/Incomplete Task",
+      "type": "task",
+      "updatedDate": {
+        "dateString": "2/12",
+        "dateTime": "2018-02-12T21:47:08+00:00",
+        "epoch": 1518472028
       }
     },
     {
-      "type": "assignment",
-      "due_date": {
-        "epoch": 1354320000,
-        "dateTime": "2012-12-05T00:00:00+00:00",
-        "dateString": "12/05"
-      },
-      "title": "Run fourier transforms on buzz saw",
-      "link_url": "https://ucberkeley.instructure.com/courses/832071/assignments/2217453",
-      "sourceUrl": "https://ucberkeley.instructure.com/courses/832071",
-      "emitter": "bCourses",
-      "bucket": "Today",
-      "notes": "This is a test of the emergency broadcast system",
-      "source": "Biology",
-      "status": "needs_action"
-    },
-    {
-      "type": "assignment",
-      "due_date": {
-        "epoch": 1354320000,
-        "dateTime": "2012-12-05T00:00:00+00:00",
-        "dateString": "12/05"
-      },
-      "title": "Report on frog dissection",
-      "link_url": "https://ucberkeley.instructure.com/courses/832071/assignments/2217453",
-      "sourceUrl": "https://ucberkeley.instructure.com/courses/832071",
-      "emitter": "bCourses",
-      "bucket": "Future",
-      "source": "Biology",
-      "status": "inprogress"
-    },
-    {
-      "type": "assignment",
-      "due_date": {
-        "epoch": 1354320000,
-        "dateTime": "2012-12-05T00:00:00+00:00",
-        "dateString": "12/05"
-      },
-      "title": "Finish Shakespeare",
-      "link_url": "https://ucberkeley.instructure.com/courses/832071/assignments/2217453",
-      "sourceUrl": "https://ucberkeley.instructure.com/courses/832071",
-      "emitter": "Google",
-      "bucket": "Future",
-      "notes": "Adieu, adieu, adieu",
-      "source": "Biology",
-      "status": "completed"
-    },
-    {
-      "type": "assignment",
-      "due_date": {
-        "epoch": 1354320000,
-        "dateTime": "2012-12-05T00:00:00+00:00",
-        "dateString": "12/05"
-      },
-      "title": "Chapter Seven",
-      "link_url": "https://ucberkeley.instructure.com/courses/832071/assignments/2217453",
-      "sourceUrl": "https://ucberkeley.instructure.com/courses/832071",
-      "emitter": "bCourses",
-      "bucket": "Future",
-      "source": "Biology",
-      "status": "completed"
-    },
-    {
-      "type": "assignment",
-      "due_date": {
-        "epoch": 1354320000,
-        "dateTime": "2012-12-05T00:00:00+00:00",
-        "dateString": "12/05"
-      },
-      "title": "Bring tweezers",
-      "link_url": "https://ucberkeley.instructure.com/courses/832071/assignments/2217453",
-      "sourceUrl": "https://ucberkeley.instructure.com/courses/832071",
-      "emitter": "bCourses",
-      "bucket": "Today",
-      "source": "Biology",
-      "status": "completed"
-    },
-    {
-      "type": "task",
-      "title": "Break bread",
-      "emitter": "Google",
       "bucket": "Unscheduled",
-      "notes": "Bring enough butter for everyone.",
-      "link_url": "https://mail.google.com/tasks/canvas?pli=1",
-      "id": "MTIyMzQ3NTIyMjUzODMyMTI2NTI6MDoxNzUxNjI4NTMw",
-      "sourceUrl": "https://www.googleapis.com/tasks/v1/lists/MDY0OTA0MjU4MDkyNTI0Mzc0OTI6MDow/tasks/MDY0OTA0MjU4MDkyNTI0Mzc0OTI6MDoxNjYzMjE0NDg0",
-      "status": "needs_action"
+      "completedDate": {
+        "dateString": "2/13",
+        "dateTime": "2018-02-13T00:19:23+00:00",
+        "epoch": 1518481163
+      },
+      "emitter": "Google",
+      "id": "MDU3NDE4MjQ0Mzk3NDk1MzYxODY6MDoxODAxNjE2Nzg",
+      "notes": "This task is not scheduled, but is complete",
+      "sourceUrl": "https://www.googleapis.com/tasks/v1/lists/MDU3NDE4MjQ0Mzk3NDk1MzYxODY6MDow/tasks/MDU3NDE4MjQ0Mzk3NDk1MzYxODY6MDoxODAxNjE2Nzg",
+      "status": "completed",
+      "title": "Test Unscheduled/Complete Task",
+      "type": "task",
+      "updatedDate": {
+        "dateString": "2/13",
+        "dateTime": "2018-02-13T00:19:23+00:00",
+        "epoch": 1518481163
+      }
     },
     {
-      "type": "task",
-      "title": "Alphabetize Kleenex boxes",
+      "bucket": "Overdue",
+      "dueDate": {
+        "dateString": "2/24",
+        "dateTime": "2018-02-24T23:59:59-08:00",
+        "epoch": 1519545599,
+        "withinOneWeek":false
+      },
       "emitter": "Google",
-      "bucket": "Unscheduled",
-      "link_url": "https://mail.google.com/tasks/canvas?pli=1",
-      "id": "MTIyMzQ3NTIyMjUzODMyMTI2NTI6MDoxNzUxNjI4NTMw",
-      "sourceUrl": "https://www.googleapis.com/tasks/v1/lists/MDY0OTA0MjU4MDkyNTI0Mzc0OTI6MDow/tasks/MDY0OTA0MjU4MDkyNTI0Mzc0OTI6MDoyMTExODI3NTU1",
-      "status": "needs_action"
+      "id": "MDU3NDE4MjQ0Mzk3NDk1MzYxODY6MDoxNzM3MTgyOTIw",
+      "notes": "This task is due today",
+      "sourceUrl": "https://www.googleapis.com/tasks/v1/lists/MDU3NDE4MjQ0Mzk3NDk1MzYxODY6MDow/tasks/MDU3NDE4MjQ0Mzk3NDk1MzYxODY6MDoxNzM3MTgyOTIw",
+      "status": "needsAction",
+      "title": "Task Due Today",
+      "type": "task"
+    },
+    {
+      "bucket": "Overdue",
+      "dueDate": {
+        "dateString": "7/21",
+        "dateTime": "2017-07-21T23:59:59-07:00",
+        "epoch": 1500706799,
+        "withinOneWeek":false
+      },
+      "emitter": "Google",
+      "id": "MDU3NDE4MjQ0Mzk3NDk1MzYxODY6MDoxNTEwNDA3OTg0",
+      "notes": "This task is overdue",
+      "sourceUrl": "https://www.googleapis.com/tasks/v1/lists/MDU3NDE4MjQ0Mzk3NDk1MzYxODY6MDow/tasks/MDU3NDE4MjQ0Mzk3NDk1MzYxODY6MDoxNTEwNDA3OTg0",
+      "status": "needsAction",
+      "title": "Overdue Task",
+      "type": "task"
+    },
+    {
+      "emitter": "Campus Solutions",
+      "linkDescription": null,
+      "linkUrl": null,
+      "uploadUrl": null,
+      "sourceUrl": "http://sis-project.berkeley.edu",
+      "status": "completed",
+      "title": "SAT Reasoning/ACT Plus Writing",
+      "notes": "Submit your official test scores for the SAT Reasoning OR the ACT plus Writing electronically.\n\nAll final, official results must be received by July 15th.\n\nTo request your scores, contact the College Board online at http://www.CollegeBoard.com, via phone at (866) 756-7346 OR the ACT online at www.ACTstudent.org, via phone at (319) 337-1313 for score report information.",
+      "type": "task",
+      "subTitle": "Office of Undergraduate Admissions",
+      "cs": {
+        "responsibleContactEmail": null,
+        "organization": null,
+        "showStatus": "",
+        "itemStatusCode": "C",
+        "displayStatus": "completed",
+        "displayCategory": "admission"
+      },
+      "completedDate": {
+        "epoch": 1490770800,
+        "dateTime": "2017-03-29T00:00:00-07:00",
+        "dateString": "3/29",
+        "hasTime": false
+      },
+      "dueDate": {
+        "epoch": 1500188399,
+        "dateTime": "2017-07-15T23:59:59-07:00",
+        "dateString": "7/15",
+        "hasTime": false,
+        "withinOneWeek":false
+      },
+      "bucket": "Overdue"
+    },
+    {
+      "emitter": "Campus Solutions",
+      "linkDescription": null,
+      "linkUrl": null,
+      "uploadUrl": null,
+      "sourceUrl": "http://sis-project.berkeley.edu",
+      "status": "inprogress",
+      "title": "Fall Transcript",
+      "notes": "Please submit final, official transcripts for all colleges/universities in which you have been enrolled in Fall 2016.\n\nYour final, official transcript(s) must be postmarked by December 15th.\n\nThe University of California, Berkeley accepts electronic transcripts.  Take steps to find out if your college issues electronic transcripts.\n\nIf your school does not issue electronic transcripts, you may mail official transcripts to:\n     UC Berkeley Undergraduate Admissions Transcripts\n     16 Sproul Hall, MC 0608 \n     Berkeley, CA 94720-0608",
+      "type": "task",
+      "subTitle": "Michelle Caruso",
+      "cs": {
+        "responsibleContactEmail": "mcaruso@berkeley.edu",
+        "organization": null,
+        "showStatus": "Incomplete",
+        "itemStatusCode": "Z",
+        "displayStatus": "furtherActionNeeded",
+        "displayCategory": "admission"
+      },
+      "dueDate": {
+        "epoch": 1522479599,
+        "dateTime": "2018-03-30T23:59:59-07:00",
+        "dateString": "3/30",
+        "hasTime": false,
+        "withinOneWeek":false
+      },
+      "bucket": "Future"
+    },
+    {
+      "emitter": "Campus Solutions",
+      "linkDescription": null,
+      "linkUrl": null,
+      "uploadUrl": null,
+      "sourceUrl": "http://sis-project.berkeley.edu",
+      "status": "completed",
+      "title": "Final High School Transcript",
+      "notes": "Please submit your final transcript(s) from all high schools/secondary schools for years 9-12.  The transcript must include the date of graduation and verify your self-reported academic record.\n\nALL final, official documents must be postmarked by July 1st.\n\nYou may mail official documents to:\n\n     UC Berkeley Undergraduate Admissions Transcripts\n     16 Sproul Hall, MC 0608 \n     Berkeley, CA 94720-0608",
+      "type": "task",
+      "subTitle": "Office of Undergraduate Admissions",
+      "cs": {
+        "responsibleContactEmail": null,
+        "organization": "Hotchkiss School The",
+        "showStatus": "",
+        "itemStatusCode": "W",
+        "displayStatus": "completed",
+        "displayCategory": "admission"
+      },
+      "completedDate": {
+        "epoch": 1498028400,
+        "dateTime": "2017-06-21T00:00:00-07:00",
+        "dateString": "6/21",
+        "hasTime": false
+      },
+      "dueDate": {
+        "epoch": 1498978799,
+        "dateTime": "2017-07-01T23:59:59-07:00",
+        "dateString": "7/01",
+        "hasTime": false,
+        "withinOneWeek":false
+      },
+      "bucket": "Overdue"
+    },
+    {
+      "emitter": "Campus Solutions",
+      "linkDescription": null,
+      "linkUrl": null,
+      "uploadUrl": null,
+      "sourceUrl": "http://sis-project.berkeley.edu",
+      "status": "inprogress",
+      "title": "English Literature & Compostn",
+      "notes": "Please submit your official scores for all Advanced Placement exams for which you have earned a score of 3 or higher.\n\nALL final, official exam results must be received by July 15th.\n\nNote:  If you have completed Advanced Placement (AP), you must submit an official report for all sittings, including exams from previous years. To arrange for AP scores to be sent to us, visit www.collegeboard.com.",
+      "type": "task",
+      "subTitle": "Office of Undergraduate Admissions",
+      "cs": {
+        "responsibleContactEmail": null,
+        "organization": null,
+        "showStatus": "Initiated",
+        "itemStatusCode": "I",
+        "displayStatus": "incomplete",
+        "displayCategory": "admission"
+      },
+      "dueDate": {
+        "epoch": 1500188399,
+        "dateTime": "2017-07-15T23:59:59-07:00",
+        "dateString": "7/15",
+        "hasTime": false,
+        "withinOneWeek":false
+      },
+      "bucket": "Overdue"
+    },
+    {
+      "emitter": "Campus Solutions",
+      "linkDescription": null,
+      "linkUrl": null,
+      "uploadUrl": null,
+      "sourceUrl": "http://sis-project.berkeley.edu",
+      "status": "inprogress",
+      "title": "Environment Science",
+      "notes": "Please submit your official scores for all Advanced Placement exams for which you have earned a score of 3 or higher.\n\nALL final, official exam results must be received by July 15th.\n\nNote:  If you have completed Advanced Placement (AP), you must submit an official report for all sittings, including exams from previous years. To arrange for AP scores to be sent to us, visit www.collegeboard.com.",
+      "type": "task",
+      "subTitle": "Office of Undergraduate Admissions",
+      "cs": {
+        "responsibleContactEmail": null,
+        "organization": null,
+        "showStatus": "Initiated",
+        "itemStatusCode": "I",
+        "displayStatus": "incomplete",
+        "displayCategory": "admission"
+      },
+      "dueDate": {
+        "epoch": 1500188399,
+        "dateTime": "2017-07-15T23:59:59-07:00",
+        "dateString": "7/15",
+        "hasTime": false,
+        "withinOneWeek":false
+      },
+      "bucket": "Overdue"
+    },
+    {
+      "emitter": "Campus Solutions",
+      "linkDescription": null,
+      "linkUrl": null,
+      "uploadUrl": null,
+      "sourceUrl": "http://sis-project.berkeley.edu",
+      "status": "inprogress",
+      "title": "Spanish Language & Culture",
+      "notes": "Please submit your official scores for all Advanced Placement exams for which you have earned a score of 3 or higher.\n\nALL final, official exam results must be received by July 15th.\n\nNote:  If you have completed Advanced Placement (AP), you must submit an official report for all sittings, including exams from previous years. To arrange for AP scores to be sent to us, visit www.collegeboard.com.",
+      "type": "task",
+      "subTitle": "Office of Undergraduate Admissions",
+      "cs": {
+        "responsibleContactEmail": null,
+        "organization": null,
+        "showStatus": "Initiated",
+        "itemStatusCode": "I",
+        "displayStatus": "incomplete",
+        "displayCategory": "admission"
+      },
+      "dueDate": {
+        "epoch": 1500188399,
+        "dateTime": "2017-07-15T23:59:59-07:00",
+        "dateString": "7/15",
+        "hasTime": false,
+        "withinOneWeek":false
+      },
+      "bucket": "Overdue"
+    },
+    {
+      "emitter": "Campus Solutions",
+      "linkDescription": null,
+      "linkUrl": null,
+      "uploadUrl": null,
+      "sourceUrl": "http://sis-project.berkeley.edu",
+      "status": "inprogress",
+      "title": "Spanish Literature & Culture",
+      "notes": "Please submit your official scores for all Advanced Placement exams for which you have earned a score of 3 or higher.\n\nALL final, official exam results must be received by July 15th.\n\nNote:  If you have completed Advanced Placement (AP), you must submit an official report for all sittings, including exams from previous years. To arrange for AP scores to be sent to us, visit www.collegeboard.com.",
+      "type": "task",
+      "subTitle": "Office of Undergraduate Admissions",
+      "cs": {
+        "responsibleContactEmail": null,
+        "organization": null,
+        "showStatus": "Initiated",
+        "itemStatusCode": "I",
+        "displayStatus": "incomplete",
+        "displayCategory": "admission"
+      },
+      "dueDate": {
+        "epoch": 1500188399,
+        "dateTime": "2017-07-15T23:59:59-07:00",
+        "dateString": "7/15",
+        "hasTime": false,
+        "withinOneWeek":false
+      },
+      "bucket": "Overdue"
+    },
+    {
+      "emitter": "Campus Solutions",
+      "linkDescription": null,
+      "linkUrl": null,
+      "uploadUrl": null,
+      "sourceUrl": "http://sis-project.berkeley.edu",
+      "status": "inprogress",
+      "title": "SAT Subject Exam",
+      "notes": "Please submit the official exam results for all SAT Subject exams electronically.\n\nALL final, official exam results must be received by July 15th.\n\nNote: To request your scores, contact the College Board online at www.CollegeBoard.com, via phone at (866) 756-7346 for score report information.",
+      "type": "task",
+      "subTitle": "Office of Undergraduate Admissions",
+      "cs": {
+        "responsibleContactEmail": null,
+        "organization": null,
+        "showStatus": "Initiated",
+        "itemStatusCode": "I",
+        "displayStatus": "incomplete",
+        "displayCategory": "admission"
+      },
+      "dueDate": {
+        "epoch": 1500188399,
+        "dateTime": "2017-07-15T23:59:59-07:00",
+        "dateString": "7/15",
+        "hasTime": false,
+        "withinOneWeek":false
+      },
+      "bucket": "Overdue"
+    },
+    {
+      "emitter": "Campus Solutions",
+      "linkDescription": null,
+      "linkUrl": null,
+      "uploadUrl": null,
+      "sourceUrl": "http://sis-project.berkeley.edu",
+      "status": "completed",
+      "title": "Accept Your Offer of Admission",
+      "notes": "Accept your Offer of Admission in CalCentral by 11:59pm PDT on your deadline.     \n\nIf you are required to pay the SIR Deposit, know that the $250.00 fee is non-refundable.                         \n                                                                                                                                               \nMore information about UC Berkeley's Honor Code can be found here:  https://asuc.org/honorcode/\n\nReview your Conditions of Admission here:  \nhttps://apply.berkeley.edu/apply/status",
+      "type": "task",
+      "subTitle": "Office of Undergraduate Admissions",
+      "cs": {
+        "responsibleContactEmail": null,
+        "organization": null,
+        "showStatus": "",
+        "itemStatusCode": "C",
+        "displayStatus": "completed",
+        "displayCategory": "admission"
+      },
+      "completedDate": {
+        "epoch": 1493103600,
+        "dateTime": "2017-04-25T00:00:00-07:00",
+        "dateString": "4/25",
+        "hasTime": false
+      },
+      "dueDate": {
+        "epoch": 1493708399,
+        "dateTime": "2017-05-01T23:59:59-07:00",
+        "dateString": "5/01",
+        "hasTime": false,
+        "withinOneWeek":false
+      },
+      "bucket": "Overdue"
+    },
+    {
+      "emitter": "Campus Solutions",
+      "linkDescription": null,
+      "linkUrl": null,
+      "uploadUrl": null,
+      "sourceUrl": "http://sis-project.berkeley.edu",
+      "status": "inprogress",
+      "title": "Accept Your Offer of Admission",
+      "notes": "Accept your Offer of Admission in CalCentral by 11:59pm PDT on your deadline.     \n\nIf you are required to pay the SIR Deposit, know that the $250.00 fee is non-refundable.                         \n                                                                                                                                               \nMore information about UC Berkeley's Honor Code can be found here:  https://asuc.org/honorcode/\n\nReview your Conditions of Admission here:  \nhttps://apply.berkeley.edu/apply/status",
+      "type": "task",
+      "subTitle": "Michelle Caruso",
+      "cs": {
+        "responsibleContactEmail": "mcaruso@berkeley.edu",
+        "organization": null,
+        "showStatus": "Initiated",
+        "itemStatusCode": "I",
+        "displayStatus": "incomplete",
+        "displayCategory": "admission"
+      },
+      "dueDate": {
+        "epoch": 1522479599,
+        "dateTime": "2018-03-30T23:59:59-07:00",
+        "dateString": "3/30",
+        "hasTime": false,
+        "withinOneWeek":false
+      },
+      "bucket": "Future"
+    },
+    {
+      "emitter": "Campus Solutions",
+      "linkDescription": null,
+      "linkUrl": null,
+      "uploadUrl": null,
+      "sourceUrl": "http://sis-project.berkeley.edu",
+      "status": "inprogress",
+      "title": "Print Your Class Schedule Now",
+      "notes": "CalCentral will be unavailable from July 1 to July 4, 2017. As soon as possible, by Friday, June 30, please print, take a screenshot, or make a copy of your Summer Session D class schedule. Summer Session D starts on Monday, July 3.\n \nVisit http://sis.berkeley.edu/9-2-upgrade for details. \n—\nSummer Session D starts on Monday, July 3, 2017 and CalCentral will be down from 12:01 a.m. Saturday, July 1 to 11:59 p.m. Tuesday, July 4, 2017.\n \nYou will NOT be able to access your personal class schedule in CalCentral during the weekend prior to the first day of Summer Session D classes.\n \nThe Berkeley Academic Guide (http://classes.berkeley.edu/) will be available during the CalCentral outage. You can use this website while CalCentral is down to search for general UC Berkeley class information, such as meeting time and location. However, your personal class schedule is not posted on the Berkeley Academic Guide.\n \nFor Frequently Asked Questions (FAQ) and more information about the CalCentral system outage, please visit CalCentral 9.2 Upgrade (http://sis.berkeley.edu/9-2-upgrade).\n \nCalCentral will be back online Wednesday, July 5, 2017.",
+      "type": "task",
+      "subTitle": null,
+      "cs": {
+        "responsibleContactEmail": null,
+        "organization": null,
+        "showStatus": "Initiated",
+        "itemStatusCode": "I",
+        "displayStatus": "incomplete",
+        "displayCategory": "student"
+      },
+      "dueDate": {
+        "epoch": 1530428399,
+        "dateTime": "2018-06-30T23:59:59-07:00",
+        "dateString": "6/30",
+        "hasTime": false,
+        "withinOneWeek": false
+      },
+      "bucket": "Future"
+    },
+    {
+      "emitter": "Campus Solutions",
+      "linkDescription": "Create Account",
+      "linkUrl": "https://calmail.berkeley.edu/manage/account/create_account",
+      "uploadUrl": null,
+      "sourceUrl": "http://sis-project.berkeley.edu",
+      "status": "completed",
+      "title": "bConnected",
+      "notes": "bConnected gives you the official Berkeley email, calendaring, and document sharing services that are used across campus. Instructors, staff, fellow students, and employers use the @berkeley.edu email address to ensure they are communicating with members of the Berkeley community.",
+      "type": "task",
+      "subTitle": null,
+      "cs": {
+        "responsibleContactEmail": null,
+        "organization": null,
+        "showStatus": "",
+        "itemStatusCode": "W",
+        "displayStatus": "completed",
+        "displayCategory": "newStudent"
+      },
+      "completedDate": {
+        "epoch": 1493794800,
+        "dateTime": "2017-05-03T00:00:00-07:00",
+        "dateString": "5/03",
+        "hasTime": false
+      },
+      "dueDate": {
+        "epoch": 1493708399,
+        "dateTime": "2017-05-01T23:59:59-07:00",
+        "dateString": "5/01",
+        "hasTime": false,
+        "withinOneWeek": false
+      },
+      "bucket": "Overdue"
+    },
+    {
+      "emitter": "Campus Solutions",
+      "linkDescription": "Submit Your Photo",
+      "linkUrl": "https://cal1card.berkeley.edu/c1cphoto",
+      "uploadUrl": null,
+      "sourceUrl": "http://sis-project.berkeley.edu",
+      "status": "inprogress",
+      "title": "Cal 1 Card Photo ID Card",
+      "notes": "The Cal 1 Card is the required official campus photo ID. The first step in obtaining a Cal 1 Card is to carefully review the applicable online photo submission instructions and submit a compliant photo here: https://cal1card.berkeley.edu/c1cphoto).  \n\nCal 1 Card issuance will occur when you arrive on campus. At that time, you will also be required to present an original valid government-issued photo ID (e.g. driver license, state ID, passport). Please be advised that a high school ID is not a valid government-issued photo ID. \n\nIf you encounter problems successfully uploading a compliant photo online or are unable to obtain a valid government-issued photo ID in advance of your arrival, please provide the pertinent details in an email to cal1card@berkeley.edu.",
+      "type": "task",
+      "subTitle": "Michelle Caruso",
+      "cs": {
+        "responsibleContactEmail": "mcaruso@berkeley.edu",
+        "organization": null,
+        "showStatus": "Initiated",
+        "itemStatusCode": "I",
+        "displayStatus": "incomplete",
+        "displayCategory": "newStudent"
+      },
+      "dueDate": {
+        "epoch": 1522479599,
+        "dateTime": "2018-03-30T23:59:59-07:00",
+        "dateString": "3/30",
+        "hasTime": false,
+        "withinOneWeek": false
+      },
+      "bucket": "Future"
+    },
+    {
+      "emitter": "Campus Solutions",
+      "linkDescription": "Get CalNet ID",
+      "linkUrl": "https://calnet.berkeley.edu/activate/undergrad",
+      "uploadUrl": null,
+      "sourceUrl": "http://sis-project.berkeley.edu",
+      "status": "completed",
+      "title": "Berkeley CalNet ID",
+      "notes": "In order to access UC Berkeley online services, you will need to establish your online identity — your CalNet ID and associated passphrase. Click below to get started.",
+      "type": "task",
+      "subTitle": "Cal 1 Card Office",
+      "cs": {
+        "responsibleContactEmail": null,
+        "organization": null,
+        "showStatus": "",
+        "itemStatusCode": "C",
+        "displayStatus": "completed",
+        "displayCategory": "newStudent"
+      },
+      "completedDate": {
+        "epoch": 1493794800,
+        "dateTime": "2017-05-03T00:00:00-07:00",
+        "dateString": "5/03",
+        "hasTime": false
+      },
+      "dueDate": {
+        "epoch": 1493708399,
+        "dateTime": "2017-05-01T23:59:59-07:00",
+        "dateString": "5/01",
+        "hasTime": false,
+        "withinOneWeek": false
+      },
+      "bucket": "Overdue"
+    },
+    {
+      "emitter": "Campus Solutions",
+      "linkDescription": "Golden Bear Advising",
+      "linkUrl": "http://bcourses.berkeley.edu",
+      "uploadUrl": null,
+      "sourceUrl": "http://sis-project.berkeley.edu",
+      "status": "completed",
+      "title": "Golden Bear Advising: CED",
+      "notes": "Golden Bear Advising is an interactive online program designed to introduce you to the academic culture of UC Berkeley. In the program, you will be given campus and college-specific resources, connect with fellow incoming students and submit a proposed course plan for your first semester. \n \nYou must complete Golden Bear Advising in order to connect with your academic adviser and enroll in your first semester of courses.\n \nTo access Golden Bear Advising, log into bcourses.berkeley.edu using your CalNet ID and password. \n\nIf you are unable to access Golden Bear Advising, please contact New Student Services.\nnss@berkeley.edu 510.642.7733.",
+      "type": "task",
+      "subTitle": "College of Environmental Design",
+      "cs": {
+        "responsibleContactEmail": null,
+        "organization": null,
+        "showStatus": "",
+        "itemStatusCode": "C",
+        "displayStatus": "completed",
+        "displayCategory": "newStudent"
+      },
+      "completedDate": {
+        "epoch": 1498806000,
+        "dateTime": "2017-06-30T00:00:00-07:00",
+        "dateString": "6/30",
+        "hasTime": false
+      },
+      "dueDate": {
+        "epoch": 1497423599,
+        "dateTime": "2017-06-13T23:59:59-07:00",
+        "dateString": "6/13",
+        "hasTime": false,
+        "withinOneWeek": false
+      },
+      "bucket": "Overdue"
+    },
+    {
+      "emitter": "Campus Solutions",
+      "linkDescription": "Parent Form",
+      "linkUrl": "https://parent-survey.berkeley.edu/",
+      "uploadUrl": null,
+      "sourceUrl": "http://sis-project.berkeley.edu",
+      "status": "completed",
+      "title": "Parent Information Form",
+      "notes": "Your family is an important part of the Cal community. Please complete this form so the university can communicate important campus information, news and events to your parents/family/loved ones, including information about billing and payment services, Golden Bear Orientation and Move-In.  \n\nTo complete the form, click the button below.",
+      "type": "task",
+      "subTitle": "UDAR API",
+      "cs": {
+        "responsibleContactEmail": null,
+        "organization": null,
+        "showStatus": "",
+        "itemStatusCode": "C",
+        "displayStatus": "completed",
+        "displayCategory": "newStudent"
+      },
+      "completedDate": {
+        "epoch": 1496818800,
+        "dateTime": "2017-06-07T00:00:00-07:00",
+        "dateString": "6/07",
+        "hasTime": false
+      },
+      "dueDate": {
+        "epoch": 1495349999,
+        "dateTime": "2017-05-20T23:59:59-07:00",
+        "dateString": "5/20",
+        "hasTime": false,
+        "withinOneWeek": false
+      },
+      "bucket": "Overdue"
+    },
+    {
+      "emitter": "Campus Solutions",
+      "linkDescription": "Campus Clarity Signup",
+      "linkUrl": "http://www.campusclarity.com/signup",
+      "uploadUrl": null,
+      "sourceUrl": "http://sis-project.berkeley.edu",
+      "status": "completed",
+      "title": "\"Think About It\" Training",
+      "notes": "UC Berkeley is committed to creating a safe environment and providing education to address issues of sexual violence in our community. Think About It, an interactive online education platform, is only one part of our comprehensive interpersonal violence prevention program. The module will help you understand related University policies, campus resources, and ways in which you can be an active bystander and community leader in preventing harassment and violence in our community. To complete the module, go to the website listed below and input your Berkeley email address. You will then be prompted to submit your CalNet ID and password.\n\nIf you are unable to access the Think About It module, please contact New Student Services via email at nss@berkeley.edu.\n\nStudents who do not complete the module will not be able to register for classes during their second semester (Spring 2019).",
+      "type": "task",
+      "subTitle": null,
+      "cs": {
+        "responsibleContactEmail": null,
+        "organization": null,
+        "showStatus": "",
+        "itemStatusCode": "C",
+        "displayStatus": "completed",
+        "displayCategory": "newStudent"
+      },
+      "completedDate": {
+        "epoch": 1518422400,
+        "dateTime": "2018-02-12T00:00:00-08:00",
+        "dateString": "2/12",
+        "hasTime": false
+      },
+      "dueDate": {
+        "epoch": 1528268399,
+        "dateTime": "2018-06-05T23:59:59-07:00",
+        "dateString": "6/05",
+        "hasTime": false,
+        "withinOneWeek": false
+      },
+      "bucket": "Future"
+    },
+    {
+      "emitter": "Campus Solutions",
+      "linkDescription": "Housing Portal",
+      "linkUrl": "http://portal.housing.berkeley.edu/",
+      "uploadUrl": null,
+      "sourceUrl": "http://sis-project.berkeley.edu",
+      "status": "completed",
+      "title": "Apply for Housing",
+      "notes": "Whether you live in a high-rise residence hall with friends, with family in university family housing, or in an off-campus apartment, your home at UC Berkeley is an important - and exciting - part of your college experience. Review the options available for you on the Housing website: link to: http://housing2.berkeley.edu. Housing application deadline for Freshmen including Fall Program for Freshmen (FPF) admits is May 2. \n\nPlease go to the Housing portal to submit your housing application. Contact the Housing Office at 510-642-4108 or reshall@berkeley.edu if you have any questions.  If you believe you may need a housing accommodation for a disability or have a special request related to one of your identities, please complete step 6 of the housing application. Please note that Cal Housing's ability to most appropriately address your needs could depend on you filling out this section by the housing application deadline.                                                                                                               \n\nThe University of California recommends that students consider purchasing renters insurance if living away from home. Renters insurance is not mandatory, and may be purchased from any source. As a service to assist students who wish to acquire renters insurance, UC has partnered with GradGuard to provide a renters insurance option for UC students to shop for coverage directly. Students will be able to sign up for renters insurance as a part of the housing contract acceptance process.",
+      "type": "task",
+      "subTitle": "SAIT Starez API",
+      "cs": {
+        "responsibleContactEmail": null,
+        "organization": null,
+        "showStatus": "",
+        "itemStatusCode": "C",
+        "displayStatus": "completed",
+        "displayCategory": "newStudent"
+      },
+      "completedDate": {
+        "epoch": 1493794800,
+        "dateTime": "2017-05-03T00:00:00-07:00",
+        "dateString": "5/03",
+        "hasTime": false
+      },
+      "dueDate": {
+        "epoch": 1493794799,
+        "dateTime": "2017-05-02T23:59:59-07:00",
+        "dateString": "5/02",
+        "hasTime": false,
+        "withinOneWeek": false
+      },
+      "bucket": "Overdue"
+    },
+    {
+      "emitter": "Campus Solutions",
+      "linkDescription": "Complete",
+      "linkUrl": "https://docs.google.com/a/berkeley.edu/forms/d/e/1FAIpQLSdvKiH5RS_zGeWnS47qputZ1Pe_WQoqmy6WjG55-Vo0A81drg/viewform",
+      "uploadUrl": null,
+      "sourceUrl": "http://sis-project.berkeley.edu",
+      "status": "completed",
+      "title": "Rec Sports Waiver",
+      "notes": "With the passage of the 2015 Wellness Referendum Fee, all UC Berkeley undergraduate and graduate students are granted memberships to the Cal Recreational Sports Facility. Please sign the linked waiver to ensure access to our facilities and services.",
+      "type": "task",
+      "subTitle": null,
+      "cs": {
+        "responsibleContactEmail": null,
+        "organization": null,
+        "showStatus": "",
+        "itemStatusCode": "C",
+        "displayStatus": "completed",
+        "displayCategory": "student"
+      },
+      "completedDate": {
+        "epoch": 1518422400,
+        "dateTime": "2018-02-12T00:00:00-08:00",
+        "dateString": "2/12",
+        "hasTime": false
+      },
+      "dueDate": {
+        "epoch": 1521097199,
+        "dateTime": "2018-03-14T23:59:59-07:00",
+        "dateString": "3/14",
+        "hasTime": false,
+        "withinOneWeek": false
+      },
+      "bucket": "Future"
+    },
+    {
+      "emitter": "Campus Solutions",
+      "linkDescription": null,
+      "linkUrl": null,
+      "uploadUrl": "https://bcswebqat.is.berkeley.edu/psc/bcsqat/EMPLOYEE/SA/c/UC_CC_CHKLST_UPLOAD_FLU.UC_CC_FILE_UPL_FLU.GBL?ucAdminFunction=STRM&ucSeq3C=33&ucChecklistSeq=100&ucChklstItemCd=RR54AF&ucAcadCareer=UGRD&ucStrm=2188",
+      "sourceUrl": "http://sis-project.berkeley.edu",
+      "status": "completed",
+      "title": "AB 540 Affidavit",
+      "notes": "Please provide a completed AB 540 (UC Nonresident Tuition Exemption) Application/Affidavit. To print out a copy of the Affidavit, please go to: http://registrar.berkeley.edu/sites/default/files/pdf/UCTE_for_Elig_CA_HSGrads.pdf",
+      "type": "task",
+      "subTitle": null,
+      "cs": {
+        "responsibleContactEmail": null,
+        "organization": null,
+        "showStatus": "",
+        "itemStatusCode": "C",
+        "displayStatus": "completed",
+        "displayCategory": "residency"
+      },
+      "completedDate": {
+        "epoch": 1518422400,
+        "dateTime": "2018-02-12T00:00:00-08:00",
+        "dateString": "2/12",
+        "hasTime": false
+      },
+      "dueDate": {
+        "epoch": 1544947199,
+        "dateTime": "2018-12-15T23:59:59-08:00",
+        "dateString": "12/15",
+        "hasTime": false,
+        "withinOneWeek": false
+      },
+      "bucket": "Future"
+    },
+    {
+      "emitter": "Campus Solutions",
+      "linkDescription": null,
+      "linkUrl": null,
+      "uploadUrl": "https://bcswebqat.is.berkeley.edu/psc/bcsqat/EMPLOYEE/SA/c/UC_CC_CHKLST_UPLOAD_FLU.UC_CC_FILE_UPL_FLU.GBL?ucAdminFunction=STRM&ucSeq3C=33&ucChecklistSeq=200&ucChklstItemCd=RR54HS&ucAcadCareer=UGRD&ucStrm=2188",
+      "sourceUrl": "http://sis-project.berkeley.edu",
+      "status": "completed",
+      "title": "AB 540 HS Transcript",
+      "notes": "Please provide a copy of your official high school transcript. If you prefer to mail the transcript, please send it to: \n\nResidence Affairs\nOffice of the Registrar\n120 Sproul Hall,\nBerkeley, CA  94720-5404 \n\n(If you are still in high school, please submit your official transcript to Undergraduate Admissions after you have completed all high school courses and graduated.)",
+      "type": "task",
+      "subTitle": null,
+      "cs": {
+        "responsibleContactEmail": null,
+        "organization": null,
+        "showStatus": "",
+        "itemStatusCode": "C",
+        "displayStatus": "completed",
+        "displayCategory": "residency"
+      },
+      "completedDate": {
+        "epoch": 1518422400,
+        "dateTime": "2018-02-12T00:00:00-08:00",
+        "dateString": "2/12",
+        "hasTime": false
+      },
+      "dueDate": {
+        "epoch": 1544947199,
+        "dateTime": "2018-12-15T23:59:59-08:00",
+        "dateString": "12/15",
+        "hasTime": false,
+        "withinOneWeek": false
+      },
+      "bucket": "Future"
+    },
+    {
+      "emitter": "Campus Solutions",
+      "linkDescription": null,
+      "linkUrl": null,
+      "uploadUrl": "https://bcswebqat.is.berkeley.edu/psc/bcsqat/EMPLOYEE/SA/c/UC_CC_CHKLST_UPLOAD_FLU.UC_CC_FILE_UPL_FLU.GBL?ucAdminFunction=STRM&ucSeq3C=34&ucChecklistSeq=200&ucChklstItemCd=RRPPCP&ucAcadCareer=UGRD&ucStrm=2188",
+      "sourceUrl": "http://sis-project.berkeley.edu",
+      "status": "inprogress",
+      "title": "Presence Clarification- Parent",
+      "notes": "In a Word document, please restate the dates of your parent's physical presence in California.  Provide specific dates, indicating when your parent first arrived in California and any departures from the state for more than a week.  Please also include their purpose and duration of travel.  If your parent has never left California, please indicate the year they came to California or that they have been present in the state since birth (if applicable).",
+      "type": "task",
+      "subTitle": null,
+      "cs": {
+        "responsibleContactEmail": null,
+        "organization": null,
+        "showStatus": "Received",
+        "itemStatusCode": "R",
+        "displayStatus": "beingProcessed",
+        "displayCategory": "residency"
+      },
+      "dueDate": {
+        "epoch": 1544947199,
+        "dateTime": "2018-12-15T23:59:59-08:00",
+        "dateString": "12/15",
+        "hasTime": false,
+        "withinOneWeek": false
+      },
+      "bucket": "Future"
+    },
+    {
+      "emitter": "Campus Solutions",
+      "linkDescription": "Submit Statement of Legal Residence",
+      "linkUrl": "https://bcsweb.is.berkeley.edu/psc/bcsprd/EMPLOYEE/HRMS/c/UC_SR_SLR.UC_SLR_STDNT.GBL?ucFrom=CalCentral&ucFromLink=https%3A%2F%2Fcalcentral.berkeley.edu%2Facademics%3FucUpdateCache%3Dprofile&ucFromText=My%20Academics",
+      "uploadUrl": null,
+      "sourceUrl": "http://sis-project.berkeley.edu",
+      "status": "completed",
+      "title": "Statement of Legal Residence",
+      "notes": "ALL NEW STUDENTS MUST SUBMIT THE STATEMENT OF LEGAL RESIDENCE.\n\nTo determine your residency, you are required to submit the Statement of Legal Residence (SLR). If you do not submit the SLR by the deadline, you will be considered a nonresident and charged over $14,000 (for undergraduates; between $6000 and $8000 for graduate/professional students) for additional nonresident fees per semester (subject to change by the Regents of the University of California and could be affected by increases or reductions in State funding, or other developments).\n\nPLEASE NOTE: Failure to submit the SLR (or a pending residency status) will result in a delay in disbursement of university funds (i.e. financial aid, stipends, etc.).\n\nLegal Residence Information: http://registrar.berkeley.edu/Residency/legalinfo.html\nContact info - Residence Affairs:  orres@berkeley.edu | (510) 642-7209\n\nThe SLR will open in a new window/tab. Please close the window/tab when you have saved and/or finished your session.",
+      "type": "task",
+      "subTitle": "Residence Affairs Unit",
+      "cs": {
+        "responsibleContactEmail": "orres@berkeley.edu",
+        "organization": null,
+        "showStatus": "",
+        "itemStatusCode": "C",
+        "displayStatus": "completed",
+        "displayCategory": "residency"
+      },
+      "completedDate": {
+        "epoch": 1493708400,
+        "dateTime": "2017-05-02T00:00:00-07:00",
+        "dateString": "5/02",
+        "hasTime": false
+      },
+      "dueDate": {
+        "epoch": 1493708399,
+        "dateTime": "2017-05-01T23:59:59-07:00",
+        "dateString": "5/01",
+        "hasTime": false,
+        "withinOneWeek": false
+      },
+      "bucket": "Overdue"
+    },
+    {
+      "emitter": "Campus Solutions",
+      "linkDescription": "Submit Statement of Legal Residence",
+      "linkUrl": "https://bcsweb.is.berkeley.edu/psc/bcsprd/EMPLOYEE/HRMS/c/UC_SR_SLR.UC_SLR_STDNT.GBL?ucFrom=CalCentral&ucFromLink=https%3A%2F%2Fcalcentral.berkeley.edu%2Facademics%3FucUpdateCache%3Dprofile&ucFromText=My%20Academics",
+      "uploadUrl": null,
+      "sourceUrl": "http://sis-project.berkeley.edu",
+      "status": "inprogress",
+      "title": "Statement of Legal Residence",
+      "notes": "ALL NEW STUDENTS MUST SUBMIT THE STATEMENT OF LEGAL RESIDENCE.\n\nTo determine your residency, you are required to submit the Statement of Legal Residence (SLR). If you do not submit the SLR by the deadline, you will be considered a nonresident and charged over $14,000 (for undergraduates; between $6000 and $8000 for graduate/professional students) for additional nonresident fees per semester (subject to change by the Regents of the University of California and could be affected by increases or reductions in State funding, or other developments).\n\nPLEASE NOTE: Failure to submit the SLR (or a pending residency status) will result in a delay in disbursement of university funds (i.e. financial aid, stipends, etc.).\n\nLegal Residence Information: http://registrar.berkeley.edu/Residency/legalinfo.html\nContact info - Residence Affairs:  orres@berkeley.edu | (510) 642-7209\n\nThe SLR will open in a new window/tab. Please close the window/tab when you have saved and/or finished your session.",
+      "type": "task",
+      "subTitle": "Michelle Caruso",
+      "cs": {
+        "responsibleContactEmail": "mcaruso@berkeley.edu",
+        "organization": null,
+        "showStatus": "Initiated",
+        "itemStatusCode": "I",
+        "displayStatus": "incomplete",
+        "displayCategory": "residency"
+      },
+      "dueDate": {
+        "epoch": 1543737599,
+        "dateTime": "2018-12-01T23:59:59-08:00",
+        "dateString": "12/01",
+        "hasTime": false,
+        "withinOneWeek": false
+      },
+      "bucket": "Future"
+    },
+    {
+      "emitter": "Campus Solutions",
+      "linkDescription": null,
+      "linkUrl": null,
+      "uploadUrl": "https://bcswebqat.is.berkeley.edu/psc/bcsqat/EMPLOYEE/SA/c/UC_CC_CHKLST_UPLOAD_FLU.UC_CC_FILE_UPL_FLU.GBL?ucAdminFunction=STRM&ucSeq3C=34&ucChecklistSeq=100&ucChklstItemCd=RRWUPP&ucAcadCareer=UGRD&ucStrm=2188",
+      "sourceUrl": "http://sis-project.berkeley.edu",
+      "status": "inprogress",
+      "title": "CWUP/PWUP Parent Info",
+      "notes": "Please provide documentation confirming that your parent’s primary residence is in California (i.e. current driver’s license, current vehicle registration, taxes from the most recent tax filing year,  utility bills, lease agreement, mortgage payments, pay stubs, letter from employer confirming California employment, gym memberships, etc.).",
+      "type": "task",
+      "subTitle": null,
+      "cs": {
+        "responsibleContactEmail": null,
+        "organization": null,
+        "showStatus": "Received",
+        "itemStatusCode": "R",
+        "displayStatus": "beingProcessed",
+        "displayCategory": "residency"
+      },
+      "dueDate": {
+        "epoch": 1544947199,
+        "dateTime": "2018-12-15T23:59:59-08:00",
+        "dateString": "12/15",
+        "hasTime": false,
+        "withinOneWeek": false
+      },
+      "bucket": "Future"
     }
   ]
 }

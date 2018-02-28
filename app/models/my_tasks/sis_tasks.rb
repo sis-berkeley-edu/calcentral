@@ -62,7 +62,10 @@ module MyTasks
         cs: {
           responsibleContactEmail: result[:responsibleCntctEmail],
           organization: result[:associationIdName],
-          showStatus: result[:itemStatus] != 'Completed' ? result[:itemStatus] : ''
+          showStatus: result[:itemStatus] != 'Completed' ? result[:itemStatus] : '',
+          itemStatusCode: result[:itemStatusCode],
+          displayStatus: display_status(result[:itemStatusCode]),
+          displayCategory: display_category(result[:adminFunc], result[:chklstItemCd])
         }
       }
       if result[:checkListMgmtFina] && (Finaid::Shared::ADMIN_FUNCTION.include? result[:adminFunc])
@@ -84,7 +87,7 @@ module MyTasks
       # the possibility of daylight savings transitions.
       if date
         date = Time.at((date + 1).in_time_zone.to_datetime.to_i - 1).to_datetime
-        format_date_into_entry!(date, formatted_entry, :dueDate)
+        format_date_into_entry!(date, formatted_entry, :dueDate, true)
       end
       formatted_entry[:bucket] = determine_bucket(date, formatted_entry, @now_time, @starting_date)
     end
@@ -109,5 +112,37 @@ module MyTasks
       formatted_entry
     end
 
+    # Maps status code to display status for task
+    def display_status(item_status_code)
+      case item_status_code
+        when 'I' # Initiated (Assigned)
+          'incomplete'
+        when 'A', 'R' # Active (Processing) / Received
+          'beingProcessed'
+        when 'C', 'W' # Completed / Waived
+          'completed'
+        when 'Z' # Incomplete
+          'furtherActionNeeded'
+        else
+          'incomplete'
+      end
+    end
+
+    # Maps admin function code and checklist item code to the category
+    # in which the task should be displayed
+    def display_category(admin_func_code, checklist_item_code)
+      return 'residency' if checklist_item_code[0,2] == 'RR'
+      case admin_func_code
+        when 'ADMA' # Admissions Application
+          'newStudent'
+        when 'ADMP' # Admissions Program
+          'admission'
+        when 'FINA' # Financial Aid
+          'finaid'
+        else
+          # General (GEN), Student Program (SPRG), Student Term (STRM), etc
+          'student'
+      end
+    end
   end
 end

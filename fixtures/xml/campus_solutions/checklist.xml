@@ -2,9 +2,12 @@
 <CHECK_LIST_ITEMS type="array">
   <CHECK_LIST_ITEM>
     <EMPLID>9000006532</EMPLID>
+    <SEQ_3C>2</SEQ_3C>
+    <CHECKLIST_SEQ>100</CHECKLIST_SEQ>
     <CHKLST_ITEM_CD>AL0001</CHKLST_ITEM_CD>
     <CHECK_LIST_DESCR>Statement, Intent to Register</CHECK_LIST_DESCR>
     <ITEM_STATUS>Initiated</ITEM_STATUS>
+    <ITEM_STATUS_CODE>I</ITEM_STATUS_CODE>
     <STATUS_DT>2015-08-10</STATUS_DT>
     <DUE_DT>:::TODAY_NO_TIME:::</DUE_DT>
     <RESPONSIBLE_CNTCT_NAME>Berkeley School of Law</RESPONSIBLE_CNTCT_NAME>
@@ -29,9 +32,12 @@
   </CHECK_LIST_ITEM>
   <CHECK_LIST_ITEM>
     <EMPLID>9000006532</EMPLID>
+    <SEQ_3C>2</SEQ_3C>
+    <CHECKLIST_SEQ>200</CHECKLIST_SEQ>
     <CHKLST_ITEM_CD>FAPFDB</CHKLST_ITEM_CD>
     <CHECK_LIST_DESCR>Application for Add'l Food</CHECK_LIST_DESCR>
     <ITEM_STATUS>Initiated</ITEM_STATUS>
+    <ITEM_STATUS_CODE>I</ITEM_STATUS_CODE>
     <STATUS_DT>2015-08-20</STATUS_DT>
     <DUE_DT>:::SIX_DAYS_HENCE_NO_TIME:::</DUE_DT>
     <RESPONSIBLE_CNTCT_NAME>Nicholas Nadon</RESPONSIBLE_CNTCT_NAME>
@@ -55,9 +61,12 @@
   </CHECK_LIST_ITEM>
   <CHECK_LIST_ITEM>
     <EMPLID>9000006532</EMPLID>
+    <SEQ_3C>2</SEQ_3C>
+    <CHECKLIST_SEQ>300</CHECKLIST_SEQ>
     <CHKLST_ITEM_CD>A10000</CHKLST_ITEM_CD>
     <CHECK_LIST_DESCR>Official Transcript</CHECK_LIST_DESCR>
     <ITEM_STATUS>Initiated</ITEM_STATUS>
+    <ITEM_STATUS_CODE>I</ITEM_STATUS_CODE>
     <STATUS_DT>2015-08-26</STATUS_DT>
     <DUE_DT>:::SIX_DAYS_HENCE_NO_TIME:::</DUE_DT>
     <RESPONSIBLE_CNTCT_NAME>Bender Rodriguez</RESPONSIBLE_CNTCT_NAME>
@@ -78,9 +87,12 @@
   </CHECK_LIST_ITEM>
   <CHECK_LIST_ITEM>
     <EMPLID>9000006532</EMPLID>
+    <SEQ_3C>2</SEQ_3C>
+    <CHECKLIST_SEQ>500</CHECKLIST_SEQ>
     <CHKLST_ITEM_CD>A10001</CHKLST_ITEM_CD>
     <CHECK_LIST_DESCR>Official Test Score</CHECK_LIST_DESCR>
     <ITEM_STATUS>Completed</ITEM_STATUS>
+    <ITEM_STATUS_CODE>C</ITEM_STATUS_CODE>
     <STATUS_DT>2015-08-26</STATUS_DT>
     <DUE_DT>:::SIX_DAYS_HENCE_NO_TIME:::</DUE_DT>
     <RESPONSIBLE_CNTCT_NAME>Bender Rodriguez</RESPONSIBLE_CNTCT_NAME>
@@ -96,5 +108,808 @@
       <DISPLAY_STATUS_DT type="boolean"></DISPLAY_STATUS_DT>
       <DISPLAY_DUE_DT type="boolean"></DISPLAY_DUE_DT>
     </CHECK_LIST_DOC_MGMT>
+  </CHECK_LIST_ITEM>
+    <CHECK_LIST_ITEM>
+    <EMPLID>9000006532</EMPLID>
+    <SEQ_3C>2</SEQ_3C>
+    <CHECKLIST_SEQ>800</CHECKLIST_SEQ>
+    <CHKLST_ITEM_CD>AHSTR</CHKLST_ITEM_CD>
+    <CHECK_LIST_DESCR>Final High School Transcript</CHECK_LIST_DESCR>
+    <ITEM_STATUS>Completed</ITEM_STATUS>
+    <ITEM_STATUS_CODE>C</ITEM_STATUS_CODE>
+    <STATUS_DT>2017-06-21</STATUS_DT>
+    <DUE_DT>2017-07-01</DUE_DT>
+    <RESPONSIBLE_CNTCT_NAME>Office of Undergraduate Admissions</RESPONSIBLE_CNTCT_NAME>
+    <RESPONSIBLE_CNTCT_EMAIL/>
+    <ASSOCIATION_ID_NAME>Hotchkiss School The</ASSOCIATION_ID_NAME>
+    <ITEM_COMMENT>Please submit your final transcript(s) from all high schools/secondary schools for years 9-12.  The transcript must include the date of graduation and verify your self-reported academic record.
+
+ALL final, official documents must be postmarked by July 1st.
+
+You may mail official documents to:
+
+     UC Berkeley Undergraduate Admissions Transcripts
+     16 Sproul Hall, MC 0608
+     Berkeley, CA 94720-0608
+    </ITEM_COMMENT>
+    <ADMIN_FUNC>ADMP</ADMIN_FUNC>
+    <ADMIN_FUNC_DESCR>Admissions Program</ADMIN_FUNC_DESCR>
+    <CHECK_LIST_DOC_MGMT>
+      <LINK_URL_LBL/>
+      <LINK_URL/>
+      <DISPLAY_STATUS_DT type="boolean">false</DISPLAY_STATUS_DT>
+      <DISPLAY_DUE_DT type="boolean">true</DISPLAY_DUE_DT>
+      <DISPLAY_RESPONSIBLE_CNTCT type="boolean">true</DISPLAY_RESPONSIBLE_CNTCT>
+    </CHECK_LIST_DOC_MGMT>
+    <CHECK_LIST_MGMT_ADMP>
+      <VAR_DATA_SEQ>1</VAR_DATA_SEQ>
+      <ACAD_CAREER>UGRD</ACAD_CAREER>
+      <STDNT_CAR_NBR>0</STDNT_CAR_NBR>
+      <ADM_APPL_NBR>00107819</ADM_APPL_NBR>
+      <APPL_PROG_NBR>0</APPL_PROG_NBR>
+    </CHECK_LIST_MGMT_ADMP>
+  </CHECK_LIST_ITEM>
+<CHECK_LIST_ITEM>
+    <EMPLID>9000006532</EMPLID>
+    <SEQ_3C>2</SEQ_3C>
+    <CHECKLIST_SEQ>400</CHECKLIST_SEQ>
+    <CHKLST_ITEM_CD>AP37</CHKLST_ITEM_CD>
+    <CHECK_LIST_DESCR>English Literature &amp; Compostn</CHECK_LIST_DESCR>
+    <ITEM_STATUS>Initiated</ITEM_STATUS>
+    <ITEM_STATUS_CODE>I</ITEM_STATUS_CODE>
+    <DUE_DT>2017-07-15</DUE_DT>
+    <RESPONSIBLE_CNTCT_NAME>Office of Undergraduate Admissions</RESPONSIBLE_CNTCT_NAME>
+    <RESPONSIBLE_CNTCT_EMAIL/>
+    <ASSOCIATION_ID_NAME/>
+    <ITEM_COMMENT>Please submit your official scores for all Advanced Placement exams for which you have earned a score of 3 or higher.
+
+ALL final, official exam results must be received by July 15th.
+
+Note:  If you have completed Advanced Placement (AP), you must submit an official report for all sittings, including exams from previous years. To arrange for AP scores to be sent to us, visit www.collegeboard.com.</ITEM_COMMENT>
+    <ADMIN_FUNC>ADMP</ADMIN_FUNC>
+    <ADMIN_FUNC_DESCR>Admissions Program</ADMIN_FUNC_DESCR>
+    <CHECK_LIST_DOC_MGMT>
+      <LINK_URL_LBL/>
+      <LINK_URL/>
+      <DISPLAY_STATUS_DT type="boolean">false</DISPLAY_STATUS_DT>
+      <DISPLAY_DUE_DT type="boolean">true</DISPLAY_DUE_DT>
+      <DISPLAY_RESPONSIBLE_CNTCT type="boolean">true</DISPLAY_RESPONSIBLE_CNTCT>
+    </CHECK_LIST_DOC_MGMT>
+    <CHECK_LIST_MGMT_ADMP>
+      <VAR_DATA_SEQ>1</VAR_DATA_SEQ>
+      <ACAD_CAREER>UGRD</ACAD_CAREER>
+      <STDNT_CAR_NBR>0</STDNT_CAR_NBR>
+      <ADM_APPL_NBR>00107819</ADM_APPL_NBR>
+      <APPL_PROG_NBR>0</APPL_PROG_NBR>
+    </CHECK_LIST_MGMT_ADMP>
+  </CHECK_LIST_ITEM>
+  <CHECK_LIST_ITEM>
+    <EMPLID>9000006532</EMPLID>
+    <SEQ_3C>2</SEQ_3C>
+    <CHECKLIST_SEQ>500</CHECKLIST_SEQ>
+    <CHKLST_ITEM_CD>AP40</CHKLST_ITEM_CD>
+    <CHECK_LIST_DESCR>Environment Science</CHECK_LIST_DESCR>
+    <ITEM_STATUS>Initiated</ITEM_STATUS>
+    <ITEM_STATUS_CODE>I</ITEM_STATUS_CODE>
+    <DUE_DT>2017-07-15</DUE_DT>
+    <RESPONSIBLE_CNTCT_NAME>Office of Undergraduate Admissions</RESPONSIBLE_CNTCT_NAME>
+    <RESPONSIBLE_CNTCT_EMAIL/>
+    <ASSOCIATION_ID_NAME/>
+    <ITEM_COMMENT>Please submit your official scores for all Advanced Placement exams for which you have earned a score of 3 or higher.
+
+ALL final, official exam results must be received by July 15th.
+
+Note:  If you have completed Advanced Placement (AP), you must submit an official report for all sittings, including exams from previous years. To arrange for AP scores to be sent to us, visit www.collegeboard.com.</ITEM_COMMENT>
+    <ADMIN_FUNC>ADMP</ADMIN_FUNC>
+    <ADMIN_FUNC_DESCR>Admissions Program</ADMIN_FUNC_DESCR>
+    <CHECK_LIST_DOC_MGMT>
+      <LINK_URL_LBL/>
+      <LINK_URL/>
+      <DISPLAY_STATUS_DT type="boolean">false</DISPLAY_STATUS_DT>
+      <DISPLAY_DUE_DT type="boolean">true</DISPLAY_DUE_DT>
+      <DISPLAY_RESPONSIBLE_CNTCT type="boolean">true</DISPLAY_RESPONSIBLE_CNTCT>
+    </CHECK_LIST_DOC_MGMT>
+    <CHECK_LIST_MGMT_ADMP>
+      <VAR_DATA_SEQ>1</VAR_DATA_SEQ>
+      <ACAD_CAREER>UGRD</ACAD_CAREER>
+      <STDNT_CAR_NBR>0</STDNT_CAR_NBR>
+      <ADM_APPL_NBR>00107819</ADM_APPL_NBR>
+      <APPL_PROG_NBR>0</APPL_PROG_NBR>
+    </CHECK_LIST_MGMT_ADMP>
+  </CHECK_LIST_ITEM>
+  <CHECK_LIST_ITEM>
+    <EMPLID>9000006532</EMPLID>
+    <SEQ_3C>2</SEQ_3C>
+    <CHECKLIST_SEQ>600</CHECKLIST_SEQ>
+    <CHKLST_ITEM_CD>AP87</CHKLST_ITEM_CD>
+    <CHECK_LIST_DESCR>Spanish Language &amp; Culture</CHECK_LIST_DESCR>
+    <ITEM_STATUS>Initiated</ITEM_STATUS>
+    <ITEM_STATUS_CODE>I</ITEM_STATUS_CODE>
+    <DUE_DT>2017-07-15</DUE_DT>
+    <RESPONSIBLE_CNTCT_NAME>Office of Undergraduate Admissions</RESPONSIBLE_CNTCT_NAME>
+    <RESPONSIBLE_CNTCT_EMAIL/>
+    <ASSOCIATION_ID_NAME/>
+    <ITEM_COMMENT>Please submit your official scores for all Advanced Placement exams for which you have earned a score of 3 or higher.
+
+ALL final, official exam results must be received by July 15th.
+
+Note:  If you have completed Advanced Placement (AP), you must submit an official report for all sittings, including exams from previous years. To arrange for AP scores to be sent to us, visit www.collegeboard.com.</ITEM_COMMENT>
+    <ADMIN_FUNC>ADMP</ADMIN_FUNC>
+    <ADMIN_FUNC_DESCR>Admissions Program</ADMIN_FUNC_DESCR>
+    <CHECK_LIST_DOC_MGMT>
+      <LINK_URL_LBL/>
+      <LINK_URL/>
+      <DISPLAY_STATUS_DT type="boolean">false</DISPLAY_STATUS_DT>
+      <DISPLAY_DUE_DT type="boolean">true</DISPLAY_DUE_DT>
+      <DISPLAY_RESPONSIBLE_CNTCT type="boolean">true</DISPLAY_RESPONSIBLE_CNTCT>
+    </CHECK_LIST_DOC_MGMT>
+    <CHECK_LIST_MGMT_ADMP>
+      <VAR_DATA_SEQ>1</VAR_DATA_SEQ>
+      <ACAD_CAREER>UGRD</ACAD_CAREER>
+      <STDNT_CAR_NBR>0</STDNT_CAR_NBR>
+      <ADM_APPL_NBR>00107819</ADM_APPL_NBR>
+      <APPL_PROG_NBR>0</APPL_PROG_NBR>
+    </CHECK_LIST_MGMT_ADMP>
+  </CHECK_LIST_ITEM>
+  <CHECK_LIST_ITEM>
+    <EMPLID>9000006532</EMPLID>
+    <SEQ_3C>2</SEQ_3C>
+    <CHECKLIST_SEQ>700</CHECKLIST_SEQ>
+    <CHKLST_ITEM_CD>AP89</CHKLST_ITEM_CD>
+    <CHECK_LIST_DESCR>Spanish Literature &amp; Culture</CHECK_LIST_DESCR>
+    <ITEM_STATUS>Initiated</ITEM_STATUS>
+    <ITEM_STATUS_CODE>I</ITEM_STATUS_CODE>
+    <DUE_DT>2017-07-15</DUE_DT>
+    <RESPONSIBLE_CNTCT_NAME>Office of Undergraduate Admissions</RESPONSIBLE_CNTCT_NAME>
+    <RESPONSIBLE_CNTCT_EMAIL/>
+    <ASSOCIATION_ID_NAME/>
+    <ITEM_COMMENT>Please submit your official scores for all Advanced Placement exams for which you have earned a score of 3 or higher.
+
+ALL final, official exam results must be received by July 15th.
+
+Note:  If you have completed Advanced Placement (AP), you must submit an official report for all sittings, including exams from previous years. To arrange for AP scores to be sent to us, visit www.collegeboard.com.</ITEM_COMMENT>
+    <ADMIN_FUNC>ADMP</ADMIN_FUNC>
+    <ADMIN_FUNC_DESCR>Admissions Program</ADMIN_FUNC_DESCR>
+    <CHECK_LIST_DOC_MGMT>
+      <LINK_URL_LBL/>
+      <LINK_URL/>
+      <DISPLAY_STATUS_DT type="boolean">false</DISPLAY_STATUS_DT>
+      <DISPLAY_DUE_DT type="boolean">true</DISPLAY_DUE_DT>
+      <DISPLAY_RESPONSIBLE_CNTCT type="boolean">true</DISPLAY_RESPONSIBLE_CNTCT>
+    </CHECK_LIST_DOC_MGMT>
+    <CHECK_LIST_MGMT_ADMP>
+      <VAR_DATA_SEQ>1</VAR_DATA_SEQ>
+      <ACAD_CAREER>UGRD</ACAD_CAREER>
+      <STDNT_CAR_NBR>0</STDNT_CAR_NBR>
+      <ADM_APPL_NBR>00107819</ADM_APPL_NBR>
+      <APPL_PROG_NBR>0</APPL_PROG_NBR>
+    </CHECK_LIST_MGMT_ADMP>
+  </CHECK_LIST_ITEM>
+  <CHECK_LIST_ITEM>
+    <EMPLID>9000006532</EMPLID>
+    <SEQ_3C>2</SEQ_3C>
+    <CHECKLIST_SEQ>300</CHECKLIST_SEQ>
+    <CHKLST_ITEM_CD>ASAT2</CHKLST_ITEM_CD>
+    <CHECK_LIST_DESCR>SAT Subject Exam</CHECK_LIST_DESCR>
+    <ITEM_STATUS>Initiated</ITEM_STATUS>
+    <ITEM_STATUS_CODE>I</ITEM_STATUS_CODE>
+    <DUE_DT>2017-07-15</DUE_DT>
+    <RESPONSIBLE_CNTCT_NAME>Office of Undergraduate Admissions</RESPONSIBLE_CNTCT_NAME>
+    <RESPONSIBLE_CNTCT_EMAIL/>
+    <ASSOCIATION_ID_NAME/>
+    <ITEM_COMMENT>Please submit the official exam results for all SAT Subject exams electronically.
+
+ALL final, official exam results must be received by July 15th.
+
+Note: To request your scores, contact the College Board online at www.CollegeBoard.com, via phone at (866) 756-7346 for score report information.</ITEM_COMMENT>
+    <ADMIN_FUNC>ADMP</ADMIN_FUNC>
+    <ADMIN_FUNC_DESCR>Admissions Program</ADMIN_FUNC_DESCR>
+    <CHECK_LIST_DOC_MGMT>
+      <LINK_URL_LBL/>
+      <LINK_URL/>
+      <DISPLAY_STATUS_DT type="boolean">false</DISPLAY_STATUS_DT>
+      <DISPLAY_DUE_DT type="boolean">true</DISPLAY_DUE_DT>
+      <DISPLAY_RESPONSIBLE_CNTCT type="boolean">true</DISPLAY_RESPONSIBLE_CNTCT>
+    </CHECK_LIST_DOC_MGMT>
+    <CHECK_LIST_MGMT_ADMP>
+      <VAR_DATA_SEQ>1</VAR_DATA_SEQ>
+      <ACAD_CAREER>UGRD</ACAD_CAREER>
+      <STDNT_CAR_NBR>0</STDNT_CAR_NBR>
+      <ADM_APPL_NBR>00107819</ADM_APPL_NBR>
+      <APPL_PROG_NBR>0</APPL_PROG_NBR>
+    </CHECK_LIST_MGMT_ADMP>
+  </CHECK_LIST_ITEM>
+  <CHECK_LIST_ITEM>
+    <EMPLID>9000006532</EMPLID>
+    <SEQ_3C>1</SEQ_3C>
+    <CHECKLIST_SEQ>100</CHECKLIST_SEQ>
+    <CHKLST_ITEM_CD>AUSIRF</CHKLST_ITEM_CD>
+    <CHECK_LIST_DESCR>Accept Your Offer of Admission</CHECK_LIST_DESCR>
+    <ITEM_STATUS>Completed</ITEM_STATUS>
+    <ITEM_STATUS_CODE>C</ITEM_STATUS_CODE>
+    <STATUS_DT>2017-04-25</STATUS_DT>
+    <DUE_DT>2017-05-01</DUE_DT>
+    <RESPONSIBLE_CNTCT_NAME>Office of Undergraduate Admissions</RESPONSIBLE_CNTCT_NAME>
+    <RESPONSIBLE_CNTCT_EMAIL/>
+    <ASSOCIATION_ID_NAME/>
+    <ITEM_COMMENT>Accept your Offer of Admission in CalCentral by 11:59pm PDT on your deadline.
+
+If you are required to pay the SIR Deposit, know that the $250.00 fee is non-refundable.
+
+More information about UC Berkeley's Honor Code can be found here:  https://asuc.org/honorcode/
+
+Review your Conditions of Admission here:
+https://apply.berkeley.edu/apply/status</ITEM_COMMENT>
+    <ADMIN_FUNC>ADMP</ADMIN_FUNC>
+    <ADMIN_FUNC_DESCR>Admissions Program</ADMIN_FUNC_DESCR>
+    <CHECK_LIST_DOC_MGMT>
+      <LINK_URL_LBL/>
+      <LINK_URL/>
+      <DISPLAY_STATUS_DT type="boolean">true</DISPLAY_STATUS_DT>
+      <DISPLAY_DUE_DT type="boolean">true</DISPLAY_DUE_DT>
+      <DISPLAY_RESPONSIBLE_CNTCT type="boolean">true</DISPLAY_RESPONSIBLE_CNTCT>
+    </CHECK_LIST_DOC_MGMT>
+    <CHECK_LIST_MGMT_ADMP>
+      <VAR_DATA_SEQ>1</VAR_DATA_SEQ>
+      <ACAD_CAREER>UGRD</ACAD_CAREER>
+      <STDNT_CAR_NBR>0</STDNT_CAR_NBR>
+      <ADM_APPL_NBR>00107819</ADM_APPL_NBR>
+      <APPL_PROG_NBR>0</APPL_PROG_NBR>
+    </CHECK_LIST_MGMT_ADMP>
+  </CHECK_LIST_ITEM>
+  <CHECK_LIST_ITEM>
+    <EMPLID>9000006532</EMPLID>
+    <SEQ_3C>21</SEQ_3C>
+    <CHECKLIST_SEQ>100</CHECKLIST_SEQ>
+    <CHKLST_ITEM_CD>AUSIRF</CHKLST_ITEM_CD>
+    <CHECK_LIST_DESCR>Accept Your Offer of Admission</CHECK_LIST_DESCR>
+    <ITEM_STATUS>Initiated</ITEM_STATUS>
+    <ITEM_STATUS_CODE>I</ITEM_STATUS_CODE>
+    <STATUS_DT>2018-02-12</STATUS_DT>
+    <DUE_DT>2018-03-30</DUE_DT>
+    <RESPONSIBLE_CNTCT_NAME>Michelle Caruso</RESPONSIBLE_CNTCT_NAME>
+    <RESPONSIBLE_CNTCT_EMAIL>mcaruso@berkeley.edu</RESPONSIBLE_CNTCT_EMAIL>
+    <ASSOCIATION_ID_NAME/>
+    <ITEM_COMMENT>Accept your Offer of Admission in CalCentral by 11:59pm PDT on your deadline.
+
+If you are required to pay the SIR Deposit, know that the $250.00 fee is non-refundable.
+
+More information about UC Berkeley's Honor Code can be found here:  https://asuc.org/honorcode/
+
+Review your Conditions of Admission here:
+https://apply.berkeley.edu/apply/status</ITEM_COMMENT>
+    <ADMIN_FUNC>ADMP</ADMIN_FUNC>
+    <ADMIN_FUNC_DESCR>Admissions Program</ADMIN_FUNC_DESCR>
+    <CHECK_LIST_DOC_MGMT>
+      <LINK_URL_LBL/>
+      <LINK_URL/>
+      <DISPLAY_STATUS_DT type="boolean">true</DISPLAY_STATUS_DT>
+      <DISPLAY_DUE_DT type="boolean">true</DISPLAY_DUE_DT>
+      <DISPLAY_RESPONSIBLE_CNTCT type="boolean">true</DISPLAY_RESPONSIBLE_CNTCT>
+    </CHECK_LIST_DOC_MGMT>
+    <CHECK_LIST_MGMT_ADMP>
+      <VAR_DATA_SEQ>2</VAR_DATA_SEQ>
+      <ACAD_CAREER>UGRD</ACAD_CAREER>
+      <STDNT_CAR_NBR>0</STDNT_CAR_NBR>
+      <ADM_APPL_NBR>00149787</ADM_APPL_NBR>
+      <APPL_PROG_NBR>0</APPL_PROG_NBR>
+    </CHECK_LIST_MGMT_ADMP>
+  </CHECK_LIST_ITEM>
+  <CHECK_LIST_ITEM>
+    <EMPLID>9000006532</EMPLID>
+    <SEQ_3C>31</SEQ_3C>
+    <CHECKLIST_SEQ>100</CHECKLIST_SEQ>
+    <CHKLST_ITEM_CD>GEN01</CHKLST_ITEM_CD>
+    <CHECK_LIST_DESCR>Print Your Class Schedule Now</CHECK_LIST_DESCR>
+    <ITEM_STATUS>Initiated</ITEM_STATUS>
+    <ITEM_STATUS_CODE>I</ITEM_STATUS_CODE>
+    <DUE_DT>2018-06-30</DUE_DT>
+    <ASSOCIATION_ID_NAME/>
+    <ITEM_COMMENT>CalCentral will be unavailable from July 1 to July 4, 2017. As soon as possible, by Friday, June 30, please print, take a screenshot, or make a copy of your Summer Session D class schedule. Summer Session D starts on Monday, July 3.
+
+Visit http://sis.berkeley.edu/9-2-upgrade for details.
+&#x2014;
+Summer Session D starts on Monday, July 3, 2017 and CalCentral will be down from 12:01 a.m. Saturday, July 1 to 11:59 p.m. Tuesday, July 4, 2017.
+
+You will NOT be able to access your personal class schedule in CalCentral during the weekend prior to the first day of Summer Session D classes.
+
+The Berkeley Academic Guide (http://classes.berkeley.edu/) will be available during the CalCentral outage. You can use this website while CalCentral is down to search for general UC Berkeley class information, such as meeting time and location. However, your personal class schedule is not posted on the Berkeley Academic Guide.
+
+For Frequently Asked Questions (FAQ) and more information about the CalCentral system outage, please visit CalCentral 9.2 Upgrade (http://sis.berkeley.edu/9-2-upgrade).
+
+CalCentral will be back online Wednesday, July 5, 2017.</ITEM_COMMENT>
+    <ADMIN_FUNC>GEN</ADMIN_FUNC>
+    <ADMIN_FUNC_DESCR>General</ADMIN_FUNC_DESCR>
+    <CHECK_LIST_DOC_MGMT>
+      <LINK_URL_LBL/>
+      <LINK_URL/>
+      <DISPLAY_STATUS_DT type="boolean">false</DISPLAY_STATUS_DT>
+      <DISPLAY_DUE_DT type="boolean">true</DISPLAY_DUE_DT>
+      <DISPLAY_RESPONSIBLE_CNTCT type="boolean">false</DISPLAY_RESPONSIBLE_CNTCT>
+    </CHECK_LIST_DOC_MGMT>
+  </CHECK_LIST_ITEM>
+  <CHECK_LIST_ITEM>
+    <EMPLID>9000006532</EMPLID>
+    <SEQ_3C>12</SEQ_3C>
+    <CHECKLIST_SEQ>100</CHECKLIST_SEQ>
+    <CHKLST_ITEM_CD>OBCON1</CHKLST_ITEM_CD>
+    <CHECK_LIST_DESCR>bConnected</CHECK_LIST_DESCR>
+    <ITEM_STATUS>Completed</ITEM_STATUS>
+    <ITEM_STATUS_CODE>C</ITEM_STATUS_CODE>
+    <STATUS_DT>2017-05-03</STATUS_DT>
+    <DUE_DT>2017-05-01</DUE_DT>
+    <RESPONSIBLE_CNTCT_NAME/>
+    <RESPONSIBLE_CNTCT_EMAIL/>
+    <ASSOCIATION_ID_NAME/>
+    <ITEM_COMMENT>bConnected gives you the official Berkeley email, calendaring, and document sharing services that are used across campus. Instructors, staff, fellow students, and employers use the @berkeley.edu email address to ensure they are communicating with members of the Berkeley community.</ITEM_COMMENT>
+    <ADMIN_FUNC>ADMA</ADMIN_FUNC>
+    <ADMIN_FUNC_DESCR>Admissions Application</ADMIN_FUNC_DESCR>
+    <CHECK_LIST_DOC_MGMT>
+      <LINK_URL_LBL>Create Account</LINK_URL_LBL>
+      <LINK_URL>https://calmail.berkeley.edu/manage/account/create_account</LINK_URL>
+      <DISPLAY_STATUS_DT type="boolean">false</DISPLAY_STATUS_DT>
+      <DISPLAY_DUE_DT type="boolean">true</DISPLAY_DUE_DT>
+      <DISPLAY_RESPONSIBLE_CNTCT type="boolean">true</DISPLAY_RESPONSIBLE_CNTCT>
+    </CHECK_LIST_DOC_MGMT>
+    <CHECK_LIST_MGMT_ADMA>
+      <VAR_DATA_SEQ>1</VAR_DATA_SEQ>
+      <ACAD_CAREER>UGRD</ACAD_CAREER>
+      <STDNT_CAR_NBR>0</STDNT_CAR_NBR>
+      <ADM_APPL_NBR>00107819</ADM_APPL_NBR>
+    </CHECK_LIST_MGMT_ADMA>
+  </CHECK_LIST_ITEM>
+  <CHECK_LIST_ITEM>
+    <EMPLID>9000006532</EMPLID>
+    <SEQ_3C>27</SEQ_3C>
+    <CHECKLIST_SEQ>100</CHECKLIST_SEQ>
+    <CHKLST_ITEM_CD>OCAL1F</CHKLST_ITEM_CD>
+    <CHECK_LIST_DESCR>Cal 1 Card Photo ID Card</CHECK_LIST_DESCR>
+    <ITEM_STATUS>Initiated</ITEM_STATUS>
+    <ITEM_STATUS_CODE>I</ITEM_STATUS_CODE>
+    <DUE_DT>2018-03-30</DUE_DT>
+    <RESPONSIBLE_CNTCT_NAME>Michelle Caruso</RESPONSIBLE_CNTCT_NAME>
+    <RESPONSIBLE_CNTCT_EMAIL>mcaruso@berkeley.edu</RESPONSIBLE_CNTCT_EMAIL>
+    <ASSOCIATION_ID_NAME/>
+    <ITEM_COMMENT>The Cal 1 Card is the required official campus photo ID. The first step in obtaining a Cal 1 Card is to carefully review the applicable online photo submission instructions and submit a compliant photo here: https://cal1card.berkeley.edu/c1cphoto).
+
+Cal 1 Card issuance will occur when you arrive on campus. At that time, you will also be required to present an original valid government-issued photo ID (e.g. driver license, state ID, passport). Please be advised that a high school ID is not a valid government-issued photo ID.
+
+If you encounter problems successfully uploading a compliant photo online or are unable to obtain a valid government-issued photo ID in advance of your arrival, please provide the pertinent details in an email to cal1card@berkeley.edu.</ITEM_COMMENT>
+    <ADMIN_FUNC>ADMA</ADMIN_FUNC>
+    <ADMIN_FUNC_DESCR>Admissions Application</ADMIN_FUNC_DESCR>
+    <CHECK_LIST_DOC_MGMT>
+      <LINK_URL_LBL>Submit Your Photo</LINK_URL_LBL>
+      <LINK_URL>https://cal1card.berkeley.edu/c1cphoto</LINK_URL>
+      <DISPLAY_STATUS_DT type="boolean">false</DISPLAY_STATUS_DT>
+      <DISPLAY_DUE_DT type="boolean">true</DISPLAY_DUE_DT>
+      <DISPLAY_RESPONSIBLE_CNTCT type="boolean">true</DISPLAY_RESPONSIBLE_CNTCT>
+    </CHECK_LIST_DOC_MGMT>
+    <CHECK_LIST_MGMT_ADMA>
+      <VAR_DATA_SEQ>2</VAR_DATA_SEQ>
+      <ACAD_CAREER>UGRD</ACAD_CAREER>
+      <STDNT_CAR_NBR>0</STDNT_CAR_NBR>
+      <ADM_APPL_NBR>00149787</ADM_APPL_NBR>
+    </CHECK_LIST_MGMT_ADMA>
+  </CHECK_LIST_ITEM>
+  <CHECK_LIST_ITEM>
+    <EMPLID>9000006532</EMPLID>
+    <SEQ_3C>4</SEQ_3C>
+    <CHECKLIST_SEQ>100</CHECKLIST_SEQ>
+    <CHKLST_ITEM_CD>OCALNT</CHKLST_ITEM_CD>
+    <CHECK_LIST_DESCR>Berkeley CalNet ID</CHECK_LIST_DESCR>
+    <ITEM_STATUS>Completed</ITEM_STATUS>
+    <ITEM_STATUS_CODE>C</ITEM_STATUS_CODE>
+    <STATUS_DT>2017-05-03</STATUS_DT>
+    <DUE_DT>2017-05-01</DUE_DT>
+    <RESPONSIBLE_CNTCT_NAME>Cal 1 Card Office</RESPONSIBLE_CNTCT_NAME>
+    <RESPONSIBLE_CNTCT_EMAIL/>
+    <ASSOCIATION_ID_NAME/>
+    <ITEM_COMMENT>In order to access UC Berkeley online services, you will need to establish your online identity &#x2014; your CalNet ID and associated passphrase. Click below to get started.</ITEM_COMMENT>
+    <ADMIN_FUNC>ADMA</ADMIN_FUNC>
+    <ADMIN_FUNC_DESCR>Admissions Application</ADMIN_FUNC_DESCR>
+    <CHECK_LIST_DOC_MGMT>
+      <LINK_URL_LBL>Get CalNet ID</LINK_URL_LBL>
+      <LINK_URL>https://calnet.berkeley.edu/activate/undergrad</LINK_URL>
+      <DISPLAY_STATUS_DT type="boolean">false</DISPLAY_STATUS_DT>
+      <DISPLAY_DUE_DT type="boolean">true</DISPLAY_DUE_DT>
+      <DISPLAY_RESPONSIBLE_CNTCT type="boolean">true</DISPLAY_RESPONSIBLE_CNTCT>
+    </CHECK_LIST_DOC_MGMT>
+    <CHECK_LIST_MGMT_ADMA>
+      <VAR_DATA_SEQ>1</VAR_DATA_SEQ>
+      <ACAD_CAREER>UGRD</ACAD_CAREER>
+      <STDNT_CAR_NBR>0</STDNT_CAR_NBR>
+      <ADM_APPL_NBR>00107819</ADM_APPL_NBR>
+    </CHECK_LIST_MGMT_ADMA>
+  </CHECK_LIST_ITEM>
+  <CHECK_LIST_ITEM>
+    <EMPLID>9000006532</EMPLID>
+    <SEQ_3C>13</SEQ_3C>
+    <CHECKLIST_SEQ>100</CHECKLIST_SEQ>
+    <CHKLST_ITEM_CD>OCEDP1</CHKLST_ITEM_CD>
+    <CHECK_LIST_DESCR>Golden Bear Advising: CED</CHECK_LIST_DESCR>
+    <ITEM_STATUS>Completed</ITEM_STATUS>
+    <ITEM_STATUS_CODE>C</ITEM_STATUS_CODE>
+    <STATUS_DT>2017-06-30</STATUS_DT>
+    <DUE_DT>2017-06-13</DUE_DT>
+    <RESPONSIBLE_CNTCT_NAME>College of Environmental Design</RESPONSIBLE_CNTCT_NAME>
+    <RESPONSIBLE_CNTCT_EMAIL/>
+    <ASSOCIATION_ID_NAME/>
+    <ITEM_COMMENT>Golden Bear Advising is an interactive online program designed to introduce you to the academic culture of UC Berkeley. In the program, you will be given campus and college-specific resources, connect with fellow incoming students and submit a proposed course plan for your first semester.
+
+You must complete Golden Bear Advising in order to connect with your academic adviser and enroll in your first semester of courses.
+
+To access Golden Bear Advising, log into bcourses.berkeley.edu using your CalNet ID and password.
+
+If you are unable to access Golden Bear Advising, please contact New Student Services.
+nss@berkeley.edu 510.642.7733.</ITEM_COMMENT>
+    <ADMIN_FUNC>ADMA</ADMIN_FUNC>
+    <ADMIN_FUNC_DESCR>Admissions Application</ADMIN_FUNC_DESCR>
+    <CHECK_LIST_DOC_MGMT>
+      <LINK_URL_LBL>Golden Bear Advising</LINK_URL_LBL>
+      <LINK_URL>http://bcourses.berkeley.edu</LINK_URL>
+      <DISPLAY_STATUS_DT type="boolean">false</DISPLAY_STATUS_DT>
+      <DISPLAY_DUE_DT type="boolean">true</DISPLAY_DUE_DT>
+      <DISPLAY_RESPONSIBLE_CNTCT type="boolean">true</DISPLAY_RESPONSIBLE_CNTCT>
+    </CHECK_LIST_DOC_MGMT>
+    <CHECK_LIST_MGMT_ADMA>
+      <VAR_DATA_SEQ>1</VAR_DATA_SEQ>
+      <ACAD_CAREER>UGRD</ACAD_CAREER>
+      <STDNT_CAR_NBR>0</STDNT_CAR_NBR>
+      <ADM_APPL_NBR>00107819</ADM_APPL_NBR>
+    </CHECK_LIST_MGMT_ADMA>
+  </CHECK_LIST_ITEM>
+  <CHECK_LIST_ITEM>
+    <EMPLID>9000006532</EMPLID>
+    <SEQ_3C>6</SEQ_3C>
+    <CHECKLIST_SEQ>100</CHECKLIST_SEQ>
+    <CHKLST_ITEM_CD>OPAREN</CHKLST_ITEM_CD>
+    <CHECK_LIST_DESCR>Parent Information Form</CHECK_LIST_DESCR>
+    <ITEM_STATUS>Completed</ITEM_STATUS>
+    <ITEM_STATUS_CODE>C</ITEM_STATUS_CODE>
+    <STATUS_DT>2017-06-07</STATUS_DT>
+    <DUE_DT>2017-05-20</DUE_DT>
+    <RESPONSIBLE_CNTCT_NAME>UDAR API</RESPONSIBLE_CNTCT_NAME>
+    <RESPONSIBLE_CNTCT_EMAIL/>
+    <ASSOCIATION_ID_NAME/>
+    <ITEM_COMMENT>Your family is an important part of the Cal community. Please complete this form so the university can communicate important campus information, news and events to your parents/family/loved ones, including information about billing and payment services, Golden Bear Orientation and Move-In.
+
+To complete the form, click the button below.</ITEM_COMMENT>
+    <ADMIN_FUNC>ADMA</ADMIN_FUNC>
+    <ADMIN_FUNC_DESCR>Admissions Application</ADMIN_FUNC_DESCR>
+    <CHECK_LIST_DOC_MGMT>
+      <LINK_URL_LBL>Parent Form</LINK_URL_LBL>
+      <LINK_URL>https://parent-survey.berkeley.edu/</LINK_URL>
+      <DISPLAY_STATUS_DT type="boolean">false</DISPLAY_STATUS_DT>
+      <DISPLAY_DUE_DT type="boolean">true</DISPLAY_DUE_DT>
+      <DISPLAY_RESPONSIBLE_CNTCT type="boolean">true</DISPLAY_RESPONSIBLE_CNTCT>
+    </CHECK_LIST_DOC_MGMT>
+    <CHECK_LIST_MGMT_ADMA>
+      <VAR_DATA_SEQ>1</VAR_DATA_SEQ>
+      <ACAD_CAREER>UGRD</ACAD_CAREER>
+      <STDNT_CAR_NBR>0</STDNT_CAR_NBR>
+      <ADM_APPL_NBR>00107819</ADM_APPL_NBR>
+    </CHECK_LIST_MGMT_ADMA>
+  </CHECK_LIST_ITEM>
+  <CHECK_LIST_ITEM>
+    <EMPLID>9000006532</EMPLID>
+    <SEQ_3C>29</SEQ_3C>
+    <CHECKLIST_SEQ>100</CHECKLIST_SEQ>
+    <CHKLST_ITEM_CD>OTHKUG</CHKLST_ITEM_CD>
+    <CHECK_LIST_DESCR>"Think About It" Training</CHECK_LIST_DESCR>
+    <ITEM_STATUS>Completed</ITEM_STATUS>
+    <ITEM_STATUS_CODE>C</ITEM_STATUS_CODE>
+    <STATUS_DT>2018-02-12</STATUS_DT>
+    <DUE_DT>2018-06-05</DUE_DT>
+    <ASSOCIATION_ID_NAME/>
+    <ITEM_COMMENT>UC Berkeley is committed to creating a safe environment and providing education to address issues of sexual violence in our community. Think About It, an interactive online education platform, is only one part of our comprehensive interpersonal violence prevention program. The module will help you understand related University policies, campus resources, and ways in which you can be an active bystander and community leader in preventing harassment and violence in our community. To complete the module, go to the website listed below and input your Berkeley email address. You will then be prompted to submit your CalNet ID and password.
+
+If you are unable to access the Think About It module, please contact New Student Services via email at nss@berkeley.edu.
+
+Students who do not complete the module will not be able to register for classes during their second semester (Spring 2019).</ITEM_COMMENT>
+    <ADMIN_FUNC>ADMA</ADMIN_FUNC>
+    <ADMIN_FUNC_DESCR>Admissions Application</ADMIN_FUNC_DESCR>
+    <CHECK_LIST_DOC_MGMT>
+      <LINK_URL_LBL>Campus Clarity Signup</LINK_URL_LBL>
+      <LINK_URL>http://www.campusclarity.com/signup</LINK_URL>
+      <DISPLAY_STATUS_DT type="boolean">false</DISPLAY_STATUS_DT>
+      <DISPLAY_DUE_DT type="boolean">true</DISPLAY_DUE_DT>
+      <DISPLAY_RESPONSIBLE_CNTCT type="boolean">false</DISPLAY_RESPONSIBLE_CNTCT>
+    </CHECK_LIST_DOC_MGMT>
+    <CHECK_LIST_MGMT_ADMA>
+      <VAR_DATA_SEQ>2</VAR_DATA_SEQ>
+      <ACAD_CAREER>UGRD</ACAD_CAREER>
+      <STDNT_CAR_NBR>0</STDNT_CAR_NBR>
+      <ADM_APPL_NBR>00149787</ADM_APPL_NBR>
+    </CHECK_LIST_MGMT_ADMA>
+  </CHECK_LIST_ITEM>
+  <CHECK_LIST_ITEM>
+    <EMPLID>9000006532</EMPLID>
+    <SEQ_3C>8</SEQ_3C>
+    <CHECKLIST_SEQ>100</CHECKLIST_SEQ>
+    <CHKLST_ITEM_CD>OUHS01</CHKLST_ITEM_CD>
+    <CHECK_LIST_DESCR>Apply for Housing</CHECK_LIST_DESCR>
+    <ITEM_STATUS>Completed</ITEM_STATUS>
+    <ITEM_STATUS_CODE>C</ITEM_STATUS_CODE>
+    <STATUS_DT>2017-05-03</STATUS_DT>
+    <DUE_DT>2017-05-02</DUE_DT>
+    <RESPONSIBLE_CNTCT_NAME>SAIT Starez API</RESPONSIBLE_CNTCT_NAME>
+    <RESPONSIBLE_CNTCT_EMAIL/>
+    <ASSOCIATION_ID_NAME/>
+    <ITEM_COMMENT>Whether you live in a high-rise residence hall with friends, with family in university family housing, or in an off-campus apartment, your home at UC Berkeley is an important - and exciting - part of your college experience. Review the options available for you on the Housing website: link to: http://housing2.berkeley.edu. Housing application deadline for Freshmen including Fall Program for Freshmen (FPF) admits is May 2.
+
+Please go to the Housing portal to submit your housing application. Contact the Housing Office at 510-642-4108 or reshall@berkeley.edu if you have any questions.  If you believe you may need a housing accommodation for a disability or have a special request related to one of your identities, please complete step 6 of the housing application. Please note that Cal Housing's ability to most appropriately address your needs could depend on you filling out this section by the housing application deadline.
+
+The University of California recommends that students consider purchasing renters insurance if living away from home. Renters insurance is not mandatory, and may be purchased from any source. As a service to assist students who wish to acquire renters insurance, UC has partnered with GradGuard to provide a renters insurance option for UC students to shop for coverage directly. Students will be able to sign up for renters insurance as a part of the housing contract acceptance process.</ITEM_COMMENT>
+    <ADMIN_FUNC>ADMA</ADMIN_FUNC>
+    <ADMIN_FUNC_DESCR>Admissions Application</ADMIN_FUNC_DESCR>
+    <CHECK_LIST_DOC_MGMT>
+      <LINK_URL_LBL>Housing Portal</LINK_URL_LBL>
+      <LINK_URL>http://portal.housing.berkeley.edu/</LINK_URL>
+      <DISPLAY_STATUS_DT type="boolean">false</DISPLAY_STATUS_DT>
+      <DISPLAY_DUE_DT type="boolean">true</DISPLAY_DUE_DT>
+      <DISPLAY_RESPONSIBLE_CNTCT type="boolean">true</DISPLAY_RESPONSIBLE_CNTCT>
+    </CHECK_LIST_DOC_MGMT>
+    <CHECK_LIST_MGMT_ADMA>
+      <VAR_DATA_SEQ>1</VAR_DATA_SEQ>
+      <ACAD_CAREER>UGRD</ACAD_CAREER>
+      <STDNT_CAR_NBR>0</STDNT_CAR_NBR>
+      <ADM_APPL_NBR>00107819</ADM_APPL_NBR>
+    </CHECK_LIST_MGMT_ADMA>
+  </CHECK_LIST_ITEM>
+  <CHECK_LIST_ITEM>
+    <EMPLID>9000006532</EMPLID>
+    <SEQ_3C>30</SEQ_3C>
+    <CHECKLIST_SEQ>100</CHECKLIST_SEQ>
+    <CHKLST_ITEM_CD>RECSF1</CHKLST_ITEM_CD>
+    <CHECK_LIST_DESCR>Rec Sports Waiver</CHECK_LIST_DESCR>
+    <ITEM_STATUS>Completed</ITEM_STATUS>
+    <ITEM_STATUS_CODE>C</ITEM_STATUS_CODE>
+    <STATUS_DT>2018-02-12</STATUS_DT>
+    <DUE_DT>2018-03-14</DUE_DT>
+    <ASSOCIATION_ID_NAME/>
+    <ITEM_COMMENT>With the passage of the 2015 Wellness Referendum Fee, all UC Berkeley undergraduate and graduate students are granted memberships to the Cal Recreational Sports Facility. Please sign the linked waiver to ensure access to our facilities and services.</ITEM_COMMENT>
+    <ADMIN_FUNC>GEN</ADMIN_FUNC>
+    <ADMIN_FUNC_DESCR>General</ADMIN_FUNC_DESCR>
+    <CHECK_LIST_DOC_MGMT>
+      <LINK_URL_LBL>Complete</LINK_URL_LBL>
+      <LINK_URL>https://docs.google.com/a/berkeley.edu/forms/d/e/1FAIpQLSdvKiH5RS_zGeWnS47qputZ1Pe_WQoqmy6WjG55-Vo0A81drg/viewform</LINK_URL>
+      <DISPLAY_STATUS_DT type="boolean">false</DISPLAY_STATUS_DT>
+      <DISPLAY_DUE_DT type="boolean">true</DISPLAY_DUE_DT>
+      <DISPLAY_RESPONSIBLE_CNTCT type="boolean">false</DISPLAY_RESPONSIBLE_CNTCT>
+    </CHECK_LIST_DOC_MGMT>
+  </CHECK_LIST_ITEM>
+  <CHECK_LIST_ITEM>
+    <EMPLID>9000006532</EMPLID>
+    <SEQ_3C>33</SEQ_3C>
+    <CHECKLIST_SEQ>100</CHECKLIST_SEQ>
+    <CHKLST_ITEM_CD>RR54AF</CHKLST_ITEM_CD>
+    <CHECK_LIST_DESCR>AB 540 Affidavit</CHECK_LIST_DESCR>
+    <ITEM_STATUS>Completed</ITEM_STATUS>
+    <ITEM_STATUS_CODE>C</ITEM_STATUS_CODE>
+    <STATUS_DT>2018-02-12</STATUS_DT>
+    <DUE_DT>2018-12-15</DUE_DT>
+    <ASSOCIATION_ID_NAME/>
+    <ITEM_COMMENT>Please provide a completed AB 540 (UC Nonresident Tuition Exemption) Application/Affidavit. To print out a copy of the Affidavit, please go to: http://registrar.berkeley.edu/sites/default/files/pdf/UCTE_for_Elig_CA_HSGrads.pdf</ITEM_COMMENT>
+    <ADMIN_FUNC>STRM</ADMIN_FUNC>
+    <ADMIN_FUNC_DESCR>Student Term</ADMIN_FUNC_DESCR>
+    <CHECK_LIST_DOC_MGMT>
+      <LINK_URL_LBL/>
+      <LINK_URL/>
+      <DOC_UPLOAD_LINK>https://bcswebqat.is.berkeley.edu/psc/bcsqat/EMPLOYEE/SA/c/UC_CC_CHKLST_UPLOAD_FLU.UC_CC_FILE_UPL_FLU.GBL?ucAdminFunction=STRM&amp;ucSeq3C=33&amp;ucChecklistSeq=100&amp;ucChklstItemCd=RR54AF&amp;ucAcadCareer=UGRD&amp;ucStrm=2188</DOC_UPLOAD_LINK>
+      <ASSOCIATED_UPLOAD type="boolean">true</ASSOCIATED_UPLOAD>
+      <DISPLAY_STATUS_DT type="boolean">true</DISPLAY_STATUS_DT>
+      <DISPLAY_DUE_DT type="boolean">true</DISPLAY_DUE_DT>
+      <DISPLAY_RESPONSIBLE_CNTCT type="boolean">false</DISPLAY_RESPONSIBLE_CNTCT>
+    </CHECK_LIST_DOC_MGMT>
+    <CHECK_LIST_MGMT_STRM>
+      <VAR_DATA_SEQ>2</VAR_DATA_SEQ>
+      <ACAD_CAREER>UGRD</ACAD_CAREER>
+      <STRM>2188</STRM>
+    </CHECK_LIST_MGMT_STRM>
+  </CHECK_LIST_ITEM>
+  <CHECK_LIST_ITEM>
+    <EMPLID>9000006532</EMPLID>
+    <SEQ_3C>33</SEQ_3C>
+    <CHECKLIST_SEQ>200</CHECKLIST_SEQ>
+    <CHKLST_ITEM_CD>RR54HS</CHKLST_ITEM_CD>
+    <CHECK_LIST_DESCR>AB 540 HS Transcript</CHECK_LIST_DESCR>
+    <ITEM_STATUS>Incomplete</ITEM_STATUS>
+    <ITEM_STATUS_CODE>Z</ITEM_STATUS_CODE>
+    <STATUS_DT>2018-02-12</STATUS_DT>
+    <DUE_DT>2018-12-15</DUE_DT>
+    <ASSOCIATION_ID_NAME/>
+    <ITEM_COMMENT>Please provide a copy of your official high school transcript. If you prefer to mail the transcript, please send it to:
+
+Residence Affairs
+Office of the Registrar
+120 Sproul Hall,
+Berkeley, CA  94720-5404
+
+(If you are still in high school, please submit your official transcript to Undergraduate Admissions after you have completed all high school courses and graduated.)</ITEM_COMMENT>
+    <ADMIN_FUNC>STRM</ADMIN_FUNC>
+    <ADMIN_FUNC_DESCR>Student Term</ADMIN_FUNC_DESCR>
+    <CHECK_LIST_DOC_MGMT>
+      <LINK_URL_LBL/>
+      <LINK_URL/>
+      <DOC_UPLOAD_LINK>https://bcswebqat.is.berkeley.edu/psc/bcsqat/EMPLOYEE/SA/c/UC_CC_CHKLST_UPLOAD_FLU.UC_CC_FILE_UPL_FLU.GBL?ucAdminFunction=STRM&amp;ucSeq3C=33&amp;ucChecklistSeq=200&amp;ucChklstItemCd=RR54HS&amp;ucAcadCareer=UGRD&amp;ucStrm=2188</DOC_UPLOAD_LINK>
+      <ASSOCIATED_UPLOAD type="boolean">true</ASSOCIATED_UPLOAD>
+      <DISPLAY_STATUS_DT type="boolean">true</DISPLAY_STATUS_DT>
+      <DISPLAY_DUE_DT type="boolean">true</DISPLAY_DUE_DT>
+      <DISPLAY_RESPONSIBLE_CNTCT type="boolean">false</DISPLAY_RESPONSIBLE_CNTCT>
+    </CHECK_LIST_DOC_MGMT>
+    <CHECK_LIST_MGMT_STRM>
+      <VAR_DATA_SEQ>2</VAR_DATA_SEQ>
+      <ACAD_CAREER>UGRD</ACAD_CAREER>
+      <STRM>2188</STRM>
+    </CHECK_LIST_MGMT_STRM>
+  </CHECK_LIST_ITEM>
+  <CHECK_LIST_ITEM>
+    <EMPLID>9000006532</EMPLID>
+    <SEQ_3C>34</SEQ_3C>
+    <CHECKLIST_SEQ>200</CHECKLIST_SEQ>
+    <CHKLST_ITEM_CD>RRPPCP</CHKLST_ITEM_CD>
+    <CHECK_LIST_DESCR>Presence Clarification- Parent</CHECK_LIST_DESCR>
+    <ITEM_STATUS>Received</ITEM_STATUS>
+    <ITEM_STATUS_CODE>R</ITEM_STATUS_CODE>
+    <STATUS_DT>2018-02-12</STATUS_DT>
+    <DUE_DT>2018-12-15</DUE_DT>
+    <ASSOCIATION_ID_NAME/>
+    <ITEM_COMMENT>In a Word document, please restate the dates of your parent's physical presence in California.  Provide specific dates, indicating when your parent first arrived in California and any departures from the state for more than a week.  Please also include their purpose and duration of travel.  If your parent has never left California, please indicate the year they came to California or that they have been present in the state since birth (if applicable).</ITEM_COMMENT>
+    <ADMIN_FUNC>STRM</ADMIN_FUNC>
+    <ADMIN_FUNC_DESCR>Student Term</ADMIN_FUNC_DESCR>
+    <CHECK_LIST_DOC_MGMT>
+      <LINK_URL_LBL/>
+      <LINK_URL/>
+      <DOC_UPLOAD_LINK>https://bcswebqat.is.berkeley.edu/psc/bcsqat/EMPLOYEE/SA/c/UC_CC_CHKLST_UPLOAD_FLU.UC_CC_FILE_UPL_FLU.GBL?ucAdminFunction=STRM&amp;ucSeq3C=34&amp;ucChecklistSeq=200&amp;ucChklstItemCd=RRPPCP&amp;ucAcadCareer=UGRD&amp;ucStrm=2188</DOC_UPLOAD_LINK>
+      <ASSOCIATED_UPLOAD type="boolean">true</ASSOCIATED_UPLOAD>
+      <DISPLAY_STATUS_DT type="boolean">true</DISPLAY_STATUS_DT>
+      <DISPLAY_DUE_DT type="boolean">true</DISPLAY_DUE_DT>
+      <DISPLAY_RESPONSIBLE_CNTCT type="boolean">false</DISPLAY_RESPONSIBLE_CNTCT>
+    </CHECK_LIST_DOC_MGMT>
+    <CHECK_LIST_MGMT_STRM>
+      <VAR_DATA_SEQ>2</VAR_DATA_SEQ>
+      <ACAD_CAREER>UGRD</ACAD_CAREER>
+      <STRM>2188</STRM>
+    </CHECK_LIST_MGMT_STRM>
+  </CHECK_LIST_ITEM>
+  <CHECK_LIST_ITEM>
+    <EMPLID>9000006532</EMPLID>
+    <SEQ_3C>10</SEQ_3C>
+    <CHECKLIST_SEQ>100</CHECKLIST_SEQ>
+    <CHKLST_ITEM_CD>RRSLRA</CHKLST_ITEM_CD>
+    <CHECK_LIST_DESCR>Statement of Legal Residence</CHECK_LIST_DESCR>
+    <ITEM_STATUS>Completed</ITEM_STATUS>
+    <ITEM_STATUS_CODE>C</ITEM_STATUS_CODE>
+    <STATUS_DT>2017-05-02</STATUS_DT>
+    <DUE_DT>2017-05-01</DUE_DT>
+    <RESPONSIBLE_CNTCT_NAME>Residence Affairs Unit</RESPONSIBLE_CNTCT_NAME>
+    <RESPONSIBLE_CNTCT_EMAIL>orres@berkeley.edu</RESPONSIBLE_CNTCT_EMAIL>
+    <ASSOCIATION_ID_NAME/>
+    <ITEM_COMMENT>ALL NEW STUDENTS MUST SUBMIT THE STATEMENT OF LEGAL RESIDENCE.
+
+To determine your residency, you are required to submit the Statement of Legal Residence (SLR). If you do not submit the SLR by the deadline, you will be considered a nonresident and charged over $14,000 (for undergraduates; between $6000 and $8000 for graduate/professional students) for additional nonresident fees per semester (subject to change by the Regents of the University of California and could be affected by increases or reductions in State funding, or other developments).
+
+PLEASE NOTE: Failure to submit the SLR (or a pending residency status) will result in a delay in disbursement of university funds (i.e. financial aid, stipends, etc.).
+
+Legal Residence Information: http://registrar.berkeley.edu/Residency/legalinfo.html
+Contact info - Residence Affairs:  orres@berkeley.edu | (510) 642-7209
+
+The SLR will open in a new window/tab. Please close the window/tab when you have saved and/or finished your session.</ITEM_COMMENT>
+    <ADMIN_FUNC>ADMA</ADMIN_FUNC>
+    <ADMIN_FUNC_DESCR>Admissions Application</ADMIN_FUNC_DESCR>
+    <CHECK_LIST_DOC_MGMT>
+      <LINK_URL_LBL>Submit Statement of Legal Residence</LINK_URL_LBL>
+      <LINK_URL>https://bcsweb.is.berkeley.edu/psc/bcsprd/EMPLOYEE/HRMS/c/UC_SR_SLR.UC_SLR_STDNT.GBL?ucFrom=CalCentral&amp;ucFromLink=https%3A%2F%2Fcalcentral.berkeley.edu%2Facademics%3FucUpdateCache%3Dprofile&amp;ucFromText=My%20Academics</LINK_URL>
+      <DISPLAY_STATUS_DT type="boolean">false</DISPLAY_STATUS_DT>
+      <DISPLAY_DUE_DT type="boolean">true</DISPLAY_DUE_DT>
+      <DISPLAY_RESPONSIBLE_CNTCT type="boolean">true</DISPLAY_RESPONSIBLE_CNTCT>
+    </CHECK_LIST_DOC_MGMT>
+    <CHECK_LIST_MGMT_ADMA>
+      <VAR_DATA_SEQ>1</VAR_DATA_SEQ>
+      <ACAD_CAREER>UGRD</ACAD_CAREER>
+      <STDNT_CAR_NBR>0</STDNT_CAR_NBR>
+      <ADM_APPL_NBR>00107819</ADM_APPL_NBR>
+    </CHECK_LIST_MGMT_ADMA>
+  </CHECK_LIST_ITEM>
+  <CHECK_LIST_ITEM>
+    <EMPLID>9000006532</EMPLID>
+    <SEQ_3C>32</SEQ_3C>
+    <CHECKLIST_SEQ>100</CHECKLIST_SEQ>
+    <CHKLST_ITEM_CD>RRSLRA</CHKLST_ITEM_CD>
+    <CHECK_LIST_DESCR>Statement of Legal Residence</CHECK_LIST_DESCR>
+    <ITEM_STATUS>Initiated</ITEM_STATUS>
+    <ITEM_STATUS_CODE>I</ITEM_STATUS_CODE>
+    <DUE_DT>2018-12-01</DUE_DT>
+    <RESPONSIBLE_CNTCT_NAME>Michelle Caruso</RESPONSIBLE_CNTCT_NAME>
+    <RESPONSIBLE_CNTCT_EMAIL>mcaruso@berkeley.edu</RESPONSIBLE_CNTCT_EMAIL>
+    <ASSOCIATION_ID_NAME/>
+    <ITEM_COMMENT>ALL NEW STUDENTS MUST SUBMIT THE STATEMENT OF LEGAL RESIDENCE.
+
+To determine your residency, you are required to submit the Statement of Legal Residence (SLR). If you do not submit the SLR by the deadline, you will be considered a nonresident and charged over $14,000 (for undergraduates; between $6000 and $8000 for graduate/professional students) for additional nonresident fees per semester (subject to change by the Regents of the University of California and could be affected by increases or reductions in State funding, or other developments).
+
+PLEASE NOTE: Failure to submit the SLR (or a pending residency status) will result in a delay in disbursement of university funds (i.e. financial aid, stipends, etc.).
+
+Legal Residence Information: http://registrar.berkeley.edu/Residency/legalinfo.html
+Contact info - Residence Affairs:  orres@berkeley.edu | (510) 642-7209
+
+The SLR will open in a new window/tab. Please close the window/tab when you have saved and/or finished your session.</ITEM_COMMENT>
+    <ADMIN_FUNC>ADMA</ADMIN_FUNC>
+    <ADMIN_FUNC_DESCR>Admissions Application</ADMIN_FUNC_DESCR>
+    <CHECK_LIST_DOC_MGMT>
+      <LINK_URL_LBL>Submit Statement of Legal Residence</LINK_URL_LBL>
+      <LINK_URL>https://bcsweb.is.berkeley.edu/psc/bcsprd/EMPLOYEE/HRMS/c/UC_SR_SLR.UC_SLR_STDNT.GBL?ucFrom=CalCentral&amp;ucFromLink=https%3A%2F%2Fcalcentral.berkeley.edu%2Facademics%3FucUpdateCache%3Dprofile&amp;ucFromText=My%20Academics</LINK_URL>
+      <DISPLAY_STATUS_DT type="boolean">false</DISPLAY_STATUS_DT>
+      <DISPLAY_DUE_DT type="boolean">true</DISPLAY_DUE_DT>
+      <DISPLAY_RESPONSIBLE_CNTCT type="boolean">true</DISPLAY_RESPONSIBLE_CNTCT>
+    </CHECK_LIST_DOC_MGMT>
+    <CHECK_LIST_MGMT_ADMA>
+      <VAR_DATA_SEQ>2</VAR_DATA_SEQ>
+      <ACAD_CAREER>UGRD</ACAD_CAREER>
+      <STDNT_CAR_NBR>0</STDNT_CAR_NBR>
+      <ADM_APPL_NBR>00149787</ADM_APPL_NBR>
+    </CHECK_LIST_MGMT_ADMA>
+  </CHECK_LIST_ITEM>
+  <CHECK_LIST_ITEM>
+    <EMPLID>9000006532</EMPLID>
+    <SEQ_3C>34</SEQ_3C>
+    <CHECKLIST_SEQ>100</CHECKLIST_SEQ>
+    <CHKLST_ITEM_CD>RRWUPP</CHKLST_ITEM_CD>
+    <CHECK_LIST_DESCR>CWUP/PWUP Parent Info</CHECK_LIST_DESCR>
+    <ITEM_STATUS>Received</ITEM_STATUS>
+    <ITEM_STATUS_CODE>R</ITEM_STATUS_CODE>
+    <STATUS_DT>2018-02-12</STATUS_DT>
+    <DUE_DT>2018-12-15</DUE_DT>
+    <ASSOCIATION_ID_NAME/>
+    <ITEM_COMMENT>Please provide documentation confirming that your parent&#x2019;s primary residence is in California (i.e. current driver&#x2019;s license, current vehicle registration, taxes from the most recent tax filing year,  utility bills, lease agreement, mortgage payments, pay stubs, letter from employer confirming California employment, gym memberships, etc.).</ITEM_COMMENT>
+    <ADMIN_FUNC>STRM</ADMIN_FUNC>
+    <ADMIN_FUNC_DESCR>Student Term</ADMIN_FUNC_DESCR>
+    <CHECK_LIST_DOC_MGMT>
+      <LINK_URL_LBL/>
+      <LINK_URL/>
+      <DOC_UPLOAD_LINK>https://bcswebqat.is.berkeley.edu/psc/bcsqat/EMPLOYEE/SA/c/UC_CC_CHKLST_UPLOAD_FLU.UC_CC_FILE_UPL_FLU.GBL?ucAdminFunction=STRM&amp;ucSeq3C=34&amp;ucChecklistSeq=100&amp;ucChklstItemCd=RRWUPP&amp;ucAcadCareer=UGRD&amp;ucStrm=2188</DOC_UPLOAD_LINK>
+      <ASSOCIATED_UPLOAD type="boolean">true</ASSOCIATED_UPLOAD>
+      <DISPLAY_STATUS_DT type="boolean">true</DISPLAY_STATUS_DT>
+      <DISPLAY_DUE_DT type="boolean">true</DISPLAY_DUE_DT>
+      <DISPLAY_RESPONSIBLE_CNTCT type="boolean">false</DISPLAY_RESPONSIBLE_CNTCT>
+    </CHECK_LIST_DOC_MGMT>
+    <CHECK_LIST_MGMT_STRM>
+      <VAR_DATA_SEQ>2</VAR_DATA_SEQ>
+      <ACAD_CAREER>UGRD</ACAD_CAREER>
+      <STRM>2188</STRM>
+    </CHECK_LIST_MGMT_STRM>
+  </CHECK_LIST_ITEM>
+  <CHECK_LIST_ITEM>
+    <EMPLID>9000006532</EMPLID>
+    <SEQ_3C>2</SEQ_3C>
+    <CHECKLIST_SEQ>100</CHECKLIST_SEQ>
+    <CHKLST_ITEM_CD>IGNIF</CHKLST_ITEM_CD>
+    <CHECK_LIST_DESCR>Non-Immigrant Info Form (NIF)</CHECK_LIST_DESCR>
+    <ITEM_STATUS>Initiated</ITEM_STATUS>
+    <ITEM_STATUS_CODE>I</ITEM_STATUS_CODE>
+    <DUE_DT>2018-04-17</DUE_DT>
+    <RESPONSIBLE_CNTCT_NAME>Michelle Caruso</RESPONSIBLE_CNTCT_NAME>
+    <RESPONSIBLE_CNTCT_EMAIL>mcaruso@berkeley.edu</RESPONSIBLE_CNTCT_EMAIL>
+    <ASSOCIATION_ID_NAME/>
+    <ITEM_COMMENT>WHAT IS NIF? The Non-Immigrant Information Form (NIF) collects information from international students to determine what type of U.S. immigration status you will hold while at UC Berkeley. NIF is also used to request a Certificate of Eligibility I-20 or DS-2019 for those who will have F-1 or J-1 student status while at UC Berkeley.
+
+WHO COMPLETES NIF? ALL admitted or readmitted international students are asked to complete NIF, regardless of visa status.
+
+SEVIS TRANSFER: If you are transferring your F/J from another US institution, you should complete the NIF now and consult with your school about your F/J release date. You will receive your I-20 or DS-2019 after your release date.
+
+This task will be completed when you have submitted your NIF, but BIO may follow up via email to request additional information.</ITEM_COMMENT>
+    <ADMIN_FUNC>SPRG</ADMIN_FUNC>
+    <ADMIN_FUNC_DESCR>Student Program</ADMIN_FUNC_DESCR>
+    <CHECK_LIST_DOC_MGMT>
+      <LINK_URL_LBL>Access the NIF</LINK_URL_LBL>
+      <LINK_URL>https://io.berkeley.edu/nif</LINK_URL>
+      <DISPLAY_STATUS_DT type="boolean">false</DISPLAY_STATUS_DT>
+      <DISPLAY_DUE_DT type="boolean">true</DISPLAY_DUE_DT>
+      <DISPLAY_RESPONSIBLE_CNTCT type="boolean">true</DISPLAY_RESPONSIBLE_CNTCT>
+    </CHECK_LIST_DOC_MGMT>
+    <CHECK_LIST_MGMT_SPRG>
+      <VAR_DATA_SEQ>1</VAR_DATA_SEQ>
+      <ACAD_CAREER>GRAD</ACAD_CAREER>
+      <STDNT_CAR_NBR>0</STDNT_CAR_NBR>
+    </CHECK_LIST_MGMT_SPRG>
   </CHECK_LIST_ITEM>
 </CHECK_LIST_ITEMS>

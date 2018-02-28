@@ -43,7 +43,7 @@ describe 'MyTasks::Merged' do
     let(:tasks) { my_tasks_model.get_feed[:tasks] }
 
     it 'should sort tasks into the right buckets' do
-      expect(tasks.count{|task| task[:bucket] == 'Overdue'}).to eq 5
+      expect(tasks.count{|task| task[:bucket] == 'Overdue'}).to eq 18
       expect(tasks.count{|task| task[:bucket] == 'Unscheduled'}).to eq 2
 
       # On Sundays, no "later in the week" tasks can escape the "Today" bucket. Since this moves
@@ -53,10 +53,10 @@ describe 'MyTasks::Merged' do
         expect(tasks.count{|task| task[:bucket] == 'Future'}).to eq 12
       else
         expect(tasks.count{|task| task[:bucket] == 'Today'}).to eq 3
-        expect(tasks.count{|task| task[:bucket] == 'Future'}).to eq 17
+        expect(tasks.count{|task| task[:bucket] == 'Future'}).to eq 28
       end
       # The total of Today + Future should be 20 no matter which day it's run on.
-      expect(tasks.count{|task| task[:bucket] == 'Today' || task[:bucket] == 'Future'}).to eq 20
+      expect(tasks.count{|task| task[:bucket] == 'Today' || task[:bucket] == 'Future'}).to eq 31
 
       expect(tasks.count{|task| %w(Overdue Today Future Unscheduled).exclude? task[:bucket]}).to eq 0
     end
@@ -70,6 +70,14 @@ describe 'MyTasks::Merged' do
         next if task[:dueDate].blank?
         expect(task[:dueDate][:dateString]).to match(/\A\d{1,2}\/\d{2}\Z/)
         expect(task[:dueDate][:epoch]).to be >=(1351641600)
+      end
+    end
+
+    it 'should include withinOneWeek indicator' do
+      tasks.each do |task|
+        next if task[:dueDate].blank?
+        dueDate = DateTime.parse(task[:dueDate][:dateTime].to_s)
+        expect(task[:dueDate][:withinOneWeek]).to eq (DateTime.now + 1.week >= dueDate && DateTime.now <= dueDate)
       end
     end
 
@@ -227,7 +235,7 @@ describe 'MyTasks::Merged' do
 
     my_tasks_model = MyTasks::Merged.new(@user_id)
     valid_feed = my_tasks_model.get_feed
-    valid_feed[:tasks].length.should == 4
+    valid_feed[:tasks].length.should == 28
   end
 
   it 'should include an updatedDate for unscheduled Canvas tasks' do

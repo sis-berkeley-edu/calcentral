@@ -1,3 +1,25 @@
+// Flexbox
+//
+// sg-wrapper:
+// <div class=""><sg-wrapper-content/></div>
+//
+// Styleguide 4
+
+// Center Aligned, Spaced Between
+//
+// Used on Tasks card to vertically align the sections with counts, including 'View' button on far right.
+//
+// markup:
+// <div class="cc-flex cc-flex-space-between cc-flex-align-center" style="border: 2px solid #ccc; padding: 20px; width: 500px;">
+//   <div>
+//     <div><strong>Section Header</strong></div>
+//     <div><i class="fa fa-paw"></i> 7 kittens</div>
+//     <div><i class="fa fa-github-alt"></i> 5 octocats</div>
+//   </div>
+//   <button class="cc-button cc-button-medium"><strong>View</strong></button>
+// </div>
+//
+// Styleguide 4.1
 .cc-flex {
   display: flex;
 }
@@ -13,6 +35,9 @@
 .cc-flex-space-between {
   justify-content: space-between;
 }
+
+// styleguide:ignore:start
+
 .cc-flex-space-between-horizontal-5 > div {
   &:not(:first-child) {
     margin-left: 5px;
@@ -32,3 +57,5 @@
 .cc-flex-wrap {
   flex-wrap: wrap;
 }
+
+// styleguide:ignore:end

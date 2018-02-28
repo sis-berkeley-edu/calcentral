@@ -89,6 +89,10 @@ button {
   }
 }
 
+// Button Colors
+//
+// Styleguide 2.4
+
 // Blue Button
 //
 // Used with primary action buttons
@@ -98,7 +102,7 @@ button {
 // <a href="#" class="cc-button cc-button-blue">Learn More</a>
 // <a href="#" class="cc-button cc-button-blue" disabled>Learn More - Disabled</a>
 //
-// Styleguide 2.4
+// Styleguide 2.4.1
 .cc-button-blue {
   background: $cc-color-curious-blue;
   border: 1px solid transparent;
@@ -121,23 +125,20 @@ button {
   }
 }
 
-// Transparent Button
-//
-// markup:
-// <button class="cc-button-transparent">Learn More</button>
+// Button Sizes
 //
 // Styleguide 2.5
-.cc-button-transparent {
-  background: transparent;
-  border: 0;
-  color: $body-font-color !important;
-  padding: 0;
-  &:focus, &:hover {
-    background: transparent;
-    i {
-      color: $cc-color-nobel !important;
-    }
-  }
+
+// Medium Button
+//
+// markup:
+// <button class="cc-button cc-button-blue cc-button-medium">View</button>
+//
+// Styleguide 2.5.1
+.cc-button-medium {
+  font-size: 11px;
+  font-weight: normal;
+  padding: 8px 14px;
 }
 
 // Large Button
@@ -145,42 +146,30 @@ button {
 // markup:
 // <button class="cc-button cc-button-blue cc-button-large">Sign In</button>
 //
-// Styleguide 2.6
+// Styleguide 2.5.2
 .cc-button-large {
   font-size: 16px;
   font-weight: normal;
   padding: 8px 10px;
 }
 
-// Selected Button
+// Button Modifiers
 //
-// markup:
-// <a class="cc-button cc-button-selected"><i class="fa fa-user"></i> Selected</a>
-// <a class="cc-button"><i class="fa fa-user"></i> Not Selected</a>
-//
-// Styleguide 2.7
-.cc-button-selected {
-  background: linear-gradient($cc-color-very-light-grey, $cc-color-nobel), $cc-color-nobel;
-  color: $cc-color-white;
-  z-index: 1;
-  &:focus, &:hover {
-    background: linear-gradient($cc-color-very-light-grey, $cc-color-nobel), $cc-color-nobel;
-    color: $cc-color-white;
-  }
-  i {
-    color: $cc-color-white;
-  }
-}
+// Styleguide 2.6
 
 // Button Plus Icon
 //
 // markup:
 // <i class="fa fa-plus cc-button-plus-icon"></i>
 //
-// Styleguide 2.8
+// Styleguide 2.6.1
 .cc-button-plus-icon {
   color: $cc-color-salem;
 }
+
+// Button Links
+//
+// Styleguide 2.7
 
 // Button Link
 //
@@ -190,7 +179,7 @@ button {
 // markup:
 // <button class="cc-button-link">Show more</button>
 //
-// Styleguide 2.9
+// Styleguide 2.7.1
 .cc-button-link {
   padding: 0;
   &, &:hover, &:focus {
@@ -210,6 +199,45 @@ button {
   }
 }
 
+// Transparent Button
+//
+// markup:
+// <button class="cc-button-transparent">Learn More</button>
+//
+// Styleguide 2.7.2
+.cc-button-transparent {
+  background: transparent;
+  border: 0;
+  color: $body-font-color !important;
+  padding: 0;
+  &:focus, &:hover {
+    background: transparent;
+    i {
+      color: $cc-color-nobel !important;
+    }
+  }
+}
+
+// Selected Button
+//
+// markup:
+// <a class="cc-button cc-button-selected"><i class="fa fa-user"></i> Selected</a>
+// <a class="cc-button"><i class="fa fa-user"></i> Not Selected</a>
+//
+// Styleguide 2.8
+.cc-button-selected {
+  background: linear-gradient($cc-color-very-light-grey, $cc-color-nobel), $cc-color-nobel;
+  color: $cc-color-white;
+  z-index: 1;
+  &:focus, &:hover {
+    background: linear-gradient($cc-color-very-light-grey, $cc-color-nobel), $cc-color-nobel;
+    color: $cc-color-white;
+  }
+  i {
+    color: $cc-color-white;
+  }
+}
+
 // Button Group
 //
 // markup:
@@ -219,7 +247,7 @@ button {
 //   <li><a class="cc-button">Button 3</a></li>
 // </ul>
 //
-// Styleguide 2.10
+// Styleguide 2.9
 .cc-button-group {
   li {
     float: left;

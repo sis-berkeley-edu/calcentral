@@ -10,7 +10,6 @@ module MyTasks
       super(uid, options)
       #To avoid issues with tz, use DateTime instead of Date (http://www.elabs.se/blog/36-working-with-time-zones-in-ruby-on-rails)
       @starting_date = Time.zone.today.in_time_zone.to_datetime
-      @now_time = Time.zone.now
     end
 
     def providers

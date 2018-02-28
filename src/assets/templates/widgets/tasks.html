@@ -7,7 +7,7 @@
           data-ng-class="{'cc-button-selected':(panelState.showAddTask)}"
           data-ng-show="api.user.profile.hasGoogleAccessToken && (currentTaskMode!='completed' || !completedTasks.length) && !api.user.profile.actingAsUid && !api.user.profile.delegateActingAsUid && !api.user.profile.advisorActingAsUid"
           data-ng-click="toggleAddTask()">
-        <i class="fa fa-plus cc-button-plus-icon"></i>
+        <i class="fa fa-plus cc-button-plus-icon" aria-hidden="true"></i>
         <span>New Task</span>
       </button>
     </div>
@@ -18,101 +18,165 @@
 
       <div class="row collapse">
         <div class="medium-10 medium-centered columns">
-          <ul class="cc-button-group cc-even-3" role="tablist">
+          <ul class="cc-button-group cc-even-2" role="tablist">
             <li data-ng-repeat="taskMode in taskModes">
               <button class="cc-button"
                 data-ng-click="switchTasksMode(taskMode)"
                 data-ng-class="{'cc-button-selected':(currentTaskMode == taskMode)}"
                 aria-selected="{{currentTaskMode == taskMode}}"
                 role="tab"
-                data-ng-bind="taskMode">
+                data-ng-bind-template="{{taskMode}} ({{taskModeCount(taskMode)}})">
               </button>
             </li>
           </ul>
         </div>
       </div>
 
-      <div data-ng-switch-when="scheduled" role="tabpanel" aria-live="polite">
-        <div data-ng-include src="'dashboard_task_noitems.html'" data-onload="tasksModeOpposite='unscheduled'"></div>
-        <div data-ng-hide="counts.scheduled === 0">
-          <div class="cc-clearfix-container cc-widget-tasks-bottom-margin">
-            <h3 class="cc-widget-tasks-section-label"><span data-ng-class="{'cc-widget-tasks-section-label-red': overdueTasks.length}">Overdue</span> <span class="cc-widget-tasks-section-label-count" data-ng-class="{'cc-widget-tasks-section-label-count-red': overdueTasks.length}" data-ng-bind="overdueTasks.length"></span> <span class="cc-right">Due</span></h3>
+      <div data-ng-switch-when="incomplete" role="tabpanel" aria-live="polite">
+        <div data-ng-show="incompleteTaskTotal() === 0">
+          <div data-ng-show="api.user.profile.hasGoogleAccessToken || !api.user.profile.officialBmailAddress">
+            <div class="cc-widget-tasks-no-items">
+              <p class="cc-widget-tasks-no-items-first">
+                You currently do not have any incomplete tasks or assignments.
+              </p>
+            </div>
+          </div>
+          <div data-ng-show="!api.user.profile.hasGoogleAccessToken && api.user.profile.officialBmailAddress">
+            <div class="cc-widget-tasks-no-items cc-widget-tasks-no-items-first" data-ng-show="api.user.profile.officialBmailAddress">
+              <div data-ng-include="'no_bconnected.html'" data-onload="mode='tasks'"></div>
+            </div>
+          </div>
+        </div>
+
+        <div data-ng-show="incompleteTaskTotal() !== 0">
+          <div class="cc-widget-text cc-widget-tasks-no-padding-bottom">
+            <p>Click "View" to see tasks, due dates, and instructions.</p>
+          </div>
+
+          <div data-ng-if="lists.overdue.length > 0" class="cc-widget-tasks-section-bottom-margin">
+            <div class="cc-flex cc-flex-space-between cc-flex-align-base cc-widget-tasks-list-header-special">
+              <div class="cc-widget-tasks-list-header-special-title">
+                <strong class="cc-widget-tasks-list-header-overdue-title">Overdue</strong>
+              </div>
+              <div class="cc-widget-tasks-list-header-special-date">Due Date</div>
+            </div>
             <ul class="cc-widget-tasks-list cc-widget-list-color cc-widget-list-color-red">
               <li
-                data-ng-repeat="task in overdueTasks | limitTo: overdueLimit"
+                data-ng-repeat="task in lists.overdue"
                 data-ng-class="{'cc-widget-list-selected': task.show}">
                 <div data-ng-include src="'dashboard_task_loop.html'"></div>
               </li>
             </ul>
-            <div data-cc-show-more-directive data-cc-show-more-list="overdueTasks" data-cc-show-more-limit="overdueLimit"></div>
-            <p data-ng-show="!overdueTasks.length" class="cc-widget-text cc-widget-tasks-no-padding-bottom">
-              There are currently no {{currentTaskMode}} tasks/assignments that are overdue.
-            </p>
           </div>
 
-          <div class="cc-clearfix-container cc-widget-tasks-bottom-margin">
-            <h3 class="cc-widget-tasks-section-label">Today <span class="cc-widget-tasks-section-label-count cc-widget-tasks-section-label-count-green" data-ng-bind="dueTodayTasks.length"></span> <span class="cc-right">Due</span></h3>
-            <ul class="cc-widget-tasks-list cc-widget-list-color cc-widget-list-color-green">
-              <li
-                data-ng-repeat="task in dueTodayTasks | limitTo: dueTodayLimit"
-                data-ng-class="{'cc-widget-list-selected': task.show}">
-                  <div data-ng-include src="'dashboard_task_loop.html'"></div>
-              </li>
-            </ul>
-            <div data-cc-show-more-directive data-cc-show-more-list="dueTodayTasks" data-cc-show-more-limit="dueTodayLimit"></div>
-            <p data-ng-show="!dueTodayTasks.length" class="cc-widget-text cc-widget-tasks-no-padding-bottom">
-              There are currently no {{currentTaskMode}} tasks/assignments that are due today.
-            </p>
-          </div>
-
-          <div class="cc-clearfix-container">
-            <h3 class="cc-widget-tasks-section-label">Future <span class="cc-widget-tasks-section-label-count" data-ng-bind="futureTasks.length"></span> <span class="cc-right">Due</span></h3>
+          <div data-ng-if="lists.furtherActionNeeded.length > 0" class="cc-widget-tasks-section-bottom-margin">
+            <div class="cc-flex cc-flex-space-between cc-flex-align-base cc-widget-tasks-list-header-special">
+              <div class="cc-widget-tasks-list-header-special-title">
+                <strong class="cc-widget-tasks-list-header-further-action-needed-title">Further Action Needed</strong>
+              </div>
+            </div>
             <ul class="cc-widget-tasks-list cc-widget-list-color">
               <li
-                data-ng-repeat="task in futureTasks | limitTo: futureLimit"
+                data-ng-repeat="task in lists.furtherActionNeeded"
                 data-ng-class="{'cc-widget-list-selected': task.show}">
                 <div data-ng-include src="'dashboard_task_loop.html'"></div>
               </li>
             </ul>
-            <div data-cc-show-more-directive data-cc-show-more-list="futureTasks" data-cc-show-more-limit="futureLimit"></div>
-            <p data-ng-show="!futureTasks.length" class="cc-widget-text">
-              There are currently no {{currentTaskMode}} tasks/assignments that are due in the future.
-            </p>
+          </div>
+
+          <div data-ng-repeat="taskSection in taskSections" data-ng-if="taskSection.tasks.incomplete.length > 0">
+            <div class="cc-widget-tasks-section-header-incomplete"
+              data-ng-class="{'cc-widget-tasks-section-header-incomplete-top-border': $first,
+              'cc-widget-tasks-section-header-incomplete-no-bottom-border': taskSection.show}">
+              <div class="cc-flex cc-flex-space-between cc-flex-align-center">
+                <div>
+                  <div >
+                    <strong>
+                      <span data-ng-bind="taskSection.title"></span>
+                    </strong>
+                  </div>
+                  <div class="cc-clearfix-container">
+                    <div class="cc-left">
+                      <span class="cc-widget-task-section-incomplete-count">
+                        <i class="fa fa-bell" aria-hidden="true"></i>
+                        <span data-ng-bind="taskSection.tasks.incomplete.length"></span> incomplete
+                      </span>
+                    </div>
+                    <div class="cc-left">
+                      <span class="cc-widget-task-section-due-within-week-count"
+                        data-ng-if="taskSection.dueWithinWeekCount > 0">
+                        <i class="fa fa-exclamation-triangle cc-icon-gold" aria-hidden="true"></i>
+                        <span data-ng-bind="taskSection.dueWithinWeekCount"></span> due within 1 week
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                <button class="cc-button cc-button-medium" data-ng-click="toggleTaskSection(taskSection)">
+                  <strong data-ng-if="!taskSection.show">View</strong>
+                  <strong data-ng-if="taskSection.show">Hide</strong>
+                </button>
+              </div>
+            </div>
+
+            <div data-ng-show="taskSection.show">
+              <div class="cc-widget-tasks-list-header">
+                <div class="cc-widget-tasks-col cc-widget-tasks-col-title-header">Title</div>
+                <div class="cc-widget-tasks-col cc-widget-tasks-col-left">&nbsp;</div>
+                <div class="cc-widget-tasks-col cc-widget-tasks-col-date-header">
+                  <span data-ng-if="taskSection.id !== 'finaid'">Due Date</span>
+                  <span data-ng-if="taskSection.id === 'finaid'">Date Assigned</span>
+                </div>
+              </div>
+              <ul class="cc-widget-tasks-list cc-widget-list-color">
+                <li
+                  data-ng-repeat="task in taskSection.tasks.incomplete"
+                  data-ng-class="{'cc-widget-list-selected': task.show}">
+                  <div data-ng-include src="'dashboard_task_loop.html'"></div>
+                </li>
+                <li data-ng-if="taskSection.tasks.beingProcessed.length > 0">
+                  <h3 class="cc-widget-tasks-subsection-label">Being Processed
+                    <span class="cc-widget-tasks-section-label-count" data-ng-bind="taskSection.tasks.beingProcessed.length"></span>
+                  </h3>
+                  <div class="cc-widget-tasks-list-subsection-header">
+                    <div class="cc-widget-tasks-col cc-widget-tasks-col-title-header">Title</div>
+                    <div class="cc-widget-tasks-col cc-widget-tasks-col-left">&nbsp;</div>
+                    <div class="cc-widget-tasks-col cc-widget-tasks-col-date-header">Status / Date Updated</div>
+                  </div>
+                </li>
+                <li
+                  data-ng-if="taskSection.tasks.beingProcessed.length > 0"
+                  data-ng-repeat="task in taskSection.tasks.beingProcessed"
+                  data-ng-class="{'cc-widget-list-selected': task.show}">
+                  <div data-ng-include src="'dashboard_task_loop.html'"></div>
+                </li>
+              </ul>
+            </div>
           </div>
         </div>
       </div>
 
-      <div data-ng-switch-when="unscheduled" role="tabpanel" aria-live="polite">
-        <div data-ng-include src="'dashboard_task_noitems.html'" data-onload="tasksModeOpposite='scheduled'"></div>
-        <h3 class="cc-widget-tasks-section-label">Unscheduled <span class="cc-widget-tasks-section-label-count" data-ng-bind="unscheduledTasks.length"></span> <span class="cc-right">Last Modified</span></h3>
-        <ul class="cc-widget-tasks-list cc-widget-list-color">
-          <li
-            data-ng-repeat="task in unscheduledTasks | limitTo:unscheduledLimit"
-            data-ng-class="{'cc-widget-list-selected': task.show}">
-            <div data-ng-include src="'dashboard_task_loop.html'"></div>
-          </li>
-        </ul>
-        <div data-cc-show-more-directive data-cc-show-more-list="unscheduledTasks" data-cc-show-more-limit="unscheduledLimit"></div>
-        <p data-ng-show="!unscheduledTasks.length" class="cc-widget-text">
-          There are currently no unscheduled tasks/assignments.
-        </p>
+      <div data-ng-switch-when="completed" role="tabpanel" aria-live="polite" class="cc-widget-tasks-bottom-margin">
+        <div data-ng-repeat="taskSection in taskSections" data-ng-if="taskSection.tasks.completed.length > 0">
+          <div class="cc-widget-tasks-section-header-completed">
+            <strong>
+              <span data-ng-bind="taskSection.title"></span>
+            </strong>
+          </div>
+          <div class="cc-widget-tasks-list-header">
+            <div class="cc-widget-tasks-col cc-widget-tasks-col-title">Title</div>
+            <div class="cc-widget-tasks-col cc-widget-tasks-col-left">&nbsp;</div>
+            <div class="cc-widget-tasks-col cc-widget-tasks-col-date">Status</div>
+          </div>
+          <ul class="cc-widget-tasks-list cc-widget-list-color">
+            <li
+              data-ng-repeat="task in taskSection.tasks.completed"
+              data-ng-class="{'cc-widget-list-selected': task.show}">
+              <div data-ng-include src="'dashboard_task_loop.html'"></div>
+            </li>
+          </ul>
+        </div>
       </div>
 
-      <div data-ng-switch-when="completed" role="tabpanel" aria-live="polite">
-        <h3 class="cc-widget-tasks-section-label">Total <span class="cc-widget-tasks-section-label-count" data-ng-bind="completedTasks.length"></span> <span class="cc-right">Completed</span></h3>
-
-        <ul class="cc-widget-tasks-list cc-widget-list-color">
-          <li
-            data-ng-repeat="task in completedTasks | limitTo:completedLimit"
-            data-ng-class="{'cc-widget-list-selected': task.show}">
-            <div data-ng-include src="'dashboard_task_loop.html'"></div>
-          </li>
-        </ul>
-        <div data-cc-show-more-directive data-cc-show-more-list="completedTasks" data-cc-show-more-limit="completedLimit"></div>
-        <p data-ng-show="!completedTasks.length" class="cc-widget-text">
-          There are currently no completed tasks/assignments.
-        </p>
-      </div>
     </div>
   </div>
 </div>
