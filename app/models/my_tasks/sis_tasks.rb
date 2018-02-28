@@ -139,9 +139,8 @@ module MyTasks
           'admission'
         when 'FINA' # Financial Aid
           'finaid'
-        when 'GEN', 'SPRG', 'STRM' # General, Student Program, Student Term
-          'student'
         else
+          # General (GEN), Student Program (SPRG), Student Term (STRM), etc
           'student'
       end
     end

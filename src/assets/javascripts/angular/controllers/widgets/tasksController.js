@@ -69,8 +69,9 @@ angular.module('calcentral.controllers').controller('TasksController', function(
         $scope.tasks = tasks;
         linkService.addCurrentPagePropertiesToResources($scope.tasks, $scope.currentPage.name, $scope.currentPage.url);
         $scope.updateTaskLists();
-        $scope.isLoading = false;
       }
+    }).finally(function() {
+      $scope.isLoading = false;
     });
   };
 
