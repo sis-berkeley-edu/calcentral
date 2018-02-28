@@ -6,7 +6,7 @@ var _ = require('lodash');
 /**
  * Financial Aid controller
  */
-angular.module('calcentral.controllers').controller('FinaidController', function(apiService, finaidFactory, finaidService, linkService, tasksFactory, $routeParams, $scope) {
+angular.module('calcentral.controllers').controller('FinaidController', function(apiService, finaidFactory, finaidService, linkService, tasksFactory, $routeParams, $scope, $location) {
   linkService.addCurrentRouteSettings($scope);
   apiService.util.setTitle($scope.currentPage.name);
 
@@ -33,7 +33,7 @@ angular.module('calcentral.controllers').controller('FinaidController', function
 
   var combinationExists = function(data, finaidYearId) {
     var combination = finaidService.combinationExists(data, finaidYearId);
-    if (!combination) {
+    if (!combination && $location.path() !== '/finances/finaid/t4/auth') {
       apiService.user.redirectToPage('finances');
       return false;
     }
