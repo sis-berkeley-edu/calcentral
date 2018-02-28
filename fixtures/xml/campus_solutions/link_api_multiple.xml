@@ -191,9 +191,7 @@
         <value>PL</value>
       </PROPERTY>
     </PROPERTIES>
-    <URL>
-      https://bcswebqat.is.berkeley.edu/psp/bcsdev/EMPLOYEE/HRMS/c/G3FRAME.G3SEARCH.GBL?&amp;G3FORM_FAMILY=STUDENT&amp;G3FORM_TYPE=AAQEAPPLIC&amp;G3FORM_CONDITION=Default&amp;G3FORM_TASK=VWS
-    </URL>
+    <URL>https://bcswebqat.is.berkeley.edu/psp/bcsdev/EMPLOYEE/HRMS/c/G3FRAME.G3SEARCH.GBL?&amp;G3FORM_FAMILY=STUDENT&amp;G3FORM_TYPE=AAQEAPPLIC&amp;G3FORM_CONDITION=Default&amp;G3FORM_TASK=VWS</URL>
     <COMMENTS></COMMENTS>
   </Link>
   <Link>
@@ -760,6 +758,93 @@ This link should take an instructor to the Grade Roster in BCS of the identified
     </PROPERTIES>
     <URL>https://bcswebqat.is.berkeley.edu/psp/bcsqat/EMPLOYEE/PSFT_CS/c/SA_LEARNER_SERVICES.SAA_SS_DPR_ADB.GBL?EMPLID={EMPLID}</URL>
     <COMMENTS>This should take a student to page where they can see their newly generated Academic Progress Report in CS.</COMMENTS>
+  </Link>
+  <Link>
+    <URL_ID>UC_CX_APR_RPT_GRD_STDNT</URL_ID>
+    <DESCRIPTION>View Academic Progress Report</DESCRIPTION>
+    <HOVER_OVER_TEXT>View Academic Progress Report</HOVER_OVER_TEXT>
+    <PROPERTIES type="array">
+      <PROPERTY>
+        <NAME>CALCENTRAL</NAME>
+        <value>GENERIC</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>UCFROM</NAME>
+        <value>CalCentral</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>UCFROMLINK</NAME>
+        <value>https://calcentral-sis-dev.berkeley.edu</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>UCFROMTEXT</NAME>
+        <value>CalCentral</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>URI_TYPE</NAME>
+        <value>PL</value>
+      </PROPERTY>
+    </PROPERTIES>
+    <URL>https://bcswebqat.is.berkeley.edu/psp/bcsqat/EMPLOYEE/PSFT_CS/c/SA_LEARNER_SERVICES.SAA_SS_DPR_ADB.GBL?EMPLID={EMPLID}</URL>
+    <COMMENTS></COMMENTS>
+  </Link>
+  <Link>
+    <URL_ID>UC_CX_APR_RPT_GRD_STDNT_HAAS</URL_ID>
+    <DESCRIPTION>View Academic Progress Report</DESCRIPTION>
+    <HOVER_OVER_TEXT>View Academic Progress Report</HOVER_OVER_TEXT>
+    <PROPERTIES type="array">
+      <PROPERTY>
+        <NAME>CALCENTRAL</NAME>
+        <value>GENERIC</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>UCFROM</NAME>
+        <value>CalCentral</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>UCFROMLINK</NAME>
+        <value>https://calcentral-sis-dev.berkeley.edu</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>UCFROMTEXT</NAME>
+        <value>CalCentral</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>URI_TYPE</NAME>
+        <value>PL</value>
+      </PROPERTY>
+    </PROPERTIES>
+    <URL>https://bcswebqat.is.berkeley.edu/psp/bcsqat/EMPLOYEE/PSFT_CS/c/SA_LEARNER_SERVICES.SAA_SS_DPR_ADB.GBL?EMPLID={EMPLID}</URL>
+    <COMMENTS></COMMENTS>
+  </Link>
+  <Link>
+    <URL_ID>UC_CX_APR_RPT_GRD_STDNT_LAW</URL_ID>
+    <DESCRIPTION>View Academic Progress Report</DESCRIPTION>
+    <HOVER_OVER_TEXT>View Academic Progress Report</HOVER_OVER_TEXT>
+    <PROPERTIES type="array">
+      <PROPERTY>
+        <NAME>CALCENTRAL</NAME>
+        <value>GENERIC</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>UCFROM</NAME>
+        <value>CalCentral</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>UCFROMLINK</NAME>
+        <value>https://calcentral-sis-dev.berkeley.edu</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>UCFROMTEXT</NAME>
+        <value>CalCentral</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>URI_TYPE</NAME>
+        <value>PL</value>
+      </PROPERTY>
+    </PROPERTIES>
+    <URL>https://bcswebqat.is.berkeley.edu/psp/bcsqat/EMPLOYEE/PSFT_CS/c/SA_LEARNER_SERVICES.SAA_SS_DPR_ADB.GBL?EMPLID={EMPLID}</URL>
+    <COMMENTS></COMMENTS>
   </Link>
   <Link>
     <URL_ID>UC_CX_AA_MILESTONE</URL_ID>

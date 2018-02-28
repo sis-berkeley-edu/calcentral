@@ -11,19 +11,25 @@ describe MyAcademics::MyAcademicRoles do
     subject { described_class_instance.get_feed_internal }
     it 'provides a set of roles based on the user\'s academic status' do
       expect(subject).to be
-      expect(subject.keys.count).to eq 15
+      expect(subject.keys.count).to eq 21
       expect(subject['ugrd']).to eq true
       expect(subject['grad']).to eq false
       expect(subject['fpf']).to eq false
       expect(subject['law']).to eq false
       expect(subject['concurrent']).to eq false
+      expect(subject['doctorScienceLaw']).to eq false
       expect(subject['lettersAndScience']).to eq true
+      expect(subject['haasBusinessAdminMasters']).to eq false
+      expect(subject['haasBusinessAdminPhD']).to eq false
       expect(subject['haasFullTimeMba']).to eq false
       expect(subject['haasEveningWeekendMba']).to eq false
       expect(subject['haasExecMba']).to eq false
       expect(subject['haasMastersFinEng']).to eq false
       expect(subject['haasMbaPublicHealth']).to eq false
       expect(subject['haasMbaJurisDoctor']).to eq false
+      expect(subject['jurisSocialPolicyMasters']).to eq false
+      expect(subject['jurisSocialPolicyPhC']).to eq false
+      expect(subject['jurisSocialPolicyPhD']).to eq false
       expect(subject['ugrdUrbanStudies']).to eq false
       expect(subject['summerVisitor']).to eq false
       expect(subject['courseworkOnly']).to eq false
