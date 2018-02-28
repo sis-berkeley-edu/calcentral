@@ -32,7 +32,7 @@ module CampusSolutions
       )
     end
 
-    def self.valid?(params)
+    def valid?(params)
       %w(DIPL LOCL MAIL HOME).include? params[:addressType]
     end
 
