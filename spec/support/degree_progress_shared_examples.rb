@@ -83,10 +83,37 @@ end
 
 shared_examples 'a proxy that returns undergraduate milestone data' do
 
+  shared_context 'when a current term is found' do
+    let(:terms) { Berkeley::Terms.fetch(fake_now: fake_now) }
+
+    before(:each) do
+      allow(Settings.terms).to receive(:fake_now).and_return fake_now
+      allow(Berkeley::Terms).to receive(:fetch).and_return terms
+    end
+  end
+
+  shared_context 'when no current term is found' do
+    before do
+      allow(Berkeley::Terms).to receive(:fetch).and_return (terms = double)
+      allow(terms).to receive(:current).and_return nil
+    end
+  end
+
+  let(:admit_term) { nil }
+  let(:admit_term_response) {
+    {
+      'admit_term'=> admit_term
+    }
+  }
+  before(:each) do
+    allow(EdoOracle::Queries).to receive(:get_admit_term).and_return admit_term_response
+  end
+
   it 'returns data with the expected structure' do
     data = subject[:feed][:degreeProgress]
     expect(data).to be
     expect(data[:acadCareer]).to be
+    expect(data[:transferCreditReviewDeadline]).not_to be
 
     plan_level_data = data[:progresses]
     expect(plan_level_data).to be
@@ -122,7 +149,32 @@ shared_examples 'a proxy that returns undergraduate milestone data' do
     expect(plan_level_data.first[:requirements][3][:name]).to eq('American Cultures')
   end
 
-  context 'when translating the status codes' do
+  describe 'calculating the transfer credit review deadline' do
+    let(:fake_now) { DateTime.parse('2013-02-13 00:00:00-08:00') }
+    context 'when user is a new admit' do
+      let(:admit_term) { '2132' }
+      context 'when current term exists' do
+        include_context 'when a current term is found'
+        it 'includes the formatted date in the feed' do
+          expect(subject[:feed][:degreeProgress][:transferCreditReviewDeadline]).to eq 'Feb 14, 2013'
+        end
+      end
+      context 'when missing current term' do
+        include_context 'when no current term is found'
+        it 'does not include the date in the feed' do
+          expect(subject[:feed][:degreeProgress][:transferCreditReviewDeadline]).to be nil
+        end
+      end
+    end
+    context 'when user is not a new admit' do
+      let(:admit_term) { nil }
+      it 'does not include the date in the feed' do
+        expect(subject[:feed][:degreeProgress][:transferCreditReviewDeadline]).to be nil
+      end
+    end
+  end
+
+  describe 'translating the status codes' do
     shared_examples 'it takes into account a lag in processing transfer credits' do
       it 'masks failed and in progress' do
         plan_level_data = subject[:feed][:degreeProgress][:progresses]
@@ -143,7 +195,6 @@ shared_examples 'a proxy that returns undergraduate milestone data' do
       end
     end
 
-    let(:terms) { Berkeley::Terms.fetch(fake_now: fake_now) }
     let(:admit_term_response) {
       {
         'admit_term'=> admit_term
@@ -151,12 +202,11 @@ shared_examples 'a proxy that returns undergraduate milestone data' do
     }
     before(:each) do
       allow(EdoOracle::Queries).to receive(:get_admit_term).and_return admit_term_response
-      allow(Settings.terms).to receive(:fake_now).and_return fake_now
-      allow_any_instance_of(Berkeley::Terms).to receive(:fetch).and_return terms
     end
 
     context 'for a spring term new admit' do
       let(:admit_term) { '2132' }
+      include_context 'when a current term is found'
       context 'before the term has started' do
         let(:fake_now) { DateTime.parse('2013-01-14 00:00:00-08:00') }
         it_behaves_like 'it takes into account a lag in processing transfer credits'
@@ -173,6 +223,7 @@ shared_examples 'a proxy that returns undergraduate milestone data' do
 
     context 'for a summer term new admit' do
       let(:admit_term) { '2135' }
+      include_context 'when a current term is found'
       context 'before the term has ended' do
         let(:fake_now) { DateTime.parse('2013-08-15 00:00:00-08:00') }
         it_behaves_like 'it takes into account a lag in processing transfer credits'
@@ -189,6 +240,7 @@ shared_examples 'a proxy that returns undergraduate milestone data' do
 
     context 'for a fall term new admit' do
       let(:admit_term) { '2138' }
+      include_context 'when a current term is found'
       context 'before the term has started' do
         let(:fake_now) { DateTime.parse('2013-08-21 00:00:00-08:00') }
         it_behaves_like 'it takes into account a lag in processing transfer credits'
@@ -206,14 +258,12 @@ shared_examples 'a proxy that returns undergraduate milestone data' do
     context 'when no admit term exists' do
       let(:admit_term) { nil }
       let(:fake_now) { DateTime.parse('2013-08-21 00:00:00-08:00') }
+      include_context 'when a current term is found'
       it_behaves_like 'it assumes all transfer credits have been processed'
     end
 
-    context 'when no current term is found' do
-      before do
-        allow(Berkeley::Terms).to receive(:fetch).and_return (terms = double)
-        allow(terms).to receive(:current).and_return nil
-      end
+    context 'when missing current term' do
+      include_context 'when no current term is found'
       context 'for a fall term new admit' do
         let(:admit_term) { '2138' }
         context 'before the term has started' do
