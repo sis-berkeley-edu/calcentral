@@ -1,8 +1,11 @@
 .cc-undergrad-degree-progress-card {
+  .cc-degree-progress-section {
+    margin-bottom: 10px;
+  }
+
   .cc-degree-progress-report-date {
     color: $cc-color-nobel;
     font-size: 13px;
-    margin-bottom: 10px;
   }
 
   .cc-degree-progress-footer {

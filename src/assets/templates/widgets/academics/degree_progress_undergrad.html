@@ -13,7 +13,7 @@
     <div data-ng-if="!degreeProgress.undergraduate.errored && degreeProgress.undergraduate.progresses.length">
       <ul>
         <li data-ng-repeat="plan in degreeProgress.undergraduate.progresses">
-          <div data-ng-if="plan.reportDate" class="cc-degree-progress-report-date">
+          <div data-ng-if="plan.reportDate" class="cc-degree-progress-section cc-degree-progress-report-date">
             Degree Progress as of <span data-ng-bind="plan.reportDate"></span>
           </div>
           <div class="cc-table">
@@ -54,7 +54,7 @@
       to refresh this data. Updates may take up to 24 hours.
     </div>
     <div data-ng-if="!api.user.profile.roles.advisor" class="cc-degree-progress-footer">
-      <span data-ng-if="degreeProgress.undergraduate.links.academicProgressReport.url">
+      <div data-ng-if="degreeProgress.undergraduate.links.academicProgressReport.url" class="cc-degree-progress-section">
         <p>Run your
           <a data-cc-campus-solutions-link-directive="degreeProgress.undergraduate.links.academicProgressReport"
              data-cc-campus-solutions-link-directive-cc-page-name="currentPage.name"
@@ -77,8 +77,12 @@
           </a>
           with major requirement questions.
         </p>
-      </span>
-      <span data-ng-if="!degreeProgress.undergraduate.links.academicProgressReport.url">If this information is out of date, please contact your advisor.</span>
+      </div>
+      <div data-ng-if="!degreeProgress.undergraduate.links.academicProgressReport.url" class="cc-degree-progress-section">If this information is out of date, please contact your advisor.</div>
+      <div data-ng-if="!api.user.profile.roles.advisor && degreeProgress.undergraduate.transferCreditReviewDeadline && degreeProgress.undergraduate.showTip">
+        <a href="#" data-ng-click="degreeProgress.undergraduate.showTip();" class="cc-text-line-height"><i class="cc-icon fa fa-info-circle cc-icon-air-force-blue"></i><span>What is "Under Review"?</span></a>
+        <p data-ng-show="degreeProgress.undergraduate.tipVisible">Transfer Credit is being reviewed for all new students. Review will finish by <span data-ng-bind="degreeProgress.undergraduate.transferCreditReviewDeadline"></span>.</p>
+      </div>
     </div>
   </div>
 </div>

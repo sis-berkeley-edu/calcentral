@@ -6,6 +6,7 @@ module DegreeProgress
     def process(response)
       degree_progress = response.try(:[], :feed).try(:[], :ucAaProgress)
       degree_progress[:progresses] = massage_progresses(degree_progress.try(:[], :progresses))
+      degree_progress[:transferCreditReviewDeadline] = is_new_admit_grace_period ? pretty_date(transfer_credit_review_deadline) : nil
       degree_progress
     end
 
@@ -18,7 +19,7 @@ module DegreeProgress
             next
           end
           result.push(progress).last.tap do |prog|
-            prog[:reportDate] = format_report_date prog.delete(:rptDate)
+            prog[:reportDate] = format_date_string prog.delete(:rptDate)
             prog[:requirements] = requirements
           end
         end
@@ -28,12 +29,15 @@ module DegreeProgress
 
     def massage_requirements(progress)
       requirements = progress.fetch(:requirements)
-      is_new_admit_grace_period = new_admit? && in_grace_period?
       result = []
       requirements.each do |requirement|
         result.push normalize(requirement, is_new_admit_grace_period) if should_include requirement
       end
       sort result
+    end
+
+    def is_new_admit_grace_period
+      @is_new_admit_grace_period ||= new_admit? && in_grace_period?
     end
 
     def new_admit?
@@ -44,9 +48,17 @@ module DegreeProgress
 
     def in_grace_period?
       current_date = Settings.terms.fake_now || DateTime.now
-      current_term = Berkeley::Terms.fetch.current
-      grace_period = grace_periods[current_term.try(:name)]
-      current_date < current_term.try(grace_period[:from]) + grace_period[:days]
+      transfer_credit_review_deadline && current_date < transfer_credit_review_deadline
+    end
+
+    def transfer_credit_review_deadline
+      calculate_date = lambda do
+        current_term = Berkeley::Terms.fetch.current
+        current_term_name = current_term.try(:name)
+        grace_period = grace_periods[current_term_name] if current_term_name
+        return current_term.try(grace_period[:from]) + grace_period[:days] if grace_period
+      end
+      @transfer_credit_review_deadline ||= calculate_date.call
     end
 
     def grace_periods
@@ -66,10 +78,14 @@ module DegreeProgress
       }
     end
 
-    def format_report_date(report_date_unformatted)
-      return nil if report_date_unformatted.blank?
-      report_date_object = strptime_in_time_zone(report_date_unformatted, '%Y-%m-%d')
-      format_date(report_date_object, '%b %e, %Y').try(:[], :dateString).to_s.squish
+    def format_date_string(date_unformatted)
+      return nil if date_unformatted.blank?
+      date_object = strptime_in_time_zone(date_unformatted, '%Y-%m-%d')
+      pretty_date date_object
+    end
+
+    def pretty_date(date_object)
+     format_date(date_object, '%b %e, %Y').try(:[], :dateString).to_s.squish
     end
 
     def should_include(requirement)
