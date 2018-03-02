@@ -439,14 +439,14 @@ grading_period:
     law:  ''
   dates:
     general:
-      spring_2017:
+      fall_2017:
         midpoint:
           start: ''
           end: ''
         final:
           start: ''
           end: ''
-      fall_2017:
+      spring_2018:
         midpoint:
           start: ''
           end: ''
@@ -454,12 +454,6 @@ grading_period:
           start: ''
           end: ''
     law:
-      spring_2017:
-        start: ''
-        end: ''
-      fall_2017:
-        start: ''
-        end: ''
       summer_2017:
         Q1:
           start: ''
@@ -473,6 +467,12 @@ grading_period:
         Q4:
           start: ''
           end: ''
+      fall_2017:
+        start: ''
+        end: ''
+      spring_2018:
+        start: ''
+        end: ''
 
 new_admits:
   start_term: 2185
