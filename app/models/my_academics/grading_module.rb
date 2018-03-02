@@ -2,12 +2,12 @@ module MyAcademics
   module GradingModule
     extend self
 
-    LAW_2172 = "Law Spring 2017"
     LAW_2178 = "Law Fall 2017"
+    LAW_2182 = "Law Spring 2018"
     GEN_MID_2178 = "General Midpoint Fall 2017"
     GEN_FIN_2178 = "General Final Fall 2017"
-    GEN_MID_2172 = "General Midpoint Spring 2017"
-    GEN_FIN_2172 = "General Final Spring 2017"
+    GEN_MID_2182 = "General Midpoint Spring 2018"
+    GEN_FIN_2182 = "General Final Spring 2018"
 
     def grading_status_mapping
       {
@@ -154,8 +154,8 @@ module MyAcademics
       if is_law
         if term_id == '2178'
           return dates_badly_formatted?(grading_period.dates.law.fall_2017, LAW_2178)
-        elsif term_id == '2172'
-          return dates_badly_formatted?(grading_period.dates.law.spring_2017, LAW_2172)
+        elsif term_id == '2182'
+          return dates_badly_formatted?(grading_period.dates.law.spring_2018, LAW_2182)
         else
           return true
         end
@@ -163,9 +163,9 @@ module MyAcademics
         if term_id == '2178'
           return dates_badly_formatted?(grading_period.dates.general.fall_2017.midpoint, GEN_MID_2178) ||
             dates_badly_formatted?(grading_period.dates.general.fall_2017.final, GEN_FIN_2178)
-        elsif term_id == '2172'
-          return dates_badly_formatted?(grading_period.dates.general.spring_2017.midpoint, GEN_MID_2172) ||
-            dates_badly_formatted?(grading_period.dates.general.spring_2017.final, GEN_FIN_2172)
+        elsif term_id == '2182'
+          return dates_badly_formatted?(grading_period.dates.general.spring_2018.midpoint, GEN_MID_2182) ||
+            dates_badly_formatted?(grading_period.dates.general.spring_2018.final, GEN_FIN_2182)
         else
           return true
         end
@@ -176,8 +176,8 @@ module MyAcademics
       if is_law
         if term_id == '2178'
           return dates_out_of_order?(grading_period.dates.law.fall_2017, LAW_2178)
-        elsif term_id == '2172'
-          return dates_out_of_order?(grading_period.dates.law.spring_2017, LAW_2172)
+        elsif term_id == '2182'
+          return dates_out_of_order?(grading_period.dates.law.spring_2018, LAW_2182)
         else
           return true
         end
@@ -185,9 +185,9 @@ module MyAcademics
         if term_id == '2178'
           return dates_out_of_order?(grading_period.dates.general.fall_2017.midpoint, GEN_MID_2178) ||
             dates_out_of_order?(grading_period.dates.general.fall_2017.final, GEN_FIN_2178)
-        elsif term_id == '2172'
-          return dates_out_of_order?(grading_period.dates.general.spring_2017.midpoint, GEN_MID_2172) ||
-            dates_out_of_order?(grading_period.dates.general.spring_2017.final, GEN_FIN_2172)
+        elsif term_id == '2182'
+          return dates_out_of_order?(grading_period.dates.general.spring_2018.midpoint, GEN_MID_2182) ||
+            dates_out_of_order?(grading_period.dates.general.spring_2018.final, GEN_FIN_2182)
         else
           return true
         end
