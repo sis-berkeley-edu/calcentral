@@ -98,7 +98,7 @@ module EdoOracle
               enroll."CLASS_SECTION_ID" as section_id,
               enroll."CAMPUS_UID" AS ldap_uid,
               enroll."STUDENT_ID" AS sis_id
-            FROM SISEDO.ENROLLMENTV00_VW enroll
+            FROM SISEDO.CC_ENROLLMENTV00_VW enroll
             WHERE
               enroll."TERM_ID" = '#{term_id}'
               AND (enroll."STDNT_ENRL_STATUS_CODE" = 'E')
