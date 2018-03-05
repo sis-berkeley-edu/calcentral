@@ -10,7 +10,7 @@
 * [Git](https://help.github.com/articles/set-up-git)
 * [JDBC Oracle driver](http://www.oracle.com/technetwork/database/enterprise-edition/jdbc-112010-090769.html)
 * [Java 8 SDK](http://www.oracle.com/technetwork/java/javase/downloads/index.html)
-* [JRuby 9.1.5.0](http://jruby.org/)
+* [JRuby 9.1.14.0](http://jruby.org/)
 * [Node.js >=0.10.30](http://nodejs.org/)
 * [PostgreSQL](http://www.postgresql.org/)
 * [Rails 3.2.x](http://rubyonrails.org/download)
@@ -133,7 +133,7 @@ http://www.oracle.com/technetwork/java/javase/downloads/index.html
   * Download [ojdbc7_g.jar](http://www.oracle.com/technetwork/database/features/jdbc/jdbc-drivers-12c-download-1958347.html)
   * Note: You do not have to open the file.
   * Rename the file to `ojdbc7.jar`
-  * Copy `ojdbc7.jar` to `~/.rvm/rubies/jruby-1.7.19/lib/`
+  * Copy `ojdbc7.jar` to `~/.rvm/rubies/jruby-9.1.14.0/lib/`
 
 1. Initialize PostgreSQL database tables:
 

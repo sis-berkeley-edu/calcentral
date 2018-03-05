@@ -7,17 +7,17 @@ cache: bundler
 dist: precise
 
 rvm:
-  - jruby-9.1.5.0
+  - jruby-9.1.14.0
 
 matrix:
   include:
-    - { rvm: jruby-9.1.5.0 }
+    - { rvm: jruby-9.1.14.0 }
 
 env:
   - JRUBY_OPTS="--dev -J-Xmx900m" DISPLAY=:99.0 LOGGER_LEVEL=WARN TRAVIS_NODE_VERSION="8"
 
 before_install:
-  - gem update --system 2.4.5
+  - gem update --system 2.5.1
 
 before_script:
   - ./script/front-end-build.sh
