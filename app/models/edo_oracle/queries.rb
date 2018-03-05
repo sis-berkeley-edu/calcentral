@@ -343,7 +343,7 @@ module EdoOracle
           enroll."WAITLISTPOSITION" AS waitlist_position,
           enroll."UNITS_TAKEN" AS units,
           TRIM(enroll."GRADING_BASIS_CODE") AS grading_basis
-        FROM SISEDO.ENROLLMENTV00_VW enroll
+        FROM SISEDO.CC_ENROLLMENTV00_VW enroll
         WHERE
           enroll."CLASS_SECTION_ID" = '#{section_id}'
           AND enroll."TERM_ID" = '#{term_id}'
@@ -372,7 +372,7 @@ module EdoOracle
           plan."STATUSINPLAN_STATUS_CODE",
           stdgroup."HIGHEST_STDNT_GROUP" AS terms_in_attendance_group
           #{email_col}
-        FROM SISEDO.ENROLLMENTV00_VW enroll
+        FROM SISEDO.CC_ENROLLMENTV00_VW enroll
         LEFT OUTER JOIN
           SISEDO.STUDENT_PLAN_CC_V00_VW plan ON enroll."STUDENT_ID" = plan."STUDENT_ID" AND
           plan."ACADPLAN_TYPE_CODE" IN ('CRT', 'HS', 'MAJ', 'SP', 'SS')
