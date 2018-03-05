@@ -298,26 +298,48 @@ describe CampusSolutions::Sir::SirStatuses do
       before do
         CampusSolutions::MyChecklist.stub_chain(:new, :get_feed).and_return checklist_response_ugrd
         CampusSolutions::Sir::SirConfig.stub_chain(:new, :get).and_return sir_config_response_ugrd
-        EdoOracle::Queries.stub(:get_new_admit_status) { new_admit_attributes_freshman_pathway }
       end
       subject { (proxy.new(uid).get_feed)[:sirStatuses] }
 
-      it_behaves_like 'a proper sir status'
+      context 'when new admit status is missing' do
+        before do
+          EdoOracle::Queries.stub(:get_new_admit_status) { nil }
+        end
+        it_behaves_like 'a proper sir status'
 
-      it 'returns an undergraduate sir application' do
-        expect(subject[0][:chklstItemCd]).to eql('AUSIRF')
+        it 'returns an undergraduate sir application' do
+          expect(subject[0][:chklstItemCd]).to eql('AUSIRF')
+        end
+        it 'does not include new admit roles' do
+          expect(subject[0][:newAdmitAttributes][:roles]).not_to be
+        end
+        it 'does not include admit term and its correct type' do
+          expect(subject[0][:newAdmitAttributes][:admitTerm]).not_to be
+        end
       end
 
-      it 'includes new admit roles' do
-        expect(subject[0][:newAdmitAttributes][:roles][:firstYearFreshman]).to eq true
-        expect(subject[0][:newAdmitAttributes][:roles][:transfer]).to eq false
-        expect(subject[0][:newAdmitAttributes][:roles][:athlete]).to eq false
-        expect(subject[0][:newAdmitAttributes][:roles][:firstYearPathway]).to eq true
-      end
+      context 'when new admit status is provided' do
+        before do
+          EdoOracle::Queries.stub(:get_new_admit_status) { new_admit_attributes_freshman_pathway }
+        end
 
-      it 'includes admit term and its correct type' do
-        expect(subject[0][:newAdmitAttributes][:admitTerm][:term]).to eq '2185'
-        expect(subject[0][:newAdmitAttributes][:admitTerm][:type]).to eq 'Summer'
+        it_behaves_like 'a proper sir status'
+
+        it 'returns an undergraduate sir application' do
+          expect(subject[0][:chklstItemCd]).to eql('AUSIRF')
+        end
+
+        it 'includes new admit roles' do
+          expect(subject[0][:newAdmitAttributes][:roles][:firstYearFreshman]).to eq true
+          expect(subject[0][:newAdmitAttributes][:roles][:transfer]).to eq false
+          expect(subject[0][:newAdmitAttributes][:roles][:athlete]).to eq false
+          expect(subject[0][:newAdmitAttributes][:roles][:firstYearPathway]).to eq true
+        end
+
+        it 'includes admit term and its correct type' do
+          expect(subject[0][:newAdmitAttributes][:admitTerm][:term]).to eq '2185'
+          expect(subject[0][:newAdmitAttributes][:admitTerm][:type]).to eq 'Summer'
+        end
       end
     end
 
