@@ -148,14 +148,14 @@ describe MyAcademics::Grading do
 
     context 'when current date is after grading period' do
       before do
-        allow(Settings.grading_period.dates.general.spring_2017.midpoint).to receive(:start).and_return '2016-12-01 0:0:0'
-        allow(Settings.grading_period.dates.general.spring_2017.midpoint).to receive(:end).and_return '2016-12-05 23:59:59'
-        allow(Settings.grading_period.dates.general.spring_2017.final).to receive(:start).and_return '2016-12-12 0:0:0'
-        allow(Settings.grading_period.dates.general.spring_2017.final).to receive(:end).and_return '2016-12-12 23:59:59'
+        allow(Settings.grading_period.dates.general.spring_2018.midpoint).to receive(:start).and_return '2016-12-01 0:0:0'
+        allow(Settings.grading_period.dates.general.spring_2018.midpoint).to receive(:end).and_return '2016-12-05 23:59:59'
+        allow(Settings.grading_period.dates.general.spring_2018.final).to receive(:start).and_return '2016-12-12 0:0:0'
+        allow(Settings.grading_period.dates.general.spring_2018.final).to receive(:end).and_return '2016-12-12 23:59:59'
         allow(DateTime).to receive(:now).and_return '2017-1-1 0:0:0'.to_datetime
       end
       it 'it should return correct grading period status' do
-        expect(subject.get_grading_period_status(false, false, '2172')).to eq :afterGradingPeriod
+        expect(subject.get_grading_period_status(false, false, '2182')).to eq :afterGradingPeriod
       end
     end
   end

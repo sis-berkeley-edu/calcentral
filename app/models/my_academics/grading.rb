@@ -5,7 +5,7 @@ module MyAcademics
 
     # This and the GradingModule involves static configuration and logic for the most recent terms.
     # There can only be one Fall, Spring, and Summer term configured
-    ACTIVE_GRADING_TERMS = ['2172', '2175', '2178']
+    ACTIVE_GRADING_TERMS = ['2175', '2178', '2182']
 
     def merge(data)
       teaching_semesters = data[:teachingSemesters]
@@ -52,16 +52,16 @@ module MyAcademics
     end
 
     def add_grading_dates(semester, term_id)
-      # This is a temp fix for Spring 2017 & Fall 2017 hardcoded from settings
-      spring_dates = grading_period.dates.general.spring_2017
+      # This is a temp fix for Fall 2017 & Spring 2018 hardcoded from settings
       fall_dates = grading_period.dates.general.fall_2017
-      if (term_id == '2172' || term_id == '2178') && valid_grading_period?(false, term_id)
+      spring_dates = grading_period.dates.general.spring_2018
+      if (term_id == '2178' || term_id == '2182') && valid_grading_period?(false, term_id)
         semester.merge!(
           {
-            gradingPeriodMidpointStart: term_id == '2172' ? format_period_start(spring_dates.midpoint.start) : format_period_start(fall_dates.midpoint.start),
-            gradingPeriodMidpointEnd: term_id == '2172' ? format_period_end(spring_dates.midpoint.end) : format_period_end(fall_dates.midpoint.end),
-            gradingPeriodFinalStart: term_id == '2172' ? format_period_start(spring_dates.final.start) : format_period_start(fall_dates.final.start),
-            gradingPeriodFinalEnd:  term_id == '2172' ? format_period_end(spring_dates.final.end) : format_period_end(fall_dates.final.end)
+            gradingPeriodMidpointStart: term_id == '2182' ? format_period_start(spring_dates.midpoint.start) : format_period_start(fall_dates.midpoint.start),
+            gradingPeriodMidpointEnd: term_id == '2182' ? format_period_end(spring_dates.midpoint.end) : format_period_end(fall_dates.midpoint.end),
+            gradingPeriodFinalStart: term_id == '2182' ? format_period_start(spring_dates.final.start) : format_period_start(fall_dates.final.start),
+            gradingPeriodFinalEnd:  term_id == '2182' ? format_period_end(spring_dates.final.end) : format_period_end(fall_dates.final.end)
           })
       else
         semester.merge!(
@@ -75,15 +75,15 @@ module MyAcademics
     end
 
     def add_grading_dates_law(semester, term_id)
-      # This is a temp fix for Spring 2017 & Fall 2017 hardcoded from settings
+      # This is a temp fix for Fall 2017 & Spring 2018 hardcoded from settings
       # Law courses do not participate in midpoint grading
       spring_dates = grading_period.dates.law.spring_2017
       fall_dates = grading_period.dates.law.fall_2017
-      if (term_id == '2172' || term_id == '2178') && valid_grading_period?(true, term_id)
+      if (term_id == '2182' || term_id == '2178') && valid_grading_period?(true, term_id)
         semester.merge!(
           {
-            gradingPeriodStartLaw: term_id == '2172' ? format_period_start(spring_dates.start) : format_period_start(fall_dates.start),
-            gradingPeriodEndLaw: term_id == '2172' ? format_period_end(spring_dates.end) : format_period_end(fall_dates.end)
+            gradingPeriodStartLaw: term_id == '2182' ? format_period_start(spring_dates.start) : format_period_start(fall_dates.start),
+            gradingPeriodEndLaw: term_id == '2182' ? format_period_end(spring_dates.end) : format_period_end(fall_dates.end)
           })
       else
         semester.merge!(
@@ -287,23 +287,23 @@ module MyAcademics
     def get_grading_period_status(is_law, is_midpoint, term_id)
       return :gradingPeriodNotSet unless valid_grading_period?(is_law, term_id)
       if is_law
-        if term_id == '2172'
-          return find_grading_period_status(grading_period.dates.law.spring_2017)
-        elsif term_id == '2178'
+        if term_id == '2178'
           return find_grading_period_status(grading_period.dates.law.fall_2017)
+        elsif term_id == '2182'
+          return find_grading_period_status(grading_period.dates.law.spring_2018)
         end
       elsif !is_law
-        if term_id == '2172'
-          if is_midpoint
-            return find_grading_period_status(grading_period.dates.general.spring_2017.midpoint)
-          else
-            return find_grading_period_status(grading_period.dates.general.spring_2017.final)
-          end
-        elsif term_id == '2178'
+        if term_id == '2178'
           if is_midpoint
             return find_grading_period_status(grading_period.dates.general.fall_2017.midpoint)
           else
             return find_grading_period_status(grading_period.dates.general.fall_2017.final)
+          end
+        elsif term_id == '2182'
+          if is_midpoint
+            return find_grading_period_status(grading_period.dates.general.spring_2018.midpoint)
+          else
+            return find_grading_period_status(grading_period.dates.general.spring_2018.final)
           end
         end
       end
