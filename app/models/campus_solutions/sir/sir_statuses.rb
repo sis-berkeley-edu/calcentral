@@ -115,16 +115,17 @@ module CampusSolutions
       end
 
       def add_visibility_flag(new_admit_attributes)
+        return false unless (admit_term = new_admit_attributes.try(:[], :admitTerm))
         start_term = Settings.new_admits.start_term
         expiration_date = Settings.new_admits.expiration_date
-        student_admit_term = new_admit_attributes.try(:[], :admitTerm).try(:[], :term)
+        student_admit_term = admit_term.try(:[], :term)
         current_date = Settings.terms.fake_now || DateTime.now
         student_admit_term.try(:to_i) >= start_term.try(:to_i) && current_date <= expiration_date
       end
 
       def get_undergraduate_new_admit_roles(campus_solutions_id, application_nbr)
         status = EdoOracle::Queries.get_new_admit_status(campus_solutions_id, application_nbr)
-        return { errored: true } unless status.is_a?(Hash)
+        return {} unless status.is_a?(Hash)
         first_year_freshman = status.try(:[], 'admit_type') == 'FYR'
         is_athlete = status.try(:[], 'athlete') == 'Y'
         is_global_edge = status.try(:[], 'global_edge_program') == 'Y'
@@ -147,7 +148,7 @@ module CampusSolutions
       end
 
       def get_undergraduate_new_admit_links(new_admit_status)
-        admit_roles = new_admit_status[:roles]
+        return {} unless (admit_roles = new_admit_status.try(:[], :roles))
         link_configuration = {
           coaFreshmanLink: admit_roles[:firstYearFreshman],
           coaTransferLink: admit_roles[:transfer],
