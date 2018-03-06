@@ -206,7 +206,7 @@ angular.module('calcentral.controllers').controller('TasksController', function(
 
   $scope.incompleteTaskTotal = function() {
     if ($scope.lists && $scope.lists.incomplete && $scope.lists.furtherActionNeeded && $scope.lists.overdue) {
-      return $scope.lists.incomplete.length + $scope.lists.furtherActionNeeded.length && $scope.lists.overdue.length;
+      return $scope.lists.incomplete.length + $scope.lists.furtherActionNeeded.length + $scope.lists.overdue.length;
     } else {
       return 0;
     }
