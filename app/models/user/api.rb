@@ -139,7 +139,7 @@ module User
         return !!authentication_state.delegated_privileges[:viewEnrollments] || !!authentication_state.delegated_privileges[:viewGrades]
       end
       roles = @user_attributes[:roles]
-      roles[:student] || roles[:faculty] || has_instructor_history || has_student_history
+      !!roles[:undergrad] || !!roles[:graduate] || !!roles[:law] || !!roles[:concurrentEnrollmentStudent] || !!roles[:faculty] || has_instructor_history || has_student_history
     end
 
     def has_badges?
