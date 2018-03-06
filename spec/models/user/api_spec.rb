@@ -16,6 +16,7 @@ describe User::Api do
   let(:has_staff_role) { false }
   let(:has_applicant_role) { false }
   let(:has_exstudent_role) { false }
+  let(:has_undergrad_role) { false }
   let(:has_faculty_role) { false }
   let(:roles) do
     {
@@ -24,7 +25,8 @@ describe User::Api do
       staff: has_staff_role,
       applicant: has_applicant_role,
       exStudent: has_exstudent_role,
-      faculty: has_faculty_role
+      faculty: has_faculty_role,
+      undergrad: has_undergrad_role
     }
   end
   let(:has_instructor_history) { false }
@@ -341,10 +343,29 @@ describe User::Api do
       end
     end
 
-    context 'when user is a student' do
+    context 'when user is a matriculated undergraduate student' do
       let(:has_student_role) { true }
+      let(:has_undergrad_role) { true }
       let(:expected_can_view_academics) { true }
       let(:expected_can_view_grades) { true }
+      let(:expected_has_badges) { true }
+      let(:expected_has_campus_tab) { true }
+      let(:expected_has_dashboard_tab) { true }
+      let(:expected_has_financials_tab) { true }
+      it_behaves_like 'a well-tempered feed'
+
+      context 'and show profile flag is true' do
+        let(:sis_profile_visible) { true }
+        let(:expected_show_sis_profile_ui) { true }
+        it_behaves_like 'a well-tempered feed'
+      end
+    end
+
+    context 'when user is a student that has not been matriculated' do
+      let(:has_student_role) { true }
+      let(:has_undergrad_role) { false }
+      let(:expected_can_view_academics) { false }
+      let(:expected_can_view_grades) { false }
       let(:expected_has_badges) { true }
       let(:expected_has_campus_tab) { true }
       let(:expected_has_dashboard_tab) { true }
