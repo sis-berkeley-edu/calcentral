@@ -7,9 +7,9 @@ module Berkeley
     STATUS_IN_PROGRESS = 'In Progress'
     STATUS_UNDER_REVIEW = 'Under Review'
 
-    def self.get_status(status_code, in_progress_value, is_new_admit_grace_period)
+    def self.get_status(status_code, in_progress_value, is_pending_transfer_credit_review_deadline)
       return nil if status_code.blank?
-      if (is_new_admit_grace_period)
+      if (is_pending_transfer_credit_review_deadline)
         return grace_period_status(status_code.strip.upcase, in_progress_value)
       end
       self.status(status_code.strip.upcase, in_progress_value)
