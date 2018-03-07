@@ -6,7 +6,9 @@ var _ = require('lodash');
 /**
  * Finaid Communications controller
  */
-angular.module('calcentral.controllers').controller('FinaidCommunicationsController', function($q, $scope, activityFactory, finaidFactory, finaidService, linkService, tasksFactory) {
+angular.module('calcentral.controllers').controller('FinaidCommunicationsController', function($q, $scope, activityFactory, finaidFactory, finaidService, linkService, tasksFactory, tasksService) {
+  $scope.tasksService = tasksService;
+
   $scope.communicationsInfo = {
     aidYear: '',
     isLoading: true,
