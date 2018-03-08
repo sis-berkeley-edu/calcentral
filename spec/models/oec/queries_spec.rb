@@ -6,18 +6,18 @@ describe Oec::Queries do
 
     let(:requested_section_ids) { %w(65536 65537 65538) }
     let(:edo_oracle_columns) do
-      %w(section_id ldap_uid sis_id first_name last_name email_address)
+      %w(section_id ldap_uid sis_id)
     end
     let(:edo_oracle_rows) do
       [
-        %w(65536 1234567 87654321 Malachi Mulligan buck@tcd.ie),
-        %w(65536 1234568 87654322 Vincent Lynch lynch@tcd.ie),
-        %w(65537 1234567 87654321 Malachi Mulligan buck@tcd.ie),
-        %w(65537 1234568 87654322 Vincent Lynch lynch@tcd.ie),
-        %w(65538 1234567 87654321 Malachi Mulligan buck@tcd.ie),
-        %w(65539 1234567 87654321 Malachi Mulligan buck@tcd.ie),
-        %w(65540 1234568 87654322 Vincent Lynch lynch@tcd.ie),
-        %w(65541 1234568 87654322 Vincent Lynch lynch@tcd.ie)
+        %w(65536 1234567 87654321),
+        %w(65536 1234568 87654322),
+        %w(65537 1234567 87654321),
+        %w(65537 1234568 87654322),
+        %w(65538 1234567 87654321),
+        %w(65539 1234567 87654321),
+        %w(65540 1234568 87654322),
+        %w(65541 1234568 87654322)
       ]
     end
     before do
@@ -38,13 +38,24 @@ describe Oec::Queries do
     end
 
     context 'missing email address' do
-      before { edo_oracle_rows[0][5] = nil }
+      let(:edo_oracle_rows) do
+        [
+          %w(65536 1234567 87654321),
+          %w(65537 1234567 87654321),
+          %w(65538 1234567 87654321),
+          %w(65539 1234567 87654321)
+        ]
+      end
       it 'fills in email address from attributes query' do
         allow(User::BasicAttributes).to receive(:attributes_for_uids).and_call_original
         expect(User::BasicAttributes).to receive(:attributes_for_uids).with(['1234567']).and_return([{
           ldap_uid: '1234567',
+          first_name: 'Malachi',
+          last_name: 'Mulligan',
           email_address: 'buck@tcd.ie'
         }])
+        expect(subject[:rows][0][3]).to eq 'Malachi'
+        expect(subject[:rows][0][4]).to eq 'Mulligan'
         expect(subject[:rows][0][5]).to eq 'buck@tcd.ie'
       end
     end
