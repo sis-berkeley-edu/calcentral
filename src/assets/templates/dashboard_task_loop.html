@@ -7,10 +7,10 @@
 
   <div data-ng-hide="editorEnabled">
     <div class="cc-widget-tasks-col cc-widget-tasks-col-title"
-      data-ng-class="{'cc-widget-tasks-item-no-action-needed':((tasksService.isCompletedTask(task) || tasksService.isCsBeingProcessedTask(task)) && task.cs.itemStatusCode !== 'W')}">
+      data-ng-class="{'cc-widget-tasks-item-no-action-needed':((isCompletedTask(task) || isCsBeingProcessedTask(task)) && task.cs.itemStatusCode !== 'W')}">
       <div
         class="cc-widget-tasks-status-{{task.status}}"
-        data-ng-class="{'cc-ellipsis':(!task.show),'cc-alert':(currentTaskMode !== 'completed' && tasksService.isOverdueTask(task)), 'cc-strikethrough':(task.editorIsProcessing)}">
+        data-ng-class="{'cc-ellipsis':(!task.show),'cc-alert':(currentTaskMode !== 'completed' && isOverdueTask(task)), 'cc-strikethrough':(task.editorIsProcessing)}">
         <strong data-ng-bind="task.title"></strong>
         <div data-ng-if="task.emitter === 'bCourses' && task.course_code" class="cc-widget-tasks-title-sub">
           <span data-ng-bind="task.course_code"></span>
