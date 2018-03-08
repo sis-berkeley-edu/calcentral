@@ -10,57 +10,6 @@ angular.module('calcentral.controllers').controller('TasksController', function(
   // Initial mode for Tasks view
   $scope.currentTaskMode = 'incomplete';
   $scope.taskModes = ['incomplete', 'completed'];
-  $scope.taskSections = [
-    {
-      type: 'campusSolutions',
-      id: 'admission',
-      title: 'Admission Tasks',
-      show: false
-    },
-    {
-      type: 'campusSolutions',
-      id: 'residency',
-      title: 'Residency Tasks',
-      show: false
-    },
-    {
-      type: 'campusSolutions',
-      id: 'finaid',
-      title: 'Financial Aid Tasks',
-      show: false
-    },
-    {
-      type: 'campusSolutions',
-      id: 'student',
-      title: 'Student Tasks',
-      show: false
-    },
-    {
-      type: 'campusSolutions',
-      id: 'newStudent',
-      title: 'New Student Tasks',
-      show: false
-    },
-    {
-      type: 'google',
-      id: 'google',
-      title: 'bTasks',
-      show: false
-    },
-    {
-      type: 'canvas',
-      id: 'canvas',
-      title: 'bCourses Tasks',
-      show: false
-    }
-  ];
-
-  var csCategoryFilterFactory = function(categoryString) {
-    return function(task) {
-      var category = categoryString;
-      return (task.emitter === 'Campus Solutions' && task.cs.displayCategory === category);
-    };
-  };
 
   var getTasks = function(options) {
     return tasksFactory.getTasks(options).then(function(data) {
@@ -68,7 +17,7 @@ angular.module('calcentral.controllers').controller('TasksController', function(
       if (tasks) {
         $scope.tasks = tasks;
         linkService.addCurrentPagePropertiesToResources($scope.tasks, $scope.currentPage.name, $scope.currentPage.url);
-        $scope.updateTaskLists();
+        tasksService.updateTaskLists($scope);
       }
     }).finally(function() {
       $scope.isLoading = false;
@@ -80,50 +29,6 @@ angular.module('calcentral.controllers').controller('TasksController', function(
     $scope.isCompletedTask = tasksService.isCompletedTask;
     $scope.isCsBeingProcessedTask = tasksService.isCsBeingProcessedTask;
     $scope.isOverdueTask = tasksService.isOverdueTask;
-  };
-
-  var isCanvasTask = function(task) {
-    return (task.emitter === 'bCourses');
-  };
-
-  var isDueWithinOneWeekTask = function(task) {
-    return (task.dueDate && task.dueDate.withinOneWeek);
-  };
-
-  var isCsFurtherActionNeededTask = function(task) {
-    return (task.emitter === 'Campus Solutions' && task.cs.displayStatus === 'furtherActionNeeded');
-  };
-
-  var isGoogleTask = function(task) {
-    return (task.emitter === 'Google');
-  };
-
-  var isIncompleteTask = function(task) {
-    return (task.status !== 'completed');
-  };
-
-  var sortByTitle = function(a, b) {
-    return apiService.util.naturalSort(a.title, b.title);
-  };
-
-  var sortByDate = function(a, b, date, reverse) {
-    if (a[date] && b[date] && a[date].epoch !== b[date].epoch) {
-      if (!reverse) {
-        return a[date].epoch - b[date].epoch;
-      } else {
-        return b[date].epoch - a[date].epoch;
-      }
-    } else {
-      return sortByTitle(a, b);
-    }
-  };
-
-  var sortByCompletedDateReverse = function(a, b) {
-    return sortByDate(a, b, 'completedDate', true);
-  };
-
-  var sortByDueDate = function(a, b) {
-    return sortByDate(a, b, 'dueDate', false);
   };
 
   var toggleStatus = function(task) {
@@ -160,7 +65,7 @@ angular.module('calcentral.controllers').controller('TasksController', function(
       function successCallback(response) {
         task.editorIsProcessing = false;
         angular.extend(task, response.data);
-        $scope.updateTaskLists();
+        tasksService.updateTaskLists($scope);
       },
       function errorCallback() {
         apiService.analytics.sendEvent('Error', 'Set completed failure', 'completed: ' + !!changedTask.completedDate);
@@ -189,7 +94,7 @@ angular.module('calcentral.controllers').controller('TasksController', function(
             break;
           }
         }
-        $scope.updateTaskLists();
+        tasksService.updateTaskLists($scope);
         apiService.analytics.sendEvent('Tasks', 'Delete', task);
       },
       function errorCallback() {
@@ -237,58 +142,6 @@ angular.module('calcentral.controllers').controller('TasksController', function(
 
   $scope.toggleTaskSection = function(taskSection) {
     taskSection.show = !taskSection.show;
-  };
-
-  $scope.updateTaskLists = function() {
-    var incompleteTasks = _.clone($scope.tasks.filter(isIncompleteTask));
-    var furtherActionNeededTasks = [];
-    var overdueTasks = [];
-
-    // separate further action needed tasks
-    if (incompleteTasks.length > 0) {
-      furtherActionNeededTasks = _.remove(incompleteTasks, isCsFurtherActionNeededTask);
-    }
-
-    // separate overdue tasks
-    if (incompleteTasks.length > 0) {
-      overdueTasks = _.remove(incompleteTasks, tasksService.isOverdueTask);
-    }
-
-    $scope.lists = {
-      completed: $scope.tasks.filter(tasksService.isCompletedTask).sort(sortByCompletedDateReverse),
-      incomplete: incompleteTasks,
-      furtherActionNeeded: furtherActionNeededTasks,
-      overdue: overdueTasks
-    };
-
-    // populate task sections
-    angular.forEach($scope.taskSections, function(taskSection) {
-      var taskFilter;
-      switch (taskSection.type) {
-        case 'campusSolutions': {
-          taskFilter = csCategoryFilterFactory(taskSection.id);
-          break;
-        }
-        case 'google': {
-          taskFilter = isGoogleTask;
-          break;
-        }
-        case 'canvas': {
-          taskFilter = isCanvasTask;
-          break;
-        }
-      }
-      var incompleteSectionTasks = _.clone($scope.lists.incomplete.filter(taskFilter).sort(sortByDueDate));
-      var beingProcessedTasks = _.remove(incompleteSectionTasks, tasksService.isCsBeingProcessedTask);
-
-      taskSection.dueWithinWeekCount = incompleteSectionTasks.filter(isDueWithinOneWeekTask).length;
-
-      taskSection.tasks = {
-        incomplete: incompleteSectionTasks,
-        beingProcessed: beingProcessedTasks,
-        completed: $scope.lists.completed.filter(taskFilter).sort(sortByDueDate)
-      };
-    });
   };
 
   initializeServiceMethods();

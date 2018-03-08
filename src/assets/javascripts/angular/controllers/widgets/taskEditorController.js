@@ -6,7 +6,7 @@ var angular = require('angular');
 /**
  * Task editor controller
  */
-angular.module('calcentral.controllers').controller('TaskEditorController', function(apiService, tasksFactory, $scope) {
+angular.module('calcentral.controllers').controller('TaskEditorController', function(apiService, tasksFactory, tasksService, $scope) {
   $scope.editorEnabled = false;
 
   $scope.enableEditor = function() {
@@ -46,7 +46,7 @@ angular.module('calcentral.controllers').controller('TaskEditorController', func
     if (!_.get(response, 'data.notes')) {
       delete $scope.task.notes;
     }
-    $scope.updateTaskLists();
+    tasksService.updateTaskLists($scope);
   };
 
   $scope.editTask = function(task) {
