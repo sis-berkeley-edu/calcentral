@@ -32,7 +32,8 @@ module Oec
         enrollments = EdoOracle::Oec.get_batch_enrollments(term_id, batch, Settings.oec.enrollments_batch_size)
         raise StandardError, 'Enrollments query failed' unless enrollments.respond_to?(:columns) && enrollments.respond_to?(:rows)
 
-        columns ||= enrollments.columns.map &:upcase
+        # We fill personal attribute columns from CalNet rather than EDO DB.
+        columns ||= (enrollments.columns.map &:upcase) + ['FIRST_NAME', 'LAST_NAME', 'EMAIL_ADDRESS']
         section_id_idx = columns.index 'SECTION_ID'
 
         enrollments.rows.each do |enrollment_row|
