@@ -7,7 +7,6 @@ var _ = require('lodash');
  * Finaid Communications controller
  */
 angular.module('calcentral.controllers').controller('FinaidCommunicationsController', function($q, $scope, activityFactory, finaidFactory, finaidService, linkService, tasksFactory, tasksService) {
-  $scope.tasksService = tasksService;
 
   $scope.communicationsInfo = {
     aidYear: '',
@@ -41,6 +40,13 @@ angular.module('calcentral.controllers').controller('FinaidCommunicationsControl
       }
       $scope.activityInfo.isLoading = false;
     });
+  };
+
+  // Initializes methods required by dashboard_task_loop.html
+  var initializeServiceMethods = function() {
+    $scope.isCompletedTask = tasksService.isCompletedTask;
+    $scope.isCsBeingProcessedTask = tasksService.isCsBeingProcessedTask;
+    $scope.isOverdueTask = tasksService.isOverdueTask;
   };
 
   /**
@@ -93,5 +99,6 @@ angular.module('calcentral.controllers').controller('FinaidCommunicationsControl
     );
   };
 
+  initializeServiceMethods();
   $scope.$on('calcentral.custom.api.finaid.finaidYear', loadCommunications);
 });

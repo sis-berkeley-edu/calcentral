@@ -35,8 +35,8 @@
       <div data-ng-switch-when="incomplete" role="tabpanel" aria-live="polite">
         <div data-ng-show="incompleteTaskTotal() === 0">
           <div data-ng-show="api.user.profile.hasGoogleAccessToken || !api.user.profile.officialBmailAddress">
-            <div class="cc-widget-tasks-no-items">
-              <p class="cc-widget-tasks-no-items-first">
+            <div class="cc-widget-tasks-no-items cc-widget-tasks-no-items-first">
+              <p>
                 You currently do not have any incomplete tasks or assignments.
               </p>
             </div>
