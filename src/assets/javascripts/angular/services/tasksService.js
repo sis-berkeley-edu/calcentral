@@ -128,7 +128,7 @@ angular.module('calcentral.services').service('tasksService', function(apiServic
     }
 
     $scope.lists = {
-      completed: $scope.tasks.filter(isCompletedTask).sort(sortByCompletedDateReverse),
+      completed: $scope.tasks.filter(isCompletedTask),
       incomplete: incompleteTasks,
       furtherActionNeeded: furtherActionNeededTasks,
       overdue: overdueTasks
@@ -160,7 +160,7 @@ angular.module('calcentral.services').service('tasksService', function(apiServic
       taskSection.tasks = {
         incomplete: incompleteSectionTasks,
         beingProcessed: beingProcessedTasks,
-        completed: $scope.lists.completed.filter(taskFilter).sort(sortByDueDate)
+        completed: $scope.lists.completed.filter(taskFilter).sort(sortByCompletedDateReverse)
       };
     });
   };
