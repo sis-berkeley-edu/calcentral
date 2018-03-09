@@ -6,7 +6,7 @@ var _ = require('lodash');
 /**
  * Task adder controller
  */
-angular.module('calcentral.controllers').controller('TaskAdderController', function(errorService, taskAdderService, $scope) {
+angular.module('calcentral.controllers').controller('TaskAdderController', function(errorService, tasksService, taskAdderService, $scope) {
   $scope.addEditTask = taskAdderService.getTaskState();
   $scope.addTaskPanelState = taskAdderService.getState();
 
@@ -14,7 +14,7 @@ angular.module('calcentral.controllers').controller('TaskAdderController', funct
     var task = _.get(data, 'data');
     taskAdderService.resetState();
     $scope.tasks.push(task);
-    $scope.updateTaskLists();
+    tasksService.updateTaskLists($scope);
     $scope.switchTasksMode('incomplete');
   };
 

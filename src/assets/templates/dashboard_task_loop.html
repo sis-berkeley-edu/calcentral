@@ -7,10 +7,10 @@
 
   <div data-ng-hide="editorEnabled">
     <div class="cc-widget-tasks-col cc-widget-tasks-col-title"
-      data-ng-class="{'cc-widget-tasks-item-no-action-needed':((task.status === 'completed' || task.cs.displayStatus === 'beingProcessed') && task.cs.itemStatusCode !== 'W')}">
+      data-ng-class="{'cc-widget-tasks-item-no-action-needed':((isCompletedTask(task) || isCsBeingProcessedTask(task)) && task.cs.itemStatusCode !== 'W')}">
       <div
         class="cc-widget-tasks-status-{{task.status}}"
-        data-ng-class="{'cc-ellipsis':(!task.show),'cc-alert':(task.bucket === 'Overdue' && currentTaskMode !== 'completed'), 'cc-strikethrough':(task.editorIsProcessing)}">
+        data-ng-class="{'cc-ellipsis':(!task.show),'cc-alert':(currentTaskMode !== 'completed' && isOverdueTask(task)), 'cc-strikethrough':(task.editorIsProcessing)}">
         <strong data-ng-bind="task.title"></strong>
         <div data-ng-if="task.emitter === 'bCourses' && task.course_code" class="cc-widget-tasks-title-sub">
           <span data-ng-bind="task.course_code"></span>
@@ -61,13 +61,9 @@
       </div>
 
       <div data-ng-if="task.status !== 'completed'">
-        <div data-ng-if="task.cs.displayStatus === 'beingProcessed' && task.cs.showStatus"
+        <div data-ng-if="(task.cs.displayStatus === 'beingProcessed' || task.cs.displayCategory === 'finaid') && task.cs.showStatus"
           data-ng-bind="task.cs.showStatus" class="cc-widget-tasks-title-sub">
         </div>
-        <div data-ng-if="task.cs.displayCategory === 'finaid' && task.cs.showStatus">
-          <span data-ng-bind="task.cs.showStatus" class="cc-widget-tasks-title-sub"></span>
-        </div>
-
         <span data-ng-if="task.dueDate.withinOneWeek">
           <i class="fa fa-exclamation-triangle cc-icon-gold" aria-hidden="true"></i>
         </span>
