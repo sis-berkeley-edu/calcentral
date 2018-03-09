@@ -77,7 +77,7 @@ module MyAcademics
     def add_grading_dates_law(semester, term_id)
       # This is a temp fix for Fall 2017 & Spring 2018 hardcoded from settings
       # Law courses do not participate in midpoint grading
-      spring_dates = grading_period.dates.law.spring_2017
+      spring_dates = grading_period.dates.law.spring_2018
       fall_dates = grading_period.dates.law.fall_2017
       if (term_id == '2182' || term_id == '2178') && valid_grading_period?(true, term_id)
         semester.merge!(
