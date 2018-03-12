@@ -85,71 +85,70 @@
           </div>
 
           <div data-ng-repeat="taskSection in taskSections" data-ng-if="taskSection.tasks.incomplete.length > 0">
-            <div class="cc-widget-tasks-section-header-incomplete"
-              data-ng-class="{'cc-widget-tasks-section-header-incomplete-top-border': $first,
-              'cc-widget-tasks-section-header-incomplete-no-bottom-border': taskSection.show}">
-              <div class="cc-flex cc-flex-space-between cc-flex-align-center">
-                <div>
-                  <div >
-                    <strong>
-                      <span data-ng-bind="taskSection.title"></span>
-                    </strong>
-                  </div>
-                  <div class="cc-clearfix-container">
-                    <div class="cc-left">
-                      <span class="cc-widget-task-section-incomplete-count">
-                        <i class="fa fa-bell" aria-hidden="true"></i>
-                        <span data-ng-bind="taskSection.tasks.incomplete.length"></span> incomplete
-                      </span>
+            <div class="cc-widget-tasks-section-wrapper" data-ng-class="{'cc-widget-tasks-section-wrapper-top-border': $first}">
+              <div class="cc-widget-tasks-section-header-incomplete">
+                <div class="cc-flex cc-flex-space-between cc-flex-align-center">
+                  <div>
+                    <div>
+                      <strong data-ng-bind="taskSection.title">
+                      </strong>
                     </div>
-                    <div class="cc-left">
-                      <span class="cc-widget-task-section-due-within-week-count"
-                        data-ng-if="taskSection.dueWithinWeekCount > 0">
-                        <i class="fa fa-exclamation-triangle cc-icon-gold" aria-hidden="true"></i>
-                        <span data-ng-bind="taskSection.dueWithinWeekCount"></span> due within 1 week
-                      </span>
+                    <div class="cc-clearfix-container">
+                      <div class="cc-left">
+                        <span class="cc-widget-task-section-incomplete-count">
+                          <i class="fa fa-bell" aria-hidden="true"></i>
+                          <span data-ng-bind="taskSection.tasks.incomplete.length"></span> incomplete
+                        </span>
+                      </div>
+                      <div class="cc-left">
+                        <span class="cc-widget-task-section-due-within-week-count"
+                          data-ng-if="taskSection.dueWithinWeekCount > 0">
+                          <i class="fa fa-exclamation-triangle cc-icon-gold" aria-hidden="true"></i>
+                          <span data-ng-bind="taskSection.dueWithinWeekCount"></span> due within 1 week
+                        </span>
+                      </div>
                     </div>
                   </div>
+                  <button class="cc-button cc-button-medium" data-ng-click="toggleTaskSection(taskSection)">
+                    <strong data-ng-if="!taskSection.show">View</strong>
+                    <strong data-ng-if="taskSection.show">Hide</strong>
+                  </button>
                 </div>
-                <button class="cc-button cc-button-medium" data-ng-click="toggleTaskSection(taskSection)">
-                  <strong data-ng-if="!taskSection.show">View</strong>
-                  <strong data-ng-if="taskSection.show">Hide</strong>
-                </button>
               </div>
-            </div>
 
-            <div data-ng-show="taskSection.show">
-              <div class="cc-widget-tasks-list-header">
-                <div class="cc-widget-tasks-col cc-widget-tasks-col-title-header">Title</div>
-                <div class="cc-widget-tasks-col cc-widget-tasks-col-left">&nbsp;</div>
-                <div class="cc-widget-tasks-col cc-widget-tasks-col-date-header">
-                  <span data-ng-if="taskSection.id !== 'finaid'">Due Date</span>
-                  <span data-ng-if="taskSection.id === 'finaid'">Date Assigned</span>
-                </div>
-              </div>
-              <ul class="cc-widget-tasks-list cc-widget-list-color">
-                <li
-                  data-ng-repeat="task in taskSection.tasks.incomplete"
-                  data-ng-class="{'cc-widget-list-selected': task.show}">
-                  <div data-ng-include src="'dashboard_task_loop.html'"></div>
-                </li>
-                <li data-ng-if="taskSection.tasks.beingProcessed.length > 0">
-                  <h3 class="cc-widget-tasks-subsection-label">Being Processed
-                    <span class="cc-widget-tasks-section-label-count" data-ng-bind="taskSection.tasks.beingProcessed.length"></span>
-                  </h3>
-                  <div class="cc-widget-tasks-list-subsection-header">
-                    <div class="cc-widget-tasks-col cc-widget-tasks-col-title-header">Title</div>
-                    <div class="cc-widget-tasks-col cc-widget-tasks-col-left">&nbsp;</div>
-                    <div class="cc-widget-tasks-col cc-widget-tasks-col-date-header">Status / Date Updated</div>
+              <div data-ng-show="taskSection.show" class="cc-widget-tasks-list-wrapper">
+                <div class="cc-widget-tasks-list-header">
+                  <div class="cc-widget-tasks-col cc-widget-tasks-col-title-header">Title</div>
+                  <div class="cc-widget-tasks-col cc-widget-tasks-col-left">&nbsp;</div>
+                  <div class="cc-widget-tasks-col cc-widget-tasks-col-date-header">
+                    <span data-ng-if="taskSection.id !== 'finaid'">Due Date</span>
+                    <span data-ng-if="taskSection.id === 'finaid'">Date Assigned</span>
                   </div>
-                </li>
-                <li
-                  data-ng-if="taskSection.tasks.beingProcessed.length > 0"
-                  data-ng-repeat="task in taskSection.tasks.beingProcessed"
-                  data-ng-class="{'cc-widget-list-selected': task.show}">
-                  <div data-ng-include src="'dashboard_task_loop.html'"></div>
-                </li>
-              </ul>
+                </div>
+                <ul class="cc-widget-tasks-list cc-widget-list-color">
+                  <li
+                    data-ng-repeat="task in taskSection.tasks.incomplete"
+                    data-ng-class="{'cc-widget-list-selected': task.show}">
+                    <div data-ng-include src="'dashboard_task_loop.html'"></div>
+                  </li>
+                  <li data-ng-if="taskSection.tasks.beingProcessed.length > 0">
+                    <h3 class="cc-widget-tasks-subsection-label">Being Processed
+                      <span class="cc-widget-tasks-section-label-count" data-ng-bind="taskSection.tasks.beingProcessed.length"></span>
+                    </h3>
+                    <div class="cc-widget-tasks-list-subsection-header">
+                      <div class="cc-widget-tasks-col cc-widget-tasks-col-title-header">Title</div>
+                      <div class="cc-widget-tasks-col cc-widget-tasks-col-left">&nbsp;</div>
+                      <div class="cc-widget-tasks-col cc-widget-tasks-col-date-header">Status / Date Updated</div>
+                    </div>
+                  </li>
+                  <li
+                    data-ng-if="taskSection.tasks.beingProcessed.length > 0"
+                    data-ng-repeat="task in taskSection.tasks.beingProcessed"
+                    data-ng-class="{'cc-widget-list-selected': task.show}">
+                    <div data-ng-include src="'dashboard_task_loop.html'"></div>
+                  </li>
+                </ul>
+              </div>
             </div>
           </div>
         </div>
