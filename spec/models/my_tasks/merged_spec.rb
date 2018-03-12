@@ -50,7 +50,7 @@ describe 'MyTasks::Merged' do
       # some "Future" tasks to "Today", more total tasks will be in the Today feed on Sunday.
       if Time.zone.today.sunday?
         expect(tasks.count{|task| task[:bucket] == 'Today'}).to eq 8
-        expect(tasks.count{|task| task[:bucket] == 'Future'}).to eq 12
+        expect(tasks.count{|task| task[:bucket] == 'Future'}).to eq 23
       else
         expect(tasks.count{|task| task[:bucket] == 'Today'}).to eq 3
         expect(tasks.count{|task| task[:bucket] == 'Future'}).to eq 28
