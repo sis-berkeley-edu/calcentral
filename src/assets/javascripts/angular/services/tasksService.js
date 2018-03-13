@@ -119,7 +119,7 @@ angular.module('calcentral.services').service('tasksService', function(apiServic
 
     // separate further action needed tasks
     if (incompleteTasks.length > 0) {
-      furtherActionNeededTasks = _.remove(incompleteTasks, isCsFurtherActionNeededTask);
+      furtherActionNeededTasks = _.remove(incompleteTasks, isCsFurtherActionNeededTask).sort(sortByDueDate);
     }
 
     // separate overdue tasks
