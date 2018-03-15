@@ -118,7 +118,7 @@
     <ITEM_STATUS>Completed</ITEM_STATUS>
     <ITEM_STATUS_CODE>C</ITEM_STATUS_CODE>
     <STATUS_DT>2017-06-21</STATUS_DT>
-    <DUE_DT>2017-07-01</DUE_DT>
+    <DUE_DT>:::TOMORROW_NO_TIME:::</DUE_DT>
     <RESPONSIBLE_CNTCT_NAME>Office of Undergraduate Admissions</RESPONSIBLE_CNTCT_NAME>
     <RESPONSIBLE_CNTCT_EMAIL/>
     <ASSOCIATION_ID_NAME>Hotchkiss School The</ASSOCIATION_ID_NAME>
@@ -149,7 +149,7 @@ You may mail official documents to:
       <APPL_PROG_NBR>0</APPL_PROG_NBR>
     </CHECK_LIST_MGMT_ADMP>
   </CHECK_LIST_ITEM>
-<CHECK_LIST_ITEM>
+  <CHECK_LIST_ITEM>
     <EMPLID>9000006532</EMPLID>
     <SEQ_3C>2</SEQ_3C>
     <CHECKLIST_SEQ>400</CHECKLIST_SEQ>
@@ -157,7 +157,7 @@ You may mail official documents to:
     <CHECK_LIST_DESCR>English Literature &amp; Compostn</CHECK_LIST_DESCR>
     <ITEM_STATUS>Initiated</ITEM_STATUS>
     <ITEM_STATUS_CODE>I</ITEM_STATUS_CODE>
-    <DUE_DT>2017-07-15</DUE_DT>
+    <DUE_DT>:::TWO_WEEKS_AGO_NO_TIME:::</DUE_DT>
     <RESPONSIBLE_CNTCT_NAME>Office of Undergraduate Admissions</RESPONSIBLE_CNTCT_NAME>
     <RESPONSIBLE_CNTCT_EMAIL/>
     <ASSOCIATION_ID_NAME/>
@@ -191,7 +191,7 @@ Note:  If you have completed Advanced Placement (AP), you must submit an officia
     <CHECK_LIST_DESCR>Environment Science</CHECK_LIST_DESCR>
     <ITEM_STATUS>Initiated</ITEM_STATUS>
     <ITEM_STATUS_CODE>I</ITEM_STATUS_CODE>
-    <DUE_DT>2017-07-15</DUE_DT>
+    <DUE_DT>:::TOMORROW_NO_TIME:::</DUE_DT>
     <RESPONSIBLE_CNTCT_NAME>Office of Undergraduate Admissions</RESPONSIBLE_CNTCT_NAME>
     <RESPONSIBLE_CNTCT_EMAIL/>
     <ASSOCIATION_ID_NAME/>
@@ -225,7 +225,7 @@ Note:  If you have completed Advanced Placement (AP), you must submit an officia
     <CHECK_LIST_DESCR>Spanish Language &amp; Culture</CHECK_LIST_DESCR>
     <ITEM_STATUS>Initiated</ITEM_STATUS>
     <ITEM_STATUS_CODE>I</ITEM_STATUS_CODE>
-    <DUE_DT>2017-07-15</DUE_DT>
+    <DUE_DT>:::LATER_IN_WEEK_NO_TIME:::</DUE_DT>
     <RESPONSIBLE_CNTCT_NAME>Office of Undergraduate Admissions</RESPONSIBLE_CNTCT_NAME>
     <RESPONSIBLE_CNTCT_EMAIL/>
     <ASSOCIATION_ID_NAME/>
@@ -259,7 +259,7 @@ Note:  If you have completed Advanced Placement (AP), you must submit an officia
     <CHECK_LIST_DESCR>Spanish Literature &amp; Culture</CHECK_LIST_DESCR>
     <ITEM_STATUS>Initiated</ITEM_STATUS>
     <ITEM_STATUS_CODE>I</ITEM_STATUS_CODE>
-    <DUE_DT>2017-07-15</DUE_DT>
+    <DUE_DT>:::LATER_IN_WEEK_NO_TIME:::</DUE_DT>
     <RESPONSIBLE_CNTCT_NAME>Office of Undergraduate Admissions</RESPONSIBLE_CNTCT_NAME>
     <RESPONSIBLE_CNTCT_EMAIL/>
     <ASSOCIATION_ID_NAME/>
@@ -293,7 +293,7 @@ Note:  If you have completed Advanced Placement (AP), you must submit an officia
     <CHECK_LIST_DESCR>SAT Subject Exam</CHECK_LIST_DESCR>
     <ITEM_STATUS>Initiated</ITEM_STATUS>
     <ITEM_STATUS_CODE>I</ITEM_STATUS_CODE>
-    <DUE_DT>2017-07-15</DUE_DT>
+    <DUE_DT>:::TOMORROW_NO_TIME:::</DUE_DT>
     <RESPONSIBLE_CNTCT_NAME>Office of Undergraduate Admissions</RESPONSIBLE_CNTCT_NAME>
     <RESPONSIBLE_CNTCT_EMAIL/>
     <ASSOCIATION_ID_NAME/>
@@ -327,8 +327,8 @@ Note: To request your scores, contact the College Board online at www.CollegeBoa
     <CHECK_LIST_DESCR>Accept Your Offer of Admission</CHECK_LIST_DESCR>
     <ITEM_STATUS>Completed</ITEM_STATUS>
     <ITEM_STATUS_CODE>C</ITEM_STATUS_CODE>
-    <STATUS_DT>2017-04-25</STATUS_DT>
-    <DUE_DT>2017-05-01</DUE_DT>
+    <STATUS_DT>:::TODAY_NO_TIME:::</STATUS_DT>
+    <DUE_DT>:::TODAY_NO_TIME:::</DUE_DT>
     <RESPONSIBLE_CNTCT_NAME>Office of Undergraduate Admissions</RESPONSIBLE_CNTCT_NAME>
     <RESPONSIBLE_CNTCT_EMAIL/>
     <ASSOCIATION_ID_NAME/>
@@ -366,7 +366,7 @@ https://apply.berkeley.edu/apply/status</ITEM_COMMENT>
     <ITEM_STATUS>Initiated</ITEM_STATUS>
     <ITEM_STATUS_CODE>I</ITEM_STATUS_CODE>
     <STATUS_DT>2018-02-12</STATUS_DT>
-    <DUE_DT>2018-03-30</DUE_DT>
+    <DUE_DT>:::SIX_DAYS_HENCE_NO_TIME:::</DUE_DT>
     <RESPONSIBLE_CNTCT_NAME>Michelle Caruso</RESPONSIBLE_CNTCT_NAME>
     <RESPONSIBLE_CNTCT_EMAIL>mcaruso@berkeley.edu</RESPONSIBLE_CNTCT_EMAIL>
     <ASSOCIATION_ID_NAME/>
@@ -403,7 +403,7 @@ https://apply.berkeley.edu/apply/status</ITEM_COMMENT>
     <CHECK_LIST_DESCR>Print Your Class Schedule Now</CHECK_LIST_DESCR>
     <ITEM_STATUS>Initiated</ITEM_STATUS>
     <ITEM_STATUS_CODE>I</ITEM_STATUS_CODE>
-    <DUE_DT>2018-06-30</DUE_DT>
+    <DUE_DT>:::LATER_IN_WEEK_NO_TIME:::</DUE_DT>
     <ASSOCIATION_ID_NAME/>
     <ITEM_COMMENT>CalCentral will be unavailable from July 1 to July 4, 2017. As soon as possible, by Friday, June 30, please print, take a screenshot, or make a copy of your Summer Session D class schedule. Summer Session D starts on Monday, July 3.
 
@@ -437,7 +437,7 @@ CalCentral will be back online Wednesday, July 5, 2017.</ITEM_COMMENT>
     <ITEM_STATUS>Completed</ITEM_STATUS>
     <ITEM_STATUS_CODE>C</ITEM_STATUS_CODE>
     <STATUS_DT>2017-05-03</STATUS_DT>
-    <DUE_DT>2017-05-01</DUE_DT>
+    <DUE_DT>:::SIX_DAYS_HENCE_NO_TIME:::</DUE_DT>
     <RESPONSIBLE_CNTCT_NAME/>
     <RESPONSIBLE_CNTCT_EMAIL/>
     <ASSOCIATION_ID_NAME/>
@@ -466,7 +466,7 @@ CalCentral will be back online Wednesday, July 5, 2017.</ITEM_COMMENT>
     <CHECK_LIST_DESCR>Cal 1 Card Photo ID Card</CHECK_LIST_DESCR>
     <ITEM_STATUS>Initiated</ITEM_STATUS>
     <ITEM_STATUS_CODE>I</ITEM_STATUS_CODE>
-    <DUE_DT>2018-03-30</DUE_DT>
+    <DUE_DT>:::SIX_DAYS_HENCE_NO_TIME:::</DUE_DT>
     <RESPONSIBLE_CNTCT_NAME>Michelle Caruso</RESPONSIBLE_CNTCT_NAME>
     <RESPONSIBLE_CNTCT_EMAIL>mcaruso@berkeley.edu</RESPONSIBLE_CNTCT_EMAIL>
     <ASSOCIATION_ID_NAME/>
@@ -500,7 +500,7 @@ If you encounter problems successfully uploading a compliant photo online or are
     <ITEM_STATUS>Completed</ITEM_STATUS>
     <ITEM_STATUS_CODE>C</ITEM_STATUS_CODE>
     <STATUS_DT>2017-05-03</STATUS_DT>
-    <DUE_DT>2017-05-01</DUE_DT>
+    <DUE_DT>:::SIX_DAYS_HENCE_NO_TIME:::</DUE_DT>
     <RESPONSIBLE_CNTCT_NAME>Cal 1 Card Office</RESPONSIBLE_CNTCT_NAME>
     <RESPONSIBLE_CNTCT_EMAIL/>
     <ASSOCIATION_ID_NAME/>
@@ -529,8 +529,8 @@ If you encounter problems successfully uploading a compliant photo online or are
     <CHECK_LIST_DESCR>Golden Bear Advising: CED</CHECK_LIST_DESCR>
     <ITEM_STATUS>Completed</ITEM_STATUS>
     <ITEM_STATUS_CODE>C</ITEM_STATUS_CODE>
-    <STATUS_DT>2017-06-30</STATUS_DT>
-    <DUE_DT>2017-06-13</DUE_DT>
+    <STATUS_DT>:::TWO_WEEKS_AGO_NO_TIME:::</STATUS_DT>
+    <DUE_DT>:::TWO_WEEKS_AGO_NO_TIME:::</DUE_DT>
     <RESPONSIBLE_CNTCT_NAME>College of Environmental Design</RESPONSIBLE_CNTCT_NAME>
     <RESPONSIBLE_CNTCT_EMAIL/>
     <ASSOCIATION_ID_NAME/>
@@ -566,8 +566,8 @@ nss@berkeley.edu 510.642.7733.</ITEM_COMMENT>
     <CHECK_LIST_DESCR>Parent Information Form</CHECK_LIST_DESCR>
     <ITEM_STATUS>Completed</ITEM_STATUS>
     <ITEM_STATUS_CODE>C</ITEM_STATUS_CODE>
-    <STATUS_DT>2017-06-07</STATUS_DT>
-    <DUE_DT>2017-05-20</DUE_DT>
+    <STATUS_DT>:::TODAY_NO_TIME:::</STATUS_DT>
+    <DUE_DT>:::TODAY_NO_TIME:::</DUE_DT>
     <RESPONSIBLE_CNTCT_NAME>UDAR API</RESPONSIBLE_CNTCT_NAME>
     <RESPONSIBLE_CNTCT_EMAIL/>
     <ASSOCIATION_ID_NAME/>
@@ -599,7 +599,7 @@ To complete the form, click the button below.</ITEM_COMMENT>
     <ITEM_STATUS>Completed</ITEM_STATUS>
     <ITEM_STATUS_CODE>C</ITEM_STATUS_CODE>
     <STATUS_DT>2018-02-12</STATUS_DT>
-    <DUE_DT>2018-06-05</DUE_DT>
+    <DUE_DT>:::TODAY_NO_TIME:::</DUE_DT>
     <ASSOCIATION_ID_NAME/>
     <ITEM_COMMENT>UC Berkeley is committed to creating a safe environment and providing education to address issues of sexual violence in our community. Think About It, an interactive online education platform, is only one part of our comprehensive interpersonal violence prevention program. The module will help you understand related University policies, campus resources, and ways in which you can be an active bystander and community leader in preventing harassment and violence in our community. To complete the module, go to the website listed below and input your Berkeley email address. You will then be prompted to submit your CalNet ID and password.
 
@@ -630,8 +630,8 @@ Students who do not complete the module will not be able to register for classes
     <CHECK_LIST_DESCR>Apply for Housing</CHECK_LIST_DESCR>
     <ITEM_STATUS>Completed</ITEM_STATUS>
     <ITEM_STATUS_CODE>C</ITEM_STATUS_CODE>
-    <STATUS_DT>2017-05-03</STATUS_DT>
-    <DUE_DT>2017-05-02</DUE_DT>
+    <STATUS_DT>:::TWO_WEEKS_AGO_NO_TIME:::</STATUS_DT>
+    <DUE_DT>:::LATER_IN_WEEK_NO_TIME:::</DUE_DT>
     <RESPONSIBLE_CNTCT_NAME>SAIT Starez API</RESPONSIBLE_CNTCT_NAME>
     <RESPONSIBLE_CNTCT_EMAIL/>
     <ASSOCIATION_ID_NAME/>
@@ -665,7 +665,7 @@ The University of California recommends that students consider purchasing renter
     <ITEM_STATUS>Completed</ITEM_STATUS>
     <ITEM_STATUS_CODE>C</ITEM_STATUS_CODE>
     <STATUS_DT>2018-02-12</STATUS_DT>
-    <DUE_DT>2018-03-14</DUE_DT>
+    <DUE_DT>:::TODAY_NO_TIME:::</DUE_DT>
     <ASSOCIATION_ID_NAME/>
     <ITEM_COMMENT>With the passage of the 2015 Wellness Referendum Fee, all UC Berkeley undergraduate and graduate students are granted memberships to the Cal Recreational Sports Facility. Please sign the linked waiver to ensure access to our facilities and services.</ITEM_COMMENT>
     <ADMIN_FUNC>GEN</ADMIN_FUNC>
@@ -687,7 +687,7 @@ The University of California recommends that students consider purchasing renter
     <ITEM_STATUS>Completed</ITEM_STATUS>
     <ITEM_STATUS_CODE>C</ITEM_STATUS_CODE>
     <STATUS_DT>2018-02-12</STATUS_DT>
-    <DUE_DT>2018-12-15</DUE_DT>
+    <DUE_DT>:::TOMORROW_NO_TIME:::</DUE_DT>
     <ASSOCIATION_ID_NAME/>
     <ITEM_COMMENT>Please provide a completed AB 540 (UC Nonresident Tuition Exemption) Application/Affidavit. To print out a copy of the Affidavit, please go to: http://registrar.berkeley.edu/sites/default/files/pdf/UCTE_for_Elig_CA_HSGrads.pdf</ITEM_COMMENT>
     <ADMIN_FUNC>STRM</ADMIN_FUNC>
@@ -715,8 +715,8 @@ The University of California recommends that students consider purchasing renter
     <CHECK_LIST_DESCR>AB 540 HS Transcript</CHECK_LIST_DESCR>
     <ITEM_STATUS>Incomplete</ITEM_STATUS>
     <ITEM_STATUS_CODE>Z</ITEM_STATUS_CODE>
-    <STATUS_DT>2018-02-12</STATUS_DT>
-    <DUE_DT>2018-12-15</DUE_DT>
+    <STATUS_DT>:::TODAY_NO_TIME:::</STATUS_DT>
+    <DUE_DT>:::TWO_WEEKS_AGO_NO_TIME:::</DUE_DT>
     <ASSOCIATION_ID_NAME/>
     <ITEM_COMMENT>Please provide a copy of your official high school transcript. If you prefer to mail the transcript, please send it to:
 
@@ -752,7 +752,7 @@ Berkeley, CA  94720-5404
     <ITEM_STATUS>Received</ITEM_STATUS>
     <ITEM_STATUS_CODE>R</ITEM_STATUS_CODE>
     <STATUS_DT>2018-02-12</STATUS_DT>
-    <DUE_DT>2018-12-15</DUE_DT>
+    <DUE_DT>:::TOMORROW_NO_TIME:::</DUE_DT>
     <ASSOCIATION_ID_NAME/>
     <ITEM_COMMENT>In a Word document, please restate the dates of your parent's physical presence in California.  Provide specific dates, indicating when your parent first arrived in California and any departures from the state for more than a week.  Please also include their purpose and duration of travel.  If your parent has never left California, please indicate the year they came to California or that they have been present in the state since birth (if applicable).</ITEM_COMMENT>
     <ADMIN_FUNC>STRM</ADMIN_FUNC>
@@ -781,7 +781,7 @@ Berkeley, CA  94720-5404
     <ITEM_STATUS>Completed</ITEM_STATUS>
     <ITEM_STATUS_CODE>C</ITEM_STATUS_CODE>
     <STATUS_DT>2017-05-02</STATUS_DT>
-    <DUE_DT>2017-05-01</DUE_DT>
+    <DUE_DT>:::LATER_IN_WEEK_NO_TIME:::</DUE_DT>
     <RESPONSIBLE_CNTCT_NAME>Residence Affairs Unit</RESPONSIBLE_CNTCT_NAME>
     <RESPONSIBLE_CNTCT_EMAIL>orres@berkeley.edu</RESPONSIBLE_CNTCT_EMAIL>
     <ASSOCIATION_ID_NAME/>
@@ -819,7 +819,7 @@ The SLR will open in a new window/tab. Please close the window/tab when you have
     <CHECK_LIST_DESCR>Statement of Legal Residence</CHECK_LIST_DESCR>
     <ITEM_STATUS>Initiated</ITEM_STATUS>
     <ITEM_STATUS_CODE>I</ITEM_STATUS_CODE>
-    <DUE_DT>2018-12-01</DUE_DT>
+    <DUE_DT>:::LATER_IN_WEEK_NO_TIME:::</DUE_DT>
     <RESPONSIBLE_CNTCT_NAME>Michelle Caruso</RESPONSIBLE_CNTCT_NAME>
     <RESPONSIBLE_CNTCT_EMAIL>mcaruso@berkeley.edu</RESPONSIBLE_CNTCT_EMAIL>
     <ASSOCIATION_ID_NAME/>
@@ -858,7 +858,7 @@ The SLR will open in a new window/tab. Please close the window/tab when you have
     <ITEM_STATUS>Received</ITEM_STATUS>
     <ITEM_STATUS_CODE>R</ITEM_STATUS_CODE>
     <STATUS_DT>2018-02-12</STATUS_DT>
-    <DUE_DT>2018-12-15</DUE_DT>
+    <DUE_DT>:::TODAY_NO_TIME:::</DUE_DT>
     <ASSOCIATION_ID_NAME/>
     <ITEM_COMMENT>Please provide documentation confirming that your parent&#x2019;s primary residence is in California (i.e. current driver&#x2019;s license, current vehicle registration, taxes from the most recent tax filing year,  utility bills, lease agreement, mortgage payments, pay stubs, letter from employer confirming California employment, gym memberships, etc.).</ITEM_COMMENT>
     <ADMIN_FUNC>STRM</ADMIN_FUNC>
@@ -886,7 +886,7 @@ The SLR will open in a new window/tab. Please close the window/tab when you have
     <CHECK_LIST_DESCR>Non-Immigrant Info Form (NIF)</CHECK_LIST_DESCR>
     <ITEM_STATUS>Initiated</ITEM_STATUS>
     <ITEM_STATUS_CODE>I</ITEM_STATUS_CODE>
-    <DUE_DT>2018-04-17</DUE_DT>
+    <DUE_DT>:::TODAY_NO_TIME:::</DUE_DT>
     <RESPONSIBLE_CNTCT_NAME>Michelle Caruso</RESPONSIBLE_CNTCT_NAME>
     <RESPONSIBLE_CNTCT_EMAIL>mcaruso@berkeley.edu</RESPONSIBLE_CNTCT_EMAIL>
     <ASSOCIATION_ID_NAME/>
