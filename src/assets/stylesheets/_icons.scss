@@ -282,3 +282,17 @@
 .fa-twitter-square {
   color: $cc-color-twitter-icon-splash !important;
 }
+
+// Font-Awesome Size
+//
+// Display font-awesome icons the size of other CalCentral icons
+//
+// markup:
+// <div class="cc-icon cc-icon-bcourses"></div>
+// <div class="cc-icon cc-icon-campussolutions"></div>
+// <div class="fa fa-exclamation-circle cc-icon-red cc-icon-fa-size"></div>
+//
+// Styleguide 3.4.3
+.cc-icon-fa-size {
+  font-size: 19px;
+}

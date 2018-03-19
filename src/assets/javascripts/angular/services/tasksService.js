@@ -85,7 +85,7 @@ angular.module('calcentral.services').service('tasksService', function(apiServic
   };
 
   var isOverdueTask = function(task) {
-    return (task.bucket === 'Overdue' && !(task.emitter === 'Campus Solutions' && task.cs.displayStatus === 'beingProcessed'));
+    return (task.bucket === 'Overdue' && isIncompleteTask(task) && !isCsBeingProcessedTask(task));
   };
 
   var sortByCompletedDateReverse = function(a, b) {
