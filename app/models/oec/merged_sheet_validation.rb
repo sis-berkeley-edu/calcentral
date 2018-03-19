@@ -77,7 +77,7 @@ module Oec
         if confirmation['DEPT_FORM'].present?
           dept_supervisors = supervisors.matching_dept_name(confirmation['DEPT_FORM'])
           validate('courses', confirmation['COURSE_ID']) do |errors|
-            errors.add "DEPT_FORM #{confirmation['DEPT_FORM']} not found among participating departments" unless participating_dept_names.include? confirmation['DEPT_FORM']
+            log :warn, "DEPT_FORM #{confirmation['DEPT_FORM']} not found among participating departments" unless participating_dept_names.include? confirmation['DEPT_FORM']
             errors.add "No supervisors found for DEPT_FORM #{confirmation['DEPT_FORM']}" if dept_supervisors.none?
             dept_supervisors.each do |supervisor|
               course_supervisor_row = {

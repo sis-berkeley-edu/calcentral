@@ -173,10 +173,16 @@ describe Oec::ValidationTask do
 
     context 'DEPT_FORM specifies non-participating department' do
       before { allow_any_instance_of(Oec::DepartmentMappings).to receive(:participating_dept_names).and_return %w(BIOLOGY INTEGBI MCELLBI) }
-      let(:invalid_row) { '2015-B-99999,2015-B-99999,GWS 150 LEC 001 VINDICATION OF RIGHTS,,,GWS,150,LEC,001,P,155555,UID:155555,Zachary,Zzzz,zzzz@berkeley.edu,23,Y,GWS,F,,01-26-2015,05-11-2015' }
+      let(:row_with_new_dept) { '2015-B-99999,2015-B-99999,GWS 150 LEC 001 VINDICATION OF RIGHTS,,,GWS,150,LEC,001,P,155555,UID:155555,Zachary,Zzzz,zzzz@berkeley.edu,23,Y,GWS,F,,01-26-2015,05-11-2015' }
       let(:key) { '2015-B-99999' }
-      let(:expected_message) { 'DEPT_FORM GWS not found among participating departments' }
-      include_examples 'validation error logging'
+      it 'should pass with warning' do
+        merged_course_confirmations_csv.concat row_with_new_dept
+        allow(Rails.logger).to receive(:warn)
+        expect(Rails.logger).to receive(:warn).with /DEPT_FORM GWS not found among participating departments/
+        allow(Rails.logger).to receive(:info)
+        expect(Rails.logger).to receive(:info).with /Validation passed./
+        task.run
+      end
     end
   end
 
