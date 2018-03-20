@@ -70,7 +70,7 @@
         "dateTime": "2018-03-01T07:59:59+00:00",
         "epoch": 1519891199,
         "hasTime": true,
-        "withinOneWeek":false
+        "withinOneWeek":true
       },
       "emitter": "bCourses",
       "linkDescription": "View in bCourses",

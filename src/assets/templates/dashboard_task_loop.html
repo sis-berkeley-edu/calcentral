@@ -69,7 +69,7 @@
         <div data-ng-if="(task.cs.displayStatus === 'beingProcessed' || task.cs.displayCategory === 'finaid') && task.cs.showStatus"
           data-ng-bind="task.cs.showStatus" class="cc-widget-tasks-title-sub">
         </div>
-        <span data-ng-if="task.dueDate.withinOneWeek">
+        <span data-ng-if="task.dueDate.withinOneWeek && task.emitter != 'bCourses'">
           <i class="fa fa-exclamation-triangle cc-icon-gold" aria-hidden="true"></i>
         </span>
         <span data-ng-if="task.cs.displayStatus === 'furtherActionNeeded' && task.cs.displayCategory !== 'finaid'">Due </span>

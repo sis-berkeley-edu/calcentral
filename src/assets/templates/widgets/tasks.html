@@ -100,7 +100,7 @@
                           <span data-ng-bind="taskSection.tasks.incomplete.length"></span> incomplete
                         </span>
                       </div>
-                      <div class="cc-left" data-ng-if="taskSection.dueWithinWeekCount > 0">
+                      <div class="cc-left" data-ng-if="taskSection.dueWithinWeekCount > 0 && taskSection.id != 'canvas'">
                         <span class="cc-widget-task-section-due-within-week-count">
                           <i class="fa fa-exclamation-triangle cc-icon-gold" aria-hidden="true"></i>
                           <span data-ng-bind="taskSection.dueWithinWeekCount"></span> due within 1 week
