@@ -8,10 +8,11 @@
   <div data-ng-hide="editorEnabled">
     <div class="cc-widget-tasks-col cc-widget-tasks-col-title"
       data-ng-class="{'cc-widget-tasks-item-no-action-needed':((isCompletedTask(task) || isCsBeingProcessedTask(task)) && task.cs.itemStatusCode !== 'W')}">
-      <div
-        class="cc-widget-tasks-status-{{task.status}}"
-        data-ng-class="{'cc-ellipsis':(!task.show),'cc-alert':(currentTaskMode !== 'completed' && isOverdueTask(task)), 'cc-strikethrough':(task.editorIsProcessing)}">
-        <strong data-ng-bind="task.title"></strong>
+      <div class="cc-widget-tasks-status-{{task.status}}"
+        data-ng-class="{'cc-ellipsis':(!task.show),'cc-strikethrough':(task.editorIsProcessing)}">
+        <div data-ng-class="{'cc-alert':isOverdueTask(task)}">
+          <strong data-ng-bind="task.title"></strong>
+        </div>
         <div data-ng-if="task.emitter === 'bCourses' && task.course_code" class="cc-widget-tasks-title-sub">
           <span data-ng-bind="task.course_code"></span>
         </div>
@@ -37,18 +38,22 @@
       </label>
 
       <div
+        class="cc-icon fa fa-exclamation-circle cc-icon-red cc-icon-fa-size"
+        data-ng-if="isOverdueTask(task)">
+      </div>
+      <div
         class="cc-icon cc-icon-bcourses"
-        data-ng-if="task.emitter=='bCourses'">
+        data-ng-if="task.emitter=='bCourses' && !isOverdueTask(task)">
       </div>
       <div
         class="cc-icon cc-icon-campussolutions"
-        data-ng-if="task.emitter=='Campus Solutions'">
+        data-ng-if="task.emitter=='Campus Solutions' && !isOverdueTask(task)">
       </div>
     </div>
 
     <div
       class="cc-widget-tasks-col cc-widget-tasks-col-date"
-      data-ng-class="{'cc-widget-tasks-item-no-action-needed':((task.status === 'completed' || task.cs.displayStatus == 'beingProcessed') && task.cs.itemStatusCode !== 'W')}">
+      data-ng-class="{'cc-widget-tasks-item-no-action-needed':((task.status === 'completed' || task.cs.displayStatus == 'beingProcessed') && task.cs.itemStatusCode !== 'W'),'cc-alert':isOverdueTask(task)}">
 
       <div data-ng-if="task.status === 'completed'">
         <span data-ng-if="!task.cs.itemStatusCode" class="cc-widget-tasks-title-sub cc-uppercase">Completed</span>
