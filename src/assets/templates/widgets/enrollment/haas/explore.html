@@ -1,7 +1,7 @@
 <div
   data-cc-enrollment-card-header-directive
   data-count="$index + 1"
-  data-date="{{enrollmentInstruction.enrollmentPeriod[0] ? 'Prior to ' + (enrollmentInstruction.enrollmentPeriod[0].date.epoch * 1000 | date:'MMM d':enrollmentInstruction.enrollmentPeriod[0].date.offset): ''}}"
+  data-date="{{enrollmentInstruction.enrollmentPeriod[0] && !isInstructionType(enrollmentInstruction, ['haasEveningWeekendMba', 'haasFullTimeMba']) ? 'Prior to ' + (enrollmentInstruction.enrollmentPeriod[0].date.epoch * 1000 | date:'MMM d':enrollmentInstruction.enrollmentPeriod[0].date.offset): ''}}"
   data-title="section.title"
 ></div>
 
