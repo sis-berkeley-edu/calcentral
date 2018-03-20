@@ -105,12 +105,12 @@ angular.module('calcentral.controllers').controller('TasksController', function(
   };
 
   $scope.incompleteTaskTotal = function(excludeBeingProcessed) {
-    if ($scope.lists && $scope.lists.incomplete && $scope.lists.furtherActionNeeded && $scope.lists.overdue) {
+    if ($scope.lists && $scope.lists.incomplete && $scope.lists.overdue) {
       var incompleteFiltered = _.clone($scope.lists.incomplete);
       if (excludeBeingProcessed) {
         _.remove(incompleteFiltered, tasksService.isCsBeingProcessedTask);
       }
-      return incompleteFiltered.length + $scope.lists.furtherActionNeeded.length + $scope.lists.overdue.length;
+      return incompleteFiltered.length + $scope.lists.overdue.length;
     } else {
       return 0;
     }

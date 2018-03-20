@@ -68,8 +68,8 @@ angular.module('calcentral.services').service('tasksService', function(apiServic
     return (task.emitter === 'Campus Solutions' && task.cs.displayStatus === 'beingProcessed');
   };
 
-  var isCsFurtherActionNeededTask = function(task) {
-    return (task.emitter === 'Campus Solutions' && task.cs.displayStatus === 'furtherActionNeeded');
+  var isNotCsFurtherActionNeededTask = function(task) {
+    return (task.emitter !== 'Campus Solutions' && task.cs.displayStatus !== 'furtherActionNeeded');
   };
 
   var isDueWithinOneWeekTask = function(task) {
@@ -114,13 +114,7 @@ angular.module('calcentral.services').service('tasksService', function(apiServic
 
   var updateTaskLists = function($scope) {
     var incompleteTasks = _.clone($scope.tasks.filter(isIncompleteTask));
-    var furtherActionNeededTasks = [];
     var overdueTasks = [];
-
-    // separate further action needed tasks
-    if (incompleteTasks.length > 0) {
-      furtherActionNeededTasks = _.remove(incompleteTasks, isCsFurtherActionNeededTask).sort(sortByDueDate);
-    }
 
     // separate overdue tasks
     if (incompleteTasks.length > 0) {
@@ -130,7 +124,6 @@ angular.module('calcentral.services').service('tasksService', function(apiServic
     $scope.lists = {
       completed: $scope.tasks.filter(isCompletedTask),
       incomplete: incompleteTasks,
-      furtherActionNeeded: furtherActionNeededTasks,
       overdue: overdueTasks
     };
 
@@ -158,7 +151,7 @@ angular.module('calcentral.services').service('tasksService', function(apiServic
       taskSection.dueWithinWeekCount = incompleteSectionTasks.filter(isDueWithinOneWeekTask).length;
 
       taskSection.tasks = {
-        incomplete: incompleteSectionTasks,
+        incomplete: incompleteSectionTasks.sort(isNotCsFurtherActionNeededTask),
         beingProcessed: beingProcessedTasks,
         completed: $scope.lists.completed.filter(taskFilter).sort(sortByCompletedDateReverse)
       };

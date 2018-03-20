@@ -67,7 +67,6 @@
         <span data-ng-if="task.dueDate.withinOneWeek">
           <i class="fa fa-exclamation-triangle cc-icon-gold" aria-hidden="true"></i>
         </span>
-        <span data-ng-if="task.cs.displayStatus === 'furtherActionNeeded' && task.cs.displayCategory !== 'finaid'">Due </span>
         <span data-ng-if="task.dueDate"
           data-ng-bind="task.dueDate.epoch * 1000 | dateInYearFilter:'MMM d':'MMM d, yyyy'">
         </span>
