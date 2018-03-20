@@ -114,7 +114,7 @@
         </a>
 
         <div
-          data-ng-if="api.user.profile.actAsOptions.canSeeCSLinks && task.uploadUrl && (task.cs.showStatus === 'Initiated' || task.cs.showStatus === 'Incomplete')"
+          data-ng-if="api.user.profile.actAsOptions.canSeeCSLinks && task.uploadUrl && (task.cs.itemStatusCode === 'I' || task.cs.itemStatusCode === 'Z')"
           class="cc-widget-tasks-upload"
         >
           <a class="cc-button"

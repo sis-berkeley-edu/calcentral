@@ -45,7 +45,7 @@ module MyTasks
 
     def entry_from_result(result)
       status = 'inprogress'
-      if %w(Completed Paidoff Waived Cancelled).include?(result[:itemStatus])
+      if %w(C P W X).include?(result[:itemStatusCode])
         status = 'completed'
       end
       formatted_entry = {
@@ -62,7 +62,7 @@ module MyTasks
         cs: {
           responsibleContactEmail: result[:responsibleCntctEmail],
           organization: result[:associationIdName],
-          showStatus: result[:itemStatus] != 'Completed' ? result[:itemStatus] : '',
+          showStatus: result[:itemStatusCode] != 'C' ? result[:itemStatus] : '',
           itemStatusCode: result[:itemStatusCode],
           displayStatus: display_status(result[:itemStatusCode]),
           displayCategory: display_category(result[:adminFunc], result[:chklstItemCd])
