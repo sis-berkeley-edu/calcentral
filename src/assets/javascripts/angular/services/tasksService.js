@@ -25,14 +25,14 @@ angular.module('calcentral.services').service('tasksService', function(apiServic
     },
     {
       type: 'campusSolutions',
-      id: 'student',
-      title: 'Student Tasks',
+      id: 'newStudent',
+      title: 'New Student Tasks',
       show: false
     },
     {
       type: 'campusSolutions',
-      id: 'newStudent',
-      title: 'New Student Tasks',
+      id: 'student',
+      title: 'Student Tasks',
       show: false
     },
     {
