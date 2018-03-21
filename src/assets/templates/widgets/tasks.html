@@ -69,21 +69,6 @@
             </ul>
           </div>
 
-          <div data-ng-if="lists.furtherActionNeeded.length > 0" class="cc-widget-tasks-section-bottom-margin">
-            <div class="cc-flex cc-flex-space-between cc-flex-align-base cc-widget-tasks-list-header-special">
-              <div class="cc-widget-tasks-list-header-special-title">
-                <strong class="cc-widget-tasks-list-header-further-action-needed-title">Further Action Needed</strong>
-              </div>
-            </div>
-            <ul class="cc-widget-tasks-list cc-widget-list-color">
-              <li
-                data-ng-repeat="task in lists.furtherActionNeeded"
-                data-ng-class="{'cc-widget-list-selected': task.show}">
-                <div data-ng-include src="'dashboard_task_loop.html'"></div>
-              </li>
-            </ul>
-          </div>
-
           <div data-ng-repeat="taskSection in taskSections" data-ng-if="(taskSection.tasks.incomplete.length > 0) || (taskSection.tasks.beingProcessed.length > 0)">
             <div class="cc-widget-tasks-section-wrapper" data-ng-class="{'cc-widget-tasks-section-wrapper-top-border': $first}">
               <div class="cc-widget-tasks-section-header-incomplete">
