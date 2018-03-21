@@ -3,7 +3,6 @@ describe DegreeProgress::MyGraduateMilestones do
   shared_examples 'a proxy that returns a link to the Grad Academic Progress Report' do
     it 'includes said link in the response' do
       expect(subject[:feed][:links]).to be
-      puts subject[:feed][:links].pretty_inspect
       expect(subject[:feed][:links][:academicProgressReportGrad]).to be
       expect(subject[:feed][:links][:academicProgressReportGrad][:urlId]).to eq 'UC_CX_APR_RPT_GRD_STDNT'
       expect(subject[:feed][:links][:academicProgressReportGrad][:url]).to eq 'https://bcswebqat.is.berkeley.edu/psp/bcsqat/EMPLOYEE/PSFT_CS/c/SA_LEARNER_SERVICES.SAA_SS_DPR_ADB.GBL?EMPLID=25738808'
