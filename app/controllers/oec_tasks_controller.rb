@@ -31,7 +31,7 @@ class OecTasksController < ApplicationController
     task_class = "Oec::#{params['task_name']}".constantize
     params.require('term')
     task_opts = params.slice('term', 'departmentCode')
-    task_status = Oec::ApiTaskWrapper.new(task_class, task_opts).start_in_background
+    task_status = Oec::ApiTaskWrapper.new(task_class, task_opts).run_new_task
     render json: {
       oecDriveUrl: Oec::RemoteDrive::HUMAN_URL,
       oecTaskStatus: task_status

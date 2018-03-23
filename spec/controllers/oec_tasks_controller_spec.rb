@@ -51,17 +51,17 @@ describe OecTasksController do
     let(:make_request) { post :run, task_name: task_name, term: term_name }
     include_examples 'authorization and error handling'
 
+    before do
+      allow(Oec::ApiTaskWrapper).to receive(:generate_task_id).and_return task_id
+    end
+
     it_should_behave_like 'an api endpoint' do
       before do
-        allow_any_instance_of(Oec::ApiTaskWrapper).to receive(:start_in_background).and_raise(RuntimeError, 'Something went wrong')
+        allow_any_instance_of(Oec::ApiTaskWrapper).to receive(:run_new_task).and_raise(RuntimeError, 'Something went wrong')
       end
     end
 
-    it 'should start task wrapper and return status' do
-      expect_any_instance_of(Oec::ApiTaskWrapper).to receive(:start_in_background).and_return({
-        id: task_id,
-        status: 'In progress'
-      })
+    it 'should start task wrapper and return a task in progress' do
       make_request
       expect(response.status).to eq 200
       response_body = JSON.parse response.body
@@ -101,6 +101,10 @@ describe OecTasksController do
   describe '#task_status' do
     let(:make_request) { get :task_status, task_id: task_id }
     let(:task_id) { Oec::ApiTaskWrapper.generate_task_id }
+
+    before do
+      allow(Oec::ApiTaskWrapper).to receive(:generate_task_id).and_return task_id
+    end
 
     it_should_behave_like 'an api endpoint' do
       before { allow(Oec::Task).to receive(:fetch_from_cache).and_raise RuntimeError, 'Something went wrong' }
