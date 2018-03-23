@@ -4,7 +4,6 @@ git:
 language: ruby
 bundler_args: --without development testext production --deployment --jobs=4 --retry=5
 cache: bundler
-dist: precise
 
 rvm:
   - jruby-9.1.14.0
