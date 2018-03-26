@@ -413,6 +413,15 @@ calnet_crosswalk_proxy:
   password: secret
   http_timeout_seconds: 30
 
+data_loch:
+  fake: true
+  aws_key: 'key'
+  aws_secret: 'secret'
+  aws_region: 'region'
+  bucket: 'bucket'
+  prefix: 'exports/go/here'
+  staging_directory: 'tmp/data_loch'
+
 class_enrollment:
   concurrent_apply_deadlines: []
 
