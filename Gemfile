@@ -98,6 +98,9 @@ gem 'net-ssh', '~>2.9.2' # v3 requires Ruby 2.0
 
 gem 'icalendar', '~> 2.2.2'
 
+# Data Loch integration
+gem 'aws-sdk-s3', '~> 1.8.2'
+
 ##################################
 # Front-end Gems for Rails Admin #
 ##################################
