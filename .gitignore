@@ -58,6 +58,9 @@ public/styleguide
 # Ignore torquebox build files
 *.knob
 
+# Ignore warbler build files
+*.war
+
 # Ignore installed gem checking
 /vendor
 
