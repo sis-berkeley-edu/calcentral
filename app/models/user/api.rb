@@ -235,7 +235,6 @@ module User
         hasInstructorHistory: has_instructor_history,
         hasStudentHistory: has_student_history,
         hasToolboxTab: has_toolbox_tab?(current_user_policy),
-        inEducationAbroadProgram: @user_attributes[:educationAbroad],
         isDelegateUser: is_delegate_user?,
         isDirectlyAuthenticated: directly_authenticated,
         isGoogleReminderDismissed: is_google_reminder_dismissed,

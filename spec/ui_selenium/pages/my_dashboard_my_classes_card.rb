@@ -8,7 +8,6 @@ module CalCentralPages
     div(:not_enrolled_msg, :xpath => '//div[contains(.,"You are not enrolled in any UC Berkeley classes this semester.")]')
     paragraph(:not_teaching_msg, :xpath => '//p[text()="You have no classes assigned to you this semester."]')
     paragraph(:not_enrolled_not_teaching_msg, :xpath => '//p[text()="You are not enrolled in any UC Berkeley classes and you have no classes assigned to you this semester."]')
-    paragraph(:eap_student_msg, :xpath => '//p[text()="You are enrolled in the Education Abroad Program this semester."]')
     link(:registrar_link, :text => "Office of the Registrar\n- opens in new window")
     link(:cal_student_central_link, :text => "Cal Student Central\n- opens in new window")
 

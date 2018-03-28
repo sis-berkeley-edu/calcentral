@@ -70,10 +70,6 @@ class ApiMyStatusPage
     roles['law']
   end
 
-  def is_eap?
-    @parsed['inEducationAbroadProgram']
-  end
-
   def is_legacy_user?
     @parsed['isLegacyStudent']
   end

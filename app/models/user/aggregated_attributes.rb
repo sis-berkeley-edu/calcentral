@@ -35,7 +35,6 @@ module User
         campusSolutionsId: campus_solutions_id,
         primaryEmailAddress: get_campus_attribute('email_address', :string),
         officialBmailAddress: get_campus_attribute('official_bmail_address', :string),
-        educationAbroad: !!@oracle_attributes[:education_abroad]
       }
     end
 
