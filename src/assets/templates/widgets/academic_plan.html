@@ -92,7 +92,10 @@
                           <i class="fa fa-exclamation-triangle cc-icon-gold"></i> ?
                         </span>
                       </td>
-                      <td data-ng-if="api.user.profile.canViewGrades && !section.grading.grade && !section.grading.midpointGrade">&mdash;</td>
+                      <td data-ng-if="api.user.profile.canViewGrades && !section.grading.grade && !section.grading.midpointGrade">
+                        <span data-ng-if="section.grading.grading_basis" data-ng-bind="section.grading.grading_basis"></span>
+                        <span data-ng-if="!section.grading.grading_basis">&mdash;</span>
+                      </td>
                     </tr>
                     <tr data-ng-repeat-end data-ng-if="api.user.profile.canViewGrades && !section.grading.grade && section.grading.midpointGrade && section.show">
                       <td colspan="3">
