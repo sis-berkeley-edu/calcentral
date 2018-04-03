@@ -1670,6 +1670,15 @@ INSERT INTO oec_course_codes VALUES (188, 'YIDDISH', '', 'HZGER', true, '2015-08
 INSERT INTO oec_course_codes VALUES (189, 'FSSEM', '', 'FSSEM', true, '2017-05-19 17:40:36.502', '2017-05-19 17:40:36.502');
 INSERT INTO oec_course_codes VALUES (190, 'GLOBAL', '', 'QIIAS', true, '2017-08-10 17:40:36.502', '2017-08-10 17:40:36.502');
 INSERT INTO oec_course_codes VALUES (191, 'BIC', '', 'QHUIS', true, '2017-09-27 23:26:36.16', '2017-09-27 23:26:36.16');
+INSERT INTO oec_course_codes VALUES (192, 'EDUC', '130', 'CALTEACH', true, '2018-04-03 23:26:36.16', '2018-04-03 23:26:36.16');
+INSERT INTO oec_course_codes VALUES (193, 'EDUC', '131AC', 'CALTEACH', true, '2018-04-03 23:26:36.16', '2018-04-03 23:26:36.16');
+INSERT INTO oec_course_codes VALUES (194, 'HISTORY', '138T', 'CALTEACH', true, '2018-04-03 23:26:36.16', '2018-04-03 23:26:36.16');
+INSERT INTO oec_course_codes VALUES (195, 'HISTORY', '180T', 'CALTEACH', true, '2018-04-03 23:26:36.16', '2018-04-03 23:26:36.16');
+INSERT INTO oec_course_codes VALUES (196, 'HISTORY', '182AT', 'CALTEACH', true, '2018-04-03 23:26:36.16', '2018-04-03 23:26:36.16');
+INSERT INTO oec_course_codes VALUES (197, 'UGIS', '187', 'CALTEACH', true, '2018-04-03 23:26:36.16', '2018-04-03 23:26:36.16');
+INSERT INTO oec_course_codes VALUES (198, 'UGIS', '188', 'CALTEACH', true, '2018-04-03 23:26:36.16', '2018-04-03 23:26:36.16');
+INSERT INTO oec_course_codes VALUES (199, 'UGIS', '303', 'CALTEACH', true, '2018-04-03 23:26:36.16', '2018-04-03 23:26:36.16');
+INSERT INTO oec_course_codes VALUES (200, 'UGIS', '82', 'CALTEACH', true, '2018-04-03 23:26:36.16', '2018-04-03 23:26:36.16');
 
 --
 -- Name: oec_course_codes_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
