@@ -19,6 +19,7 @@ module Berkeley
         'BTCNM' =>  'Center for New Media',
         'BOOPT' =>  'School of Optometry',
         'BUGMS' =>  'Center for Global Metropolitan Studies',
+        'CALTEACH' => 'CalTeach Program',
         'CCHEM' =>  'Department of Chemistry',
         'CEEEG' =>  'Department of Chemical and Biomolecular Engineering',
         'CFPPR' =>  'Goldman School of Public Policy',
