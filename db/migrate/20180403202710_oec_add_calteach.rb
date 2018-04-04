@@ -2,6 +2,7 @@ class OecAddCalteach < ActiveRecord::Migration
   def up
     if Oec::CourseCode.where(dept_code: 'CALTEACH').count == 0
       [
+        'CALTEACH', '', 'CALTEACH', true,
         'EDUC', '130', 'CALTEACH', true,
         'EDUC', '131AC', 'CALTEACH', true,
         'HISTORY', '138T', 'CALTEACH', true,

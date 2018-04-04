@@ -20,6 +20,9 @@ describe Oec::DepartmentMappings, if: in_memory_database? do
     Oec::CourseCode.create(dept_name: 'PORTUG', catalog_id: '66OTHER', dept_code: 'MBARC', include_in_oec: true)
     Oec::CourseCode.create(dept_name: 'SPANISH', catalog_id: '', dept_code: 'LPSPP', include_in_oec: true)
     Oec::CourseCode.create(dept_name: 'FSSEM', catalog_id: '', dept_code: 'FSSEM', include_in_oec: include_fssem)
+    Oec::CourseCode.create(dept_name: 'EDUC', catalog_id: '130', dept_code: 'CALTEACH', include_in_oec: true)
+    Oec::CourseCode.create(dept_name: 'CALTEACH', catalog_id: '', dept_code: 'CALTEACH', include_in_oec: true)
+
     allow(EdoOracle::Oec).to receive(:get_fssem_course_codes).with(term_id).and_return([
       {dept_name: 'CHEM', catalog_id: '24'},
       {dept_name: 'CLASSIC', catalog_id: '24'},
@@ -113,6 +116,13 @@ describe Oec::DepartmentMappings, if: in_memory_database? do
       let(:catalog_id) {'24'}
       it 'returns the virtual department name' do
         expect(home_dept).to eq 'FSSEM'
+      end
+    end
+    context 'catalog ID belongs to a tailored pseudo-department' do
+      let(:dept_name) {'EDUC'}
+      let(:catalog_id) {'130'}
+      it 'returns the pseudo-department name' do
+        expect(home_dept).to eq 'CALTEACH'
       end
     end
   end
