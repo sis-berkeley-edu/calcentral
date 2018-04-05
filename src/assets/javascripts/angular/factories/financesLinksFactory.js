@@ -8,8 +8,8 @@ var angular = require('angular');
 angular.module('calcentral.factories').factory('financesLinksFactory', function(apiService) {
   var urlEftEnrollment = '/api/my/eft_enrollment';
   var urlFppEnrollment = '/api/campus_solutions/fpp_enrollment';
-  var urlGeneralCsLinks = '/api/campus_solutions/financial_resources_general';
-  var urlSummerEstimator = '/api/campus_solutions/financial_resources_parameterized/summer_estimator/';
+  var urlEmergencyLoan = '/api/campus_solutions/financial_resources/emergency_loan';
+  var urlSummerEstimator = '/api/campus_solutions/financial_resources/summer_estimator';
 
   var getEftEnrollment = function(options) {
     return apiService.http.request(options, urlEftEnrollment);
@@ -19,18 +19,17 @@ angular.module('calcentral.factories').factory('financesLinksFactory', function(
     return apiService.http.request(options, urlFppEnrollment);
   };
 
-  var getGeneralCsLinks = function(options) {
-    return apiService.http.request(options, urlGeneralCsLinks);
+  var getEmergencyLoan = function(options) {
+    return apiService.http.request(options, urlEmergencyLoan);
   };
 
   var getSummerEstimator = function(options) {
-    urlSummerEstimator = options && options.aidYear ? urlSummerEstimator + options.aidYear : urlSummerEstimator;
     return apiService.http.request(options, urlSummerEstimator);
   };
 
   return {
-    getGeneralCsLinks: getGeneralCsLinks,
     getEftEnrollment: getEftEnrollment,
+    getEmergencyLoan: getEmergencyLoan,
     getFppEnrollment: getFppEnrollment,
     getSummerEstimator: getSummerEstimator
   };
