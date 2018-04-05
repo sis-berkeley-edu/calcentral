@@ -106,7 +106,7 @@ angular.module('calcentral.controllers').controller('FinancesLinksController', f
     return $q(function(resolve) {
       $scope.canViewEftLink = userService.profile.roles.student && (userService.profile.roles.undergrad || userService.profile.roles.graduate || userService.profile.academicRoles.law);
       $scope.canViewEmergencyLoanLink = !userService.profile.academicRoles.summerVisitor;
-      $scope.canViewSummerEstimatorLink = !userService.profile.academicRoles.concurrent && !userService.profile.academicRoles.summerVisitor;
+      $scope.canViewSummerEstimatorLink = !!userService.profile.roles.undergrad;
       resolve();
     });
   };
