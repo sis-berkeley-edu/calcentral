@@ -3,19 +3,12 @@ module CampusSolutions
 
     before_action :api_authenticate
 
-    def get_general
-      render json: CampusSolutions::FinancialResourcesGeneral.new().get_feed
+    def get_emergency_loan
+      render json: CampusSolutions::EmergencyLoanLink.new().get_feed
     end
 
-    def get_parameterized
-      aid_year = aid_year_param
-      render json: CampusSolutions::FinancialResourcesParameterized.new({aid_year: aid_year}).get_feed
-    end
-
-    private
-
-    def aid_year_param
-      params.require 'aid_year'
+    def get_summer_estimator
+      render json: CampusSolutions::SummerEstimatorLink.new().get_feed
     end
 
   end
