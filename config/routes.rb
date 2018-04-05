@@ -157,8 +157,8 @@ Calcentral::Application.routes.draw do
     get '/api/campus_solutions/financial_aid_data' => 'campus_solutions/financial_aid_data#get', :defaults => { :format => 'json' }
     get '/api/campus_solutions/financial_aid_funding_sources' => 'campus_solutions/financial_aid_funding_sources#get', :defaults => { :format => 'json' }
     get '/api/campus_solutions/financial_aid_funding_sources_term' => 'campus_solutions/financial_aid_funding_sources_term#get', :defaults => { :format => 'json' }
-    get '/api/campus_solutions/financial_resources_general' => 'campus_solutions/financial_resources#get_general', :defaults => { :format => 'json' }
-    get '/api/campus_solutions/financial_resources_parameterized/summer_estimator/:aid_year' => 'campus_solutions/financial_resources#get_parameterized', :defaults => { :format => 'json' }
+    get '/api/campus_solutions/financial_resources/emergency_loan' => 'campus_solutions/financial_resources#get_emergency_loan', :defaults => { :format => 'json' }
+    get '/api/campus_solutions/financial_resources/summer_estimator' => 'campus_solutions/financial_resources#get_summer_estimator', :defaults => { :format => 'json' }
     get '/api/campus_solutions/fpp_enrollment' => 'campus_solutions/fpp_enrollment#get', :defaults => { :format => 'json' }
     get '/api/campus_solutions/higher_one_url' => 'campus_solutions/higher_one_url#get', :defaults => { :format => 'json' }
     get '/api/campus_solutions/holds' => 'campus_solutions/holds#get', :defaults => { :format => 'json' }
