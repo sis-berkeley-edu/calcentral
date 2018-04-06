@@ -22,7 +22,6 @@ describe MyAcademics::GpaUnits do
   end
 
   context 'when legacy user but non-legacy term' do
-    let(:status_proxy) { HubEdos::AcademicStatus.new(user_id: uid, fake: true) }
     before do
       allow_any_instance_of(described_class).to receive(:lookup_campus_solutions_id).and_return eight_digit_cs_id
       allow(Settings.terms).to receive(:legacy_cutoff).and_return('spring-2010')
@@ -37,7 +36,6 @@ describe MyAcademics::GpaUnits do
   end
 
   context 'when sourced from Hub academic status' do
-    let(:status_proxy) { HubEdos::AcademicStatus.new(user_id: uid, fake: true) }
     before do
       allow(HubEdos::AcademicStatus).to receive(:new).and_return status_proxy
       allow_any_instance_of(MyAcademics::MyAcademicRoles).to receive(:get_feed).and_return academic_roles
