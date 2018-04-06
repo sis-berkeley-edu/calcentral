@@ -6,7 +6,7 @@ var _ = require('lodash');
 /**
  * Footer controller
  */
-angular.module('calcentral.controllers').controller('FinancesLinksController', function(apiService, campusLinksFactory, finaidService, financesLinksFactory, userService, $scope, $q) {
+angular.module('calcentral.controllers').controller('FinancesLinksController', function(apiService, campusLinksFactory, finaidService, financesLinksFactory, sirFactory, userService, $scope, $q) {
   $scope.isLoading = true;
   $scope.canViewEftLink = false;
   $scope.canViewEmergencyLoanLink = false;
@@ -102,11 +102,19 @@ angular.module('calcentral.controllers').controller('FinancesLinksController', f
     $scope.summerEstimatorLink = _.get(links, 'summerEstimator');
   };
 
+  var parseSirStatuses = function(response) {
+    var hasUndergraduateRole = userService.profile.roles.undergrad;
+    var sirStatuses = _.get(response, 'data.sirStatuses');
+    var hasUndergraduateSir = !!_.find(sirStatuses, {
+      isUndergraduate: true
+    });
+    $scope.canViewSummerEstimatorLink = hasUndergraduateRole || hasUndergraduateSir;
+  };
+
   var setLinkVisibilities = function() {
     return $q(function(resolve) {
       $scope.canViewEftLink = userService.profile.roles.student && (userService.profile.roles.undergrad || userService.profile.roles.graduate || userService.profile.academicRoles.law);
       $scope.canViewEmergencyLoanLink = !userService.profile.academicRoles.summerVisitor;
-      $scope.canViewSummerEstimatorLink = !!userService.profile.roles.undergrad;
       resolve();
     });
   };
@@ -115,20 +123,20 @@ angular.module('calcentral.controllers').controller('FinancesLinksController', f
     var getCampusLinks = campusLinksFactory.getLinks({
       category: 'finances'
     }).then(parseCampusLinks);
-    var getEftEnrollment = financesLinksFactory.getEftEnrollment().then(parseEftEnrollment);
     var getFppEnrollment = financesLinksFactory.getFppEnrollment().then(parseFppEnrollment);
-    var getEmergencyLoanLink = financesLinksFactory.getEmergencyLoan().then(parseEmergencyLoanLink);
-    var getSummerEstimatorLink = financesLinksFactory.getSummerEstimator().then(parseSummerEstimatorLink);
 
-    var requests = [getCampusLinks, getFppEnrollment, getEmergencyLoanLink];
+    var requests = [getCampusLinks, getFppEnrollment];
 
     if ($scope.canViewEftLink) {
+      var getEftEnrollment = financesLinksFactory.getEftEnrollment().then(parseEftEnrollment);
       requests.push(getEftEnrollment);
     }
     if ($scope.canViewEmergencyLoanLink) {
+      var getEmergencyLoanLink = financesLinksFactory.getEmergencyLoan().then(parseEmergencyLoanLink);
       requests.push(getEmergencyLoanLink);
     }
     if ($scope.canViewSummerEstimatorLink) {
+      var getSummerEstimatorLink = financesLinksFactory.getSummerEstimator().then(parseSummerEstimatorLink);
       requests.push(getSummerEstimatorLink);
     }
 
@@ -137,5 +145,6 @@ angular.module('calcentral.controllers').controller('FinancesLinksController', f
     });
   };
 
-  setLinkVisibilities().then(initialize());
+  var setSummerEstimatorVisibility = sirFactory.getSirStatuses().then(parseSirStatuses);
+  setSummerEstimatorVisibility.then(setLinkVisibilities).then(initialize);
 });
