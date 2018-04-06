@@ -33,16 +33,8 @@ module MyAcademics
       else
         result[:hub_empty] = true
       end
-      if (edo_response)
-        if (totalUnitsTakenNotForGpa = parse_edo_total_units_taken_not_for_gpa edo_response) && totalUnitsTakenNotForGpa.present?
-          result[:totalUnitsTakenNotForGpa] = totalUnitsTakenNotForGpa
-        end
-        if (totalUnitsPassedNotForGpa = parse_edo_total_units_passed_not_for_gpa edo_response) && totalUnitsPassedNotForGpa.present?
-          result[:totalUnitsPassedNotForGpa] = totalUnitsPassedNotForGpa
-        end
-      else
-        result[:edo_empty] = true
-      end
+      result[:totalUnitsTakenNotForGpa] = parse_total_units_not_for_gpa(edo_response, 'pnp_taken')
+      result[:totalUnitsPassedNotForGpa] = parse_total_units_not_for_gpa(edo_response, 'pnp_passed')
       result
     end
 
@@ -74,17 +66,16 @@ module MyAcademics
       end
     end
 
-    def parse_edo_total_units_taken_not_for_gpa(edo_response)
-      if (units = edo_response["pnp_taken"])
+    def parse_total_units_not_for_gpa(edo_response, key)
+      units = edo_response.try(:[], key)
+      if should_see_not_for_gpa_units? && units
         units.to_f
       end
     end
 
-    def parse_edo_total_units_passed_not_for_gpa(edo_response)
-      if (units = edo_response["pnp_passed"])
-        units.to_f
-      end
+    def should_see_not_for_gpa_units?
+      roles = MyAcademics::MyAcademicRoles.new(@uid).get_feed
+      !roles['law']
     end
-
   end
 end
