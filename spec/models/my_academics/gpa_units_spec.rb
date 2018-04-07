@@ -1,8 +1,8 @@
-describe 'MyAcademics::GpaUnits' do
+describe MyAcademics::GpaUnits do
 
-  let(:uid) { '61889' }
+  let(:uid) { random_id }
   let(:eight_digit_cs_id) { '87654321' }
-  let(:ten_digit_cs_id) { '1234567890' }
+  let(:ten_digit_cs_id) { random_cs_id }
   let(:edo_response) do
     {
       'pnp_taken' => 3,
@@ -15,15 +15,15 @@ describe 'MyAcademics::GpaUnits' do
     }
   end
   let(:has_law_role) { false }
+  let(:status_proxy) { HubEdos::AcademicStatus.new(user_id: uid, fake: true) }
 
   let(:feed) do
-    {}.tap { |feed| MyAcademics::GpaUnits.new(uid).merge feed }
+    {}.tap { |feed| described_class.new(uid).merge feed }
   end
 
   context 'when legacy user but non-legacy term' do
-    let(:status_proxy) { HubEdos::AcademicStatus.new(user_id: uid, fake: true) }
     before do
-      allow_any_instance_of(CalnetCrosswalk::ByUid).to receive(:lookup_campus_solutions_id).and_return eight_digit_cs_id
+      allow_any_instance_of(described_class).to receive(:lookup_campus_solutions_id).and_return eight_digit_cs_id
       allow(Settings.terms).to receive(:legacy_cutoff).and_return('spring-2010')
     end
     context 'CS data is ready to go' do
@@ -36,7 +36,6 @@ describe 'MyAcademics::GpaUnits' do
   end
 
   context 'when sourced from Hub academic status' do
-    let(:status_proxy) { HubEdos::AcademicStatus.new(user_id: uid, fake: true) }
     before do
       allow(HubEdos::AcademicStatus).to receive(:new).and_return status_proxy
       allow_any_instance_of(MyAcademics::MyAcademicRoles).to receive(:get_feed).and_return academic_roles
@@ -44,7 +43,7 @@ describe 'MyAcademics::GpaUnits' do
 
     context 'when CalNet and EDO DB are responsive' do
       before do
-        allow_any_instance_of(CalnetCrosswalk::ByUid).to receive(:lookup_campus_solutions_id).and_return ten_digit_cs_id
+        allow_any_instance_of(described_class).to receive(:lookup_campus_solutions_id).and_return ten_digit_cs_id
         allow(EdoOracle::Queries).to receive(:get_pnp_unit_count).and_return edo_response
       end
 
@@ -99,7 +98,7 @@ describe 'MyAcademics::GpaUnits' do
 
     context 'when CalNet campus solutions id lookup fails' do
       before do
-        allow_any_instance_of(CalnetCrosswalk::ByUid).to receive(:lookup_campus_solutions_id).and_return nil
+        allow_any_instance_of(described_class).to receive(:lookup_campus_solutions_id).and_return nil
       end
       it 'cannot call the EDO query' do
         expect(feed[:gpaUnits][:totalUnitsTakenNotForGpa]).not_to be
@@ -109,14 +108,13 @@ describe 'MyAcademics::GpaUnits' do
 
     context 'when EDO DB provides no data' do
       before do
-        allow_any_instance_of(CalnetCrosswalk::ByUid).to receive(:lookup_campus_solutions_id).and_return ten_digit_cs_id
+        allow_any_instance_of(described_class).to receive(:lookup_campus_solutions_id).and_return ten_digit_cs_id
         allow(EdoOracle::Queries).to receive(:get_pnp_unit_count).and_return nil
       end
-      it 'cannot call the EDO query' do
+      it 'cannot provide the pass/no pass unit totals' do
         expect(feed[:gpaUnits][:totalUnitsTakenNotForGpa]).not_to be
         expect(feed[:gpaUnits][:totalUnitsPassedNotForGpa]).not_to be
       end
     end
   end
-
 end
