@@ -37,6 +37,7 @@ describe CalnetLdap::UserAttributes do
       expect(feed[:roles][:student]).to eq true
       expect(feed[:roles][:registered]).to eq false
       expect(feed[:roles][:exStudent]).to eq false
+      expect(feed[:roles][:expiredAccount]).to eq false
       expect(feed[:roles][:confidential]).to be_falsey
       expect(feed[:student_id]).to eq '11667051'
       expect(feed[:campus_solutions_id]).to eq '11667051'

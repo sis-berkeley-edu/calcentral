@@ -54,6 +54,11 @@ module Berkeley
       roles
     end
 
+    def roles_from_ldap_ou(ldap_ou)
+      return {} if ldap_ou.nil? || ldap_ou.empty?
+      { expiredAccount: ldap_ou.include?('expired people') }
+    end
+
     def roles_from_campus_row(campus_row)
       affiliation_string = campus_row['affiliations'] || ''
       roles = roles_from_affiliations(affiliation_string.split ',')
