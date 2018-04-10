@@ -1,12 +1,14 @@
 module MyAcademics
   class TransferCredit < UserSpecificModel
     include ClassLogger
+    include Cache::CachedFeed
+    include Cache::UserCacheExpiry
 
     def merge(data)
-      data[:transferCredit] = transfer_credit
+      data[:transferCredit] = get_feed
     end
 
-    def transfer_credit
+    def get_feed_internal
       response = CampusSolutions::TransferCredit.new(user_id: @uid).get
       response = response.try(:[], :feed).try(:[], :root).try(:[], :ucTransferCredits).try(:[], :transferCredit)
       if (credit = response.try(:[], :ucTransferCrseSch))
