@@ -5,77 +5,92 @@ module MyAcademics
     include Concerns::AcademicStatus
 
     def merge(data)
-      gpa = hub_gpa_units
-      data[:gpaUnits] = gpa
+      data[:gpaUnits] = gpa_units
     end
 
-    def hub_gpa_units
-      hub_response = MyAcademics::MyAcademicStatus.new(@uid).get_feed
+    def gpa_units
+      feed = MyAcademics::MyAcademicStatus.new(@uid).get_feed
+      academic_status = parse_academic_status feed
+
+      result = {
+        :errored => feed.try(:[], :errored),
+        :cumulativeGpa => parse_cumulative_gpa(academic_status),
+        :totalUnitsTakenNotForGpa => parse_total_units_not_for_gpa(pnp_units, 'pnp_taken'),
+        :totalUnitsPassedNotForGpa => parse_total_units_not_for_gpa(pnp_units, 'pnp_passed'),
+        :totalTransferAndTestingUnits => units_transferred
+      }
+      result.merge!(parse_total_units academic_status)
+      result.merge!(parse_total_units_for_gpa academic_status)
+      result
+    end
+
+    def parse_academic_status(feed)
+      #TODO: Consult with SR concerning GPA displayed when multiple academic careers present
+      academic_statuses(feed).try(:first)
+    end
+
+    def pnp_units
       # P/NP units from the Hub are calculated differently than desired, so we grab them from an EDODB view instead
       # EDODB P/NP units take into account repeat courses, making them more accurate than the values obtained from the Hub
       if (campus_solutions_id = get_campus_solutions_id)
-        edo_response = EdoOracle::Queries.get_pnp_unit_count(campus_solutions_id)
+        EdoOracle::Queries.get_pnp_unit_count(campus_solutions_id)
       end
+    end
 
-      result = {}
-      #copy needed fields from response obj
-      result[:errored] = hub_response[:errored]
-      # TODO: Consult with SR concerning GPA displayed when multiple academic careers present
-      if (hub_status = academic_statuses(hub_response).try(:first))
-        # GPA is passed as a string to force a decimal point for whole values.
-        result[:cumulativeGpa] = (cumulativeGpa = parse_hub_cumulative_gpa hub_status) && cumulativeGpa.to_s
-        if (totalUnits = parse_hub_total_units hub_status) && totalUnits.present?
-          result = result.merge(totalUnits)
-        end
-        if (totalUnitsForGpa = parse_hub_total_units_for_gpa hub_status) && totalUnitsForGpa.present?
-          result = result.merge(totalUnitsForGpa)
-        end
-      else
-        result[:hub_empty] = true
+    def units_transferred
+      return nil if law_student?
+      feed = MyAcademics::TransferCredit.new(@uid).get_feed
+      transfer_units = feed.try(:[], :ucTransferCrseSch).try(:[], :unitsAdjusted)
+      test_units = feed.try(:[], :ucTestComponent).try(:[], :totalTestUnits)
+      if transfer_units || test_units
+        transfer_units.to_f + test_units.to_f
       end
-      result[:totalUnitsTakenNotForGpa] = parse_total_units_not_for_gpa(edo_response, 'pnp_taken')
-      result[:totalUnitsPassedNotForGpa] = parse_total_units_not_for_gpa(edo_response, 'pnp_passed')
-      result
     end
 
     def get_campus_solutions_id
       lookup_campus_solutions_id
     end
 
-    def parse_hub_cumulative_gpa(status)
-      status['cumulativeGPA'].try(:[], 'average')
+    def parse_cumulative_gpa(status)
+      status.try(:[], 'cumulativeGPA').try(:[], 'average').try(:to_s)
     end
 
     # Ignores unimportant unit types given back by the hub, including 'unitsOther' (holds total units that exceed limits for other categories, e.g. transfer units)
-    def parse_hub_total_units(status)
-      if (units = status['cumulativeUnits']) && (total_units = units.find { |u| u['type'] && u['type']['code'] == 'Total'})
-        {
-          totalUnits: total_units['unitsCumulative'].to_f,
-          transferUnitsAccepted: total_units['unitsTransferAccepted'].to_f,
-          testingUnits: total_units['unitsTest'].to_f
-        }
+    def parse_total_units(status)
+      if (units = status.try(:[], 'cumulativeUnits')) && (total = units.find { |u| u['type'] && u['type']['code'] == 'Total'})
+        total_units = total.try(:[], 'unitsCumulative').to_f
+        transfer_units_accepted = total.try(:[], 'unitsTransferAccepted').to_f
+        testing_units = total.try(:[], 'unitsTest').to_f
       end
+      {
+        totalUnits: total_units,
+        transferUnitsAccepted: transfer_units_accepted,
+        testingUnits: testing_units
+      }
     end
 
-    def parse_hub_total_units_for_gpa(status)
-      if (units = status['cumulativeUnits']) && (total_units = units.find { |u| u['type'] && u['type']['code'] == 'For GPA'})
-        {
-          totalUnitsAttempted: total_units['unitsTaken'].to_f,
-          totalUnitsForGpa: total_units['unitsPassed'].to_f
-        }
+    def parse_total_units_for_gpa(status)
+      if (units = status.try(:[], 'cumulativeUnits')) && (total = units.find { |u| u['type'] && u['type']['code'] == 'For GPA'})
+        total_units_attempted = total.try(:[], 'unitsTaken').to_f
+        total_units_for_gpa = total.try(:[], 'unitsPassed').to_f
       end
+      {
+        totalUnitsAttempted: total_units_attempted,
+        totalUnitsForGpa: total_units_for_gpa
+      }
     end
 
     def parse_total_units_not_for_gpa(edo_response, key)
+      return nil if law_student?
       units = edo_response.try(:[], key)
-      if should_see_not_for_gpa_units? && units
+      if units
         units.to_f
       end
     end
 
-    def should_see_not_for_gpa_units?
+    def law_student?
       roles = MyAcademics::MyAcademicRoles.new(@uid).get_feed
-      !roles['law']
+      !!roles['law']
     end
   end
 end

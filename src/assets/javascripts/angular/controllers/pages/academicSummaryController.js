@@ -29,16 +29,6 @@ angular.module('calcentral.controllers').controller('AcademicSummaryController',
     });
   };
 
-  var parseGpaUnits = function() {
-    // Testing units are lumped in with Transfer Units on the academic summary
-    if ($scope.gpaUnits && !$scope.gpaUnits.errored) {
-      var unitsAdjusted = _.get($scope, 'transferCredit.ucTransferCrseSch.unitsAdjusted');
-      var totalTestUnits = _.get($scope, 'transferCredit.ucTestComponent.totalTestUnits');
-      var totalTransferAndTestingUnits = academicsService.totalTransferUnits(unitsAdjusted, totalTestUnits);
-      _.set($scope.gpaUnits, 'testingAndTransferUnits', totalTransferAndTestingUnits);
-    }
-  };
-
   var parseTransferCredit = function() {
     $scope.showTransferCredit = showTransferCredit();
     if (!showTransferCredit) {
@@ -63,7 +53,6 @@ angular.module('calcentral.controllers').controller('AcademicSummaryController',
     angular.extend($scope, _.get(response, 'data'));
     $scope.showSemesters = showSemesters();
     parseTermHonors();
-    parseGpaUnits();
     parseTransferCredit();
   };
 

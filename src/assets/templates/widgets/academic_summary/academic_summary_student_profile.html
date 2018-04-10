@@ -113,14 +113,14 @@
       <tr>
         <th class="cc-academic-summary-row-title"><h4>Units</h4></th>
         <th class="cc-academic-summary-row-header">Cumulative</th>
-        <th data-ng-if="gpaUnits.testingAndTransferUnits" class="cc-academic-summary-row-header">Transfer</th>
+        <th data-ng-if="gpaUnits.totalTransferAndTestingUnits" class="cc-academic-summary-row-header">Transfer</th>
         <th data-ng-if="gpaUnits.totalUnitsTakenNotForGpa" class="cc-academic-summary-row-header">P/NP Total</th>
         <th data-ng-if="gpaUnits.totalUnitsPassedNotForGpa" class="cc-academic-summary-row-header">P/NP Passed</th>
       </tr>
       <tr>
         <td></td>
         <td><span data-ng-bind="gpaUnits.totalUnits"></span></td>
-        <td data-ng-if="gpaUnits.testingAndTransferUnits"><span data-ng-bind="gpaUnits.testingAndTransferUnits"></span></td>
+        <td data-ng-if="gpaUnits.totalTransferAndTestingUnits"><span data-ng-bind="gpaUnits.totalTransferAndTestingUnits"></span></td>
         <td data-ng-if="gpaUnits.totalUnitsTakenNotForGpa"><span data-ng-bind="gpaUnits.totalUnitsTakenNotForGpa"></span></td>
         <td data-ng-if="gpaUnits.totalUnitsPassedNotForGpa"><span data-ng-bind="gpaUnits.totalUnitsPassedNotForGpa"></span></td>
       </tr>
