@@ -83,6 +83,8 @@ module Berkeley
         # TODO: We still need to cover staff, guests, concurrent-enrollment students and registration status.
         case active_affiliation[:type][:code]
           when 'ADMT_UX'
+            result[:releasedAdmit] = true
+          when 'APPLICANT'
             result[:applicant] = true
           when 'GRADUATE'
             result[:student] = true

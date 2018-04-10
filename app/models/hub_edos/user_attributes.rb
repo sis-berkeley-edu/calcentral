@@ -132,7 +132,7 @@ module HubEdos
       # CS Affiliations are expected to exist for any working CS ID.
       if (affiliations = edo[:affiliations])
         result[:roles] = roles_from_cs_affiliations(affiliations)
-        if result[:roles].slice(:student, :exStudent, :applicant).has_value?(true)
+        if result[:roles].slice(:student, :exStudent, :applicant, :releasedAdmit).has_value?(true)
           result[:student_id] = @campus_solutions_id
         end
         result[:roles][:confidential] = true if edo[:confidential]

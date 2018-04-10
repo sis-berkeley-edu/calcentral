@@ -49,9 +49,9 @@ class ApplicationController < ActionController::Base
     reauthenticate(redirect_path: '/') if session_state_requires_reauthentication?
   end
 
-  def require_applicant_role
-    is_applicant = HubEdos::UserAttributes.new(user_id: current_user.user_id).has_role?(:applicant)
-    render json: { error: 'User must be an applicant to view New Admit data.' }, status: 200 unless is_applicant
+  def require_released_admit_role
+    is_released_admit = HubEdos::UserAttributes.new(user_id: current_user.user_id).has_role?(:releasedAdmit)
+    render json: { error: 'User must be a released admit to view New Admit data.' }, status: 200 unless is_released_admit
   end
 
   # Only a small subset of student API feeds are available to a delegate, and so
