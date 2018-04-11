@@ -51,7 +51,6 @@ describe User::AggregatedAttributes do
   before(:each) do
     allow(HubEdos::UserAttributes).to receive(:new).with(user_id: uid).and_return double get: edo_attributes
     allow(CalnetLdap::UserAttributes).to receive(:new).with(user_id: uid).and_return double get_feed: ldap_attributes
-    allow(CampusOracle::UserAttributes).to receive(:new).with(user_id: uid).and_return double(get_feed: {})
   end
 
   describe 'all systems available' do
