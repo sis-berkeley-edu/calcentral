@@ -225,10 +225,21 @@ describe Berkeley::UserRoles do
               :description => 'Active'
             },
             :fromDate => '2014-05-15'
+          },
+          {
+            :type => {
+              :code => 'APPLICANT',
+              :description => ''
+            },
+            :status => {
+              :code =>'ACT',
+              :description => 'Active'
+            },
+            :fromDate => '2014-05-15'
           }
         ]
       end
-      it_behaves_like 'a parser for roles', [:applicant]
+      it_behaves_like 'a parser for roles', [:applicant, :releasedAdmit]
     end
 
     context 'unreleased admit or not-yet-accepted applicant' do
@@ -247,7 +258,7 @@ describe Berkeley::UserRoles do
           }
         ]
       end
-      it_behaves_like 'a parser for roles', []
+      it_behaves_like 'a parser for roles', [:applicant]
     end
 
     context 'ex-student and unaccepted applicant' do
@@ -277,7 +288,7 @@ describe Berkeley::UserRoles do
           }
         ]
       end
-      it_behaves_like 'a parser for roles', [:exStudent]
+      it_behaves_like 'a parser for roles', [:exStudent, :applicant]
     end
 
     context 'retracted admit' do
@@ -307,7 +318,7 @@ describe Berkeley::UserRoles do
           }
         ]
       end
-      it_behaves_like 'a parser for roles', []
+      it_behaves_like 'a parser for roles', [:applicant]
     end
 
     context 'advisor affiliation' do

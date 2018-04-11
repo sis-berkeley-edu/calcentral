@@ -83,9 +83,10 @@ module Berkeley
         # TODO: We still need to cover staff, guests, concurrent-enrollment students and registration status.
         case active_affiliation[:type][:code]
           when 'ADMT_UX'
+            # A 'releasedAdmit' is a user whose Statement of Intent to Register has been released to them
             result[:releasedAdmit] = true
           when 'APPLICANT'
-            result[:applicant] = true
+            result[:applicant] = true unless active_affiliation[:detail] == 'Applied'
           when 'GRADUATE'
             result[:student] = true
             result[:graduate] = true

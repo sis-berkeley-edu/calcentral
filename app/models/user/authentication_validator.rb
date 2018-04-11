@@ -43,25 +43,37 @@ module User
     end
 
     def held_applicant?
-      # Check CalDap affiliations first, since that will generally be faster than an API call.
-      # We have a choice between CampusOracle::Queries.get_basic_people_attributes (faster but uncached) and
-      # CampusOracle::UserAttributes (slower but cached and quickly re-used on the happy path).
-      calnet_attributes = CampusOracle::Queries.get_basic_people_attributes([@auth_uid]).first
-      return false if calnet_attributes.present? &&
-        calnet_attributes['affiliations'].present? &&
-        calnet_attributes['affiliations'] != 'STUDENT-TYPE-NOT-REGISTERED'
       cs_feed = HubEdos::Affiliations.new(user_id: @auth_uid).get
-      if cs_feed[:feed] && (student = cs_feed[:feed]['student']) && student['affiliations']
+      if cs_feed.try(:[], :feed) && (student = cs_feed[:feed].try(:[], 'student')) && student.try(:[], 'affiliations')
         cs_feed = HashConverter.symbolize student
-        applicant_in_process?(cs_feed[:affiliations]) && roles_from_cs_affiliations(cs_feed[:affiliations]).blank?
+        held = unreleased_applicant?(cs_feed[:affiliations])
+        has_ldap_affiliations = held ? has_ldap_affiliations? : nil
+        is_graduate = held && (!has_ldap_affiliations.nil? && !has_ldap_affiliations) ? is_graduate_applicant? : nil
+        held && (!has_ldap_affiliations.nil? && !has_ldap_affiliations) && (!is_graduate.nil? && !is_graduate)
       else
         # We don't know much about this person, but they're not a held applicant.
         false
       end
     end
 
-    def applicant_in_process?(cs_affiliations)
-      cs_affiliations.index { |a| (a[:type][:code] == 'APPLICANT') && (a[:status][:code] == 'ACT') }
+    def unreleased_applicant?(cs_affiliations)
+      roles = roles_from_cs_affiliations(cs_affiliations)
+      is_applicant = roles.delete(:applicant)
+      !!is_applicant && roles.empty?
+    end
+
+    def has_ldap_affiliations?
+      ldap_attributes = CalnetLdap::UserAttributes.new(user_id: @auth_uid).get_feed
+      ldap_roles = ldap_attributes.try(:[], :roles) || {}
+      ldap_roles.has_value?(true)
+    end
+
+    def is_graduate_applicant?
+      sir_feed = CampusSolutions::Sir::SirStatuses.new(@auth_uid).get_feed
+      sir_statuses = sir_feed.try(:[], :sirStatuses) || []
+      sir_statuses.any? do |sir_status|
+        !sir_status.try(:[], :isUndergraduate)
+      end
     end
 
   end
