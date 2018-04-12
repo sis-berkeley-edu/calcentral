@@ -50,7 +50,7 @@
             </div>
           </li>
 
-          <li data-ng-if="(isGraduateStudent || isLawStudent) && studentResources.higherDegreesCommitteeForm.url">
+          <li data-ng-if="(isGraduateStudent || isLawStudent) && !(isJdLlmOnly || isLawVisiting) && studentResources.higherDegreesCommitteeForm.url">
             <div class="cc-inline-block">
               <a data-cc-campus-solutions-link-directive="studentResources.higherDegreesCommitteeForm"
                 data-cc-campus-solutions-link-directive-cc-page-name="currentPage.name"
@@ -65,7 +65,7 @@
             </div>
           </li>
 
-          <li data-ng-if="(isGraduateStudent || isLawStudent) && studentResources.specialEnrollmentPetition.url">
+          <li data-ng-if="(isGraduateStudent || isLawStudent) && !(isJdLlmOnly || isLawVisiting) && studentResources.specialEnrollmentPetition.url">
             <a data-cc-campus-solutions-link-directive="studentResources.specialEnrollmentPetition"
               data-cc-campus-solutions-link-directive-cc-page-name="currentPage.name"
               data-cc-campus-solutions-link-directive-cc-page-url="currentPage.url"
@@ -84,13 +84,13 @@
       <div>
         <h3>Manage your Forms</h3>
         <ul class="cc-list-bullets">
-          <li data-ng-if="studentResources.viewSubmittedForms.url">
+          <li data-ng-if="!(isJdLlmOnly || isLawVisiting) && studentResources.viewSubmittedForms.url">
             <a data-cc-campus-solutions-link-directive="studentResources.viewSubmittedForms"
               data-cc-campus-solutions-link-directive-cc-page-name="currentPage.name"
               data-cc-campus-solutions-link-directive-cc-page-url="currentPage.url"
             ></a>
           </li>
-          <li data-ng-if="studentResources.updatePendingForms.url">
+          <li data-ng-if="!(isJdLlmOnly || isLawVisiting) && studentResources.updatePendingForms.url">
             <a data-cc-campus-solutions-link-directive="studentResources.updatePendingForms"
               data-cc-campus-solutions-link-directive-cc-page-name="currentPage.name"
               data-cc-campus-solutions-link-directive-cc-page-url="currentPage.url"

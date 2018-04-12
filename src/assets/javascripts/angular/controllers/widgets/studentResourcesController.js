@@ -6,6 +6,14 @@ var _ = require('lodash');
 angular.module('calcentral.controllers').controller('StudentResourcesController', function(apiService, linkService, studentResourcesFactory, $scope) {
   $scope.isLoading = true;
 
+  $scope.isJdLlmOnly = function() {
+    return (apiService.user.profile.academicRoles.lawJdLlm && !apiService.user.profile.academicRoles.lawJspJsd);
+  };
+
+  $scope.isLawVisiting = function() {
+    return apiService.user.profile.academicRoles.lawVisiting;
+  };
+
   var loadStudentResources = function() {
     return studentResourcesFactory.getStudentResources();
   };
