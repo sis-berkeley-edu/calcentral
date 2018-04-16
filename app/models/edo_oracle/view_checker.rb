@@ -142,7 +142,7 @@ class EdoOracle::ViewChecker
       ]
     },
     {
-      :id => 'SISEDO.STUDENT_REGISTRATIONV00_VW',
+      :id => 'SISEDO.STUDENT_REGISTRATIONV01_VW',
       :columns => [
         'STUDENT_ID',
         'ACADCAREER_CODE',
