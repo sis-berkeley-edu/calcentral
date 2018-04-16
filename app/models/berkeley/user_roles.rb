@@ -3,6 +3,26 @@ module Berkeley
     extend self
     include ClassLogger
 
+     def self.base_roles
+      {
+        advisor: false,
+        applicant: false,
+        concurrentEnrollmentStudent: false,
+        confidential: false,
+        expiredAccount: false,
+        exStudent: false,
+        faculty: false,
+        graduate: false,
+        guest: false,
+        law: false,
+        registered: false,
+        releasedAdmit: false,
+        staff: false,
+        student: false,
+        undergrad: false
+      }
+    end
+
     def roles_from_affiliations(affiliations)
       affiliations ||= []
       {
