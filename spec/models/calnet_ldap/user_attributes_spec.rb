@@ -34,11 +34,6 @@ describe CalnetLdap::UserAttributes do
       expect(feed[:last_name]).to eq 'BEAR'
       expect(feed[:ldap_uid]).to eq '61889'
       expect(feed[:person_name]).to eq 'Oski BEAR'
-      expect(feed[:roles][:student]).to eq true
-      expect(feed[:roles][:registered]).to eq false
-      expect(feed[:roles][:exStudent]).to eq false
-      expect(feed[:roles][:expiredAccount]).to eq false
-      expect(feed[:roles][:confidential]).to be_falsey
       expect(feed[:student_id]).to eq '11667051'
       expect(feed[:campus_solutions_id]).to eq '11667051'
     end
@@ -104,42 +99,102 @@ describe CalnetLdap::UserAttributes do
       end
     end
 
-    context 'when both active and expired student affiliations appear' do
-      let(:ldap_result) do
-        {
-          berkeleyeduaffiliations: %w(EMPLOYEE-TYPE-STAFF STUDENT-STATUS-EXPIRED STUDENT-TYPE-REGISTERED),
-          berkeleyedustuexpdate: ['20140901145959Z'],
-          uid: ['61889']
-        }
-      end
-      it 'chooses one' do
-        expect(feed[:roles][:student]).to eq true
-        expect(feed[:roles][:registered]).to eq true
-        expect(feed[:roles][:exStudent]).to be_falsey
-        expect(feed[:roles][:staff]).to eq true
-      end
-    end
-
-    context 'when only the Alumni affiliation appears' do
-      let(:ldap_result) do
-        {
-          berkeleyeduaffiliations: %w(AFFILIATE-TYPE-ADVCON-ALUMNUS AFFILIATE-TYPE-ADVCON-ATTENDEE),
-          berkeleyedustuexpdate: ['20140901145959Z'],
-          uid: ['61889']
-        }
-      end
-      it 'is an ex-student' do
-        expect(feed[:roles][:student]).to be_falsey
-        expect(feed[:roles][:registered]).to be_falsey
-        expect(feed[:roles][:exStudent]).to eq true
-        expect(feed[:roles][:staff]).to be_falsey
-      end
-    end
 
     context 'when LDAP query returns no mail attribute' do
       before { ldap_result.delete :mail }
       it 'falls back to berkeleyeduofficialemail' do
         expect(feed[:email_address]).to eq 'oski_bearable@berkeley.edu'
+      end
+    end
+
+    context 'student affiliations enabled' do
+      before do
+        Settings.stub_chain(:features, :ldap_student_affiliations).and_return(true)
+      end
+      it 'correctly maps ldap affiliations to calcentral affiliations' do
+        expect(feed[:roles][:student]).to eq true
+        expect(feed[:roles][:registered]).to eq false
+        expect(feed[:roles][:exStudent]).to eq false
+        expect(feed[:roles][:expiredAccount]).to eq false
+        expect(feed[:roles][:confidential]).to be_falsey
+      end
+
+      context 'when both active and expired student affiliations appear' do
+        let(:ldap_result) do
+          {
+            berkeleyeduaffiliations: %w(EMPLOYEE-TYPE-STAFF STUDENT-STATUS-EXPIRED STUDENT-TYPE-REGISTERED),
+            berkeleyedustuexpdate: ['20140901145959Z'],
+            uid: ['61889']
+          }
+        end
+        it 'chooses one' do
+          expect(feed[:roles][:student]).to eq true
+          expect(feed[:roles][:registered]).to eq true
+          expect(feed[:roles][:exStudent]).to be_falsey
+          expect(feed[:roles][:staff]).to eq true
+        end
+      end
+
+      context 'when only the Alumni affiliation appears' do
+        let(:ldap_result) do
+          {
+            berkeleyeduaffiliations: %w(AFFILIATE-TYPE-ADVCON-ALUMNUS AFFILIATE-TYPE-ADVCON-ATTENDEE),
+            berkeleyedustuexpdate: ['20140901145959Z'],
+            uid: ['61889']
+          }
+        end
+        it 'is an ex-student' do
+          expect(feed[:roles][:student]).to be_falsey
+          expect(feed[:roles][:registered]).to be_falsey
+          expect(feed[:roles][:exStudent]).to eq true
+          expect(feed[:roles][:staff]).to be_falsey
+        end
+      end
+    end
+
+    context 'student affiliations disabled' do
+      before do
+        Settings.stub_chain(:features, :ldap_student_affiliations).and_return(false)
+      end
+
+      it 'correctly maps ldap affiliations to calcentral affiliations' do
+        expect(feed[:roles][:student]).to be_falsey
+        expect(feed[:roles][:registered]).to be_falsey
+        expect(feed[:roles][:exStudent]).to be_falsey
+        expect(feed[:roles][:expiredAccount]).to be_falsey
+        expect(feed[:roles][:confidential]).to be_falsey
+      end
+
+      context 'when both active and expired student affiliations appear' do
+        let(:ldap_result) do
+          {
+            berkeleyeduaffiliations: %w(EMPLOYEE-TYPE-STAFF STUDENT-STATUS-EXPIRED STUDENT-TYPE-REGISTERED),
+            berkeleyedustuexpdate: ['20140901145959Z'],
+            uid: ['61889']
+          }
+        end
+        it 'ignores both' do
+          expect(feed[:roles][:student]).to be_falsey
+          expect(feed[:roles][:registered]).to be_falsey
+          expect(feed[:roles][:exStudent]).to be_falsey
+          expect(feed[:roles][:staff]).to eq true
+        end
+      end
+
+      context 'when only the Alumni affiliation appears' do
+        let(:ldap_result) do
+          {
+            berkeleyeduaffiliations: %w(AFFILIATE-TYPE-ADVCON-ALUMNUS AFFILIATE-TYPE-ADVCON-ATTENDEE),
+            berkeleyedustuexpdate: ['20140901145959Z'],
+            uid: ['61889']
+          }
+        end
+        it 'is an ex-student' do
+          expect(feed[:roles][:student]).to be_falsey
+          expect(feed[:roles][:registered]).to be_falsey
+          expect(feed[:roles][:exStudent]).to eq true
+          expect(feed[:roles][:staff]).to be_falsey
+        end
       end
     end
   end

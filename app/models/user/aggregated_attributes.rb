@@ -37,7 +37,7 @@ module User
       }
     end
 
-    # private
+    private
 
     def get_campus_roles
       base_roles = Berkeley::UserRoles.base_roles
