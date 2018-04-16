@@ -470,7 +470,7 @@ module EdoOracle
           SPLSTUDYPROG_TYPE_CODE as splstudyprog_type_code,
           SPLSTUDYPROG_TYPE_DESCR as splstudyprog_type_descr
         FROM
-          SISEDO.STUDENT_REGISTRATIONV00_VW
+          SISEDO.STUDENT_REGISTRATIONV01_VW
         WHERE
           STUDENT_ID = '#{person_id}' AND
           (WITHCNCL_TYPE_CODE IS NOT NULL
