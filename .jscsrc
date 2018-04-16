@@ -55,6 +55,7 @@
     "src/assets/javascripts/angularlib/**",
     "src/assets/javascripts/lib/**",
     "public/assets/**",
+    "public/styleguide/**",
     "coverage/**",
     "node_modules/**",
     "vendor/**"
