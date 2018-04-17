@@ -21,7 +21,7 @@ describe CanvasUserProvisionController do
       it 'returns 403 error' do
         post :user_import, userIds: user_id_string
         expect(response.status).to eq(403)
-        expect(response.body).to eq ' '
+        expect(response.body).to eq ''
       end
     end
 

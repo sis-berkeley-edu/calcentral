@@ -240,7 +240,6 @@ describe AdvisingStudentController do
         it_behaves_like 'an endpoint receiving a valid request'
         it 'should return data' do
           feed = JSON.parse(body = subject.body)
-          puts feed.pretty_inspect
           expect(feed['feed']['holds']).to be
         end
       end

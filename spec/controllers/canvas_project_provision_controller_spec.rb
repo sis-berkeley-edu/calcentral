@@ -36,7 +36,7 @@ describe CanvasProjectProvisionController do
       it 'should respond with empty http 403' do
         post :create_project_site, :name => project_site_name
         expect(response.status).to eq 403
-        expect(response.body).to eq ' '
+        expect(response.body).to eq ''
       end
     end
 

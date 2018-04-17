@@ -12,9 +12,9 @@ class BootstrapController < ApplicationController
   # check_reauthentication code.
   def index
     if @calcentral_config[:providedServices].include? 'calcentral'
-      render 'public/index-main.html'
+      render file: 'public/index-main.html'
     else
-      render 'public/index-junction.html'
+      render file: 'public/index-junction.html'
     end
   end
 

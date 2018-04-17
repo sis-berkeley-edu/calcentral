@@ -314,7 +314,7 @@ describe CanvasCourseAddUserController do
           it 'denies the request' do
             post :add_user, request_params.merge(ldapUserId: '260506', role: 'Student', sectionId: '864215')
             expect(response.status).to eq 403
-            expect(response.body).to eq ' '
+            expect(response.body).to eq ''
           end
         end
 
@@ -322,7 +322,7 @@ describe CanvasCourseAddUserController do
           it 'denies unauthorized roles' do
             post :add_user, request_params.merge(ldapUserId: '260506', role: 'TA', sectionId: '202184')
             expect(response.status).to eq 403
-            expect(response.body).to eq ' '
+            expect(response.body).to eq ''
           end
         end
       end

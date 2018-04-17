@@ -6,7 +6,7 @@ describe PhotoController do
     it 'returns an empty body' do
       make_request
       expect(response.status).to eq 200
-      expect(response.body).to eq ' '
+      expect(response.body).to eq ''
     end
   end
 
@@ -22,7 +22,7 @@ describe PhotoController do
     it 'returns an empty body and an error status' do
       make_request
       expect(response.status).to eq 403
-      expect(response.body).to eq ' '
+      expect(response.body).to eq ''
     end
   end
 

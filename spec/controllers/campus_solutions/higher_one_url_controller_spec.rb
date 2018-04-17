@@ -41,7 +41,7 @@ describe CampusSolutions::HigherOneUrlController do
     it 'denies all access' do
       get :get
       expect(response.status).to eq 403
-      expect(response.body).to eq ' '
+      expect(response.body).to eq ''
     end
   end
 
@@ -58,7 +58,7 @@ describe CampusSolutions::HigherOneUrlController do
       it 'denies all access' do
         get :get
         expect(response.status).to eq 403
-        expect(response.body).to eq ' '
+        expect(response.body).to eq ''
       end
     end
     context 'financial access' do

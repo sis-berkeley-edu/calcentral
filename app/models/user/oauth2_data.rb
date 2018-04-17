@@ -126,7 +126,7 @@ module User
 
     def self.decrypt_with_iv(value_with_iv)
       return value_with_iv if value_with_iv.blank?
-      cipher = OpenSSL::Cipher::Cipher.new(@@encryption_algorithm)
+      cipher = OpenSSL::Cipher.new(@@encryption_algorithm)
       cipher.decrypt
       cipher.key = @@encryption_key
       cipher.iv = Base64.decode64(value_with_iv[1])

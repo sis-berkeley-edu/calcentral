@@ -85,7 +85,7 @@ shared_examples 'a canvas course admin authorized api endpoint' do
     it 'returns 403 error' do
       make_request
       expect(response.status).to eq(403)
-      expect(response.body).to eq " "
+      expect(response.body).to eq ''
     end
   end
 

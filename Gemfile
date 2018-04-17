@@ -2,19 +2,23 @@ source 'https://rubygems.org'
 
 # The core framework
 # https://github.com/rails/rails
-gem 'rails', '4.1.11'
+gem 'rails', '4.2.8'
 
 gem 'actionpack-action_caching', '~>1.1.1'
 gem 'actionpack-page_caching', '~>1.0.2'
 gem 'actionpack-xml_parser', '~>1.0.1'
 gem 'actionview-encoded_mail_to', '~>1.0.5'
-gem 'activerecord-session_store', '~>0.1.1'
+gem 'activerecord-session_store', '~>1.1.0'
 gem 'activeresource', '~>4.0.0'
 gem 'protected_attributes', '~> 1.0.8'
 gem 'rails-observers', '~>0.1.2'
 gem 'rails-perftest', '~>0.0.5'
+gem 'responders', '~> 2.0'
 
 gem 'activerecord-jdbc-adapter', '~> 1.3.16'
+
+# Needed for rails_admin in Ruby 2
+gem 'safe_yaml', '~> 1.0.4'
 
 # Postgresql adapter
 gem 'activerecord-jdbcpostgresql-adapter', '~> 1.3.16'
@@ -63,7 +67,7 @@ gem 'jruby-activemq', '~> 5.13.0', git: 'https://github.com/ets-berkeley-edu/jru
 # To support SSL TLSv1.2.
 # jruby-openssl versions 0.9.8 through 0.9.16 trigger runaway memory consumption in CalCentral.
 # Track progress at https://github.com/jruby/jruby-openssl/issues/86 and SISRP-18781.
-gem 'jruby-openssl', '0.9.7'
+gem 'jruby-openssl', '0.9.19'
 
 # Addressable is a replacement for the URI implementation that is part of Ruby's standard library.
 # https://github.com/sporkmonger/addressable
@@ -71,7 +75,7 @@ gem 'addressable', '~> 2.3.4'
 
 # for parsing formatted html
 # Do NOT update until https://github.com/sparklemotion/nokogiri/issues/1114 is fixed
-gem 'nokogiri', '~> 1.5.9', :platforms => :jruby
+gem 'nokogiri', '~> 1.6.0', :platforms => :jruby
 
 # for parsing paged feeds
 gem 'link_header', '~> 0.0.7'
@@ -82,9 +86,9 @@ gem 'rails_admin', '0.6.5'
 gem 'bootstrap-sass', '~> 3.3.1.0'
 
 # TorqueBox app server
-gem 'torquebox', '~> 3.1.2'
-gem 'torquebox-server', '~> 3.1.2'
-gem 'torquebox-messaging', '~> 3.1.2'
+gem 'torquebox', '~> 3.2.0'
+gem 'torquebox-server', '~> 3.2.0'
+gem 'torquebox-messaging', '~> 3.2.0'
 gem 'jmx', '~> 1.0'
 
 # for trying, and trying again, and then giving up.
@@ -113,16 +117,16 @@ gem 'closure-compiler', '~> 1.1.11'
 # Oracle adapter
 # Purposely excluding this for test environments since folks have to install ojdbc6
 group :development, :testext, :production do
-  gem 'activerecord-oracle_enhanced-adapter', '~> 1.5.6'
+  gem 'activerecord-oracle_enhanced-adapter', '~> 1.6.0'
   gem 'rvm-capistrano', '~> 1.3.1'
   gem 'capistrano', '~> 2.15.4'
 end
 
 group :development, :test , :testext do
-  gem 'rspec-core', '~> 3.1.7'
-  gem 'rspec-rails', '~> 3.1.0'
-  gem 'rspec-mocks', '~> 3.1.3'
-  gem 'rspec-support', '~> 3.1.2'
+  gem 'rspec-core', '~> 3.4.0'
+  gem 'rspec-rails', '~> 3.4.1'
+  gem 'rspec-mocks', '~> 3.4.0'
+  gem 'rspec-support', '~> 3.4.0'
   gem 'rspec-its', '~> 1.1.0'
   gem 'rspec-collection_matchers', '~> 1.1.2'
   gem 'minitest-reporters', '~> 1.0.8'
