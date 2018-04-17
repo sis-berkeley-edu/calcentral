@@ -6,7 +6,7 @@ module EdoOracle
     ABSENTIA_CODE = 'OGPFABSENT'.freeze
     FILING_FEE_CODE = 'BGNNFILING'.freeze
 
-    CANONICAL_SECTION_ORDERING = 'section_display_name, primary DESC, instruction_format, section_num'
+    CANONICAL_SECTION_ORDERING = 'section_display_name, "primary" DESC, instruction_format, section_num'
 
     # Changes from CampusOracle::Queries section columns:
     #   - 'course_cntl_num' now 'section_id'
@@ -22,7 +22,7 @@ module EdoOracle
       TRIM(crs."transcriptTitle") AS course_title_short,
       crs."subjectArea" AS dept_name,
       crs."classSubjectArea" AS dept_code,
-      sec."primary" AS primary,
+      sec."primary" AS "primary",
       sec."sectionNumber" AS section_num,
       sec."component-code" as instruction_format,
       sec."primaryAssociatedSectionId" as primary_associated_section_id,
@@ -70,26 +70,78 @@ module EdoOracle
       sql_clause
     end
 
-    # EDO equivalent of CampusOracle::Queries.get_enrolled_sections
-    # Changes:
-    #   - 'wait_list_seq_num' replaced by 'waitlist_position'
-    #   - 'course_option' removed
-    #   - 'cred_cd' and 'pnp_flag' replaced by 'grading_basis'
+    def self.and_institution(object_alias)
+      <<-SQL
+        AND #{object_alias}.INSTITUTION = 'UCB01'
+      SQL
+    end
+
+    def self.and_academic_career(object_alias, academic_careers)
+      return nil if academic_careers.blank?
+      <<-SQL
+        AND #{object_alias}.ACAD_CAREER IN ('#{academic_careers.join "','"}')
+      SQL
+    end
+
+    def self.join_requirements_designation(object_alias, require_desig_code)
+      return nil if require_desig_code.blank?
+      <<-SQL
+      LEFT OUTER JOIN SISEDO.CLC_RQMNT_DESIG_DESCR RD
+        ON #{object_alias}.ACAD_CAREER = RD.ACAD_CAREER
+       AND #{object_alias}.INSTITUTION = RD.INSTITUTION
+       AND #{object_alias}.TERM_ID = RD.TERM_ID
+       AND RD.RQMNT_DESIGNTN = '#{require_desig_code}'
+      SQL
+    end
+
+    def self.get_term_unit_totals(person_id, academic_careers, term_id)
+      result = safe_query <<-SQL
+        SELECT 
+          SUM(SCT.TOTAL_EARNED_UNITS) AS TOTAL_EARNED_UNITS,
+          SUM(SCT.TOTAL_ENROLLED_UNITS) AS TOTAL_ENROLLED_UNITS,
+          MIN(SCT.GRADING_COMPLETE) AS GRADING_COMPLETE
+        FROM SISEDO.CLC_STUDENT_CAREER_TERMV00_VW SCT
+        WHERE SCT.CAMPUS_ID = '#{person_id}'
+        #{and_academic_career('SCT', academic_careers)}
+        #{and_institution('SCT')}
+        AND SCT.TERM_ID = #{term_id}
+        GROUP BY SCT.TERM_ID
+      SQL
+      result.first
+    end
+
+    def self.get_term_law_unit_totals(person_id, academic_careers, term_id)
+      result = safe_query <<-SQL
+        SELECT 
+          SUM(SCT.EARNED_UNITS_LAW) AS TOTAL_EARNED_LAW_UNITS,
+          SUM(SCT.ENROLLED_UNITS_LAW) AS TOTAL_ENROLLED_LAW_UNITS
+        FROM SISEDO.CLC_STUDENT_CAREER_TERM_LAWV00_VW SCT
+        WHERE SCT.CAMPUS_ID = '#{person_id}'
+        #{and_academic_career('SCT', academic_careers)}
+        #{and_institution('SCT')}
+        AND SCT.TERM_ID = #{term_id}
+        GROUP BY SCT.TERM_ID
+      SQL
+      result.first
+    end
+
     def self.get_enrolled_sections(person_id, terms = nil)
       # The push_pred hint below alerts Oracle to use indexes on SISEDO.API_COURSEV00_VW, aka crs.
-      # Reduce performance hit and only add Terms whare clause if limiting number of terms pulled
       in_term_where_clause = "enr.\"TERM_ID\" IN (#{terms_query_list terms}) AND " if Settings.features.hub_term_api
       safe_query <<-SQL
         SELECT DISTINCT
           #{SECTION_COLUMNS},
           sec."maxEnroll" AS enroll_limit,
-          enr."STDNT_ENRL_STATUS_CODE" AS enroll_status,
-          enr."WAITLISTPOSITION" AS waitlist_position,
-          enr."UNITS_TAKEN" AS units,
-          enr."GRADE_MARK" AS grade,
-          enr."GRADE_POINTS" AS grade_points,
-          enr."GRADING_BASIS_CODE" AS grading_basis
-        FROM SISEDO.CC_ENROLLMENTV00_VW enr
+          ENR.STDNT_ENRL_STATUS_CODE AS enroll_status,
+          ENR.WAITLISTPOSITION AS waitlist_position,
+          ENR.UNITS_TAKEN,
+          ENR.UNITS_EARNED,
+          ENR.GRADE_MARK AS grade,
+          ENR.GRADE_POINTS AS grade_points,
+          ENR.GRADING_BASIS_CODE AS grading_basis,
+          ENR.ACAD_CAREER,
+          ENR.RQMNT_DESIGNTN
+        FROM SISEDO.CLC_ENROLLMENTV00_VW enr
         JOIN SISEDO.CLASSSECTIONALLV01_MVW sec ON (
           enr."TERM_ID" = sec."term-id" AND
           enr."SESSION_ID" = sec."session-id" AND
@@ -98,10 +150,29 @@ module EdoOracle
         #{JOIN_SECTION_TO_COURSE}
         WHERE  #{in_term_where_clause}
           enr."CAMPUS_UID" = '#{person_id}'
+          #{and_institution('enr')}
           AND enr."STDNT_ENRL_STATUS_CODE" != 'D'
           #{where_course_term_updated_date}
         ORDER BY term_id DESC, #{CANONICAL_SECTION_ORDERING}
       SQL
+    end
+
+    def self.get_law_enrollment(person_id, academic_career, term, section, require_desig_code = nil)
+      require_desig_field = require_desig_code ? 'RD.DESCRFORMAL' : 'NULL'
+      result = safe_query <<-SQL
+        SELECT
+          ENR.UNITS_TAKEN_LAW,
+          ENR.UNITS_EARNED_LAW,
+          #{require_desig_field} AS RQMNT_DESG_DESCR
+        FROM SISEDO.CLC_ENROLLMENT_LAWV00_VW ENR
+         #{join_requirements_designation('ENR', require_desig_code)}
+        WHERE ENR.CAMPUS_UID = '#{person_id}'
+          #{and_institution('ENR')}
+          AND ENR.ACAD_CAREER = '#{academic_career}'
+          AND ENR.TERM_ID = '#{term}'
+          AND ENR.CLASS_NBR = '#{section}'
+      SQL
+      result.first
     end
 
     # EDO equivalent of CampusOracle::Queries.get_instructing_sections
@@ -540,6 +611,5 @@ module EdoOracle
       SQL
       result.first
     end
-
   end
 end

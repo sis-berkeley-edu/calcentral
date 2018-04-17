@@ -70,8 +70,8 @@ module EdoOracle
       end
 
       def row_to_feed_item(row, previous_item, cross_listing_tracker=nil)
-        course_item = course_ids_from_row row
-        if course_item[:id] == previous_item[:id] && previous_item[:session_code] == Berkeley::TermCodes::SUMMER_SESSIONS[row['session_id']]
+        class_enrollment = class_from_row row
+        if class_enrollment[:id] == previous_item[:id] && previous_item[:session_code] == Berkeley::TermCodes::SUMMER_SESSIONS[row['session_id']]
           previous_section = previous_item[:sections].last
           # Odd database joins will occasionally give us null course titles, which we can replace from later rows.
           previous_item[:name] = row['course_title'] if previous_item[:name].blank?
@@ -101,7 +101,7 @@ module EdoOracle
             ]
           }
           sum_primary_limits(course_data, row) unless row['enroll_status']
-          course_item.merge(term_data).merge(course_data)
+          class_enrollment.merge(term_data).merge(course_data)
         end
       end
 
@@ -123,7 +123,7 @@ module EdoOracle
       #   "id" : unique for the UserCourses feed across terms; used by Classes
       #   "slug" : URL-friendly ID without term information; used by Academics
       #   "course_code" : the short course name as displayed in the UX
-      def course_ids_from_row(row)
+      def class_from_row(row)
         dept_name, dept_code, catalog_id = parse_course_code row
         slug = [dept_name, catalog_id].map { |str| normalize_to_slug str }.join '-'
         term_code = Berkeley::TermCodes.edo_id_to_code row['term_id']
@@ -136,7 +136,8 @@ module EdoOracle
           dept: dept_name,
           dept_code: dept_code,
           id: course_id,
-          slug: slug
+          slug: slug,
+          academicCareer: row['acad_career']
         }
       end
 
@@ -154,7 +155,7 @@ module EdoOracle
           topic_description: row['topic_description'],
         }
         if section_data[:is_primary_section]
-          section_data[:units] = row['units']
+          section_data[:units] = row['units_taken']
           section_data[:start_date] = row['start_date'] if row['start_date']
           section_data[:end_date] = row['end_date'] if row['end_date']
           section_data[:session_id] = row['session_id'] if row['session_id']
@@ -166,7 +167,7 @@ module EdoOracle
           # Grading and waitlist data relevant to students.
           grading = {}
           grading[:grade] = row['grade'].present? ? row['grade'].strip : nil
-          grading[:grade_points] = row['grade_points'].present? ? row['grade_points'] : nil
+          grading[:grade_points] = (row['grade_points'].present?) ? row['grade_points'] : nil
           grading[:grading_basis] = section_data[:is_primary_section] ? row['grading_basis'] : nil
           section_data[:grading] = grading
           if row['enroll_status'] == 'W'
@@ -242,7 +243,7 @@ module EdoOracle
       end
 
       def to_boolean(string)
-        string == 'true'
+        string.try(:downcase) == 'true'
       end
 
       # Our underlying database join between sections and courses is shaky, so we need a series of fallbacks.
