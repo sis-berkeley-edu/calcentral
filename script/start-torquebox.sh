@@ -32,7 +32,9 @@ OPTS=${CALCENTRAL_JRUBY_OPTS:="-J-Djruby.openssl.x509.lookup.cache=8 -Xcompile.i
 export JRUBY_OPTS=${OPTS}
 
 # The CALCENTRAL_JVM_OPTS env variable (optional) will override default JVM args
-JVM_OPTS=${CALCENTRAL_JVM_OPTS:="\-server \-verbose:gc \-Xmn768m \-Xms6144m \-Xmx6144m \-XX:+CMSParallelRemarkEnabled \-XX:+CMSScavengeBeforeRemark \-XX:+PrintGCCause \-XX:+PrintGCDateStamps \-XX:+PrintGCDetails \-XX:+ScavengeBeforeFullGC \-XX:+UseCMSInitiatingOccupancyOnly \-XX:+UseCodeCacheFlushing \-XX:+UseConcMarkSweepGC \-XX:CMSInitiatingOccupancyFraction=85 \-XX:MaxMetaspaceSize=1024m \-XX:ReservedCodeCacheSize=256m"}LOG_DIR=${CALCENTRAL_LOG_DIR:=`pwd`"/log"}
+JVM_OPTS=${CALCENTRAL_JVM_OPTS:="\-server \-verbose:gc \-Xmn768m \-Xms6144m \-Xmx6144m \-XX:+CMSParallelRemarkEnabled \-XX:+CMSScavengeBeforeRemark \-XX:+PrintGCCause \-XX:+PrintGCDateStamps \-XX:+PrintGCDetails \-XX:+ScavengeBeforeFullGC \-XX:+UseCMSInitiatingOccupancyOnly \-XX:+UseCodeCacheFlushing \-XX:+UseConcMarkSweepGC \-XX:CMSInitiatingOccupancyFraction=85 \-XX:MaxMetaspaceSize=1024m \-XX:ReservedCodeCacheSize=256m"}
+
+LOG_DIR=${CALCENTRAL_LOG_DIR:=`pwd`"/log"}
 MAX_THREADS=${CALCENTRAL_MAX_THREADS:="90"}
 export CALCENTRAL_LOG_DIR=${LOG_DIR}
 IP_ADDR=`/sbin/ifconfig | grep 'inet addr:'| grep -v '127.0.0.1' | cut -d: -f2 | awk '{ print $1}'`
