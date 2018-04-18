@@ -41,8 +41,8 @@ module User
 
     def get_campus_roles
       base_roles = Berkeley::UserRoles.base_roles
-      campus_roles = (@ldap_attributes && @ldap_attributes[:roles]) || {}
-      campus_roles = base_roles.merge campus_roles
+      ldap_roles = (@ldap_attributes && @ldap_attributes[:roles]) || {}
+      campus_roles = base_roles.merge ldap_roles
       if @sis_profile_visible
         edo_roles = (@edo_attributes && @edo_attributes[:roles]) || {}
         # Do not introduce conflicts if CS is more up-to-date on active student status.

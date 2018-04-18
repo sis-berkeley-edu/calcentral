@@ -44,9 +44,10 @@ module User
 
     def held_applicant?
       cs_feed = HubEdos::Affiliations.new(user_id: @auth_uid).get
-      if cs_feed.try(:[], :feed) && (student = cs_feed[:feed].try(:[], 'student')) && student.try(:[], 'affiliations')
-        cs_feed = HashConverter.symbolize student
-        held = unreleased_applicant?(cs_feed[:affiliations])
+      cs_student = cs_feed.try(:[], :feed).try(:[], 'student')
+      if affiliations = cs_student.try(:[], 'affiliations')
+        affiliations = HashConverter.symbolize affiliations
+        held = unreleased_applicant?(affiliations)
         has_ldap_affiliations = held ? has_ldap_affiliations? : nil
         is_graduate = held && (!has_ldap_affiliations.nil? && !has_ldap_affiliations) ? is_graduate_applicant? : nil
         held && (!has_ldap_affiliations.nil? && !has_ldap_affiliations) && (!is_graduate.nil? && !is_graduate)
