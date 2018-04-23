@@ -14,6 +14,22 @@ angular.module('calcentral.controllers').controller('AcademicSummaryController',
     apiService.util.printPage();
   };
 
+  var mergeTermHonors = function(semester) {
+    var honors = $scope.collegeAndLevel.awardHonors[semester.termId] || [];
+    semester.honors = _.keyBy(honors, function(honor) {
+      return honor.code;
+    });
+  };
+
+  var parseTransferCredit = function() {
+    $scope.showTransferCredit = showTransferCredit();
+    if (!showTransferCredit) {
+      return;
+    } else {
+      $scope.showPointsColumn = showTransferCreditPoints(_.get($scope, 'transferCredit.ucTransferCrseSch.items'));
+    }
+  };
+
   var showSemesters = function() {
     return !!(_.get($scope, 'semesters.length') && apiService.user.profile.hasStudentHistory);
   };
@@ -29,36 +45,26 @@ angular.module('calcentral.controllers').controller('AcademicSummaryController',
     });
   };
 
-  var parseTransferCredit = function() {
-    $scope.showTransferCredit = showTransferCredit();
-    if (!showTransferCredit) {
-      return;
-    } else {
-      $scope.showPointsColumn = showTransferCreditPoints(_.get($scope, 'transferCredit.ucTransferCrseSch.items'));
-    }
-  };
-
-  var mergeTermHonors = function(semester) {
-    var honors = $scope.collegeAndLevel.awardHonors[semester.termId] || [];
-    semester.honors = _.keyBy(honors, function(honor) {
-      return honor.code;
-    });
-  };
-
-  var parseTermHonors = function() {
-    _.each($scope.semesters, mergeTermHonors);
-  };
-
   var parseAcademics = function(response) {
     angular.extend($scope, _.get(response, 'data'));
+    $scope.showGpa = academicsService.showGpa($scope.gpaUnits.gpa);
     $scope.showSemesters = showSemesters();
+    parseGpaUnits();
     parseTermHonors();
     parseTransferCredit();
+  };
+
+  var parseGpaUnits = function() {
+    $scope.gpaUnits = academicsService.parseGpaUnits($scope.gpaUnits);
   };
 
   var parsePerson = function(response) {
     var names = _.get(response, 'data.feed.student.names');
     $scope.primaryName = apiService.profile.findPrimary(names);
+  };
+
+  var parseTermHonors = function() {
+    _.each($scope.semesters, mergeTermHonors);
   };
 
   // Similar to academicsController, we wait until user profile is fully loaded before hitting academics data

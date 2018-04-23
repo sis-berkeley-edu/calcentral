@@ -28,6 +28,25 @@ angular.module('calcentral.services').service('academicsService', function() {
     return _.head(_.compact(sortedSemesters));
   };
 
+  var containsLawClass = function(selectedTeachingSemester) {
+    var classes = _.get(selectedTeachingSemester, 'classes');
+    return !!_.find(classes, {
+      dept: 'LAW'
+    });
+  };
+
+  var containsMidpointClass = function(selectedTeachingSemester) {
+    var classes = _.get(selectedTeachingSemester, 'classes');
+    var isSummer = isSummerSemester(selectedTeachingSemester);
+    if (!isSummer && classes && classes.length) {
+      return !_.every(classes, function(klass) {
+        return _.get(klass, 'dept') === 'LAW';
+      });
+    } else {
+      return false;
+    }
+  };
+
   var countSectionItem = function(selectedCourse, sectionItem) {
     var count = 0;
     for (var i = 0; i < selectedCourse.sections.length; i++) {
@@ -44,6 +63,31 @@ angular.module('calcentral.services').service('academicsService', function() {
       }
     }
     return count;
+  };
+
+  /**
+   * Determines if a collection of courses have topics present to display
+   * Required for table presentation on semester page
+   */
+  var courseCollectionHasTopics = function(courses) {
+    return !!_.find(courses, function(course) {
+      return course.topics.length > 0;
+    });
+  };
+
+  /**
+   * Returns expected graduation term name if student is not a graduate or law student
+   * @param  {Object} graduation      Graduation node of My Academics feed
+   * @return {String}                 expected graduation term name string
+   */
+  var expectedGradTermName = function(graduation) {
+    var lastExpectedGraduationTermName = _.get(graduation, 'lastExpectedGraduationTerm.name');
+    var isNotGraduateOrLawStudent = _.get(graduation, 'isNotGraduateOrLawStudent');
+    if (isNotGraduateOrLawStudent && lastExpectedGraduationTermName) {
+      return lastExpectedGraduationTermName;
+    } else {
+      return '';
+    }
   };
 
   var filterBySectionSlug = function(course, sectionSlug) {
@@ -149,6 +193,20 @@ angular.module('calcentral.services').service('academicsService', function() {
     return classes;
   };
 
+  /**
+   * Collects unique course sections topics for course
+   */
+  var getCourseTopics = function(course) {
+    var topics = [];
+    _.forEach(course.sections, function(section) {
+      var sectionTopicString = _.trim(section.topic_description);
+      if (!_.isEmpty(sectionTopicString)) {
+        topics.push(section.topic_description);
+      }
+    });
+    return _.intersection(topics);
+  };
+
   var getPreviousClasses = function(semesters) {
     var classes = [];
     for (var i = 0; i < semesters.length; i++) {
@@ -184,19 +242,9 @@ angular.module('calcentral.services').service('academicsService', function() {
     }
   };
 
-  /**
-   * Returns expected graduation term name if student is not a graduate or law student
-   * @param  {Object} graduation      Graduation node of My Academics feed
-   * @return {String}                 expected graduation term name string
-   */
-  var expectedGradTermName = function(graduation) {
-    var lastExpectedGraduationTermName = _.get(graduation, 'lastExpectedGraduationTerm.name');
-    var isNotGraduateOrLawStudent = _.get(graduation, 'isNotGraduateOrLawStudent');
-    if (isNotGraduateOrLawStudent && lastExpectedGraduationTermName) {
-      return lastExpectedGraduationTermName;
-    } else {
-      return '';
-    }
+  var isSummerSemester = function(selectedTeachingSemester) {
+    var termCode = _.get(selectedTeachingSemester, 'termCode');
+    return (termCode === 'C');
   };
 
   var normalizeGradingData = function(course) {
@@ -210,6 +258,42 @@ angular.module('calcentral.services').service('academicsService', function() {
         break;
       }
     }
+  };
+
+  /**
+   * Converts each value given in gpaUnits to a Number type to be processed regularly.  `parseFloat` returns NaN if input value does not contain at least one digit.
+   * GPAs are displayed with 4 significant digits.
+   * Also sets any law career-based GPAs to 'N/A' due to law classes being P/NP
+   */
+  var parseGpaUnits = function(gpaUnits) {
+    _.forEach(gpaUnits.gpa, function(gpa) {
+      if (gpa.role === 'law') {
+        gpa.cumulativeGpaFloat = 'N/A';
+      } else {
+        gpa.cumulativeGpaFloat = parseFloat(gpa.cumulativeGpa).toPrecision(4);
+      }
+    });
+    gpaUnits.totalUnits = parseFloat(gpaUnits.totalUnits);
+    return gpaUnits;
+  };
+
+  var showGpa = function(gpaArray) {
+    return _.some(gpaArray, function(gpa) {
+      return _.get(gpa, 'role') !== 'law';
+    });
+  };
+
+  var showResidency = function(academicRoles) {
+    var show = true;
+    var blacklistedRoles = ['summerVisitor', 'haasMastersFinEng', 'haasExecMba', 'haasEveningWeekendMba'];
+    _.forEach(blacklistedRoles, function(role) {
+      if (_.get(academicRoles, role)) {
+        show = false;
+        // Break the loop if we get a hit on a blacklisted role
+        return false;
+      }
+    });
+    return show;
   };
 
   /**
@@ -266,30 +350,6 @@ angular.module('calcentral.services').service('academicsService', function() {
     return semesters;
   };
 
-  /**
-   * Collects unique course sections topics for course
-   */
-  var getCourseTopics = function(course) {
-    var topics = [];
-    _.forEach(course.sections, function(section) {
-      var sectionTopicString = _.trim(section.topic_description);
-      if (!_.isEmpty(sectionTopicString)) {
-        topics.push(section.topic_description);
-      }
-    });
-    return _.intersection(topics);
-  };
-
-  /**
-   * Determines if a collection of courses have topics present to display
-   * Required for table presentation on semester page
-   */
-  var courseCollectionHasTopics = function(courses) {
-    return !!_.find(courses, function(course) {
-      return course.topics.length > 0;
-    });
-  };
-
   var textbookRequestInfo = function(course, semester) {
     var primarySectionNumbers = [];
     var primaryCcns = [];
@@ -327,51 +387,10 @@ angular.module('calcentral.services').service('academicsService', function() {
     }
   };
 
-  var containsMidpointClass = function(selectedTeachingSemester) {
-    var classes = _.get(selectedTeachingSemester, 'classes');
-    var isSummer = isSummerSemester(selectedTeachingSemester);
-    if (!isSummer && classes && classes.length) {
-      return !_.every(classes, function(klass) {
-        if (_.get(klass, 'dept') === 'LAW') {
-          return true;
-        } else {
-          return false;
-        }
-      });
-    } else {
-      return false;
-    }
-  };
-
-  var containsLawClass = function(selectedTeachingSemester) {
-    var classes = _.get(selectedTeachingSemester, 'classes');
-    return !!_.find(classes, {
-      dept: 'LAW'
-    });
-  };
-
-  var isSummerSemester = function(selectedTeachingSemester) {
-    var termCode = _.get(selectedTeachingSemester, 'termCode');
-    return (termCode === 'C');
-  };
-
   var totalTransferUnits = function(transferUnits, testUnits) {
     var numericTransferUnits = transferUnits || 0;
     var numericTestUnits = testUnits || 0;
     return numericTransferUnits + numericTestUnits;
-  };
-
-  var showResidency = function(academicRoles) {
-    var show = true;
-    var blacklistedRoles = ['summerVisitor', 'haasMastersFinEng', 'haasExecMba', 'haasEveningWeekendMba'];
-    _.forEach(blacklistedRoles, function(role) {
-      if (_.get(academicRoles, role)) {
-        show = false;
-        // Break the loop if we get a hit on a blacklisted role
-        return false;
-      }
-    });
-    return show;
   };
 
   // Expose methods
@@ -392,6 +411,8 @@ angular.module('calcentral.services').service('academicsService', function() {
     isLSStudent: isLSStudent,
     isSummerSemester: isSummerSemester,
     normalizeGradingData: normalizeGradingData,
+    parseGpaUnits: parseGpaUnits,
+    showGpa: showGpa,
     showResidency: showResidency,
     summarizeStudentClassTopics: summarizeStudentClassTopics,
     textbookRequestInfo: textbookRequestInfo,

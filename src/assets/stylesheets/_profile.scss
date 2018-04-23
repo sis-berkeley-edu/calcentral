@@ -8,6 +8,29 @@
       }
     }
   }
+  .cc-widget-profile-gpa {
+    .cc-widget-profile-gpa-list {
+      margin: 0;
+    }
+    .cc-widget-profile-gpa-career {
+      display: inline-block;
+      padding: 0;
+      text-align: left;
+      width: 35%;
+    }
+    .cc-widget-profile-gpa-cumulative {
+      display: inline-block;
+      width: 15%;
+    }
+    .cc-widget-profile-gpa-hide-button-block {
+      display: block;
+      margin-top: 4px;
+    }
+    .cc-widget-profile-gpa-hide-button-inline {
+      display: inline-block;
+      margin-left: 4%;
+    }
+  }
   .cc-widget-profile-message-text {
     line-height: 1.6;
     margin-bottom: 0;
@@ -48,5 +71,8 @@
     i {
       color: $cc-color-white;
     }
+  }
+  .cc-widget-profile-section {
+    margin: 0 !important;
   }
 }
