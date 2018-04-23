@@ -21,9 +21,9 @@ bundle install & npm install
 bundle exec torquebox deploy .
 
 # Adapted from current start-torquebox.sh settings
-OPTS="-J-Djruby.openssl.x509.lookup.cache=8 -Xcompile.invokedynamic=false -Xcext.enabled=true -J-XX:+UseConcMarkSweepGC -J-XX:+CMSPermGenSweepingEnabled -J-XX:+CMSClassUnloadingEnabled -J-XX:MaxPermSize=1024m -J-Djruby.thread.pool.enabled=true -J-Djava.io.tmpdir=${PWD}/tmp"
+OPTS="-J-Djruby.openssl.x509.lookup.cache=8 -Xcompile.invokedynamic=false -J-XX:+UseConcMarkSweepGC -J-XX:+CMSPermGenSweepingEnabled -J-XX:+CMSClassUnloadingEnabled -J-Djruby.thread.pool.enabled=true -J-Djava.io.tmpdir=${PWD}/tmp"
 export JRUBY_OPTS=${OPTS}
-JVM_OPTS="\-server \-verbose:gc \-Xmn500m \-Xms3000m \-Xmx3000m \-XX:+CMSParallelRemarkEnabled \-XX:+CMSScavengeBeforeRemark \-XX:+PrintPromotionFailure \-XX:+PrintGCDateStamps \-XX:+PrintGCDetails \-XX:+ScavengeBeforeFullGC \-XX:+UseCMSInitiatingOccupancyOnly \-XX:+UseCodeCacheFlushing \-XX:+UseConcMarkSweepGC \-XX:CMSInitiatingOccupancyFraction=85 \-XX:MaxMetaspaceSize=1024m \-XX:ReservedCodeCacheSize=256m"
+JVM_OPTS="\-server \-verbose:gc \-Xmn768m \-Xms6144m \-Xmx6144m \-XX:+CMSParallelRemarkEnabled \-XX:+CMSScavengeBeforeRemark \-XX:+PrintPromotionFailure \-XX:+PrintGCDateStamps \-XX:+PrintGCDetails \-XX:+ScavengeBeforeFullGC \-XX:+UseCMSInitiatingOccupancyOnly \-XX:+UseCodeCacheFlushing \-XX:+UseConcMarkSweepGC \-XX:CMSInitiatingOccupancyFraction=85 \-XX:MaxMetaspaceSize=1024m \-XX:ReservedCodeCacheSize=256m"
 MAX_THREADS=${CALCENTRAL_MAX_THREADS:="250"}
 
 # build assets without watcher / browser sync
