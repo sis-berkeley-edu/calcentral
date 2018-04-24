@@ -50,36 +50,46 @@ module Oec
           raise UnexpectedDataError, "Could not find worksheet 'Report Viewers' in sheet '#{confirmation_sheet.title}'"
         end
 
+        merged_course_rows = []
         course_confirmation.each do |course_confirmation_row|
           validate('Merged course confirmations', "#{course_confirmation_row['COURSE_ID']}-#{course_confirmation_row['LDAP_UID']}") do |errors|
             sis_import_rows = sis_import.select { |row| row['LDAP_UID'] == course_confirmation_row['LDAP_UID'] && row['COURSE_ID'] == course_confirmation_row['COURSE_ID']  }
             if sis_import_rows.none?
               errors.add 'No SIS import row found matching confirmation row'
-              validate_and_add(merged_course_confirmations, course_confirmation_row, %w(COURSE_ID LDAP_UID), strict: false)
+              merged_course_rows << WorksheetRow.new({}, merged_course_confirmations).merge(course_confirmation_row)
             else
               errors.add 'Multiple SIS import rows found matching confirmation row' if sis_import_rows.count > 1
               sis_import_rows.each do |sis_import_row|
-                merged_row = sis_import_row.merge course_confirmation_row
-                validate_and_add(merged_course_confirmations, merged_row, %w(COURSE_ID LDAP_UID), strict: false)
+                merged_course_rows << sis_import_row.merge(course_confirmation_row)
               end
             end
           end
         end
 
+        fill_in_sis_ids merged_course_rows
+        merged_course_rows.each do |row|
+          validate_and_add(merged_course_confirmations, row, %w(COURSE_ID LDAP_UID), strict: false)
+        end
+
+        merged_supervisor_rows = []
         supervisor_confirmation.each do |supervisor_confirmation_row|
           validate('Merged supervisor confirmations', supervisor_confirmation_row['LDAP_UID']) do |errors|
             supervisor_rows = supervisors.select { |row| row['LDAP_UID'] == supervisor_confirmation_row['LDAP_UID']}
             if supervisor_rows.none?
               errors.add 'No supervisors row found matching confirmation row'
-              validate_and_add(merged_supervisor_confirmations, supervisor_confirmation_row, %w(LDAP_UID), strict: false)
+              merged_supervisor_rows << WorksheetRow.new({}, merged_supervisor_confirmations).merge(supervisor_confirmation_row)
             else
               errors.add 'Multiple supervisor rows found matching confirmation row' if supervisor_rows.count > 1
               supervisor_rows.each do |supervisor_row|
-                merged_row = supervisor_row.merge supervisor_confirmation_row
-                validate_and_add(merged_supervisor_confirmations, merged_row, %w(LDAP_UID), strict: false)
+                merged_supervisor_rows << supervisor_row.merge(supervisor_confirmation_row)
               end
             end
           end
+        end
+
+        fill_in_sis_ids merged_supervisor_rows
+        merged_supervisor_rows.each do |row|
+          validate_and_add(merged_supervisor_confirmations, row, %w(LDAP_UID), strict: false)
         end
 
         log :info, "Merged all rows from department sheet '#{department_item.title}'"
@@ -91,6 +101,18 @@ module Oec
       end
       export_sheet(merged_course_confirmations, merged_confirmations_folder)
       export_sheet(merged_supervisor_confirmations, merged_confirmations_folder)
+    end
+
+    def fill_in_sis_ids(confirmation_sheet)
+      rows_without_sis_id = confirmation_sheet.select { |r| r['SIS_ID'].blank? }
+      uids = rows_without_sis_id.map { |r| r['LDAP_UID'] }
+      user_data = CanvasCsv::Base.new().accumulate_user_data uids
+      uid_to_sid = user_data.inject({}) do |hash, user|
+        hash.update(user['login_id'] => user['user_id'])
+      end
+      rows_without_sis_id.each do |r|
+        r['SIS_ID'] = uid_to_sid[r['LDAP_UID']]
+      end
     end
 
   end
