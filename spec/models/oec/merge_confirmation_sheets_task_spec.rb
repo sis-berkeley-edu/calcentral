@@ -223,6 +223,20 @@ describe Oec::MergeConfirmationSheetsTask do
         expect(rows_without_sis_data.first[sis_column]).to be_blank
       end
     end
+
+    it 'should fill in empty SIS_ID values' do
+      expect(User::BasicAttributes).to receive(:attributes_for_uids).with(['100008']).and_return([{
+        ldap_uid: '100008',
+        student_id: '2345678',
+        roles: {
+          student: true,
+          registered: true
+        }
+      }])
+      task.run
+      row_without_sis_data = merged_course_confirmation.find { |row| row['COURSE_ID'] == '2015-B-91111' }
+      expect(row_without_sis_data['SIS_ID']).to eq '2345678'
+    end
   end
 
   context 'when supervisor data conflicts between department forms' do
@@ -262,11 +276,19 @@ describe Oec::MergeConfirmationSheetsTask do
       expect(task.errors['Merged supervisor confirmations']['999999'].keys).to include 'No supervisors row found matching confirmation row'
     end
 
-    it 'should export a row with blank values for SIS data' do
+    it 'should fill in empty SIS_ID values' do
+      expect(User::BasicAttributes).to receive(:attributes_for_uids).with(['999999']).and_return([{
+        ldap_uid: '999999',
+        student_id: '1234567',
+        roles: {
+          exStudent: true,
+          staff: true
+        }
+      }])
       task.run
       rows_without_sis_data = merged_supervisor_confirmation.select { |row| row['LDAP_UID'] == '999999' }
       expect(rows_without_sis_data).to have(1).items
-      expect(rows_without_sis_data.first['SIS_ID']).to be_blank
+      expect(rows_without_sis_data.first['SIS_ID']).to eq 'UID:999999'
     end
   end
 end
