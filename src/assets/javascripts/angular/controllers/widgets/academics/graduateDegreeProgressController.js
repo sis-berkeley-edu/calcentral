@@ -21,7 +21,7 @@ angular.module('calcentral.controllers').controller('GraduateDegreeProgressContr
       }
     ).finally(
       function() {
-        var isHigherDegreeStudent = apiService.user.profile.academicRoles.grad || apiService.user.profile.academicRoles.law;
+        var isHigherDegreeStudent = apiService.user.profile.academicRoles.grad || (apiService.user.profile.academicRoles.law && apiService.user.profile.academicRoles.lawJspJsd);
         var isExStudentWithMilestones = apiService.user.profile.roles.exStudent && $scope.degreeProgress.graduate.progresses.length;
         $scope.degreeProgress.graduate.showCard = apiService.user.profile.features.csDegreeProgressGradStudent && (isHigherDegreeStudent || isExStudentWithMilestones);
         $scope.degreeProgress.graduate.isLoading = false;
