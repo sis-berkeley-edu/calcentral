@@ -2,21 +2,6 @@ module CampusOracle
   class Queries < Connection
     include ActiveRecordHelper
 
-    def self.get_person_attributes(person_id)
-      result = {}
-      use_pooled_connection {
-        log_access(connection, connection_handler, name)
-        sql = <<-SQL
-      select pi.ldap_uid, pi.student_id, pi.ug_grad_flag, trim(pi.first_name) as first_name, trim(pi.last_name) as last_name,
-        pi.person_name, pi.email_address, pi.affiliations, pi.person_type, pi.alternateid AS official_bmail_address
-      from calcentral_person_info_vw pi
-      where pi.ldap_uid = #{person_id.to_i}
-        SQL
-        result = connection.select_one(sql)
-      }
-      stringify_ints! result
-    end
-
     def self.get_person_attributes_with_term_reg(person_id, term_yr, term_cd)
       result = {}
       use_pooled_connection {

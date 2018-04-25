@@ -6,12 +6,6 @@ describe User::AuthenticationValidator do
   end
 
   describe '#held_applicant?' do
-    let(:nil_calnet_row) do
-      { 'affiliations' => '' }
-    end
-    let(:calnet_affiliation_staff) do
-      { 'affiliations' => 'EMPLOYEE-TYPE-STAFF,STUDENT-STATUS-EXPIRED' }
-    end
     let(:nil_cs_affiliations) do
       {
         statusCode: 200,
@@ -23,6 +17,23 @@ describe User::AuthenticationValidator do
         }
       }
     end
+    let(:applicant_applied_cs_affiliation) do
+      {
+        statusCode: 200,
+        feed: {
+          'student'=>
+            {'affiliations'=>
+               [{'type'=>{'code'=>'APPLICANT', 'description'=>'Applicant'},
+                 'detail'=> 'Applied',
+                 'status'=> {
+                   'code'=>'ACT',
+                   'description'=>'Active'},
+                 'fromDate'=>'2016-01-06'}]
+            }
+        },
+        studentNotFound: nil
+      }
+    end
     let(:held_cs_affiliations) do
       {
         statusCode: 200,
@@ -30,6 +41,7 @@ describe User::AuthenticationValidator do
           'student'=>
             {'affiliations'=>
               [{'type'=>{'code'=>'APPLICANT', 'description'=>'Applicant'},
+                'detail'=> 'Admitted',
                 'status'=> {
                   'code'=>'ACT',
                   'description'=>'Active'},
@@ -53,6 +65,7 @@ describe User::AuthenticationValidator do
                   'description'=>'Active'},
                 'fromDate'=>'2016-01-11'},
                 {'type'=>{'code'=>'APPLICANT', 'description'=>'Applicant'},
+                  'detail' => 'Admitted',
                   'status'=> {
                     'code'=>'ACT',
                     'description'=>'Active'},
@@ -61,47 +74,103 @@ describe User::AuthenticationValidator do
         studentNotFound: nil
       }
     end
+    let(:nil_ldap_roles) do
+      {
+        roles: {}
+      }
+    end
+    let(:staff_ldap_roles) do
+      {
+        roles: {
+          staff: true
+        }
+      }
+    end
+    let(:undergrad_sir_admit) do
+      {
+        sirStatuses: [
+          { isUndergraduate: true }
+        ]
+      }
+    end
+    let(:multiple_sir_admit) do
+      {
+        sirStatuses: [
+          { isUndergraduate: true },
+          {}
+        ]
+      }
+    end
+    let(:graduate_sir_admit) do
+      {
+        sirStatuses: [
+          { isUndergraduate: false }
+        ]
+      }
+    end
+    let(:ldap_affiliations) { nil }
+    let(:sir_statuses) { nil }
     before do
-      allow(CampusOracle::Queries).to receive(:get_basic_people_attributes).with([auth_uid]).and_return [calnet_row]
-      allow(HubEdos::Affiliations).to receive(:new).with(user_id: auth_uid).and_return double(get: cs_affiliations)
+      HubEdos::Affiliations.stub_chain(:new, :get).and_return cs_affiliations
+      CalnetLdap::UserAttributes.stub_chain(:new, :get_feed).and_return ldap_affiliations
+      CampusSolutions::Sir::SirStatuses.stub_chain(:new, :get_feed).and_return sir_statuses
     end
     subject { User::AuthenticationValidator.new(auth_uid).held_applicant? }
-    context 'Nil affiliations from Hub' do
-      let(:calnet_row) do
-        { 'affiliations' => 'STUDENT-TYPE-NOT-REGISTERED' }
-      end
+    context 'nil affiliations from all' do
       let(:cs_affiliations) { nil_cs_affiliations }
-      it {should be false}
-    end
-    context 'CalNet affiliations but no CS affiliations' do
-      let(:calnet_row) { calnet_affiliation_staff }
-      let(:cs_affiliations) { held_cs_affiliations }
-      it {should be false}
-    end
-    context 'CalNet affiliations and only pending-admit CS affiliation' do
-      let(:calnet_row) { calnet_affiliation_staff }
-      let(:cs_affiliations) { nil }
-      it {should be false}
-    end
-    context 'No CalNet affiliations and only pending-admit CS affiliation' do
-      let(:calnet_row) { nil_calnet_row }
-      let(:cs_affiliations) { held_cs_affiliations }
-      it {should be true}
-    end
-    context 'Only not-registered CalNet affiliation and only pending-admit CS affiliation' do
-      let(:calnet_row) do
-        { 'affiliations' => 'STUDENT-TYPE-NOT-REGISTERED' }
+      it 'should return false without requesting data from LDAP or SirStatuses' do
+        expect(subject).to eql(false)
+        expect(CalnetLdap::UserAttributes).not_to receive(:new)
+        expect(CampusSolutions::Sir::SirStatuses).not_to receive(:new)
       end
+    end
+    context 'no CS affiliations, existing LDAP affiliations' do
+      let(:cs_affiliations) { nil }
+      let(:ldap_affiliations) { staff_ldap_roles }
+      it 'should return false without requesting data from LDAP or SirStatuses' do
+        expect(subject).to eql(false)
+        expect(CalnetLdap::UserAttributes).not_to receive(:new)
+        expect(CampusSolutions::Sir::SirStatuses).not_to receive(:new)
+      end
+    end
+    context 'pending-admit CS affiliation, no LDAP affiliations, undergraduate new admit' do
       let(:cs_affiliations) { held_cs_affiliations }
-      it {should be true}
+      let(:sir_statuses) { undergrad_sir_admit }
+      it 'should return true' do
+        expect(subject).to eql(true)
+      end
     end
-    context 'No CalNet affiliations and released-admit CS affiliation' do
-      let(:calnet_row) { nil_calnet_row }
+    context 'pending-admit CS affiliation, existing LDAP affiliations, undergraduate new admit' do
+      let(:cs_affiliations) { held_cs_affiliations }
+      let(:ldap_affiliations) { staff_ldap_roles }
+      it 'should return false without requesting data from SirStatuses' do
+        expect(subject).to eql(false)
+        expect(CampusSolutions::Sir::SirStatuses).not_to receive(:new)
+      end
+    end
+    context 'pending-admit CS affiliation, no LDAP affiliations, multiple new admit' do
+      let(:cs_affiliations) { held_cs_affiliations }
+      let(:sir_statuses) { multiple_sir_admit }
+      it 'should return false' do
+        expect(subject).to eql(false)
+      end
+    end
+    context 'pending-admit CS affiliation, no LDAP affiliations, graduate new admit' do
+      let(:cs_affiliations) { held_cs_affiliations }
+      let(:sir_statuses) { graduate_sir_admit }
+      it 'should return false' do
+        expect(subject).to eql(false)
+      end
+    end
+    context 'released-admit CS affiliation, no LDAP affiliations, undergraduate new admit' do
       let(:cs_affiliations) { released_cs_affiliations }
-      it {should be false}
+      it 'should return false without requesting data from LDAP or SirStatuses' do
+        expect(subject).to eql(false)
+        expect(CalnetLdap::UserAttributes).not_to receive(:new)
+        expect(CampusSolutions::Sir::SirStatuses).not_to receive(:new)
+      end
     end
-    context 'No CalNet affiliations and multiple CS affiliations' do
-      let(:calnet_row) { nil_calnet_row }
+    context 'multiple CS affiliations, no LDAP affiliations, undergraduate new admit' do
       let(:cs_affiliations) do
         {
           statusCode: 200,
@@ -121,10 +190,13 @@ describe User::AuthenticationValidator do
           studentNotFound: nil
         }
       end
-      it {should be_falsey}
+      it 'should return false without requesting data from LDAP or SirStatuses' do
+        expect(subject).to eql(false)
+        expect(CalnetLdap::UserAttributes).not_to receive(:new)
+        expect(CampusSolutions::Sir::SirStatuses).not_to receive(:new)
+      end
     end
-    context 'Reverted released-admit' do
-      let(:calnet_row) { nil_calnet_row }
+    context 'Reverted released-admit, no LDAP affiliations, undergraduate new admit' do
       let(:cs_affiliations) do
         {
           statusCode: 200,
@@ -139,6 +211,7 @@ describe User::AuthenticationValidator do
                     'description'=>'Inactive'},
                   'fromDate'=>'2016-01-11'},
                   {'type'=>{'code'=>'APPLICANT', 'description'=>'Applicant'},
+                    'detail' => 'Admitted',
                     'status'=> {
                       'code'=>'ACT',
                       'description'=>'Active'},
@@ -146,7 +219,11 @@ describe User::AuthenticationValidator do
           studentNotFound: nil
         }
       end
-      it {should be true}
+      let(:ldap_affiliations) { nil_ldap_roles }
+      let(:sir_statuses) { undergrad_sir_admit }
+      it 'should return true' do
+        expect(subject).to eql(true)
+      end
     end
   end
 

@@ -50,7 +50,11 @@ module CalnetLdap
     def self.parse(ldap_record)
       affiliation_roles = Berkeley::UserRoles.roles_from_ldap_affiliations ldap_record
       group_roles = Berkeley::UserRoles.roles_from_ldap_groups(ldap_record[:berkeleyeduismemberof])
-      roles = group_roles.merge affiliation_roles
+      ou_roles = Berkeley::UserRoles.roles_from_ldap_ou(ldap_record[:ou])
+      roles = ou_roles.tap do |roles|
+        roles.merge!(group_roles)
+        roles.merge!(affiliation_roles)
+      end
       roles[:confidential] = true if string_attribute(ldap_record, :berkeleyeduconfidentialflag) == 'true'
       identifiers(ldap_record).merge(
         email_address: string_attribute(ldap_record, :mail) || string_attribute(ldap_record, :berkeleyeduofficialemail),

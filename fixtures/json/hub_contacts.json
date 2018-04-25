@@ -30,11 +30,11 @@
             ],
             "affiliations": [
               {
-                "detail": "",
+                "detail": "Admitted",
                 "fromDate": "2015-10-02",
                 "status": {
-                  "code": "INA",
-                  "description": "Inactive"
+                  "code": "ACT",
+                  "description": "Active"
                 },
                 "toDate": "2015-10-28",
                 "type": {

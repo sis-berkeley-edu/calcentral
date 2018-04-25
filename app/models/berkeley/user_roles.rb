@@ -3,6 +3,26 @@ module Berkeley
     extend self
     include ClassLogger
 
+     def base_roles
+      {
+        advisor: false,
+        applicant: false,
+        concurrentEnrollmentStudent: false,
+        confidential: false,
+        expiredAccount: false,
+        exStudent: false,
+        faculty: false,
+        graduate: false,
+        guest: false,
+        law: false,
+        registered: false,
+        releasedAdmit: false,
+        staff: false,
+        student: false,
+        undergrad: false
+      }
+    end
+
     def roles_from_affiliations(affiliations)
       affiliations ||= []
       {
@@ -18,16 +38,20 @@ module Berkeley
 
     def roles_from_ldap_affiliations(ldap_record)
       affiliations = ldap_record[:berkeleyeduaffiliations].to_a
+      affiliations_map = ['EMPLOYEE', 'AFFILIATE', 'GUEST', 'STUDENT']
+
+      # Remove any affiliations we are choosing to ignore
+      if !ldap_student_affiliations_enabled
+        affiliations_map.delete('STUDENT')
+        affiliations = affiliations.delete_if do |affiliation|
+          affiliation.include?('STUDENT')
+        end
+      end
 
       # CalNet should no longer provide conflicting affiliations as normal business. If conflicts
       # do appear, we log them and more-or-less arbitrarily choose the "active" version rather than
       # the "no-longer-active" version.
-      [
-        'STUDENT',
-        'EMPLOYEE',
-        'AFFILIATE',
-        'GUEST'
-      ].each do |aff_substring|
+      affiliations_map.each do |aff_substring|
         active_aff = affiliations.select {|aff| aff.start_with? "#{aff_substring}-TYPE-"}
         expired_aff = affiliations.select {|aff| aff == "FORMER-#{aff_substring}" ||
           aff.start_with?("#{aff_substring}-STATUS-")}
@@ -41,7 +65,7 @@ module Berkeley
     end
 
     def roles_from_ldap_groups(ldap_groups)
-      return {} if ldap_groups.nil? || ldap_groups.empty?
+      return {} if ldap_groups.nil? || ldap_groups.empty? || !ldap_student_affiliations_enabled
 
       # Active-but-not-registered students have exactly the same list of memberships as registered students.
       group_prefix = 'cn=edu:berkeley:official:students'
@@ -52,6 +76,11 @@ module Berkeley
         "#{group_prefix}:undergrad,#{group_suffix}" => :undergrad
       })
       roles
+    end
+
+    def roles_from_ldap_ou(ldap_ou)
+      return {} if ldap_ou.nil? || ldap_ou.empty?
+      { expiredAccount: ldap_ou.include?('expired people') }
     end
 
     def roles_from_campus_row(campus_row)
@@ -78,7 +107,10 @@ module Berkeley
         # TODO: We still need to cover staff, guests, concurrent-enrollment students and registration status.
         case active_affiliation[:type][:code]
           when 'ADMT_UX'
-            result[:applicant] = true
+            # A 'releasedAdmit' is a user whose Statement of Intent to Register has been released to them
+            result[:releasedAdmit] = true
+          when 'APPLICANT'
+            result[:applicant] = true unless active_affiliation[:detail] == 'Applied'
           when 'GRADUATE'
             result[:student] = true
             result[:graduate] = true
@@ -113,6 +145,10 @@ module Berkeley
         end
         h
       end
+    end
+
+    def ldap_student_affiliations_enabled
+      Settings.features.ldap_student_affiliations
     end
 
   end

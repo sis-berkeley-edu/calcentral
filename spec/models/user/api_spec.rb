@@ -51,7 +51,6 @@ describe User::Api do
       campusSolutionsId: '1234567890',
       primaryEmailAddress: 'foo@foo.com',
       officialBmailAddress: 'foo@berkeley.edu',
-      educationAbroad: false
     }
   end
   let(:sis_profile_visible) { false }

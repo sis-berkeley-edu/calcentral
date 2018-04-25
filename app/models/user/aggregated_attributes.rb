@@ -11,9 +11,8 @@ module User
     def get_feed_internal
       @edo_attributes = HubEdos::UserAttributes.new(user_id: @uid).get if is_cs_profile_feature_enabled
       @ldap_attributes = CalnetLdap::UserAttributes.new(user_id: @uid).get_feed
-      @oracle_attributes = CampusOracle::UserAttributes.new(user_id: @uid).get_feed
       campus_solutions_id = @edo_attributes[:campus_solutions_id] if @edo_attributes.present?
-      unknown = @ldap_attributes.blank? && @oracle_attributes.blank? && campus_solutions_id.blank?
+      unknown = @ldap_attributes.blank? && campus_solutions_id.blank?
       # TODO isLegacyStudent is no longer used.
       is_legacy_student = !unknown && (campus_solutions_id.blank? || @edo_attributes[:is_legacy_student])
       @sis_profile_visible = is_cs_profile_feature_enabled
@@ -35,16 +34,15 @@ module User
         campusSolutionsId: campus_solutions_id,
         primaryEmailAddress: get_campus_attribute('email_address', :string),
         officialBmailAddress: get_campus_attribute('official_bmail_address', :string),
-        educationAbroad: !!@oracle_attributes[:education_abroad]
       }
     end
 
     private
 
     def get_campus_roles
+      base_roles = Berkeley::UserRoles.base_roles
       ldap_roles = (@ldap_attributes && @ldap_attributes[:roles]) || {}
-      oracle_roles = (@oracle_attributes && @oracle_attributes[:roles]) || {}
-      campus_roles = oracle_roles.merge ldap_roles
+      campus_roles = base_roles.merge ldap_roles
       if @sis_profile_visible
         edo_roles = (@edo_attributes && @edo_attributes[:roles]) || {}
         # Do not introduce conflicts if CS is more up-to-date on active student status.
@@ -66,7 +64,7 @@ module User
           logger.error "EDO attribute #{field} failed validation for UID #{@uid}: expected a #{format}, got #{edo_attribute}"
         end
       end
-      validated_edo_attribute || @ldap_attributes[field.to_sym] || @oracle_attributes[field]
+      validated_edo_attribute || @ldap_attributes[field.to_sym]
     end
 
     def validate_attribute(value, format)

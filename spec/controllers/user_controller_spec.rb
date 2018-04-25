@@ -2,14 +2,18 @@ describe UserController do
   let (:user_id) { random_id }
   before do
     session['user_id'] = user_id
-    allow(CampusOracle::UserAttributes).to receive(:new).with(user_id: user_id).and_return(double(get_feed: {
-      'person_name' => 'Joe Test',
+    HubEdos::UserAttributes.stub_chain(:new, :get).and_return({
+      :person_name => 'Joe Test',
+      :first_name => 'Joe',
+      :last_name => 'Test',
+      :given_name => 'Joseph',
+      :family_name => 'Untest',
       :roles => {
         :student => true,
         :faculty => false,
         :staff => false
       }
-    }))
+    })
     allow(Settings.features).to receive(:reauthentication).and_return(false)
   end
 

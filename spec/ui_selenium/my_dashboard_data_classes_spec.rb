@@ -272,12 +272,8 @@ describe 'My Dashboard My Classes card', :testui => true do
 
             if current_student_semester.nil? && current_teaching_semester.nil? && academics_api.other_sites(current_term).nil?
 
-              # EAP student
-              if status_api.is_eap?
-                expect(has_eap_msg).to be true
-
               # Student with no classes
-              elsif status_api.is_student? && !status_api.is_faculty?
+              if status_api.is_student? && !status_api.is_faculty?
                 registrar_link_works = WebDriverUtils.verify_external_link(driver, my_classes.registrar_link_element, 'Welcome to our web site - Office Of The Registrar')
                 cal_student_central_link_works = WebDriverUtils.verify_external_link(driver, my_classes.cal_student_central_link_element, 'Welcome! | Cal Student Central')
                 it "shows a 'not enrolled' message for UID #{uid}" do
