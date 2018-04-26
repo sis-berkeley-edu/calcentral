@@ -67,7 +67,7 @@ angular.module('calcentral.services').factory('profileMenuService', function(api
         },
         {
           id: 'information-disclosure',
-          name: 'Information Disclosure',
+          name: 'Information Disclosure (FERPA)',
           roles: {
             student: true
           }
