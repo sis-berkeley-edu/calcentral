@@ -20,13 +20,26 @@ module CanvasLti
     def create_project(project_name)
       project_account_id = Settings.canvas_proxy.projects_account_id
       term_id = Settings.canvas_proxy.projects_term_id
+      template_id = Settings.canvas_proxy.projects_template_id
       worker = Canvas::Course.new(user_id: @uid)
       response = worker.create(project_account_id, project_name, project_name, term_id, unique_sis_project_id)
       if (course_details = response[:body])
         site_id = course_details['id']
-        Canvas::CourseSettings.new(course_id: site_id).fix_default_view course_details
+        response = Canvas::CourseCopyImport.new(canvas_course_id: site_id).import_course_template(template_id)
+        if (import_status = response[:body]) && import_status['workflow_state'] != 'completed'
+          progress_id = import_status['progress_url'].split('/').last
+        end
+
         enrollment = CanvasLti::CourseAddUser.new(user_id: @uid, canvas_course_id: course_details['id']).add_user_to_course(@uid, 'Owner')
-        {
+
+        if progress_id
+          response = Canvas::Progress.new(progress_id: progress_id).get_progress
+          if !response[:body] || response[:body]['workflow_state'] != 'completed'
+            logger.warn("Project site #{site_id} template import not complete before API return")
+          end
+        end
+
+        return {
           projectSiteId: site_id,
           projectSiteUrl: "#{Settings.canvas_proxy.url_root}/courses/#{site_id}",
           enrollment_id: enrollment['id']
