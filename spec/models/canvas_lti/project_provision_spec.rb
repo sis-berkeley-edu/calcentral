@@ -35,6 +35,7 @@ describe CanvasLti::ProjectProvision do
     let(:account_id) { Settings.canvas_proxy.projects_account_id }
     let(:term_id) { Settings.canvas_proxy.projects_term_id }
     let(:url_root) { Settings.canvas_proxy.url_root }
+    let(:template_id) { Settings.canvas_proxy.projects_template_id }
     let(:project_name) { 'Test Project' }
     let(:unique_sis_project_id) { '67f4b934525501cb' }
     let(:new_course) do
@@ -90,8 +91,8 @@ describe CanvasLti::ProjectProvision do
       expect(result[:enrollment_id]).to eq 20959
     end
 
-    it 'resets the site home page if needed' do
-      expect_any_instance_of(Canvas::CourseSettings).to receive(:fix_default_view).with(new_course)
+    it 'imports the Project template' do
+      expect_any_instance_of(Canvas::CourseCopyImport).to receive(:import_course_template).with(template_id).and_call_original
       result = subject.create_project(project_name)
       expect(result[:projectSiteId]).to eq 23
     end
