@@ -1,24 +1,24 @@
 <div class="cc-widget-text" data-ng-controller="InformationDisclosureController">
-  <p>
-    The university's directory information includes personal information such as your address, email, name, phone, and portions of your academic record.
-  </p>
-  <div data-cc-spinner-directive="ferpa.isLoading" data-ng-if="api.user.profile.actAsOptions.canSeeCSLinks">
-    <p data-ng-if="ferpa.deeplink.url && !ferpa.isErrored">
-      You may restrict your directory information from being disclosed to third parties by
-      <a data-cc-campus-solutions-link-directive="ferpa.deeplink"
-        data-cc-campus-solutions-link-directive-cc-cache="profile"
-        data-cc-campus-solutions-link-directive-cc-page-name="currentPage.name"
-        data-cc-campus-solutions-link-directive-cc-page-url="currentPage.url"
-      ></a>.
-    </p>
-    <p data-ng-if="!ferpa.deeplink.url || ferpa.isErrored">
-      <i class="fa fa-exclamation-triangle cc-icon-red"></i> The "managing your FERPA Restriction" link is currently unavailable. Please try again later.
-    </p>
+  <div data-cc-spinner-directive="ferpa.isLoading" data-ng-if="api.user.profile.canSeeCSLinks">
+    <a data-ng-if="ferpa.deeplink.url && !ferpa.isErrored"
+      data-cc-campus-solutions-link-directive="ferpa.deeplink"
+      data-cc-campus-solutions-link-directive-cc-cache="profile"
+      data-cc-campus-solutions-link-directive-cc-page-name="currentPage.name"
+      data-cc-campus-solutions-link-directive-cc-page-url="currentPage.url"
+      data-cc-campus-solutions-link-directive-name="'Manage your FERPA Restrictions'"
+      data-cc-campus-solutions-link-directive-title="'Manage your FERPA Restrictions'"></a>
   </div>
+  </br>
   <p>
-    To learn more, view <a href="http://registrar.berkeley.edu/GeneralInfo/ferpa.html">UC Berkeley's policy governing disclosure of information from student records</a>.
-  </p>
-  <p data-ng-if="api.user.profile.actAsOptions.canSeeCSLinks">
-    Public directory information can be updated at <a href="https://calnet.berkeley.edu/directory/update/index.pl">https://calnet.berkeley.edu/directory/update/index.pl</a>.
+    UC Berkeley defines directory information as personal information such as your address, email, name, phone, and academic standing.
+    </br></br>
+    You may restrict some or all of your information from being treated as directory information by managing your FERPA restrictions.
+    </br></br>
+    To learn more about how UC Berkeley protects the privacy of student records, visit the 
+    <a href="http://registrar.berkeley.edu/academic-policies-procedures/ferpa" title="FERPA Privacy Disclosure" data-cc-outbound-enabled="true">FERPA Privacy Disclosure page</a>.
+    </br></br>
+    Public directory information can be updated at the 
+    <a href="https://calnet.berkeley.edu/directory/update/index.pl" title="Campus Online Directory" data-cc-outbound-enabled="true">campus online directory</a>.
+    Make changes to contact information used for official campus communications using the links to the left.
   </p>
 </div>
