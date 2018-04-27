@@ -35,6 +35,7 @@
     "browser-sync": "~2.18.13",
     "browserify": "~14.4.0",
     "bulkify": "~1.4.2",
+    "concat-with-sourcemaps": "1.0.5",
     "del": "~3.0.0",
     "font-awesome": "~4.7.0",
     "gulp": "~3.9.1",
