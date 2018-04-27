@@ -19,6 +19,7 @@ production:
   password: <%= Settings.postgres.password %>
   host: <%= Settings.postgres.host %>
   port: <%= Settings.postgres.port %>
+  sslmode: <%= Settings.postgres.sslmode %>
 
 test:
   adapter: sqlite3
