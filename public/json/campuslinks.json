@@ -1345,6 +1345,25 @@
       },
       "categories": [
         {
+          "topcategory": "Support Services",
+          "subcategory": "Students"
+        }
+      ]
+    },
+    {
+      "name": "UHS - Tang Center",
+      "description": "Berkeley's healthcare center",
+      "url": "http://uhs.berkeley.edu/",
+      "roles": {
+        "student": true,
+        "applicant": true,
+        "staff": true,
+        "faculty": true,
+        "exStudent": true,
+        "summerVisitor": true
+      },
+      "categories": [
+        {
           "topcategory": "Wellness",
           "subcategory": "Campus Health Center"
         }
@@ -2074,25 +2093,6 @@
         {
           "topcategory": "Finances",
           "subcategory": "Leaving Cal?"
-        }
-      ]
-    },
-    {
-      "name": "How does my SHIP Waiver affect my billing?",
-      "description": "Frequently Asked Questions about how opt-ing out of the Student Health Insurance Plan effects your bill. ",
-      "url": "http://studentcentral.berkeley.edu/faqshipwaiver",
-      "roles": {
-        "student": true,
-        "applicant": true,
-        "staff": false,
-        "faculty": false,
-        "exStudent": true,
-        "summerVisitor": true
-      },
-      "categories": [
-        {
-          "topcategory": "Wellness",
-          "subcategory": "Campus Health Center"
         }
       ]
     },
@@ -3466,9 +3466,9 @@
       ]
     },
     {
-      "name": "UC Berkeley Wellness Letter",
+      "name": "Be Well e-News",
       "description": "Tips and information on how to stay healthy",
-      "url": "http://www.wellnessletter.com/ucberkeley/",
+      "url": "https://uhs.berkeley.edu/social",
       "roles": {
         "student": true,
         "applicant": true,
@@ -3531,7 +3531,7 @@
       ]
     },
     {
-      "name": "UC SHIP (Student Health Insurance Plan)",
+      "name": "Berkeley SHIP (Student Health Insurance Plan)",
       "description": "UC Student Health Insurance Plan",
       "url": "http://www.uhs.berkeley.edu/students/insurance/",
       "roles": {
@@ -3539,25 +3539,6 @@
         "applicant": true,
         "staff": false,
         "faculty": false,
-        "exStudent": true,
-        "summerVisitor": true
-      },
-      "categories": [
-        {
-          "topcategory": "Wellness",
-          "subcategory": "Campus Health Center"
-        }
-      ]
-    },
-    {
-      "name": "UHS - Tang Center",
-      "description": "Berkeley's healthcare center",
-      "url": "http://uhs.berkeley.edu/",
-      "roles": {
-        "student": true,
-        "applicant": true,
-        "staff": true,
-        "faculty": true,
         "exStudent": true,
         "summerVisitor": true
       },
