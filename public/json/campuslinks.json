@@ -543,7 +543,7 @@
     {
       "name": "BETS - equipment tracking",
       "description": "Equipment Tracking System of inventorial and non-inventorial equipment",
-      "url": "http://bets.berkeley.edu/BETS/home/BetsHome.cfm",
+      "url": "https://bets.berkeley.edu",
       "roles": {
         "student": false,
         "applicant": false,
