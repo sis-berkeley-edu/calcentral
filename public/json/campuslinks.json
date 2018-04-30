@@ -2371,25 +2371,6 @@
       ]
     },
     {
-      "name": "MyFinAid (aid prior to Fall 2016)",
-      "description": "Personal financial aid information prior to Fall 2016",
-      "url": "https://myfinaid.berkeley.edu/",
-      "roles": {
-        "student": true,
-        "applicant": true,
-        "staff": false,
-        "faculty": false,
-        "exStudent": true,
-        "summerVisitor": false
-      },
-      "categories": [
-        {
-          "topcategory": "Finances",
-          "subcategory": "Financial Assistance"
-        }
-      ]
-    },
-    {
       "name": "My Years at Cal",
       "description": "Undergraduate advice site with useful resources and on how to stay on track for graduation ",
       "url": "http://myyears.berkeley.edu/",
