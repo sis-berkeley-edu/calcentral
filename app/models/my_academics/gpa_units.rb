@@ -10,23 +10,24 @@ module MyAcademics
 
     def gpa_units
       feed = MyAcademics::MyAcademicStatus.new(@uid).get_feed
-      academic_status = parse_academic_status feed
+      # TODO: Eventually we want to use #parse_academic_statuses to pull all careers and parse associated values for each career
+      academic_statuses = parse_academic_statuses feed
+      academic_status_first = academic_statuses.try(:first)
 
       result = {
         :errored => feed.try(:[], :errored),
-        :cumulativeGpa => parse_cumulative_gpa(academic_status),
+        :gpa => parse_cumulative_gpa(academic_statuses),
         :totalUnitsTakenNotForGpa => parse_total_units_not_for_gpa(pnp_units, 'pnp_taken'),
         :totalUnitsPassedNotForGpa => parse_total_units_not_for_gpa(pnp_units, 'pnp_passed'),
         :totalTransferAndTestingUnits => units_transferred
       }
-      result.merge!(parse_total_units academic_status)
-      result.merge!(parse_total_units_for_gpa academic_status)
+      result.merge!(parse_total_units academic_status_first)
+      result.merge!(parse_total_units_for_gpa academic_status_first)
       result
     end
 
-    def parse_academic_status(feed)
-      #TODO: Consult with SR concerning GPA displayed when multiple academic careers present
-      academic_statuses(feed).try(:first)
+    def parse_academic_statuses(feed)
+      academic_statuses(feed)
     end
 
     def pnp_units
@@ -51,8 +52,18 @@ module MyAcademics
       lookup_campus_solutions_id
     end
 
-    def parse_cumulative_gpa(status)
-      status.try(:[], 'cumulativeGPA').try(:[], 'average').try(:to_s)
+    def parse_cumulative_gpa(statuses)
+      gpa = []
+      statuses.try(:each) do |status|
+        role = status.try(:[], 'studentCareer').try(:[], :role)
+        gpa.push(
+          {
+            role: role,
+            roleDescr: role == 'concurrent' ? 'UCB Extension' : status.try(:[], 'studentCareer').try(:[], 'academicCareer').try(:[], 'formalDescription'),
+            cumulativeGpa: status.try(:[], 'cumulativeGPA').try(:[], 'average').try(:to_s)
+          })
+      end
+      gpa
     end
 
     # Ignores unimportant unit types given back by the hub, including 'unitsOther' (holds total units that exceed limits for other categories, e.g. transfer units)

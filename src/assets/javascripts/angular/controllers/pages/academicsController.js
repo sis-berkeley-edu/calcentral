@@ -206,11 +206,7 @@ angular.module('calcentral.controllers').controller('AcademicsController', funct
         $scope.widgetSemesterName = $scope.selectedTeachingSemester.name;
       }
     }
-    // cumulativeGpa is passed as a string to maintain two significant digits
-    $scope.gpaUnits.cumulativeGpaFloat = $scope.gpaUnits.cumulativeGpa;
-    // Convert these to Number types to be processed regularly. `parseFloat` returns NaN if the input value does not contain at least one digit.
-    $scope.gpaUnits.cumulativeGpa = parseFloat($scope.gpaUnits.cumulativeGpa);
-    $scope.gpaUnits.totalUnits = parseFloat($scope.gpaUnits.totalUnits);
+    $scope.gpaUnits = academicsService.parseGpaUnits($scope.gpaUnits);
   };
 
   var filterWidgets = function() {
@@ -222,6 +218,7 @@ angular.module('calcentral.controllers').controller('AcademicsController', funct
     $scope.showAdvising = !$scope.filteredForDelegate && apiService.user.profile.features.advising && apiService.user.profile.roles.student && isMbaJdOrNotLaw();
     $scope.showProfileMessage = (!$scope.isAcademicInfoAvailable || !$scope.collegeAndLevel || _.isEmpty($scope.collegeAndLevel.careers));
     $scope.showResidency = apiService.user.profile.roles.student && academicsService.showResidency(apiService.user.profile.academicRoles);
+    $scope.showGpaSection = academicsService.showGpa($scope.gpaUnits.gpa);
   };
 
   /**

@@ -31,7 +31,7 @@ describe MyAcademics::GpaUnits do
       it 'sources from Hub' do
         expect(CampusOracle::Queries).to receive(:get_student_info).never
         expect(HubEdos::AcademicStatus).to receive(:new).and_return status_proxy
-        expect(subject[:gpaUnits][:cumulativeGpa]).to eq '3.8'
+        expect(subject[:gpaUnits][:gpa][0][:cumulativeGpa]).to eq '3.8'
       end
     end
   end
@@ -49,8 +49,11 @@ describe MyAcademics::GpaUnits do
         allow_any_instance_of(MyAcademics::MyAcademicRoles).to receive(:get_feed).and_return academic_roles
       end
 
-      it 'translates GPA' do
-        expect(subject[:gpaUnits][:cumulativeGpa]).to eq '3.8'
+      it 'translates GPA, grouped by career' do
+        expect(subject[:gpaUnits][:gpa][0][:cumulativeGpa]).to eq '3.8'
+        expect(subject[:gpaUnits][:gpa][0][:role]).to eq 'ugrd'
+        expect(subject[:gpaUnits][:gpa][1][:cumulativeGpa]).to eq '0'
+        expect(subject[:gpaUnits][:gpa][1][:role]).to eq 'concurrent'
       end
       it 'translates total units' do
         expect(subject[:gpaUnits][:totalUnits]).to eq 73
@@ -98,7 +101,7 @@ describe MyAcademics::GpaUnits do
           end
         end
         it 'returns what data it can' do
-          expect(subject[:gpaUnits][:cumulativeGpa]).to be_present
+          expect(subject[:gpaUnits][:gpa][0][:cumulativeGpa]).to be_present
           expect(subject[:gpaUnits][:totalUnits]).to be nil
         end
       end

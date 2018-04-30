@@ -116,8 +116,10 @@ angular.module('calcentral.controllers').controller('AcademicsGpaController', fu
     };
     accumulateUnits($scope.selectedCourses, selectedSemesterTotals);
     $scope.estimatedGpa = selectedSemesterTotals.score / selectedSemesterTotals.units;
+    // Until this is redesigned, we can only pull in a single career.
+    var cumulativeGpa = _.get('$scope.gpaUnits.gpa[0]', 'cumulativeGpa');
     $scope.estimatedCumulativeGpa =
-        (($scope.gpaUnits.cumulativeGpa * $scope.gpaUnits.totalUnitsAttempted) + selectedSemesterTotals.score) /
+        ((cumulativeGpa * $scope.gpaUnits.totalUnitsAttempted) + selectedSemesterTotals.score) /
         ($scope.gpaUnits.totalUnitsAttempted + selectedSemesterTotals.units);
   };
 

@@ -270,6 +270,206 @@
                   }
                 ],
                 "termsInAttendance": 4
+              },
+              {
+                "studentCareer": {
+                  "academicCareer": {
+                    "code": "UCBX",
+                    "description": "UCB Ext",
+                    "formalDescription": "UC Berkeley Extension",
+                    "fromDate": "2018-01-09"
+                  },
+                  "fromDate": "2018-01-09"
+                },
+                "studentPlans": [
+                  {
+                    "academicPlan": {
+                      "plan": {
+                        "code": "30XCECCENX",
+                        "description": "UCBX Concurrent Enrollment",
+                        "fromDate": "2018-01-18"
+                      },
+                      "type": {
+                        "code": "SS",
+                        "description": "Major - Self-Supporting"
+                      },
+                      "cipCode": "",
+                      "hegisCode": "",
+                      "targetDegree": {},
+                      "ownedBy": {
+                        "administrativeOwners": [
+                          {
+                            "organization": {
+                              "code": "UCB01",
+                              "description": "UC Berkeley"
+                            },
+                            "percentage": 100
+                          }
+                        ]
+                      },
+                      "academicProgram": {
+                        "program": {
+                          "code": "XCCRT",
+                          "description": "UCBX Concurrent Enrollment"
+                        },
+                        "academicCareer": {
+                          "code": "UCBX",
+                          "description": "UCB Ext",
+                          "formalDescription": "UC Berkeley Extension",
+                          "fromDate": "2018-01-09"
+                        }
+                      }
+                    },
+                    "statusInPlan": {
+                      "status": {
+                        "code": "AC",
+                        "description": "Active in Program"
+                      },
+                      "action": {
+                        "code": "MATR",
+                        "description": "Matriculation"
+                      },
+                      "reason": {
+                        "code": "NEW",
+                        "description": "New Admits"
+                      }
+                    },
+                    "primary": true
+                  }
+                ],
+                "cumulativeGPA": {
+                  "type": {
+                    "code": "Cumulative"
+                  },
+                  "average": 0,
+                  "source": "UCB"
+                },
+                "cumulativeUnits": [
+                  {
+                    "type": {
+                      "code": "Total"
+                    },
+                    "unitsEnrolled": 0,
+                    "unitsWaitlisted": 0,
+                    "unitsTaken": 0,
+                    "unitsPassed": 0,
+                    "unitsIncomplete": 0,
+                    "unitsTransferEarned": 0,
+                    "unitsTransferAccepted": 0,
+                    "unitsTest": 0,
+                    "unitsOther": 0,
+                    "unitsCumulative": 0
+                  },
+                  {
+                    "type": {
+                      "code": "For GPA"
+                    },
+                    "unitsEnrolled": 0,
+                    "unitsWaitlisted": 0,
+                    "unitsTaken": 0,
+                    "unitsPassed": 0,
+                    "unitsIncomplete": 0,
+                    "unitsTransferEarned": 0,
+                    "unitsTransferAccepted": 0
+                  },
+                  {
+                    "type": {
+                      "code": "Not For GPA"
+                    },
+                    "unitsEnrolled": 0,
+                    "unitsWaitlisted": 0,
+                    "unitsTaken": 0,
+                    "unitsPassed": 0,
+                    "unitsIncomplete": 0,
+                    "unitsTransferEarned": 0,
+                    "unitsTransferAccepted": 0
+                  }
+                ],
+                "currentRegistration": {
+                  "term": {
+                    "id": "2182",
+                    "name": "2018 Spring"
+                  },
+                  "academicCareer": {
+                    "code": "UCBX",
+                    "description": "UC Berkeley Extension"
+                  },
+                  "eligibleToRegister": true,
+                  "eligibilityStatus": {
+                    "code": "C",
+                    "description": "Continuing"
+                  },
+                  "registered": false,
+                  "disabled": false,
+                  "athlete": false,
+                  "intendsToGraduate": false,
+                  "academicLevel": {
+                    "type": {
+                      "code": "Begining of Term"
+                    },
+                    "level": {
+                      "code": "00",
+                      "description": "Not Set"
+                    }
+                  },
+                  "termUnits": [
+                    {
+                      "type": {
+                        "code": "Total",
+                        "description": "Total"
+                      },
+                      "unitsMin": 0,
+                      "unitsMax": 0,
+                      "unitsEnrolled": 0,
+                      "unitsWaitlisted": 0,
+                      "unitsTaken": 0,
+                      "unitsPassed": 0,
+                      "unitsIncomplete": 0,
+                      "unitsTransferEarned": 0,
+                      "unitsTransferAccepted": 0,
+                      "unitsTest": 0,
+                      "unitsOther": 0
+                    },
+                    {
+                      "type": {
+                        "code": "For GPA",
+                        "description": "For GPA"
+                      },
+                      "unitsMin": 0,
+                      "unitsMax": 0,
+                      "unitsEnrolled": 0,
+                      "unitsWaitlisted": 0,
+                      "unitsTaken": 0,
+                      "unitsPassed": 0,
+                      "unitsIncomplete": 0,
+                      "unitsTransferEarned": 0
+                    },
+                    {
+                      "type": {
+                        "code": "Not For GPA",
+                        "description": "Not For GPA"
+                      },
+                      "unitsMin": 0,
+                      "unitsMax": 0,
+                      "unitsEnrolled": 0,
+                      "unitsWaitlisted": 0,
+                      "unitsTaken": 0,
+                      "unitsPassed": 0,
+                      "unitsIncomplete": 0,
+                      "unitsTransferEarned": 0
+                    }
+                  ],
+                  "termGPA": {
+                    "type": {
+                      "code": "Term GPA",
+                      "description": "Term GPA"
+                    },
+                    "average": 0
+                  },
+                  "specialStudyPrograms": [],
+                  "withdrawalCancel": {},
+                  "new": true
+                }
               }
             ],
             "awardHonors": [],

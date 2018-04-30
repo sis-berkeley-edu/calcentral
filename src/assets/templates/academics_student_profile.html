@@ -5,7 +5,7 @@
 
   <div class="cc-widget-padding cc-flex-space-between-vertical-15">
 
-    <div data-ng-if="showProfileMessage">
+    <div class="cc-widget-profile-section" data-ng-if="showProfileMessage">
       <div data-ng-if="collegeAndLevel.errored">
         There was a problem reaching campus services.
       </div>
@@ -47,7 +47,7 @@
       </div>
     </div>
 
-    <div>
+    <div class="cc-widget-profile-section">
       <h3 data-ng-if="!collegeAndLevel.isCurrent && api.user.profile.roles.student && collegeAndLevel.termName">Academic status as of <span data-ng-bind="collegeAndLevel.termName"></span></h3>
       <div data-ng-if="showProfileMessage" class="cc-table-top-border"></div>
 
@@ -82,7 +82,7 @@
         </table>
       </div>
 
-      <div class="cc-table cc-table-top-border cc-clearfix" data-ng-if="gpaUnits.cumulativeGpa > 0 && !api.user.profile.roles.law">
+      <div class="cc-table cc-table-top-border cc-clearfix cc-widget-profile-gpa" data-ng-if="showGpaSection">
         <table>
           <tbody>
             <tr>
@@ -90,8 +90,18 @@
               <td>
                 <button class="cc-button-link" data-ng-click="academics.showGPA = true" data-ng-show="!academics.showGPA">Show GPA</button>
                 <div data-ng-show="academics.showGPA">
-                  <strong data-ng-bind="gpaUnits.cumulativeGpaFloat"></strong>
-                  (<button class="cc-button-link" data-ng-click="academics.showGPA = false">Hide</button>)
+                  <ul class="cc-widget-profile-gpa-list" data-ng-if="gpaUnits.gpa.length >= 2" data-ng-repeat="gpa in gpaUnits.gpa">
+                    <li>
+                      <p class="cc-widget-profile-gpa-career" data-ng-bind="gpa.roleDescr"></p>
+                      <strong class="cc-text-right cc-widget-profile-gpa-cumulative" data-ng-bind="gpa.cumulativeGpaFloat"></strong>
+                    </li>
+                  </ul>
+                  <div class="cc-widget-profile-gpa-cumulative" data-ng-if="gpaUnits.gpa.length<2">
+                    <strong data-ng-bind="gpaUnits.gpa[0].cumulativeGpaFloat"></strong>
+                  </div>
+                  <div data-ng-class="{'cc-widget-profile-gpa-hide-button-inline':(gpaUnits.gpa.length<2),'cc-widget-profile-gpa-hide-button-block':(gpaUnits.gpa.length>=2)}">
+                      (<button class="cc-button-link" data-ng-click="academics.showGPA = false">Hide</button>)
+                  </div>
                 </div>
               </td>
             </tr>
@@ -100,7 +110,7 @@
       </div>
     </div>
 
-    <div data-ng-include="'widgets/academics/degrees_conferred.html'"></div>
+    <div class="cc-widget-profile-section" data-ng-include="'widgets/academics/degrees_conferred.html'"></div>
 
   </div>
 </div>

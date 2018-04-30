@@ -127,16 +127,22 @@
     </tbody>
   </table>
 </div>
-<div class="cc-table cc-table-top-border cc-academic-summary-content" data-ng-if="!api.user.profile.academicRoles.summerVisitor && gpaUnits.cumulativeGpa > 0 && !api.user.profile.roles.law">
+<div class="cc-table cc-table-top-border cc-academic-summary-content" data-ng-if="!api.user.profile.academicRoles.summerVisitor && showGpa">
   <table>
     <tbody>
       <tr>
-        <th class="cc-academic-summary-row-title"><h4>GPA</h4></th>
-        <th class="cc-academic-summary-row-header">Cumulative</th>
-      </tr>
-      <tr>
-        <td></td>
-        <td><span data-ng-bind="gpaUnits.cumulativeGpa | number:3"></span></td>
+        <th class="cc-academic-summary-row-title"><h4>Cumulative GPA</h4></th>
+        <td>
+          <ul class="cc-academic-summary-gpa-list" data-ng-if="gpaUnits.gpa.length >= 2">
+              <li data-ng-repeat="gpa in gpaUnits.gpa">
+                <p class="cc-inline-block cc-academic-summary-gpa-career" data-ng-bind="gpa.roleDescr"></p>
+                <p class="cc-inline-block cc-text-right cc-academic-summary-gpa" data-ng-bind="gpa.cumulativeGpaFloat"></p>
+              </li>
+          </ul>
+          <div data-ng-if="gpaUnits.gpa.length<2">
+            <p class="cc-inline-block cc-academic-summary-gpa" data-ng-bind="gpaUnits.gpa[0].cumulativeGpaFloat"></p>
+          </div>
+        </td>
       </tr>
     </tbody>
   </table>

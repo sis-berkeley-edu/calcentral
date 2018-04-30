@@ -16,7 +16,7 @@ describe MyAcademics::MyAcademicRoles do
       expect(subject['grad']).to eq false
       expect(subject['fpf']).to eq false
       expect(subject['law']).to eq false
-      expect(subject['concurrent']).to eq false
+      expect(subject['concurrent']).to eq true
       expect(subject['doctorScienceLaw']).to eq false
       expect(subject['lettersAndScience']).to eq true
       expect(subject['haasBusinessAdminMasters']).to eq false
