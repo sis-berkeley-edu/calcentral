@@ -212,7 +212,9 @@ module CanvasCsv
       raise RuntimeError, 'Unable to retrieve course site details. SIS Course ID not present.' if @import_data['sis_course_id'].blank?
       response = Canvas::SisCourse.new(sis_course_id: @import_data['sis_course_id']).course
       if response[:statusCode] == 200 && (course_properties = response[:body]) && (canvas_course_id = course_properties['id'])
-        Canvas::CourseSettings.new(course_id: canvas_course_id).fix_default_view course_properties
+        worker = Canvas::CourseSettings.new(course_id: canvas_course_id)
+        worker.fix_default_view course_properties
+        worker.hide_grade_distributions
         @import_data['canvas_course_id'] = canvas_course_id
         @import_data['course_site_url'] = "#{Settings.canvas_proxy.url_root}/courses/#{canvas_course_id}"
         background_job_complete_step 'Retrieved new course site details'
