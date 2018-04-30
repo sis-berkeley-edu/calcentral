@@ -1614,9 +1614,9 @@
       ]
     },
     {
-      "name": "Drop-in Computer Facilities",
+      "name": "Computer Facilities",
       "description": "Convenient and secure on-campus computing facilities for all individuals with a CalNet ID",
-      "url": "https://www.ets.berkeley.edu/discover-services/drop-computer-facilities",
+      "url": "https://technology.berkeley.edu/services/classroom-technology-and-equipment-device-support-support-and-training/computer-facilities",
       "roles": {
         "student": true,
         "applicant": true,
@@ -2846,9 +2846,9 @@
       ]
     },
     {
-      "name": "Residential Computing (ResComp)",
+      "name": "Residential Computing (Student Tech Services)",
       "description": "Computer and network services for students living in campus housing",
-      "url": "http://www.rescomp.berkeley.edu/",
+      "url": "http://studenttech.berkeley.edu/",
       "roles": {
         "student": true,
         "applicant": true,
