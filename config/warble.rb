@@ -79,7 +79,7 @@ Warbler::Config.new do |config|
 
   # Name of the archive (without the extension). Defaults to the basename
   # of the project directory.
-  # config.jar_name = "mywar"
+  config.jar_name = 'calcentral'
 
   # File extension for the archive. Defaults to either 'jar' or 'war'.
   # config.jar_extension = "jar"
