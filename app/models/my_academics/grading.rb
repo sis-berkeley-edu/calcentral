@@ -124,8 +124,8 @@ module MyAcademics
 
     def add_grading_dates_summer_general(semester_class, section)
       if section.try(:[], :end_date)
-        grading_start = cast_utc_to_pacific(section[:end_date] - 4.days)
-        grading_end = cast_utc_to_pacific(section[:end_date] + 8.days + 23.hours + 59.minutes + 59.seconds)
+        grading_start = Concerns::AcademicsModule.cast_utc_to_pacific(section[:end_date] - 4.days)
+        grading_end = Concerns::AcademicsModule.cast_utc_to_pacific(section[:end_date] + 8.days + 23.hours + 59.minutes + 59.seconds)
         # Summer general grading periods are specific to the class start/end dates.
         section.merge!(
           {

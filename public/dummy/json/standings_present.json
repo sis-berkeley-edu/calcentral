@@ -1,0 +1,33 @@
+{
+  "feed": {
+    "currentStandings": [
+      {
+        "acadStandingStatus": "DIS",
+        "acadStandingStatusDescr": "Dismissed",
+        "acadStandingActionDescr": "Dismissed (2.0 Rule)",
+        "termName": "2020 Spring"
+      }
+    ]
+    ,
+    "standingsHistory": [
+     {
+        "acadStandingStatus": "DIS",
+        "acadStandingStatusDescr": "Dismissed",
+        "acadStandingActionDescr": "Dismissed (2.0 Rule)",
+        "termName": "2019 Fall"
+      },
+      {
+        "acadStandingStatus": "GST",
+        "acadStandingStatusDescr": "Good Standing",
+        "acadStandingActionDescr": "Probation Ended",
+        "termName": "2019 Summer"
+      },
+      {
+        "acadStandingStatus": "GST",
+        "acadStandingStatusDescr": "Good Standing",
+        "acadStandingActionDescr": "Probation Ended",
+        "termName": "2019 Spring"
+      }
+    ]
+  }
+}

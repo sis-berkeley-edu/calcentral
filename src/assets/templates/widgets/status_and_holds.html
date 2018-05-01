@@ -5,6 +5,21 @@
 
   <div class="cc-widget-padding" data-cc-spinner-directive="statusHolds.isLoading">
     <h3 class="cc-status-holds-status-header" data-ng-if="regStatus.show || showResidency">Status</h3>
+     <div data-ng-if="!api.user.profile.academicRoles.law && !api.user.profile.academicRoles.grad">
+      <div class="cc-status-holds-section">
+        <div data-ng-if="residency.official.description">
+          <h4>Academic Standing</h4>
+          <div>
+            <button class="cc-button-link" data-ng-click="academics.showStanding = true" data-ng-show="!academics.showStanding">Show Academic Standing</button>
+            <button class="cc-button-link" data-ng-click="academics.showStanding = false" data-ng-show="academics.showStanding">Hide Academic Standing</button>
+          </div>
+          <div data-ng-show="academics.showStanding">
+            <div data-ng-include="'widgets/academic_standing.html'"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <div data-ng-if="api.user.profile.features.regstatus">
       <div data-ng-if="regStatus.show">
         <div class="cc-status-holds-section" data-ng-repeat="registration in regStatus.registrations | orderBy:'-id'">

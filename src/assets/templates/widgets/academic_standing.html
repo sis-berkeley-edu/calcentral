@@ -1,0 +1,64 @@
+<div data-ng-controller="AcademicStandingController" data-cc-spinner-directive="standingInfo.isLoading">
+  <div class="cc-table" data-ng-if="standings.currentStandings.length">
+    <table>
+      <tbody data-ng-repeat="standing in standings.currentStandings">
+        <tr>
+          <td>
+            <i class="fa fa-exclamation-circle cc-icon-red" aria-hidden="true" data-ng-if="standing.acadStandingStatus !== 'GST'"></i>
+            <i class="cc-icon fa fa-check-circle cc-icon-green" aria-hidden="true" data-ng-if="standing.acadStandingStatus === 'GST'"></i>
+          </td>
+          <td>
+            <span data-ng-bind="standing.acadStandingStatusDescr"></span>
+          </td>
+          <td class="cc-table-right">
+            <div data-ng-bind="standing.termName"></div>
+          </td>
+        </tr>
+        <tr data-ng-if="standing.acadStandingStatus !== 'GST'">
+          <td></td>
+          <td colspan="2">
+            <span data-ng-bind="standing.acadStandingActionDescr" class="cc-standing-sub-title"></span><br>
+            <span class="cc-standing-sub-title">Please consult with your college advisor for guidance.</span>
+          </td>
+        </tr>
+        <tr data-ng-if="standings.standingsHistory.length">
+          <td></td>
+          <td colspan="2">
+            <div>
+              <button class="cc-button-link" data-ng-click="academics.showStandingHistory = true" data-ng-show="!academics.showStandingHistory">Show History</button>
+            </div>
+          </td>
+        </tr>
+        <tr class="cc-standing-history-bg" data-ng-show="academics.showStandingHistory">
+          <td class="cc-standing-history-row"></td>
+          <td colspan="2" class="cc-standing-history-row">
+            <div data-ng-if="standings.standingsHistory.length">
+              <table>
+                <thead>
+                  <tr>
+                    <th scope="col">Standing History</th>
+                    <th scope="col" class="cc-table-right cc-table-right-spacing">Term</th>
+                  </tr>
+                </thead>
+                <tbody data-ng-repeat="standing in standings.standingsHistory">
+                  <tr>
+                    <td>
+                      <span data-ng-bind="standing.acadStandingStatusDescr"></span><br>
+                      <span data-ng-if="standing.acadStandingStatus !== 'GST'" data-ng-bind="standing.acadStandingActionDescr" class="cc-standing-sub-title"></span>
+                    </td>
+                    <td class="cc-table-right cc-table-right-spacing">
+                      <div data-ng-bind="standing.termName"></div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div data-ng-if="!standings.currentStandings.length">
+    You have no academic standing at this time.
+  </div>
+</div>
