@@ -9,7 +9,6 @@ angular.module('calcentral.controllers').controller('AcademicSummaryController',
   $scope.academicSummary = {
     isLoading: true
   };
-  $scope.expectedGradTermName = academicsService.expectedGradTermName;
   $scope.printPage = function() {
     apiService.util.printPage();
   };

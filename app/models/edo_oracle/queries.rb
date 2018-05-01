@@ -611,5 +611,18 @@ module EdoOracle
       SQL
       result.first
     end
+
+    def self.get_concurrent_student_status (student_id)
+      result = safe_query <<-SQL
+        SELECT
+          CONCURRENT_PROGRAM as concurrent_status
+        FROM
+          SISEDO.CLC_CONCURRENT_PROGRAMV00_VW
+        WHERE STUDENT_ID = '#{student_id}' AND
+              INSTITUTION = 'UCB01'
+      SQL
+      result.first
+    end
+
   end
 end

@@ -75,21 +75,6 @@ angular.module('calcentral.services').service('academicsService', function() {
     });
   };
 
-  /**
-   * Returns expected graduation term name if student is not a graduate or law student
-   * @param  {Object} graduation      Graduation node of My Academics feed
-   * @return {String}                 expected graduation term name string
-   */
-  var expectedGradTermName = function(graduation) {
-    var lastExpectedGraduationTermName = _.get(graduation, 'lastExpectedGraduationTerm.name');
-    var isNotGraduateOrLawStudent = _.get(graduation, 'isNotGraduateOrLawStudent');
-    if (isNotGraduateOrLawStudent && lastExpectedGraduationTermName) {
-      return lastExpectedGraduationTermName;
-    } else {
-      return '';
-    }
-  };
-
   var filterBySectionSlug = function(course, sectionSlug) {
     if (!course.multiplePrimaries) {
       return null;
@@ -400,7 +385,6 @@ angular.module('calcentral.services').service('academicsService', function() {
     containsMidpointClass: containsMidpointClass,
     countSectionItem: countSectionItem,
     courseCollectionHasTopics: courseCollectionHasTopics,
-    expectedGradTermName: expectedGradTermName,
     filterBySectionSlug: filterBySectionSlug,
     findSemester: findSemester,
     getAllClasses: getAllClasses,

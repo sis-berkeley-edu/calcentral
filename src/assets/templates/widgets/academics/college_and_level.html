@@ -40,7 +40,7 @@
 </div>
 
 <div class="cc-table cc-table-top-border cc-clearfix"
-  data-ng-if="collegeAndLevel.termsInAttendance || expectedGradTerm(collegeAndLevel)">
+  data-ng-if="collegeAndLevel.termsInAttendance || graduation.undergraduate.expectedGraduationTerm">
   <table class="cc-widget-profile-table">
     <tbody>
       <tr>
@@ -52,21 +52,41 @@
               <strong data-ng-bind="collegeAndLevel.termsInAttendance"></strong>
             </div>
           </div>
-          <div class="cc-widget-profile-section-block" data-ng-if="expectedGradTermName(graduation)">
+          <div class="cc-widget-profile-section-block" data-ng-if="graduation.undergraduate.expectedGraduationTerm">
             <div class="cc-text-light">Expected Graduation</div>
             <div>
-              <i class="fa fa-clock-o cc-icon-grey" data-ng-if="graduation.appointmentsInGraduatingTerm"></i>
-              <strong data-ng-bind="graduation.lastExpectedGraduationTerm.name"></strong>
+              <i class="fa fa-clock-o cc-icon-grey" data-ng-if="graduation.undergraduate.appointmentsInGraduatingTerm"></i>
+              <strong data-ng-bind="graduation.undergraduate.expectedGraduationTerm.termName"></strong>
             </div>
             <div class="cc-widget-profile-footnote">
-              <span data-ng-if="graduation.appointmentsInGraduatingTerm">
-                <span data-ng-bind="graduation.lastExpectedGraduationTerm.name"></span>
+              <span data-ng-if="graduation.undergraduate.appointmentsInGraduatingTerm">
+                <span data-ng-bind="graduation.undegraduate.expectedGraduationTerm.termName"></span>
                 will be your final term to complete all degree requirements.
                 If you have questions, please contact your College Advisor.
               </span>
-              <span data-ng-if="!graduation.appointmentsInGraduatingTerm">
+              <span data-ng-if="!graduation.undergraduate.appointmentsInGraduatingTerm">
                 Consult your college advisor with questions or concerns.
               </span>
+            </div>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="cc-table cc-table-top-border cc-clearfix" data-ng-if="graduation.gradLaw.expectedGraduationTerms.length">
+  <table class="cc-widget-profile-table">
+    <tbody>
+      <tr>
+        <th>Expected Graduation</th>
+        <td>
+          <div class="cc-widget-profile-section-block" data-ng-repeat="term in graduation.gradLaw.expectedGraduationTerms">
+            <div data-ng-repeat="plan in term.plans" class="cc-text-light">
+              <span data-ng-bind="plan"></span>
+            </div>
+            <div>
+              <strong data-ng-bind="term.expectedGradTermNames.join(', ')"></strong>
             </div>
           </div>
         </td>
