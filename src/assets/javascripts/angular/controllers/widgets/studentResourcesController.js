@@ -24,6 +24,7 @@ angular.module('calcentral.controllers').controller('StudentResourcesController'
     $scope.isSummerVisitor = apiService.user.profile.academicRoles.summerVisitor;
     $scope.isJdLlmOnly = (apiService.user.profile.academicRoles.lawJdLlm && !apiService.user.profile.academicRoles.lawJspJsd && !apiService.user.profile.academicRoles.grad);
     $scope.isLawVisiting = (apiService.user.profile.academicRoles.lawVisiting && !apiService.user.profile.academicRoles.grad);
+    $scope.isNonDegreeSeekingSummerVisitor = apiService.user.profile.academicRoles.nonDegreeSeekingSummerVisitor;
   };
 
   var loadInformation = function() {

@@ -11,7 +11,7 @@
         <h3>Submit a Form</h3>
         <ul class="cc-list-bullets">
 
-          <li data-ng-if="isUndergraduate && studentResources.changeOfAcademicPlanAdd.url">
+          <li data-ng-if="!isNonDegreeSeekingSummerVisitor && isUndergraduate && studentResources.changeOfAcademicPlanAdd.url">
             <div class="cc-inline-block">
               <a data-cc-campus-solutions-link-directive="studentResources.changeOfAcademicPlanAdd"
                 data-cc-campus-solutions-link-directive-cc-page-name="currentPage.name"
@@ -20,7 +20,7 @@
             </div>
           </li>
 
-          <li data-ng-if="studentResources.emergencyLoanFormAdd.url && !isSummerVisitor">
+          <li data-ng-if="!isNonDegreeSeekingSummerVisitor && studentResources.emergencyLoanFormAdd.url">
             <a data-cc-campus-solutions-link-directive="studentResources.emergencyLoanFormAdd"
               data-cc-campus-solutions-link-directive-cc-page-name="currentPage.name"
               data-cc-campus-solutions-link-directive-cc-page-url="currentPage.url"
@@ -34,7 +34,7 @@
             ></a>
           </li>
 
-          <li data-ng-if="studentResources.withdrawFromSemesterAdd.url && !isLawStudent">
+          <li data-ng-if="!isLawStudent && studentResources.withdrawFromSemesterAdd.url">
             <a data-cc-campus-solutions-link-directive="studentResources.withdrawFromSemesterAdd"
               data-cc-campus-solutions-link-directive-cc-page-name="currentPage.name"
               data-cc-campus-solutions-link-directive-cc-page-url="currentPage.url"
@@ -96,7 +96,7 @@
               data-cc-campus-solutions-link-directive-cc-page-url="currentPage.url"
             ></a>
           </li>
-          <li data-ng-if="studentResources.emergencyLoanFormView.url && !isSummerVisitor">
+          <li data-ng-if="!isNonDegreeSeekingSummerVisitor && studentResources.emergencyLoanFormView.url">
             <a data-cc-campus-solutions-link-directive="studentResources.emergencyLoanFormView"
               data-cc-campus-solutions-link-directive-cc-page-name="currentPage.name"
               data-cc-campus-solutions-link-directive-cc-page-url="currentPage.url"
