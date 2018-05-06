@@ -8,17 +8,24 @@ angular.module('calcentral.controllers').controller('AcademicRecordsController',
   $scope.officialTranscript = {
     postParams: {},
     postUrl: '',
-    postUrlHover: 'Request your Official Transcript',
+    postUrlHover: 'Transcript for Undergraduate or Graduate Students',
+    isLoading: true,
+    defaultRequestLink: 'http://registrar.berkeley.edu/academic-records/transcripts-diplomas'
+  };
+  $scope.lawOfficialTranscript = {
+    postParams: {},
+    postUrl: '',
+    postUrlHover: 'Transcript in electronic PDF format for Law students',
     isLoading: true,
     defaultRequestLink: 'http://registrar.berkeley.edu/academic-records/transcripts-diplomas'
   };
   $scope.lawTranscriptLink = {
     link: 'http://www.law.berkeley.edu/php-programs/registrar/forms/transcriptrequestform.php',
-    title: 'Request your official Law Transcript'
+    title: 'Transcript in printed format for Law students'
   };
   $scope.ucbxTranscriptLink = {
     link: 'http://extension.berkeley.edu/static/studentservices/transcripts/#ordertranscripts',
-    title: 'Request your University Extension Transcript'
+    title: 'Transcript for UCB Extension Concurrent Enrollment students'
   };
   $scope.lawUnofficialTranscriptLink = {};
 
@@ -57,6 +64,11 @@ angular.module('calcentral.controllers').controller('AcademicRecordsController',
     var transcriptData = _.get(response, 'data.officialTranscriptRequestData');
     $scope.officialTranscript.postUrl = _.get(transcriptData, 'postUrl');
     $scope.officialTranscript.postParams = _.get(transcriptData, 'postParams');
+    // For law the fice code needs to be set to the law_fice code.
+    var lawPostParams = Object.assign({}, _.get(transcriptData, 'postParams'));
+    lawPostParams.fice = lawPostParams.lawFice;
+    $scope.lawOfficialTranscript.postUrl = _.get(transcriptData, 'postUrl');
+    $scope.lawOfficialTranscript.postParams = lawPostParams;
   };
 
   $scope.requestTranscript = function() {
@@ -64,6 +76,14 @@ angular.module('calcentral.controllers').controller('AcademicRecordsController',
       postRequest($scope.officialTranscript.postUrl, $scope.officialTranscript.postParams);
     } else {
       $window.open($scope.officialTranscript.defaultRequestLink, '_blank');
+    }
+  };
+
+  $scope.requestLawTranscript = function() {
+    if (apiService.user.profile.features.transcriptRequestLinkCredSolutions) {
+      postRequest($scope.lawOfficialTranscript.postUrl, $scope.lawOfficialTranscript.postParams);
+    } else {
+      $window.open($scope.lawOfficialTranscript.defaultRequestLink, '_blank');
     }
   };
 

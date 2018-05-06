@@ -7,22 +7,24 @@
     <div class="cc-list-link-container" data-cc-spinner-directive="officialTranscript.isLoading">
       <ul class="cc-list-links">
         <li data-ng-if="api.user.profile.academicRoles.law || api.user.profile.roles.exStudent">
-          <a data-ng-href="{{lawTranscriptLink.link}}" data-ng-attr-title="{{lawTranscriptLink.title}}">Transcript - Law School students</a>
+          <a data-ng-class="{'cc-academics-link-disabled':(api.user.profile.delegateActingAsUid)}"
+            data-ng-click="requestLawTranscript()"
+            data-ng-disabled="api.user.profile.delegateActingAsUid"
+            data-ng-attr-title="{{lawOfficialTranscript.postUrlHover}}">Transcript - Law (Electronic)</a>
+          <div class="cc-list-links-sub-text">Electronic PDF, $1.90 charge</div>
         </li>
-        <li data-ng-if="(api.user.profile.academicRoles.law || api.user.profile.roles.exStudent) && lawUnofficialTranscriptLink.url">
-          <a data-cc-campus-solutions-link-directive="lawUnofficialTranscriptLink"
-            data-cc-campus-solutions-link-directive-cc-page-name="currentPage.name"
-            data-cc-campus-solutions-link-directive-cc-page-url="currentPage.url"
-          ></a>
-        </li>
-        <li data-ng-if="api.user.profile.roles.exStudent || (!api.user.profile.academicRoles.law && (api.user.profile.academicRoles.concurrent || api.user.profile.academicRoles.ugrd || api.user.profile.academicRoles.grad))">
-          <a data-ng-href="{{ucbxTranscriptLink.link}}" data-ng-attr-title="{{ucbxTranscriptLink.title}}">Transcript - Concurrent Enrollment students</a>
+        <li data-ng-if="!api.user.profile.academicRoles.law || api.user.profile.roles.exStudent">
+          <a data-ng-href="{{lawTranscriptLink.link}}" data-ng-attr-title="{{lawTranscriptLink.title}}">Transcript - Law (Printed)</a>
+          <div class="cc-list-links-sub-text">Printed for pick up or mailing at no charge</div>
         </li>
         <li data-ng-if="api.user.profile.roles.exStudent || (!api.user.profile.academicRoles.law && (api.user.profile.academicRoles.ugrd || api.user.profile.academicRoles.grad))">
           <a data-ng-class="{'cc-academics-link-disabled':(api.user.profile.delegateActingAsUid)}"
             data-ng-click="requestTranscript()"
             data-ng-disabled="api.user.profile.delegateActingAsUid"
-            data-ng-attr-title="{{officialTranscript.postUrlHover}}">Transcript - General students (not Law, not Concurrent)</a>
+            data-ng-attr-title="{{officialTranscript.postUrlHover}}">Transcript - Undergraduate or Graduate Students</a>
+        </li>
+        <li data-ng-if="api.user.profile.roles.exStudent || (!api.user.profile.academicRoles.law && api.user.profile.academicRoles.concurrent)">
+          <a data-ng-href="{{ucbxTranscriptLink.link}}" data-ng-attr-title="{{ucbxTranscriptLink.title}}">Transcript - Concurrent Enrollment (UC Extension)</a>
         </li>
         <li data-ng-if="api.user.profile.features.enrollmentVerification && (api.user.profile.isDirectlyAuthenticated || api.user.profile.actingAsUid || api.user.profile.advisorActingAsUid)">
           <a title="Request Enrollment Verification" href="academics/enrollment_verification">Enrollment Verification</a>
