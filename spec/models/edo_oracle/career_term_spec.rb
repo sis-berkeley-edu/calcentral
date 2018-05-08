@@ -1,4 +1,4 @@
-describe EdoOracle::CareerTerm do
+describe EdoOracle::CareerTerm, testext: false do
 
   describe '#term_summary' do
     subject { described_class.new({user_id: uid}).term_summary(academic_careers, term_id) }

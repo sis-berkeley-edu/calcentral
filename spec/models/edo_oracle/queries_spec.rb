@@ -28,7 +28,7 @@ describe EdoOracle::Queries do
     expect(described_class.settings).to be Settings.edodb
   end
 
-  describe '#get_term_unit_totals' do
+  describe '#get_term_unit_totals', testext: false do
     subject { described_class.get_term_unit_totals(uid, academic_careers, term_id) }
     let(:uid) { 799934 }
     let(:academic_careers) { ['UGRD'] }
@@ -44,7 +44,7 @@ describe EdoOracle::Queries do
     end
   end
 
-  describe '#get_term_law_unit_totals' do
+  describe '#get_term_law_unit_totals', testext: false do
     subject { described_class.get_term_law_unit_totals(uid, academic_careers, term_id) }
     let(:uid) { 300216 }
     let(:academic_careers) { %w(GRAD LAW) }
@@ -59,7 +59,7 @@ describe EdoOracle::Queries do
     end
   end
 
-  describe '#get_enrolled_sections' do
+  describe '#get_enrolled_sections', testext: false do
     subject { described_class.get_enrolled_sections uid }
     let(:uid) { 799934 }
 
@@ -108,7 +108,7 @@ describe EdoOracle::Queries do
     end
   end
 
-  describe '#get_law_enrollment' do
+  describe '#get_law_enrollment', testext: false do
     subject { described_class.get_law_enrollment(uid, academic_career, term, section, require_desig_code) }
     let (:uid) { 490452 }
     let (:academic_career) { 'LAW' }
