@@ -96,7 +96,7 @@ module EdoOracle
 
     def self.get_term_unit_totals(person_id, academic_careers, term_id)
       result = safe_query <<-SQL
-        SELECT 
+        SELECT
           SUM(SCT.TOTAL_EARNED_UNITS) AS TOTAL_EARNED_UNITS,
           SUM(SCT.TOTAL_ENROLLED_UNITS) AS TOTAL_ENROLLED_UNITS,
           MIN(SCT.GRADING_COMPLETE) AS GRADING_COMPLETE
@@ -112,7 +112,7 @@ module EdoOracle
 
     def self.get_term_law_unit_totals(person_id, academic_careers, term_id)
       result = safe_query <<-SQL
-        SELECT 
+        SELECT
           SUM(SCT.EARNED_UNITS_LAW) AS TOTAL_EARNED_LAW_UNITS,
           SUM(SCT.ENROLLED_UNITS_LAW) AS TOTAL_ENROLLED_LAW_UNITS
         FROM SISEDO.CLC_STUDENT_CAREER_TERM_LAWV00_VW SCT
@@ -622,6 +622,21 @@ module EdoOracle
               INSTITUTION = 'UCB01'
       SQL
       result.first
+    end
+
+    def self.get_academic_standings (student_id)
+      safe_query <<-SQL
+        SELECT STUDENT_ID as student_id,
+          ACAD_STANDING_STATUS as acad_standing_status,
+          ACAD_STANDING_STATUS_DESCR as acad_standing_status_descr,
+          ACAD_STANDING_ACTION_DESCR as acad_standing_action_descr,
+          TERM_ID as term_id,
+          ACTION_DATE as action_date
+        FROM
+          SISEDO.STUDENT_ACAD_STNDNGV00_VW
+        WHERE
+          STUDENT_ID = '#{student_id}'
+      SQL
     end
 
   end
