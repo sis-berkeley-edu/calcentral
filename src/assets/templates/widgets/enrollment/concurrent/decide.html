@@ -19,10 +19,8 @@
           Application temporarily unavailable at this time
         </div>
         <div data-ng-if="enrollmentInstruction.csLinks.ucAddClassEnrollment.url">
-          The deadline to apply
-          <span data-ng-if="!enrollmentInstruction.isEndOfDropAddTimePeriod">is</span>
-          <span data-ng-if="enrollmentInstruction.isEndOfDropAddTimePeriod">was</span>
-          <span data-ng-bind="enrollmentInstruction.concurrentApplyDeadline"></span>
+          <span data-ng-if="!enrollmentInstruction.isEndOfDropAddTimePeriod">You have until the class application deadline to apply.</span>
+          <span data-ng-if="enrollmentInstruction.isEndOfDropAddTimePeriod">The deadline to apply to classes has passed</span>
         </div>
       </div>
     </li>

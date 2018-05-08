@@ -562,8 +562,6 @@ describe MyAcademics::ClassEnrollments do
         end
         it 'includes application deadline date for concurrent enrollment students for each term' do
           expect(term_instructions.keys.count).to eq 2
-          expect(term_instructions['2165'][:concurrentApplyDeadline]).to eq '05/01/2016'
-          expect(term_instructions['2168'][:concurrentApplyDeadline]).to eq '09/23/2016'
         end
         it 'includes period timezone offsets' do
           expect(term_instructions.keys.count).to eq 2
@@ -580,8 +578,6 @@ describe MyAcademics::ClassEnrollments do
           before { Settings.class_enrollment.concurrent_apply_deadlines.delete_at(1) }
           it 'defaults to TBD' do
             expect(term_instructions.keys.count).to eq 2
-            expect(term_instructions['2165'][:concurrentApplyDeadline]).to eq '05/01/2016'
-            expect(term_instructions['2168'][:concurrentApplyDeadline]).to eq 'TBD'
           end
         end
       end
