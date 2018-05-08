@@ -37,6 +37,10 @@ module Concerns
       {
         role_code: 'lawVisiting',
         match: %w(84501CWOG 84V00G),
+      },
+      {
+        role_code: 'lawJdCdp',
+        match: ['84501JDG'],
       }
     ]
 
