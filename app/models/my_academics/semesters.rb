@@ -27,7 +27,7 @@ module MyAcademics
       withdrawal_terms = withdrawal_data.map {|row| Berkeley::TermCodes.edo_id_to_code(row['term_id'])}
       study_prog_terms = study_prog_data.map {|row| Berkeley::TermCodes.edo_id_to_code(row['term_id'])}
 
-      # Note: a student should never have withdrawl and absentia or filling fee for same term
+      # Note: a student should never have withdrawal and absentia or filling fee for same term
       (enrollment_terms.keys | withdrawal_terms | study_prog_terms).sort.reverse.map do |term_key|
         semester = semester_info term_key
         semester[:filteredForDelegate] = !!@filtered
@@ -37,14 +37,25 @@ module MyAcademics
           semester[:hasEnrolledClasses] = has_enrolled_classes?(enrollment_terms[term_key])
           merge_grades(semester)
         end
+        semester.merge! unit_totals(enrollment_terms[term_key])
         merge_study_prog(semester, study_prog_data)
         merge_withdrawals(semester, withdrawal_data)
         semester unless semester[:classes].empty? && !semester[:hasWithdrawalData] && !semester[:hasStudyProgData]
       end
     end
 
+    def unit_totals(enrollments)
+      academic_careers = (enrollments.collect {|enrollment| enrollment[:academicCareer].try(:intern)}).uniq
+      unit_totals = EdoOracle::CareerTerm.new(user_id: @uid).term_summary(academic_careers, enrollments.first[:term_id])
+      total_law_units = unit_totals[:grading_complete] ? unit_totals[:total_earned_law_units] : unit_totals[:total_enrolled_law_units]
+      {
+        totalUnits: unit_totals[:grading_complete] ? unit_totals[:total_earned_units] : unit_totals[:total_enrolled_units],
+        totalLawUnits: law_student? || academic_careers.include?(:LAW) ? total_law_units : nil,
+        isGradingComplete: unit_totals[:grading_complete]
+      }
+    end
 
-    def merge_study_prog (semester, filing_fee_data)
+    def merge_study_prog(semester, filing_fee_data)
       filing_fee_data.each do |row|
         if row['term_id'] == Berkeley::TermCodes.slug_to_edo_id(semester[:slug])
           semester.merge! map_study_prog(row)
@@ -122,11 +133,22 @@ module MyAcademics
               end
               primaries_count += 1
             end
+            section[:grading][:grade_points] = nil if law_class? course
+            section.merge!(law_class_enrollment(course, section))
           end
           merge_multiple_primaries(mapped_course, course[:course_option]) if primaries_count > 1
         end
         mapped_course
       end
+    end
+
+    def law_class_enrollment(course, section)
+      if law_class?(course) || law_student?
+        enrollment = EdoOracle::Queries.get_law_enrollment(@uid, course[:academicCareer], course[:term_id], section[:ccn])
+      end
+      {
+        lawUnits: enrollment.try(:[], 'units_taken_law')
+      }
     end
 
     def merge_grades(semester)
@@ -159,6 +181,15 @@ module MyAcademics
       else
         {}
       end
+    end
+
+    def law_student?
+      roles = MyAcademics::MyAcademicRoles.new(@uid).get_feed
+      !!roles['law']
+    end
+
+    def law_class?(course)
+      :LAW == course[:academicCareer].try(:intern)
     end
 
   end

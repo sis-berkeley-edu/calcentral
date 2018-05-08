@@ -46,20 +46,6 @@ class EdoOracle::ViewChecker
       ]
     },
     {
-      :id => 'SISEDO.ENROLLMENTV00_VW',
-      :columns => [
-        'ACAD_CAREER',
-        'CAMPUS_UID',
-        'CLASS_SECTION_ID',
-        'GRADING_BASIS_CODE',
-        'STDNT_ENRL_STATUS_CODE',
-        'STUDENT_ID',
-        'TERM_ID',
-        'UNITS_TAKEN',
-        'WAITLISTPOSITION',
-      ]
-    },
-    {
       :id => 'SISEDO.CC_ENROLLMENTV00_VW',
       :columns => [
         'ACAD_CAREER',
@@ -74,6 +60,42 @@ class EdoOracle::ViewChecker
         'TERM_ID',
         'UNITS_TAKEN',
         'WAITLISTPOSITION',
+      ]
+    },
+    {
+      :id => 'SISEDO.CLC_ENROLLMENTV00_VW',
+      :columns => [
+        'STUDENT_ID',
+        'CAMPUS_UID',
+        'ACAD_CAREER',
+        'INSTITUTION',
+        'STDNT_ENRL_STATUS_CODE',
+        'WAITLISTPOSITION',
+        'UNITS_TAKEN',
+        'UNITS_EARNED',
+        'GRADE_MARK',
+        'GRADING_BASIS_CODE',
+        'TERM_ID',
+        'SESSION_ID',
+        'CLASS_SECTION_ID',
+        'GRADE_POINTS',
+        'CRSE_CAREER',
+        'RQMNT_DESIGNTN'
+      ]
+    },
+    {
+      :id => 'SISEDO.CLC_ENROLLMENT_LAWV00_VW',
+      :columns => [
+        'STUDENT_ID',
+        'CAMPUS_UID',
+        'ACAD_CAREER',
+        'INSTITUTION',
+        'TERM_ID',
+        'CLASS_NBR',
+        'SEQ_NBR',
+        'UNITS_TAKEN_LAW',
+        'UNITS_EARNED_LAW',
+        'LOCK_FLAG'
       ]
     },
     {
@@ -174,6 +196,43 @@ class EdoOracle::ViewChecker
         'APPLICATION_NBR',
         'EVALUATOR_NAME',
         'EVALUATOR_EMAIL'
+      ]
+    },
+    {
+      :id => 'SISEDO.CLC_STUDENT_CAREER_TERMV00_VW',
+      :columns => [
+        'STUDENT_ID',
+        'CAMPUS_ID',
+        'ACAD_CAREER',
+        'INSTITUTION',
+        'TERM_ID',
+        'TOTAL_EARNED_UNITS',
+        'TOTAL_ENROLLED_UNITS',
+        'GRADING_COMPLETE'
+      ]
+    },
+    {
+      :id => 'SISEDO.CLC_STUDENT_CAREER_TERM_LAWV00_VW',
+      :columns => [
+        'STUDENT_ID',
+        'CAMPUS_ID',
+        'ACAD_CAREER',
+        'INSTITUTION',
+        'TERM_ID',
+        'EARNED_UNITS_LAW',
+        'ENROLLED_UNITS_LAW'
+      ]
+    },
+    {
+      :id => 'SISEDO.CLC_RQMNT_DESIG_DESCR',
+      :columns => [
+        'INSTITUTION',
+        'ACAD_CAREER',
+        'TERM_ID',
+        'RQMNT_DESIGNTN',
+        'DESCRIPTION',
+        'DESCRSHORT',
+        'DESCRFORMAL'
       ]
     }
   ]

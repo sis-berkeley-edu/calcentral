@@ -2,7 +2,7 @@
   class PopulateCampusH2 < ActiveRecord::Base
     Rails.application.config.after_initialize do
       if Settings.campusdb.adapter == "h2"
-        establish_connection "campusdb"
+        establish_connection :campusdb
         sql = <<-SQL
 
         DROP TABLE IF EXISTS CALCENTRAL_CLASS_ROSTER_VW;

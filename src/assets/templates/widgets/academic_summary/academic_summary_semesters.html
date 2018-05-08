@@ -16,14 +16,15 @@
     </ul>
   </div>
   <div class="cc-table cc-academic-summary-content">
-    <table data-ng-if="semester.hasEnrolledClasses && !semester.hasWithdrawalData">
+    <table data-ng-if="semester.hasEnrolledClasses && !semester.hasWithdrawalData" class="cc-class-enrollments">
       <thead>
         <tr>
-          <th width="20%">Class</th>
-          <th width="55%">Title</th>
-          <th class="cc-table-right cc-academic-summary-table-units" width="10%">Units</th>
-          <th data-ng-if="api.user.profile.canViewGrades" width="5%">Grade</th>
-          <th data-ng-if="api.user.profile.canViewGrades" class="cc-table-right" width="10%">Points</th>
+          <th>Class</th>
+          <th>Title</th>
+          <th class="cc-table-right cc-academic-summary-table-units">Un.</th>
+          <th ng-if="semester.totalLawUnits" class="cc-table-right cc-academic-summary-table-units">Law Un.</th>
+          <th data-ng-if="api.user.profile.canViewGrades">Gr.</th>
+          <th data-ng-if="api.user.profile.canViewGrades" class="cc-table-right">Pts.</th>
         </tr>
       </thead>
       <tbody data-ng-repeat="class in semester.classes">
@@ -55,12 +56,23 @@
           </td>
           <td data-ng-bind="class.title"></td>
           <td class="cc-text-right cc-academic-summary-table-units" data-ng-bind="section.units | number:1"></td>
+          <td ng-if="semester.totalLawUnits && (section.lawUnits || section.lawUnits === 0)" class="cc-text-right cc-academic-summary-table-units" data-ng-bind="section.lawUnits | number:1"></td>
+          <td ng-if="semester.totalLawUnits && !(section.lawUnits || section.lawUnits === 0)" class="cc-text-right cc-academic-summary-table-units">&mdash;</td>
           <td data-ng-if="api.user.profile.canViewGrades && section.grading.grade" data-ng-bind="section.grading.grade"></td>
           <td data-ng-if="api.user.profile.canViewGrades && !section.grading.grade">&mdash;</td>
           <td class="cc-text-right" data-ng-if="api.user.profile.canViewGrades && section.grading.grade_points" data-ng-bind="section.grading.grade_points"></td>
           <td class="cc-text-right" data-ng-if="api.user.profile.canViewGrades && !section.grading.grade_points">&mdash;</td>
         </tr>
       </tbody>
+      <tfoot>
+        <tr>
+          <th data-ng-bind="semester.isGradingComplete ? 'Earned Total:' : 'Enrolled Total:'" colspan="2" scope="row" class="cc-table-right cc-academic-summary-table-units"></th>
+          <td data-ng-bind="semester.totalUnits" class="cc-table-right cc-academic-summary-table-units"></td>
+          <td ng-if="semester.totalLawUnits" data-ng-bind="semester.totalLawUnits" class="cc-table-right cc-academic-summary-table-units"></td>
+          <td></td>
+          <td></td>
+        </tr>
+      </tfoot>
     </table>
   </div>
 </div>
