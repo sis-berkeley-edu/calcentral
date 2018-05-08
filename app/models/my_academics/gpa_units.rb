@@ -21,7 +21,8 @@ module MyAcademics
         :totalUnitsPassedNotForGpa => parse_total_units_not_for_gpa(pnp_units, 'pnp_passed'),
         :totalTransferAndTestingUnits => units_transferred
       }
-      result.merge!(parse_total_units academic_status_first)
+      result.merge!(get_cumulative_units)
+      result.merge!(parse_total_transfer_units academic_status_first)
       result.merge!(parse_total_units_for_gpa academic_status_first)
       result
     end
@@ -66,15 +67,32 @@ module MyAcademics
       gpa
     end
 
-    # Ignores unimportant unit types given back by the hub, including 'unitsOther' (holds total units that exceed limits for other categories, e.g. transfer units)
-    def parse_total_units(status)
+    def get_cumulative_units
+      unit_totals = EdoOracle::Queries.get_career_unit_totals(@uid)
+      has_active_career = unit_totals.any? do |career|
+        active? career
+      end
+      result = {
+        totalUnits: 0,
+        totalLawUnits: 0
+      }
+      unit_totals.each do |career|
+        result[:totalUnits] += (career['total_cumulative_units'] if active?(career) || !has_active_career).to_f
+        result[:totalLawUnits] += (career['total_cumulative_law_units'] if active?(career) || !has_active_career).to_f
+      end
+      result
+    end
+
+    def active?(career)
+      :AC == career['program_status'].try(:intern)
+    end
+
+    def parse_total_transfer_units(status)
       if (units = status.try(:[], 'cumulativeUnits')) && (total = units.find { |u| u['type'] && u['type']['code'] == 'Total'})
-        total_units = total.try(:[], 'unitsCumulative').to_f
         transfer_units_accepted = total.try(:[], 'unitsTransferAccepted').to_f
         testing_units = total.try(:[], 'unitsTest').to_f
       end
       {
-        totalUnits: total_units,
         transferUnitsAccepted: transfer_units_accepted,
         testingUnits: testing_units
       }

@@ -71,12 +71,17 @@
 
       <div data-ng-include="'widgets/academics/college_and_level.html'"></div>
 
-      <div class="cc-table cc-table-top-border cc-clearfix" data-ng-if="gpaUnits.totalUnits > 0">
+      <div class="cc-table cc-table-top-border cc-clearfix" data-ng-if="gpaUnits.totalUnits > 0 || gpaUnits.totalLawUnits > 0">
         <table>
           <tbody>
             <tr>
-              <th width="92px">Cumulative Units</th>
-              <td><strong data-ng-bind="gpaUnits.totalUnits"></strong></td>
+              <th scope="rowgroup" rowspan="{{gpaUnits.totalLawUnits > 0 ? 2 : 1}}">Cumulative Units</th>
+              <th scope="row" rowspan="1" class="cc-widget-profile-subhead">Total Units</th>
+              <td data-ng-bind="gpaUnits.totalUnits"></td>
+            </tr>
+            <tr data-ng-if="gpaUnits.totalLawUnits > 0">
+              <th scope="row" rowspan="1" class="cc-widget-profile-subhead">Law Units</th>
+              <td data-ng-bind="gpaUnits.totalLawUnits"></td>
             </tr>
           </tbody>
         </table>
@@ -86,7 +91,7 @@
         <table>
           <tbody>
             <tr>
-              <th width="92px">GPA</th>
+              <th>GPA</th>
               <td>
                 <button class="cc-button-link" data-ng-click="academics.showGPA = true" data-ng-show="!academics.showGPA">Show GPA</button>
                 <div data-ng-show="academics.showGPA">
