@@ -97,7 +97,19 @@ describe EdoOracle::Queries do
       expect(subject.first['acad_career']).to eq 'UGRD'
       expect(subject.first['rqmnt_designtn']).to be nil
     end
-
+    context 'when a class has a requirements designation' do
+      let(:uid) { 490452 }
+      context 'and the course career is not LAW' do
+        it 'does not provide the requirements designation' do
+          expect(subject[0]['rqmnt_designtn']).to be nil
+        end
+      end
+      context 'and the course career is LAW' do
+        it 'provides the requirements designation' do
+          expect(subject[1]['rqmnt_designtn']).to eq 'LPR'
+        end
+      end
+    end
     context 'when no UID provided' do
       let(:uid) { nil }
       it_behaves_like 'a successful query'

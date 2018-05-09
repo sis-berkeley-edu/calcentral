@@ -144,10 +144,11 @@ module MyAcademics
 
     def law_class_enrollment(course, section)
       if law_class?(course) || law_student?
-        enrollment = EdoOracle::Queries.get_law_enrollment(@uid, course[:academicCareer], course[:term_id], section[:ccn])
+        enrollment = EdoOracle::Queries.get_law_enrollment(@uid, course[:academicCareer], course[:term_id], section[:ccn], course[:requirementsDesignationCode])
       end
       {
-        lawUnits: enrollment.try(:[], 'units_taken_law')
+        lawUnits: enrollment.try(:[], 'units_taken_law'),
+        requirementsDesignation: enrollment.try(:[], 'rqmnt_desg_descr')
       }
     end
 
