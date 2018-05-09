@@ -11,7 +11,7 @@ describe MyAcademics::MyAcademicRoles do
     subject { described_class_instance.get_feed_internal }
     it 'provides a set of roles based on the user\'s academic status' do
       expect(subject).to be
-      expect(subject.keys.count).to eq 24
+      expect(subject.keys.count).to eq 25
       expect(subject['ugrd']).to eq true
       expect(subject['grad']).to eq false
       expect(subject['fpf']).to eq false
@@ -36,6 +36,7 @@ describe MyAcademics::MyAcademicRoles do
       expect(subject['ugrdUrbanStudies']).to eq false
       expect(subject['summerVisitor']).to eq false
       expect(subject['courseworkOnly']).to eq false
+      expect(subject['lawJdCdp']).to eq false
     end
   end
 
