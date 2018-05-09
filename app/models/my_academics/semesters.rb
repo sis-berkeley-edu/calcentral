@@ -36,17 +36,18 @@ module MyAcademics
           semester[:classes] = map_enrollments(enrollment_terms[term_key]).compact
           semester[:hasEnrolledClasses] = has_enrolled_classes?(enrollment_terms[term_key])
           merge_grades(semester)
+          semester.merge! unit_totals(enrollment_terms[term_key])
         end
-        semester.merge! unit_totals(enrollment_terms[term_key])
+
         merge_study_prog(semester, study_prog_data)
         merge_withdrawals(semester, withdrawal_data)
         semester unless semester[:classes].empty? && !semester[:hasWithdrawalData] && !semester[:hasStudyProgData]
       end
     end
 
-    def unit_totals(enrollments)
+    def unit_totals(enrollments = [])
       academic_careers = (enrollments.collect {|enrollment| enrollment[:academicCareer].try(:intern)}).uniq
-      unit_totals = EdoOracle::CareerTerm.new(user_id: @uid).term_summary(academic_careers, enrollments.first[:term_id])
+      unit_totals = EdoOracle::CareerTerm.new(user_id: @uid).term_summary(academic_careers, enrollments.first.try(:[], :term_id))
       total_law_units = unit_totals[:grading_complete] ? unit_totals[:total_earned_law_units] : unit_totals[:total_enrolled_law_units]
       {
         totalUnits: unit_totals[:grading_complete] ? unit_totals[:total_earned_units] : unit_totals[:total_enrolled_units],
