@@ -71,9 +71,9 @@
       </tbody>
       <tfoot data-ng-if="semester.showUnitTotal">
         <tr>
-          <th data-ng-bind="semester.isGradingComplete ? 'Earned Total:' : 'Enrolled Total:'" colspan="2" scope="row" class="cc-table-right cc-academic-summary-table-units"></th>
-          <td data-ng-bind="semester.totalUnits" class="cc-table-right cc-academic-summary-table-units"></td>
-          <td ng-if="semester.totalLawUnits" data-ng-bind="semester.totalLawUnits" class="cc-table-right cc-academic-summary-table-units"></td>
+          <td data-ng-bind="semester.isGradingComplete ? 'Earned Total:' : 'Enrolled Total:'" colspan="2" scope="row" class="cc-table-right cc-academic-summary-table-units"></td>
+          <td class="cc-table-right cc-academic-summary-table-units"><strong data-ng-bind="semester.totalUnits"></strong></td>
+          <td ng-if="semester.totalLawUnits" class="cc-table-right cc-academic-summary-table-units"><strong data-ng-bind="semester.totalLawUnits"></strong></td>
           <td></td>
           <td></td>
         </tr>

@@ -6,9 +6,12 @@
       margin-top: 0;
     }
   }
-  .cc-academic-summary-enrollment-header {
+  .cc-academic-summary-enrollment-header, .cc-academic-summary-transfer-credits-header {
     display: inline-block;
     margin: 10px 15px 5px;
+  }
+  .cc-academic-summary-transfer-credits-header {
+    font-size: 14px;
   }
   .cc-academic-summary-margin-bottom {
     margin-bottom: 15px;
@@ -28,7 +31,6 @@
   }
   .cc-academic-summary-content {
     margin: 0 15px 10px;
-
     .cc-academic-summary-table-spacing {
       padding: 0;
     }
@@ -56,6 +58,11 @@
   .cc-table-top-border {
     padding-top: 10px;
   }
+  .cc-academic-summary-legacy-note {
+    display: block;
+    padding-bottom: 4px;
+    padding-left: 15px;
+  }
   h3 {
     padding: 15px 15px 10px;
   }
@@ -76,17 +83,19 @@
         font-size: 13px;
       }
     }
-    &.cc-class-enrollments {
+    &.cc-class-enrollments, &.cc-transfer-credits {
+      td {
+        padding-bottom: 6px;
+        vertical-align: top;
+      }
       .cc-requirement {
         font-size: 12px;
         font-weight: bold;
         line-height: 12px;
         padding-left: 8px;
       }
-      td {
-        padding-bottom: 6px;
-        vertical-align: top;
-      }
+    }
+    &.cc-class-enrollments {
       thead > tr > th {
         &:nth-child(1) {
           width: 20%;
@@ -103,6 +112,19 @@
       }
       tfoot {
         background: none;
+        tr > td {
+          font-weight: normal;
+        }
+      }
+    }
+    &.cc-transfer-credits {
+      thead > tr > th {
+        &:nth-child(1) {
+          width: 65%;
+        }
+        &:nth-child(2), &:nth-child(3) {
+          width: 10%;
+        }
       }
     }
   }
