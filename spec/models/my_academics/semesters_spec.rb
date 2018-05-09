@@ -1,6 +1,6 @@
 describe MyAcademics::Semesters do
 
-  describe '#semester_feed' do
+  describe '#semester_feed', testext: false do
 
     before do
       allow(Settings.edodb).to receive(:fake).and_return false

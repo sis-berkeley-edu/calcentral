@@ -1,13 +1,13 @@
 describe EdoOracle::UserCourses::Base do
 
-  context '#merge_enrollments' do
+  describe '#merge_enrollments', testext: false do
     before do
       allow(Settings.edodb).to receive(:fake).and_return false
       allow(Settings.terms).to receive(:fake_now).and_return nil
       allow(Settings.terms).to receive(:use_term_definitions_json_file).and_return true
       allow(Settings.features).to receive(:hub_term_api).and_return false
     end
-    
+
     subject do
       feed = {}
       described_class.new(user_id: user_id).merge_enrollments(feed)
