@@ -152,7 +152,7 @@ module EdoOracle
         SELECT DISTINCT
           #{SECTION_COLUMNS},
           sec."maxEnroll" AS enroll_limit,
-          ENR.STDNT_ENRL_STATUS_CODE AS enroll_status,
+          ENR.STDNT_ENRL_STATUS_CODE   AS enroll_status,
           ENR.WAITLISTPOSITION AS waitlist_position,
           ENR.UNITS_TAKEN,
           ENR.UNITS_EARNED,
@@ -678,5 +678,40 @@ module EdoOracle
           SISEDO.GRADING_DATES_CS_V00_VW
       SQL
     end
+
+    def self.get_section_reserved_capacity(term_id, section_id)
+      safe_query <<-SQL
+        SELECT CLASS_NBR as class_nbr,
+          CLASS_SECTION as class_section,
+          COMPONENT as component,
+          CATALOG_NBR as catalog_nbr,
+          RESERVED_SEATS as reserved_seats,
+          RESERVED_SEATS_TAKEN as reserved_seats_taken,
+          REQUIREMENT_GROUP_DESCR as requirement_group_descr,
+          TERM_ID as term_id
+        FROM
+          SISEDO.CLC_CURRENT_RESERVE_CAPACITYV00_VW
+        WHERE
+          TERM_ID = '#{term_id}' AND
+          CLASS_NBR = '#{section_id}'
+      SQL
+    end
+
+    def self.get_section_capacity(term_id, section_id)
+      safe_query <<-SQL
+        SELECT
+          "enrolledCount" as enrolled_count,
+          "waitlistedCount" as waitlisted_count,
+          "minEnroll" as min_enroll,
+          "maxEnroll" as max_enroll,
+          "maxWaitlist" as max_waitlist
+        FROM
+          SISEDO.CLASSSECTIONALLV01_MVW
+        WHERE
+          "id" = '#{section_id}' AND
+          "term-id" = '#{term_id}'
+      SQL
+    end
+
   end
 end

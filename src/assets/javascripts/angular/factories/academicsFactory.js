@@ -8,6 +8,7 @@ var angular = require('angular');
 angular.module('calcentral.factories').factory('academicsFactory', function(apiService) {
   var url = '/api/my/academics';
   // var url = '/dummy/json/academics.json';
+  // var url = '/dummy/json/academics_reserved_seats.json';
 
   var urlResidency = '/api/my/residency';
   // var urlResidency = '/dummy/json/residency.json';
