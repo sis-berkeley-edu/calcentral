@@ -125,6 +125,26 @@ module EdoOracle
       result.first
     end
 
+    def self.get_career_unit_totals(person_id)
+      safe_query <<-SQL
+        SELECT
+          CAR.ACAD_CAREER,
+          CASE 
+            WHEN CAR.PROGRAM_STATUS = 'AC'
+            THEN CAR.PROGRAM_STATUS
+            ELSE NULL
+          END AS PROGRAM_STATUS,
+          CAR.TOTAL_CUMULATIVE_UNITS,
+          LAW.TOTAL_CUMULATIVE_UNITS_LAW AS TOTAL_CUMULATIVE_LAW_UNITS
+          FROM SISEDO.CLC_STUDENT_CAREERV00_VW CAR
+          LEFT OUTER JOIN SISEDO.CLC_STUDENT_CAREER_LAWV00_VW LAW
+            ON CAR.STUDENT_ID = LAW.STUDENT_ID
+           AND CAR.ACAD_CAREER = LAW.ACAD_CAREER
+           AND CAR.INSTITUTION = LAW.INSTITUTION
+          WHERE CAR.CAMPUS_ID = '#{person_id}'
+      SQL
+    end
+
     def self.get_enrolled_sections(person_id, terms = nil)
       # The push_pred hint below alerts Oracle to use indexes on SISEDO.API_COURSEV00_VW, aka crs.
       in_term_where_clause = "enr.\"TERM_ID\" IN (#{terms_query_list terms}) AND " if Settings.features.hub_term_api

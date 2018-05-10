@@ -59,6 +59,35 @@ describe EdoOracle::Queries do
     end
   end
 
+  describe '#get_career_unit_totals', testext: false do
+    subject { described_class.get_career_unit_totals(uid) }
+    let(:uid) { 300216 }
+
+    it_behaves_like 'a successful query'
+
+    it 'returns the expected result' do
+      expect(subject.count).to eq 3
+      expect(subject[0]).to be
+      expect(subject[1]).to be
+      expect(subject[2]).to be
+
+      expect(subject[0]['acad_career']).to eq 'GRAD'
+      expect(subject[0]['program_status']).to eq 'AC'
+      expect(subject[0]['total_cumulative_units']).to eq 16
+      expect(subject[0]['total_cumulative_law_units']).to eq 0
+
+      expect(subject[1]['acad_career']).to eq 'LAW'
+      expect(subject[1]['program_status']).to eq 'AC'
+      expect(subject[1]['total_cumulative_units']).to eq 61
+      expect(subject[1]['total_cumulative_law_units']).to eq 46
+
+      expect(subject[2]['acad_career']).to eq 'UGRD'
+      expect(subject[2]['program_status']).to be_falsey
+      expect(subject[2]['total_cumulative_units']).to eq 157
+      expect(subject[2]['total_cumulative_law_units']).to eq 0
+    end
+  end
+
   describe '#get_enrolled_sections', testext: false do
     subject { described_class.get_enrolled_sections uid }
     let(:uid) { 799934 }

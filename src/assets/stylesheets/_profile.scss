@@ -74,5 +74,9 @@
   }
   .cc-widget-profile-section {
     margin: 0 !important;
+
+    table > tbody > tr > th {
+      width: 92px;
+    }
   }
 }

@@ -7,22 +7,18 @@
     display: inline-block;
     margin: 10px 15px 5px;
   }
-  .cc-academic-summary-gpa {
-    padding: 0;
-  }
-  .cc-academic-summary-gpa-career {
-    padding: 0;
-    width: 15%;
-  }
-  .cc-academic-summary-gpa-list {
-    margin: 0;
-  }
   .cc-academic-summary-margin-bottom {
     margin-bottom: 15px;
   }
   .cc-academic-summary-row-header {
     color: $cc-color-dim-gray;
     vertical-align: bottom;
+  }
+  .cc-academic-summary-row-subhead {
+    color: $cc-color-dim-gray;
+    padding: 0;
+    vertical-align: bottom;
+    width: 20%;
   }
   .cc-academic-summary-row-title, .cc-degrees-conferred-title {
     width: 20%;

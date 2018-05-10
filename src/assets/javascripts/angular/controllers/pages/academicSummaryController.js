@@ -44,26 +44,28 @@ angular.module('calcentral.controllers').controller('AcademicSummaryController',
     });
   };
 
+  var parseGpaUnits = function(gpaUnits) {
+    var unitRows = _.compact(_.values(_.pick(gpaUnits, 'totalUnits', 'totalLawUnits', 'totalTransferAndTestingUnits', 'totalUnitsTakenNotForGpa', 'totalUnitsPassedNotForGpa')));
+    $scope.gpaUnits = academicsService.parseGpaUnits(gpaUnits);
+    $scope.gpaUnits.rowCount = unitRows.length;
+  };
+
+  var parseTermHonors = function() {
+    _.each($scope.semesters, mergeTermHonors);
+  };
+
   var parseAcademics = function(response) {
     angular.extend($scope, _.get(response, 'data'));
     $scope.showGpa = academicsService.showGpa($scope.gpaUnits.gpa);
     $scope.showSemesters = showSemesters();
-    parseGpaUnits();
+    parseGpaUnits(_.get(response, 'data.gpaUnits'));
     parseTermHonors();
     parseTransferCredit();
-  };
-
-  var parseGpaUnits = function() {
-    $scope.gpaUnits = academicsService.parseGpaUnits($scope.gpaUnits);
   };
 
   var parsePerson = function(response) {
     var names = _.get(response, 'data.feed.student.names');
     $scope.primaryName = apiService.profile.findPrimary(names);
-  };
-
-  var parseTermHonors = function() {
-    _.each($scope.semesters, mergeTermHonors);
   };
 
   // Similar to academicsController, we wait until user profile is fully loaded before hitting academics data
