@@ -66,7 +66,6 @@ describe EdoOracle::Queries do
     it_behaves_like 'a successful query'
 
     it 'returns the expected result' do
-      puts subject.to_yaml
       expect(subject.count).to eq 3
       expect(subject[0]).to be
       expect(subject[1]).to be
