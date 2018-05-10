@@ -54,12 +54,23 @@ angular.module('calcentral.controllers').controller('AcademicSummaryController',
     _.each($scope.semesters, mergeTermHonors);
   };
 
+  var parseTermUnits = function() {
+    _.each($scope.semesters, function(semester) {
+      var showUnitTotal = _.some(semester.classes, function(klass) {
+        var classCareer = _.get(klass, 'academicCareer');
+        return (classCareer === 'GRAD') || (classCareer === 'LAW');
+      });
+      semester.showUnitTotal = showUnitTotal;
+    });
+  };
+
   var parseAcademics = function(response) {
     angular.extend($scope, _.get(response, 'data'));
     $scope.showGpa = academicsService.showGpa($scope.gpaUnits.gpa);
     $scope.showSemesters = showSemesters();
     parseGpaUnits(_.get(response, 'data.gpaUnits'));
     parseTermHonors();
+    parseTermUnits();
     parseTransferCredit();
   };
 
