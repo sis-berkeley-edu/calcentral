@@ -1,6 +1,7 @@
 module MyAcademics
   class Semesters < UserSpecificModel
     include Concerns::AcademicsModule
+    include Concerns::Careers
 
     def initialize(uid)
       super(uid)
@@ -8,9 +9,9 @@ module MyAcademics
 
     def merge(data)
       if (@filtered = data[:filteredForDelegate])
-        enrollments = EdoOracle::UserCourses::All.new(user_id: @uid).get_enrollments_summary
+        enrollments = EdoOracle::UserCourses::All.new(user_id: @uid).get_enrollments_summary(academic_careers)
       else
-        enrollments = EdoOracle::UserCourses::All.new(user_id: @uid).get_all_campus_courses
+        enrollments = EdoOracle::UserCourses::All.new(user_id: @uid).get_all_campus_courses(academic_careers)
       end
 
       campus_solution_id = CalnetCrosswalk::ByUid.new(user_id: @uid).lookup_campus_solutions_id
@@ -18,6 +19,12 @@ module MyAcademics
 
       data[:semesters] = semester_feed(enrollments, reg_status_data).compact
       merge_semesters_count data
+    end
+
+    def academic_careers
+      return nil unless law_student?
+      careers = active_or_all EdoOracle::Career.new(user_id: @uid).fetch
+      careers.try(:map) {|career| career.try(:[], 'acad_career')}
     end
 
     def semester_feed(enrollment_terms, reg_status_data)

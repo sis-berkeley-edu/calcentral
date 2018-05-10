@@ -125,7 +125,7 @@ module EdoOracle
       result.first
     end
 
-    def self.get_career_unit_totals(person_id)
+    def self.get_careers(person_id)
       safe_query <<-SQL
         SELECT
           CAR.ACAD_CAREER,
@@ -145,7 +145,7 @@ module EdoOracle
       SQL
     end
 
-    def self.get_enrolled_sections(person_id, terms = nil)
+    def self.get_enrolled_sections(person_id, academic_careers, terms)
       # The push_pred hint below alerts Oracle to use indexes on SISEDO.API_COURSEV00_VW, aka crs.
       in_term_where_clause = "enr.\"TERM_ID\" IN (#{terms_query_list terms}) AND " if Settings.features.hub_term_api
       safe_query <<-SQL
@@ -174,6 +174,7 @@ module EdoOracle
         #{JOIN_SECTION_TO_COURSE}
         WHERE  #{in_term_where_clause}
           enr."CAMPUS_UID" = '#{person_id}'
+          #{and_academic_career('enr', academic_careers)}
           #{and_institution('enr')}
           AND enr."STDNT_ENRL_STATUS_CODE" != 'D'
           #{where_course_term_updated_date}
@@ -182,7 +183,7 @@ module EdoOracle
     end
 
     def self.get_law_enrollment(person_id, academic_career, term, section, require_desig_code = nil)
-      require_desig_field = require_desig_code ? 'RD.DESCRFORMAL' : 'NULL'
+      require_desig_field = require_desig_code.blank? ? 'NULL' : 'RD.DESCRFORMAL'
       result = safe_query <<-SQL
         SELECT
           ENR.UNITS_TAKEN_LAW,
