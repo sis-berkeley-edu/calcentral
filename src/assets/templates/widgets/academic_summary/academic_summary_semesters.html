@@ -67,7 +67,7 @@
           <td class="cc-text-right" data-ng-if="api.user.profile.canViewGrades && !section.grading.grade_points">&mdash;</td>
         </tr>
       </tbody>
-      <tfoot>
+      <tfoot data-ng-if="semester.showUnitTotal">
         <tr>
           <th data-ng-bind="semester.isGradingComplete ? 'Earned Total:' : 'Enrolled Total:'" colspan="2" scope="row" class="cc-table-right cc-academic-summary-table-units"></th>
           <td data-ng-bind="semester.totalUnits" class="cc-table-right cc-academic-summary-table-units"></td>
