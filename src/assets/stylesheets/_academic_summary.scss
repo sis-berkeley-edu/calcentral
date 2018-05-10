@@ -58,6 +58,15 @@
       padding-left: 10px;
     }
     table.cc-class-enrollments {
+      td {
+        padding-bottom: 6px;
+        vertical-align: top;
+        .requirement {
+          color: $cc-color-dim-gray;
+          font-size: 12px;
+          line-height: 12px;
+        }
+      }
       thead > tr > th {
         &:nth-child(1) {
           width: 20%;

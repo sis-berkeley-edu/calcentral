@@ -36,10 +36,30 @@ describe MyAcademics::Semesters do
     context 'when student has a LAW career term' do
       let(:uid) { 490452 }
       context 'when grades have not all been received for the term' do
-        it 'provides the total enrolled law units' do
+        it 'provides the total enrolled units and law units' do
+          expect(subject.count).to eq 1
+          expect(subject[0][:termId]).to eq '2185'
           expect(subject[0][:totalUnits]).to eq 0
           expect(subject[0][:totalLawUnits]).to eq 16
           expect(subject[0][:isGradingComplete]).to eq false
+        end
+        it 'provides the classes and sections the student was enrolled in' do
+          expect(subject[0][:classes]).to be
+          expect(subject[0][:classes].count).to eq 2
+
+          expect(subject[0][:classes][0][:sections]).to be
+          expect(subject[0][:classes][0][:sections].count).to eq 1
+          expect(subject[0][:classes][0][:sections][0][:ccn]).to eq '12392'
+          expect(subject[0][:classes][0][:sections][0][:units]).to eq 2
+          expect(subject[0][:classes][0][:sections][0][:lawUnits]).to eq 3
+          expect(subject[0][:classes][0][:sections][0][:requirementsDesignation]).to be nil
+
+          expect(subject[0][:classes][1][:sections]).to be
+          expect(subject[0][:classes][1][:sections].count).to eq 1
+          expect(subject[0][:classes][1][:sections][0][:ccn]).to eq '11950'
+          expect(subject[0][:classes][1][:sections][0][:units]).to eq 3
+          expect(subject[0][:classes][1][:sections][0][:lawUnits]).to eq 3
+          expect(subject[0][:classes][1][:sections][0][:requirementsDesignation]).to eq 'Fulfills Professional Responsibility Requirement'
         end
       end
     end

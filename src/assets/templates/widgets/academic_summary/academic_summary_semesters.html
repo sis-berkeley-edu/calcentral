@@ -54,7 +54,10 @@
               <span class="cc-nowrap" data-ng-if="class.session_code" data-ng-bind-template="(Session {{class.session_code}})"></span>
             </span>
           </td>
-          <td data-ng-bind="class.title"></td>
+          <td>
+            <div data-ng-bind="class.title"></div>
+            <div data-ng-bind="section.requirementsDesignation" class="requirement"></div>
+          </td>
           <td class="cc-text-right cc-academic-summary-table-units" data-ng-bind="section.units | number:1"></td>
           <td ng-if="semester.totalLawUnits && (section.lawUnits || section.lawUnits === 0)" class="cc-text-right cc-academic-summary-table-units" data-ng-bind="section.lawUnits | number:1"></td>
           <td ng-if="semester.totalLawUnits && !(section.lawUnits || section.lawUnits === 0)" class="cc-text-right cc-academic-summary-table-units">&mdash;</td>

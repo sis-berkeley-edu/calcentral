@@ -140,7 +140,11 @@ module EdoOracle
           ENR.GRADE_POINTS AS grade_points,
           ENR.GRADING_BASIS_CODE AS grading_basis,
           ENR.ACAD_CAREER,
-          ENR.RQMNT_DESIGNTN
+          CASE 
+            WHEN ENR.CRSE_CAREER = 'LAW'
+            THEN ENR.RQMNT_DESIGNTN
+            ELSE NULL
+          END AS RQMNT_DESIGNTN
         FROM SISEDO.CLC_ENROLLMENTV00_VW enr
         JOIN SISEDO.CLASSSECTIONALLV01_MVW sec ON (
           enr."TERM_ID" = sec."term-id" AND

@@ -27,11 +27,14 @@ describe EdoOracle::UserCourses::Base do
     it 'provides the expected data for each class' do
       expect(subject['2017-D'][0][:academicCareer]).to eq 'UGRD'
       expect(subject['2017-D'][0][:term_id]).to eq '2178'
+      expect(subject['2017-D'][0][:requirementsDesignationCode]).to be nil
       expect(subject['2017-D'][1][:academicCareer]).to eq 'UGRD'
       expect(subject['2017-D'][1][:term_id]).to eq '2178'
+      expect(subject['2017-D'][1][:requirementsDesignationCode]).to be nil
 
       expect(subject['2016-C'][0][:academicCareer]).to eq 'UGRD'
       expect(subject['2016-C'][0][:term_id]).to eq '2165'
+      expect(subject['2016-C'][0][:requirementsDesignationCode]).to be nil
     end
   end
 
