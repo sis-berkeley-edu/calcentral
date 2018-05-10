@@ -6,7 +6,7 @@ module DegreeProgress
     def process(response)
       degree_progress = response.try(:[], :feed).try(:[], :ucAaProgress)
       degree_progress[:progresses] = massage_progresses(degree_progress.try(:[], :progresses))
-      degree_progress[:transferCreditReviewDeadline] = is_pending_transfer_credit_review_deadline ? pretty_date(transfer_credit_review_deadline) : nil
+      degree_progress[:transferCreditReviewDeadline] = is_pending_transfer_credit_review_deadline ? get_month(transfer_credit_review_deadline) : nil
       degree_progress
     end
 
@@ -83,6 +83,10 @@ module DegreeProgress
       return nil if date_unformatted.blank?
       date_object = strptime_in_time_zone(date_unformatted, '%Y-%m-%d')
       pretty_date date_object
+    end
+
+    def get_month(date_object)
+      date_object.strftime('%B')
     end
 
     def pretty_date(date_object)
