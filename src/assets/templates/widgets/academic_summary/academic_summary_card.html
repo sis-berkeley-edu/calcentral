@@ -19,5 +19,31 @@
     </div>
     <div data-ng-if="showTransferCredit" data-ng-include="'widgets/academic_summary/academic_summary_transfer_credit.html'"></div>
     <div data-ng-if="showSemesters" data-ng-repeat="semester in semesters | orderBy:'-'" data-ng-include="'widgets/academic_summary/academic_summary_semesters.html'"></div>
+    <div data-ng-if="showSemesters && (gpaUnits.totalLawUnits > 0 || api.user.profile.roles.law)" class="cc-academic-summary-border-wrapper">
+        <div class="cc-table cc-academic-summary-content">
+          <table class="cc-class-enrollments">
+            <thead>
+              <tr>
+                <th><h4>Summary</h4></th>
+                <th></th>
+                <th class="cc-table-right cc-academic-summary-table-units">Un.</th>
+                <th class="cc-table-right cc-academic-summary-table-units">Law Un.</th>
+                <th></th>
+                <th></th>
+              </tr>
+            </thead>
+            <tfoot>
+              <tr>
+                <th colspan="2" scope="row" class="cc-table-right cc-academic-summary-table-units">Earned Total:</th>
+                <td data-ng-bind="gpaUnits.totalUnits.toFixed(1)" class="cc-table-right cc-academic-summary-table-units"></td>
+                <td data-ng-bind="gpaUnits.totalLawUnits.toFixed(1)" class="cc-table-right cc-academic-summary-table-units"></td>
+                <td></td>
+                <td></td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+      </div>
+      
   </div>
 </div>
