@@ -1,0 +1,49 @@
+<div class="cc-table cc-table-top-border cc-clearfix" data-ng-if="graduation.undergraduate.expectedGraduationTerm">
+  <table class="cc-widget-profile-table">
+    <tbody>
+    <tr>
+      <th>Terms Information</th>
+      <td>
+        <div class="cc-section-block" data-ng-if="termsInAttendance">
+          <div class="cc-text-light">Terms in Attendance</div>
+          <div data-ng-bind="termsInAttendance"></div>
+        </div>
+        <div class="cc-section-block" data-ng-if="graduation.undergraduate.expectedGraduationTerm">
+          <div class="cc-text-light">Expected Graduation</div>
+          <div>
+            <i class="fa fa-clock-o cc-icon-grey" data-ng-if="graduation.undergraduate.appointmentsInGraduatingTerm"></i>
+            <div data-ng-bind="graduation.undergraduate.expectedGraduationTerm.termName"></div>
+          </div>
+          <div class="cc-widget-profile-footnote">
+              <span data-ng-if="graduation.undergraduate.appointmentsInGraduatingTerm">
+                <span data-ng-bind="graduation.undegraduate.expectedGraduationTerm.termName"></span>
+                will be your final term to complete all degree requirements.
+                If you have questions, please contact your College Advisor.
+              </span>
+            <span data-ng-if="!graduation.undergraduate.appointmentsInGraduatingTerm">
+                Consult your college advisor with questions or concerns.
+              </span>
+          </div>
+        </div>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+<div class="cc-table cc-table-top-border cc-clearfix" data-ng-if="graduation.gradLaw.expectedGraduationTerms.length">
+  <table class="cc-widget-profile-table">
+    <tbody>
+    <tr>
+      <th>Expected Graduation</th>
+      <td>
+        <div class="cc-section-block" data-ng-repeat="term in graduation.gradLaw.expectedGraduationTerms">
+          <div data-ng-repeat="plan in term.plans" class="cc-text-light">
+            <span data-ng-bind="plan"></span>
+          </div>
+          <div data-ng-bind="term.expectedGradTermNames.join(', ')"></div>
+        </div>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>

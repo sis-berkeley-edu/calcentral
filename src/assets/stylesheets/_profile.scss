@@ -3,7 +3,7 @@
     .cc-degrees-conferred-title {
       margin: 0;
       width: 92px;
-      h4 {
+      th {
         color: $cc-color-dim-gray;
       }
     }
@@ -46,9 +46,6 @@
     font-size: 12px;
     font-style: italic;
   }
-  .cc-widget-profile-section-block {
-    margin: 0 0 5px;
-  }
   .cc-widget-profile-table {
     th {
       width: 92px;
@@ -75,8 +72,14 @@
   .cc-widget-profile-section {
     margin: 0 !important;
 
+    .cc-section-block:not(:last-child) {
+      margin: 0 0 5px;
+    }
     table > tbody > tr > th {
       width: 92px;
+      &.cc-widget-profile-subhead {
+        width: 100px;
+      }
     }
   }
 }

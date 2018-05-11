@@ -1,0 +1,12 @@
+<div class="cc-table cc-table-top-border cc-clearfix">
+  <table class="cc-widget-profile-table">
+    <tbody>
+      <tr>
+        <th data-ng-pluralize count="careers.length" when="{'1': 'Academic Career', 'other': 'Academic Careers'}"></th>
+        <td>
+          <div data-ng-repeat="career in careers" data-ng-bind="career"></div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

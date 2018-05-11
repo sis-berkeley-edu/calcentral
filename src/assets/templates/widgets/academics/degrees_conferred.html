@@ -1,10 +1,8 @@
-<div class="cc-table cc-table-top-border cc-clearfix cc-degrees-conferred" data-ng-if="collegeAndLevel.degrees">
+<div class="cc-table cc-table-top-border cc-clearfix cc-degrees-conferred">
   <table>
     <tbody>
     <tr>
-      <th class="cc-degrees-conferred-title">
-        <h4 data-ng-pluralize count="collegeAndLevel.degrees.length" when="{'1': 'Degree Conferred', 'other': 'Degrees Conferred'}"></h4>
-      </th>
+      <th class="cc-degrees-conferred-title" data-ng-pluralize count="collegeAndLevel.degrees.length" when="{'1': 'Degree Conferred', 'other': 'Degrees Conferred'}"></th>
       <td class="cc-flex-space-between-vertical-15">
         <div class="cc-degrees-conferred-container cc-clearfix" data-ng-repeat="degree in collegeAndLevel.degrees">
           <div class="cc-degrees-conferred-data">

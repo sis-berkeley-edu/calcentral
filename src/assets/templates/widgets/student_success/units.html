@@ -7,6 +7,12 @@
 <div class="cc-table cc-student-success-subsection">
   <table>
     <tbody data-ng-if="!gpaUnits.isLegacy">
+      <tr data-ng-if="gpaUnits.totalLawUnits">
+        <td>Law Units</td>
+        <td class="cc-table-right" colspan="2">
+          <span data-ng-bind="gpaUnits.totalLawUnits | number:1"></span>
+        </td>
+      </tr>
       <tr>
         <td>Units for GPA</td>
         <td class="cc-table-right" colspan="2">
