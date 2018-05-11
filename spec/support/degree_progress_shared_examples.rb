@@ -143,8 +143,8 @@ shared_examples 'a proxy that returns undergraduate milestone data' do
     end
 
     shared_examples 'the deadline is pending' do
-      it 'includes the formatted date in the feed' do
-        expect(subject[:feed][:degreeProgress][:transferCreditReviewDeadline]).to eq 'Feb 14, 2013'
+      it 'includes the month in the feed' do
+        expect(subject[:feed][:degreeProgress][:transferCreditReviewDeadline]).to eq 'February'
       end
     end
     shared_examples 'the deadline has passed' do
