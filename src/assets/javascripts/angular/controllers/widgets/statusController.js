@@ -123,7 +123,7 @@ angular.module('calcentral.controllers').controller('StatusController', function
   var loadHolds = function() {
     var deferred;
 
-    if (!(apiService.user.profile.roles.student || apiService.user.profile.roles.applicant)) {
+    if (!(apiService.user.profile.roles.student || apiService.user.profile.roles.applicant || apiService.user.profile.roles.exStudent || apiService.user.profile.roles.concurrentEnrollmentStudent)) {
       deferred = $q.defer();
       deferred.resolve();
       return deferred.promise;

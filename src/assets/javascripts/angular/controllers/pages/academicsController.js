@@ -240,7 +240,7 @@ angular.module('calcentral.controllers').controller('AcademicsController', funct
       var getRegistrations = registrationsFactory.getRegistrations().then(loadRegistrations);
       var requests = [getAcademics, getRegistrations];
 
-      if (apiService.user.profile.roles.student || apiService.user.profile.roles.applicant) {
+      if (apiService.user.profile.roles.student || apiService.user.profile.roles.applicant || apiService.user.profile.roles.exStudent || apiService.user.profile.roles.concurrentEnrollmentStudent) {
         requests.push(loadNumberOfHolds());
       }
       $q.all(requests).then(filterWidgets);
