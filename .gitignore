@@ -73,6 +73,9 @@ public/styleguide
 # Npm log
 npm-debug.log
 
+# Npm package-lock.json
+package-lock.json
+
 # Vagrant
 .vagrant/
 
@@ -81,3 +84,6 @@ npm-debug.log
 
 # VScode Javascript config
 jsconfig.json
+
+# Prettier ignore file
+.prettierignore

@@ -6,6 +6,7 @@
 
 ## Dependencies
 
+* Administrator privileges
 * [Bundler](http://gembundler.com/rails3.html)
 * [Git](https://help.github.com/articles/set-up-git)
 * [JDBC Oracle driver](http://www.oracle.com/technetwork/database/enterprise-edition/jdbc-112010-090769.html)
@@ -13,14 +14,13 @@
 * [JRuby 9.1.14.0](http://jruby.org/)
 * [Node.js >=0.10.30](http://nodejs.org/)
 * [PostgreSQL](http://www.postgresql.org/)
-* [Rails 3.2.x](http://rubyonrails.org/download)
-* [Rubygems](http://rubyforge.org/frs/?group_id=126)
+* [Rubygems 2.5.1](https://rubygems.org/pages/download)
 * [RVM](https://rvm.io/rvm/install/) - Ruby version managers
 * [xvfb](http://xquartz.macosforge.org/landing/) - xvfb headless browser, included for Macs with XQuartz
 
 ## Installation
 
-1. Install Java 8 JDK:
+1. Install Java 8 JDK ([8u172](http://www.oracle.com/technetwork/java/javase/downloads/index.html)):
 http://www.oracle.com/technetwork/java/javase/downloads/index.html
 
 1. Install Postgres:
@@ -40,7 +40,6 @@ http://www.oracle.com/technetwork/java/javase/downloads/index.html
     ```bash
     brew update
     brew install postgresql
-    initdb /usr/local/var/postgres
     ```
 
     1. __For Mountain Lion & Mavericks users ONLY:__  [Fix Postgres paths](http://nextmarvel.net/blog/2011/09/brew-install-postgresql-on-os-x-lion/).
@@ -76,11 +75,20 @@ http://www.oracle.com/technetwork/java/javase/downloads/index.html
 
     **Note**: At this point, exit out of Postgres. To do this, type "\q" and then press ENTER.
 
-1. Fork this repository, then:
+1. [Fork this repository](https://github.com/ets-berkeley-edu/calcentral/wiki/Workflow), then:
+
+    with ssh ([note](https://help.github.com/articles/connecting-to-github-with-ssh/))
 
     ```bash
     git clone git@github.com:[your GitHub Account]/calcentral.git
     # e.g. git clone git@github.com:christianv/calcentral.git
+    ```
+
+    or via https - ([note](https://help.github.com/articles/caching-your-github-password-in-git/))
+    ```bash
+    git clone https://github.com/[your Github Account]/calcentral.git
+    # e.g. git clone https://github.com/christianv/calcentral.git
+
     ```
 
 1. Go inside the `calcentral` repository:
@@ -90,11 +98,13 @@ http://www.oracle.com/technetwork/java/javase/downloads/index.html
     # Answer "yes" if it asks you to trust a new .rvmrc file.
     ```
 
-1. Install JRuby:
+1. Install JRuby (requires ):
+
+     **Note**: To install JRuby, you must first install [rvm](https://rvm.io/rvm/install/).
 
     ```bash
     rvm get head
-    rvm install jruby-1.7.19
+    rvm install jruby-9.1.14.0
     cd ..
     cd calcentral
     # Answer "yes" again if it asks you to trust a new .rvmrc file.
@@ -108,13 +118,28 @@ http://www.oracle.com/technetwork/java/javase/downloads/index.html
     ``` bash
     export JRUBY_OPTS="--dev"
     ```
+1. Configure Default JRuby and Gemset
+
+    ```bash
+    cd ~
+    rvm use jruby-9.1.14.0 --default # This may output 'Unknown ruby string (do not know how to handle): jruby-9.1.14.0.', which can be ignored.
+    rvm gemset use global
+
+    ```
 
 1. Download and install xvfb. On a Mac, you get xvfb by [installing XQuartz](http://xquartz.macosforge.org/landing/).
 
 1. Download the appropriate gems with [Bundler](http://gembundler.com/rails3.html):
 
+    **Important**: Make sure you have the JRuby-upgraded CalCentral codebase in your calcentral directory before running `bundle install`.
+
     ```bash
-    gem install bundler -v "1.11.2"
+    rvm rubygems 2.5.1 --force
+    gem --version
+    # Should output '2.5.1'
+
+    gem uninstall bundler --force -x
+    gem install bundler --version="1.15.4"
     bundle install
     ```
 
@@ -130,21 +155,21 @@ http://www.oracle.com/technetwork/java/javase/downloads/index.html
     You can also create Ruby configuration files like "settings.local.rb" and "development.local.rb" to amend the standard `config/environments/*.rb` files.
 
 1. Install JDBC driver (for Oracle connection)
-  * Download [ojdbc7_g.jar](http://www.oracle.com/technetwork/database/features/jdbc/jdbc-drivers-12c-download-1958347.html)
-  * Note: You do not have to open the file.
-  * Rename the file to `ojdbc7.jar`
-  * Copy `ojdbc7.jar` to `~/.rvm/rubies/jruby-9.1.14.0/lib/`
+    * Download [ojdbc7_g.jar](http://www.oracle.com/technetwork/database/features/jdbc/jdbc-drivers-12c-download-1958347.html)
+    * Note: You do not have to open the file.
+    * Rename the file to `ojdbc7.jar`
+    * Copy `ojdbc7.jar` to `~/.rvm/rubies/jruby-9.1.14.0/lib/`
 
 1. Initialize PostgreSQL database tables:
 
     ```bash
-    rake environment db:schema:load db:seed
+    bundle exec rake environment db:schema:load db:seed
     ```
 
 1. Make yourself powerful:
 
     ```bash
-    rake superuser:create UID=[your numeric CalNet UID]
+    bundle exec rake superuser:create UID=[your numeric CalNet UID]
     # e.g. rake superuser:create UID=61889
     ```
 
@@ -397,7 +422,7 @@ To set this up locally, perform the following steps:
 1. Add the following lines to development.local.yml:
 
 ```yml
-cache: 
+cache:
   store: "memcached"
 ```
 
@@ -459,4 +484,3 @@ gulp styleguide
 This will generate the styleguide in public/styleguide, which will open automatically in your browser at
 [http://localhost:3006/](http://localhost:3006/). Modifications to SCSS files under /src/assets/stylesheets are watched
 and reloaded into the guide on-the-fly.
-
