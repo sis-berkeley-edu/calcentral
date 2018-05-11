@@ -59,8 +59,8 @@ describe EdoOracle::Queries do
     end
   end
 
-  describe '#get_career_unit_totals', testext: false do
-    subject { described_class.get_career_unit_totals(uid) }
+  describe '#get_careers', testext: false do
+    subject { described_class.get_careers(uid) }
     let(:uid) { 300216 }
 
     it_behaves_like 'a successful query'
@@ -89,8 +89,10 @@ describe EdoOracle::Queries do
   end
 
   describe '#get_enrolled_sections', testext: false do
-    subject { described_class.get_enrolled_sections uid }
+    subject { described_class.get_enrolled_sections(uid, careers, terms) }
     let(:uid) { 799934 }
+    let(:terms) { nil }
+    let(:careers) { nil }
 
     it_behaves_like 'a successful query'
 
@@ -137,6 +139,39 @@ describe EdoOracle::Queries do
         it 'provides the requirements designation' do
           expect(subject[1]['rqmnt_designtn']).to eq 'LPR'
         end
+      end
+    end
+    context 'when constrained by terms' do
+      before do
+        allow(Settings.features).to receive(:hub_term_api).and_return true
+      end
+      let(:term) do
+        {
+          'term_yr' => '2017',
+          'term_cd' => 'D',
+          'term_status' => 'FT',
+          'term_status_desc' => 'Current Fall',
+          'term_name' => 'Fall',
+          'current_tb_term_flag' => 'N',
+          'term_start_date' => Time.parse('2017-08-16 00:00:00 UTC'),
+          'term_end_date' => Time.parse('2017-12-15 00:00:00 UTC')
+        }
+      end
+      let(:terms) { [Berkeley::Term.new(term)] }
+      it_behaves_like 'a successful query'
+      it 'returns only enrollments belonging to the specified terms' do
+        expect(subject.count).to eq 2
+        expect(subject[0]['term_id']).to eq '2178'
+        expect(subject[1]['term_id']).to eq '2178'
+      end
+    end
+    context 'when constrained by careers' do
+      let(:uid) { 300216 }
+      let(:careers) { ['GRAD'] }
+      it_behaves_like 'a successful query'
+      it 'returns only enrollments associated with the specified careers' do
+        expect(subject.count).to eq 1
+        expect(subject[0]['acad_career']).to eq 'GRAD'
       end
     end
     context 'when no UID provided' do

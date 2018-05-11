@@ -3,6 +3,7 @@ module MyAcademics
     include ClassLogger
     include User::Identifiers
     include Concerns::AcademicStatus
+    include Concerns::Careers
 
     def merge(data)
       data[:gpaUnits] = gpa_units
@@ -68,23 +69,16 @@ module MyAcademics
     end
 
     def get_cumulative_units
-      unit_totals = EdoOracle::Queries.get_career_unit_totals(@uid)
-      has_active_career = unit_totals.any? do |career|
-        active? career
-      end
+      careers = active_or_all EdoOracle::Career.new(user_id: @uid).fetch
       result = {
         totalUnits: 0,
         totalLawUnits: 0
       }
-      unit_totals.each do |career|
-        result[:totalUnits] += (career['total_cumulative_units'] if active?(career) || !has_active_career).to_f
-        result[:totalLawUnits] += (career['total_cumulative_law_units'] if active?(career) || !has_active_career).to_f
+      careers.each do |career|
+        result[:totalUnits] += (career['total_cumulative_units']).to_f
+        result[:totalLawUnits] += (career['total_cumulative_law_units']).to_f
       end
       result
-    end
-
-    def active?(career)
-      :AC == career['program_status'].try(:intern)
     end
 
     def parse_total_transfer_units(status)

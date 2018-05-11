@@ -10,10 +10,11 @@ describe EdoOracle::UserCourses::Base do
 
     subject do
       feed = {}
-      described_class.new(user_id: user_id).merge_enrollments(feed)
+      described_class.new(user_id: user_id).merge_enrollments(feed, academic_careers)
       feed
     end
     let(:user_id) { 799934 }
+    let(:academic_careers) { nil }
 
     it 'assembles the enrollments feed' do
       expect(subject).to be
@@ -48,7 +49,7 @@ describe EdoOracle::UserCourses::Base do
 
     it 'should query non-legacy terms only' do
       allow(Settings.terms).to receive(:legacy_cutoff).and_return 'summer-2013'
-      expect(EdoOracle::Queries).to receive(:get_enrolled_sections).with(anything, terms_following_and_including_cutoff('2135')).and_return []
+      expect(EdoOracle::Queries).to receive(:get_enrolled_sections).with(anything, nil, terms_following_and_including_cutoff('2135')).and_return []
       described_class.new(user_id: random_id).merge_enrollments({})
     end
 

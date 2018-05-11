@@ -1,6 +1,44 @@
 describe MyAcademics::Semesters do
 
+  describe '#academic_careers', testext: false do
+    subject { described_class.new(uid).academic_careers }
+
+    before do
+      allow_any_instance_of(MyAcademics::MyAcademicRoles).to receive(:get_feed).and_return academic_roles
+    end
+    let(:uid) { 300216 }
+    let(:academic_roles) do
+      {
+        'law'=> has_law_role
+      }
+    end
+
+    context 'when user is not a Law student' do
+      let(:has_law_role) { false }
+      it 'returns nil' do
+        expect(subject).to be nil
+      end
+    end
+    context 'when user is a Law student' do
+      let(:has_law_role) { true }
+
+      context 'with an active career' do
+        it 'returns a list of active careers' do
+          expect(subject).to contain_exactly('GRAD', 'LAW')
+        end
+      end
+      context 'with no active career' do
+        let(:uid) { 790833 }
+        it 'returns a list of all careers' do
+          expect(subject).to contain_exactly('UGRD', 'UCBX')
+        end
+      end
+    end
+
+  end
+
   describe '#semester_feed', testext: false do
+    subject { described_class.new(uid).semester_feed(enrollment_terms, reg_status_data) }
 
     before do
       allow(Settings.edodb).to receive(:fake).and_return false
@@ -9,7 +47,6 @@ describe MyAcademics::Semesters do
       allow(Settings.features).to receive(:hub_term_api).and_return false
     end
 
-    subject { described_class.new(uid).semester_feed(enrollment_terms, reg_status_data) }
     let(:enrollment_terms) { EdoOracle::UserCourses::All.new(user_id: uid, fake: false).get_all_campus_courses }
     let(:reg_status_data) { [] }
     let(:uid) { 790833 }
