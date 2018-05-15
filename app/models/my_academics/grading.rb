@@ -283,11 +283,11 @@ module MyAcademics
 
     def find_grading_period_status(dates, is_midpoint)
       if is_midpoint
-        begin_date = dates[:mid_term_begin_date]
-        end_date = dates[:mid_term_end_date]
+        begin_date = dates[:mid_term_begin_date].try(:in_time_zone).try(:to_datetime)
+        end_date = dates[:mid_term_end_date].try(:end_of_day).try(:to_datetime)
       else
-        begin_date = dates[:final_begin_date]
-        end_date = dates[:final_end_date]
+        begin_date = dates[:final_begin_date].try(:in_time_zone).try(:to_datetime)
+        end_date = dates[:final_end_date].try(:end_of_day).try(:to_datetime)
       end
       current_date = Settings.terms.fake_now || DateTime.now
       return :gradingPeriodNotSet if begin_date.blank? || end_date.blank?

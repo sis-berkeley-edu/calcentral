@@ -318,6 +318,107 @@ describe MyAcademics::Grading do
 
   end
 
+  describe '#find_grading_period_status' do
+    let(:mid_term_begin_date) { Date.parse('Mon, 05 Mar 2018') }
+    let(:mid_term_end_date) { Date.parse('Mon, 12 Mar 2018') }
+    let(:final_begin_date) { Date.parse('Mon, 26 Mar 2018') }
+    let(:final_end_date) { Date.parse('Wed, 16 May 2018') }
+    let(:has_mid_term) { true }
+    let(:is_midpoint) { false }
+    let(:dates) do
+      {
+        mid_term_begin_date: mid_term_begin_date,
+        mid_term_end_date: mid_term_end_date,
+        final_begin_date: final_begin_date,
+        final_end_date: final_end_date,
+        hasMidTerm: has_mid_term
+      }
+    end
+    # Daylight Times Savings in 2018 (PDT): Mar 11 - Nov 4
+    let(:fake_date_time) { DateTime.parse('Tue, 1 Apr 2018 16:20:42 PDT') }
+    let(:grading_period_status) { subject.find_grading_period_status(dates, is_midpoint) }
+    before { allow(Settings.terms).to receive(:fake_now).and_return fake_date_time }
+
+    context 'when status requested for midpoint test' do
+      let(:is_midpoint) { true }
+      context 'when midpoint grading open date not present' do
+        let(:mid_term_begin_date) { nil }
+        it 'returns grading period not set indicator' do
+          expect(grading_period_status).to eq :gradingPeriodNotSet
+        end
+      end
+      context 'when midpoint grading deadline date not present' do
+        let(:mid_term_end_date) { nil }
+        it 'returns grading period not set indicator' do
+          expect(grading_period_status).to eq :gradingPeriodNotSet
+        end
+      end
+      context 'when before midpoint grading period begins' do
+        let(:fake_date_time) { DateTime.parse('Tue, 20 Feb 2018 19:38:05 PST') }
+        it 'returns before grading period indicator' do
+          expect(grading_period_status).to eq :beforeGradingPeriod
+        end
+      end
+      context 'when midpoint grading period has begun and not ended' do
+        let(:fake_date_time) { DateTime.parse('Mon, 5 Mar 2018 00:00:01 PST') }
+        it 'returns in grading period indicator' do
+          expect(grading_period_status).to eq :inGradingPeriod
+        end
+      end
+      context 'before midpoint grading period has ended' do
+        let(:fake_date_time) { DateTime.parse('Mon, 12 Mar 2018 11:59:58 PDT') }
+        it 'returns in grading period indicator' do
+          expect(grading_period_status).to eq :inGradingPeriod
+        end
+      end
+      context 'when midpoint grading period has ended' do
+        let(:fake_date_time) { DateTime.parse('Tue, 13 Mar 2018 00:00:01 PDT') }
+        it 'returns after grading period indicator' do
+          expect(grading_period_status).to eq :afterGradingPeriod
+        end
+      end
+    end
+    context 'when status requested for final test' do
+      let(:is_midpoint) { false }
+      context 'when final grading open date not present' do
+        let(:final_begin_date) { nil }
+        it 'returns grading period not set indicator' do
+          expect(grading_period_status).to eq :gradingPeriodNotSet
+        end
+      end
+      context 'when final grading deadline date not present' do
+        let(:final_end_date) { nil }
+        it 'returns grading period not set indicator' do
+          expect(grading_period_status).to eq :gradingPeriodNotSet
+        end
+      end
+      context 'when before final grading period begins' do
+        let(:fake_date_time) { DateTime.parse('Sun, 25 Mar 2018 00:00:01 PDT') }
+        it 'returns before grading period indicator' do
+          expect(grading_period_status).to eq :beforeGradingPeriod
+        end
+      end
+      context 'after final grading period has begun and not ended' do
+        let(:fake_date_time) { DateTime.parse('Mon, 26 Mar 2018 00:00:01 PDT') }
+        it 'returns in grading period indicator' do
+          expect(grading_period_status).to eq :inGradingPeriod
+        end
+      end
+      context 'before final grading period has ended' do
+      let(:fake_date_time) { DateTime.parse('Wed, 16 May 2018 11:59:58 PDT') }
+        it 'returns in grading period indicator' do
+          expect(grading_period_status).to eq :inGradingPeriod
+        end
+      end
+      context 'when final grading period has ended' do
+        let(:fake_date_time) { DateTime.parse('Thu, 17 May 2018 00:00:00 PDT') }
+        it 'returns after grading period indicator' do
+          expect(grading_period_status).to eq :afterGradingPeriod
+        end
+      end
+    end
+  end
+
   describe '#get_grading_dates' do
     let(:term_id) { '2182' }
     let(:grading_type) { :general }
