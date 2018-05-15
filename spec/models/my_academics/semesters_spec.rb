@@ -387,15 +387,17 @@ describe MyAcademics::Semesters do
 
     context 'when a semester has all waitlisted courses, or no enrolled courses' do
       before do
-        allow(Settings.terms).to receive(:legacy_cutoff).and_return 'summer-2014'
-        allow_any_instance_of(CampusOracle::UserCourses::All).to receive(:get_all_campus_courses).and_return enrollment_data
+        allow(Settings.terms).to receive(:fake_now).and_return '2016-04-01'
+        allow(Settings.terms).to receive(:legacy_cutoff).and_return 'fall-2009'
+        expect(CampusOracle::Queries).not_to receive :get_enrolled_sections
+        allow_any_instance_of(EdoOracle::UserCourses::All).to receive(:get_all_campus_courses).and_return enrollment_data
       end
-      let(:term_keys) { ['2013-D'] }
-      let(:enrollment_data) { {'2013-D' => waitlisted_term} }
+      let(:term_keys) { ['2016-D'] }
+      let(:enrollment_data) { {'2016-D' => waitlisted_term} }
 
       context 'all waitlisted courses' do
         let(:waitlisted_term) do
-          enrollment_term('2013-D').tap do |term|
+          enrollment_term('2016-D').tap do |term|
             term.each do |course|
               course[:sections] = [
                 course_enrollment_section(is_primary_section: true, waitlisted: true),
@@ -411,18 +413,109 @@ describe MyAcademics::Semesters do
         end
       end
 
-      context 'some waitlisted courses' do
+      context 'some waitlisted courses and no reserved seats' do
+        before do
+          allow_any_instance_of(EdoOracle::Queries).to receive(:get_section_reserved_capacity).and_return([])
+        end
         let(:waitlisted_term) do
-          enrollment_term('2013-D').tap do |term|
+          enrollment_term('2016-D').tap do |term|
             term.first[:sections] = [
-              course_enrollment_section(waitlisted: true),
-              course_enrollment_section(waitlisted: true)
+              course_enrollment_section(is_primary_section: true, waitlisted: true),
+              course_enrollment_section(is_primary_section: false,waitlisted: true)
             ]
           end
         end
         it 'should say that there are enrolled courses' do
           feed[:semesters].each do |semester|
             expect(semester[:hasEnrolledClasses]).to be true
+          end
+        end
+        it 'should say that there are no reserved seats for all sections' do
+          feed[:semesters].each do |semester|
+            semester[:classes].each do |course|
+              course[:sections].each do |section|
+                expect(section[:hasReservedSeats]).to be_nil
+              end
+            end
+          end
+        end
+      end
+
+      context 'some waitlisted courses with reserved seats' do
+        let(:reserved_capacity_data) {
+          [
+            {
+              'term_id' => '2168',
+              'class_nbr' => '123456',
+              'reserved_seats' => '20',
+              'reserved_seats_taken' => '11',
+              'requirement_group_descr' => 'Music major'
+            },
+            {
+              'term_id' => '2168',
+              'class_nbr' => '123456',
+              'reserved_seats' => '30',
+              'reserved_seats_taken' => '22',
+              'requirement_group_descr' => 'New L&S Transfer Admits'
+            },
+            {
+              'term_id' => '2168',
+              'class_nbr' => '123456',
+              'reserved_seats' => '40',
+              'reserved_seats_taken' => '39',
+              'requirement_group_descr' => 'Enrollment by Permission'
+            },
+          ]
+        }
+        let(:section_capacity_data) {
+          [
+            {
+              'enrolled_count' => '20',
+              'max_enroll' => '50'
+            }
+          ]
+        }
+        let(:waitlisted_term) do
+          enrollment_term('2016-D').tap do |term|
+            term.first[:sections] = [
+              course_enrollment_section(waitlisted: true, ccn: '123456'),
+              course_enrollment_section(waitlisted: true, ccn: '654321')
+            ]
+          end
+        end
+        before do
+          allow(EdoOracle::Queries).to receive(:get_section_reserved_capacity).and_return([])
+          allow(EdoOracle::Queries).to receive(:get_section_reserved_capacity).with('2168','123456').and_return(reserved_capacity_data)
+          allow(EdoOracle::Queries).to receive(:get_section_capacity).and_return(section_capacity_data)
+        end
+        it 'should say that there are no reserved seats for all sections that are not ccn=123456' do
+          feed[:semesters].each do |semester|
+            semester[:classes].each do |course|
+              course[:sections].each do |section|
+                if section[:ccn] != '123456'
+                  expect(section[:hasReservedSeats]).to be_nil
+                end
+              end
+            end
+          end
+        end
+
+        it 'should say that there are reserved seats for all sections that are ccn=123456 in term 2016' do
+          feed[:semesters].each do |semester|
+            semester[:classes].each do |course|
+              course[:sections].each do |section|
+                if section[:ccn] == '123456'
+                  expect(section[:hasReservedSeats]).to be true
+                  expect(semester[:termId]).to eq('2168')
+
+                  expect(section[:capacity]).to be
+                  expect(section[:capacity][:unreservedSeats]).to eq('12')
+                  expect(section[:capacity][:reservedSeats].length).to eq(3)
+                  expect(section[:capacity][:reservedSeats][0][:seats]).to eq('9')
+                  expect(section[:capacity][:reservedSeats][0][:seatsFor]).to eq('Music major')
+                end
+              end
+            end
           end
         end
       end

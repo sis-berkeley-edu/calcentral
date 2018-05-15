@@ -28,8 +28,8 @@ module MyAcademics
     end
 
     def semester_feed(enrollment_terms, reg_status_data)
-      study_prog_data = reg_status_data.select { |row| row['splstudyprog_type_code'].present? }
-      withdrawal_data = reg_status_data.select { |row| row['withcncl_type_code'].present? }
+      study_prog_data = reg_status_data.select{|row| row['splstudyprog_type_code'].present?}
+      withdrawal_data = reg_status_data.select{|row| row['withcncl_type_code'].present?}
 
       withdrawal_terms = withdrawal_data.map {|row| Berkeley::TermCodes.edo_id_to_code(row['term_id'])}
       study_prog_terms = study_prog_data.map {|row| Berkeley::TermCodes.edo_id_to_code(row['term_id'])}
@@ -40,7 +40,7 @@ module MyAcademics
         semester[:filteredForDelegate] = !!@filtered
         if enrollment_terms[term_key]
           semester[:hasEnrollmentData] = true
-          semester[:classes] = map_enrollments(enrollment_terms[term_key]).compact
+          semester[:classes] = map_enrollments(enrollment_terms[term_key], semester[:termId]).compact
           semester[:hasEnrolledClasses] = has_enrolled_classes?(enrollment_terms[term_key])
           merge_grades(semester)
           semester.merge! unit_totals(enrollment_terms[term_key])
@@ -124,7 +124,7 @@ module MyAcademics
       data
     end
 
-    def map_enrollments(enrollment_term)
+    def map_enrollments(enrollment_term, term_id)
       enrollment_term.map do |course|
         next unless course[:role] == 'Student'
         mapped_course = course_info course
@@ -141,12 +141,46 @@ module MyAcademics
               end
               primaries_count += 1
             end
+            if section[:waitlisted]
+              map_reserved_seats(term_id, section)
+            end
             section[:grading][:grade_points] = nil if law_class? course
             section.merge!(law_class_enrollment(course, section))
           end
           merge_multiple_primaries(mapped_course, course[:course_option]) if primaries_count > 1
         end
         mapped_course
+      end
+    end
+
+    def map_reserved_seats(term_id, section)
+      section_reserved_capacity = EdoOracle::Queries.get_section_reserved_capacity(term_id, section[:ccn])
+      if section_reserved_capacity.any?
+        section[:hasReservedSeats] = true
+        # get section capacity
+        section_capacity = EdoOracle::Queries.get_section_capacity(term_id, section[:ccn])
+        unreserved_seats_available = 'N/A'
+        if section_capacity.any?
+          section_row = section_capacity.first
+          section_enrolled_count = section_row['enrolled_count']
+          section_max_enroll = section_row['max_enroll']
+          # calculate total available unreserved seats
+          available_reserved_total = section_reserved_capacity.map {|row| row['reserved_seats'].to_i - row['reserved_seats_taken'].to_i}.sum
+          unreserved_seats_available = section_max_enroll.to_i - section_enrolled_count.to_i - available_reserved_total.to_i
+        end
+        section[:capacity] = {
+            unreservedSeats: unreserved_seats_available.to_s,
+            reservedSeats: []
+          }
+        section_reserved_capacity.each do |row|
+          available_reserved = row['reserved_seats'].to_i - row['reserved_seats_taken'].to_i
+          section[:capacity][:reservedSeats].push(
+            {
+              seats: available_reserved.to_s,
+              seatsFor: row['requirement_group_descr']
+            }
+          )
+        end
       end
     end
 

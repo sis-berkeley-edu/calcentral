@@ -60,6 +60,7 @@
               <th>Title</th>
               <th data-ng-if="waitlistedCoursesHaveTopics">Topic</th>
               <th>Waitlist Position / Class Size</th>
+              <th>Reserved Seats</th>
             </thead>
             <tbody data-ng-repeat="course in waitlistedCourses">
               <tr data-ng-repeat="section in course.sections">
@@ -83,6 +84,40 @@
                   <div data-ng-if="section.waitlisted && section.waitlistPosition">
                     <strong data-ng-bind="section.waitlistPosition"></strong> on list of class of <strong data-ng-bind="section.enroll_limit"></strong>
                   </div>
+                </td>
+                <td>
+                  <div data-ng-if="section.waitlistPosition && section.hasReservedSeats">
+                    <span data-ng-click="course.capacity = section.capacity; course.showSeats = true" data-ng-show="!course.showSeats"><a href="#">Show</a></span>
+                    <span data-ng-click="course.showSeats = false" data-ng-show="course.showSeats"><a href="#">Hide</a></span>
+                  </div>
+                  <div data-ng-if="section.waitlistPosition && !section.hasReservedSeats">
+                    N/A
+                  </div>
+                </td>
+              </tr>
+              <tr data-ng-show="course.showSeats">
+                <td colspan="5">
+                  <div class="cc-italic"><strong>Reserve Seat Rules for this Class</strong></div>
+                  <div class="cc-italic"><strong>Note:</strong> Reserved seat Rules can change at any time.</div>
+                </td>
+              </tr>
+              <tr data-ng-show="course.showSeats">
+                <td colspan="5">
+                  <div class="cc-italic"><strong>Unreserved Seats</strong></div>
+                  <div class="cc-italic"><strong data-ng-bind="course.capacity.unreservedSeats"></strong> unreserved Seats available</div>
+                </td>
+              </tr>
+              <tr data-ng-show="course.showSeats">
+                <td colspan="5">
+                  <div class="cc-italic"><strong >Reserved Seats</strong></div>
+                  <div data-ng-repeat="reservedSeat in course.capacity.reservedSeats" class="cc-italic">
+                    <strong data-ng-bind="reservedSeat.seats"></strong> seats avaiable for: <strong data-ng-bind="reservedSeat.seatsFor"></strong>
+                  </div>
+                </td>
+              </tr>
+              <tr data-ng-show="course.showSeats">
+                <td colspan="5">
+                  <a href="http://registrar.berkeley.edu/registration/enrollment">More Information about Reserved Seats</a>
                 </td>
               </tr>
             </tbody>

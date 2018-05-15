@@ -1,0 +1,714 @@
+{
+    "collegeAndLevel": {
+        "holds": {
+            "hasHolds": true
+        },
+        "awardHonors": {},
+        "roles": null,
+        "statusCode": 200,
+        "errored": null,
+        "body": null,
+        "careers": [
+            "Undergrad"
+        ],
+        "level": "Senior",
+        "termName": "Summer 2018",
+        "termId": "2185",
+        "termsInAttendance": "8",
+        "majors": [
+            {
+                "college": "Undergrad Letters \u0026 Science",
+                "major": "Political Science BA",
+                "description": null,
+                "subPlan": null,
+                "type": "MAJ"
+            },
+            {
+                "college": "Undergrad Business",
+                "major": "Business Administration BS",
+                "description": null,
+                "subPlan": null,
+                "type": "MAJ"
+            }
+        ],
+        "minors": [],
+        "designatedEmphases": [],
+        "plans": [
+            {
+                "career": {
+                    "code": "UGRD",
+                    "description": "Undergrad"
+                },
+                "program": {
+                    "code": "UCLS",
+                    "description": "Undergrad Letters \u0026 Science"
+                },
+                "plan": {
+                    "code": "25699U",
+                    "description": "Political Science BA",
+                    "formalDescription": null
+                },
+                "subPlan": {},
+                "type": {
+                    "code": "MAJ",
+                    "description": "Major - Regular Acad/Prfnl",
+                    "category": "Major"
+                },
+                "expectedGraduationTerm": {
+                    "code": "2188",
+                    "name": "Fall 2018"
+                },
+                "college": "Undergrad Letters \u0026 Science",
+                "role": null,
+                "primary": false
+            },
+            {
+                "career": {
+                    "code": "UGRD",
+                    "description": "Undergrad"
+                },
+                "program": {
+                    "code": "UBUS",
+                    "description": "Undergrad Business"
+                },
+                "plan": {
+                    "code": "70141U",
+                    "description": "Business Administration BS",
+                    "formalDescription": null
+                },
+                "subPlan": {},
+                "type": {
+                    "code": "MAJ",
+                    "description": "Major - Regular Acad/Prfnl",
+                    "category": "Major"
+                },
+                "expectedGraduationTerm": {
+                    "code": "2188",
+                    "name": "Fall 2018"
+                },
+                "college": "Undergrad Business",
+                "role": null,
+                "primary": true
+            }
+        ],
+        "degrees": null,
+        "isCurrent": true
+    },
+    "gpaUnits": {
+        "errored": null,
+        "gpa": [
+            {
+                "role": "ugrd",
+                "roleDescr": "Undergraduate",
+                "cumulativeGpa": "3.559"
+            }
+        ],
+        "totalUnitsTakenNotForGpa": 24.0,
+        "totalUnitsPassedNotForGpa": 24.0,
+        "totalTransferAndTestingUnits": 22.3,
+        "totalUnits": 130.3,
+        "transferUnitsAccepted": 0.0,
+        "testingUnits": 13.3,
+        "totalUnitsAttempted": 84.0,
+        "totalUnitsForGpa": 84.0
+    },
+    "semesters": [
+        {
+            "name": "Summer 2018",
+            "slug": "summer-2018",
+            "termId": "2185",
+            "termCode": "C",
+            "termYear": "2018",
+            "timeBucket": "future",
+            "campusSolutionsTerm": true,
+            "gradingInProgress": null,
+            "classes": [
+                {
+                    "role": "Student",
+                    "sections": [
+                        {
+                            "ccn": "14331",
+                            "instruction_format": "LEC",
+                            "is_primary_section": true,
+                            "section_label": "LEC 001",
+                            "section_number": "001",
+                            "topic_description": null,
+                            "units": "4.0",
+                            "session_id": "6W1",
+                            "grading": {
+                                "grade": null,
+                                "grade_points": "0.0",
+                                "grading_basis": "GRD"
+                            },
+                            "waitlisted": true,
+                            "waitlistPosition": 17,
+                            "hasReservedSeats": true,
+                            "capacity": {
+                                "unreservedSeats": 7,
+                                "reservedSeats": [
+                                    {
+                                        "seats": 9,
+                                        "seatsFor": "Music major"
+                                    },
+                                    {
+                                        "seats": 8,
+                                        "seatsFor": "New L&S Transfer Admits"
+                                    },
+                                    {
+                                        "seats": 1,
+                                        "seatsFor": "Enrollment by Permission"
+                                    }
+                                ]
+                            },
+                            "enroll_limit": 103,
+                            "instructors": [],
+                            "schedules": {
+                                "oneTime": [],
+                                "recurring": [
+                                    {
+                                        "buildingName": "Dwinelle",
+                                        "roomNumber": "145",
+                                        "schedule": "MTuWTh 2:00P-3:59P"
+                                    }
+                                ]
+                            },
+                            "final_exams": [
+                                {
+                                    "exam_type": "Y",
+                                    "location": null,
+                                    "exam_date": null,
+                                    "exam_start_time": null,
+                                    "exam_end_time": null
+                                }
+                            ],
+                            "gradeOption": "Letter",
+                            "lawUnits": null
+                        },
+                        {
+                            "ccn": "14334",
+                            "instruction_format": "DIS",
+                            "is_primary_section": false,
+                            "section_label": "DIS 103",
+                            "section_number": "103",
+                            "topic_description": null,
+                            "associated_primary_id": "14331.0",
+                            "grading": {
+                                "grade": null,
+                                "grade_points": "0.0",
+                                "grading_basis": null
+                            },
+                            "waitlisted": true,
+                            "waitlistPosition": 0,
+                            "enroll_limit": 32,
+                            "instructors": [],
+                            "schedules": {
+                                "oneTime": [],
+                                "recurring": [
+                                    {
+                                        "buildingName": "Dwinelle",
+                                        "roomNumber": "88",
+                                        "schedule": "F 10:00A-11:59A"
+                                    }
+                                ]
+                            },
+                            "final_exams": [],
+                            "lawUnits": null
+                        }
+                    ],
+                    "slug": "pol_sci-n3",
+                    "session_code": "A",
+                    "academicCareer": "UGRD",
+                    "title": "Introduction to Empirical Analysis and Quantitative Methods",
+                    "url": "/academics/semester/summer-2018/class/pol_sci-n3-2018-C-A",
+                    "course_code": "POL SCI N3",
+                    "dept": "POL SCI",
+                    "dept_code": "POLSCI",
+                    "courseCatalog": "N3",
+                    "course_id": "pol_sci-n3-2018-C-A"
+                },
+                {
+                    "role": "Student",
+                    "sections": [
+                        {
+                            "ccn": "14331",
+                            "instruction_format": "LEC",
+                            "is_primary_section": true,
+                            "section_label": "LEC 001",
+                            "section_number": "001",
+                            "topic_description": null,
+                            "units": "4.0",
+                            "session_id": "6W1",
+                            "grading": {
+                                "grade": null,
+                                "grade_points": "0.0",
+                                "grading_basis": "GRD"
+                            },
+                            "waitlisted": true,
+                            "waitlistPosition": 17,
+                            "hasReservedSeats": true,
+                            "enroll_limit": 103,
+                            "instructors": [],
+                            "schedules": {
+                                "oneTime": [],
+                                "recurring": [
+                                    {
+                                        "buildingName": "Dwinelle",
+                                        "roomNumber": "145",
+                                        "schedule": "MTuWTh 2:00P-3:59P"
+                                    }
+                                ]
+                            },
+                            "final_exams": [
+                                {
+                                    "exam_type": "Y",
+                                    "location": null,
+                                    "exam_date": null,
+                                    "exam_start_time": null,
+                                    "exam_end_time": null
+                                }
+                            ],
+                            "gradeOption": "Letter",
+                            "lawUnits": null
+                        },
+                        {
+                            "ccn": "14334",
+                            "instruction_format": "DIS",
+                            "is_primary_section": false,
+                            "section_label": "DIS 103",
+                            "section_number": "103",
+                            "topic_description": null,
+                            "associated_primary_id": "14331.0",
+                            "grading": {
+                                "grade": null,
+                                "grade_points": "0.0",
+                                "grading_basis": null
+                            },
+                            "waitlisted": true,
+                            "waitlistPosition": 0,
+                            "enroll_limit": 32,
+                            "instructors": [],
+                            "schedules": {
+                                "oneTime": [],
+                                "recurring": [
+                                    {
+                                        "buildingName": "Dwinelle",
+                                        "roomNumber": "88",
+                                        "schedule": "F 10:00A-11:59A"
+                                    }
+                                ]
+                            },
+                            "final_exams": [],
+                            "lawUnits": null
+                        }
+                    ],
+                    "slug": "pol_sci-n3",
+                    "session_code": "A",
+                    "academicCareer": "UGRD",
+                    "title": "Introduction to Empirical Analysis and Quantitative Methods #2",
+                    "url": "/academics/semester/summer-2018/class/pol_sci-n3-2018-C-A",
+                    "course_code": "POL SCI N3",
+                    "dept": "POL SCI",
+                    "dept_code": "POLSCI",
+                    "courseCatalog": "N3",
+                    "course_id": "pol_sci-n3-2018-C-A"
+                },
+                {
+                    "role": "Student",
+                    "sections": [
+                        {
+                            "ccn": "14331",
+                            "instruction_format": "LEC",
+                            "is_primary_section": true,
+                            "section_label": "LEC 001",
+                            "section_number": "001",
+                            "topic_description": null,
+                            "units": "4.0",
+                            "session_id": "6W1",
+                            "grading": {
+                                "grade": null,
+                                "grade_points": "0.0",
+                                "grading_basis": "GRD"
+                            },
+                            "waitlisted": true,
+                            "waitlistPosition": 17,
+                            "hasReservedSeats": false,
+                            "enroll_limit": 103,
+                            "instructors": [],
+                            "schedules": {
+                                "oneTime": [],
+                                "recurring": [
+                                    {
+                                        "buildingName": "Dwinelle",
+                                        "roomNumber": "145",
+                                        "schedule": "MTuWTh 2:00P-3:59P"
+                                    }
+                                ]
+                            },
+                            "final_exams": [
+                                {
+                                    "exam_type": "Y",
+                                    "location": null,
+                                    "exam_date": null,
+                                    "exam_start_time": null,
+                                    "exam_end_time": null
+                                }
+                            ],
+                            "gradeOption": "Letter",
+                            "lawUnits": null
+                        },
+                        {
+                            "ccn": "14334",
+                            "instruction_format": "DIS",
+                            "is_primary_section": false,
+                            "section_label": "DIS 103",
+                            "section_number": "103",
+                            "topic_description": null,
+                            "associated_primary_id": "14331.0",
+                            "grading": {
+                                "grade": null,
+                                "grade_points": "0.0",
+                                "grading_basis": null
+                            },
+                            "waitlisted": true,
+                            "waitlistPosition": 0,
+                            "enroll_limit": 32,
+                            "instructors": [],
+                            "schedules": {
+                                "oneTime": [],
+                                "recurring": [
+                                    {
+                                        "buildingName": "Dwinelle",
+                                        "roomNumber": "88",
+                                        "schedule": "F 10:00A-11:59A"
+                                    }
+                                ]
+                            },
+                            "final_exams": [],
+                            "lawUnits": null
+                        }
+                    ],
+                    "slug": "pol_sci-n3",
+                    "session_code": "A",
+                    "academicCareer": "UGRD",
+                    "title": "Just Another class that does not have Reserved Seats",
+                    "url": "/academics/semester/summer-2018/class/pol_sci-n3-2018-C-A",
+                    "course_code": "POL SCI N3",
+                    "dept": "POL SCI",
+                    "dept_code": "POLSCI",
+                    "courseCatalog": "N3",
+                    "course_id": "pol_sci-n3-2018-C-A"
+                },
+                {
+                    "role": "Student",
+                    "sections": [
+                        {
+                            "ccn": "13905",
+                            "instruction_format": "WBL",
+                            "is_primary_section": true,
+                            "section_label": "WBL 001",
+                            "section_number": "001",
+                            "topic_description": null,
+                            "units": "4.0",
+                            "session_id": "8W",
+                            "grading": {
+                                "grade": null,
+                                "grade_points": "0.0",
+                                "grading_basis": "GRD"
+                            },
+                            "instructors": [
+                                {
+                                    "name": "Pradeep Chhibber",
+                                    "role": "PI",
+                                    "gradeRosterAccess": "A",
+                                    "uid": "172986",
+                                    "printInSchedule": "Y",
+                                    "csGradeAccessCode": "A",
+                                    "csDelegateRole": "PI",
+                                    "ccGradingAccess": "approveGrades",
+                                    "ccDelegateRole": "Instr. of Record",
+                                    "ccDelegateRoleOrder": 1
+                                }
+                            ],
+                            "schedules": {
+                                "oneTime": [],
+                                "recurring": []
+                            },
+                            "final_exams": [
+                                {
+                                    "exam_type": "Y",
+                                    "location": null,
+                                    "exam_date": null,
+                                    "exam_start_time": null,
+                                    "exam_end_time": null
+                                }
+                            ],
+                            "gradeOption": "Letter",
+                            "lawUnits": null
+                        },
+                        {
+                            "ccn": "13906",
+                            "instruction_format": "WBD",
+                            "is_primary_section": false,
+                            "section_label": "WBD 101",
+                            "section_number": "101",
+                            "topic_description": null,
+                            "associated_primary_id": "13905.0",
+                            "grading": {
+                                "grade": null,
+                                "grade_points": "0.0",
+                                "grading_basis": null
+                            },
+                            "instructors": [],
+                            "schedules": {
+                                "oneTime": [],
+                                "recurring": []
+                            },
+                            "final_exams": [],
+                            "lawUnits": null
+                        }
+                    ],
+                    "slug": "pol_sci-w145a",
+                    "session_code": "C",
+                    "academicCareer": "UGRD",
+                    "title": "Understanding Political Developments in India",
+                    "url": "/academics/semester/summer-2018/class/pol_sci-w145a-2018-C-C",
+                    "course_code": "POL SCI W145A",
+                    "dept": "POL SCI",
+                    "dept_code": "POLSCI",
+                    "courseCatalog": "W145A",
+                    "course_id": "pol_sci-w145a-2018-C-C"
+                }
+            ],
+            "filteredForDelegate": false,
+            "hasEnrollmentData": true,
+            "hasEnrolledClasses": true,
+            "totalUnits": "0.0",
+            "totalLawUnits": null,
+            "isGradingComplete": false
+        }
+    ],
+    "pastSemestersLimit": 3,
+    "pastSemestersCount": 9,
+    "transferCredit": {
+        "ucTransferCrseSch": {
+            "items": [
+                {
+                    "institution": "Allan Hancock College",
+                    "transferUnits": 6.0,
+                    "ucbGradePoints": 0.0
+                },
+                {
+                    "institution": "Cuesta College",
+                    "transferUnits": 3.0,
+                    "ucbGradePoints": 0.0
+                }
+            ],
+            "tcAdjust": 0.0,
+            "unitsAdjusted": 9.0,
+            "unitsTotal": 9.0
+        },
+        "ucTestComponent": {
+            "apUnits": 13.3,
+            "ibUnits": null,
+            "alevelUnits": null,
+            "totalTestUnits": 13.3
+        }
+    },
+    "examSchedule": [
+        {
+            "cs_data_available": true,
+            "name": "Spring 2018",
+            "termCode": "B",
+            "courses": [
+                {
+                    "name": "PHYS ED 11",
+                    "number": 11,
+                    "time": null,
+                    "waitlisted": null,
+                    "exam_slot": "none",
+                    "exam_location": "No exam."
+                },
+                {
+                    "name": "PHYS ED 11",
+                    "number": 11,
+                    "time": null,
+                    "waitlisted": null,
+                    "exam_slot": "none",
+                    "exam_location": "No exam."
+                },
+                {
+                    "name": "PHYS ED 11",
+                    "number": 11,
+                    "time": null,
+                    "waitlisted": null,
+                    "exam_slot": "none",
+                    "exam_location": "No exam."
+                },
+                {
+                    "name": "PHYS ED 11",
+                    "number": 11,
+                    "time": null,
+                    "waitlisted": null,
+                    "exam_slot": "none",
+                    "exam_location": "No exam."
+                },
+                {
+                    "name": "POL SCI 112B",
+                    "number": 112,
+                    "time": "TuTh 11:00A-12:29P",
+                    "waitlisted": null,
+                    "exam_slot": "none",
+                    "exam_location": "No exam."
+                },
+                {
+                    "name": "POL SCI 191",
+                    "number": 191,
+                    "time": "Tu 2:00P-3:59P",
+                    "waitlisted": null,
+                    "exam_location": "Final exam information not available. Please consult instructors.",
+                    "exam_date": null,
+                    "exam_time": null,
+                    "exam_slot": "none"
+                },
+                {
+                    "name": "UGBA 155",
+                    "number": 155,
+                    "time": "M 12:30P-1:59P",
+                    "waitlisted": null,
+                    "exam_location": "Chou Hall N500",
+                    "exam_date": "Wed 05/9",
+                    "exam_time": "03:00PM-06:00PM",
+                    "exam_slot": "2018-05-09T15:00:00.000-07:00"
+                },
+                {
+                    "name": "UGBA 192A",
+                    "number": 192,
+                    "time": "M 8:00A-10:59A",
+                    "waitlisted": null,
+                    "exam_slot": "none",
+                    "exam_location": "No exam."
+                },
+                {
+                    "name": "UGBA 199",
+                    "number": 199,
+                    "time": null,
+                    "waitlisted": null,
+                    "exam_slot": "none",
+                    "exam_location": "No exam."
+                }
+            ],
+            "timeBucket": "current",
+            "slug": "spring-2018",
+            "exams": {
+                "2018-05-09 15:00:00 -0700": [
+                    {
+                        "name": "UGBA 155",
+                        "number": 155,
+                        "time": "M 12:30P-1:59P",
+                        "waitlisted": null,
+                        "exam_location": "Chou Hall N500",
+                        "exam_date": "Wed 05/9",
+                        "exam_time": "03:00PM-06:00PM",
+                        "exam_slot": "2018-05-09T15:00:00.000-07:00"
+                    }
+                ],
+                "none": [
+                    {
+                        "name": "PHYS ED 11",
+                        "number": 11,
+                        "time": null,
+                        "waitlisted": null,
+                        "exam_slot": "none",
+                        "exam_location": "No exam."
+                    },
+                    {
+                        "name": "PHYS ED 11",
+                        "number": 11,
+                        "time": null,
+                        "waitlisted": null,
+                        "exam_slot": "none",
+                        "exam_location": "No exam."
+                    },
+                    {
+                        "name": "PHYS ED 11",
+                        "number": 11,
+                        "time": null,
+                        "waitlisted": null,
+                        "exam_slot": "none",
+                        "exam_location": "No exam."
+                    },
+                    {
+                        "name": "PHYS ED 11",
+                        "number": 11,
+                        "time": null,
+                        "waitlisted": null,
+                        "exam_slot": "none",
+                        "exam_location": "No exam."
+                    },
+                    {
+                        "name": "POL SCI 112B",
+                        "number": 112,
+                        "time": "TuTh 11:00A-12:29P",
+                        "waitlisted": null,
+                        "exam_slot": "none",
+                        "exam_location": "No exam."
+                    },
+                    {
+                        "name": "POL SCI 191",
+                        "number": 191,
+                        "time": "Tu 2:00P-3:59P",
+                        "waitlisted": null,
+                        "exam_location": "Final exam information not available. Please consult instructors.",
+                        "exam_date": null,
+                        "exam_time": null,
+                        "exam_slot": "none"
+                    },
+                    {
+                        "name": "UGBA 192A",
+                        "number": 192,
+                        "time": "M 8:00A-10:59A",
+                        "waitlisted": null,
+                        "exam_slot": "none",
+                        "exam_location": "No exam."
+                    },
+                    {
+                        "name": "UGBA 199",
+                        "number": 199,
+                        "time": null,
+                        "waitlisted": null,
+                        "exam_slot": "none",
+                        "exam_location": "No exam."
+                    }
+                ]
+            }
+        }
+    ],
+    "graduation": {
+        "undergraduate": {
+            "expectedGraduationTerm": {
+                "termId": "2188",
+                "termName": "Fall 2018"
+            },
+            "activeTermsWithEnrollmentAppointments": [
+                "2185",
+                "2188"
+            ],
+            "appointmentsInGraduatingTerm": true
+        },
+        "gradLaw": {
+            "expectedGraduationTerms": null
+        }
+    },
+    "studentLinks": {
+        "tcReportLink": {
+            "url": "https://bcs-web-dev-03.is.berkeley.edu:8443/psp/bcsdev/EMPLOYEE/SA/c/CSU_DA_TRN_CDT_STD.CSU_DA_TRN_CDT_STD.GBL",
+            "urlId": "UC_CX_XFER_CREDIT_REPORT_STDNT",
+            "ucFrom": "CalCentral",
+            "ucFromLink": "https://calcentral-sis-dev-01.ist.berkeley.edu/",
+            "ucFromText": "CalCentral",
+            "name": "Transfer Credit Report",
+            "title": "Detailed Transfer Credit Report",
+            "isCsLink": true
+        }
+    }
+}
