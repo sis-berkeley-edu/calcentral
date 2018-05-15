@@ -129,7 +129,7 @@ module EdoOracle
       safe_query <<-SQL
         SELECT
           CAR.ACAD_CAREER,
-          CASE 
+          CASE
             WHEN CAR.PROGRAM_STATUS = 'AC'
             THEN CAR.PROGRAM_STATUS
             ELSE NULL
@@ -160,7 +160,7 @@ module EdoOracle
           ENR.GRADE_POINTS AS grade_points,
           ENR.GRADING_BASIS_CODE AS grading_basis,
           ENR.ACAD_CAREER,
-          CASE 
+          CASE
             WHEN ENR.CRSE_CAREER = 'LAW'
             THEN ENR.RQMNT_DESIGNTN
             ELSE NULL
@@ -664,5 +664,19 @@ module EdoOracle
       SQL
     end
 
+    def self.get_grading_dates
+      safe_query <<-SQL
+        SELECT
+          ACAD_CAREER as acad_career,
+          TERM_ID as term_id,
+          SESSION_CODE as session_code,
+          MID_BEGIN_DT as mid_term_begin_date,
+          MID_END_DT as mid_term_end_date,
+          FINAL_BEGIN_DT as final_begin_date,
+          FINAL_END_DT as final_end_date
+        FROM
+          SISEDO.GRADING_DATES_CS_V00_VW
+      SQL
+    end
   end
 end
