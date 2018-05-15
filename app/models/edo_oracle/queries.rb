@@ -152,7 +152,7 @@ module EdoOracle
         SELECT DISTINCT
           #{SECTION_COLUMNS},
           sec."maxEnroll" AS enroll_limit,
-          ENR.STDNT_ENRL_STATUS_CODE   AS enroll_status,
+          ENR.STDNT_ENRL_STATUS_CODE AS enroll_status,
           ENR.WAITLISTPOSITION AS waitlist_position,
           ENR.UNITS_TAKEN,
           ENR.UNITS_EARNED,

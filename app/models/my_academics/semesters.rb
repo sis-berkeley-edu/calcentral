@@ -154,7 +154,6 @@ module MyAcademics
     end
 
     def map_reserved_seats(term_id, section)
-      # Get reserved rows if any
       section_reserved_capacity = EdoOracle::Queries.get_section_reserved_capacity(term_id, section[:ccn])
       if section_reserved_capacity.any?
         section[:hasReservedSeats] = true
@@ -169,12 +168,10 @@ module MyAcademics
           available_reserved_total = section_reserved_capacity.map {|row| row['reserved_seats'].to_i - row['reserved_seats_taken'].to_i}.sum
           unreserved_seats_available = section_max_enroll.to_i - section_enrolled_count.to_i - available_reserved_total.to_i
         end
-        # add capacity data to section
         section[:capacity] = {
             unreservedSeats: unreserved_seats_available.to_s,
             reservedSeats: []
           }
-        # add reserved seat data to capacity.reservedSeats
         section_reserved_capacity.each do |row|
           available_reserved = row['reserved_seats'].to_i - row['reserved_seats_taken'].to_i
           section[:capacity][:reservedSeats].push(
