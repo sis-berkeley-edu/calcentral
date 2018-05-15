@@ -9,18 +9,20 @@
     <li>
       <div>
         <div>
-          <a data-cc-campus-solutions-link-directive="enrollmentInstruction.csLinks.ucAddClassEnrollment"
-            data-cc-campus-solutions-link-directive-cc-page-name="currentPage.name"
-            data-cc-campus-solutions-link-directive-cc-page-url="currentPage.url"
-            data-ng-disabled="enrollmentInstruction.isEndOfDropAddTimePeriod || !enrollmentInstruction.csLinks.ucAddClassEnrollment"
-          ></a>
+          <span>
+              <a data-cc-campus-solutions-link-directive="enrollmentInstruction.csLinks.ucAddClassEnrollment"
+              data-cc-campus-solutions-link-directive-cc-page-name="currentPage.name"
+              data-cc-campus-solutions-link-directive-cc-page-url="currentPage.url"
+              data-ng-disabled="enrollmentInstruction.isEndOfDropAddTimePeriod || !enrollmentInstruction.csLinks.ucAddClassEnrollment"
+              ></a>
+              <a href="https://extension.berkeley.edu/static/studentservices/concurrent/#collapseOneAfter"
+              title ="View deadlines for concurrent enrollment"
+              data-ng-if="!(enrollmentInstruction.isEndOfDropAddTimePeriod || !enrollmentInstruction.csLinks.ucAddClassEnrollment)"
+              >(view deadlines)</a>
+          </span>
         </div>
         <div data-ng-if="!enrollmentInstruction.csLinks.ucAddClassEnrollment.url">
           Application temporarily unavailable at this time
-        </div>
-        <div data-ng-if="enrollmentInstruction.csLinks.ucAddClassEnrollment.url">
-          <span data-ng-if="!enrollmentInstruction.isEndOfDropAddTimePeriod">You have until the class application deadline to apply.</span>
-          <span data-ng-if="enrollmentInstruction.isEndOfDropAddTimePeriod">The deadline to apply to classes has passed</span>
         </div>
       </div>
     </li>
