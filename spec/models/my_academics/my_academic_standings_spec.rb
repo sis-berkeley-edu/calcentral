@@ -10,11 +10,25 @@ describe MyAcademics::MyStandings do
         'action_date'=> DateTime.parse('07-AUG-14')
       },
       {
+        'acad_standing_status' => 'GST',
+        'acad_standing_status_descr'=> 'Good Standing',
+        'acad_standing_action_descr'=> 'Probation Ended',
+        'term_id' => '2198',
+        'action_date'=> DateTime.parse('07-AUG-19')
+      },
+      {
         'acad_standing_status' => 'DIS',
         'acad_standing_status_descr'=> 'Dismissed',
         'acad_standing_action_descr'=> 'Dismissed (2.0 Rule)',
         'term_id' => '2198',
-        'action_date'=> DateTime.parse('07-AUG-19')
+        'action_date'=> DateTime.parse('08-AUG-19')
+      },
+      {
+        'acad_standing_status' => 'AP',
+        'acad_standing_status_descr'=> 'Probation',
+        'acad_standing_action_descr'=> 'Academic Probation',
+        'term_id' => '2158',
+        'action_date'=> DateTime.parse('07-AUG-15')
       },
       {
         'acad_standing_status' => 'AP',
@@ -54,7 +68,7 @@ describe MyAcademics::MyStandings do
       before do
         EdoOracle::Queries.stub(:get_academic_standings) { standings_response }
       end
-      it 'should successfully return a response' do
+      it 'should successfully return a response with only latest standing per term' do
         standings = subject[:feed][:standingsHistory]
         expect(standings.count).to eq 2
 
@@ -69,7 +83,7 @@ describe MyAcademics::MyStandings do
         expect(standings[1][:termName]).to eq 'Fall 2014'
       end
 
-      it 'should successfully set the current standing' do
+      it 'should successfully set the current standing to latest standing' do
         standings = subject[:feed][:currentStandings]
         expect(standings.count).to eq 1
 

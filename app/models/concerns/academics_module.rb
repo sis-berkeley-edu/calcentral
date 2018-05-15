@@ -42,6 +42,18 @@ module Concerns
       }).merge course_listing(campus_course)
     end
 
+    def standings_info(standing)
+      term = Berkeley::TermCodes.from_edo_id(standing['term_id'])
+      {
+        acadStandingStatus: standing['acad_standing_status'],
+        acadStandingStatusDescr: standing['acad_standing_status_descr'],
+        acadStandingActionDescr: standing['acad_standing_action_descr'],
+        termId: standing['term_id'],
+        actionDate: DateTime.parse(standing['action_date'].to_s).strftime('%b %d, %Y'),
+        termName: Berkeley::TermCodes.to_english(term[:term_yr], term[:term_cd])
+      }
+    end
+
     def course_info_with_multiple_listings(campus_course)
       campus_course.slice(:role, :sections, :slug, :session_code).merge({
         listings: [ course_listing(campus_course) ],

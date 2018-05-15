@@ -125,6 +125,7 @@ Calcentral::Application.routes.draw do
     get '/api/advising/degree_progress/grad/:student_uid' => 'advising_student#degree_progress_graduate', :defaults => { :format => 'json' }
     get '/api/advising/degree_progress/ugrd/:student_uid' => 'advising_student#degree_progress_undergrad', :defaults => { :format => 'json' }
     get '/api/advising/holds/:student_uid' => 'advising_student#holds', :defaults => { :format => 'json' }
+    get '/api/advising/standings/:student_uid' => 'advising_student#standings', :defaults => { :format => 'json' }
     get '/api/advising/registrations/:student_uid' => 'advising_student#registrations', :defaults => { :format => 'json' }
     get '/api/advising/resources/:student_uid' => 'advising_student#resources', :defaults => { :format => 'json' }
     get '/api/advising/student/:student_uid' => 'advising_student#profile', :defaults => { :format => 'json' }

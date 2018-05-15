@@ -32,14 +32,37 @@
               <span data-ng-bind="semester.name"></span> <span data-ng-bind="semester.notation" class="cc-text-red"></span>
             </h3>
             <br>
+            <div>
+              <table>
+                <tbody>
+                  <tr data-ng-if="semester.hasWithdrawalData">
+                    <td></td>
+                    <td>
+                      <span data-ng-bind="semester.withdrawalStatus.withcnclTypeDescr"></span>
+                      <span data-ng-bind="semester.withdrawalStatus.withcnclFromDate"></span> (Reason:<span data-ng-bind="semester.withdrawalStatus.withcnclReasonDescr">)</span>
+                    </td>
+                  </tr>
+                  <tr data-ng-if="semester.hasStandingData">
+                    <td>
+                      <i class="fa fa-exclamation-circle cc-icon-red" aria-hidden="true"></i>
+                    </td>
+                    <td>
+                      <div data-ng-bind="semester.standing.acadStandingStatusDescr"></div>
+                      <div>
+                        <span class="cc-academic-plan-card-sub-title">
+                          <span data-ng-bind="semester.standing.acadStandingActionDescr"></span> - Updated
+                          <span data-ng-bind="semester.standing.actionDate"></span>
+                        </span>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
             <div data-ng-show="semester.show">
               <div class="cc-widget-text" data-ng-if="!semester.plannedClasses.length && !semester.hasEnrolledClasses && !semester.hasWithdrawalData && !semester.hasStudyProgData">
                 No Plan Provided
                 <span data-ng-bind="semester.name"></span>.
-              </div>
-              <div class="cc-widget-text" data-ng-if="semester.hasWithdrawalData">
-                <span data-ng-bind="semester.withdrawalStatus.withcnclTypeDescr"></span>
-                <span data-ng-bind="semester.withdrawalStatus.withcnclFromDate"></span> (Reason:<span data-ng-bind="semester.withdrawalStatus.withcnclReasonDescr"></span>)
               </div>
               <div class="cc-widget-text" data-ng-if="semester.hasStudyProgData">
                 <span data-ng-bind="semester.studyProg.studyprogTypeDescr"></span>
