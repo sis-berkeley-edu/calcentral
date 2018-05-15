@@ -2,6 +2,9 @@
   .cc-academic-summary-border-wrapper {
     border: 1px solid $cc-color-very-light-grey;
     margin: 15px;
+    &:first-child {
+      margin-top: 0;
+    }
   }
   .cc-academic-summary-enrollment-header {
     display: inline-block;
@@ -20,28 +23,10 @@
     vertical-align: bottom;
     width: 20%;
   }
-  .cc-academic-summary-row-title, .cc-degrees-conferred-title {
-    width: 20%;
-    h4 {
-      color: $cc-color-dim-gray;
-      font-size: 14px;
-      margin: 0;
-      padding: 2px 2px 2px 0;
-    }
-  }
-  .cc-academic-summary-subheader {
-    margin: 15px 15px 10px;
-  }
   .cc-academic-summary-sub-plan {
     margin-left: 10px;
   }
   .cc-academic-summary-content {
-    td {
-      padding-top: 0;
-      vertical-align: bottom;
-    }
-  }
-  .cc-academic-summary-content, .cc-degrees-conferred {
     margin: 0 15px 10px;
 
     .cc-academic-summary-table-spacing {
@@ -53,15 +38,50 @@
     .cc-academic-summary-table-multiple {
       padding-left: 10px;
     }
-    table.cc-class-enrollments {
+    .cc-section-block:not(:last-child) {
+      margin: 0 0 5px;
+    }
+  }
+  .cc-degrees-conferred {
+    td {
+      padding-top: 6px;
+    }
+  }
+  .cc-table-top-border {
+    padding-top: 10px;
+  }
+  h3 {
+    padding: 15px 15px 10px;
+  }
+  table {
+    caption {
+      text-align: left;
+    }
+    td {
+      padding-top: 0;
+      vertical-align: bottom;
+    }
+    th {
+      font-size: 14px;
+      margin: 0;
+      padding: 2px 10px 2px 0;
+      width: 30%;
+      &.cc-academic-summary-row-subhead {
+        font-size: 13px;
+      }
+    }
+    strong {
+      color: $cc-color-dim-gray;
+    }
+    &.cc-class-enrollments {
+      .cc-requirement {
+        color: $cc-color-dim-gray;
+        font-size: 12px;
+        line-height: 12px;
+      }
       td {
         padding-bottom: 6px;
         vertical-align: top;
-        .requirement {
-          color: $cc-color-dim-gray;
-          font-size: 12px;
-          line-height: 12px;
-        }
       }
       thead > tr > th {
         &:nth-child(1) {
@@ -80,11 +100,6 @@
       tfoot {
         background: none;
       }
-    }
-  }
-  .cc-degrees-conferred {
-    td {
-      padding-top: 6px;
     }
   }
   @media print {

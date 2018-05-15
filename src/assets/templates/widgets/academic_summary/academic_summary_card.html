@@ -6,11 +6,9 @@
     </button>
   </div>
   <div data-cc-spinner-directive="academicSummary.isLoading">
-    <div class="cc-academic-summary-subheader">
-      <h3>Student Profile</h3>
-    </div>
+    <h3>Student Profile</h3>
     <div class="cc-academic-summary-margin-bottom" data-ng-include="'widgets/academic_summary/academic_summary_student_profile.html'"></div>
-    <div data-ng-if="showTransferCredit || showSemesters" class="cc-academic-summary-subheader">
+    <div data-ng-if="showTransferCredit || showSemesters">
       <h3>Enrollment</h3>
       <span data-ng-if="api.user.profile.features.hubTermApi">
         <strong>Note: </strong>Enrollment data for current term and back to Spring 2010 (where applicable) is displayed. <button class="cc-button-link" data-ng-show="!showMore" data-ng-click="showMore=!showMore">Show more</button>
@@ -22,9 +20,10 @@
     <div data-ng-if="showSemesters && (gpaUnits.totalLawUnits > 0 || api.user.profile.roles.law)" class="cc-academic-summary-border-wrapper">
         <div class="cc-table cc-academic-summary-content">
           <table class="cc-class-enrollments">
+            <caption><h4>Summary</h4></caption>
             <thead>
               <tr>
-                <th><h4>Summary</h4></th>
+                <th></th>
                 <th></th>
                 <th class="cc-table-right cc-academic-summary-table-units">Un.</th>
                 <th class="cc-table-right cc-academic-summary-table-units">Law Un.</th>
@@ -44,6 +43,5 @@
           </table>
         </div>
       </div>
-      
   </div>
 </div>

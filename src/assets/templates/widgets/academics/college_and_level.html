@@ -1,19 +1,7 @@
-<div data-cc-academic-plans-directive data-plans="collegeAndLevel.majors" data-options="{labels: {'1': 'Major', 'other': 'Majors'}}" data-type="major"> </div>
-<div data-cc-academic-plans-directive data-plans="collegeAndLevel.minors" data-options="{labels: {'1': 'Minor', 'other': 'Minors'}}" data-type="minor"> </div>
-<div data-cc-academic-plans-directive data-plans="collegeAndLevel.designatedEmphases" data-options="{labels: {'1': 'Designated Emphasis', 'other': 'Designated Emphases'}}" data-type="designatedEmphasis"> </div>
-
-<div class="cc-table cc-table-top-border cc-clearfix" data-ng-if="collegeAndLevel.careers.length">
-  <table class="cc-widget-profile-table">
-    <tbody>
-    <tr>
-      <th data-ng-pluralize count="collegeAndLevel.careers.length" when="{'1': 'Academic Career', 'other': 'Academic Careers'}"></th>
-      <td>
-        <div data-ng-repeat="career in collegeAndLevel.careers"><strong data-ng-bind="career"></strong></div>
-      </td>
-    </tr>
-    </tbody>
-  </table>
-</div>
+<div data-cc-academic-plans-directive data-ng-if="collegeAndLevel.majors.length" data-plans="collegeAndLevel.majors" data-options="{labels: {'1': 'Major', 'other': 'Majors'}}" data-type="major"></div>
+<div data-cc-academic-plans-directive data-ng-if="collegeAndLevel.minors.length" data-plans="collegeAndLevel.minors" data-options="{labels: {'1': 'Minor', 'other': 'Minors'}}" data-type="minor"></div>
+<div data-cc-academic-plans-directive data-ng-if="collegeAndLevel.designatedEmphases.length" data-plans="collegeAndLevel.designatedEmphases" data-options="{labels: {'1': 'Designated Emphasis', 'other': 'Designated Emphases'}}" data-type="designatedEmphasis"></div>
+<div data-cc-academic-careers-directive data-ng-if="collegeAndLevel.careers.length" data-careers="collegeAndLevel.careers"></div>
 
 <div class="cc-table cc-table-top-border cc-clearfix" data-ng-if="collegeAndLevel.level">
   <table class="cc-widget-profile-table">
@@ -21,11 +9,11 @@
       <tr>
         <th>Level</th>
         <th class="cc-table-subheader" scope="col" data-ng-if="collegeAndLevel.nonApLevel">Including AP</th>
-        <td data-ng-if="!collegeAndLevel.nonApLevel"><strong data-ng-bind="collegeAndLevel.level"></strong></td>
+        <td data-ng-if="!collegeAndLevel.nonApLevel" data-ng-bind="collegeAndLevel.level"></td>
       </tr>
       <tr data-ng-if="collegeAndLevel.nonApLevel">
         <td></td>
-        <td><strong data-ng-bind="collegeAndLevel.level"></strong></td>
+        <td data-ng-bind="collegeAndLevel.level"></td>
       </tr>
       <tr data-ng-if="collegeAndLevel.nonApLevel">
         <th></th>
@@ -33,64 +21,10 @@
       </tr>
       <tr data-ng-if="collegeAndLevel.nonApLevel">
         <td></td>
-        <td><strong data-ng-bind="collegeAndLevel.nonApLevel"></strong></td>
+        <td data-ng-bind="collegeAndLevel.nonApLevel"></td>
       </tr>
     </tbody>
   </table>
 </div>
-
-<div class="cc-table cc-table-top-border cc-clearfix"
-  data-ng-if="collegeAndLevel.termsInAttendance || graduation.undergraduate.expectedGraduationTerm">
-  <table class="cc-widget-profile-table">
-    <tbody>
-      <tr>
-        <th>Terms Information</th>
-        <td>
-          <div class="cc-widget-profile-section-block" data-ng-if="collegeAndLevel.termsInAttendance">
-            <div class="cc-text-light">Terms in Attendance</div>
-            <div>
-              <strong data-ng-bind="collegeAndLevel.termsInAttendance"></strong>
-            </div>
-          </div>
-          <div class="cc-widget-profile-section-block" data-ng-if="graduation.undergraduate.expectedGraduationTerm">
-            <div class="cc-text-light">Expected Graduation</div>
-            <div>
-              <i class="fa fa-clock-o cc-icon-grey" data-ng-if="graduation.undergraduate.appointmentsInGraduatingTerm"></i>
-              <strong data-ng-bind="graduation.undergraduate.expectedGraduationTerm.termName"></strong>
-            </div>
-            <div class="cc-widget-profile-footnote">
-              <span data-ng-if="graduation.undergraduate.appointmentsInGraduatingTerm">
-                <span data-ng-bind="graduation.undegraduate.expectedGraduationTerm.termName"></span>
-                will be your final term to complete all degree requirements.
-                If you have questions, please contact your College Advisor.
-              </span>
-              <span data-ng-if="!graduation.undergraduate.appointmentsInGraduatingTerm">
-                Consult your college advisor with questions or concerns.
-              </span>
-            </div>
-          </div>
-        </td>
-      </tr>
-    </tbody>
-  </table>
-</div>
-
-<div class="cc-table cc-table-top-border cc-clearfix" data-ng-if="graduation.gradLaw.expectedGraduationTerms.length">
-  <table class="cc-widget-profile-table">
-    <tbody>
-      <tr>
-        <th>Expected Graduation</th>
-        <td>
-          <div class="cc-widget-profile-section-block" data-ng-repeat="term in graduation.gradLaw.expectedGraduationTerms">
-            <div data-ng-repeat="plan in term.plans" class="cc-text-light">
-              <span data-ng-bind="plan"></span>
-            </div>
-            <div>
-              <strong data-ng-bind="term.expectedGradTermNames.join(', ')"></strong>
-            </div>
-          </div>
-        </td>
-      </tr>
-    </tbody>
-  </table>
-</div>
+<div data-cc-expected-graduation-terms-directive data-ng-if="collegeAndLevel.termsInAttendance || graduation.undergraduate.expectedGraduationTerm || graduation.gradLaw.expectedGraduationTerms.length"
+     data-termsInAttendance="collegeAndLevel.termsInAttendance" data-graduation="graduation"></div>
