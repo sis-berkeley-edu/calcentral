@@ -33,7 +33,12 @@
   </div>
   <div data-ng-if="!isInstructionType(enrollmentInstruction, ['law','haasEveningWeekendMba','haasFullTimeMba'])">
     <div data-ng-if="!enrollmentInstruction.termIsSummer">
-      Learn more about <a href="http://registrar.berkeley.edu/Records/tbinfo.html">enrollment rules and information</a>.
+      <div>
+        Learn more about <a href="http://registrar.berkeley.edu/Records/tbinfo.html">enrollment rules and information</a>.
+      </div>
+      <div>
+        View the <a href=" http://registrar.berkeley.edu/calendar?terms=current">enrollment calendar</a> for deadlines.
+      </div>
     </div>
     <div data-ng-if="enrollmentInstruction.termIsSummer">
       Enrollment and fee policies for Summer Sessions may differ from those in effect during the fall/spring semesters,
