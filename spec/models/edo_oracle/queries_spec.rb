@@ -447,5 +447,18 @@ describe EdoOracle::Queries do
         expect(subject.count).to eq 3
       end
     end
+
+    describe '.get_student_term_cpp', testext: false do
+      subject { EdoOracle::Queries.get_student_term_cpp(student_id) }
+      context 'when valid uid' do
+        let(:oski_sid) { '11667051' }
+        let(:student_id) { oski_sid }
+        it 'should return term cpp records' do
+          expect(subject.count).to_not eq 0
+          expect(subject[0]).to have_keys(['term_id', 'acad_career', 'acad_program', 'acad_plan'])
+        end
+      end
+    end
+
   end
 end

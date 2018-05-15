@@ -74,7 +74,7 @@
       </div>
     </div>
 
-    <div data-ng-if="showResidency">
+    <div data-ng-if="!api.user.profile.academicRoles.nonDegreeSeekingSummerVisitor && showResidency">
       <div class="cc-status-holds-section">
         <div data-ng-if="residency.official.description">
           <h4>California Residency</h4>

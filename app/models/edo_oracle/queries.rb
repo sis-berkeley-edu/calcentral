@@ -6,6 +6,8 @@ module EdoOracle
     ABSENTIA_CODE = 'OGPFABSENT'.freeze
     FILING_FEE_CODE = 'BGNNFILING'.freeze
 
+    UC_BERKELEY = 'UCB01'
+
     CANONICAL_SECTION_ORDERING = 'section_display_name, "primary" DESC, instruction_format, section_num'
 
     # Changes from CampusOracle::Queries section columns:
@@ -623,7 +625,7 @@ module EdoOracle
       result.first
     end
 
-    def self.get_new_admit_evaluator (student_id, application_nbr)
+    def self.get_new_admit_evaluator(student_id, application_nbr)
       result = safe_query <<-SQL
         SELECT
           EVALUATOR_NAME as evaluator_name,
@@ -711,6 +713,21 @@ module EdoOracle
           "id" = '#{section_id}' AND
           "term-id" = '#{term_id}'
       SQL
+    end
+
+    def self.get_student_term_cpp(student_id)
+      result = safe_query <<-SQL
+        SELECT
+          TERM_ID as term_id,
+          ACAD_CAREER_CODE as acad_career,
+          ACAD_PROGRAM as acad_program,
+          ACAD_PLAN as acad_plan
+        FROM SISEDO.STUDENT_TERM_CPPV00_VW
+        WHERE
+          INSTITUTION = '#{UC_BERKELEY}' AND
+          STUDENT_ID = '#{student_id}'
+      SQL
+      return result
     end
 
   end
