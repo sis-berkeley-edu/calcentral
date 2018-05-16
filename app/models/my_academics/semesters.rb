@@ -144,7 +144,7 @@ module MyAcademics
             if section[:waitlisted]
               map_reserved_seats(term_id, section)
             end
-            section[:grading][:grade_points] = nil if law_class? course
+            section[:grading][:gradePoints] = nil if law_class? course
             section.merge!(law_class_enrollment(course, section))
           end
           merge_multiple_primaries(mapped_course, course[:course_option]) if primaries_count > 1

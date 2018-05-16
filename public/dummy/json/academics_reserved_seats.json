@@ -137,8 +137,8 @@
                             "session_id": "6W1",
                             "grading": {
                                 "grade": null,
-                                "grade_points": "0.0",
-                                "grading_basis": "GRD"
+                                "gradePoints": "0.0",
+                                "gradingBasis": "GRD"
                             },
                             "waitlisted": true,
                             "waitlistPosition": 17,
@@ -194,8 +194,8 @@
                             "associated_primary_id": "14331.0",
                             "grading": {
                                 "grade": null,
-                                "grade_points": "0.0",
-                                "grading_basis": null
+                                "gradePoints": "0.0",
+                                "gradingBasis": null
                             },
                             "waitlisted": true,
                             "waitlistPosition": 0,
@@ -240,8 +240,8 @@
                             "session_id": "6W1",
                             "grading": {
                                 "grade": null,
-                                "grade_points": "0.0",
-                                "grading_basis": "GRD"
+                                "gradePoints": "0.0",
+                                "gradingBasis": "GRD"
                             },
                             "waitlisted": true,
                             "waitlistPosition": 17,
@@ -280,8 +280,8 @@
                             "associated_primary_id": "14331.0",
                             "grading": {
                                 "grade": null,
-                                "grade_points": "0.0",
-                                "grading_basis": null
+                                "gradePoints": "0.0",
+                                "gradingBasis": null
                             },
                             "waitlisted": true,
                             "waitlistPosition": 0,
@@ -326,8 +326,8 @@
                             "session_id": "6W1",
                             "grading": {
                                 "grade": null,
-                                "grade_points": "0.0",
-                                "grading_basis": "GRD"
+                                "gradePoints": "0.0",
+                                "gradingBasis": "GRD"
                             },
                             "waitlisted": true,
                             "waitlistPosition": 17,
@@ -366,8 +366,8 @@
                             "associated_primary_id": "14331.0",
                             "grading": {
                                 "grade": null,
-                                "grade_points": "0.0",
-                                "grading_basis": null
+                                "gradePoints": "0.0",
+                                "gradingBasis": null
                             },
                             "waitlisted": true,
                             "waitlistPosition": 0,
@@ -412,8 +412,8 @@
                             "session_id": "8W",
                             "grading": {
                                 "grade": null,
-                                "grade_points": "0.0",
-                                "grading_basis": "GRD"
+                                "gradePoints": "0.0",
+                                "gradingBasis": "GRD"
                             },
                             "instructors": [
                                 {
@@ -455,8 +455,8 @@
                             "associated_primary_id": "13905.0",
                             "grading": {
                                 "grade": null,
-                                "grade_points": "0.0",
-                                "grading_basis": null
+                                "gradePoints": "0.0",
+                                "gradingBasis": null
                             },
                             "instructors": [],
                             "schedules": {

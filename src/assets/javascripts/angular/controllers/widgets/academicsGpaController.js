@@ -135,7 +135,7 @@ angular.module('calcentral.controllers').controller('AcademicsGpaController', fu
         _.forEach(course.sections, function(section) {
           if (section.is_primary_section && !section.grading.grade) {
             var gradingRow = {
-              'gradeOption': section.grading.grading_basis,
+              'gradeOption': section.grading.gradingBasis,
               'units': section.units
             };
             if (gradingRow.gradeOption === 'GRD') {

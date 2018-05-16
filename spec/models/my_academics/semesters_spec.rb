@@ -159,8 +159,8 @@ describe MyAcademics::Semesters do
         units: (is_primary_section ? rand(1.0..5.0).round(1) : 0.0),
         grading: {
           grade: is_primary_section ? random_grade : nil,
-          grading_basis: 'GRD',
-          grade_points: rand(0.0..16.0)
+          gradingBasis: 'GRD',
+          gradePoints: rand(0.0..16.0)
         },
         schedules: {
           oneTime: [],

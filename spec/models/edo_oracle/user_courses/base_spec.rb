@@ -178,7 +178,7 @@ describe EdoOracle::UserCourses::Base do
           expect(section[:section_label]).to eq "#{enrollment['instruction_format']} #{enrollment['section_num']}"
           expect(section[:section_number]).to eq enrollment['section_num']
           if (enrollment['primary'] == 'true')
-            expect(section[:grading][:grading_basis]).to eq enrollment['grading_basis']
+            expect(section[:grading][:gradingBasis]).to eq enrollment['grading_basis']
             expect(section[:is_primary_section]).to eq true
             expect(section[:units]).to eq enrollment['units_taken']
           else
