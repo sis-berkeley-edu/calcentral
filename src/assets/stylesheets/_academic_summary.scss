@@ -70,14 +70,12 @@
         font-size: 13px;
       }
     }
-    strong {
-      color: $cc-color-dim-gray;
-    }
     &.cc-class-enrollments {
       .cc-requirement {
-        color: $cc-color-dim-gray;
         font-size: 12px;
+        font-weight: bold;
         line-height: 12px;
+        padding-left: 8px;
       }
       td {
         padding-bottom: 6px;
