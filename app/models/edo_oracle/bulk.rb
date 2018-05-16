@@ -44,8 +44,8 @@ module EdoOracle
           sec."primary" AS primary,
           sec."component-code" AS instruction_format,
           sec."sectionNumber" AS section_num,
-          sec."displayName" AS course_display_name,
           sec."enrolledCount" AS enrollment_count,
+          crs."displayName" AS course_display_name,
           instr."campus-uid" AS instructor_uid,
           TRIM(instr."formattedName") AS instructor_name,
           instr."role-code" AS instructor_role_code,
@@ -54,9 +54,12 @@ module EdoOracle
           mtg."startTime" AS meeting_start_time,
           mtg."endTime" AS meeting_end_time,
           mtg."startDate" AS meeting_start_date,
-          mtg."endDate" AS meeting_end_date
+          mtg."endDate" AS meeting_end_date,
+          TRIM(crs."title") AS course_title
         FROM
           SISEDO.CLASSSECTIONALLV00_MVW sec
+        LEFT OUTER JOIN SISEDO.DISPLAYNAMEXLATV01_MVW xlat ON (xlat."classDisplayName" = sec."displayName")
+        LEFT OUTER JOIN SISEDO.API_COURSEV01_MVW crs ON (xlat."courseDisplayName" = crs."displayName")
         LEFT OUTER JOIN SISEDO.MEETINGV00_VW mtg ON (
           mtg."cs-course-id" = sec."cs-course-id" AND
           mtg."term-id" = sec."term-id" AND
@@ -72,6 +75,21 @@ module EdoOracle
         WHERE
           sec."term-id" = '#{term_id}'
           AND sec."status-code" IN ('A','S')
+          AND crs."updatedDate" = (
+            SELECT MAX(crs2."updatedDate")
+            FROM SISEDO.API_COURSEV01_MVW crs2, SISEDO.EXTENDED_TERM_MVW term2
+            WHERE crs2."cms-version-independent-id" = crs."cms-version-independent-id"
+            AND crs2."displayName" = crs."displayName"
+            AND term2.ACAD_CAREER = 'UGRD'
+            AND term2.STRM = sec."term-id"
+            AND (
+              (
+                CAST(crs2."fromDate" AS DATE) <= term2.TERM_END_DT AND
+                CAST(crs2."toDate" AS DATE) >= term2.TERM_END_DT
+              )
+              OR CAST(crs2."updatedDate" AS DATE) = TO_DATE('1901-01-01', 'YYYY-MM-DD')
+            )
+          )
       SQL
       # Result sets are too large for bulk stringification.
       safe_query(sql, do_not_stringify: true)
