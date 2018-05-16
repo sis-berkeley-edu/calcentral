@@ -46,23 +46,23 @@
     <tbody>
       <tr>
         <th scope="rowgroup" rowspan="{{gpaUnits.rowCount}}">Cumulative Units</th>
-        <th scope="row" rowspan="1" class="cc-academic-summary-row-subhead">Total Units</th>
+        <th scope="row" rowspan="1" class="cc-academic-summary-subhead">Total Units</th>
         <td><span data-ng-bind="gpaUnits.totalUnits"></span></td>
       </tr>
       <tr data-ng-if="gpaUnits.totalLawUnits">
-        <th scope="row" rowspan="1" class="cc-academic-summary-row-subhead">Law Units</th>
+        <th scope="row" rowspan="1" class="cc-academic-summary-subhead">Law Units</th>
         <td><span data-ng-bind="gpaUnits.totalLawUnits"></span></td>
       </tr>
       <tr data-ng-if="gpaUnits.totalTransferAndTestingUnits">
-        <th scope="row" rowspan="1" class="cc-academic-summary-row-subhead">Transfer Units</th>
+        <th scope="row" rowspan="1" class="cc-academic-summary-subhead">Transfer Units</th>
         <td><span data-ng-bind="gpaUnits.totalTransferAndTestingUnits"></span></td>
       </tr>
       <tr data-ng-if="gpaUnits.totalUnitsTakenNotForGpa">
-        <th scope="row" rowspan="1" class="cc-academic-summary-row-subhead">P/NP Total</th>
+        <th scope="row" rowspan="1" class="cc-academic-summary-subhead">P/NP Total</th>
         <td><span data-ng-bind="gpaUnits.totalUnitsTakenNotForGpa"></span></td>
       </tr>
       <tr data-ng-if="gpaUnits.totalUnitsPassedNotForGpa">
-        <th scope="row" rowspan="1" class="cc-academic-summary-row-subhead">P/NP Passed</th>
+        <th scope="row" rowspan="1" class="cc-academic-summary-subhead">P/NP Passed</th>
         <td><span data-ng-bind="gpaUnits.totalUnitsPassedNotForGpa"></span></td>
       </tr>
     </tbody>
@@ -79,7 +79,7 @@
     <tbody data-ng-if="gpaUnits.gpa.length >= 2">
       <tr data-ng-repeat="gpa in gpaUnits.gpa">
         <th data-ng-if="$first" scope="rowgroup" rowspan="{{gpaUnits.gpa.length}}">Cumulative GPA</th>
-        <th scope="row" rowspan="1" class="cc-academic-summary-row-subhead" data-ng-bind="gpa.roleDescr"></th>
+        <th scope="row" rowspan="1" class="cc-academic-summary-subhead" data-ng-bind="gpa.roleDescr"></th>
         <td><span data-ng-bind="gpa.cumulativeGpaFloat"></span></td>
       </tr>
     </tbody>

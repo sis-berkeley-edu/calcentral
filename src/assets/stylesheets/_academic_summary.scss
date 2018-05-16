@@ -17,7 +17,7 @@
     color: $cc-color-dim-gray;
     vertical-align: bottom;
   }
-  .cc-academic-summary-row-subhead {
+  .cc-academic-summary-subhead {
     color: $cc-color-dim-gray;
     padding: 0;
     vertical-align: bottom;
@@ -37,6 +37,12 @@
     }
     .cc-academic-summary-table-multiple {
       padding-left: 10px;
+    }
+    .cc-academics-semester-status {
+      margin: 3px 0 6px 10px;
+      > span {
+        vertical-align: inherit;
+      }
     }
     .cc-section-block:not(:last-child) {
       margin: 0 0 5px;
@@ -66,7 +72,7 @@
       margin: 0;
       padding: 2px 10px 2px 0;
       width: 30%;
-      &.cc-academic-summary-row-subhead {
+      &.cc-academic-summary-subhead {
         font-size: 13px;
       }
     }

@@ -37,7 +37,7 @@
       <th>Expected Graduation</th>
       <td>
         <div class="cc-section-block" data-ng-repeat="term in graduation.gradLaw.expectedGraduationTerms">
-          <div data-ng-repeat="plan in term.plans" class="cc-text-light">
+          <div data-ng-repeat="plan in term.plans track by $index" class="cc-text-light">
             <span data-ng-bind="plan"></span>
           </div>
           <div data-ng-bind="term.expectedGradTermNames.join(', ')"></div>
