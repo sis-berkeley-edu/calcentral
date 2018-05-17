@@ -90,7 +90,9 @@ module MyAcademics
         hasStudyProgData: semester.try(:[], :hasStudyProgData),
         studyProg: semester.try(:[], :studyProg),
         hasWithdrawalData: semester.try(:[], :hasWithdrawalData),
-        withdrawalStatus:  semester.try(:[], :withdrawalStatus)
+        withdrawalStatus:  semester.try(:[], :withdrawalStatus),
+        hasStandingData: semester.try(:[], :hasStandingData),
+        standing: semester.try(:[], :standing)
       }.merge calc_enrolled_units(semester)
     end
 

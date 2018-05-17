@@ -49,6 +49,10 @@ class AdvisingStudentController < ApplicationController
     render json: MyAcademics::MyHolds.new(student_uid_param).get_feed_as_json
   end
 
+  def standings
+    render json: MyAcademics::MyStandings.new(student_uid_param).get_feed_as_json
+  end
+
   def profile
     student_uid = student_uid_param
     render json: {

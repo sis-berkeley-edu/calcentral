@@ -38,7 +38,7 @@ describe MyAcademics::Semesters do
   end
 
   describe '#semester_feed', testext: false do
-    subject { described_class.new(uid).semester_feed(enrollment_terms, reg_status_data) }
+    subject { described_class.new(uid).semester_feed(enrollment_terms, reg_status_data, standing_data) }
 
     before do
       allow(Settings.edodb).to receive(:fake).and_return false
@@ -49,6 +49,7 @@ describe MyAcademics::Semesters do
 
     let(:enrollment_terms) { EdoOracle::UserCourses::All.new(user_id: uid, fake: false).get_all_campus_courses }
     let(:reg_status_data) { [] }
+    let(:standing_data) { [] }
     let(:uid) { 790833 }
 
     it 'sorts the terms in descending order' do
@@ -273,6 +274,31 @@ describe MyAcademics::Semesters do
       let(:enrollment_data) { generate_enrollment_data }
       it 'should add withdrawal data' do
         expect([feed[:semesters][3]]).to all include({hasWithdrawalData: true})
+      end
+    end
+
+    context 'Has standing data' do
+      before do
+        allow(Settings.terms).to receive(:fake_now).and_return '2016-04-01'
+        allow(Settings.terms).to receive(:legacy_cutoff).and_return 'fall-2009'
+        allow_any_instance_of(EdoOracle::UserCourses::All).to receive(:get_all_campus_courses).and_return enrollment_data
+        allow(EdoOracle::Queries).to receive(:get_academic_standings).and_return standing_data
+      end
+      let(:standing_data) {
+        [
+          {
+            'acad_standing_status' => 'GST',
+            'acad_standing_status_descr'=>  'Good Standing',
+            'acad_standing_action_descr'=> 'Probation Ended',
+            'term_id' => '2158',
+            'action_date'=> DateTime.parse('07-AUG-14')
+          }
+        ]
+      }
+      let(:enrollment_data) { generate_enrollment_data }
+      it 'should add standing data' do
+        expect(feed[:semesters][3]).to include({hasStandingData: true})
+        expect(feed[:semesters][3][:standing][:acadStandingStatus]).to eq 'GST'
       end
     end
 

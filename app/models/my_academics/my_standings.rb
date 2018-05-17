@@ -28,12 +28,18 @@ module MyAcademics
       parsed_standings = empty_standings
       current_standing = get_latest_current_standing(academic_standings)
       return parsed_standings unless current_standing
-      # Its possible to have more than one current standing with same term and action date
+      # Its possible to have more than one standing with same term and action date
+      # Only use the latest one for each term.
+      processed_term = []
       academic_standings.each do |standing|
         if standing['term_id'] == current_standing['term_id'] && standing['action_date'] == current_standing['action_date']
           parsed_standings[:current_standings].push(parse_standing(standing)) unless parsed_standings[:current_standings].any?
+          processed_term.push standing['term_id']
         else
-          parsed_standings[:standings_history].push(parse_standing(standing))
+          unless processed_term.include? standing['term_id']
+            parsed_standings[:standings_history].push(parse_standing(standing))
+            processed_term.push standing['term_id']
+          end
         end
       end
       parsed_standings
@@ -47,15 +53,7 @@ module MyAcademics
     end
 
     def parse_standing(standing)
-      term = Berkeley::TermCodes.from_edo_id(standing['term_id'])
-      {
-        acadStandingStatus: standing['acad_standing_status'],
-        acadStandingStatusDescr: standing['acad_standing_status_descr'],
-        acadStandingActionDescr: standing['acad_standing_action_descr'],
-        termId: standing['term_id'],
-        actionDate: Concerns::AcademicsModule.cast_utc_to_pacific(standing['action_date']),
-        termName: Berkeley::TermCodes.to_english(term[:term_yr], term[:term_cd])
-      }
+      Concerns::AcademicsModule.standings_info(standing)
     end
 
     def get_latest_current_standing(academic_standings)

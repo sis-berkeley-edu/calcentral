@@ -16,9 +16,16 @@ module MyAcademics
 
       campus_solution_id = CalnetCrosswalk::ByUid.new(user_id: @uid).lookup_campus_solutions_id
       reg_status_data = EdoOracle::Queries.get_registration_status(campus_solution_id)
+      standing_data = get_academic_standings(campus_solution_id)
+      standing_data.sort_by!{|s| [s['term_id'], s['action_date']]}.reverse!
 
-      data[:semesters] = semester_feed(enrollments, reg_status_data).compact
+      data[:semesters] = semester_feed(enrollments, reg_status_data, standing_data).compact
       merge_semesters_count data
+    end
+
+    def get_academic_standings(campus_solution_id)
+      academic_standings = EdoOracle::Queries.get_academic_standings(campus_solution_id)
+      academic_standings ||= []
     end
 
     def academic_careers
@@ -27,12 +34,12 @@ module MyAcademics
       careers.try(:map) {|career| career.try(:[], 'acad_career')}
     end
 
-    def semester_feed(enrollment_terms, reg_status_data)
+    def semester_feed(enrollment_terms, reg_status_data, standing_data)
       study_prog_data = reg_status_data.select{|row| row['splstudyprog_type_code'].present?}
       withdrawal_data = reg_status_data.select{|row| row['withcncl_type_code'].present?}
 
-      withdrawal_terms = withdrawal_data.map {|row| Berkeley::TermCodes.edo_id_to_code(row['term_id'])}
-      study_prog_terms = study_prog_data.map {|row| Berkeley::TermCodes.edo_id_to_code(row['term_id'])}
+      withdrawal_terms = withdrawal_data.map{|row| Berkeley::TermCodes.edo_id_to_code(row['term_id'])}
+      study_prog_terms = study_prog_data.map{|row| Berkeley::TermCodes.edo_id_to_code(row['term_id'])}
 
       # Note: a student should never have withdrawal and absentia or filling fee for same term
       (enrollment_terms.keys | withdrawal_terms | study_prog_terms).sort.reverse.map do |term_key|
@@ -48,6 +55,7 @@ module MyAcademics
 
         merge_study_prog(semester, study_prog_data)
         merge_withdrawals(semester, withdrawal_data)
+        merge_standings(semester, standing_data)
         semester unless semester[:classes].empty? && !semester[:hasWithdrawalData] && !semester[:hasStudyProgData]
       end
     end
@@ -82,7 +90,7 @@ module MyAcademics
       }
     end
 
-    def merge_withdrawals (semester, withdrawal_data)
+    def merge_withdrawals(semester, withdrawal_data)
       withdrawal_data.each do |row|
         if row['term_id'] == Berkeley::TermCodes.slug_to_edo_id(semester[:slug])
           withdrawal_status = map_withdrawal_status(row)
@@ -104,6 +112,20 @@ module MyAcademics
             withcnclFromDate:  row['withcncl_fromdate']? row['withcncl_fromdate'].to_date.strftime('%b %d, %Y') : nil,
             withcnclLastAttenDate:  row['withcncl_lastattendate']? row['withcncl_lastattendate'].to_date.strftime('%b %d, %Y'): nil,
           }
+      }
+    end
+
+    def merge_standings(semester, standing_data)
+      if (standing = standing_data.find {|row| row['term_id'] == Berkeley::TermCodes.slug_to_edo_id(semester[:slug])})
+        standing_data = map_standings(standing)
+        semester.merge! standing_data
+      end
+    end
+
+    def map_standings(standing)
+      {
+        hasStandingData: true,
+        standing: Concerns::AcademicsModule.standings_info(standing)
       }
     end
 

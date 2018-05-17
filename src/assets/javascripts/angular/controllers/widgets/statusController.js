@@ -6,7 +6,7 @@ var angular = require('angular');
 /**
  * Status controller
  */
-angular.module('calcentral.controllers').controller('StatusController', function(holdsFactory, activityFactory, apiService, statusHoldsService, badgesFactory, financesFactory, registrationsFactory, $http, $scope, $q) {
+angular.module('calcentral.controllers').controller('StatusController', function(academicStandingsFactory, holdsFactory, activityFactory, apiService, statusHoldsService, badgesFactory, financesFactory, registrationsFactory, $http, $scope, $q) {
   $scope.finances = {};
   $scope.regStatus = {
     hasData: false,
@@ -147,6 +147,25 @@ angular.module('calcentral.controllers').controller('StatusController', function
     );
   };
 
+  var loadStandings = function() {
+    var deferred;
+    if (!apiService.user.profile.roles.undergrad) {
+      deferred = $q.defer();
+      deferred.resolve();
+      return deferred.promise;
+    }
+    return academicStandingsFactory.getStandings().then(
+      function(response) {
+        var currentStandings = _.get(response, 'data.feed.currentStandings');
+        if (currentStandings[0].acadStandingStatus !== 'GST') {
+          $scope.count += 1;
+          $scope.hasStandingAlert = true;
+          $scope.hasAlerts = true;
+        }
+      }
+    );
+  };
+
   var finishLoading = function() {
     // Hides the spinner
     $scope.statusLoading = '';
@@ -186,7 +205,7 @@ angular.module('calcentral.controllers').controller('StatusController', function
 
       // Get all the necessary data from the different factories
       var getRegistrations = registrationsFactory.getRegistrations().then(parseRegistrations);
-      var statusGets = [loadHolds(), getRegistrations];
+      var statusGets = [loadHolds(), loadStandings(), getRegistrations];
 
       // Only fetch financial data for delegates who have been given explicit permssion.
       var includeFinancial = (!apiService.user.profile.delegateActingAsUid || apiService.user.profile.canActOnFinances);
