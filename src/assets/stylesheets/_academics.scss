@@ -346,6 +346,16 @@
   .cc-academics-semester-notation {
     margin-left: 10px;
   }
+  .cc-academics-semester-status {
+    font-size: 13px;
+    font-weight: bold;
+    margin: 0 10px;
+    > span {
+      display: inline-block;
+      vertical-align: middle;
+    }
+
+  }
   .cc-academics-semester-title-link {
     margin-top: 7px;
   }
