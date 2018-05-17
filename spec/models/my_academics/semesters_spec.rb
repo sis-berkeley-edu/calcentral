@@ -57,6 +57,16 @@ describe MyAcademics::Semesters do
       expect(subject[0][:termId]).to eq '2178'
       expect(subject[1][:termId]).to eq '2172'
     end
+    it 'provides grading data' do
+      expect(subject[0][:classes][0][:sections][0][:grading][:gradePoints]).to eq 0
+      expect(subject[0][:classes][0][:sections][0][:grading][:gradingBasis]).to eq 'GRD'
+      expect(subject[1][:classes][0][:sections][0][:grading][:gradePoints]).to eq 0
+      expect(subject[1][:classes][0][:sections][0][:grading][:gradingBasis]).to eq 'GRD'
+    end
+    it 'flags class sections as non-Law based on the class academic career' do
+      expect(subject[0][:classes][0][:sections][0][:isLaw]).to be_falsey
+      expect(subject[1][:classes][0][:sections][0][:isLaw]).to be_falsey
+    end
     context 'when all of student\'s grades have been received for the term' do
       it 'provides the total earned units' do
         expect(subject[0][:totalUnits]).to eq 3
@@ -98,6 +108,16 @@ describe MyAcademics::Semesters do
           expect(subject[0][:classes][1][:sections][0][:units]).to eq 3
           expect(subject[0][:classes][1][:sections][0][:lawUnits]).to eq 3
           expect(subject[0][:classes][1][:sections][0][:requirementsDesignation]).to eq 'Fulfills Professional Responsibility Requirement'
+        end
+        it 'suppresses Grade Points on Law classes' do
+          expect(subject[0][:classes][0][:sections][0][:grading][:gradePoints]).to be nil
+          expect(subject[0][:classes][0][:sections][0][:grading][:gradingBasis]).to eq 'LAW'
+          expect(subject[0][:classes][1][:sections][0][:grading][:gradePoints]).to be nil
+          expect(subject[0][:classes][1][:sections][0][:grading][:gradingBasis]).to eq 'LAW'
+        end
+        it 'flags class sections as Law based on the class academic career' do
+          expect(subject[0][:classes][0][:sections][0][:isLaw]).to be true
+          expect(subject[0][:classes][1][:sections][0][:isLaw]).to be true
         end
       end
     end
