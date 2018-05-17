@@ -166,11 +166,11 @@ module EdoOracle
 
         if row.include? 'enroll_status'
           # Grading and waitlist data relevant to students.
-          grading = {}
-          grading[:grade] = row['grade'].present? ? row['grade'].strip : nil
-          grading[:grade_points] = (row['grade_points'].present?) ? row['grade_points'] : nil
-          grading[:grading_basis] = section_data[:is_primary_section] ? row['grading_basis'] : nil
-          section_data[:grading] = grading
+          section_data[:grading] = {
+            grade: row['grade'].present? ? row['grade'].strip : nil,
+            gradePoints: row['grade_points'].present? ? row['grade_points'] : nil,
+            gradingBasis: section_data[:is_primary_section] ? row['grading_basis'] : nil
+          }
           if row['enroll_status'] == 'W'
             section_data[:waitlisted] = true
             section_data[:waitlistPosition] = row['waitlist_position'].to_i

@@ -26,7 +26,7 @@
           <th class="cc-table-right cc-academic-summary-table-units">Un.</th>
           <th ng-if="semester.totalLawUnits" class="cc-table-right cc-academic-summary-table-units">Law Un.</th>
           <th data-ng-if="api.user.profile.canViewGrades">Gr.</th>
-          <th data-ng-if="api.user.profile.canViewGrades" class="cc-table-right">Pts.</th>
+          <th data-ng-if="api.user.profile.canViewGrades && semester.showGradePoints" class="cc-table-right">Pts.</th>
         </tr>
       </thead>
       <tbody data-ng-repeat="class in semester.classes">
@@ -65,8 +65,8 @@
           <td ng-if="semester.totalLawUnits && !(section.lawUnits || section.lawUnits === 0)" class="cc-text-right cc-academic-summary-table-units">&mdash;</td>
           <td data-ng-if="api.user.profile.canViewGrades && section.grading.grade" data-ng-bind="section.grading.grade"></td>
           <td data-ng-if="api.user.profile.canViewGrades && !section.grading.grade">&mdash;</td>
-          <td class="cc-text-right" data-ng-if="api.user.profile.canViewGrades && section.grading.grade_points" data-ng-bind="section.grading.grade_points"></td>
-          <td class="cc-text-right" data-ng-if="api.user.profile.canViewGrades && !section.grading.grade_points">&mdash;</td>
+          <td class="cc-text-right" data-ng-if="api.user.profile.canViewGrades && semester.showGradePoints && section.grading.gradePoints" data-ng-bind="section.grading.gradePoints"></td>
+          <td class="cc-text-right" data-ng-if="api.user.profile.canViewGrades && semester.showGradePoints && !section.grading.gradePoints">&mdash;</td>
         </tr>
       </tbody>
       <tfoot data-ng-if="semester.showUnitTotal">

@@ -7,7 +7,8 @@ angular.module('calcentral.controllers').controller('AcademicSummaryController',
   apiService.util.setTitle('Academic Summary');
   linkService.addCurrentRouteSettings($scope);
   $scope.academicSummary = {
-    isLoading: true
+    isLoading: true,
+    showSemesters: false
   };
   $scope.printPage = function() {
     apiService.util.printPage();
@@ -29,10 +30,6 @@ angular.module('calcentral.controllers').controller('AcademicSummaryController',
     }
   };
 
-  var showSemesters = function() {
-    return !!(_.get($scope, 'semesters.length') && apiService.user.profile.hasStudentHistory);
-  };
-
   var showTransferCredit = function() {
     return !!(_.get($scope, 'transferCredit.ucTransferCrseSch.unitsTotal') || _.get('transferCredit.ucTestComponent.totalTestUnits'));
   };
@@ -42,6 +39,23 @@ angular.module('calcentral.controllers').controller('AcademicSummaryController',
     return !!_.find(creditItems, function(credit) {
       return (_.get(credit, 'ucbGradePoints') > 0);
     });
+  };
+
+  var hasPoints = function(classSection) {
+    return _.some(classSection.sections, function(section) {
+      return section.grading.gradePoints;
+    });
+  };
+
+  var parseSemester = function(semester) {
+    semester.showGradePoints = _.some(semester.classes, hasPoints);
+  };
+
+  var parseSemesters = function(semesters) {
+    if (!!(semesters.length && apiService.user.profile.hasStudentHistory)) {
+      $scope.showSemesters = true;
+      _.each(semesters, parseSemester);
+    }
   };
 
   var parseGpaUnits = function(gpaUnits) {
@@ -67,8 +81,8 @@ angular.module('calcentral.controllers').controller('AcademicSummaryController',
   var parseAcademics = function(response) {
     angular.extend($scope, _.get(response, 'data'));
     $scope.showGpa = academicsService.showGpa($scope.gpaUnits.gpa);
-    $scope.showSemesters = showSemesters();
     parseGpaUnits(_.get(response, 'data.gpaUnits'));
+    parseSemesters(_.get(response, 'data.semesters'));
     parseTermHonors();
     parseTermUnits();
     parseTransferCredit();
