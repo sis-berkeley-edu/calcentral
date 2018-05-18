@@ -5,7 +5,7 @@
 
   <div class="cc-widget-padding" data-cc-spinner-directive="statusHolds.isLoading">
     <h3 class="cc-status-holds-status-header" data-ng-if="regStatus.show || showResidency">Status</h3>
-     <div data-ng-if="api.user.profile.academicRoles.undergrad">
+     <div data-ng-if="api.user.profile.roles.undergrad || api.user.profile.roles.advisor">
       <div class="cc-status-holds-section">
         <div>
           <h4>Academic Standing</h4>
