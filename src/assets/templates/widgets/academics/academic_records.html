@@ -6,14 +6,14 @@
     <!-- If Law true, show law links, do not show general or concurrent -->
     <div class="cc-list-link-container" data-cc-spinner-directive="officialTranscript.isLoading">
       <ul class="cc-list-links">
-        <li data-ng-if="api.user.profile.academicRoles.law || api.user.profile.roles.exStudent">
+        <li data-ng-if="api.user.profile.academicRoles.law">
           <a data-ng-class="{'cc-academics-link-disabled':(api.user.profile.delegateActingAsUid)}"
             data-ng-click="requestLawTranscript()"
             data-ng-disabled="api.user.profile.delegateActingAsUid"
             data-ng-attr-title="{{lawOfficialTranscript.postUrlHover}}">Transcript - Law (Electronic)</a>
           <div class="cc-list-links-sub-text">Electronic PDF, $1.90 charge</div>
         </li>
-        <li data-ng-if="api.user.profile.academicRoles.law || api.user.profile.roles.exStudent">
+        <li data-ng-if="api.user.profile.academicRoles.law">
           <a data-ng-href="{{lawTranscriptLink.link}}" data-ng-attr-title="{{lawTranscriptLink.title}}">Transcript - Law (Printed)</a>
           <div class="cc-list-links-sub-text">Printed for pick up or mailing at no charge</div>
         </li>
