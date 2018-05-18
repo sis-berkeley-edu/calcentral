@@ -7,10 +7,10 @@ describe MyAcademics::MyAcademicRoles do
   end
   let(:term_cpp) do
     [
-      {"term_id"=>"2158", "acad_career"=>"UGRD", "acad_program"=>"UCNR", "acad_plan"=>"04606U"},
-      {"term_id"=>"2162", "acad_career"=>"UGRD", "acad_program"=>"UCNR", "acad_plan"=>"04606U"},
-      {"term_id"=>"2168", "acad_career"=>"UGRD", "acad_program"=>"UCNR", "acad_plan"=>"04606U"},
-      {"term_id"=>"2172", "acad_career"=>"UGRD", "acad_program"=>"UCNR", "acad_plan"=>"04606U"},
+      {'term_id'=>'2158', 'acad_career'=>'UGRD', 'acad_program'=>'UCNR', 'acad_plan'=>'04606U'},
+      {'term_id'=>'2162', 'acad_career'=>'UGRD', 'acad_program'=>'UCNR', 'acad_plan'=>'04606U'},
+      {'term_id'=>'2168', 'acad_career'=>'UGRD', 'acad_program'=>'UCNR', 'acad_plan'=>'04606U'},
+      {'term_id'=>'2172', 'acad_career'=>'UGRD', 'acad_program'=>'UCNR', 'acad_plan'=>'04606U'},
     ]
   end
   let(:described_class_instance) { described_class.new(random_id) }
@@ -19,7 +19,7 @@ describe MyAcademics::MyAcademicRoles do
     subject { described_class_instance.get_feed_internal }
     it 'provides a set of roles based on the user\'s academic status' do
       expect(subject).to be
-      expect(subject.keys.count).to eq 26
+      expect(subject.keys.count).to eq 27
       expect(subject['ugrd']).to eq true
       expect(subject['grad']).to eq false
       expect(subject['fpf']).to eq false
@@ -41,6 +41,7 @@ describe MyAcademics::MyAcademicRoles do
       expect(subject['lawJspJsd']).to eq false
       expect(subject['lawJdLlm']).to eq false
       expect(subject['lawVisiting']).to eq false
+      expect(subject['ugrdNonDegree']).to eq false
       expect(subject['ugrdUrbanStudies']).to eq false
       expect(subject['summerVisitor']).to eq false
       expect(subject['nonDegreeSeekingSummerVisitor']).to eq false
@@ -88,8 +89,8 @@ describe MyAcademics::MyAcademicRoles do
     context 'student has only in summer visitor plans' do
       let(:term_cpp) do
         [
-          {"term_id"=>"2125", "acad_career"=>"UGRD", "acad_program"=>"UNODG", "acad_plan"=>"99000U"},
-          {"term_id"=>"2135", "acad_career"=>"UGRD", "acad_program"=>"UNODG", "acad_plan"=>"99000U"},
+          {'term_id'=>'2125', 'acad_career'=>'UGRD', 'acad_program'=>'UNODG', 'acad_plan'=>'99000U'},
+          {'term_id'=>'2135', 'acad_career'=>'UGRD', 'acad_program'=>'UNODG', 'acad_plan'=>'99000U'},
         ]
       end
       it { should eq true }
@@ -97,11 +98,11 @@ describe MyAcademics::MyAcademicRoles do
     context 'student has summer visitor and non-degree seeking plans' do
       let(:term_cpp) do
         [
-          {"term_id"=>"2155", "acad_career"=>"GRAD", "acad_program"=>"GNODG", "acad_plan"=>"99000G"},
-          {"term_id"=>"2165", "acad_career"=>"GRAD", "acad_program"=>"GNODG", "acad_plan"=>"99000G"},
-          {"term_id"=>"2168", "acad_career"=>"UCBX", "acad_program"=>"XCCRT", "acad_plan"=>"30XCECCENX"},
-          {"term_id"=>"2172", "acad_career"=>"UCBX", "acad_program"=>"XCCRT", "acad_plan"=>"30XCECCENX"},
-          {"term_id"=>"2175", "acad_career"=>"GRAD", "acad_program"=>"GNODG", "acad_plan"=>"99000G"},
+          {'term_id'=>'2155', 'acad_career'=>'GRAD', 'acad_program'=>'GNODG', 'acad_plan'=>'99000G'},
+          {'term_id'=>'2165', 'acad_career'=>'GRAD', 'acad_program'=>'GNODG', 'acad_plan'=>'99000G'},
+          {'term_id'=>'2168', 'acad_career'=>'UCBX', 'acad_program'=>'XCCRT', 'acad_plan'=>'30XCECCENX'},
+          {'term_id'=>'2172', 'acad_career'=>'UCBX', 'acad_program'=>'XCCRT', 'acad_plan'=>'30XCECCENX'},
+          {'term_id'=>'2175', 'acad_career'=>'GRAD', 'acad_program'=>'GNODG', 'acad_plan'=>'99000G'},
         ]
       end
       it { should eq true }
@@ -109,9 +110,9 @@ describe MyAcademics::MyAcademicRoles do
     context 'student has no summer visitor plans' do
       let(:term_cpp) do
         [
-          {"term_id"=>"2162", "acad_career"=>"UGRD", "acad_program"=>"UCNR", "acad_plan"=>"04606U"},
-          {"term_id"=>"2168", "acad_career"=>"UGRD", "acad_program"=>"UCNR", "acad_plan"=>"04606U"},
-          {"term_id"=>"2172", "acad_career"=>"UGRD", "acad_program"=>"UCNR", "acad_plan"=>"04606U"},
+          {'term_id'=>'2162', 'acad_career'=>'UGRD', 'acad_program'=>'UCNR', 'acad_plan'=>'04606U'},
+          {'term_id'=>'2168', 'acad_career'=>'UGRD', 'acad_program'=>'UCNR', 'acad_plan'=>'04606U'},
+          {'term_id'=>'2172', 'acad_career'=>'UGRD', 'acad_program'=>'UCNR', 'acad_plan'=>'04606U'},
         ]
       end
       it { should eq false }
@@ -119,12 +120,12 @@ describe MyAcademics::MyAcademicRoles do
     context 'student has summer visitor and degree seeking plans' do
       let(:term_cpp) do
         [
-          {"term_id"=>"2145", "acad_career"=>"UGRD", "acad_program"=>"UCLS", "acad_plan"=>"25000U"},
-          {"term_id"=>"2148", "acad_career"=>"UGRD", "acad_program"=>"UCLS", "acad_plan"=>"25000U"},
-          {"term_id"=>"2152", "acad_career"=>"UGRD", "acad_program"=>"UCLS", "acad_plan"=>"25000U"},
-          {"term_id"=>"2158", "acad_career"=>"UGRD", "acad_program"=>"UCLS", "acad_plan"=>"25780U"},
-          {"term_id"=>"2162", "acad_career"=>"UGRD", "acad_program"=>"UCLS", "acad_plan"=>"25780U"},
-          {"term_id"=>"2175", "acad_career"=>"GRAD", "acad_program"=>"GNODG", "acad_plan"=>"99000G"},
+          {'term_id'=>'2145', 'acad_career'=>'UGRD', 'acad_program'=>'UCLS', 'acad_plan'=>'25000U'},
+          {'term_id'=>'2148', 'acad_career'=>'UGRD', 'acad_program'=>'UCLS', 'acad_plan'=>'25000U'},
+          {'term_id'=>'2152', 'acad_career'=>'UGRD', 'acad_program'=>'UCLS', 'acad_plan'=>'25000U'},
+          {'term_id'=>'2158', 'acad_career'=>'UGRD', 'acad_program'=>'UCLS', 'acad_plan'=>'25780U'},
+          {'term_id'=>'2162', 'acad_career'=>'UGRD', 'acad_program'=>'UCLS', 'acad_plan'=>'25780U'},
+          {'term_id'=>'2175', 'acad_career'=>'GRAD', 'acad_program'=>'GNODG', 'acad_plan'=>'99000G'},
         ]
       end
       it { should eq false }

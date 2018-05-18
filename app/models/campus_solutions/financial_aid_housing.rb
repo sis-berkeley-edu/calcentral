@@ -8,49 +8,82 @@ module CampusSolutions
     }
     def self.append_housing(uid, feed)
       if feed.try(:[], :feed).try(:[], :housing)
-        message_type = nil
-        if link_title_present = feed[:feed][:housing].try(:[], :link).try(:has_key?, :title)
-          feed[:feed][:housing][:link][:name] = 'Update Housing'
-          feed[:feed][:housing][:link][:title] = 'Update Housing'
-        end
+        @uid = uid
+        undergrad_status = find_undergrad_new_admit_status
+        undergrad_new_admit_attributes = undergrad_status.try(:[], :newAdmitAttributes)
 
-        sir_status_feed = CampusSolutions::Sir::SirStatuses.new(uid).get_feed
-        sir_statuses = sir_status_feed.try(:[], :sirStatuses)
-        if sir_statuses.present? && ugrd_status = sir_statuses.find {|status| status[:isUndergraduate]}
+        feed[:feed][:housing][:instruction] = instruction(undergrad_status, undergrad_new_admit_attributes)
 
-          message_type = :generic
-          new_admit_attributes = ugrd_status.try(:[], :newAdmitAttributes)
-
-          first_year_pathway = new_admit_attributes.try(:[], :roles).try(:[], :firstYearPathway)
-          admit_term = new_admit_attributes.try(:[], :admitTerm)
-          if first_year_pathway
-
-            if admit_term.try(:[], :type) == 'Fall'
-              message_type = :fall_pathways
-              feed[:feed][:housing][:title] = 'Housing or Pathway'
-              if link_title_present
-                feed[:feed][:housing][:link][:title] = 'Update Housing or First-Year Pathway'
-                feed[:feed][:housing][:link][:name] = 'Update Housing / Pathway'
-              end
-            end
-            if admit_term.try(:[], :type) == 'Spring'
-              if link_title_present
-                pathways_link = LinkFetcher.fetch_link('UC_ADMT_FYPATH_FA_SPG')
-                pathways_message = CampusSolutions::MessageCatalog.get_message_catalog_definition('26500', INSTRUCTIONAL_MESSAGE_NUMBERS[:spring_pathways])
-                feed[:feed][:housing][:pathways_link] = pathways_link
-                feed[:feed][:housing][:pathways_message] = pathways_message
-              end
-            end
-          end
-        else
-          feed[:feed][:housing].delete(:link)
-        end
-        if message_type
-          instruction = CampusSolutions::MessageCatalog.get_message_catalog_definition('26500', INSTRUCTIONAL_MESSAGE_NUMBERS[message_type])
-          feed[:feed][:housing][:instruction] = instruction
+        if (link = feed[:feed][:housing].try(:[], :link)).try(:has_key?, :title)
+          feed[:feed][:housing][:link] = update_housing_link(link, undergrad_new_admit_attributes)
+          feed[:feed][:housing].merge! first_year_pathway_items(undergrad_new_admit_attributes)
         end
       end
       feed
+    end
+
+    def self.update_housing_link(link, undergrad_new_admit_attributes)
+      return nil unless undergrad_new_admit_attributes.present? || continuing_undergrad?
+
+      if first_year_fall_admit? undergrad_new_admit_attributes
+        return {
+          title: 'Update Housing or First-Year Pathway',
+          name: 'Update Housing / Pathway',
+          url: link.try(:[], :url),
+          isCsLink: link.try(:[], :isCsLink)
+        }
+      end
+      {
+        title: 'Update Housing',
+        name: 'Update Housing',
+        url: link.try(:[], :url),
+        isCsLink: link.try(:[], :isCsLink)
+      }
+    end
+
+    def self.first_year_pathway_items(undergrad_new_admit_attributes)
+      pathways_link = LinkFetcher.fetch_link('UC_ADMT_FYPATH_FA_SPG') if first_year_spring_admit? undergrad_new_admit_attributes
+      pathways_message = get_message :spring_pathways if first_year_spring_admit? undergrad_new_admit_attributes
+
+      items = {
+        pathways_link: pathways_link,
+        pathways_message: pathways_message
+      }
+      items[:title] = 'Housing or Pathway' if first_year_fall_admit? undergrad_new_admit_attributes
+      items
+    end
+
+    def self.instruction(undergrad_status, undergrad_new_admit_attributes)
+      return get_message :fall_pathways if first_year_fall_admit? undergrad_new_admit_attributes
+      return get_message :generic if undergrad_status
+    end
+
+    def self.find_undergrad_new_admit_status
+      sir_status_feed = CampusSolutions::Sir::SirStatuses.new(@uid).get_feed
+      sir_statuses = sir_status_feed.try(:[], :sirStatuses)
+      sir_statuses.try(:find) {|status| status[:isUndergraduate]}
+    end
+
+    def self.continuing_undergrad?
+      is_undergrad = User::AggregatedAttributes.new(@uid).get_feed[:roles][:undergrad]
+      is_continuing = !MyAcademics::MyAcademicRoles.new(@uid).get_feed['ugrdNonDegree']
+      is_undergrad && is_continuing
+    end
+
+    def self.first_year_fall_admit?(undergrad_new_admit_attributes)
+      first_year_pathway = undergrad_new_admit_attributes.try(:[], :roles).try(:[], :firstYearPathway)
+      admit_term = undergrad_new_admit_attributes.try(:[], :admitTerm)
+      first_year_pathway && admit_term.try(:[], :type) == 'Fall'
+    end
+
+    def self.first_year_spring_admit?(undergrad_new_admit_attributes)
+      first_year_pathway = undergrad_new_admit_attributes.try(:[], :roles).try(:[], :firstYearPathway)
+      admit_term = undergrad_new_admit_attributes.try(:[], :admitTerm)
+      first_year_pathway && admit_term.try(:[], :type) == 'Spring'
+    end
+
+    def self.get_message(type)
+      CampusSolutions::MessageCatalog.get_message_catalog_definition('26500', INSTRUCTIONAL_MESSAGE_NUMBERS[type])
     end
   end
 end

@@ -46,7 +46,8 @@ module Concerns
 
     # Role(s) assigned to a user if they are in a program associated with that role.
     ACADEMIC_PROGRAM_ROLES = [
-      {role_code: 'lettersAndScience', match: ['UCLS']}
+      {role_code: 'lettersAndScience', match: ['UCLS']},
+      {role_code: 'ugrdNonDegree', match: ['UNODG']}
     ]
 
     # Role(s) assigned to a user if they are in a career associated with that role.

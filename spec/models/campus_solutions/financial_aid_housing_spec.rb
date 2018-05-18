@@ -1,6 +1,8 @@
 describe CampusSolutions::FinancialAidHousing do
   subject { CampusSolutions::FinancialAidHousing.append_housing(uid, feed) }
   let(:uid) { random_id }
+  let(:undergrad) { false }
+  let(:non_degree_undergrad) { false }
   let(:raw_feed) { {:feed => {}} }
   let(:feed_with_housing) do
     {
@@ -37,6 +39,8 @@ describe CampusSolutions::FinancialAidHousing do
   end
 
   before do
+    allow_any_instance_of(User::AggregatedAttributes).to receive(:get_feed).and_return({ :roles => { :undergrad => undergrad }})
+    allow_any_instance_of(MyAcademics::MyAcademicRoles).to receive(:get_feed).and_return({ 'ugrdNonDegree' => non_degree_undergrad })
     allow(LinkFetcher).to receive(:fetch_link).with('UC_ADMT_FYPATH_FA_SPG').and_return(spring_first_year_pathway_link)
     allow(CampusSolutions::MessageCatalog).to receive(:get_message_catalog_definition) do |msg_set_nbr, msg_nbr|
       case msg_nbr
@@ -50,7 +54,7 @@ describe CampusSolutions::FinancialAidHousing do
     end
   end
 
-  context '#append_housing' do
+  describe '#append_housing' do
     context 'when housing data not present within feed' do
       let(:feed) { raw_feed }
       it 'returns feed' do
@@ -64,10 +68,19 @@ describe CampusSolutions::FinancialAidHousing do
       context 'when sir statuses not present (non-ugrd)' do
         let(:sir_statuses) { nil }
         it 'excludes generic housing instructional message' do
-          expect(subject[:feed][:housing][:instruction]).to_not be
+          expect(subject[:feed][:housing][:instruction]).to be nil
         end
         it 'excludes housing update link' do
-          expect(subject[:feed][:housing][:link]).to_not be
+          expect(subject[:feed][:housing][:link]).to be nil
+        end
+        context 'when user is continuing undergrad' do
+          let(:undergrad) { true }
+          it 'includes housing update link' do
+            expect(subject[:feed][:housing][:link]).to be
+            expect(subject[:feed][:housing][:link][:name]).to eq 'Update Housing'
+            expect(subject[:feed][:housing][:link][:title]).to eq 'Update Housing'
+            expect(subject[:feed][:housing][:link][:url]).to eq 'https://bcs.example.com/housing_update/'
+          end
         end
       end
       context 'when sir statuses present' do
@@ -81,10 +94,19 @@ describe CampusSolutions::FinancialAidHousing do
         context 'when ugrd status not present' do
           let(:sir_statuses) { [{isUndergraduate: false}] }
           it 'excludes generic housing instructional message' do
-            expect(subject[:feed][:housing][:instruction]).to_not be
+            expect(subject[:feed][:housing][:instruction]).to be nil
           end
           it 'excludes housing update link' do
-            expect(subject[:feed][:housing][:link]).to_not be
+            expect(subject[:feed][:housing][:link]).to be nil
+          end
+          context 'when user is continuing undergrad' do
+            let(:undergrad) { true }
+            it 'includes housing update link' do
+              expect(subject[:feed][:housing][:link]).to be
+              expect(subject[:feed][:housing][:link][:name]).to eq 'Update Housing'
+              expect(subject[:feed][:housing][:link][:title]).to eq 'Update Housing'
+              expect(subject[:feed][:housing][:link][:url]).to eq 'https://bcs.example.com/housing_update/'
+            end
           end
         end
         context 'when ugrd status present' do
@@ -185,5 +207,4 @@ describe CampusSolutions::FinancialAidHousing do
       end
     end
   end
-
 end
