@@ -21,24 +21,8 @@ angular.module('calcentral.controllers').controller('AcademicSummaryController',
     });
   };
 
-  var parseTransferCredit = function() {
-    $scope.showTransferCredit = showTransferCredit();
-    if (!showTransferCredit) {
-      return;
-    } else {
-      $scope.showPointsColumn = showTransferCreditPoints(_.get($scope, 'transferCredit.ucTransferCrseSch.items'));
-    }
-  };
-
-  var showTransferCredit = function() {
-    return !!(_.get($scope, 'transferCredit.ucTransferCrseSch.unitsTotal') || _.get('transferCredit.ucTestComponent.totalTestUnits'));
-  };
-
-  var showTransferCreditPoints = function(creditItems) {
-    // If one transfer credit institution includes a 'ucbGradePoints' value, show the Points column.  Otherwise, hide it.
-    return !!_.find(creditItems, function(credit) {
-      return (_.get(credit, 'ucbGradePoints') > 0);
-    });
+  var parseTransferCredit = function(response) {
+    $scope.transferCredits = _.get(response, 'data');
   };
 
   var hasPoints = function(classSection) {
@@ -85,12 +69,29 @@ angular.module('calcentral.controllers').controller('AcademicSummaryController',
     parseSemesters(_.get(response, 'data.semesters'));
     parseTermHonors();
     parseTermUnits();
-    parseTransferCredit();
   };
 
   var parsePerson = function(response) {
     var names = _.get(response, 'data.feed.student.names');
     $scope.primaryName = apiService.profile.findPrimary(names);
+  };
+
+  $scope.showTransferCreditPoints = function(career) {
+    if (career === 'law') {
+      return false;
+    }
+    return _.some($scope.transferCredits[career].detailed, function(credit) {
+      return (_.get(credit, 'gradePoints')) > 0;
+    });
+  };
+  $scope.hasTestUnits = function(career) {
+    if (career !== 'undergraduate') {
+      return false;
+    }
+    var testCredits = _.values(_.pick($scope.transferCredits[career].summary, ['apTestUnits', 'ibTestUnits', 'alevelTestUnits']));
+    return _.some(testCredits, function(testCredit) {
+      return testCredit > 0;
+    });
   };
 
   // Similar to academicsController, we wait until user profile is fully loaded before hitting academics data
@@ -99,6 +100,8 @@ angular.module('calcentral.controllers').controller('AcademicSummaryController',
       $scope.canViewAcademics = apiService.user.profile.hasAcademicsTab;
       academicsFactory.getAcademics()
       .then(parseAcademics)
+      .then(academicsFactory.getTransferCredit)
+      .then(parseTransferCredit)
       .then(profileFactory.getPerson)
       .then(parsePerson)
       .finally(function() {

@@ -1,0 +1,41 @@
+{
+   "transferCreditDetails":{
+      "undergrad":[
+         {
+            "school":"Hogwarts School for Wizards",
+            "units":27,
+            "gradePoints":0
+         },
+         {
+            "school":"Barber Academy of Haircutting",
+            "units":0.5,
+            "gradePoints":0
+         },
+         {
+            "school":"The School for Anyone to Learn Anything",
+            "units":13,
+            "gradePoints":0
+         },
+         {
+            "school":"ACME School of Anvils and Anchors",
+            "units":12,
+            "gradePoints":38.8
+         }
+      ],
+      "grad":null,
+      "law":null
+   },
+   "transferCreditSummaries":{
+      "undergrad":{
+         "career":"UGRD",
+         "totalCumulativeUnits":169.5,
+         "totalTransferUnits":52.5,
+         "transferUnitsAdjusted":0,
+         "apTestUnits":0,
+         "ibTestUnits":0,
+         "alevelTestUnits":0
+      },
+      "grad":null,
+      "law":null
+   }
+}

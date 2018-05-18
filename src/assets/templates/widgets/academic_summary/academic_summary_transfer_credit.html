@@ -1,6 +1,6 @@
 <div class="cc-academic-summary-border-wrapper">
   <div class="row">
-    <div class="small-6 columns"><h4 class="cc-academic-summary-enrollment-header">Transfer Credit</h4></div>
+    <div class="small-6 columns"><h4 class="cc-academic-summary-transfer-credits-header" data-ng-bind-template="{{credit.summary.careerDescr}} Transfer Credit"></h4></div>
     <div data-ng-if="studentLinks.tcReportLink.url && api.user.profile.roles.student" class="small-6 columns cc-text-right">
       <a
         class="cc-academic-summary-enrollment-header"
@@ -11,54 +11,70 @@
     </div>
   </div>
   <div class="cc-table cc-academic-summary-content row">
-    <div class="cc-academic-summary-table-spacing" data-ng-if="transferCredit.ucTransferCrseSch.unitsTotal" data-ng-class="{'small-6 columns': transferCredit.ucTestComponent.totalTestUnits}">
-      <table>
+    <div class="cc-academic-summary-table-spacing" data-ng-if="credit.detailed.length" data-ng-class="{'small-6 columns': hasTestUnits(career)}">
+      <table class="cc-transfer-credits">
         <thead>
           <tr>
             <th>Institution</th>
             <th class="cc-table-right">Units</th>
-            <th data-ng-if="showPointsColumn" class="cc-table-center">Points</th>
+            <th data-ng-if="showTransferCreditPoints(career)" class="cc-table-right">Points</th>
+            <th data-ng-if="career === 'law'" class="cc-table-right">Law Units</th>
           </tr>
         </thead>
         <tbody>
-          <tr data-ng-repeat="credit in transferCredit.ucTransferCrseSch.items">
-            <td data-ng-bind="credit.institution"></td>
-            <td class="cc-text-right" data-ng-bind="credit.transferUnits | number:3"></td>
-            <td class="cc-text-center" data-ng-if="showPointsColumn && credit.ucbGradePoints" data-ng-bind="credit.ucbGradePoints | number:3"></td>
-            <td class="cc-text-center" data-ng-if="showPointsColumn && !credit.ucbGradePoints">&mdash;</td>
+          <tr class="cc-academic-summary-transfer-credit-row-law" data-ng-repeat="detailedCredit in credit.detailed">
+            <td>
+              <span data-ng-bind="detailedCredit.school"></span>
+              <div class="cc-requirement" data-ng-if="detailedCredit.requirementDesignation"><span data-ng-bind="detailedCredit.requirementDesignation"></span></div>
+            </td>
+            <td class="cc-text-right" data-ng-bind="detailedCredit.units | number:3"></td>
+            <td data-ng-if="showTransferCreditPoints(career) && detailedCredit.gradePoints > 0" class="cc-text-right">
+              <span data-ng-bind="detailedCredit.gradePoints | number:3"></span>
+            </td>
+            <td  data-ng-if="career === 'law'" class="cc-text-right">
+              <span data-ng-bind="detailedCredit.lawUnits | number:3"></span>
+            </td>
           </tr>
-          <tr>
-            <td class="cc-text-right" colspan="2">Total Course Units: <strong data-ng-bind="transferCredit.ucTransferCrseSch.unitsAdjusted | number:3"></strong></td>
-            <td></td>
+          <tr data-ng-if="career !== 'law'">
+            <td class="cc-text-right">Total Course Units:</td>
+            <td class="cc-text-right"><strong data-ng-bind="credit.summary.totalTransferUnits | number:3"></strong></td>
           </tr>
-          <tr>
-            <td class="cc-text-right" colspan="2" data-ng-if="transferCredit.ucTransferCrseSch.unitsTotal && (transferCredit.ucTransferCrseSch.unitsTotal !== transferCredit.ucTransferCrseSch.unitsAdjusted)" data-ng-bind-template="Non-Adjusted Course Units: {{transferCredit.ucTransferCrseSch.unitsTotal | number:3}}"></td>
-            <td></td>
+          <tr data-ng-if="career !== 'law' && credit.summary.transferUnitsAdjusted > 0">
+            <td class="cc-text-right">Non-Adjusted Course Units:</td>
+            <td class="cc-text-right"><strong data-ng-bind="credit.summary.totalTransferUnits + credit.summary.transferUnitsAdjusted | number:3"></strong></td>
+          </tr>
+          <tr data-ng-if="career === 'law'">
+            <td class="cc-text-right">Totals:</td>
+            <td class="cc-text-right"><strong  data-ng-bind="credit.summary.totalTransferUnits | number:3"></strong></td>
+            <td class="cc-text-right"><strong data-ng-bind="credit.summary.totalTransferUnitsLaw | number:3"></strong></td>
           </tr>
         </tbody>
       </table>
     </div>
-    <div class="cc-academic-summary-table-spacing" data-ng-if="transferCredit.ucTestComponent.totalTestUnits" data-ng-class="{'small-6 columns': transferCredit.ucTransferCrseSch.unitsTotal}">
-      <table>
+    <div class="cc-academic-summary-table-spacing" data-ng-if="hasTestUnits(career)" data-ng-class="{'small-6 columns': credit.detailed.length}">
+      <table class="cc-transfer-credits" data-ng-class="{'cc-academic-summary-table-multiple':credit.detailed.length}">
         <thead>
-          <th data-ng-class="{'cc-academic-summary-table-multiple':(transferCredit.ucTransferCrseSch.unitsTotal && transferCredit.ucTestComponent.totalTestUnits)}">Test Credit</th>
+          <th >Test Credit</th>
           <th class="cc-table-right">Units</th>
         </thead>
         <tbody>
-          <tr data-ng-if="transferCredit.ucTestComponent.apUnits">
-            <td data-ng-class="{'cc-academic-summary-table-multiple':(transferCredit.ucTransferCrseSch.unitsTotal && transferCredit.ucTestComponent.totalTestUnits)}">Advanced Placement (AP)</td>
-            <td class="cc-text-right" data-ng-bind="transferCredit.ucTestComponent.apUnits | number:3"></td>
+          <tr data-ng-if="credit.summary.apTestUnits">
+            <td>Advanced Placement (AP)</td>
+            <td class="cc-text-right" data-ng-bind="credit.summary.apTestUnits | number:3"></td>
           </tr>
-          <tr data-ng-if="transferCredit.ucTestComponent.ibUnits">
-            <td data-ng-class="{'cc-academic-summary-table-multiple':(transferCredit.ucTransferCrseSch.unitsTotal && transferCredit.ucTestComponent.totalTestUnits)}">International Baccalaureate (IB)</td>
-            <td class="cc-text-right" data-ng-bind="transferCredit.ucTestComponent.ibUnits | number:3"></td>
+          <tr data-ng-if="credit.summary.ibTestUnits">
+            <td>International Baccalaureate (IB)</td>
+            <td class="cc-text-right" data-ng-bind="credit.summary.ibTestUnits | number:3"></td>
           </tr>
-          <tr data-ng-if="transferCredit.ucTestComponent.alevelUnits">
-            <td data-ng-class="{'cc-academic-summary-table-multiple':(transferCredit.ucTransferCrseSch.unitsTotal && transferCredit.ucTestComponent.totalTestUnits)}">GCE Advanced-Level (A-level)</td>
-            <td class="cc-text-right" data-ng-bind="transferCredit.ucTestComponent.alevelUnits | number:3"></td>
+          <tr data-ng-if="credit.summary.alevelTestUnits">
+            <td>GCE Advanced-Level (A-level)</td>
+            <td class="cc-text-right" data-ng-bind="credit.summary.alevelTestUnits | number:3"></td>
           </tr>
           <tr>
-            <td class="cc-text-right" colspan="2">Total Test Units: <strong data-ng-bind="transferCredit.ucTestComponent.totalTestUnits | number:3"></strong></td>
+            <td class="cc-text-right">Total Test Units:</td>
+            <td class="cc-text-right">
+                <strong data-ng-bind="credit.summary.apTestUnits + credit.summary.ibTestUnits + credit.summary.alevelTestUnits | number:3"></strong>
+            </td>
           </tr>
         </tbody>
       </table>

@@ -10,10 +10,13 @@
     <div class="cc-academic-summary-margin-bottom" data-ng-include="'widgets/academic_summary/academic_summary_student_profile.html'"></div>
     <div data-ng-if="showTransferCredit || showSemesters">
       <h3>Enrollment</h3>
-      <span data-ng-if="api.user.profile.features.hubTermApi">
+      <span class="cc-academic-summary-legacy-note" data-ng-if="api.user.profile.features.hubTermApi">
         <strong>Note: </strong>Enrollment data for current term and back to Spring 2010 (where applicable) is displayed. <button class="cc-button-link" data-ng-show="!showMore" data-ng-click="showMore=!showMore">Show more</button>
         <span data-ng-if="showMore"> If enrollments exist in terms prior to Spring 2010, the data will be displayed in Summer 2017. If you require a full record now, please order a transcript.</span>
       </span>
+    </div>
+    <div data-ng-repeat="(career, credit) in transferCredits">
+      <div data-ng-include="'widgets/academic_summary/academic_summary_transfer_credit.html'" data-ng-if="credit.detailed.length || hasTestUnits(career)"></div>
     </div>
     <div data-ng-if="showTransferCredit" data-ng-include="'widgets/academic_summary/academic_summary_transfer_credit.html'"></div>
     <div data-ng-if="showSemesters" data-ng-repeat="semester in semesters | orderBy:'-'" data-ng-include="'widgets/academic_summary/academic_summary_semesters.html'"></div>
@@ -33,9 +36,9 @@
             </thead>
             <tfoot>
               <tr>
-                <th colspan="2" scope="row" class="cc-table-right cc-academic-summary-table-units">Earned Total:</th>
-                <td data-ng-bind="gpaUnits.totalUnits.toFixed(1)" class="cc-table-right cc-academic-summary-table-units"></td>
-                <td data-ng-bind="gpaUnits.totalLawUnits.toFixed(1)" class="cc-table-right cc-academic-summary-table-units"></td>
+                <td colspan="2" scope="row" class="cc-table-right cc-academic-summary-table-units">Earned Total:</td>
+                <td class="cc-table-right cc-academic-summary-table-units"><strong data-ng-bind="gpaUnits.totalUnits.toFixed(1)"></strong></td>
+                <td class="cc-table-right cc-academic-summary-table-units"><strong data-ng-bind="gpaUnits.totalLawUnits.toFixed(1)"></strong></td>
                 <td></td>
                 <td></td>
               </tr>

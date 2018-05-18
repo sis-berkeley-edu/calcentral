@@ -730,5 +730,45 @@ module EdoOracle
       return result
     end
 
+    def self.get_transfer_credit_detailed (student_id)
+      safe_query <<-SQL
+        SELECT TC.ACAD_CAREER as career,
+          TC.SCHOOL_DESCR as school_descr,
+          TC.UNITS_TRNSFR as transfer_units,
+          TC.UNITS_TRNSFR_LAW as law_transfer_units,
+          TC.RQMNT_DESIGNTN_DESCRFORMAL as requirement_designation,
+          TC.TRF_GRADE_POINTS as grade_points
+        FROM SISEDO.CLC_TRANSFER_CREDIT_SCHLV00_VW TC
+        WHERE STUDENT_ID = '#{student_id}'
+          #{and_institution('TC')}
+      SQL
+    end
+
+    def self.get_transfer_credit_summary (student_id)
+      safe_query <<-SQL
+        SELECT SC.ACAD_CAREER as career,
+          SC.TOTAL_CUMULATIVE_UNITS as total_cumulative_units,
+          SC.TOTAL_TRANSFER_UNITS as total_transfer_units,
+          SC.TRANSFER_CREDIT_UNITS_ADJUSTMENT as transfer_units_adjusted,
+          SC.TRANSFER_TEST_UNITS_AP as ap_test_units,
+          SC.TRANSFER_TEST_UNITS_IB as ib_test_units,
+          SC.TRANSFER_TEST_UNITS_ALEVEL as alevel_test_units
+        FROM SISEDO.CLC_STUDENT_CAREERV00_VW SC
+        WHERE STUDENT_ID = '#{student_id}'
+          #{and_institution('SC')}
+      SQL
+    end
+
+    def self.get_total_transfer_units_law (student_id)
+      results = safe_query <<-SQL
+        SELECT SC.TOTAL_TRANSFER_UNITS_LAW as total_transfer_units_law
+        FROM SISEDO.CLC_STUDENT_CAREER_LAWV00_VW SC
+        WHERE STUDENT_ID = '#{student_id}'
+          AND ACAD_CAREER = 'LAW'
+          #{and_institution('SC')}
+      SQL
+      results.first
+    end
+
   end
 end
