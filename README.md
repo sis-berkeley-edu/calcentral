@@ -12,7 +12,7 @@
 * [JDBC Oracle driver](http://www.oracle.com/technetwork/database/enterprise-edition/jdbc-112010-090769.html)
 * [Java 8 SDK](http://www.oracle.com/technetwork/java/javase/downloads/index.html)
 * [JRuby 9.1.14.0](http://jruby.org/)
-* [Node.js >=0.10.30](http://nodejs.org/)
+* [Node.js >=8.9.4](http://nodejs.org/)
 * [PostgreSQL](http://www.postgresql.org/)
 * [Rubygems 2.5.1](https://rubygems.org/pages/download)
 * [RVM](https://rvm.io/rvm/install/) - Ruby version managers
