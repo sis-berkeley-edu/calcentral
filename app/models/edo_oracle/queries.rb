@@ -661,7 +661,8 @@ module EdoOracle
         FROM
           SISEDO.STUDENT_ACAD_STNDNGV00_VW
         WHERE
-          STUDENT_ID = '#{student_id}'
+          STUDENT_ID = '#{student_id}' AND
+          ACADCAREER_CODE = 'UGRD'
       SQL
     end
 
