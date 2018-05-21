@@ -147,7 +147,7 @@ module EdoOracle
       SQL
     end
 
-    def self.get_enrolled_sections(person_id, academic_careers, terms)
+    def self.get_enrolled_sections(person_id, terms)
       # The push_pred hint below alerts Oracle to use indexes on SISEDO.API_COURSEV00_VW, aka crs.
       in_term_where_clause = "enr.\"TERM_ID\" IN (#{terms_query_list terms}) AND " if Settings.features.hub_term_api
       safe_query <<-SQL
@@ -176,7 +176,6 @@ module EdoOracle
         #{JOIN_SECTION_TO_COURSE}
         WHERE  #{in_term_where_clause}
           enr."CAMPUS_UID" = '#{person_id}'
-          #{and_academic_career('enr', academic_careers)}
           #{and_institution('enr')}
           AND enr."STDNT_ENRL_STATUS_CODE" != 'D'
           #{where_course_term_updated_date}
