@@ -42,7 +42,7 @@
                       <span data-ng-bind="semester.withdrawalStatus.withcnclFromDate"></span> (Reason:<span data-ng-bind="semester.withdrawalStatus.withcnclReasonDescr">)</span>
                     </td>
                   </tr>
-                  <tr data-ng-if="semester.hasStandingData">
+                  <tr data-ng-if="semester.hasStandingData && semester.standing.acadStandingStatus !== 'GST'">
                     <td>
                       <i class="fa fa-exclamation-circle cc-icon-red" aria-hidden="true"></i>
                     </td>
