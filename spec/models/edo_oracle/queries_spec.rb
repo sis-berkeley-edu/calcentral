@@ -89,10 +89,9 @@ describe EdoOracle::Queries do
   end
 
   describe '#get_enrolled_sections', testext: false do
-    subject { described_class.get_enrolled_sections(uid, careers, terms) }
+    subject { described_class.get_enrolled_sections(uid, terms) }
     let(:uid) { 799934 }
     let(:terms) { nil }
-    let(:careers) { nil }
 
     it_behaves_like 'a successful query'
 
@@ -163,15 +162,6 @@ describe EdoOracle::Queries do
         expect(subject.count).to eq 2
         expect(subject[0]['term_id']).to eq '2178'
         expect(subject[1]['term_id']).to eq '2178'
-      end
-    end
-    context 'when constrained by careers' do
-      let(:uid) { 300216 }
-      let(:careers) { ['GRAD'] }
-      it_behaves_like 'a successful query'
-      it 'returns only enrollments associated with the specified careers' do
-        expect(subject.count).to eq 1
-        expect(subject[0]['acad_career']).to eq 'GRAD'
       end
     end
     context 'when no UID provided' do

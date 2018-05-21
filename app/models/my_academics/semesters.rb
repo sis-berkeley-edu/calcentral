@@ -9,9 +9,9 @@ module MyAcademics
 
     def merge(data)
       if (@filtered = data[:filteredForDelegate])
-        enrollments = EdoOracle::UserCourses::All.new(user_id: @uid).get_enrollments_summary(academic_careers)
+        enrollments = EdoOracle::UserCourses::All.new(user_id: @uid).get_enrollments_summary
       else
-        enrollments = EdoOracle::UserCourses::All.new(user_id: @uid).get_all_campus_courses(academic_careers)
+        enrollments = EdoOracle::UserCourses::All.new(user_id: @uid).get_all_campus_courses
       end
 
       campus_solution_id = CalnetCrosswalk::ByUid.new(user_id: @uid).lookup_campus_solutions_id
@@ -28,13 +28,8 @@ module MyAcademics
       academic_standings ||= []
     end
 
-    def academic_careers
-      return nil unless law_student?
-      careers = active_or_all EdoOracle::Career.new(user_id: @uid).fetch
-      careers.try(:map) {|career| career.try(:[], 'acad_career')}
-    end
-
     def semester_feed(enrollment_terms, reg_status_data, standing_data)
+      academic_careers = find_academic_careers
       study_prog_data = reg_status_data.select{|row| row['splstudyprog_type_code'].present?}
       withdrawal_data = reg_status_data.select{|row| row['withcncl_type_code'].present?}
 
@@ -47,7 +42,7 @@ module MyAcademics
         semester[:filteredForDelegate] = !!@filtered
         if enrollment_terms[term_key]
           semester[:hasEnrollmentData] = true
-          semester[:classes] = map_enrollments(enrollment_terms[term_key], semester[:termId]).compact
+          semester[:classes] = map_enrollments(enrollment_terms[term_key], academic_careers, semester[:termId]).compact
           semester[:hasEnrolledClasses] = has_enrolled_classes?(enrollment_terms[term_key])
           merge_grades(semester)
           semester.merge! unit_totals(enrollment_terms[term_key])
@@ -58,6 +53,11 @@ module MyAcademics
         merge_standings(semester, standing_data)
         semester unless semester[:classes].empty? && !semester[:hasWithdrawalData] && !semester[:hasStudyProgData]
       end
+    end
+
+    def find_academic_careers
+      careers = active_or_all EdoOracle::Career.new(user_id: @uid).fetch
+      careers.try(:map) {|career| career.try(:[], 'acad_career')}
     end
 
     def unit_totals(enrollments = [])
@@ -146,9 +146,10 @@ module MyAcademics
       data
     end
 
-    def map_enrollments(enrollment_term, term_id)
+    def map_enrollments(enrollment_term, academic_careers, term_id)
       enrollment_term.map do |course|
         next unless course[:role] == 'Student'
+        next if law_student? && !academic_careers.include?(course[:academicCareer])
         mapped_course = course_info course
         if @filtered
           mapped_course.delete :url
