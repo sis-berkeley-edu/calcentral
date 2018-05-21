@@ -12,11 +12,11 @@ module EdoOracle
         !uid.blank?
       end
 
-      def merge_enrollments(campus_classes, academic_careers = nil)
+      def merge_enrollments(campus_classes)
         return if @non_legacy_academic_terms.empty?
         previous_item = {}
 
-        EdoOracle::Queries.get_enrolled_sections(@uid, academic_careers, @non_legacy_academic_terms).each do |row|
+        EdoOracle::Queries.get_enrolled_sections(@uid, @non_legacy_academic_terms).each do |row|
           if (item = row_to_feed_item(row, previous_item))
             item[:role] = 'Student'
             # Cross-listed courses may lack descriptive names. Students, unlike instructors, will
