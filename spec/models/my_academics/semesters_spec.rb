@@ -508,7 +508,7 @@ describe MyAcademics::Semesters do
               'term_id' => '2168',
               'class_nbr' => '123456',
               'reserved_seats' => '40',
-              'reserved_seats_taken' => '39',
+              'reserved_seats_taken' => '41',
               'requirement_group_descr' => 'Enrollment by Permission'
             },
           ]
@@ -555,10 +555,24 @@ describe MyAcademics::Semesters do
                   expect(semester[:termId]).to eq('2168')
 
                   expect(section[:capacity]).to be
-                  expect(section[:capacity][:unreservedSeats]).to eq('12')
+                  expect(section[:capacity][:unreservedSeats]).to eq('14')
                   expect(section[:capacity][:reservedSeats].length).to eq(3)
                   expect(section[:capacity][:reservedSeats][0][:seats]).to eq('9')
                   expect(section[:capacity][:reservedSeats][0][:seatsFor]).to eq('Music major')
+                end
+              end
+            end
+          end
+        end
+
+        it 'should say N/A when there are negative reserved seats for sections that are ccn=123456 in term 2016' do
+          feed[:semesters].each do |semester|
+            semester[:classes].each do |course|
+              course[:sections].each do |section|
+                if section[:ccn] == '123456'
+                  expect(section[:hasReservedSeats]).to be true
+                  expect(semester[:termId]).to eq('2168')
+                  expect(section[:capacity][:reservedSeats][2][:seats]).to eq('N/A')
                 end
               end
             end
