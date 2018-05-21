@@ -192,19 +192,23 @@ module MyAcademics
           unreserved_seats_available = section_max_enroll.to_i - section_enrolled_count.to_i - available_reserved_total.to_i
         end
         section[:capacity] = {
-            unreservedSeats: unreserved_seats_available.to_s,
+            unreservedSeats: format_capacity(unreserved_seats_available),
             reservedSeats: []
           }
         section_reserved_capacity.each do |row|
           available_reserved = row['reserved_seats'].to_i - row['reserved_seats_taken'].to_i
           section[:capacity][:reservedSeats].push(
             {
-              seats: available_reserved.to_s,
+              seats: format_capacity(available_reserved),
               seatsFor: row['requirement_group_descr']
             }
           )
         end
       end
+    end
+
+    def format_capacity(capacity_number)
+      capacity_number.to_i < 0 ? 'N/A' : capacity_number.to_s
     end
 
     def law_class_enrollment(course, section)
