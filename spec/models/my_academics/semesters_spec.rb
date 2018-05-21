@@ -1,40 +1,20 @@
 describe MyAcademics::Semesters do
 
-  describe '#academic_careers', testext: false do
-    subject { described_class.new(uid).academic_careers }
-
-    before do
-      allow_any_instance_of(MyAcademics::MyAcademicRoles).to receive(:get_feed).and_return academic_roles
-    end
+  describe '#find_academic_careers', testext: false do
+    subject { described_class.new(uid).find_academic_careers }
     let(:uid) { 300216 }
-    let(:academic_roles) do
-      {
-        'law'=> has_law_role
-      }
-    end
 
-    context 'when user is not a Law student' do
-      let(:has_law_role) { false }
-      it 'returns nil' do
-        expect(subject).to be nil
+    context 'with an active career' do
+      it 'returns a list of active careers' do
+        expect(subject).to contain_exactly('GRAD', 'LAW')
       end
     end
-    context 'when user is a Law student' do
-      let(:has_law_role) { true }
-
-      context 'with an active career' do
-        it 'returns a list of active careers' do
-          expect(subject).to contain_exactly('GRAD', 'LAW')
-        end
-      end
-      context 'with no active career' do
-        let(:uid) { 790833 }
-        it 'returns a list of all careers' do
-          expect(subject).to contain_exactly('UGRD', 'UCBX')
-        end
+    context 'with no active career' do
+      let(:uid) { 790833 }
+      it 'returns a list of all careers' do
+        expect(subject).to contain_exactly('UGRD', 'UCBX')
       end
     end
-
   end
 
   describe '#semester_feed', testext: false do
