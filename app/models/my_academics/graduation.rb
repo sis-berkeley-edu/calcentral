@@ -49,10 +49,8 @@ module MyAcademics
       terms_with_appointments.include?(term_code)
     end
 
-    def concurrent_student?
-      cs_id = lookup_campus_solutions_id @uid
-      status = EdoOracle::Queries.get_concurrent_student_status cs_id
-      status.try(:[], 'concurrent_status') == 'Y'
+    def is_concurrent_student
+      @is_concurrent_student ||= EdoOracle::Student.new(user_id: @uid).concurrent?
     end
 
     def extract_latest_undergraduate_graduation_term
@@ -81,7 +79,7 @@ module MyAcademics
 
       if non_ugrd_statuses.length > 1
         # CalCentral only shows expected graduation for GRAD careers if the student has concurrent status
-        non_ugrd_statuses = concurrent_student? ? non_ugrd_statuses : all_law_statuses(non_ugrd_statuses)
+        non_ugrd_statuses = is_concurrent_student ? non_ugrd_statuses : all_law_statuses(non_ugrd_statuses)
       end
 
       plans = active_plans_from_statuses non_ugrd_statuses
