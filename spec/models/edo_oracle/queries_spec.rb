@@ -192,6 +192,17 @@ describe EdoOracle::Queries do
     end
   end
 
+  describe '#get_concurrent_student_status' do
+    subject { described_class.get_concurrent_student_status(student_id) }
+    let (:student_id) { 95727964 }
+
+    it_behaves_like 'a successful query that returns one result'
+
+    it 'returns the expected result' do
+      expect(subject['concurrent_status']).to eq 'Y'
+    end
+  end
+
   context 'when connecting to an external database', :ignore => true do
     # Stubbing terms not available in TestExt env
     let(:summer_2016_db_term) do
