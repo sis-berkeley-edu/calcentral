@@ -101,8 +101,66 @@ describe MyAcademics::Semesters do
         end
       end
     end
+    context 'when student is in a concurrent (GRAD+LAW) program' do
+      before do
+        allow(User::Identifiers).to receive(:lookup_campus_solutions_id).and_return '95727964'
+      end
+      let(:uid) { 300216 }
+      it 'suppresses Grade Points on both Grad and Law classes' do
+        expect(subject[0][:classes][0][:academicCareer]).to eq 'GRAD'
+        expect(subject[0][:classes][0][:sections][0][:grading][:gradePoints]).to be nil
+        expect(subject[0][:classes][0][:sections][0][:grading][:gradingBasis]).to eq 'CNC'
+
+        expect(subject[0][:classes][1][:academicCareer]).to eq 'LAW'
+        expect(subject[0][:classes][1][:sections][0][:grading][:gradePoints]).to be nil
+        expect(subject[0][:classes][1][:sections][0][:grading][:gradingBasis]).to eq 'GRD'
+
+        expect(subject[0][:classes][2][:academicCareer]).to eq 'LAW'
+        expect(subject[0][:classes][2][:sections][0][:grading][:gradePoints]).to be nil
+        expect(subject[0][:classes][2][:sections][0][:grading][:gradingBasis]).to eq 'GRD'
+      end
+    end
   end
 
+  describe '#hide_points?' do
+    subject { described_class.new(uid).hide_points? course  }
+    let(:uid) { 300216 }
+    let(:course) do
+      {
+        academicCareer: class_career
+      }
+    end
+
+    context 'when class is for Law' do
+      let(:class_career) { 'LAW' }
+      it 'returns true' do
+        expect(subject).to be true
+      end
+    end
+    context 'when student is in a concurrent (GRAD+LAW) program' do
+      before do
+        allow(User::Identifiers).to receive(:lookup_campus_solutions_id).and_return '95727964'
+      end
+      context 'and class is for Undergrad' do
+        let(:class_career) { 'UGRD' }
+        it 'returns false' do
+          expect(subject).to be false
+        end
+      end
+      context 'and class is for Grad' do
+        let(:class_career) { 'GRAD' }
+        it 'returns true' do
+          expect(subject).to be true
+        end
+      end
+      context 'and class is for Law' do
+        let(:class_career) { 'LAW' }
+        it 'returns true' do
+          expect(subject).to be true
+        end
+      end
+    end
+  end
   context 'using stubbed proxy' do
     let(:feed) { {}.tap { |feed| MyAcademics::Semesters.new(random_id).merge(feed) } }
 
