@@ -167,7 +167,7 @@ module MyAcademics
             if section[:waitlisted]
               map_reserved_seats(term_id, section)
             end
-            section[:grading][:gradePoints] = nil if law_class? course
+            section[:grading][:gradePoints] = nil if hide_points? course
             section[:isLaw] = law_class? course
             section.merge!(law_class_enrollment(course, section))
           end
@@ -254,6 +254,10 @@ module MyAcademics
       end
     end
 
+    def hide_points?(course)
+      (law_class? course) || (grad_class?(course) && is_concurrent_student)
+    end
+
     def law_student?
       roles = MyAcademics::MyAcademicRoles.new(@uid).get_feed
       !!roles['law']
@@ -263,5 +267,12 @@ module MyAcademics
       :LAW == course[:academicCareer].try(:intern)
     end
 
+    def grad_class?(course)
+      :GRAD == course[:academicCareer].try(:intern)
+    end
+
+    def is_concurrent_student
+      @is_concurrent_student ||= EdoOracle::Student.new(user_id: @uid).concurrent?
+    end
   end
 end
