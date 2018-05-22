@@ -274,7 +274,6 @@ describe MyAcademics::Grading do
   end
 
   context 'when adding grading dates to semesters and summer sections' do
-
     describe '#add_grading_dates' do
       context 'when semester is not supported by campus solutions grading interface' do
         let(:semester_one_term_id) { '2142' }
@@ -315,7 +314,265 @@ describe MyAcademics::Grading do
         end
       end
     end
+  end
 
+  context 'when obtaining cs grading status' do
+    let(:cs_grading_feed) do
+      {
+        statusCode: 200,
+        feed: {
+          ucSrClassGrading: {
+            classGradingStatuses: {
+              classGradingStatus: [
+                cs_class_grading_status_1
+              ]
+            }
+          }
+        }
+      }
+    end
+
+    let(:cs_class_grading_status_1) do
+      {
+        strm: semester_one_term_id,
+        classNbr: '10001',
+        courseTitle: 'MATH 101',
+        classSection: '0001',
+        classTitle: 'Some Math',
+        ssrComponentCode: 'LEC',
+        ssrComponent: 'Lecture',
+        classType: 'E',
+        classSectionAssociationId: '1',
+        roster: grading_status_rosters
+      }
+    end
+    let(:grading_status_rosters) do
+      [
+        midterm_roster,
+        final_roster
+      ]
+    end
+    let(:midterm_roster) do
+      {
+        gradeRosterTypeCode: 'MID',
+        gradeRosterType: 'Mid-Term Grade',
+        gradingStatusCode: 'GRD',
+        gradingStatus: 'Grade Input Allowed',
+        grApprovalStatusCode: 'APPR',
+        grApprovalStatus: 'Approved',
+        approvalDate: '2017-03-13',
+        postingDate: nil,
+        partialPost: 'N',
+        overrideGradePoster: 'N'
+      }
+    end
+    let(:final_roster) do
+      {
+        gradeRosterTypeCode: 'FIN',
+        gradeRosterType: 'Final Grade',
+        gradingStatusCode: 'POST',
+        gradingStatus: 'Posted',
+        grApprovalStatusCode: 'APPR',
+        grApprovalStatus: 'Approved',
+        approvalDate: nil,
+        postingDate: '2017-05-19',
+        partialPost: 'N',
+        overrideGradePoster: 'N'
+      }
+    end
+
+    before { allow_any_instance_of(CampusSolutions::Grading).to receive(:get).and_return(cs_grading_feed) }
+
+    describe '#get_cs_status' do
+      let(:ccn) { '10001' }
+      let(:term_id) { semester_one_term_id }
+      let(:is_law) { false }
+      let(:cs_status) { subject.get_cs_status(ccn, is_law, term_id) }
+      context 'when grading status is present' do
+        it 'returns grading status from feed' do
+          expect(cs_status).to eq({ midpointStatus: 'APPR', finalStatus: 'POST' })
+        end
+      end
+      context 'when grading feed not present' do
+        let(:cs_grading_feed) { nil }
+        it 'returns nil' do
+          expect(cs_status).to eq nil
+        end
+      end
+    end
+
+    describe '#find_status_in_rosters' do
+      let(:is_law) { false }
+      let(:is_summer) { false }
+      let(:status_in_roster) { subject.find_status_in_rosters(rosters, is_law, is_summer) }
+      context 'when rosters is blank' do
+        let(:rosters) { nil }
+        it 'returns blank codes for both statuses' do
+          expect(status_in_roster).to eq({midpointStatus: nil, finalStatus: nil})
+        end
+      end
+      context 'when rosters is a single roster' do
+        let(:rosters) { final_roster }
+        it 'returns only the final status' do
+          expect(status_in_roster).to eq({midpointStatus: nil, finalStatus: 'POST'})
+        end
+      end
+      context 'when rosters is an array' do
+        let(:rosters) { grading_status_rosters }
+        context 'when processing grading roster status for law course' do
+          let(:is_law) { true }
+          it 'returns only the final status' do
+            expect(status_in_roster).to eq({finalStatus: 'POST'})
+          end
+        end
+        context 'when processing grading roster status for summer term courses' do
+          let(:is_summer) { true }
+          it 'returns only the final status' do
+            expect(status_in_roster).to eq({finalStatus: 'POST'})
+          end
+        end
+        context 'when processing grading roster status for non-law spring or fall courses' do
+          it 'returns both statuses' do
+            expect(status_in_roster).to eq({midpointStatus: 'APPR', finalStatus: 'POST'})
+          end
+        end
+      end
+    end
+  end
+
+  describe '#parse_cs_grading_status' do
+    let(:cs_grading_status) do
+      { midpointStatus: 'APPR', finalStatus: 'GRD' }
+    end
+    let(:is_law) { false }
+    let(:is_summer) { false }
+    let(:grading_status) { subject.parse_cs_grading_status(cs_grading_status, is_law, is_summer) }
+    let(:cs_grading_status) { { midpointStatus: cs_midpoint_grading_status, finalStatus: cs_final_grading_status } }
+    let(:cs_midpoint_grading_status) { 'APPR' }
+    let(:cs_final_grading_status) { 'GRD' }
+    context 'when cs status is not expected' do
+      context 'when midpoint grading status is incorrect' do
+        let(:cs_midpoint_grading_status) { 'XYU' }
+        it 'returns response indicating no cs data' do
+          expect(grading_status).to eq ({finalStatus: :noCsData,midpointStatus: :noCsData})
+        end
+      end
+      context 'when final grading status is incorrect' do
+        let(:cs_final_grading_status) { 'XYU' }
+        it 'returns response indicating no cs data' do
+          expect(grading_status).to eq ({finalStatus: :noCsData,midpointStatus: :noCsData})
+        end
+      end
+    end
+    context 'when cs status is valid' do
+      context 'when status for law context ' do
+        let(:is_law) { true }
+        it 'returns status with appropriate final status symbol' do
+          expect(grading_status[:finalStatus]).to eq :GRD
+          expect(grading_status[:midpointStatus]).to_not eq :APPR
+        end
+      end
+      context 'when grading for summer session' do
+        let(:is_summer) { true }
+        it 'returns status with appropriate final status symbol' do
+          expect(grading_status[:finalStatus]).to eq :GRD
+          expect(grading_status[:midpointStatus]).to_not eq :APPR
+        end
+      end
+      context 'when grading for non-law non-summer context' do
+        it 'returns status for both midpoint and final grading' do
+          expect(grading_status[:finalStatus]).to eq :GRD
+          expect(grading_status[:midpointStatus]).to eq :APPR
+        end
+        context 'when cs status for midpoint is RDY' do
+          let(:cs_midpoint_grading_status) { 'RDY' }
+          it 'returns appropriate midpoint status' do
+            expect(grading_status[:midpointStatus]).to eq :NRVW
+          end
+        end
+        context 'when cs status for midpoint is NRVW' do
+          let(:cs_midpoint_grading_status) { 'NRVW' }
+          it 'returns appropriate midpoint status' do
+            expect(grading_status[:midpointStatus]).to eq :NRVW
+          end
+        end
+      end
+    end
+  end
+
+  describe '#parse_cc_grading_status' do
+    let(:cs_grading_status) { 'GRD' }
+    let(:is_law) { false }
+    let(:is_midpoint) { false }
+    let(:term_id) { semester_one_term_id }
+    let(:section) { nil }
+    let(:cc_grading_status) { subject.parse_cc_grading_status(cs_grading_status, is_law, is_midpoint, term_id, section) }
+
+    context 'when cs grading session configuration present' do
+      before { allow(subject).to receive(:cs_grading_session_config?).and_return(true) }
+      context 'when section present' do
+        let(:section) do
+          {
+            gradingPeriodStartDate: Time.parse('2018-01-10 00:00:00 UTC'),
+            gradingPeriodEndDate: Time.parse('2018-02-15 00:00:00 UTC')
+          }
+        end
+        let(:summer_grading_window) do
+          {
+            final_begin_date: section[:gradingPeriodStartDate],
+            final_end_date: section[:gradingPeriodEndDate]
+          }
+        end
+        it 'provides grading period status for summer grading window' do
+          expect(subject).to receive(:find_grading_period_status).with(summer_grading_window, false).and_return(:afterGradingPeriod)
+          expect(cc_grading_status).to eq :gradesOverdue
+        end
+      end
+      context 'when section not present' do
+        let(:grading_window) do
+          {
+            final_begin_date: Time.parse('2018-01-10 00:00:00 UTC'),
+            final_end_date: Time.parse('2018-02-15 00:00:00 UTC')
+          }
+        end
+        it 'provides grading period status for non-summer grading' do
+          expect(subject).to receive(:get_grading_dates).with(term_id, :general).and_return(grading_window)
+          expect(subject).to receive(:find_grading_period_status).with(grading_window, false).and_return(:afterGradingPeriod)
+          expect(cc_grading_status).to eq :gradesOverdue
+        end
+      end
+    end
+
+    context 'when cs grading session configuration is not present' do
+      before { allow(subject).to receive(:cs_grading_session_config?).and_return(false) }
+      it 'returns cc grading status for grading period not set' do
+        expect(cc_grading_status).to eq :periodStarted
+      end
+    end
+  end
+
+  describe '#get_grading_dates' do
+    let(:grading_type) { :general }
+    context 'when session id not specified' do
+      let(:grading_dates) { subject.get_grading_dates(semester_one_term_id, grading_type) }
+      it 'returns grading dates for session 1' do
+        expect(grading_dates[:mid_term_begin_date]).to eq Date.parse('Mon, 05 Mar 2018')
+        expect(grading_dates[:mid_term_end_date]).to eq Date.parse('Sun, 11 Mar 2018')
+        expect(grading_dates[:final_begin_date]).to eq Date.parse('Mon, 26 Mar 2018')
+        expect(grading_dates[:final_end_date]).to eq Date.parse('Wed, 16 May 2018')
+      end
+    end
+    context 'when session id specified' do
+      let(:semester_one_term_id) { '2185' }
+      let(:session_id) { '3W' }
+      let(:grading_dates) { subject.get_grading_dates(semester_one_term_id, grading_type, session_id) }
+      it 'returns grading dates for session 1' do
+        expect(grading_dates[:mid_term_begin_date]).to eq nil
+        expect(grading_dates[:mid_term_end_date]).to eq nil
+        expect(grading_dates[:final_begin_date]).to eq Date.parse('Mon, 06 Aug 2018')
+        expect(grading_dates[:final_end_date]).to eq Date.parse('Wed, 15 Aug 2018')
+      end
+    end
   end
 
   describe '#find_grading_period_status' do

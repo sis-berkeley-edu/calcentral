@@ -201,14 +201,14 @@ module MyAcademics
 
     def find_ccn_grading_statuses(grading_statuses, ccn, is_law, term_id)
       return nil unless grading_statuses && ccn && term_id
-      is_summer = is_summer_term? term_id
       status_array  = grading_statuses.try(:[], :classGradingStatus)
       # if feed returned single status it will not be wrapped in array
       # need to wrap in array for code to iterate correctly
-      status_array =  status_array.blank? || status_array.kind_of?(Array) ? status_array : [] << status_array
+      status_array = status_array.blank? || status_array.kind_of?(Array) ? status_array : [] << status_array
       rosters = status_array.try(:find) do |grading_status|
         grading_status[:strm] == term_id && grading_status[:classNbr] == ccn
       end.try(:[],:roster)
+      is_summer = is_summer_term? term_id
       find_status_in_rosters(rosters, is_law, is_summer)
     end
 
@@ -278,7 +278,7 @@ module MyAcademics
       else
         grading_status = :gradingPeriodNotSet
       end
-      grading_status_mapping[cs_grading_status][grading_status]
+      grading_status_mapping[cs_grading_status.to_sym][grading_status]
     end
 
     def find_grading_period_status(dates, is_midpoint)
