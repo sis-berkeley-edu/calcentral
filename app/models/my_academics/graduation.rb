@@ -77,7 +77,7 @@ module MyAcademics
       non_ugrd_statuses = all_grad_law_statuses hub_statuses
       return nil if non_ugrd_statuses.empty?
 
-      if non_ugrd_statuses.length > 1
+      if non_ugrd_statuses.length >= 1
         # CalCentral only shows expected graduation for GRAD careers if the student has concurrent status
         non_ugrd_statuses = is_concurrent_student ? non_ugrd_statuses : all_law_statuses(non_ugrd_statuses)
       end
