@@ -55,11 +55,15 @@ module EdoOracle
           mtg."endTime" AS meeting_end_time,
           mtg."startDate" AS meeting_start_date,
           mtg."endDate" AS meeting_end_date,
-          TRIM(crs."title") AS course_title
+          TRIM(crs."title") AS course_title,
+          cls."allowedUnitsForAcadProgress" AS allowed_units
         FROM
           SISEDO.CLASSSECTIONALLV00_MVW sec
         LEFT OUTER JOIN SISEDO.DISPLAYNAMEXLATV01_MVW xlat ON (xlat."classDisplayName" = sec."displayName")
         LEFT OUTER JOIN SISEDO.API_COURSEV01_MVW crs ON (xlat."courseDisplayName" = crs."displayName")
+        LEFT OUTER JOIN SISEDO.CLASSV00_VW cls ON (
+          cls."term-id" = sec."term-id" AND
+          cls."sectionId" = sec."id")
         LEFT OUTER JOIN SISEDO.MEETINGV00_VW mtg ON (
           mtg."cs-course-id" = sec."cs-course-id" AND
           mtg."term-id" = sec."term-id" AND
