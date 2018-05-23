@@ -130,11 +130,10 @@ module MyAcademics
         # Only primary sections have grade rosters.
         if is_primary_section? section
           section_session_id = section.try(:[], :session_id)
-          # Only parse grading status for configured grading sessions
+          ccn = section[:ccn]
+          has_grade_access = has_grading_access?(section)
+          cs_grading_status = parse_cs_grading_status(get_cs_status(ccn, is_law, term_id), is_law, is_summer)
           if cs_grading_session_config?(term_id, acad_career_code, section_session_id)
-            ccn = section[:ccn]
-            has_grade_access = has_grading_access?(section)
-            cs_grading_status = parse_cs_grading_status(get_cs_status(ccn, is_law, term_id), is_law, is_summer)
             # Law and summer classes do not have midpoint grades.
             if is_law && !is_summer
               section.merge!(
