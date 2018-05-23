@@ -164,7 +164,7 @@ module MyAcademics
               end
               primaries_count += 1
             end
-            if section[:waitlisted]
+            if section[:waitlisted] && Settings.features.reserved_capacity
               map_reserved_seats(term_id, section)
             end
             section[:grading][:gradePoints] = nil if hide_points? course
