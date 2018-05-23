@@ -60,7 +60,7 @@
               <th>Title</th>
               <th data-ng-if="waitlistedCoursesHaveTopics">Topic</th>
               <th>Waitlist Position / Class Size</th>
-              <th>Reserved Seats</th>
+              <th data-ng-if="api.user.profile.features.reservedCapacity">Reserved Seats</th>
             </thead>
             <tbody data-ng-repeat="course in waitlistedCourses">
               <tr data-ng-repeat="section in course.sections">
@@ -85,7 +85,7 @@
                     <strong data-ng-bind="section.waitlistPosition"></strong> on list of class of <strong data-ng-bind="section.enroll_limit"></strong>
                   </div>
                 </td>
-                <td>
+                <td data-ng-if="api.user.profile.features.reservedCapacity">
                   <div data-ng-if="section.waitlistPosition && section.hasReservedSeats">
                     <span data-ng-click="course.capacity = section.capacity; course.showSeats = true" data-ng-show="!course.showSeats"><a href="#">Show</a></span>
                     <span data-ng-click="course.showSeats = false" data-ng-show="course.showSeats"><a href="#">Hide</a></span>

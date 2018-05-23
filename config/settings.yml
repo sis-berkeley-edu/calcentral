@@ -485,6 +485,7 @@ features:
   prevent_acting_as_users_from_posting: true
   reauthentication: true
   regstatus: true
+  reserved_capacity: false
   textbooks: false
   transcript_request_link_cred_solutions: false
   videos: false

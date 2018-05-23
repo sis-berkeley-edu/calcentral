@@ -154,6 +154,7 @@ features:
   cs_profile_work_experience: true
   final_exam_schedule: true
   financials: true
+  reserved_capacity: true
   textbooks: true
   videos: true
   webcast_sign_up_on_calcentral: true
