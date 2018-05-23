@@ -69,7 +69,7 @@ angular.module('calcentral.services').service('tasksService', function(apiServic
   };
 
   var isNotCsFurtherActionNeededTask = function(task) {
-    return (task.emitter !== 'Campus Solutions' && task.cs.displayStatus !== 'furtherActionNeeded');
+    return (task.emitter !== 'Campus Solutions' || task.cs.displayStatus !== 'furtherActionNeeded');
   };
 
   var isDueWithinOneWeekTask = function(task) {
