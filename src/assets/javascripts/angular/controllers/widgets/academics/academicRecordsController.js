@@ -64,9 +64,11 @@ angular.module('calcentral.controllers').controller('AcademicRecordsController',
     var transcriptData = _.get(response, 'data.officialTranscriptRequestData');
     $scope.officialTranscript.postUrl = _.get(transcriptData, 'postUrl');
     $scope.officialTranscript.postParams = _.get(transcriptData, 'postParams');
-    // For law the fice code needs to be set to the law_fice code.
+    // For law the fice code and dates need to be set.
     var lawPostParams = Object.assign({}, _.get(transcriptData, 'postParams'));
     lawPostParams.fice = lawPostParams.lawFice;
+    lawPostParams.attfr = lawPostParams.lawAttfr;
+    lawPostParams.attto = lawPostParams.lawAttto;
     $scope.lawOfficialTranscript.postUrl = _.get(transcriptData, 'postUrl');
     $scope.lawOfficialTranscript.postParams = lawPostParams;
   };
