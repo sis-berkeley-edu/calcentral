@@ -6,17 +6,44 @@ module MyAcademics
     include Concerns::AcademicRoles
 
     def get_feed_internal
+      {
+        current: get_current_roles,
+        historical: get_historical_roles
+      }
+    end
+
+    def get_current_roles
       response = MyAcademics::MyAcademicStatus.new(@uid).get_feed
       roles = role_defaults
       assigned_roles = collect_roles academic_statuses(response)
 
+      map_roles(roles, assigned_roles)
+      roles
+    end
+
+    def get_historical_roles
+      term_cpp = MyAcademics::MyTermCpp.new(@uid).get_feed
+      roles = role_defaults
+      assigned_roles = []
+
+      term_cpp.each do |term|
+        assigned_roles << get_academic_career_roles(term['acad_career'])
+        assigned_roles << get_academic_program_roles(term['acad_program'])
+        assigned_roles << get_academic_plan_roles(term['acad_plan'])
+      end
+      assigned_roles.flatten!
+      assigned_roles.uniq!
+
+      map_roles(roles, assigned_roles)
+      roles
+    end
+
+    def map_roles(default_roles, assigned_roles)
       assigned_roles.each do |role|
-        if roles.has_key?(role)
-          roles[role] = true
+        if default_roles.has_key?(role)
+          default_roles[role] = true
         end
       end
-      roles['nonDegreeSeekingSummerVisitor'] = is_non_degree_seeking_summer_visitor?
-      roles
     end
 
     def collect_roles(academic_statuses)
@@ -35,21 +62,6 @@ module MyAcademics
       end
       roles << status.try(:[], 'studentCareer').try(:[], :role)
       roles.compact
-    end
-
-    def is_non_degree_seeking_summer_visitor?
-      term_cpp = MyAcademics::MyTermCpp.new(@uid).get_feed
-      program_codes = term_cpp.collect { |row| row['acad_program'] }
-      non_degree_seeking_program_codes = ['GNODG', 'LNODG', 'UNODG', 'XCCRT', 'XFPF']
-
-      if is_degree_seeking = (program_codes - non_degree_seeking_program_codes).present?
-        false
-      else
-        plan_role_codes = term_cpp.collect { |row| get_academic_plan_role_code(row['acad_plan']) }
-        summer_visitor_plan_role = Concerns::AcademicRoles::ACADEMIC_PLAN_ROLES.find {|role| role[:role_code] == 'summerVisitor'}
-        summer_visitor_plan_codes = summer_visitor_plan_role[:match]
-        (plan_role_codes - summer_visitor_plan_codes).present?
-      end
     end
   end
 end

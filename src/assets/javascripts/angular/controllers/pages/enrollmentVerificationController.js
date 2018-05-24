@@ -36,7 +36,7 @@ angular.module('calcentral.controllers').controller('EnrollmentVerificationContr
   var parseEnrollmentVerificationData = function(response) {
     var messages = _.get(response, 'data.messages');
     $scope.enrollVerification.requestOfficialVerificationLink = _.get(response, 'data.requestUrl');
-    $scope.enrollVerification.lawExclusive = isRoleExclusive('law', apiService.user.profile.academicRoles);
+    $scope.enrollVerification.lawExclusive = isRoleExclusive('law', apiService.user.profile.academicRoles.current);
 
     if (messages) {
       if ($scope.enrollVerification.lawExclusive) {

@@ -227,6 +227,10 @@ angular.module('calcentral.services').service('academicsService', function() {
     }
   };
 
+  var isNonDegreeSeekingSummerVisitor = function(academicRoles) {
+    return academicRoles.historical.summerVisitor && !academicRoles.historical.degreeSeeking;
+  };
+
   var isSummerSemester = function(selectedTeachingSemester) {
     var termCode = _.get(selectedTeachingSemester, 'termCode');
     return (termCode === 'C');
@@ -393,6 +397,7 @@ angular.module('calcentral.services').service('academicsService', function() {
     getPreviousClasses: getPreviousClasses,
     hasTeachingClasses: hasTeachingClasses,
     isLSStudent: isLSStudent,
+    isNonDegreeSeekingSummerVisitor: isNonDegreeSeekingSummerVisitor,
     isSummerSemester: isSummerSemester,
     normalizeGradingData: normalizeGradingData,
     parseGpaUnits: parseGpaUnits,

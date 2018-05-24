@@ -148,7 +148,8 @@ angular.module('calcentral.controllers').controller('UserOverviewController', fu
 
         processSemesters($scope.planSemesters);
         prepareSchedulePlannerLink(_.get($scope, 'collegeAndLevel.plans'), _.get($scope, 'collegeAndLevel.termId'));
-        $scope.showResidency = $scope.targetUser.roles.student && academicsService.showResidency($scope.targetUser.academicRoles);
+        $scope.isNonDegreeSeekingSummerVisitor = academicsService.isNonDegreeSeekingSummerVisitor($scope.targetUser.academicRoles);
+        $scope.showResidency = $scope.targetUser.roles.student && academicsService.showResidency($scope.targetUser.academicRoles.current);
 
         if (!!_.get($scope, 'updatePlanUrl.url')) {
           linkService.addCurrentPagePropertiesToLink($scope.updatePlanUrl, $scope.currentPage.name, $scope.currentPage.url);
@@ -208,8 +209,8 @@ angular.module('calcentral.controllers').controller('UserOverviewController', fu
         $scope.degreeProgress.undergraduate.links = _.get(response, 'data.feed.links');
         $scope.degreeProgress.undergraduate.errored = _.get(response, 'errored');
       }).finally(function() {
-        $scope.degreeProgress.undergraduate.showCard = apiService.user.profile.features.csDegreeProgressUgrdAdvising && ($scope.targetUser.academicRoles.ugrd || $scope.degreeProgress.undergraduate.progresses.length);
-        $scope.degreeProgress.graduate.showCard = apiService.user.profile.features.csDegreeProgressGradAdvising && ($scope.degreeProgress.graduate.progresses.length || $scope.targetUser.academicRoles.grad || $scope.targetUser.academicRoles.law);
+        $scope.degreeProgress.undergraduate.showCard = apiService.user.profile.features.csDegreeProgressUgrdAdvising && ($scope.targetUser.academicRoles.current.ugrd || $scope.degreeProgress.undergraduate.progresses.length);
+        $scope.degreeProgress.graduate.showCard = apiService.user.profile.features.csDegreeProgressGradAdvising && ($scope.degreeProgress.graduate.progresses.length || $scope.targetUser.academicRoles.current.grad || $scope.targetUser.academicRoles.law);
         $scope.degreeProgress.isLoading = false;
       });
     });

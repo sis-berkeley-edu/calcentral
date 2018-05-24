@@ -150,7 +150,7 @@ angular.module('calcentral.services').factory('profileMenuService', function(api
   };
 
   var hasBlacklistedRole = function(categoryRoles) {
-    var academicRoles = apiService.user.profile.academicRoles;
+    var academicRoles = apiService.user.profile.academicRoles.current;
     return _.some(academicRoles, function(hasRole, role) {
       return hasRole && categoryRoles[role] === false;
     });

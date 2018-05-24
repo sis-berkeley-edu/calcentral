@@ -62,6 +62,8 @@ describe AdvisingStudentController do
         it 'should return data' do
           feed = JSON.parse subject.body
           expect(feed['academicRoles']).to be
+          expect(feed['academicRoles']['current']).to be
+          expect(feed['academicRoles']['historical']).to be
           expect(feed['attributes']).to be
           expect(feed['attributes']['roles']).to be
           expect(feed['contacts']['feed']).to be
