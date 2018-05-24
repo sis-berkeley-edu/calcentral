@@ -141,7 +141,7 @@ angular.module('calcentral.controllers').controller('StatusController', function
           $scope.holds = _.get(response, 'data.feed.holds');
           holdsCount = _.get(response, 'data.feed.holds.length');
           $scope.count += holdsCount;
-          $scope.hasAlerts = (holdsCount > 0);
+          $scope.hasAlerts = (holdsCount > 0) || $scope.hasStandingAlert;
         }
       }
     );
