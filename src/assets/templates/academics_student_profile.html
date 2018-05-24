@@ -71,7 +71,7 @@
 
       <div data-ng-include="'widgets/academics/college_and_level.html'"></div>
 
-      <div class="cc-table cc-table-top-border cc-clearfix" data-ng-if="!api.user.profile.academicRoles.nonDegreeSeekingSummerVisitor && (gpaUnits.totalUnits > 0 || gpaUnits.totalLawUnits > 0)">
+      <div class="cc-table cc-table-top-border cc-clearfix" data-ng-if="!isNonDegreeSeekingSummerVisitor && (gpaUnits.totalUnits > 0 || gpaUnits.totalLawUnits > 0)">
         <table>
           <tbody>
             <tr>

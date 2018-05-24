@@ -50,11 +50,13 @@ describe DegreeProgress::MyGraduateMilestones do
   end
   let(:academic_roles) do
     {
-      'jurisSocialPolicyMasters' => whitelisted_law_student,
-      'haasBusinessAdminMasters' => whitelisted_haas_student,
-      'haasExecMba' => blacklisted_haas_student,
-      'grad' => graduate_student,
-      'law' => law_student,
+      current: {
+        'jurisSocialPolicyMasters' => whitelisted_law_student,
+        'haasBusinessAdminMasters' => whitelisted_haas_student,
+        'haasExecMba' => blacklisted_haas_student,
+        'grad' => graduate_student,
+        'law' => law_student,
+      }
     }
   end
   let(:graduate_student) { false }

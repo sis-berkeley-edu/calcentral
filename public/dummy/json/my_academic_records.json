@@ -1,19 +1,4 @@
 {
-  "academicRoles": {
-    "concurrent": false,
-    "fpf": false,
-    "grad": true,
-    "haasEveningWeekendMba": false,
-    "haasExecMba": false,
-    "haasFullTimeMba": false,
-    "haasMastersFinEng": false,
-    "haasMbaJurisDoctor": false,
-    "haasMbaPublicHealth": false,
-    "law": true,
-    "summerVisitor": false,
-    "ugrd": false,
-    "ugrdUrbanStudies": false
-  },
   "lawUnofficialTranscriptLink": null,
   "officialTranscriptRequestData": {
     "postParams": {

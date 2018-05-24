@@ -40,7 +40,7 @@ angular.module('calcentral.factories').factory('campusLinksFactory', function(ap
   };
 
   var hasBlacklistedRole = function(linkRoles) {
-    var academicRoles = apiService.user.profile.academicRoles;
+    var academicRoles = apiService.user.profile.academicRoles.current;
     return _.some(academicRoles, function(hasRole, role) {
       return hasRole && linkRoles[role] === false;
     });

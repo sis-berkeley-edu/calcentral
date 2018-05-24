@@ -263,7 +263,7 @@ angular.module('calcentral.controllers').controller('EnrollmentCardController', 
 
   var loadEnrollmentData = function() {
     $scope.isAdvisingStudentLookup = $route.current.isAdvisingStudentLookup;
-    $scope.isGrad = $scope.isAdvisingStudentLookup ? $scope.targetUser.academicRoles.grad : apiService.user.profile.academicRoles.grad;
+    $scope.isGrad = $scope.isAdvisingStudentLookup ? $scope.targetUser.academicRoles.current.grad : apiService.user.profile.academicRoles.current.grad;
 
     if ($scope.isAdvisingStudentLookup || apiService.user.profile.roles.student) {
       loadEnrollmentInstructionDecks()

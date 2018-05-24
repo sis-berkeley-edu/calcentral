@@ -13,14 +13,14 @@ describe Concerns::AcademicRoles do
     end
   end
 
-  shared_examples 'a translator that returns the role corresponding to an academic status' do
+  shared_examples 'a translator that handles invalid input' do
     context 'when code is nil' do
       let(:code) { nil }
       it { should be nil }
     end
-    context 'when code is not mapped' do
+    context 'when code is not mapped to any role' do
       let(:code) { 'BUNK' }
-      it { should be nil }
+      it { should eq [] }
     end
   end
 
@@ -40,48 +40,53 @@ describe Concerns::AcademicRoles do
     it_behaves_like 'a map of academic status codes to roles'
   end
 
-  describe '#get_academic_plan_role_code' do
-    subject { described_class.get_academic_plan_role_code code }
-    it_behaves_like 'a translator that returns the role corresponding to an academic status'
+  describe '#get_academic_plan_roles' do
+    subject { described_class.get_academic_plan_roles code }
+    it_behaves_like 'a translator that handles invalid input'
 
     context 'when a match is found' do
       let(:code) { '99V06G' }
-      it { should eq 'summerVisitor' }
+      it { should contain_exactly 'summerVisitor' }
     end
   end
 
-  describe '#get_academic_program_role_code' do
-    subject { described_class.get_academic_program_role_code(code) }
+  describe '#get_academic_program_roles' do
+    subject { described_class.get_academic_program_roles(code) }
 
-    it_behaves_like 'a translator that returns the role corresponding to an academic status'
-
+    context 'when code is nil' do
+      let(:code) { nil }
+      it { should be nil }
+    end
+    context 'when code is not mapped to any role' do
+      let(:code) { 'BUNK' }
+      it { should eq ['degreeSeeking'] }
+    end
     context 'when a match is found' do
       let(:code) { 'UCLS' }
-      it { should eq 'lettersAndScience' }
+      it { should contain_exactly('lettersAndScience', 'degreeSeeking') }
     end
   end
 
-  describe '#get_academic_career_role_code' do
-    subject { described_class.get_academic_career_role_code(code) }
-    it_behaves_like 'a translator that returns the role corresponding to an academic status'
+  describe '#get_academic_career_roles' do
+    subject { described_class.get_academic_career_roles(code) }
+    it_behaves_like 'a translator that handles invalid input'
 
     context 'when a match is found' do
       let(:code) { 'LAW' }
-      it { should eq 'law' }
+      it { should contain_exactly 'law' }
     end
   end
 
   describe '#role_defaults' do
     subject { described_class.role_defaults }
     it 'returns all possible roles set to false' do
-      expect(subject.keys.count).to eq (26)
-      expect(subject['ugrd']).to eq false
-      expect(subject['grad']).to eq false
-      expect(subject['law']).to eq false
+      expect(subject.keys.count).to eq (27)
       expect(subject['concurrent']).to eq false
-      expect(subject['lettersAndScience']).to eq false
+      expect(subject['courseworkOnly']).to eq false
+      expect(subject['degreeSeeking']).to eq false
       expect(subject['doctorScienceLaw']).to eq false
       expect(subject['fpf']).to eq false
+      expect(subject['grad']).to eq false
       expect(subject['haasBusinessAdminMasters']).to eq false
       expect(subject['haasBusinessAdminPhD']).to eq false
       expect(subject['haasFullTimeMba']).to eq false
@@ -93,14 +98,16 @@ describe Concerns::AcademicRoles do
       expect(subject['jurisSocialPolicyMasters']).to eq false
       expect(subject['jurisSocialPolicyPhC']).to eq false
       expect(subject['jurisSocialPolicyPhD']).to eq false
-      expect(subject['lawJspJsd']).to eq false
+      expect(subject['law']).to eq false
+      expect(subject['lawJdCdp']).to eq false
       expect(subject['lawJdLlm']).to eq false
+      expect(subject['lawJspJsd']).to eq false
       expect(subject['lawVisiting']).to eq false
+      expect(subject['lettersAndScience']).to eq false
+      expect(subject['summerVisitor']).to eq false
+      expect(subject['ugrd']).to eq false
       expect(subject['ugrdNonDegree']).to eq false
       expect(subject['ugrdUrbanStudies']).to eq false
-      expect(subject['summerVisitor']).to eq false
-      expect(subject['courseworkOnly']).to eq false
-      expect(subject['lawJdCdp']).to eq false
     end
   end
 end

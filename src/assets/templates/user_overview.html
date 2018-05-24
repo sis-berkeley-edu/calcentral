@@ -16,10 +16,10 @@
       </div>
     </div>
     <div class="medium-6 large-4 columns cc-column-3">
-      <div data-ng-include="'widgets/final_exam_schedule.html'" data-ng-if="!targetUser.academicRoles.summerVisitor && api.user.profile.features.finalExamSchedule && examSchedule.length"></div>
+      <div data-ng-include="'widgets/final_exam_schedule.html'" data-ng-if="!targetUser.academicRoles.current.summerVisitor && api.user.profile.features.finalExamSchedule && examSchedule.length"></div>
       <div data-ng-include="'widgets/enrollment_card.html'" data-ng-if="api.user.profile.features.csEnrollmentCard"></div>
-      <div data-ng-include="'widgets/transfer_credit.html'" data-ng-if="!targetUser.academicRoles.summerVisitor"></div>
-      <div data-ng-include="'widgets/my_advising.html'" data-ng-if="!targetUser.academicRoles.summerVisitor"></div>
+      <div data-ng-include="'widgets/transfer_credit.html'" data-ng-if="!targetUser.academicRoles.current.summerVisitor"></div>
+      <div data-ng-include="'widgets/my_advising.html'" data-ng-if="!targetUser.academicRoles.current.summerVisitor"></div>
     </div>
   </div>
   <div class="row collapse" data-ng-if="api.user.profile.features.advisingAcademicPlanner">
@@ -28,7 +28,7 @@
     </div>
     <div class="medium-6 large-4 columns">
       <div data-ng-include="'widgets/toolbox/user_preview.html'"></div>
-      <div data-ng-include="'widgets/my_advising.html'" data-ng-if="!targetUser.academicRoles.summerVisitor"></div>
+      <div data-ng-include="'widgets/my_advising.html'" data-ng-if="!targetUser.academicRoles.current.summerVisitor"></div>
     </div>
     <div class="medium-6 large-4 columns cc-column-2">
       <div data-ng-include src="'widgets/academic_plan.html'" data-ng-if="planSemesters.length"></div>
@@ -40,9 +40,9 @@
         <div data-ng-include src="'widgets/academics/degree_progress_undergrad.html'" data-ng-if="degreeProgress.undergraduate.showCard"></div>
       </div>
       <div data-ng-include src="'widgets/higher_degree_committees.html'" data-ng-if="api.user.profile.features.csCommittees && committees.showCommittees"></div>
-      <div data-ng-include="'widgets/transfer_credit.html'" data-ng-if="!targetUser.academicRoles.summerVisitor"></div>
+      <div data-ng-include="'widgets/transfer_credit.html'" data-ng-if="!targetUser.academicRoles.current.summerVisitor"></div>
       <div data-ng-include="'widgets/student_success/student_success.html'" data-ng-if="api.user.profile.features.advisingStudentSuccess"></div>
-      <div data-ng-include="'widgets/final_exam_schedule.html'" data-ng-if="!targetUser.academicRoles.summerVisitor && api.user.profile.features.finalExamSchedule && examSchedule.length"></div>
+      <div data-ng-include="'widgets/final_exam_schedule.html'" data-ng-if="!targetUser.academicRoles.current.summerVisitor && api.user.profile.features.finalExamSchedule && examSchedule.length"></div>
     </div>
   </div>
 </div>

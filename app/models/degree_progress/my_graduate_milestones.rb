@@ -33,9 +33,9 @@ module DegreeProgress
       student_empl_id = User::Identifiers.lookup_campus_solutions_id @uid
       links = {}
 
-      links[:academic_progress_report_haas] = fetch_link(APR_LINK_ID_HAAS, { :EMPLID => student_empl_id }) if haas_student?(roles)
-      links[:academic_progress_report_law] = fetch_link(APR_LINK_ID_LAW, { :EMPLID => student_empl_id }) if law_student?(roles)
-      links[:academic_progress_report_grad] = fetch_link(APR_LINK_ID_GRAD, { :EMPLID => student_empl_id }) if non_haas_grad_student?(roles)
+      links[:academic_progress_report_haas] = fetch_link(APR_LINK_ID_HAAS, { :EMPLID => student_empl_id }) if haas_student?(roles[:current])
+      links[:academic_progress_report_law] = fetch_link(APR_LINK_ID_LAW, { :EMPLID => student_empl_id }) if law_student?(roles[:current])
+      links[:academic_progress_report_grad] = fetch_link(APR_LINK_ID_GRAD, { :EMPLID => student_empl_id }) if non_haas_grad_student?(roles[:current])
       links
     end
 

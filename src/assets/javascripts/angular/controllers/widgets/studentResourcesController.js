@@ -3,7 +3,7 @@
 var angular = require('angular');
 var _ = require('lodash');
 
-angular.module('calcentral.controllers').controller('StudentResourcesController', function(apiService, linkService, studentResourcesFactory, $scope) {
+angular.module('calcentral.controllers').controller('StudentResourcesController', function(academicsService, apiService, linkService, studentResourcesFactory, $scope) {
   $scope.isLoading = true;
 
   var loadStudentResources = function() {
@@ -21,10 +21,10 @@ angular.module('calcentral.controllers').controller('StudentResourcesController'
     $scope.isLawStudent = apiService.user.profile.roles.law;
     $scope.isGraduateStudent = apiService.user.profile.roles.graduate;
     $scope.isUndergraduate = apiService.user.profile.roles.undergrad;
-    $scope.isSummerVisitor = apiService.user.profile.academicRoles.summerVisitor;
-    $scope.isJdLlmOnly = (apiService.user.profile.academicRoles.lawJdLlm && !apiService.user.profile.academicRoles.lawJspJsd && !apiService.user.profile.academicRoles.grad);
-    $scope.isLawVisiting = (apiService.user.profile.academicRoles.lawVisiting && !apiService.user.profile.academicRoles.grad);
-    $scope.isNonDegreeSeekingSummerVisitor = apiService.user.profile.academicRoles.nonDegreeSeekingSummerVisitor;
+    $scope.isSummerVisitor = apiService.user.profile.academicRoles.current.summerVisitor;
+    $scope.isJdLlmOnly = (apiService.user.profile.academicRoles.current.lawJdLlm && !apiService.user.profile.academicRoles.current.lawJspJsd && !apiService.user.profile.academicRoles.current.grad);
+    $scope.isLawVisiting = (apiService.user.profile.academicRoles.current.lawVisiting && !apiService.user.profile.academicRoles.current.grad);
+    $scope.isNonDegreeSeekingSummerVisitor = academicsService.isNonDegreeSeekingSummerVisitor(apiService.user.profile.academicRoles);
   };
 
   var loadInformation = function() {

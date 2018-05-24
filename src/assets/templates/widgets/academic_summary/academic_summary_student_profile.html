@@ -21,8 +21,8 @@
 <div data-cc-academic-plans-directive data-ng-if="collegeAndLevel.majors.length" data-plans="collegeAndLevel.majors" data-options="{labels: {'1': 'Major', 'other': 'Majors'}}" data-type="major" class="cc-academic-summary-content"></div>
 <div data-cc-academic-plans-directive data-ng-if="collegeAndLevel.minors.length" data-plans="collegeAndLevel.minors" data-options="{labels: {'1': 'Minor', 'other': 'Minors'}}" data-type="minor" class="cc-academic-summary-content"></div>
 <div data-cc-academic-plans-directive data-ng-if="collegeAndLevel.designatedEmphases.length" data-plans="collegeAndLevel.designatedEmphases" data-options="{labels: {'1': 'Designated Emphasis', 'other': 'Designated Emphases'}}" data-type="designatedEmphasis" class="cc-academic-summary-content"></div>
-<div data-ng-if="!api.user.profile.academicRoles.summerVisitor && collegeAndLevel.careers.length" data-cc-academic-careers-directive data-careers="collegeAndLevel.careers" class="cc-academic-summary-content"></div>
-<div class="cc-table cc-table-top-border cc-academic-summary-content" data-ng-if="!api.user.profile.academicRoles.summerVisitor && collegeAndLevel.level">
+<div data-ng-if="!api.user.profile.academicRoles.current.summerVisitor && collegeAndLevel.careers.length" data-cc-academic-careers-directive data-careers="collegeAndLevel.careers" class="cc-academic-summary-content"></div>
+<div class="cc-table cc-table-top-border cc-academic-summary-content" data-ng-if="!api.user.profile.academicRoles.current.summerVisitor && collegeAndLevel.level">
   <table>
     <tbody>
       <tr>
@@ -41,7 +41,7 @@
 </div>
 <div data-cc-expected-graduation-terms-directive data-ng-if="collegeAndLevel.termsInAttendance || graduation.undergraduate.expectedGraduationTerm || graduation.gradLaw.expectedGraduationTerms.length"
      data-termsInAttendance="collegeAndLevel.termsInAttendance" data-graduation="graduation" class="cc-academic-summary-content"></div>
-<div class="cc-table cc-table-top-border cc-academic-summary-content" data-ng-if="!api.user.profile.academicRoles.summerVisitor && (gpaUnits.totalUnits > 0 || gpaUnits.totalLawUnits > 0)">
+<div class="cc-table cc-table-top-border cc-academic-summary-content" data-ng-if="!api.user.profile.academicRoles.current.summerVisitor && (gpaUnits.totalUnits > 0 || gpaUnits.totalLawUnits > 0)">
   <table>
     <tbody>
       <tr>
@@ -68,7 +68,7 @@
     </tbody>
   </table>
 </div>
-<div class="cc-table cc-table-top-border cc-academic-summary-content" data-ng-if="!api.user.profile.academicRoles.summerVisitor && showGpa">
+<div class="cc-table cc-table-top-border cc-academic-summary-content" data-ng-if="!api.user.profile.academicRoles.current.summerVisitor && showGpa">
   <table>
     <tbody data-ng-if="gpaUnits.gpa.length < 2">
       <tr>

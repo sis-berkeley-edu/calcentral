@@ -66,7 +66,7 @@ module CampusSolutions
 
     def self.continuing_undergrad?
       is_undergrad = User::AggregatedAttributes.new(@uid).get_feed[:roles][:undergrad]
-      is_continuing = !MyAcademics::MyAcademicRoles.new(@uid).get_feed['ugrdNonDegree']
+      is_continuing = !MyAcademics::MyAcademicRoles.new(@uid).get_feed[:current]['ugrdNonDegree']
       is_undergrad && is_continuing
     end
 
