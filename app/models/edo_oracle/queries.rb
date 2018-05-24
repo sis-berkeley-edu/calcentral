@@ -643,8 +643,8 @@ module EdoOracle
         SELECT
           CONCURRENT_PROGRAM as concurrent_status
         FROM
-          SISEDO.CLC_CONCURRENT_PROGRAMV00_VW
-        WHERE STUDENT_ID = '#{student_id}' AND
+            SISEDO.CLC_CONCURRENT_PROGRAMV00_VW
+          WHERE STUDENT_ID = '#{student_id}' AND
               INSTITUTION = 'UCB01'
       SQL
       result.first

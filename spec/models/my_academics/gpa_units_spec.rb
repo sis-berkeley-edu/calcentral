@@ -11,7 +11,10 @@ describe MyAcademics::GpaUnits do
   end
   let(:academic_roles) do
     {
-      'law' => has_law_role
+      current: {
+        'law' => has_law_role
+      }
+
     }
   end
   let(:has_law_role) { false }

@@ -43,17 +43,18 @@ module MyAcademics
 
     def career_based_role(studentCareer)
       career_code = studentCareer.try(:[], 'academicCareer').try(:[], 'code')
-      get_academic_career_role_code(career_code) if studentCareer
+      get_academic_career_roles(career_code).try(:first) if studentCareer
     end
 
     def plan_based_role(studentPlan)
       plan_code = studentPlan.try(:[], 'academicPlan').try(:[], 'plan').try(:[], 'code')
-      get_academic_plan_role_code(plan_code) if studentPlan
+      # TODO: handle the case where a plan matches multiple roles
+      get_academic_plan_roles(plan_code).try(:first) if studentPlan
     end
 
     def program_based_role(studentProgram)
       program_code = studentProgram.try(:[], 'program').try(:[], 'code')
-      get_academic_program_role_code(program_code) if studentProgram
+      get_academic_program_roles(program_code).try(:first) if studentProgram
     end
   end
 end

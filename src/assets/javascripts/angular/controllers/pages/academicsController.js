@@ -186,7 +186,7 @@ angular.module('calcentral.controllers').controller('AcademicsController', funct
     $scope.isLSStudent = academicsService.isLSStudent($scope.collegeAndLevel);
     $scope.isUndergraduate = _.includes(_.get($scope.collegeAndLevel, 'careers'), 'Undergraduate');
     $scope.hasTeachingClasses = academicsService.hasTeachingClasses(_.get(response, 'data.teachingSemesters'));
-    $scope.canViewFinalExamSchedule = apiService.user.profile.roles.student && !apiService.user.profile.delegateActingAsUid && !apiService.user.profile.academicRoles.summerVisitor;
+    $scope.canViewFinalExamSchedule = apiService.user.profile.roles.student && !apiService.user.profile.delegateActingAsUid && !apiService.user.profile.academicRoles.current.summerVisitor;
 
     // summarize section topics for courses
     if ($scope.semesters) {
@@ -210,14 +210,17 @@ angular.module('calcentral.controllers').controller('AcademicsController', funct
   };
 
   var filterWidgets = function() {
+    var isNonDegreeSeekingSummerVisitor = academicsService.isNonDegreeSeekingSummerVisitor(apiService.user.profile.academicRoles);
+
     $scope.isAcademicInfoAvailable = !!($scope.hasRegStatus ||
                                        ($scope.semesters && $scope.semesters.length));
+    $scope.isNonDegreeSeekingSummerVisitor = isNonDegreeSeekingSummerVisitor;
     $scope.showStatusAndBlocks = !$scope.filteredForDelegate &&
                                  ($scope.hasRegStatus ||
                                  ($scope.numberOfHolds));
-    $scope.showAdvising = !$scope.filteredForDelegate && apiService.user.profile.features.advising && apiService.user.profile.roles.student && isMbaJdOrNotLaw() && !apiService.user.profile.academicRoles.nonDegreeSeekingSummerVisitor;
+    $scope.showAdvising = !$scope.filteredForDelegate && apiService.user.profile.features.advising && apiService.user.profile.roles.student && isMbaJdOrNotLaw() && !isNonDegreeSeekingSummerVisitor;
     $scope.showProfileMessage = (!$scope.isAcademicInfoAvailable || !$scope.collegeAndLevel || _.isEmpty($scope.collegeAndLevel.careers));
-    $scope.showResidency = apiService.user.profile.roles.student && academicsService.showResidency(apiService.user.profile.academicRoles);
+    $scope.showResidency = apiService.user.profile.roles.student && academicsService.showResidency(apiService.user.profile.academicRoles.current);
     $scope.showGpaSection = academicsService.showGpa($scope.gpaUnits.gpa);
   };
 
@@ -226,7 +229,7 @@ angular.module('calcentral.controllers').controller('AcademicsController', funct
    * @return {Boolean} Returns true when student is MBA/JD or Not a Law Student
    */
   var isMbaJdOrNotLaw = function() {
-    return !apiService.user.profile.academicRoles.law || apiService.user.profile.academicRoles.haasMbaJurisDoctor;
+    return !apiService.user.profile.academicRoles.current.law || apiService.user.profile.academicRoles.current.haasMbaJurisDoctor;
   };
 
   // Wait until user profile is fully loaded before hitting academics data

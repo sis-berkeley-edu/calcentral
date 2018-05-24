@@ -113,8 +113,8 @@ angular.module('calcentral.controllers').controller('FinancesLinksController', f
 
   var setLinkVisibilities = function() {
     return $q(function(resolve) {
-      $scope.canViewEftLink = userService.profile.roles.student && (userService.profile.roles.undergrad || userService.profile.roles.graduate || userService.profile.academicRoles.law);
-      $scope.canViewEmergencyLoanLink = !userService.profile.academicRoles.summerVisitor;
+      $scope.canViewEftLink = userService.profile.roles.student && (userService.profile.roles.undergrad || userService.profile.roles.graduate || userService.profile.academicRoles.current.law);
+      $scope.canViewEmergencyLoanLink = !userService.profile.academicRoles.current.summerVisitor;
       resolve();
     });
   };

@@ -113,7 +113,7 @@ module MyAcademics
 
     def law_student?
       roles = MyAcademics::MyAcademicRoles.new(@uid).get_feed
-      !!roles['law']
+      !!roles[:current]['law']
     end
   end
 end
