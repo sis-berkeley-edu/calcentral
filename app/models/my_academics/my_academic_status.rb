@@ -48,8 +48,7 @@ module MyAcademics
 
     def plan_based_role(studentPlan)
       plan_code = studentPlan.try(:[], 'academicPlan').try(:[], 'plan').try(:[], 'code')
-      # TODO: handle the case where a plan matches multiple roles
-      get_academic_plan_roles(plan_code).try(:first) if studentPlan
+      get_academic_plan_roles(plan_code) if studentPlan
     end
 
     def program_based_role(studentProgram)

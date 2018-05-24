@@ -44,7 +44,7 @@ module DegreeProgress
     end
 
     def law_student?(roles)
-      !!roles['doctorScienceLaw'] || !!roles['jurisSocialPolicyMasters'] || !!roles['jurisSocialPolicyPhC'] || !!roles['jurisSocialPolicyPhD'] || !!roles['lawJdCdp']
+      !!roles['doctorScienceLaw'] || !!roles['jurisSocialPolicyMasters'] || !!roles['jurisSocialPolicyPhC'] || !!roles['jurisSocialPolicyPhD'] || !!roles['lawJdCdp'] || !!roles['masterOfLawsLlm']
     end
 
     def non_haas_grad_student?(roles)

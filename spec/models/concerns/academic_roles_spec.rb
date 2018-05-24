@@ -80,7 +80,7 @@ describe Concerns::AcademicRoles do
   describe '#role_defaults' do
     subject { described_class.role_defaults }
     it 'returns all possible roles set to false' do
-      expect(subject.keys.count).to eq (27)
+      expect(subject.keys.count).to eq (28)
       expect(subject['concurrent']).to eq false
       expect(subject['courseworkOnly']).to eq false
       expect(subject['degreeSeeking']).to eq false
@@ -104,6 +104,7 @@ describe Concerns::AcademicRoles do
       expect(subject['lawJspJsd']).to eq false
       expect(subject['lawVisiting']).to eq false
       expect(subject['lettersAndScience']).to eq false
+      expect(subject['masterOfLawsLlm']).to eq false
       expect(subject['summerVisitor']).to eq false
       expect(subject['ugrd']).to eq false
       expect(subject['ugrdNonDegree']).to eq false

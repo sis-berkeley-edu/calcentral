@@ -6,7 +6,7 @@ describe MyAcademics::MyAcademicRoles do
 
     it 'includes a key for every possible role' do
       expect(subject).to be
-      expect(subject.keys.count).to eq 27
+      expect(subject.keys.count).to eq 28
     end
     it 'sets role flag to true for every relevant career, program, and plan the student has ever had' do
       expect(subject['concurrent']).to eq true
@@ -32,6 +32,7 @@ describe MyAcademics::MyAcademicRoles do
       expect(subject['lawJspJsd']).to eq true
       expect(subject['lawVisiting']).to eq true
       expect(subject['lettersAndScience']).to eq true
+      expect(subject['masterOfLawsLlm']).to eq false
       expect(subject['summerVisitor']).to eq true
       expect(subject['ugrd']).to eq true
       expect(subject['ugrdUrbanStudies']).to eq true
@@ -59,7 +60,7 @@ describe MyAcademics::MyAcademicRoles do
       it 'provides a set of roles based on the user\'s current academic status' do
         expect(subject).to be
         expect(subject[:current]).to be
-        expect(subject[:current].keys.count).to eq 27
+        expect(subject[:current].keys.count).to eq 28
         expect(subject[:current]['ugrd']).to eq true
         expect(subject[:current]['grad']).to eq false
         expect(subject[:current]['fpf']).to eq false
@@ -82,6 +83,7 @@ describe MyAcademics::MyAcademicRoles do
         expect(subject[:current]['lawJspJsd']).to eq false
         expect(subject[:current]['lawJdLlm']).to eq false
         expect(subject[:current]['lawVisiting']).to eq false
+        expect(subject[:current]['masterOfLawsLlm']).to eq false
         expect(subject[:current]['ugrdNonDegree']).to eq false
         expect(subject[:current]['ugrdUrbanStudies']).to eq false
         expect(subject[:current]['summerVisitor']).to eq false
@@ -91,7 +93,7 @@ describe MyAcademics::MyAcademicRoles do
       it 'provides a set of roles based on all of the user\'s past academic data' do
         expect(subject).to be
         expect(subject[:historical]).to be
-        expect(subject[:historical].keys.count).to eq 27
+        expect(subject[:historical].keys.count).to eq 28
         expect(subject[:historical]['ugrd']).to eq true
         expect(subject[:historical]['grad']).to eq false
         expect(subject[:historical]['fpf']).to eq false
