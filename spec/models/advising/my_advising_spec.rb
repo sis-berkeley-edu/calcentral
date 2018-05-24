@@ -89,11 +89,16 @@ describe Advising::MyAdvising do
 
     context 'graduate advisor relationships' do
       before do
-        allow_any_instance_of(MyAcademics::MyAcademicRoles).to receive(:get_feed).and_return({ :grad => true, :law => true })
+        allow_any_instance_of(MyAcademics::MyAcademicRoles).to receive(:get_feed).and_return(academic_roles)
         cs_advisor_student_relationship_proxy.set_response({
           status: 200,
           body: cs_advisor_student_relationship_proxy.read_file('fixtures', 'xml', 'campus_solutions', 'advisor_student_relationship_graduate.xml')
         })
+      end
+      let(:academic_roles) do
+        {
+          current: { :grad => true, :law => true }
+        }
       end
 
       it 'provides advisors in the expected order' do
@@ -115,11 +120,16 @@ describe Advising::MyAdvising do
 
     context 'undergraduate advisor relationships' do
       before do
-        allow_any_instance_of(MyAcademics::MyAcademicRoles).to receive(:get_feed).and_return({ :ugrd => true, :law => true })
+        allow_any_instance_of(MyAcademics::MyAcademicRoles).to receive(:get_feed).and_return(academic_roles)
         cs_advisor_student_relationship_proxy.set_response({
           status: 200,
           body: cs_advisor_student_relationship_proxy.read_file('fixtures', 'xml', 'campus_solutions', 'advisor_student_relationship_undergraduate.xml')
         })
+      end
+      let(:academic_roles) do
+        {
+          current: { :ugrd => true, :law => true }
+        }
       end
 
       it 'provides advisors in the expected order' do

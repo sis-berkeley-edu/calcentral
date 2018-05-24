@@ -3,7 +3,7 @@
 var angular = require('angular');
 var _ = require('lodash');
 
-angular.module('calcentral.controllers').controller('UndergraduateDegreeProgressController', function(degreeProgressFactory, apiService, $scope) {
+angular.module('calcentral.controllers').controller('UndergraduateDegreeProgressController', function(academicsService, degreeProgressFactory, apiService, $scope) {
   $scope.degreeProgress = {
     undergraduate: {
       isLoading: true
@@ -22,7 +22,7 @@ angular.module('calcentral.controllers').controller('UndergraduateDegreeProgress
         $scope.degreeProgress.undergraduate.transferCreditReviewDeadline = _.get(response, 'data.feed.degreeProgress.transferCreditReviewDeadline');
         $scope.degreeProgress.undergraduate.links = _.get(response, 'data.feed.links');
         $scope.degreeProgress.undergraduate.errored = _.get(response, 'data.errored');
-        $scope.degreeProgress.undergraduate.showCard = apiService.user.profile.features.csDegreeProgressUgrdStudent && apiService.user.profile.roles.undergrad && !apiService.user.profile.academicRoles.nonDegreeSeekingSummerVisitor;
+        $scope.degreeProgress.undergraduate.showCard = apiService.user.profile.features.csDegreeProgressUgrdStudent && apiService.user.profile.roles.undergrad && !academicsService.isNonDegreeSeekingSummerVisitor(apiService.user.profile.academicRoles);
         $scope.degreeProgress.undergraduate.showTip = showTip;
       }
     );

@@ -12,12 +12,12 @@ angular.module('calcentral.controllers').controller('MyAdvisingController', func
   };
 
   var isHaasStudent = function(academicRoles) {
-    if (academicRoles.haasFullTimeMba ||
-      academicRoles.haasEveningWeekendMba ||
-      academicRoles.haasExecMba ||
-      academicRoles.haasMastersFinEng ||
-      academicRoles.haasMbaPublicHealth ||
-      academicRoles.haasMbaJurisDoctor) {
+    if (academicRoles.current.haasFullTimeMba ||
+      academicRoles.current.haasEveningWeekendMba ||
+      academicRoles.current.haasExecMba ||
+      academicRoles.current.haasMastersFinEng ||
+      academicRoles.current.haasMbaPublicHealth ||
+      academicRoles.current.haasMbaJurisDoctor) {
       return true;
     }
     return false;

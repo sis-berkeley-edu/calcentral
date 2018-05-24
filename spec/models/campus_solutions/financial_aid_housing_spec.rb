@@ -37,10 +37,15 @@ describe CampusSolutions::FinancialAidHousing do
       title: 'First-Year Pathways Financial Aid'
     }
   end
+  let(:academic_roles) do
+    {
+      current: { 'ugrdNonDegree' => non_degree_undergrad }
+    }
+  end
 
   before do
     allow_any_instance_of(User::AggregatedAttributes).to receive(:get_feed).and_return({ :roles => { :undergrad => undergrad }})
-    allow_any_instance_of(MyAcademics::MyAcademicRoles).to receive(:get_feed).and_return({ 'ugrdNonDegree' => non_degree_undergrad })
+    allow_any_instance_of(MyAcademics::MyAcademicRoles).to receive(:get_feed).and_return(academic_roles)
     allow(LinkFetcher).to receive(:fetch_link).with('UC_ADMT_FYPATH_FA_SPG').and_return(spring_first_year_pathway_link)
     allow(CampusSolutions::MessageCatalog).to receive(:get_message_catalog_definition) do |msg_set_nbr, msg_nbr|
       case msg_nbr

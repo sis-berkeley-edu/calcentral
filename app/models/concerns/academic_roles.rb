@@ -47,6 +47,7 @@ module Concerns
     # Role(s) assigned to a user if they are in a program associated with that role.
     ACADEMIC_PROGRAM_ROLES = [
       {role_code: 'lettersAndScience', match: ['UCLS']},
+      {role_code: 'degreeSeeking', match: [], exclude: ['GNODG', 'LNODG', 'UNODG', 'XCCRT', 'XFPF']},
       {role_code: 'ugrdNonDegree', match: ['UNODG']}
     ]
 
@@ -58,16 +59,16 @@ module Concerns
       {role_code: 'concurrent', match: ['UCBX']}
     ]
 
-    def get_academic_plan_role_code(plan_code)
-      get_role_code(ACADEMIC_PLAN_ROLES, plan_code)
+    def get_academic_plan_roles(plan_code)
+      get_matched_roles(ACADEMIC_PLAN_ROLES, plan_code)
     end
 
-    def get_academic_program_role_code(program_code)
-      get_role_code(ACADEMIC_PROGRAM_ROLES, program_code)
+    def get_academic_program_roles(program_code)
+      get_matched_roles(ACADEMIC_PROGRAM_ROLES, program_code)
     end
 
-    def get_academic_career_role_code(career_code)
-      get_role_code(ACADEMIC_CAREER_ROLES, career_code)
+    def get_academic_career_roles(career_code)
+      get_matched_roles(ACADEMIC_CAREER_ROLES, career_code)
     end
 
     def role_defaults
@@ -76,12 +77,18 @@ module Concerns
 
     private
 
-    def get_role_code(roles, academic_code)
+    def get_matched_roles(roles, academic_code)
       return nil if academic_code.nil?
-      matched_role_codes = roles.select do |matcher|
-        matcher[:match].include?(academic_code)
+      matched_roles = roles.select do |matcher|
+        if matcher[:exclude]
+          !matcher[:exclude].include?(academic_code)
+        else
+          matcher[:match].include?(academic_code)
+        end
       end
-      matched_role_codes.empty? ? nil : matched_role_codes.first[:role_code]
+      return matched_roles.map do |role|
+        role[:role_code]
+      end
     end
 
     def role_codes

@@ -97,7 +97,7 @@ module Advising
 
     def student_is_graduate?
       roles = MyAcademics::MyAcademicRoles.new(@uid).get_feed
-      roles[:grad]
+      roles[:current][:grad]
     end
   end
 end

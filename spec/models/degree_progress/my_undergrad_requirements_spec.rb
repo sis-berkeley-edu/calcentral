@@ -19,7 +19,12 @@ describe DegreeProgress::MyUndergradRequirements do
 
     context 'when student is active in the Letters and Science program' do
       before do
-        allow_any_instance_of(MyAcademics::MyAcademicRoles).to receive(:get_feed).and_return({ 'lettersAndScience' => true })
+        allow_any_instance_of(MyAcademics::MyAcademicRoles).to receive(:get_feed).and_return(academic_roles)
+      end
+      let(:academic_roles) do
+        {
+          current: { 'lettersAndScience' => true }
+        }
       end
       it 'includes the Academic Progress Report link in the response' do
         expect(subject[:feed][:links]).to be
@@ -29,7 +34,12 @@ describe DegreeProgress::MyUndergradRequirements do
     end
     context 'when student is not active in the Letters and Science program' do
       before do
-        allow_any_instance_of(MyAcademics::MyAcademicRoles).to receive(:get_feed).and_return({ 'lettersAndScience' => false })
+        allow_any_instance_of(MyAcademics::MyAcademicRoles).to receive(:get_feed).and_return(academic_roles)
+      end
+      let(:academic_roles) do
+        {
+          current: { 'lettersAndScience' => false }
+        }
       end
       it 'does not include the Academic Progress Report link in the response' do
         expect(subject[:feed][:links]).not_to be

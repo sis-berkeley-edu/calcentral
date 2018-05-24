@@ -1,9 +1,9 @@
 <div data-cc-academic-plans-directive data-ng-if="collegeAndLevel.majors.length" data-plans="collegeAndLevel.majors" data-options="{labels: {'1': 'Major', 'other': 'Majors'}}" data-type="major"></div>
 <div data-cc-academic-plans-directive data-ng-if="collegeAndLevel.minors.length" data-plans="collegeAndLevel.minors" data-options="{labels: {'1': 'Minor', 'other': 'Minors'}}" data-type="minor"></div>
 <div data-cc-academic-plans-directive data-ng-if="collegeAndLevel.designatedEmphases.length" data-plans="collegeAndLevel.designatedEmphases" data-options="{labels: {'1': 'Designated Emphasis', 'other': 'Designated Emphases'}}" data-type="designatedEmphasis"></div>
-<div data-cc-academic-careers-directive data-ng-if="!api.user.profile.academicRoles.nonDegreeSeekingSummerVisitor && collegeAndLevel.careers.length" data-careers="collegeAndLevel.careers"></div>
+<div data-cc-academic-careers-directive data-ng-if="!isNonDegreeSeekingSummerVisitor && collegeAndLevel.careers.length" data-careers="collegeAndLevel.careers"></div>
 
-<div class="cc-table cc-table-top-border cc-clearfix" data-ng-if="!api.user.profile.academicRoles.nonDegreeSeekingSummerVisitor && collegeAndLevel.level">
+<div class="cc-table cc-table-top-border cc-clearfix" data-ng-if="!isNonDegreeSeekingSummerVisitor && collegeAndLevel.level">
   <table class="cc-widget-profile-table">
     <tbody>
       <tr>
@@ -26,5 +26,5 @@
     </tbody>
   </table>
 </div>
-<div data-cc-expected-graduation-terms-directive data-ng-if="!api.user.profile.academicRoles.nonDegreeSeekingSummerVisitor && (collegeAndLevel.termsInAttendance || graduation.undergraduate.expectedGraduationTerm || graduation.gradLaw.expectedGraduationTerms.length)"
+<div data-cc-expected-graduation-terms-directive data-ng-if="!isNonDegreeSeekingSummerVisitor && (collegeAndLevel.termsInAttendance || graduation.undergraduate.expectedGraduationTerm || graduation.gradLaw.expectedGraduationTerms.length)"
      data-termsInAttendance="collegeAndLevel.termsInAttendance" data-graduation="graduation"></div>

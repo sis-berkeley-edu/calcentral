@@ -42,6 +42,8 @@ describe UserController do
       expect(json_response['isDirectlyAuthenticated']).to be true
       expect(json_response['canActOnFinances']).to be true
       expect(json_response['academicRoles']).to be_present
+      expect(json_response['academicRoles']['current']).to be_present
+      expect(json_response['academicRoles']['historical']).to be_present
 
       visit = User::Visit.where(:uid => session['user_id'])[0]
       expect(visit.last_visit_at).to be_present
@@ -58,6 +60,8 @@ describe UserController do
         expect(json_response['features']).to be_present
         expect(json_response['isDirectlyAuthenticated']).to be false
         expect(json_response['academicRoles']).to be_present
+        expect(json_response['academicRoles']['current']).to be_present
+        expect(json_response['academicRoles']['historical']).to be_present
       end
     end
   end
@@ -238,5 +242,4 @@ describe UserController do
       end
     end
   end
-
 end
