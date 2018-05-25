@@ -132,7 +132,8 @@ module MyAcademics
           section_session_id = section.try(:[], :session_id)
           ccn = section[:ccn]
           has_grade_access = has_grading_access?(section)
-          cs_grading_status = parse_cs_grading_status(get_cs_status(ccn, is_law, term_id), is_law, is_summer)
+          cs_roster_status = get_cs_status(ccn, is_law, term_id)
+          cs_grading_status = parse_cs_grading_status(cs_roster_status, is_law, is_summer)
           if cs_grading_session_config?(term_id, acad_career_code, section_session_id)
             # Law and summer classes do not have midpoint grades.
             if is_law && !is_summer
@@ -186,12 +187,12 @@ module MyAcademics
     end
 
     def get_cs_status(ccn, is_law, term_id)
-      cnn_status = nil
+      status = nil
       if (grading_feed = get_grading_data)
         grading_statuses = grading_feed.try(:[],:feed).try(:[],:ucSrClassGrading).try(:[],:classGradingStatuses)
-        cnn_status = find_ccn_grading_statuses(grading_statuses, ccn, is_law, term_id)
+        status = find_ccn_grading_statuses(grading_statuses, ccn, is_law, term_id)
       end
-      cnn_status
+      status
     end
 
     def get_grading_data
@@ -260,9 +261,11 @@ module MyAcademics
     def parse_cc_grading_status(cs_grading_status, is_law, is_midpoint, term_id, section = nil)
       grading_type = is_law ? :law : :general
       acad_career_code = GRADING_TYPE_TO_CAREER_MAP[grading_type]
-      session_id = section.try(:[], :session_id)
+
+      session_id = section.try(:[], :session_id) || '1'
       if cs_grading_session_config?(term_id, acad_career_code, session_id)
         if section.present?
+
           # summer has no midterm
           summer_grading_window = {
             final_begin_date: section[:gradingPeriodStartDate],
