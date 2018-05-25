@@ -7,7 +7,7 @@ var angular = require('angular');
 /**
  * Academics controller
  */
-angular.module('calcentral.controllers').controller('AcademicsController', function(academicsFactory, academicsService, holdsFactory, apiService, badgesFactory, linkService, registrationsFactory, userService, $q, $routeParams, $scope, $location) {
+angular.module('calcentral.controllers').controller('AcademicsController', function(academicsFactory, academicsService, academicStandingsFactory, holdsFactory, apiService, badgesFactory, linkService, registrationsFactory, userService, $q, $routeParams, $scope, $location) {
   linkService.addCurrentRouteSettings($scope);
   apiService.util.setTitle($scope.currentPage.name);
 
@@ -175,6 +175,17 @@ angular.module('calcentral.controllers').controller('AcademicsController', funct
     );
   };
 
+  var loadHasStanding = function() {
+    return academicStandingsFactory.getStandings().then(
+      function(response) {
+        var currentStandings = _.get(response, 'data.feed.currentStandings');
+        if (currentStandings[0].acadStandingStatus !== 'GST') {
+          $scope.hasStandingAlert = true;
+        }
+      }
+    );
+  };
+
   var loadRegistrations = function(response) {
     var registrations = _.get(response, 'data.registrations');
     $scope.hasRegStatus = !_.isEmpty(registrations);
@@ -216,8 +227,7 @@ angular.module('calcentral.controllers').controller('AcademicsController', funct
                                        ($scope.semesters && $scope.semesters.length));
     $scope.isNonDegreeSeekingSummerVisitor = isNonDegreeSeekingSummerVisitor;
     $scope.showStatusAndBlocks = !$scope.filteredForDelegate &&
-                                 ($scope.hasRegStatus ||
-                                 ($scope.numberOfHolds));
+                                 ($scope.hasRegStatus || $scope.numberOfHolds || $scope.hasStandingAlert);
     $scope.showAdvising = !$scope.filteredForDelegate && apiService.user.profile.features.advising && apiService.user.profile.roles.student && isMbaJdOrNotLaw() && !isNonDegreeSeekingSummerVisitor;
     $scope.showProfileMessage = (!$scope.isAcademicInfoAvailable || !$scope.collegeAndLevel || _.isEmpty($scope.collegeAndLevel.careers));
     $scope.showResidency = apiService.user.profile.roles.student && academicsService.showResidency(apiService.user.profile.academicRoles.current);
@@ -245,6 +255,9 @@ angular.module('calcentral.controllers').controller('AcademicsController', funct
 
       if (apiService.user.profile.roles.student || apiService.user.profile.roles.applicant || apiService.user.profile.roles.exStudent || apiService.user.profile.roles.concurrentEnrollmentStudent) {
         requests.push(loadNumberOfHolds());
+      }
+      if (apiService.user.profile.academicRoles.current.ugrd && !apiService.user.profile.academicRoles.current.ugrdNonDegree) {
+        requests.push(loadHasStanding());
       }
       $q.all(requests).then(filterWidgets);
     }
