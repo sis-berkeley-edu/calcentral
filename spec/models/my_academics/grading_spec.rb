@@ -501,7 +501,7 @@ describe MyAcademics::Grading do
   end
 
   describe '#parse_cc_grading_status' do
-    let(:cs_grading_status) { 'GRD' }
+    let(:cs_grading_status) { :GRD }
     let(:is_law) { false }
     let(:is_midpoint) { false }
     let(:term_id) { semester_one_term_id }
@@ -524,7 +524,7 @@ describe MyAcademics::Grading do
           }
         end
         it 'provides grading period status for summer grading window' do
-          expect(subject).to receive(:find_grading_period_status).with(summer_grading_window, false).and_return(:afterGradingPeriod)
+          expect(subject).to receive(:find_grading_period_status).with(summer_grading_window, is_midpoint).and_return(:afterGradingPeriod)
           expect(cc_grading_status).to eq :gradesOverdue
         end
       end
@@ -535,10 +535,35 @@ describe MyAcademics::Grading do
             final_end_date: Time.parse('2018-02-15 00:00:00 UTC')
           }
         end
-        it 'provides grading period status for non-summer grading' do
-          expect(subject).to receive(:get_grading_dates).with(term_id, :general).and_return(grading_window)
-          expect(subject).to receive(:find_grading_period_status).with(grading_window, false).and_return(:afterGradingPeriod)
-          expect(cc_grading_status).to eq :gradesOverdue
+        context 'when before after begins' do
+          before do
+            expect(subject).to receive(:get_grading_dates).with(term_id, :general).and_return(grading_window)
+            expect(subject).to receive(:find_grading_period_status).with(grading_window, is_midpoint).and_return(:afterGradingPeriod)
+          end
+          it 'provides grading period status for non-summer grading' do
+            expect(cc_grading_status).to eq :gradesOverdue
+          end
+        end
+        context 'when before grading begins' do
+          before do
+            expect(subject).to receive(:get_grading_dates).with(term_id, :general).and_return(grading_window)
+            expect(subject).to receive(:find_grading_period_status).with(grading_window, is_midpoint).and_return(:beforeGradingPeriod)
+          end
+          context 'when midterm grading status' do
+            let(:is_midpoint) { true }
+            context 'when not reviewed' do
+              let(:cs_grading_status) { :NRVW }
+              it 'returns period not started status' do
+                expect(cc_grading_status).to eq :periodNotStarted
+              end
+            end
+            context 'when approved' do
+              let(:cs_grading_status) { :APPR }
+              it 'returns grades posted status' do
+                expect(cc_grading_status).to eq :gradesPosted
+              end
+            end
+          end
         end
       end
     end
