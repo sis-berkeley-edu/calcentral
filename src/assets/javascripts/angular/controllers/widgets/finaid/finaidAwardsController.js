@@ -7,7 +7,7 @@ var _ = require('lodash');
  * Financial Aid - Awards controller
  */
 angular.module('calcentral.controllers').controller('FinaidAwardsController', function($scope, finaidFactory, finaidService) {
-  var keysGiftWork = ['giftaid', 'workstudy', 'waiversAndOther'];
+  var keysGiftWork = ['giftaid', 'waiversAndOther', 'workstudy'];
   var keysLoans = ['subsidizedloans', 'unsubsidizedloans', 'alternativeloans', 'plusloans'];
 
   $scope.finaidAwardsInfo = {
