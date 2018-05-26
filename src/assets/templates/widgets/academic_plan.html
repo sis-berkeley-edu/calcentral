@@ -42,18 +42,20 @@
                       <span data-ng-bind="semester.withdrawalStatus.withcnclFromDate"></span> (Reason:<span data-ng-bind="semester.withdrawalStatus.withcnclReasonDescr">)</span>
                     </td>
                   </tr>
-                  <tr data-ng-if="semester.hasStandingData && semester.standing.acadStandingStatus !== 'GST'">
+                  <tr data-ng-if="!semester.show && semester.hasStandingData && semester.standing.acadStandingStatus !== 'GST'">
                     <td>
                       <i class="fa fa-exclamation-circle cc-icon-red" aria-hidden="true"></i>
                     </td>
                     <td>
-                      <div data-ng-bind="semester.standing.acadStandingStatusDescr"></div>
                       <div>
-                        <span class="cc-academic-plan-card-sub-title">
-                          <span data-ng-bind="semester.standing.acadStandingActionDescr"></span> - Updated
-                          <span data-ng-bind="semester.standing.actionDate"></span>
+                        <span>
+                          <span data-ng-bind="semester.standing.acadStandingStatusDescr"></span>
+                          <span class="cc-academic-plan-card-sub-title cc-italic"> Updated
+                            <span data-ng-bind="semester.standing.actionDate"></span>
+                          </span>
                         </span>
                       </div>
+                      <div class="cc-academic-plan-card-sub-title" data-ng-bind="semester.standing.acadStandingActionDescr"></div>
                     </td>
                   </tr>
                 </tbody>
@@ -176,6 +178,28 @@
                 </table>
                 <br>
               </div>
+            </div>
+            <div>
+              <table>
+                <tbody>
+                  <tr data-ng-if="semester.show && semester.hasStandingData && semester.standing.acadStandingStatus !== 'GST'">
+                    <td>
+                      <i class="fa fa-exclamation-circle cc-icon-red" aria-hidden="true"></i>
+                    </td>
+                    <td>
+                      <div>
+                        <span>
+                          <span data-ng-bind="semester.standing.acadStandingStatusDescr"></span>
+                          <span class="cc-academic-plan-card-sub-title cc-italic"> Updated
+                            <span data-ng-bind="semester.standing.actionDate"></span>
+                          </span>
+                        </span>
+                      </div>
+                      <div class="cc-academic-plan-card-sub-title" data-ng-bind="semester.standing.acadStandingActionDescr"></div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
           </div>
         </li>

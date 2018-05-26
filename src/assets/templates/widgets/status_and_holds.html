@@ -5,13 +5,13 @@
 
   <div class="cc-widget-padding" data-cc-spinner-directive="statusHolds.isLoading">
     <h3 class="cc-status-holds-status-header" data-ng-if="regStatus.show || showResidency">Status</h3>
-     <div data-ng-if="(api.user.profile.academicRoles.current.ugrd && !api.user.profile.academicRoles.current.ugrdNonDegree) || (api.user.profile.roles.advisor && targetUser.academicRoles.current.ugrd && !targetUser.academicRoles.current.ugrdNonDegree)">
+     <div data-ng-if="api.user.profile.features.standings && ((api.user.profile.academicRoles.current.ugrd && !api.user.profile.academicRoles.current.ugrdNonDegree) || (api.user.profile.roles.advisor && targetUser.academicRoles.current.ugrd && !targetUser.academicRoles.current.ugrdNonDegree))">
       <div class="cc-status-holds-section">
         <div>
-          <h4>Academic Standing</h4>
+          <h4>Academic Status</h4>
           <div>
-            <button class="cc-button-link" data-ng-click="academics.showStanding = true" data-ng-show="!academics.showStanding">Show Academic Standing</button>
-            <button class="cc-button-link" data-ng-click="academics.showStanding = false" data-ng-show="academics.showStanding">Hide Academic Standing</button>
+            <button class="cc-button-link" data-ng-click="academics.showStanding = true" data-ng-show="!academics.showStanding">Show Academic Status</button>
+            <button class="cc-button-link" data-ng-click="academics.showStanding = false" data-ng-show="academics.showStanding">Hide Academic Status</button>
           </div>
           <div data-ng-show="academics.showStanding">
             <div data-ng-include="'widgets/academic_standing.html'"></div>
