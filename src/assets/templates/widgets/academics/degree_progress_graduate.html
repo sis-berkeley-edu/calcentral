@@ -27,7 +27,7 @@
         <span data-ng-bind="degreeProgress.graduate.links.academicProgressReportHaas.linkDescription"></span>
       </div>
     </div>
-    <div data-ng-if="!degreeProgress.graduate.progresses.length && !api.user.profile.roles.advisor">
+    <div data-ng-if="!degreeProgress.graduate.progresses.length && !api.user.profile.roles.advisor && showEmptyMilestonesMessage">
       You have not completed any Graduate Division Milestones. Please contact your department if you believe this is an error.
     </div>
     <div data-ng-if="!degreeProgress.graduate.progresses.length && api.user.profile.roles.advisor">

@@ -12,21 +12,19 @@ angular.module('calcentral.controllers').controller('GraduateDegreeProgressContr
   };
 
   var loadGraduateDegreeProgress = function() {
-    degreeProgressFactory.getGraduateMilestones().then(
-      function(response) {
-        var links = _.get(response, 'data.feed.links');
-        $scope.degreeProgress.graduate.links = _.isEmpty(links) ? undefined : links;
-        $scope.degreeProgress.graduate.progresses = _.get(response, 'data.feed.degreeProgress');
-        $scope.degreeProgress.graduate.errored = _.get(response, 'errored');
-      }
-    ).finally(
-      function() {
-        var isHigherDegreeStudent = apiService.user.profile.academicRoles.current.grad || (apiService.user.profile.academicRoles.current.law && (apiService.user.profile.academicRoles.current.lawJspJsd || apiService.user.profile.academicRoles.current.lawJdCdp));
-        var isExStudentWithMilestones = apiService.user.profile.roles.exStudent && $scope.degreeProgress.graduate.progresses.length;
-        $scope.degreeProgress.graduate.showCard = apiService.user.profile.features.csDegreeProgressGradStudent && (isHigherDegreeStudent || isExStudentWithMilestones) && !academicsService.isNonDegreeSeekingSummerVisitor(apiService.user.profile.academicRoles);
-        $scope.degreeProgress.graduate.isLoading = false;
-      }
-    );
+    degreeProgressFactory.getGraduateMilestones().then(function(response) {
+      var links = _.get(response, 'data.feed.links');
+      $scope.degreeProgress.graduate.links = _.isEmpty(links) ? undefined : links;
+      $scope.degreeProgress.graduate.progresses = _.get(response, 'data.feed.degreeProgress');
+      $scope.degreeProgress.graduate.errored = _.get(response, 'errored');
+    }).then(function() {
+      $scope.showEmptyMilestonesMessage = apiService.user.profile.academicRoles.current.grad || (apiService.user.profile.academicRoles.current.law && apiService.user.profile.academicRoles.current.lawJspJsd);
+      var hasAprLink = !!$scope.degreeProgress.graduate.links;
+      var hasMilestones = $scope.degreeProgress.graduate.progresses.length;
+      $scope.degreeProgress.graduate.showCard = apiService.user.profile.features.csDegreeProgressGradStudent && (hasAprLink || hasMilestones || $scope.showEmptyMilestonesMessage) && !apiService.user.profile.academicRoles.current.nonDegreeSeekingSummerVisitor;
+    }).finally(function() {
+      $scope.degreeProgress.graduate.isLoading = false;
+    });
   };
 
   loadGraduateDegreeProgress();
