@@ -61,7 +61,7 @@ module MyAcademics
         roles << plan.try(:[], 'academicPlan').try(:[], 'academicProgram').try(:[], :role)
       end
       roles << status.try(:[], 'studentCareer').try(:[], :role)
-      roles.compact
+      roles.flatten.uniq.compact
     end
   end
 end

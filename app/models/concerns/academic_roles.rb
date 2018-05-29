@@ -35,6 +35,10 @@ module Concerns
         match: %w(84501JDASG 84501JDBAG 84501JDCPG 84501JDEAG 84501JDECG 84501JDESG 84501JDJNG 84501JDJPG 84501JDPPG 84501JDSWG 845B0HLLMG 845B0LLMG 845B0SLLMG),
       },
       {
+        role_code: 'masterOfLawsLlm',
+        match: ['845B0LLMG']
+      },
+      {
         role_code: 'lawVisiting',
         match: %w(84501CWOG 84V00G),
       },

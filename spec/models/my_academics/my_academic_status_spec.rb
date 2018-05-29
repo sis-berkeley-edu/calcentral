@@ -115,8 +115,104 @@ describe MyAcademics::MyAcademicStatus do
       end
       it 'assigns roles' do
         expect(subject.first['studentCareer'][:role]).to eq 'ugrd'
-        expect(subject.first['studentPlans'].first[:role]).to eq 'fpf'
+        expect(subject.first['studentPlans'].first[:role]).to eq ['fpf']
         expect(subject.first['studentPlans'].first['academicPlan']['academicProgram'][:role]).to eq 'lettersAndScience'
+      end
+    end
+
+    context 'when student has an active plan code that maps to multiple plan-based roles' do
+      let(:master_of_laws_status) do
+        {
+          'studentCareer' => {
+            'academicCareer' => {
+              'code' => 'LAW',
+              'description' => 'Law',
+              'formalDescription' => 'Law',
+              'fromDate' => '2017-08-14',
+              'toDate' => '2018-05-09'
+            },
+            'matriculation' => {
+              'term' => {
+                'id' => '2178',
+                'name' => '2017 Fall'
+              },
+              'type' => {
+                'code' => 'FYR',
+                'description' => 'First Year Student'
+              }
+            },
+            'fromDate' => '2017-08-14',
+            'toDate' => '2018-05-09'
+          },
+          'studentPlans' => [
+            {
+              'academicPlan' => {
+                'plan' => {
+                  'code' => '845B0LLMG',
+                  'description' => 'Master of Laws LLM',
+                  'fromDate' => '2017-08-25',
+                  'toDate' => '2018-05-09'
+                },
+                'type' => {
+                  'code' => 'SS',
+                  'description' => 'Major - Self-Supporting'
+                },
+                'cipCode' => '22.0202',
+                'hegisCode' => '',
+                'targetDegree' => {
+                  'type' => {
+                    'code' => '28',
+                    'description' => 'Master of Laws'
+                  }
+                },
+                'ownedBy' => {
+                  'administrativeOwners' => [
+                    {
+                      'organization' => {
+                        'code' => 'LAW',
+                        'description' => 'School of Law'
+                      },
+                      'percentage' => 100
+                    }
+                  ]
+                },
+                'academicProgram' => {
+                  'program' => {
+                    'code' => 'LSSDP',
+                    'description' => 'Law Self-Supporting Programs'
+                  },
+                  'academicCareer' => {
+                    'code' => 'LAW',
+                    'description' => 'Law',
+                    'formalDescription' => 'Law',
+                    'fromDate' => '2017-08-14',
+                    'toDate' => '2018-05-09'
+                  }
+                }
+              },
+              'statusInPlan' => {
+                'status' => {
+                  'code' => 'AC',
+                  'description' => 'Active in Program'
+                },
+                'action' => {
+                  'code' => 'DATA',
+                  'description' => 'Data Change'
+                },
+                'reason' => {
+                  'code' => 'GTOI',
+                  'description' => 'Grad Term - Auto Opt-In'
+                }
+              },
+              'primary' => true,
+              'expectedGraduationTerm' => {}
+            }
+          ]
+        }
+      end
+      let(:academic_statuses) { [master_of_laws_status] }
+      it 'returns all applicable roles' do
+        expect(subject.first['studentPlans'].first[:role]).to include('lawJdLlm', 'masterOfLawsLlm')
       end
     end
   end
