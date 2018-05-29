@@ -155,6 +155,7 @@ features:
   final_exam_schedule: true
   financials: true
   reserved_capacity: true
+  standings: true
   textbooks: true
   videos: true
   webcast_sign_up_on_calcentral: true
