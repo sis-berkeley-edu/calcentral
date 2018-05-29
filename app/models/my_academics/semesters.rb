@@ -24,7 +24,7 @@ module MyAcademics
     end
 
     def get_academic_standings(campus_solution_id)
-      academic_standings = EdoOracle::Queries.get_academic_standings(campus_solution_id)
+      academic_standings = EdoOracle::Queries.get_academic_standings(campus_solution_id) if Settings.features.standings
       academic_standings ||= []
     end
 
