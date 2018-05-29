@@ -29,8 +29,12 @@ describe DataLoch::S3 do
         }
       end
       it 'returns object key under hashed current (fake) date' do
-        key = subject.upload_to_daily('analytics', local_path)
+        key = subject.upload('analytics', local_path)
         expect(key).to eq 'exports/go/here/daily/8e8847c1bdf012037ee13bb62da8a5c1-2013-10-10/analytics/analytics_a_la_carte.gz'
+      end
+      it 'also handles historical data' do
+        key = subject.upload('analytics', local_path, true)
+        expect(key).to eq 'exports/go/here/historical/analytics/analytics_a_la_carte.gz'
       end
     end
 
@@ -38,7 +42,7 @@ describe DataLoch::S3 do
       let(:put_object_response) { 'AccessDenied' }
       it 'logs errors and returns false' do
         expect(Rails.logger).to receive(:error).with /Error on S3 upload/
-        result = subject.upload_to_daily('analytics', local_path)
+        result = subject.upload('analytics', local_path)
         expect(result).to be_nil
       end
     end
