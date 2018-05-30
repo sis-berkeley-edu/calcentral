@@ -157,7 +157,7 @@ angular.module('calcentral.controllers').controller('StatusController', function
     return academicStandingsFactory.getStandings().then(
       function(response) {
         var currentStandings = _.get(response, 'data.feed.currentStandings');
-        if (currentStandings[0].acadStandingStatus !== 'GST') {
+        if (currentStandings.length !== 0 && currentStandings[0].acadStandingStatus !== 'GST') {
           $scope.count += 1;
           $scope.hasStandingAlert = true;
           $scope.hasAlerts = true;
