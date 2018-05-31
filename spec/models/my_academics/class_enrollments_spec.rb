@@ -80,7 +80,7 @@ describe MyAcademics::ClassEnrollments do
       plan: { code: '04606U', description: 'Nutritional Science BS' },
       type: { code: 'MAJ', description: 'Major - Regular Acad/Prfnl', category: 'Major' },
       college: 'Undergrad Natural Resources',
-      role: nil,
+      role: [],
       statusInPlan: {
         status: { code: 'AC' }
       },
@@ -94,7 +94,7 @@ describe MyAcademics::ClassEnrollments do
       plan: { code: '25201U', description: 'Computer Science BA' },
       type: { code: 'MAJ', description: 'Major - Regular Acad/Prfnl', category: 'Major' },
       college: 'Undergrad Letters & Science',
-      role: nil,
+      role: [],
       statusInPlan: {
         status: { code: 'AC' }
       },
@@ -108,7 +108,7 @@ describe MyAcademics::ClassEnrollments do
       plan: { code: '25179U', description: 'Cognitive Science BA' },
       type: { code: 'MAJ', description: 'Major - Regular Acad/Prfnl', category: 'Major'},
       college: 'Undergrad Letters & Science',
-      role: nil,
+      role: [],
       statusInPlan: {
         status: { code: 'AC' }
       },
@@ -122,7 +122,7 @@ describe MyAcademics::ClassEnrollments do
       plan: { code: '25000FPFU', description: 'L&S Undcl Fall Pgm Freshmen UG' },
       type: { code: 'MAJ', description: 'Major - Regular Acad/Prfnl', category: 'Major'},
       college: 'Undergrad Letters & Science',
-      role: 'fpf',
+      role: ['fpf'],
       statusInPlan: {
         status: { code: 'AC' }
       },
@@ -136,7 +136,7 @@ describe MyAcademics::ClassEnrollments do
       plan: { code: '16290PHDG', description: 'Electrical Eng & Comp Sci PhD' },
       type: { code: 'MAJ', description: 'Major - Regular Acad/Prfnl', category: 'Major' },
       college: 'Graduate Academic Programs',
-      role: nil,
+      role: [],
       statusInPlan: {
         status: { code: 'AC' }
       },
@@ -150,7 +150,7 @@ describe MyAcademics::ClassEnrollments do
       plan: { code: '84485PHDG', description: 'JSP PhD' },
       type: { code: 'MAJ', description: 'Major - Regular Acad/Prfnl', category: 'Major' },
       college: 'Law Academic Programs',
-      role: nil,
+      role: [],
       statusInPlan: {
         status: { code: 'AC' }
       },
@@ -273,6 +273,12 @@ describe MyAcademics::ClassEnrollments do
     it 'includes metadata for included plans' do
       expect(student_plan_roles[:metadata][:includes_fpf]).to eq false
     end
+  end
+
+  context 'when determining enrollment specific role' do
+    let(:plan_based_role) { '' }
+    let(:career_based_role) { 'UGRD' }
+    let(:role) { subject.determine_enrollment_specific_role(plan_based_role, career_based_role) }
   end
 
   context 'when providing career term role decks' do
