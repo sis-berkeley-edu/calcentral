@@ -21,7 +21,7 @@ angular.module('calcentral.controllers').controller('GraduateDegreeProgressContr
       $scope.showEmptyMilestonesMessage = apiService.user.profile.academicRoles.current.grad || (apiService.user.profile.academicRoles.current.law && apiService.user.profile.academicRoles.current.lawJspJsd);
       var hasAprLink = !!$scope.degreeProgress.graduate.links;
       var hasMilestones = $scope.degreeProgress.graduate.progresses.length;
-      $scope.degreeProgress.graduate.showCard = apiService.user.profile.features.csDegreeProgressGradStudent && (hasAprLink || hasMilestones || $scope.showEmptyMilestonesMessage) && !apiService.user.profile.academicRoles.current.nonDegreeSeekingSummerVisitor;
+      $scope.degreeProgress.graduate.showCard = apiService.user.profile.features.csDegreeProgressGradStudent && (hasAprLink || hasMilestones || $scope.showEmptyMilestonesMessage) && !academicsService.isNonDegreeSeekingSummerVisitor(apiService.user.profile.academicRoles);
     }).finally(function() {
       $scope.degreeProgress.graduate.isLoading = false;
     });
