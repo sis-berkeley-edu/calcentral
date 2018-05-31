@@ -17,9 +17,6 @@ gem 'responders', '~> 2.0'
 
 gem 'activerecord-jdbc-adapter', '~> 1.3.16'
 
-# Needed for rails_admin in Ruby 2
-gem 'safe_yaml', '~> 1.0.4'
-
 # Postgresql adapter
 gem 'activerecord-jdbcpostgresql-adapter', '~> 1.3.16'
 
@@ -81,7 +78,7 @@ gem 'nokogiri', '~> 1.6.0', :platforms => :jruby
 gem 'link_header', '~> 0.0.7'
 
 # for simplified relational data management
-gem 'rails_admin', '0.6.5'
+gem 'rails_admin', '1.3.0'
 
 gem 'bootstrap-sass', '~> 3.3.1.0'
 
@@ -90,6 +87,9 @@ gem 'torquebox', '~> 3.2.0'
 gem 'torquebox-server', '~> 3.2.0'
 gem 'torquebox-messaging', '~> 3.2.0'
 gem 'jmx', '~> 1.0'
+
+# for building a WAR to deploy on Tomcat
+gem 'warbler', '~> 2.0.4'
 
 # for trying, and trying again, and then giving up.
 gem 'retriable', '~> 1.4'
