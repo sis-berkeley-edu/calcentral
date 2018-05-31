@@ -115,7 +115,7 @@ module User
 
     def self.encrypt_with_iv(value)
       return value if value.blank?
-      cipher = OpenSSL::Cipher::Cipher.new(@@encryption_algorithm)
+      cipher = OpenSSL::Cipher.new(@@encryption_algorithm)
       cipher.encrypt
       iv = cipher.random_iv
       cipher.key = @@encryption_key
