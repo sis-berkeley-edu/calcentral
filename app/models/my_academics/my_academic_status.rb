@@ -32,7 +32,8 @@ module MyAcademics
       if (plans = status.try(:[], 'studentPlans'))
         plans.each do |plan|
           if active? plan
-            plan[:role] = plan_based_role plan
+            # TODO: Update to use :roles
+            plan[:role] = plan_based_roles plan
             if (program = plan.try(:[], 'academicPlan').try(:[], 'academicProgram'))
               plan['academicPlan']['academicProgram'][:role] = program_based_role program
             end
@@ -46,7 +47,7 @@ module MyAcademics
       get_academic_career_roles(career_code).try(:first) if studentCareer
     end
 
-    def plan_based_role(studentPlan)
+    def plan_based_roles(studentPlan)
       plan_code = studentPlan.try(:[], 'academicPlan').try(:[], 'plan').try(:[], 'code')
       get_academic_plan_roles(plan_code) if studentPlan
     end

@@ -50,6 +50,19 @@ describe Concerns::AcademicRoles do
     end
   end
 
+  describe '#get_academic_plan_roles' do
+    subject { described_class.get_academic_plan_roles(code) }
+    context 'when code is nil' do
+      let(:code) { nil }
+      it { should be nil }
+    end
+
+    context 'when code is not mapped to any role' do
+      let(:code) { '25000ABCD' }
+      it { should eq [] }
+    end
+  end
+
   describe '#get_academic_program_roles' do
     subject { described_class.get_academic_program_roles(code) }
 
