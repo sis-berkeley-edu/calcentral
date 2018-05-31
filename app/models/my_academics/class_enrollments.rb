@@ -7,7 +7,7 @@ module MyAcademics
     include Concerns::AcademicStatus
     include LinkFetcher
 
-    ENROLLMENT_DECK_KEYS = ['fpf', 'haasFullTimeMba', 'haasEveningWeekendMba', 'haasExecMba', 'summerVisitor', 'law', 'concurrent']
+    ENROLLMENT_DECK_KEYS = ['fpf', 'haasFullTimeMba', 'haasEveningWeekendMba', 'haasExecMba', 'summerVisitor', 'courseworkOnly', 'law', 'concurrent']
 
     def get_feed_internal
       return {} unless is_feature_enabled && user_is_student?
@@ -43,9 +43,9 @@ module MyAcademics
       grouped_roles
     end
 
-    def determine_enrollment_specific_role(plan_based_role, career_based_role)
-      if ENROLLMENT_DECK_KEYS.include? plan_based_role
-        return plan_based_role
+    def determine_enrollment_specific_role(plan_based_roles, career_based_role)
+      if (ENROLLMENT_DECK_KEYS & plan_based_roles).any?
+        return plan_based_roles.first
       elsif ENROLLMENT_DECK_KEYS.include? career_based_role
         return career_based_role
       end
