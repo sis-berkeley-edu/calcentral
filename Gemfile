@@ -32,7 +32,7 @@ gem 'json', '~> 1.8.0'
 gem 'omniauth-cas', '~> 1.1.0', git: 'https://github.com/ets-berkeley-edu/omniauth-cas.git'
 
 # LDAP
-gem 'net-ldap', '~> 0.11.0'
+gem 'net-ldap', '~> 0.16.0'
 
 # secure_headers provides x-frame, csp and other http headers
 gem 'secure_headers', '~> 1.4.0'
