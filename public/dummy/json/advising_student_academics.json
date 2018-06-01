@@ -829,13 +829,5 @@
       ]
     }
   ],
-  "updatePlanUrl" : "https://bcs-web-dev-03.is.berkeley.edu:8443/psc/bcsdev/EMPLOYEE/HRMS/c/SCI_PLNR_FL.SCI_PLNR_FL.GBL?ucInstitution=UCB01",
-  "lastModified":{
-    "hash":"ffabb092eb078bba9c5717705bfb543166b3305e",
-    "timestamp":{
-      "epoch":1459449726,
-      "dateTime":"2016-03-31T11:42:06-07:00",
-      "dateString":"3/31"
-    }
-  }
+  "updatePlanUrl" : "https://bcs-web-dev-03.is.berkeley.edu:8443/psc/bcsdev/EMPLOYEE/HRMS/c/SCI_PLNR_FL.SCI_PLNR_FL.GBL?ucInstitution=UCB01"
 }

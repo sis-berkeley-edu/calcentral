@@ -45,14 +45,5 @@
   "delegateActingAsUid": false,
   "canSeeCSLinks": true,
   "canActOnFinances": true,
-  "lastModified": {
-    "hash": "c7e1f3df2ddb1dbf46b0d285185b1af03d20089e",
-    "timestamp": {
-      "epoch": 1394747903,
-      "dateTime": "2014-03-13T22:58:23+01:00",
-      "dateString": "3/13"
-    }
-  },
-  "feedName": "User::Api",
   "youtubeSplashId": "Yc3z0TIl_Fc"
 }

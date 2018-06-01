@@ -6,8 +6,6 @@ module CalCentralPages
     include CalCentralPages
     include ClassLogger
 
-    span(:day, :xpath => '//span[@data-ng-bind="lastModifiedDate | date:\'EEEE\'"]')
-    span(:date, :xpath => '//span[@data-ng-bind="lastModifiedDate | date:\'MMM d\'"]')
     unordered_list(:events_list, :xpath => '//ul[@class="cc-widget-list cc-widget-mycalendar-datelist"]')
     elements(:event_time, :div, :xpath => '//ul[@class="cc-widget-list cc-widget-mycalendar-datelist"]/li//div[@class="cc-widget-mycalendar-datelist-time cc-left"]')
     elements(:event_summary, :div, :xpath => '//ul[@class="cc-widget-list cc-widget-mycalendar-datelist"]/li//strong[@data-ng-bind="item.summary"]')

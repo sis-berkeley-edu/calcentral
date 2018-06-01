@@ -81,13 +81,5 @@
       "isAllDay": false,
       "emitter": "Google Calendar"
     }
-  ],
-  "lastModified": {
-    "hash": "af8f7132a5d2efdf8bd3d88c2d1fa5d37086c389",
-    "timestamp": {
-      "epoch": 1383947240,
-      "dateTime": "2013-11-08T13:47:20-08:00",
-      "dateString": "11/08"
-    }
-  }
+  ]
 }

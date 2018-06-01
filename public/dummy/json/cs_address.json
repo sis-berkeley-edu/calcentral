@@ -85,14 +85,5 @@
         "isRequired": false
       }
     }
-  },
-  "lastModified": {
-    "hash": "a2f654e13a274b144ab40a280e2cb7c43cdaccf4",
-    "timestamp": {
-      "epoch": 1433190149,
-      "dateTime": "2015-06-01T13:22:29-07:00",
-      "dateString": "6/01"
-    }
-  },
-  "feedName": "CampusSolutions::MyAddress"
+  }
 }
