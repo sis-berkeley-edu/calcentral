@@ -203,6 +203,20 @@ describe EdoOracle::Queries do
     end
   end
 
+  describe '#get_transfer_credit_detailed', testext: false do
+    subject { EdoOracle::Queries.get_transfer_credit_detailed(uid) }
+    let(:uid) { 300216 }
+
+    it_behaves_like 'a successful query'
+
+    it 'returns the expected result' do
+      expect(subject.count).to eq 3
+      expect(subject[0]).to have_keys(['career', 'school_descr', 'transfer_units', 'law_transfer_units', 'requirement_designation', 'grade_points'])
+      expect(subject[1]).to have_keys(['career', 'school_descr', 'transfer_units', 'law_transfer_units', 'requirement_designation', 'grade_points'])
+      expect(subject[2]).to have_keys(['career', 'school_descr', 'transfer_units', 'law_transfer_units', 'requirement_designation', 'grade_points'])
+    end
+  end
+
   context 'when connecting to an external database', :ignore => true do
     # Stubbing terms not available in TestExt env
     let(:summer_2016_db_term) do
@@ -460,6 +474,5 @@ describe EdoOracle::Queries do
         end
       end
     end
-
   end
 end

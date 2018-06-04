@@ -137,13 +137,20 @@ module EdoOracle
             ELSE NULL
           END AS PROGRAM_STATUS,
           CAR.TOTAL_CUMULATIVE_UNITS,
-          LAW.TOTAL_CUMULATIVE_UNITS_LAW AS TOTAL_CUMULATIVE_LAW_UNITS
+          LAW.TOTAL_CUMULATIVE_UNITS_LAW AS TOTAL_CUMULATIVE_LAW_UNITS,
+          CAR.TOTAL_TRANSFER_UNITS as total_transfer_units,
+          CAR.TRANSFER_CREDIT_UNITS_ADJUSTMENT as transfer_units_adjusted,
+          CAR.TRANSFER_TEST_UNITS_AP as ap_test_units,
+          CAR.TRANSFER_TEST_UNITS_IB as ib_test_units,
+          CAR.TRANSFER_TEST_UNITS_ALEVEL as alevel_test_units,
+          LAW.TOTAL_TRANSFER_UNITS_LAW as total_transfer_units_law
           FROM SISEDO.CLC_STUDENT_CAREERV00_VW CAR
           LEFT OUTER JOIN SISEDO.CLC_STUDENT_CAREER_LAWV00_VW LAW
             ON CAR.STUDENT_ID = LAW.STUDENT_ID
            AND CAR.ACAD_CAREER = LAW.ACAD_CAREER
            AND CAR.INSTITUTION = LAW.INSTITUTION
           WHERE CAR.CAMPUS_ID = '#{person_id}'
+            #{and_institution('CAR')}
       SQL
     end
 
@@ -730,7 +737,7 @@ module EdoOracle
       return result
     end
 
-    def self.get_transfer_credit_detailed (student_id)
+    def self.get_transfer_credit_detailed (person_id)
       safe_query <<-SQL
         SELECT TC.ACAD_CAREER as career,
           TC.SCHOOL_DESCR as school_descr,
@@ -739,36 +746,9 @@ module EdoOracle
           TC.RQMNT_DESIGNTN_DESCRFORMAL as requirement_designation,
           TC.TRF_GRADE_POINTS as grade_points
         FROM SISEDO.CLC_TRANSFER_CREDIT_SCHLV00_VW TC
-        WHERE STUDENT_ID = '#{student_id}'
+        WHERE CAMPUS_UID = '#{person_id}'
           #{and_institution('TC')}
       SQL
     end
-
-    def self.get_transfer_credit_summary (student_id)
-      safe_query <<-SQL
-        SELECT SC.ACAD_CAREER as career,
-          SC.TOTAL_CUMULATIVE_UNITS as total_cumulative_units,
-          SC.TOTAL_TRANSFER_UNITS as total_transfer_units,
-          SC.TRANSFER_CREDIT_UNITS_ADJUSTMENT as transfer_units_adjusted,
-          SC.TRANSFER_TEST_UNITS_AP as ap_test_units,
-          SC.TRANSFER_TEST_UNITS_IB as ib_test_units,
-          SC.TRANSFER_TEST_UNITS_ALEVEL as alevel_test_units
-        FROM SISEDO.CLC_STUDENT_CAREERV00_VW SC
-        WHERE STUDENT_ID = '#{student_id}'
-          #{and_institution('SC')}
-      SQL
-    end
-
-    def self.get_total_transfer_units_law (student_id)
-      results = safe_query <<-SQL
-        SELECT SC.TOTAL_TRANSFER_UNITS_LAW as total_transfer_units_law
-        FROM SISEDO.CLC_STUDENT_CAREER_LAWV00_VW SC
-        WHERE STUDENT_ID = '#{student_id}'
-          AND ACAD_CAREER = 'LAW'
-          #{and_institution('SC')}
-      SQL
-      results.first
-    end
-
   end
 end
