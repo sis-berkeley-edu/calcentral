@@ -142,7 +142,7 @@ class ApplicationController < ActionController::Base
     else
       require_advisor current_user.user_id
       {
-        roles: [:applicant, :student, :exStudent],
+        roles: [:applicant, :releasedAdmit, :student, :exStudent],
         except: [:confidential]
       }
     end
