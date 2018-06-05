@@ -55,14 +55,5 @@
     }
   ],
   "currentTerm": "Spring 2014",
-  "apiVersion": "1.0.7",
-  "lastModified": {
-    "hash": "5487ad7f77a8309af55dae6671bc87b706ee3d12",
-    "timestamp": {
-      "epoch": 1399590141,
-      "dateTime": "2014-05-08T16:02:21-07:00",
-      "dateString": "5/08"
-    }
-  },
-  "feedName": "Financials::MyFinancials"
+  "apiVersion": "1.0.7"
 }

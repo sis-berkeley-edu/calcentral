@@ -163,14 +163,5 @@
       "type": "alert",
       "status": "Action required, missing document"
     }
-  ],
-  "lastModified": {
-    "hash": "c78afd5ef7549973e02d230ec3c30b3cc3cd7c08",
-    "timestamp": {
-      "epoch": 1397756074,
-      "dateTime": "2014-04-17T10:34:34-07:00",
-      "dateString": "4/17"
-    }
-  },
-  "feedName": "Finaid::MyFinAid"
+  ]
 }

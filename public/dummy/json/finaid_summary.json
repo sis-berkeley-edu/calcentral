@@ -48,14 +48,5 @@
         "shortTitle": "You have not selected a Title IV Release option."
       }
     }
-  },
-  "lastModified": {
-    "hash": "b2496bed80547289819e442821e83df043166ac3",
-    "timestamp": {
-      "epoch": 1438643912,
-      "dateTime": "2015-08-03T16:18:32-07:00",
-      "dateString": "8/03"
-    }
-  },
-  "feedName": "CampusSolutions::MyAidYears"
+  }
 }

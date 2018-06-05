@@ -6,14 +6,5 @@
   "mealpoints": null,
   "mealpointsMessage": "OK",
   "mealpointsPlan": null,
-  "statusCode": 200,
-  "lastModified": {
-    "hash": "e5569fb761838b28150bf0f5d7536707be4c829b",
-    "timestamp": {
-      "epoch": 1397610967,
-      "dateTime": "2014-04-15T18:16:07-07:00",
-      "dateString": "4/15"
-    }
-  },
-  "feedName": "Cal1card::MyCal1card"
+  "statusCode": 200
 }
