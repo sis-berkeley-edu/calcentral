@@ -10,10 +10,14 @@ module DataLoch
       )
     end
 
-    def upload_to_daily(subfolder, local_path)
-      today = (Settings.terms.fake_now || DateTime.now).in_time_zone.strftime('%Y-%m-%d')
-      digest = Digest::MD5.hexdigest today
-      key = "#{@settings.prefix}/daily/#{digest}-#{today}/#{subfolder}/#{File.basename local_path}"
+    def upload(subfolder, local_path, is_historical=false)
+      if is_historical
+        key = "#{@settings.prefix}/historical/#{subfolder}/#{File.basename local_path}"
+      else
+        today = (Settings.terms.fake_now || DateTime.now).in_time_zone.strftime('%Y-%m-%d')
+        digest = Digest::MD5.hexdigest today
+        key = "#{@settings.prefix}/daily/#{digest}-#{today}/#{subfolder}/#{File.basename local_path}"
+      end
       begin
         @resource.bucket(@settings.bucket).object(key).upload_file local_path, server_side_encryption: 'AES256'
         logger.info("S3 upload complete (bucket=#{@settings.bucket}, key=#{key}")

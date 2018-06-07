@@ -6,7 +6,9 @@ namespace :data_loch do
     if term_ids.blank?
       Rails.logger.error 'Must specify TERM_ID as four-digit Campus Solutions id. Separate multiple term ids with commas.'
     else
-      Rails.logger.warn "Starting course and enrollment data snapshot for term ids #{term_ids}."
+      is_historical = ENV['HISTORICAL']
+      data_type = is_historical ? 'historical' : 'daily'
+      Rails.logger.warn "Starting #{data_type} course and enrollment data snapshot for term ids #{term_ids}."
       Rails.logger.warn 'Disabling slow query logger for this task.'
       ActiveSupport::Notifications.unsubscribe 'sql.active_record'
 
@@ -16,11 +18,11 @@ namespace :data_loch do
         Rails.logger.info "Starting snapshots for term #{term_id}."
 
         courses_path = DataLoch::Zipper.zip_courses term_id
-        s3.upload_to_daily('courses', courses_path)
+        s3.upload('courses', courses_path, is_historical)
         FileUtils.rm courses_path
 
         enrollments_path = DataLoch::Zipper.zip_enrollments term_id
-        s3.upload_to_daily('enrollments', enrollments_path)
+        s3.upload('enrollments', enrollments_path, is_historical)
         FileUtils.rm enrollments_path
 
         Rails.logger.info "Snapshots complete for term #{term_id}."

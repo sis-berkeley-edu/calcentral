@@ -27,7 +27,8 @@ describe DataLoch::Zipper do
           '13:00',
           '13:59',
           '2018-01-16 00:00:00 UTC',
-          '2018-05-04 00:00:00 UTC'
+          '2018-05-04 00:00:00 UTC',
+          'Battling with Blubber'
         ],
         [
           '65537',
@@ -46,7 +47,8 @@ describe DataLoch::Zipper do
           '10:00',
           '10:59',
           '2018-01-16 00:00:00 UTC',
-          '2018-05-04 00:00:00 UTC'
+          '2018-05-04 00:00:00 UTC',
+          'The Gogolian Slap'
         ]
       ]
     end
@@ -63,8 +65,8 @@ describe DataLoch::Zipper do
 
     it 'writes zipped course results to the filesystem' do
       expect(csv_rows).to have(2).items
-      expect(csv_rows[0]).to eq '65536,2182,Y,true,LEC,001,SCANDIN 60,40.0,234567,Snorri Sturluson,PI,Dwinelle 109,MOWEFR,13:00,13:59,2018-01-16 00:00:00 UTC,2018-05-04 00:00:00 UTC'
-      expect(csv_rows[1]).to eq '65537,2182,Y,true,LEC,001,SLAVIC 46,13.0,345678,Vladimir Propp,PI,Dwinelle 242,MOWEFR,10:00,10:59,2018-01-16 00:00:00 UTC,2018-05-04 00:00:00 UTC'
+      expect(csv_rows[0]).to eq '65536,2182,Y,true,LEC,001,SCANDIN 60,40.0,234567,Snorri Sturluson,PI,Dwinelle 109,MOWEFR,13:00,13:59,2018-01-16 00:00:00 UTC,2018-05-04 00:00:00 UTC,Battling with Blubber'
+      expect(csv_rows[1]).to eq '65537,2182,Y,true,LEC,001,SLAVIC 46,13.0,345678,Vladimir Propp,PI,Dwinelle 242,MOWEFR,10:00,10:59,2018-01-16 00:00:00 UTC,2018-05-04 00:00:00 UTC,The Gogolian Slap'
     end
   end
 

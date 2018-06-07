@@ -15,6 +15,15 @@ module Canvas
       end
     end
 
+    def hide_grade_distributions()
+      logger.info "Will hide grade distributions for site ID #{@course_id}"
+      results = wrapped_put "#{request_path}/settings", {
+        'hide_distribution_graphs' => true
+      }
+      logger.error "Could not hide grade distributions for site ID #{@course_id}" if results[:statusCode] != 200
+      results
+    end
+
     def set_grading_scheme(grading_scheme_id = nil)
       # Oddly enough, the 'grading_standard_id' has to be updated via the Course API rather than Course Settings API
       # https://canvas.instructure.com/doc/api/courses.html#method.courses.update
@@ -57,6 +66,9 @@ module Canvas
 
       on_request(uri_matching: "#{api_root}/#{request_path}", method: :put)
         .respond_with_file('fixtures', 'json', 'canvas_course_settings_set_grading_scheme.json')
+
+      on_request(uri_matching: "#{api_root}/#{request_path}/settings", method: :put)
+        .respond_with_file('fixtures', 'json', 'canvas_course_settings_hide_grade_distributions.json')
     end
 
   end
