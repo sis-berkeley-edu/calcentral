@@ -56,7 +56,7 @@ module EdoOracle
           mtg."startDate" AS meeting_start_date,
           mtg."endDate" AS meeting_end_date,
           TRIM(crs."title") AS course_title,
-          cls."allowedUnitsForAcadProgress" AS allowed_units
+          cls."allowedUnitsMaximum" AS allowed_units
         FROM
           SISEDO.CLASSSECTIONALLV00_MVW sec
         LEFT OUTER JOIN SISEDO.DISPLAYNAMEXLATV01_MVW xlat ON (xlat."classDisplayName" = sec."displayName")
