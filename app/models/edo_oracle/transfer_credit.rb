@@ -3,6 +3,12 @@ module EdoOracle
     include ClassLogger
     include User::Identifiers
 
+    CAREERS = {
+      :UGRD => :Undergraduate,
+      :GRAD => :Graduate,
+      :LAW => :Law
+    }
+
     def initialize(options = {})
       super(Settings.edodb, options)
     end
@@ -26,109 +32,69 @@ module EdoOracle
       }
     end
 
-    def campus_solutions_id
-      @cs_id ||= lookup_campus_solutions_id @uid
-    end
-
-    def get_total_transfer_units_law
-      if (law_units = EdoOracle::Queries.get_total_transfer_units_law campus_solutions_id)
-        return law_units.try(:[], 'total_transfer_units_law').try(:to_f)
-      end
-      nil
-    end
-
     def get_transfer_credit_detailed
-      if (transfer_credits = EdoOracle::Queries.get_transfer_credit_detailed campus_solutions_id)
-        return parse_rows_detailed transfer_credits
+      result = {}
+      return result unless (transfer_credits = EdoOracle::Queries.get_transfer_credit_detailed @uid)
+
+      transfer_credits.try(:each) do |credit|
+        career = credit['career']
+
+        next unless (career_description = CAREERS.try(:[], career.try(:intern)).try(:downcase))
+        next if law_student? && !(career_whitelist.include? career)
+
+        is_law = :LAW == career.try(:intern)
+        result[career_description] ||= []
+        result[career_description] << {
+          school: credit['school_descr'],
+          units: credit['transfer_units'].try(:to_f),
+          gradePoints: is_law ? nil : credit['grade_points'].try(:to_f),
+          lawUnits: is_law ? credit['law_transfer_units'].try(:to_f) : nil,
+          requirementDesignation: is_law ? credit['requirement_designation'] : nil
+        }
       end
-      nil
+      result
     end
 
     def get_transfer_credit_summary
-      if (summaries = EdoOracle::Queries.get_transfer_credit_summary campus_solutions_id)
-        return parse_rows_summary summaries
+      result = {}
+      return result unless careers
+
+      careers.try(:each) do |summary|
+        career = summary['acad_career']
+        next unless (career_description = CAREERS.try(:[], career.try(:intern)))
+        next if law_student? && !(career_whitelist.include? career)
+
+        is_undergrad = :UGRD == career.try(:intern)
+        result[career_description.downcase] = {
+          :career => career,
+          :careerDescr => career_description,
+          :totalCumulativeUnits => is_undergrad ? summary['total_cumulative_units'].try(:to_f) : nil,
+          :totalTransferUnits => summary['total_transfer_units'].try(:to_f),
+          :transferUnitsAdjusted => summary['transfer_units_adjusted'].try(:to_f),
+          :apTestUnits => is_undergrad ? summary['ap_test_units'].try(:to_f) : nil,
+          :ibTestUnits => is_undergrad ? summary['ib_test_units'].try(:to_f) : nil,
+          :alevelTestUnits => is_undergrad ? summary['alevel_test_units'].try(:to_f) : nil,
+          :totalTransferUnitsLaw => summary['total_transfer_units_law'].try(:to_f)
+        }
       end
-      nil
+      result
     end
 
-    def parse_rows_summary(summaries)
-      valid_careers = %w(UGRD GRAD LAW)
-      undergrad, grad, law = nil, nil, nil
-      summaries.try(:each) do |summary|
-        if (career = summary.try(:[], 'career')) && (valid_careers.include? career)
-          parsed_summary = parse_row_summary summary
-          case career
-            when 'UGRD'
-              parsed_summary[:careerDescr] = 'Undergraduate'
-              undergrad = parsed_summary
-            when 'GRAD'
-              parsed_summary[:careerDescr] = 'Graduate'
-              grad = parsed_summary
-            when 'LAW'
-              parsed_summary[:careerDescr] = 'Law'
-              parsed_summary[:totalTransferUnitsLaw] = get_total_transfer_units_law
-              law = parsed_summary
-          end
-        else
-          next
-        end
+    def careers
+      @careers ||= EdoOracle::Career.new(user_id: @uid).fetch
+    end
+
+    def career_whitelist
+      get_careers = Proc.new do
+        active_or_all_careers = Concerns::Careers.active_or_all careers
+        active_or_all_careers.try(:map) {|career| career.try(:[], 'acad_career')}
       end
-      {
-        undergraduate: undergrad,
-        graduate: grad,
-        law: law
-      }
+      @career_whitelist ||= get_careers.call
     end
 
-    def parse_rows_detailed(transfer_credits)
-      undergrad, grad, law = [], [], []
-      transfer_credits.try(:each) do |credit|
-        career = credit['career']
-        case career
-          when 'UGRD'
-            parsed_credit = parse_non_law_credit credit
-            undergrad.push parsed_credit
-          when 'GRAD'
-            parsed_credit = parse_non_law_credit credit
-            grad.push parsed_credit
-          when 'LAW'
-            parsed_credit = parse_law_credit credit
-            law.push parsed_credit
-          else
-            logger.warn("Transfer credit received for UID #{@uid} with unrecognizable career #{career}")
-            next
-        end
-      end
-      {
-        undergraduate: undergrad.present? ? undergrad : nil,
-        graduate: grad.present? ? grad : nil,
-        law: law.present? ? law : nil
-      }
+    def law_student?
+      roles = MyAcademics::MyAcademicRoles.new(@uid).get_feed
+      !!roles[:current]['law']
     end
-
-    def parse_law_credit(credit)
-      {
-        school: credit['school_descr'],
-        units: credit['transfer_units'].try(:to_f),
-        lawUnits: credit['law_transfer_units'].try(:to_f),
-        requirementDesignation: credit['requirement_designation']
-      }
-    end
-
-    def parse_non_law_credit(credit)
-      {
-        school: credit['school_descr'],
-        units: credit['transfer_units'].try(:to_f),
-        gradePoints: credit['grade_points'].try(:to_f)
-      }
-    end
-
-    def parse_row_summary(summary)
-      relevant_non_ugrd_fields = %w(career total_transfer_units transfer_units_adjusted)
-      parsed = summary.try(:[], 'career') == 'UGRD' ? summary : summary.select { |k, v| relevant_non_ugrd_fields.include? k }
-      parsed.try(:each) { |k, v| parsed[k] = v.is_a?(Numeric) ? v.try(:to_f) : v }
-      HashConverter.camelize parsed
-    end
-
   end
 end
