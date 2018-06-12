@@ -119,14 +119,21 @@ angular.module('calcentral.controllers').controller('FinancesLinksController', f
     });
   };
 
+  var canViewFppEnrollment = function() {
+    return !(userService.profile.actingAsUid || userService.profile.advisorActingAsUid);
+  };
+
   var initialize = function() {
     var getCampusLinks = campusLinksFactory.getLinks({
       category: 'finances'
     }).then(parseCampusLinks);
-    var getFppEnrollment = financesLinksFactory.getFppEnrollment().then(parseFppEnrollment);
 
-    var requests = [getCampusLinks, getFppEnrollment];
+    var requests = [getCampusLinks];
 
+    if (canViewFppEnrollment()) {
+      var getFppEnrollment = financesLinksFactory.getFppEnrollment().then(parseFppEnrollment);
+      requests.push(getFppEnrollment);
+    }
     if ($scope.canViewEftLink) {
       var getEftEnrollment = financesLinksFactory.getEftEnrollment().then(parseEftEnrollment);
       requests.push(getEftEnrollment);
