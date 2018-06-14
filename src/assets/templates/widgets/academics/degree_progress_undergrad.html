@@ -3,86 +3,91 @@
     <h2>Degree Progress</h2>
   </div>
   <div class="cc-widget-padding">
-    <div data-ng-if="degreeProgress.undergraduate.errored">There was an error retrieving undergraduate degree progress data.</div>
-    <div data-ng-if="!degreeProgress.undergraduate.errored && !degreeProgress.undergraduate.progresses.length && !api.user.profile.roles.advisor">
-      You do not have degree progress report data. Please contact your advisor for assistance.
-    </div>
-    <div data-ng-if="!degreeProgress.undergraduate.errored && !degreeProgress.undergraduate.progresses.length && api.user.profile.roles.advisor">
-      <p>This student has no degree progress data.</p>
-    </div>
-    <div data-ng-if="!degreeProgress.undergraduate.errored && degreeProgress.undergraduate.progresses.length">
-      <ul>
-        <li data-ng-repeat="plan in degreeProgress.undergraduate.progresses">
-          <div data-ng-if="plan.reportDate" class="cc-degree-progress-section cc-degree-progress-report-date">
-            Degree Progress as of <span data-ng-bind="plan.reportDate"></span>
-          </div>
-          <div class="cc-table">
-            <table>
-              <thead>
-                <tr>
-                  <th>University Requirement</th>
-                  <th>Status</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr data-ng-repeat="requirement in plan.requirements">
-                  <td data-ng-bind="requirement.name"></td>
-                  <td>
-                    <i class="fa" data-ng-class="{
-                        'cc-icon fa fa-check cc-icon-green': requirement.status === 'Satisfied',
-                        'cc-icon fa fa-exclamation-triangle cc-icon-gold': requirement.status === 'Not Satisfied',
-                        'cc-icon fa fa-clock-o cc-icon-grey': requirement.status === 'In Progress',
-                        'cc-icon fa fa-refresh cc-icon-dark-grey': requirement.status === 'Under Review'
-                    }"></i>
-                    <span data-ng-bind="requirement.status"></span>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </li>
-      </ul>
-    </div>
-    <div data-ng-if="api.user.profile.roles.advisor" class="cc-degree-progress-footer">
-      Run the
-      <a data-ng-if="degreeProgress.undergraduate.links.academicProgressReport.url"
-        data-cc-campus-solutions-link-directive="degreeProgress.undergraduate.links.academicProgressReport"
-        data-cc-campus-solutions-link-directive-cc-page-name="currentPage.name"
-        data-cc-campus-solutions-link-directive-cc-page-url="currentPage.url"
-      ></a>
-      <span data-ng-if="!degreeProgress.undergraduate.links.academicProgressReport.url">Academic Progress Report</span>
-      to refresh this data. Updates may take up to 24 hours.
-    </div>
-    <div data-ng-if="!api.user.profile.roles.advisor" class="cc-degree-progress-footer">
-      <div data-ng-if="degreeProgress.undergraduate.links.academicProgressReport.url" class="cc-degree-progress-section">
-        <p>Run your
-          <a data-cc-campus-solutions-link-directive="degreeProgress.undergraduate.links.academicProgressReport"
-             data-cc-campus-solutions-link-directive-cc-page-name="currentPage.name"
-             data-cc-campus-solutions-link-directive-cc-page-url="currentPage.url"
-          ></a> to view your College of Letters and Science requirements. Major requirements may not be updated.
-        </p>
-        <p>
-          Please contact your
-          <a href="https://ls.berkeley.edu/advising/about-undergraduate-advising-services"
-            data-cc-outbound-enabled="true"
-            title="How to contact your L&amp;S college advisor">
-            college advisor
-          </a>
-          with college requirement questions or your
-          <a
-            href="https://ls.berkeley.edu/sites/default/files/umalist.pdf"
-            data-cc-outbound-enabled="true"
-            title="List of major advisors">
-            major advisor
-          </a>
-          with major requirement questions.
-        </p>
+    <div class="cc-degree-progress-section">
+      <div data-ng-if="degreeProgress.undergraduate.errored">There was an error retrieving undergraduate degree progress data.</div>
+      <div data-ng-if="!degreeProgress.undergraduate.errored && !degreeProgress.undergraduate.progresses.length && !api.user.profile.roles.advisor">
+        You do not have degree progress report data. Please contact your advisor for assistance.
       </div>
-      <div data-ng-if="!degreeProgress.undergraduate.links.academicProgressReport.url" class="cc-degree-progress-section">If this information is out of date, please contact your advisor.</div>
-      <div data-ng-if="!api.user.profile.roles.advisor && degreeProgress.undergraduate.transferCreditReviewDeadline && degreeProgress.undergraduate.showTip">
-        <a href="#" data-ng-click="degreeProgress.undergraduate.showTip();" class="cc-text-line-height"><i class="cc-icon fa fa-info-circle cc-icon-air-force-blue"></i><span>What is "Under Review"?</span></a>
-        <p data-ng-show="degreeProgress.undergraduate.tipVisible">Coursework is being reviewed for all new students. Review will finish by mid&hyphen;<span data-ng-bind="degreeProgress.undergraduate.transferCreditReviewDeadline"></span>.</p>
+      <div data-ng-if="!degreeProgress.undergraduate.errored && !degreeProgress.undergraduate.progresses.length && api.user.profile.roles.advisor">
+        <p>This student has no degree progress data.</p>
       </div>
+      <div data-ng-if="!degreeProgress.undergraduate.errored && degreeProgress.undergraduate.progresses.length">
+        <ul>
+          <li data-ng-repeat="plan in degreeProgress.undergraduate.progresses">
+            <div data-ng-if="plan.reportDate" class="cc-degree-progress-section cc-degree-progress-report-date">
+              Degree Progress as of <span data-ng-bind="plan.reportDate"></span>
+            </div>
+            <div class="cc-table">
+              <table>
+                <thead>
+                  <tr>
+                    <th>University Requirement</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr data-ng-repeat="requirement in plan.requirements">
+                    <td data-ng-bind="requirement.name"></td>
+                    <td>
+                      <i class="fa" data-ng-class="{
+                          'cc-icon fa fa-check cc-icon-green': requirement.status === 'Satisfied',
+                          'cc-icon fa fa-exclamation-triangle cc-icon-gold': requirement.status === 'Not Satisfied',
+                          'cc-icon fa fa-clock-o cc-icon-grey': requirement.status === 'In Progress',
+                          'cc-icon fa fa-refresh cc-icon-dark-grey': requirement.status === 'Under Review'
+                      }"></i>
+                      <span data-ng-bind="requirement.status"></span>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div data-ng-class="{'cc-degree-progress-section': degreeProgress.undergraduate.transferCreditReviewDeadline,
+                         'cc-degree-progress-footer': !degreeProgress.undergraduate.transferCreditReviewDeadline}">
+      <div data-ng-if="api.user.profile.roles.advisor" class="cc-degree-progress-section">
+        Run the
+        <a data-ng-if="degreeProgress.undergraduate.links.academicProgressReport.url"
+          data-cc-campus-solutions-link-directive="degreeProgress.undergraduate.links.academicProgressReport"
+          data-cc-campus-solutions-link-directive-cc-page-name="currentPage.name"
+          data-cc-campus-solutions-link-directive-cc-page-url="currentPage.url"
+        ></a>
+        <span data-ng-if="!degreeProgress.undergraduate.links.academicProgressReport.url">Academic Progress Report</span>
+        to refresh this data. Updates may take up to 24 hours.
+      </div>
+      <div data-ng-if="!api.user.profile.roles.advisor" class="cc-degree-progress-footer">
+        <div data-ng-if="degreeProgress.undergraduate.links.academicProgressReport.url" class="cc-degree-progress-section">
+          <p>Run your
+            <a data-cc-campus-solutions-link-directive="degreeProgress.undergraduate.links.academicProgressReport"
+              data-cc-campus-solutions-link-directive-cc-page-name="currentPage.name"
+              data-cc-campus-solutions-link-directive-cc-page-url="currentPage.url"
+            ></a> to view your College of Letters and Science requirements. Major requirements may not be updated.
+          </p>
+          <p>
+            Please contact your
+            <a href="https://ls.berkeley.edu/advising/about-undergraduate-advising-services"
+              data-cc-outbound-enabled="true"
+              title="How to contact your L&amp;S college advisor">
+              college advisor
+            </a>
+            with college requirement questions or your
+            <a
+              href="https://ls.berkeley.edu/sites/default/files/umalist.pdf"
+              data-cc-outbound-enabled="true"
+              title="List of major advisors">
+              major advisor
+            </a>
+            with major requirement questions.
+          </p>
+        </div>
+        <div data-ng-if="!degreeProgress.undergraduate.links.academicProgressReport.url">If this information is out of date, please contact your advisor.</div>
+      </div>
+    </div>
+    <div data-ng-if="degreeProgress.undergraduate.transferCreditReviewDeadline" class="cc-degree-progress-footer">
+      <a href="#" data-ng-click="degreeProgress.undergraduate.showTip();" class="cc-text-line-height"><i class="cc-icon fa fa-info-circle cc-icon-air-force-blue"></i><span>What is "Under Review"?</span></a>
+      <p data-ng-show="degreeProgress.undergraduate.tipVisible">Coursework is being reviewed for all new students. Review will finish by mid&hyphen;<span data-ng-bind="degreeProgress.undergraduate.transferCreditReviewDeadline"></span>.</p>
     </div>
   </div>
 </div>

@@ -1,7 +1,7 @@
 describe DegreeProgress::MyUndergradRequirements do
 
-  let(:user_id) { random_id }
-  let(:emplid) { random_id }
+  let(:emplid) { 11667051 }
+  let(:user_id) { 61889 }
 
   before do
     proxy_class = CampusSolutions::DegreeProgress::UndergradRequirements
@@ -29,7 +29,7 @@ describe DegreeProgress::MyUndergradRequirements do
       it 'includes the Academic Progress Report link in the response' do
         expect(subject[:feed][:links]).to be
         expect(subject[:feed][:links][:academicProgressReport]).to be
-        expect(subject[:feed][:links][:academicProgressReport][:url]).to eq 'https://bcswebqat.is.berkeley.edu/psp/bcsqat/EMPLOYEE/PSFT_CS/c/SA_LEARNER_SERVICES.SAA_SS_DPR_ADB.GBL?EMPLID=25738808'
+        expect(subject[:feed][:links][:academicProgressReport][:url]).to eq 'https://bcswebqat.is.berkeley.edu/psp/bcsqat/EMPLOYEE/PSFT_CS/c/SA_LEARNER_SERVICES.SAA_SS_DPR_ADB.GBL?EMPLID=11667051'
       end
     end
     context 'when student is not active in the Letters and Science program' do
