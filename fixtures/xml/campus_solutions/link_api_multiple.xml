@@ -2014,4 +2014,54 @@ This link should take an instructor to the Grade Roster in BCS of the identified
     <URL>http://www.sos.ca.gov/elections/voter-registration</URL>
     <COMMENTS></COMMENTS>
   </Link>
+  <Link>
+    <URL_ID>UC_CX_CRS_GRD_LEGACY</URL_ID>
+    <Description>Grading</Description>
+    <HOVER_OVER_TEXT>Enter, edit, and approve final grades for this course.</HOVER_OVER_TEXT>
+    <PROPERTIES type="array">
+      <PROPERTY>
+        <NAME>CALCENTRAL</NAME>
+        <value>GRADE-ROSTER</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>UCFROM</NAME>
+        <value>CalCentral</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>UCFROMLINK</NAME>
+        <value>https://calcentral-sis-dev-01.ist.berkeley.edu/</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>UCFROMTEXT</NAME>
+        <value>CalCentral</value>
+      </PROPERTY>
+    </PROPERTIES>
+    <URL>https://bcswebqat.is.berkeley.edu/psp/bcsqat/EMPLOYEE/PSFT_CS/q/?ICAction=ICQryNameURL=PUBLIC.UCCS_R_BF_EGRD_ROSTER_CC&amp;BIND1={TERM_ID}&amp;BIND2={CLASS_NBR}</URL>
+    <COMMENTS/>
+  </Link>
+  <Link>
+    <URL_ID>UC_CX_TERM_GRD_LEGACY</URL_ID>
+    <Description>Grading</Description>
+    <HOVER_OVER_TEXT>Enter, edit, and approve final grades for this course.</HOVER_OVER_TEXT>
+    <PROPERTIES type="array">
+      <PROPERTY>
+        <NAME>CALCENTRAL</NAME>
+        <value>GRADE-ROSTER</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>UCFROM</NAME>
+        <value>CalCentral</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>UCFROMLINK</NAME>
+        <value>https://calcentral-sis-dev-01.ist.berkeley.edu/</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>UCFROMTEXT</NAME>
+        <value>CalCentral</value>
+      </PROPERTY>
+    </PROPERTIES>
+    <URL>https://bcswebqat.is.berkeley.edu/psp/bcsqat/EMPLOYEE/PSFT_CS/q/?ICAction=ICQryNameURL=PUBLIC.UCCS_R_BF_EGRD_INSTR&amp;Parameters&amp;BIND1={TERM_ID}</URL>
+    <COMMENTS/>
+  </Link>
 </UC_LINK_RESOURCES>

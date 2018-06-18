@@ -124,5 +124,13 @@ module MyAcademics
       return end_date.to_date.strftime('%m/%d') if DateTime.now.year == end_date.to_date.year
       end_date.to_date.strftime('%m/%d/%Y')
     end
+
+    def legacy_grading_term_type(term_code)
+      term_code_int = term_code.to_i
+      return :none if term_code_int < 2012
+      return :legacy_term if term_code_int >= 2012 && term_code_int <= 2072
+      return :legacy_class if term_code_int >= 2075 && term_code_int <= 2165
+      return :cs if term_code_int > 2165
+    end
   end
 end
