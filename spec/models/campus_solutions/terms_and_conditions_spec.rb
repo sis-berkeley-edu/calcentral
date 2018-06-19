@@ -9,11 +9,24 @@ describe CampusSolutions::TermsAndConditions do
       {
         feed: {
           finaidSummary: {
-            finaidYears: [{ id: 2016 }, { id:2015 }]
+            finaidYears: [
+              {
+                id: 2016,
+                termsAndConditions: {
+                  approved: terms_and_conditions_approved
+                }
+              }, {
+                id:2015,
+                termsAndConditions: {
+                  approved: terms_and_conditions_approved
+                }
+              }
+            ]
           }
         }
       }
     }
+    let(:terms_and_conditions_approved) { nil }
 
     before do
       allow_any_instance_of(CampusSolutions::MyAidYears).to receive(:get_feed).and_return aid_years_response
@@ -75,6 +88,16 @@ describe CampusSolutions::TermsAndConditions do
       it_should_behave_like 'a simple proxy that returns errors'
       it_behaves_like 'a proxy that properly observes the finaid feature flag'
       it_behaves_like 'a proxy that got data successfully'
+
+      context 'when response has already been recorded for this aid year' do
+        let(:terms_and_conditions_approved) { false }
+        it 'raises an error and aborts' do
+          expect{
+            subject
+          }.to raise_error Errors::BadRequestError, /Invalid request: {:response=>"Y", :aidYear=>"2016"}/
+          expect(CampusSolutions::Proxy).to receive(:get).never
+        end
+      end
     end
   end
 

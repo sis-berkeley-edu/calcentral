@@ -19,12 +19,19 @@ module CampusSolutions
     end
 
     def valid?(params)
-      aid_years = []
-      aid_years_feed = CampusSolutions::MyAidYears.new(@uid).get_feed
-      aid_years_feed.try(:[], :feed).try(:[], :finaidSummary).try(:[], :finaidYears).try(:each) do |aid_year|
-        aid_years.push(aid_year.try(:[], :id).try(:to_i))
+      valid_aid_years = []
+      aid_years = CampusSolutions::MyAidYears.new(@uid).get_feed
+      aid_years.try(:[], :feed).try(:[], :finaidSummary).try(:[], :finaidYears).try(:each) do |aid_year|
+        unless prior_response_recorded? aid_year
+          valid_aid_years.push(aid_year.try(:[], :id).try(:to_i))
+        end
       end
-      aid_years.include?(params[:aidYear].try(:to_i))
+      valid_aid_years.include?(params[:aidYear].try(:to_i))
+    end
+
+    def prior_response_recorded?(aid_year)
+      response = aid_year.try(:[], :termsAndConditions).try(:[], :approved)
+      response == true || response == false
     end
 
     def request_root_xml_node
