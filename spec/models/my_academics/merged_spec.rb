@@ -5,7 +5,6 @@ describe MyAcademics::Merged do
       MyAcademics::GpaUnits,
       MyAcademics::Semesters,
       MyAcademics::Teaching,
-      MyAcademics::TransferCredit,
       MyAcademics::Exams,
       MyAcademics::CanvasSites,
       MyAcademics::FacultyDelegate,

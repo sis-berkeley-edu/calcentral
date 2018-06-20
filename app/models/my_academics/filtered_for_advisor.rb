@@ -11,7 +11,6 @@ module MyAcademics
         CollegeAndLevel,
         GpaUnits,
         Semesters,
-        TransferCredit,
         Exams,
         AcademicPlan,
         AdvisorLinks,

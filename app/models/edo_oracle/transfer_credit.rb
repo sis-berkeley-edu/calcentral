@@ -65,15 +65,22 @@ module EdoOracle
         next if law_student? && !(career_whitelist.include? career)
 
         is_undergrad = :UGRD == career.try(:intern)
+        total_transfer_units = summary['total_transfer_units'].try(:to_f)
+        transfer_units_adjustment = (summary['transfer_units_adjustment'] || 0).try(:to_f)
+        ap_test_units = summary['ap_test_units'].try(:to_f)
+        ib_test_units = summary['ib_test_units'].try(:to_f)
+        alevel_test_units = summary['alevel_test_units'].try(:to_f)
+
         result[career_description.downcase] = {
           :career => career,
           :careerDescr => career_description,
           :totalCumulativeUnits => is_undergrad ? summary['total_cumulative_units'].try(:to_f) : nil,
-          :totalTransferUnits => summary['total_transfer_units'].try(:to_f),
-          :transferUnitsAdjusted => summary['transfer_units_adjusted'].try(:to_f),
-          :apTestUnits => is_undergrad ? summary['ap_test_units'].try(:to_f) : nil,
-          :ibTestUnits => is_undergrad ? summary['ib_test_units'].try(:to_f) : nil,
-          :alevelTestUnits => is_undergrad ? summary['alevel_test_units'].try(:to_f) : nil,
+          :totalTransferUnits => total_transfer_units - transfer_units_adjustment,
+          :totalTransferUnitsNonAdjusted => transfer_units_adjustment > 0 ? total_transfer_units : nil,
+          :apTestUnits => is_undergrad ? ap_test_units : nil,
+          :ibTestUnits => is_undergrad ? ib_test_units : nil,
+          :alevelTestUnits => is_undergrad ? alevel_test_units : nil,
+          :totalTestUnits => is_undergrad ? ap_test_units + ib_test_units + alevel_test_units : nil,
           :totalTransferUnitsLaw => summary['total_transfer_units_law'].try(:to_f)
         }
       end

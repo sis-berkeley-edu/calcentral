@@ -75,6 +75,10 @@ class AdvisingStudentController < ApplicationController
     render json: StudentSuccess::Merged.new(user_id: student_uid_param).get_feed
   end
 
+  def transfer_credit
+    render json: MyAcademics::MyTransferCredit.new(student_uid_param).get_feed_as_json
+  end
+
   private
 
   def authorize_for_student
