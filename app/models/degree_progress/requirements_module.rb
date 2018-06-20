@@ -1,5 +1,6 @@
 module DegreeProgress
   module RequirementsModule
+    include Concerns::AcademicsModule
     include DatedFeed
     include LinkFetcher
 
@@ -37,46 +38,19 @@ module DegreeProgress
     end
 
     def is_pending_transfer_credit_review_deadline
-      compare_dates = lambda do
+      compare_dates = Proc.new do
         current_date = Settings.terms.fake_now || DateTime.now
-        transfer_credit_review_deadline && current_date < transfer_credit_review_deadline
+        transfer_credit_review_deadline && current_date <= transfer_credit_review_deadline + 1.days
       end
       @is_pending_transfer_credit_review_deadline ||= compare_dates.call
     end
 
     def transfer_credit_review_deadline
-      calculate_date = lambda do
-        term = admit_term
-        term_name = term.try(:name)
-        grace_period = grace_periods[term_name] if term_name
-        return term.try(grace_period[:from]) + grace_period[:days] if grace_period
+      return @transfer_credit_review_deadline if defined? @transfer_credit_review_deadline
+      @transfer_credit_review_deadline ||= begin
+        expiration = EdoOracle::Queries.get_transfer_credit_expiration(student_empl_id).try(:[], 'expire_date')
+        cast_utc_to_pacific(expiration) if expiration
       end
-      @transfer_credit_review_deadline ||= calculate_date.call
-    end
-
-    def admit_term
-      admit_term_id = EdoOracle::Queries.get_admit_term(student_empl_id).try(:[], 'admit_term')
-      return {} unless admit_term_id
-      admit_term = Berkeley::TermCodes.from_edo_id(admit_term_id)
-      admit_term_slug = Berkeley::TermCodes.to_slug(admit_term[:term_yr], admit_term[:term_cd])
-      Berkeley::Terms.fetch.campus[admit_term_slug]
-    end
-
-    def grace_periods
-      @grace_periods ||= {
-        'Spring' => {
-          :days => 30,
-          :from => :start
-        },
-        'Summer' => {
-          :days => 60,
-          :from => :end
-        },
-        'Fall' => {
-          :days => 60,
-          :from => :start
-        }
-      }
     end
 
     def format_date_string(date_unformatted)

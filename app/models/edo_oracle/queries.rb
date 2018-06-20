@@ -618,14 +618,15 @@ module EdoOracle
       result.first
     end
 
-    def self.get_admit_term(student_id)
+    def self.get_transfer_credit_expiration(student_id)
       result = safe_query <<-SQL
         SELECT
-          ADMIT_TERM as admit_term
+          EXPIRE_DT_TC as expire_date
         FROM
-          SISEDO.APPLICANT_ADMIT_DATA_UGV00_VW
+          SISEDO.APPLICANT_ADMIT_DATAV00_VW
         WHERE
-          STUDENT_ID = '#{student_id}'
+          STUDENT_ID = '#{student_id}' AND
+          APPLICATION_CENTER = 'UGRD'
         ORDER BY APPLICATION_NBR DESC
       SQL
       result.first

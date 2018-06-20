@@ -1,8 +1,8 @@
 describe DegreeProgress::UndergradRequirements do
 
   let(:model) { described_class.new(user_id) }
-  let(:user_id) { '12345' }
-  let(:emplid) { '12345678' }
+  let(:user_id) { 61889 }
+  let(:emplid) { 11667051 }
   before do
     proxy_class = CampusSolutions::DegreeProgress::UndergradRequirements
     fake_proxy = proxy_class.new(user_id: user_id, fake: true)
@@ -20,7 +20,7 @@ describe DegreeProgress::UndergradRequirements do
     it 'includes the Academic Progress Report link in the response' do
       expect(subject[:feed][:links]).to be
       expect(subject[:feed][:links][:academicProgressReport]).to be
-      expect(subject[:feed][:links][:academicProgressReport][:url]).to eq 'https://bcswebqat.is.berkeley.edu/psp/bcsqat/EMPLOYEE/PSFT_CS/c/SSR_ADVISEE_OVRD.SAA_SS_DPR_ADB.GBL?EMPLID=25738808'
+      expect(subject[:feed][:links][:academicProgressReport][:url]).to eq 'https://bcswebqat.is.berkeley.edu/psp/bcsqat/EMPLOYEE/PSFT_CS/c/SSR_ADVISEE_OVRD.SAA_SS_DPR_ADB.GBL?EMPLID=11667051'
     end
   end
 end

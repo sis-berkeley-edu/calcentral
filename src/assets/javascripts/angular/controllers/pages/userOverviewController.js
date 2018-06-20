@@ -195,6 +195,11 @@ angular.module('calcentral.controllers').controller('UserOverviewController', fu
     });
   };
 
+  var showTip = function() {
+    $scope.degreeProgress.undergraduate.tipVisible = true;
+    return false;
+  };
+
   var loadDegreeProgresses = function() {
     advisingFactory.getDegreeProgressGraduate({
       uid: $routeParams.uid
@@ -206,6 +211,8 @@ angular.module('calcentral.controllers').controller('UserOverviewController', fu
         uid: $routeParams.uid
       }).then(function(response) {
         $scope.degreeProgress.undergraduate.progresses = _.get(response, 'data.feed.degreeProgress.progresses');
+        $scope.degreeProgress.undergraduate.transferCreditReviewDeadline = _.get(response, 'data.feed.degreeProgress.transferCreditReviewDeadline');
+        $scope.degreeProgress.undergraduate.showTip = showTip;
         $scope.degreeProgress.undergraduate.links = _.get(response, 'data.feed.links');
         $scope.degreeProgress.undergraduate.errored = _.get(response, 'errored');
       }).finally(function() {
