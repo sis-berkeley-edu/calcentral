@@ -60,7 +60,6 @@ angular.module('calcentral.controllers').controller('SirItemController', functio
         // Reload the checklistItem you were currently modifying
         $rootScope.$broadcast('calcentral.custom.api.sir.update', {
           option: $scope.sirItem.form.option,
-          programDescription: $scope.item.config.descrProgramLong,
           response: response
         });
       }

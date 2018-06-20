@@ -6,6 +6,7 @@ module CampusSolutions
       include Cache::CachedFeed
       include Cache::UserCacheExpiry
       include Cache::RelatedCacheKeyTracker
+      include Concerns::DatesAndTimes
       include LinkFetcher
       include User::Identifiers
 
@@ -43,13 +44,13 @@ module CampusSolutions
       }
 
       def get_feed_internal
-        sir_checklist_items = get_sir_checklist_items
+        sir_items = active_application_nbrs.length ? get_checklist_items : []
         {
-          sirStatuses: sir_checklist_items
+          sirStatuses: sir_items
         }
       end
 
-      def get_sir_checklist_items
+      def get_checklist_items
         checklist_feed = CampusSolutions::MyChecklist.new(@uid).get_feed
         checklist_items = checklist_feed.try(:[], :feed).try(:[], :checkListItems)
         if checklist_items.nil?
@@ -62,21 +63,40 @@ module CampusSolutions
       def extract_sir_checklist_items(checklist_items)
         sir_checklist_items = []
         checklist_items.try(:each) do |checklist_item|
-          sir_checklist_items.push(checklist_item) if checklist_item.try(:[], :adminFunc) == 'ADMP'
+          sir_checklist_items.push(checklist_item) if checklist_item.try(:[], :adminFunc) == 'ADMP' && is_active_offer?(checklist_item)
         end
         map_sir_configs(sir_checklist_items)
       end
 
       def map_sir_configs(sir_checklist_items)
         sir_config = (CampusSolutions::Sir::SirConfig.new().get).try(:[], :feed).try(:[], :sirConfig)
-        sir_checklist_items.try(:delete_if) do |item|
+        sir_checklist_items.delete_if do |item|
           relevant_sir_config = find_relevant_sir_config_form(item, sir_config.try(:[], :sirForms))
-          if not relevant_sir_config.nil?
+          if relevant_sir_config.present?
             item[:config] = relevant_sir_config
             item[:responseReasons] = find_relevant_response_reasons(item, sir_config.try(:[], :responseReasons))
             item[:isUndergraduate] = item.try(:[], :checkListMgmtAdmp).try(:[], :acadCareer) == 'UGRD'
           end
           relevant_sir_config.nil?
+        end
+        add_status_for_completed_non_undergraduate_items(sir_checklist_items)
+      end
+
+      # Some populations are given the option to accept or decline their SIR
+      # We need to attach the appropriate messaging from the SIR config for these
+      def add_status_for_completed_non_undergraduate_items(sir_checklist_items)
+        sir_checklist_items.each do |item|
+          next unless is_completed_non_undergraduate_item?(item)
+          application_nbr = item.try(:[], :checkListMgmtAdmp).try(:[], :admApplNbr).try(:to_s)
+
+          if (application_attributes = applications[application_nbr])
+            action = application_attributes.try(:[], :admitAction)
+            sirOptions = item.try(:[], :config).try(:[], :sirOptions) || []
+            message = (sirOptions.find { |option| option.try(:[], :progAction) == action }).try(:[], :messageText)
+
+            item[:sirCompletedAction] = action
+            item[:sirCompletedMessage] = message
+          end
         end
         add_deposit_info(sir_checklist_items)
       end
@@ -98,15 +118,11 @@ module CampusSolutions
       def add_undergraduate_new_admit_attributes(sir_checklist_items)
         sir_checklist_items.try(:each) do |item|
           new_admit_attributes = {}
-          application_nbr = item.try(:[], :checkListMgmtAdmp).try(:[], :admApplNbr).try(:to_s)
-          cs_id = lookup_campus_solutions_id
           if item.try(:[], :isUndergraduate)
-            new_admit_attributes.merge!(get_undergraduate_new_admit_roles(cs_id, application_nbr))
+            application_nbr = item.try(:[], :checkListMgmtAdmp).try(:[], :admApplNbr).try(:to_s)
+            new_admit_attributes.merge!(get_undergraduate_new_admit_attributes(application_nbr))
             if is_completed_undergraduate_item? item
-              new_admit_attributes.merge!({
-                visible: add_visibility_flag(new_admit_attributes),
-                links: get_undergraduate_new_admit_links(new_admit_attributes)
-              })
+              new_admit_attributes.merge!( {links: get_undergraduate_new_admit_links(new_admit_attributes[:roles])} )
             end
           end
           item[:newAdmitAttributes] = new_admit_attributes
@@ -114,45 +130,34 @@ module CampusSolutions
         add_header_info(sir_checklist_items)
       end
 
-      def add_visibility_flag(new_admit_attributes)
-        return false unless (admit_term = new_admit_attributes.try(:[], :admitTerm))
-        start_term = Settings.new_admits.start_term
-        expiration_date = Settings.new_admits.expiration_date
-        student_admit_term = admit_term.try(:[], :term)
-        current_date = Settings.terms.fake_now || DateTime.now
-        student_admit_term.try(:to_i) >= start_term.try(:to_i) && current_date <= expiration_date
+      def get_undergraduate_new_admit_attributes(application_nbr)
+        if (application_attributes = applications[application_nbr])
+          first_year_freshman = application_attributes.try(:[], :admitType) == 'FYR'
+          is_athlete = application_attributes.try(:[], :athlete) == 'Y'
+          is_global_edge = application_attributes.try(:[], :globalEdgeProgram) == 'Y'
+          admit_term = application_attributes.try(:[], :admitTerm)
+
+          roles = {
+            athlete: is_athlete,
+            firstYearFreshman: first_year_freshman,
+            firstYearPathway: first_year_freshman && !is_athlete && !is_global_edge && ['UCLS', 'UCNR'].include?(application_attributes.try(:[], :applicantProgram)),
+            preMatriculated: ['AD', 'PM'].include?(application_attributes.try(:[], :admitStatus)),
+            transfer: application_attributes.try(:[], :admitType) == 'TRN'
+          }
+          term = {
+            term: admit_term,
+            type: codes[from_edo_id(admit_term).try(:[], :term_cd).to_sym]
+          }
+          { roles: roles, admitTerm: term }
+        end
       end
 
-      def get_undergraduate_new_admit_roles(campus_solutions_id, application_nbr)
-        status = EdoOracle::Queries.get_new_admit_status(campus_solutions_id, application_nbr)
-        return {} unless status.is_a?(Hash)
-        first_year_freshman = status.try(:[], 'admit_type') == 'FYR'
-        is_athlete = status.try(:[], 'athlete') == 'Y'
-        is_global_edge = status.try(:[], 'global_edge_program') == 'Y'
-        admit_term_code = from_edo_id(status.try(:[], 'admit_term'))
-        roles = {
-          athlete: is_athlete,
-          firstYearFreshman: first_year_freshman,
-          firstYearPathway: first_year_freshman && !is_athlete && !is_global_edge && ['UCLS', 'UCNR'].include?(status.try(:[], 'applicant_program')),
-          preMatriculated: ['AD', 'PM'].include?(status.try(:[], 'admit_status')),
-          transfer: status.try(:[], 'admit_type') == 'TRN'
-        }
-        admit_term = {
-          term: status.try(:[], 'admit_term'),
-          type: codes[admit_term_code.try(:[], :term_cd).to_sym]
-        }
-        {
-          roles: roles,
-          admitTerm: admit_term
-        }
-      end
-
-      def get_undergraduate_new_admit_links(new_admit_status)
-        return {} unless (admit_roles = new_admit_status.try(:[], :roles))
+      def get_undergraduate_new_admit_links(new_admit_roles)
+        return {} unless new_admit_roles
         link_configuration = {
-          coaFreshmanLink: admit_roles[:firstYearFreshman],
-          coaTransferLink: admit_roles[:transfer],
-          firstYearPathwayLink: admit_roles[:firstYearPathway]
+          coaFreshmanLink: new_admit_roles[:firstYearFreshman],
+          coaTransferLink: new_admit_roles[:transfer],
+          firstYearPathwayLink: new_admit_roles[:firstYearPathway]
         }
         add_undergraduate_new_admit_links link_configuration
       end
@@ -176,12 +181,50 @@ module CampusSolutions
         end
       end
 
+      def applications
+        @applications ||= {}.tap do |applications|
+          all_applicant_data = EdoOracle::Queries.get_new_admit_data(campus_solutions_id) || []
+          all_applicant_data.each do |application|
+            if (application_nbr = application.try(:[], 'application_nbr'))
+              applications[application_nbr] = HashConverter.camelize(application)
+            end
+          end
+        end
+      end
+
+      def active_application_nbrs
+        @active_applications ||= [].tap do |active_applications|
+          current_date = Settings.terms.fake_now || DateTime.now
+          applications.each do |application_nbr, application|
+            expiration_date = application.try(:[], :expirationDate)
+            expiration_date = cast_utc_to_pacific(expiration_date) if expiration_date.present?
+
+            if expiration_date && current_date <= expiration_date + 1.days
+              active_applications.push(application_nbr) unless active_applications.include?(application_nbr)
+            end
+          end
+        end
+      end
+
+      def campus_solutions_id
+        @campus_solutions_id ||= lookup_campus_solutions_id(@uid)
+      end
+
+      def is_active_offer?(checklist_item)
+        checklist_application_nbr = checklist_item.try(:[], :checkListMgmtAdmp).try(:[], :admApplNbr).try(:to_s)
+        active_application_nbrs.include?(checklist_application_nbr)
+      end
+
       def is_incomplete?(checklist_item)
         ['I', 'R'].include?(checklist_item.try(:[], :itemStatusCode))
       end
 
       def is_completed_undergraduate_item?(checklist_item)
         checklist_item.try(:[], :itemStatusCode) == 'C' || (checklist_item.try(:[], :itemStatusCode) == 'R' && !checklist_item.try(:[], :deposit).try(:[], :required))
+      end
+
+      def is_completed_non_undergraduate_item?(checklist_item)
+        checklist_item.try(:[], :checkListMgmtAdmp).try(:[],  :acadCareer) != 'UGRD' && checklist_item.try(:[], :itemStatusCode) == 'C'
       end
 
       def unpack_deposit_response(deposit_response)

@@ -139,20 +139,14 @@ module CampusSolutions
     def attributes
       @new_admit_attributes ||= {}.tap do |new_admit_attributes|
         new_admit_statuses = CampusSolutions::Sir::SirStatuses.new(@uid).get_feed
-        undergraduate_status = new_admit_statuses.try(:[], :sirStatuses).try(:find) do |status|
-          status.try(:[], :isUndergraduate)
-        end
+        undergraduate_status = new_admit_statuses.try(:[], :sirStatuses).try(:find) {|status| status.try(:[], :isUndergraduate)}
         new_admit_attributes.merge!({
           admitTerm: undergraduate_status.try(:[], :newAdmitAttributes).try(:[], :admitTerm),
           applicationNbr: undergraduate_status.try(:[], :checkListMgmtAdmp).try(:[], :admApplNbr).try(:to_s),
           roles: undergraduate_status.try(:[], :newAdmitAttributes).try(:[], :roles),
-          visible: is_visible?(undergraduate_status)
+          visible: undergraduate_status.present?
         })
       end
-    end
-
-    def is_visible?(undergraduate_status)
-      ['I', 'R'].include?(undergraduate_status.try(:[], :itemStatusCode)) || undergraduate_status.try(:[], :newAdmitAttributes).try(:[], :visible)
     end
 
     def non_spring_admit(admit_term)

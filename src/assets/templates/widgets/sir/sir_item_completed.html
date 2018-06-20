@@ -1,12 +1,15 @@
 <div class="cc-widget cc-widget-sir" data-ng-controller="SirItemController">
-  <div data-ng-include="'widgets/sir/sir_item_header.html'" data-ng-if="item.studentResponse.option.progAction !== 'WAPP' || item.isUndergraduate"></div>
+  <div data-ng-include="'widgets/sir/sir_item_header.html'" data-ng-if="(item.studentResponse.option.progAction !== 'WAPP' && item.sirCompletedAction !== 'WAPP') || item.isUndergraduate"></div>
   <div data-ng-if="!item.isUndergraduate">
-    <div class="cc-widget-title" data-ng-if="item.studentResponse.option.progAction === 'WAPP'">
-      <h2>Enrollment Declined</h2>
-    </div>
-    <div class="cc-widget-text">
-      <h3 data-ng-bind="item.studentResponse.programDescription"></h3>
-      <div data-ng-bind-html="item.studentResponse.option.messageText | linky"></div>
+    <div data-ng-if="item.studentResponse || item.sirCompletedAction">
+      <div class="cc-widget-title" data-ng-if="item.studentResponse.option.progAction === 'WAPP' || item.sirCompletedAction === 'WAPP'">
+        <h2>Enrollment Declined</h2>
+      </div>
+      <div class="cc-widget-text">
+        <h3 data-ng-bind="item.config.descrProgramLong"></h3>
+        <div data-ng-if="item.studentResponse" data-ng-bind-html="item.studentResponse.option.messageText | linky"></div>
+        <div data-ng-if="!item.studentResponse && item.sirCompletedMessage" data-ng-bind-html="item.sirCompletedMessage | linky"></div>
+      </div>
     </div>
   </div>
   <div data-ng-if="item.isUndergraduate">

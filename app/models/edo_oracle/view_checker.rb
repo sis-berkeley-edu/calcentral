@@ -182,23 +182,6 @@ class EdoOracle::ViewChecker
       :columns => ['subjectArea']
     },
     {
-      :id => 'SISEDO.APPLICANT_ADMIT_DATA_UGV00_VW',
-      :columns => [
-        'ACAD_PROG',
-        'ACAD_PROG_DESCR',
-        'ADMIT_TERM',
-        'ADMIT_TYPE',
-        'ADMIT_TYPE_DESCR',
-        'ADMITTED_GEP',
-        'ATHLETE',
-        'PROG_STATUS',
-        'STUDENT_ID',
-        'APPLICATION_NBR',
-        'EVALUATOR_NAME',
-        'EVALUATOR_EMAIL'
-      ]
-    },
-    {
       :id => 'SISEDO.CLC_STUDENT_CAREER_TERMV00_VW',
       :columns => [
         'STUDENT_ID',

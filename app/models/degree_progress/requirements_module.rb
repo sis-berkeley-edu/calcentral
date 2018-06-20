@@ -1,6 +1,6 @@
 module DegreeProgress
   module RequirementsModule
-    include Concerns::AcademicsModule
+    include Concerns::DatesAndTimes
     include DatedFeed
     include LinkFetcher
 
