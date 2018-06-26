@@ -97,7 +97,7 @@ describe EdoOracle::Queries do
 
     it 'returns the expected result' do
       expect(subject.count).to eq 3
-      expect(subject.first.count).to eq 28
+      expect(subject.first.count).to eq 29
       expect(subject.first['section_id']).to eq '12392'
       expect(subject.first['term_id']).to eq '2178'
       expect(subject.first['session_id']).to eq '1'
@@ -105,6 +105,7 @@ describe EdoOracle::Queries do
       expect(subject.first['course_title_short']).to eq 'SENIOR SEMINAR'
       expect(subject.first['dept_name']).to eq 'AMERSTD'
       expect(subject.first['dept_code']).to eq 'AMERSTD'
+      expect(subject.first['course_career_code']).to eq 'UGRD'
       expect(subject.first['primary']).to eq 'TRUE'
       expect(subject.first['section_num']).to eq '3'
       expect(subject.first['instruction_format']).to eq 'SEM'
@@ -172,6 +173,57 @@ describe EdoOracle::Queries do
       let(:uid) { 1 }
       it_behaves_like 'a successful query'
     end
+  end
+
+  describe '.get_instructing_sections', testext: false do
+    let(:term) { Berkeley::Terms.fetch.campus['fall-2018'] }
+    let(:uid) { '27' }
+    subject { described_class.get_instructing_sections(uid, [term]) }
+    it 'returns the expected result' do
+      expect(subject.count).to eq 1
+      expect(subject.first['section_id']).to eq '12392'
+      expect(subject.first['term_id']).to eq '2188'
+      expect(subject.first['session_id']).to eq '1'
+      expect(subject.first['course_title']).to eq 'Supervised Research: Biological Sciences'
+      expect(subject.first['course_title_short']).to eq 'RESEARCH BIOL SCI'
+      expect(subject.first['course_career_code']).to eq 'UGRD'
+      expect(subject.first['dept_name']).to eq 'UGIS'
+      expect(subject.first['dept_code']).to eq 'UGIS'
+      expect(subject.first['primary']).to eq 'TRUE'
+      expect(subject.first['section_num']).to eq '16'
+      expect(subject.first['instruction_format']).to eq 'TUT'
+      expect(subject.first['primary_associated_section_id']).to eq 12392
+      expect(subject.first['section_display_name']).to eq 'UGIS 192C'
+      expect(subject.first['topic_description']).to be nil
+      expect(subject.first['course_display_name']).to eq 'UGIS 192C'
+      expect(subject.first['catalog_id']).to eq '192C'
+      expect(subject.first['catalog_root']).to eq '192'
+      expect(subject.first['catalog_prefix']).to be nil
+      expect(subject.first['catalog_suffix']).to eq 'C'
+      expect(subject.first['enroll_limit']).to eq 30.0
+      expect(subject.first['waitlist_limit']).to eq 30.0
+      expect(subject.first['start_date']).to eq Date.parse('Wed, 22 Aug 2018')
+      expect(subject.first['end_date']).to eq Date.parse('Fri, 07 Dec 2018')
+    end
+
+    describe '.get_section_final_exams', testext: false do
+      let(:term_id) { '2178' }
+      let(:section_id) { '11950' }
+      subject { described_class.get_section_final_exams(term_id, section_id) }
+      it 'returns the expected result' do
+        expect(subject[0]['term_id']).to eq '2178'
+        expect(subject[0]['session_id']).to eq '1'
+        expect(subject[0]['section_id']).to eq '11950'
+        expect(subject[0]['exam_type']).to eq 'N'
+        expect(subject[0]['exam_date']).to eq Date.parse('Thu, 17 Dec 2015')
+        expect(subject[0]['exam_start_time']).to eq Time.parse('1901-01-01 11:00:00 UTC')
+        expect(subject[0]['exam_end_time']).to eq Time.parse('1901-01-01 14:00:00 UTC')
+        expect(subject[0]['location']).to eq 'Hearst Gym 188'
+        expect(subject[0]['exam_exception']).to eq 'Y'
+        expect(subject[0]['finalized']).to eq 'N'
+      end
+    end
+
   end
 
   describe '#get_law_enrollment', testext: false do

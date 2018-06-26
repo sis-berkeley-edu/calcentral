@@ -61,20 +61,17 @@ describe EdoOracle::CourseSections do
   context 'working EDO connection' do
     before do
       expect(EdoOracle::Queries).to receive(:get_section_meetings).with(term_id, section_id).and_return meetings
-      expect(EdoOracle::Queries).to receive(:get_section_final_exam).with(term_id, section_id).and_return final_exams
       expect(EdoOracle::Queries).to receive(:get_section_instructors).with(term_id, section_id).and_return instructors
     end
 
     context 'no instructors or meetings found' do
       let(:instructors) { [] }
       let(:meetings) { [] }
-      let(:final_exams) { [] }
       it_behaves_like 'an empty result set'
     end
 
     context 'meeting data' do
       let(:instructors) { [] }
-      let(:final_exams) { [] }
       let(:meetings) do
         [
           {
@@ -133,44 +130,6 @@ describe EdoOracle::CourseSections do
       end
     end
 
-    context 'exam data' do
-      let(:meetings) { [] }
-      let(:instructors) { [] }
-      let(:final_exams) do
-        [
-          {
-            'term_id'=>'2168',
-            'session_id'=>'1',
-            'exam_type' => 'Y',
-            'exam_date'=>Time.parse('2016-12-15 00:00:00 UTC'),
-            'exam_start_time'=>Time.parse('1900-01-01 19:00:00 UTC'),
-            'exam_end_time'=>Time.parse('1900-01-01 22:00:00 UTC'),
-            'location'=>'Dwinelle 105',
-          },
-          {
-            'term_id'=>'2168',
-            'session_id'=>'1',
-            'exam_type' => 'A',
-            'exam_date'=>nil,
-            'exam_start_time'=>nil,
-            'exam_end_time'=>nil,
-            'location'=>nil,
-          }
-        ]
-      end
-      it 'counts final_exams properly' do
-        expect(subject[:final_exams].length).to eq 2
-      end
-      it 'translates time correctly' do
-        expect(subject[:final_exams][0][:exam_date]).to eq Time.parse('2016-12-15 00:00:00 UTC')
-      end
-      it 'translates space correctly' do
-        expect(subject[:final_exams][0][:location]).to eq 'Dwinelle 105'
-        expect(subject[:final_exams][1][:location]).to eq nil
-      end
-
-    end
-
     context 'instructor data' do
       let(:instructors) do
         [
@@ -191,7 +150,6 @@ describe EdoOracle::CourseSections do
         ]
       end
       let(:meetings) { [] }
-      let(:final_exams) { [] }
       it 'translates attributes' do
         expect(subject[:instructors]).to eq [
           {

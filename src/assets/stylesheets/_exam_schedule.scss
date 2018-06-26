@@ -1,27 +1,57 @@
 .cc-widget-exam-schedule {
-  .cc-widget-exam-schedule-content {
-    margin-left: 95px;
+  .cc-widget-exam-schedule-column-right {
+    width: 55%;
   }
-  .cc-widget-exam-schedule-item:not(:last-child) {
-    padding: 10px 0;
-  }
-  .cc-widget-exam-schedule-time {
-    margin-right: 15px;
-    text-align: right;
-    width: 80px;
-  }
-  .cc-widget-exam-schedule-time-conflicts-left {
-    margin-left: -5px;
-  }
-  .cc-widget-exam-schedule-text {
-    padding: 5px;
-    padding-left: 20px;
+  .cc-widget-exam-schedule-column-left {
+    width: 45%;
   }
   .cc-widget-exam-schedule-conflicts {
-    border-left: 5px solid $cc-color-havelock-blue;
+    background-color: $cc-color-ivory;
+    border-left: 5px solid $cc-color-dark-tangerine;
+    margin-left: -5px;
   }
-  .cc-widget-exam-schedule-conflicts-text {
-    padding-bottom: 5px;
-    padding-left: 15px;
+  .cc-widget-exam-schedule-conflicts-notice {
+    font-weight: bold;
+  }
+  .cc-widget-exam-schedule-conflicts-notice-container {
+    background-color: $cc-color-ivory;
+    border-left: 5px solid $cc-color-dark-tangerine;
+  }
+  .cc-widget-exam-schedule-course-identifier {
+    font-weight: bold;
+  }
+  .cc-widget-exam-schedule-course-waitlisted {
+    font-style: italic;
+  }
+  .cc-widget-exam-schedule-graduate-notice {
+    color: $cc-color-dim-gray;
+    padding: 0 15px 15px;
+  }
+  .cc-widget-exam-schedule-header {
+    margin: 10px 0;
+    padding: 0 15px;
+  }
+  .cc-widget-exam-schedule-list {
+    list-style-type: none;
+    margin-left: 5px;
+  }
+  .cc-widget-exam-schedule-list-item {
+    padding: 5px 10px;
+  }
+  .cc-widget-exam-schedule-no-location {
+    font-style: italic;
+  }
+  .cc-widget-exam-schedule-notice {
+    font-size: 12px;
+  }
+  .cc-widget-exam-schedule-notice-paragraph {
+    margin: 10px 0;
+  }
+  .cc-widget-exam-schedule-text {
+    padding: 15px 15px 5px;
+  }
+  .cc-widget-exam-schedule-time-location {
+    color: $cc-color-dim-gray;
+    font-size: 12px;
   }
 }
