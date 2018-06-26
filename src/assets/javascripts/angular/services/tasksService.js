@@ -68,8 +68,8 @@ angular.module('calcentral.services').service('tasksService', function(apiServic
     return (task.emitter === 'Campus Solutions' && task.cs.displayStatus === 'beingProcessed');
   };
 
-  var isNotCsFurtherActionNeededTask = function(task) {
-    return (task.emitter !== 'Campus Solutions' || task.cs.displayStatus !== 'furtherActionNeeded');
+  var isCsFurtherActionNeededTask = function(task) {
+    return (task.emitter === 'Campus Solutions' && task.cs.displayStatus === 'furtherActionNeeded');
   };
 
   var isDueWithinOneWeekTask = function(task) {
@@ -131,6 +131,11 @@ angular.module('calcentral.services').service('tasksService', function(apiServic
     $scope.taskSections = taskSections;
     angular.forEach($scope.taskSections, function(taskSection) {
       var taskFilter;
+      var incompleteSectionTasks = [];
+      var furtherActionNeededTasks = [];
+      var beingProcessedTasks = [];
+      var incompleteSortedSectionTasks = [];
+
       switch (taskSection.type) {
         case 'campusSolutions': {
           taskFilter = csCategoryFilterFactory(taskSection.id);
@@ -145,13 +150,15 @@ angular.module('calcentral.services').service('tasksService', function(apiServic
           break;
         }
       }
-      var incompleteSectionTasks = _.clone($scope.lists.incomplete.filter(taskFilter).sort(sortByDueDate));
-      var beingProcessedTasks = _.remove(incompleteSectionTasks, isCsBeingProcessedTask);
+      incompleteSectionTasks = _.clone($scope.lists.incomplete.filter(taskFilter)).sort(sortByDueDate);
+      furtherActionNeededTasks = _.remove(incompleteSectionTasks, isCsFurtherActionNeededTask);
+      incompleteSortedSectionTasks = _.concat(incompleteSectionTasks, furtherActionNeededTasks);
+      beingProcessedTasks = _.remove(incompleteSectionTasks, isCsBeingProcessedTask);
 
       taskSection.dueWithinWeekCount = incompleteSectionTasks.filter(isDueWithinOneWeekTask).length;
 
       taskSection.tasks = {
-        incomplete: incompleteSectionTasks.sort(isNotCsFurtherActionNeededTask),
+        incomplete: incompleteSortedSectionTasks,
         beingProcessed: beingProcessedTasks,
         completed: $scope.lists.completed.filter(taskFilter).sort(sortByCompletedDateReverse)
       };
