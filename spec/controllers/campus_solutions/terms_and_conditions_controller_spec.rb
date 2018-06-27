@@ -18,7 +18,7 @@ describe CampusSolutions::TermsAndConditionsController do
              {
                bogus_field: 'abc',
                response: 'Y',
-               aidYear: '2016'
+               aidYear: '2015'
              }
         expect(response.status).to eq 200
         json = JSON.parse(response.body)
