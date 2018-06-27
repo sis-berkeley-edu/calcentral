@@ -53,7 +53,7 @@ describe MyAcademics::Grading do
       session_id: '1',
       enroll_limit: 20,
       waitlist_limit: 0,
-      instructors: [],
+      instructors: section_one_instructors,
       schedules: {oneTime: [], recurring: []},
       final_exams: [],
       courseCode: 'MATH 101'
@@ -73,12 +73,14 @@ describe MyAcademics::Grading do
       session_id: '1',
       enroll_limit: 20,
       waitlist_limit: 0,
-      instructors: [],
+      instructors: section_two_instructors,
       schedules: {oneTime: [], recurring: []},
       final_exams: [],
       courseCode: 'MATH 102'
     }
   end
+  let(:section_one_instructors) { [] }
+  let(:section_two_instructors) { [] }
 
   let(:edo_grading_dates) do
     {
@@ -440,6 +442,80 @@ describe MyAcademics::Grading do
     end
   end
 
+  describe '#add_legacy_term_grading_to_classes' do
+    context 'when instructor has grading access' do
+      let(:section_one_instructors) { [{uid: uid, ccGradingAccess: :enterGrades}] }
+      let(:section_two_instructors) { [{uid: uid, ccGradingAccess: :enterGrades}] }
+      it 'adds grading link to class sections' do
+        subject.add_legacy_term_grading_to_classes(semester_classes, semester_one_term_id)
+        semester_classes[0][:sections].each do |section|
+          expect(section[:gradingLink][:name]).to eq 'Grading'
+          expect(section[:gradingLink][:urlId]).to eq 'UC_CX_TERM_GRD_LEGACY'
+          expect(section[:gradingLink][:url]).to eq "https://bcswebqat.is.berkeley.edu/psp/bcsqat/EMPLOYEE/PSFT_CS/q/?ICAction=ICQryNameURL=PUBLIC.UCCS_R_BF_EGRD_INSTR&Parameters&BIND1=2182"
+        end
+      end
+      it 'adds posted grading statuses to class sections' do
+        subject.add_legacy_term_grading_to_classes(semester_classes, semester_one_term_id)
+        semester_classes[0][:sections].each do |section|
+          expect(section[:ccGradingStatus]).to eq :gradesPosted
+        end
+      end
+    end
+    context 'when instructor does not have grading access' do
+      let(:section_one_instructors) { [{uid: uid, ccGradingAccess: :noGradeAccess}] }
+      let(:section_two_instructors) { [{uid: uid, ccGradingAccess: :noGradeAccess}] }
+      it 'does not add grading link to class sections' do
+        subject.add_legacy_term_grading_to_classes(semester_classes, semester_one_term_id)
+        semester_classes[0][:sections].each do |section|
+          expect(section[:gradingLink]).to eq nil
+        end
+      end
+      it 'does not add posted grading statuses to class sections' do
+        subject.add_legacy_term_grading_to_classes(semester_classes, semester_one_term_id)
+        semester_classes[0][:sections].each do |section|
+          expect(section[:ccGradingStatus]).to eq nil
+        end
+      end
+    end
+  end
+
+  describe '#add_legacy_class_grading_to_classes' do
+    context 'when instructor has grading access' do
+      let(:section_one_instructors) { [{uid: uid, ccGradingAccess: :enterGrades}] }
+      let(:section_two_instructors) { [{uid: uid, ccGradingAccess: :enterGrades}] }
+      it 'adds grading link to class sections' do
+        subject.add_legacy_class_grading_to_classes(semester_classes, semester_one_term_id)
+        semester_classes[0][:sections].each do |section|
+          expect(section[:gradingLink][:name]).to eq 'Grading'
+          expect(section[:gradingLink][:urlId]).to eq 'UC_CX_CRS_GRD_LEGACY'
+          expect(section[:gradingLink][:url]).to eq "https://bcswebqat.is.berkeley.edu/psp/bcsqat/EMPLOYEE/PSFT_CS/q/?ICAction=ICQryNameURL=PUBLIC.UCCS_R_BF_EGRD_ROSTER_CC&BIND1=2182&BIND2=#{section[:ccn]}"
+        end
+      end
+      it 'adds posted grading statuses to class sections' do
+        subject.add_legacy_class_grading_to_classes(semester_classes, semester_one_term_id)
+        semester_classes[0][:sections].each do |section|
+          expect(section[:ccGradingStatus]).to eq :gradesPosted
+        end
+      end
+    end
+    context 'when instructor does not have grading access' do
+      let(:section_one_instructors) { [{uid: uid, ccGradingAccess: :noGradeAccess}] }
+      let(:section_two_instructors) { [{uid: uid, ccGradingAccess: :noGradeAccess}] }
+      it 'does not add grading link to class sections' do
+        subject.add_legacy_class_grading_to_classes(semester_classes, semester_one_term_id)
+        semester_classes[0][:sections].each do |section|
+          expect(section[:gradingLink]).to eq nil
+        end
+      end
+      it 'does not add posted grading statuses to class sections' do
+        subject.add_legacy_class_grading_to_classes(semester_classes, semester_one_term_id)
+        semester_classes[0][:sections].each do |section|
+          expect(section[:ccGradingStatus]).to eq nil
+        end
+      end
+    end
+  end
+
   describe '#parse_cs_grading_status' do
     let(:cs_grading_status) do
       { midpointStatus: 'APPR', finalStatus: 'GRD' }
@@ -793,6 +869,36 @@ describe MyAcademics::Grading do
       it 'returns true' do
         expect(grading_configured).to eq true
       end
+    end
+  end
+
+  describe '#legacy_grading_term_type' do
+    it 'returns :none when term is before spring 2001' do
+      expect(subject.legacy_grading_term_type('1998')).to eq :none
+      expect(subject.legacy_grading_term_type('2002')).to eq :none
+      expect(subject.legacy_grading_term_type('2008')).to eq :none
+    end
+    it 'returns :legacy_term when term is spring 2001 to spring 2007' do
+      expect(subject.legacy_grading_term_type('2012')).to eq :legacy_term
+      expect(subject.legacy_grading_term_type('2015')).to eq :legacy_term
+      expect(subject.legacy_grading_term_type('2018')).to eq :legacy_term
+      expect(subject.legacy_grading_term_type('2055')).to eq :legacy_term
+      expect(subject.legacy_grading_term_type('2072')).to eq :legacy_term
+    end
+    it 'returns :legacy_class when term is summer 2007 to summer 2016' do
+      expect(subject.legacy_grading_term_type('2075')).to eq :legacy_class
+      expect(subject.legacy_grading_term_type('2078')).to eq :legacy_class
+      expect(subject.legacy_grading_term_type('2158')).to eq :legacy_class
+      expect(subject.legacy_grading_term_type('2162')).to eq :legacy_class
+      expect(subject.legacy_grading_term_type('2165')).to eq :legacy_class
+    end
+    it 'returns :cs when term is fall 2016 or after' do
+      expect(subject.legacy_grading_term_type('2168')).to eq :cs
+      expect(subject.legacy_grading_term_type('2172')).to eq :cs
+      expect(subject.legacy_grading_term_type('2175')).to eq :cs
+      expect(subject.legacy_grading_term_type('2178')).to eq :cs
+      expect(subject.legacy_grading_term_type('2182')).to eq :cs
+      expect(subject.legacy_grading_term_type('2192')).to eq :cs
     end
   end
 end

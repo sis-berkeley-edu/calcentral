@@ -20,8 +20,14 @@ module MyAcademics
       teaching_semesters.try(:each) do |semester|
         term_id = Berkeley::TermCodes.slug_to_edo_id(semester[:slug])
         add_grading_information_links(semester)
-        add_grading_dates(semester, term_id)
-        add_grading_to_classes(semester[:classes], term_id)
+
+        add_legacy_term_grading_to_classes(semester[:classes], term_id) if legacy_grading_term_type(term_id) == :legacy_term
+        add_legacy_class_grading_to_classes(semester[:classes], term_id) if legacy_grading_term_type(term_id) == :legacy_class
+
+        if legacy_grading_term_type(term_id) == :cs
+          add_grading_dates(semester, term_id)
+          add_grading_to_classes(semester[:classes], term_id)
+        end
       end
     end
 
@@ -117,6 +123,43 @@ module MyAcademics
     def add_grading_to_classes(semester_classes, term_id)
       semester_classes.try(:each) do |semester_class|
         add_grading_to_class(semester_class, term_id)
+      end
+    end
+
+    def add_legacy_term_grading_to_classes(semester_classes, term_id)
+      grading_link = fetch_link('UC_CX_TERM_GRD_LEGACY', { TERM_ID: term_id })
+      semester_classes.try(:each) do |semester_class|
+        semester_class.try(:[],:sections).try(:each) do |section|
+          if is_primary_section? section
+            has_grade_access = has_grading_access?(section)
+            section.merge!(
+              {
+                csGradingStatus: nil,
+                ccGradingStatus: has_grade_access ? :gradesPosted : nil,
+                gradingLink: has_grade_access ? grading_link : nil
+              }
+            )
+          end
+        end
+      end
+    end
+
+    def add_legacy_class_grading_to_classes(semester_classes, term_id)
+      semester_classes.try(:each) do |semester_class|
+        semester_class.try(:[],:sections).try(:each) do |section|
+          if is_primary_section? section
+            ccn = section[:ccn]
+            has_grade_access = has_grading_access?(section)
+            grading_link = fetch_link('UC_CX_CRS_GRD_LEGACY', { TERM_ID: term_id, CLASS_NBR: ccn })
+            section.merge!(
+              {
+                csGradingStatus: nil,
+                ccGradingStatus: has_grade_access ? :gradesPosted : nil,
+                gradingLink: has_grade_access ? grading_link : nil
+              }
+            )
+          end
+        end
       end
     end
 
