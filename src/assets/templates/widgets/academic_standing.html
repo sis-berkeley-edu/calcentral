@@ -14,14 +14,14 @@
             <div data-ng-bind="standing.termName"></div>
           </td>
         </tr>
-        <tr data-ng-if="standing.acadStandingStatus !== 'GST'">
+        <tr>
           <td></td>
           <td colspan="2">
             <span class="cc-standing-sub-title cc-italic"> Updated
               <span data-ng-bind="standing.actionDate"></span>
             </span><br>
             <span data-ng-bind="standing.acadStandingActionDescr" class="cc-standing-sub-title"></span><br>
-            <span class="cc-standing-sub-title">Please consult with your college advisor for guidance.</span>
+            <span class="cc-standing-sub-title" data-ng-if="standing.acadStandingStatus !== 'GST'">Please consult with your college advisor for guidance.</span>
           </td>
         </tr>
         <tr data-ng-if="standings.standingsHistory.length">
