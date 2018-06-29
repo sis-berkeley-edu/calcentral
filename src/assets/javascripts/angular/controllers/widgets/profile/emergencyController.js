@@ -14,7 +14,7 @@ angular.module('calcentral.controllers').controller('EmergencyController', funct
 
   var parseEmergencyContactInformation = function(response) {
     $scope.emergencyContactInformation.isErrored = _.get(response, 'data.errored');
-    $scope.emergencyContactInformation.editLink = _.get(response, 'data.feed.links.editEmergencyContactInformation');
+    $scope.emergencyContactInformation.editLink = _.get(response, 'data.feed.links.editProfile');
   };
 
   var loadInformation = function() {
