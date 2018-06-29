@@ -12,11 +12,17 @@ angular.module('calcentral.controllers').controller('DemographicController', fun
     isErrored: false
   };
 
+  var parseDemographicInformation = function(response) {
+    $scope.demographicInformation.isErrored = _.get(response, 'data.errored');
+    $scope.demographicInformation.editLink = _.get(response, 'data.feed.links.editDemographicInformation');
+  };
+
   var loadInformation = function() {
-    profileFactory.getPerson().then(function(response) {
-      $scope.demographicInformation.isLoading = false;
-      $scope.demographicInformation.isErrored = _.get(response, 'data.errored');
-    });
+    profileFactory.getPerson()
+      .then(parseDemographicInformation)
+      .finally(function() {
+        $scope.demographicInformation.isLoading = false;
+      });
   };
 
   loadInformation();
