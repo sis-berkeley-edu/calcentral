@@ -2,6 +2,14 @@
   class="cc-widget-text cc-page-widget-profile-sections"
   data-ng-controller="EmergencyController"
   data-cc-spinner-directive="emergencyContactInformation.isLoading">
+
+  <div class="cc-page-widget-profile-action">
+    <a class="cc-button cc-button-blue"
+       data-cc-campus-solutions-link-directive="emergencyContactInformation.editLink"
+       data-cc-campus-solutions-link-directive-cc-page-name="currentPage.name"
+       data-cc-campus-solutions-link-directive-cc-page-url="currentPage.url"
+    >Edit Profile</a>
+  </div>
   <div data-ng-if="!emergencyContactInformation.isErrored">
     <div data-ng-include="'widgets/profile/emergency_contact.html'"></div>
   </div>
