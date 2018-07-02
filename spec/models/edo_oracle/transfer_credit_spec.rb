@@ -48,15 +48,17 @@ describe EdoOracle::TransferCredit do
         expect(subject[:undergraduate][:summary][:totalCumulativeUnits]).to be_an_instance_of(Float)
         expect(subject[:undergraduate][:summary][:totalCumulativeUnits]).to eq 2.0
         expect(subject[:undergraduate][:summary][:totalTransferUnits]).to be_an_instance_of(Float)
-        expect(subject[:undergraduate][:summary][:totalTransferUnits]).to eq 0.0
-        expect(subject[:undergraduate][:summary][:transferUnitsAdjusted]).to be_an_instance_of(Float)
-        expect(subject[:undergraduate][:summary][:transferUnitsAdjusted]).to eq 0.0
+        expect(subject[:undergraduate][:summary][:totalTransferUnits]).to eq 70.0
+        expect(subject[:undergraduate][:summary][:totalTransferUnitsNonAdjusted]).to be_an_instance_of(Float)
+        expect(subject[:undergraduate][:summary][:totalTransferUnitsNonAdjusted]).to eq 100.0
         expect(subject[:undergraduate][:summary][:apTestUnits]).to be_an_instance_of(Float)
-        expect(subject[:undergraduate][:summary][:apTestUnits]).to eq 0.0
+        expect(subject[:undergraduate][:summary][:apTestUnits]).to eq 2.0
         expect(subject[:undergraduate][:summary][:ibTestUnits]).to be_an_instance_of(Float)
-        expect(subject[:undergraduate][:summary][:ibTestUnits]).to eq 0.0
+        expect(subject[:undergraduate][:summary][:ibTestUnits]).to eq 4.0
         expect(subject[:undergraduate][:summary][:alevelTestUnits]).to be_an_instance_of(Float)
-        expect(subject[:undergraduate][:summary][:alevelTestUnits]).to eq 0.0
+        expect(subject[:undergraduate][:summary][:alevelTestUnits]).to eq 6.0
+        expect(subject[:undergraduate][:summary][:totalTestUnits]).to be_an_instance_of(Float)
+        expect(subject[:undergraduate][:summary][:totalTestUnits]).to eq 12.0
         expect(subject[:undergraduate][:summary][:totalTransferUnitsLaw]).to eq nil
       end
       it 'preserves data structure for relevant careers' do
@@ -81,7 +83,7 @@ describe EdoOracle::TransferCredit do
           expect(subject[:law][:detailed]).to be
           expect(subject[:law][:detailed]).to have(2).items
           expect(subject[:law][:summary]).to be
-          expect(subject[:law][:summary]).to have(9).items
+          expect(subject[:law][:summary]).to have(10).items
         end
       end
       context 'not currently a law student' do
@@ -125,14 +127,13 @@ describe EdoOracle::TransferCredit do
           expect(subject[:law][:detailed][1][:requirementDesignation]).to eq 'Fulfills Constitutional Law Requirement'
         end
         it 'parses summary data, casting Numerical values to Floats' do
-          expect(subject[:graduate][:summary]).to have(9).items
+          expect(subject[:graduate][:summary]).to have(10).items
           expect(subject[:graduate][:summary][:career]).to eq 'GRAD'
           expect(subject[:graduate][:summary][:careerDescr]).to eq :Graduate
           expect(subject[:graduate][:summary][:totalCumulativeUnits]).to be nil
           expect(subject[:graduate][:summary][:totalTransferUnits]).to be_an_instance_of(Float)
           expect(subject[:graduate][:summary][:totalTransferUnits]).to eq 3.0
-          expect(subject[:graduate][:summary][:transferUnitsAdjusted]).to be_an_instance_of(Float)
-          expect(subject[:graduate][:summary][:transferUnitsAdjusted]).to eq 0.0
+          expect(subject[:graduate][:summary][:totalTransferUnitsNonAdjusted]).to be nil
           expect(subject[:graduate][:summary][:apTestUnits]).to be nil
           expect(subject[:graduate][:summary][:ibTestUnits]).to be nil
           expect(subject[:graduate][:summary][:alevelTestUnits]).to be nil
@@ -143,11 +144,11 @@ describe EdoOracle::TransferCredit do
           expect(subject[:law][:summary][:totalCumulativeUnits]).to be nil
           expect(subject[:law][:summary][:totalTransferUnits]).to be_an_instance_of(Float)
           expect(subject[:law][:summary][:totalTransferUnits]).to eq 10.0
-          expect(subject[:law][:summary][:transferUnitsAdjusted]).to be_an_instance_of(Float)
-          expect(subject[:law][:summary][:transferUnitsAdjusted]).to eq 0.0
+          expect(subject[:law][:summary][:totalTransferUnitsNonAdjusted]).to be nil
           expect(subject[:law][:summary][:apTestUnits]).to be nil
           expect(subject[:law][:summary][:ibTestUnits]).to be nil
           expect(subject[:law][:summary][:alevelTestUnits]).to be nil
+          expect(subject[:law][:summary][:totalTestUnits]).to be nil
           expect(subject[:law][:summary][:totalTransferUnitsLaw]).to be_an_instance_of(Float)
           expect(subject[:law][:summary][:totalTransferUnitsLaw]).to eq 57.0
         end
@@ -174,13 +175,13 @@ describe EdoOracle::TransferCredit do
           expect(subject[:graduate][:detailed]).to be
           expect(subject[:graduate][:detailed]).to have(1).items
           expect(subject[:graduate][:summary]).to be
-          expect(subject[:graduate][:summary]).to have(9).items
+          expect(subject[:graduate][:summary]).to have(10).items
 
           expect(subject[:law]).to be
           expect(subject[:law][:detailed]).to be
           expect(subject[:law][:detailed]).to have(1).items
           expect(subject[:law][:summary]).to be
-          expect(subject[:law][:summary]).to have(9).items
+          expect(subject[:law][:summary]).to have(10).items
         end
       end
       context 'not currently a law student' do
@@ -189,19 +190,19 @@ describe EdoOracle::TransferCredit do
           expect(subject[:undergraduate][:detailed]).to be
           expect(subject[:undergraduate][:detailed]).to have(1).items
           expect(subject[:undergraduate][:summary]).to be
-          expect(subject[:undergraduate][:summary]).to have(9).items
+          expect(subject[:undergraduate][:summary]).to have(10).items
 
           expect(subject[:graduate]).to be
           expect(subject[:graduate][:detailed]).to be
           expect(subject[:graduate][:detailed]).to have(1).items
           expect(subject[:graduate][:summary]).to be
-          expect(subject[:graduate][:summary]).to have(9).items
+          expect(subject[:graduate][:summary]).to have(10).items
 
           expect(subject[:law]).to be
           expect(subject[:law][:detailed]).to be
           expect(subject[:law][:detailed]).to have(1).items
           expect(subject[:law][:summary]).to be
-          expect(subject[:law][:summary]).to have(9).items
+          expect(subject[:law][:summary]).to have(10).items
         end
       end
     end

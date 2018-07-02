@@ -1,104 +1,117 @@
-<div data-cc-spinner-directive="academics.isLoading" class="cc-transfer-credit">
-  <div data-ng-if="transferCredit.ucTransferCrseSch.items.length || transferCredit.ucTestComponent.totalTestUnits > 0" class="cc-widget">
+<div class="cc-widget cc-transfer-credit" data-ng-controller="TransferCreditController">
+  <div data-ng-if="transferCredits.law.summary || transferCredits.graduate.summary || transferCredits.undergraduate.summary">
     <div class="cc-widget-title">
       <h2>Transfer Credit</h2>
     </div>
-    <div class="cc-table">
-      <table class="cc-table-padding cc-transfer-credit-table">
-        <thead>
-          <tr class="cc-table-subheader">
-            <th scope="col">
-              <h3>Type</h3>
-            </th>
-            <th scope="col"></th>
-            <th class="cc-table-right cc-transfer-credit-table-right-padding" scope="col">
-              <h3>Units</h3>
-            </th>
+    <div data-cc-spinner-directive="transferCredits.isLoading" class="cc-widget-padding cc-flex-space-between-vertical-15">
+      <a data-ng-if="studentLinks.tcReportLink.url && !advisorLinks.tcReportLink.url"
+        data-cc-campus-solutions-link-directive="studentLinks.tcReportLink"
+        data-cc-campus-solutions-link-directive-cc-page-name="currentPage.name"
+        data-cc-campus-solutions-link-directive-cc-page-url="currentPage.url"
+      ></a>
+      <a data-ng-if="advisorLinks.tcReportLink.url"
+        data-cc-campus-solutions-link-directive="advisorLinks.tcReportLink"
+        data-cc-campus-solutions-link-directive-cc-page-name="currentPage.name"
+        data-cc-campus-solutions-link-directive-cc-page-url="currentPage.url"
+      ></a>
+
+      <div data-ng-if="transferCredits.law.summary" class="cc-table cc-widget-border">
+        <table>
+          <thead><tr>
+            <th scope="col">Type</th>
+            <th scope="col" class="cc-table-right">Law Units</th>
+            <th scope="col" class="cc-table-right">Units</th>
+          </tr></thead>
+          <tbody class="cc-widget-table-hover"
+                 data-ng-class="{'cc-widget-table-hover-opened':(transferCredits.law.show)}"
+                 data-cc-accessible-focus-directive
+                 data-ng-click="api.widget.toggleShow($event, null, transferCredits.law, 'Transfer Credit')">
+            <tr class="cc-transfer-credit-section-header">
+              <td>{{transferCredits.law.summary.careerDescr}} Transfer Units</td>
+              <td class="cc-text-right" data-ng-bind="transferCredits.law.summary.totalTransferUnitsLaw | number:3"></td>
+              <td class="cc-text-right cc-toggle-triangle" data-ng-bind="transferCredits.law.summary.totalTransferUnits | number:3"></td>
+            </tr>
+            <tr data-ng-show="transferCredits.law.show" data-ng-repeat="detail in transferCredits.law.detailed">
+              <td>
+                <span data-ng-bind="detail.school"></span>
+                <div class="cc-requirements-designation" data-ng-if="detail.requirementDesignation"><span data-ng-bind="detail.requirementDesignation"></span></div>
+              </td>
+              <td class="cc-text-right" data-ng-bind="detail.lawUnits | number:3"></td>
+              <td class="cc-text-right" data-ng-bind="detail.units | number:3"></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div data-ng-if="transferCredits.graduate.summary" class="cc-table cc-widget-border">
+        <table>
+          <thead><tr>
+            <th scope="col">Type</th>
+            <th scope="col" class="cc-table-right">Units</th>
+          </tr></thead>
+          <tbody class="cc-widget-table-hover"
+                 data-ng-class="{'cc-widget-table-hover-opened':(transferCredits.graduate.show)}"
+                 data-cc-accessible-focus-directive
+                 data-ng-click="api.widget.toggleShow($event, null, transferCredits.graduate, 'Transfer Credit')">
+            <tr class="cc-transfer-credit-section-header">
+              <td>{{transferCredits.graduate.summary.careerDescr}} Transfer Units</td>
+              <td class="cc-text-right cc-toggle-triangle" data-ng-bind="transferCredits.graduate.summary.totalTransferUnits | number:3"></td>
+            </tr>
+            <tr data-ng-show="transferCredits.graduate.show" data-ng-repeat="detail in transferCredits.graduate.detailed">
+              <td data-ng-bind="detail.school"></td>
+              <td class="cc-text-right" data-ng-bind="detail.units | number:3"></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div data-ng-if="transferCredits.undergraduate.summary" class="cc-table cc-widget-border">
+        <table>
+          <thead><tr>
+            <th scope="col">Type</th>
+            <th scope="col" class="cc-table-right">Units</th>
+          </tr></thead>
+          <tbody class="cc-widget-table-hover"
+                 data-ng-class="{'cc-widget-table-hover-opened':(transferCredits.undergraduate.show)}"
+                 data-cc-accessible-focus-directive
+                 data-ng-click="api.widget.toggleShow($event, null, transferCredits.undergraduate, 'Transfer Credit')"
+                 data-ng-if="transferCredits.undergraduate.summary.totalTransferUnits">
+            <tr class="cc-transfer-credit-section-header">
+              <td>{{transferCredits.undergraduate.summary.careerDescr}} Transfer Units</td>
+              <td class="cc-text-right cc-toggle-triangle">
+                <span data-ng-bind="transferCredits.undergraduate.summary.totalTransferUnits | number:3"></span>
+                <span data-ng-if="transferCredits.undergraduate.summary.totalTransferUnitsNonAdjusted" data-ng-bind-template="(Non-Adjusted: {{transferCredits.undergraduate.summary.totalTransferUnitsNonAdjusted | number:3}})"></span>
+              </td>
+            </tr>
+            <tr data-ng-show="transferCredits.undergraduate.show" data-ng-repeat="detail in transferCredits.undergraduate.detailed">
+              <td data-ng-bind="detail.school"></td>
+              <td class="cc-text-right" data-ng-bind="detail.units | number:3"></td>
+            </tr>
+          </tbody>
+          <tbody class="cc-widget-table-hover"
+                 data-ng-class="{'cc-widget-table-hover-opened':(transferCredits.undergraduate.testUnits.show)}"
+                 data-cc-accessible-focus-directive
+                 data-ng-click="api.widget.toggleShow($event, null, transferCredits.undergraduate.testUnits, 'Transfer Credit')"
+                 data-ng-if="transferCredits.undergraduate.summary.alevelTestUnits || transferCredits.undergraduate.summary.apTestUnits || transferCredits.undergraduate.summary.ibTestUnits">
+          <tr class="cc-transfer-credit-section-header">
+            <td>{{transferCredits.undergraduate.summary.careerDescr}} Test Units</td>
+            <td class="cc-text-right cc-toggle-triangle" data-ng-bind="transferCredits.undergraduate.summary.alevelTestUnits + transferCredits.undergraduate.summary.apTestUnits + transferCredits.undergraduate.summary.ibTestUnits | number:3"></td>
           </tr>
-        </thead>
-        <tbody class="cc-widget-table-hover"
-          data-ng-class="{'cc-widget-table-hover-opened':(transferCredit.ucTransferCrseSch.show)}"
-          data-cc-accessible-focus-directive
-          data-ng-click="api.widget.toggleShow($event, null, transferCredit.ucTransferCrseSch, 'Transfer Credit')"
-          data-ng-if="transferCredit.ucTransferCrseSch.items.length">
-          <tr class="cc-transfer-credit-table-parent-row">
-            <td colspan="1">Transfer Units</td>
-            <td class="cc-table-right cc-toggle-triangle cc-transfer-credit-table-right-padding" colspan="2">
-              <span data-ng-bind="transferCredit.ucTransferCrseSch.unitsAdjusted | number:3"></span>
-              <span data-ng-if="transferCredit.ucTransferCrseSch.unitsTotal && (transferCredit.ucTransferCrseSch.unitsTotal !== transferCredit.ucTransferCrseSch.unitsAdjusted)" data-ng-bind-template="(Non-Adjusted: {{transferCredit.ucTransferCrseSch.unitsTotal | number:3}})"></span>
-            </td>
+          <tr data-ng-if="transferCredits.undergraduate.summary.apTestUnits" data-ng-show="transferCredits.undergraduate.testUnits.show">
+            <td>Advanced Placement (AP)</td>
+            <td class="cc-text-right" data-ng-bind="transferCredits.undergraduate.summary.apTestUnits | number:3"></td>
           </tr>
-          <tr data-ng-show="transferCredit.ucTransferCrseSch.show" data-ng-repeat="item in transferCredit.ucTransferCrseSch.items">
-            <td colspan="2">
-              <span data-ng-bind="item.institution"></span>
-            </td>
-            <td class="cc-table-right cc-transfer-credit-table-right-padding" colspan="1">
-              <span data-ng-bind="item.transferUnits | number:3"></span>
-            </td>
+          <tr data-ng-if="transferCredits.undergraduate.summary.ibTestUnits" data-ng-show="transferCredits.undergraduate.testUnits.show">
+            <td>International Baccalaureate (IB)</td>
+            <td class="cc-text-right" data-ng-bind="transferCredits.undergraduate.summary.ibTestUnits | number:3"></td>
           </tr>
-        </tbody>
-        <tbody class="cc-widget-table-hover"
-          data-ng-class="{'cc-widget-table-hover-opened':(transferCredit.ucTestComponent.show)}"
-          data-cc-accessible-focus-directive
-          data-ng-click="api.widget.toggleShow($event, null, transferCredit.ucTestComponent, 'Transfer Credit')"
-          data-ng-if="transferCredit.ucTestComponent.totalTestUnits > 0">
-          <tr data-ng-if="transferCredit.ucTransferCrseSch.items.length"><td class="cc-transfer-credit-table-border" colspan="3"></td></tr>
-          <tr class="cc-transfer-credit-table-parent-row">
-            <td colspan="2">Test Units</td>
-            <td class="cc-table-right cc-toggle-triangle cc-transfer-credit-table-right-padding" colspan="1">
-              <span data-ng-bind="transferCredit.ucTestComponent.totalTestUnits | number:3"></span>
-            </td>
+          <tr data-ng-if="transferCredits.undergraduate.summary.alevelTestUnits" data-ng-show="transferCredits.undergraduate.testUnits.show">
+            <td>GCE Advanced-Level (A-Level)</td>
+            <td class="cc-text-right" data-ng-bind="transferCredits.undergraduate.summary.alevelTestUnits | number:3"></td>
           </tr>
-          <tr data-ng-if="transferCredit.ucTestComponent.apUnits" data-ng-show="transferCredit.ucTestComponent.show">
-            <td colspan="2">
-              <span>Advanced Placement (AP)</span>
-            </td>
-            <td class="cc-table-right cc-transfer-credit-table-right-padding" colspan="1">
-              <span data-ng-bind="transferCredit.ucTestComponent.apUnits | number:3"></span>
-            </td>
-          </tr>
-          <tr data-ng-if="transferCredit.ucTestComponent.ibUnits" data-ng-show="transferCredit.ucTestComponent.show">
-            <td colspan="2">
-              <span>International Baccalaureate (IB)</span>
-            </td>
-            <td class="cc-table-right cc-transfer-credit-table-right-padding" colspan="1">
-              <span data-ng-bind="transferCredit.ucTestComponent.ibUnits | number:3"></span>
-            </td>
-          </tr>
-          <tr data-ng-if="transferCredit.ucTestComponent.alevelUnits" data-ng-show="transferCredit.ucTestComponent.show">
-            <td colspan="2">
-              <span>GCE Advanced-Level (A-level)</span>
-            </td>
-            <td class="cc-table-right cc-transfer-credit-table-right-padding" colspan="1">
-              <span data-ng-bind="transferCredit.ucTestComponent.alevelUnits | number:3"></span>
-            </td>
-          </tr>
-        </tbody>
-        <tbody data-ng-if="studentLinks.tcReportLink.url && !advisorLinks.tcReportLink.url">
-          <tr><td class="cc-transfer-credit-table-border" colspan="3"></td></tr>
-          <tr class="cc-transfer-credit-table-parent-row">
-            <td colspan="3">
-              <a
-                data-cc-campus-solutions-link-directive="studentLinks.tcReportLink"
-                data-cc-campus-solutions-link-directive-cc-page-name="currentPage.name"
-                data-cc-campus-solutions-link-directive-cc-page-url="currentPage.url"
-              ></a>
-            </td>
-          </tr>
-        </tbody>
-        <tbody data-ng-if="advisorLinks.tcReportLink.url">
-          <tr><td class="cc-transfer-credit-table-border" colspan="3"></td></tr>
-          <tr class="cc-transfer-credit-table-parent-row">
-            <td colspan="3">
-              <a
-                data-cc-campus-solutions-link-directive="advisorLinks.tcReportLink"
-                data-cc-campus-solutions-link-directive-cc-page-name="currentPage.name"
-                data-cc-campus-solutions-link-directive-cc-page-url="currentPage.url"
-              ></a>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
 </div>

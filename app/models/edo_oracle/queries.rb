@@ -139,7 +139,7 @@ module EdoOracle
           CAR.TOTAL_CUMULATIVE_UNITS,
           LAW.TOTAL_CUMULATIVE_UNITS_LAW AS TOTAL_CUMULATIVE_LAW_UNITS,
           CAR.TOTAL_TRANSFER_UNITS as total_transfer_units,
-          CAR.TRANSFER_CREDIT_UNITS_ADJUSTMENT as transfer_units_adjusted,
+          CAR.TRANSFER_CREDIT_UNITS_ADJUSTMENT as transfer_units_adjustment,
           CAR.TRANSFER_TEST_UNITS_AP as ap_test_units,
           CAR.TRANSFER_TEST_UNITS_IB as ib_test_units,
           CAR.TRANSFER_TEST_UNITS_ALEVEL as alevel_test_units,

@@ -1,23 +1,29 @@
 .cc-transfer-credit {
-  .cc-transfer-credit-table {
-    h3 {
-      color: $cc-color-dim-gray;
-      font-size: 14px;
+  table {
+    .cc-requirements-designation {
+      font-size: 12px;
+      font-weight: bold;
+      line-height: 12px;
+      padding-left: 8px;
     }
-    tbody {
+    .cc-transfer-credit-section-header td {
       padding-bottom: 6px;
     }
-    .cc-transfer-credit-table-border {
-      border-top: 1px solid $cc-color-very-light-grey;
-      margin-top: 8px;
-    }
-    .cc-transfer-credit-table-parent-row {
-      td {
-        font-size: 14px;
-        padding-bottom: 8px;
+    .cc-widget-table-hover, .cc-widget-table-hover-opened {
+      .cc-toggle-triangle::after {
+        top: 14px;
       }
     }
-    .cc-transfer-credit-table-right-padding {
+    tr:first-child td {
+      padding-top: 10px;
+    }
+    tr:last-child td {
+      padding-bottom: 10px;
+    }
+    td:first-child {
+      width: 50%;
+    }
+    td:last-child, th:last-child {
       padding-right: 24px;
     }
   }

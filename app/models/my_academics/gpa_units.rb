@@ -42,12 +42,11 @@ module MyAcademics
 
     def units_transferred
       return nil if law_student?
-      feed = MyAcademics::TransferCredit.new(@uid).get_feed
-      transfer_units = feed.try(:[], :ucTransferCrseSch).try(:[], :unitsAdjusted)
-      test_units = feed.try(:[], :ucTestComponent).try(:[], :totalTestUnits)
-      if transfer_units || test_units
-        transfer_units.to_f + test_units.to_f
-      end
+      feed = EdoOracle::TransferCredit.new(user_id: @uid).get_feed
+      grad_transfer_units = feed.try(:[], :graduate).try(:[], :summary).try(:[], :totalTransferUnits) || 0
+      undergrad_transfer_units = feed.try(:[], :undergraduate).try(:[], :summary).try(:[], :totalTransferUnits) || 0
+      undergrad_test_units = feed.try(:[], :undergraduate).try(:[], :summary).try(:[], :totalTestUnits) || 0
+      grad_transfer_units.to_f + undergrad_transfer_units.to_f + undergrad_test_units.to_f
     end
 
     def get_campus_solutions_id

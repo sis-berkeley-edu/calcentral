@@ -25,7 +25,7 @@
           <tr class="cc-academic-summary-transfer-credit-row-law" data-ng-repeat="detailedCredit in credit.detailed">
             <td>
               <span data-ng-bind="detailedCredit.school"></span>
-              <div class="cc-requirement" data-ng-if="detailedCredit.requirementDesignation"><span data-ng-bind="detailedCredit.requirementDesignation"></span></div>
+              <div class="cc-requirements-designation" data-ng-if="detailedCredit.requirementDesignation"><span data-ng-bind="detailedCredit.requirementDesignation"></span></div>
             </td>
             <td class="cc-text-right" data-ng-bind="detailedCredit.units | number:3"></td>
             <td data-ng-if="showTransferCreditPoints(career) && detailedCredit.gradePoints > 0" class="cc-text-right">
@@ -39,9 +39,9 @@
             <td class="cc-text-right">Total Course Units:</td>
             <td class="cc-text-right"><strong data-ng-bind="credit.summary.totalTransferUnits | number:3"></strong></td>
           </tr>
-          <tr data-ng-if="career !== 'law' && credit.summary.transferUnitsAdjusted > 0">
+          <tr data-ng-if="career !== 'law' && credit.summary.totalTransferUnitsNonAdjusted > 0">
             <td class="cc-text-right">Non-Adjusted Course Units:</td>
-            <td class="cc-text-right"><strong data-ng-bind="credit.summary.totalTransferUnits + credit.summary.transferUnitsAdjusted | number:3"></strong></td>
+            <td class="cc-text-right"><strong data-ng-bind="credit.summary.totalTransferUnitsNonAdjusted | number:3"></strong></td>
           </tr>
           <tr data-ng-if="career === 'law'">
             <td class="cc-text-right">Totals:</td>
