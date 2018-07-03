@@ -171,7 +171,8 @@
           <thead>
             <th width="15%" scope="col" class="cc-academics-course-number">Course</th>
             <th width="10%" scope="col" class="show-for-medium-up">Class Number</th>
-            <th data-ng-attr-width="{{(containsMidpointclass || isSummerSemester) ? '35%' : '45%'}}" scope="col">Title</th>
+            <th data-ng-attr-width="{{(45 - (10*(containsMidpointClass ? 1 : 0)) - (10*(isSummerSemester ? 1 : 0)) - (15*(teachingCoursesHaveTopics ? 1 : 0))) + '%'}}" scope="col">Title</th>
+            <th width="15%" scope="col" data-ng-if="teachingCoursesHaveTopics">Topic</th>
             <th width="10%" scope="col" class="show-for-medium-up cc-academics-course-section">Section</th>
             <th data-ng-if="isSummerSemester" width="10%" scope="col" class="show-for-medium-up cc-academics-course-grading cc-academics-course-grading-centered">Grades Due</th>
             <th width="10%" scope="col" class="show-for-medium-up cc-academics-course-grading cc-academics-course-grading-centered">Grading Links</th>
@@ -192,6 +193,12 @@
                 <div data-ng-bind="section.ccn"></div>
               </td>
               <td data-ng-if="section.is_primary_section" class="cc-academics-course-title" data-ng-bind="course.title"></td>
+              <td data-ng-if="teachingCoursesHaveTopics">
+                <div data-ng-if="!section.topic_description">&mdash;</div>
+                <div data-ng-if="section.topic_description">
+                  <span data-ng-bind="section.topic_description"></span>
+                </div>
+              </td>
               <td data-ng-if="section.is_primary_section" class="show-for-medium-up">
                 <div data-ng-bind="section.section_label"></div>
               </td>

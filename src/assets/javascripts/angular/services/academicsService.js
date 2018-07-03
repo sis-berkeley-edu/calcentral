@@ -28,6 +28,12 @@ angular.module('calcentral.services').service('academicsService', function() {
     return _.head(_.compact(sortedSemesters));
   };
 
+  var collectTopics = function(course) {
+    return _.compact(_.map(course.sections, function(section) {
+      return section.topic_description;
+    }));
+  };
+
   var containsLawClass = function(selectedTeachingSemester) {
     var classes = _.get(selectedTeachingSemester, 'classes');
     return !!_.find(classes, {
@@ -306,7 +312,7 @@ angular.module('calcentral.services').service('academicsService', function() {
         key = course.multiplePrimaries ? section.slug : 'default';
         course.sections = classes[key] ? classes[key].sections : [];
         course.sections.push(section);
-        course.topics = section.topic_description ? [section.topic_description] : [];
+        course.topics = collectTopics(course);
         classes[key] = course;
       } else {
         key = originalCourse.multiplePrimaries ? section.associatedWithPrimary : 'default';
@@ -385,6 +391,7 @@ angular.module('calcentral.services').service('academicsService', function() {
   // Expose methods
   return {
     chooseDefaultSemester: chooseDefaultSemester,
+    collectTopics: collectTopics,
     containsLawClass: containsLawClass,
     containsMidpointClass: containsMidpointClass,
     countSectionItem: countSectionItem,

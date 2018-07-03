@@ -94,9 +94,14 @@ angular.module('calcentral.controllers').controller('AcademicsController', funct
   };
 
   var setGradingFlags = function(selectedTeachingSemester) {
+    if (!selectedTeachingSemester) {
+      return false;
+    }
+    var teachingCourses = academicsService.getClassesSections(selectedTeachingSemester.classes, false);
     $scope.containsMidpointClass = academicsService.containsMidpointClass(selectedTeachingSemester);
     $scope.containsLawClass = academicsService.containsLawClass(selectedTeachingSemester);
     $scope.isSummerSemester = academicsService.isSummerSemester(selectedTeachingSemester);
+    $scope.teachingCoursesHaveTopics = academicsService.courseCollectionHasTopics(teachingCourses);
   };
 
   var fillSemesterSpecificPage = function(semesterSlug, data) {
@@ -104,6 +109,8 @@ angular.module('calcentral.controllers').controller('AcademicsController', funct
     var selectedStudentSemester = academicsService.findSemester(data.semesters, semesterSlug, selectedStudentSemester);
     var selectedTeachingSemester = academicsService.findSemester(data.teachingSemesters, semesterSlug, selectedTeachingSemester);
     var selectedSemester = (selectedStudentSemester || selectedTeachingSemester);
+    var enrolledCourses;
+    var waitlistedCourses;
     if (!checkPageExists(selectedSemester)) {
       return;
     }
@@ -113,12 +120,14 @@ angular.module('calcentral.controllers').controller('AcademicsController', funct
     if (selectedStudentSemester && !$routeParams.classId) {
       $scope.selectedCourses = selectedStudentSemester.classes;
       if (!isOnlyInstructor) {
+        enrolledCourses = academicsService.getClassesSections(selectedStudentSemester.classes, false);
+        waitlistedCourses = academicsService.getClassesSections(selectedStudentSemester.classes, true);
         $scope.allCourses = academicsService.getAllClasses(data.semesters);
         $scope.previousCourses = academicsService.getPreviousClasses(data.semesters);
-        $scope.enrolledCourses = academicsService.getClassesSections(selectedStudentSemester.classes, false);
-        $scope.waitlistedCourses = academicsService.getClassesSections(selectedStudentSemester.classes, true);
-        $scope.enrolledCoursesHaveTopics = academicsService.courseCollectionHasTopics($scope.enrolledCourses);
-        $scope.waitlistedCoursesHaveTopics = academicsService.courseCollectionHasTopics($scope.waitlistedCourses);
+        $scope.enrolledCourses = enrolledCourses;
+        $scope.waitlistedCourses = waitlistedCourses;
+        $scope.enrolledCoursesHaveTopics = academicsService.courseCollectionHasTopics(enrolledCourses);
+        $scope.waitlistedCoursesHaveTopics = academicsService.courseCollectionHasTopics(waitlistedCourses);
       }
     }
     $scope.selectedStudentSemester = selectedStudentSemester;
@@ -127,11 +136,9 @@ angular.module('calcentral.controllers').controller('AcademicsController', funct
 
     // Get selected course from URL params and extract data from selected semester schedule
     if ($routeParams.classId) {
+      var classSemester = isOnlyInstructor ? selectedTeachingSemester : selectedStudentSemester;
       $scope.isInstructorOrGsi = isOnlyInstructor;
-      var classSemester = selectedStudentSemester;
-      if (isOnlyInstructor) {
-        classSemester = selectedTeachingSemester;
-      }
+
       for (var i = 0; i < classSemester.classes.length; i++) {
         var course = classSemester.classes[i];
         if (course.course_id === $routeParams.classId) {
@@ -139,6 +146,7 @@ angular.module('calcentral.controllers').controller('AcademicsController', funct
             $scope.selectedSection = academicsService.filterBySectionSlug(course, $routeParams.sectionSlug);
           }
           academicsService.normalizeGradingData(course);
+          course.topics = academicsService.collectTopics(course);
           $scope.selectedCourse = (course.sections.length) ? course : null;
           if (isOnlyInstructor) {
             $scope.campusCourseId = course.listings[0].course_id;
