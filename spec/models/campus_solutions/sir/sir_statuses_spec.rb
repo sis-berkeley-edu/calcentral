@@ -9,7 +9,8 @@ describe CampusSolutions::Sir::SirStatuses do
         checkListItems: [{
           chklstItemCd: 'AUSIRF',
           checkListMgmtAdmp: {
-            acadCareer: 'UGRD'
+            acadCareer: 'UGRD',
+            admApplNbr: '00157689'
           },
           itemStatus: 'Initiated',
           itemStatusCode: 'I',
@@ -28,10 +29,31 @@ describe CampusSolutions::Sir::SirStatuses do
       feed: {
         checkListItems: [{
           chklstItemCd: 'AL0007',
+          checkListMgmtAdmp: {
+            acadCareer: 'LAW',
+            admApplNbr: '00157689'
+          },
           itemStatus: 'Initiated',
           itemStatusCode: 'I',
           adminFunc: 'ADMP'
         }]
+      }
+    }
+  }
+
+  let(:checklist_response_law_completed) {
+    {
+      feed: {
+        checkListItems: [{
+         chklstItemCd: 'AL0007',
+         checkListMgmtAdmp: {
+           acadCareer: 'LAW',
+           admApplNbr: '00157692'
+         },
+         itemStatus: 'Initiated',
+         itemStatusCode: 'C',
+         adminFunc: 'ADMP'
+       }]
       }
     }
   }
@@ -42,7 +64,8 @@ describe CampusSolutions::Sir::SirStatuses do
         checkListItems: [{
            chklstItemCd: 'AUSIRF',
            checkListMgmtAdmp: {
-             acadCareer: 'UGRD'
+             acadCareer: 'UGRD',
+             admApplNbr: '00157689'
            },
            itemStatus: 'Completed',
            itemStatusCode: 'C',
@@ -57,18 +80,30 @@ describe CampusSolutions::Sir::SirStatuses do
       feed: {
         checkListItems: [{
            chklstItemCd: 'AL0007',
+           checkListMgmtAdmp: {
+             acadCareer: 'UGRD',
+             admApplNbr: '00157689'
+           },
            itemStatus: 'Initiated',
            itemStatusCode: 'I',
            adminFunc: 'ADMP'
           },
           {
           chklstItemCd: 'AUSIRF',
+          checkListMgmtAdmp: {
+            acadCareer: 'UGRD',
+            admApplNbr: '00157690'
+          },
           itemStatus: 'Initiated',
           itemStatusCode: 'I',
           adminFunc: 'ADMP'
           },
           {
           chklstItemCd: 'AUSIRF',
+          checkListMgmtAdmp: {
+            acadCareer: 'UGRD',
+            admApplNbr: '00157691'
+          },
           itemStatus: 'Completed',
           itemStatusCode: 'C',
           adminFunc: 'ADMP'
@@ -108,44 +143,11 @@ describe CampusSolutions::Sir::SirStatuses do
     }
   }
 
-  let(:new_admit_attributes_freshman_pathway) {
-    {
-      'applicant_program' => 'UCLS',
-      'applicant_program_descr' => 'College of Letters and Science',
-      'admit_status' => 'AD',
-      'admit_term' => '2185',
-      'admit_type' => 'FYR',
-      'admit_type_desc' => 'First Year Student',
-      'athlete' => 'N',
-      'global_edge_program' => 'N'
-    }
-  }
-
-  let(:new_admit_attributes_freshman_pathway_gep) {
-    {
-      'applicant_program' => 'UCLS',
-      'applicant_program_descr' => 'College of Letters and Science',
-      'admit_status' => 'AD',
-      'admit_term' => '2185',
-      'admit_type' => 'FYR',
-      'admit_type_desc' => 'First Year Student',
-      'athlete' => 'N',
-      'global_edge_program' => 'Y'
-    }
-  }
-
-  let(:new_admit_attributes_transfer) {
-    {
-      'applicant_program' => 'UCLS',
-      'applicant_program_descr' => 'College of Letters and Science',
-      'admit_status' => 'APP',
-      'admit_term' => '2165',
-      'admit_type' => 'TRN',
-      'admit_type_desc' => 'Transfer',
-      'athlete' => 'N',
-      'global_edge_program' => 'Y'
-    }
-  }
+  let(:new_admit_attributes_freshman_pathway_sid) { 12345678 }
+  let(:new_admit_attributes_freshman_pathway_gep_sid) { 12345679 }
+  let(:new_admit_attributes_transfer_sid) { 12345680 }
+  let(:multiple_sir_offers_sid) { 12345681 }
+  let(:new_admit_attributes_law_completed_sid) { 12345682 }
 
   let(:link_api_response) {
     {
@@ -194,7 +196,7 @@ describe CampusSolutions::Sir::SirStatuses do
            descrLong: 'Congratulations on your admission to Berkeley Law LL.M. professional track! If you have any questions, please contact the Advanced Degree Programs Office.',
            chklstItemCd: 'AL0007',
            sirConditions: [1, 2, 3, 4, 5, 6, 7],
-           sirOptions: ['array', 'of', 'options']
+           sirOptions: [{ progAction: 'WAPP', messageText: 'Here is the wrong law message' }, { progAction: 'DEIN', messageText: 'Here is the law message!' }]
          },
          {
            institution: 'UCB01',
@@ -258,6 +260,9 @@ describe CampusSolutions::Sir::SirStatuses do
     }
   }
 
+  let(:before_expiration_date) { DateTime.parse('1901-01-01 00:00:00 -0700') }
+  let(:after_expiration_date) { DateTime.parse('2099-01-01 00:00:00 -0700') }
+
   shared_examples 'a proper sir status' do
     it 'returns an actual SIR status' do
       expect(subject).to have(1).items
@@ -301,26 +306,19 @@ describe CampusSolutions::Sir::SirStatuses do
       end
       subject { (proxy.new(uid).get_feed)[:sirStatuses] }
 
-      context 'when new admit status is missing' do
+      context 'when edodb is unavailable' do
         before do
-          EdoOracle::Queries.stub(:get_new_admit_status) { nil }
+          allow(EdoOracle::Queries).to receive(:get_new_admit_data).and_return nil
         end
-        it_behaves_like 'a proper sir status'
 
-        it 'returns an undergraduate sir application' do
-          expect(subject[0][:chklstItemCd]).to eql('AUSIRF')
-        end
-        it 'does not include new admit roles' do
-          expect(subject[0][:newAdmitAttributes][:roles]).not_to be
-        end
-        it 'does not include admit term and its correct type' do
-          expect(subject[0][:newAdmitAttributes][:admitTerm]).not_to be
+        it 'returns an empty array' do
+          expect(subject).to eql([])
         end
       end
 
       context 'when new admit status is provided' do
         before do
-          EdoOracle::Queries.stub(:get_new_admit_status) { new_admit_attributes_freshman_pathway }
+          allow(User::Identifiers).to receive(:lookup_campus_solutions_id).and_return new_admit_attributes_freshman_pathway_sid
         end
 
         it_behaves_like 'a proper sir status'
@@ -347,11 +345,8 @@ describe CampusSolutions::Sir::SirStatuses do
       before do
         CampusSolutions::MyChecklist.stub_chain(:new, :get_feed).and_return checklist_response_ugrd_completed
         CampusSolutions::Sir::SirConfig.stub_chain(:new, :get).and_return sir_config_response_ugrd
-        EdoOracle::Queries.stub(:get_new_admit_status) { new_admit_attributes_freshman_pathway }
-        Settings.stub_chain(:new_admits, :expiration_date).and_return('2018-02-22 12:00:00 -0700')
-        Settings.stub_chain(:new_admits, :start_term).and_return(2185)
-        DateTime.stub(:now).and_return('2018-02-21 12:00:00 -0700')
-
+        allow(User::Identifiers).to receive(:lookup_campus_solutions_id).and_return new_admit_attributes_freshman_pathway_sid
+        allow(Settings.terms).to receive(:fake_now).and_return before_expiration_date
         allow_any_instance_of(LinkFetcher).to receive(:fetch_link).and_return link_api_response
       end
       subject { (proxy.new(uid).get_feed)[:sirStatuses]}
@@ -359,10 +354,6 @@ describe CampusSolutions::Sir::SirStatuses do
       it 'does not query for a deposit due' do
         expect(subject[0][:deposit][:required]).to be_falsey
         expect(subject[0][:deposit][:dueAmt]).to be_nil
-      end
-
-      it 'correctly sets the visibility flag' do
-        expect(subject[0][:newAdmitAttributes][:visible]).to be_truthy
       end
 
       context 'as a freshman eligible for first year pathway' do
@@ -375,7 +366,7 @@ describe CampusSolutions::Sir::SirStatuses do
 
       context 'as a freshman eligible for first year pathway admitted to the Global Edge Program' do
         before do
-          EdoOracle::Queries.stub(:get_new_admit_status) {new_admit_attributes_freshman_pathway_gep}
+          allow(User::Identifiers).to receive(:lookup_campus_solutions_id).and_return new_admit_attributes_freshman_pathway_gep_sid
         end
         subject { (proxy.new(uid).get_feed)[:sirStatuses] }
         it 'denies first year pathway status due to GEP' do
@@ -390,7 +381,7 @@ describe CampusSolutions::Sir::SirStatuses do
 
       context 'as a transfer student' do
         before do
-          EdoOracle::Queries.stub(:get_new_admit_status) { new_admit_attributes_transfer }
+          allow(User::Identifiers).to receive(:lookup_campus_solutions_id).and_return new_admit_attributes_transfer_sid
         end
         subject { (proxy.new(uid).get_feed)[:sirStatuses] }
         it 'adds the correct links to the status' do
@@ -420,10 +411,28 @@ describe CampusSolutions::Sir::SirStatuses do
       end
     end
 
+    context 'as a law student with a completed offer' do
+      before do
+        CampusSolutions::MyChecklist.stub_chain(:new, :get_feed).and_return checklist_response_law_completed
+        CampusSolutions::Sir::SirConfig.stub_chain(:new, :get).and_return sir_config_response_law
+        allow(User::Identifiers).to receive(:lookup_campus_solutions_id).and_return new_admit_attributes_law_completed_sid
+      end
+      subject { (proxy.new(uid).get_feed[:sirStatuses]) }
+
+      it 'adds sirCompletedAction and sirCompletedMessage properties to the status' do
+        expect(subject[0][:sirCompletedAction]).to eql('DEIN')
+        expect(subject[0][:sirCompletedMessage]).to eql('Here is the law message!')
+      end
+      it 'does not make the MyDeposit proxy call' do
+        expect(CampusSolutions::Sir::MyDeposit).not_to receive(:new)
+      end
+    end
+
     context 'as a student with multiple offers' do
       before do
         CampusSolutions::MyChecklist.stub_chain(:new, :get_feed).and_return checklist_response_multiple
         CampusSolutions::Sir::SirConfig.stub_chain(:new, :get).and_return sir_config_response_multiple
+        allow(User::Identifiers).to receive(:lookup_campus_solutions_id).and_return multiple_sir_offers_sid
       end
       subject { (proxy.new(uid).get_feed)[:sirStatuses] }
       it 'returns multiple sir applications' do

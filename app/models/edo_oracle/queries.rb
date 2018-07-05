@@ -598,24 +598,25 @@ module EdoOracle
       result.first
     end
 
-    def self.get_new_admit_status(student_id, application_nbr)
+    def self.get_new_admit_data(student_id)
       result = safe_query <<-SQL
         SELECT
           ACAD_PROG as applicant_program,
-          ACAD_PROG_DESCR as applicant_program_descr,
           ADMIT_TERM as admit_term,
           ADMIT_TYPE as admit_type,
-          ADMIT_TYPE_DESCR as admit_type_desc,
           ADMITTED_GEP as global_edge_program,
+          APPLICATION_NBR as application_nbr,
           ATHLETE as athlete,
+          EXPIRE_DT_AD as expiration_date,
+          PROG_ACTION as admit_action,
           PROG_STATUS as admit_status
         FROM
-          SISEDO.APPLICANT_ADMIT_DATA_UGV00_VW
+          SISEDO.APPLICANT_ADMIT_DATAV00_VW
         WHERE
           STUDENT_ID = '#{student_id}' AND
-          APPLICATION_NBR = '#{application_nbr}'
+          PROG_ACTION <> 'DATA'
       SQL
-      result.first
+      result
     end
 
     def self.get_transfer_credit_expiration(student_id)
@@ -638,10 +639,11 @@ module EdoOracle
           EVALUATOR_NAME as evaluator_name,
           EVALUATOR_EMAIL as evaluator_email
         FROM
-          SISEDO.APPLICANT_ADMIT_DATA_UGV00_VW
+          SISEDO.APPLICANT_ADMIT_DATAV00_VW
         WHERE
           STUDENT_ID = '#{student_id}' AND
-          APPLICATION_NBR = '#{application_nbr}'
+          APPLICATION_NBR = '#{application_nbr}' AND
+          APPLICATION_CENTER = 'UGRD'
       SQL
       result.first
     end

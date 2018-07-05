@@ -14,7 +14,7 @@ describe CampusSolutions::NewAdmitResources do
         {
           checkListMgmtAdmp: {
             acadCareer: 'UGRD',
-            admApplNbr: '00111591'
+            admApplNbr: '00157689'
           },
           isUndergraduate: true,
           itemStatusCode: 'I'
@@ -29,7 +29,7 @@ describe CampusSolutions::NewAdmitResources do
         {
           checkListMgmtAdmp: {
             acadCareer: 'UGRD',
-            admApplNbr: '00111591'
+            admApplNbr: '00157689'
           },
           isUndergraduate: true,
           itemStatusCode: 'C'
@@ -51,8 +51,7 @@ describe CampusSolutions::NewAdmitResources do
         admitTerm: {
           term: 2165,
           type: 'Fall'
-        },
-        visible: true
+        }
       }
     }
   }
@@ -70,8 +69,7 @@ describe CampusSolutions::NewAdmitResources do
         admitTerm: {
           term: 2178,
           type: 'Spring'
-        },
-        visible: true
+        }
       }
     }
   }
@@ -89,8 +87,7 @@ describe CampusSolutions::NewAdmitResources do
         admitTerm: {
           term: 2165,
           type: 'Fall'
-        },
-        visible: true
+        }
       }
     }
   }
@@ -108,8 +105,7 @@ describe CampusSolutions::NewAdmitResources do
         admitTerm: {
           term: 2178,
           type: 'Spring'
-        },
-        visible: false
+        }
       }
     }
   }
@@ -124,19 +120,7 @@ describe CampusSolutions::NewAdmitResources do
     }
   }
 
-  let(:evaluator_response) {
-    {
-      'evaluator_name' => 'James P. Sullivan',
-      'evaluator_email' => 'sully@monsters.inc'
-    }
-  }
-
-  let(:evaluator_response_empty) {
-    {
-      'evaluator_name' => nil,
-      'evaluator_email' => nil
-    }
-  }
+  let(:evaluator_response_empty_id) { '12345678' }
 
   shared_examples 'a general response' do
     it 'has all link sections attached' do
@@ -167,7 +151,6 @@ describe CampusSolutions::NewAdmitResources do
         before do
           sir_statuses_incomplete_base_response[:sirStatuses][0].merge!(new_admit_attributes_freshman)
           CampusSolutions::Sir::SirStatuses.stub_chain(:new, :get_feed).and_return sir_statuses_incomplete_base_response
-          EdoOracle::Queries.stub(:get_new_admit_evaluator) { evaluator_response }
         end
         subject { proxy.new(uid).get_feed }
         it_behaves_like 'a general response'
@@ -189,7 +172,7 @@ describe CampusSolutions::NewAdmitResources do
         before do
           sir_statuses_incomplete_base_response[:sirStatuses][0].merge!(new_admit_attributes_first_year_pathway)
           CampusSolutions::Sir::SirStatuses.stub_chain(:new, :get_feed).and_return sir_statuses_incomplete_base_response
-          EdoOracle::Queries.stub(:get_new_admit_evaluator) { evaluator_response_empty }
+          allow(User::Identifiers).to receive(:lookup_campus_solutions_id).and_return evaluator_response_empty_id
         end
         subject { proxy.new(uid).get_feed }
         it_behaves_like 'a general response'
@@ -216,9 +199,7 @@ describe CampusSolutions::NewAdmitResources do
     context 'as a completed new admit' do
       context 'as a student whose SIR card has expired' do
         before do
-          sir_statuses_complete_base_response[:sirStatuses][0].merge!(new_admit_attributes_expired)
-          CampusSolutions::Sir::SirStatuses.stub_chain(:new, :get_feed).and_return sir_statuses_complete_base_response
-          EdoOracle::Queries.stub(:get_new_admit_evaluator) { evaluator_response_empty }
+          CampusSolutions::Sir::SirStatuses.stub_chain(:new, :get_feed).and_return({sirStatuses: []})
         end
         subject { proxy.new(uid).get_feed }
         it 'returns a simple response indicating expiration of the card' do
@@ -230,7 +211,7 @@ describe CampusSolutions::NewAdmitResources do
         before do
           sir_statuses_complete_base_response[:sirStatuses][0].merge!(new_admit_attributes_transfer)
           CampusSolutions::Sir::SirStatuses.stub_chain(:new, :get_feed).and_return sir_statuses_complete_base_response
-          EdoOracle::Queries.stub(:get_new_admit_evaluator) { evaluator_response_empty }
+          allow(User::Identifiers).to receive(:lookup_campus_solutions_id).and_return evaluator_response_empty_id
         end
         subject { proxy.new(uid).get_feed }
         it_behaves_like 'a general response'

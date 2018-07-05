@@ -32,24 +32,11 @@ angular.module('calcentral.controllers').controller('SirController', function(si
   */
   var parseSirStatuses = function(sirStatusesResponse, studentResponse) {
     var sirStatuses = _.get(sirStatusesResponse, 'data.sirStatuses');
-    if (!sirStatuses || !sirStatuses.length) {
+    if ((!sirStatuses || !sirStatuses.length) && !studentResponse) {
       return;
-    }
-
-    sirStatuses = sirStatuses.filter(function(status) {
-      var visible = (status.itemStatusCode !== 'C' || _.get(status, 'newAdmitAttributes.visible'));
-      return studentResponse ? visible || recentlyCompletedSir(status, studentResponse) : visible;
-    });
-
-    if (sirStatuses.length) {
+    } else {
       updateScopeSirStatuses(sirStatuses, studentResponse);
     }
-  };
-
-  var recentlyCompletedSir = function(sirStatus, studentResponse) {
-    var sirApplicationNbr = _.get(sirStatus, 'checkListMgmtAdmp.admApplNbr');
-    var recentlyCompletedApplicationNbr = _.get(studentResponse, 'response.admApplNbr');
-    return _.get(sirStatus, 'itemStatusCode') === 'C' && (sirApplicationNbr === recentlyCompletedApplicationNbr);
   };
 
   /**
@@ -57,31 +44,38 @@ angular.module('calcentral.controllers').controller('SirController', function(si
    * We should only update the items that already are in the current scope & have an updated status.
    */
   var updateScopeSirStatuses = function(sirStatuses, studentResponse) {
-    // If we don't have any checklist items yet, we should definitely update the scope
+    // If we don't have any checklist items yet, update the scope
     if (!$scope.sir.statuses.length) {
       $scope.sir.statuses = sirStatuses;
       return;
+    } else {
+      // Otherwise, find the matching item already in scope, and update it
+      sirStatuses.forEach(function(sirStatusItem) {
+        var result = _.find($scope.sir.statuses, {
+          chklstItemCd: sirStatusItem.chklstItemCd,
+          checkListMgmtAdmp: sirStatusItem.checkListMgmtAdmp
+        });
+        // If we don't find it in the current scope, it's a new item, so we should add it
+        if (!result) {
+          $scope.sir.statuses.push(sirStatusItem);
+        } else {
+          if (result.itemStatusCode !== sirStatusItem.itemStatusCode) {
+            // Update specific checklist item
+            var index = _.indexOf($scope.sir.statuses, result);
+            $scope.sir.statuses.splice(index, 1, sirStatusItem);
+          }
+        }
+      });
     }
 
-    sirStatuses.forEach(function(sirStatusItem) {
-      var result = _.find($scope.sir.statuses, {
-        chklstItemCd: sirStatusItem.chklstItemCd,
-        checkListMgmtAdmp: sirStatusItem.checkListMgmtAdmp
-      });
-      // If we don't find it in the current scope, it's a new item, so we should add it
-      if (!result) {
-        $scope.sir.statuses.push(sirStatusItem);
-      } else {
-        if (result.itemStatusCode !== sirStatusItem.itemStatusCode) {
-          // Update specific checklist item
-          if (checklistMatches(sirStatusItem, studentResponse)) {
-            sirStatusItem.studentResponse = studentResponse;
-          }
-          var index = _.indexOf($scope.sir.statuses, result);
-          $scope.sir.statuses.splice(index, 1, sirStatusItem);
+    // Iterate through scoped sirs, and attach the student response to the relevant item
+    if (studentResponse) {
+      $scope.sir.statuses.forEach(function(scopeSirStatusItem) {
+        if (checklistMatches(scopeSirStatusItem, studentResponse)) {
+          scopeSirStatusItem.studentResponse = studentResponse;
         }
-      }
-    });
+      });
+    }
   };
 
   var getSirStatuses = function(options) {
@@ -101,6 +95,10 @@ angular.module('calcentral.controllers').controller('SirController', function(si
 
   $scope.isReceivedUndergraduateNoDeposit = function(item) {
     return _.get(item, 'itemStatusCode') === 'R' && !_.get(item, 'deposit.required') && _.get(item, 'isUndergraduate');
+  };
+
+  $scope.isCompletedNonUndergraduate = function(item) {
+    return _.get(item, 'itemStatusCode') === 'C' && !_.get(item, 'isUndergraduate');
   };
 
   $scope.$on('calcentral.custom.api.sir.update', function(event, studentResponse) {
