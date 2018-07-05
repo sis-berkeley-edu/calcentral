@@ -10,13 +10,13 @@
         </div>
         <div class="cc-section-block" data-ng-if="graduation.undergraduate.expectedGraduationTerm">
           <div class="cc-text-light">Expected Graduation</div>
-          <div>
+          <span>
             <i class="fa fa-clock-o cc-icon-grey" data-ng-if="graduation.undergraduate.appointmentsInGraduatingTerm"></i>
-            <div data-ng-bind="graduation.undergraduate.expectedGraduationTerm.termName"></div>
-          </div>
+            <strong><span data-ng-bind="graduation.undergraduate.expectedGraduationTerm.termName"></span><strong>
+          </span>
           <div class="cc-widget-profile-footnote">
               <span data-ng-if="graduation.undergraduate.appointmentsInGraduatingTerm">
-                <span data-ng-bind="graduation.undegraduate.expectedGraduationTerm.termName"></span>
+                <span data-ng-bind="graduation.undergraduate.expectedGraduationTerm.termName"></span>
                 will be your final term to complete all degree requirements.
                 If you have questions, please contact your College Advisor.
               </span>
