@@ -36,18 +36,18 @@ module MyAcademics
         # A termCode of 'C' denotes a summer term. Every non-law term has midpoint grading, except summer.
         if is_summer_semester? semester
           semester.merge!({
-            gradingAssistanceLink: grading_info_links[:general].url
+            gradingAssistanceLink: grading_info_links[:general].try(:url)
           })
         else
           semester.merge!({
-            gradingAssistanceLinkMidpoint: grading_info_links[:midterm].url,
-            gradingAssistanceLink: grading_info_links[:general].url
+            gradingAssistanceLinkMidpoint: grading_info_links[:midterm].try(:url),
+            gradingAssistanceLink: grading_info_links[:general].try(:url)
           })
         end
       end
       if has_law?(semester[:classes])
         semester.merge!({
-          gradingAssistanceLinkLaw: grading_info_links[:law].url
+          gradingAssistanceLinkLaw: grading_info_links[:law].try(:url)
         })
       end
     end
