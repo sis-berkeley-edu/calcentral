@@ -3,7 +3,7 @@
 var angular = require('angular');
 var _ = require('lodash');
 
-angular.module('calcentral.controllers').controller('AcademicSummaryController', function(academicsFactory, academicsService, apiService, linkService, profileFactory, $route, $scope) {
+angular.module('calcentral.controllers').controller('AcademicSummaryController', function(academicsFactory, academicsService, apiService, linkService, profileFactory, transferCreditFactory, $route, $scope) {
   apiService.util.setTitle('Academic Summary');
   linkService.addCurrentRouteSettings($scope);
   $scope.academicSummary = {
@@ -22,7 +22,9 @@ angular.module('calcentral.controllers').controller('AcademicSummaryController',
   };
 
   var parseTransferCredit = function(response) {
-    $scope.transferCredits = _.get(response, 'data');
+    var data = _.get(response, 'data');
+    $scope.transferCredits = data;
+    $scope.showTransferCredit = _.get(data, 'undergraduate.detailed') || _.get(data, 'graduate.detailed') || _.get(data, 'law.detailed');
   };
 
   var hasPoints = function(classSection) {
@@ -100,7 +102,7 @@ angular.module('calcentral.controllers').controller('AcademicSummaryController',
       $scope.canViewAcademics = apiService.user.profile.hasAcademicsTab;
       academicsFactory.getAcademics()
       .then(parseAcademics)
-      .then(academicsFactory.getTransferCredit)
+      .then(transferCreditFactory.getTransferCredit)
       .then(parseTransferCredit)
       .then(profileFactory.getPerson)
       .then(parsePerson)

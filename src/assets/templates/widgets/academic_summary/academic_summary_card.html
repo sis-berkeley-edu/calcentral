@@ -16,9 +16,8 @@
       </span>
     </div>
     <div data-ng-repeat="(career, credit) in transferCredits">
-      <div data-ng-include="'widgets/academic_summary/academic_summary_transfer_credit.html'" data-ng-if="credit.detailed.length || hasTestUnits(career)"></div>
+      <div data-ng-include="'widgets/academic_summary/academic_summary_transfer_credit.html'" data-ng-if="credit.detailed || hasTestUnits(career)"></div>
     </div>
-    <div data-ng-if="showTransferCredit" data-ng-include="'widgets/academic_summary/academic_summary_transfer_credit.html'"></div>
     <div data-ng-if="showSemesters" data-ng-repeat="semester in semesters | orderBy:'-'" data-ng-include="'widgets/academic_summary/academic_summary_semesters.html'"></div>
     <div data-ng-if="showSemesters && (gpaUnits.totalLawUnits > 0 || api.user.profile.roles.law)" class="cc-academic-summary-border-wrapper">
         <div class="cc-table cc-academic-summary-content">
