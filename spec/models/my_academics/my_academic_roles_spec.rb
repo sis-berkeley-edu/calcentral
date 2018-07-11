@@ -41,8 +41,7 @@ describe MyAcademics::MyAcademicRoles do
 
   context 'using stubbed proxy' do
     before do
-      fake_proxy = HubEdos::AcademicStatus.new(fake: true, user_id: '61889')
-      allow_any_instance_of(HubEdos::AcademicStatus).to receive(:new).and_return fake_proxy
+      allow_any_instance_of(Berkeley::Term).to receive(:campus_solutions_id).and_return('2172')
       allow_any_instance_of(MyAcademics::MyTermCpp).to receive(:get_feed).and_return(term_cpp)
     end
     let(:term_cpp) do
@@ -50,7 +49,7 @@ describe MyAcademics::MyAcademicRoles do
         {'term_id'=>'2158', 'acad_career'=>'UGRD', 'acad_program'=>'UCNR', 'acad_plan'=>'04606U'},
         {'term_id'=>'2162', 'acad_career'=>'UGRD', 'acad_program'=>'UCNR', 'acad_plan'=>'04606U'},
         {'term_id'=>'2168', 'acad_career'=>'UGRD', 'acad_program'=>'UCNR', 'acad_plan'=>'04606U'},
-        {'term_id'=>'2172', 'acad_career'=>'UGRD', 'acad_program'=>'UCNR', 'acad_plan'=>'04606U'},
+        {'term_id'=>'2172', 'acad_career'=>'GRAD', 'acad_program'=>'UCNR', 'acad_plan'=>'04606U'},
       ]
     end
     let(:described_class_instance) { described_class.new(random_id) }
@@ -61,14 +60,14 @@ describe MyAcademics::MyAcademicRoles do
         expect(subject).to be
         expect(subject[:current]).to be
         expect(subject[:current].keys.count).to eq 28
-        expect(subject[:current]['ugrd']).to eq true
-        expect(subject[:current]['grad']).to eq false
+        expect(subject[:current]['ugrd']).to eq false
+        expect(subject[:current]['grad']).to eq true
         expect(subject[:current]['fpf']).to eq false
         expect(subject[:current]['law']).to eq false
-        expect(subject[:current]['concurrent']).to eq true
-        expect(subject[:current]['degreeSeeking']).to eq false
+        expect(subject[:current]['concurrent']).to eq false
+        expect(subject[:current]['degreeSeeking']).to eq true
         expect(subject[:current]['doctorScienceLaw']).to eq false
-        expect(subject[:current]['lettersAndScience']).to eq true
+        expect(subject[:current]['lettersAndScience']).to eq false
         expect(subject[:current]['haasBusinessAdminMasters']).to eq false
         expect(subject[:current]['haasBusinessAdminPhD']).to eq false
         expect(subject[:current]['haasFullTimeMba']).to eq false
@@ -95,7 +94,7 @@ describe MyAcademics::MyAcademicRoles do
         expect(subject[:historical]).to be
         expect(subject[:historical].keys.count).to eq 28
         expect(subject[:historical]['ugrd']).to eq true
-        expect(subject[:historical]['grad']).to eq false
+        expect(subject[:historical]['grad']).to eq true
         expect(subject[:historical]['fpf']).to eq false
         expect(subject[:historical]['law']).to eq false
         expect(subject[:historical]['concurrent']).to eq false
@@ -173,40 +172,6 @@ describe MyAcademics::MyAcademicRoles do
         it 'sets roles approrpriately' do
           expect(subject[:historical]['summerVisitor']).to eq false
           expect(subject[:historical]['degreeSeeking']).to eq true
-        end
-      end
-    end
-
-    describe '#collect_roles' do
-      subject { described_class_instance.collect_roles(academic_statuses) }
-
-      context 'when academic_statuses is nil' do
-        let(:academic_statuses) { nil }
-        it 'returns an empty array' do
-          expect(subject).to eq []
-        end
-      end
-      context 'when academic_statuses is an empty array' do
-        let(:academic_statuses) { [] }
-        it 'returns an empty array' do
-          expect(subject).to eq []
-        end
-      end
-      context 'when student has no roles' do
-        let(:academic_statuses) { ['STATUS1', 'STATUS2']}
-        it 'returns an empty array' do
-          expect(subject).to eq []
-        end
-      end
-    end
-
-    describe '#extract_roles' do
-      subject { described_class_instance.extract_roles(status) }
-
-      context 'when status is nil' do
-        let(:status) { nil }
-        it 'returns an empty array' do
-          expect(subject).to eq []
         end
       end
     end

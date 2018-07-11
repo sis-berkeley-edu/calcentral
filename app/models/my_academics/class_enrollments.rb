@@ -5,6 +5,7 @@ module MyAcademics
     include Cache::UserCacheExpiry
     include CampusSolutions::EnrollmentCardFeatureFlagged
     include Concerns::AcademicStatus
+    include Concerns::AcademicRoles
     include LinkFetcher
 
     ENROLLMENT_DECK_KEYS = ['fpf', 'haasFullTimeMba', 'haasEveningWeekendMba', 'haasExecMba', 'summerVisitor', 'courseworkOnly', 'law', 'concurrent']
@@ -28,23 +29,50 @@ module MyAcademics
           :includes_fpf => false
         }
       }
-      academic_statuses(MyAcademics::MyAcademicStatus.new(@uid).get_feed).each do |status|
-        career_role = status.try(:[], 'studentCareer').try(:[], :role)
-        career_code = status.try(:[], 'studentCareer').try(:[], 'academicCareer').try(:[], 'code')
-
-        status.try(:[], 'studentPlans').each do |plan|
-          role = determine_enrollment_specific_role(plan[:role], career_role)
-          role_key = [role, career_code]
-          grouped_roles[:data][role_key] = { role: role, career_code: career_code, academic_plans: [] } if grouped_roles[:data][role_key].blank?
-          grouped_roles[:data][role_key][:academic_plans] << plan
-          grouped_roles[:metadata][:includes_fpf] = true if role == 'fpf'
-        end
+      current_term_cpp = get_current_and_future_cpp
+      current_term_cpp.each do |term_cpp|
+        career_code = term_cpp['acad_career']
+        role = get_enrollment_plan_role(term_cpp)
+        role_key = [role, career_code]
+        grouped_roles[:data][role_key] = { role: role, career_code: career_code, academic_plans: []} if grouped_roles[:data][role_key].blank?
+        grouped_roles[:data][role_key][:academic_plans] << build_plan(role, term_cpp['acad_plan'])
+        grouped_roles[:metadata][:includes_fpf] = true if role == 'fpf'
       end
       grouped_roles
     end
 
+    def get_current_and_future_cpp
+      term_cpp = MyAcademics::MyTermCpp.new(@uid).get_feed
+      current_term = Berkeley::Terms.fetch.current.try(:campus_solutions_id)
+      term_cpp.select {|t| t['term_id'].to_s >= current_term.to_s }
+    end
+
+    def get_enrollment_plan_role(term_cpp)
+      career_role = get_academic_career_roles(term_cpp['acad_career']).first
+
+      plan_based_roles = []
+      plan_based_roles << get_academic_career_roles(term_cpp['acad_career'])
+      plan_based_roles << get_academic_program_roles(term_cpp['acad_program'])
+      plan_based_roles << get_academic_plan_roles(term_cpp['acad_plan'])
+      plan_based_roles.flatten!
+      plan_based_roles.uniq!
+
+      determine_enrollment_specific_role(plan_based_roles, career_role)
+    end
+
+    def build_plan(role, code)
+      {
+        role: role,
+        plan: {
+          code: code
+        }
+      }
+    end
+
     def determine_enrollment_specific_role(plan_based_roles, career_based_role)
-      if (ENROLLMENT_DECK_KEYS & plan_based_roles).any?
+      if plan_based_roles.include? 'fpf'
+        return 'fpf'
+      elsif (ENROLLMENT_DECK_KEYS & plan_based_roles).any?
         return plan_based_roles.first
       elsif ENROLLMENT_DECK_KEYS.include? career_based_role
         return career_based_role
