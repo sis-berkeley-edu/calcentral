@@ -93,6 +93,7 @@ Calcentral::Application.routes.draw do
     get '/api/my/campuslinks' => 'my_campus_links#get_feed', :as => :my_campus_links, :defaults => { :format => 'json' }
     get '/api/my/campuslinks/expire' => 'my_campus_links#expire'
     get '/api/my/campuslinks/refresh' => 'my_campus_links#refresh', :defaults => { :format => 'json' }
+    get '/api/my/housing/:aid_year' => 'my_housing#get_feed', :defaults => { :format => 'json' }
     get '/api/my/registrations' => 'my_registrations#get_feed', :defaults => { :format => 'json' }
     get '/api/my/sir_statuses' => 'sir_statuses#get_feed', :defaults => { :format => 'json' }
     get '/api/my/new_admit_resources' =>'new_admit_resources#get_feed', :defaults => { :format => 'json' }
