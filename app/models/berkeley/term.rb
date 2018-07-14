@@ -117,6 +117,32 @@ module Berkeley
       self
     end
 
+    def from_edo_db(db_row)
+      @campus_solutions_id = db_row['term_id']
+      @code = db_row['term_code'].to_s
+      @year = db_row['term_year'].to_i
+      @slug = TermCodes.to_slug(@year, @code)
+      @name = db_row['term_type']
+      @start = db_row['term_begin_date'].to_date.in_time_zone.to_datetime
+      @end = db_row['term_end_date'].to_date.in_time_zone.to_datetime
+      if @code == 'C'
+        @is_summer = true
+        @classes_start = @start
+        @classes_end = @end
+        @instruction_end = @end
+        @end_drop_add = false
+      else
+        @is_summer = false
+        @classes_start = db_row['class_begin_date'].to_date.in_time_zone.to_datetime  if db_row['class_begin_date'].present?
+        @instruction_end = db_row['instruction_end_date'].to_date.in_time_zone.to_datetime if db_row['instruction_end_date'].present?
+        @classes_end = db_row['class_end_date'].to_date.in_time_zone.to_datetime if db_row['class_end_date'].present?
+        @final_exam_week_start = db_row['final_exam_week_start_date'].to_date.in_time_zone.to_datetime if db_row['final_exam_week_start_date'].present?
+        @final_exam_cs_data_available = @end.advance(days: -56)
+        @end_drop_add =db_row['end_drop_add_date'] if db_row['end_drop_add_date'].present?
+      end
+      self
+    end
+
     def from_legacy_db(db_row)
       term_cd = db_row['term_cd']
       term_yr = db_row['term_yr'].to_i

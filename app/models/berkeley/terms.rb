@@ -128,6 +128,22 @@ module Berkeley
       cs_terms
     end
 
+    def load_terms_from_edo_db
+      cs_terms = []
+      edo_db_terms = EdoOracle::Queries.get_undergrad_terms
+      edo_db_terms.each_with_index do |term, index|
+        new_term = Berkeley::Term.new.from_edo_db(term)
+        cs_terms << new_term
+        # Only keep 2 future terms in array
+        cs_terms.shift if is_future_term?(new_term) && index > 1
+      end
+      cs_terms
+    end
+
+    def is_future_term?(new_term)
+      new_term.start > @current_date
+    end
+
     def fetch_terms_from_api
       # Unlike the legacy database view, the HubTerm API does not support bulk queries. We have to
       # loop through enough API calls to find:
@@ -145,7 +161,7 @@ module Berkeley
         if Settings.terms.use_term_definitions_json_file
           return load_terms_from_file
         else
-          return cs_terms
+          return load_terms_from_edo_db
         end
       end
       feed = HubTerm::Proxy.new(temporal_position: HubTerm::Proxy::NEXT_TERM).get_term
