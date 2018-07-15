@@ -335,6 +335,17 @@ describe EdoOracle::Queries do
       end
     end
 
+    describe '.get_instructing_legacy_terms' do
+      let(:person_id) { '7093' }
+      it 'fetches expected data' do
+        results = EdoOracle::Queries.get_instructing_legacy_terms(person_id)
+        expect(results.count).to eq 3
+        expect(results[0]['term_id']).to eq '2072'
+        expect(results[1]['term_id']).to eq '2068'
+        expect(results[2]['term_id']).to eq '2065'
+      end
+    end
+
     describe '.get_enrolled_sections', testext: true do
       let(:term) { Berkeley::Terms.fetch.campus['spring-2010'] }
       let(:uid) { '767911' }

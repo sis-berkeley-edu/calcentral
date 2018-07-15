@@ -12,6 +12,11 @@
         <div class="cc-text-light" data-ng-bind="class.title"></div>
       </div>
     </div>
+    <div class="cc-academics-teaching-semester" data-ng-if="pastSemestersTeachingLimit == 'Infinity'">
+      <h3 data-ng-if="legacySemester.legacyGradingReportLink" data-ng-repeat="legacySemester in legacyTeachingSemesters">
+        <a data-ng-href="{{legacySemester.legacyGradingReportLink}}" data-ng-bind-template="{{legacySemester.name}} {{legacySemester.year}} Grades"></a>
+      </h3>
+    </div>
     <div data-ng-if="pastSemestersTeachingCount > 1" data-cc-show-infinite-directive data-cc-show-infinite-limit="pastSemestersTeachingLimit"></div>
   </div>
 </div>

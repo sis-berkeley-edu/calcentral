@@ -62,6 +62,11 @@ module Berkeley
       end
     end
 
+    def self.find_by_campus_solutions_id(term_id, options = {})
+      terms = fetch(options).campus
+      fetch(options).campus.values.find {|t| t.campus_solutions_id == term_id}
+    end
+
     def self.legacy?(term_yr, term_cd)
       term = self.fetch.campus[Berkeley::TermCodes.to_slug(term_yr, term_cd)]
       term.present? && term.legacy?
