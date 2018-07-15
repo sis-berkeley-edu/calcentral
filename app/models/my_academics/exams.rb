@@ -23,7 +23,7 @@ module MyAcademics
       merged_semester_exams = merge_course_timeslot_locations(semester_exams)
       flag_duplicate_semester_exam_courses(merged_semester_exams)
       flag_conflicting_timeslots(merged_semester_exams)
-      merged_semester_exams
+      merged_semester_exams.sort_by { |exam| exam[:exam_slot] }
     end
 
     def collect_semester_exams(semester)

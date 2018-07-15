@@ -216,14 +216,13 @@ describe EdoOracle::Queries do
         expect(subject[0]['section_id']).to eq '11950'
         expect(subject[0]['exam_type']).to eq 'N'
         expect(subject[0]['exam_date']).to eq Date.parse('Thu, 17 Dec 2015')
-        expect(subject[0]['exam_start_time']).to eq Time.parse('1901-01-01 11:00:00 UTC')
-        expect(subject[0]['exam_end_time']).to eq Time.parse('1901-01-01 14:00:00 UTC')
+        expect(subject[0]['exam_start_time'].utc).to be
+        expect(subject[0]['exam_end_time'].utc).to be
         expect(subject[0]['location']).to eq 'Hearst Gym 188'
         expect(subject[0]['exam_exception']).to eq 'Y'
         expect(subject[0]['finalized']).to eq 'N'
       end
     end
-
   end
 
   describe '#get_law_enrollment', testext: false do

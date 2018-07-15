@@ -23,7 +23,7 @@ describe CampusSolutions::Sir::Deposit do
   end
 
   # TODO This UID and ADM_APPL_NBR no longer work with our upstream data source. New test data is needed.
-  pending 'SISRP-13071' do
+  skip 'SISRP-13071' do
     context 'real proxy', testext: true do
       let(:proxy) { CampusSolutions::Sir::Deposit.new(fake: false, user_id: user_id, adm_appl_nbr: '00000087') }
       it_should_behave_like 'a proxy that gets data'

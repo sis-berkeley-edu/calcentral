@@ -119,10 +119,10 @@ describe MyAcademics::Exams do
     let(:semester_exam_schedule) { subject.get_semester_exam_schedule(student_semester) }
     it 'obtains and processes semester exams in proper order' do
       expect(subject).to receive(:collect_semester_exams).with(student_semester).ordered
-      expect(subject).to receive(:merge_course_timeslot_locations).ordered
+      expect(subject).to receive(:merge_course_timeslot_locations).ordered.and_return([])
       expect(subject).to receive(:flag_duplicate_semester_exam_courses).ordered
       expect(subject).to receive(:flag_conflicting_timeslots).ordered
-      expect(semester_exam_schedule).to eq nil
+      expect(semester_exam_schedule).to eq []
     end
   end
 
