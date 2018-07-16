@@ -48,14 +48,16 @@
     <div data-ng-class="{'cc-degree-progress-section': degreeProgress.undergraduate.transferCreditReviewDeadline,
                          'cc-degree-progress-footer': !degreeProgress.undergraduate.transferCreditReviewDeadline}">
       <div data-ng-if="api.user.profile.roles.advisor" class="cc-degree-progress-section">
-        Run the
-        <a data-ng-if="degreeProgress.undergraduate.links.academicProgressReport.url"
-          data-cc-campus-solutions-link-directive="degreeProgress.undergraduate.links.academicProgressReport"
-          data-cc-campus-solutions-link-directive-cc-page-name="currentPage.name"
-          data-cc-campus-solutions-link-directive-cc-page-url="currentPage.url"
-        ></a>
-        <span data-ng-if="!degreeProgress.undergraduate.links.academicProgressReport.url">Academic Progress Report</span>
-        to refresh this data. Updates may take up to 24 hours.
+        <div>Run the
+          <a data-ng-if="degreeProgress.undergraduate.links.academicProgressReport.url"
+            data-cc-campus-solutions-link-directive="degreeProgress.undergraduate.links.academicProgressReport"
+            data-cc-campus-solutions-link-directive-cc-page-name="currentPage.name"
+            data-cc-campus-solutions-link-directive-cc-page-url="currentPage.url"
+          ></a>
+          <span data-ng-if="!degreeProgress.undergraduate.links.academicProgressReport.url">Academic Progress Report</span>
+          to generate degree progress data.
+        </div>
+        <div>Note: Data is only available for active students.</div>
       </div>
       <div data-ng-if="!api.user.profile.roles.advisor" class="cc-degree-progress-footer">
         <div data-ng-if="degreeProgress.undergraduate.links.academicProgressReport.url" class="cc-degree-progress-section">
