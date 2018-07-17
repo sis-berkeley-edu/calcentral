@@ -54,7 +54,9 @@ angular.module('calcentral.controllers').controller('finalExamScheduleController
     var semesters = _.get($scope, 'finalExams.semesters', []);
     var conflictFound = _.find(semesters, function(semester) {
       var exams = _.get(semester, 'examSchedule', []);
-      return _.find(exams, function(e) { return e.timeConflict; });
+      return _.find(exams, function(e) {
+        return e.timeConflict;
+      });
     });
     $scope.finalExams.conflictFound = !!(conflictFound);
   };
