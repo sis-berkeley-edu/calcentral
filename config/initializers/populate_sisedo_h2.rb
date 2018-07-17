@@ -14,7 +14,7 @@ class PopulateSisedosH2 < ActiveRecord::Base
       CREATE ALIAS TO_DATE AS $$
         java.util.Date to_date(String value, String format) throws java.text.ParseException {
 
-        java.text.DateFormat dateFormat = new  java.text.SimpleDateFormat(format);
+        java.text.DateFormat dateFormat = new java.text.SimpleDateFormat(format);
           return dateFormat.parse(value);
         }
       $$;
@@ -376,6 +376,7 @@ class PopulateSisedosH2 < ActiveRecord::Base
         "topic-id"	NUMBER(38),
         "topic-descr"	VARCHAR2(50 CHAR)
       );
+
       INSERT INTO SISEDO.CLASSSECTIONALLV01_MVW ("id","cs-course-id","offeringNumber","term-id","session-id","sectionNumber","number", "component-code","component-descr","displayName","instructionMode-code","instructionMode-descr","startDate","endDate","status-code","status-descr","classEnrollmentType-code","classEnrollmentType-descr","updatedDate","cancelDate","primary","primaryAssociatedComponent","primaryAssociatedSectionId","enrollmentStatus-code","enrollmentStatus-descr","enrolledCount","waitlistedCount","minEnroll","maxEnroll","maxWaitlist","instructorAddConsentRequired","instructorDropConsentRequired","printInScheduleOfClasses","graded","feesExist","roomShare","optionalSection","contactHours","finalExam","topic-id","topic-descr") VALUES (	11950,'101094',1,'2168','Q3','7','7','GRP','Directed Group Study','ARCH 198','P','In person','2016-08-24','2016-12-09','A','Active','E','Enrollment Section','?? updated date','','TRUE','GRP',11950,'O','Open',0,0,0,10,10,'I','N','N','?? graded','FALSE','?? roomShare','N',1,'N',0,''	);
       INSERT INTO SISEDO.CLASSSECTIONALLV01_MVW ("id","cs-course-id","offeringNumber","term-id","session-id","sectionNumber","number", "component-code","component-descr","displayName","instructionMode-code","instructionMode-descr","startDate","endDate","status-code","status-descr","classEnrollmentType-code","classEnrollmentType-descr","updatedDate","cancelDate","primary","primaryAssociatedComponent","primaryAssociatedSectionId","enrollmentStatus-code","enrollmentStatus-descr","enrolledCount","waitlistedCount","minEnroll","maxEnroll","maxWaitlist","instructorAddConsentRequired","instructorDropConsentRequired","printInScheduleOfClasses","graded","feesExist","roomShare","optionalSection","contactHours","finalExam","topic-id","topic-descr") VALUES (	11950,'101188',1,'2172','1','1','1','LEC','Lecture','ARCH 249','P','In person','2017-01-17','2017-05-05','A','Active','E','Enrollment Section','?? updated date','','TRUE','LEC',11950,'C','Closed',20,0,0,20,10,'N','N','Y','?? graded','FALSE','?? roomShare','N',1,'N',0,''	);
       INSERT INTO SISEDO.CLASSSECTIONALLV01_MVW ("id","cs-course-id","offeringNumber","term-id","session-id","sectionNumber","number", "component-code","component-descr","displayName","instructionMode-code","instructionMode-descr","startDate","endDate","status-code","status-descr","classEnrollmentType-code","classEnrollmentType-descr","updatedDate","cancelDate","primary","primaryAssociatedComponent","primaryAssociatedSectionId","enrollmentStatus-code","enrollmentStatus-descr","enrolledCount","waitlistedCount","minEnroll","maxEnroll","maxWaitlist","instructorAddConsentRequired","instructorDropConsentRequired","printInScheduleOfClasses","graded","feesExist","roomShare","optionalSection","contactHours","finalExam","topic-id","topic-descr") VALUES (	11950,'101242',1,'2178','1','10','10','IND','Independent Study','ARCH 298','P','In person','2017-08-23','2017-12-08','A','Active','E','Enrollment Section','?? updated date','','TRUE','IND',11950,'O','Open',0,0,0,10,10,'D','N','N','?? graded','FALSE','?? roomShare','N',0,'N',0,''	);
@@ -519,6 +520,7 @@ class PopulateSisedosH2 < ActiveRecord::Base
         "fromDate"	TIMESTAMP(6),
         "toDate"	TIMESTAMP(6)
       );
+
       INSERT INTO SISEDO.API_COURSEV01_MVW ("cms-version-independent-id","displayName","subjectArea","classSubjectArea","catalogNumber-formatted","catalogNumber-number","catalogNumber-prefix","catalogNumber-suffix","title","transcriptTitle","academicCareer-code","updatedDate","fromDate","toDate") VALUES (	'd0baed2d-e1af-474f-89bb-ebdba738860e','AMERSTD 102','AMERSTD','AMERSTD','102','102',null,null,'Examining U.S. Cultures in Place','US CULTURES/PLACE','UGRD','2013-03-16 11:21:15.000000','2007-01-09 00:00:00.000000','2099-12-19 00:00:00.000000');
       INSERT INTO SISEDO.API_COURSEV01_MVW ("cms-version-independent-id","displayName","subjectArea","classSubjectArea","catalogNumber-formatted","catalogNumber-number","catalogNumber-prefix","catalogNumber-suffix","title","transcriptTitle","academicCareer-code","updatedDate","fromDate","toDate") VALUES (	'd0baed2d-e1af-474f-89bb-ebdba738860e','AMERSTD 102','AMERSTD','AMERSTD','102','102',null,null,'Examining U.S. Cultures in Place','US CULTURES/PLACE','UGRD','2013-03-16 11:21:12.000000','1993-08-17 00:00:00.000000','1995-08-22 00:00:00.000000');
       INSERT INTO SISEDO.API_COURSEV01_MVW ("cms-version-independent-id","displayName","subjectArea","classSubjectArea","catalogNumber-formatted","catalogNumber-number","catalogNumber-prefix","catalogNumber-suffix","title","transcriptTitle","academicCareer-code","updatedDate","fromDate","toDate") VALUES (	'd0baed2d-e1af-474f-89bb-ebdba738860e','AMERSTD 102','AMERSTD','AMERSTD','102','102',null,null,'Examining U.S. Cultures in Place','US CULTURES/PLACE','UGRD','2013-03-16 11:21:14.000000','1995-08-22 00:00:00.000000','2007-01-09 00:00:00.000000');
@@ -1024,6 +1026,7 @@ class PopulateSisedosH2 < ActiveRecord::Base
         INSTITUTION	VARCHAR2(5 CHAR),
         CONCURRENT_PROGRAM	CHAR(1 CHAR)
       );
+
       INSERT INTO SISEDO.CLC_CONCURRENT_PROGRAMV00_VW (STUDENT_ID,INSTITUTION,CONCURRENT_PROGRAM) VALUES ('95727964','UCB01','Y');
 
       DROP TABLE IF EXISTS SISEDO.CLC_FINAL_EXAM_INFOV00_VW;
@@ -1073,6 +1076,27 @@ class PopulateSisedosH2 < ActiveRecord::Base
         STDNT_GROUP_FROMDATE DATE
       );
       INSERT INTO SISEDO.STUDENT_GROUPV01_VW (STUDENT_ID,STDNT_GROUP,STDNT_GROUP_DESCR,STDNT_GROUP_FROMDATE) VALUES ('3031234560','R1TA','1 Term in Attendance',PARSEDATETIME('2018-04-01', 'yyyy-mm-dd'));
+
+      DROP TABLE IF EXISTS SISEDO.CLC_FA_HOUSING_VW;
+      CREATE TABLE SISEDO.CLC_FA_HOUSING_VW (
+        STUDENT_ID	VARCHAR2(11 CHAR),
+        CAMPUS_UID	VARCHAR2(16 CHAR),
+        TERM_DESCR	VARCHAR2(25 CHAR),
+        TERM_ID	VARCHAR2(4 CHAR),
+        HOUSING_OPTION	VARCHAR2(40 CHAR),
+        HOUSING_STATUS	VARCHAR2(1 CHAR),
+        HOUSING_BEGIN_DATE	VARCHAR2(10),
+        HOUSING_END_DATE	VARCHAR2(10),
+        AID_YEAR	VARCHAR2(4 CHAR),
+        ACAD_CAREER	VARCHAR2(4 CHAR),
+        NSLDS_LOAN_YEAR	VARCHAR2(1 CHAR),
+        ACAD_PROG_PRIMARY	VARCHAR2(5 CHAR),
+        ADMIT_TYPE	VARCHAR2(3 CHAR),
+        ADMIT_TERM	VARCHAR2(4 CHAR),
+        STUDENT_GROUPS_CODE	VARCHAR2(4 CHAR)
+      );
+      INSERT INTO SISEDO.CLC_FA_HOUSING_VW (STUDENT_ID,CAMPUS_UID,TERM_DESCR,TERM_ID,HOUSING_OPTION,HOUSING_STATUS,HOUSING_BEGIN_DATE,HOUSING_END_DATE,AID_YEAR,ACAD_CAREER,NSLDS_LOAN_YEAR,ACAD_PROG_PRIMARY,ADMIT_TYPE,ADMIT_TERM,STUDENT_GROUPS_CODE) VALUES ('11667051','61889','Fall 2018','2188','Living Off Campus','N','2018-02-01','2018-10-01','2019','UGRD','4','UCCH',null,'2188','AHI');
+      INSERT INTO SISEDO.CLC_FA_HOUSING_VW (STUDENT_ID,CAMPUS_UID,TERM_DESCR,TERM_ID,HOUSING_OPTION,HOUSING_STATUS,HOUSING_BEGIN_DATE,HOUSING_END_DATE,AID_YEAR,ACAD_CAREER,NSLDS_LOAN_YEAR,ACAD_PROG_PRIMARY,ADMIT_TYPE,ADMIT_TERM,STUDENT_GROUPS_CODE) VALUES ('11667051','61889','Spring 2019','2192','Residence Hall','N','2018-02-01','2019-05-01','2019','UGRD','3','UCLS',null,'2188','RLT5');
 
       SQL
 

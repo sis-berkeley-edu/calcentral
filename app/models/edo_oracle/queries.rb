@@ -779,5 +779,18 @@ module EdoOracle
         ORDER BY TERM_ID DESC
       SQL
     end
+
+    def self.get_housing(person_id, aid_year)
+      safe_query <<-SQL
+        SELECT DISTINCT 
+          HSG.TERM_ID,
+          HSG.TERM_DESCR,
+          HSG.HOUSING_OPTION
+        FROM SISEDO.CLC_FA_HOUSING_VW HSG
+        WHERE HSG.CAMPUS_UID = '#{person_id}'
+        AND HSG.AID_YEAR = '#{aid_year}'
+        ORDER BY HSG.TERM_ID
+      SQL
+    end
   end
 end

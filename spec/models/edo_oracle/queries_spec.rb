@@ -268,6 +268,20 @@ describe EdoOracle::Queries do
     end
   end
 
+  describe '#get_housing' do
+    subject { EdoOracle::Queries.get_housing(uid, aid_year) }
+    let(:uid) { 61889 }
+    let(:aid_year) { 2019 }
+
+    it_behaves_like 'a successful query'
+
+    it 'returns the expected result' do
+      expect(subject.count).to eq 2
+      expect(subject[0]).to have_keys(%w(term_id term_descr housing_option))
+      expect(subject[1]).to have_keys(%w(term_id term_descr housing_option))
+    end
+  end
+
   context 'when connecting to an external database', :ignore => true do
     # Stubbing terms not available in TestExt env
     let(:summer_2016_db_term) do
