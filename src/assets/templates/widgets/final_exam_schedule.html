@@ -1,34 +1,79 @@
-<div class="cc-widget cc-widget-exam-schedule" data-ng-if="examSchedule.length">
-  <div class="cc-widget-title">
-    <h2><span data-ng-bind="widgetSemesterName"></span> Final Exam Schedule</h2>
-  </div>
-  <div class="cc-widget-padding">
-    <div data-ng-repeat="semester in examSchedule">
-      <hr data-ng-if="!$first">
-      <h3 data-ng-bind="semester.name"></h3>
-      <div class="cc-widget-exam-schedule-text" data-ng-if="!semester.cs_data_available && !isUndergraduate">Please check your syllabus for your final exams for your graduate classes.</div>
-      <div class="cc-widget-exam-schedule-text" data-ng-if="!semester.cs_data_available && semester.exams">Dates and times are subject to change. Please check your syllabus for the official exam day and time for each class.</div>
-      <div class="cc-widget-exam-schedule-text" data-ng-if="!semester.exams && isUndergraduate">No exam schedules listed.</div>
-      <div data-ng-repeat="(exam_slot, exam) in semester.exams">
-        <div ng-class="{'cc-widget-exam-schedule-conflicts': exam.length > 1 && exam_slot != 'none', 'cc-widget-exam-schedule-time-conflicts-left': exam.length > 1 && exam_slot != 'none'}">
-          <div class="cc-widget-exam-schedule-conflicts-text" data-ng-if="exam.length > 1 && exam_slot != 'none'">
-            <i class="fa fa-exclamation-triangle cc-icon-gold"></i>
-            <strong>Exam Conflict: </strong>Consult with instructors.
-          </div>
-          <div data-ng-repeat="course in exam" class="cc-widget-exam-schedule-item cc-clearfix-container">
-            <div class="cc-widget-exam-schedule-time cc-left">
-              <span data-ng-bind="course.exam_date"></span><br>
-              <span data-ng-bind="course.exam_time" class="cc-text-small cc-text-light"></span>
-            </div>
-            <div class="cc-widget-exam-schedule-content">
-              <strong data-ng-bind="course.name"></strong>
-              <span data-ng-if="course.waitlisted">(waitlisted)</span>
-              <div class="cc-text-small" data-ng-bind="course.exam_location"></div>
-            </div>
-          </div>
+<div data-ng-if="api.user.profile.features.finalExamSchedule" data-ng-controller="finalExamScheduleController">
+  <div class="cc-widget cc-widget-exam-schedule" data-ng-if="!finalExams.gradCoursesOnlyPresent">
+    <div class="cc-widget-title">
+      <h2><span data-ng-bind="widgetSemesterName"></span> Final Exam Schedule</h2>
+    </div>
+    <div class="cc-widget-padding" data-ng-if="finalExams.lawCoursesPresent">
+      <a data-ng-href="lawExamLink">Law Final Exam Schedule</a>
+    </div>
+    <div data-ng-if="finalExams.semesters.length > 0">
+      <div class="cc-widget-exam-schedule-text">
+        Exam information is
+        <a data-ng-click="finalExams.changeNotice = !finalExams.changeNotice">
+          subject to change
+          <i class="fa fa-info-circle cc-icon-air-force-blue"></i>
+        </a>
+        <div class="cc-widget-exam-schedule-notice" data-ng-if="finalExams.changeNotice">
+          <p class="cc-widget-exam-schedule-notice-paragraph">
+            Final exams are based on the day and time a course is offered.
+            Therefore, if the course schedule changes, then the exam group may also change.
+          </p>
+          <p class="cc-widget-exam-schedule-notice-paragraph">
+            Please note: this calendar is only a guideline for faculty and students to get
+            a sense of when their final exam may take place. The official Schedule of Final
+            Examinations is available on the 11th week of instruction.
+          </p>
         </div>
-        <br>
       </div>
+
+      <div class="cc-widget-exam-schedule-text cc-widget-exam-schedule-conflicts-notice-container"
+        data-ng-if="finalExams.conflictFound"
+      >
+        <div class="cc-widget-exam-schedule-conflicts-notice">
+          <i class="fa fa-exclamation-triangle cc-icon-gold"></i>
+          Time Conflict Detected
+        </div>
+        <div>
+          <a data-ng-href="guidelinesLink">
+            Read Guidelines and Expectations
+          </a>
+        </div>
+      </div>
+
+      <div data-ng-repeat="semester in finalExams.semesters">
+        <h3 class="cc-widget-exam-schedule-header" data-ng-bind-template="{{semester.name}} Final Exams"></h3>
+        <div data-ng-if="semester.examSchedule.length > 0">
+          <ol class="cc-widget-exam-schedule-list">
+            <li class="cc-widget-exam-schedule-list-item"
+              data-ng-class="{'cc-widget-exam-schedule-conflicts': schedule.timeConflict}"
+              data-ng-repeat="schedule in semester.examSchedule"
+            >
+              <div class="cc-flex cc-flex-wrap">
+                <div class="cc-widget-exam-schedule-column-left" data-ng-bind="schedule.examDate"></div>
+                <div class="cc-widget-exam-schedule-column-right">
+                  <span class="cc-widget-exam-schedule-course-identifier">
+                    <span data-ng-bind="schedule.name"></span>
+                    <span data-ng-if="schedule.displaySectionLabel" data-ng-bind="schedule.sectionLabel"></span>
+                  </span>
+                  <span class="cc-widget-exam-schedule-course-waitlisted" data-ng-if="schedule.waitlisted">
+                    (waitlist)
+                  </span>
+                </div>
+              </div>
+              <div class="cc-flex cc-flex-wrap cc-widget-exam-schedule-time-location" data-ng-repeat="location in schedule.examLocations">
+                <div class="cc-widget-exam-schedule-column-left" data-ng-bind="schedule.examTime"></div>
+                <div class="cc-widget-exam-schedule-column-right"
+                  data-ng-bind="location"
+                  data-ng-class="{'cc-widget-exam-schedule-no-location': location === 'Exam Location TBD'||location === 'Exam information not available at this time.'}"
+                ></div>
+              </tr>
+            </li>
+          </ol>
+        </div>
+      </div>
+    </div>
+    <div class="cc-widget-exam-schedule-graduate-notice" data-ng-if="finalExams.gradCoursesPresent">
+      Note: Exams for graduate level courses are not represented here.
     </div>
   </div>
 </div>

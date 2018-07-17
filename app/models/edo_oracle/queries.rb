@@ -24,6 +24,7 @@ module EdoOracle
       TRIM(crs."transcriptTitle") AS course_title_short,
       crs."subjectArea" AS dept_name,
       crs."classSubjectArea" AS dept_code,
+      crs."academicCareer-code" AS course_career_code,
       sec."primary" AS "primary",
       sec."sectionNumber" AS section_num,
       sec."component-code" as instruction_format,
@@ -302,31 +303,31 @@ module EdoOracle
     end
 
     # No Campus Oracle equivalent.
-    def self.get_section_final_exam(term_id, section_id)
+    def self.get_section_final_exams(term_id, section_id)
       safe_query <<-SQL
-        SELECT DISTINCT
+        SELECT
           sec."term-id" AS term_id,
           sec."session-id" AS session_id,
           sec."id" AS section_id,
           sec."finalExam" AS exam_type,
-          exam."date" AS exam_date,
-          exam."startTime" AS exam_start_time,
-          exam."endTime" AS exam_end_time,
-          exam."location-descr" AS location
+          exam."EXAM_DT" AS exam_date,
+          exam."EXAM_START_TIME" AS exam_start_time,
+          exam."EXAM_END_TIME" AS exam_end_time,
+          exam."EXAM_EXCEPTION" as exam_exception,
+          exam."FACILITY_DESCR" AS location,
+          exam."FINALIZED" AS finalized
         FROM
-          SISEDO.EXAMV00_VW exam
-        RIGHT JOIN SISEDO.CLASSSECTIONALLV01_MVW sec ON (
-          exam."cs-course-id" = sec."cs-course-id" AND
-          exam."term-id" = sec."term-id" AND
-          exam."session-id" = sec."session-id" AND
-          exam."offeringNumber" = sec."offeringNumber" AND
-          exam."sectionNumber" = sec."sectionNumber" AND
-          exam."type-code" = 'FIN'
+          SISEDO.CLC_FINAL_EXAM_INFOV00_VW exam
+        LEFT JOIN SISEDO.CLASSSECTIONALLV01_MVW sec ON (
+          exam."CRSE_ID" = sec."cs-course-id" AND
+          exam."STRM" = sec."term-id" AND
+          exam."SESSION_CODE" = sec."session-id" AND
+          exam."CRSE_OFFER_NBR" = sec."offeringNumber" AND
+          exam."CLASS_SECTION" = sec."sectionNumber"
         )
         WHERE
           sec."term-id" = '#{term_id}' AND
-          sec."id" = '#{section_id}' AND
-          sec."finalExam" IN ('A', 'Y')
+          sec."id" = '#{section_id}'
         ORDER BY exam_date
       SQL
     end

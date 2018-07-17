@@ -38,8 +38,6 @@ describe Berkeley::Term do
         expect(subject.is_summer).to eq false
         expect(subject.classes_start).to eq Time.zone.parse('2016-08-24 00:00:00').to_datetime
         expect(subject.classes_end).to eq Time.zone.parse('2016-12-02 23:59:59').to_datetime
-        expect(subject.final_exam_week_start).to eq Time.zone.parse('2016-12-12 23:59:59').to_datetime
-        expect(subject.final_exam_cs_data_available).to eq Time.zone.parse('2016-10-21 23:59:59 -0800').to_datetime
         expect(subject.instruction_end).to eq Time.zone.parse('2016-12-09 23:59:59').to_datetime
         expect(subject.grades_entered).to eq Time.zone.parse('2017-01-13 23:59:59').to_datetime
         expect(subject.start).to eq Time.zone.parse('2016-08-17 00:00:00').to_datetime
@@ -117,8 +115,6 @@ describe Berkeley::Term do
       its(:classes_start) {should eq Time.zone.parse('2014-08-28 00:00:00').to_datetime}
       its(:classes_end) {should eq Time.zone.parse('2014-12-05 23:59:59').to_datetime}
       its(:instruction_end) {should eq Time.zone.parse('2014-12-12 23:59:59').to_datetime}
-      its(:final_exam_week_start) {should eq Time.zone.parse('2014-12-15 23:59:59').to_datetime}
-      its(:final_exam_cs_data_available) {should eq Time.zone.parse('2014-10-31 23:59:59 -0800').to_datetime}
       its(:start) {should eq Time.zone.parse('2014-08-21 00:00:00').to_datetime}
       its(:end) {should eq Time.zone.parse('2014-12-19 23:59:59').to_datetime}
       its(:to_english) {should eq 'Fall 2014'}
@@ -143,8 +139,6 @@ describe Berkeley::Term do
       its(:classes_start) {should eq Time.zone.parse('2014-01-21 00:00:00').to_datetime}
       its(:classes_end) {should eq Time.zone.parse('2014-05-02 23:59:59').to_datetime}
       its(:instruction_end) {should eq Time.zone.parse('2014-05-09 23:59:59').to_datetime}
-      its(:final_exam_week_start) {should eq Time.zone.parse('2014-05-12 23:59:59').to_datetime}
-      its(:final_exam_cs_data_available) {should eq Time.zone.parse('2014-03-28 23:59:59 -700').to_datetime}
       its(:start) {should eq Time.zone.parse('2014-01-14 00:00:00').to_datetime}
       its(:end) {should eq Time.zone.parse('2014-05-16 23:59:59').to_datetime}
       its(:to_english) {should eq 'Spring 2014'}
