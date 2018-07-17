@@ -285,6 +285,15 @@ describe Berkeley::Terms do
     end
   end
 
+  describe '.find_by_campus_solutions_id' do
+    it 'returns term object for given campus solutions id' do
+      spring_2010_term = described_class.find_by_campus_solutions_id('2102')
+      expect(spring_2010_term.campus_solutions_id).to eq '2102'
+      expect(spring_2010_term.name).to eq 'Spring'
+      expect(spring_2010_term.year).to eq 2010
+    end
+  end
+
   describe '#fetch_terms_from_api' do
     context 'Hub Term API enabled' do
       before { allow(Settings.features).to receive(:hub_term_api).and_return true }

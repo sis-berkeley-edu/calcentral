@@ -9,6 +9,7 @@ module MyAcademics
       teaching_semesters = format_teaching_semesters feed
       if teaching_semesters.present?
         data[:teachingSemesters] = teaching_semesters
+        data[:legacyTeachingSemesters] = get_legacy_teaching_semesters
         data[:pastSemestersTeachingCount] = teaching_semesters.select {|sem| sem[:timeBucket] == 'past'}.length
         data[:pastSemestersTeachingLimit] = teaching_semesters.length - data[:pastSemestersTeachingCount] + 1;
       end
@@ -52,5 +53,25 @@ module MyAcademics
       }
     end
 
+    def get_legacy_teaching_semesters
+      term_ids = EdoOracle::Queries.get_instructing_legacy_terms(@uid).collect {|t| t['term_id']}.sort.reverse
+      link_key = 'UC_CX_TERM_GRD_LEGACY'
+      link = LinkFetcher.fetch_link(link_key)
+
+      term_objects = term_ids.collect do |term_id|
+        if link
+          placeholders = {'TERM_ID' => term_id}
+          duplicated_link = link.dup
+          LinkFetcher.replace_url_params(link_key, duplicated_link, placeholders)
+        end
+        berkeley_term = Berkeley::Terms.find_by_campus_solutions_id(term_id)
+        {
+          'termId' => term_id,
+          'name' => berkeley_term.name.to_s,
+          'year' => berkeley_term.year.to_s,
+          'legacyGradingReportLink' => duplicated_link.try(:[], :url)
+        }
+      end
+    end
   end
 end

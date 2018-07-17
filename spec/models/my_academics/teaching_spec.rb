@@ -400,4 +400,51 @@ describe MyAcademics::Teaching do
       include_examples 'a good and proper section formatting'
     end
   end
+
+  describe '#get_legacy_teaching_semesters' do
+    let(:uid) { 7093 }
+    let(:fall_2005_dummy_term) { double("term", :name => 'Fall', :year => 2005) }
+    let(:spring_2006_dummy_term) { double("term", :name => 'Spring', :year => 2006) }
+    let(:spring_2007_dummer_term) { double("term", :name => 'Spring', :year => 2007) }
+    let(:legacy_terms) { [ {'term_id' => '2058'}, {'term_id' => '2062'} ] }
+    let(:cs_link_api_link) { {url: 'https://example.com/?BIND1={TERM_ID}'} }
+    subject { described_class.new(uid).get_legacy_teaching_semesters }
+    before do
+      allow(EdoOracle::Queries).to receive(:get_instructing_legacy_terms).and_return(legacy_terms)
+      allow(LinkFetcher).to receive(:fetch_link).and_return(cs_link_api_link)
+      allow(Berkeley::Terms).to receive(:find_by_campus_solutions_id) do |cs_term_id|
+        terms = {
+          '2058' => fall_2005_dummy_term,
+          '2062' => spring_2006_dummy_term,
+          '2072' => spring_2007_dummer_term
+        }
+        terms[cs_term_id]
+      end
+    end
+    context 'when no terms available' do
+      let(:legacy_terms) { [] }
+      it 'returns empty array' do
+        expect(subject.count).to eq 0
+      end
+    end
+    context 'when terms available' do
+      let(:legacy_terms) { [ {'term_id' => '2062'}, {'term_id' => '2058'}, {'term_id' => '2072'} ] }
+      it 'returns terms in descending order' do
+        expect(subject[0]['termId']).to eq '2072'
+        expect(subject[0]['name']).to eq 'Spring'
+        expect(subject[0]['year']).to eq '2007'
+        expect(subject[1]['termId']).to eq '2062'
+        expect(subject[1]['name']).to eq 'Spring'
+        expect(subject[1]['year']).to eq '2006'
+        expect(subject[2]['termId']).to eq '2058'
+        expect(subject[2]['name']).to eq 'Fall'
+        expect(subject[2]['year']).to eq '2005'
+      end
+      it 'includes legacy grading report links' do
+        expect(subject[0]['legacyGradingReportLink']).to eq 'https://example.com/?BIND1=2072'
+        expect(subject[1]['legacyGradingReportLink']).to eq 'https://example.com/?BIND1=2062'
+        expect(subject[2]['legacyGradingReportLink']).to eq 'https://example.com/?BIND1=2058'
+      end
+    end
+  end
 end

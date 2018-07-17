@@ -161,6 +161,7 @@ describe MyAcademics::Semesters do
       end
     end
   end
+
   context 'using stubbed proxy' do
     let(:feed) { {}.tap { |feed| MyAcademics::Semesters.new(random_id).merge(feed) } }
 

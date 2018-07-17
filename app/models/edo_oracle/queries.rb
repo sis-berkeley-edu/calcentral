@@ -239,6 +239,14 @@ module EdoOracle
       SQL
     end
 
+    def self.get_instructing_legacy_terms(person_id)
+      safe_query <<-SQL
+        SELECT "STRM" as term_id
+        FROM SISEDO.CLC_TERM_INSTR_BF2008V00_VW
+        WHERE "INSTRUCTOR_ID" = '#{person_id}'
+      SQL
+    end
+
     # EDO equivalent of CampusOracle::Queries.get_secondary_sections.
     # Changes:
     #   - More precise associations allow us to query by primary section rather
