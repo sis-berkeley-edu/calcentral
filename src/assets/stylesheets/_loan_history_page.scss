@@ -1,0 +1,136 @@
+.cc-loan-history-page {
+  .cc-loan-history-aid-year, .cc-loan-history-cumulative {
+    .cc-icon {
+      color: $cc-color-lochmara;
+    }
+    .cc-loan-category-description {
+      margin-bottom: 10px;
+    }
+    .cc-table-loan-history {
+      table {
+        margin-bottom: 32px;
+        padding: 0 15px;
+        table-layout: fixed;
+        tr {
+          td, th {
+            border-bottom: 1px solid $cc-color-whisper;
+            font-size: 12px;
+            padding: 8px;
+          }
+        }
+      }
+    }
+    .grand-total  {
+      table {
+        margin-bottom: 0;
+      }
+    }
+    .loan-category-description {
+      padding: 0 15px;
+    }
+  }
+  .cc-loan-history-aid-year {
+    padding: 15px 0 20px;
+    .aid-year-header {
+      display: inline-block;
+      margin-bottom: 8px;
+    }
+    .cc-table-loan-history {
+      table {
+        h4 {
+          margin: 0;
+        }
+        tr {
+          th {
+            &:nth-child(2) {
+              width: 50%;
+            }
+            &:nth-child(3) {
+              width: 20%;
+            }
+          }
+        }
+      }
+    }
+    .mobile-table {
+      margin-top: 24px;
+      tbody, tfoot {
+        display: table;
+        width: 100%;
+        td {
+          &:first-child {
+            color: $cc-color-dim-gray;
+            font-weight: bold;
+            width: 40%;
+          }
+        }
+        tr {
+          &:last-child {
+            margin-bottom: 12px;
+          }
+        }
+      }
+    }
+  }
+  .cc-loan-history-cumulative {
+    padding: 15px 0 32px;
+    .cc-table-loan-history {
+      table {
+        tr {
+          td {
+            &:first-child {
+              border-left: 1px solid $cc-color-whisper;
+            }
+            &:last-child {
+              border-right: 1px solid $cc-color-whisper;
+            }
+          }
+          th {
+            &:first-child {
+              width: 60%;
+            }
+          }
+        }
+        @media #{$small-only} {
+          padding: 0;
+        }
+      }
+    }
+  }
+  .cc-loan-history-messaging {
+    padding: 0 15px;
+    margin-bottom: 32px;
+    .message {
+      margin-bottom: 20px;
+    }
+    .message-description {
+      margin-bottom: 0;
+    }
+    .message-inactive {
+      margin-top: 15px;
+    }
+  }
+  .cc-loan-history-resources {
+    margin-bottom: 32px;
+    padding: 0 15px;
+    ul li p:last-child {
+      margin-bottom: 0;
+    }
+  }
+  .cc-loan-history-glossary {
+    margin-bottom: 0;
+    padding: 0 15px;
+    .glossary-entry {
+      margin-bottom: 12px;
+      .glossary-definition {
+        margin-bottom: 0px;
+      }
+      .glossary-term {
+        margin-bottom: 8px;
+      }
+    }
+  }
+  .title-link {
+    margin-right: 15px;
+  }
+}

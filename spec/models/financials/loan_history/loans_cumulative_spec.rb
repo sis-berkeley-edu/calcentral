@@ -38,10 +38,10 @@ describe Financials::LoanHistory::LoansCumulative do
           end
 
           it 'correctly parses the loan description data' do
-            expect(subject[:loans][0][:loanCategory]).to eql('Federal Direct Loans')
-            expect(subject[:loans][1][:loanCategory]).to eql('Federal Perkins Loan')
-            expect(subject[:loans][2][:loanCategory]).to eql('State and Institutional Loans')
-            expect(subject[:loans][3][:loanCategory]).to eql('Private Loans')
+            expect(subject[:loans][0][:category]).to eql('Federal Direct Loans')
+            expect(subject[:loans][1][:category]).to eql('Federal Perkins Loan')
+            expect(subject[:loans][2][:category]).to eql('State and Institutional Loans')
+            expect(subject[:loans][3][:category]).to eql('Private Loans')
           end
 
           it 'correctly calculates the loan category totals' do

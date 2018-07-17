@@ -87,9 +87,7 @@ Calcentral::Application.routes.draw do
     get '/api/my/campuslinks' => 'my_campus_links#get_feed', :as => :my_campus_links, :defaults => { :format => 'json' }
     get '/api/my/campuslinks/expire' => 'my_campus_links#expire'
     get '/api/my/campuslinks/refresh' => 'my_campus_links#refresh', :defaults => { :format => 'json' }
-<<<<<<< HEAD
     get '/api/my/housing/:aid_year' => 'my_housing#get_feed', :defaults => { :format => 'json' }
-=======
     get '/api/my/class_enrollments' => 'my_class_enrollments#get_feed', :defaults => { :format => 'json' }
     get '/api/my/classes' => 'my_classes#get_feed', :as => :my_classes, :defaults => { :format => 'json' }
     get '/api/my/committees' => 'my_committees#get_feed', :defaults => { :format => 'json' }
@@ -105,7 +103,6 @@ Calcentral::Application.routes.draw do
     get '/api/my/loan_history_summary' => 'loan_history#get_summary_feed', :defaults => { :format => 'json' }
     get '/api/my/new_admit_resources' =>'new_admit_resources#get_feed', :defaults => { :format => 'json' }
     get '/api/my/photo' => 'photo#my_photo', :as => :my_photo, :defaults => {:format => 'jpeg' }
->>>>>>> SISRP-38606 - Loan History Card - CLC Dev (Back end)
     get '/api/my/registrations' => 'my_registrations#get_feed', :defaults => { :format => 'json' }
     get '/api/my/residency' => 'my_academics#residency', :defaults => { :format => 'json' }
     get '/api/my/sir_statuses' => 'sir_statuses#get_feed', :defaults => { :format => 'json' }

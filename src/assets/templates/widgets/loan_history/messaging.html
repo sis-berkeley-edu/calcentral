@@ -1,0 +1,26 @@
+<div class="cc-loan-history-messaging">
+  <div data-ng-if="loanHistory.messaging.enrolledPriorToFall2016">
+    <div data-ng-attr-id="{{loanHistory.messaging.enrolledPriorToFall2016.code}}">
+      <div class="message">
+        <h3 data-ng-bind="loanHistory.messaging.enrolledPriorToFall2016.title"></h3>
+        <p class="message-description" data-ng-bind-html="loanHistory.messaging.enrolledPriorToFall2016.description"></p>
+      </div>
+    </div>
+  </div>
+  <div data-ng-if="loanHistory.messaging.estimatedPaymentDisclaimer">
+    <div data-ng-attr-id="{{loanHistory.messaging.estimatedPaymentDisclaimer.code}}">
+      <div class="message">
+        <h3 data-ng-bind="loanHistory.messaging.estimatedPaymentDisclaimer.title"></h3>
+        <p class="message-description" data-ng-bind-html="loanHistory.messaging.estimatedPaymentDisclaimer.description"></p>
+      </div>
+    </div>
+  </div>
+  <div class="message-inactive" data-ng-if="loanHistory.messaging.inactiveLoanHistory">
+      <div data-ng-attr-id="{{loanHistory.messaging.inactiveLoanHistory.code}}">
+        <div class="message">
+          <h3 data-ng-bind="loanHistory.messaging.inactiveLoanHistory.title"></h3>
+          <p class="message-description" data-ng-bind-html="loanHistory.messaging.inactiveLoanHistory.description"></p>
+        </div>
+      </div>
+    </div>
+</div>

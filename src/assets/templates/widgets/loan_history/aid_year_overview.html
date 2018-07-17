@@ -1,0 +1,81 @@
+<div class="cc-loan-history-aid-year">
+  <div data-ng-repeat="aidYear in loanHistory.aidYears | orderBy:'aidYear':reverse">
+    <div class="loan-category-description">
+      <span>
+          <h3 class="aid-year-header" data-ng-bind-template="{{aidYear.aidYearFormatted}} Aid Year"></h3> 
+          <a class="hide-for-small" data-ng-click="scrollToDefinition('AY', $event)"><i class="cc-icon fa fa-info-circle"></i></a>
+      </span>
+      <p data-ng-if="aidYear.loans.length === 0">No loan information for the <span data-ng-bind="aidYear.aidYearFormatted"></span> aid year.</p>
+    </div>
+    <div class="cc-table cc-table-loan-history" data-ng-if="aidYear.loans.length > 0">
+      <table class="hide-for-small">
+        <thead>
+          <tr>
+            <th>Loan Type</th>
+            <th>Loan Name</th>
+            <th class="cc-table-right"><span>Borrowed<a data-ng-click="scrollToDefinition('BRWD', $event)"><i class="cc-icon fa fa-info-circle"></i></a></span></th>
+            <th class="cc-table-right"><span>Interest Rate<a data-ng-click="scrollToDefinition('INTR', $event)"><i class="cc-icon fa fa-info-circle"></i></a></span></th>
+            <th class="cc-table-right"><span>Est. Monthly Payment<a data-ng-click="scrollToDefinition('DSCL', $event)"><i class="cc-icon fa fa-info-circle"></i></a></span></th>
+          </tr>
+        </thead>
+        <tbody data-ng-repeat="loan in aidYear.loans | orderBy:'sequence'">
+          <tr>
+            <td data-ng-bind="loan.loanCategory"></td>
+            <td data-ng-bind="loan.loanDescr"></td>
+            <td class="cc-table-right" data-ng-bind="loan.amountOwed | currency:'$ '"></td>
+            <td class="cc-table-right">
+              <span data-ng-if="loan.interestRate"><span data-ng-bind="loan.interestRate"></span> &percnt;</span>
+              <span data-ng-if="!loan.interestRate">Unknown</span>
+            </td>
+            <td class="cc-table-right" data-ng-bind="loan.estMonthlyPayment | currency:'$ '"></td>
+          </tr>
+        </tbody>
+        <tfoot>
+          <tr>
+            <td colspan="2">
+              <h4 data-ng-bind-template="{{aidYear.aidYearFormatted}} Total"></h4>
+            </td>
+            <td class="cc-table-right"><h4 data-ng-bind="aidYear.totalAmountOwed | currency:'$ '"></h4></td>
+            <td></td>
+            <td></td>
+          </tr>
+        </tfoot>
+      </table>
+      <table class="hide-for-medium-up mobile-table" data-ng-repeat="loan in aidYear.loans | orderBy:'sequence'">
+        <tbody>
+          <tr>
+            <td>Loan Type</td>
+            <td><span data-ng-bind="loan.loanCategory"></span></td>
+          </tr>
+          <tr>
+            <td>Loan Name</td>
+            <td><span data-ng-bind="loan.loanDescr"></span></td>
+          </tr>
+          <tr>
+            <td><span>Borrowed</span></td>
+            <td><span data-ng-bind="loan.amountOwed | currency:'$ '">></span></td>
+          </tr>
+          <tr>
+            <td><span>Interest Rate</span></td>
+            <td>
+              <span data-ng-if="loan.interestRate"><span data-ng-bind="loan.interestRate"></span> &percnt;</span>
+              <span data-ng-if="!loan.interestRate">Unknown</span>
+            </td>
+          </tr>
+          <tr>
+            <td><span>Est. Monthly Payment</span></td>
+            <td><span data-ng-bind="loan.estMonthlyPayment | currency:'$ '"></span></td>
+          </tr>
+        </tbody>
+      </table>
+      <table class="hide-for-medium-up mobile-table">
+        <tfoot>
+          <tr>
+            <td><h4 data-ng-bind-template="{{aidYear.aidYearFormatted}} Total"></h4></td>
+            <td><h4 data-ng-bind="aidYear.totalAmountOwed | currency:'$ '"></h4></td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,9 @@
+<div class="cc-loan-history-resources">
+  <h3>Resources</h3>
+  <ul class="cc-list-bullets" data-ng-repeat="link in loanHistory.links | orderBy:'sequence'">
+    <li>
+      <a data-ng-href="{{link.url}}" data-ng-bind="link.title" data-ng-attr-title="{{link.title}}"></a>
+      <p data-ng-bind="link.descr"></p>
+    </li>
+  </ul>
+</div>

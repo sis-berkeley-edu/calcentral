@@ -788,7 +788,6 @@ module EdoOracle
       SQL
     end
 
-<<<<<<< HEAD
     def self.get_housing(person_id, aid_year)
       safe_query <<-SQL
         SELECT DISTINCT 
@@ -801,7 +800,6 @@ module EdoOracle
         ORDER BY HSG.TERM_ID
       SQL
     end
-=======
     def self.is_loan_history_active (student_id)
       result = safe_query <<-SQL
         SELECT
@@ -958,6 +956,5 @@ module EdoOracle
       result
     end
 
->>>>>>> SISRP-38606 - Loan History Card - CLC Dev (Back end)
   end
 end

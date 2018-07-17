@@ -28,7 +28,7 @@ module Financials
             loan_category = loan.try(:[], :categoryTitle)
             loans.push([loan_category,
               {
-                loanCategory: loan_category,
+                category: loan_category,
                 loans: [],
                 sequence: loan.try(:[], :parentSequence).try(:to_i),
                 totals: { amountOwed: 0, estMonthlyPayment: 0 }
@@ -62,13 +62,13 @@ module Financials
             parsed_amount = parse_owed_value(amount.try(:[], 'amount').try(:to_f).try(:round, 2))
             parsed_est_monthly_payment = parse_owed_value(est_monthly_payment)
             minimum_monthly_payment = loan.try(:[], :minLoanAmt)
-            monthly_payment = parsed_amount > 0 ? choose_monthly_payment(parsed_est_monthly_payment, minimum_monthly_payment) : 0
+            monthly_payment = parsed_amount > 0 ? parse_owed_value(choose_monthly_payment(parsed_est_monthly_payment, minimum_monthly_payment)) : 0
 
-            add_amounts_to_running_total(loans_hash, loan_category, parsed_amount, parsed_est_monthly_payment)
+            add_amounts_to_running_total(loans_hash, loan_category, parsed_amount, monthly_payment)
             loan_obj.merge!(
               {
                 amountOwed: parsed_amount,
-                estMonthlyPayment: parse_owed_value(monthly_payment)
+                estMonthlyPayment: monthly_payment
               })
           else
             logger.error("#{loan.try(:[], :loanType)} child view missing for UID #{@uid}")
