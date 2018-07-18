@@ -92,7 +92,6 @@ features:
   cs_profile_emergency_contacts: true
   cs_profile_languages: true
   cs_profile_work_experience: true
-  final_exam_schedule: true
   my_fin_aid: true
   prevent_acting_as_users_from_posting: false
   reauthentication: false
