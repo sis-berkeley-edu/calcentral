@@ -2,17 +2,19 @@ module MyAcademics
   class Exams < UserSpecificModel
 
     def merge(data = {})
-      if Settings.features.final_exam_schedule
+      if Settings.features.final_exam_schedule_student
         if semesters = data.try(:[], :semesters)
-          parse_student_semesters(semesters)
+          parse_semesters(semesters)
         end
+      end
+      if Settings.features.final_exam_schedule_instructor
         if teaching_semesters = data.try(:[], :teachingSemesters)
-          parse_courses_for_instructor(teaching_semesters)
+          parse_semesters(teaching_semesters)
         end
       end
     end
 
-    def parse_student_semesters(semesters)
+    def parse_semesters(semesters)
       semesters.reject{|x| x[:termCode] == 'C' || x[:timeBucket] == 'past'}.each do |semester|
         semester[:examSchedule] = HashConverter.camelize(get_semester_exam_schedule(semester))
       end
@@ -28,7 +30,7 @@ module MyAcademics
 
     def collect_semester_exams(semester)
       semester_final_exams = []
-      semester[:classes].select {|c| c[:role] == 'Student' }.each do |course|
+      semester[:classes].each do |course|
         course[:sections].select{|x| x[:is_primary_section]}.each do |section|
           section[:final_exams] = get_section_final_exams(semester[:termId], section[:ccn])
           section_final_exams = section[:final_exams].collect do |final_exam|
@@ -82,26 +84,6 @@ module MyAcademics
         exam_course_names = exams.collect {|e| "#{e[:name]}-#{e[:section_label]}" }.uniq
         slot_grouped_exams[slot].each do |exam|
           exam[:time_conflict] = exam_course_names.count > 1
-        end
-      end
-    end
-
-    def parse_courses_for_instructor(data)
-      data.reject{|x| x[:termCode] == 'C' || x[:timeBucket] == 'past'}.each do |semester|
-        semester[:classes].each do |course|
-          course[:sections].select{|x| x[:is_primary_section]}.each do |section|
-            parsed_course = {
-              name: course[:course_code]
-            }
-            if section[:final_exams].any?
-              exam = section[:final_exams].first
-              section[:estimated_final_exam] = [{
-                exam_location: choose_cs_exam_location(exam),
-                exam_time: parse_cs_exam_time(exam),
-                exam_date: parse_cs_exam_date(exam)
-              }]
-            end
-          end
         end
       end
     end

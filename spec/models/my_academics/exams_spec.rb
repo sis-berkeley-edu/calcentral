@@ -1,61 +1,89 @@
 describe MyAcademics::Exams do
   let(:uid) { random_id }
-  let(:feature_flag) { true }
+  let(:student_feature_flag) { true }
+  let(:instructor_feature_flag) { true }
 
   subject do
     MyAcademics::Exams.new uid
   end
 
   describe "#merge" do
+    let(:student_semesters) do
+      [
+        {name: 'Fall 2016', timeBucket: 'future'},
+        {name: 'Spring 2016', timeBucket: 'current'}
+      ]
+    end
+    let(:teaching_semesters) do
+      [
+        {name: 'Spring 2015', timeBucket: 'past'}
+      ]
+    end
+    let(:feed) do
+      {
+        semesters: student_semesters,
+        teachingSemesters: teaching_semesters
+      }
+    end
     before do
       allow(Settings.terms).to receive(:fake_now).and_return '2016-04-01'
-      allow(Settings.features).to receive(:final_exam_schedule).and_return feature_flag
-      allow(subject).to receive(:parse_student_semesters) { |data| data }
-      allow(subject).to receive(:parse_courses_for_instructor) { |data| data }
+      allow(Settings.features).to receive(:final_exam_schedule_student).and_return student_feature_flag
+      allow(Settings.features).to receive(:final_exam_schedule_instructor).and_return instructor_feature_flag
+      allow(subject).to receive(:parse_semesters) { |data| data }
     end
 
-    context 'when feature flag is on' do
-      let(:student_semesters) do
-        [
-          {name: 'Fall 2016', timeBucket: 'future'},
-          {name: 'Spring 2016', timeBucket: 'current'}
-        ]
-      end
-      let(:teaching_semesters) { [] }
-      let(:feed) do
-        {
-          semesters: student_semesters,
-          teachingSemesters: teaching_semesters
-        }
-      end
-      let(:feature_flag) { true }
+    context 'when student feature flag is on' do
+      let(:student_feature_flag) { true }
       context 'when student semesters data present' do
         let(:feed) { {semesters: student_semesters} }
         it 'parses student semeseters feed' do
-          expect(subject).to receive(:parse_student_semesters)
+          expect(subject).to receive(:parse_semesters).with(student_semesters)
           subject.merge(feed)
         end
       end
-      context 'when teaching semesters data present' do
-        let(:feed) { {teachingSemesters: teaching_semesters} }
-        it 'parses teaching feed' do
-          expect(subject).to receive(:parse_courses_for_instructor)
+      context 'when student semesters data is not present' do
+        let(:feed) { {} }
+        it 'parses student semeseters feed' do
+          expect(subject).to_not receive(:parse_semesters).with(student_semesters)
           subject.merge(feed)
         end
       end
     end
-    context 'when feature flag is not on' do
-      let(:feature_flag) { false }
-      let(:feed) { {} }
+    context 'when student feature flag is not on' do
+      let(:student_feature_flag) { false }
       it 'does not parse feeds' do
-        expect(subject).to_not receive(:parse_academic_data)
-        expect(subject).to_not receive(:parse_courses_for_instructor)
+        expect(subject).to_not receive(:parse_semesters).with(student_semesters)
+        subject.merge(feed)
+      end
+    end
+
+    context 'when instructor feature flag is on' do
+      let(:instructor_feature_flag) { true }
+      context 'when teaching semesters data present' do
+        let(:feed) { {teachingSemesters: teaching_semesters} }
+        it 'parses teaching feed' do
+          expect(subject).to receive(:parse_semesters).with(teaching_semesters)
+          subject.merge(feed)
+        end
+      end
+      context 'when teaching semesters data is not present' do
+        let(:feed) { {} }
+        it 'parses teaching feed' do
+          expect(subject).to_not receive(:parse_semesters).with(teaching_semesters)
+          subject.merge(feed)
+        end
+      end
+    end
+    context 'when instructor feature flag is not on' do
+      let(:instructor_feature_flag) { false }
+      it 'does not parse feeds' do
+        expect(subject).to_not receive(:parse_semesters).with(teaching_semesters)
         subject.merge(feed)
       end
     end
   end
 
-  describe "#parse_student_semesters" do
+  describe "#parse_semesters" do
     let(:student_semesters) do
       [
         fall_2016_semester_future,
@@ -94,7 +122,7 @@ describe MyAcademics::Exams do
     end
     before do
       allow(subject).to receive(:get_semester_exam_schedule).and_return([{ name: 'COMPSCI 1A' }])
-      subject.parse_student_semesters(student_semesters)
+      subject.parse_semesters(student_semesters)
     end
     it 'excludes processing of summer semesters' do
       expect(student_semesters[1][:name]).to eq 'Summer 2016'
