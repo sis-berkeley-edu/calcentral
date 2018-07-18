@@ -18,6 +18,10 @@ module CampusSolutions
       enrollment_term['ENROLLMENT_PERIOD'].each do |period|
         format_cs_datetime(period, '%Y-%m-%dT%H:%M:%S')
       end
+      # Clean up empty []
+      enrollment_term['ENROLLED_CLASSES'].each do |cls|
+        cls['WHEN'] = '' if cls['WHEN'] == []
+      end
       if enrollment_term['SCHEDULE_OF_CLASSES_PERIOD']
         format_cs_datetime(enrollment_term['SCHEDULE_OF_CLASSES_PERIOD'], '%Y-%m-%d')
       end
