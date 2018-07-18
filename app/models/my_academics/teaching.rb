@@ -69,7 +69,7 @@ module MyAcademics
           'termId' => term_id,
           'name' => berkeley_term.name.to_s,
           'year' => berkeley_term.year.to_s,
-          'legacyGradingReportLink' => duplicated_link.try(:[], :url)
+          'gradingReportLink' => duplicated_link
         }
       end
     end

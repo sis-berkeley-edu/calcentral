@@ -407,7 +407,18 @@ describe MyAcademics::Teaching do
     let(:spring_2006_dummy_term) { double("term", :name => 'Spring', :year => 2006) }
     let(:spring_2007_dummer_term) { double("term", :name => 'Spring', :year => 2007) }
     let(:legacy_terms) { [ {'term_id' => '2058'}, {'term_id' => '2062'} ] }
-    let(:cs_link_api_link) { {url: 'https://example.com/?BIND1={TERM_ID}'} }
+    let(:cs_link_api_link) do
+      {
+        name: 'Grading',
+        title: 'Enter, edit, and approve final grades for this course.',
+        urlId: 'UC_CX_TERM_GRD_LEGACY',
+        url: 'https://example.com/?BIND1={TERM_ID}',
+        ucFrom: 'CalCentral',
+        ucFromLink: 'https://calcentral-sis-dev-01.ist.berkeley.edu/',
+        ucFromText: 'CalCentral',
+        showNewWindow: true
+      }
+    end
     subject { described_class.new(uid).get_legacy_teaching_semesters }
     before do
       allow(EdoOracle::Queries).to receive(:get_instructing_legacy_terms).and_return(legacy_terms)
@@ -441,9 +452,14 @@ describe MyAcademics::Teaching do
         expect(subject[2]['year']).to eq '2005'
       end
       it 'includes legacy grading report links' do
-        expect(subject[0]['legacyGradingReportLink']).to eq 'https://example.com/?BIND1=2072'
-        expect(subject[1]['legacyGradingReportLink']).to eq 'https://example.com/?BIND1=2062'
-        expect(subject[2]['legacyGradingReportLink']).to eq 'https://example.com/?BIND1=2058'
+        expect(subject[0]['gradingReportLink'][:url]).to eq 'https://example.com/?BIND1=2072'
+        expect(subject[1]['gradingReportLink'][:url]).to eq 'https://example.com/?BIND1=2062'
+        expect(subject[2]['gradingReportLink'][:url]).to eq 'https://example.com/?BIND1=2058'
+      end
+      it 'includes legacy grading report new window boolean' do
+        expect(subject[0]['gradingReportLink'][:showNewWindow]).to eq true
+        expect(subject[1]['gradingReportLink'][:showNewWindow]).to eq true
+        expect(subject[2]['gradingReportLink'][:showNewWindow]).to eq true
       end
     end
   end

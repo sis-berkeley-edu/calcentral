@@ -42,7 +42,7 @@ var angular = require('angular');
  *
  * In most cases you can simply pass the object to the directive as follows. The page name and URL are passed to the
  * directive explicitly because these are usually set in the AngularJS controller for the page.
- *   <a data-cc-campus-solutions-link-directive="csLinkUrl"></a>
+ *   <a data-cc-campus-solutions-link-directive="csLinkObject"></a>
  *
  * Often the page name and URL may need to be passed as an attribute:
  *   <a data-cc-campus-solutions-link-directive="csLinkObject"
