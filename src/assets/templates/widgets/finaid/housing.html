@@ -22,13 +22,13 @@
             <thead>
               <tr>
                 <th scope="col">Term</th>
-                <th scope="col">Housing Option</th>
+                <th scope="col" class="cc-table-right">Housing Option</th>
               </tr>
             </thead>
-            <tbody data-ng-repeat="term in housing.terms">
-              <tr>
+            <tbody>
+              <tr data-ng-repeat="term in housing.terms">
                 <td data-ng-bind="term.termDescr"></td>
-                <td data-ng-bind="term.housingOption"></td>
+                <td data-ng-bind="term.housingOption" class="cc-table-right"></td>
               </tr>
             </tbody>
           </table>
