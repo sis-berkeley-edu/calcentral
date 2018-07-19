@@ -1,3 +1,4 @@
+// scss-lint:disable NestingDepth
 .cc-loan-history-page {
   .cc-loan-history-aid-year, .cc-loan-history-cumulative {
     .cc-icon {
@@ -11,16 +12,14 @@
         margin-bottom: 32px;
         padding: 0 15px;
         table-layout: fixed;
-        tr {
-          td, th {
-            border-bottom: 1px solid $cc-color-whisper;
-            font-size: 12px;
-            padding: 8px;
-          }
+        td, th {
+          border-bottom: 1px solid $cc-color-whisper;
+          font-size: 12px;
+          padding: 8px;
         }
       }
     }
-    .grand-total  {
+    .grand-total {
       table {
         margin-bottom: 0;
       }
@@ -40,14 +39,12 @@
         h4 {
           margin: 0;
         }
-        tr {
-          th {
-            &:nth-child(2) {
-              width: 50%;
-            }
-            &:nth-child(3) {
-              width: 20%;
-            }
+        th {
+          &:nth-child(2) {
+            width: 50%;
+          }
+          &:nth-child(3) {
+            width: 20%;
           }
         }
       }
@@ -57,17 +54,17 @@
       tbody, tfoot {
         display: table;
         width: 100%;
-        td {
-          &:first-child {
-            color: $cc-color-dim-gray;
-            font-weight: bold;
-            width: 40%;
-          }
+      }
+      td {
+        &:first-child {
+          color: $cc-color-dim-gray;
+          font-weight: bold;
+          width: 40%;
         }
-        tr {
-          &:last-child {
-            margin-bottom: 12px;
-          }
+      }
+      tr {
+        &:last-child {
+          margin-bottom: 12px;
         }
       }
     }
@@ -76,19 +73,17 @@
     padding: 15px 0 32px;
     .cc-table-loan-history {
       table {
-        tr {
-          td {
-            &:first-child {
-              border-left: 1px solid $cc-color-whisper;
-            }
-            &:last-child {
-              border-right: 1px solid $cc-color-whisper;
-            }
+        td {
+          &:first-child {
+            border-left: 1px solid $cc-color-whisper;
           }
-          th {
-            &:first-child {
-              width: 60%;
-            }
+          &:last-child {
+            border-right: 1px solid $cc-color-whisper;
+          }
+        }
+        th {
+          &:first-child {
+            width: 60%;
           }
         }
         @media #{$small-only} {
@@ -97,9 +92,22 @@
       }
     }
   }
-  .cc-loan-history-messaging {
+  .cc-loan-history-glossary {
+    margin-bottom: 0;
     padding: 0 15px;
+    .glossary-entry {
+      margin-bottom: 12px;
+      .glossary-definition {
+        margin-bottom: 0;
+      }
+      .glossary-term {
+        margin-bottom: 8px;
+      }
+    }
+  }
+  .cc-loan-history-messaging {
     margin-bottom: 32px;
+    padding: 0 15px;
     .message {
       margin-bottom: 20px;
     }
@@ -115,19 +123,6 @@
     padding: 0 15px;
     ul li p:last-child {
       margin-bottom: 0;
-    }
-  }
-  .cc-loan-history-glossary {
-    margin-bottom: 0;
-    padding: 0 15px;
-    .glossary-entry {
-      margin-bottom: 12px;
-      .glossary-definition {
-        margin-bottom: 0px;
-      }
-      .glossary-term {
-        margin-bottom: 8px;
-      }
     }
   }
   .title-link {

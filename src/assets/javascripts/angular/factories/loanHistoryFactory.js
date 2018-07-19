@@ -18,7 +18,7 @@ angular.module('calcentral.factories').factory('loanHistoryFactory', function(ap
 
   var getInactive = function(options) {
     return apiService.http.request(options, urlInactive);
-  }
+  };
 
   var getSummary = function(options) {
     return apiService.http.request(options, urlSummary);

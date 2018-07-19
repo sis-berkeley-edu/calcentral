@@ -1,7 +1,6 @@
 module Concerns
   module LoanHistoryModule
     extend self
-    include ClassLogger
 
     def calculate_estimated_monthly_payment(interest_rate, principal_value, repayment_period)
       return nil unless interest_rate && principal_value && repayment_period && (interest_rate > 0)
