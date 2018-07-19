@@ -120,6 +120,18 @@ angular.module('calcentral.config').config(function($routeProvider, calcentralCo
       templateUrl: 'finaid_awards_compare.html',
       controller: 'MyFinancesController'
     }).
+    when('/finances/cumulative_loan_debt', {
+      templateUrl: 'cumulative_loan_debt_page.html',
+      controller: 'LoanHistoryCumulativeController'
+    }).
+    when('/finances/loan_summary_aid_year', {
+      templateUrl: 'loan_summary_by_aid_year_page.html',
+      controller: 'LoanHistoryAidYearController'
+    }).
+    when('/finances/loan_resources', {
+      templateUrl: 'loan_resources_page.html',
+      controller: 'LoanHistoryResourcesController'
+    }).
     when('/profile/:category?', {
       templateUrl: 'profile.html',
       controller: 'ProfileController',

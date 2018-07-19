@@ -1,0 +1,67 @@
+<div class="cc-loan-history-cumulative">
+  <div data-ng-repeat="loanCategory in loanHistory.loans | orderBy:'sequence'">
+    <div class="loan-category-description">
+      <h3 data-ng-bind="loanCategory.category"></h3>
+      <p class="cc-loan-category-description" data-ng-bind-html="loanCategory.descr"></p>
+    </div>
+    <div class="cc-table cc-table-loan-history">
+      <table>
+        <thead>
+          <tr>
+            <th>Loan Name</th>
+            <th class="cc-table-right">
+              <span data-ng-if="showAmountOwedVerbiage(loanCategory.category)">Amount Owed<a class="hide-for-small" data-ng-click="scrollToDefinition('AMNT', $event);"><i class="cc-icon fa fa-info-circle"></i></a></span>
+              <span data-ng-if="!showAmountOwedVerbiage(loanCategory.category)">Borrowed<a class="hide-for-small" data-ng-click="scrollToDefinition('BRWD', $event);"><i class="cc-icon fa fa-info-circle"></i></a></span>
+            </th>
+            <th class="cc-table-right">
+              <span>Est. Monthly Payment<a class="hide-for-small" data-ng-click="scrollToDefinition('DSCL', $event)"><i class="cc-icon fa fa-info-circle"></i></a></span>
+            </th>
+          </tr>
+        </thead>
+        <tbody data-ng-if="showLoanList(loanCategory.category)">
+          <tr data-ng-repeat="loan in loanCategory.loans | orderBy:'sequence'" data-ng-if="loan.amountOwed > 0">
+            <td>
+              <span>
+                <span data-ng-bind="loan.loanType"></span> <a class="hide-for-small" data-ng-click="scrollToDefinition('FED', $event);" data-ng-if="isFederalDirectLoan(loanCategory.category)"><i class="cc-icon fa fa-info-circle"></i></a>
+              </span>
+            </td>
+            <td class="cc-table-right" data-ng-bind="loan.amountOwed | currency:'$ '"></td>
+            <td class="cc-table-right" data-ng-bind="loan.estMonthlyPayment | currency:'$ '"></td>
+          </tr>
+        </tbody>
+        <tfoot>
+          <tr>
+            <td data-ng-bind-template="Total {{loanCategory.category}}"></td>
+            <td class="cc-table-right" data-ng-bind="loanCategory.totals.amountOwed | currency:'$ '"></td>
+            <td class="cc-table-right" data-ng-bind="loanCategory.totals.estMonthlyPayment | currency:'$ '"></td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+  </div>
+  <div>
+    <div class="loan-category-description"><h3>Grand Total</h3></div>
+    <div class="cc-table cc-table-loan-history grand-total">
+      <table>
+        <thead>
+          <tr>
+            <th></th>
+            <th class="cc-table-right">Total Calculated Debt</th>
+            <th class="cc-table-right">
+              <span>Est. Monthly Payment<a class="hide-for-small" data-ng-click="scrollToDefinition('DSCL', $event);"><i class="cc-icon fa fa-info-circle"></i></a></span>
+            </th>
+          </tr>
+        </thead>
+        <tfoot>
+          <tr>
+            <td>
+              <span>Calculated Cumulative Debt <a class="hide-for-small" data-ng-click="scrollToDefinition('CALC', $event)"><i class="cc-icon fa fa-info-circle"></i></a></span>
+            </td>
+            <td class="cc-table-right" data-ng-bind="loanHistory.loansSummary.amountOwed | currency:'$ '"></td>
+            <td class="cc-table-right" data-ng-bind="loanHistory.loansSummary.estMonthlyPayment | currency:'$ '"></td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+  </div>
+</div>

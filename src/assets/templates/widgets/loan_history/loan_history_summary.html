@@ -1,0 +1,22 @@
+<div class="cc-widget cc-loan-history-summary" data-ng-controller="LoanHistorySummaryController">
+  <div class="cc-widget-title">
+    <h2>Loan History</h2>
+  </div>
+  <div data-cc-spinner-directive="loanHistory.isLoading">
+    <div class="cc-widget-padding">
+      <div data-ng-if="loanHistory.active">
+        <div class="cc-left">
+          <p class="cc-summary-header"><strong>Total Calculated Debt</strong></p>
+          <p class="cc-summary-amount cc-text-left" data-ng-bind="loanHistory.amountOwed | currency"></p>
+        </div>
+        <div class="cc-right">
+          <a class="cc-summary-link cc-text-right" href="/finances/loan_summary_aid_year">View Summary by Aid Year</a>
+          <a class="cc-summary-link cc-text-right" href="/finances/cumulative_loan_debt">View Cumulative Debt</a>
+        </div>
+      </div>
+      <div data-ng-if="!loanHistory.active">
+        <a href="/finances/loan_resources">View Loan Resources</a>
+      </div>
+    </div>
+  </div>
+</div>

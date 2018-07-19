@@ -1,0 +1,11 @@
+<div class="cc-loan-history-glossary">
+    <h3>Glossary</h3>
+    <ul data-ng-repeat="termObj in loanHistory.glossary | orderBy:'sequence'">
+      <li data-ng-attr-id="{{termObj.code}}">
+        <div class="glossary-entry">
+          <p class="glossary-term"><strong data-ng-bind="termObj.term"></strong></p>
+          <p class="glossary-definition" data-ng-bind-html="termObj.definition"></p>
+        </div>
+      </li>
+    </ul>
+  </div>
