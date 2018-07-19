@@ -2,12 +2,11 @@ module Concerns
   module LoanHistoryModule
     extend self
 
-    def calculate_estimated_monthly_payment(interest_rate, principal_value, repayment_period)
-      return nil unless interest_rate && principal_value && repayment_period && (interest_rate > 0)
-      # Interest rate is provided as a percentage, so we'll need to convert it to a value
-      # Furthermore, we'll divide it by 12 since it is an annual interest rate, and repayment_period is in months
-      interest = (interest_rate / 100) / 12
-      (interest * principal_value) / (1 - (1+interest)**(-repayment_period))
+    def calculate_estimated_monthly_payment(annual_interest_rate, principal_value, repayment_period)
+      return nil unless annual_interest_rate && principal_value && repayment_period && (annual_interest_rate > 0)
+      annual_interest = (annual_interest_rate / 100)
+      monthly_interest = annual_interest / 12
+      (monthly_interest * principal_value) / (1 - (1 + monthly_interest)**(-repayment_period))
     end
 
     def choose_monthly_payment(estimated, minimum)
@@ -21,7 +20,7 @@ module Concerns
     end
 
     def is_loan_history_active? (campus_solutions_id)
-      is_active = EdoOracle::Queries.is_loan_history_active campus_solutions_id
+      is_active = EdoOracle::Queries.get_loan_history_status campus_solutions_id
       is_active.try(:[], 'active') == 'Y'
     end
 

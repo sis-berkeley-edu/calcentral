@@ -2,8 +2,8 @@
   <div data-ng-repeat="aidYear in loanHistory.aidYears | orderBy:'aidYear':reverse">
     <div class="loan-category-description">
       <span>
-          <h3 class="aid-year-header" data-ng-bind-template="{{aidYear.aidYearFormatted}} Aid Year"></h3> 
-          <a class="hide-for-small" data-ng-click="scrollToDefinition('AY', $event)"><i class="cc-icon fa fa-info-circle"></i></a>
+        <h3 class="aid-year-header" data-ng-bind-template="{{aidYear.aidYearFormatted}} Aid Year"></h3> 
+        <a class="hide-for-small" data-ng-click="scrollToDefinition('AY', $event)"><i class="cc-icon fa fa-info-circle"></i></a>
       </span>
       <p data-ng-if="aidYear.loans.length === 0">No loan information for the <span data-ng-bind="aidYear.aidYearFormatted"></span> aid year.</p>
     </div>
@@ -18,8 +18,8 @@
             <th class="cc-table-right"><span>Est. Monthly Payment<a data-ng-click="scrollToDefinition('DSCL', $event)"><i class="cc-icon fa fa-info-circle"></i></a></span></th>
           </tr>
         </thead>
-        <tbody data-ng-repeat="loan in aidYear.loans | orderBy:'sequence'">
-          <tr>
+        <tbody>
+          <tr data-ng-repeat="loan in aidYear.loans | orderBy:'sequence'">
             <td data-ng-bind="loan.loanCategory"></td>
             <td data-ng-bind="loan.loanDescr"></td>
             <td class="cc-table-right" data-ng-bind="loan.amountOwed | currency:'$ '"></td>

@@ -18,8 +18,8 @@
             </th>
           </tr>
         </thead>
-        <tbody data-ng-if="showLoanList(loanCategory.category)" data-ng-repeat="loan in loanCategory.loans | orderBy:'sequence'">
-          <tr data-ng-if="loan.amountOwed > 0">
+        <tbody data-ng-if="showLoanList(loanCategory.category)">
+          <tr data-ng-repeat="loan in loanCategory.loans | orderBy:'sequence'" data-ng-if="loan.amountOwed > 0">
             <td>
               <span>
                 <span data-ng-bind="loan.loanType"></span> <a class="hide-for-small" data-ng-click="scrollToDefinition('FED', $event);" data-ng-if="isFederalDirectLoan(loanCategory.category)"><i class="cc-icon fa fa-info-circle"></i></a>

@@ -6,6 +6,8 @@ module Financials
       include Concerns::LoanHistoryModule
       include User::Identifiers
 
+      UNKNOWN = 'UNK'
+
       def merge(data)
         data.merge!(get_feed)
       end
@@ -110,12 +112,12 @@ module Financials
       end
 
       def show_interest_rate?(loan)
-        loan.try(:[], :interestRate) != 'UNK'
+        loan.try(:[], :interestRate) != UNKNOWN
       end
 
       def use_interest_rate_from_config?(loan)
         interest = loan.try(:[], :interestRate)
-        interest == 'CONFIG' || interest == 'UNK'
+        interest == 'CONFIG' || interest == UNKNOWN
       end
 
     end

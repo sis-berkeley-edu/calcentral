@@ -1,6 +1,6 @@
 describe Concerns::LoanHistoryModule do
 
-  context '#calculate_estimated_monthly_payment' do
+  describe '#calculate_estimated_monthly_payment' do
     let(:interest_rate) { 4.5 }
     let(:principal_value) { 18000 }
     let(:repayment_period) { nil }
@@ -28,7 +28,7 @@ describe Concerns::LoanHistoryModule do
     end
   end
 
-  context '#choose_monthly_payment' do
+  describe '#choose_monthly_payment' do
     let(:estimated) { nil }
     let(:minimum) { 50 }
     subject { described_class.choose_monthly_payment(estimated, minimum) }
@@ -56,7 +56,7 @@ describe Concerns::LoanHistoryModule do
     end
   end
 
-  context '#enrolled_pre_fall_2016?' do
+  describe '#enrolled_pre_fall_2016?' do
     let(:enrolled_prior_to_fall_2016_cs_id) { 11667051 }
     let(:not_enrolled_prior_to_fall_2016_cs_id) { 22778162 }
     subject { described_class.enrolled_pre_fall_2016?(cs_id) }
@@ -76,7 +76,7 @@ describe Concerns::LoanHistoryModule do
     end
   end
 
-  context '#is_loan_history_active?' do
+  describe '#is_loan_history_active?' do
     let(:loan_history_active_cs_id) { 11667051 }
     let(:loan_history_inactive_cs_id) { 33889273 }
     subject { described_class.is_loan_history_active?(cs_id) }
@@ -96,7 +96,7 @@ describe Concerns::LoanHistoryModule do
     end
   end
 
-  context '#parse_edo_response_with_sequencing' do
+  describe '#parse_edo_response_with_sequencing' do
     subject { described_class.parse_edo_response_with_sequencing(input) }
 
     context 'when given an edodb-like array with `sequence` as one of the properties' do
@@ -121,7 +121,7 @@ describe Concerns::LoanHistoryModule do
     end
   end
 
-  context '#parse_owed_value' do
+  describe '#parse_owed_value' do
     subject { described_class.parse_owed_value(value) }
 
     context 'when given a value with lots of trailing numbers' do

@@ -71,7 +71,7 @@ module Financials
                 estMonthlyPayment: monthly_payment
               })
           else
-            logger.error("#{loan.try(:[], :loanType)} child view missing for UID #{@uid}")
+            logger.warn("#{loan.try(:[], :loanType)} child view missing for UID #{@uid}")
           end
           loans_hash[loan_category][:loans].push(loan_obj)
         end
@@ -86,14 +86,14 @@ module Financials
           cumulative_monthly_payment += loan_category.try(:[], :totals).try(:[], :estMonthlyPayment) || 0
         end
         loans_summary = { amountOwed: parse_owed_value(cumulative_amount), estMonthlyPayment: parse_owed_value(cumulative_monthly_payment) }
-        remove_temporary_properties(loans_hash, loans_summary)
+        cleaned_loans_hash = remove_temporary_properties loans_hash
+        convert_loans_to_array(cleaned_loans_hash, loans_summary)
       end
 
-      def remove_temporary_properties(loans_hash, loans_summary)
+      def remove_temporary_properties(loans_hash)
         loans_hash.each_value do |loan_category|
           loan_category.delete(:hasDescr)
         end
-        convert_loans_to_array(loans_hash, loans_summary)
       end
 
       def convert_loans_to_array(loans_hash, loans_summary)

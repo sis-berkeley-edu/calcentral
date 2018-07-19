@@ -800,7 +800,7 @@ module EdoOracle
         ORDER BY HSG.TERM_ID
       SQL
     end
-    def self.is_loan_history_active (student_id)
+    def self.get_loan_history_status (student_id)
       result = safe_query <<-SQL
         SELECT
           IS_STUDENT_ACTIVE as active
