@@ -25,22 +25,37 @@ module MyAcademics
       merged_semester_exams = merge_course_timeslot_locations(semester_exams)
       flag_duplicate_semester_exam_courses(merged_semester_exams)
       flag_conflicting_timeslots(merged_semester_exams)
-      merged_semester_exams.sort_by { |exam| exam[:exam_slot] }
+      sort_semester_exams(merged_semester_exams)
+    end
+
+    def sort_semester_exams(semester_exams)
+      semester_exams.sort_by do |exam|
+        (exam.try(:[], :exam_slot).try(:utc) || Time.now + 1000.years).to_s + ' ' + exam.try(:[], :name)
+      end
     end
 
     def collect_semester_exams(semester)
       semester_final_exams = []
       semester[:classes].each do |course|
         course[:sections].select{|x| x[:is_primary_section]}.each do |section|
-          section[:final_exams] = get_section_final_exams(semester[:termId], section[:ccn])
-          section_final_exams = section[:final_exams].collect do |final_exam|
-            final_exam[:name] = course[:course_code]
-            final_exam[:academic_career] = course[:academicCareer]
-            final_exam[:section_label] = section[:section_label]
-            final_exam[:waitlisted] = section[:waitlisted]
-            final_exam
+          section_data = {
+            name: course[:course_code],
+            academic_career: course[:academicCareer],
+            section_label: section[:section_label],
+            waitlisted: section[:waitlisted]
+          }
+          section_final_exams = get_section_final_exams(semester[:termId], section[:ccn])
+          merged_section_final_exams = section_final_exams.collect {|exam| exam.merge(section_data)}
+          if merged_section_final_exams.any?
+            section_payload = merged_section_final_exams
+          else
+            section_payload = [
+              section_data.merge({
+                exam_location: 'Exam information not available at this time.'
+              })
+            ]
           end
-          semester_final_exams.concat(section_final_exams)
+          semester_final_exams.concat(section_payload)
         end
       end
       semester_final_exams
@@ -55,10 +70,10 @@ module MyAcademics
     def merge_course_timeslot_locations(semester_exams)
       merged_exams = []
       timeslot_course_grouped_exams = semester_exams.group_by do |e|
-        "#{e[:exam_slot].strftime('%m-%d-%Y %H:%M')}-#{e[:name]}-#{e[:section_label]}"
+        "#{e.try(:[], :exam_slot).try(:strftime, '%m-%d-%Y %H:%M')}-#{e[:name]}-#{e[:section_label]}"
       end
       timeslot_course_grouped_exams.each do |slot, exams|
-        locations = exams.collect {|e| e[:exam_location] }.uniq
+        locations = exams.collect {|e| e[:exam_location] }.compact.uniq
         merged_exam = exams.first
         merged_exam.delete(:exam_location)
         merged_exam[:exam_locations] = locations
@@ -83,9 +98,13 @@ module MyAcademics
       slot_grouped_exams.each do |slot, exams|
         exam_course_names = exams.collect {|e| "#{e[:name]}-#{e[:section_label]}" }.uniq
         slot_grouped_exams[slot].each do |exam|
-          exam[:time_conflict] = exam_course_names.count > 1
+          exam[:time_conflict] = (exam_course_names.count > 1) && is_datetime?(slot)
         end
       end
+    end
+
+    def is_datetime?(d)
+      %w(Date Time DateTime Timezone).any? { |t| d.class.name == t }
     end
 
     # Applies logic based on translate value and pre/post finalization status

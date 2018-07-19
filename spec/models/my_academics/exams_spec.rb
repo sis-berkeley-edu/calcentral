@@ -7,7 +7,7 @@ describe MyAcademics::Exams do
     MyAcademics::Exams.new uid
   end
 
-  describe "#merge" do
+  describe '#merge' do
     let(:student_semesters) do
       [
         {name: 'Fall 2016', timeBucket: 'future'},
@@ -83,7 +83,7 @@ describe MyAcademics::Exams do
     end
   end
 
-  describe "#parse_semesters" do
+  describe '#parse_semesters' do
     let(:student_semesters) do
       [
         fall_2016_semester_future,
@@ -142,25 +142,40 @@ describe MyAcademics::Exams do
     end
   end
 
-  describe "#get_semester_exam_schedule" do
+  describe '#get_semester_exam_schedule' do
     let(:student_semester) { {name: 'Spring 2017'} }
     let(:semester_exam_schedule) { subject.get_semester_exam_schedule(student_semester) }
     it 'obtains and processes semester exams in proper order' do
       expect(subject).to receive(:collect_semester_exams).with(student_semester).ordered
-      expect(subject).to receive(:merge_course_timeslot_locations).ordered.and_return([])
+      expect(subject).to receive(:merge_course_timeslot_locations).ordered
       expect(subject).to receive(:flag_duplicate_semester_exam_courses).ordered
       expect(subject).to receive(:flag_conflicting_timeslots).ordered
+      expect(subject).to receive(:sort_semester_exams).ordered.and_return([])
       expect(semester_exam_schedule).to eq []
     end
   end
 
-  describe "#collect_semester_exams" do
-    let(:dummy_final_exams) do
+  describe '#sort_semester_exams' do
+    let(:semester_exams) do
       [
-        {:exam_location=>"Wheeler 150"},
-        {:exam_location=>"Valley Life Sciences 2040"}
+        {name: 'CHEM 3BL' },
+        {name: 'ANTHRO 4AC' },
+        {name: 'CHEM 3B', exam_slot: Time.parse('2016-12-12 15:00:00')},
+        {name: 'ANTHRO 3AC' },
+        {name: 'MCELLBI 194', exam_slot: Time.now},
       ]
     end
+    it 'sorts exams by slot, then alphabetically by name, with nil sorted last' do
+      result = subject.sort_semester_exams(semester_exams)
+      expect(result[0][:name]).to eq 'CHEM 3B'
+      expect(result[1][:name]).to eq 'MCELLBI 194'
+      expect(result[2][:name]).to eq 'ANTHRO 3AC'
+      expect(result[3][:name]).to eq 'ANTHRO 4AC'
+      expect(result[4][:name]).to eq 'CHEM 3BL'
+    end
+  end
+
+  describe '#collect_semester_exams' do
     let(:student_semester) do
       {
         name: 'Fall 2017',
@@ -171,64 +186,45 @@ describe MyAcademics::Exams do
         classes: fall_2017_classes
       }
     end
-    let(:fall_2017_classes) do
-      [
-        non_student_class,
-        undergrad_class
-      ]
-    end
-    let(:non_student_class) do
-      {
-        role: 'Instructor',
-        course_code: 'MCELLBI 104',
-        academicCareer: 'UGRD',
-        courseCatalog: '104',
-        sections: []
-      }
-    end
-    let(:undergrad_class) do
+    let(:fall_2017_classes) { [fall_2017_class] }
+    let(:fall_2017_class) do
       {
         role: 'Student',
         course_code: 'BIOLOGY 1AL',
         academicCareer: 'UGRD',
         courseCatalog: '1AL',
-        sections: [
-          bio_1al_section_1,
-          bio_1al_section_2
-        ]
+        sections: [bio_1al_section_1, bio_1al_section_2]
       }
     end
-    let(:bio_1al_section_1) do
-      {
-        ccn: '13182',
-        is_primary_section: true,
-        section_label: "LEC 001"
-      }
+    let(:dummy_final_exams) do
+      [
+        { exam_location: 'Wheeler 150' },
+        { exam_location: 'Valley Life Sciences 2040' }
+      ]
     end
-    let(:bio_1al_section_2) do
-      {
-        ccn: '13138',
-        is_primary_section: false,
-        section_label: "LAB 323"
-      }
-    end
+    let(:bio_1al_section_1) { {ccn: '13182', is_primary_section: true, section_label: 'LEC 001'} }
+    let(:bio_1al_section_2) { {ccn: '13138', is_primary_section: false, section_label: 'LAB 323'} }
     let(:semester_exams) { subject.collect_semester_exams(student_semester) }
-    it 'excludes processing of non-student classes' do
-      expect(subject).to receive(:get_section_final_exams).with('2178','13182').and_return(dummy_final_exams)
-      expect(semester_exams.count).to eq 2
-      semester_exams.each do |exam|
-        expect(exam[:name]).to_not eq 'MCELLBI 104'
-      end
-    end
+    before { expect(subject).to receive(:get_section_final_exams).with('2178','13182').and_return(dummy_final_exams) }
     it 'excludes processing of non-primary sections' do
-      expect(subject).to receive(:get_section_final_exams).with('2178','13182').and_return(dummy_final_exams)
       expect(semester_exams.count).to eq 2
       semester_exams.each do |exam|
         expect(exam[:section_label]).to_not eq 'LAB 323'
       end
     end
+    context 'when course has no final exam schedules' do
+      let(:dummy_final_exams) { [] }
+      it 'course is still included' do
+        expect(semester_exams.count).to eq 1
+        expect(semester_exams[0][:name]).to eq 'BIOLOGY 1AL'
+        expect(semester_exams[0][:section_label]).to eq 'LEC 001'
+      end
+      it 'exam location reflects no exam information at this time' do
+        expect(semester_exams.count).to eq 1
+        expect(semester_exams[0][:exam_location]).to eq 'Exam information not available at this time.'
+      end
+    end
     it 'merges course and section data with parsed final exams' do
-      allow(subject).to receive(:get_section_final_exams).with('2178','13182').and_return(dummy_final_exams)
       expect(semester_exams[0][:exam_location]).to eq 'Wheeler 150'
       expect(semester_exams[1][:exam_location]).to eq 'Valley Life Sciences 2040'
       semester_exams.each do |exam|
@@ -240,17 +236,17 @@ describe MyAcademics::Exams do
     end
   end
 
-  describe "#merge_course_timeslot_locations" do
+  describe '#merge_course_timeslot_locations' do
     let(:semester_exams) do
       [
-        {name: 'MCELLBI 102', :exam_slot=>Time.parse('2016-12-10 07:00:00'), :exam_location=>'Dwinelle 105'},
-        {name: 'MCELLBI 101', :exam_slot=>Time.parse('2016-12-10 12:00:00'), :exam_location=>'Dwinelle 105'},
-        {name: 'MCELLBI 104', :exam_slot=>Time.parse('2016-12-11 14:00:00'), :exam_location=>'Dwinelle 105'},
-        {name: 'MCELLBI 104', :exam_slot=>Time.parse('2016-12-11 14:00:00'), :exam_location=>'Dwinelle 117'},
-        {name: 'MCELLBI 136', :exam_slot=>Time.parse('2016-12-11 19:00:00'), :exam_location=>'Dwinelle 105'},
-        {name: 'MCELLBI 136', :exam_slot=>Time.parse('2016-12-15 19:00:00'), :exam_location=>'Dwinelle 105'},
-        {name: 'MCELLBI 136', :exam_slot=>Time.parse('2016-12-15 19:00:00'), :exam_location=>'Stanley 106'},
-        {name: 'BIOLOGY 1AL', :exam_slot=>Time.parse('2016-12-15 19:00:00'), :exam_location=>'Dwinelle 105'},
+        {name: 'MCELLBI 102', exam_slot: Time.parse('2016-12-10 07:00:00'), exam_location: 'Dwinelle 105'},
+        {name: 'MCELLBI 101', exam_slot: Time.parse('2016-12-10 12:00:00'), exam_location: 'Dwinelle 105'},
+        {name: 'MCELLBI 104', exam_slot: Time.parse('2016-12-11 14:00:00'), exam_location: 'Dwinelle 105'},
+        {name: 'MCELLBI 104', exam_slot: Time.parse('2016-12-11 14:00:00'), exam_location: 'Dwinelle 117'},
+        {name: 'MCELLBI 136', exam_slot: Time.parse('2016-12-11 19:00:00'), exam_location: 'Dwinelle 105'},
+        {name: 'MCELLBI 136', exam_slot: Time.parse('2016-12-15 19:00:00'), exam_location: 'Dwinelle 105'},
+        {name: 'MCELLBI 136', exam_slot: Time.parse('2016-12-15 19:00:00'), exam_location: 'Stanley 106'},
+        {name: 'BIOLOGY 1AL', exam_slot: Time.parse('2016-12-15 19:00:00'), exam_location: 'Dwinelle 105'},
       ]
     end
     let(:exams) { subject.merge_course_timeslot_locations(semester_exams) }
@@ -277,19 +273,37 @@ describe MyAcademics::Exams do
       expect(exams[4][:exam_locations][1]).to eq 'Stanley 106'
       expect(exams[5][:exam_locations][0]).to eq 'Dwinelle 105'
     end
+    context 'when semester exams without schedule data' do
+      let(:semester_exams) do
+        [
+          {name: 'MCELLBI 101', academic_career: 'UGRD', section_label: 'LEC 001'},
+          {name: 'MCELLBI 101', academic_career: 'UGRD', section_label: 'LEC 002'},
+          {name: 'MCELLBI 102', exam_slot: Time.parse('2016-12-11 14:00:00'), exam_location: 'Dwinelle 105'}
+        ]
+      end
+      it 'returns exam entries without schedule data' do
+        expect(exams.count).to eq 3
+        expect(exams[0][:exam_locations]).to eq []
+        expect(exams[1][:exam_locations]).to eq []
+        expect(exams[2][:exam_locations]).to eq ['Dwinelle 105']
+        expect(exams[0][:exam_slot]).to eq nil
+        expect(exams[1][:exam_slot]).to eq nil
+        expect(exams[2][:exam_slot]).to eq Time.parse('2016-12-11 14:00:00')
+      end
+    end
   end
 
-  describe "#flag_conflicting_timeslots" do
+  describe '#flag_conflicting_timeslots' do
     let(:semester_exams) do
       [
-        {name: 'MCELLBI 136', :section_label=>'LEC 001', :exam_slot=>Time.parse('2016-12-15 19:00:00')},
-        {name: 'BIOLOGY 1AL', :section_label=>'LEC 001', :exam_slot=>Time.parse('2016-12-15 19:00:00')},
-        {name: 'MCELLBI 136', :section_label=>'LEC 001', :exam_slot=>Time.parse('2016-12-15 19:00:00')},
-        {name: 'MCELLBI 136', :section_label=>'LEC 001', :exam_slot=>Time.parse('2016-12-11 19:00:00')},
-        {name: 'MCELLBI 104', :section_label=>'LEC 001', :exam_slot=>Time.parse('2016-12-11 14:00:00')},
-        {name: 'MCELLBI 104', :section_label=>'LEC 002', :exam_slot=>Time.parse('2016-12-11 14:00:00')},
-        {name: 'MCELLBI 101', :section_label=>'LEC 001', :exam_slot=>Time.parse('2016-12-10 12:00:00')},
-        {name: 'MCELLBI 102', :section_label=>'LEC 001', :exam_slot=>Time.parse('2016-12-10 07:00:00')},
+        {name: 'MCELLBI 136', section_label: 'LEC 001', exam_slot: Time.parse('2016-12-15 19:00:00')},
+        {name: 'BIOLOGY 1AL', section_label: 'LEC 001', exam_slot: Time.parse('2016-12-15 19:00:00')},
+        {name: 'MCELLBI 136', section_label: 'LEC 001', exam_slot: Time.parse('2016-12-15 19:00:00')},
+        {name: 'MCELLBI 136', section_label: 'LEC 001', exam_slot: Time.parse('2016-12-11 19:00:00')},
+        {name: 'MCELLBI 104', section_label: 'LEC 001', exam_slot: Time.parse('2016-12-11 14:00:00')},
+        {name: 'MCELLBI 104', section_label: 'LEC 002', exam_slot: Time.parse('2016-12-11 14:00:00')},
+        {name: 'MCELLBI 101', section_label: 'LEC 001', exam_slot: Time.parse('2016-12-10 12:00:00')},
+        {name: 'MCELLBI 102', section_label: 'LEC 001', exam_slot: Time.parse('2016-12-10 07:00:00')},
       ]
     end
     before { subject.flag_conflicting_timeslots(semester_exams) }
@@ -306,9 +320,39 @@ describe MyAcademics::Exams do
       expect(semester_exams[6][:time_conflict]).to eq false
       expect(semester_exams[7][:time_conflict]).to eq false
     end
+    context 'when exam slots are nil' do
+      let(:semester_exams) do
+        [
+          {name: 'MCELLBI 104', section_label: 'LEC 002'},
+          {name: 'MCELLBI 101', section_label: 'LEC 001'},
+          {name: 'MCELLBI 102', section_label: 'LEC 001', exam_slot: Time.parse('2016-12-10 07:00:00')},
+        ]
+      end
+      it 'does not flag nil slots as conflicting' do
+        expect(semester_exams.count).to eq 3
+        semester_exams.each {|exam| expect(exam[:time_conflict]).to eq false }
+      end
+    end
   end
 
-  describe "#flag_duplicate_semester_exam_courses" do
+  describe '#is_datetime?' do
+    it 'returns false when not a date or time object' do
+      expect(subject.is_datetime?(nil)).to eq false
+      expect(subject.is_datetime?('hello')).to eq false
+      expect(subject.is_datetime?(123)).to eq false
+      expect(subject.is_datetime?({hello: 123})).to eq false
+      expect(subject.is_datetime?([1,2,3])).to eq false
+    end
+
+    it 'returns true when is a date or time object' do
+      expect(subject.is_datetime?(Date.parse('2018-01-01'))).to eq true
+      expect(subject.is_datetime?(Time.parse('2018-01-01 14:33:01'))).to eq true
+      expect(subject.is_datetime?(DateTime.parse('2018-01-01 14:33:01'))).to eq true
+      expect(subject.is_datetime?(Time.zone.now)).to eq true
+    end
+  end
+
+  describe '#flag_duplicate_semester_exam_courses' do
     let(:semester_exams) do
       [
         {name: 'MCELLBI 136'},
@@ -328,7 +372,7 @@ describe MyAcademics::Exams do
     end
   end
 
-  describe "#get_section_final_exams" do
+  describe '#get_section_final_exams' do
     let(:valid_final_exam) do
       {
         'term_id' => '2168',
@@ -372,6 +416,12 @@ describe MyAcademics::Exams do
         expect(exams.count).to eq 1
       end
     end
+    context 'when no final exam schedules present' do
+      let(:final_exams) { [] }
+      it 'returns empty array' do
+        expect(exams.count).to eq 0
+      end
+    end
     it 'returns parsed entries' do
       expect(exams.count).to eq 1
       expect(exams[0][:exam_location]).to eq 'Exam Location TBD'
@@ -383,7 +433,7 @@ describe MyAcademics::Exams do
     end
   end
 
-  describe "#parse_exam" do
+  describe '#parse_exam' do
     let(:exam) do
       {
         location: exam_location,
@@ -436,7 +486,7 @@ describe MyAcademics::Exams do
     end
   end
 
-  describe "#parse_cs_exam_date" do
+  describe '#parse_cs_exam_date' do
     let(:exam) do
       {
         exam_date: exam_date,
@@ -500,7 +550,7 @@ describe MyAcademics::Exams do
     end
   end
 
-  describe "#parse_cs_exam_time" do
+  describe '#parse_cs_exam_time' do
     let(:exam) do
       {
         exam_start_time: exam_start_time,
@@ -578,7 +628,7 @@ describe MyAcademics::Exams do
     end
   end
 
-  describe "#single_letter_meridian_indicator" do
+  describe '#single_letter_meridian_indicator' do
     subject { MyAcademics::Exams.new(uid).single_letter_meridian_indicator(meridian_indicator) }
     context 'when indicator is \'pm\'' do
       let(:meridian_indicator) { 'pm' }
@@ -602,7 +652,7 @@ describe MyAcademics::Exams do
     end
   end
 
-  describe "#parse_cs_exam_slot" do
+  describe '#parse_cs_exam_slot' do
     let(:exam) do
       {
         exam_date: exam_date,
@@ -690,7 +740,7 @@ describe MyAcademics::Exams do
     end
   end
 
-  describe "#choose_cs_exam_location" do
+  describe '#choose_cs_exam_location' do
     let(:exam) do
       {
         location: exam_location_value,
