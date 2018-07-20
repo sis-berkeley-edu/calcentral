@@ -100,7 +100,7 @@ module Financials
 
       def format_aid_year_name(aid_year)
         aid_year_int = aid_year.to_i
-        aid_year.to_s + " - " + (aid_year_int + 1).to_s
+        (aid_year_int - 1).to_s + " - " + aid_year.to_s
       end
 
       def get_child_loan_details(view_name)
