@@ -43,8 +43,8 @@ describe Financials::LoanHistory::LoansAidYears do
           end
 
           it 'formats the aid year for front-end consumption' do
-            expect(subject[:aidYears][0][:aidYearFormatted]).to eql('2018 - 2019')
-            expect(subject[:aidYears][1][:aidYearFormatted]).to eql('2017 - 2018')
+            expect(subject[:aidYears][0][:aidYearFormatted]).to eql('2017 - 2018')
+            expect(subject[:aidYears][1][:aidYearFormatted]).to eql('2016 - 2017')
           end
 
           it 'correctly calculates the total amount owed for each aid year' do
