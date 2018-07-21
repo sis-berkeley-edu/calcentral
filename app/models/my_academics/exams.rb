@@ -16,8 +16,19 @@ module MyAcademics
 
     def parse_semesters(semesters)
       semesters.reject{|x| x[:termCode] == 'C' || x[:timeBucket] == 'past'}.each do |semester|
-        semester[:examSchedule] = HashConverter.camelize(get_semester_exam_schedule(semester))
+        semester_exam_schedule = get_semester_exam_schedule(semester)
+        semester[:exams] = {
+          schedule: HashConverter.camelize(semester_exam_schedule),
+          courseCareerCodes: collect_semester_course_career_codes(semester)
+        }
       end
+    end
+
+    def collect_semester_course_career_codes(semester)
+      semester[:classes].collect do |course|
+        has_primary_section = course[:sections].find { |s| s[:is_primary_section] }
+        has_primary_section ? course[:courseCareerCode] : nil
+      end.compact.uniq
     end
 
     def get_semester_exam_schedule(semester)
@@ -37,25 +48,27 @@ module MyAcademics
     def collect_semester_exams(semester)
       semester_final_exams = []
       semester[:classes].each do |course|
-        course[:sections].select{|x| x[:is_primary_section]}.each do |section|
-          section_data = {
-            name: course[:course_code],
-            academic_career: course[:academicCareer],
-            section_label: section[:section_label],
-            waitlisted: section[:waitlisted]
-          }
-          section_final_exams = get_section_final_exams(semester[:termId], section[:ccn])
-          merged_section_final_exams = section_final_exams.collect {|exam| exam.merge(section_data)}
-          if merged_section_final_exams.any?
-            section_payload = merged_section_final_exams
-          else
-            section_payload = [
-              section_data.merge({
-                exam_location: 'Exam information not available at this time.'
-              })
-            ]
+        if (course[:courseCareerCode] == 'UGRD')
+          course[:sections].select{|sec| sec[:is_primary_section] }.each do |section|
+            section_data = {
+              name: course[:course_code],
+              courseCareerCode: course[:courseCareerCode],
+              section_label: section[:section_label],
+              waitlisted: section[:waitlisted]
+            }
+            section_final_exams = get_section_final_exams(semester[:termId], section[:ccn])
+            merged_section_final_exams = section_final_exams.collect {|exam| exam.merge(section_data)}
+            if merged_section_final_exams.any?
+              section_payload = merged_section_final_exams
+            else
+              section_payload = [
+                section_data.merge({
+                  exam_location: 'Exam information not available at this time.'
+                })
+              ]
+            end
+            semester_final_exams.concat(section_payload)
           end
-          semester_final_exams.concat(section_payload)
         end
       end
       semester_final_exams

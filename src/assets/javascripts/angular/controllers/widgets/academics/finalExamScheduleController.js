@@ -15,31 +15,26 @@ angular.module('calcentral.controllers').controller('finalExamScheduleController
     lawExamLink: 'https://www.law.berkeley.edu/php-programs/students/exams/examTimesList.php'
   };
 
-  // TODO: Move career parsing to back-end
-  var detectLawAndGradCourses = function(semesters) {
+  var detectCourseCareers = function(semesters) {
     var currentAndFutureExamSemesters = getCurrentAndFutureExamSemesters(semesters);
     var academicCareerCodes = getSemesterCourseAcademicCareerCodes(currentAndFutureExamSemesters);
-    var uniqueAcademicCareerCodes = _.uniq(academicCareerCodes);
-    var ugrdPresent = _.includes(uniqueAcademicCareerCodes, 'UGRD');
-    var lawPresent = _.includes(uniqueAcademicCareerCodes, 'LAW');
-    var gradPresent = _.includes(uniqueAcademicCareerCodes, 'GRAD');
+    var ugrdPresent = _.includes(academicCareerCodes, 'UGRD');
+    var lawPresent = _.includes(academicCareerCodes, 'LAW');
+    var gradPresent = _.includes(academicCareerCodes, 'GRAD');
+    $scope.finalExams.ugrdCoursesPresent = ugrdPresent;
     $scope.finalExams.lawCoursesPresent = lawPresent;
     $scope.finalExams.gradCoursesPresent = gradPresent;
     $scope.finalExams.gradCoursesOnlyPresent = (gradPresent && !lawPresent && !ugrdPresent);
+    $scope.finalExams.coursesPresent = (ugrdPresent || gradPresent || lawPresent);
   };
 
   var getSemesterCourseAcademicCareerCodes = function(semesters) {
-    var allCourses = getSemesterCourses(semesters);
-    return _.map(allCourses, 'academicCareer');
-  };
-
-  var getSemesterCourses = function(semesters) {
-    var allCourses = [];
+    var allCourseCareerCodes = [];
     _.forEach(semesters, function(semester) {
-      var semesterClasses = _.get(semester, 'classes', []);
-      allCourses = _.concat(allCourses, semesterClasses);
+      var semesterCareerCodes = _.get(semester, 'exams.courseCareerCodes', []);
+      allCourseCareerCodes = _.concat(allCourseCareerCodes, semesterCareerCodes);
     });
-    return allCourses;
+    return _.uniq(_.flatten(allCourseCareerCodes));
   };
 
   var getCurrentAndFutureExamSemesters = function(semesters) {
@@ -53,7 +48,7 @@ angular.module('calcentral.controllers').controller('finalExamScheduleController
   var detectSemesterTimeConflicts = function() {
     var semesters = _.get($scope, 'finalExams.semesters', []);
     var conflictFound = _.find(semesters, function(semester) {
-      var exams = _.get(semester, 'examSchedule', []);
+      var exams = _.get(semester, 'exams.schedule', []);
       return _.find(exams, function(e) {
         return e.timeConflict;
       });
@@ -64,10 +59,10 @@ angular.module('calcentral.controllers').controller('finalExamScheduleController
   var parseAcademics = function(academics) {
     var semesters = _.get(academics, 'data.semesters');
     $scope.finalExams.semesters = _.filter(semesters, function(semester) {
-      var semesterExamScheduleLength = _.get(semester, 'examSchedule.length');
+      var semesterExamScheduleLength = _.get(semester, 'exams.schedule.length');
       return (semesterExamScheduleLength > 0);
     });
-    detectLawAndGradCourses(semesters);
+    detectCourseCareers(semesters);
     detectSemesterTimeConflicts();
   };
 

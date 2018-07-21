@@ -138,6 +138,7 @@ module EdoOracle
           id: course_id,
           slug: slug,
           academicCareer: row['acad_career'],
+          courseCareerCode: row['course_career_code'],
           requirementsDesignationCode: row['rqmnt_designtn']
         }
       end
