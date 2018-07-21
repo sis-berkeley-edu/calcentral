@@ -1,12 +1,12 @@
 <div data-ng-if="api.user.profile.features.finalExamScheduleStudent" data-ng-controller="finalExamScheduleController">
-  <div class="cc-widget cc-widget-exam-schedule" data-ng-if="!finalExams.gradCoursesOnlyPresent">
+  <div class="cc-widget cc-widget-exam-schedule" data-ng-if="!finalExams.gradCoursesOnlyPresent && finalExams.coursesPresent">
     <div class="cc-widget-title">
       <h2><span data-ng-bind="widgetSemesterName"></span> Final Exam Schedule</h2>
     </div>
     <div class="cc-widget-padding" data-ng-if="finalExams.lawCoursesPresent">
       <a data-ng-href="lawExamLink">Law Final Exam Schedule</a>
     </div>
-    <div data-ng-if="finalExams.semesters.length > 0">
+    <div data-ng-if="finalExams.ugrdCoursesPresent">
       <div class="cc-widget-exam-schedule-text">
         Exam information is
         <a data-ng-click="finalExams.changeNotice = !finalExams.changeNotice">
@@ -42,11 +42,11 @@
 
       <div data-ng-repeat="semester in finalExams.semesters">
         <h3 class="cc-widget-exam-schedule-header" data-ng-bind-template="{{semester.name}} Final Exams"></h3>
-        <div data-ng-if="semester.examSchedule.length > 0">
+        <div data-ng-if="semester.exams.schedule.length > 0">
           <ol class="cc-widget-exam-schedule-list">
             <li class="cc-widget-exam-schedule-list-item"
               data-ng-class="{'cc-widget-exam-schedule-conflicts': schedule.timeConflict}"
-              data-ng-repeat="schedule in semester.examSchedule"
+              data-ng-repeat="schedule in semester.exams.schedule"
             >
               <div class="cc-flex cc-flex-wrap">
                 <div class="cc-widget-exam-schedule-column-left" data-ng-bind="schedule.examDate"></div>
@@ -72,7 +72,7 @@
         </div>
       </div>
     </div>
-    <div class="cc-widget-exam-schedule-graduate-notice" data-ng-if="finalExams.gradCoursesPresent">
+    <div class="cc-widget-exam-schedule-graduate-notice" data-ng-if="finalExams.gradCoursesPresent && finalExams.ugrdCoursesPresent">
       Note: Exams for graduate level courses are not represented here.
     </div>
   </div>

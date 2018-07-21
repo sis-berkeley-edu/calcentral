@@ -790,7 +790,7 @@ module EdoOracle
 
     def self.get_housing(person_id, aid_year)
       safe_query <<-SQL
-        SELECT DISTINCT 
+        SELECT DISTINCT
           HSG.TERM_ID,
           HSG.TERM_DESCR,
           HSG.HOUSING_OPTION

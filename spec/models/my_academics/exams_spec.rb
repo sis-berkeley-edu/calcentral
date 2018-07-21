@@ -84,7 +84,7 @@ describe MyAcademics::Exams do
   end
 
   describe '#parse_semesters' do
-    let(:student_semesters) do
+    let(:semesters) do
       [
         fall_2016_semester_future,
         summer_2016_semester_future,
@@ -122,31 +122,35 @@ describe MyAcademics::Exams do
     end
     before do
       allow(subject).to receive(:get_semester_exam_schedule).and_return([{ name: 'COMPSCI 1A' }])
-      subject.parse_semesters(student_semesters)
+      allow(subject).to receive(:collect_semester_course_career_codes).and_return(['UGRD','LAW'])
+      subject.parse_semesters(semesters)
     end
     it 'excludes processing of summer semesters' do
-      expect(student_semesters[1][:name]).to eq 'Summer 2016'
-      expect(student_semesters[1][:examSchedule]).to_not be
+      expect(semesters[1][:name]).to eq 'Summer 2016'
+      expect(semesters[1][:exams]).to_not be
     end
     it 'excludes processing of past semesters' do
-      expect(student_semesters[3][:name]).to eq 'Fall 2015'
-      expect(student_semesters[3][:examSchedule]).to_not be
+      expect(semesters[3][:name]).to eq 'Fall 2015'
+      expect(semesters[3][:exams]).to_not be
     end
     it 'processes current and future non-summer semesters' do
-      expect(student_semesters[2][:name]).to eq 'Spring 2016'
-      expect(student_semesters[2][:examSchedule]).to be
-      expect(student_semesters[2][:examSchedule][0][:name]).to eq 'COMPSCI 1A'
-      expect(student_semesters[0][:name]).to eq 'Fall 2016'
-      expect(student_semesters[0][:examSchedule]).to be
-      expect(student_semesters[0][:examSchedule][0][:name]).to eq 'COMPSCI 1A'
+      expect(semesters[2][:name]).to eq 'Spring 2016'
+      expect(semesters[2][:exams]).to be
+      expect(semesters[2][:exams][:schedule][0][:name]).to eq 'COMPSCI 1A'
+      expect(semesters[0][:name]).to eq 'Fall 2016'
+      expect(semesters[0][:exams]).to be
+      expect(semesters[0][:exams][:schedule][0][:name]).to eq 'COMPSCI 1A'
+    end
+    it 'includes course career codes' do
+      expect(semesters[0][:exams][:courseCareerCodes]).to eq ['UGRD','LAW']
     end
   end
 
   describe '#get_semester_exam_schedule' do
-    let(:student_semester) { {name: 'Spring 2017'} }
-    let(:semester_exam_schedule) { subject.get_semester_exam_schedule(student_semester) }
+    let(:semester) { {name: 'Spring 2017'} }
+    let(:semester_exam_schedule) { subject.get_semester_exam_schedule(semester) }
     it 'obtains and processes semester exams in proper order' do
-      expect(subject).to receive(:collect_semester_exams).with(student_semester).ordered
+      expect(subject).to receive(:collect_semester_exams).with(semester).ordered
       expect(subject).to receive(:merge_course_timeslot_locations).ordered
       expect(subject).to receive(:flag_duplicate_semester_exam_courses).ordered
       expect(subject).to receive(:flag_conflicting_timeslots).ordered
@@ -176,22 +180,19 @@ describe MyAcademics::Exams do
   end
 
   describe '#collect_semester_exams' do
-    let(:student_semester) do
+    let(:semester) do
       {
         name: 'Fall 2017',
         termId: '2178',
-        termCode: 'D',
-        timeBucket: 'current',
-        slug: 'fall-2017',
         classes: fall_2017_classes
       }
     end
-    let(:fall_2017_classes) { [fall_2017_class] }
-    let(:fall_2017_class) do
+    let(:fall_2017_classes) { [fall_2017_class_1] }
+    let(:fall_2017_class_1) do
       {
         role: 'Student',
         course_code: 'BIOLOGY 1AL',
-        academicCareer: 'UGRD',
+        courseCareerCode: 'UGRD',
         courseCatalog: '1AL',
         sections: [bio_1al_section_1, bio_1al_section_2]
       }
@@ -204,12 +205,52 @@ describe MyAcademics::Exams do
     end
     let(:bio_1al_section_1) { {ccn: '13182', is_primary_section: true, section_label: 'LEC 001'} }
     let(:bio_1al_section_2) { {ccn: '13138', is_primary_section: false, section_label: 'LAB 323'} }
-    let(:semester_exams) { subject.collect_semester_exams(student_semester) }
-    before { expect(subject).to receive(:get_section_final_exams).with('2178','13182').and_return(dummy_final_exams) }
+    let(:semester_exams) { subject.collect_semester_exams(semester) }
+    before { expect(subject).to receive(:get_section_final_exams).and_return(dummy_final_exams) }
     it 'excludes processing of non-primary sections' do
       expect(semester_exams.count).to eq 2
       semester_exams.each do |exam|
         expect(exam[:section_label]).to_not eq 'LAB 323'
+      end
+    end
+    context 'when multiple courses are included' do
+      let(:fall_2017_class_2) do
+        {
+          role: 'Student',
+          course_code: 'BIOLOGY 202',
+          courseCareerCode: fall_2017_class_2_career_code,
+          courseCatalog: '202',
+          sections: [bio_202_section_1]
+        }
+      end
+      let(:bio_202_section_1) { {ccn: '13139', is_primary_section: true, section_label: 'LEC 001'} }
+      let(:fall_2017_classes) { [fall_2017_class_1, fall_2017_class_2] }
+      let(:fall_2017_class_2_career_code) { 'UGRD' }
+      context 'includes graduate course' do
+        let(:fall_2017_class_2_career_code) { 'GRAD' }
+        it 'excludes graduate course' do
+          expect(semester_exams.count).to eq 2
+          expect(semester_exams[0][:name]).to eq 'BIOLOGY 1AL'
+          expect(semester_exams[0][:section_label]).to eq 'LEC 001'
+          expect(semester_exams[0][:exam_location]).to eq 'Wheeler 150'
+          expect(semester_exams[1][:name]).to eq 'BIOLOGY 1AL'
+          expect(semester_exams[1][:section_label]).to eq 'LEC 001'
+          expect(semester_exams[1][:exam_location]).to eq 'Valley Life Sciences 2040'
+          expect(semester_exams[2]).to_not be
+        end
+      end
+      context 'includes law course' do
+        let(:fall_2017_class_2_career_code) { 'LAW' }
+        it 'excludes law course' do
+          expect(semester_exams.count).to eq 2
+          expect(semester_exams[0][:name]).to eq 'BIOLOGY 1AL'
+          expect(semester_exams[0][:section_label]).to eq 'LEC 001'
+          expect(semester_exams[0][:exam_location]).to eq 'Wheeler 150'
+          expect(semester_exams[1][:name]).to eq 'BIOLOGY 1AL'
+          expect(semester_exams[1][:section_label]).to eq 'LEC 001'
+          expect(semester_exams[1][:exam_location]).to eq 'Valley Life Sciences 2040'
+          expect(semester_exams[2]).to_not be
+        end
       end
     end
     context 'when course has no final exam schedules' do
@@ -229,10 +270,46 @@ describe MyAcademics::Exams do
       expect(semester_exams[1][:exam_location]).to eq 'Valley Life Sciences 2040'
       semester_exams.each do |exam|
         expect(exam[:name]).to eq 'BIOLOGY 1AL'
-        expect(exam[:academic_career]).to eq 'UGRD'
+        expect(exam[:courseCareerCode]).to eq 'UGRD'
         expect(exam[:section_label]).to eq 'LEC 001'
         expect(exam[:waitlisted]).to eq nil
       end
+    end
+  end
+
+  describe '#collect_semester_course_career_codes' do
+    let(:semester) { {classes: fall_2017_classes} }
+    let(:fall_2017_classes) { [fall_2017_class_1, fall_2017_class_2, fall_2017_class_3] }
+    let(:fall_2017_class_1) do
+      {
+        courseCareerCode: 'UGRD',
+        sections: [
+          { is_primary_section: true },
+          { is_primary_section: false }
+        ]
+      }
+    end
+    let(:fall_2017_class_2) do
+      {
+        courseCareerCode: 'LAW',
+        sections: [
+          { is_primary_section: false },
+          { is_primary_section: false }
+        ]
+      }
+    end
+    let(:fall_2017_class_3) do
+      {
+        courseCareerCode: 'GRAD',
+        sections: [
+          { is_primary_section: false },
+          { is_primary_section: true }
+        ]
+      }
+    end
+    let(:semester_course_career_codes) { subject.collect_semester_course_career_codes(semester) }
+    it 'returns array of course career codes for courses with primary sections' do
+      expect(semester_course_career_codes).to eq ['UGRD','GRAD']
     end
   end
 
@@ -276,8 +353,8 @@ describe MyAcademics::Exams do
     context 'when semester exams without schedule data' do
       let(:semester_exams) do
         [
-          {name: 'MCELLBI 101', academic_career: 'UGRD', section_label: 'LEC 001'},
-          {name: 'MCELLBI 101', academic_career: 'UGRD', section_label: 'LEC 002'},
+          {name: 'MCELLBI 101', courseCareerCode: 'UGRD', section_label: 'LEC 001'},
+          {name: 'MCELLBI 101', courseCareerCode: 'UGRD', section_label: 'LEC 002'},
           {name: 'MCELLBI 102', exam_slot: Time.parse('2016-12-11 14:00:00'), exam_location: 'Dwinelle 105'}
         ]
       end
