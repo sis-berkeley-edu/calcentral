@@ -1026,7 +1026,7 @@
     {
       "name": "Cal Student Central",
       "description": "Providing support to your questions concerning financial aid, fees and billing, payments, disbursements, registration, and enrollment",
-      "url": "http://studentcentral.berkeley.edu/",
+      "url": "http://studentcentral.berkeley.edu/open-case",
       "roles": {
         "student": true,
         "applicant": true,
