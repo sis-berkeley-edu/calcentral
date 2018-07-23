@@ -4,7 +4,7 @@
       <h2><span data-ng-bind="widgetSemesterName"></span> Final Exam Schedule</h2>
     </div>
     <div class="cc-widget-padding" data-ng-if="finalExams.lawCoursesPresent">
-      <a data-ng-href="lawExamLink">Law Final Exam Schedule</a>
+      <a data-ng-href="{{finalExams.lawExamLink}}">Law Final Exam Schedule</a>
     </div>
     <div data-ng-if="finalExams.ugrdCoursesPresent">
       <div class="cc-widget-exam-schedule-text">
@@ -34,7 +34,7 @@
           Time Conflict Detected
         </div>
         <div>
-          <a data-ng-href="guidelinesLink">
+          <a data-ng-href="{{finalExams.guidelinesLink}}" title="Learn More about Final Exam Schedule Conflicts">
             Read Guidelines and Expectations
           </a>
         </div>
