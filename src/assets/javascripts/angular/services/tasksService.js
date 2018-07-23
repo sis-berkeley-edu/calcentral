@@ -124,7 +124,7 @@ angular.module('calcentral.services').service('tasksService', function(apiServic
     $scope.lists = {
       completed: $scope.tasks.filter(isCompletedTask),
       incomplete: incompleteTasks,
-      overdue: overdueTasks
+      overdue: overdueTasks.sort(sortByDueDate)
     };
 
     // populate task sections
@@ -152,8 +152,8 @@ angular.module('calcentral.services').service('tasksService', function(apiServic
       }
       incompleteSectionTasks = _.clone($scope.lists.incomplete.filter(taskFilter)).sort(sortByDueDate);
       furtherActionNeededTasks = _.remove(incompleteSectionTasks, isCsFurtherActionNeededTask);
-      incompleteSortedSectionTasks = _.concat(incompleteSectionTasks, furtherActionNeededTasks);
       beingProcessedTasks = _.remove(incompleteSectionTasks, isCsBeingProcessedTask);
+      incompleteSortedSectionTasks = _.concat(incompleteSectionTasks, furtherActionNeededTasks);
 
       taskSection.dueWithinWeekCount = incompleteSectionTasks.filter(isDueWithinOneWeekTask).length;
 
