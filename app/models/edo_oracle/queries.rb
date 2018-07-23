@@ -793,7 +793,8 @@ module EdoOracle
         SELECT DISTINCT
           HSG.TERM_ID,
           HSG.TERM_DESCR,
-          HSG.HOUSING_OPTION
+          HSG.HOUSING_OPTION,
+          HSG.HOUSING_END_DATE
         FROM SISEDO.CLC_FA_HOUSING_VW HSG
         WHERE HSG.CAMPUS_UID = '#{person_id}'
         AND HSG.AID_YEAR = '#{aid_year}'

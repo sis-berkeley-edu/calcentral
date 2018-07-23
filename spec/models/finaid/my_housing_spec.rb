@@ -1,6 +1,7 @@
 describe Finaid::MyHousing do
 
   before do
+    allow(Settings.terms).to receive(:fake_now).and_return after_spring_housing_period
     allow_any_instance_of(CampusSolutions::MyAidYears).to receive(:default_aid_year).and_return '2019'
     allow_any_instance_of(CampusSolutions::Sir::SirStatuses).to receive(:get_feed).and_return(new_admit_status)
     allow_any_instance_of(User::AggregatedAttributes).to receive(:get_feed).and_return({ :roles => { :undergrad => undergrad }})
@@ -20,6 +21,8 @@ describe Finaid::MyHousing do
     end
   end
   let(:uid) { 61889 }
+  let(:during_spring_housing_period) { DateTime.parse('2019-04-30 23:59:59 -0700') }
+  let(:after_spring_housing_period) { DateTime.parse('2019-05-01 00:00:00 -0700') }
   let(:new_admit_status) { nil }
   let(:academic_roles) do
     {
@@ -44,15 +47,17 @@ describe Finaid::MyHousing do
       expect(subject[:housing][:links]).to be
       expect(subject[:housing][:isFallPathway]).to be_falsey
 
-      expect(subject[:housing][:terms][0].count).to eq 3
+      expect(subject[:housing][:terms][0].count).to eq 4
       expect(subject[:housing][:terms][0][:termId]).to eq '2188'
       expect(subject[:housing][:terms][0][:termDescr]).to eq 'Fall 2018'
       expect(subject[:housing][:terms][0][:housingOption]).to eq 'Living Off Campus'
+      expect(subject[:housing][:terms][0][:housingEndDate]).to eq DateTime.parse('2018-10-01')
 
-      expect(subject[:housing][:terms][1].count).to eq 3
+      expect(subject[:housing][:terms][1].count).to eq 4
       expect(subject[:housing][:terms][1][:termId]).to eq '2192'
       expect(subject[:housing][:terms][1][:termDescr]).to eq 'Spring 2019'
       expect(subject[:housing][:terms][1][:housingOption]).to eq 'Residence Hall'
+      expect(subject[:housing][:terms][1][:housingEndDate]).to eq DateTime.parse('2019-05-01')
 
       expect(subject[:housing][:links][:updateHousing]).to be nil
       expect(subject[:housing][:links][:pathwayFinaid]).to be nil
@@ -78,15 +83,17 @@ describe Finaid::MyHousing do
         expect(subject[:housing][:links]).to be
         expect(subject[:housing][:isFallPathway]).to be_falsey
 
-        expect(subject[:housing][:terms][0].count).to eq 3
+        expect(subject[:housing][:terms][0].count).to eq 4
         expect(subject[:housing][:terms][0][:termId]).to eq '2188'
         expect(subject[:housing][:terms][0][:termDescr]).to eq 'Fall 2018'
         expect(subject[:housing][:terms][0][:housingOption]).to eq 'Living Off Campus'
+        expect(subject[:housing][:terms][0][:housingEndDate]).to eq DateTime.parse('2018-10-01')
 
-        expect(subject[:housing][:terms][1].count).to eq 3
+        expect(subject[:housing][:terms][1].count).to eq 4
         expect(subject[:housing][:terms][1][:termId]).to eq '2192'
         expect(subject[:housing][:terms][1][:termDescr]).to eq 'Spring 2019'
         expect(subject[:housing][:terms][1][:housingOption]).to eq 'Residence Hall'
+        expect(subject[:housing][:terms][1][:housingEndDate]).to eq DateTime.parse('2019-05-01')
 
         expect(subject[:housing][:links][:updateHousing]).to be nil
         expect(subject[:housing][:links][:pathwayFinaid]).to be nil
@@ -101,22 +108,30 @@ describe Finaid::MyHousing do
       it 'does not provide a first year pathway suggestion message' do
         expect(subject[:housing][:pathwayMessage]).to be nil
       end
+      it 'does not provide a first-year pathway financial aid link' do
+        expect(subject[:housing][:links][:pathwayFinaid]).to be nil
+      end
       it 'sets the fall pathway flag to false' do
         expect(subject[:housing][:isFallPathway]).to be_falsey
       end
       context 'and is not an undergrad' do
-        it 'does not provide links' do
+        it 'does not provide a housing update link' do
           expect(subject[:housing][:links]).to be
           expect(subject[:housing][:links][:updateHousing]).to be nil
-          expect(subject[:housing][:links][:pathwayFinaid]).to be nil
         end
       end
       context 'and is a continuing undergrad' do
         let(:undergrad) { true }
-        it 'provides a housing update link' do
-          expect(subject[:housing][:links]).to be
-          expect(subject[:housing][:links][:updateHousing]).to eq 'update housing link'
-          expect(subject[:housing][:links][:pathwayFinaid]).to be nil
+        context 'after the latest term\'s window for changing housing has closed' do
+          it 'does not provide a housing update link' do
+            expect(subject[:housing][:links][:updateHousing]).to be nil
+          end
+        end
+        context 'while the window for changing housing is still open' do
+          before { allow(Settings.terms).to receive(:fake_now).and_return during_spring_housing_period }
+          it 'provides a housing update link' do
+            expect(subject[:housing][:links][:updateHousing]).to eq 'update housing link'
+          end
         end
       end
     end
@@ -155,13 +170,22 @@ describe Finaid::MyHousing do
         it 'provides a generic instruction' do
           expect(subject[:housing][:instruction]).to eq 'generic message'
         end
-        it 'provides a housing update link' do
-          expect(subject[:housing][:links]).to be
-          expect(subject[:housing][:links][:updateHousing]).to eq 'update housing link'
+        it 'does not provide a first-year pathway financial aid link' do
           expect(subject[:housing][:links][:pathwayFinaid]).to be nil
         end
         it 'sets the fall pathway flag to false' do
           expect(subject[:housing][:isFallPathway]).to be_falsey
+        end
+        context 'after the latest term\'s window for changing housing has closed' do
+          it 'does not provide a housing update link' do
+            expect(subject[:housing][:links][:updateHousing]).to be nil
+          end
+        end
+        context 'while the window for changing housing is still open' do
+          before { allow(Settings.terms).to receive(:fake_now).and_return during_spring_housing_period }
+          it 'provides a housing update link' do
+            expect(subject[:housing][:links][:updateHousing]).to eq 'update housing link'
+          end
         end
       end
       context 'and is a first-year pathway fall admit' do
@@ -178,6 +202,9 @@ describe Finaid::MyHousing do
         end
         it 'provides a pathway-specific housing update link' do
           expect(subject[:housing][:links][:updateHousing]).to eq 'update housing/pathway link'
+          end
+        it 'does not provide a first-year pathway financial aid link' do
+          expect(subject[:housing][:links][:pathwayFinaid]).to be nil
         end
         it 'sets the fall pathway flag to true' do
           expect(subject[:housing][:isFallPathway]).to be true
@@ -198,14 +225,22 @@ describe Finaid::MyHousing do
         it 'provides a first year pathway suggestion message' do
           expect(subject[:housing][:pathwayMessage]).to eq 'spring pathway message'
         end
-        it 'provides a housing update link' do
-          expect(subject[:housing][:links][:updateHousing]).to eq 'update housing link'
-        end
         it 'provides a first-year pathway financial aid link' do
           expect(subject[:housing][:links][:pathwayFinaid]).to eq 'first-year pathway financial aid link'
         end
         it 'sets the fall pathway flag to false' do
           expect(subject[:housing][:isFallPathway]).to be_falsey
+        end
+        context 'after the latest term\'s window for changing housing has closed' do
+          it 'does not provide a housing update link' do
+            expect(subject[:housing][:links][:updateHousing]).to be nil
+          end
+        end
+        context 'while the window for changing housing is still open' do
+          before { allow(Settings.terms).to receive(:fake_now).and_return during_spring_housing_period }
+          it 'provides a housing update link' do
+            expect(subject[:housing][:links][:updateHousing]).to eq 'update housing link'
+          end
         end
       end
     end
