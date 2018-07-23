@@ -2,8 +2,9 @@ module Finaid
   class MyHousing < UserSpecificModel
     include Cache::CachedFeed
     include Cache::UserCacheExpiry
-    include Concerns::NewAdmits
     include CampusSolutions::FinaidFeatureFlagged
+    include Concerns::DatesAndTimes
+    include Concerns::NewAdmits
 
     attr_accessor :aid_year
 
@@ -15,10 +16,10 @@ module Finaid
 
     def get_feed_internal
       return {} unless is_feature_enabled
-      feed = EdoOracle::Queries.get_housing(@uid, my_aid_year)
+      @feed = EdoOracle::Queries.get_housing(@uid, my_aid_year)
       {
         housing: {
-          terms: HashConverter.downcase_and_camelize(feed),
+          terms: HashConverter.downcase_and_camelize(@feed),
           instruction: instruction,
           pathwayMessage: pathway_message,
           links: links,
@@ -56,7 +57,7 @@ module Finaid
     def housing_update_link
       if first_year_pathway_fall_admit? admit_status
         LinkFetcher.fetch_link('UC_CX_FA_STDNT_HOUSING_TYPE_PW', link_params)
-      elsif continuing_undergrad?
+      elsif continuing_undergrad? && can_update_housing?
         LinkFetcher.fetch_link('UC_CX_FA_STDNT_HOUSING_TYPE', link_params)
       end
     end
@@ -80,6 +81,13 @@ module Finaid
       is_undergrad = User::AggregatedAttributes.new(@uid).get_feed[:roles][:undergrad]
       is_continuing = !MyAcademics::MyAcademicRoles.new(@uid).get_feed[:current]['ugrdNonDegree']
       is_undergrad && is_continuing
+    end
+
+    def can_update_housing?
+      max_term = @feed.try(:last)
+      if (housing_period_end_date = max_term.try(:[], 'housing_end_date'))
+        (Settings.terms.fake_now || DateTime.now) < cast_utc_to_pacific(housing_period_end_date)
+      end
     end
 
     def my_aid_year

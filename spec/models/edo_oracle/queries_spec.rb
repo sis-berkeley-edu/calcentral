@@ -277,8 +277,12 @@ describe EdoOracle::Queries do
 
     it 'returns the expected result' do
       expect(subject.count).to eq 2
-      expect(subject[0]).to have_keys(%w(term_id term_descr housing_option))
-      expect(subject[1]).to have_keys(%w(term_id term_descr housing_option))
+      expect(subject[0]).to have_keys(%w(term_id term_descr housing_option housing_end_date))
+      expect(subject[1]).to have_keys(%w(term_id term_descr housing_option housing_end_date))
+    end
+    it 'sorts the rows by term ID' do
+      expect(subject[0]['term_id']).to eq '2188'
+      expect(subject[1]['term_id']).to eq '2192'
     end
   end
 

@@ -5,7 +5,8 @@ module CampusSolutions
         MyAidYears,
         MyFinancialAidData,
         MyFinancialAidFundingSources,
-        MyFinancialAidFundingSourcesTerm
+        MyFinancialAidFundingSourcesTerm,
+        Finaid::MyHousing
       ].each do |klass|
         klass.expire uid
       end
