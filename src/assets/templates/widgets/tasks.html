@@ -106,7 +106,7 @@
               </div>
 
               <div data-ng-show="taskSection.show" class="cc-widget-tasks-list-wrapper">
-                <div class="cc-widget-tasks-list-header">
+                <div class="cc-widget-tasks-list-header" data-ng-if="taskSection.tasks.incomplete.length">
                   <div class="cc-widget-tasks-col cc-widget-tasks-col-title-header">Title</div>
                   <div class="cc-widget-tasks-col cc-widget-tasks-col-left">&nbsp;</div>
                   <div class="cc-widget-tasks-col cc-widget-tasks-col-date-header">
