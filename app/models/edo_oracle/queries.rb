@@ -794,7 +794,9 @@ module EdoOracle
           HSG.TERM_ID,
           HSG.TERM_DESCR,
           HSG.HOUSING_OPTION,
-          HSG.HOUSING_END_DATE
+          HSG.HOUSING_STATUS,
+          HSG.HOUSING_END_DATE,
+          HSG.ACAD_CAREER
         FROM SISEDO.CLC_FA_HOUSING_VW HSG
         WHERE HSG.CAMPUS_UID = '#{person_id}'
         AND HSG.AID_YEAR = '#{aid_year}'
