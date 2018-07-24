@@ -11,12 +11,14 @@ module EdoOracle
 
     def initialize(options = {})
       super(Settings.edodb, options)
+      @has_units = false
     end
 
     def get_feed
       detailed = get_transfer_credit_detailed
       summary = get_transfer_credit_summary
       {
+        hasUnits: @has_units,
         undergraduate: {
           detailed: detailed[:undergraduate],
           summary: summary[:undergraduate]
@@ -55,6 +57,18 @@ module EdoOracle
       result
     end
 
+    def has_units?(result)
+      all_units = result[:totalCumulativeUnits].to_i +
+        result[:totalTransferUnits].to_i +
+        result[:totalTransferUnitsNonAdjusted].to_i +
+        result[:apTestUnits].to_i +
+        result[:ibTestUnits].to_i +
+        result[:alevelTestUnits].to_i +
+        result[:totalTestUnits].to_i +
+        result[:totalTransferUnitsLaw].to_i
+      (all_units > 0)
+    end
+
     def get_transfer_credit_summary
       result = {}
       return result unless careers
@@ -83,6 +97,7 @@ module EdoOracle
           :totalTestUnits => is_undergrad ? ap_test_units + ib_test_units + alevel_test_units : nil,
           :totalTransferUnitsLaw => summary['total_transfer_units_law'].try(:to_f)
         }
+        @has_units ||= has_units?(result[career_description.downcase])
       end
       result
     end
