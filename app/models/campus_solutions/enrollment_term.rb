@@ -20,7 +20,7 @@ module CampusSolutions
       end
       # Clean up empty []
       enrollment_term['ENROLLED_CLASSES'].each do |cls|
-        cls['WHEN'] = '' if cls['WHEN'] == []
+        cls['WHEN'] = cls['WHEN'].to_s.tr('[]','').tr('""','')
       end
       if enrollment_term['SCHEDULE_OF_CLASSES_PERIOD']
         format_cs_datetime(enrollment_term['SCHEDULE_OF_CLASSES_PERIOD'], '%Y-%m-%d')
