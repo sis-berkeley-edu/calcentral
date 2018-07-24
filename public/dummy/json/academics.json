@@ -101,8 +101,32 @@
       "timeBucket": "future",
       "campusSolutionsTerm": true,
       "gradingInProgress": null,
+      "exams": {
+        "courseCareerCodes": [
+            "UGRD"
+        ],
+        "schedule": [
+          {
+            "courseCareerCode": "UGRD",
+            "displaySectionLabel": false,
+            "examDate": "Tue Dec 11",
+            "examLocations": [
+              "Exam Location TBD"
+            ],
+            "examSlot": "2017-12-11T23:00:00.000Z",
+            "examTime": "3:00P - 6:00P",
+            "exception": "N",
+            "finalized": "N",
+            "name": "ANTHRO C125A",
+            "sectionLabel": "LEC 001",
+            "timeConflict": false,
+            "waitlisted": null
+          }
+        ]
+      },
       "classes": [
         {
+          "academicCareer": "UGRD",
           "role": "Student",
           "sections": [
             {
@@ -142,15 +166,6 @@
                   }
                 ]
               },
-              "final_exams": [
-                {
-                  "exam_type": "Y",
-                  "location": null,
-                  "exam_date": null,
-                  "exam_start_time": null,
-                  "exam_end_time": null
-                }
-              ],
               "gradeOption": "Letter"
             }
           ],
@@ -177,8 +192,32 @@
       "timeBucket": "current",
       "campusSolutionsTerm": true,
       "gradingInProgress": null,
+      "exams": {
+        "courseCareerCodes": [
+            "UGRD"
+        ],
+        "schedule": [
+          {
+            "courseCareerCode": "UGRD",
+            "displaySectionLabel": false,
+            "examDate": "Thu May 11",
+            "examLocations": [
+              "Exam Location TBD"
+            ],
+            "examSlot": "2017-05-11T12:00:00.000Z",
+            "examTime": "12:00P - 2:30P",
+            "exception": "N",
+            "finalized": "N",
+            "name": "PSEUDO 1",
+            "sectionLabel": "LEC 999",
+            "timeConflict": false,
+            "waitlisted": null
+          }
+        ]
+      },
       "classes": [
         {
+          "academicCareer": "UGRD",
           "role": "Student",
           "sections": [
             {
@@ -199,7 +238,6 @@
                 "oneTime": [],
                 "recurring": []
               },
-              "final_exams": [],
               "gradeOption": "Letter"
             }
           ],
@@ -248,7 +286,6 @@
                 "oneTime": [],
                 "recurring": []
               },
-              "final_exams": [],
               "gradeOption": "Letter"
             }
           ],
@@ -283,7 +320,6 @@
                 "oneTime": [],
                 "recurring": []
               },
-              "final_exams": [],
               "gradeOption": "Letter"
             }
           ],
@@ -319,41 +355,6 @@
       "totalTestUnits": 13.3
     }
   },
-  "examSchedule": [
-    {
-      "cs_data_available": false,
-      "name": "Fall 2017",
-      "termCode": "D",
-      "courses": [
-        {
-          "name": "ANTHRO C125A",
-          "number": 125,
-          "time": "TuTh 2:00P-3:29P",
-          "waitlisted": null,
-          "exam_location": "",
-          "exam_time": "8-11A",
-          "exam_slot": 5,
-          "exam_date": "Tue 12/12"
-        }
-      ],
-      "timeBucket": "future",
-      "slug": "fall-2017",
-      "exams": {
-        "5": [
-          {
-            "name": "ANTHRO C125A",
-            "number": 125,
-            "time": "TuTh 2:00P-3:29P",
-            "waitlisted": null,
-            "exam_location": "",
-            "exam_time": "8-11A",
-            "exam_slot": 5,
-            "exam_date": "Tue 12/12"
-          }
-        ]
-      }
-    }
-  ],
   "otherSiteMemberships": [
     {
       "name": "Fall 2013",
