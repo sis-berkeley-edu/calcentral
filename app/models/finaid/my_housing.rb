@@ -55,9 +55,9 @@ module Finaid
     end
 
     def housing_update_link
-      if first_year_pathway_fall_admit? admit_status
+      if first_year_pathway_fall_admit?(admit_status) || first_year_pathway_spring_admit?(admit_status)
         LinkFetcher.fetch_link('UC_CX_FA_STDNT_HOUSING_TYPE_PW', link_params)
-      elsif continuing_undergrad? && can_update_housing?
+      elsif can_update_housing?
         LinkFetcher.fetch_link('UC_CX_FA_STDNT_HOUSING_TYPE', link_params)
       end
     end
@@ -77,13 +77,17 @@ module Finaid
       CampusSolutions::MessageCatalog.get_message_catalog_definition('26500', INSTRUCTIONAL_MESSAGE_NUMBERS[type]).try(:[], :descrlong)
     end
 
-    def continuing_undergrad?
-      is_undergrad = User::AggregatedAttributes.new(@uid).get_feed[:roles][:undergrad]
-      is_continuing = !MyAcademics::MyAcademicRoles.new(@uid).get_feed[:current]['ugrdNonDegree']
-      is_undergrad && is_continuing
+    def can_update_housing?
+      undergrad_housing_status_pending? && housing_period_open?
     end
 
-    def can_update_housing?
+    def undergrad_housing_status_pending?
+      @feed.try(:select) do |term|
+        ('UGRD' == term['acad_career']) && ('Y' != term['housing_status'].try(:upcase))
+      end.present?
+    end
+
+    def housing_period_open?
       max_term = @feed.try(:last)
       if (housing_period_end_date = max_term.try(:[], 'housing_end_date'))
         (Settings.terms.fake_now || DateTime.now) < cast_utc_to_pacific(housing_period_end_date)
