@@ -14,15 +14,7 @@
           <i class="fa fa-info-circle cc-icon-air-force-blue"></i>
         </a>
         <div class="cc-widget-exam-schedule-notice" data-ng-if="finalExams.changeNotice">
-          <p class="cc-widget-exam-schedule-notice-paragraph">
-            Final exams are based on the day and time a course is offered.
-            Therefore, if the course schedule changes, then the exam group may also change.
-          </p>
-          <p class="cc-widget-exam-schedule-notice-paragraph">
-            Please note: this calendar is only a guideline for faculty and students to get
-            a sense of when their final exam may take place. The official Schedule of Final
-            Examinations is available on the 11th week of instruction.
-          </p>
+          <p class="cc-widget-exam-schedule-notice-paragraph" data-ng-bind-html="finalExams.message"></p>
         </div>
       </div>
 

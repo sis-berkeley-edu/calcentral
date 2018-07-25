@@ -6,6 +6,7 @@ module MyAcademics
         if semesters = data.try(:[], :semesters)
           parse_semesters(semesters)
         end
+        data[:examMessage] = exam_message
       end
       if Settings.features.final_exam_schedule_instructor
         if teaching_semesters = data.try(:[], :teachingSemesters)
@@ -22,6 +23,10 @@ module MyAcademics
           courseCareerCodes: collect_semester_course_career_codes(semester)
         }
       end
+    end
+
+    def exam_message
+      CampusSolutions::MessageCatalog.get_message_catalog_definition('32500', '110').try(:[], :descrlong)
     end
 
     def collect_semester_course_career_codes(semester)
