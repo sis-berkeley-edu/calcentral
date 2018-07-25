@@ -58,6 +58,7 @@ angular.module('calcentral.controllers').controller('finalExamScheduleController
 
   var parseAcademics = function(academics) {
     var semesters = _.get(academics, 'data.semesters');
+    $scope.finalExams.message = _.get(academics, 'data.examMessage');
     $scope.finalExams.semesters = _.filter(semesters, function(semester) {
       var semesterExamScheduleLength = _.get(semester, 'exams.schedule.length');
       return (semesterExamScheduleLength > 0);
