@@ -21,7 +21,9 @@
   },
   "scripts": {
     "build": "gulp build",
-    "build-production": "gulp build --env production"
+    "build-production": "gulp build --env production",
+    "dev": "NODE_ENV=development webpack-serve --config webpack/dev.config.js",
+    "webpack-build": "NODE_ENV=production webpack --config webpack/prod.config.js"
   },
   "engines": {
     "node": ">=8.9.4"
@@ -32,10 +34,17 @@
     "angular": "1.6.6",
     "angular-route": "1.6.6",
     "angular-sanitize": "1.6.6",
+    "babel-core": "^6.26.3",
+    "babel-loader": "^7.1.5",
+    "babel-preset-env": "^1.7.0",
     "browser-sync": "~2.18.13",
     "browserify": "~14.4.0",
     "bulkify": "~1.4.2",
+    "clean-webpack-plugin": "~0.1.19",
+    "copy-webpack-plugin": "^4.5.2",
+    "css-loader": "^1.0.0",
     "del": "~3.0.0",
+    "file-loader": "^1.1.11",
     "font-awesome": "~4.7.0",
     "gulp": "~3.9.1",
     "gulp-angular-templatecache": "~2.0.0",
@@ -55,19 +64,31 @@
     "gulp-uglify": "~3.0.0",
     "gulp-util": "~3.0.7",
     "highcharts": "~6.0.0",
+    "html-webpack-plugin": "^3.2.0",
+    "http-proxy-middleware": "^0.18.0",
     "js-natural-sort": "~0.8.1",
     "jscs": "3.0.7",
     "jshint": "2.9.5",
+    "koa-connect": "^2.0.1",
     "lodash": "~4.17.4",
     "minimist": "~1.2.0",
     "moment": "~2.18.1",
+    "node-sass": "^4.9.2",
     "opn": "~5.1.0",
     "pikaday": "~1.6.1",
     "raven-js": "~3.18.1",
+    "require-all": "^3.0.0",
     "run-sequence": "~2.2.0",
+    "sass-loader": "^7.1.0",
     "sc5-styleguide": "2.0.4",
     "streamqueue": "~1.1.1",
+    "style-loader": "^0.21.0",
+    "url-loader": "^1.0.1",
     "vinyl-source-stream": "~1.1.0",
-    "watchify": "~3.9.0"
+    "watchify": "~3.9.0",
+    "webpack": "~4.16.2",
+    "webpack-cli": "~3.1.0",
+    "webpack-merge": "^4.1.4",
+    "webpack-serve": "^2.0.2"
   }
 }
