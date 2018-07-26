@@ -54,7 +54,7 @@ module Financials
           interest_rate = find_interest_rate(relevant_loan_config, loan)
           interest_visible = show_interest_rate? loan
           est_monthly_payment = calculate_estimated_monthly_payment(interest_rate, amount, relevant_loan_config.try(:[], :loanDuration))
-          minimum_monthly_payment = amount > 0 ? choose_monthly_payment(est_monthly_payment, relevant_loan_config.try(:[], :minLoanAmt)) : 0
+          minimum_monthly_payment = amount > 0 ? choose_monthly_payment(est_monthly_payment, relevant_loan_config.try(:[], :minLoanAmt), amount) : 0
 
           loans_hash[aid_year][:loans].push({
             amountOwed: parse_owed_value(amount),

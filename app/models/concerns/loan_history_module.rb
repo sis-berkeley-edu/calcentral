@@ -9,8 +9,9 @@ module Concerns
       (monthly_interest * principal_value) / (1 - (1 + monthly_interest)**(-repayment_period))
     end
 
-    def choose_monthly_payment(estimated, minimum)
-      return nil unless estimated && minimum
+    def choose_monthly_payment(estimated, minimum, total_amount_owed)
+      return nil unless estimated && minimum && total_amount_owed
+      return total_amount_owed if total_amount_owed < minimum
       estimated < minimum ? minimum : estimated
     end
 
