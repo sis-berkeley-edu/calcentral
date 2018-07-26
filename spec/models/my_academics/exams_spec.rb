@@ -83,6 +83,31 @@ describe MyAcademics::Exams do
     end
   end
 
+  describe '#exam_message' do
+    before { allow(CampusSolutions::MessageCatalog).to receive(:get_message_catalog_definition).with('32500', '110').and_return(message_object) }
+    let(:message_object) do
+      {
+        messageSetNbr: '32500',
+        messageNbr: '110',
+        messageText: 'Final Exam Schedule Message',
+        msgSeverity: 'M',
+        descrlong: 'Final exams are based on the day and time a course is offered.'
+      }
+    end
+    let(:message_response) { subject.exam_message }
+    context 'when message present' do
+      it 'returns long message description' do
+        expect(message_response).to eq 'Final exams are based on the day and time a course is offered.'
+      end
+    end
+    context 'when message not present' do
+      let(:message_object) { nil }
+      it 'returns nil' do
+        expect(message_response).to eq nil
+      end
+    end
+  end
+
   describe '#parse_semesters' do
     let(:semesters) do
       [
