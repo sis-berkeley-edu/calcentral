@@ -31,7 +31,8 @@ describe Concerns::LoanHistoryModule do
   describe '#choose_monthly_payment' do
     let(:estimated) { nil }
     let(:minimum) { 50 }
-    subject { described_class.choose_monthly_payment(estimated, minimum) }
+    let(:total_amount_owed) { 15000 }
+    subject { described_class.choose_monthly_payment(estimated, minimum, total_amount_owed) }
 
     context 'when only given some of the parameters' do
       it 'returns nil' do
@@ -51,6 +52,14 @@ describe Concerns::LoanHistoryModule do
         let(:estimated) { 100 }
         it 'returns the estimated value' do
           expect(subject).to eql(100)
+        end
+      end
+
+      context 'when total amount owed < minimum monthly payment' do
+        let(:estimated) { 45 }
+        let(:total_amount_owed) { 1 }
+        it 'returns the total amount owed as the minimum monthly payment' do
+          expect(subject).to eql(1)
         end
       end
     end
