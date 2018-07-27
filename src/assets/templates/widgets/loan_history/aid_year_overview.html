@@ -1,5 +1,5 @@
 <div class="cc-loan-history-aid-year">
-  <div data-ng-repeat="aidYear in loanHistory.aidYears | orderBy:'aidYear':reverse">
+  <div data-ng-repeat="aidYear in loanHistory.aidYears | orderBy:'aidYear':true">
     <div class="loan-category-description">
       <span>
         <h3 class="aid-year-header" data-ng-bind-template="{{aidYear.aidYearFormatted}} Aid Year"></h3> 
