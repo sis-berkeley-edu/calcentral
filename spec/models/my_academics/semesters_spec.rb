@@ -1,6 +1,6 @@
 describe MyAcademics::Semesters do
 
-  describe '#find_academic_careers', testext: false do
+  describe '#find_academic_careers' do
     subject { described_class.new(uid).find_academic_careers }
     let(:uid) { 300216 }
 
@@ -17,7 +17,7 @@ describe MyAcademics::Semesters do
     end
   end
 
-  describe '#semester_feed', testext: false do
+  describe '#semester_feed' do
     subject { described_class.new(uid).semester_feed(enrollment_terms, reg_status_data, standing_data) }
 
     before do

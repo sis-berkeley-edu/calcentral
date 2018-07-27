@@ -50,23 +50,4 @@ describe CampusSolutions::Phone do
       it_behaves_like 'a proxy that got data successfully'
     end
   end
-
-  context 'with a real external service', :testext => true do
-    let(:params) { {
-      type: 'CELL',
-      phone: '9949919892',
-      countryCode: '91',
-      extension: '23',
-      isPreferred: 'Y'
-    } }
-    let(:proxy) { CampusSolutions::Phone.new(fake: false, user_id: user_id, params: params) }
-
-    context 'performing a real post' do
-      subject {
-        proxy.get
-      }
-      it_should_behave_like 'a simple proxy that returns errors'
-      it_behaves_like 'a proxy that got data successfully'
-    end
-  end
 end

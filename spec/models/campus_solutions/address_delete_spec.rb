@@ -32,32 +32,4 @@ describe CampusSolutions::AddressDelete do
       it_behaves_like 'a proxy that got data successfully'
     end
   end
-
-  context 'with a real external service', testext: true do
-    let(:create_params) { {
-      addressType: 'HOME',
-      address1: '1 Test Lane',
-      address2: 'peters road',
-      city: 'ventura',
-      state: 'CA',
-      postal: '93001',
-      country: 'USA'
-    } }
-    before {
-      CampusSolutions::Address.new(fake: false, user_id: user_id, params: create_params).get
-    }
-
-    let(:proxy) { CampusSolutions::AddressDelete.new(fake: false, user_id: user_id, params: params) }
-    subject { proxy.get }
-
-    context 'a successful delete' do
-      let(:params) { {
-        type: 'HOME'
-      } }
-      context 'performing a real delete' do
-        it_behaves_like 'a proxy that got data successfully'
-      end
-    end
-
-  end
 end

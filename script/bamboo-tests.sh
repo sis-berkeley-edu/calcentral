@@ -1,8 +1,7 @@
 #!/bin/bash
-# Script to install necessary dependencies and then run either unit tests or testext tests, for use on Bamboo CI
+# Script to install necessary dependencies and then run unit tests, for use on Bamboo CI
 
 # set up environment
-# In the Bamboo job, configure the RAILS_ENV environment variable to "testext" to test against a set of real APIs.
 export RAILS_ENV=${RAILS_ENV:="test"}
 export DISPLAY=":99"
 export JRUBY_OPTS="-Xcompile.invokedynamic=false -J-Xmx900m -J-Djruby.compile.mode=OFF"
@@ -38,8 +37,4 @@ if [ "$2" == "uitest" ]; then
 elif [ $RAILS_ENV == "test" ]; then
   echo "Running tests with fixtures"
   bundle exec rake assets:clean spec:xml
-else
-  # run regular testext tests
-  echo "Running testext tests"
-  bundle exec rake assets:clean db:reset spec:xml
 fi

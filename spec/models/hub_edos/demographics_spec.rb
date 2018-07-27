@@ -43,18 +43,4 @@ describe HubEdos::Demographics do
       end
     end
   end
-
-  context 'real proxy', testext: true do
-    let(:proxy) { HubEdos::Demographics.new(fake: false, user_id: '61889') }
-    subject { proxy.get }
-
-    it_behaves_like 'a proxy that properly observes the profile feature flag'
-
-    it 'returns data with the expected structure' do
-      expect(subject[:feed]['student']).to be
-      expect(subject[:feed]['student']['ethnicities'][0]).to be
-      expect(subject[:feed]['student']['residency']).to be
-    end
-
-  end
 end

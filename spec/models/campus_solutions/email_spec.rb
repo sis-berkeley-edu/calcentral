@@ -68,32 +68,4 @@ describe CampusSolutions::Email do
       it_behaves_like 'a proxy that got data successfully'
     end
   end
-
-  context 'with a real external service', testext: true do
-    let(:proxy) { CampusSolutions::Email.new(fake: false, user_id: user_id, params: params) }
-    subject { proxy.post }
-
-    context 'a successful post' do
-      let(:params) { {
-        type: 'HOME',
-        email: 'foo@foo.com',
-        isPreferred: 'Y'
-      } }
-      context 'performing a real post' do
-        it_behaves_like 'a proxy that got data successfully'
-      end
-    end
-
-    context 'an invalid post' do
-      let(:params) { {
-        type: 'HOME',
-        email: '',
-        isPreferred: ''
-      } }
-      context 'performing a real but invalid post' do
-        it_should_behave_like 'a simple proxy that returns errors'
-        it_should_behave_like 'a proxy that responds to user error gracefully'
-      end
-    end
-  end
 end

@@ -1,5 +1,4 @@
 describe CampusSolutions::Title4 do
-
   let(:user_id) { '12345' }
 
   context 'post' do
@@ -44,21 +43,6 @@ describe CampusSolutions::Title4 do
       }
       it_should_behave_like 'a simple proxy that returns errors'
       it_behaves_like 'a proxy that properly observes the finaid feature flag'
-      it_behaves_like 'a proxy that got data successfully'
-    end
-  end
-
-  context 'with a real external service', :testext => true do
-    let(:params) { {
-      response: 'Y'
-    } }
-    let(:proxy) { CampusSolutions::Title4.new(fake: false, user_id: user_id, params: params) }
-
-    context 'performing a real post' do
-      subject {
-        proxy.get
-      }
-      it_should_behave_like 'a simple proxy that returns errors'
       it_behaves_like 'a proxy that got data successfully'
     end
   end

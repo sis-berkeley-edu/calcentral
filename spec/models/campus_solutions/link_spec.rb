@@ -96,10 +96,4 @@ describe CampusSolutions::Link do
       end
     end
   end
-
-  context 'real proxy', testext: true do
-    let(:fake_proxy) { false }
-
-    it_should_behave_like 'a proxy that gets data'
-  end
 end

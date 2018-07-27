@@ -32,28 +32,4 @@ describe CampusSolutions::EmailDelete do
       it_behaves_like 'a proxy that got data successfully'
     end
   end
-
-  context 'with a real external service', testext: true do
-    let(:create_params) { {
-      type: 'OTHR',
-      email: 'foo@foo.com',
-      isPreferred: 'N'
-    } }
-    before {
-      CampusSolutions::Email.new(fake: false, user_id: user_id, params: create_params).get
-    }
-
-    let(:proxy) { CampusSolutions::EmailDelete.new(fake: false, user_id: user_id, params: params) }
-    subject { proxy.get }
-
-    context 'a successful delete' do
-      let(:params) { {
-        type: 'OTHR'
-      } }
-      context 'performing a real delete' do
-        it_behaves_like 'a proxy that got data successfully'
-      end
-    end
-
-  end
 end

@@ -119,25 +119,6 @@ describe User::Oauth2Data do
     expect(User::Oauth2Data.get_canvas_email user_id).to_not be_blank
   end
 
-  it 'should simulate a non-responsive google', testext: true do
-    allow_any_instance_of(Google::APIClient).to receive(:execute).and_raise StandardError
-    allow(Google::APIClient).to receive(:execute).and_raise(StandardError)
-    user_info = GoogleApps::Userinfo.new(
-      access_token: Settings.google_proxy.test_user_access_token,
-      refresh_token: Settings.google_proxy.test_user_refresh_token,
-      expiration_time: 0
-    )
-    allow(GoogleApps::Userinfo).to receive(:new).and_return user_info
-    User::Oauth2Data.new_or_update(
-      user_id,
-      GoogleApps::Proxy::APP_ID,
-      access_token,
-      refresh_token,
-      1)
-    expect_any_instance_of(User::Oauth2Data).to_not receive(:save)
-    User::Oauth2Data.update_google_email! user_id
-  end
-
   it 'should invalidate cache when tokens are deleted' do
     oauth2 = User::Oauth2Data.new(
       uid: user_id,

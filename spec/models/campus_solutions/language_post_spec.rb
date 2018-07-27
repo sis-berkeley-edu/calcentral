@@ -54,25 +54,4 @@ describe CampusSolutions::LanguagePost do
       it_behaves_like 'a proxy that got data successfully'
     end
   end
-
-  context 'with a real external service', :testext => true do
-    let(:params) { {
-      languageCode: 'EN',
-      isNative: 'N',
-      isTranslateToNative: 'N',
-      isTeachLanguage: 'N',
-      speakProf: '1',
-      readProf: '2',
-      teachLang: '3'
-    } }
-    let(:proxy) { CampusSolutions::LanguagePost.new(fake: false, user_id: user_id, params: params) }
-
-    context 'performing a real post' do
-      subject {
-        proxy.get
-      }
-      it_should_behave_like 'a simple proxy that returns errors'
-      it_behaves_like 'a proxy that got data successfully'
-    end
-  end
 end

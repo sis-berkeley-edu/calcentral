@@ -23,7 +23,7 @@ Calcentral::Application.routes.draw do
   get '/api/smoke_test_routes' => 'routes_list#smoke_test_routes', :as => :all_routes, :defaults => { :format => 'json' }
 
   # Torquebox utility endpoints, not usable in a vanilla Rails deployment
-  if ENV['IS_TORQUEBOX'] || ['test', 'testext'].include?(ENV['RAILS_ENV'])
+  if ENV['IS_TORQUEBOX'] || ENV['RAILS_ENV'] == 'test'
     get '/api/torque/stats' => 'torquebox#stats', :defaults => {:format => 'json'}
     get '/api/torque/bg' => 'torquebox#bg', :defaults => {:format => 'json'}
     get '/api/torque/bg_msgs' => 'torquebox#bg_msgs', :defaults => {:format => 'json'}

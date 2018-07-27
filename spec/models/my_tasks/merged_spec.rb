@@ -209,22 +209,6 @@ describe 'MyTasks::Merged' do
     response.should == {:tasksCleared => false}
   end
 
-  it 'should simulate a non-responsive google', :testext => true do
-    GoogleApps::Proxy.stub(:access_granted?).and_return(true)
-    Google::APIClient.any_instance.stub(:execute).and_raise(StandardError)
-    Google::APIClient.stub(:execute).and_raise(StandardError)
-    GoogleApps::TasksList.stub(:new).and_return(@real_google_tasks_list_proxy)
-    GoogleApps::UpdateTask.stub(:new).and_return(@real_google_update_task_proxy)
-    GoogleApps::ClearTaskList.stub(:new).and_return(@real_google_clear_completed_tasks_proxy)
-    my_tasks_model = MyTasks::Merged.new(@user_id)
-    response = my_tasks_model.clear_completed_tasks params={'emitter' => 'Google'}
-    response.should == {:tasksCleared => false}
-    response = my_tasks_model.update_task({'type' => 'sometype', 'emitter' => GoogleApps::Proxy::APP_ID, 'status' => 'completed', 'id' => '1'}, '1')
-    response.should == {}
-    valid_feed = my_tasks_model.get_feed
-    valid_feed[:tasks].select {|entry| entry[:emitter] == 'Google'}.empty?.should be_truthy
-  end
-
   it 'should not explode on Canvas feeds that have invalid json' do
     GoogleApps::Proxy.stub(:access_granted?).and_return(false)
     Canvas::Proxy.stub(:access_granted?).and_return(true)

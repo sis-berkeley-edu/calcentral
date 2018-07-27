@@ -12,14 +12,6 @@ shared_examples 'an Oracle driven data source' do
   end
   let(:row_hash) { db_results[0].dup }
 
-  it 'uses Oracle JDBC driver', :testext => true do
-    expect(subject.connection).to be_an_instance_of ActiveRecord::ConnectionAdapters::JdbcAdapter
-  end
-
-  it 'verifies if test data source present', :testext => true do
-    expect(subject.test_data?).to eq false
-  end
-
   context 'when in test mode' do
     before { allow(subject).to receive(:test_data?).and_return(true) }
     describe '.timestamp_format' do

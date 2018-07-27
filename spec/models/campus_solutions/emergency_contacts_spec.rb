@@ -10,11 +10,8 @@ describe CampusSolutions::EmergencyContacts do
     it_behaves_like 'a proxy that got data successfully'
     it 'returns data with the expected structure' do
 
-      # Guard against the empty feed when testing against real proxy with testext context
       students_feed = subject[:feed][:students]
-
       if students_feed && students_feed[:student][:emergencyContacts]
-
         emergency_contacts = students_feed[:student][:emergencyContacts][:emergencyContact]
         expect(emergency_contacts.length).to be
 
@@ -59,10 +56,5 @@ describe CampusSolutions::EmergencyContacts do
       let(:filename) { 'emergency_contacts.xml'}
       it_should_behave_like 'a proxy that gets data'
     end
-  end
-
-  context 'real proxy', testext: true do
-    let(:fake_proxy) { false }
-    it_should_behave_like 'a proxy that gets data'
   end
 end

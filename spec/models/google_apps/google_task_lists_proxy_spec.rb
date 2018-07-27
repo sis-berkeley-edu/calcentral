@@ -13,15 +13,4 @@ describe GoogleApps::Proxy do
     response.data["kind"].should == "tasks#tasks"
     response.data["items"].size.should == 7
   end
-
-  it "should simulate a task list request", :testext => true do
-    proxy = GoogleApps::TasksList.new(
-      :access_token => Settings.google_proxy.test_user_access_token,
-      :refresh_token => Settings.google_proxy.test_user_refresh_token,
-      :expiration_time => 0
-    )
-    response_enum = proxy.tasks_list
-    response_enum.first.data["kind"].should == "tasks#tasks"
-  end
-
 end

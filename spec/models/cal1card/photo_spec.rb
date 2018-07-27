@@ -37,10 +37,4 @@ describe Cal1card::Photo do
       end
     end
   end
-
-  context 'real proxy', testext: true do
-    let(:fake) { false }
-    let(:uid) { '211159' }
-    it_behaves_like 'a proxy returning valid photo data'
-  end
 end

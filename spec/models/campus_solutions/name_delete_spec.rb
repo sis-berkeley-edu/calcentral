@@ -32,41 +32,4 @@ describe CampusSolutions::NameDelete do
       it_behaves_like 'a proxy that got data successfully'
     end
   end
-
-  context 'with a real external service', testext: true do
-    let(:create_params) { {
-      type: 'LEG',
-      firstName: 'Joey',
-      lastName: 'Test',
-      initials: 'JT',
-      prefix: 'Mr',
-      suffix: '',
-      royalPrefix: '',
-      royalSuffix: '',
-      title: '',
-      middleName: '',
-      secondLastName: '',
-      ac: '',
-      preferredFirstName: '',
-      partnerLastName: '',
-      partnerRoyalPrefix: '',
-      lastNamePrefNld: ''
-    } }
-    before {
-      CampusSolutions::PersonName.new(fake: false, user_id: user_id, params: create_params).get
-    }
-
-    let(:proxy) { CampusSolutions::NameDelete.new(fake: false, user_id: user_id, params: params) }
-    subject { proxy.get }
-
-    context 'a successful delete' do
-      let(:params) { {
-        type: 'LEG'
-      } }
-      context 'performing a real delete' do
-        it_behaves_like 'a proxy that got data successfully'
-      end
-    end
-
-  end
 end

@@ -48,22 +48,6 @@ feature 'MyBadges urls:' do
     @fake_calendar_events = GoogleApps::EventsRecentItems.new(:fake => true)
   end
 
-  scenario 'see if munged urls from google_calendar badges resolve', :testext => true do
-    #This requires an existing event to be exist from the time listed below.
-    event_listed_after = '2013-05-09T12:42:02-07:00'
-    GoogleApps::Proxy.stub(:access_granted?).and_return(true)
-    GoogleApps::EventsRecentItems.stub(:new).and_return(@real_calendar_events)
-    results = MyBadges::GoogleCalendar.new(@user_id).fetch_counts(
-      {
-        timeMin: event_listed_after,
-        updatedMin: nil
-      })
-    expect(results[:items]).not_to be_empty
-    first_link = results[:items].first[:link]
-    eid = Rack::Utils.parse_query(URI.parse(first_link).query)['eid']
-    selenium_check_url_exists(first_link, eid)
-  end
-
   scenario 'see if mungled urls from google_calendar badges != passed through urls for berkeley.edu tokens' do
     User::Oauth2Data.stub(:get_google_email).and_return('oski.the.creepy.bear@berkeley.edu')
     GoogleApps::Proxy.stub(:access_granted?).and_return(true)

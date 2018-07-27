@@ -27,9 +27,4 @@ describe CampusSolutions::AdvisorStudentActionItems do
       expect(subject[:feed][:ucAaActionItems][:actionItems][0][:actionItemDescription]).to eq 'Testing 123'
     end
   end
-
-  context 'real proxy', testext: true, :ignore => true do
-    let(:proxy) { CampusSolutions::AdvisorStudentActionItems.new(fake: false, user_id: user_id) }
-    it_should_behave_like 'a proxy that gets data'
-  end
 end

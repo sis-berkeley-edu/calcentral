@@ -115,13 +115,13 @@ gem 'closure-compiler', '~> 1.1.11'
 
 # Oracle adapter
 # Purposely excluding this for test environments since folks have to install ojdbc6
-group :development, :testext, :production do
+group :development, :production do
   gem 'activerecord-oracle_enhanced-adapter', '~> 1.6.0'
   gem 'rvm-capistrano', '~> 1.3.1'
   gem 'capistrano', '~> 2.15.4'
 end
 
-group :development, :test , :testext do
+group :development, :test do
   gem 'rspec-core', '~> 3.4.0'
   gem 'rspec-rails', '~> 3.4.1'
   gem 'rspec-mocks', '~> 3.4.0'
@@ -168,9 +168,7 @@ end
 group :test do
   gem 'activerecord-jdbcsqlite3-adapter', '~> 1.3.16'
   gem 'page-object', '~> 1.2.0'
-end
 
-group :test, :testext do
   # RSpec results that Hudson + Bamboo + xml happy CI servers can read. See https://rubygems.org/gems/rspec_junit_formatter
   # TODO: Use gem 'rspec_junit_formatter', '~> 0.2.x' when deprecated concern of CLC-3565 is resolved.
   gem 'rspec_junit_formatter', :git => 'https://github.com/sj26/rspec_junit_formatter.git'

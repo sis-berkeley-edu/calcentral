@@ -295,48 +295,10 @@ describe CampusOracle::Queries do
       expect { CampusOracle::Queries.find_people_by_name('TEST-', '15') }.to raise_error(ArgumentError, 'Limit argument must be a Fixnum')
     end
 
-    it 'should escape user input to avoid SQL injection', :testext => true do
+    it 'should escape user input to avoid SQL injection' do
+      allow(CampusOracle::Queries.connection).to receive(:select_all).and_return(nil)
       CampusOracle::Queries.connection.should_receive(:quote_string).with("anything' OR 'x'='x").and_return("anything'' OR ''x''=''x")
       user_data = CampusOracle::Queries.find_people_by_name("anything' OR 'x'='x")
-    end
-
-    it 'should be able to find users by last name separated by a comma and space', :testext => true do
-      user_data = CampusOracle::Queries.find_people_by_name('smith, j', 10)
-      expect(user_data).to be_an_instance_of Array
-      if user_data.count > 0
-        expect(user_data[0]).to be_an_instance_of Hash
-        expect(user_data[0]['first_name']).to be_an_instance_of String
-        expect(user_data[0]['last_name']).to be_an_instance_of String
-      end
-    end
-
-    it 'should provide row number and count column', :testext => true do
-      user_data = CampusOracle::Queries.find_people_by_name('smith, j', 10)
-      expect(user_data).to be_an_instance_of Array
-      if user_data.count > 0
-        expect(user_data[0]).to be_an_instance_of Hash
-        expect(user_data[0]['row_number']).to be_an_instance_of BigDecimal
-        expect(user_data[0]['result_count']).to be_an_instance_of BigDecimal
-      end
-    end
-
-    it 'should be able to limit the number of results', :testext => true do
-      user_data = CampusOracle::Queries.find_people_by_name('smith', 2)
-      expect(user_data).to be_an_instance_of Array
-      expect(user_data).to have(2).items
-    end
-
-    it 'should exclude inactive accounts', :testext => true do
-      user_data = CampusOracle::Queries.find_people_by_name('smith', 100)
-      user_data.each do |row|
-        expect(row['affiliations']).to include '-TYPE-'
-        expect(row['person_type']).not_to eq 'Z'
-      end
-    end
-
-    it 'should include the expired-account marker', :testext => true do
-      user_data = CampusOracle::Queries.find_people_by_name('smith', 1)
-      expect(user_data.first['person_type']).to be_present
     end
   end
 
@@ -347,50 +309,6 @@ describe CampusOracle::Queries do
 
     it 'should raise exception if row limit argument is not an integer' do
       expect { CampusOracle::Queries.find_people_by_email('test-', '15') }.to raise_error(ArgumentError, 'Limit argument must be a Fixnum')
-    end
-
-    it 'should escape user input to avoid SQL injection', :testext => true do
-      CampusOracle::Queries.connection.should_receive(:quote_string).with("anything' OR 'x'='x").and_return("anything'' OR ''x''=''x")
-      user_data = CampusOracle::Queries.find_people_by_email("anything' OR 'x'='x")
-    end
-
-    it 'should be able to find users by partial email', :testext => true do
-      user_data = CampusOracle::Queries.find_people_by_email('johnson')
-      expect(user_data).to be_an_instance_of Array
-      if user_data.count > 0
-        expect(user_data[0]).to be_an_instance_of Hash
-        expect(user_data[0]['first_name']).to be_an_instance_of String
-        expect(user_data[0]['last_name']).to be_an_instance_of String
-      end
-    end
-
-    it 'should provide row number and count column', :testext => true do
-      user_data = CampusOracle::Queries.find_people_by_email('john', 1)
-      expect(user_data).to be_an_instance_of Array
-      if user_data.count > 0
-        expect(user_data[0]).to be_an_instance_of Hash
-        expect(user_data[0]['row_number']).to be_an_instance_of BigDecimal
-        expect(user_data[0]['result_count']).to be_an_instance_of BigDecimal
-      end
-    end
-
-    it 'should be able to limit the number of results', :testext => true do
-      user_data = CampusOracle::Queries.find_people_by_email('john', 5)
-      expect(user_data).to be_an_instance_of Array
-      expect(user_data).to have(5).items
-    end
-
-    it 'should exclude inactive accounts', :testext => true do
-      user_data = CampusOracle::Queries.find_people_by_email('john', 100)
-      user_data.each do |row|
-        expect(row['affiliations']).to include '-TYPE-'
-        expect(row['person_type']).not_to eq 'Z'
-      end
-    end
-
-    it 'should include the expired-account marker', :testext => true do
-      user_data = CampusOracle::Queries.find_people_by_email('john', 1)
-      expect(user_data.first['person_type']).to be_present
     end
   end
 

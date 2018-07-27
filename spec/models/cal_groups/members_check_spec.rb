@@ -66,15 +66,4 @@ describe CalGroups::MembersCheck do
       include_examples 'error response'
     end
   end
-
-  # This testext group is disabled until CLC-5251 is resolved.
-  context 'using real data feed', testext: true, ignore: true do
-    let(:fake) { false }
-    subject { result }
-
-    include_examples 'membership expectations'
-
-    it_behaves_like 'a proxy logging errors'
-    it_behaves_like 'a polite HTTP client'
-  end
 end

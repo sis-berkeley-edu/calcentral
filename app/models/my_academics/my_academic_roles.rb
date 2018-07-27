@@ -13,7 +13,6 @@ module MyAcademics
     end
 
     def get_current_roles
-      term_cpp = MyAcademics::MyTermCpp.new(@uid).get_feed
       current_term = Berkeley::Terms.fetch.current.try(:campus_solutions_id)
       current_term_cpp = term_cpp.select {|t| t['term_id'].to_s >= current_term.to_s }
       get_roles(current_term_cpp)
@@ -36,7 +35,6 @@ module MyAcademics
     end
 
     def get_historical_roles
-      term_cpp = MyAcademics::MyTermCpp.new(@uid).get_feed
       roles = role_defaults
       assigned_roles = []
 
@@ -58,6 +56,10 @@ module MyAcademics
           default_roles[role] = true
         end
       end
+    end
+
+    def term_cpp
+      @term_cpp ||= MyAcademics::MyTermCpp.new(@uid).get_feed
     end
   end
 end

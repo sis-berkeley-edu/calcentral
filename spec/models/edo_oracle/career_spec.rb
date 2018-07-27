@@ -1,4 +1,4 @@
-describe EdoOracle::Career, testext: false do
+describe EdoOracle::Career do
 
   describe '#fetch' do
     subject { described_class.new({user_id: uid}).fetch }

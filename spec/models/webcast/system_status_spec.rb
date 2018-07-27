@@ -19,15 +19,4 @@ describe Webcast::SystemStatus do
       end
     end
   end
-
-  context 'a real, non-fake proxy' do
-    subject { Webcast::SystemStatus.new }
-
-    context 'real data', :testext => true do
-      it 'should return true or false' do
-        flag = subject.get[:isSignUpActive]
-        expect([true, false]).to include flag
-      end
-    end
-  end
 end

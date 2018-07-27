@@ -76,30 +76,4 @@ describe CalGroups::MemberCheck do
       include_examples 'error response'
     end
   end
-
-  # This testext group is disabled until CLC-5251 is resolved.
-  context 'using real data feed', testext: true, ignore: true do
-    let(:fake) { false }
-    let(:group_name) { 'testgroup' }
-    subject { result }
-
-    context 'a known member' do
-      let(:member_id) { '242881' }
-      it 'affirms membership' do
-        expect(result[:isMember]).to eq true
-      end
-      include_examples 'verbose response'
-    end
-
-    context 'a known nonmember' do
-      let(:member_id) { '1015749' }
-      it 'denies membership' do
-        expect(result[:isMember]).to eq false
-      end
-      include_examples 'verbose response'
-    end
-
-    it_behaves_like 'a proxy logging errors'
-    it_behaves_like 'a polite HTTP client'
-  end
 end

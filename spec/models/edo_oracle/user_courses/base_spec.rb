@@ -1,43 +1,4 @@
 describe EdoOracle::UserCourses::Base do
-
-  describe '#merge_enrollments', testext: false do
-    before do
-      allow(Settings.edodb).to receive(:fake).and_return false
-      allow(Settings.terms).to receive(:fake_now).and_return nil
-      allow(Settings.terms).to receive(:use_term_definitions_json_file).and_return true
-      allow(Settings.features).to receive(:hub_term_api).and_return false
-    end
-
-    subject do
-      feed = {}
-      described_class.new(user_id: user_id).merge_enrollments(feed)
-      feed
-    end
-    let(:user_id) { 799934 }
-
-    it 'assembles the enrollments feed' do
-      expect(subject).to be
-    end
-    it 'groups the classes by term' do
-      expect(subject['2017-D']).to be
-      expect(subject['2017-D'].count).to eq 2
-      expect(subject['2016-C']).to be
-      expect(subject['2016-C'].count).to eq 1
-    end
-    it 'provides the expected data for each class' do
-      expect(subject['2017-D'][0][:academicCareer]).to eq 'UGRD'
-      expect(subject['2017-D'][0][:term_id]).to eq '2178'
-      expect(subject['2017-D'][0][:requirementsDesignationCode]).to be nil
-      expect(subject['2017-D'][1][:academicCareer]).to eq 'UGRD'
-      expect(subject['2017-D'][1][:term_id]).to eq '2178'
-      expect(subject['2017-D'][1][:requirementsDesignationCode]).to be nil
-
-      expect(subject['2016-C'][0][:academicCareer]).to eq 'UGRD'
-      expect(subject['2016-C'][0][:term_id]).to eq '2165'
-      expect(subject['2016-C'][0][:requirementsDesignationCode]).to be nil
-    end
-  end
-
   context 'using stubbed proxy' do
     RSpec::Matchers.define :terms_following_and_including_cutoff do |cutoff|
       match do |terms|

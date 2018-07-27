@@ -1,5 +1,4 @@
 describe CampusSolutions::WorkExperience do
-
   let(:user_id) { '12351' }
 
   context 'post' do
@@ -44,34 +43,6 @@ describe CampusSolutions::WorkExperience do
       }
       it_should_behave_like 'a simple proxy that returns errors'
       it_behaves_like 'a proxy that properly observes the profile feature flag'
-      it_behaves_like 'a proxy that got data successfully'
-    end
-  end
-
-  context 'with a real external service', testext: true, ignore: true  do
-    let(:params) { {
-      sequenceNbr: '',
-      employmentDescr: 'Petting Zoo',
-      country: 'USA',
-      city: 'ventura',
-      state: 'CA',
-      phone: '1234',
-      startDt: '08/11/2012',
-      endDt: '08/11/2015',
-      titleLong: 'Test Title',
-      employFrac: '10',
-      hoursPerWeek: '4',
-      endingPayRate: '10000',
-      currencyType: 'USD',
-      payFrequency: 'M'
-    } }
-    let(:proxy) { CampusSolutions::WorkExperience.new(fake: false, user_id: user_id, params: params) }
-
-    context 'performing a real post' do
-      subject {
-        proxy.get
-      }
-      it_should_behave_like 'a simple proxy that returns errors'
       it_behaves_like 'a proxy that got data successfully'
     end
   end

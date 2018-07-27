@@ -396,27 +396,6 @@ module EdoOracle
       SQL
     end
 
-    # EDO equivalent of CampusOracle::Queries.terms
-    # Changes:
-    #   - 'term_yr' and 'term_cd' replaced by 'term_id'
-    #   - 'term_status', 'term_status_desc', and 'current_tb_term_flag' are not present.
-    #     No indication of past, current, or future term status
-    #   - Multiple entries for each term due to differing start and end dates that
-    #     may exist for LAW as compared to GRAD, UGRAD, or UCBX
-    def self.terms
-      safe_query <<-SQL
-        SELECT
-          term."STRM" as term_code,
-          trim(term."DESCR") AS term_name,
-          term."TERM_BEGIN_DT" AS term_start_date,
-          term."TERM_END_DT" AS term_end_date
-        FROM
-          SISEDO.TERM_TBL_VW term
-        ORDER BY
-          term_start_date desc
-      SQL
-    end
-
     # TODO: Update this and dependencies to require term
     def self.get_cross_listed_course_title(course_code)
       result = safe_query <<-SQL
@@ -843,7 +822,7 @@ module EdoOracle
           TYPE_DETAILS_VIEW_NAME as loan_child_vw
         FROM
           SISEDO.CLC_FA_LNHST_CUMULATIVE
-        WHERE 
+        WHERE
           INSTITUTION = 'UCB01'
       SQL
       result

@@ -1,5 +1,4 @@
-describe ServiceAlertsController, :testext => true do
-
+describe ServiceAlertsController do
   before do
     allow(ServiceAlerts::Alert).to receive(:get_latest).and_return(fake_alert)
   end
@@ -33,5 +32,4 @@ describe ServiceAlertsController, :testext => true do
       expect(json_response['releaseNote']).to be_present
     end
   end
-
 end

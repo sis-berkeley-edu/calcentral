@@ -44,7 +44,7 @@ describe CampusSolutions::MessageCatalog do
     end
   end
 
-  shared_examples 'a proxy that gets data' do
+  context '#get' do
     let(:message_set_nbr) {'26500'}
     let(:message_nbr) {'112'}
     let(:fake_flag) { true }
@@ -63,15 +63,5 @@ describe CampusSolutions::MessageCatalog do
       expect(message[:messageText]).to be
       expect(message[:descrlong]).to be
     end
-  end
-
-  context 'mock proxy' do
-    let(:fake_proxy) { true }
-    it_should_behave_like 'a proxy that gets data'
-  end
-
-  context 'real proxy', testext: true do
-    let(:fake_proxy) { false }
-    it_should_behave_like 'a proxy that gets data'
   end
 end
