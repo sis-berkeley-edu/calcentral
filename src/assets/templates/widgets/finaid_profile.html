@@ -21,30 +21,32 @@
           </div>
           <div data-ng-if="category.show" data-ng-repeat="items in category.itemGroups" class="cc-widget-finaid-profile-itemgroup">
             <div data-ng-repeat="item in items" class="cc-clearfix-container">
-              <div class="cc-left">
-                <strong data-ng-bind="item.title"></strong>
-                <a data-ng-if="item.title === 'Title IV' && api.user.profile.actAsOptions.canSeeCSLinks" href="/profile/title4">
-                  Update
-                  <span class="cc-visuallyhidden" data-ng-bind="item.title"></span>
-                </a>
-                <a data-ng-if="item.link.url && api.user.profile.actAsOptions.canSeeCSLinks"
-                  data-cc-campus-solutions-link-directive
-                  data-cc-campus-solutions-link-directive-url="item.link.url"
-                  data-cc-campus-solutions-link-directive-cc-cache="finaid"
-                  data-cc-campus-solutions-link-directive-cc-page-name="currentPage.name"
-                  data-cc-campus-solutions-link-directive-cc-page-url="currentPage.url"
-                  data-cc-campus-solutions-link-directive-uc-from="true"
-                  data-cc-campus-solutions-link-directive-uc-from-link="true"
-                  data-cc-campus-solutions-link-directive-uc-from-text="true"
-                >
-                  <span data-ng-bind="item.link.title"></span>
-                  <span class="cc-visuallyhidden" data-ng-bind="category.title"></span>
-                </a>
-              </div>
-              <div class="cc-right" data-ng-bind="item.value" data-ng-if="item.value"></div>
-              <div class="cc-right" data-ng-if="item.values">
-                <div data-ng-repeat="value in item.values" class="cc-text-right">
-                  <div data-ng-bind="value.subvalue.join(' &bull; ')"></div>
+              <div data-ng-if="item.title !== 'SHIP Health Insurance'">
+                <div class="cc-left">
+                  <strong data-ng-bind="item.title"></strong>
+                  <a data-ng-if="item.title === 'Title IV' && api.user.profile.actAsOptions.canSeeCSLinks" href="/profile/title4">
+                    Update
+                    <span class="cc-visuallyhidden" data-ng-bind="item.title"></span>
+                  </a>
+                  <a data-ng-if="item.link.url && api.user.profile.actAsOptions.canSeeCSLinks"
+                    data-cc-campus-solutions-link-directive
+                    data-cc-campus-solutions-link-directive-url="item.link.url"
+                    data-cc-campus-solutions-link-directive-cc-cache="finaid"
+                    data-cc-campus-solutions-link-directive-cc-page-name="currentPage.name"
+                    data-cc-campus-solutions-link-directive-cc-page-url="currentPage.url"
+                    data-cc-campus-solutions-link-directive-uc-from="true"
+                    data-cc-campus-solutions-link-directive-uc-from-link="true"
+                    data-cc-campus-solutions-link-directive-uc-from-text="true"
+                  >
+                    <span data-ng-bind="item.link.title"></span>
+                    <span class="cc-visuallyhidden" data-ng-bind="category.title"></span>
+                  </a>
+                </div>
+                <div class="cc-right" data-ng-bind="item.value" data-ng-if="item.value"></div>
+                <div class="cc-right" data-ng-if="item.values">
+                  <div data-ng-repeat="value in item.values" class="cc-text-right">
+                    <div data-ng-bind="value.subvalue.join(' &bull; ')"></div>
+                  </div>
                 </div>
               </div>
             </div>
