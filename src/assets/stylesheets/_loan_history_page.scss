@@ -17,11 +17,17 @@
           font-size: 12px;
           padding: 8px;
         }
+        th {
+          vertical-align: bottom;
+        }
       }
     }
     .grand-total {
       table {
         margin-bottom: 0;
+        tfoot td {
+          font-size: 14px;
+        }
       }
     }
     .loan-category-description {
@@ -40,11 +46,17 @@
           margin: 0;
         }
         th {
+          &:nth-child(1), &:nth-child(4), &:nth-child(5) {
+            width: 15%;
+          }
           &:nth-child(2) {
-            width: 50%;
+            width: 35%;
           }
           &:nth-child(3) {
             width: 20%;
+          }
+          &:nth-child(4) {
+            min-width: 105px;
           }
         }
       }
@@ -83,7 +95,7 @@
         }
         th {
           &:first-child {
-            width: 60%;
+            width: 50%;
           }
         }
         @media #{$small-only} {
