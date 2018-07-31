@@ -49,14 +49,9 @@ module MyAcademics
 
     def get_enrollment_plan_role(term_cpp)
       career_role = get_academic_career_roles(term_cpp['acad_career']).first
-
-      plan_based_roles = []
-      plan_based_roles << get_academic_career_roles(term_cpp['acad_career'])
-      plan_based_roles << get_academic_program_roles(term_cpp['acad_program'])
-      plan_based_roles << get_academic_plan_roles(term_cpp['acad_plan'])
+      plan_based_roles = get_academic_plan_roles(term_cpp['acad_plan'])
       plan_based_roles.flatten!
       plan_based_roles.uniq!
-
       determine_enrollment_specific_role(plan_based_roles, career_role)
     end
 
