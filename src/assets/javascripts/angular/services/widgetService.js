@@ -1,6 +1,6 @@
 'use strict';
 
-var angular = require('angular');
+
 
 angular.module('calcentral.services').service('widgetService', function(analyticsService) {
   /**

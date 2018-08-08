@@ -1,7 +1,7 @@
 /* jshint camelcase: false */
 'use strict';
 
-var angular = require('angular');
+
 var _ = require('lodash');
 
 angular.module('calcentral.services').factory('rosterService', function($filter) {

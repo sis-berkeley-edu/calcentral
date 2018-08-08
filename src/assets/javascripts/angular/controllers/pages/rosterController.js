@@ -1,7 +1,7 @@
 /* jshint camelcase: false */
 'use strict';
 
-var angular = require('angular');
+
 
 /**
  * Canvas roster photos LTI app controller

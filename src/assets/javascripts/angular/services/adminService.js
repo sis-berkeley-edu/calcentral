@@ -1,7 +1,7 @@
 /* jshint camelcase: false */
 'use strict';
 
-var angular = require('angular');
+
 
 angular.module('calcentral.services').service('adminService', function(adminFactory, apiService) {
   var actAs = function(user) {

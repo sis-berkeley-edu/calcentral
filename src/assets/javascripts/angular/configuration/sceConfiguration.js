@@ -1,6 +1,6 @@
 'use strict';
 
-var angular = require('angular');
+
 
 /**
  * Set the SCE configuration for CalCentral

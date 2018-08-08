@@ -1,19 +1,52 @@
 /* jshint esversion:6 */
+/* jscs: disable  requireBlocksOnNewline */
+'use strict';
+
+// Angular
+require('angular');
+require('angular-route');
+require('angular-sanitize');
+
+// Node
 require('lodash');
 require('moment');
 require('js-natural-sort');
 require('raven-js');
 require('pikaday');
-require('angular');
-require('angular-route');
-require('angular-sanitize');
-// require('bulk-require')(__dirname, ['./**/*.js']);
+
+// CalCentral JS - Initialization
+require('./angular/calcentral.js');
+
+// CalCentral JS - Configuration
+let configuration = require.context('./angular/configuration', true, /\.js$/);
+configuration.keys().forEach(configuration);
+
+// CalCentral JS - Directives
+let directives = require.context('./angular/directives', true, /\.js$/);
+directives.keys().forEach(directives);
+
+// CalCentral JS - Factories
+let factories = require.context('./angular/factories', true, /\.js$/);
+factories.keys().forEach(factories);
+
+// CalCentral JS - Filters
+let filters = require.context('./angular/filters', true, /\.js$/);
+filters.keys().forEach(filters);
+
+// CalCentral JS - Services
+let services = require.context('./angular/services', true, /\.js$/);
+services.keys().forEach(services);
+
+// CalCentral JS - Controllers
+let controllers = require.context('./angular/controllers', true, /\.js$/);
+controllers.keys().forEach(controllers);
+require('./angular/controllers/calcentralController.js');
+
+// CalCentral Templates
+const templates = require.context('../templates', true, /\.html$/);
+templates.keys().forEach((key) => { templates(key); });
 
 // Styles
-import '../stylesheets/lib/foundation.css';
-import '../stylesheets/calcentral.scss';
-import '../stylesheets/colors.scss';
-
-// CalCentral JS
-require('require-all')(__dirname + '/angular');
-require('require-all')(__dirname + '/angularlib');
+require('../stylesheets/lib/foundation.css');
+require('../stylesheets/calcentral.scss');
+require('../stylesheets/colors.scss');

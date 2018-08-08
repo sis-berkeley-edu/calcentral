@@ -1,6 +1,6 @@
 'use strict';
 
-var angular = require('angular');
+
 
 /**
  * Canvas Course Add User Factory - Interface for 'Find a Person to Add' tool API endpoints

@@ -1,7 +1,7 @@
 'use strict';
 
 var _ = require('lodash');
-var angular = require('angular');
+
 
 /**
  * Profile Menu Serives - provide all the information for the profile menu

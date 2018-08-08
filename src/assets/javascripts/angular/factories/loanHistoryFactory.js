@@ -1,6 +1,6 @@
 'use strict';
 
-var angular = require('angular');
+
 
 angular.module('calcentral.factories').factory('loanHistoryFactory', function(apiService) {
   var urlAidYears = 'api/my/loan_history_aid_years';

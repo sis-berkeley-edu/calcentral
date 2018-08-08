@@ -1,6 +1,6 @@
 'use strict';
 
-var angular = require('angular');
+
 
 /**
  * Canvas Site Mailing List Factory; API endpoint for the course-level bCourses tool to create a single mailing list.

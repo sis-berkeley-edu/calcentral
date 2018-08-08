@@ -1,6 +1,5 @@
 'use strict';
 
-var angular = require('angular');
 
 /**
  * CalCentral main controller

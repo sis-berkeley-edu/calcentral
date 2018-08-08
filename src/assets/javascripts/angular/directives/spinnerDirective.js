@@ -1,6 +1,6 @@
 'use strict';
 
-var angular = require('angular');
+
 
 /**
  * This attribute will replace the element by a spinner until data is returned in an HTTP respsonse.

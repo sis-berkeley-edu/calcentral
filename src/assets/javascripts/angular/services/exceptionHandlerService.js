@@ -1,6 +1,6 @@
 'use strict';
 
-var angular = require('angular');
+
 
 angular.module('calcentral.services').factory('$exceptionHandler', function($log, errorService) {
   // Return the function

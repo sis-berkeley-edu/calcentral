@@ -1,7 +1,7 @@
 'use strict';
 
 var _ = require('lodash');
-var angular = require('angular');
+
 
 /**
  * Finaid COA (Cost of Attendance) controller

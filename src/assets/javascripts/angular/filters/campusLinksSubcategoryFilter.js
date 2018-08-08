@@ -1,6 +1,6 @@
 'use strict';
 
-var angular = require('angular');
+
 
 // There is no way to pass in a parameter to a filter, so we need to create our own
 // http://stackoverflow.com/questions/11753321

@@ -53,30 +53,73 @@ module.exports = {
   },
   module: {
     rules: [
-      { test: /\.js$/, exclude: /node_modules/, loader: 'babel-loader' },
-      // options.limit sets our base64 encoding threshold at 8KB
-      { test: /\.(png|svg|jpg|gif)$/, loader: 'url-loader', options: { name: '[name].[ext]', outputPath: 'assets/images/', limit: 8 * 1024 } },
-      { test: /\.(woff|woff2|eot|ttf|otf)$/, loader: 'file-loader' }
+      { test: /\.js$/,
+        exclude: path.resolve(__dirname, '../node_modules'),
+        use: [
+          { loader: 'ng-annotate-loader',
+            options: {
+              add: true
+            }
+          },
+          { loader: 'babel-loader' }
+        ]
+      },
+      { test: /\.html$/,
+        exclude: [
+          path.resolve(__dirname, '../src/base.html'),
+          path.resolve(__dirname, '../src/bcourses_embedded.html'),
+          path.resolve(__dirname, '../src/index-junction.html'),
+          path.resolve(__dirname, '../src/index-main.html')
+        ],
+        use: [
+          { loader: 'ngtemplate-loader',
+            options: {
+              module: 'templates',
+              relativeTo: '/src/assets/templates/',
+              requireAngular: true
+            }
+          },
+          { loader: 'html-loader',
+            options: {
+              attrs: [':data-ng-src']
+            }
+          }
+        ]
+      },
+      { test: /\.(png|svg|jpg|gif|ico)$/,
+        loader: 'url-loader',
+        options: {
+          name: '[name].[ext]',
+          outputPath: 'assets/images/',
+          // sets our base64 encoding threshold at 8KB
+          limit: 8 * 1024
+        }
+      },
+      { test: /\.(woff|woff2|eot|ttf|otf)$/,
+        loader: 'file-loader'
+      }
     ]
   },
-  target: 'node',
   plugins: [
     new cleanWebpackPlugin(pathsToClean, { root: path.resolve(__dirname, '../public/') }),
     new copyWebpackPlugin([
-      { from: paths.source.assets.fonts, to: paths.public.assets.fonts }
+      { from: paths.source.assets.fonts, to: paths.public.assets.fonts },
     ]),
     new htmlWebpackPlugin({
       filename: paths.public.templates.bCoursesEmbedded,
+      inject: false,
       injectedHtml: paths.source.templates.bCoursesEmbedded,
       template: paths.source.templates.base
     }),
     new htmlWebpackPlugin({
       filename: paths.public.templates.indexJunction,
+      inject: false,
       injectedHtml: paths.source.templates.indexJunction,
       template: paths.source.templates.base
     }),
     new htmlWebpackPlugin({
       filename: paths.public.templates.index,
+      inject: false,
       injectedHtml: paths.source.templates.index,
       template: paths.source.templates.base
     })

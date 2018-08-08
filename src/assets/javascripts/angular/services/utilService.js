@@ -1,6 +1,6 @@
 'use strict';
 
-var angular = require('angular');
+
 
 angular.module('calcentral.services').service('utilService', function($cacheFactory, $http, $location, $rootScope, $route, $window, calcentralConfig) {
 

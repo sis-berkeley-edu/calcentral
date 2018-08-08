@@ -1,6 +1,6 @@
 'use strict';
+require('../angularlib/swipeDirective');
 
-var angular = require('angular');
 
 /**
  * Initialize all of the submodules
@@ -11,6 +11,7 @@ angular.module('calcentral.directives', []);
 angular.module('calcentral.factories', []);
 angular.module('calcentral.filters', []);
 angular.module('calcentral.services', ['ng']);
+angular.module('templates', []);
 
 /**
  * CalCentral module

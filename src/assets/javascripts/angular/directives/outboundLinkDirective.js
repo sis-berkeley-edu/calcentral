@@ -1,6 +1,6 @@
 'use strict';
 
-var angular = require('angular');
+
 
 /**
  * Parse a request and location URL and determine whether this is a same-domain request.

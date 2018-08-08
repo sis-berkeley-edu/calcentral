@@ -1,6 +1,6 @@
 'use strict';
 
-var angular = require('angular');
+
 
 angular.module('calcentral.services').factory('spinnerInterceptorService', function($q) {
   return {

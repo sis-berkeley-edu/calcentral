@@ -1,7 +1,7 @@
 'use strict';
 
 var _ = require('lodash');
-var angular = require('angular');
+
 
 angular.module('calcentral.services').service('finaidService', function($rootScope, userService) {
   var options = {

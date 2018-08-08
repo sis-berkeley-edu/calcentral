@@ -1,6 +1,6 @@
 'use strict';
 
-var angular = require('angular');
+
 
 /**
  * The delegate user is sent to this page after creating a new CalNet account.

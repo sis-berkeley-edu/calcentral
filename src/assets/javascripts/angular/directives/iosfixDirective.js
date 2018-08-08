@@ -1,6 +1,6 @@
 'use strict';
 
-var angular = require('angular');
+
 
 /**
  * iOS devices don't support event bubbling all the way to the top.

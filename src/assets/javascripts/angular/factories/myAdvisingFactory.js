@@ -1,6 +1,6 @@
 'use strict';
 
-var angular = require('angular');
+
 
 /**
  * Serves data to Students about Advising Relationships, Action Items, and Appointments

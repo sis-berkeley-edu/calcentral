@@ -1,6 +1,6 @@
 'use strict';
 
-var angular = require('angular');
+
 
 angular.module('calcentral.factories').factory('degreeProgressFactory', function(apiService) {
   var undergraduateRequirementsUrl = '/api/academics/degree_progress/ugrd';

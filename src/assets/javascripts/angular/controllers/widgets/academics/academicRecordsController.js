@@ -1,6 +1,6 @@
 'use strict';
 
-var angular = require('angular');
+
 var _ = require('lodash');
 
 angular.module('calcentral.controllers').controller('AcademicRecordsController', function(academicRecordsFactory, apiService, $scope, $window) {

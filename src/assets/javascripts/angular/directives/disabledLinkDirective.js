@@ -1,6 +1,6 @@
 'use strict';
 
-var angular = require('angular');
+
 
 /**
  * Make sure that links with a disabled attribute are in fact disabled

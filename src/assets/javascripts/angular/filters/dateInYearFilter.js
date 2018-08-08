@@ -1,6 +1,6 @@
 'use strict';
 
-var angular = require('angular');
+
 
 angular.module('calcentral.filters').filter('dateInYearFilter', function(dateService, $filter) {
   return function(millisecondsEpoch, currentYearFormat, otherYearFormat) {

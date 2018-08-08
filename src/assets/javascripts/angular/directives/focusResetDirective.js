@@ -1,6 +1,6 @@
 'use strict';
 
-var angular = require('angular');
+
 
 /*
   Intended for use on content wrappers when nested elements are hidden/revealed using ngShow/ngHide/ngIf

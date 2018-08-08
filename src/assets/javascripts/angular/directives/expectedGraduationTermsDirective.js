@@ -1,6 +1,6 @@
 'use strict';
 
-var angular = require('angular');
+
 
 angular.module('calcentral.directives').directive('ccExpectedGraduationTermsDirective', [function() {
   return {

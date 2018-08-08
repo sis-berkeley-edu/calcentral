@@ -1,6 +1,6 @@
 'use strict';
 
-var angular = require('angular');
+
 
 /*
  * CalCentral Sortable Column Directive

@@ -71,9 +71,11 @@ module.exports = webpackMerge(baseConfig, {
     },
     devMiddleware: {
       publicPath: path.resolve(__dirname, '../public/'),
-      writeToDisk: true
+      writeToDisk: (filePath) => {
+        // excludes writing hot-module files created by webpack-serve to the disk
+        return !/hot-update/.test(filePath);
+      }
     },
-    open: true,
     port: port
   }
 });

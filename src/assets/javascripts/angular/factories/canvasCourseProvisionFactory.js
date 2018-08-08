@@ -1,7 +1,7 @@
 /* jshint camelcase: false */
 'use strict';
 
-var angular = require('angular');
+
 
 /**
  * Canvas Course Provision Factory - API Interface for 'Create a Course Site' and 'Official Sections' LTI Tools
