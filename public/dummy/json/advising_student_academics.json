@@ -503,7 +503,7 @@
               "is_primary_section": false,
               "section_label": "DIS 101",
               "section_number": "101",
-              "associated_primary_id": "34458.0",
+              "associated_primary_id": "34458",
               "instructors": [],
               "schedules": {
                 "oneTime": [],
@@ -563,7 +563,7 @@
               "is_primary_section": false,
               "section_label": "DIS 102",
               "section_number": "102",
-              "associated_primary_id": "34462.0",
+              "associated_primary_id": "34462",
               "instructors": [],
               "schedules": {
                 "oneTime": [],
@@ -657,7 +657,7 @@
               "is_primary_section": false,
               "section_label": "DIS 101",
               "section_number": "101",
-              "associated_primary_id": "29777.0",
+              "associated_primary_id": "29777",
               "instructors": [],
               "schedules": {
                 "oneTime": [],
