@@ -35,6 +35,7 @@ module Oec
         MODULAR_COURSE
         START_DATE
         END_DATE
+        CANVAS_COURSE_ID
       )
     end
 
