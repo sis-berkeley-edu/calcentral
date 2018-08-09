@@ -211,6 +211,21 @@ describe Oec::PublishTask do
     end
   end
 
+  describe 'canvas_course_id column' do
+    let(:local_write) { 'Y' }
+    it 'is empty by default' do
+      task.run
+      courses.each { |row| expect(row['CANVAS_COURSE_ID']).to be_nil }
+    end
+    context 'with canvas_course_id added to merged confirmation sheet' do
+      before { merged_course_confirmations_csv.sub!(",\n", ",888888\n") }
+      it 'copies the value into the correct courses row' do
+        task.run
+        expect(courses.find { |row| row['COURSE_ID'] == '2015-B-32903' }['CANVAS_COURSE_ID']). to eq '888888'
+      end
+    end
+  end
+
   describe 'integrity validation' do
     let(:local_write) { 'Y' }
     before do
