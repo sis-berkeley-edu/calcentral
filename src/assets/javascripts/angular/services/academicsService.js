@@ -77,7 +77,7 @@ angular.module('calcentral.services').service('academicsService', function() {
    */
   var courseCollectionHasTopics = function(courses) {
     return !!_.find(courses, function(course) {
-      return course.topics.length > 0;
+      return (_.get(course, 'topics.length') > 0);
     });
   };
 
