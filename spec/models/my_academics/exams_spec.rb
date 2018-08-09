@@ -219,7 +219,8 @@ describe MyAcademics::Exams do
         course_code: 'BIOLOGY 1AL',
         courseCareerCode: 'UGRD',
         courseCatalog: '1AL',
-        sections: [bio_1al_section_1, bio_1al_section_2]
+        sections: [bio_1al_section_1, bio_1al_section_2],
+        listings: bio_1al_listings
       }
     end
     let(:dummy_final_exams) do
@@ -228,30 +229,57 @@ describe MyAcademics::Exams do
         { exam_location: 'Valley Life Sciences 2040' }
       ]
     end
-    let(:bio_1al_section_1) { {ccn: '13182', is_primary_section: true, section_label: 'LEC 001'} }
-    let(:bio_1al_section_2) { {ccn: '13138', is_primary_section: false, section_label: 'LAB 323'} }
+    let(:bio_1al_section_1) { {ccn: '13182', is_primary_section: true, section_label: 'LEC 001', waitlisted: false} }
+    let(:bio_1al_section_2) { {ccn: '13138', is_primary_section: false, section_label: 'LAB 323', waitlisted: false} }
+    let(:bio_1al_listings) do
+      [
+        {:course_code=>"BIOLOGY 1AL", :dept=>"BIOLOGY", :dept_code=>"BIOLOGY", :courseCatalog=>"1AL", :course_id=>"biology-1al-2017-D"},
+        {:course_code=>"PSYCH 1AL", :dept=>"PSYCH", :dept_code=>"BIOLOGY", :courseCatalog=>"1AL", :course_id=>"psych-1al-2017-D"}
+      ]
+    end
     let(:semester_exams) { subject.collect_semester_exams(semester) }
-    before { expect(subject).to receive(:get_section_final_exams).and_return(dummy_final_exams) }
+    before do
+      expect(subject).to receive(:get_section_final_exams).and_return(dummy_final_exams)
+      allow(subject).to receive(:post_merge_process_section_final_exams) do |merged_final_exams|
+        merged_final_exams
+      end
+    end
+    it 'mutates semester feed, adding exams to sections' do
+      expect(semester_exams.count).to eq 2
+      final_exams = fall_2017_class_1[:sections][0][:finalExams]
+      expect(final_exams.count).to eq 2
+      expect(final_exams[0][:exam_location]).to eq 'Wheeler 150'
+      expect(final_exams[1][:exam_location]).to eq 'Valley Life Sciences 2040'
+    end
+    it 'includes course and section properties' do
+      expect(semester_exams.count).to eq 2
+      semester_exams.each do |exam|
+        expect(exam).to have_keys([:name, :courseRole, :courseCareerCode, :section_label, :waitlisted])
+      end
+    end
     it 'excludes processing of non-primary sections' do
       expect(semester_exams.count).to eq 2
       semester_exams.each do |exam|
         expect(exam[:section_label]).to_not eq 'LAB 323'
       end
     end
-    context 'when multiple courses are included' do
+    context 'when multiple courses apply to user' do
       let(:fall_2017_class_2) do
         {
           role: 'Student',
           course_code: 'BIOLOGY 202',
           courseCareerCode: fall_2017_class_2_career_code,
           courseCatalog: '202',
+          listings: [
+            {:course_code=>"BIOLOGY 202", :dept=>"BIOLOGY", :dept_code=>"BIOLOGY", :courseCatalog=>"202", :course_id=>"biology-202-2017-D"},
+          ],
           sections: [bio_202_section_1]
         }
       end
       let(:bio_202_section_1) { {ccn: '13139', is_primary_section: true, section_label: 'LEC 001'} }
       let(:fall_2017_classes) { [fall_2017_class_1, fall_2017_class_2] }
       let(:fall_2017_class_2_career_code) { 'UGRD' }
-      context 'includes graduate course' do
+      context 'user is associated with a graduate course' do
         let(:fall_2017_class_2_career_code) { 'GRAD' }
         it 'excludes graduate course' do
           expect(semester_exams.count).to eq 2
@@ -264,7 +292,7 @@ describe MyAcademics::Exams do
           expect(semester_exams[2]).to_not be
         end
       end
-      context 'includes law course' do
+      context 'user is associated with a law course' do
         let(:fall_2017_class_2_career_code) { 'LAW' }
         it 'excludes law course' do
           expect(semester_exams.count).to eq 2
@@ -287,7 +315,7 @@ describe MyAcademics::Exams do
       end
       it 'exam location reflects no exam information at this time' do
         expect(semester_exams.count).to eq 1
-        expect(semester_exams[0][:exam_location]).to eq 'Exam information not available at this time.'
+        expect(semester_exams[0][:exam_location]).to eq 'Exam Information not available at this time.'
       end
     end
     it 'merges course and section data with parsed final exams' do
@@ -295,9 +323,94 @@ describe MyAcademics::Exams do
       expect(semester_exams[1][:exam_location]).to eq 'Valley Life Sciences 2040'
       semester_exams.each do |exam|
         expect(exam[:name]).to eq 'BIOLOGY 1AL'
+        expect(exam[:courseRole]).to eq 'Student'
         expect(exam[:courseCareerCode]).to eq 'UGRD'
+        expect(exam[:crossListedCourseNames]).to eq ['BIOLOGY 1AL','PSYCH 1AL']
         expect(exam[:section_label]).to eq 'LEC 001'
-        expect(exam[:waitlisted]).to eq nil
+        expect(exam[:waitlisted]).to eq false
+      end
+    end
+  end
+
+  describe '#filter_section_payload' do
+    let(:section_payload) do
+      [
+        {
+          courseCareerCode: 'UGRD',
+          courseRole: 'Instructor',
+          crossListedCourseNames: ['MCELLBI C61', 'PSYCH C61'],
+          exam_date: 'Wed May 9',
+          exam_date_instructor: 'Wed, May 9',
+          exam_location: 'RSF Fieldhouse',
+          exam_slot: '2018-05-09T18:30:00.000Z',
+          exam_time: '11:30A - 2:30P',
+          exam_type: 'Y',
+          exception: 'N',
+          finalized: 'Y',
+          name: 'MCELLBI C61',
+          section_label: 'LEC 001',
+          waitlisted: nil,
+        }
+      ]
+    end
+    it 'returns only section specific exam schedule information' do
+      result = subject.filter_section_payload(section_payload)
+      expect(result[0]).to_not have_keys([
+        :courseRole,
+        :courseCareerCode,
+        :crossListedCourseNames,
+        :display_section_label,
+        :exam_type,
+        :exception,
+        :finalized,
+        :name,
+        :time_conflict,
+        :waitlisted,
+      ])
+      expect(result[0]).to have_keys([:exam_date, :exam_time, :exam_location])
+    end
+  end
+
+  describe '#post_merge_process_section_final_exams' do
+    let(:finalized) { 'N' }
+    let(:exam_type) { 'Y' }
+    let(:course_role) { 'Student' }
+    let(:exam_location) { 'Exam Location TBD' }
+    let(:merged_section_final_exam) do
+      {
+        courseRole: course_role,
+        exam_type: exam_type,
+        exam_location: exam_location,
+        finalized: finalized,
+      }
+    end
+    let(:merged_section_final_exams) { [merged_section_final_exam] }
+    let(:processed_final_exams) { subject.post_merge_process_section_final_exams(merged_section_final_exams) }
+    context 'when final exam data present for section' do
+      let(:finalized) { 'N' }
+      it 'returns section final exams as provided' do
+        expect(processed_final_exams[0][:exam_location]).to eq 'Exam Location TBD'
+      end
+    end
+    context 'when final exam data not present for section' do
+      let(:finalized) { nil }
+      context 'when course role is student' do
+        let(:course_role) { 'Student' }
+        it 'returns exam with indication of no final exam information available' do
+          expect(processed_final_exams[0][:exam_location]).to eq 'Exam Information not available at this time.'
+        end
+      end
+      context 'when course role is instructor with exam type \'N\'' do
+        let(:course_role) { 'Instructor' }
+        it 'returns exam with indication of no final exam information available' do
+          expect(processed_final_exams[0][:exam_location]).to eq 'Exam Information not available at this time.'
+        end
+        context 'when exam type is type \'N\'' do
+          let(:exam_type) { 'N' }
+          it 'returns exam with indication of no final exam for course' do
+            expect(processed_final_exams[0][:exam_location]).to eq 'No final exam for this course'
+          end
+        end
       end
     end
   end
@@ -562,8 +675,10 @@ describe MyAcademics::Exams do
         it 'returns exam object' do
           expect(parsed_exam[:exam_location]).to eq 'Exam Location TBD'
           expect(parsed_exam[:exam_date]).to eq 'Mon Dec 12'
+          expect(parsed_exam[:exam_date_instructor]).to eq 'Dec 12, 2016'
           expect(parsed_exam[:exam_time]).to eq '1:00P - 3:30P'
           expect(parsed_exam[:exam_slot]).to eq Time.parse('2016-12-12 13:00:00')
+          expect(parsed_exam[:exam_type]).to eq exam_translate_value
           expect(parsed_exam[:exception]).to eq 'N'
           expect(parsed_exam[:finalized]).to eq 'N'
         end
@@ -580,8 +695,10 @@ describe MyAcademics::Exams do
       it 'returns exam object' do
         expect(parsed_exam[:exam_location]).to eq 'Kroeber 221'
         expect(parsed_exam[:exam_date]).to eq 'Mon Dec 12'
+        expect(parsed_exam[:exam_date_instructor]).to eq 'Dec 12, 2016'
         expect(parsed_exam[:exam_time]).to eq '1:00P - 3:30P'
         expect(parsed_exam[:exam_slot]).to eq Time.parse('2016-12-12 13:00:00')
+        expect(parsed_exam[:exam_type]).to eq exam_translate_value
         expect(parsed_exam[:exception]).to eq 'N'
         expect(parsed_exam[:finalized]).to eq 'Y'
       end
@@ -601,8 +718,8 @@ describe MyAcademics::Exams do
     let(:exam_finalized) { 'N' }
     let(:exam_exception) { 'N' }
     let(:exam_translate_value) { 'Y' }
-    let(:exam_date_result) { subject.parse_cs_exam_date(exam) }
-
+    let(:instructor_format) { false }
+    let(:exam_date_result) { subject.parse_cs_exam_date(exam, instructor_format) }
     context 'when exam data is pre-finalized' do
       let(:finalized) { 'N' }
 
@@ -613,6 +730,42 @@ describe MyAcademics::Exams do
           let(:exam_translate_value) { 'Y' }
           it 'returns date string' do
             expect(exam_date_result).to eq 'Mon Dec 5'
+          end
+          context 'when exam date is not present' do
+            let(:exam_date) { nil }
+            it 'returns nil' do
+              expect(exam_date_result).to eq nil
+            end
+          end
+          context 'when exam date is in the current year' do
+            let(:exam_date) { Time.now }
+            context 'when default format is requested' do
+              let(:instructor_format) { false }
+              it 'returns date with standard format' do
+                expect(exam_date_result).to eq exam_date.strftime('%a %b %-d')
+              end
+            end
+            context 'when instructor format is requested' do
+              let(:instructor_format) { true }
+              it 'returns date with full year format' do
+                expect(exam_date_result).to eq exam_date.strftime('%a, %b %-d')
+              end
+            end
+          end
+          context 'when exam date is not in the current year' do
+            let(:exam_date) { Time.now + 1.year + 1.month }
+            context 'when default format is requested' do
+              let(:instructor_format) { false }
+              it 'returns date with standard format' do
+                expect(exam_date_result).to eq exam_date.strftime('%a %b %-d')
+              end
+            end
+            context 'when instructor format is requested' do
+              let(:instructor_format) { true }
+              it 'returns date with full year format' do
+                expect(exam_date_result).to eq exam_date.strftime('%b %-d, %Y')
+              end
+            end
           end
         end
         context 'when translate value is N' do
@@ -642,6 +795,21 @@ describe MyAcademics::Exams do
         it 'returns date string' do
           expect(exam_date_result).to eq 'Mon Dec 5'
         end
+        context 'when exam date is not in the current year' do
+          let(:exam_date) { Time.now + 1.year + 1.month }
+          context 'when default format is requested' do
+            let(:instructor_format) { false }
+            it 'returns date with standard format' do
+              expect(exam_date_result).to eq exam_date.strftime('%a %b %-d')
+            end
+          end
+          context 'when long format is requested' do
+            let(:instructor_format) { true }
+            it 'returns date with full year format' do
+              expect(exam_date_result).to eq exam_date.strftime('%b %-d, %Y')
+            end
+          end
+        end
       end
       context 'when exam date is not present' do
         let(:exam_date) { nil }
@@ -649,6 +817,20 @@ describe MyAcademics::Exams do
           expect(exam_date_result).to eq nil
         end
       end
+    end
+  end
+
+  describe '#time_is_current_year?' do
+    it 'returns true when within the current year' do
+      expect(subject.time_is_current_year?(Time.now)).to eq true
+      expect(subject.time_is_current_year?(Date.today.at_beginning_of_year.to_time)).to eq true
+      expect(subject.time_is_current_year?(Date.today.at_end_of_year.to_time)).to eq true
+    end
+    it 'returns false when within a previous or future year' do
+      expect(subject.time_is_current_year?(Time.now + 1.year)).to eq false
+      expect(subject.time_is_current_year?(Time.now - 1.year)).to eq false
+      expect(subject.time_is_current_year?(Time.now.at_beginning_of_year - 5.seconds)).to eq false
+      expect(subject.time_is_current_year?(Time.now.at_end_of_year + 5.seconds)).to eq false
     end
   end
 
@@ -667,6 +849,7 @@ describe MyAcademics::Exams do
     let(:exam_finalized) { 'N' }
     let(:exam_exception) { 'N' }
     let(:exam_translate_value) { 'Y' }
+    let(:long_format) { false }
     let(:exam_time) { subject.parse_cs_exam_time(exam) }
 
     context 'when exam data is pre-finalized' do
@@ -704,7 +887,7 @@ describe MyAcademics::Exams do
         it 'returns nil' do
           expect(exam_time).to eq nil
         end
-    end
+      end
     end
 
     context 'when exam data is finalized' do
@@ -877,7 +1060,7 @@ describe MyAcademics::Exams do
         context 'when translate value is not Y or C' do
           let(:exam_translate_value) { 'N' }
           it 'returns message indicating no exam information at this time' do
-            expect(exam_location).to eq 'Exam information not available at this time.'
+            expect(exam_location).to eq 'Exam Information not available at this time.'
           end
         end
       end
@@ -885,7 +1068,7 @@ describe MyAcademics::Exams do
       context 'when exam is an exception' do
         let(:exam_exception) { 'Y' }
         it 'returns message indicating no exam information at this time' do
-          expect(exam_location).to eq 'Exam information not available at this time.'
+          expect(exam_location).to eq 'Exam Information not available at this time.'
         end
       end
     end

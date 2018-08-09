@@ -313,30 +313,30 @@ module EdoOracle
     # No Campus Oracle equivalent.
     def self.get_section_final_exams(term_id, section_id)
       safe_query <<-SQL
-        SELECT
-          sec."term-id" AS term_id,
-          sec."session-id" AS session_id,
-          sec."id" AS section_id,
-          sec."finalExam" AS exam_type,
-          exam."EXAM_DT" AS exam_date,
-          exam."EXAM_START_TIME" AS exam_start_time,
-          exam."EXAM_END_TIME" AS exam_end_time,
-          exam."EXAM_EXCEPTION" as exam_exception,
-          exam."FACILITY_DESCR" AS location,
-          exam."FINALIZED" AS finalized
-        FROM
-          SISEDO.CLC_FINAL_EXAM_INFOV00_VW exam
-        LEFT JOIN SISEDO.CLASSSECTIONALLV01_MVW sec ON (
-          exam."CRSE_ID" = sec."cs-course-id" AND
-          exam."STRM" = sec."term-id" AND
-          exam."SESSION_CODE" = sec."session-id" AND
-          exam."CRSE_OFFER_NBR" = sec."offeringNumber" AND
-          exam."CLASS_SECTION" = sec."sectionNumber"
-        )
-        WHERE
-          sec."term-id" = '#{term_id}' AND
-          sec."id" = '#{section_id}'
-        ORDER BY exam_date
+      SELECT
+        sec."term-id" AS term_id,
+        sec."session-id" AS session_id,
+        sec."id" AS section_id,
+        sec."finalExam" AS exam_type,
+        exam."EXAM_DT" AS exam_date,
+        exam."EXAM_START_TIME" AS exam_start_time,
+        exam."EXAM_END_TIME" AS exam_end_time,
+        exam."EXAM_EXCEPTION" as exam_exception,
+        exam."FACILITY_DESCR" AS location,
+        exam."FINALIZED" AS finalized
+      FROM
+        SISEDO.CLASSSECTIONALLV01_MVW sec
+      LEFT JOIN SISEDO.CLC_FINAL_EXAM_INFOV00_VW exam ON (
+        sec."cs-course-id" = exam."CRSE_ID" AND
+        sec."term-id" = exam."STRM" AND
+        sec."session-id" = exam."SESSION_CODE" AND
+        sec."offeringNumber" = exam."CRSE_OFFER_NBR" AND
+        sec."sectionNumber" = exam."CLASS_SECTION"
+      )
+      WHERE
+        sec."term-id" = '#{term_id}' AND
+        sec."id" = '#{section_id}'
+      ORDER BY exam_date
       SQL
     end
 

@@ -3,16 +3,29 @@
 var angular = require('angular');
 var _ = require('lodash');
 
-angular.module('calcentral.controllers').controller('finalExamScheduleController', function(academicsFactory, $scope) {
+angular.module('calcentral.controllers').controller('finalExamScheduleController', function(academicsFactory, apiService, $scope) {
   $scope.finalExams = {
-    semesters: [],
     changeNotice: false,
     conflictFound: false,
     lawCoursesPresent: false,
     gradCoursesPresent: false,
     gradCoursesOnlyPresent: false,
+    ugrdCoursesPresent: false,
+    lawExamLink: 'https://www.law.berkeley.edu/php-programs/students/exams/examTimesList.php',
     guidelinesLink: 'https://registrar.berkeley.edu/scheduling/academic-scheduling/final-exam-guide-schedules',
-    lawExamLink: 'https://www.law.berkeley.edu/php-programs/students/exams/examTimesList.php'
+    semesters: []
+  };
+
+  $scope.isFinalExamFeatureEnabled = function() {
+    if (apiService.user.profile.features && $scope.finalExamMode) {
+      return apiService.user.profile.features['finalExamSchedule' + capitalize($scope.finalExamMode)];
+    } else {
+      return false;
+    }
+  };
+
+  var capitalize = function(s) {
+    return s && s[0].toUpperCase() + s.slice(1);
   };
 
   var detectCourseCareers = function(semesters) {
@@ -21,11 +34,23 @@ angular.module('calcentral.controllers').controller('finalExamScheduleController
     var ugrdPresent = _.includes(academicCareerCodes, 'UGRD');
     var lawPresent = _.includes(academicCareerCodes, 'LAW');
     var gradPresent = _.includes(academicCareerCodes, 'GRAD');
-    $scope.finalExams.ugrdCoursesPresent = ugrdPresent;
-    $scope.finalExams.lawCoursesPresent = lawPresent;
-    $scope.finalExams.gradCoursesPresent = gradPresent;
-    $scope.finalExams.gradCoursesOnlyPresent = (gradPresent && !lawPresent && !ugrdPresent);
-    $scope.finalExams.coursesPresent = (ugrdPresent || gradPresent || lawPresent);
+
+    return {
+      ugrdCoursesPresent: ugrdPresent,
+      lawCoursesPresent: lawPresent,
+      gradCoursesPresent: gradPresent,
+      gradCoursesOnlyPresent: (gradPresent && !lawPresent && !ugrdPresent),
+      coursesPresent: (ugrdPresent || gradPresent || lawPresent)
+    };
+  };
+
+  var detectFinalizedSemesterExams = function(semesters) {
+    _.forEach(semesters, function(semester) {
+      var finalizedSchedule = _.find(_.get(semester, 'exams.schedule'), function(s) {
+        return s.finalized === 'Y';
+      });
+      semester.schedulesFinalized = (finalizedSchedule !== undefined);
+    });
   };
 
   var getSemesterCourseAcademicCareerCodes = function(semesters) {
@@ -45,30 +70,42 @@ angular.module('calcentral.controllers').controller('finalExamScheduleController
     });
   };
 
-  var detectSemesterTimeConflicts = function() {
-    var semesters = _.get($scope, 'finalExams.semesters', []);
+  var loadExamSemesters = function() {
+    academicsFactory.getAcademics().then(parseAcademics);
+  };
+
+  var detectSemesterTimeConflicts = function(semesters) {
     var conflictFound = _.find(semesters, function(semester) {
       var exams = _.get(semester, 'exams.schedule', []);
       return _.find(exams, function(e) {
         return e.timeConflict;
       });
     });
-    $scope.finalExams.conflictFound = !!(conflictFound);
+    return !!(conflictFound);
   };
 
   var parseAcademics = function(academics) {
-    var semesters = _.get(academics, 'data.semesters');
+    var semesters = [];
+    var academicsNode = $scope.finalExamMode === 'instructor' ? 'teachingSemesters' : 'semesters';
+
+    if ($scope.currentSemester !== undefined) {
+      semesters = [$scope.currentSemester];
+    } else {
+      semesters = _.get(academics, 'data.' + academicsNode);
+    }
+
+    $scope.finalExams.semesters = parseSemesters(semesters);
+    $scope.finalExams.conflictFound = detectSemesterTimeConflicts($scope.finalExams.semesters);
+    angular.extend($scope.finalExams, detectCourseCareers(semesters));
     $scope.finalExams.message = _.get(academics, 'data.examMessage');
-    $scope.finalExams.semesters = _.filter(semesters, function(semester) {
+    detectFinalizedSemesterExams($scope.finalExams.semesters);
+  };
+
+  var parseSemesters = function(semesters) {
+    return _.filter(semesters, function(semester) {
       var semesterExamScheduleLength = _.get(semester, 'exams.schedule.length');
       return (semesterExamScheduleLength > 0);
     });
-    detectCourseCareers(semesters);
-    detectSemesterTimeConflicts();
-  };
-
-  var loadExamSemesters = function() {
-    academicsFactory.getAcademics().then(parseAcademics);
   };
 
   loadExamSemesters();

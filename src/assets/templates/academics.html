@@ -9,37 +9,34 @@
       class="medium-8 columns cc-academics-row-margin"
       data-ng-if="selectedTeachingSemester && !api.user.profile.hasStudentHistory && !api.user.profile.roles.student">
       <div data-ng-include="'academics_semester_classes.html'"></div>
+      <div data-ng-include="'widgets/final_exam_schedule.html'" data-ng-init="finalExamMode='instructor'"></div>
     </div>
 
     <div
       class="medium-6 large-4 columns cc-academics-row-margin"
       data-ng-if="api.user.profile.hasStudentHistory || api.user.profile.roles.student || api.user.profile.roles.applicant">
-      <div data-ng-include src="'academics_student_profile.html'"></div>
-      <div data-ng-include src="'academics_status_holds_blocks.html'" data-ng-if="showStatusAndBlocks"></div>
-      <div data-ng-include src="'widgets/academics/academic_records.html'"></div>
+      <div data-ng-include="'academics_student_profile.html'"></div>
+      <div data-ng-include="'academics_status_holds_blocks.html'" data-ng-if="showStatusAndBlocks"></div>
+      <div data-ng-include="'widgets/academics/academic_records.html'"></div>
     </div>
 
     <div
       data-ng-class="{'medium-6':(api.user.profile.roles.student || api.user.profile.roles.exStudent), 'medium-4':(!(api.user.profile.roles.student || api.user.profile.roles.exStudent))}"
       class="large-4 columns cc-column-2 cc-academics-row-margin">
-      <div data-ng-include src="'academics_semesters.html'" data-ng-if="api.user.profile.hasStudentHistory && semesters.length"></div>
-      <div
-        data-ng-include src="'widgets/academics/degree_progress_undergrad.html'"
-        data-ng-controller="UndergraduateDegreeProgressController"
-      ></div>
-      <div
-        data-ng-include src="'widgets/academics/degree_progress_graduate.html'"
-        data-ng-controller="GraduateDegreeProgressController"
-      ></div>
-      <div data-ng-include src="'academics_teaching.html'" data-ng-if="!api.user.profile.delegateActingAsUid && hasTeachingClasses"></div>
-      <div data-ng-include src="'academics_higher_degree_committees.html'" data-ng-if="api.user.profile.features.csCommittees && !api.user.profile.delegateActingAsUid && (api.user.profile.roles.student || api.user.profile.roles.exStudent)"></div>
-      <div data-ng-include src="'academics_higher_degree_faculty_committees.html'" data-ng-if="api.user.profile.features.csCommittees && !api.user.profile.delegateActingAsUid && api.user.profile.roles.faculty"></div>
+      <div data-ng-include="'academics_semesters.html'" data-ng-if="api.user.profile.hasStudentHistory && semesters.length"></div>
+      <div data-ng-include="'widgets/academics/degree_progress_undergrad.html'" data-ng-controller="UndergraduateDegreeProgressController"></div>
+      <div data-ng-include="'widgets/academics/degree_progress_graduate.html'" data-ng-controller="GraduateDegreeProgressController"></div>
+      <div data-ng-include="'academics_teaching.html'" data-ng-if="!api.user.profile.delegateActingAsUid && hasTeachingClasses"></div>
+      <div data-ng-include="'widgets/final_exam_schedule.html'" data-ng-init="finalExamMode='instructor'" data-ng-if="!api.user.profile.delegateActingAsUid && hasTeachingClasses && api.user.profile.hasStudentHistory && api.user.profile.roles.student"></div>
+
+      <div data-ng-include="'academics_higher_degree_committees.html'" data-ng-if="api.user.profile.features.csCommittees && !api.user.profile.delegateActingAsUid && (api.user.profile.roles.student || api.user.profile.roles.exStudent)"></div>
+      <div data-ng-include="'academics_higher_degree_faculty_committees.html'" data-ng-if="api.user.profile.features.csCommittees && !api.user.profile.delegateActingAsUid && api.user.profile.roles.faculty"></div>
     </div>
 
     <div class="medium-6 large-4 columns cc-column-3">
       <div data-ng-include="'widgets/enrollment_card.html'" data-ng-if="api.user.profile.features.csEnrollmentCard"></div>
 
-      <div data-ng-include="'widgets/final_exam_schedule.html'" data-ng-if="canViewFinalExamSchedule && api.user.profile.features.finalExamScheduleStudent"></div>
+      <div data-ng-include="'widgets/final_exam_schedule.html'" data-ng-init="finalExamMode='student'" data-ng-if="canViewFinalExamSchedule"></div>
 
       <div data-ng-include="'widgets/my_advising.html'" data-ng-if="showAdvising"></div>
 

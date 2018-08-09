@@ -55,7 +55,7 @@ module Concerns
     end
 
     def course_info_with_multiple_listings(campus_course)
-      campus_course.slice(:role, :sections, :slug, :session_code).merge({
+      campus_course.slice(:role, :sections, :slug, :session_code, :courseCareerCode).merge({
         listings: [ course_listing(campus_course) ],
         title: campus_course[:name],
         url: class_to_url(campus_course)
