@@ -49,47 +49,4 @@ describe CampusSolutions::EmergencyContact do
       it_behaves_like 'a proxy that got data successfully'
     end
   end
-
-  context 'with a real external service', :testext => true do
-    let(:params) { {
-      # CS server will reject post unless data has changed, so make some key fields unique with timestamp
-      contactName: "Tester #{DateTime.now.to_i}",
-      isSameAddressEmpl: 'N',
-      isPrimaryContact: 'N',
-      country: 'USA',
-      address1: "Lane #{DateTime.now.to_i}",
-      address2: 'peters road',
-      address3: 'estella st',
-      address4: 'fourth field lane',
-      city: 'ventura',
-      num1: '1',
-      num2: '2',
-      houseType: 'AB',
-      addrField1: 'AV',
-      addrField2: 'L2',
-      addrField3: 'L3',
-      county: 'Alameda',
-      state: 'CA',
-      postal: '93001',
-      geoCode: '',
-      inCityLimit: 'N',
-      countryCode: '',
-      phone: '805/658-4588',
-      relationship: 'SP',
-      isSamePhoneEmpl: 'N',
-      addressType: 'HOME',
-      phoneType: 'HOME',
-      extension: '123',
-      emailAddr: 'foo@foo.com'
-    } }
-    let(:proxy) { CampusSolutions::EmergencyContact.new(fake: false, user_id: user_id, params: params) }
-
-    context 'performing a real post' do
-      subject {
-        proxy.get
-      }
-      it_should_behave_like 'a simple proxy that returns errors'
-      it_behaves_like 'a proxy that got data successfully'
-    end
-  end
 end

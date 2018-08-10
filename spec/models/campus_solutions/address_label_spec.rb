@@ -25,10 +25,4 @@ describe CampusSolutions::AddressLabel do
       expect(subject[:feed][:labels][10][:field]).to eq 'num2'
     end
   end
-
-  context 'real proxy', testext: true do
-    let(:proxy) { CampusSolutions::AddressLabel.new(fake: false, country: 'ESP') }
-    it_should_behave_like 'a proxy that gets data'
-  end
-
 end

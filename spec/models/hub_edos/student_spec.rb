@@ -15,17 +15,4 @@ describe HubEdos::Student do
       expect(subject[:feed]['student']['addresses'][0]['country']).to eq 'USA'
     end
   end
-
-  context 'real proxy', testext: true do
-    let(:proxy) { HubEdos::Student.new(fake: false, user_id: '61889') }
-    subject { proxy.get }
-
-    it_behaves_like 'a proxy that properly observes the profile feature flag'
-
-    it 'returns data with the expected structure' do
-      expect(subject[:feed]['student']).to be
-      expect(subject[:feed]['student']['identifiers'][0]['type']).to be
-    end
-
-  end
 end

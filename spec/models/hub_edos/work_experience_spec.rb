@@ -13,16 +13,4 @@ describe HubEdos::WorkExperience do
       expect(subject[:feed]['workExperiences'].size).to eq(3)
     end
   end
-
-  context 'real proxy', testext: true do
-    let(:proxy) { HubEdos::WorkExperience.new(fake: false, user_id: '12351') }
-    subject { proxy.get }
-
-    it_behaves_like 'a proxy that properly observes the profile feature flag'
-
-    it 'returns data with the expected structure' do
-      expect(subject[:feed]['workExperiences']).to be
-    end
-
-  end
 end

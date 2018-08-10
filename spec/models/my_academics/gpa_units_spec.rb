@@ -130,7 +130,7 @@ describe MyAcademics::GpaUnits do
     end
   end
 
-  describe '#get_cumulative_units', testext: false do
+  describe '#get_cumulative_units' do
     subject { described_class.new(uid).get_cumulative_units }
 
     context 'when user is active in a program' do

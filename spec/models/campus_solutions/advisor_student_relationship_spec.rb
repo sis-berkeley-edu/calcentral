@@ -30,10 +30,4 @@ describe CampusSolutions::AdvisorStudentRelationship do
       expect(subject[:feed][:ucAaStudentAdvisor][:studentAdvisor][0][:assignedAdvisorEmail]).to eq 'janed@example.com'
     end
   end
-
-  context 'real proxy', testext: true, :ignore => true do
-    let(:user_id) { '1091292' }
-    let(:proxy) { CampusSolutions::AdvisorStudentRelationship.new(fake: false, user_id: user_id) }
-    it_should_behave_like 'a proxy that gets data'
-  end
 end

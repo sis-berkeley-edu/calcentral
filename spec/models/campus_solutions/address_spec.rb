@@ -66,25 +66,4 @@ describe CampusSolutions::Address do
       it_behaves_like 'a proxy that got data successfully'
     end
   end
-
-  context 'with a real external service', testext: true do
-    let(:params) { {
-      addressType: 'HOME',
-      address1: 'Über dem Faß Rénard',
-      address2: 'peters road',
-      city: 'ventura',
-      state: 'CA',
-      postal: '93001',
-      country: 'USA'
-    } }
-    let(:proxy) { CampusSolutions::Address.new(fake: false, user_id: user_id, params: params) }
-
-    context 'performing a real post' do
-      subject {
-        proxy.get
-      }
-      it_should_behave_like 'a simple proxy that returns errors'
-      it_behaves_like 'a proxy that got data successfully'
-    end
-  end
 end

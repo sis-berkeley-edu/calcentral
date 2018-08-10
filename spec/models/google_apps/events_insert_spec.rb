@@ -55,35 +55,4 @@ describe GoogleApps::EventsInsert do
       it_behaves_like "4xx insert event task"
     end
   end
-
-  context "real insert event test", testext: true do
-    before(:each) do
-      token_info = {
-        access_token: Settings.google_proxy.test_user_access_token,
-        refresh_token: Settings.google_proxy.test_user_refresh_token,
-        expiration_time: 0
-      }
-      real_insert_proxy = GoogleApps::EventsInsert.new(token_info)
-      real_delete_proxy = GoogleApps::EventsDelete.new(token_info)
-      GoogleApps::EventsInsert.stub(:new).and_return(real_insert_proxy)
-      GoogleApps::EventsDelete.stub(:new).and_return(real_delete_proxy)
-    end
-
-    context "invalid payload" do
-      subject { GoogleApps::EventsInsert.new(user_id).insert_event(invalid_payload) }
-      it_behaves_like "4xx insert event task"
-    end
-
-    context "valid payload" do
-      let(:delete_proxy) { GoogleApps::EventsDelete.new(user_id) }
-      subject { @insert_response = GoogleApps::EventsInsert.new(user_id).insert_event(valid_payload) }
-      after(:each) do
-        insert_id = @insert_response.data["id"]
-        delete_proxy.delete_event(insert_id)
-      end
-
-      it_behaves_like "200 insert event task"
-    end
-
-  end
 end

@@ -31,48 +31,6 @@ describe Textbooks::Proxy do
 
   describe '#get' do
     subject { proxy.get }
-    describe 'live testext tests enabled for order-independent expectations', testext: true, ignore: true do
-      let(:fake) { false }
-      context 'valid section numbers and term slug' do
-        let(:course_catalog) { 'R1A' }
-        let(:dept) { 'COLWRIT' }
-        let(:section_numbers) { ['001'] }
-        let(:slug) { 'summer-2015' }
-        it 'produces the expected textbook feed' do
-          it_is_a_normal_server_response
-          it_has_at_least_one_title
-          book_list = subject[:books][:items]
-          first_book = book_list[0]
-          [:isbn, :image, :amazonLink, :cheggLink, :oskicatLink, :googlebookLink, :bookstoreInfo].each do |key|
-            expect(first_book[key]).to be_present
-          end
-          expect(first_book[:image]).to_not match /http:/
-        end
-      end
-
-      context 'an unknown section number' do
-        let(:course_catalog) { '102' }
-        let(:dept) { 'MCELLBI' }
-        let(:section_numbers) { ['101'] }
-        let(:slug) { 'summer-2015' }
-        it 'returns a helpful message' do
-          it_is_a_normal_server_response
-          feed = subject[:books]
-          expect(feed[:bookUnavailableError]).to eq 'Currently, there is no textbook information for this course. Check again later for updates, or contact the <a href="https://calstudentstore.berkeley.edu/textbook" target="_blank">ASUC book store</a>.'
-        end
-      end
-
-      context 'multiple section numbers' do
-        let(:course_catalog) { '102' }
-        let(:dept) { 'MCELLBI' }
-        let(:section_numbers) { ['101', '001'] }
-        let(:slug) { 'summer-2015' }
-        it 'finds the one with books' do
-          it_is_a_normal_server_response
-          it_has_at_least_one_title
-        end
-      end
-    end
 
     context 'fake proxy' do
       let(:fake) { true }

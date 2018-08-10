@@ -19,12 +19,6 @@ describe Canvas::Proxy do
     expect(accounts).to_not be_empty
   end
 
-  it 'should get own profile as authorized user', :testext => true do
-    @client.set_response(body: @client.read_file('fixtures', 'json', 'canvas_accounts.json'))
-    profile = @client.wrapped_get('users/self/profile')[:body]
-    expect(profile['login_id']).to eq @user_id.to_s
-  end
-
   describe 'url_root' do
     before do
       allow(Settings.canvas_proxy).to receive(:url_root).and_return('FROM_CONFIG')
@@ -37,25 +31,6 @@ describe Canvas::Proxy do
       client = Canvas::Proxy.new(url_root: 'FROM_CALL')
       expect(client.api_root).to eq 'FROM_CALL/api/v1'
     end
-  end
-
-  it 'should get the upcoming_events feed for a known user', :testext => true do
-    client = Canvas::UpcomingEvents.new(:user_id => @user_id)
-    response = client.upcoming_events
-    events = response[:body]
-    expect(events).to_not be_nil
-    if events.length > 0
-      expect(events[0]['title']).to be_present
-      expect(events[0]['html_url']).to be_present
-    end
-  end
-
-  it 'should get the todo feed for a known user', :testext => true do
-    client = Canvas::Todo.new(:user_id => @user_id)
-    response = client.todo
-    tasks = response[:body]
-    expect(tasks[0]['assignment']['name']).to be_present
-    expect(tasks[0]['assignment']['course_id']).to be_present
   end
 
   it 'should get user activity feed using the Tammi account' do

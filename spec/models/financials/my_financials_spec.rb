@@ -18,8 +18,6 @@ describe Financials::MyFinancials do
     JSON.parse(feed)
   }
 
-  # We combine expectations in one larger test so as to reduce proxy load
-  # when running in the testext environment.
   context 'when following a happy path for #get_feed' do
     it 'includes the expected data' do
       expect(subject).to be

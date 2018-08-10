@@ -101,12 +101,6 @@ Spork.prefork do
     # Nicer way to hide breaking tests.
     config.filter_run_excluding :ignore => true
 
-    # Exclusion filter: If a test is marked with :testext and true, it will be skipped
-    # unless tests were started with the testext environment
-    unless ENV["RAILS_ENV"] == 'testext'
-      config.filter_run_excluding :testext => true
-    end
-
     # Make sure the front-end assets are available when running the back-end tests
     if !File.exist?("#{::Rails.root}/public/index-main.html")
       puts 'Front-end build task - spec helper'

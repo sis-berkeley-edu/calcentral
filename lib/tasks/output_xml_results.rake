@@ -1,5 +1,5 @@
 namespace :spec do
-  if %w(test testext).include? Rails.env
+  if Rails.env == 'test'
     desc "Runs rake spec, but pipes the output to xml using the rspec_junit_formatter gem"
     RSpec::Core::RakeTask.new(:xml) do |t|
       # Because most of us aren't perfect, but we'd still want the out pipe to show us why.

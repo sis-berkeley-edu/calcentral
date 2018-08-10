@@ -11,12 +11,4 @@ describe ClearingHouse::MyClearingHouseUrl do
       expect(response).to eq ({})
     end
   end
-
-  context 'real model', testext: true do
-    subject { real_model }
-    it 'should make a connection' do
-      response = subject.get_feed_internal
-      expect(response.code).to eq 200
-    end
-  end
 end

@@ -40,11 +40,4 @@ describe CampusSolutions::HigherOneUrl do
       end
     end
   end
-
-  context 'real proxy', testext: true do
-    let(:proxy) { CampusSolutions::HigherOneUrl.new fake: false, user_id: user_id }
-
-    it_should_behave_like 'a proxy that gets data'
-  end
-
 end

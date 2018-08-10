@@ -230,25 +230,4 @@ describe Webcast::Merged do
       end
     end
   end
-
-  context 'a real, non-fake proxy with user in view-as mode', testext: true do
-    context 'course with zero recordings is different than course not scheduled for recordings' do
-      before do
-        # Ensure that testext can reach 2015-B.
-        allow(Settings.terms).to receive(:fake_now).and_return '2015-07-01'.to_datetime
-      end
-      let(:media) do
-        user_id = random_id
-        view_as_mode = AuthenticationState.new('user_id' => user_id, SessionKey.original_user_id => random_id)
-        policy = AuthenticationStatePolicy.new(view_as_mode, nil)
-        Webcast::Merged.new(user_id, policy, 2015, 'B', [1, 56742, 56745]).get_feed[:media]
-      end
-      it 'identifies course that is scheduled for recordings' do
-        expect(media).to have(2).items
-        expect([media[0][:ccn], media[1][:ccn]]).to contain_exactly('56742', '56745')
-        media.each { |r| expect(r[:videos]).to have_at_least(10).items, "#{r[:ccn]} only has #{r[:videos].length} recordings" }
-      end
-    end
-  end
-
 end

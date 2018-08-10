@@ -1,5 +1,4 @@
 describe CampusSolutions::TermsAndConditions do
-
   let(:user_id) { '12345' }
 
   context 'post' do
@@ -98,22 +97,6 @@ describe CampusSolutions::TermsAndConditions do
           expect(CampusSolutions::Proxy).to receive(:get).never
         end
       end
-    end
-  end
-
-  context 'with a real external service', :testext => true do
-    let(:params) { {
-      response: 'Y',
-      aidYear: '2016'
-    } }
-    let(:proxy) { CampusSolutions::TermsAndConditions.new(fake: false, user_id: user_id, params: params) }
-
-    context 'performing a real post' do
-      subject {
-        proxy.get
-      }
-      it_should_behave_like 'a simple proxy that returns errors'
-      it_behaves_like 'a proxy that got data successfully'
     end
   end
 end

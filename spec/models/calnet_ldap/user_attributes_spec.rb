@@ -198,24 +198,4 @@ describe CalnetLdap::UserAttributes do
       end
     end
   end
-
-  context 'test user from real LDAP connection', testext: true do
-    let(:uid) { '61889' }
-    it 'translates attributes' do
-      expect(feed[:ldap_uid]).to eq '61889'
-      expect(feed[:first_name]).to be_present
-      expect(feed[:last_name]).to be_present
-      expect(feed[:person_name]).to be_present
-      expect(feed[:campus_solutions_id]).to be_present
-    end
-  end
-
-  context 'two test users from real LDAP connection', testext: true do
-    let(:feed) { described_class.get_bulk_attributes %w(212373 11000023) }
-    it 'translates attributes' do
-      expect(feed).to have(2).items
-      expect(feed.find { |result| result[:ldap_uid] == '212373' }).to be_present
-      expect(feed.find { |result| result[:ldap_uid] == '11000023' }).to be_present
-    end
-  end
 end

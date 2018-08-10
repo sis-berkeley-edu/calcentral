@@ -33,12 +33,4 @@ describe CalnetCrosswalk::ByUid do
     end
     include_context 'looking up ids'
   end
-
-  context 'real proxy', testext: true do
-    let(:proxy) { CalnetCrosswalk::ByUid.new(user_id: '300940', fake: false) }
-    let(:feed) { proxy.get[:feed] }
-    it_behaves_like 'a proxy that returns data'
-    include_context 'looking up ids'
-  end
-
 end

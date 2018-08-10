@@ -152,23 +152,6 @@ feature 'act_as_user' do
     response['uid'].should == '238382'
   end
 
-  scenario 'making sure act_as doesn\'t expose google data', :testext => true do
-    allow(GoogleApps::Proxy).to receive(:access_granted?).and_return true
-    allow(GoogleApps::EventsList).to receive(:new).and_return @fake_events_list
-    %w(238382 2040 11002820).each do |user|
-      login_with_cas user
-      visit '/api/my/up_next'
-      response = JSON.parse(page.body)
-      response['items'].empty?.should be_falsey
-      Rails.cache.exist?(UpNext::MyUpNext.cache_key(user)).should be_truthy
-    end
-    login_with_cas '238382'
-    act_as_user '2040'
-    visit '/api/my/up_next'
-    response = JSON.parse(page.body)
-    response['items'].empty?.should be_truthy
-  end
-
   context 'with an invalid user' do
     let(:invalid_uid) { random_id }
     before do

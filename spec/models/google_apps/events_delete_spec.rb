@@ -26,24 +26,4 @@ describe GoogleApps::EventsDelete do
       it { subject.response[:body].should be_blank }
     end
   end
-
-  context "real event deletion", testext: true do
-    # Hard to simulate a real, existing event deletion by itself, so this will be bundled with
-    # events_insert_spec.rb, and even then, still hard to verify
-
-    before(:each) do
-      real_proxy = GoogleApps::EventsDelete.new(access_token: Settings.google_proxy.test_user_access_token,
-                                               refresh_token: Settings.google_proxy.test_user_refresh_token,
-                                               expiration_time: 0)
-      GoogleApps::EventsDelete.stub(:new).and_return(real_proxy)
-    end
-
-    context "non-existing event (404)" do
-      subject { GoogleApps::EventsDelete.new(user_id).delete_event("non_existent") }
-
-      its(:status) { should eq(404) }
-      it { subject.response[:body].should be_blank }
-    end
-
-  end
 end

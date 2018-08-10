@@ -35,36 +35,4 @@ describe CampusSolutions::EthnicityDelete do
       it_behaves_like 'a proxy that got data successfully'
     end
   end
-
-  context 'with a real external service', testext: true do
-    let(:create_params) { {
-      regRegion: 'USA',
-      ethnicGroupCode: 'ASIANIND',
-      isPrimary: 'N',
-      isHispanicLatino: 'ab',
-      isAmiAln: 'N',
-      isAsian: 'N',
-      isBlackAfAm: 'N',
-      isHawPac: 'N',
-      isWhite: 'Y',
-      isEthnicityValidated: 'N'
-    } }
-    before {
-      CampusSolutions::EthnicityPost.new(fake: false, user_id: user_id, params: create_params).get
-    }
-
-    let(:proxy) { CampusSolutions::EthnicityDelete.new(fake: false, user_id: user_id, params: params) }
-    subject { proxy.get }
-
-    context 'a successful delete' do
-      let(:params) { {
-        regRegion: 'USA',
-        ethnicGroupCode: 'ASIANIND'
-      } }
-      context 'performing a real delete' do
-        it_behaves_like 'a proxy that got data successfully'
-      end
-    end
-
-  end
 end

@@ -99,48 +99,4 @@ describe EdoOracle::Oec do
       expect_results(%w(cross_listed_ccns co_scheduled_ccns), allow_nil: true)
     end
   end
-
-  context 'course code lookup', testext: true do
-    subject do
-      EdoOracle::Oec.get_courses(term_id, EdoOracle::Oec.depts_clause(term_code, course_codes))
-    end
-
-    context 'a department participating in OEC' do
-      let(:course_codes) do
-        [Oec::CourseCode.new(dept_name: 'PORTUG', catalog_id: nil, dept_code: 'LPSPP', include_in_oec: true)]
-      end
-      include_examples 'expected result structure'
-    end
-
-    context 'a department not participating in OEC' do
-      let(:course_codes) do
-        [Oec::CourseCode.new(dept_name: 'FRENCH', catalog_id: nil, dept_code: 'HFREN', include_in_oec: false)]
-      end
-      include_examples 'expected result structure'
-    end
-  end
-
-  context 'course lookup', testext: true do
-    let(:course_id_list) { EdoOracle::Oec.chunked_whitelist(EdoOracle::Oec.course_ccn_column, course_ids) }
-
-    context 'lookup by course id' do
-      let(:course_ids) { %w(31036 31037) }
-      subject { EdoOracle::Oec.get_courses(term_id, course_id_list) }
-      include_examples 'expected result structure'
-      it 'returns the right courses' do
-        expect(subject).to have(2).items
-        expect(subject.map { |row| row['section_id'] }).to match_array course_ids
-      end
-    end
-
-    context 'crosslisting and room share lookup' do
-      let(:course_ids) { %w(32821 32862) }
-      let(:course_id_aggregates) { [ '32819,32820,32821', '32862,33269,33378' ] }
-      subject { EdoOracle::Oec.get_courses(term_id, course_id_list) }
-      it 'returns correct aggregated ccns' do
-        expect(subject.map { |row| row['cross_listed_ccns'].split(',').uniq.join(',') }).to match_array course_id_aggregates
-        expect(subject.map { |row| row['co_scheduled_ccns'].split(',').uniq.join(',') }).to match_array course_id_aggregates
-      end
-    end
-  end
 end
