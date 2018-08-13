@@ -7,7 +7,7 @@ var angular = require('angular');
 /**
  * Academics controller
  */
-angular.module('calcentral.controllers').controller('AcademicsController', function(academicsFactory, academicsService, academicStandingsFactory, holdsFactory, apiService, badgesFactory, linkService, registrationsFactory, userService, $q, $routeParams, $scope, $location) {
+angular.module('calcentral.controllers').controller('AcademicsController', function(academicsFactory, academicsService, academicStandingsFactory, holdsFactory, apiService, linkService, registrationsFactory, $q, $routeParams, $scope, $location) {
   linkService.addCurrentRouteSettings($scope);
   apiService.util.setTitle($scope.currentPage.name);
 

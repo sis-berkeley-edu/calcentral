@@ -28,7 +28,7 @@ module EdoOracle
       sec."primary" AS "primary",
       sec."sectionNumber" AS section_num,
       sec."component-code" as instruction_format,
-      sec."primaryAssociatedSectionId" as primary_associated_section_id,
+      TO_CHAR(sec."primaryAssociatedSectionId") as primary_associated_section_id,
       sec."displayName" AS section_display_name,
       sec."topic-descr" AS topic_description,
       xlat."courseDisplayName" AS course_display_name,

@@ -113,7 +113,7 @@ describe EdoOracle::Queries do
       expect(subject.first['primary']).to eq 'TRUE'
       expect(subject.first['section_num']).to eq '3'
       expect(subject.first['instruction_format']).to eq 'SEM'
-      expect(subject.first['primary_associated_section_id']).to eq 12392
+      expect(subject.first['primary_associated_section_id']).to eq '12392'
       expect(subject.first['section_display_name']).to eq 'AMERSTD 191'
       expect(subject.first['topic_description']).to be nil
       expect(subject.first['course_display_name']).to eq 'AMERSTD 191'
@@ -196,7 +196,7 @@ describe EdoOracle::Queries do
       expect(subject.first['primary']).to eq 'TRUE'
       expect(subject.first['section_num']).to eq '16'
       expect(subject.first['instruction_format']).to eq 'TUT'
-      expect(subject.first['primary_associated_section_id']).to eq 12392
+      expect(subject.first['primary_associated_section_id']).to eq '12392'
       expect(subject.first['section_display_name']).to eq 'UGIS 192C'
       expect(subject.first['topic_description']).to be nil
       expect(subject.first['course_display_name']).to eq 'UGIS 192C'
