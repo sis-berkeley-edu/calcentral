@@ -44,7 +44,11 @@ require('./angular/controllers/calcentralController.js');
 
 // CalCentral Templates
 const templates = require.context('../templates', true, /\.html$/);
-templates.keys().forEach((key) => { templates(key); });
+templates.keys().forEach(templates);
+
+// Images
+const images = require.context('../images', true, /\.(png|svg|jpg|gif|ico)$/);
+images.keys().forEach(images);
 
 // Styles
 require('../stylesheets/lib/foundation.css');

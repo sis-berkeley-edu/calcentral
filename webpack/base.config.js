@@ -81,7 +81,7 @@ module.exports = {
           },
           { loader: 'html-loader',
             options: {
-              attrs: [':data-ng-src']
+              attrs: ['img:data-src']
             }
           }
         ]
@@ -89,6 +89,7 @@ module.exports = {
       { test: /\.(png|svg|jpg|gif|ico)$/,
         loader: 'url-loader',
         options: {
+          fallback: 'file-loader',
           name: '[name].[ext]',
           outputPath: 'assets/images/',
           // sets our base64 encoding threshold at 8KB
