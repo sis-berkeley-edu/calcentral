@@ -1108,24 +1108,6 @@ class PopulateSisedosH2 < ActiveRecord::Base
       );
       INSERT INTO SISEDO.MEETINGV00_VW ("cs-course-id","offeringNumber","term-id","session-id","sectionNumber","number","meetsDays","meetsMonday","meetsTuesday","meetsWednesday","meetsThursday","meetsFriday","meetsSaturday","meetsSunday","startTime","endTime","location-code","location-descr","startDate","endDate") VALUES ('101242',1,'2178','1','10',10,null,'false','false','false','false','false','false','false','00:00','00:00',' ',null,'2017-08-23','2017-12-08');
 
-      DROP TABLE IF EXISTS SISEDO.EXAMV00_VW;
-      CREATE TABLE SISEDO.EXAMV00_VW (
-        "cs-course-id"	VARCHAR2(6 CHAR),
-        "offeringNumber"	NUMBER(38),
-        "term-id"	VARCHAR2(4 CHAR),
-        "session-id"	VARCHAR2(3 CHAR),
-        "sectionNumber"	VARCHAR2(4 CHAR),
-        "number"	NUMBER(38),
-        "type-code"	VARCHAR2(4 CHAR),
-        "type-descr"	VARCHAR2(30 CHAR),
-        "date"	DATE,
-        "startTime"	TIMESTAMP(6),
-        "endTime"	TIMESTAMP(6),
-        "location-code"	VARCHAR2(10 CHAR),
-        "location-descr"	VARCHAR2(30 CHAR)
-      );
-      --TODO: POPULATE SISEDO.EXAMV00_VW
-
       DROP TABLE IF EXISTS SISEDO.GRADING_DATES_CS_V00_VW;
       CREATE TABLE SISEDO.GRADING_DATES_CS_V00_VW (
         ACAD_CAREER VARCHAR2(4 CHAR),
