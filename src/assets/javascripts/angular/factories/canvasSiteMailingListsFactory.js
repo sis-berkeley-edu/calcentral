@@ -1,7 +1,5 @@
 'use strict';
 
-
-
 /**
  * Canvas Site Mailing Lists Factory - API interface for the admin-level 'Manage bCourses Site Mailing Lists' tool.
  */

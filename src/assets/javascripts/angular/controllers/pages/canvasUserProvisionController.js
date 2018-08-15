@@ -1,7 +1,5 @@
 'use strict';
 
-
-
 /**
  * Canvas user provisioning LTI app controller
  */

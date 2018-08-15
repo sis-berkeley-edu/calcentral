@@ -1,7 +1,5 @@
 'use strict';
 
-
-
 /**
  * Finaid Approvals controller
  */

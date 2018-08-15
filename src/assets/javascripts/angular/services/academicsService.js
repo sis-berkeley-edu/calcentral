@@ -3,7 +3,6 @@
 
 var _ = require('lodash');
 
-
 angular.module('calcentral.services').service('academicsService', function() {
 
   // Selects the semester of most pressing interest.

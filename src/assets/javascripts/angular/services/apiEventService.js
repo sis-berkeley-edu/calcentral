@@ -1,7 +1,5 @@
 'use strict';
 
-
-
 /**
  * API event service - broadcasts API events
  */

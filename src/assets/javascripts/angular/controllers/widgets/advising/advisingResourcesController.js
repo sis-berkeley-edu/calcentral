@@ -2,7 +2,6 @@
 
 var _ = require('lodash');
 
-
 /**
  * Advising Resources Controller
  * Show Campus Solutions links and favorite reports

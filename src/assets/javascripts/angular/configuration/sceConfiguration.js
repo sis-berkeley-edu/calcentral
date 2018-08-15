@@ -1,7 +1,5 @@
 'use strict';
 
-
-
 /**
  * Set the SCE configuration for CalCentral
  */

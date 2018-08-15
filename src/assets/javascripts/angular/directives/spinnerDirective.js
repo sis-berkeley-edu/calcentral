@@ -1,7 +1,5 @@
 'use strict';
 
-
-
 /**
  * This attribute will replace the element by a spinner until data is returned in an HTTP respsonse.
  */

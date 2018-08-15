@@ -1,7 +1,5 @@
 'use strict';
 
-
-
 /**
  * Up Next Factory
  */

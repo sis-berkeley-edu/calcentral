@@ -1,7 +1,5 @@
 'use strict';
 
-
-
 /**
  * Housing Factory
  */

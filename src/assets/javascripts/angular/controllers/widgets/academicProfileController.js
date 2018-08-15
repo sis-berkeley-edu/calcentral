@@ -1,7 +1,5 @@
 'use strict';
 
-
-
 /**
  * Academic Profile controller
  */

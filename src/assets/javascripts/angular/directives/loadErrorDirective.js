@@ -1,7 +1,5 @@
 'use strict';
 
-
-
 /**
  * Set a scope flag to signal an error during ng-load, enabling fallback to a default image.
  */

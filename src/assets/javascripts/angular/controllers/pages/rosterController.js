@@ -1,8 +1,6 @@
 /* jshint camelcase: false */
 'use strict';
 
-
-
 /**
  * Canvas roster photos LTI app controller
  */

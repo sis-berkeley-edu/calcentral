@@ -1,7 +1,5 @@
 'use strict';
 
-
-
 /**
  * Set the HTTP Error configuration for CalCentral
  */

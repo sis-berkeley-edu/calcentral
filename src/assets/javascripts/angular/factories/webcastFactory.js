@@ -1,7 +1,5 @@
 'use strict';
 
-
-
 /**
  * Webcast Factory
  */

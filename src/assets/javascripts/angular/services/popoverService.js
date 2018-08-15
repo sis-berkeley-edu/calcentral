@@ -1,7 +1,5 @@
 'use strict';
 
-
-
 angular.module('calcentral.services').service('popoverService', function($document, $rootScope, analyticsService) {
   var popovers = {};
 

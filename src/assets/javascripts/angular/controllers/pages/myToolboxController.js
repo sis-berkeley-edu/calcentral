@@ -1,7 +1,5 @@
 'use strict';
 
-
-
 /**
  * Controller for page containing view-as widget and other admin-related tools
  */

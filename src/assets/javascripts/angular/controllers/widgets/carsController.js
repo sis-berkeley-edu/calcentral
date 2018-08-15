@@ -1,7 +1,5 @@
 'use strict';
 
-
-
 /**
  * CARS controller
  */

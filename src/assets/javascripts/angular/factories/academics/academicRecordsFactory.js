@@ -1,7 +1,5 @@
 'use strict';
 
-
-
 angular.module('calcentral.factories').factory('academicRecordsFactory', function(apiService) {
 
   var url = '/api/my/academic_records';

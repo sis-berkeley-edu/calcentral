@@ -1,7 +1,5 @@
 'use strict';
 
-
-
 angular.module('calcentral.directives').directive('ccDatepickerDirective', function($document) {
   return {
     // Restrict the directive to attributes

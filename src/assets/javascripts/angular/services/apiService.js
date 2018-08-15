@@ -1,7 +1,5 @@
 'use strict';
 
-
-
 angular.module('calcentral.services').service('apiService', function(
   analyticsService,
   authService,

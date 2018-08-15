@@ -1,7 +1,5 @@
 'use strict';
 
-
-
 angular.module('calcentral.services').factory('httpService', function($cacheFactory, $http) {
   /**
    * Clear the cache for a specific URL

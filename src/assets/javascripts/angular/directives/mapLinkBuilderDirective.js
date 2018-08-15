@@ -1,7 +1,5 @@
 'use strict';
 
-
-
 angular.module('calcentral.directives').directive('ccMapLinkBuilderDirective', function($compile) {
   /**
    * buildingLinkName is used in the location name handed to Google Maps.

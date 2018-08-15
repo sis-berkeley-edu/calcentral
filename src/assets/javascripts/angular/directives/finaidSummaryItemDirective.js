@@ -1,7 +1,5 @@
 'use strict';
 
-
-
 /**
  * Directive for the finaid permissions
  */

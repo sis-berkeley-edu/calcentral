@@ -1,6 +1,5 @@
 'use strict';
 
-
 var _ = require('lodash');
 
 angular.module('calcentral.directives').directive('ccAmountChangeSymbolDirective', [function() {

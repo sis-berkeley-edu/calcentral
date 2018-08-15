@@ -2,7 +2,6 @@
 
 var _ = require('lodash');
 
-
 /**
  * Directive for displaying links to Campus Solutions
  *

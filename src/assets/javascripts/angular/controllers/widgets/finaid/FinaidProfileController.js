@@ -2,7 +2,6 @@
 
 var _ = require('lodash');
 
-
 /**
  * Financial Aid & Scholarships Profile controller
  */

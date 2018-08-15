@@ -1,7 +1,5 @@
 'use strict';
 
-
-
 angular.module('calcentral.services').service('taskAdderService', function($http, $q, apiService) {
   var taskPanelState = {
     isProcessing: false,

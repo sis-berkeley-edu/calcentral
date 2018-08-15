@@ -1,7 +1,5 @@
 'use strict';
 
-
-
 /**
  * Honors & awards section controller
  */

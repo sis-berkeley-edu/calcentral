@@ -1,7 +1,5 @@
 'use strict';
 
-
-
 /**
  * Directive for the enrollment card header
  */

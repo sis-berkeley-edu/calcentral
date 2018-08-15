@@ -1,7 +1,5 @@
 'use strict';
 
-
-
 angular.module('calcentral.directives').directive('ccYoutubeDirective', function(apiService, $compile, $sce) {
   return {
     restrict: 'ACE',

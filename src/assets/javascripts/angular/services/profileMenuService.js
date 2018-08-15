@@ -2,7 +2,6 @@
 
 var _ = require('lodash');
 
-
 /**
  * Profile Menu Serives - provide all the information for the profile menu
  */

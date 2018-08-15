@@ -1,6 +1,6 @@
 'use strict';
-require('../angularlib/swipeDirective');
 
+require('../angularlib/swipeDirective');
 
 /**
  * Initialize all of the submodules

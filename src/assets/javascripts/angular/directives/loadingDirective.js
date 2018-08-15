@@ -1,7 +1,5 @@
 'use strict';
 
-
-
 angular.module('calcentral.directives').directive('ccLoadingDirective', [function() {
   return {
     link: function(scope, elm, attrs) {

@@ -1,7 +1,5 @@
 'use strict';
 
-
-
 /**
  * Show an $ amount in a specific way
  *

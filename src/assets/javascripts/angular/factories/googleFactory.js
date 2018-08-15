@@ -1,7 +1,5 @@
 'use strict';
 
-
-
 /**
  * Google Factory
  */

@@ -2,7 +2,6 @@
 
 var _ = require('lodash');
 
-
 /**
  * Finaid COA (Cost of Attendance) controller
  */

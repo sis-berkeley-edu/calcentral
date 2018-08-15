@@ -1,7 +1,5 @@
 'use strict';
 
-
-
 /**
  * Canvas Site Creation Factory - API Interface for 'Create a Site' overview index page
  */

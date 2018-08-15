@@ -1,7 +1,5 @@
 'use strict';
 
-
-
 /**
  * Set the location configuration for CalCentral
  */

@@ -1,7 +1,5 @@
 'use strict';
 
-
-
 angular.module('calcentral.directives').directive('ccFocusDirective', function() {
   return {
     link: function(scope, elm, attrs) {

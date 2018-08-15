@@ -1,6 +1,5 @@
 'use strict';
 
-
 /**
  * CalCentral main controller
  */

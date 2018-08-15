@@ -1,7 +1,5 @@
 'use strict';
 
-
-
 /**
  * Hookup Google Reminder controller
  */

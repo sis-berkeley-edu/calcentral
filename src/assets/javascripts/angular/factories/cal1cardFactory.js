@@ -1,7 +1,5 @@
 'use strict';
 
-
-
 /**
  * Cal1Card Factory
  */

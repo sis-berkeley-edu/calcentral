@@ -1,7 +1,5 @@
 'use strict';
 
-
-
 /**
  * Admin Factory
  */

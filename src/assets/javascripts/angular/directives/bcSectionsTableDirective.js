@@ -1,7 +1,5 @@
 'use strict';
 
-
-
 angular.module('calcentral.directives').directive('bcSectionsTable', function() {
   return {
     restrict: 'A',

@@ -1,7 +1,5 @@
 'use strict';
 
-
-
 /**
  * Parse a request and location URL and determine whether this is a same-domain request.
  * This function has been copied over from AngularJS since they don't expose this function

@@ -1,7 +1,5 @@
 'use strict';
 
-
-
 /**
  * Statement Of Legal Residency URL Factory
  */

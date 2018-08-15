@@ -1,7 +1,5 @@
 'use strict';
 
-
-
 angular.module('calcentral.services').service('utilService', function($cacheFactory, $http, $location, $rootScope, $route, $window, calcentralConfig) {
 
   /**

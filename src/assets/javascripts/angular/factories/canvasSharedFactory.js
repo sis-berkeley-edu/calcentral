@@ -1,7 +1,5 @@
 'use strict';
 
-
-
 /**
  * Canvas Shared Factory - Interface for shared API endpoints
  */

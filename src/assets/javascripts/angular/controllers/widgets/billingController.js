@@ -1,6 +1,5 @@
 'use strict';
 
-
 var _ = require('lodash');
 
 angular.module('calcentral.controllers').controller('BillingController', function(apiService, financesFactory, $filter, $scope) {

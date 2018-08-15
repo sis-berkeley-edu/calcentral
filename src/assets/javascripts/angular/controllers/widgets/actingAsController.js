@@ -1,7 +1,5 @@
 'use strict';
 
-
-
 /**
  * 'Acting as' controller
  */

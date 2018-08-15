@@ -1,6 +1,5 @@
 'use strict';
 
-
 var _ = require('lodash');
 
 angular.module('calcentral.controllers').controller('StudentResourcesController', function(academicsService, apiService, linkService, studentResourcesFactory, $scope) {

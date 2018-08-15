@@ -1,8 +1,6 @@
 /* jshint camelcase: false */
 'use strict';
 
-
-
 /**
  * Canvas Manage Official Sections LTI app controller
  */

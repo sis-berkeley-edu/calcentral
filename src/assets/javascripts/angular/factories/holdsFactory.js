@@ -1,7 +1,5 @@
 'use strict';
 
-
-
 /**
  * Holds Factory
  */

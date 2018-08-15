@@ -2,7 +2,6 @@
 
 var _ = require('lodash');
 
-
 /**
  * Profile controller
  */

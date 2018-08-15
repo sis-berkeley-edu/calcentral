@@ -1,7 +1,5 @@
 'use strict';
 
-
-
 angular.module('calcentral.services').factory('httpErrorInterceptorService', function($q, errorService) {
   return {
     // Basic idea from http://stackoverflow.com/questions/11971213

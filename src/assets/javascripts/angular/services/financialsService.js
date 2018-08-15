@@ -1,7 +1,5 @@
 'use strict';
 
-
-
 angular.module('calcentral.services').service('financialsService', function(analyticsService) {
   var printPage = function() {
     analyticsService.sendEvent('Finances', 'Print');

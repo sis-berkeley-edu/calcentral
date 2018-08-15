@@ -1,7 +1,5 @@
 'use strict';
 
-
-
 angular.module('calcentral.directives').directive('ccAccessibleFocusDirective', function() {
   return {
     // Restrict it to attributes.

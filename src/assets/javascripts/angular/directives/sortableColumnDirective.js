@@ -1,7 +1,5 @@
 'use strict';
 
-
-
 /*
  * CalCentral Sortable Column Directive
  *

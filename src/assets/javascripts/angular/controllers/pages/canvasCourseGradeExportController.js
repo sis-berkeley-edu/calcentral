@@ -1,8 +1,6 @@
 /* jshint camelcase: false */
 'use strict';
 
-
-
 /**
  * Canvas Add User to Course LTI app controller
  */

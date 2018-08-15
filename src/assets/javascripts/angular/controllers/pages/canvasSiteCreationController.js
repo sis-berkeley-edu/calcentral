@@ -1,7 +1,5 @@
 'use strict';
 
-
-
 /**
  * Canvas 'Create a Site' overview index controller
  */

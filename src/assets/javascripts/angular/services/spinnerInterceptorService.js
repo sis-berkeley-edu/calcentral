@@ -1,7 +1,5 @@
 'use strict';
 
-
-
 angular.module('calcentral.services').factory('spinnerInterceptorService', function($q) {
   return {
     /**

@@ -1,7 +1,5 @@
 'use strict';
 
-
-
 angular.module('calcentral.directives').directive('ccShowInfiniteDirective', function($parse) {
   var setTextScope = function(scope, infiniteText) {
     if (!infiniteText) {

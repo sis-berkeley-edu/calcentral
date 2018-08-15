@@ -1,7 +1,5 @@
 'use strict';
 
-
-
 /**
  * Welcome newly assigned delegates
  */

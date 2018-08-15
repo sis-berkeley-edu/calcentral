@@ -1,8 +1,6 @@
 /* jshint camelcase: false */
 'use strict';
 
-
-
 angular.module('calcentral.services').service('canvasSiteCreationService', function() {
   /**
    * linkToSiteOverview Provides the sub-URI for the site creation overview context

@@ -1,7 +1,5 @@
 'use strict';
 
-
-
 angular.module('calcentral.directives').directive('ccTelPhoneInputDirective', function() {
   /**
    * 8,9,18,19 AUG 2016

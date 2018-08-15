@@ -1,7 +1,5 @@
 'use strict';
 
-
-
 angular.module('calcentral.services').service('delegateService', function($q) {
   /**
    * Fired after an action (e.g., save) has finished

@@ -1,7 +1,5 @@
 'use strict';
 
-
-
 /**
  * Set the security configuration for CalCentral
  */

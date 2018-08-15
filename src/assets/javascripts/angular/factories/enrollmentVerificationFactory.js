@@ -1,7 +1,5 @@
 'use strict';
 
-
-
 /**
  * Factory for the enrollment verification messages.
  */

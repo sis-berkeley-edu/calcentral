@@ -1,7 +1,5 @@
 'use strict';
 
-
-
 angular.module('calcentral.directives').directive('ccSelectOnClickDirective', function() {
   return {
     restrict: 'A',

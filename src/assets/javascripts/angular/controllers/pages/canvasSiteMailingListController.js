@@ -1,7 +1,5 @@
 'use strict';
 
-
-
 /**
  * Canvas Site Mailing List app controller; for the course-level tool allowing creation of a single bCourses mailing list.
  */

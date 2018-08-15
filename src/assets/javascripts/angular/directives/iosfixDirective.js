@@ -1,7 +1,5 @@
 'use strict';
 
-
-
 /**
  * iOS devices don't support event bubbling all the way to the top.
  * We need this capability since we need to close popovers when we tap/touch/click outside of them.

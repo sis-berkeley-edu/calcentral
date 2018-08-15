@@ -2,7 +2,6 @@
 
 var _ = require('lodash');
 
-
 angular.module('calcentral.services').service('finaidService', function($rootScope, userService) {
   var options = {
     finaidYear: false

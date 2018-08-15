@@ -1,7 +1,5 @@
 'use strict';
 
-
-
 angular.module('calcentral.services').service('errorService', function(calcentralConfig) {
   var Raven = require('raven-js');
   Raven.config(calcentralConfig.sentryUrl).install();

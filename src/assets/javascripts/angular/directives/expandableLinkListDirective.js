@@ -1,7 +1,5 @@
 'use strict';
 
-
-
 angular.module('calcentral.directives').directive('ccExpandableLinkListDirective', function(widgetService) {
   return {
     restrict: 'E',

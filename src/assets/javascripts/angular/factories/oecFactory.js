@@ -1,7 +1,5 @@
 'use strict';
 
-
-
 /**
  * OEC Factory - Interface for 'OEC Control Panel' API endpoints
  */

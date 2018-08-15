@@ -1,7 +1,5 @@
 'use strict';
 
-
-
 /**
  * Canvas Project Provision Factory - API Interface for 'Create a Project Site' tool
  */

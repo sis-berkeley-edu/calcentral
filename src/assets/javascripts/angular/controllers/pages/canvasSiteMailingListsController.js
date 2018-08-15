@@ -1,7 +1,5 @@
 'use strict';
 
-
-
 /**
  * Canvas Site Mailing Lists app controller; for the admin-level tool allowing administration of all bCourses mailing lists.
  */

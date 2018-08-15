@@ -1,7 +1,5 @@
 'use strict';
 
-
-
 /**
  * Transfer Credit Factory
  */

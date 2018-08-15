@@ -2,7 +2,6 @@
 
 var _ = require('lodash');
 
-
 /**
  * Controller populates academic dates from TBD calendar API.
  */

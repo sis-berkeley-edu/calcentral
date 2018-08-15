@@ -1,8 +1,6 @@
 /* jshint camelcase: false */
 'use strict';
 
-
-
 /**
  * Canvas course provisioning LTI app controller
  */

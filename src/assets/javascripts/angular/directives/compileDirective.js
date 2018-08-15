@@ -1,7 +1,5 @@
 'use strict';
 
-
-
 angular.module('calcentral.directives').directive('ccCompileDirective', function($compile) {
   return {
     restrict: 'A',

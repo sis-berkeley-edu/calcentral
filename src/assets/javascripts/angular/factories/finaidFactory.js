@@ -1,7 +1,5 @@
 'use strict';
 
-
-
 /**
  * Financial Aid Factory
  */

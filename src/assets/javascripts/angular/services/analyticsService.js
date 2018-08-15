@@ -1,7 +1,5 @@
 'use strict';
 
-
-
 angular.module('calcentral.services').service('analyticsService', function(calcentralConfig, $rootScope, $location) {
   /**
    * Send an analytics event

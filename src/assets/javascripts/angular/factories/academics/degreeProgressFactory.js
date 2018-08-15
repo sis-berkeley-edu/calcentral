@@ -1,7 +1,5 @@
 'use strict';
 
-
-
 angular.module('calcentral.factories').factory('degreeProgressFactory', function(apiService) {
   var undergraduateRequirementsUrl = '/api/academics/degree_progress/ugrd';
   // var undergraduateRequirementsUrl = '/dummy/json/degree_progress_ugrd.json';

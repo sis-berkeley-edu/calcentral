@@ -1,7 +1,5 @@
 'use strict';
 
-
-
 /**
  * My Finances controller
  */

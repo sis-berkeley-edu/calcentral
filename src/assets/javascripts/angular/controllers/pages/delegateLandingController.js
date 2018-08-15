@@ -1,7 +1,5 @@
 'use strict';
 
-
-
 /**
  * The delegate user is sent to this page after creating a new CalNet account.
  */

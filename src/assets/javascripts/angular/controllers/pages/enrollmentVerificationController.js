@@ -2,7 +2,6 @@
 
 var _ = require('lodash');
 
-
 /**
  * Enrollment Verification Controller
  */

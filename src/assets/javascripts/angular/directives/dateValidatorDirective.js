@@ -1,7 +1,5 @@
 'use strict';
 
-
-
 angular.module('calcentral.directives').directive('ccDateValidatorDirective', function() {
   return {
     require: 'ngModel',

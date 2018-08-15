@@ -1,7 +1,5 @@
 'use strict';
 
-
-
 /**
  * Higher Degree Committees Factory
  */

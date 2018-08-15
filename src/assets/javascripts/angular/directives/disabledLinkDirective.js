@@ -1,7 +1,5 @@
 'use strict';
 
-
-
 /**
  * Make sure that links with a disabled attribute are in fact disabled
  * - Adds the correct ARIA roles

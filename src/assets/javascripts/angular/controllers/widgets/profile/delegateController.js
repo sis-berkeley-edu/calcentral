@@ -2,7 +2,6 @@
 
 var _ = require('lodash');
 
-
 /**
  * Controller for users wanting to manage delegates
  */

@@ -3,8 +3,6 @@
  */
 'use strict';
 
-
-
 angular.module('calcentral.directives').directive('ccScrollToDirective', function($rootScope, $window) {
   return {
     restrict: 'AC',

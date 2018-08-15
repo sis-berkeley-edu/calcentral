@@ -1,7 +1,5 @@
 'use strict';
 
-
-
 angular.module('calcentral.services').service('widgetService', function(analyticsService) {
   /**
    * Toggle whether an item for a widget should be shown or not.

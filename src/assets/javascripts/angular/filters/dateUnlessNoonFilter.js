@@ -1,7 +1,5 @@
 'use strict';
 
-
-
 angular.module('calcentral.filters').filter('dateUnlessNoonFilter', function($filter) {
   return function(millisecondsEpoch, format) {
     var date = $filter('date')(millisecondsEpoch, format);

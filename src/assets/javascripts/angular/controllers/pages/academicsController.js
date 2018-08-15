@@ -3,7 +3,6 @@
 
 var _ = require('lodash');
 
-
 /**
  * Academics controller
  */

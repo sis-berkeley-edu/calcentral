@@ -2,7 +2,6 @@
 
 var _ = require('lodash');
 
-
 /**
  * Controller gets students linked to a delegate user account
  */
