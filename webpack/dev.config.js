@@ -3,10 +3,13 @@
 /* jscs: disable  disallowSpacesInsideObjectBrackets */
 /* jscs: disable  requirePaddingNewLinesInObjects */
 /* jscs: disable  requireObjectKeysOnNewLine */
+const chokidar = require('chokidar');
 const convert = require('koa-connect');
 const path = require('path');
 const proxy = require('http-proxy-middleware');
+const stringify = require('json-stringify-safe');
 const webpackMerge = require('webpack-merge');
+const webSocket = require('ws');
 
 const port = 3001;
 const baseConfig = require('./base.config.js');
@@ -70,10 +73,40 @@ module.exports = webpackMerge(baseConfig, {
       })));
     },
     devMiddleware: {
-      publicPath: path.resolve(__dirname, '../public/'),
       writeToDisk: (filePath) => {
         // excludes writing hot-module files created by webpack-serve to the disk
         return !/hot-update/.test(filePath);
+      }
+    },
+    hotClient: {
+      host: 'localhost',
+      port: 8090
+    },
+    on: {
+      listening(server) {
+        const socket = new webSocket('ws://localhost:8090');
+        const watchPath = path.resolve(__dirname, '../src');
+        const watchOptions = {
+          awaitWriteFinish: {
+            stabilityThreshold: 1500
+          }
+        };
+        const watcher = chokidar.watch(watchPath, watchOptions);
+        const reloadObject = {
+          type: 'broadcast',
+          data: {
+            type: 'window-reload',
+            data: {}
+          }
+        };
+
+        watcher.on('change', () => {
+          socket.send(stringify(reloadObject));
+        });
+
+        socket.on('close', () => {
+          watcher.close();
+        });
       }
     },
     port: port
