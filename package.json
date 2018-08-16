@@ -22,8 +22,8 @@
   "scripts": {
     "build": "gulp build",
     "build-production": "gulp build --env production",
-    "dev": "NODE_ENV=development webpack-serve --config webpack/dev.config.js",
-    "webpack:build": "NODE_ENV=production webpack --config webpack/prod.config.js"
+    "dev": "webpack-serve --config webpack/dev.config.js",
+    "webpack:build": "webpack --config webpack/prod.config.js"
   },
   "engines": {
     "node": ">=8.9.4"
@@ -42,7 +42,6 @@
     "bulkify": "~1.4.2",
     "chokidar": "^2.0.4",
     "clean-webpack-plugin": "~0.1.19",
-    "copy-webpack-plugin": "^4.5.2",
     "css-loader": "^1.0.0",
     "del": "~3.0.0",
     "file-loader": "^1.1.11",

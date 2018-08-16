@@ -6,15 +6,10 @@ const fs = require('fs');
 const path = require('path');
 
 const cleanWebpackPlugin = require('clean-webpack-plugin');
-const copyWebpackPlugin = require('copy-webpack-plugin');
 const htmlWebpackPlugin = require('html-webpack-plugin');
 
 let paths = {
   source: {
-    assets: {
-      fonts: 'node_modules/font-awesome/fonts/',
-      images: 'src/assets/images/'
-    },
     templates: {
       base: './src/base.html',
       bCoursesEmbedded: fs.readFileSync('./src/bcourses_embedded.html'),
@@ -90,22 +85,25 @@ module.exports = {
         loader: 'url-loader',
         options: {
           fallback: 'file-loader',
-          name: '[name].[ext]',
-          outputPath: 'assets/images/',
           // sets our base64 encoding threshold at 8KB
-          limit: 8 * 1024
+          limit: 8 * 1024,
+          name: '[name].[ext]',
+          outputPath: 'assets/images/'
         }
       },
       { test: /\.(woff|woff2|eot|ttf|otf)$/,
-        loader: 'file-loader'
+        loader: 'url-loader',
+        options: {
+          fallback: 'file-loader',
+          limit: 8 * 1024,
+          name: '[name].[ext]',
+          outputPath: 'assets/fonts/'
+        }
       }
     ]
   },
   plugins: [
     new cleanWebpackPlugin(pathsToClean, { root: path.resolve(__dirname, '../public/') }),
-    new copyWebpackPlugin([
-      { from: paths.source.assets.fonts, to: paths.public.assets.fonts },
-    ]),
     new htmlWebpackPlugin({
       filename: paths.public.templates.bCoursesEmbedded,
       inject: false,
