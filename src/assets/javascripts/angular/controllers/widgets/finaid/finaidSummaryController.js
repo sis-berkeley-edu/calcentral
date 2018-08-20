@@ -6,75 +6,49 @@ var _ = require('lodash');
  * Finaid Summary controller
  */
 angular.module('calcentral.controllers').controller('FinaidSummaryController', function(finaidFactory, finaidService, tasksFactory, $location, $q, $route, $routeParams, $scope) {
-  // Keep a list of all the selected properties
-  angular.extend($scope, {
-    // Keep a list of all the selected properties
+  $scope.financialAidSummary = {
+    isLoading: true,
     selected: {},
-    finaidSummaryInfo: {
-      tasksCount: 0,
-      isLoadingOptions: true,
-      isLoadingData: true
-    },
-    finaidSummaryData: {},
-    showFundingOfferedDetails: false,
-    shoppingSheet: {}
-  });
-
-  var setDefaultSelections = function(data) {
-    if (!_.get(data, 'finaidSummary.finaidYears.length')) {
-      return;
-    }
-    finaidService.setDefaultFinaidYear(data, $routeParams.finaidYearId);
-    selectFinaidYear();
-    updateFinaidUrl();
+    tasksCount: 0,
+    giftAidDetail: {},
+    waiversDetail: {},
+    loansWorkStudyDetail: {}
   };
 
-  var updateFinaidUrl = function() {
-    if (!$scope.selected.finaidYear) {
+  $scope.financialAidSummary.changeAidYear = function() {
+    finaidService.setFinaidYear($scope.financialAidSummary.selected.finaidYear);
+    updateSummary();
+    updateUrl();
+  };
+
+  var updateUrl = function() {
+    if (!$scope.financialAidSummary.selected.finaidYear) {
       return;
     }
-    $scope.finaidUrl = 'finances/finaid/' + $scope.selected.finaidYear.id;
-
     if ($scope.isMainFinaid) {
-      $location.path($scope.finaidUrl, false);
+      $location.path('finances/finaid/' + $scope.financialAidSummary.selected.finaidYear.id, false);
     }
   };
 
-  var getFinaidYearData = function() {
-    $q.all([
-      getFinAidYearInfo(),
-      getTasksIncompleteCount()
-    ]).then(function() {
-      $scope.finaidSummaryInfo.isLoadingData = false;
-    });
-  };
-
-  var getFinAidYearInfo = function() {
-    return finaidFactory.getFinaidYearInfo({
-      finaidYearId: finaidService.options.finaidYear.id
-    }).then(parseFinaidYearInfo);
-  };
-
-  var parseFinaidYearInfo = function(response) {
-    angular.extend($scope.finaidSummaryData, _.get(response, 'data.feed.financialAidSummary'));
-    angular.extend($scope.shoppingSheet, _.get(response, 'data.feed.shoppingSheet'));
-    $scope.finaidSummaryInfo.errored = _.get(response, 'data.errored');
+  var updateSummary = function() {
+    angular.extend($scope.financialAidSummary.selected, _.get($scope.financialAidSummary.aid, finaidService.options.finaidYear.id));
   };
 
   var selectFinaidYear = function() {
-    $scope.finaidSummaryInfo.isLoadingData = true;
-    $scope.selected.finaidYear = finaidService.options.finaidYear;
-    getFinaidYearData();
+    $scope.financialAidSummary.selected.finaidYear = finaidService.options.finaidYear;
   };
 
-  $scope.$on('calcentral.custom.api.finaid.finaidYear', selectFinaidYear);
-
-  $scope.updateFinaidYear = function() {
-    finaidService.setFinaidYear($scope.selected.finaidYear);
-    updateFinaidUrl();
+  var setDefaultSelections = function(feed) {
+    var aidYears = _.values(_.get(feed, 'financialAidSummary.aidYears'));
+    if (!aidYears.length) {
+      return;
+    }
+    finaidService.setDefaultFinaidYear(aidYears, $routeParams.finaidYearId);
+    selectFinaidYear(feed);
+    updateSummary();
   };
 
-  var getTasksIncompleteCount = function() {
+  var loadTasksIncompleteCount = function() {
     return tasksFactory.getFinaidTasks({
       finaidYearId: finaidService.options.finaidYear.id
     }).then(function(response) {
@@ -82,20 +56,33 @@ angular.module('calcentral.controllers').controller('FinaidSummaryController', f
       var completedTasksCount = _.filter(tasks, {
         status: 'completed'
       }).length;
-      $scope.finaidSummaryInfo.tasksCount = tasks.length - completedTasksCount;
+      $scope.financialAidSummary.tasksCount = tasks.length - completedTasksCount;
     });
   };
 
-  var getFinaidSummary = function() {
-    finaidFactory.getSummary().then(
-      function successCallback(response) {
-        var feed = _.get(response, 'data.feed');
-        angular.extend($scope, feed);
-        setDefaultSelections(feed);
-        $scope.finaidSummaryInfo.isLoadingOptions = false;
-      }
-    );
+  var parseFinancialAidSummary = function(response) {
+    var feed = _.get(response, 'data');
+    angular.extend($scope.financialAidSummary, _.get(feed, 'financialAidSummary'));
+    $scope.financialAidSummary.isMainPage = ($location.path() === '/finances');
+    $scope.financialAidSummary.errored = _.get(feed, 'errored');
+    setDefaultSelections(feed);
   };
 
-  getFinaidSummary();
+  var loadFinancialAidSummary = function() {
+    finaidFactory.getFinancialAidSummary()
+    .then(
+      parseFinancialAidSummary,
+      function errorCallback() {
+        $scope.financialAidSummary.errored = true;
+      }
+    )
+    .then(
+      loadTasksIncompleteCount
+    )
+    .finally(function() {
+      $scope.financialAidSummary.isLoading = false;
+    });
+  };
+
+  loadFinancialAidSummary();
 });

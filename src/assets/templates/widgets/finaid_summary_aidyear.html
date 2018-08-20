@@ -1,15 +1,15 @@
-<div class="cc-clearfix-container" data-ng-class="{'cc-widget-finaid-summary-multiple-aid-years':(finaidSummary.finaidYears.length > 1)}">
+<div class="cc-clearfix-container" data-ng-class="{'cc-widget-finaid-summary-multiple-aid-years':(financialAidSummary.aidYears.length)}">
   <div class="cc-widget-finaid-summary-label cc-left">
     <label for="cc-widget-finaid-summary-select-year">
       <strong>Aid Year:</strong>
     </label>
   </div>
-  <div data-ng-if="finaidSummary.finaidYears.length === 1">
-    <span data-ng-bind="selected.finaidYear.name"></span>
+  <div data-ng-if="financialAidSummary.aidYears.length === 1">
+    <span data-ng-bind="financialAidSummary.selected.finaidYear.name"></span>
   </div>
-  <div data-ng-if="finaidSummary.finaidYears.length > 1">
+  <div data-ng-if="financialAidSummary.aidYears.length > 1">
     <div class="cc-select cc-widget-finaid-summary-select-year-container">
-      <select id="cc-widget-finaid-summary-select-year" data-ng-model="selected.finaidYear" data-ng-options="f as f.name for f in finaidSummary.finaidYears" data-ng-change="updateFinaidYear()"></select>
+      <select id="cc-widget-finaid-summary-select-year" data-ng-model="financialAidSummary.selected.finaidYear" data-ng-options="aidYear as aidYear.name for aidYear in financialAidSummary.aidYears" data-ng-change="financialAidSummary.changeAidYear()"></select>
     </div>
   </div>
 </div>

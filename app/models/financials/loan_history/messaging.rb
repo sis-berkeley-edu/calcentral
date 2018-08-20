@@ -17,7 +17,7 @@ module Financials
 
       def get_messages
         message_codes = self.class.MESSAGE_IDS.values
-        message_data = EdoOracle::Queries.get_loan_history_messages message_codes
+        message_data = EdoOracle::FinancialAid::Queries.get_loan_history_messages message_codes
 
         self.class.MESSAGE_IDS.keys.map do |message_code|
           relevant_message = message_data.try(:find) { |message| message.try(:[], 'code') ==  self.class.MESSAGE_IDS[message_code] }

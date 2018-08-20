@@ -57,7 +57,6 @@ module CalCentralPages
     div(:finaid_content, :xpath => '//div[@data-ng-if="!finaidSummaryInfo.errored"]')
     div(:finaid_summary_info, :xpath => '//div[@data-onload="netCostInfo.card = \'summary\'"]')
     div(:finaid_summary_label, :class => 'cc-widget-finaid-summary-label')
-    div(:finaid_summary_message, :class => 'cc-widget-finaid-summary-message-title')
     div(:no_finaid_message, :xpath => '//div[contains(.,"You do not currently have any Financial Aid information ready to view.")]')
 
     span(:finaid_single_year, :xpath => '//span[@data-ng-bind="selected.finaidYear.name"]')
@@ -65,9 +64,9 @@ module CalCentralPages
     span(:finaid_semesters, :xpath => '//span[@data-ng-bind="selected.finaidYear.availableSemesters | andFilter"]')
 
     div(:net_cost_section, :class => 'cc-widget-finaid-summary-netcost-summary')
-    div(:finaid_cost_of_attend, :xpath => '//div[@data-ng-if="finaidSummaryData.netCost"]//span[text()="Estimated Cost of Attendance"]/../following-sibling::div')
-    div(:finaid_gift_aid, :xpath => '//div[@data-ng-if="finaidSummaryData.netCost"]//span[text()="Gift Aid"]/../following-sibling::div')
-    div(:finaid_net_cost, :xpath => '//div[@data-ng-if="finaidSummaryData.netCost"]//span[text()="Net Cost"]/../following-sibling::div')
+    div(:finaid_cost_of_attend, :xpath => '//div[@data-ng-if="financialAidSummary.totalNetCost"]//span[text()="Estimated Cost of Attendance"]/../following-sibling::div')
+    div(:finaid_gift_aid, :xpath => '//div[@data-ng-if="financialAidSummary.totalNetCost"]//span[text()="Gift Aid"]/../following-sibling::div')
+    div(:finaid_net_cost, :xpath => '//div[@data-ng-if="financialAidSummary.totalNetCost"]//span[text()="Net Cost"]/../following-sibling::div')
 
     div(:finaid_funding_offered_ttl, :xpath => '//div[@class="cc-widget-finaid-summary-funding-offered ng-scope"]//span[text()="Funding Offered"]/../following-sibling::div')
     div(:finaid_funding_gift_aid, :xpath => '//div[@class="cc-widget-finaid-summary-funding-offered ng-scope"]//span[text()="Gift Aid"]/../following-sibling::div')

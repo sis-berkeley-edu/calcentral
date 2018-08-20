@@ -3,7 +3,7 @@ module Financials
     class GlossaryAidYears < Glossary
 
       def query
-        EdoOracle::Queries.get_loan_history_glossary_aid_years
+        EdoOracle::FinancialAid::Queries.get_loan_history_glossary_aid_years
       end
 
     end

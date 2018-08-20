@@ -1,11 +1,11 @@
-describe MyHousingController do
+describe MyFinancialAidSummaryController do
   before do
-    allow(FinancialAid::MyHousing).to receive(:from_session).and_return double get_feed_as_json: {feed: 'test' }
+    allow(FinancialAid::MyFinancialAidSummary).to receive(:from_session).and_return double get_feed_as_json: {feed: 'test' }
   end
   let(:user_id) { random_id }
   let(:params) do
     {
-      aid_year: '2019'
+      aid_year: '2018'
     }
   end
 

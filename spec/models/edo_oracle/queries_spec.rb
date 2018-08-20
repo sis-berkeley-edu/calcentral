@@ -272,24 +272,6 @@ describe EdoOracle::Queries do
     end
   end
 
-  describe '#get_housing' do
-    subject { EdoOracle::Queries.get_housing(uid, aid_year) }
-    let(:uid) { 61889 }
-    let(:aid_year) { 2019 }
-
-    it_behaves_like 'a successful query'
-
-    it 'returns the expected result' do
-      expect(subject.count).to eq 2
-      expect(subject[0]).to have_keys(%w(term_id term_descr housing_option housing_status housing_end_date acad_career))
-      expect(subject[1]).to have_keys(%w(term_id term_descr housing_option housing_status housing_end_date acad_career))
-    end
-    it 'sorts the rows by term ID' do
-      expect(subject[0]['term_id']).to eq '2188'
-      expect(subject[1]['term_id']).to eq '2192'
-    end
-  end
-
   describe '.terms_query_list' do
     context 'when no terms present' do
       it 'returns empty string' do
@@ -393,7 +375,6 @@ describe EdoOracle::Queries do
       end
     end
   end
-
 
   describe '.get_rosters' do
     let(:section_ids) { %w(11950 31755) }

@@ -68,7 +68,7 @@ module MyTasks
           displayCategory: display_category(result[:adminFunc], result[:chklstItemCd])
         }
       }
-      if result[:checkListMgmtFina] && (Finaid::Shared::ADMIN_FUNCTION.include? result[:adminFunc])
+      if result[:checkListMgmtFina] && (FinancialAid::Shared::ADMIN_FUNCTION.include? result[:adminFunc])
         formatted_entry[:cs].merge!({
           isFinaid: true,
           finaidYearId: result[:checkListMgmtFina][:aidYear]

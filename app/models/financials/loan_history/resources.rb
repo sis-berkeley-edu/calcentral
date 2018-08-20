@@ -13,7 +13,7 @@ module Financials
       end
 
       def get_links
-        links_data = Array.wrap(EdoOracle::Queries.get_loan_history_resources)
+        links_data = Array.wrap(EdoOracle::FinancialAid::Queries.get_loan_history_resources)
         parse_edo_response_with_sequencing links_data
       end
 

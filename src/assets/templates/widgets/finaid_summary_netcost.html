@@ -1,23 +1,44 @@
-<div
-  data-ng-if="finaidSummaryData.netCost"
-  class="cc-widget-finaid-summary-netcost-summary"
->
-  <div data-ng-repeat="item in finaidSummaryData.netCost.items">
-    <div data-ng-if="item.title === 'Estimated Cost of Attendance' && !isMainFinaid && finaidUrl" class="cc-clearfix-container">
-      <div class="cc-left">
-        <span data-ng-bind="item.title"></span>
-        <span data-ng-bind="itemSubTitle" class="cc-text-light"></span>
-      </div>
-      <a
-        class="cc-right"
-        data-cc-amount-directive="item.amount"
-        data-cc-amount-directive-color="false"
-        data-ng-href="{{finaidUrl}}"
-        title="View Estimated Cost of Attendance"
-      ></a>
-    </div>
-    <div data-ng-if="item.title !== 'Estimated Cost of Attendance' || isMainFinaid || !finaidUrl" data-cc-finaid-summary-item-directive data-item="item"></div>
-  </div>
-  <hr class="cc-hr-spacing-5" aria-hidden="true" />
-  <div data-cc-finaid-summary-item-directive data-item="finaidSummaryData.netCost.total"></div>
+<div data-ng-if="financialAidSummary.selected.totalNetCost" class="cc-table cc-widget-finaid-summary-netcost-summary">
+  <table>
+    <tbody>
+      <tr>
+        <th>Estimated Cost of Attendance</th>
+        <td>
+          <span data-ng-if="isMainFinaid"
+            class="cc-right"
+            data-cc-amount-directive="financialAidSummary.selected.totalCostOfAttendance"
+            data-cc-amount-directive-color="false"
+          ></span>
+          <a data-ng-if="!isMainFinaid"
+             class="cc-right"
+             data-cc-amount-directive="financialAidSummary.selected.totalCostOfAttendance"
+             data-cc-amount-directive-color="false"
+             data-ng-href="finances/finaid/{{financialAidSummary.selected.finaidYear.id}}"
+             title="View Estimated Cost of Attendance"
+          ></a>
+        </td>
+      </tr>
+      <tr>
+        <th>
+          <span>Gift Aid and Waivers</span>
+          <span class="cc-text-light">(Money you don't repay)</span>
+        </th>
+        <td
+          class="cc-right"
+          data-cc-amount-directive="financialAidSummary.selected.totalGiftAidAndWaivers"
+          data-cc-amount-directive-color="false"
+        ></td>
+      </tr>
+    </tbody>
+    <tfoot>
+      <tr>
+        <th>Net Cost</th>
+        <td
+          class="cc-right"
+          data-cc-amount-directive="financialAidSummary.selected.totalNetCost"
+          data-cc-amount-directive-color="false"
+        ></td>
+      </tr>
+    </tfoot>
+  </table>
 </div>

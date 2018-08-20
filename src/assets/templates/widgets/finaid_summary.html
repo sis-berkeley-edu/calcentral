@@ -2,44 +2,31 @@
   <div class="cc-widget-title">
     <h2 class="cc-left">Financial Aid and Scholarships</h2>
   </div>
-  <div class="cc-widget-text" data-cc-spinner-directive="finaidSummaryInfo.isLoadingOptions">
-    <a data-ng-if="!isMainFinaid && finaidUrl && !finaidSummaryInfo.errored" class="cc-button cc-button-blue" data-ng-href="{{finaidUrl}}">
+  <div class="cc-widget-text" data-cc-spinner-directive="financialAidSummary.isLoading">
+    <a data-ng-if="financialAidSummary.isMainPage && !financialAidSummary.errored && financialAidSummary.aidYears.length" class="cc-button cc-button-blue" data-ng-href="finances/finaid/{{financialAidSummary.selected.finaidYear.id}}">
       <strong>View Awards</strong>
     </a>
-    <div data-ng-if="!finaidSummaryInfo.errored">
-      <div data-ng-if="finaidSummary.finaidYears.length">
-        <ul class="cc-list-links" data-ng-if="api.user.profile.features.finaidSummaryTcT4Links">
-          <li data-ng-if="!selected.finaidYear.termsAndConditions.approved">
-            <a data-ng-href="{{finaidUrl}}/tc" class="cc-outbound-link" title="Accept terms and conditions">Accept terms and conditions</a>
-          </li>
-          <li data-ng-if="!finaidSummary.title4.approved">
-            <a data-ng-href="finances/finaid/t4/auth" class="cc-outbound-link" title="Authorize Title IV authorization">Authorize Title IV authorization</a>
-          </li>
-        </ul>
-        <hr data-ng-if="!isMainFinaid || api.user.profile.features.finaidSummaryTcT4Links" aria-hidden="true">
+    <div data-ng-if="!financialAidSummary.errored">
+      <div data-ng-if="financialAidSummary.aidYears.length">
+        <hr data-ng-if="!isMainFinaid" aria-hidden="true">
         <div data-ng-include="'widgets/finaid_summary_aidyear.html'"></div>
         <div data-ng-include="'widgets/finaid_summary_semester.html'"></div>
-        <hr data-ng-if="selected.finaidYear.availableSemesters.length" aria-hidden="true">
+        <hr data-ng-if="financialAidSummary.selected.finaidYear.availableSemesters.length" aria-hidden="true">
         <div>
-          <div data-cc-spinner-directive="finaidSummaryInfo.isLoadingData">
-            <div data-ng-if="finaidSummaryInfo.tasksCount > 0">
-              <a data-ng-href="{{finaidUrl}}" data-ng-disabled="isMainFinaid">
-                <i class="fa fa-bell cc-icon" data-ng-class="{'cc-icon-gold':(isMainFinaid), 'cc-non-anchored-link':(!isMainFinaid)}"></i><span data-ng-bind="finaidSummaryInfo.tasksCount"></span>&nbsp;incomplete
-              </a>
-              <span data-ng-pluralize count="finaidSummaryInfo.tasksCount" when="{'1': 'financial aid task', 'other': 'financial aid tasks'}"></span>
-            </div>
-            <div data-ng-include="'widgets/finaid_summary_netcost.html'"></div>
-            <hr data-ng-if="!finaidSummaryData.netCost" aria-hidden="true">
-            <div data-ng-include="'widgets/finaid_summary_fundingoffered.html'"></div>
+          <div data-ng-if="financialAidSummary.tasksCount > 0">
+            <a data-ng-href="{{financialAidSummary.url}}" data-ng-disabled="isMainFinaid">
+              <i class="fa fa-bell cc-icon" data-ng-class="{'cc-icon-gold':(isMainFinaid), 'cc-non-anchored-link':(!isMainFinaid)}"></i><span data-ng-bind="financialAidSummary.tasksCount"></span>&nbsp;incomplete
+            </a>
+            <span data-ng-pluralize count="financialAidSummary.tasksCount" when="{'1': 'financial aid task', 'other': 'financial aid tasks'}"></span>
           </div>
+          <div data-ng-include="'widgets/finaid_summary_netcost.html'"></div>
+          <div data-ng-include="'widgets/finaid_summary_fundingoffered.html'"></div>
         </div>
-        <hr aria-hidden="true">
       </div>
-      <div data-ng-if="!finaidSummary.finaidYears.length" data-ng-include="'widgets/finaid_not_available.html'"></div>
+      <div data-ng-if="!financialAidSummary.aidYears.length" data-ng-include="'widgets/finaid_not_available.html'"></div>
     </div>
-    <div data-ng-if="finaidSummaryInfo.errored">
+    <div data-ng-if="financialAidSummary.errored">
       <div data-ng-include="'widgets/finaid_errored.html'"></div>
-      <hr aria-hidden="true">
     </div>
     <div data-ng-include="'widgets/finaid_summary_footer.html'"></div>
   </div>

@@ -7,59 +7,57 @@ angular.module('calcentral.services').service('finaidService', function($rootSco
     finaidYear: false
   };
 
-  var findFinaidYear = function(data, finaidYearId) {
-    return _.find(data.finaidSummary.finaidYears, function(finaidYear) {
+  var findFinaidYear = function(aidYears, finaidYearId) {
+    return _.find(aidYears, function(finaidYear) {
       return finaidYear.id === finaidYearId;
     });
   };
 
   /**
-   * See whether the finaid year option combination exists
-   * @param {Object} data Summary data
+   * @param {Array} aidYears Array of aidYear objects
    * @param {String} finaidYearId e.g. 2015
    * @return {Boolean} true if combination exists, otherwise false
    */
-  var combinationExists = function(data, finaidYearId) {
-    return !!findFinaidYear(data, finaidYearId);
+  var combinationExists = function(aidYears, finaidYearId) {
+    return !!findFinaidYear(aidYears, finaidYearId);
   };
 
-  var findDefaultFinaidYear = function(finaidYears) {
-    return _.find(finaidYears, function(finaidYear) {
-      return finaidYear.default;
+  var findDefaultFinaidYear = function(aidYears) {
+    return _.find(aidYears, function(aidYear) {
+      return aidYear.default;
     });
   };
 
-  var setDefaultFinaidYear = function(data, finaidYearId) {
-    if (data && data.finaidSummary && data.finaidSummary.finaidYears) {
+  var setDefaultFinaidYear = function(aidYears, finaidYearId) {
+    if (aidYears) {
       if (finaidYearId) {
-        if (combinationExists(data, finaidYearId)) {
-          setFinaidYear(findFinaidYear(data, finaidYearId));
+        if (combinationExists(aidYears, finaidYearId)) {
+          setFinaidYear(findFinaidYear(aidYears, finaidYearId));
         } else {
           userService.redirectToPage('finances');
         }
       } else {
         // If no aid year has been selected before, select the default one
-        var finaidYear = findDefaultFinaidYear(data.finaidSummary.finaidYears);
+        var aidYear = findDefaultFinaidYear(aidYears);
 
         // If no default is found, use the first one
-        if (!finaidYear) {
-          finaidYear = data.finaidSummary.finaidYears[0];
+        if (!aidYear) {
+          aidYear = aidYears[0];
         }
 
-        setFinaidYear(finaidYear);
+        setFinaidYear(aidYear);
       }
     }
     return options.finaidYear;
   };
 
-  var setFinaidYear = function(finaidYear) {
-    options.finaidYear = finaidYear;
+  var setFinaidYear = function(aidYear) {
+    options.finaidYear = aidYear;
     if (options.finaidYear) {
       $rootScope.$broadcast('calcentral.custom.api.finaid.finaidYear');
     }
   };
 
-  // Expose the methods
   return {
     combinationExists: combinationExists,
     findFinaidYear: findFinaidYear,

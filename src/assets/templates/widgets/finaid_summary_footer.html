@@ -1,16 +1,18 @@
-<div class="cc-text-small" data-ng-if="finaidSummary.finaidYears.length">
-  <div data-ng-if="!finaidSummaryInfo.errored">
-    <a data-ng-if="shoppingSheet.url && api.user.profile.actAsOptions.canSeeCSLinks"
-      data-cc-campus-solutions-link-directive
-      data-cc-campus-solutions-link-directive-url="shoppingSheet.url"
+<div class="cc-text-small" data-ng-if="financialAidSummary.aidYears.length">
+  <hr aria-hidden="true">
+  <div data-ng-if="!financialAidSummary.errored">
+    <a data-ng-if="financialAidSummary.selected.shoppingSheetLink.url && api.user.profile.actAsOptions.canSeeCSLinks"
+      data-cc-campus-solutions-link-directive="financialAidSummary.selected.links.shoppingSheet"
       data-cc-campus-solutions-link-directive-cc-page-name="currentPage.name"
       data-cc-campus-solutions-link-directive-cc-page-url="currentPage.url"
       data-cc-campus-solutions-link-directive-uc-from="true"
       data-cc-campus-solutions-link-directive-uc-from-link="true"
       data-cc-campus-solutions-link-directive-uc-from-text="true"
-    ><i class="fa fa-file-text"></i> Shopping Sheet</a>
+    ><i class="fa fa-file-text"></i></a>
   </div>
   <div>
-    <a href="http://financialaid.berkeley.edu/">Learn more about Financial Aid</a>
+    <a data-ng-if="financialAidSummary.links.financialAidWebsite.url"
+       data-cc-campus-solutions-link-directive="financialAidSummary.links.financialAidWebsite"
+    ></a>
   </div>
 </div>
