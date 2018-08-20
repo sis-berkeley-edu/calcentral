@@ -1,0 +1,77 @@
+{
+    "env": {
+        "browser": true,
+        "commonjs": true
+    },
+    "extends": "eslint:recommended",
+    "globals": {
+      "angular": false
+    },
+    "parserOptions": {
+        "ecmaVersion": 6
+    },
+    "root": true,
+    "rules": {
+      "array-bracket-spacing": ["error"],
+      "block-spacing": ["error"],
+      "brace-style": ["error"],
+      "camelcase": ["error"],
+      "curly": ["error"],
+      "comma-dangle": ["error", "never"],
+      "comma-spacing": ["error"],
+      "comma-style": ["error"],
+      "complexity": ["error", 16],
+      "dot-notation": ["error"],
+      "eol-last": ["error"],
+      "eqeqeq": ["error"],
+      "func-call-spacing": ["error"],
+      "guard-for-in": ["error"],
+      "keyword-spacing": ["error"],
+      "indent": ["error", 2],
+      "line-comment-position": ["error", 
+        { "position": "above" }
+      ],
+      "linebreak-style": ["error", "unix"],
+      "max-depth": ["error", 5],
+      "multiline-ternary": ["error", "never"],
+      "no-bitwise": ["error"],
+      "no-console": ["error"],
+      "no-empty": ["error"],
+      "no-extend-native": ["error"],
+      "no-irregular-whitespace": ["error"],
+      "no-loop-func": ["error"],
+      "no-mixed-spaces-and-tabs": ["error"],
+      "no-multi-spaces": ["error"],
+      "no-multi-str": ["error"],
+      "no-multiple-empty-lines": ["error", 
+        { "max": 2, "maxEOF": 1 }
+      ],
+      "no-nested-ternary": ["error"],
+      "no-new": ["error"],
+      "no-undef": ["error"],
+      "no-underscore-dangle": ["error"],
+      "no-unused-vars": ["error"],
+      "no-with": ["error"],
+      "padded-blocks": ["error",
+        { "blocks": "never" }
+      ],
+      "quotes": ["error", "single"],
+      "semi": ["error", "always"],
+      "semi-spacing": ["error"],
+      "space-before-function-paren": ["error", "never"],
+      "space-infix-ops": ["error"],
+      "space-unary-ops": ["error", { 
+        "words": false,
+        "nonwords": false,
+        "overrides": {
+          "+": true, 
+          "-": true
+        }
+      }],
+      "spaced-comment": ["error", "always"],
+      "strict": ["error", "global"],
+      "valid-jsdoc": ["error"],
+      "wrap-iife": ["error"],
+      "yoda": ["error", "never"]
+    }
+}
