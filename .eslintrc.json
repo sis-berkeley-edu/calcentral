@@ -1,7 +1,8 @@
 {
     "env": {
         "browser": true,
-        "commonjs": true
+        "commonjs": true,
+        "node": true
     },
     "extends": "eslint:recommended",
     "globals": {
@@ -20,14 +21,18 @@
       "comma-dangle": ["error", "never"],
       "comma-spacing": ["error"],
       "comma-style": ["error"],
-      "complexity": ["error", 16],
+      "complexity": ["error", 17],
       "dot-notation": ["error"],
       "eol-last": ["error"],
       "eqeqeq": ["error"],
       "func-call-spacing": ["error"],
       "guard-for-in": ["error"],
       "keyword-spacing": ["error"],
-      "indent": ["error", 2],
+      "indent": ["error", 2, 
+        { "MemberExpression": 0,
+          "SwitchCase": 1
+        }
+      ],
       "line-comment-position": ["error", 
         { "position": "above" }
       ],
@@ -38,6 +43,7 @@
       "no-console": ["error"],
       "no-empty": ["error"],
       "no-extend-native": ["error"],
+      "no-extra-boolean-cast": ["off"],
       "no-irregular-whitespace": ["error"],
       "no-loop-func": ["error"],
       "no-mixed-spaces-and-tabs": ["error"],
@@ -51,6 +57,7 @@
       "no-undef": ["error"],
       "no-underscore-dangle": ["error"],
       "no-unused-vars": ["error"],
+      "no-useless-escape": ["warn"],
       "no-with": ["error"],
       "padded-blocks": ["error",
         { "blocks": "never" }
@@ -60,14 +67,6 @@
       "semi-spacing": ["error"],
       "space-before-function-paren": ["error", "never"],
       "space-infix-ops": ["error"],
-      "space-unary-ops": ["error", { 
-        "words": false,
-        "nonwords": false,
-        "overrides": {
-          "+": true, 
-          "-": true
-        }
-      }],
       "spaced-comment": ["error", "always"],
       "strict": ["error", "global"],
       "valid-jsdoc": ["error"],

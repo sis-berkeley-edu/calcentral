@@ -3,7 +3,6 @@
 var _ = require('lodash');
 
 angular.module('calcentral.controllers').controller('AcademicRecordsController', function(academicRecordsFactory, apiService, $scope, $window) {
-
   $scope.officialTranscript = {
     postParams: {},
     postUrl: '',
@@ -28,7 +27,7 @@ angular.module('calcentral.controllers').controller('AcademicRecordsController',
   };
   $scope.lawUnofficialTranscriptLink = {};
 
-  /**
+  /*
    * Constructs a post request to Credentials Solutions, as outlined by the Credentials Solutions documentation seen in
    * https://confluence.ets.berkeley.edu/confluence/display/MYB/Academic+Records.
    */
@@ -90,10 +89,10 @@ angular.module('calcentral.controllers').controller('AcademicRecordsController',
 
   var loadAcademicRecordsData = function() {
     academicRecordsFactory.getTranscriptData()
-      .then(parseData)
-      .finally(function() {
-        $scope.officialTranscript.isLoading = false;
-      });
+    .then(parseData)
+    .finally(function() {
+      $scope.officialTranscript.isLoading = false;
+    });
   };
 
   loadAcademicRecordsData();

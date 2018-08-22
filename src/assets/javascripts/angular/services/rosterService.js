@@ -25,9 +25,6 @@ angular.module('calcentral.services').factory('rosterService', function($filter)
     }
   };
 
-  /**
-   * Returns count if object is an array, otherwise returns 0
-   */
   var getCount = function(array) {
     return Array.isArray(array) ? array.length : 0;
   };

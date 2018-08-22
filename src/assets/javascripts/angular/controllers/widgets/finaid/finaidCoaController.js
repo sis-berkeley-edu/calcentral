@@ -12,9 +12,6 @@ angular.module('calcentral.controllers').controller('FinaidCoaController', funct
     validViewKeys: []
   };
 
-  /**
-   * Toggle between the semester & year view
-   */
   $scope.toggleView = function() {
     if ($scope.coa.currentView === knownViewKeys[0]) {
       $scope.coa.currentView = knownViewKeys[1];
@@ -23,10 +20,6 @@ angular.module('calcentral.controllers').controller('FinaidCoaController', funct
     }
   };
 
-  /**
-   * Modifies view categories to include title header and total
-   * @param  {Object} scopeView   Reference to view object within $scope
-   */
   var adaptCategoryTitles = function(scopeView) {
     var categories = scopeView.data;
     _.forEach(categories, function(category) {
@@ -38,10 +31,6 @@ angular.module('calcentral.controllers').controller('FinaidCoaController', funct
     });
   };
 
-  /**
-   * Determines if view object is valid
-   * @param  {Object}  rawView Raw view object as provided by API
-   */
   var isInvalidView = function(rawView) {
     var viewData = _.get(rawView, 'data');
     if (!viewData || !_.isArray(viewData) || viewData.length < 1) {

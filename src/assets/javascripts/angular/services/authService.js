@@ -1,9 +1,8 @@
 'use strict';
 
 angular.module('calcentral.services').service('authService', function($http, $route, $timeout) {
-  /**
+  /*
    * Check whether the current user is logged in or not
-   *
    * If they aren't AND they aren't on a public page, redirect them to login.
    */
   var isLoggedInRedirect = function() {
@@ -20,7 +19,6 @@ angular.module('calcentral.services').service('authService', function($http, $ro
     }, 0);
   };
 
-  // Expose methods
   return {
     isLoggedInRedirect: isLoggedInRedirect
   };

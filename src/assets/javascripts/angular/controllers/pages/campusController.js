@@ -23,10 +23,10 @@ angular.module('calcentral.controllers').controller('CampusController', function
 
   var initialize = function() {
     getLinks()
-      .then(handleLinks)
-      .finally(function() {
-        $scope.isLoading = false;
-      });
+    .then(handleLinks)
+    .finally(function() {
+      $scope.isLoading = false;
+    });
   };
 
   initialize();

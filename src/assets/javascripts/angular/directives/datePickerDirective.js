@@ -56,10 +56,7 @@ angular.module('calcentral.directives').directive('ccDatepickerDirective', funct
           }
         });
 
-        /**
-         * Close the picker and unset all the events that were bound to it.
-         * @param {Object} clickEvent Event containing the click information
-         */
+        // Close the picker and unset all the events that were bound to it.
         var closeAll = function(clickEvent) {
           // Do not close the datepicker when you're selecting the month or year
           if (clickEvent && clickEvent.target && (clickEvent.target.className || clickEvent.target.tagName)) {

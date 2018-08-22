@@ -40,6 +40,7 @@ angular.module('calcentral.directives').directive('ccTruncateDirective', functio
   /**
    * Construct the button template
    * @param {Boolean} opened Whether it's currently opened or not
+   * @param {Object} options Object with optional cssButtonClass property
    * @return {String} The parsed template for the button
    */
   var buttonTemplate = function(opened, options) {
@@ -52,6 +53,7 @@ angular.module('calcentral.directives').directive('ccTruncateDirective', functio
    * @param {Object} scope The scope of the current element
    * @param {Object} element Element were it is bound to
    * @param {Object} options The options that were being passed through
+   * @return {undefined}
    */
   var update = function(scope, element, options) {
     // Do nothing when there is no text to truncate
@@ -106,8 +108,8 @@ angular.module('calcentral.directives').directive('ccTruncateDirective', functio
     link: function(scope, element, attr) {
       // Do the same as regular AngularJS html binding
       element
-        .addClass('ng-binding')
-        .data('$binding', attr.ngBindHtml);
+      .addClass('ng-binding')
+      .data('$binding', attr.ngBindHtml);
 
       // Options being passed to the truncate directive
       // Will result in a JSON object

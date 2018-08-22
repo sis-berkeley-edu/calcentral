@@ -69,15 +69,13 @@ angular.module('calcentral.controllers').controller('BillingController', functio
 
   var loadCarsInfo = function() {
     financesFactory.getFinances()
-      .then(hasCarsActivity)
-      .finally(function() {
-        $scope.billing.isLoadingCars = false;
-      });
+    .then(hasCarsActivity)
+    .finally(function() {
+      $scope.billing.isLoadingCars = false;
+    });
   };
 
-  /**
-   * Adds a searchable date format property to the billing object
-   */
+  // Adds a searchable date format property to the billing object
   var makeDatesSearchable = function(billingItem) {
     if (billingItem.itemEffectiveDate) {
       var itemEffectiveDateSearch = $filter('date')(billingItem.itemEffectiveDate, 'MM/dd/yy');
@@ -179,11 +177,11 @@ angular.module('calcentral.controllers').controller('BillingController', functio
 
   var loadBillingInfo = function() {
     financesFactory.getCsFinances()
-      .then(parseBillingInfo)
-      .then(loadCarsInfo)
-      .finally(function() {
-        $scope.billing.isLoading = false;
-      });
+    .then(parseBillingInfo)
+    .then(loadCarsInfo)
+    .finally(function() {
+      $scope.billing.isLoading = false;
+    });
   };
 
   $scope.changeSorting = function(column) {
@@ -195,7 +193,7 @@ angular.module('calcentral.controllers').controller('BillingController', functio
     }
   };
 
-  /**
+  /*
    * Sorting on "amount" is conditional on the type of filter selected - we want to sort on
    * "itemBalance" under the "Balance" view, and "itemLineAmount" under all other views.
    */

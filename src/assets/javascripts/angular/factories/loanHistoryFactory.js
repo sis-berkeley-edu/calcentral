@@ -28,6 +28,5 @@ angular.module('calcentral.factories').factory('loanHistoryFactory', function(ap
     getInactive: getInactive,
     getSummary: getSummary
   };
-
 });
 

@@ -1,10 +1,5 @@
 'use strict';
 
-
-
-/**
- * Textbook Factory
- */
 angular.module('calcentral.factories').factory('textbookFactory', function(apiService) {
   // var url = '/dummy/json/textbooks_details.json';
   // var url = '/dummy/json/textbooks_error.json';

@@ -13,7 +13,7 @@ angular.module('calcentral.directives').directive('ccAcademicsClassInfoEnrollmen
         enrollStatus: attrs.enrollmentStatus
       };
 
-      /**
+      /*
        * Maps selected students to an array of sections that will be
        * affected by the request.
        */
@@ -154,7 +154,7 @@ angular.module('calcentral.directives').directive('ccAcademicsClassInfoEnrollmen
         return list;
       };
 
-      /**
+      /*
        * Returns all unique affected sections in a formatted text string that
        * includes name and ccn, to be used in rendered email for each action
        */
@@ -196,9 +196,6 @@ angular.module('calcentral.directives').directive('ccAcademicsClassInfoEnrollmen
         return list;
       };
 
-      /**
-       * Refreshes list of displayed students and statistics
-       */
       var refreshFilteredStudents = function() {
         var useWaitlistCounts = (scope.searchFilters.enrollStatus === 'waitlisted');
         scope.filteredStudents = rosterService.getFilteredStudents(scope.students, scope.sections, scope.searchFilters, useWaitlistCounts);

@@ -3,10 +3,6 @@
 var _ = require('lodash');
 
 angular.module('calcentral.services').service('committeesService', function() {
-
-  /**
-   * Apply the CSS style based on the icon needed
-   */
   var getIconStyle = function(iconName) {
     var iconStyle;
     switch (iconName) {
@@ -29,9 +25,6 @@ angular.module('calcentral.services').service('committeesService', function() {
     return iconStyle;
   };
 
-  /**
-   * Committee data parsing functions
-   */
   var getCommitteeHeader = function(committeeData) {
     return {
       type: committeeData.committeeType,
@@ -73,9 +66,6 @@ angular.module('calcentral.services').service('committeesService', function() {
     return committeeData.serviceRange;
   };
 
-  /**
-   * Add needed flags for UI state managment
-   */
   var decorateCommittees = function(committees) {
     _.forEach(committees, function(committee) {
       decorateWithLoadingError(committee);
@@ -83,9 +73,6 @@ angular.module('calcentral.services').service('committeesService', function() {
     return committees;
   };
 
-  /**
-   * Add loadError flag to manage errors on photo loading
-   */
   var decorateWithLoadingError = function(obj) {
     angular.extend(
       obj,
@@ -94,25 +81,21 @@ angular.module('calcentral.services').service('committeesService', function() {
       });
   };
 
-  /**
-   * Loop through each committee and build terse model for UI
-   * Add other UI state variables
-   */
   var parseCommitteeData = function(committees, isFaculty) {
     var reducedCommitteeData = [];
     _.forEach(committees, function(committee) {
       var reducedData = {
-          header: getCommitteeHeader(committee),
-          milestoneAttempts: committee.milestoneAttempts,
-          chairs: decorateCommittees(getCommitteeChair(committee)),
-          coChairs: decorateCommittees(getCommitteeCoChair(committee)),
-          inside: decorateCommittees(getCommitteeInsideMembers(committee)),
-          outside: decorateCommittees(getCommitteeOutsideMembers(committee)),
-          reps: decorateCommittees(getCommitteeAdditionalReps(committee)),
-          senate: decorateCommittees(getCommitteeSenate(committee)),
-          show: false,
-          loadError: false
-        };
+        header: getCommitteeHeader(committee),
+        milestoneAttempts: committee.milestoneAttempts,
+        chairs: decorateCommittees(getCommitteeChair(committee)),
+        coChairs: decorateCommittees(getCommitteeCoChair(committee)),
+        inside: decorateCommittees(getCommitteeInsideMembers(committee)),
+        outside: decorateCommittees(getCommitteeOutsideMembers(committee)),
+        reps: decorateCommittees(getCommitteeAdditionalReps(committee)),
+        senate: decorateCommittees(getCommitteeSenate(committee)),
+        show: false,
+        loadError: false
+      };
       // Add additional faculty info if faculty committees
       if (isFaculty) {
         angular.extend(reducedData, {

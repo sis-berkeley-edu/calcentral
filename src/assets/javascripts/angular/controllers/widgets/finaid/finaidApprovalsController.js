@@ -6,9 +6,7 @@
 angular.module('calcentral.controllers').controller('FinaidApprovalsController', function($location, $rootScope, $scope, finaidFactory) {
   $scope.approvalMessage = {};
 
-  /**
-   * Send an event to let everyone know the permissions have been updated.
-   */
+  // Send an event to let everyone know the permissions have been updated.
   var sendEvent = function() {
     $rootScope.$broadcast('calcentral.custom.api.finaid.approvals');
   };

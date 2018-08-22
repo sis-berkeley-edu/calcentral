@@ -21,5 +21,4 @@ angular.module('calcentral.controllers').controller('LoanHistorySummaryControlle
   };
 
   init();
-
 });

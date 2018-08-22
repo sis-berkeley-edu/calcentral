@@ -17,10 +17,6 @@ angular.module('calcentral.directives').directive('ccYoutubeDirective', function
           video: '<div id="cc-youtube-video-placeholder" class="cc-youtube-video-placeholder" tabindex="0"><iframe type="text/html" width="100%" height="100%" src=' + videourl + ' frameborder="0" allowfullscreen></iframe></div>'
         };
 
-        /**
-         * Launch the correct mode
-         * @param {String} mode 'image' or 'video'
-         */
         var launch = function(mode) {
           // Remove both placeholders
           angular.element(document.querySelector('#cc-youtube-image-placeholder')).remove();

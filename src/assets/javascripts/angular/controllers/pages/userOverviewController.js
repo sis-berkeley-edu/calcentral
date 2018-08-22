@@ -150,7 +150,7 @@ angular.module('calcentral.controllers').controller('UserOverviewController', fu
         $scope.isNonDegreeSeekingSummerVisitor = academicsService.isNonDegreeSeekingSummerVisitor($scope.targetUser.academicRoles);
         $scope.showResidency = $scope.targetUser.roles.student && academicsService.showResidency($scope.targetUser.academicRoles.current);
 
-        if (!!_.get($scope, 'updatePlanUrl.url')) {
+        if (_.get($scope, 'updatePlanUrl.url')) {
           linkService.addCurrentPagePropertiesToLink($scope.updatePlanUrl, $scope.currentPage.name, $scope.currentPage.url);
         }
       },

@@ -2,6 +2,7 @@
 /* jscs: disable  disallowSpacesInsideObjectBrackets */
 /* jscs: disable  requirePaddingNewLinesInObjects */
 /* jscs: disable  requireObjectKeysOnNewLine */
+'use strict';
 const fs = require('fs');
 const path = require('path');
 
@@ -32,13 +33,13 @@ let paths = {
 };
 
 let pathsToClean = [
-                    paths.public.assets.fonts,
-                    paths.public.assets.images,
-                    paths.public.assets.javascripts,
-                    paths.public.templates.bCoursesEmbedded,
-                    paths.public.templates.index,
-                    paths.public.templates.indexJunction
-                  ];
+  paths.public.assets.fonts,
+  paths.public.assets.images,
+  paths.public.assets.javascripts,
+  paths.public.templates.bCoursesEmbedded,
+  paths.public.templates.index,
+  paths.public.templates.indexJunction
+];
 
 module.exports = {
   entry: './src/assets/javascripts/index.js',

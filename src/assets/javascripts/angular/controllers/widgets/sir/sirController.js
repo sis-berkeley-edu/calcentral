@@ -15,9 +15,6 @@ angular.module('calcentral.controllers').controller('SirController', function(si
     statuses: []
   };
 
-  /**
-   * Check whether 2 checklist items match on the admissions key
-   */
   var checklistMatches = function(sirStatusItem, studentResponse) {
     return (sirStatusItem.checkListMgmtAdmp.acadCareer === studentResponse.response.acadCareer &&
             sirStatusItem.checkListMgmtAdmp.stdntCarNbr === studentResponse.response.studentCarNbr &&
@@ -25,7 +22,7 @@ angular.module('calcentral.controllers').controller('SirController', function(si
             sirStatusItem.checkListMgmtAdmp.applProgNbr === studentResponse.response.applProgNbr);
   };
 
-  /**
+  /*
   * Non-undergraduates:  Filters out any checklist item that is already "Completed" that the user has already seen
   * Undergraduates:  Filters out any checklist item that is "Completed" and has passed the functionally-defined expiration date in YML config
   */
@@ -38,7 +35,7 @@ angular.module('calcentral.controllers').controller('SirController', function(si
     }
   };
 
-  /**
+  /*
    * Update the sir status items that need to be updated
    * We should only update the items that already are in the current scope & have an updated status.
    */
@@ -85,9 +82,9 @@ angular.module('calcentral.controllers').controller('SirController', function(si
 
   var initWorkflow = function(options) {
     getSirStatuses(options)
-      .then(function(sirStatusesResponse) {
-        return parseSirStatuses(sirStatusesResponse, _.get(options, 'studentResponse'));
-      });
+    .then(function(sirStatusesResponse) {
+      return parseSirStatuses(sirStatusesResponse, _.get(options, 'studentResponse'));
+    });
   };
 
   initWorkflow();

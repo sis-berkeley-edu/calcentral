@@ -28,11 +28,11 @@ angular.module('calcentral.controllers').controller('StudentResourcesController'
 
   var loadInformation = function() {
     loadStudentResources()
-      .then(parseStudentResources)
-      .then(setStudentRoles)
-      .finally(function() {
-        $scope.isLoading = false;
-      });
+    .then(parseStudentResources)
+    .then(setStudentRoles)
+    .finally(function() {
+      $scope.isLoading = false;
+    });
   };
 
   loadInformation();

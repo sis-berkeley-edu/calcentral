@@ -22,7 +22,7 @@ angular.module('calcentral.controllers').controller('DelegateStudentsController'
     'viewGrades'
   ];
 
-  /**
+  /*
    * setDelegateAccess() adds `delegateAccess` property on student, if and only
    * if the student has granted at least one `viewable` (i.e., other than phone)
    * privilege.
@@ -46,14 +46,14 @@ angular.module('calcentral.controllers').controller('DelegateStudentsController'
      */
     $scope.showNoPrivilegesMessage = $scope.showNoPrivilegesMessage || (!viewable && !student.privileges[phone]);
 
-    /**
+    /*
      * If at least one student grants only phone privilege, this flag lets us
      * show the global 'phone-and-in-person privileges' explanatory paragraph in
      * the template.
      */
     $scope.showPhoneInPersonPrivilegesMessage = $scope.showPhoneInPersonPrivilegesMessage || (!viewable && student.privileges[phone]);
 
-    /**
+    /*
      * If at least one student has a null UID, this flag lets us show the global
      * `Account Issue` explanatory paragraph in the template.
      */

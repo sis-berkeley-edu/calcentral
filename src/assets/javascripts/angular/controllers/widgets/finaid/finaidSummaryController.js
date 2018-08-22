@@ -20,9 +20,6 @@ angular.module('calcentral.controllers').controller('FinaidSummaryController', f
     shoppingSheet: {}
   });
 
-  /**
-   * Set the default selections on the finaid year
-   */
   var setDefaultSelections = function(data) {
     if (!_.get(data, 'finaidSummary.finaidYears.length')) {
       return;
@@ -72,9 +69,6 @@ angular.module('calcentral.controllers').controller('FinaidSummaryController', f
 
   $scope.$on('calcentral.custom.api.finaid.finaidYear', selectFinaidYear);
 
-  /**
-   * Update the finaid year selection
-   */
   $scope.updateFinaidYear = function() {
     finaidService.setFinaidYear($scope.selected.finaidYear);
     updateFinaidUrl();
@@ -92,9 +86,6 @@ angular.module('calcentral.controllers').controller('FinaidSummaryController', f
     });
   };
 
-  /**
-   * Get the financial aid summary information
-   */
   var getFinaidSummary = function() {
     finaidFactory.getSummary().then(
       function successCallback(response) {

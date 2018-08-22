@@ -29,9 +29,9 @@ angular.module('calcentral.controllers').controller('UndergraduateDegreeProgress
 
   var loadInformation = function() {
     loadDegreeProgress()
-      .finally(function() {
-        $scope.degreeProgress.undergraduate.isLoading = false;
-      });
+    .finally(function() {
+      $scope.degreeProgress.undergraduate.isLoading = false;
+    });
   };
 
   loadInformation();

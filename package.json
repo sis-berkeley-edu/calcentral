@@ -24,7 +24,7 @@
     "build-production": "gulp build --env production",
     "dev": "webpack-serve --config webpack/dev.config.js",
     "webpack:build": "webpack --config webpack/prod.config.js",
-    "lint": "eslint --ignore-path ./.eslintignore ."
+    "lint": "eslint ."
   },
   "engines": {
     "node": ">=8.9.4"

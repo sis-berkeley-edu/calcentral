@@ -2,9 +2,6 @@
 
 var _ = require('lodash');
 
-/**
- * My Advising controller
- */
 angular.module('calcentral.controllers').controller('MyAdvisingController', function(myAdvisingFactory, advisingFactory, apiService, $route, $routeParams, $scope, $q) {
   $scope.myAdvising = {
     isLoading: true
@@ -53,12 +50,12 @@ angular.module('calcentral.controllers').controller('MyAdvisingController', func
 
   var loadFeeds = function() {
     myAdvisingFactory.getStudentAdvisingInfo()
-      .then(loadStudentAdvisingInfo)
-      .then(getStudentAcademicRoles)
-      .then(loadStudentAcademicRoles)
-      .finally(function() {
-        $scope.myAdvising.isLoading = false;
-      });
+    .then(loadStudentAdvisingInfo)
+    .then(getStudentAcademicRoles)
+    .then(loadStudentAcademicRoles)
+    .finally(function() {
+      $scope.myAdvising.isLoading = false;
+    });
   };
 
   loadFeeds();

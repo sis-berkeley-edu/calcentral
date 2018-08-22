@@ -3,7 +3,7 @@
 var _ = require('lodash');
 
 angular.module('calcentral.services').factory('linkService', function($location, $route) {
-  /**
+  /*
    * Add the page name and url to a link object
    * Designed for use on objects used with ccCampusSolutionsLinkDirective to include current page name and URL
    */
@@ -13,7 +13,7 @@ angular.module('calcentral.services').factory('linkService', function($location,
     return link;
   };
 
-  /**
+  /*
    * Adds the current page name and URL to each object in a resource collection
    * Designed for use on objects used with ccCampusSolutionsLinkDirective
    */
@@ -31,6 +31,7 @@ angular.module('calcentral.services').factory('linkService', function($location,
    *   $scope.currentPage.name // page name
    *   $scope.currentPage.url  // current page URL
    * @param {Object} $scope Controller scope object
+   * @return {undefined}
    */
   var addCurrentRouteSettings = function($scope) {
     $scope.currentPage = {
@@ -39,7 +40,7 @@ angular.module('calcentral.services').factory('linkService', function($location,
     };
   };
 
-  /**
+  /*
    * Sometimes Campus Solutions gives us links that end with a question mark, we should clean those up
    * /EMPLOYEE/HRMS/c/MAINTAIN_SERVICE_IND_STDNT.ACTIVE_SRVC_INDICA.GBL?
    */
@@ -53,6 +54,7 @@ angular.module('calcentral.services').factory('linkService', function($location,
   /**
    * Configures an anchor element to an outbound link, opening in a new window
    * @param  {Element} linkElement HTML anchor element
+   * @return {undefined}
    */
   var makeOutboundlink = function(linkElement) {
     var screenReadMessage = document.createElement('span');

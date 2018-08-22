@@ -119,9 +119,6 @@ angular.module('calcentral.services').factory('profileMenuService', function(api
     }
   ];
 
-  /**
-   * Wrap callbacks into a promise
-   */
   var defer = function(navigation, callback) {
     var deferred = $q.defer();
 
@@ -131,9 +128,6 @@ angular.module('calcentral.services').factory('profileMenuService', function(api
     return deferred.promise;
   };
 
-  /**
-   * Filter the categories inside of the navigation element
-   */
   var filterCategories = function(navigation, callback) {
     return _.map(navigation, function(item) {
       item.categories = callback(item.categories);
@@ -169,7 +163,7 @@ angular.module('calcentral.services').factory('profileMenuService', function(api
     return filterCategories(navigation, filterRolesInCategory);
   };
 
-  /**
+  /*
    * Filter based on the roles
    * If there is no 'roles' definied, we assume everyone should see it
    */
@@ -213,9 +207,6 @@ angular.module('calcentral.services').factory('profileMenuService', function(api
     return filterCategories(navigation, filterActAsInCategory);
   };
 
-  /**
-   * Filter based on active view-as mode (admin, advisor, delegate, etc.)
-   */
   var filterActAs = function(navigation) {
     return defer(navigation, filterActAsInNavigation);
   };
@@ -226,7 +217,7 @@ angular.module('calcentral.services').factory('profileMenuService', function(api
     });
   };
 
-  /**
+  /*
    * If we remove all the links in a certain section, we need to make sure we
    * don't show the heading
    */
@@ -242,11 +233,11 @@ angular.module('calcentral.services').factory('profileMenuService', function(api
 
   var getNavigation = function() {
     return apiService.user.fetch()
-      .then(initialNavigation)
-      .then(filterRoles)
-      .then(filterFeatureFlags)
-      .then(filterActAs)
-      .then(filterEmpty);
+    .then(initialNavigation)
+    .then(filterRoles)
+    .then(filterFeatureFlags)
+    .then(filterActAs)
+    .then(filterEmpty);
   };
 
   return {

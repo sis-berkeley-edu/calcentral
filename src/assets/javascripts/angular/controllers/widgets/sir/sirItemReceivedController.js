@@ -12,9 +12,6 @@ angular.module('calcentral.controllers').controller('SirItemReceivedController',
 
   $scope.higherOneUrl = '';
 
-  /**
-   * Get the HigherOne URL and update the scope
-   */
   var getHigherOneUrl = function() {
     return sirFactory.getHigherOneUrl({
       refreshCache: true
@@ -25,7 +22,7 @@ angular.module('calcentral.controllers').controller('SirItemReceivedController',
     );
   };
 
-  /**
+  /*
    * Start the Higher One URL interval since it expires after 5 minutes
    */
   var startHigherOneUrlInterval = function() {

@@ -9,9 +9,6 @@ angular.module('calcentral.factories').factory('activityFactory', function(apiSe
   var activityUrl = '/api/my/activities';
   // var activityUrl = '/dummy/json/activities.json';
 
-  /**
-   * Filter out only the finaid activities with a specific aid year
-   */
   var filterFinaid = function(activities, finaidYearId) {
     return _.filter(activities, {
       cs: {
@@ -21,10 +18,6 @@ angular.module('calcentral.factories').factory('activityFactory', function(apiSe
     });
   };
 
-  /**
-   * Parse the the activity response
-   * @param {Object} activityResponse The response from the server
-   */
   var parseActivities = function(activityResponse, options) {
     if (!_.get(activityResponse, 'data.activities')) {
       return;
@@ -65,12 +58,6 @@ angular.module('calcentral.factories').factory('activityFactory', function(apiSe
       webconference: 'video-camera'
     };
 
-    /**
-     * Algorithm to use when sorting activity elements
-     * @param {Object} a Exhibit #1
-     * @param {Object} b Exhibit #2 that's being compared to exhibit 1
-     * @return {Integer} see String.compareTo responses
-     */
     var sortFunction = function(a, b) {
       // Time descending.
       return b.date.epoch - a.date.epoch;
@@ -95,11 +82,6 @@ angular.module('calcentral.factories').factory('activityFactory', function(apiSe
       }
     };
 
-    /**
-     * Create the list of sources
-     * @param {Array} original The original array
-     * @return {Array} A sorted list of all the sources
-     */
     var createSources = function(original) {
       var sources = [];
       original.map(function(item) {
@@ -211,28 +193,26 @@ angular.module('calcentral.factories').factory('activityFactory', function(apiSe
     return data;
   };
 
-  /**
+  /*
    * Loads the main & finaid activities
    * We need to make sure we load this after the profile has been loaded since
    * some of these items are behind feature flags.
    */
   var getActivityAll = function(options, url) {
     return apiService.user.fetch()
-      // Load the activities
-      .then(function() {
-        return apiService.http.request(options, url);
-      })
-      // Parse the activities
-      .then(function(data) {
-        return parseActivities(data, options);
-      });
+    .then(function() {
+      return apiService.http.request(options, url);
+    })
+    .then(function(data) {
+      return parseActivities(data, options);
+    });
   };
 
   var getActivity = function(options) {
     return getActivityAll(options, activityUrl);
   };
 
-  /**
+  /*
    * Get Finaid activity / messages from 2016 onwards
    * options.finaidYearId should contain the aid year ID
    * that way, we'll be filtering messages only with that aid year

@@ -14,9 +14,7 @@ angular.module('calcentral.controllers').controller('CanvasCourseGradeExportCont
   $scope.resolvingCourseState = false;
   $scope.focusOnSelectionHeader = false;
 
-  /**
-   * Sends message to parent window to switch to gradebook
-   */
+  // Sends message to parent window to switch to gradebook
   $scope.goToGradebook = function() {
     var gradebookUrl = $scope.canvasRootUrl + '/courses/' + $scope.canvasCourseId + '/grades';
     if (apiService.util.isInIframe) {
@@ -26,9 +24,7 @@ angular.module('calcentral.controllers').controller('CanvasCourseGradeExportCont
     }
   };
 
-  /**
-   * Sends message to parent window to go to Course Settings
-   */
+  // Sends message to parent window to go to Course Settings
   $scope.goToCourseSettings = function() {
     var courseDetailsUrl = $scope.canvasRootUrl + '/courses/' + $scope.canvasCourseId + '/settings#tab-details';
     if (apiService.util.isInIframe) {
@@ -38,10 +34,7 @@ angular.module('calcentral.controllers').controller('CanvasCourseGradeExportCont
     }
   };
 
-  /*
-   * Updates status of background job in $scope.
-   * Halts jobStatusLoader loop if job no longer in progress.
-   */
+  // Updates status of background job in $scope. Halts jobStatusLoader loop if job no longer in progress.
   var statusProcessor = function(response) {
     angular.extend($scope, response.data);
     $scope.percentCompleteRounded = Math.round($scope.percentComplete * 100);
@@ -56,25 +49,20 @@ angular.module('calcentral.controllers').controller('CanvasCourseGradeExportCont
     }
   };
 
-  /*
-   * Performs background job status request every 2000 miliseconds
-   * with result processed by statusProcessor.
-   */
+  // Performs background job status request every 2000 miliseconds with result processed by statusProcessor.
   var timeoutPromise;
   var jobStatusLoader = function() {
     timeoutPromise = $timeout(function() {
       return canvasCourseGradeExportFactory.jobStatus($scope.canvasCourseId, $scope.backgroundJobId)
-        .then(statusProcessor, function errorCallback() {
-          $scope.errorStatus = 'error';
-          $scope.contactSupport = true;
-          $scope.displayError = 'Unable to obtain grade preloading status.';
-        });
+      .then(statusProcessor, function errorCallback() {
+        $scope.errorStatus = 'error';
+        $scope.contactSupport = true;
+        $scope.displayError = 'Unable to obtain grade preloading status.';
+      });
     }, 2000);
   };
 
-  /*
-   * Begins grade preparation and download process
-   */
+  // Begins grade preparation and download process
   $scope.preloadGrades = function(type) {
     $scope.selectedType = type;
     $scope.appState = 'loading';
@@ -136,9 +124,7 @@ angular.module('calcentral.controllers').controller('CanvasCourseGradeExportCont
     return true;
   };
 
-  /*
-   * Switches to 'selection' step and scrolls to top of page
-   */
+  // Switches to 'selection' step and scrolls to top of page
   $scope.switchToSelection = function() {
     apiService.util.iframeScrollToTop();
     $scope.appState = 'selection';
@@ -174,9 +160,7 @@ angular.module('calcentral.controllers').controller('CanvasCourseGradeExportCont
     );
   };
 
-  /*
-   * Triggers auto-download of selected CSV download
-   */
+  // Triggers auto-download of selected CSV download
   var downloadGrades = function() {
     var downloadPath = [
       '/api/academics/canvas/egrade_export/download/',
@@ -189,9 +173,7 @@ angular.module('calcentral.controllers').controller('CanvasCourseGradeExportCont
     $window.location.href = downloadPath;
   };
 
-  /**
-   * Performs authorization check on user to control interface presentation
-   */
+  // Performs authorization check on user to control interface presentation
   var checkAuthorization = function() {
     canvasSharedFactory.courseUserRoles($scope.canvasCourseId).then(
       function successCallback(response) {
@@ -220,7 +202,7 @@ angular.module('calcentral.controllers').controller('CanvasCourseGradeExportCont
     );
   };
 
-  /* Load and initialize application based on section terms provided */
+  // Load and initialize application based on section terms provided
   var loadSectionTerms = function(sectionTerms) {
     if (sectionTerms && sectionTerms.length > 0) {
       $scope.sectionTerms = sectionTerms;
@@ -237,7 +219,7 @@ angular.module('calcentral.controllers').controller('CanvasCourseGradeExportCont
     }
   };
 
-  /* Load and initialize application based on grading standard and muted assignment states for course */
+  // Load and initialize application based on grading standard and muted assignment states for course
   var validateCourseState = function(gradingStandardEnabled, mutedAssignments) {
     $scope.mutedAssignments = mutedAssignments;
     if (!gradingStandardEnabled) {
@@ -250,7 +232,7 @@ angular.module('calcentral.controllers').controller('CanvasCourseGradeExportCont
     }
   };
 
-  /* Load and initialize application based on official sections */
+  // Load and initialize application based on official sections
   var loadOfficialSections = function(officialSections) {
     if (officialSections && officialSections.length > 0) {
       $scope.officialSections = officialSections;

@@ -4,7 +4,6 @@
  * Directive for the finaid permissions
  */
 angular.module('calcentral.directives').directive('ccFinaidSummaryItemDirective', function() {
-
   var capitalizeSentence = function(str) {
     if (typeof(str) !== 'string') {
       return '';

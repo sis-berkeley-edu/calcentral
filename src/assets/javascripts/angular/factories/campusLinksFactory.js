@@ -9,22 +9,12 @@ angular.module('calcentral.factories').factory('campusLinksFactory', function(ap
   // Data contains "links" and "navigation"
   var linkDataUrl = '/api/my/campuslinks';
 
-  /**
-   * Add to the subcategories list if it doesn't exist yet
-   * @param {String} subcategory The subcategory you want to add
-   * @param {Array} subcategories The subcategories array
-   */
   var addToSubcategories = function(subcategory, subcategories) {
     if (subcategories.indexOf(subcategory) === -1) {
       subcategories.push(subcategory);
     }
   };
 
-  /**
-   * Add to the top categories
-   * @param {Object} link Link object
-   * @param {Object} topcategories Top categories object
-   */
   var addToTopCategories = function(link, topcategories) {
     for (var i = 0; i < link.categories.length; i++) {
       topcategories[link.categories[i].topcategory] = true;
@@ -49,12 +39,6 @@ angular.module('calcentral.factories').factory('campusLinksFactory', function(ap
     return hasWhitelistedRole(link.roles) && !hasBlacklistedRole(link.roles);
   };
 
-  /**
-   * Check whether a link is in a current category
-   * @param {Object} link Link object
-   * @param {String} currentTopCategory The current top category
-   * @return {Boolean} Whether a link is in the current category
-   */
   var isLinkInCategory = function(link, currentTopCategory) {
     link.subCategories = [];
     for (var i = 0; i < link.categories.length; i++) {
@@ -65,10 +49,6 @@ angular.module('calcentral.factories').factory('campusLinksFactory', function(ap
     return (link.subCategories.length > 0);
   };
 
-  /**
-   * Compile the campus links
-   * @param {Array} links The list of links that need to be parsed
-   */
   var compileLinks = function(links, currentTopCategory) {
     var response = {
       links: [],
@@ -91,12 +71,6 @@ angular.module('calcentral.factories').factory('campusLinksFactory', function(ap
     return response;
   };
 
-  /**
-   * Get the category name, when you feed in an id
-   * @param {String} categoryId A category id
-   * @param {Object} navigation The navigation object
-   * @return {String} The category name
-   */
   var getCategoryName = function(categoryId, navigation) {
     // We want to explicitly check for undefined here
     // since other values need to result in a 404.
@@ -145,10 +119,10 @@ angular.module('calcentral.factories').factory('campusLinksFactory', function(ap
     apiService.http.clearCache(options, linkDataUrl);
 
     return getUserRoles()
-      .then(getCampusLinks)
-      .then(function(response) {
-        return parseCampusLinks(response, options.category);
-      });
+    .then(getCampusLinks)
+    .then(function(response) {
+      return parseCampusLinks(response, options.category);
+    });
   };
 
   return {

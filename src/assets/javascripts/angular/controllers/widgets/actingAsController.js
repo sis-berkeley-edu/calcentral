@@ -6,9 +6,7 @@
 angular.module('calcentral.controllers').controller('ActingAsController', function(adminFactory, apiService, $scope) {
   $scope.admin = {};
 
-  /**
-   * Stop acting as someone else
-   */
+  // Stop acting as someone else
   $scope.admin.stopActAs = function() {
     adminFactory.stopActAs().then(apiService.util.redirectToToolbox);
   };
@@ -17,9 +15,7 @@ angular.module('calcentral.controllers').controller('ActingAsController', functi
     adminFactory.stopAdvisorActAs().then(apiService.util.redirectToHome);
   };
 
-  /**
-   * Delegate is done acting-as
-   */
+  // Delegate is done acting-as
   $scope.admin.stopDelegateActAs = function() {
     adminFactory.stopDelegateActAs().then(apiService.util.redirectToToolbox);
   };

@@ -16,9 +16,6 @@ angular.module('calcentral.services').service('userService', function($http, $lo
 
   // Private methods that are only exposed for testing but shouldn't be used within the views
 
-  /**
-   * Redirect user to the dashboard when you're on the splash page
-   */
   var redirectToHome = function() {
     if ($location.path() === '/') {
       analyticsService.sendEvent('Authentication', 'Redirect to dashboard');
@@ -71,15 +68,12 @@ angular.module('calcentral.services').service('userService', function($http, $lo
     }
   };
 
-  /**
-   * Set the user firstLoginAt attribute
-   */
   var setFirstLogin = function() {
     profile.firstLoginAt = (new Date()).getTime();
     redirectToHome();
   };
 
-  /**
+  /*
    * Handle the access to the page that the user is watching
    * This will depend on
    *   - whether they are logged in or not
@@ -100,9 +94,6 @@ angular.module('calcentral.services').service('userService', function($http, $lo
     }
   };
 
-  /**
-   * Set extra properties for a user
-   */
   var setExtraProperties = function(profile) {
     if (profile.roles) {
       // Set this boolean to true when they only have the applicant role
@@ -134,9 +125,6 @@ angular.module('calcentral.services').service('userService', function($http, $lo
     return activeRoles;
   };
 
-  /**
-   * Set the current user information
-   */
   var handleUserLoaded = function(data) {
     angular.extend(profile, data);
 
@@ -157,6 +145,7 @@ angular.module('calcentral.services').service('userService', function($http, $lo
   /**
    * Get the actual user information
    * @param {Object} options Options that need to be passed through
+   * @return {Object} user information
    */
   var fetch = function(options) {
     httpService.clearCache(options, statusUrl);
@@ -180,10 +169,7 @@ angular.module('calcentral.services').service('userService', function($http, $lo
       handleAccessToPage();
     }
   };
-
-  /**
-   * Sign the current user in.
-   */
+  
   var signIn = function() {
     analyticsService.sendEvent('Authentication', 'Redirect to login');
     window.location = '/auth/cas';
@@ -192,6 +178,7 @@ angular.module('calcentral.services').service('userService', function($http, $lo
   /**
    * Remove OAuth permissions for a service for the currently logged in user
    * @param {String} authorizationService The authorization service (e.g. 'google')
+   * @return {undefined}
    */
   var removeOAuth = function(authorizationService) {
     // Send the request to remove the authorization for the specific OAuth service
@@ -204,9 +191,6 @@ angular.module('calcentral.services').service('userService', function($http, $lo
     );
   };
 
-  /**
-   * Sign the current user out.
-   */
   var signOut = function() {
     $http.post('/logout').then(
       function successCallback(response) {

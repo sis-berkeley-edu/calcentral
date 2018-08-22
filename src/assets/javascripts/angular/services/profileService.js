@@ -3,14 +3,10 @@
 var _ = require('lodash');
 
 angular.module('calcentral.services').service('profileService', function() {
-
   var actionFailed = function($scope, response) {
     $scope.errorMessage = _.get(response, 'data.feed.errmsgtext') || 'An error occurred while saving your data.';
   };
 
-  /**
-   * Fired after an action (delete / save) has been completed
-   */
   var actionCompleted = function($scope, response, callback) {
     if (response.data.error || response.data.errored) {
       actionFailed();
@@ -22,9 +18,6 @@ angular.module('calcentral.services').service('profileService', function() {
     }
   };
 
-  /**
-   * Close the editors for a specific section (e.g. phone / email)
-   */
   var closeEditors = function($scope) {
     angular.forEach($scope.items.content, function(item) {
       if (item && item.isModifying) {
@@ -33,16 +26,13 @@ angular.module('calcentral.services').service('profileService', function() {
     });
   };
 
-  /**
-   * Close the editor for a specific item in a section
-   */
   var closeEditor = function($scope) {
     closeEditors($scope);
     $scope.currentObject = {};
     $scope.items.editorEnabled = false;
   };
 
-  /**
+  /*
    * Filter out the different types (e.g. for phone / email / ...)
    *
    * We need to exclude the ones that
@@ -65,39 +55,24 @@ angular.module('calcentral.services').service('profileService', function() {
     });
   };
 
-  /**
-   * Find a certain item with a specific code
-   */
   var findItem = function(items, code) {
     return _.find(items, function(item) {
       return item.type.code === code;
     });
   };
 
-  /**
-   * Find a preferred item
-   */
   var findPreferred = function(items) {
     return findItem(items, 'PRF');
   };
 
-  /**
-   * Find a primary item
-   */
   var findPrimary = function(items) {
     return findItem(items, 'PRI');
   };
 
-  /**
-   * Process a single formattedAddress by replacing '\\n' with '\n'.
-   */
   var fixFormattedAddress = function(formattedAddress) {
     return formattedAddress.replace(/\\n/g, '\n');
   };
 
-  /**
-   * Process an array of formattedAddresses by replacing '\\n' with '\n'.
-   */
   var fixFormattedAddresses = function(addresses) {
     if (!addresses) {
       return;
@@ -111,15 +86,12 @@ angular.module('calcentral.services').service('profileService', function() {
     });
   };
 
-  /**
-   * Delete a certain item in a section
-   */
   var deleteItem = function($scope, action, item) {
     $scope.isDeleting = true;
     return action(item);
   };
 
-  /**
+  /*
    * Map address fields to the current country and the ones (depending on country) that the user has entered
    */
   var matchFields = function(fields, item) {
@@ -133,9 +105,6 @@ angular.module('calcentral.services').service('profileService', function() {
     return returnObject;
   };
 
-  /**
-   * Parse a certain section in the profile
-   */
   var parseSection = function($scope, data, section) {
     var person = data.data.feed.student;
     angular.extend($scope, {
@@ -145,25 +114,16 @@ angular.module('calcentral.services').service('profileService', function() {
     });
   };
 
-  /**
-   * Removes the current error message
-   */
   var removeErrorMessage = function($scope) {
     $scope.errorMessage = '';
   };
 
-  /**
-   * Save a certain item in a section
-   */
   var save = function($scope, action, item) {
     $scope.errorMessage = '';
     $scope.isSaving = true;
     return action(item);
   };
 
-  /**
-   * Show the editor to add / edit object
-   */
   var showSaveAdd = function($scope, item, config) {
     closeEditors($scope);
     angular.merge($scope.currentObject, {
@@ -175,9 +135,6 @@ angular.module('calcentral.services').service('profileService', function() {
     $scope.items.editorEnabled = true;
   };
 
-  /**
-   * Show the add editor
-   */
   var showAdd = function($scope, item) {
     var initObject = angular.copy(item);
     if (_.get($scope, 'types[0].fieldvalue')) {
@@ -193,9 +150,6 @@ angular.module('calcentral.services').service('profileService', function() {
     });
   };
 
-  /**
-   * Show the edit editor
-   */
   var showEdit = function($scope, item) {
     showSaveAdd($scope, item, {
       isPreferredOnLoad: !!item.primary

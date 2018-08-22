@@ -6,6 +6,7 @@ angular.module('calcentral.services').service('analyticsService', function(calce
    * @param {String} category e.g. Video
    * @param {String} action e.g. Play
    * @param {String} label e.g. Flying to Belgium
+   * @return {undefined}
    * More info on https://developers.google.com/analytics/devguides/collection/analyticsjs/events
    */
   var sendEvent = function(category, action, label) {
@@ -17,6 +18,7 @@ angular.module('calcentral.services').service('analyticsService', function(calce
   /**
    * Set the user id for the analytics service
    * @param {String} uid The uid of the current user
+   * @return {undefined}
    */
   var setUserId = function(uid) {
     if (uid) {
@@ -29,12 +31,13 @@ angular.module('calcentral.services').service('analyticsService', function(calce
    * @param {String} section The section you're currently in (e.g. Up Next / My Classes / Activity)
    * @param {String} website The website you're trying to access (Google Maps)
    * @param {String} url The URL you're accessing
+   * @return {undefined}
    */
   var trackExternalLink = function(section, website, url) {
     sendEvent('External link', url, 'section: ' + section + ' - website: ' + website);
   };
 
-  /**
+  /*
    * This will track the the page that you're viewing
    * e.g. /, /dashboard
    */
@@ -44,11 +47,7 @@ angular.module('calcentral.services').service('analyticsService', function(calce
     }
   };
 
-  /* jshint ignore:start */
-  // jscs:disable
-  /**
-   * Inject the Google Analytics code
-   */
+  /* eslint-disable */
   var injectAnalyticsCode = function() {
     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
     (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -57,12 +56,8 @@ angular.module('calcentral.services').service('analyticsService', function(calce
 
     window.ga('create', calcentralConfig.googleAnalyticsId , 'auto');
   };
-  // jscs:enable
-  /* jshint ignore:end */
+  /* eslint-enable */
 
-  /**
-   * Load the Google Analytics service
-   */
   var load = function() {
     if (isProduction()) {
       /* jshint ignore:start */
@@ -72,9 +67,6 @@ angular.module('calcentral.services').service('analyticsService', function(calce
     }
   };
 
-  /**
-   * Returns true if application is running in actual production environment
-   */
   var isProduction = function() {
     return calcentralConfig.applicationLayer === 'production';
   };

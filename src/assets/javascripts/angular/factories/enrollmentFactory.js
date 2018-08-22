@@ -18,6 +18,7 @@ angular.module('calcentral.factories').factory('enrollmentFactory', function(api
    * @param {object} instructionType enrollment instruction object
    * @param {object} termId          term code for enrollment instruction object
    * @param {object} academicPlanner raw academic planner object
+   * @return {object} instructionType 
    */
   var setAcademicPlanner = function(instructionType, termId, academicPlanner) {
     var planner = _.get(academicPlanner, termId);

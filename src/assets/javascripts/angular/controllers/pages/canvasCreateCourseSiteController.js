@@ -1,4 +1,4 @@
-/* jshint camelcase: false */
+/* eslint camelcase: "off" */
 'use strict';
 
 /**

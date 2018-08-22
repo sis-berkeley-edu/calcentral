@@ -10,6 +10,7 @@ angular.module('calcentral.services').service('apiEventService', function($rootS
    * @param {String} apiName The name of the event
    * @param {String} eventName The name of the event
    * @param {Object} data Data that you want to send with the event
+   * @return {undefined}
    */
   var broadcastApiEvent = function(apiName, eventName, data) {
     // console.log('calcentral.api.' + apiName + '.' + eventName, data);
@@ -20,6 +21,7 @@ angular.module('calcentral.services').service('apiEventService', function($rootS
    * Watch the event for a certain part of the API
    * @param {String} apiName The name of the API you want to watch (e.g. user)
    * @param {String} eventName The name of the event (isUserLoaded)
+   * @return {undefined}
    */
   var watchEvent = function(apiName, eventName) {
     $rootScope.$watch('api.' + apiName + '.events.' + eventName, function(data) {
@@ -27,9 +29,6 @@ angular.module('calcentral.services').service('apiEventService', function($rootS
     }, true);
   };
 
-  /**
-   * Fire the events for the API
-   */
   var fireApiEvents = function(api) {
     for (var i in api) {
       if (api.hasOwnProperty(i) && api[i].events) {

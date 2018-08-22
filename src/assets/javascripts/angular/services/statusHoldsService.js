@@ -3,7 +3,6 @@
 var _ = require('lodash');
 
 angular.module('calcentral.services').service('statusHoldsService', function() {
-
   var cnpStatusIcon = function(registration) {
     var positiveIndicators = _.get(registration, 'positiveIndicators');
     var indicatorTypes = [];

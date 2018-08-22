@@ -17,9 +17,6 @@ angular.module('calcentral.directives').directive('ccSpinnerDirective', function
         var messageElement = angular.element(messageTemplate);
       }
 
-      /**
-       * Check whether isLoading has changed
-       */
       var watch = function(value) {
         attrs.$set('aria-busy', value);
         elment.toggleClass('cc-spinner', value);

@@ -12,8 +12,6 @@ angular.module('calcentral.controllers').controller('FinaidAwardsCompareControll
   $scope,
   finaidFactory,
   finaidService) {
-
-  // Expose everything to the view.
   $scope.finaidAwardsCompare = {
     information: {},
     isLoading: true,
@@ -56,49 +54,30 @@ angular.module('calcentral.controllers').controller('FinaidAwardsCompareControll
   };
   $scope.isMainFinaid = false;
 
-  /**
-   * The title for section categories/items that contain the total for other categories/other
-   * items in that category.
-   */
   var grandTotalTitle = 'Grand Total';
 
-  /**
-   * Check whether we should update the URL or not
-   */
   var checkUpdateUrl = function() {
     if ($routeParams.finaidYearId !== finaidService.options.finaidYear.id) {
       $location.path('finances/finaid/compare/' + finaidService.options.finaidYear.id, false);
     }
   };
 
-  /**
-   * Set the Financial Aid year to what's available in the service
-   */
   var setFinaidYear = function() {
     $scope.finaidAwardsCompare.selected.aidYear = finaidService.options.finaidYear;
   };
 
-  /**
-   * Parse the list of packages
-   */
   var parseFinaidAwardCompareList = function(response) {
     $scope.finaidAwardsCompare.data.list = _.get(response, 'data.feed.awardParms');
     $scope.finaidAwardsCompare.errored = response.errored;
     $scope.finaidAwardsCompare.isLoading = false;
   };
 
-  /**
-   * Get the list of all the packages on different dates and times
-   */
   var getFinaidAwardCompareList = function() {
     return finaidFactory.getAwardCompareList({
       finaidYearId: finaidService.options.finaidYear.id
     }).then(parseFinaidAwardCompareList);
   };
 
-  /**
-   * Select the first package in the dropdown (if there are any)
-   */
   var selectFirstPackage = function() {
     var packages = _.get($scope, 'finaidAwardsCompare.data.list.data');
     if (_.get(packages, 'length')) {
@@ -106,9 +85,6 @@ angular.module('calcentral.controllers').controller('FinaidAwardsCompareControll
     }
   };
 
-  /**
-   * Find the change in current from prior.
-   */
   var findChange = function(current, prior) {
     if (prior === null) {
       if (current !== null) {
@@ -124,10 +100,6 @@ angular.module('calcentral.controllers').controller('FinaidAwardsCompareControll
     return $scope.changeTags.same;
   };
 
-  /**
-   * Parse a set of summary items from a list of titles, normalizing all items and using a default
-   * values for missing items.
-   */
   var parseSummaryItems = function(titles, itemsByTitle) {
     return _.map(titles, function(title) {
       var item = itemsByTitle[title];
@@ -169,9 +141,6 @@ angular.module('calcentral.controllers').controller('FinaidAwardsCompareControll
     });
   };
 
-  /**
-   * Parse current and prior data for the Summary Information section.
-   */
   var parseSummaryData = function(data) {
     var priorData = _.flatten(_.get(data, 'prior.data.feed.status.categories[0].itemGroups'));
     var currentData = _.flatten(_.get(data, 'current.data.feed.status.categories[0].itemGroups'));
@@ -207,9 +176,6 @@ angular.module('calcentral.controllers').controller('FinaidAwardsCompareControll
     $scope.finaidAwardsCompare.data.current.summary = currentItems;
   };
 
-  /**
-   * Parse current and prior data for the Net Cost section.
-   */
   var parseNetcostData = function(data) {
     var priorNetcost = _.get(data, 'prior.data.feed.coa.fullyear.data');
     var currentNetcost = _.get(data, 'current.data.feed.coa.fullyear.data');
@@ -276,9 +242,6 @@ angular.module('calcentral.controllers').controller('FinaidAwardsCompareControll
     $scope.finaidAwardsCompare.data.current.netcost = currentNetcost;
   };
 
-  /**
-   * Parse current and prior data for the Packages section.
-   */
   var parsePackagesData = function(data) {
     var priorData = _.get(data, 'prior.data.feed.awards.semester.data');
     var currentData = _.get(data, 'current.data.feed.awards.semester.data');
@@ -339,15 +302,15 @@ angular.module('calcentral.controllers').controller('FinaidAwardsCompareControll
 
       // Re-add the Grand Total item.
       var priorGrandTotalItem = _.last(priorCategory.items) || {
-          title: grandTotalTitle,
-          totals: _.clone(amountsTemplate)
-        };
+        title: grandTotalTitle,
+        totals: _.clone(amountsTemplate)
+      };
       priorCategory.items = _.concat(unzippedItems[0], priorGrandTotalItem);
       priorCategory.change = $scope.changeTags.blank;
       var currentGrandTotalItem = _.last(currentCategory.items) || {
-          title: grandTotalTitle,
-          totals: _.clone(amountsTemplate)
-        };
+        title: grandTotalTitle,
+        totals: _.clone(amountsTemplate)
+      };
       currentGrandTotalItem.change =
         findChange(_.last(currentGrandTotalItem.totals), _.last(priorGrandTotalItem.totals));
       currentCategory.items = _.concat(unzippedItems[1], currentGrandTotalItem);
@@ -374,18 +337,12 @@ angular.module('calcentral.controllers').controller('FinaidAwardsCompareControll
     $scope.finaidAwardsCompare.data.current.packages = currentPackages;
   };
 
-  /**
-   * Parse the current and prior package data
-   */
   var parseCurrentAndPrior = function(response) {
     parseSummaryData(response);
     parseNetcostData(response);
     parsePackagesData(response);
   };
 
-  /**
-   * Load the current and prior data after changing the selected option in the dropdown
-   */
   var loadCurrentAndPrior = function(priorDate) {
     if (!priorDate) {
       $scope.finaidAwardsCompare.data.current = {};
@@ -409,9 +366,6 @@ angular.module('calcentral.controllers').controller('FinaidAwardsCompareControll
     }
   };
 
-  /**
-   * By default, show all the different sections (e.g. "Summary Information", "Net Cost")
-   */
   var showSectionsByDefault = function() {
     _.forEach($scope.finaidAwardsCompare.sections, function(section) {
       $scope.finaidAwardsCompare.toggle[section.id] = {
@@ -420,15 +374,12 @@ angular.module('calcentral.controllers').controller('FinaidAwardsCompareControll
     });
   };
 
-  /**
-   * Load the compare list
-   */
   var loadFinaidAwardsCompareList = function() {
     checkUpdateUrl();
     setFinaidYear();
 
     return getFinaidAwardCompareList()
-      .then(selectFirstPackage);
+    .then(selectFirstPackage);
   };
 
   $scope.$on('calcentral.custom.api.finaid.finaidYear', loadFinaidAwardsCompareList);

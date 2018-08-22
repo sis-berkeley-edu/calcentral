@@ -39,9 +39,7 @@ angular.module('calcentral.controllers').controller('AdminController', function(
     $scope.admin.actAs.id = parseInt(id, 10);
   };
 
-  /**
-   * Get stored recent/saved users
-   */
+  // Get stored recent/saved users
   var getStoredUsers = function(options) {
     return adminFactory.getStoredUsers(options).then(
       function successCallback(response) {
@@ -62,9 +60,7 @@ angular.module('calcentral.controllers').controller('AdminController', function(
     });
   };
 
-  /**
-   * Lookup user using either UID or SID
-   */
+  // Lookup user using either UID or SID
   var lookupUser = function(id) {
     return adminFactory.userLookup({
       id: id
@@ -144,9 +140,7 @@ angular.module('calcentral.controllers').controller('AdminController', function(
     );
   };
 
-  /**
-   * Update display of user lists
-   */
+  // Update display of user lists
   var updateUserLists = function() {
     $scope.admin.userBlocks[0].users = $scope.admin.storedUsers.saved;
     $scope.admin.userBlocks[1].users = $scope.admin.storedUsers.recent;
@@ -156,9 +150,7 @@ angular.module('calcentral.controllers').controller('AdminController', function(
     $scope.admin.actAs.id = parseInt(adminService.getLdapUid(lastUser), 10) || '';
   };
 
-  /**
-   * Initialize stored user arrays
-   */
+  // Initialize stored user arrays
   $scope.admin.userBlocks = [
     {
       title: 'Saved Users',
