@@ -12,7 +12,6 @@ set -xv
 TORQUEBOX_LOG=`date +"${PWD}/log/torquebox_%Y-%m-%d.log"`
 
 killall memcached
-killall gulp
 sleep 1
 memcached -d
 
@@ -27,6 +26,6 @@ JVM_OPTS="\-server \-verbose:gc \-Xmn768m \-Xms6144m \-Xmx6144m \-XX:+CMSParalle
 MAX_THREADS=${CALCENTRAL_MAX_THREADS:="250"}
 
 # build assets without watcher / browser sync
-gulp build --env production
+npm run build
 
 bundle exec torquebox run -p=3000  --clustered --jvm-options="$JVM_OPTS" --max-threads=${MAX_THREADS} >> ${TORQUEBOX_LOG}

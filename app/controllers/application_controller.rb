@@ -174,7 +174,7 @@ class ApplicationController < ActionController::Base
   end
 
   def self.correct_port(host_with_port, http_referer)
-    # A developer on localhost running `gulp build` will expect port 3001. However, low-level Rails logic will deduce
+    # A developer on localhost running a local front-end server will expect port 3001. However, low-level Rails logic will deduce
     # a port value of 3000. Problems arise when we HTTP redirect: developer unexpectedly hops from 3001 to 3000.
     # Therefore, we use a conservative hack to undo the false assumption of Rails.
     if http_referer.to_s.include?('localhost:3001')

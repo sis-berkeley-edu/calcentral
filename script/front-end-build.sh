@@ -11,6 +11,6 @@ npm config set strict-ssl false
 npm install || { echo "ERROR: npm install failed" ; exit 1 ; }
 
 # Build and fingerprint front-end assets.
-npm run build-production || { echo "ERROR: npm front-end assets build failed" ; exit 1 ; }
+npm run build || { echo "ERROR: npm front-end assets build failed" ; exit 1 ; }
 
 exit 0
