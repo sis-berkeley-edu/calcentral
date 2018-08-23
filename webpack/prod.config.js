@@ -1,7 +1,3 @@
-/* jshint esversion:6 */
-/* jscs: disable  disallowSpacesInsideObjectBrackets */
-/* jscs: disable  requirePaddingNewLinesInObjects */
-/* jscs: disable  requireObjectKeysOnNewLine */
 'use strict';
 
 const baseConfig = require('./base.config.js');

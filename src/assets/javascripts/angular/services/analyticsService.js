@@ -60,9 +60,7 @@ angular.module('calcentral.services').service('analyticsService', function(calce
 
   var load = function() {
     if (isProduction()) {
-      /* jshint ignore:start */
       injectAnalyticsCode(calcentralConfig.googleAnalyticsId);
-      /* jshint ignore:end */
       setUserId(calcentralConfig.uid);
     }
   };

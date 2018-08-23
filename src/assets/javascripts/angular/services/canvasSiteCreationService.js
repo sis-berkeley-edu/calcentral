@@ -1,4 +1,3 @@
-/* jshint camelcase: false */
 'use strict';
 
 angular.module('calcentral.services').service('canvasSiteCreationService', function() {

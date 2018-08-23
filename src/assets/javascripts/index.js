@@ -1,5 +1,3 @@
-/* jshint esversion:6 */
-/* jscs: disable  requireBlocksOnNewline */
 'use strict';
 
 // Angular

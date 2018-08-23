@@ -1,9 +1,5 @@
-/* jshint esversion:6 */
-/* jshint strict:false */
-/* jscs: disable  disallowSpacesInsideObjectBrackets */
-/* jscs: disable  requirePaddingNewLinesInObjects */
-/* jscs: disable  requireObjectKeysOnNewLine */
 'use strict';
+
 const chokidar = require('chokidar');
 const convert = require('koa-connect');
 const path = require('path');
