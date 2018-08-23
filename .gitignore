@@ -76,9 +76,6 @@ npm-debug.log
 # Npm package-lock.json
 package-lock.json
 
-# Vagrant
-.vagrant/
-
 # VScode IDE config
 .vscode
 
