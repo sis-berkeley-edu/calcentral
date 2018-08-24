@@ -6,11 +6,6 @@ if [ -d "${HOME}/.nvm" ] && [ "${TRAVIS}" = "true" ]; then
   nvm install $(node -e 'console.log(require("./package.json").engines.node.replace(/[^\d\.]+/g, ""))')
 fi
 
-# Travis-CI may not have installed all required executables. Use locally installed ones.
-function npm-exec {
-   $(npm bin)/$@  
-}
-
 echo "Verify clean and consistent SCSS with scss_lint"
 gem cleanup scss_lint
 gem install scss_lint --version 0.49.0
