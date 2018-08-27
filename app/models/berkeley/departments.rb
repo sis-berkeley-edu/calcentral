@@ -19,9 +19,12 @@ module Berkeley
         'BTCNM' =>  'Center for New Media',
         'BOOPT' =>  'School of Optometry',
         'BUGMS' =>  'Center for Global Metropolitan Studies',
+        # Not an official department code.
         'CALTEACH' => 'CalTeach Program',
         'CCHEM' =>  'Department of Chemistry',
         'CEEEG' =>  'Department of Chemical and Biomolecular Engineering',
+        # Officially part of HSCAN.
+        'CELTIC' => 'Celtic Studies',
         'CFPPR' =>  'Goldman School of Public Policy',
         'CLLAW' =>  'School of Law',
         'CPACA' =>  'School of Public Health',
@@ -78,6 +81,8 @@ module Berkeley
         'MBARC' =>  'Department of Agricultural and Resource Economics',
         'MCESP' =>  'Department of Environmental Science, Policy and Management',
         'MDNST' =>  'Department of Nutritional Sciences and Toxicology',
+        # Officially part of QHUIS.
+        'MEDIAST' => 'Media Studies',
         'MEPMB' =>  'Department of Plant and Microbial Biology',
         'MGERG' =>  'Energy and Resources Group',
         'MMIMS' =>  'School of Information',
