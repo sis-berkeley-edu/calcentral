@@ -418,12 +418,15 @@ calnet_crosswalk_proxy:
 
 data_loch:
   fake: true
-  aws_key: 'key'
-  aws_secret: 'secret'
-  aws_region: 'region'
-  bucket: 'bucket'
-  prefix: 'exports/go/here'
   staging_directory: 'tmp/data_loch'
+  targets:
+    - name: 's3_test'
+      aws_key: 'key'
+      aws_secret: 'secret'
+      aws_region: 'region'
+      bucket: 'bucket'
+      prefix: 'exports/go/here'
+
 
 # A feature will be disabled if the corresponding feature-flag is false or nil.
 features:
