@@ -6,12 +6,12 @@ var angular = require('angular');
 /**
  * Canvas roster photos LTI app controller
  */
-angular.module('calcentral.controllers').controller('RosterController', function(apiService, rosterFactory, rosterService, $routeParams, $scope, $window) {
+angular.module('calcentral.controllers').controller('RosterController', function(apiService, emailService, rosterFactory, rosterService, $routeParams, $scope, $window) {
   if ($routeParams.canvasCourseId) {
     apiService.util.setTitle('Roster Photos');
   }
   $scope.accessibilityAnnounce = apiService.util.accessibilityAnnounce;
-  $scope.bmailLink = rosterService.bmailLink;
+  $scope.bmailLink = emailService.bmailLink;
   $scope.currentRosterViewType = 'photos';
   $scope.searchOptions = {
     text: '',
