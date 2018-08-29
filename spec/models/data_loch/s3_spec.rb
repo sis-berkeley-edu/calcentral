@@ -1,5 +1,5 @@
 describe DataLoch::S3 do
-  subject {described_class.new}
+  subject {described_class.new('s3_test')}
 
   let(:local_path) { '/tmp/data_loch/analytics_a_la_carte.gz' }
   before do
