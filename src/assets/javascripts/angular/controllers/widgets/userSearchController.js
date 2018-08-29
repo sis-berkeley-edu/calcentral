@@ -5,7 +5,8 @@ var _ = require('lodash');
 /**
  * Search and view-as users.
  */
-angular.module('calcentral.controllers').controller('UserSearchController', function(adminFactory, adminService, apiService, $scope) {
+angular.module('calcentral.controllers').controller('UserSearchController', function(adminFactory, adminService, apiService, emailService, $scope) {
+  $scope.bmailLink = emailService.bmailLink;
   $scope.userSearch = {
     title: 'View as',
     tabs: {
@@ -43,8 +44,11 @@ angular.module('calcentral.controllers').controller('UserSearchController', func
     var missingName = 'Name Not Provided';
 
     angular.forEach(users, function(user) {
+      user.ldapUid = user.campusUid;
+
       // Normalize user's person name for the UI.
-      user.name = user.name || user.defaultName || (user.firstName || '').concat(' ', user.lastName || '');
+      user.name = decorateUserName(user);
+
       // Guard against whitespace-only name.
       if (/^\s+$/.test(user.name)) {
         user.name = missingName;
@@ -67,6 +71,19 @@ angular.module('calcentral.controllers').controller('UserSearchController', func
       };
     });
     return users;
+  };
+
+  var decorateUserName = function(user) {
+    var legalFirst = _.trim(_.get(user, 'firstNameLegal'));
+    var legalMiddle = _.trim(_.get(user, 'middleNameLegal'));
+    var legalLast = _.trim(_.get(user, 'lastNameLegal'));
+    var preferredFirst = _.trim(_.get(user, 'firstNamePreferred'));
+    var preferredMiddle = _.trim(_.get(user, 'middleNamePreferred'));
+    var preferredFull = '';
+    if (preferredFirst || preferredMiddle) {
+      preferredFull = '\\' + _.trim(preferredFirst + ' ' + preferredMiddle) + '\\';
+    }
+    return _.join([legalFirst, legalMiddle, preferredFull, legalLast], ' ');
   };
 
   var getStoredUsers = function() {
