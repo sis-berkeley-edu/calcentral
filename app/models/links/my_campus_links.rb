@@ -1,5 +1,6 @@
 module Links
   class MyCampusLinks
+    include CampusLinksFromFileFeatureFlagged
 
 =begin
   NOTES:
@@ -15,7 +16,17 @@ module Links
 =end
 
     def get_feed
-      # Feed consists of two primary sections: Navigation and Links
+      return get_from_file if is_campus_links_from_file_feature_enabled
+      get_from_database
+    end
+
+    def get_from_file
+      file = File.open("#{Rails.root}/public/json/campuslinks.json")
+      contents = File.read(file)
+      JSON.parse(contents)
+    end
+
+    def get_from_database
       navigation = []
       Links::LinkCategory.where('root_level = ?', true).order('LOWER(name)').each do |category|
         navigation.push({
