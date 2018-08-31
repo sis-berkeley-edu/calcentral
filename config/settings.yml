@@ -438,6 +438,7 @@ features:
   authentication_validator: false
   background_jobs_check: true
   cal1card: false
+  campus_links_from_file: false
   class_info_enrollment_section_overview: false
   class_info_enrollment_tab: false
   course_manage_official_sections: false
