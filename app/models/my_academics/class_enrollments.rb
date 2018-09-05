@@ -21,37 +21,9 @@ module MyAcademics
       })
     end
 
-    # Groups student plans into groups based on roles (e.g. 'default', 'fpf', 'concurrent')
-    def grouped_student_plan_roles
-      grouped_roles = {
-        :data => {},
-        :metadata => {
-          :includes_fpf => false
-        }
-      }
-      current_term_cpp = get_current_and_future_cpp
-      current_term_cpp.each do |term_cpp|
-        career_code = term_cpp['acad_career']
-        role = get_enrollment_plan_role(term_cpp)
-        role_key = [role, career_code]
-        grouped_roles[:data][role_key] = { role: role, career_code: career_code, academic_plans: []} if grouped_roles[:data][role_key].blank?
-        grouped_roles[:data][role_key][:academic_plans] << build_plan(role, term_cpp['acad_plan'])
-        grouped_roles[:metadata][:includes_fpf] = true if role == 'fpf'
-      end
-      grouped_roles
-    end
-
-    def get_current_and_future_cpp
-      term_cpp = MyAcademics::MyTermCpp.new(@uid).get_feed
-      current_term = Berkeley::Terms.fetch.current.try(:campus_solutions_id)
-      term_cpp.select {|t| t['term_id'].to_s >= current_term.to_s }
-    end
-
     def get_enrollment_plan_role(term_cpp)
       career_role = get_academic_career_roles(term_cpp['acad_career']).first
-      plan_based_roles = get_academic_plan_roles(term_cpp['acad_plan'])
-      plan_based_roles.flatten!
-      plan_based_roles.uniq!
+      plan_based_roles = get_academic_plan_roles(term_cpp['acad_plan']).try(:uniq)
       determine_enrollment_specific_role(plan_based_roles, career_role)
     end
 
@@ -97,51 +69,36 @@ module MyAcademics
       grouped_roles = grouped_student_plan_roles
       career_term_plan_roles = []
 
-      grouped_roles[:data].keys.each do |role_key|
-        student_plan_role = grouped_roles[:data][role_key]
+      grouped_roles.keys.each do |role_key|
+        student_plan_role = grouped_roles[role_key]
         career_terms.each do |career_term|
-          if (student_plan_role[:career_code] == career_term[:acadCareer])
+          if (student_plan_role[:career_code] == career_term[:acadCareer] && student_plan_role[:term_id] == career_term[:termId])
             career_term_plan_roles << student_plan_role.merge({term: career_term.slice(:termId, :termDescr, :termName, :termIsSummer)})
           end
         end
       end
-      if grouped_roles[:metadata][:includes_fpf]
-        return limit_to_single_fpf_career_term_plan_role(career_term_plan_roles)
-      end
       career_term_plan_roles
     end
 
-    # Hack to ensure that FPF role is only applied to the first applicable career term plan
-    # Logic only valid for Fall 2016 to Spring 2017 transition
-    # See SISRP-25837 / SISRP-26815
-    def limit_to_single_fpf_career_term_plan_role(career_term_plan_roles)
-      career_term_plan_roles_grouped_by_role = career_term_plan_roles.group_by { |plan_role| plan_role[:role] }
-      career_term_plan_roles_grouped_by_term = career_term_plan_roles.group_by { |plan_role| plan_role[:term][:termId] }
-
-      # Obtain terms with FPF roles
-      fpf_term_ids = career_term_plan_roles_grouped_by_role['fpf'].to_a.collect {|plan_role| plan_role[:term].try(:[], :termId) }.uniq.sort
-
-      # segregate plans from first term containing FPF plan, and other remaining terms
-      other_term_plan_roles = career_term_plan_roles_grouped_by_term.slice!(fpf_term_ids.first).values.flatten
-
-      first_fpf_term_plan_roles = career_term_plan_roles_grouped_by_term
-
-      # Isolate earliest FPF career_term_plan_role
-      first_fpf_role = first_fpf_term_plan_roles.values[0].to_a.select { |plan_role| plan_role[:role] == 'fpf' }.first
-
-      # force remaining roles to be default
-      default_role = 'default'
-      other_term_plan_roles.collect do |plan_role|
-        if plan_role[:role] == 'fpf'
-          plan_role[:role] = default_role
-          plan_role[:academic_plans].each do |plan|
-            plan[:role] = default_role
-          end
-        end
+    # Groups student plans into groups based on roles (e.g. 'default', 'fpf', 'concurrent')
+    def grouped_student_plan_roles
+      grouped_roles = {}
+      current_term_cpp = get_current_and_future_cpp
+      current_term_cpp.each do |term_cpp|
+        term_id = term_cpp['term_id']
+        career_code = term_cpp['acad_career']
+        role = get_enrollment_plan_role(term_cpp)
+        role_key = [role, career_code, term_id]
+        grouped_roles[role_key] = { role: role, career_code: career_code, term_id: term_id, academic_plans: []} if grouped_roles[role_key].blank?
+        grouped_roles[role_key][:academic_plans] << build_plan(role, term_cpp['acad_plan'])
       end
+      grouped_roles
+    end
 
-      converted_remaining_plan_roles = filter_duplicate_plan_roles(other_term_plan_roles.to_a)
-      [first_fpf_role] + converted_remaining_plan_roles
+    def get_current_and_future_cpp
+      term_cpp = MyAcademics::MyTermCpp.new(@uid).get_feed
+      current_term = Berkeley::Terms.fetch.current.try(:campus_solutions_id)
+      term_cpp.select {|t| t['term_id'].to_s >= current_term.to_s }
     end
 
     # Removes duplicate plan roles within the same term
