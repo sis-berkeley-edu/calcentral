@@ -7,6 +7,7 @@ angular.module('calcentral.services').factory('emailService', function() {
   /**
    * Returns link to gMail compose with TO address specified
    * @param {String} toAddress 'TO' address string
+   * @return {String} URL encoded "To" address
    */
   var bmailLink = function(toAddress) {
     var urlEncodedToAddress = encodeURIComponent(toAddress);

@@ -18,10 +18,10 @@ angular.module('calcentral.controllers').controller('ContactController', functio
 
   var loadInformation = function() {
     profileFactory.getPerson()
-      .then(parseContactInformation)
-      .finally(function() {
-        $scope.contactInformation.isLoading = false;
-      });
+    .then(parseContactInformation)
+    .finally(function() {
+      $scope.contactInformation.isLoading = false;
+    });
   };
 
   loadInformation();

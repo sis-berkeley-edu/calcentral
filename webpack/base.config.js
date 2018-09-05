@@ -56,28 +56,6 @@ module.exports = {
           { loader: 'babel-loader' }
         ]
       },
-      { test: /\.html$/,
-        exclude: [
-          path.resolve(__dirname, '../src/base.html'),
-          path.resolve(__dirname, '../src/bcourses_embedded.html'),
-          path.resolve(__dirname, '../src/index-junction.html'),
-          path.resolve(__dirname, '../src/index-main.html')
-        ],
-        use: [
-          { loader: 'ngtemplate-loader',
-            options: {
-              module: 'templates',
-              relativeTo: '/src/assets/templates/',
-              requireAngular: true
-            }
-          },
-          { loader: 'html-loader',
-            options: {
-              attrs: ['img:data-src']
-            }
-          }
-        ]
-      },
       { test: /\.(png|svg|jpg|gif|ico)$/,
         loader: 'url-loader',
         options: {
