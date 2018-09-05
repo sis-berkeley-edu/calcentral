@@ -1,27 +1,34 @@
-<div data-ng-if="api.user.profile.features.finalExamScheduleStudent" data-ng-controller="finalExamScheduleController">
-  <div class="cc-widget cc-widget-exam-schedule" data-ng-if="!finalExams.gradCoursesOnlyPresent && finalExams.coursesPresent">
+<div data-ng-controller="finalExamScheduleController">
+  <div class="cc-widget cc-widget-exam-schedule" data-ng-if="isFinalExamFeatureEnabled() && !finalExams.gradCoursesOnlyPresent && finalExams.coursesPresent">
     <div class="cc-widget-title">
-      <h2><span data-ng-bind="widgetSemesterName"></span> Final Exam Schedule</h2>
+      <h2>
+        <span data-ng-bind="widgetSemesterName" data-ng-if="finalExamMode !== 'instructor'"></span>
+        <span data-ng-if="finalExamMode !== 'instructor'">Final Exam Schedule</span>
+        <span data-ng-if="finalExamMode === 'instructor'">Final Exams</span>
+        <span class="cc-widget-title-sub" data-ng-if="finalExamMode === 'instructor'">TEACHING</span>
+      </h2>
     </div>
     <div class="cc-widget-padding" data-ng-if="finalExams.lawCoursesPresent">
       <a data-ng-href="{{finalExams.lawExamLink}}">Law Final Exam Schedule</a>
     </div>
     <div data-ng-if="finalExams.ugrdCoursesPresent">
       <div class="cc-widget-exam-schedule-text">
-        Exam information is
-        <a data-ng-click="finalExams.changeNotice = !finalExams.changeNotice">
-          subject to change
-          <i class="fa fa-info-circle cc-icon-air-force-blue"></i>
-        </a>
+        Exam information is subject to change.
+        <a data-ng-click="finalExams.changeNotice = !finalExams.changeNotice">Learn more</a>
         <div class="cc-widget-exam-schedule-notice" data-ng-if="finalExams.changeNotice">
           <p class="cc-widget-exam-schedule-notice-paragraph" data-ng-bind-html="finalExams.message"></p>
         </div>
       </div>
 
-      <div class="cc-widget-exam-schedule-text cc-widget-exam-schedule-conflicts-notice-container"
-        data-ng-if="finalExams.conflictFound"
-      >
-        <div class="cc-widget-exam-schedule-conflicts-notice">
+      <div class="cc-widget-exam-schedule-text" data-ng-if="finalExams.conflictFound && finalExamMode === 'instructor'">
+        <div class="cc-widget-exam-schedule-conflicts-notice-instructor">
+          <i class="fa fa-clock-o"></i>
+          Note: Exam time overlap
+        </div>
+      </div>
+
+      <div class="cc-widget-exam-schedule-text cc-widget-exam-schedule-conflicts-notice-container" data-ng-if="finalExams.conflictFound && finalExamMode !== 'instructor'">
+        <div class="cc-widget-exam-schedule-conflicts-notice-student">
           <i class="fa fa-exclamation-triangle cc-icon-gold"></i>
           Time Conflict Detected
         </div>
@@ -32,38 +39,80 @@
         </div>
       </div>
 
-      <div data-ng-repeat="semester in finalExams.semesters | orderBy:'termId'">
-        <h3 class="cc-widget-exam-schedule-header" data-ng-bind-template="{{semester.name}} Final Exams"></h3>
-        <div data-ng-if="semester.exams.schedule.length > 0">
-          <ol class="cc-widget-exam-schedule-list">
-            <li class="cc-widget-exam-schedule-list-item"
-              data-ng-class="{'cc-widget-exam-schedule-conflicts': schedule.timeConflict}"
-              data-ng-repeat="schedule in semester.exams.schedule"
-            >
-              <div class="cc-flex cc-flex-wrap">
-                <div class="cc-widget-exam-schedule-column-left" data-ng-bind="schedule.examDate"></div>
-                <div class="cc-widget-exam-schedule-column-right">
-                  <span class="cc-widget-exam-schedule-course-identifier">
-                    <span data-ng-bind="schedule.name"></span>
-                    <span data-ng-if="schedule.displaySectionLabel" data-ng-bind="schedule.sectionLabel"></span>
-                  </span>
-                  <span class="cc-widget-exam-schedule-course-waitlisted" data-ng-if="schedule.waitlisted">
-                    (waitlist)
-                  </span>
+      <div data-ng-if="finalExamMode === 'instructor'">
+        <div data-ng-repeat="semester in finalExams.semesters | orderBy:'termId'">
+          <h3 class="cc-widget-exam-schedule-header">
+            <span data-ng-bind-template="{{semester.name}} Final Exams"></span>
+            <span class="cc-widget-exam-schedule-header-grey" data-ng-if="!semester.schedulesFinalized">(Projected)</span>
+          </h3>
+          <div class="cc-table cc-widget-padding" data-ng-if="semester.exams.schedule.length > 0">
+            <table data-ng-if="semester.exams.schedule.length > 0">
+              <thead>
+                <th class="cc-widget-exam-schedule-column-left-instructor" scope="col">Class</th>
+                <th scope="col">Exam Schedule</th>
+              </thead>
+              <tbody data-ng-repeat="schedule in semester.exams.schedule">
+                <tr data-ng-class-even="'cc-academics-even'">
+                  <td>
+                    <div data-ng-repeat="courseName in schedule.crossListedCourseNames">
+                      <span data-ng-bind="courseName"></span>
+                      <span data-ng-if="schedule.displaySectionLabel" data-ng-bind="schedule.sectionLabel"></span>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="cc-widget-exam-schedule-time-location" data-ng-repeat="location in schedule.examLocations">
+                      <i data-ng-if="schedule.timeConflict" class="fa fa-clock-o"></i>
+                      <span data-ng-if="schedule.examDateInstructor" data-ng-bind-template="{{schedule.examDateInstructor}},"></span>
+                      <span data-ng-if="schedule.examTime" data-ng-bind="schedule.examTime"></span>
+                      <span data-ng-if="schedule.examDateInstructor || schedule.examTime"> | </span>
+                      <span
+                        data-ng-bind="location"
+                        data-ng-class="{'cc-widget-exam-schedule-no-location-instructors': location === 'Exam Location TBD'||location === 'Exam Information not available at this time.'}"
+                      ></span>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div data-ng-if="finalExamMode !== 'instructor'">
+        <div data-ng-repeat="semester in finalExams.semesters | orderBy:'termId'">
+          <h3 class="cc-widget-exam-schedule-header" data-ng-bind-template="{{semester.name}} Final Exams"></h3>
+          <div data-ng-if="semester.exams.schedule.length > 0">
+            <ol class="cc-widget-exam-schedule-list">
+              <li class="cc-widget-exam-schedule-list-item"
+                data-ng-class="{'cc-widget-exam-schedule-conflicts': schedule.timeConflict}"
+                data-ng-repeat="schedule in semester.exams.schedule"
+              >
+                <div class="cc-flex cc-flex-wrap">
+                  <div class="cc-widget-exam-schedule-column-left" data-ng-bind="schedule.examDate"></div>
+                  <div class="cc-widget-exam-schedule-column-right">
+                    <span class="cc-widget-exam-schedule-course-identifier">
+                      <span data-ng-bind="schedule.name"></span>
+                      <span data-ng-if="schedule.displaySectionLabel" data-ng-bind="schedule.sectionLabel"></span>
+                    </span>
+                    <span class="cc-widget-exam-schedule-course-waitlisted" data-ng-if="schedule.waitlisted">
+                      (waitlist)
+                    </span>
+                  </div>
                 </div>
-              </div>
-              <div class="cc-flex cc-flex-wrap cc-widget-exam-schedule-time-location" data-ng-repeat="location in schedule.examLocations">
-                <div class="cc-widget-exam-schedule-column-left" data-ng-bind="schedule.examTime"></div>
-                <div class="cc-widget-exam-schedule-column-right"
-                  data-ng-bind="location"
-                  data-ng-class="{'cc-widget-exam-schedule-no-location': location === 'Exam Location TBD'||location === 'Exam information not available at this time.'}"
-                ></div>
-              </tr>
-            </li>
-          </ol>
+                <div class="cc-flex cc-flex-wrap cc-widget-exam-schedule-time-location" data-ng-repeat="location in schedule.examLocations">
+                  <div class="cc-widget-exam-schedule-column-left" data-ng-bind="schedule.examTime"></div>
+                  <div class="cc-widget-exam-schedule-column-right"
+                    data-ng-bind="location"
+                    data-ng-class="{'cc-widget-exam-schedule-no-location': location === 'Exam Location TBD'||location === 'Exam Information not available at this time.'}"
+                  ></div>
+                </div>
+              </li>
+            </ol>
+          </div>
         </div>
       </div>
     </div>
+
     <div class="cc-widget-exam-schedule-graduate-notice" data-ng-if="finalExams.gradCoursesPresent && finalExams.ugrdCoursesPresent">
       Note: Exams for graduate level courses are not represented here.
     </div>

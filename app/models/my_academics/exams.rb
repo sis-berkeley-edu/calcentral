@@ -57,26 +57,49 @@ module MyAcademics
           course[:sections].select{|sec| sec[:is_primary_section] }.each do |section|
             section_data = {
               name: course[:course_code],
+              courseRole: course[:role],
               courseCareerCode: course[:courseCareerCode],
               section_label: section[:section_label],
+              crossListedCourseNames: course.try(:[], :listings).try(:collect) {|l| l[:course_code] },
               waitlisted: section[:waitlisted]
             }
             section_final_exams = get_section_final_exams(semester[:termId], section[:ccn])
             merged_section_final_exams = section_final_exams.collect {|exam| exam.merge(section_data)}
             if merged_section_final_exams.any?
-              section_payload = merged_section_final_exams
+              section_payload = post_merge_process_section_final_exams(merged_section_final_exams)
             else
               section_payload = [
                 section_data.merge({
-                  exam_location: 'Exam information not available at this time.'
+                  exam_location: 'Exam Information not available at this time.'
                 })
               ]
             end
+            # adds final exam data to semester/teachingSemester section
+            section[:finalExams] = filter_section_payload(section_payload)
             semester_final_exams.concat(section_payload)
           end
         end
       end
       semester_final_exams
+    end
+
+    def filter_section_payload(section_payload)
+      section_payload.collect do |exam|
+        exam.slice(:exam_date, :exam_time, :exam_location)
+      end
+    end
+
+    def post_merge_process_section_final_exams(merged_section_final_exams)
+      merged_section_final_exams.each do |final_exam|
+        if final_exam[:finalized].blank?
+          if final_exam[:courseRole] == 'Instructor' && final_exam[:exam_type] == 'N'
+            final_exam[:exam_location] = 'No final exam for this course'
+          else
+            final_exam[:exam_location] = 'Exam Information not available at this time.'
+          end
+        end
+      end
+      merged_section_final_exams
     end
 
     def get_section_final_exams(term_id, section_id)
@@ -133,22 +156,31 @@ module MyAcademics
       {
         exam_location: choose_cs_exam_location(exam),
         exam_date: parse_cs_exam_date(exam),
+        exam_date_instructor: parse_cs_exam_date(exam, true),
         exam_time: parse_cs_exam_time(exam),
         exam_slot: parse_cs_exam_slot(exam),
+        exam_type: exam[:exam_type],
         exception: exam[:exam_exception],
         finalized: exam[:finalized]
       }
     end
 
     # Takes the exam date and makes it presentable, Mon 12/12
-    def parse_cs_exam_date(exam)
+    def parse_cs_exam_date(exam, instructor_format = false)
       if exam[:finalized] != 'Y'
         if exam[:exam_exception] == 'Y' || (exam[:exam_type] != 'Y' && exam[:exam_type] != 'C')
           return nil
         end
       end
       date = exam[:exam_date]
-      date && date.strftime('%a %b %-d')
+      format = '%a %b %-d' unless instructor_format
+      format = '%a, %b %-d' if instructor_format && time_is_current_year?(date)
+      format = '%b %-d, %Y' if instructor_format && !time_is_current_year?(date)
+      date && date.strftime(format)
+    end
+
+    def time_is_current_year?(time)
+      time.try(:year) == Time.now.year
     end
 
     # Takes the exam time and makes it presentable, 07:00PM-10:00PM
@@ -206,7 +238,7 @@ module MyAcademics
     def choose_cs_exam_location(exam)
       if exam[:location]
         if exam[:exam_exception] == 'Y'
-          return 'Exam information not available at this time.'
+          return 'Exam Information not available at this time.'
         else
           if exam[:finalized] == 'Y'
             return exam.try(:[], :location)
@@ -214,7 +246,7 @@ module MyAcademics
             if exam[:exam_type] == 'Y' || exam[:exam_type] == 'C'
               return 'Exam Location TBD'
             else
-              return 'Exam information not available at this time.'
+              return 'Exam Information not available at this time.'
             end
           end
         end

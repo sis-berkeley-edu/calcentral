@@ -1,0 +1,40 @@
+<div class="cc-academics-schedules" data-ng-if="courseHasSectionWithFinalExam()">
+  <h4>Final Exam Schedule</h4>
+  <div data-ng-if="primarySections.length > 1" class="cc-table">
+    <table>
+      <thead>
+        <th scope="col" width="25%">Section</th>
+        <th scope="col">Schedule</th>
+      </thead>
+      <tbody data-ng-repeat="section in primarySections">
+        <tr>
+          <td>
+            <span data-ng-bind="section.section_label"></span>
+          </td>
+          <td>
+            <div data-ng-repeat="schedule in section.finalExams" data-ng-if="section.finalExams">
+              <span data-ng-if="schedule.exam_date" data-ng-bind-template="{{schedule.exam_date}},"></span>
+              <span data-ng-if="schedule.exam_time" data-ng-bind="schedule.exam_time"></span>
+              <span data-ng-if="schedule.exam_date || schedule.exam_time"> | </span>
+              <span data-ng-bind="schedule.exam_location"
+                data-ng-class="{'cc-widget-exam-schedule-no-location-instructors': schedule.exam_location === 'Exam Location TBD'|| schedule.exam_location === 'Exam Information not available at this time.'}"
+              ></span>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div data-ng-if="primarySections.length < 2">
+    <div class="row collapse" data-ng-repeat="section in primarySections">
+      <div data-ng-repeat="schedule in section.finalExams" data-ng-if="section.finalExams">
+        <span data-ng-if="schedule.exam_date" data-ng-bind-template="{{schedule.exam_date}},"></span>
+        <span data-ng-if="schedule.exam_time" data-ng-bind="schedule.exam_time"></span>
+        <span data-ng-if="schedule.exam_date || schedule.exam_time"> | </span>
+        <span data-ng-bind="schedule.exam_location" data-ng-class="{'cc-widget-exam-schedule-no-location-instructors': schedule.exam_location === 'Exam Location TBD'|| schedule.exam_location === 'Exam Information not available at this time.'}"
+        ></span>
+      </div>
+    </div>
+  </div>
+</div>

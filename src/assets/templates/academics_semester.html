@@ -18,12 +18,12 @@
 
   <div class="medium-8 columns cc-academics-row-margin cc-clearfix" data-ng-hide="selectedStudentSemester && !selectedCourses.length && selectedSemester.timeBucket === 'future'">
     <div data-ng-include="'academics_semester_classes.html'"></div>
+    <div data-ng-include="'widgets/final_exam_schedule.html'" data-ng-init="finalExamMode='student'; currentSemester=selectedStudentSemester" data-ng-if="canViewFinalExamSchedule"></div>
+    <div data-ng-include="'widgets/final_exam_schedule.html'" data-ng-init="finalExamMode='instructor'; currentSemester=selectedTeachingSemester" data-ng-if="selectedTeachingSemester"></div>
   </div>
 
   <div class="medium-4 columns cc-column-3" data-ng-class="{'pull-8 cc-clearfix':(!selectedCourses.length && selectedSemester.timeBucket === 'future')}">
     <div data-ng-include="'academics_final_grades.html'" data-ng-if="selectedStudentSemester && (selectedSemester.timeBucket === 'past') && !selectedSemester.gradingInProgress"></div>
-
     <div data-ng-include="'academics_gpa.html'" data-ng-if="(selectedStudentSemester && (selectedSemester.timeBucket !== 'future') && ((selectedSemester.timeBucket !== 'past') || selectedSemester.gradingInProgress)) && !api.user.profile.roles.law && api.user.profile.features.gpaCalculator"></div>
-
   </div>
 </div>

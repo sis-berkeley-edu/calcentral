@@ -5,12 +5,18 @@
   .cc-widget-exam-schedule-column-left {
     width: 45%;
   }
+  .cc-widget-exam-schedule-column-left-instructor {
+    width: 45%;
+  }
   .cc-widget-exam-schedule-conflicts {
     background-color: $cc-color-ivory;
     border-left: 5px solid $cc-color-dark-tangerine;
     margin-left: -5px;
   }
-  .cc-widget-exam-schedule-conflicts-notice {
+  .cc-widget-exam-schedule-conflicts-notice-instructor {
+    color: $cc-color-dim-gray;
+  }
+  .cc-widget-exam-schedule-conflicts-notice-student {
     font-weight: bold;
   }
   .cc-widget-exam-schedule-conflicts-notice-container {
@@ -31,6 +37,10 @@
     margin: 10px 0;
     padding: 0 15px;
   }
+  .cc-widget-exam-schedule-header-grey {
+    color: $cc-color-nobel !important;
+    font-weight: normal;
+  }
   .cc-widget-exam-schedule-list {
     list-style-type: none;
     margin-left: 5px;
@@ -39,6 +49,10 @@
     padding: 5px 10px;
   }
   .cc-widget-exam-schedule-no-location {
+    font-style: italic;
+  }
+  .cc-widget-exam-schedule-no-location-instructors {
+    color: $cc-color-nobel;
     font-style: italic;
   }
   .cc-widget-exam-schedule-notice {
