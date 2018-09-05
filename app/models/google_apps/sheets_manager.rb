@@ -21,17 +21,16 @@ module GoogleApps
 
     def initialize(app_id, uid, opts={})
       super(app_id, uid, opts)
-      auth = google_api.authorization
       # See https://github.com/gimite/google-drive-ruby
-      @session = GoogleDrive::Session.login_with_oauth auth.access_token
+      @session = GoogleDrive::Session.login_with_oauth google_api
     end
 
     def export_csv(file)
       csv_export_uri = if file.respond_to? :csv_export_url
-                     file.csv_export_url
-                   elsif file.exportLinks && file.exportLinks['text/csv']
-                     file.exportLinks['text/csv']
-                   end
+                         file.csv_export_url
+                       elsif file.exportLinks && file.exportLinks['text/csv']
+                         file.exportLinks['text/csv']
+                       end
       raise Errors::ProxyError, "No CSV export path found for file ID: #{file.id}" unless csv_export_uri
       result = @session.execute!(uri: csv_export_uri)
       log_response result
