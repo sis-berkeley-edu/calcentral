@@ -54,7 +54,7 @@ describe MyAcademics::ClassEnrollments do
   end
   let(:holds) { [] }
   let(:term_id) { '2168' }
-  let(:term_cpp) { :ugrd_nutritional_science_plan_term_cpp }
+  let(:term_cpp) { :ugrd_nutritional_science_plan_2168_term_cpp }
   let(:academic_statuses) { [] }
   let(:student_plans) { [undergrad_nutritional_science_plan] }
   let(:undergrad_career) do
@@ -77,27 +77,27 @@ describe MyAcademics::ClassEnrollments do
       primary: true,
     }
   end
-  let(:ugrd_nutritional_science_plan_term_cpp) do
+  let(:ugrd_nutritional_science_plan_2168_term_cpp) do
     [
       {'term_id'=>'2168', 'acad_career'=>'UGRD', 'acad_program'=>'UCNR', 'acad_plan'=>'04606U'},
     ]
   end
-  let(:ugrd_computer_science_plan_term_cpp) do
+  let(:ugrd_computer_science_plan_2168_term_cpp) do
     [
       {'term_id'=>'2168', 'acad_career'=>'UGRD', 'acad_program'=>'UCLS', 'acad_plan'=>'25201U'},
     ]
   end
-  let(:ugrd_cognitive_science_plan_term_cpp) do
+  let(:ugrd_cognitive_science_plan_2168_term_cpp) do
     [
       {'term_id'=>'2168', 'acad_career'=>'UGRD', 'acad_program'=>'UCLS', 'acad_plan'=>'25179U'},
     ]
   end
-  let(:ugrd_fall_program_for_freshmen_plan_term_cpp) do
+  let(:ugrd_fall_program_for_freshmen_plan_2168_term_cpp) do
     [
       {'term_id'=>'2168', 'acad_career'=>'UGRD', 'acad_program'=>'UCLS', 'acad_plan'=>'25000FPFU'},
     ]
   end
-  let(:grad_electrical_engineering_plan_term_cpp) do
+  let(:grad_electrical_engineering_plan_2168_term_cpp) do
     [
       {'term_id'=>'2168', 'acad_career'=>'GRAD', 'acad_program'=>'GACAD', 'acad_plan'=>'16290PHDG'},
     ]
@@ -107,7 +107,7 @@ describe MyAcademics::ClassEnrollments do
       {'term_id'=>'2172', 'acad_career'=>'GRAD', 'acad_program'=>'GACAD', 'acad_plan'=>'16290PHDG'},
     ]
   end
-  let(:law_jsp_term_cpp) do
+  let(:law_jsp_2168_term_cpp) do
     [
       {'term_id'=>'2168', 'acad_career'=>'LAW', 'acad_program'=>'LACAD', 'acad_plan'=>'84485PHDG'},
     ]
@@ -121,7 +121,8 @@ describe MyAcademics::ClassEnrollments do
     [
       cs_career_term_ugrd_summer_2016,
       cs_career_term_grad_fall_2016,
-      cs_career_term_law_fall_2016]
+      cs_career_term_law_fall_2016
+    ]
   }
   let(:cs_career_term_ugrd_summer_2016) { { termId: '2165', termDescr: '2016 Summer', acadCareer: 'UGRD' } }
   let(:cs_career_term_ugrd_fall_2016) { { termId: '2168', termDescr: '2016 Fall', acadCareer: 'UGRD' } }
@@ -158,7 +159,7 @@ describe MyAcademics::ClassEnrollments do
     end
 
     context 'when the user is a student' do
-      let(:term_cpp) { ugrd_computer_science_plan_term_cpp }
+      let(:term_cpp) { ugrd_computer_science_plan_2168_term_cpp }
       let(:cs_enrollment_career_terms) { [{ termId: '2168', termDescr: '2016 Fall', acadCareer: 'UGRD' }] }
       let(:user_is_student) { true }
       let(:feed) { subject.get_feed }
@@ -201,37 +202,34 @@ describe MyAcademics::ClassEnrollments do
   context 'when grouping student plans by role' do
     let(:student_plan_roles) { subject.grouped_student_plan_roles }
     let(:term_cpp) do
-      ugrd_computer_science_plan_term_cpp + grad_electrical_engineering_plan_term_cpp + law_jsp_term_cpp
+      ugrd_computer_science_plan_2168_term_cpp + grad_electrical_engineering_plan_2168_term_cpp + law_jsp_2168_term_cpp
     end
     it 'groups plans by role and career code' do
-      expect(student_plan_roles[:data]).to have_keys([ ['default','UGRD'], ['default','GRAD'], ['law','LAW'] ])
+      expect(student_plan_roles).to have_keys([ ['default','UGRD', '2168'], ['default','GRAD', '2168'], ['law','LAW','2168'] ])
     end
     it 'includes role code with each student plan role' do
-      expect(student_plan_roles[:data][['default','UGRD']][:role]).to eq 'default'
-      expect(student_plan_roles[:data][['default','GRAD']][:role]).to eq 'default'
-      expect(student_plan_roles[:data][['law','LAW']][:role]).to eq 'law'
+      expect(student_plan_roles[['default','UGRD', '2168']][:role]).to eq 'default'
+      expect(student_plan_roles[['default','GRAD', '2168']][:role]).to eq 'default'
+      expect(student_plan_roles[['law','LAW', '2168']][:role]).to eq 'law'
     end
     it 'includes career code with each student plan role' do
-      expect(student_plan_roles[:data][['default','UGRD']][:career_code]).to eq 'UGRD'
-      expect(student_plan_roles[:data][['default','GRAD']][:career_code]).to eq 'GRAD'
-      expect(student_plan_roles[:data][['law','LAW']][:career_code]).to eq 'LAW'
+      expect(student_plan_roles[['default','UGRD', '2168']][:career_code]).to eq 'UGRD'
+      expect(student_plan_roles[['default','GRAD', '2168']][:career_code]).to eq 'GRAD'
+      expect(student_plan_roles[['law','LAW', '2168']][:career_code]).to eq 'LAW'
     end
     it 'includes plans with each student plan role' do
-      expect(student_plan_roles[:data][['default','UGRD']][:academic_plans].count).to eq 1
-      expect(student_plan_roles[:data][['default','GRAD']][:academic_plans].count).to eq 1
-      expect(student_plan_roles[:data][['law','LAW']][:academic_plans].count).to eq 1
-      expect(student_plan_roles[:data][['default','UGRD']][:academic_plans][0][:plan][:code]).to eq '25201U'
-      expect(student_plan_roles[:data][['default','GRAD']][:academic_plans][0][:plan][:code]).to eq '16290PHDG'
-      expect(student_plan_roles[:data][['law','LAW']][:academic_plans][0][:plan][:code]).to eq '84485PHDG'
-    end
-    it 'includes metadata for included plans' do
-      expect(student_plan_roles[:metadata][:includes_fpf]).to eq false
+      expect(student_plan_roles[['default','UGRD', '2168']][:academic_plans].count).to eq 1
+      expect(student_plan_roles[['default','GRAD', '2168']][:academic_plans].count).to eq 1
+      expect(student_plan_roles[['law','LAW', '2168']][:academic_plans].count).to eq 1
+      expect(student_plan_roles[['default','UGRD', '2168']][:academic_plans][0][:plan][:code]).to eq '25201U'
+      expect(student_plan_roles[['default','GRAD', '2168']][:academic_plans][0][:plan][:code]).to eq '16290PHDG'
+      expect(student_plan_roles[['law','LAW', '2168']][:academic_plans][0][:plan][:code]).to eq '84485PHDG'
     end
   end
 
   context 'when providing career term role decks' do
     let(:term_cpp) do
-      ugrd_computer_science_plan_term_cpp + grad_electrical_engineering_plan_2172_term_cpp + law_jsp_2172_term_cpp
+      ugrd_computer_science_plan_2168_term_cpp + grad_electrical_engineering_plan_2172_term_cpp + law_jsp_2172_term_cpp
     end
     let(:decks) { subject.get_career_term_role_decks }
     context 'when more than one role in any term' do
@@ -256,11 +254,19 @@ describe MyAcademics::ClassEnrollments do
       end
     end
     context 'when no more than one role exists in any term' do
+      let(:law_jsp_2175_term_cpp) do
+        [
+          {'term_id'=>'2175', 'acad_career'=>'LAW', 'acad_program'=>'LACAD', 'acad_plan'=>'84485PHDG'},
+        ]
+      end
+      let(:term_cpp) do
+        ugrd_computer_science_plan_2168_term_cpp + grad_electrical_engineering_plan_2172_term_cpp + law_jsp_2175_term_cpp
+      end
       let(:cs_enrollment_career_terms) do
         [
           { termId: '2168', termDescr: '2016 Fall', acadCareer: 'UGRD' },
-          { termId: '2172', termDescr: '2017 Spring', acadCareer: 'UGRD' },
-          { termId: '2175', termDescr: '2017 Summer', acadCareer: 'UGRD' },
+          { termId: '2172', termDescr: '2017 Spring', acadCareer: 'GRAD' },
+          { termId: '2175', termDescr: '2017 Summer', acadCareer: 'LAW' },
         ]
       end
       it 'groups roles into single deck' do
@@ -271,7 +277,7 @@ describe MyAcademics::ClassEnrollments do
         expect(decks[0][:cards][0][:term][:termId]).to eq '2168'
         expect(decks[0][:cards][1][:role]).to eq 'default'
         expect(decks[0][:cards][1][:term][:termId]).to eq '2172'
-        expect(decks[0][:cards][2][:role]).to eq 'default'
+        expect(decks[0][:cards][2][:role]).to eq 'law'
         expect(decks[0][:cards][2][:term][:termId]).to eq '2175'
       end
     end
@@ -344,7 +350,7 @@ describe MyAcademics::ClassEnrollments do
     end
     context 'when multiple student plan roles match a career code for an active career-term' do
       let(:term_cpp) do
-        ugrd_computer_science_plan_term_cpp + ugrd_cognitive_science_plan_term_cpp + law_jsp_term_cpp
+        ugrd_computer_science_plan_2168_term_cpp + ugrd_cognitive_science_plan_2168_term_cpp + law_jsp_2168_term_cpp
       end
       let(:cs_enrollment_career_terms) { [{ termId: '2168', termDescr: '2016 Fall', acadCareer: 'UGRD' }] }
       it 'excludes student plan roles with non-matching career code' do
@@ -363,9 +369,7 @@ describe MyAcademics::ClassEnrollments do
     end
 
     context 'when a student plan role matches a career code for multiple active career-terms' do
-      let(:term_cpp) do
-        law_jsp_term_cpp
-      end
+      let(:term_cpp) { law_jsp_2168_term_cpp }
       let(:cs_enrollment_career_terms) {
         [
           { termId: '2168', termDescr: '2016 Fall', acadCareer: 'LAW' },
@@ -373,21 +377,17 @@ describe MyAcademics::ClassEnrollments do
         ]
       }
       it 'includes the plans for each matching career-term' do
-        expect(career_term_roles.count).to eq 2
+        expect(career_term_roles.count).to eq 1
         expect(career_term_roles[0][:academic_plans].count).to eq 1
         expect(career_term_roles[0][:academic_plans][0][:plan][:code]).to eq '84485PHDG'
         expect(career_term_roles[0][:term][:termId]).to eq '2168'
         expect(career_term_roles[0][:term][:termDescr]).to eq '2016 Fall'
-        expect(career_term_roles[1][:academic_plans].count).to eq 1
-        expect(career_term_roles[1][:academic_plans][0][:plan][:code]).to eq '84485PHDG'
-        expect(career_term_roles[1][:term][:termId]).to eq '2172'
-        expect(career_term_roles[1][:term][:termDescr]).to eq '2017 Spring'
       end
     end
 
     context 'when a student plan role does not match the career code for any active career-term' do
       let(:term_cpp) do
-        law_jsp_term_cpp
+        law_jsp_2172_term_cpp
       end
       let(:cs_enrollment_career_terms) { [{ termId: '2168', termDescr: '2016 Fall', acadCareer: 'UGRD' }] }
       it 'does not include an career term role object for the student plan role' do
@@ -397,40 +397,39 @@ describe MyAcademics::ClassEnrollments do
 
     context 'when a student plan role is fpf and matches multiple career-terms' do
       let(:term_id) { '2168' }
+      let(:ugrd_chem_2172_term_cpp) { [{'term_id'=>'2172', 'acad_career'=>'UGRD', 'acad_program'=>'UCCH', 'acad_plan'=>'10294U'}] }
       let(:term_cpp) do
-        ugrd_fall_program_for_freshmen_plan_term_cpp
+        ugrd_fall_program_for_freshmen_plan_2168_term_cpp + ugrd_chem_2172_term_cpp
       end
       let(:cs_enrollment_career_terms) { [
         { termId: '2168', termDescr: '2016 Fall', acadCareer: 'UGRD' },
         { termId: '2172', termDescr: '2017 Spring', acadCareer: 'UGRD' },
         { termId: '2175', termDescr: '2017 Summer', acadCareer: 'UGRD' },
       ] }
-      it 'applies the fpf role to the earliest career term role object' do
-        expect(career_term_roles.count).to eq 3
+      it 'applies the fpf role to the fall 2016 term role object' do
+        expect(career_term_roles.count).to eq 2
         expect(career_term_roles[0][:role]).to eq 'fpf'
         expect(career_term_roles[0][:career_code]).to eq 'UGRD'
         expect(career_term_roles[0][:academic_plans].count).to eq 1
         expect(career_term_roles[0][:academic_plans][0][:plan][:code]).to eq '25000FPFU'
         expect(career_term_roles[0][:term][:termId]).to eq '2168'
       end
-      it 'applies a default fpf role to the later career term role objects' do
+      it 'applies a default career term role to the Spring 2017 object' do
         expect(career_term_roles[1][:role]).to eq 'default'
         expect(career_term_roles[1][:career_code]).to eq 'UGRD'
         expect(career_term_roles[1][:academic_plans].count).to eq 1
-        expect(career_term_roles[1][:academic_plans][0][:plan][:code]).to eq '25000FPFU'
+        expect(career_term_roles[1][:academic_plans][0][:plan][:code]).to eq '10294U'
         expect(career_term_roles[1][:term][:termId]).to eq '2172'
-        expect(career_term_roles[2][:role]).to eq 'default'
-        expect(career_term_roles[2][:career_code]).to eq 'UGRD'
-        expect(career_term_roles[2][:academic_plans].count).to eq 1
-        expect(career_term_roles[2][:academic_plans][0][:plan][:code]).to eq '25000FPFU'
-        expect(career_term_roles[2][:term][:termId]).to eq '2175'
+      end
+      it 'does not return a summer 2017 object' do
+        expect(career_term_roles[2]).to eq nil
       end
     end
 
     context 'when a student plan roles are fpf and default and both match multiple career-terms' do
       let(:term_id) { '2168' }
       let(:term_cpp) do
-        ugrd_fall_program_for_freshmen_plan_term_cpp + ugrd_nutritional_science_plan_term_cpp
+        ugrd_fall_program_for_freshmen_plan_2168_term_cpp + ugrd_nutritional_science_plan_2168_term_cpp
       end
       let(:cs_enrollment_career_terms) { [
         { termId: '2168', termDescr: '2016 Fall', acadCareer: 'UGRD' },
@@ -447,7 +446,7 @@ describe MyAcademics::ClassEnrollments do
         expect(career_term_roles[1][:career_code]).to eq 'UGRD'
         expect(career_term_roles[1][:academic_plans].count).to eq 1
         expect(career_term_roles[1][:academic_plans][0][:plan][:code]).to eq '04606U'
-        expect(career_term_roles[1][:term][:termId]).to eq '2172'
+        expect(career_term_roles[1][:term][:termId]).to eq '2168'
       end
     end
   end
