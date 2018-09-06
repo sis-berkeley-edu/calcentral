@@ -108,6 +108,10 @@ angular.module('calcentral.services').service('tasksService', function(apiServic
     return sortByDate(a, b, 'dueDate', false);
   };
 
+  var sortByUpdatedDate = function(a, b) {
+    return sortByDate(a, b, 'updatedDate', false);
+  };
+
   var sortByTitle = function(a, b) {
     return apiService.util.naturalSort(a.title, b.title);
   };
@@ -131,6 +135,7 @@ angular.module('calcentral.services').service('tasksService', function(apiServic
     $scope.taskSections = taskSections;
     angular.forEach($scope.taskSections, function(taskSection) {
       var taskFilter;
+      var incompleteSortingMethod;
       var incompleteSectionTasks = [];
       var furtherActionNeededTasks = [];
       var beingProcessedTasks = [];
@@ -150,7 +155,14 @@ angular.module('calcentral.services').service('tasksService', function(apiServic
           break;
         }
       }
-      incompleteSectionTasks = _.clone($scope.lists.incomplete.filter(taskFilter)).sort(sortByDueDate);
+
+      if (taskSection.type === 'campusSolutions' && taskSection.id === 'finaid') {
+        incompleteSortingMethod = sortByUpdatedDate;
+      } else {
+        incompleteSortingMethod = sortByDueDate;
+      }
+
+      incompleteSectionTasks = _.clone($scope.lists.incomplete.filter(taskFilter)).sort(incompleteSortingMethod);
       furtherActionNeededTasks = _.remove(incompleteSectionTasks, isCsFurtherActionNeededTask);
       beingProcessedTasks = _.remove(incompleteSectionTasks, isCsBeingProcessedTask);
       incompleteSortedSectionTasks = _.concat(incompleteSectionTasks, furtherActionNeededTasks);
