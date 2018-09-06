@@ -4,11 +4,11 @@
 var angular = require('angular');
 var _ = require('lodash');
 
-angular.module('calcentral.directives').directive('ccAcademicsClassInfoEnrollmentDirective', function(apiService, rosterService) {
+angular.module('calcentral.directives').directive('ccAcademicsClassInfoEnrollmentDirective', function(apiService, emailService, rosterService) {
   return {
     scope: true,
     link: function(scope, elem, attrs) {
-      scope.bmailLink = rosterService.bmailLink;
+      scope.bmailLink = emailService.bmailLink;
       scope.searchFilters = {
         section: null,
         enrollStatus: attrs.enrollmentStatus
