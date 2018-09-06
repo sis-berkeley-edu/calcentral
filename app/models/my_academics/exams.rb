@@ -165,7 +165,7 @@ module MyAcademics
       }
     end
 
-    # Takes the exam date and makes it presentable, Mon 12/12
+    # Takes the exam date and makes it presentable, 'Mon, Feb 5'
     def parse_cs_exam_date(exam, instructor_format = false)
       if exam[:finalized] != 'Y'
         if exam[:exam_exception] == 'Y' || (exam[:exam_type] != 'Y' && exam[:exam_type] != 'C')
@@ -173,9 +173,8 @@ module MyAcademics
         end
       end
       date = exam[:exam_date]
-      format = '%a %b %-d' unless instructor_format
-      format = '%a, %b %-d' if instructor_format && time_is_current_year?(date)
-      format = '%b %-d, %Y' if instructor_format && !time_is_current_year?(date)
+      format = '%a, %b %-d' if !instructor_format || time_is_current_year?(date)
+      format = '%a, %b %-d, %Y' if instructor_format && !time_is_current_year?(date)
       date && date.strftime(format)
     end
 

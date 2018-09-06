@@ -640,7 +640,7 @@ describe MyAcademics::Exams do
     it 'returns parsed entries' do
       expect(exams.count).to eq 1
       expect(exams[0][:exam_location]).to eq 'Exam Location TBD'
-      expect(exams[0][:exam_date]).to eq 'Thu Dec 15'
+      expect(exams[0][:exam_date]).to eq 'Thu, Dec 15'
       expect(exams[0][:exam_time]).to eq '7:00P - 10:00P'
       expect(exams[0][:exam_slot]).to eq Time.parse('2016-12-15 19:00:00')
       expect(exams[0][:exception]).to eq 'N'
@@ -674,8 +674,8 @@ describe MyAcademics::Exams do
         let(:exam_translate_value) { 'Y' }
         it 'returns exam object' do
           expect(parsed_exam[:exam_location]).to eq 'Exam Location TBD'
-          expect(parsed_exam[:exam_date]).to eq 'Mon Dec 12'
-          expect(parsed_exam[:exam_date_instructor]).to eq 'Dec 12, 2016'
+          expect(parsed_exam[:exam_date]).to eq 'Mon, Dec 12'
+          expect(parsed_exam[:exam_date_instructor]).to eq 'Mon, Dec 12, 2016'
           expect(parsed_exam[:exam_time]).to eq '1:00P - 3:30P'
           expect(parsed_exam[:exam_slot]).to eq Time.parse('2016-12-12 13:00:00')
           expect(parsed_exam[:exam_type]).to eq exam_translate_value
@@ -694,8 +694,8 @@ describe MyAcademics::Exams do
       let(:exam_finalized) { 'Y' }
       it 'returns exam object' do
         expect(parsed_exam[:exam_location]).to eq 'Kroeber 221'
-        expect(parsed_exam[:exam_date]).to eq 'Mon Dec 12'
-        expect(parsed_exam[:exam_date_instructor]).to eq 'Dec 12, 2016'
+        expect(parsed_exam[:exam_date]).to eq 'Mon, Dec 12'
+        expect(parsed_exam[:exam_date_instructor]).to eq 'Mon, Dec 12, 2016'
         expect(parsed_exam[:exam_time]).to eq '1:00P - 3:30P'
         expect(parsed_exam[:exam_slot]).to eq Time.parse('2016-12-12 13:00:00')
         expect(parsed_exam[:exam_type]).to eq exam_translate_value
@@ -729,7 +729,7 @@ describe MyAcademics::Exams do
         context 'when translate value is Y' do
           let(:exam_translate_value) { 'Y' }
           it 'returns date string' do
-            expect(exam_date_result).to eq 'Mon Dec 5'
+            expect(exam_date_result).to eq 'Mon, Dec 5'
           end
           context 'when exam date is not present' do
             let(:exam_date) { nil }
@@ -742,7 +742,7 @@ describe MyAcademics::Exams do
             context 'when default format is requested' do
               let(:instructor_format) { false }
               it 'returns date with standard format' do
-                expect(exam_date_result).to eq exam_date.strftime('%a %b %-d')
+                expect(exam_date_result).to eq exam_date.strftime('%a, %b %-d')
               end
             end
             context 'when instructor format is requested' do
@@ -757,13 +757,13 @@ describe MyAcademics::Exams do
             context 'when default format is requested' do
               let(:instructor_format) { false }
               it 'returns date with standard format' do
-                expect(exam_date_result).to eq exam_date.strftime('%a %b %-d')
+                expect(exam_date_result).to eq exam_date.strftime('%a, %b %-d')
               end
             end
             context 'when instructor format is requested' do
               let(:instructor_format) { true }
               it 'returns date with full year format' do
-                expect(exam_date_result).to eq exam_date.strftime('%b %-d, %Y')
+                expect(exam_date_result).to eq exam_date.strftime('%a, %b %-d, %Y')
               end
             end
           end
@@ -793,20 +793,20 @@ describe MyAcademics::Exams do
       let(:finalized) { 'Y' }
       context 'when exam date is present' do
         it 'returns date string' do
-          expect(exam_date_result).to eq 'Mon Dec 5'
+          expect(exam_date_result).to eq 'Mon, Dec 5'
         end
         context 'when exam date is not in the current year' do
           let(:exam_date) { Time.now + 1.year + 1.month }
           context 'when default format is requested' do
             let(:instructor_format) { false }
             it 'returns date with standard format' do
-              expect(exam_date_result).to eq exam_date.strftime('%a %b %-d')
+              expect(exam_date_result).to eq exam_date.strftime('%a, %b %-d')
             end
           end
           context 'when long format is requested' do
             let(:instructor_format) { true }
             it 'returns date with full year format' do
-              expect(exam_date_result).to eq exam_date.strftime('%b %-d, %Y')
+              expect(exam_date_result).to eq exam_date.strftime('%a, %b %-d, %Y')
             end
           end
         end
