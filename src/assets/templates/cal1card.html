@@ -35,22 +35,19 @@
           <a href="http://cal1card.berkeley.edu">Learn more about Cal 1 Card</a>
         </div>
       </li>
-      <li>
-        <div data-ng-if="mealpointsPlan">
-          <div class="cc-cal1card-header">
-            <strong>Meal Plan</strong><span data-ng-if="mealpointsPlan"> &bull; </span><span data-ng-bind="mealpointsPlan"></span>
+      <li class="cc-clearfix-container">
+        <div class="cc-flex cc-flex-space-between">
+          <div>
+            <div class="cc-cal1card-header">
+              <strong>Meal Plan</strong>
+            </div>
+            <div>
+              <a href="https://caldining.berkeley.edu/meal-plans">Learn about meal plans</a>
+            </div>
           </div>
-          <div class="cc-cal1card-yourbalance">
-            Your current balance:
+          <div>
+            <a href="https://cal1card.berkeley.edu/cdlogin">View Meal Plan Balance</a>
           </div>
-          <span class="cc-left cc-cal1card-amount" data-ng-bind="mealpoints | number"></span> <span class="cc-cal1card-points">pts</span>
-          <a href="http://caldining.berkeley.edu" class="cc-right">Manage Your Points</a>
-        </div>
-        <div data-ng-if="!mealpointsPlan">
-          <div class="cc-cal1card-header">
-            <strong>You don't have a meal plan.</strong>
-          </div>
-          <a href="http://caldining.berkeley.edu">Learn more about Meal Plans</a>
         </div>
       </li>
     </ul>

@@ -1,10 +1,10 @@
 {
   "cal1cardStatus": "OK",
-  "cal1cardLost": null,
-  "debit": "3.01",
+  "cal1cardLost": "Found",
+  "debit": "3.50",
   "debitMessage": "OK",
-  "mealpoints": "150.74",
+  "mealpoints": null,
   "mealpointsMessage": "OK",
-  "mealpointsPlan": "Resident",
+  "mealpointsPlan": null,
   "statusCode": 200
 }
