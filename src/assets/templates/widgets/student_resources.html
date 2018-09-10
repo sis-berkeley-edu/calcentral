@@ -7,7 +7,7 @@
       Resource links unavailable.
     </div>
     <div class="cc-widget-padding" data-ng-if="studentResources">
-      <div>
+      <div data-ng-if="isGeneralStudent">
         <h3>Submit a Form</h3>
         <ul class="cc-list-bullets">
 
@@ -81,7 +81,7 @@
         </ul>
       </div>
 
-      <div>
+      <div data-ng-if="isGeneralStudent">
         <h3>Manage your Forms</h3>
         <ul class="cc-list-bullets">
           <li data-ng-if="!(isJdLlmOnly || isLawVisiting) && studentResources.viewSubmittedForms.url">
@@ -98,6 +98,30 @@
           </li>
           <li data-ng-if="!isNonDegreeSeekingSummerVisitor && studentResources.emergencyLoanFormView.url">
             <a data-cc-campus-solutions-link-directive="studentResources.emergencyLoanFormView"
+              data-cc-campus-solutions-link-directive-cc-page-name="currentPage.name"
+              data-cc-campus-solutions-link-directive-cc-page-url="currentPage.url"
+            ></a>
+          </li>
+        </ul>
+      </div>
+
+      <div>
+        <h3>Campus Services</h3>
+        <ul class="cc-list-bullets">
+          <li data-ng-if="isGeneralStudent && studentResources.disabledStudentsProgramServices.url">
+            <a data-cc-campus-solutions-link-directive="studentResources.disabledStudentsProgramServices"
+              data-cc-campus-solutions-link-directive-cc-page-name="currentPage.name"
+              data-cc-campus-solutions-link-directive-cc-page-url="currentPage.url"
+            ></a>
+          </li>
+          <li data-ng-if="isGeneralStudent && studentResources.scarabLogin.url">
+            <a data-cc-campus-solutions-link-directive="studentResources.scarabLogin"
+              data-cc-campus-solutions-link-directive-cc-page-name="currentPage.name"
+              data-cc-campus-solutions-link-directive-cc-page-url="currentPage.url"
+            ></a>
+          </li>
+          <li data-ng-if="isUcbxStudent && studentResources.disabledStudentServices.url">
+            <a data-cc-campus-solutions-link-directive="studentResources.disabledStudentServices"
               data-cc-campus-solutions-link-directive-cc-page-name="currentPage.name"
               data-cc-campus-solutions-link-directive-cc-page-url="currentPage.url"
             ></a>

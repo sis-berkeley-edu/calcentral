@@ -1,0 +1,26 @@
+{
+  "statusCode":200,
+  "feed":{
+     "resources":{
+        "eformsReviewCenter":{
+           "url":"https://bcs-web-dev-03.is.berkeley.edu:8443/psp/bcsdev/EMPLOYEE/SA/c/G3ACTION_CENTER.G3ACTION_CENTER.GBL",
+           "urlId":"UC_CX_GT_ACTION_CENTER",
+           "ucFrom":"CalCentral",
+           "ucFromLink":"https://calcentral-sis-dev-01.ist.berkeley.edu/",
+           "ucFromText":"CalCentral",
+           "name":"eForms Action Center",
+           "title":"View online forms that require evaluation.",
+           "isCsLink":true
+        },
+        "scarabLogin":{
+           "url":"https://dssonline.berkeley.edu/scarab/faculty",
+           "urlId":"UC_CX_DSP_FACULTY_LOGIN",
+           "linkDescription":"View students' letters of accommodations",
+           "linkDescriptionDisplay":true,
+           "showNewWindow":true,
+           "name":"SCARAB Login (Disabled Students' Program)",
+           "title":"Log in to view DSP information such as letters of accommodations"
+        }
+     }
+  }
+}

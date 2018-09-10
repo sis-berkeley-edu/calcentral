@@ -20,6 +20,8 @@ angular.module('calcentral.controllers').controller('StudentResourcesController'
     $scope.isLawStudent = apiService.user.profile.roles.law;
     $scope.isGraduateStudent = apiService.user.profile.roles.graduate;
     $scope.isUndergraduate = apiService.user.profile.roles.undergrad;
+    $scope.isUcbxStudent = apiService.user.profile.roles.concurrentEnrollmentStudent;
+    $scope.isGeneralStudent = apiService.user.profile.roles.law || apiService.user.profile.roles.graduate || apiService.user.profile.roles.undergrad;
     $scope.isSummerVisitor = apiService.user.profile.academicRoles.current.summerVisitor;
     $scope.isJdLlmOnly = ((apiService.user.profile.academicRoles.current.lawJdLlm || apiService.user.profile.academicRoles.current.lawJdCdp) && !apiService.user.profile.academicRoles.current.lawJspJsd && !apiService.user.profile.academicRoles.current.grad);
     $scope.isLawVisiting = (apiService.user.profile.academicRoles.current.lawVisiting && !apiService.user.profile.academicRoles.current.grad);

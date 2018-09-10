@@ -2,24 +2,20 @@
 
 var _ = require('lodash');
 
-angular.module('calcentral.controllers').controller('FacultyResourcesController', function(csLinkFactory, $scope) {
+angular.module('calcentral.controllers').controller('FacultyResourcesController', function(facultyResourcesFactory, $scope) {
   $scope.facultyResources = {
     isLoading: true
   };
 
   var loadCsLinks = function() {
-    csLinkFactory.getLink({
-      urlId: 'UC_CX_GT_ACTION_CENTER'
-    }).then(function(response) {
-      var link = _.get(response, 'data.link');
-      $scope.facultyResources.eformsReviewCenterLink = link;
+    facultyResourcesFactory.getFacultyResources()
+    .then(function(response) {
+      var links = _.get(response, 'data.feed.resources');
+      angular.merge($scope.facultyResources, links);
+    }).finally(function(){
       $scope.facultyResources.isLoading = false;
     });
   };
 
-  var loadInformation = function() {
-    loadCsLinks();
-  };
-
-  loadInformation();
+  loadCsLinks();
 });

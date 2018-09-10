@@ -4,15 +4,23 @@
   </div>
   <div class="cc-widget-padding" data-cc-spinner-directive="facultyResources.isLoading">
 
-    <h3>Action Center</h3>
-    <ul class="cc-list-bullets">
-      <li data-ng-if="facultyResources.eformsReviewCenterLink.url">
-        <a data-cc-campus-solutions-link-directive="facultyResources.eformsReviewCenterLink"
-          data-cc-campus-solutions-link-directive-cc-page-name="currentPage.name"
-          data-cc-campus-solutions-link-directive-cc-page-url="currentPage.url"
-        ></a>
-      </li>
-    </ul>
+    <div data-ng-if="facultyResources.eformsReviewCenter.url || facultyResources.scarabLogin.url">
+      <h3>Action Center</h3>
+      <ul class="cc-list-bullets">
+        <li data-ng-if="facultyResources.eformsReviewCenter.url">
+          <a data-cc-campus-solutions-link-directive="facultyResources.eformsReviewCenter"
+            data-cc-campus-solutions-link-directive-cc-page-name="currentPage.name"
+            data-cc-campus-solutions-link-directive-cc-page-url="currentPage.url"
+          ></a>
+        </li>
+        <li data-ng-if="facultyResources.scarabLogin.url">
+          <a data-cc-campus-solutions-link-directive="facultyResources.scarabLogin"
+            data-cc-campus-solutions-link-directive-cc-page-name="currentPage.name"
+            data-cc-campus-solutions-link-directive-cc-page-url="currentPage.url"
+          ></a>: View students' letters of accommodations
+        </li>
+      </ul>
+    </div>
 
     <h3>Classes and Schedule</h3>
     <ul class="cc-list-bullets">
