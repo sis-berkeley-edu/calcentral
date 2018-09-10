@@ -1,7 +1,5 @@
 'use strict';
 
-var angular = require('angular');
-
 /**
  * POST to the Campus Solutions API which links delegate to a student account
  */

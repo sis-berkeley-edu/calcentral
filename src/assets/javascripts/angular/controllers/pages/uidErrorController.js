@@ -1,7 +1,5 @@
 'use strict';
 
-var angular = require('angular');
-
 /**
  * UID Error controller
  */

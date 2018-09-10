@@ -1,27 +1,20 @@
+/* eslint wrap-iife: "off" */
 'use strict';
 
-var angular = require('angular');
-
 angular.module('calcentral.services').service('utilService', function($cacheFactory, $http, $location, $rootScope, $route, $window, calcentralConfig) {
-
   /**
    * Pass in controller name so we can set active location in menu
    * @param {String} name The name of the controller
+   * @return {undefined}
    */
   var changeControllerName = function(name) {
     $rootScope.controllerName = name;
   };
 
-  /**
-   * Pass whether this is a bCourses app context or not.
-   */
   var checkIsBcourses = function() {
     $rootScope.isBcourses = $route.current.isBcourses;
   };
 
-  /**
-   * Hide the off canvas menu
-   */
   var hideOffCanvasMenu = function() {
     $rootScope.offCanvasMenu = {
       show: false
@@ -44,30 +37,18 @@ angular.module('calcentral.services').service('utilService', function($cacheFact
     }
   })();
 
-  /**
-   * Redirect to a page
-   */
   var redirect = function(page) {
     $location.path('/' + page);
   };
 
-  /**
-   * Redirect to My Toolbox page
-   */
   var redirectToToolbox = function() {
     window.location = '/toolbox';
   };
 
-  /**
-   * Redirect to base URL
-   */
   var redirectToHome = function() {
     window.location = '/';
   };
 
-  /**
-   * Prevent a click event from bubbling up to its parents
-   */
   var preventBubble = function($event) {
     // We don't need to do anything when you hit the enter key.
     // In that instance the event will be undefined.
@@ -82,10 +63,6 @@ angular.module('calcentral.services').service('utilService', function($cacheFact
     }
   };
 
-  /**
-   * Set the title for the current web page
-   * @param {String} title The title that you want to show for the current web page
-   */
   var setTitle = function(title) {
     var providedServices = calcentralConfig.providedServices;
     if (providedServices.indexOf('calcentral') !== -1) {
@@ -98,6 +75,7 @@ angular.module('calcentral.services').service('utilService', function($cacheFact
   /**
    * Post a message to the parent
    * @param {String|Object} message Message you want to send over.
+   * @return {undefined}
    */
   var iframePostMessage = function(message) {
     if ($window.parent) {
@@ -113,6 +91,7 @@ angular.module('calcentral.services').service('utilService', function($cacheFact
    *
    * See bc-iframe-resize directive for easy application to Canvas embedded LTI Tools
    * @param {Object} alternativeElement DOM element that provides scrollHeight used to resize iframe
+   * @return {undefined}
    */
   var iframeUpdateHeight = function(alternativeElement) {
     if (isInIframe) {
@@ -133,7 +112,7 @@ angular.module('calcentral.services').service('utilService', function($cacheFact
     }
   };
 
-  /**
+  /*
    * Send a message triggering the parent page to scroll to the top.
    * Assumes iframe environment only applies to bCourses / Canvas LTI
    */
@@ -148,9 +127,6 @@ angular.module('calcentral.services').service('utilService', function($cacheFact
     }
   };
 
-  /**
-   * Change location of parent window
-   */
   var iframeParentLocation = function(location) {
     if (isInIframe) {
       iframePostMessage(JSON.stringify({
@@ -160,7 +136,7 @@ angular.module('calcentral.services').service('utilService', function($cacheFact
     }
   };
 
-  /**
+  /*
    * Replaces '/' and '%2F' with '_slash_' to appease Apache. See CLC-4279.
    * We can remove this once Apache is updated and allows 'AllowEncodedSlashes NoDecode'
    */

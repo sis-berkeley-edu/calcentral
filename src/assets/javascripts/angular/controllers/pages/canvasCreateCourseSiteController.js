@@ -1,7 +1,5 @@
-/* jshint camelcase: false */
+/* eslint camelcase: "off" */
 'use strict';
-
-var angular = require('angular');
 
 /**
  * Canvas course provisioning LTI app controller

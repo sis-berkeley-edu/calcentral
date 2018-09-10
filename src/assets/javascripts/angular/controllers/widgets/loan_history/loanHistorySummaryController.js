@@ -1,6 +1,5 @@
 'use strict';
 
-var angular = require('angular');
 var _ = require('lodash');
 
 angular.module('calcentral.controllers').controller('LoanHistorySummaryController', function($scope, loanHistoryFactory) {
@@ -22,5 +21,4 @@ angular.module('calcentral.controllers').controller('LoanHistorySummaryControlle
   };
 
   init();
-
 });

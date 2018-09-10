@@ -1,8 +1,6 @@
-/* jshint camelcase: false */
 'use strict';
 
 var _ = require('lodash');
-var angular = require('angular');
 
 /**
  * Academics controller

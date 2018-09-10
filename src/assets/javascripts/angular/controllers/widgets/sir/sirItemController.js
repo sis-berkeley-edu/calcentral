@@ -1,6 +1,5 @@
 'use strict';
 
-var angular = require('angular');
 var _ = require('lodash');
 
 /**
@@ -18,9 +17,6 @@ angular.module('calcentral.controllers').controller('SirItemController', functio
     hasError: false
   };
 
-  /**
-   * Based on everything the student enterred & the current checklist, create the response object.
-   */
   var getResponseObject = function() {
     var option = $scope.sirItem.form.option;
     var admissionsManagement = $scope.item.checkListMgmtAdmp;
@@ -44,9 +40,6 @@ angular.module('calcentral.controllers').controller('SirItemController', functio
     return response;
   };
 
-  /**
-   * Submit the SIR response from the student
-   */
   $scope.submitSirReponse = function() {
     $scope.sirItem.isSubmitting = true;
 
@@ -66,9 +59,6 @@ angular.module('calcentral.controllers').controller('SirItemController', functio
     });
   };
 
-  /**
-   * Check whether the current SIR form is valid
-   */
   var isFormValid = function(form) {
     // Make sure we at least select one option
     if (!form.option) {
@@ -90,9 +80,6 @@ angular.module('calcentral.controllers').controller('SirItemController', functio
     return true;
   };
 
-  /**
-   * Custom form validation
-   */
   var validateForm = function() {
     $scope.$watch('sirItem.form', function(value) {
       if (!value) {
@@ -102,7 +89,7 @@ angular.module('calcentral.controllers').controller('SirItemController', functio
     }, true);
   };
 
-  /**
+  /*
    * Select the first response reason from the dropdown
    * This way we don't see an empty value on load
    */

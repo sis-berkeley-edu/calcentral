@@ -1,7 +1,5 @@
 'use strict';
 
-var angular = require('angular');
-
 angular.module('calcentral.services').service('errorService', function(calcentralConfig) {
   var Raven = require('raven-js');
   Raven.config(calcentralConfig.sentryUrl).install();
@@ -15,8 +13,8 @@ angular.module('calcentral.services').service('errorService', function(calcentra
 
   /**
    * Send an error exception
-   * @param {String} exception The exception label to send,
-   * followed by a hash of tags we want to capture in Sentry.
+   * @param {String} exception The exception label to send, followed by a hash of tags we want to capture in Sentry.
+   * @return {undefined}
    */
   var send = function(exception) {
     exception = exception.message || exception;

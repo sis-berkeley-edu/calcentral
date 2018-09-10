@@ -1,7 +1,4 @@
-/* jshint camelcase: false */
 'use strict';
-
-var angular = require('angular');
 
 /**
  * Canvas Manage Official Sections LTI app controller

@@ -1,7 +1,4 @@
-/* jshint camelcase: false */
 'use strict';
-
-var angular = require('angular');
 
 angular.module('calcentral.services').service('canvasSiteCreationService', function() {
   /**

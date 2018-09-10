@@ -1,7 +1,5 @@
 'use strict';
 
-var angular = require('angular');
-
 /**
  * Canvas Shared Factory - Interface for shared API endpoints
  */

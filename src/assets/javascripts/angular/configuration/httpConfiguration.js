@@ -1,7 +1,5 @@
 'use strict';
 
-var angular = require('angular');
-
 /**
  * Set the HTTP Error configuration for CalCentral
  */

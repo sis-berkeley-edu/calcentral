@@ -1,7 +1,10 @@
+# Ignore all non-JS files
+!**/*.js
+
+# Ignore non-relevant directories
 src/assets/javascripts/angularlib/**
 src/assets/javascripts/lib/**
-public/assets/**
-public/styleguide/**
+public/**
 coverage/**
 node_modules/**
 vendor/**

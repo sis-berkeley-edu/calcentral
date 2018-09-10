@@ -1,7 +1,5 @@
 'use strict';
 
-var angular = require('angular');
-
 /**
  * Directive for finaid tables
  */

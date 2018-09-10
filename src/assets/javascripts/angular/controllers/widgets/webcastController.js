@@ -1,7 +1,5 @@
 'use strict';
 
-var angular = require('angular');
-
 /**
  * Webcast controller
  */
@@ -11,9 +9,6 @@ angular.module('calcentral.controllers').controller('WebcastController', functio
   var outerTabs = ['Course Capture Sign-up', 'Course Captures'];
   $scope.accessibilityAnnounce = apiService.util.accessibilityAnnounce;
 
-  /**
-   * Dropdown defaults to first video in the list
-   */
   var selectMediaOptions = function() {
     if ($scope.videos) {
       if ($routeParams.video) {

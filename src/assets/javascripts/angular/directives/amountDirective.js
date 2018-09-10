@@ -1,8 +1,6 @@
 'use strict';
 
-var angular = require('angular');
-
-/**
+/*
  * Show an $ amount in a specific way
  *
  * Usage:

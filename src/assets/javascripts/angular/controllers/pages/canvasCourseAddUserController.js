@@ -1,7 +1,5 @@
 'use strict';
 
-var angular = require('angular');
-
 /**
  * Canvas Add User to Course LTI app controller
  */

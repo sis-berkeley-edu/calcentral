@@ -1,7 +1,5 @@
 'use strict';
 
-var angular = require('angular');
-
 /**
  * OEC Factory - Interface for 'OEC Control Panel' API endpoints
  */

@@ -1,7 +1,5 @@
 'use strict';
 
-var angular = require('angular');
-
 /**
  * This attribute will replace the element by a spinner until data is returned in an HTTP respsonse.
  */
@@ -19,9 +17,6 @@ angular.module('calcentral.directives').directive('ccSpinnerDirective', function
         var messageElement = angular.element(messageTemplate);
       }
 
-      /**
-       * Check whether isLoading has changed
-       */
       var watch = function(value) {
         attrs.$set('aria-busy', value);
         elment.toggleClass('cc-spinner', value);

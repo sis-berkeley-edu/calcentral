@@ -1,6 +1,5 @@
 'use strict';
 
-var angular = require('angular');
 var _ = require('lodash');
 
 /**
@@ -17,9 +16,6 @@ angular.module('calcentral.controllers').controller('FinaidAwardsController', fu
   };
   $scope.finaidAwards = {};
 
-  /**
-   * Check whether an object has any keys with actual values in them
-   */
   var checkKeys = function(keys, object) {
     return _.some(keys, _.partial(_.get, object));
   };

@@ -1,7 +1,6 @@
 'use strict';
 
 var _ = require('lodash');
-var angular = require('angular');
 
 /**
  * Profile controller
@@ -9,18 +8,14 @@ var angular = require('angular');
 angular.module('calcentral.controllers').controller('ProfileController', function(apiService, linkService, profileMenuService, $routeParams, $scope) {
   linkService.addCurrentRouteSettings($scope);
 
-  /**
-   * Find the category object when we get a categoryId back
-   */
+  // Find the category object when we get a categoryId back
   var findCategory = function(categoryId, navigation) {
     return _.find(_.flatten(_.map(navigation, 'categories')), {
       id: categoryId
     });
   };
 
-  /**
-   * Get the category depending on the routeParam
-   */
+  // Get the category depending on the routeParam
   var getCurrentCategory = function(navigation) {
     if (!navigation || !navigation.length) {
       return false;
@@ -32,25 +27,18 @@ angular.module('calcentral.controllers').controller('ProfileController', functio
     }
   };
 
-  /**
-   * Set the page title
-   */
+  // Set the page title
   var setPageTitle = function() {
     var title = $scope.currentCategory.name + ' - ' + $scope.header;
     apiService.util.setTitle(title);
   };
 
-  /**
-   * Get the navigation for the profile page
-   * This will depend on feature flags and the user's roles
-   */
+  // Get the navigation for the profile page. This will depend on feature flags and the user's roles
   var getNavigation = function() {
     return profileMenuService.getNavigation();
   };
 
-  /**
-   * Set the correct navigation information
-   */
+  // Set the correct navigation information
   var setNavigation = function(navigation) {
     var currentCategory = getCurrentCategory(navigation);
 

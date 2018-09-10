@@ -1,6 +1,5 @@
 'use strict';
 
-var angular = require('angular');
 var _ = require('lodash');
 
 /**
@@ -54,16 +53,10 @@ angular.module('calcentral.controllers').controller('WorkExperienceSectionContro
   };
   var countryWatcher;
 
-  /**
-   * Format a specific date to the MM/DD/YYYY format
-   */
   var formatDate = function(date) {
     return apiService.date.moment(date, 'YYYY-MM-DD').format('L');
   };
 
-  /**
-   * Format the dates in the work exprience API
-   */
   var formatDates = function(data) {
     if (!data) {
       return;
@@ -83,9 +76,6 @@ angular.module('calcentral.controllers').controller('WorkExperienceSectionContro
     return data;
   };
 
-  /**
-   * We only want the City and State fields from the AddressFields
-   */
   var returnCityState = function(fields) {
     if (fields.field === 'state' || fields.field === 'city') {
       return fields;
@@ -132,9 +122,6 @@ angular.module('calcentral.controllers').controller('WorkExperienceSectionContro
     });
   };
 
-  /**
-   * Removes previous address data, we need to do this every time you change the country
-   */
   var removePreviousAddressData = function() {
     $scope.currentObject.data = _.fromPairs(_.map($scope.currentObject.data, function(value, key) {
       if (['currencyType', 'country', 'employmentDescr', 'employFrac', 'endDt', 'endingPayRate', 'hoursPerWeek', 'payFrequency', 'phone', 'sequenceNbr', 'startDt', 'titleLong'].indexOf(key) === -1) {
@@ -172,9 +159,6 @@ angular.module('calcentral.controllers').controller('WorkExperienceSectionContro
     });
   };
 
-  /**
-   * We need to watch when the country changes, if so, load the address fields dynamically depending on the country
-   */
   var startCountryWatch = function() {
     countryWatcher = $scope.$watch('currentObject.data.country', countryWatch);
   };
@@ -273,8 +257,8 @@ angular.module('calcentral.controllers').controller('WorkExperienceSectionContro
     }, apiService.profile.matchFields($scope.currentObject.fields, item));
 
     apiService.profile
-      .save($scope, profileFactory.postWorkExperience, merge)
-      .then(saveCompleted);
+    .save($scope, profileFactory.postWorkExperience, merge)
+    .then(saveCompleted);
   };
 
   loadInformation();

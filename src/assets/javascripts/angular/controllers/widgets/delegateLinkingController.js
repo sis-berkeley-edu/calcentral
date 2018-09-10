@@ -1,7 +1,6 @@
 'use strict';
 
 var _ = require('lodash');
-var angular = require('angular');
 
 /**
  * Controller links student account with the requested delegate account

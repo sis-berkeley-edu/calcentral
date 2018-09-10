@@ -1,7 +1,6 @@
 'use strict';
 
 var _ = require('lodash');
-var angular = require('angular');
 
 /**
  * Enrollment Verification Controller
@@ -60,10 +59,10 @@ angular.module('calcentral.controllers').controller('EnrollmentVerificationContr
 
   var loadEnrollmentVerificationFeed = function() {
     enrollmentVerificationFactory.getEnrollmentVerificationData()
-      .then(parseEnrollmentVerificationData)
-      .finally(function() {
-        $scope.enrollVerification.isLoading = false;
-      });
+    .then(parseEnrollmentVerificationData)
+    .finally(function() {
+      $scope.enrollVerification.isLoading = false;
+    });
   };
 
   $scope.$on('calcentral.api.user.isAuthenticated', function(event, isAuthenticated) {

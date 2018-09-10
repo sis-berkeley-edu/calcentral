@@ -1,10 +1,8 @@
 'use strict';
 
-var angular = require('angular');
 var _ = require('lodash');
 
 angular.module('calcentral.services').service('loanHistoryService', function($q, loanHistoryFactory) {
-
   var checkLoanActiveStatus = function() {
     return $q(function(resolve) {
       loanHistoryFactory.getSummary()
@@ -26,5 +24,4 @@ angular.module('calcentral.services').service('loanHistoryService', function($q,
     checkLoanActiveStatus: checkLoanActiveStatus,
     scrollToDefinition: scrollToDefinition
   };
-
 });

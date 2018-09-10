@@ -1,7 +1,6 @@
 'use strict';
 
 var _ = require('lodash');
-var angular = require('angular');
 
 /**
  * Controller populates academic dates from TBD calendar API.

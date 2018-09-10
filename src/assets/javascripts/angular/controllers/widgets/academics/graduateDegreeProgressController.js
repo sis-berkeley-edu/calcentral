@@ -1,10 +1,8 @@
 'use strict';
 
-var angular = require('angular');
 var _ = require('lodash');
 
 angular.module('calcentral.controllers').controller('GraduateDegreeProgressController', function(academicsService, degreeProgressFactory, apiService, $scope) {
-
   $scope.degreeProgress = {
     graduate: {
       isLoading: true

@@ -1,6 +1,5 @@
 'use strict';
 
-var angular = require('angular');
 var _ = require('lodash');
 
 /**
@@ -19,7 +18,7 @@ angular.module('calcentral.controllers').controller('EmergencyController', funct
 
   var loadInformation = function() {
     profileFactory.getPerson()
-      .then(parseEmergencyContactInformation).finally(function() {
+    .then(parseEmergencyContactInformation).finally(function() {
       $scope.emergencyContactInformation.isLoading = false;
     });
   };

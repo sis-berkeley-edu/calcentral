@@ -1,6 +1,5 @@
 'use strict';
 
-var angular = require('angular');
 var _ = require('lodash');
 
 angular.module('calcentral.controllers').controller('LoanHistoryCumulativeController', function($anchorScroll, $location, $scope, apiService, loanHistoryFactory, loanHistoryService) {

@@ -7,7 +7,7 @@ class BootstrapController < ApplicationController
   before_filter :check_databases_alive, :check_cache_clear_flag
   layout false
 
-  # View code is public/index-main.html (compiled by gulp build).
+  # View code is public/index-main.html (compiled by webpack build).
   # We don't want to serve index-main statically because that would skip the check_databases_alive and
   # check_reauthentication code.
   def index

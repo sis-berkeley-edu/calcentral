@@ -1,7 +1,5 @@
 'use strict';
 
-var angular = require('angular');
-
 /**
  * Parse a request and location URL and determine whether this is a same-domain request.
  * This function has been copied over from AngularJS since they don't expose this function
@@ -55,10 +53,6 @@ angular.module('calcentral.directives').directive('a', function(linkService) {
     // We need to run this after ngHref has changed
     priority: 200,
     link: function(scope, element, attr) {
-      /**
-       * We update the anchor tag
-       * @param {String} url The URL of the anchor tag.
-       */
       var updateAnchorTag = function(url) {
         // We only want to change anchor tags that link to a different domain
         // Since this gets executed a couple of times, we add a class to the screenreader message & check for it
@@ -67,7 +61,7 @@ angular.module('calcentral.directives').directive('a', function(linkService) {
         }
       };
 
-      /**
+      /*
        * Check whether the href attribute has changed
        */
       var observe = function(value) {

@@ -1,7 +1,6 @@
 'use strict';
 
 var _ = require('lodash');
-var angular = require('angular');
 
 /**
  * Financial Aid & Scholarships Profile controller

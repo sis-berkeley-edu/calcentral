@@ -39,7 +39,6 @@
         rel="stylesheet" 
         data-ng-if="isBcourses">
 
-  <link href="/assets/stylesheets/application.css" rel="stylesheet">
   <script src="/assets/javascripts/application.js"></script>
 </head>
 
@@ -48,7 +47,6 @@
   data-ng-show="api.user.events.isLoaded"
   data-cc-iosfix-directive>
 
-<!-- inject:body:html -->
-<!-- endinject -->
+  <%= htmlWebpackPlugin.options.injectedHtml %>
 </body>
 </html>

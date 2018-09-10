@@ -1,7 +1,5 @@
 'use strict';
 
-var angular = require('angular');
-
 /**
  * Canvas Site Creation Factory - API Interface for 'Create a Site' overview index page
  */

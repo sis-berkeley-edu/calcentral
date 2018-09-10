@@ -225,11 +225,8 @@ Front-end linting can be done by running the following commands:
 
 ```bash
 rm -rf node_modules
-npm install -g jshint
-npm install -g jscs
-gulp build
-jshint .
-jscs .
+npm install
+npm run lint
 ```
 
 This will check for any potential JavaScript issues and whether you formatted the code correctly.

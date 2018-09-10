@@ -1,6 +1,5 @@
 'use strict';
 
-var angular = require('angular');
 var _ = require('lodash');
 
 angular.module('calcentral.controllers').controller('AcademicSummaryController', function(academicsFactory, academicsService, apiService, linkService, profileFactory, transferCreditFactory, $route, $scope) {
@@ -38,7 +37,7 @@ angular.module('calcentral.controllers').controller('AcademicSummaryController',
   };
 
   var parseSemesters = function(semesters) {
-    if (!!(semesters.length && apiService.user.profile.hasStudentHistory)) {
+    if (semesters.length && apiService.user.profile.hasStudentHistory) {
       $scope.showSemesters = true;
       _.each(semesters, parseSemester);
     }

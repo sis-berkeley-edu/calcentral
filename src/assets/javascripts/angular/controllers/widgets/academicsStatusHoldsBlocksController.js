@@ -1,6 +1,5 @@
 'use strict';
 
-var angular = require('angular');
 var _ = require('lodash');
 
 /**
@@ -28,7 +27,7 @@ angular.module('calcentral.controllers').controller('AcademicsStatusHoldsBlocksC
 
   var getRegistrations = function() {
     registrationsFactory.getRegistrations()
-      .then(parseRegistrations);
+    .then(parseRegistrations);
   };
   var parseRegistrations = function(response) {
     var registrations = _.get(response, 'data.registrations');

@@ -1,6 +1,5 @@
 'use strict';
 
-var angular = require('angular');
 var _ = require('lodash');
 
 /**
@@ -147,9 +146,6 @@ angular.module('calcentral.controllers').controller('EnrollmentCardController', 
     }
   ];
 
-  /**
-   * Groups enrolled and waitlisted classes by career description
-   */
   var groupByCareer = function(data) {
     var sections = ['enrolledClasses', 'waitlistedClasses'];
     for (var i = 0; i < sections.length; i++) {
@@ -159,9 +155,6 @@ angular.module('calcentral.controllers').controller('EnrollmentCardController', 
     return data;
   };
 
-  /**
-   * Determines the sections displayed for card by instruction type
-   */
   var setSections = function(enrollmentInstruction) {
     enrollmentInstruction.notificationTemplate = 'notifications';
     switch (enrollmentInstruction.role) {
@@ -199,9 +192,6 @@ angular.module('calcentral.controllers').controller('EnrollmentCardController', 
     return enrollmentInstruction;
   };
 
-  /**
-   * Add aditional metadata to the links
-   */
   var mapLinks = function(enrollmentInstruction) {
     if (!_.isEmpty(_.get(enrollmentInstruction, 'links'))) {
       return enrollmentInstruction;
@@ -232,29 +222,16 @@ angular.module('calcentral.controllers').controller('EnrollmentCardController', 
     return enrollmentFactory.getEnrollmentInstructionDecks().then(parseEnrollmentInstructionDecks);
   };
 
-  /**
-   * Changes the card currently displayed within a class enrollment card deck
-   */
   $scope.switchTerm = function(index, enrollmentDeck) {
     enrollmentDeck.selectedCardIndex = index;
     var selectedCard = enrollmentDeck.cards[enrollmentDeck.selectedCardIndex];
     $scope.accessibilityAnnounce('Loaded enrollment instructions for ' + _.get(selectedCard, 'term.termName', 'selected term'));
   };
 
-  /**
-   *
-   * Returns true if any of the types codes provided match the instruction type code
-   * @param  {object} instruction class enrollment instruction object
-   * @param  {array}  typeCodes   array of strings representing instruction types
-   * @return {Boolean}            True when any type code provided matches
-   */
   $scope.isInstructionType = function(instruction, typeCodes) {
     return typeCodes.indexOf(instruction.role) !== -1;
   };
 
-  /**
-   * Toggles display of section when instruction type is not concurrent
-   */
   $scope.toggleSection = function($event, section, enrollmentInstruction) {
     if (!$scope.isInstructionType(enrollmentInstruction, ['concurrent'])) {
       $scope.api.widget.toggleShow($event, null, section, 'Class Enrollment Section - ' + section.title);
@@ -267,9 +244,9 @@ angular.module('calcentral.controllers').controller('EnrollmentCardController', 
 
     if ($scope.isAdvisingStudentLookup || apiService.user.profile.roles.student) {
       loadEnrollmentInstructionDecks()
-        .finally(function() {
-          $scope.enrollment.isLoading = false;
-        });
+      .finally(function() {
+        $scope.enrollment.isLoading = false;
+      });
     } else {
       $scope.enrollment.isLoading = false;
     }

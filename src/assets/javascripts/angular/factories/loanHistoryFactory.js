@@ -1,7 +1,5 @@
 'use strict';
 
-var angular = require('angular');
-
 angular.module('calcentral.factories').factory('loanHistoryFactory', function(apiService) {
   var urlAidYears = 'api/my/loan_history_aid_years';
   var urlCumulative = 'api/my/loan_history_cumulative';
@@ -30,6 +28,5 @@ angular.module('calcentral.factories').factory('loanHistoryFactory', function(ap
     getInactive: getInactive,
     getSummary: getSummary
   };
-
 });
 

@@ -1,6 +1,5 @@
 'use strict';
 
-var angular = require('angular');
 var _ = require('lodash');
 
 /**
@@ -15,10 +14,10 @@ angular.module('calcentral.controllers').controller('FinancesLinksController', f
   $scope.campusLinks = {
     data: {},
     linkOrder: ['Payment Options', 'Tuition and Fees', 'Billing FAQ', 'FAFSA', 'Dream Act Application', 'Financial Aid & Scholarships Office',
-                'MyFinAid (aid prior to Fall 2016)', 'Cost of Attendance', 'Graduate Financial Support', 'Work-Study', 'Financial Literacy',
-                'National Student Loan Database System', 'Loan Repayment Calculator', 'Federal Student Loans', 'Student Advocate\'s Office',
-                'Berkeley International Office', 'Have a loan?', 'Withdrawing or Canceling?', 'Summer Fees', 'Canceling and Withdrawing from Summer',
-                'Summer Schedule & Deadlines', 'Summer Sessions Website', 'Cal Student Central']
+      'MyFinAid (aid prior to Fall 2016)', 'Cost of Attendance', 'Graduate Financial Support', 'Work-Study', 'Financial Literacy',
+      'National Student Loan Database System', 'Loan Repayment Calculator', 'Federal Student Loans', 'Student Advocate\'s Office',
+      'Berkeley International Office', 'Have a loan?', 'Withdrawing or Canceling?', 'Summer Fees', 'Canceling and Withdrawing from Summer',
+      'Summer Schedule & Deadlines', 'Summer Sessions Website', 'Cal Student Central']
   };
   $scope.delegateAccess = {
     title: 'Authorize others to access your billing information'
@@ -76,11 +75,11 @@ angular.module('calcentral.controllers').controller('FinancesLinksController', f
     });
   };
 
-  /**
+  /*
    Parse incoming response from EFT.  If the response returns a 404 for the searched
    SID, this likely means the SID has never logged on to the EFT web app before,
    so we parse it the same way we would an 'inactive' student.
-   **/
+   */
   var parseEftEnrollment = function(response) {
     angular.merge($scope.eft, response);
     if (_.get($scope.eft, 'data.statusCode') === 404 || _.get($scope.eft, 'data.data.eftStatus') === 'inactive') {

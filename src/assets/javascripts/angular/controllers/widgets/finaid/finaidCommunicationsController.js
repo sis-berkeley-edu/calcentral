@@ -1,13 +1,11 @@
 'use strict';
 
-var angular = require('angular');
 var _ = require('lodash');
 
 /**
  * Finaid Communications controller
  */
 angular.module('calcentral.controllers').controller('FinaidCommunicationsController', function($q, $scope, activityFactory, finaidFactory, finaidService, linkService, tasksFactory, tasksService) {
-
   $scope.communicationsInfo = {
     aidYear: '',
     isLoading: true,
@@ -49,9 +47,6 @@ angular.module('calcentral.controllers').controller('FinaidCommunicationsControl
     $scope.isOverdueTask = tasksService.isOverdueTask;
   };
 
-  /**
-   * Calculate the counts for the completed and uncompleted tasks
-   */
   var calculateCounts = function(data) {
     if (!_.get(data, 'tasks.length')) {
       return;
@@ -83,19 +78,19 @@ angular.module('calcentral.controllers').controller('FinaidCommunicationsControl
     $scope.communicationsInfo.aidYear = finaidService.options.finaidYear;
     var finaidYearId = finaidService.options.finaidYear.id;
     $q.all([
-        getMyFinaidActivity({
-          finaidYearId: finaidYearId
-        }),
-        getMyFinaidTasks({
-          finaidYearId: finaidYearId
-        }),
-        getFinaidYearInfo({
-          finaidYearId: finaidYearId
-        })
-      ])
-      .then(function() {
-        $scope.communicationsInfo.isLoading = false;
-      }
+      getMyFinaidActivity({
+        finaidYearId: finaidYearId
+      }),
+      getMyFinaidTasks({
+        finaidYearId: finaidYearId
+      }),
+      getFinaidYearInfo({
+        finaidYearId: finaidYearId
+      })
+    ])
+    .then(function() {
+      $scope.communicationsInfo.isLoading = false;
+    }
     );
   };
 

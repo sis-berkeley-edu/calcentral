@@ -1,9 +1,7 @@
 'use strict';
 
-var angular = require('angular');
-
 angular.module('calcentral.directives').directive('ccMapLinkBuilderDirective', function($compile) {
-  /**
+  /*
    * buildingLinkName is used in the location name handed to Google Maps.
    * Need to pre-process in case it includes special chars. We are guaranteed
    * to have a raw building name, but not a pretty display name
@@ -16,7 +14,7 @@ angular.module('calcentral.directives').directive('ccMapLinkBuilderDirective', f
     }
   };
 
-  /**
+  /*
    * Tooltip title is similar, but without URI encoding and with room number
    */
   var buildingTooltipName = function(location) {

@@ -1,6 +1,5 @@
 'use strict';
 
-var angular = require('angular');
 var Highcharts = require('highcharts');
 
 angular.module('calcentral.directives').directive('ccLineChartDirective', function() {

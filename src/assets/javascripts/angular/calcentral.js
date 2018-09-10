@@ -1,20 +1,17 @@
 'use strict';
 
-var angular = require('angular');
+require('../angularlib/swipeDirective');
 
-/**
- * Initialize all of the submodules
- */
+// Initialize all of the submodules
 angular.module('calcentral.config', ['ngRoute']);
 angular.module('calcentral.controllers', []);
 angular.module('calcentral.directives', []);
 angular.module('calcentral.factories', []);
 angular.module('calcentral.filters', []);
 angular.module('calcentral.services', ['ng']);
+angular.module('templates', []);
 
-/**
- * CalCentral module
- */
+// CalCentral module
 angular.module('calcentral', [
   'calcentral.config',
   'calcentral.controllers',
@@ -28,30 +25,19 @@ angular.module('calcentral', [
   'templates'
 ]);
 
-/**
- * Inject the CalCentral config as a constant that can be use accross modules
- */
+// Inject the CalCentral config as a constant that can be use accross modules
 var injectConfigConstant = function(response) {
   angular.module('calcentral.config').constant('calcentralConfig', response.data);
 };
 
-/**
- * Bootstrap the CalCentral Angular App
- */
+// Bootstrap the CalCentral Angular App
 var bootstrap = function() {
   angular.element(document).ready(function() {
     angular.bootstrap(document, ['calcentral']);
   });
 };
 
-/**
- * Load the CalCentral config which includes:
- *   csrf tokens
- *   uid
- *   google analytics id
- *   app version
- *   hostname
- */
+// Load the CalCentral config which includes: csrf tokens, uid, google analytics id, app version, hostname
 var loadConfig = function() {
   var initInjector = angular.injector(['ng']);
   var $http = initInjector.get('$http');

@@ -1,7 +1,6 @@
 'use strict';
 
 var _ = require('lodash');
-var angular = require('angular');
 
 angular.module('calcentral.services').service('finaidService', function($rootScope, userService) {
   var options = {
@@ -18,23 +17,18 @@ angular.module('calcentral.services').service('finaidService', function($rootSco
    * See whether the finaid year option combination exists
    * @param {Object} data Summary data
    * @param {String} finaidYearId e.g. 2015
+   * @return {Boolean} true if combination exists, otherwise false
    */
   var combinationExists = function(data, finaidYearId) {
     return !!findFinaidYear(data, finaidYearId);
   };
 
-  /**
-   * Find the aid year which has the default=true attribute
-   */
   var findDefaultFinaidYear = function(finaidYears) {
     return _.find(finaidYears, function(finaidYear) {
       return finaidYear.default;
     });
   };
 
-  /**
-   * Set the default Finaid year
-   */
   var setDefaultFinaidYear = function(data, finaidYearId) {
     if (data && data.finaidSummary && data.finaidSummary.finaidYears) {
       if (finaidYearId) {

@@ -1,9 +1,8 @@
 'use strict';
 
 var _ = require('lodash');
-var angular = require('angular');
 
-/**
+/*
  * Directive for displaying links to Campus Solutions
  *
  * Intended for use with objects that include Campus Solutions Link API properties
@@ -78,9 +77,6 @@ angular.module('calcentral.directives').directive('ccCampusSolutionsLinkDirectiv
     return scope.$eval(_.get(attrs, 'ccCampusSolutionsLinkDirective'));
   };
 
-  /**
-   * Returns base URL
-   */
   var getBaseUrl = function(scope, attrs) {
     var attrUrl = scope.$eval(_.get(attrs, 'ccCampusSolutionsLinkDirectiveUrl'));
     if (_.isEmpty(attrUrl)) {
@@ -92,9 +88,6 @@ angular.module('calcentral.directives').directive('ccCampusSolutionsLinkDirectiv
     }
   };
 
-  /**
-   * Sets the text for the anchor tag if not already present
-   */
   var setLinkBody = function(linkBody, element) {
     if (linkBody) {
       var currentLinkBody = element.text();
@@ -134,9 +127,6 @@ angular.module('calcentral.directives').directive('ccCampusSolutionsLinkDirectiv
     };
   };
 
-  /**
-   * Process ucFrom parameter configuration
-   */
   var getUcFromParamConfig = function(linkObj, scope, attrs) {
     var includeUcFrom = !!(scope.$eval(attrs.ccCampusSolutionsLinkDirectiveUcFrom) || _.get(linkObj, 'ucfrom') || _.get(linkObj, 'ucFrom')) || false;
     var includeUcFromLink = !!(scope.$eval(attrs.ccCampusSolutionsLinkDirectiveUcFromLink) || _.get(linkObj, 'ucfromlink') || _.get(linkObj, 'ucFromLink')) || false;
@@ -148,7 +138,7 @@ angular.module('calcentral.directives').directive('ccCampusSolutionsLinkDirectiv
     };
   };
 
-  /**
+  /*
    * Applies ucFrom, ucFromLink, and ucFromText parameters to URL
    * 'ucFrom' is always 'CalCentral'
    */

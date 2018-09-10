@@ -1,11 +1,9 @@
-/* jshint camelcase: false */
+/* eslint camelcase: "off" */
 'use strict';
 
 var _ = require('lodash');
-var angular = require('angular');
 
 angular.module('calcentral.services').service('academicsService', function() {
-
   // Selects the semester of most pressing interest.
   // Choose the semester with grading in progress
   // Otherwise choose the current semester, if available.
@@ -71,7 +69,7 @@ angular.module('calcentral.services').service('academicsService', function() {
     return count;
   };
 
-  /**
+  /*
    * Determines if a collection of courses have topics present to display
    * Required for table presentation on semester page
    */
@@ -150,6 +148,7 @@ angular.module('calcentral.services').service('academicsService', function() {
    * @param {Array} courses courses from the 'semesters' node of the academics feed
    * @param {Boolean} findWaitlisted Boolean indicating return of waitlisted courses only
    * @param {String} courseCode Optional string representing course to filter results by
+   * @return {Array} classes
    */
   var getClassesSections = function(courses, findWaitlisted, courseCode) {
     var classes = [];
@@ -184,7 +183,7 @@ angular.module('calcentral.services').service('academicsService', function() {
     return classes;
   };
 
-  /**
+  /*
    * Collects unique course sections topics for course
    */
   var getCourseTopics = function(course) {
@@ -255,7 +254,7 @@ angular.module('calcentral.services').service('academicsService', function() {
     }
   };
 
-  /**
+  /*
    * Converts each value given in gpaUnits to a Number type to be processed regularly.  `parseFloat` returns NaN if input value does not contain at least one digit.
    * GPAs are displayed with 4 significant digits.
    * Also sets any law career-based GPAs to 'N/A' due to law classes being P/NP
@@ -296,6 +295,7 @@ angular.module('calcentral.services').service('academicsService', function() {
    * courses with multiple primary sections
    * @param {Object} originalCourse course object
    * @param {Array} enrolledSections custom sections list (i.e. might be waitlisted sections only)
+   * @return {Object} classes
    */
   var splitMultiplePrimaries = function(originalCourse, enrolledSections) {
     var classes = {};
@@ -326,7 +326,7 @@ angular.module('calcentral.services').service('academicsService', function() {
     return classes;
   };
 
-  /**
+  /*
    * Collects section topics and adds to class objects
    * Required for table presentation on semester page
    *

@@ -1,11 +1,7 @@
 'use strict';
 
-var angular = require('angular');
 var _ = require('lodash');
 
-/**
- * API Test controller
- */
 angular.module('calcentral.controllers').controller('ApiTestController', function(apiTestFactory, $scope, $q) {
   // Crude way of testing against the http.success responses due to insufficient status codes.
   var responseDictionary = {
@@ -31,7 +27,7 @@ angular.module('calcentral.controllers').controller('ApiTestController', functio
     running: false
   };
 
-  /**
+  /*
    * Hit an actual API endpoint
    * We first check whether the endpoint is mentioned in the dictionary
    * If so, check whether we have that key as part of the response
@@ -56,14 +52,12 @@ angular.module('calcentral.controllers').controller('ApiTestController', functio
     );
   };
 
-  /**
-   * Gets executed at the end of the test run
-   */
+  // Gets executed at the end of the test run
   var runFinished = function() {
     $scope.apiTest.running = false;
   };
 
-  /**
+  /*
    * Run the API test
    * This will hit multiple endpoints and see whether we do get successful responses back
    */
@@ -79,9 +73,7 @@ angular.module('calcentral.controllers').controller('ApiTestController', functio
     })).then(runFinished);
   };
 
-  /**
-   * Parse the routes so we can add a status to them
-   */
+  // Parse the routes so we can add a status to them
   var parseRoutes = function(response) {
     routesWithStatus = {};
     _.forEach(response.data.routes, function(url) {
@@ -90,7 +82,7 @@ angular.module('calcentral.controllers').controller('ApiTestController', functio
     $scope.apiTest.isLoading = false;
   };
 
-  /**
+  /*
    * Get all the routes we need to test for the smoke test
    * We only need to get these once
    */

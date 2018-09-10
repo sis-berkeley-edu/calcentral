@@ -1,7 +1,5 @@
 'use strict';
 
-var angular = require('angular');
-
 angular.module('calcentral.directives').directive('ccShowMoreDirective', function($parse) {
   return {
     replace: true,

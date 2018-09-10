@@ -1,6 +1,5 @@
 'use strict';
 
-var angular = require('angular');
 var _ = require('lodash');
 
 /**
@@ -39,7 +38,7 @@ angular.module('calcentral.controllers').controller('TasksController', function(
     }
   };
 
-  /**
+  /*
    * If completed, give task a completed date epoch *after* sending to
    * backend (and successful response) so model can reflect correct changes.
    * Otherwise, remove completedDate prop after backend response.

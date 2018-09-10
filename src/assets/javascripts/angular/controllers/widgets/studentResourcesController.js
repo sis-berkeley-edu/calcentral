@@ -1,6 +1,5 @@
 'use strict';
 
-var angular = require('angular');
 var _ = require('lodash');
 
 angular.module('calcentral.controllers').controller('StudentResourcesController', function(academicsService, apiService, linkService, studentResourcesFactory, $scope) {
@@ -29,11 +28,11 @@ angular.module('calcentral.controllers').controller('StudentResourcesController'
 
   var loadInformation = function() {
     loadStudentResources()
-      .then(parseStudentResources)
-      .then(setStudentRoles)
-      .finally(function() {
-        $scope.isLoading = false;
-      });
+    .then(parseStudentResources)
+    .then(setStudentRoles)
+    .finally(function() {
+      $scope.isLoading = false;
+    });
   };
 
   loadInformation();

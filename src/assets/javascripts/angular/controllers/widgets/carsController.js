@@ -1,7 +1,5 @@
 'use strict';
 
-var angular = require('angular');
-
 /**
  * CARS controller
  */
@@ -59,9 +57,6 @@ angular.module('calcentral.controllers').controller('CarsController', function(a
     }
   };
 
-  /**
-   * We need to convert this back to a float so it gets sorted correctly & so we can do comparisons
-   */
   var parseToFloat = function(element, j) {
     element[j + 'Float'] = parseFloat(element[j]);
   };
@@ -85,7 +80,7 @@ angular.module('calcentral.controllers').controller('CarsController', function(a
     }
   };
 
-  /**
+  /*
    * We need to parse the amount to a fixed float
    * The reason for doing this is search, so you can find 25.00 (instead of 25)
    */
@@ -153,7 +148,7 @@ angular.module('calcentral.controllers').controller('CarsController', function(a
     $scope.myfinances = finances;
   };
 
-  /**
+  /*
    * Sort the terms
    * First "All" and then the terms in descending order
    */
@@ -172,9 +167,7 @@ angular.module('calcentral.controllers').controller('CarsController', function(a
     }
   };
 
-  /**
-   * Select the current term when it exists
-   */
+  // Select the current term when it exists
   var selectCurrentTerm = function(addedTerms, terms) {
     var currentTerm = $scope.myfinances.currentTerm;
     var toSelectTerm = '';
@@ -231,9 +224,7 @@ angular.module('calcentral.controllers').controller('CarsController', function(a
     'all': ['Current', 'Past due', 'Future', 'Closed', 'Error', 'Unapplied', 'Installment', 'Open']
   };
 
-  /**
-   * Create the counts for a certain status.
-   */
+  // Create the counts for a certain status.
   var createCounts = function() {
     var openCount = 0;
     for (var i = 0; i < $scope.myfinances.activity.length; i++) {
@@ -248,9 +239,7 @@ angular.module('calcentral.controllers').controller('CarsController', function(a
     };
   };
 
-  /**
-   * Get the student's financial information
-   */
+  // Get the student's financial information
   var getCarsInfo = function() {
     // Data contains all the financial information for the current student
     financesFactory.getFinances().then(
@@ -293,23 +282,16 @@ angular.module('calcentral.controllers').controller('CarsController', function(a
     );
   };
 
-  // http://jsfiddle.net/vojtajina/js64b/14/
   $scope.sort = {
     column: 'transDate',
     descending: true
   };
 
-  /**
-   * Return the right sorting class for the table headers
-   */
   $scope.getSortClass = function(column) {
     var sortUpDown = $scope.sort.descending ? 'down' : 'up';
     return $scope.sort.column.indexOf(column) !== -1 && 'fa fa-chevron-' + sortUpDown;
   };
 
-  /**
-   * Change the sorting for a certain column
-   */
   $scope.changeSorting = function(column) {
     var sort = $scope.sort;
     if (angular.equals(sort.column, [column])) {
@@ -320,9 +302,6 @@ angular.module('calcentral.controllers').controller('CarsController', function(a
     }
   };
 
-  /**
-   * Depending on the transStatusSearch we need to update the search filters
-   */
   $scope.$watch('transStatusSearch', function(status) {
     if (status === 'open') {
       $scope.searchStatuses = statuses.open;

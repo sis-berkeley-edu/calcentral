@@ -1,18 +1,13 @@
 'use strict';
 
-var angular = require('angular');
-
 angular.module('calcentral.services').service('popoverService', function($document, $rootScope, analyticsService) {
   var popovers = {};
 
-  /**
-   * Close all the popovers
-   */
   var closeAll = function() {
     popovers = {};
   };
 
-  /**
+  /*
    * Close all the popovers when it's initiated from a click on the document
    * We need to do a $scope.$apply in order to fill in the $scope
    */
@@ -24,6 +19,7 @@ angular.module('calcentral.services').service('popoverService', function($docume
   /**
    * Close all the popovers apart from the one you're passing in
    * @param {String} popover Popover name
+   * @return {undefined}
    */
   var closeOthers = function(popover) {
     var popoverStatus = popovers[popover];
@@ -34,6 +30,7 @@ angular.module('calcentral.services').service('popoverService', function($docume
   /**
    * Get the current popover status
    * @param {String} popover Popover name
+   * @return {Boolean} true if popover active, otherwise false
    */
   var status = function(popover) {
     return !!popovers[popover];
@@ -42,6 +39,7 @@ angular.module('calcentral.services').service('popoverService', function($docume
   /**
    * Bind the event handlers for the document
    * @param {Boolean} popoverShown Whether a popover is shown
+   * @return {undefined}
    */
   var bindEventHandlers = function(popoverShown) {
     if (popoverShown) {
@@ -58,6 +56,7 @@ angular.module('calcentral.services').service('popoverService', function($docume
   /**
    * Toggle a certain popover
    * @param {String} popover Popover name
+   * @return {undefined}
    */
   var toggle = function(popover) {
     closeOthers(popover);

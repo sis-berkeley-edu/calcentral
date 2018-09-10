@@ -1,7 +1,6 @@
 'use strict';
 
 var _ = require('lodash');
-var angular = require('angular');
 
 /**
  * Advising Resources Controller
@@ -12,10 +11,7 @@ angular.module('calcentral.controllers').controller('AdvisingResourcesController
     isLoading: true
   };
 
-  /**
-   * Configuration for the sections displayed
-   * @type {Array}
-   */
+  // Configuration for the sections displayed
   var sections = [
     {
       sectionTitle: 'Tools',
@@ -49,9 +45,7 @@ angular.module('calcentral.controllers').controller('AdvisingResourcesController
     }
   ];
 
-  /**
-   * Sorts section links alphabetically by the 'name' property
-   */
+  // Sorts section links alphabetically by the 'name' property
   var alphabetizeSectionLinks = function() {
     _.forEach(sections, function(section) {
       if (section.links.length > 0) {
@@ -62,16 +56,12 @@ angular.module('calcentral.controllers').controller('AdvisingResourcesController
     });
   };
 
-  /**
-   * Adds page name and url to link resource sets
-   */
+  // Adds page name and url to link resource sets
   var addPagePropertiesToLinks = function(resources) {
     linkService.addCurrentPagePropertiesToResources(resources, $scope.currentPage.name, $scope.currentPage.url);
   };
 
-  /**
-   * Populates the configured sections array with resource links
-   */
+  // Populates the configured sections array with resource links
   var populateSections = function(resources) {
     _.forEach(sections, function(section) {
       _.forEach(section.linkIds, function(linkId) {
@@ -83,9 +73,7 @@ angular.module('calcentral.controllers').controller('AdvisingResourcesController
     });
   };
 
-  /**
-   * Parse the advising resources
-   */
+  // Parse the advising resources
   var parseResources = function(response) {
     var resources = _.get(response, 'data.feed');
     if (resources) {
@@ -97,9 +85,7 @@ angular.module('calcentral.controllers').controller('AdvisingResourcesController
     $scope.advisingResources.isLoading = false;
   };
 
-  /**
-   * Load the advising resources
-   */
+  // Load the advising resources
   var loadResources = function() {
     advisingFactory.getResources().then(parseResources);
   };

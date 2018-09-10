@@ -1,7 +1,5 @@
-/* jshint camelcase: false */
 'use strict';
 
-var angular = require('angular');
 var _ = require('lodash');
 
 angular.module('calcentral.services').factory('rosterService', function($filter) {
@@ -26,9 +24,6 @@ angular.module('calcentral.services').factory('rosterService', function($filter)
     }
   };
 
-  /**
-   * Returns count if object is an array, otherwise returns 0
-   */
   var getCount = function(array) {
     return Array.isArray(array) ? array.length : 0;
   };
