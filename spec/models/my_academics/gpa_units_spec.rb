@@ -134,20 +134,20 @@ describe MyAcademics::GpaUnits do
     subject { described_class.new(uid).get_cumulative_units }
 
     context 'when user is active in a program' do
-      let(:uid) { 300216 }
+      let(:uid) { 89887 }
 
-      it 'sums units only for careers in which the student is active' do
+      it 'sums units only for careers in which the student is active, ignoring UCBX rows' do
         expect(subject).to be
-        expect(subject[:totalUnits]).to eq 77
-        expect(subject[:totalLawUnits]).to eq 46
+        expect(subject[:totalUnits]).to eq 146
+        expect(subject[:totalLawUnits]).to eq 14
       end
     end
     context 'when user is not active in any program' do
       let(:uid) { 790833 }
 
-      it 'sums units over all careers' do
+      it 'sums units over all careers, ignoring UCBX rows' do
         expect(subject).to be
-        expect(subject[:totalUnits]).to eq 10
+        expect(subject[:totalUnits]).to eq 2
         expect(subject[:totalLawUnits]).to eq 0
       end
     end

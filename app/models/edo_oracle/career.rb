@@ -9,5 +9,9 @@ module EdoOracle
     def fetch
       EdoOracle::Queries.get_careers(@uid)
     end
+
+    def get_cumulative_units
+      EdoOracle::Queries.get_cumulative_units(@uid)
+    end
   end
 end
