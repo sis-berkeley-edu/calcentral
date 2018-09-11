@@ -462,7 +462,6 @@ features:
   cs_profile_work_experience: false
   cs_sir: true
   enrollment_verification: false
-  finaid_summary_tc_t4_links: false
   final_exam_schedule_student: false
   final_exam_schedule_instructor: false
   gpa_calculator: true

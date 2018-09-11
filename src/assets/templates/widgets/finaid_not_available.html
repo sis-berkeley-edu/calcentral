@@ -1,5 +1,15 @@
 <div>
   You do not currently have any Financial Aid information ready to view.
-  Please check <a href="http://financialaid.berkeley.edu/">Financial Aid &amp; Scholarships</a>
-  or contact <a href="http://studentcentral.berkeley.edu/">Cal Student Central</a> for more information.
+  Please check
+  <a data-ng-if="financialAidSummary.links.financialAidWebsite.url"
+     data-cc-campus-solutions-link-directive="financialAidSummary.links.financialAidWebsite"
+     data-cc-campus-solutions-link-directive-name="'Financial Aid & Scholarships'"
+  ></a>
+  <span data-ng-if="!financialAidSummary.links.financialAidWebsite.url">Financial Aid &amp; Scholarships</span>
+  or contact
+  <a data-ng-if="financialAidSummary.links.calStudentCentral.url"
+     data-cc-campus-solutions-link-directive="financialAidSummary.links.calStudentCentral"
+  ></a>
+  <span data-ng-if="!financialAidSummary.links.calStudentCentral.url">Cal Student Central</span>
+  for more information.
 </div>

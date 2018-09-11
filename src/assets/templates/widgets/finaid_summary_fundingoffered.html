@@ -1,23 +1,81 @@
-<div class="cc-widget-finaid-summary-funding-offered">
-  <div
-    class="cc-text-bold cc-padded"
-    data-cc-finaid-summary-item-directive
-    data-item="finaidSummaryData.fundingOffered.total"
-  ></div>
-
-  <div data-ng-repeat="category in finaidSummaryData.fundingOffered.categories">
-    <ul class="cc-widget-list">
-      <li class="cc-widget-list-hover"
-          data-ng-class="{'cc-widget-list-hover-opened':(category.show)}"
-          data-cc-accessible-focus-directive
-          data-ng-click="api.widget.toggleShow($event, null, category, 'My Finances - Financial Aid and Scholarships')">
-        <div class="cc-padded" data-cc-finaid-summary-item-directive data-item="category.total"></div>
-
-        <div data-ng-show="category.show" data-ng-repeat="item in category.items" class="cc-text-small cc-widget-finaid-summary-indent cc-padded">
-          <div data-cc-finaid-summary-item-directive data-item="item"></div>
-        </div>
-      </li>
-    </ul>
-
-  </div>
+<div class="cc-table cc-widget-finaid-summary-funding-offered">
+  <table>
+    <thead>
+      <tr class="cc-padded">
+        <td class="cc-text-bold">Funding Offered</td>
+        <td class="cc-right cc-text-bold"
+          data-cc-amount-directive="financialAidSummary.selected.totalFundingOffered"
+          data-cc-amount-directive-color="false"
+        ></td>
+      </tr>
+    </thead>
+    <tbody class="cc-widget-table-hover"
+           data-ng-class="{'cc-widget-table-hover-opened':(financialAidSummary.giftAidDetail.show)}"
+           data-cc-accessible-focus-directive
+           data-ng-click="api.widget.toggleShow($event, null, financialAidSummary.giftAidDetail, 'My Finances - Financial Aid and Scholarships')">
+      <tr>
+        <td>Gift Aid and Outside Resources</td>
+        <td data-ng-class="financialAidSummary.selected.grantsAndScholarships ? 'cc-right cc-toggle-triangle' : 'cc-right'"
+          data-cc-amount-directive="financialAidSummary.selected.giftAidAndOutsideResources"
+          data-cc-amount-directive-color="false"
+        ></td>
+      </tr>
+      <tr data-ng-if="financialAidSummary.selected.grantsAndScholarships && financialAidSummary.giftAidDetail.show">
+        <td><span class="cc-widget-finaid-summary-indent">Grants and Scholarships</span></td>
+        <td><span
+          class="cc-right"
+          data-cc-amount-directive="financialAidSummary.selected.grantsAndScholarships"
+          data-cc-amount-directive-color="false"
+        ></span></td>
+      </tr>
+    </tbody>
+    <tbody class="cc-widget-table-hover"
+           data-ng-class="{'cc-widget-table-hover-opened':(financialAidSummary.waiversDetail.show)}"
+           data-cc-accessible-focus-directive
+           data-ng-click="api.widget.toggleShow($event, null, financialAidSummary.waiversDetail, 'My Finances - Financial Aid and Scholarships')">
+      <tr>
+        <td>Waivers and Other Funding</td>
+        <td data-ng-class="financialAidSummary.selected.feeWaivers ? 'cc-right cc-toggle-triangle' : 'cc-right'"
+            data-cc-amount-directive="financialAidSummary.selected.waiversAndOtherFunding"
+            data-cc-amount-directive-color="false"
+        ></td>
+      </tr>
+      <tr data-ng-if="financialAidSummary.selected.feeWaivers && financialAidSummary.waiversDetail.show">
+        <td><span class="cc-widget-finaid-summary-indent">Fee Waivers</span></td>
+        <td><span
+          class="cc-right"
+          data-cc-amount-directive="financialAidSummary.selected.feeWaivers"
+          data-cc-amount-directive-color="false"
+        ></span></td>
+      </tr>
+    </tbody>
+    <tbody class="cc-widget-table-hover"
+           data-ng-class="{'cc-widget-table-hover-opened':(financialAidSummary.loansWorkStudyDetail.show)}"
+           data-cc-accessible-focus-directive
+           data-ng-click="api.widget.toggleShow($event, null, financialAidSummary.loansWorkStudyDetail, 'My Finances - Financial Aid and Scholarships')">
+      <tr>
+        <td>Loans and Work-Study</td>
+        <td data-ng-class="(financialAidSummary.selected.workStudy || financialAidSummary.selected.loans) ? 'cc-right cc-toggle-triangle' : 'cc-right'"
+          data-cc-amount-directive="financialAidSummary.selected.loansAndWorkStudy"
+          data-cc-amount-directive-color="false"
+        ></td>
+      </tr>
+      <tr data-ng-if="financialAidSummary.selected.workStudy && financialAidSummary.loansWorkStudyDetail.show">
+        <td><span class="cc-widget-finaid-summary-indent">Work-Study</span></td>
+        <td><span
+          class="cc-right"
+          data-cc-amount-directive="financialAidSummary.selected.workStudy"
+          data-cc-amount-directive-color="false"
+        ></span></td>
+      </tr>
+      <tr data-ng-if="financialAidSummary.selected.loans && financialAidSummary.loansWorkStudyDetail.show">
+        <td><span class="cc-widget-finaid-summary-indent">Loans</span></td>
+        <td><span
+          class="cc-right"
+          data-cc-amount-directive="financialAidSummary.selected.loans"
+          data-cc-amount-directive-color="false"
+        ></span></td>
+      </tr>
+    </tbody>
+  </table>
 </div>

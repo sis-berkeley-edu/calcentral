@@ -16,12 +16,12 @@ module Concerns
     end
 
     def enrolled_pre_fall_2016? (campus_solutions_id)
-      enrolled = EdoOracle::Queries.enrolled_pre_fall_2016 campus_solutions_id
+      enrolled = EdoOracle::FinancialAid::Queries.enrolled_pre_fall_2016 campus_solutions_id
       enrolled.try(:[], 'enrolled') == 'Y'
     end
 
     def is_loan_history_active? (campus_solutions_id)
-      is_active = EdoOracle::Queries.get_loan_history_status campus_solutions_id
+      is_active = EdoOracle::FinancialAid::Queries.get_loan_history_status campus_solutions_id
       is_active.try(:[], 'active') == 'Y'
     end
 

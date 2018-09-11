@@ -5,6 +5,6 @@ class MyHousingController < ApplicationController
 
   def get_feed
     options = params.permit :aid_year
-    render json: Finaid::MyHousing.from_session(session, options).get_feed_as_json
+    render json: FinancialAid::MyHousing.from_session(session, options).get_feed_as_json
   end
 end

@@ -1,4 +1,4 @@
-describe Finaid::MyHousing do
+describe FinancialAid::MyHousing do
 
   before do
     allow(Settings.terms).to receive(:fake_now).and_return after_spring_housing_period

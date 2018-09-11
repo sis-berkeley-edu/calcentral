@@ -21,17 +21,17 @@ angular.module('calcentral.controllers').controller('FinaidController', function
     blank: 'blank'
   };
 
-  var setFinaidYear = function(data, finaidYearId) {
+  var setFinaidYear = function(aidYears, finaidYearId) {
     if (finaidYearId) {
-      $scope.finaidYear = finaidService.findFinaidYear(data, finaidYearId);
+      $scope.finaidYear = finaidService.findFinaidYear(aidYears, finaidYearId);
     } else {
-      finaidService.setDefaultFinaidYear(data);
+      finaidService.setDefaultFinaidYear(aidYears);
       $scope.finaidYear = _.get(finaidService, 'options.finaidYear');
     }
   };
 
-  var combinationExists = function(data, finaidYearId) {
-    var combination = finaidService.combinationExists(data, finaidYearId);
+  var combinationExists = function(aidYears, finaidYearId) {
+    var combination = finaidService.combinationExists(aidYears, finaidYearId);
     if (!combination && $location.path() !== '/finances/finaid/t4/auth') {
       apiService.user.redirectToPage('finances');
       return false;
@@ -41,9 +41,11 @@ angular.module('calcentral.controllers').controller('FinaidController', function
   var getFinaidSummary = function(options) {
     return finaidFactory.getSummary(options).then(
       function successCallback(response) {
-        combinationExists(response.data.feed, $routeParams.finaidYearId);
-        setFinaidYear(response.data.feed, $routeParams.finaidYearId);
-        $scope.finaidSummary = response.data.feed.finaidSummary;
+        var finaidSummary = _.get(response, 'data.feed.finaidSummary');
+        var aidYears = _.get(finaidSummary, 'finaidYears');
+        combinationExists(aidYears, $routeParams.finaidYearId);
+        setFinaidYear(aidYears, $routeParams.finaidYearId);
+        $scope.finaidSummary = finaidSummary;
         $scope.finaid.isLoading = false;
       }
     );

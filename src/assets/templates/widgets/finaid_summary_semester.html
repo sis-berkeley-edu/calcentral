@@ -1,15 +1,15 @@
-<div class="cc-clearfix-container" data-ng-if="selected.finaidYear.availableSemesters.length">
+<div class="cc-clearfix-container" data-ng-if="financialAidSummary.selected.finaidYear.availableSemesters.length">
   <div class="cc-widget-finaid-summary-label cc-left">
     <label>
       <strong>
         <span
-          data-ng-pluralize count="selected.finaidYear.availableSemesters.length"
+          data-ng-pluralize count="financialAidSummary.selected.finaidYear.availableSemesters.length"
           when="{'1': 'Semester', 'other': 'Semesters'}"
         ></span>:
       </strong>
     </label>
   </div>
-  <div class="cc-widget-finaid-summary-available-semesters" data-ng-if="selected.finaidYear.availableSemesters.length">
-    <span data-ng-bind="selected.finaidYear.availableSemesters | andFilter"></span>
+  <div class="cc-widget-finaid-summary-available-semesters" data-ng-if="financialAidSummary.selected.finaidYear.availableSemesters.length">
+    <span data-ng-bind="financialAidSummary.selected.finaidYear.availableSemesters | andFilter"></span>
   </div>
 </div>

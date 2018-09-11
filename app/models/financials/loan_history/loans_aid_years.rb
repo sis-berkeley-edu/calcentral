@@ -18,7 +18,7 @@ module Financials
       end
 
       def get_loan_data
-        data = EdoOracle::Queries.get_loan_history_categories_aid_years campus_solutions_id
+        data = EdoOracle::FinancialAid::Queries.get_loan_history_categories_aid_years campus_solutions_id
         parse_loan_aid_years HashConverter.camelize(data)
       end
 
@@ -104,7 +104,7 @@ module Financials
       end
 
       def get_child_loan_details(view_name)
-        EdoOracle::Queries.get_loan_history_aid_years_details(campus_solutions_id, view_name)
+        EdoOracle::FinancialAid::Queries.get_loan_history_aid_years_details(campus_solutions_id, view_name)
       end
 
       def campus_solutions_id

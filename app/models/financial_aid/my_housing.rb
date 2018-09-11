@@ -1,4 +1,4 @@
-module Finaid
+module FinancialAid
   class MyHousing < UserSpecificModel
     include Cache::CachedFeed
     include Cache::UserCacheExpiry
@@ -16,7 +16,7 @@ module Finaid
 
     def get_feed_internal
       return {} unless is_feature_enabled
-      @feed = EdoOracle::Queries.get_housing(@uid, my_aid_year)
+      @feed = EdoOracle::FinancialAid::Queries.get_housing(@uid, my_aid_year)
       {
         housing: {
           terms: HashConverter.downcase_and_camelize(@feed),
