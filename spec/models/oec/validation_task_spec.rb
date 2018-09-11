@@ -11,6 +11,15 @@ describe Oec::ValidationTask do
       expect(Rails.logger).to receive(:info).with /Validation passed./
       task.run
     end
+    context 'recognized COURSE_ID suffix' do
+      let(:valid_row) { '2015-B-99999_MID,2015-B-99999_MID,GWS 150 LEC 001 VINDICATION OF RIGHTS,,,GWS,150,LEC,001,P,155555,UID:155555,Zachary,Zzzz,zzzz@berkeley.edu,23,Y,GWS,F,,01-26-2015,05-11-2015' }
+      it 'should pass validation' do
+        merged_course_confirmations_csv.concat valid_row
+        allow(Rails.logger).to receive(:info)
+        expect(Rails.logger).to receive(:info).with /Validation passed./
+        task.run
+      end
+    end
   end
 
   shared_examples 'validation error logging' do
@@ -65,6 +74,13 @@ describe Oec::ValidationTask do
     context 'non-matching COURSE_ID_2' do
       let(:invalid_row) { '2015-B-99999,2015-B-99998,GWS 150 LEC 001 VINDICATION OF RIGHTS,,,GWS,150,LEC,001,P,155555,UID:155555,Zachary,Zzzz,zzzz@berkeley.edu,23,Y,GWS,F,,01-26-2015,05-11-2015' }
       let(:expected_message) { 'Non-matching COURSE_ID_2 2015-B-99998' }
+      include_examples 'validation error logging'
+    end
+
+    context 'unrecognized COURSE_ID suffix' do
+      let(:key) { '2015-B-99999_HUH' }
+      let(:invalid_row) { '2015-B-99999_HUH,2015-B-99999_HUH,GWS 150 LEC 001 VINDICATION OF RIGHTS,,,GWS,150,LEC,001,P,155555,UID:155555,Zachary,Zzzz,zzzz@berkeley.edu,23,Y,GWS,F,,01-26-2015,05-11-2015' }
+      let(:expected_message) { 'Invalid COURSE_ID 2015-B-99999_HUH' }
       include_examples 'validation error logging'
     end
 
