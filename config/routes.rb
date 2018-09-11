@@ -161,6 +161,7 @@ Calcentral::Application.routes.draw do
     get '/api/campus_solutions/currency_code' => 'campus_solutions/currency_code#get', :defaults => { :format => 'json' }
     get '/api/campus_solutions/emergency_contacts' => 'campus_solutions/emergency_contacts#get', :defaults => { :format => 'json' }
     get '/api/campus_solutions/ethnicity_setup' => 'campus_solutions/ethnicity_setup#get', :defaults => { :format => 'json' }
+    get '/api/campus_solutions/faculty_resources' => 'campus_solutions/faculty_resources#get', :defaults => { :format => 'json' }
     get '/api/campus_solutions/financial_aid_compare_awards_current' => 'campus_solutions/financial_aid_compare_awards_current#get', :defaults => { :format => 'json' }
     get '/api/campus_solutions/financial_aid_compare_awards_list' => 'campus_solutions/financial_aid_compare_awards_list#get', :defaults => { :format => 'json' }
     get '/api/campus_solutions/financial_aid_compare_awards_prior' => 'campus_solutions/financial_aid_compare_awards_prior#get', :defaults => { :format => 'json' }
