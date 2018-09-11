@@ -4,7 +4,8 @@ describe MyAcademics::Teaching do
     allow(Settings.features).to receive(:hub_term_api).and_return false
   end
 
-  let(:feed) { {}.tap { |feed| described_class.new(uid).merge feed } }
+  let(:instance) { described_class.new(uid) }
+  let(:feed) { {}.tap { |feed| instance.merge feed } }
   let(:teaching) { feed[:teachingSemesters] }
 
   shared_examples 'a properly translated feed' do
@@ -284,6 +285,13 @@ describe MyAcademics::Teaching do
       bio1a = teaching[0][:classes].find { |course| course[:listings].first[:course_code] == 'BIOLOGY 1A' }
       expect(bio1a[:enrollLimit]).to eq 50
       expect(bio1a[:waitlistLimit]).to eq 10
+    end
+    context 'when running ETS-only services' do
+      it 'does not call SIS-only code' do
+        allow(Settings.application).to receive(:provided_services).and_return ['bcourses']
+        expect(instance).not_to receive(:get_legacy_teaching_semesters)
+        expect(feed[:legacyTeachingSemesters]).to eq []
+      end
     end
   end
 
