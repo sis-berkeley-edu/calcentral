@@ -68,7 +68,7 @@ module MyAcademics
     end
 
     def get_cumulative_units
-      careers = active_or_all EdoOracle::Career.new(user_id: @uid).fetch
+      careers = active_or_all EdoOracle::Career.new(user_id: @uid).get_cumulative_units
       result = {
         totalUnits: 0,
         totalLawUnits: 0
