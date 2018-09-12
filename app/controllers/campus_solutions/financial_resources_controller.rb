@@ -1,6 +1,5 @@
 module CampusSolutions
   class FinancialResourcesController < ApplicationController
-
     before_action :api_authenticate
 
     def get_emergency_loan
