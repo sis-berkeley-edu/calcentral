@@ -2,6 +2,7 @@ module User
   class Visit < ActiveRecord::Base
     extend Cache::Cacheable
     include ActiveRecordHelper
+    include User::UserVisitsFeatureFlagged
 
     self.table_name = 'user_visits'
 
@@ -19,6 +20,8 @@ module User
     self.primary_key = :uid
 
     def self.record(uid)
+      return nil unless self.is_feature_enabled
+
       fetch_from_cache uid  do
         use_pooled_connection {
           Retriable.retriable(:on => ActiveRecord::RecordNotUnique, :tries => 5) do
