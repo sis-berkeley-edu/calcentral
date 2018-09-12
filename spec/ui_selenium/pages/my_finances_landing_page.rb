@@ -22,11 +22,8 @@ module CalCentralPages
       link(:cal_1_card_link, :xpath => '//a[@href="http://cal1card.berkeley.edu"]')
       link(:manage_debit_card, :xpath => '//div[contains(.,"Debit Account")]/following-sibling::a[contains(.,"Manage Your Card")]')
       link(:learn_about_debit_card, :xpath => '//div[contains(.,"You don\'t have a debit account")]/following-sibling::a[contains(.,"Learn more about Cal 1 Card")]')
-      span(:meal_points_plan, :xpath => '//span[@data-ng-bind="mealpointsPlan"]')
-      span(:meal_points_balance, :xpath => '//span[@data-ng-bind="mealpoints | number"]')
-      link(:cal_dining_link, :xpath => '//a[@href="http://caldining.berkeley.edu"]')
-      link(:manage_meal_card, :xpath => '//div[contains(.,"Meal Plan")]/following-sibling::a[contains(.,"Manage Your Points")]')
-      link(:learn_about_meal_plan, :xpath => '//div[contains(.,"You don\'t have a meal plan")]/following-sibling::a[contains(.,"Learn more about Meal Plans")]')
+      link(:learn_about_meal_plan, :xpath => '//a[@href="http://caldining.berkeley.edu/meal-plans"]')
+      link(:view_meal_plan, :xpath => '//a[@href="https://cal1card.berkeley.edu/cdlogin"]')
 
       # FINANCIAL RESOURCES CARD
       h2(:fin_resources_heading, :xpath => '//h2[text()="Financial Resources"]')

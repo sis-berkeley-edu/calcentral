@@ -12,11 +12,10 @@ describe Cal1card::MyCal1card do
 
   context 'happy path with fake data' do
     it 'feeds back correct information' do
+      expect(subject.keys).to eq [:cal1cardStatus, :cal1cardLost, :debit, :debitMessage, :statusCode]
       expect(subject).to be_truthy
       expect(subject[:cal1cardStatus]).to eq 'OK'
       expect(subject[:debit]).to eq '0.8'
-      expect(subject[:mealpoints]).to eq '359.11'
-      expect(subject[:mealpointsPlan]).to eq 'Resident Meal Plan Points'
       expect(subject[:statusCode]).to eq 200
     end
   end
