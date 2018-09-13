@@ -11,7 +11,7 @@ module MyTasks
     end
 
     def fetch_tasks
-      logger.info "Sorting Google tasks into buckets with starting_date #{@starting_date}"
+      logger.debug "Sorting Google tasks into buckets with starting_date #{@starting_date}"
       tasks = []
 
       google_proxy = GoogleApps::TasksList.new(user_id: @uid)

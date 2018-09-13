@@ -21,7 +21,7 @@ module MyTasks
     def collect_results(response)
       collected_results = []
       if (response && response[:feed] && results = response[:feed][:checkListItems])
-        logger.info "Sorting SIS Checklist feed into buckets with starting_date #{@starting_date}; #{results}"
+        logger.debug "Sorting SIS Checklist feed into buckets with starting_date #{@starting_date}; #{results}"
         results.each do |result|
           if (formatted_entry = yield result)
             logger.debug "Adding Checklist task with dueDate: #{formatted_entry[:dueDate]} in bucket '#{formatted_entry[:bucket]}': #{formatted_entry}"

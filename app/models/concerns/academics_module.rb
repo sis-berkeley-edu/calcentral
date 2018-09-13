@@ -84,6 +84,7 @@ module Concerns
     end
 
     def time_bucket(term_yr, term_cd)
+      return nil unless current_term
       term_yr = term_yr.to_i
       if term_yr < current_term.year || (term_yr == current_term.year && term_cd < current_term.code)
         bucket = 'past'
