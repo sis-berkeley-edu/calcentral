@@ -102,24 +102,41 @@ angular.module('calcentral.controllers').controller('FinancesLinksController', f
   };
 
   var parseSirStatuses = function(response) {
-    var hasUndergraduateRole = userService.profile.roles.undergrad;
-    var sirStatuses = _.get(response, 'data.sirStatuses');
-    var hasUndergraduateSir = !!_.find(sirStatuses, {
-      isUndergraduate: true
+    return $q(function(resolve) {
+      var hasUndergraduateRole = userService.profile.roles.undergrad;
+      var sirStatuses = _.get(response, 'data.sirStatuses');
+      var hasUndergraduateSir = !!_.find(sirStatuses, {
+        isUndergraduate: true
+      });
+      var canViewSummerEstimatorLink = hasUndergraduateRole || hasUndergraduateSir;
+      resolve(canViewSummerEstimatorLink);
     });
-    $scope.canViewSummerEstimatorLink = hasUndergraduateRole || hasUndergraduateSir;
+  };
+
+  var setSummerEstimatorVisibility = function() {
+    return $q(function(resolve) {
+      $scope.canViewSummerEstimatorLink = false;
+      if (!userService.profile.delegateActingAsUid) {
+        sirFactory.getSirStatuses()
+        .then(parseSirStatuses)
+        .then(function(canViewSummerEstimatorLink) {
+          $scope.canViewSummerEstimatorLink = canViewSummerEstimatorLink;
+          resolve();
+        });
+      } else {
+        resolve();
+      }
+    });
   };
 
   var setLinkVisibilities = function() {
     return $q(function(resolve) {
       $scope.canViewEftLink = userService.profile.roles.student && (userService.profile.roles.undergrad || userService.profile.roles.graduate || userService.profile.academicRoles.current.law);
-      $scope.canViewEmergencyLoanLink = !userService.profile.academicRoles.current.summerVisitor;
+      $scope.canViewEmergencyLoanLink = !userService.profile.delegateActingAsUid && !userService.profile.academicRoles.current.summerVisitor;
+      $scope.canViewFppEnrollment = !(userService.profile.actingAsUid || userService.profile.advisorActingAsUid || userService.profile.delegateActingAsUid) && userService.profile.roles.student &&
+                                    (userService.profile.roles.undergrad || userService.profile.roles.grad || userService.profile.roles.law) && !userService.profile.academicRoles.current.summerVisitor; 
       resolve();
     });
-  };
-
-  var canViewFppEnrollment = function() {
-    return !(userService.profile.actingAsUid || userService.profile.advisorActingAsUid);
   };
 
   var initialize = function() {
@@ -129,7 +146,7 @@ angular.module('calcentral.controllers').controller('FinancesLinksController', f
 
     var requests = [getCampusLinks];
 
-    if (canViewFppEnrollment()) {
+    if ($scope.canViewFppEnrollment) {
       var getFppEnrollment = financesLinksFactory.getFppEnrollment().then(parseFppEnrollment);
       requests.push(getFppEnrollment);
     }
@@ -151,6 +168,5 @@ angular.module('calcentral.controllers').controller('FinancesLinksController', f
     });
   };
 
-  var setSummerEstimatorVisibility = sirFactory.getSirStatuses().then(parseSirStatuses);
-  setSummerEstimatorVisibility.then(setLinkVisibilities).then(initialize);
+  setSummerEstimatorVisibility().then(setLinkVisibilities).then(initialize);
 });
