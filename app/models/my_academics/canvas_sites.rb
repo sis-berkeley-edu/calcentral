@@ -16,7 +16,7 @@ module MyAcademics
             linked_classes[:role_and_slugs].each do |role_and_slug|
               if (linked_term = data[role_and_slug[:role_key]].find { |term| term[:slug] == linked_classes[:term_slug] })
                 if linked_term[:classes] && (linked_class = linked_term[:classes].select { |c| c[:slug] == role_and_slug[:slug] }.first)
-                  linked_class[:class_sites] << group_entry
+                  linked_class[:class_sites].try(:<<, group_entry)
                 end
               end
             end

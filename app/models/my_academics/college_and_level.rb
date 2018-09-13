@@ -11,7 +11,7 @@ module MyAcademics
 
       # If we have no profile at all, consider the no-profile to be active for the current term.
       if college_and_level[:empty]
-        college_and_level[:termName] = Berkeley::Terms.fetch.current.to_english
+        college_and_level[:termName] = Berkeley::Terms.fetch.current.try(:to_english)
         college_and_level[:isCurrent] = true
       else
         # The key name is a bit misleading, since the profile might be for a future term.

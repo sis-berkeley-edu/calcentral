@@ -29,7 +29,7 @@ module MyTasks
 
     def collect_results(response)
       if (results = response[:body]) && results.respond_to?(:collect)
-        logger.info "Sorting Canvas feed into buckets with starting_date #{@starting_date}; #{results}"
+        logger.debug "Sorting Canvas feed into buckets with starting_date #{@starting_date}; #{results}"
         results.collect do |result|
           if (formatted_entry = yield result)
             logger.debug "Adding Canvas task with dueDate: #{formatted_entry['dueDate']} in bucket '#{formatted_entry['bucket']}': #{formatted_entry}"
