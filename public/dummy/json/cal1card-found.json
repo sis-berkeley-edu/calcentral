@@ -3,8 +3,5 @@
   "cal1cardLost": "Found",
   "debit": "3.50",
   "debitMessage": "OK",
-  "mealpoints": null,
-  "mealpointsMessage": "OK",
-  "mealpointsPlan": null,
   "statusCode": 200
 }

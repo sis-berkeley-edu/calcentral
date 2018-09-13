@@ -28,16 +28,4 @@ class ApiMyCal1CardPage
   def debit_balance
     (sprintf '%.2f', @parsed['debit'].to_f).to_s
   end
-
-  def has_meal_plan?
-    true unless @parsed['mealpointsPlan'].nil?
-  end
-
-  def meal_points_balance
-    @parsed['mealpoints']
-  end
-
-  def meal_points_plan
-    @parsed['mealpointsPlan']
-  end
 end

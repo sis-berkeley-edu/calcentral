@@ -19,9 +19,6 @@ describe 'My Finances Cal1Card', :testui => true do
           has_finances_tab = false
           has_debit_account = false
           has_debit_balance = false
-          has_meal_plan = false
-          has_nonres_meal_plan = false
-          has_meal_points = false
           card_lost = false
           card_found = false
 
@@ -67,42 +64,11 @@ describe 'My Finances Cal1Card', :testui => true do
               end
 
               # Meal plan:
-              if cal1card_api.has_meal_plan?
-                has_meal_plan = true
-                testable_users.push(uid)
-                if cal1card_api.meal_points_balance.to_i > 0
-                  has_meal_points = true
-                end
-                if cal1card_api.meal_points_plan.include?('Non-Resident')
-                  has_nonres_meal_plan = true
-                end
-                api_points = cal1card_api.meal_points_balance
-                api_plan = cal1card_api.meal_points_plan
-                my_finances_points = my_finances_page.meal_points_balance.delete(', ')
-                my_finances_plan = my_finances_page.meal_points_plan
-                has_manage_points_link = my_finances_page.manage_meal_card?
-                it "shows the meal point balance for UID #{uid}" do
-                  expect(my_finances_points).to eql(api_points)
-                end
-                it "shows the meal plan type for UID #{uid}" do
-                  expect(my_finances_plan).to eql(api_plan)
-                end
-                it "shows a link to manage the points balance at Cal 1 Card for UID #{uid}" do
-                  expect(has_manage_points_link).to be true
-                end
-              else
-                my_finances_points = my_finances_page.meal_points_balance?
-                my_finances_plan = my_finances_page.meal_points_plan?
-                has_learn_about_meals = my_finances_page.learn_about_meal_plan?
-                it "shows no meal point balance for UID #{uid}" do
-                  expect(my_finances_points).to be false
-                end
-                it "shows no meal plan type for UID #{uid}" do
-                  expect(my_finances_plan).to be false
-                end
-                it "shows a link to learn about meal plans at Cal 1 Card for UID #{uid}" do
-                  expect(has_learn_about_meals).to be true
-                end
+              has_learn_about_meals = my_finances_page.learn_about_meal_plan?
+              has_view_meal_plan = my_finances_page.view_meal_plan?
+              it "shows links to learn about and view meal plan at Cal 1 Card for UID #{uid}" do
+                expect(has_learn_about_meals).to be true
+                expect(has_view_meal_plan).to be true
               end
 
               # Card lost & found
@@ -124,8 +90,7 @@ describe 'My Finances Cal1Card', :testui => true do
           rescue => e
             logger.error e.message + "\n" + e.backtrace.join("\n")
           ensure
-            test_output_row = [uid, has_meal_plan, has_meal_points, has_nonres_meal_plan, has_debit_account, has_debit_balance,
-                               card_lost, card_found]
+            test_output_row = [uid, has_debit_account, has_debit_balance, card_lost, card_found]
             UserUtils.add_csv_row(test_output, test_output_row)
           end
         end

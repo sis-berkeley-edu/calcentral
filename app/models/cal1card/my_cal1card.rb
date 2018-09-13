@@ -33,13 +33,14 @@ module Cal1card
         query: {uid: @uid},
         basic_auth: {username: @settings.username, password: @settings.password}
       )
-      feed = response.parsed_response
-      logger.debug "Cal1Card remote response: #{response.inspect}"
-
-      camelized = HashConverter.camelize feed
-      camelized[:cal1card].merge({
-        statusCode: 200
-      })
+      parsed_response = response.parsed_response.try(:[], 'cal1card')
+      {
+        cal1cardStatus: parsed_response.try(:[], 'cal1card_status'),
+        cal1cardLost: parsed_response.try(:[], 'cal1card_lost'),
+        debit: parsed_response.try(:[], 'debit'),
+        debitMessage: parsed_response.try(:[], 'debit_message'),
+        statusCode: 200,
+      }
     end
 
     def url
