@@ -44,9 +44,16 @@ describe UserController do
       expect(json_response['academicRoles']).to be_present
       expect(json_response['academicRoles']['current']).to be_present
       expect(json_response['academicRoles']['historical']).to be_present
-
-      visit = User::Visit.where(:uid => session['user_id'])[0]
-      expect(visit.last_visit_at).to be_present
+    end
+    context 'when user visits feature flag is on' do
+      before do
+        allow(Settings.features).to receive(:user_visits).and_return true
+      end
+      it 'should record a user\'s visit' do
+        get :my_status
+        visit = User::Visit.where(:uid => session['user_id'])[0]
+        expect(visit.last_visit_at).to be_present
+      end
     end
     context 'in LTI' do
       let(:uid) { user_id }
