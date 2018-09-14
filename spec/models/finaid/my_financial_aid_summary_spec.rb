@@ -1,7 +1,6 @@
 describe FinancialAid::MyFinancialAidSummary do
   before do
     allow_any_instance_of(CampusSolutions::MyAidYears).to receive(:get_feed).and_return aid_years
-    allow_any_instance_of(CampusSolutions::Sir::SirStatuses).to receive(:get_feed).and_return(new_admit_status)
     allow_any_instance_of(LinkFetcher).to receive(:fetch_link).with('UC_CX_FA_SHOPPING_SHEET', {AID_YEAR: '2017', ACAD_CAREER: 'UGRD', INSTITUTION: 'UCB01', SFA_SS_GROUP: 'CCUGRD'}).and_return('2017 shopping sheet link')
     allow_any_instance_of(LinkFetcher).to receive(:fetch_link).with('UC_CX_FA_SHOPPING_SHEET', {AID_YEAR: '2018', ACAD_CAREER: 'UGRD', INSTITUTION: 'UCB01', SFA_SS_GROUP: 'CCUGRD'}).and_return('2018 shopping sheet link')
     allow_any_instance_of(LinkFetcher).to receive(:fetch_link).with('UC_CX_FA_UCB_FA_WEBSITE').and_return('finaid website link')
@@ -24,7 +23,6 @@ describe FinancialAid::MyFinancialAidSummary do
       }
     }
   end
-  let(:new_admit_status) { nil }
 
   describe '#get_feed' do
     subject { described_class.new(uid).get_feed }
@@ -76,38 +74,12 @@ describe FinancialAid::MyFinancialAidSummary do
       expect(subject[:financialAidSummary][:aid]['2018'][:shoppingSheetLink]).not_to be
     end
 
-    context 'when user is an Undergrad new admit' do
-      let(:new_admit_status) do
-        {
-          sirStatuses: [
-            {
-              isUndergraduate: true,
-              newAdmitAttributes: new_admit_attributes
-            }
-          ]
-        }
-      end
-      context 'and has no financial aid for their admit year' do
-        let(:new_admit_attributes) do
-          {
-            term: { term: '2168' }
-          }
-        end
-        it 'does not provide a link to the Shopping Sheet' do
-          expect(subject[:financialAidSummary][:aid]['2017'][:shoppingSheetLink]).not_to be
-          expect(subject[:financialAidSummary][:aid]['2018'][:shoppingSheetLink]).not_to be
-        end
-        context 'and has financial aid for their admit year' do
-          let(:new_admit_attributes) do
-            {
-              term: { term: '2188' }
-            }
-          end
-          it 'provides a link to the Shopping Sheet for the admit year only' do
-            expect(subject[:financialAidSummary][:aid]['2017'][:shoppingSheetLink]).not_to be
-            expect(subject[:financialAidSummary][:aid]['2018'][:shoppingSheetLink]).to eq '2018 shopping sheet link'
-          end
-        end
+    context 'when user is assigned to the \'CCUGRD\' group for one aid year' do
+      let(:uid) { 799934 }
+
+      it 'provides a link to the Shopping Sheet for that aid year' do
+        expect(subject[:financialAidSummary][:aid]['2017'][:shoppingSheetLink]).not_to be
+        expect(subject[:financialAidSummary][:aid]['2018'][:shoppingSheetLink]).to eq '2018 shopping sheet link'
       end
     end
   end

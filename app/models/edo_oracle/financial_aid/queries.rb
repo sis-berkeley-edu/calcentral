@@ -182,7 +182,8 @@ module EdoOracle
           UC_FEE_WAIVERS,
           UC_LOANS_WRK_STUDY,
           UC_LOANS,
-          UC_WORK_STUDY
+          UC_WORK_STUDY,
+          SFA_SS_GROUP
         FROM SISEDO.CLC_FA_FASO_V00_VW
         WHERE CAMPUS_UID = '#{person_id}'
         AND AID_YEAR = '#{aid_year}'

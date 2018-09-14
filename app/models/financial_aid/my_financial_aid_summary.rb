@@ -3,9 +3,7 @@ module FinancialAid
     include Cache::CachedFeed
     include Cache::UserCacheExpiry
     include CampusSolutions::FinaidFeatureFlagged
-    include Concerns::NewAdmits
     include LinkFetcher
-    include User::Identifiers
 
     INSTITUTION = 'UCB01'
 
@@ -39,7 +37,7 @@ module FinancialAid
           loansAndWorkStudy: format_currency(financial_aid_summary.try(:[], 'uc_loans_wrk_study')),
           loans: format_currency(financial_aid_summary.try(:[], 'uc_loans')),
           workStudy: format_currency(financial_aid_summary.try(:[], 'uc_work_study')),
-          shoppingSheetLink: shopping_sheet_link(aid_year_id)
+          shoppingSheetLink: shopping_sheet_link(aid_year_id, financial_aid_summary.try(:[], 'sfa_ss_group'))
         }
       end
       aid
@@ -56,20 +54,9 @@ module FinancialAid
       (amount || 0).to_f.round(2)
     end
 
-    def shopping_sheet_link(aid_year)
-      return nil unless undergrad_new_admit?(admit_status) && admit_year_match?(aid_year)
-      fetch_link('UC_CX_FA_SHOPPING_SHEET', {AID_YEAR: aid_year, ACAD_CAREER: 'UGRD', INSTITUTION: INSTITUTION, SFA_SS_GROUP: 'CCUGRD'})
-    end
-
-    def admit_year_match?(aid_year)
-      undergrad_new_admit_status = admit_status.try(:[], :sirStatuses).try(:find) {|status| status[:isUndergraduate]}
-      admit_term = undergrad_new_admit_status.try(:[], :newAdmitAttributes).try(:[], :term).try(:[], :term)
-      admit_year = Berkeley::TermCodes.from_edo_id(admit_term).try(:[], :term_yr)
-      admit_year == aid_year
-    end
-
-    def admit_status
-      CampusSolutions::Sir::SirStatuses.new(@uid).get_feed
+    def shopping_sheet_link(aid_year, group)
+      return nil unless group.present?
+      fetch_link('UC_CX_FA_SHOPPING_SHEET', {AID_YEAR: aid_year, ACAD_CAREER: 'UGRD', INSTITUTION: INSTITUTION, SFA_SS_GROUP: group})
     end
 
     def aid_years
