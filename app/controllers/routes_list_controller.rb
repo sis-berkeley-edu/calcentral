@@ -23,7 +23,6 @@ class RoutesListController < ApplicationController
         /api/my/academics
         /api/my/activities
         /api/my/badges
-        /api/my/cal1card
         /api/my/campuslinks
         /api/my/classes
         /api/my/financials
