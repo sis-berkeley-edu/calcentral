@@ -17,7 +17,7 @@ angular.module('calcentral.controllers').controller('FinancesLinksController', f
       'MyFinAid (aid prior to Fall 2016)', 'Cost of Attendance', 'Graduate Financial Support', 'Work-Study', 'Financial Literacy',
       'National Student Loan Database System', 'Loan Repayment Calculator', 'Federal Student Loans', 'Student Advocate\'s Office',
       'Berkeley International Office', 'Have a loan?', 'Withdrawing or Canceling?', 'Summer Fees', 'Canceling and Withdrawing from Summer',
-      'Summer Schedule & Deadlines', 'Summer Sessions Website', 'Cal Student Central']
+      'Summer Schedule & Deadlines', 'Summer Sessions Website', 'Cal Student Central', 'Debit Account', 'Meal Plan Balance', 'Learn about meal plans']
   };
   $scope.delegateAccess = {
     title: 'Authorize others to access your billing information'
@@ -134,7 +134,7 @@ angular.module('calcentral.controllers').controller('FinancesLinksController', f
       $scope.canViewEftLink = userService.profile.roles.student && (userService.profile.roles.undergrad || userService.profile.roles.graduate || userService.profile.academicRoles.current.law);
       $scope.canViewEmergencyLoanLink = !userService.profile.delegateActingAsUid && !userService.profile.academicRoles.current.summerVisitor;
       $scope.canViewFppEnrollment = !(userService.profile.actingAsUid || userService.profile.advisorActingAsUid || userService.profile.delegateActingAsUid) && userService.profile.roles.student &&
-                                    (userService.profile.roles.undergrad || userService.profile.roles.grad || userService.profile.roles.law) && !userService.profile.academicRoles.current.summerVisitor; 
+                                    (userService.profile.roles.undergrad || userService.profile.roles.grad || userService.profile.roles.law) && !userService.profile.academicRoles.current.summerVisitor;
       resolve();
     });
   };

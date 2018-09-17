@@ -20,7 +20,6 @@ describe 'Delegated access', :testui => true do
       @status_api = ApiMyStatusPage.new @driver
       @academics_api = ApiMyAcademicsPageSemesters.new @driver
       @financials_api = ApiMyFinancialsPage.new @driver
-      @cal1card_api = ApiMyCal1CardPage.new @driver
       @cs_fin_aid_years_api = ApiCSAidYearsPage.new @driver
 
       # Academics UI
@@ -168,7 +167,6 @@ describe 'Delegated access', :testui => true do
                 @academics_api.get_json @driver
                 @status_api.get_json @driver
                 @financials_api.get_json @driver
-                @cal1card_api.get_json @driver
                 @cs_fin_aid_years_api.get_json @driver
 
                 is_student = @status_api.is_student?
@@ -345,12 +343,6 @@ describe 'Delegated access', :testui => true do
                   if privileges['financial']
 
                     @finances_page.load_page
-
-                    # Cal 1 Card
-                    sees_cal_1_card = WebDriverUtils.verify_block { @finances_page.debit_account_header_element.when_visible WebDriverUtils.page_event_timeout }
-                    if @cal1card_api.has_data?
-                      it ("shows delegate UID #{uid} the Cal 1 Card card for UID #{student_uid}") { expect(sees_cal_1_card).to be true }
-                    end
 
                     # Financial Resources links
                     shows_fin_resources = @finances_page.fin_resources_list_element.when_visible timeout

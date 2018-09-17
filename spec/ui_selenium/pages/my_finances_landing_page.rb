@@ -12,19 +12,6 @@ module CalCentralPages
       wait_for_expected_title('My Finances | CalCentral', WebDriverUtils.page_load_timeout)
       h1(:page_heading, :xpath => '//h1[text()="My Finances"]')
 
-      # CAL 1 CARD CARD
-      h2(:cal_1_card_heading, :xpath => '//h2[text()="Cal 1 Card"]')
-      div(:cal_1_card_content, :xpath => '//div[@data-ng-if=\'api.user.profile.features.cal1card\']//ul')
-      list_item(:card_lost_msg, :xpath => '//li[contains(.,"Your Cal 1 Card is reported as lost.")]')
-      list_item(:card_found_msg, :xpath => '//li[@data-ng-if="cal1cardLost === \'Lost\'"]')
-      div(:debit_account_header, :xpath => '//div[@class="cc-cal1card-header"]')
-      span(:debit_balance, :xpath => '//span[@data-ng-bind="debit + \'\' | currency"]')
-      link(:cal_1_card_link, :xpath => '//a[@href="http://cal1card.berkeley.edu"]')
-      link(:manage_debit_card, :xpath => '//div[contains(.,"Debit Account")]/following-sibling::a[contains(.,"Manage Your Card")]')
-      link(:learn_about_debit_card, :xpath => '//div[contains(.,"You don\'t have a debit account")]/following-sibling::a[contains(.,"Learn more about Cal 1 Card")]')
-      link(:learn_about_meal_plan, :xpath => '//a[@href="http://caldining.berkeley.edu/meal-plans"]')
-      link(:view_meal_plan, :xpath => '//a[@href="https://cal1card.berkeley.edu/cdlogin"]')
-
       # FINANCIAL RESOURCES CARD
       h2(:fin_resources_heading, :xpath => '//h2[text()="Financial Resources"]')
       div(:fin_resources_spinner, :xpath => '//h2[text()="Financial Resources"]/../following-sibling::div[@class="cc-spinner"]')

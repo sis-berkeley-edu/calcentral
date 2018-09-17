@@ -1629,6 +1629,25 @@
       ]
     },
     {
+      "name": "Debit Account",
+      "description": "Manage your debit account",
+      "url": "https://cal1card.berkeley.edu",
+      "roles": {
+        "student": true,
+        "applicant": true,
+        "staff": false,
+        "faculty": false,
+        "exStudent": true,
+        "summerVisitor": true
+      },
+      "categories": [
+        {
+          "topcategory": "Finances",
+          "subcategory": "Cal 1 Card"
+        }
+      ]
+    },
+    {
       "name": "DeCal Courses",
       "description": "Catalog of student-led courses",
       "url": "http://www.decal.org/ ",
@@ -2348,6 +2367,25 @@
       ]
     },
     {
+      "name": "Learn about meal plans",
+      "description": "",
+      "url": "https://caldining.berkeley.edu/meal-plans",
+      "roles": {
+        "student": true,
+        "applicant": true,
+        "staff": false,
+        "faculty": false,
+        "exStudent": true,
+        "summerVisitor": true
+      },
+      "categories": [
+        {
+          "topcategory": "Finances",
+          "subcategory": "Cal 1 Card"
+        }
+      ]
+    },
+    {
       "name": "Learning Resources",
       "description": "Supports the development of the workforce with learning and development programs",
       "url": "http://hrweb.berkeley.edu/learning",
@@ -2424,6 +2462,25 @@
         {
           "topcategory": "Tools \u0026 Resources",
           "subcategory": "Campus Mail"
+        }
+      ]
+    },
+    {
+      "name": "Meal Plan Balance",
+      "description": "",
+      "url": "https://cal1card.berkeley.edu/cdlogin",
+      "roles": {
+        "student": true,
+        "applicant": true,
+        "staff": false,
+        "faculty": false,
+        "exStudent": true,
+        "summerVisitor": true
+      },
+      "categories": [
+        {
+          "topcategory": "Finances",
+          "subcategory": "Cal 1 Card"
         }
       ]
     },
