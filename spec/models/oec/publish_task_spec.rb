@@ -20,6 +20,8 @@ describe Oec::PublishTask do
   let(:course_students) { Oec::CourseStudents.from_csv(read_exported_csv 'course_students') }
   let(:supervisors) { Oec::Supervisors.from_csv(read_exported_csv 'supervisors') }
   let(:course_supervisors) { Oec::CourseSupervisors.from_csv(read_exported_csv 'course_supervisors') }
+  let(:department_hierarchy) { Oec::DepartmentHierarchy.from_csv(read_exported_csv 'department_hierarchy') }
+  let(:report_viewer_hierarchy) { Oec::ReportViewerHierarchy.from_csv(read_exported_csv 'report_viewer_hierarchy') }
 
   before(:each) do
     allow(Oec::RemoteDrive).to receive(:new).and_return fake_remote_drive
@@ -103,6 +105,42 @@ describe Oec::PublishTask do
 
       it 'should export the same supervisors sheet it was given' do
         expect(read_exported_csv 'supervisors').to eq merged_supervisor_confirmations_csv
+      end
+
+      it 'should produce a sane report_viewer_hierarchy sheet' do
+        expect(report_viewer_hierarchy.first).to_not be_empty
+        report_viewer_hierarchy.each do |row|
+          supervisor = supervisors.find { |supervisor| supervisor['LDAP_UID'] == row['TARGET'] }
+          expect([
+                   supervisor['DEPT_NAME_1'],
+                   supervisor['DEPT_NAME_2'],
+                   supervisor['DEPT_NAME_3'],
+                   supervisor['DEPT_NAME_4']
+                 ]).to include(row['SOURCE'])
+          expect(supervisor['SUPERVISOR_GROUP']).to eq row['ROLE_ID']
+        end
+      end
+
+      it 'should produce a sane department_hierarchy sheet' do
+        top_level = department_hierarchy.find { |row| row['LEVEL'] == '1' }
+        expect(top_level['NODE_ID']).to eq 'UC Berkeley'
+        expect(top_level['PARENT_NODE_ID']).to be_blank
+        department_hierarchy.each do |row|
+          level = row['LEVEL']
+          expect(%w(1 2)).to include(level)
+          if level == '2'
+            expect(row['PARENT_NODE_ID']).to eq 'UC Berkeley'
+            matching_supervisor = supervisors.find do |supervisor|
+              [
+                supervisor['DEPT_NAME_1'],
+                supervisor['DEPT_NAME_2'],
+                supervisor['DEPT_NAME_3'],
+                supervisor['DEPT_NAME_4']
+              ].include? row['NODE_ID']
+            end
+            expect(matching_supervisor).not_to be_empty
+          end
+        end
       end
     end
 
