@@ -6,7 +6,7 @@ class EdoOracle::ViewChecker
       :columns => ['subjectArea']
     },
     {
-      :id => 'SISEDO.API_COURSEV00_MVW',
+      :id => 'SISEDO.API_COURSEV01_MVW',
       :columns => %w(catalogNumber-formatted catalogNumber-number catalogNumber-prefix catalogNumber-suffix cms-id classSubjectArea displayName status-code subjectArea transcriptTitle title)
     },
     {
@@ -186,7 +186,7 @@ class EdoOracle::ViewChecker
       :columns => %w(STUDENT_ID CAMPUS_UID ACAD_CAREER INSTITUTION MODEL_NBR ARTICULATION_TERM SCHOOL_DESCR RQMNT_DESIGNTN_DESCRFORMAL UNITS_TRNSFR UNITS_TRNSFR_LAW TRF_GRADE_POINTS)
     },
     {
-      :id => 'SISEDO.DISPLAYNAMEXLAT_MVW',
+      :id => 'SISEDO.DISPLAYNAMEXLATV01_MVW',
       :columns => %w(classDisplayName courseDisplayName)
     },
     {

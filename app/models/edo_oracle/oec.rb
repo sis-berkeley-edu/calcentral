@@ -42,7 +42,7 @@ module EdoOracle
           CASE mtg."location-code"
             WHEN 'INTR' THEN NULL ELSE (
             SELECT listagg("id", ',') WITHIN GROUP (ORDER BY "id")
-            FROM SISEDO.MEETINGV00_VW mtg2 JOIN SISEDO.CLASSSECTIONV00_VW sec3 ON (
+            FROM SISEDO.MEETINGV00_VW mtg2 JOIN SISEDO.CLASSSECTIONALLV01_MVW sec3 ON (
               mtg2."location-code" = mtg."location-code" AND
               mtg2."meetsDays" = mtg."meetsDays" AND
               mtg2."startTime" = mtg."startTime" AND
@@ -70,9 +70,9 @@ module EdoOracle
             instr."session-id" = sec."session-id" AND
             instr."offeringNumber" = sec."offeringNumber" AND
             instr."number" = sec."sectionNumber")
-          LEFT OUTER JOIN SISEDO.DISPLAYNAMEXLAT_MVW xlat ON (
+          LEFT OUTER JOIN SISEDO.DISPLAYNAMEXLATV01_MVW xlat ON (
             xlat."classDisplayName" = sec."displayName")
-          LEFT OUTER JOIN SISEDO.API_COURSEV00_MVW crs ON (
+          LEFT OUTER JOIN SISEDO.API_COURSEV01_MVW crs ON (
             xlat."courseDisplayName" = crs."displayName"
             AND crs."status-code" = 'ACTIVE')
           WHERE
@@ -164,9 +164,9 @@ module EdoOracle
           sec."displayName" AS course_display_name
         FROM
           SISEDO.CLASSSECTIONALLV00_MVW sec
-          LEFT OUTER JOIN SISEDO.DISPLAYNAMEXLAT_MVW xlat ON (
+          LEFT OUTER JOIN SISEDO.DISPLAYNAMEXLATV01_MVW xlat ON (
             xlat."classDisplayName" = sec."displayName")
-          LEFT OUTER JOIN SISEDO.API_COURSEV00_MVW crs ON (
+          LEFT OUTER JOIN SISEDO.API_COURSEV01_MVW crs ON (
             xlat."courseDisplayName" = crs."displayName"
             AND crs."status-code" = 'ACTIVE')
           WHERE
