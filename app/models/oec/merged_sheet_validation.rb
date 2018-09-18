@@ -16,6 +16,8 @@ module Oec
       students = Oec::Students.new
       course_students = Oec::CourseStudents.new
       supervisors = Oec::Supervisors.new
+      department_hierarchy = Oec::DepartmentHierarchy.new
+      report_viewer_hierarchy = Oec::ReportViewerHierarchy.new
 
       if (previous_course_supervisors = @remote_drive.find_nested [@term_code, Oec::Folder.overrides, 'course_supervisors'])
         course_supervisors = Oec::CourseSupervisors.from_csv @remote_drive.export_csv(previous_course_supervisors)
@@ -44,9 +46,7 @@ module Oec
       participating_dept_names = Oec::DepartmentMappings.new(term_code: @term_code).participating_dept_names
 
       log :info, "Validating #{supervisor_confirmations.count} supervisor confirmation rows"
-      supervisor_confirmations.each do |confirmation|
-        validate_and_add(supervisors, confirmation, %w(LDAP_UID))
-      end
+      add_from_supervisor_confirmations(supervisor_confirmations, supervisors, department_hierarchy, report_viewer_hierarchy)
 
       log :info, "Validating #{course_confirmations.count} course confirmation rows"
       course_confirmations.each do |confirmation|
@@ -158,13 +158,32 @@ module Oec
 
       if valid?
         log :info, 'Validation passed.'
-        [instructors, course_instructors, courses, students, course_students, supervisors, course_supervisors]
+        [instructors, course_instructors, courses, students, course_students, supervisors, course_supervisors, department_hierarchy, report_viewer_hierarchy]
       else
         @status = 'Error'
         log :warn, 'Validation failed!'
         log_validation_errors
         nil
       end
+    end
+
+    def add_from_supervisor_confirmations(supervisor_confirmations, supervisors, department_hierarchy, report_viewer_hierarchy)
+      dept_keys = %w(DEPT_NAME_1 DEPT_NAME_2 DEPT_NAME_3 DEPT_NAME_4 DEPT_NAME_5 DEPT_NAME_6 DEPT_NAME_7 DEPT_NAME_8 DEPT_NAME_9 DEPT_NAME_10)
+      validate_and_add(department_hierarchy, department_hierarchy.university_row(), ['NODE_ID'])
+      supervisor_confirmations.each do |confirmation|
+        validate_and_add(supervisors, confirmation, %w(LDAP_UID))
+        depts = confirmation.slice(*dept_keys).values.compact
+        depts.each do |dept|
+          viewer_row = {
+            'SOURCE' => dept,
+            'TARGET' => confirmation['LDAP_UID'],
+            'ROLE_ID' => confirmation['SUPERVISOR_GROUP'],
+          }
+          validate_and_add(report_viewer_hierarchy, viewer_row, %w(SOURCE TARGET))
+          validate_and_add(department_hierarchy, department_hierarchy.department_row(dept), %w(NODE_ID))
+        end
+      end
+
     end
 
     def validate_integrity(key, *worksheets)
