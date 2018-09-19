@@ -26,7 +26,7 @@ class EdoOracle::ViewChecker
       :columns => %w(ACAD_CAREER CAMPUS_UID CLASS_SECTION_ID GRADE_MARK GRADE_POINTS GRADING_BASIS_CODE SESSION_ID STDNT_ENRL_STATUS_CODE STUDENT_ID TERM_ID UNITS_TAKEN WAITLISTPOSITION)
     },
     {
-      :id => 'SISEDO.CLASSSECTIONALLV00_MVW',
+      :id => 'SISEDO.CLASSSECTIONALLV01_MVW',
       :columns => %w(component-code cs-course-id displayName endDate finalExam id maxEnroll maxWaitlist primary primaryAssociatedSectionId printInScheduleOfClasses sectionNumber status-code session-id startDate term-id)
     },
     {

@@ -58,7 +58,7 @@ module EdoOracle
           TRIM(crs."title") AS course_title,
           cls."allowedUnitsMaximum" AS allowed_units
         FROM
-          SISEDO.CLASSSECTIONALLV00_MVW sec
+          SISEDO.CLASSSECTIONALLV01_MVW sec
         LEFT OUTER JOIN SISEDO.DISPLAYNAMEXLATV01_MVW xlat ON (xlat."classDisplayName" = sec."displayName")
         LEFT OUTER JOIN SISEDO.API_COURSEV01_MVW crs ON (xlat."courseDisplayName" = crs."displayName")
         LEFT OUTER JOIN SISEDO.CLASSV00_VW cls ON (
