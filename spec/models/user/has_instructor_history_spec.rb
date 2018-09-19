@@ -3,7 +3,7 @@ describe User::HasInstructorHistory do
 
   describe 'has_instructor_history?' do
     let(:legacy_term) { double(:term, :legacy? => true) }
-    let(:sisedo_term) { double(:term, :legacy? => true) }
+    let(:sisedo_term) { double(:term, :legacy? => false) }
     let(:current_terms) { [sisedo_term, legacy_term] }
     let(:is_legacy_instructor) { false }
     let(:is_sisedo_instructor) { false }
