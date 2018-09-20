@@ -163,6 +163,11 @@
         Sending request...
       </div>
 
+      <div data-ng-if="jobStatus === 'New'" class="bc-page-course-official-sections-pending-request">
+        <i class="fa fa-spinner fa-spin"></i>
+        Request sent. Awaiting processing...
+      </div>
+
       <div data-ng-include src="'canvas_embedded/_shared/progress_bar.html'"></div>
     </div>
 
