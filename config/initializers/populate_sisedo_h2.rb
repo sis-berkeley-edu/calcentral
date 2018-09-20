@@ -1180,50 +1180,6 @@ class PopulateSisedosH2 < ActiveRecord::Base
       );
       --TODO: POPULATE SISEDO.STUCAR_TERMV00_VW
 
-      DROP TABLE IF EXISTS SISEDO.CLASSSECTIONALLV00_MVW;
-      CREATE TABLE SISEDO.CLASSSECTIONALLV00_MVW (
-        "id" NUMBER(38),
-        "cs-course-id" VARCHAR(6),
-        "offeringNumber" NUMBER(38),
-        "term-id" VARCHAR(4),
-        "session-id" VARCHAR(3),
-        "sectionNumber" VARCHAR(4),
-        "number" VARCHAR(4),
-        "component-code" VARCHAR(3),
-        "component-descr" VARCHAR(30),
-        "displayName" VARCHAR(19),
-        "instructionMode-code" VARCHAR(2),
-        "instructionMode-descr" VARCHAR(24),
-        "startDate" DATE,
-        "endDate" DATE,
-        "status-code" VARCHAR(1),
-        "status-descr" VARCHAR(30),
-        "classEnrollmentType-code" VARCHAR(1),
-        "classEnrollmentType-descr" VARCHAR(30),
-        "updatedDate" VARCHAR(15),
-        "cancelDate" DATE,
-        "primary" VARCHAR(5),
-        "primaryAssociatedComponent" VARCHAR(3),
-        "primaryAssociatedSectionId" NUMBER(38),
-        "enrollmentStatus-code" VARCHAR(1),
-        "enrollmentStatus-descr" VARCHAR(30),
-        "enrolledCount" NUMBER(38),
-        "waitlistedCount" NUMBER(38),
-        "minEnroll" NUMBER(38),
-        "maxEnroll" NUMBER(38),
-        "maxWaitlist" NUMBER(38),
-        "instructorAddConsentRequired" VARCHAR(1),
-        "instructorDropConsentRequired" VARCHAR(1),
-        "printInScheduleOfClasses" VARCHAR(1),
-        "graded" VARCHAR(9),
-        "feesExist" VARCHAR(5),
-        "roomShare" VARCHAR(12),
-        "optionalSection" VARCHAR(1),
-        "contactHours" NUMBER(7,3),
-        "finalExam" VARCHAR(2)
-      );
-      --TODO: POPULATE SISEDO.CLASSSECTIONALLV00_MVW
-
       DROP TABLE IF EXISTS SISEDO.CC_ENROLLMENTV00_VW;
       CREATE TABLE SISEDO.CC_ENROLLMENTV00_VW (
         INSTITUTION VARCHAR2(5),
