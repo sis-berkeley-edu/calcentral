@@ -48,12 +48,12 @@ module.exports = {
       { test: /\.js$/,
         exclude: path.resolve(__dirname, '../node_modules'),
         use: [
-          { loader: 'ng-annotate-loader',
+          { loader: 'babel-loader',
             options: {
-              add: true
+              presets: [['@babel/preset-env'], ['@babel/preset-react']],
+              plugins: [['angularjs-annotate']]
             }
-          },
-          { loader: 'babel-loader' }
+          }
         ]
       },
       { test: /\.(png|svg|jpg|gif|ico)$/,
