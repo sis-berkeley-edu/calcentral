@@ -28,14 +28,24 @@ module CanvasLti
         response = Canvas::CourseCopyImport.new(canvas_course_id: site_id).import_course_template(template_id)
         if (import_status = response[:body]) && import_status['workflow_state'] != 'completed'
           progress_id = import_status['progress_url'].split('/').last
+          import_start_time = Time.now.to_i
         end
 
         enrollment = CanvasLti::CourseAddUser.new(user_id: @uid, canvas_course_id: course_details['id']).add_user_to_course(@uid, 'Owner')
 
         if progress_id
-          response = Canvas::Progress.new(progress_id: progress_id).get_progress
-          if !response[:body] || response[:body]['workflow_state'] != 'completed'
-            logger.warn("Project site #{site_id} template import not complete before API return")
+          import_state = 'new'
+          15.times do
+            response = Canvas::Progress.new(progress_id: progress_id).get_progress
+            import_state = response[:body] && response[:body]['workflow_state']
+            break if !import_state || import_state == 'completed'
+            sleep 1
+          end
+          elapsed_time = Time.now.to_i - import_start_time
+          if import_state == 'completed'
+            logger.warn("Project site #{site_id} template import completed after #{elapsed_time} seconds")
+          else
+            logger.warn("Project site #{site_id} template import not completed after #{elapsed_time} seconds")
           end
         end
 
