@@ -172,7 +172,8 @@ module EdoOracle
 
       def self.get_financial_aid_summary(person_id, aid_year)
         result = safe_query <<-SQL
-        SELECT UC_COST_ATTENDANCE,
+        SELECT STUDENT_ID,
+          UC_COST_ATTENDANCE,
           UC_GIFT_AID_WAIVER,
           UC_NET_COST,
           UC_FUNDING_OFFERED,

@@ -37,7 +37,7 @@ module FinancialAid
           loansAndWorkStudy: format_currency(financial_aid_summary.try(:[], 'uc_loans_wrk_study')),
           loans: format_currency(financial_aid_summary.try(:[], 'uc_loans')),
           workStudy: format_currency(financial_aid_summary.try(:[], 'uc_work_study')),
-          shoppingSheetLink: shopping_sheet_link(aid_year_id, financial_aid_summary.try(:[], 'sfa_ss_group'))
+          shoppingSheetLink: shopping_sheet_link(aid_year_id, financial_aid_summary)
         }
       end
       aid
@@ -54,9 +54,10 @@ module FinancialAid
       (amount || 0).to_f.round(2)
     end
 
-    def shopping_sheet_link(aid_year, group)
+    def shopping_sheet_link(aid_year, financial_aid_summary)
+      group = financial_aid_summary.try(:[], 'sfa_ss_group')
       return nil unless group.present?
-      fetch_link('UC_CX_FA_SHOPPING_SHEET', {AID_YEAR: aid_year, ACAD_CAREER: 'UGRD', INSTITUTION: INSTITUTION, SFA_SS_GROUP: group})
+      fetch_link('UC_CX_FA_SHOPPING_SHEET', {EMPLID: financial_aid_summary.try(:[], 'student_id'), AID_YEAR: aid_year, ACAD_CAREER: 'UGRD', INSTITUTION: INSTITUTION, SFA_SS_GROUP: group})
     end
 
     def aid_years

@@ -1,8 +1,8 @@
 describe FinancialAid::MyFinancialAidSummary do
   before do
     allow_any_instance_of(CampusSolutions::MyAidYears).to receive(:get_feed).and_return aid_years
-    allow_any_instance_of(LinkFetcher).to receive(:fetch_link).with('UC_CX_FA_SHOPPING_SHEET', {AID_YEAR: '2017', ACAD_CAREER: 'UGRD', INSTITUTION: 'UCB01', SFA_SS_GROUP: 'CCUGRD'}).and_return('2017 shopping sheet link')
-    allow_any_instance_of(LinkFetcher).to receive(:fetch_link).with('UC_CX_FA_SHOPPING_SHEET', {AID_YEAR: '2018', ACAD_CAREER: 'UGRD', INSTITUTION: 'UCB01', SFA_SS_GROUP: 'CCUGRD'}).and_return('2018 shopping sheet link')
+    allow_any_instance_of(LinkFetcher).to receive(:fetch_link).with('UC_CX_FA_SHOPPING_SHEET', {EMPLID: cs_id, AID_YEAR: '2017', ACAD_CAREER: 'UGRD', INSTITUTION: 'UCB01', SFA_SS_GROUP: 'CCUGRD'}).and_return('2017 shopping sheet link')
+    allow_any_instance_of(LinkFetcher).to receive(:fetch_link).with('UC_CX_FA_SHOPPING_SHEET', {EMPLID: cs_id,AID_YEAR: '2018', ACAD_CAREER: 'UGRD', INSTITUTION: 'UCB01', SFA_SS_GROUP: 'CCUGRD'}).and_return('2018 shopping sheet link')
     allow_any_instance_of(LinkFetcher).to receive(:fetch_link).with('UC_CX_FA_UCB_FA_WEBSITE').and_return('finaid website link')
     allow_any_instance_of(LinkFetcher).to receive(:fetch_link).with('UC_CX_CAL_STUDENT_CENTRAL').and_return('cal student central link')
   end
@@ -27,6 +27,7 @@ describe FinancialAid::MyFinancialAidSummary do
   describe '#get_feed' do
     subject { described_class.new(uid).get_feed }
     let(:uid) { 61889 }
+    let(:cs_id) { '11667051' }
 
     it_behaves_like 'a proxy that properly observes the finaid feature flag'
 
@@ -76,6 +77,7 @@ describe FinancialAid::MyFinancialAidSummary do
 
     context 'when user is assigned to the \'CCUGRD\' group for one aid year' do
       let(:uid) { 799934 }
+      let(:cs_id) { '84307640' }
 
       it 'provides a link to the Shopping Sheet for that aid year' do
         expect(subject[:financialAidSummary][:aid]['2017'][:shoppingSheetLink]).not_to be
