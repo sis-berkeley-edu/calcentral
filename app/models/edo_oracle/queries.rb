@@ -784,24 +784,21 @@ module EdoOracle
 
     def self.search_students(search_string)
       result = safe_query <<-SQL
-        SELECT *
-        FROM
-          (
-            SELECT DISTINCT
-              STUDENT_ID AS student_id,
-              CAMPUS_ID AS campus_uid,
-              OPRID AS oprid,
-              FIRST_NAME AS first_name_legal,
-              MIDDLE_NAME AS middle_name_legal,
-              LAST_NAME AS last_name_legal,
-              UC_PRF_FIRST_NM AS first_name_preferred,
-              UC_PRF_MIDDLE_NM AS middle_name_preferred,
-              EMAIL_ADDR AS email,
-              ACAD_PROG AS academic_programs
-            FROM SISEDO.CLC_STDNT_LOOKUP_V00_VW
-            WHERE upper(UC_SRCH_CRIT) LIKE upper('%#{search_string}%')
-          )
-        WHERE rownum < 31
+        SELECT DISTINCT
+          STUDENT_ID as student_id,
+          CAMPUS_ID as campus_uid,
+          OPRID as oprid,
+          FIRST_NAME as first_name_legal,
+          MIDDLE_NAME as middle_name_legal,
+          LAST_NAME as last_name_legal,
+          UC_PRF_FIRST_NM as first_name_preferred,
+          UC_PRF_MIDDLE_NM as middle_name_preferred,
+          EMAIL_ADDR as email,
+          ACAD_PROG as academic_programs
+        FROM SISEDO.CLC_STDNT_LOOKUP_V00_VW
+        WHERE
+          upper(UC_SRCH_CRIT) LIKE upper('%#{search_string}%') AND
+          rownum < 31
       SQL
       result
     end
