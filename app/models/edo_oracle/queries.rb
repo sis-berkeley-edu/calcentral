@@ -787,7 +787,6 @@ module EdoOracle
         SELECT DISTINCT
           STUDENT_ID as student_id,
           CAMPUS_ID as campus_uid,
-          OPRID as oprid,
           FIRST_NAME as first_name_legal,
           MIDDLE_NAME as middle_name_legal,
           LAST_NAME as last_name_legal,
