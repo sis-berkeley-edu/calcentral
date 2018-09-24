@@ -44,7 +44,7 @@ angular.module('calcentral.controllers').controller('UserSearchController', func
     var missingName = 'Name Not Provided';
 
     angular.forEach(users, function(user) {
-      user.ldapUid = adminService.getLdapUid(user);
+      user.ldapUid = user.campusUid;
 
       // Normalize user's person name for the UI.
       user.name = decorateUserName(user);
@@ -74,12 +74,6 @@ angular.module('calcentral.controllers').controller('UserSearchController', func
   };
 
   var decorateUserName = function(user) {
-    var legalName = decorateUserWithLegalName(user);
-    var userAttributeName = _.trim(user.name || user.defaultName || (user.firstName || '').concat(' ', user.lastName || ''));
-    return legalName || userAttributeName;
-  };
-
-  var decorateUserWithLegalName = function(user) {
     var legalFirst = _.trim(_.get(user, 'firstNameLegal'));
     var legalMiddle = _.trim(_.get(user, 'middleNameLegal'));
     var legalLast = _.trim(_.get(user, 'lastNameLegal'));
@@ -87,9 +81,9 @@ angular.module('calcentral.controllers').controller('UserSearchController', func
     var preferredMiddle = _.trim(_.get(user, 'middleNamePreferred'));
     var preferredFull = '';
     if (preferredFirst || preferredMiddle) {
-      preferredFull = '\"' + _.trim(preferredFirst + ' ' + preferredMiddle) + '\"';
+      preferredFull = '\\' + _.trim(preferredFirst + ' ' + preferredMiddle) + '\\';
     }
-    return _.trim(_.join([legalFirst, legalMiddle, preferredFull, legalLast], ' '));
+    return _.join([legalFirst, legalMiddle, preferredFull, legalLast], ' ');
   };
 
   var getStoredUsers = function() {
