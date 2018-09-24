@@ -3,7 +3,7 @@
 var _ = require('lodash');
 
 angular.module('calcentral.services').factory('rosterService', function($filter) {
-  /**
+  /*
    * Returns link to gMail compose with TO address specified
    * @param {String} toAddress 'TO' address string
    */
