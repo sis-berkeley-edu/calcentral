@@ -12,7 +12,7 @@ angular.module('calcentral.services').service('adminService', function(adminFact
   };
 
   var getLdapUid = function(user) {
-    return user && (user.ldap_uid || user.ldapUid || user.campusUid);
+    return user && (user.ldap_uid || user.ldapUid);
   };
 
   return {
