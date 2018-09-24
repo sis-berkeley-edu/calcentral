@@ -15,21 +15,12 @@
     </div>
     <ul class="cc-widget-list">
       <li data-ng-repeat="user in userSearch.selectedTab.users | limitTo: userSearch.selectedTab.label == 'Search' ? searchResultsViewLimit : ''">
-        <div class="cc-user-search-item cc-flex cc-flex-space-between cc-flex-align-center"
-          data-ng-class="{'cc-user-search-item-no-bottom-border':($last)}">
-          <div>
-            <div>
-                <a href="/user/overview/{{user.ldapUid}}" data-ng-click="user.storeAsRecent()">
-                  <span data-ng-bind="user.name" data-ng-if="user.name"></span>
-                </a>
-                (<span data-ng-bind="user.studentId"></span>)
-            </div>
-            <div>
-              <span data-ng-bind="user.academicPrograms" data-ng-if="user.academicPrograms"></span>
-              <a data-ng-if="user.email" data-ng-bind="user.email" data-ng-href="{{bmailLink(user.email)}}"></a>
-            </div>
-          </div>
-          <div>
+        <div class="cc-user-search-item cc-clearfix">
+          <a href="/user/overview/{{user.ldapUid}}" data-ng-click="user.storeAsRecent()">
+            <span data-ng-bind="user.name" data-ng-if="user.name"></span>
+          </a>
+          (<span data-ng-bind="user.studentId"></span>)
+          <div class="cc-right">
             <button class="cc-button-star" title="Delete {{user.name}}" type="button" data-ng-click="user.delete()" data-ng-if="user.saved">
               <span class="cc-visuallyhidden">Delete</span>
               <span class="fa-stack cc-button-star-saved">

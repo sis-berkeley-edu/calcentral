@@ -4,6 +4,15 @@ var _ = require('lodash');
 
 angular.module('calcentral.services').factory('rosterService', function($filter) {
   /**
+   * Returns link to gMail compose with TO address specified
+   * @param {String} toAddress 'TO' address string
+   */
+  var bmailLink = function(toAddress) {
+    var urlEncodedToAddress = encodeURIComponent(toAddress);
+    return 'https://mail.google.com/mail/u/0/?view=cm&fs=1&tf=1&source=mailto&to=' + urlEncodedToAddress;
+  };
+
+  /**
    * Returns array with AngularJS text filter applied
    * Must use this to maintain parity with template based filter
    * Template Filter Example:
@@ -136,6 +145,7 @@ angular.module('calcentral.services').factory('rosterService', function($filter)
   };
 
   return {
+    bmailLink: bmailLink,
     getFilteredStudents: getFilteredStudents
   };
 });

@@ -12,7 +12,7 @@
     input {
       padding: 5px;
     }
-    .cc-user-search-button {
+    button:not(.cc-widget-show-more) {
       margin: 0 0 10px 5px;
     }
   }
@@ -23,10 +23,6 @@
     }
   }
   .cc-user-search-item {
-    border-bottom: $cc-color-very-light-grey 1px solid;
     padding: 0 0 2px;
-  }
-  .cc-user-search-item-no-bottom-border {
-    border-bottom: 0;
   }
 }

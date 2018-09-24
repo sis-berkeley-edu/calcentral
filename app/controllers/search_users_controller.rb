@@ -18,7 +18,9 @@ class SearchUsersController < ApplicationController
   def by_id_or_name
     opts = user_search_constraints
     id_or_name = params.require 'input'
-    users = User::SearchUsersByName.new.search_by(id_or_name, opts)
+    users = id_or_name =~ /\A\d+\z/ ?
+      User::SearchUsers.new(opts.merge id: id_or_name).search_users :
+      User::SearchUsersByName.new.search_by(id_or_name, opts)
     render json: { users: prepare_to_render(users.take(limit)) }.to_json
   end
 
