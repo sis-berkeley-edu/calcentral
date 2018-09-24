@@ -1680,6 +1680,7 @@ INSERT INTO oec_course_codes VALUES (198, 'UGIS', '188', 'CALTEACH', true, '2018
 INSERT INTO oec_course_codes VALUES (199, 'UGIS', '303', 'CALTEACH', true, '2018-04-03 23:26:36.16', '2018-04-03 23:26:36.16');
 INSERT INTO oec_course_codes VALUES (200, 'UGIS', '82', 'CALTEACH', true, '2018-04-03 23:26:36.16', '2018-04-03 23:26:36.16');
 INSERT INTO oec_course_codes VALUES (201, 'CALTEACH', '', 'CALTEACH', true, '2018-04-03 23:26:36.16', '2018-04-03 23:26:36.16');
+INSERT INTO oec_course_codes VALUES (202, 'CYBER', '', 'MMIMS', true, '2018-09-24 23:26:36.16', '2018-09-24 23:26:36.16');
 
 --
 -- Name: oec_course_codes_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
