@@ -1456,8 +1456,6 @@ class PopulateSisedosH2 < ActiveRecord::Base
       INSERT INTO SISEDO.CLC_STDNT_LOOKUP_V00_VW (UC_SRCH_CRIT,STUDENT_ID,CAMPUS_ID,OPRID,LAST_NAME,FIRST_NAME,MIDDLE_NAME,UC_PRF_FIRST_NM,UC_PRF_MIDDLE_NM,EMAIL_ADDR,ACAD_PROG) VALUES ('alexander.miller@berkeley.edu','23100002','1001238',null,'Miller','Alexander',' ','Alex',null,'alexander.miller@berkeley.edu','GACAD, UCLS');
 
       SQL
-
-      SQL
       
       connection.execute sql
     end
