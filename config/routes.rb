@@ -179,6 +179,8 @@ Calcentral::Application.routes.draw do
     get '/api/campus_solutions/state' => 'campus_solutions/state#get', :defaults => { :format => 'json' }
     get '/api/campus_solutions/student_resources' => 'campus_solutions/student_resources#get', :defaults => { :format => 'json' }
     get '/api/campus_solutions/translate' => 'campus_solutions/translate#get', :defaults => { :format => 'json' }
+    post '/api/campus_solutions/emergency_contact' => 'campus_solutions/emergency_contact#post', :defaults => { :format => 'json' }
+    post '/api/campus_solutions/emergency_phone' => 'campus_solutions/emergency_phone#post', :defaults => { :format => 'json' }
     post '/api/campus_solutions/ethnicity' => 'campus_solutions/ethnicity#post', :defaults => { :format => 'json' }
     post '/api/campus_solutions/language' => 'campus_solutions/language#post', :defaults => { :format => 'json' }
     post '/api/campus_solutions/person_name' => 'campus_solutions/person_name#post', :defaults => { :format => 'json' }
@@ -186,6 +188,8 @@ Calcentral::Application.routes.draw do
     post '/api/campus_solutions/terms_and_conditions' => 'campus_solutions/terms_and_conditions#post', :defaults => { :format => 'json' }
     post '/api/campus_solutions/title4' => 'campus_solutions/title4#post', :defaults => { :format => 'json' }
     post '/api/campus_solutions/work_experience' => 'campus_solutions/work_experience#post', :defaults => { :format => 'json' }
+    delete '/api/campus_solutions/emergency_contact/:contactName' => 'campus_solutions/emergency_contact#delete', :defaults => { :format => 'json' }
+    delete '/api/campus_solutions/emergency_phone/:contactName/:phoneType' => 'campus_solutions/emergency_phone#delete', :defaults => { :format => 'json' }
     delete '/api/campus_solutions/ethnicity/:ethnicGroupCode/:regRegion' => 'campus_solutions/ethnicity#delete', :defaults => { :format => 'json' }
     delete '/api/campus_solutions/language/:languageCode' => 'campus_solutions/language#delete', :defaults => { :format => 'json' }
     delete '/api/campus_solutions/person_name/:type' => 'campus_solutions/person_name#delete', :defaults => { :format => 'json' }

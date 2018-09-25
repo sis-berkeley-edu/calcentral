@@ -20,10 +20,18 @@ angular.module('calcentral.factories').factory('profileFactory', function(apiSer
   var urlTypesRelationship = urlTypes + '?field_name=RELATIONSHIP';
   var urlWorkExperience = '/api/edos/work_experience';
 
+  var urlPostEmergencyContact = '/api/campus_solutions/emergency_contact';
+  var urlPostEmergencyPhone = '/api/campus_solutions/emergency_phone';
   var urlPostLanguage = '/api/campus_solutions/language';
   var urlPostName = '/api/campus_solutions/person_name';
   var urlPostWorkExperience = '/api/campus_solutions/work_experience';
 
+  var deleteEmergencyContact = function(options) {
+    return $http.delete(urlPostEmergencyContact + '/' + options.contactName, options);
+  };
+  var deleteEmergencyPhone = function(options) {
+    return $http.delete(urlPostEmergencyPhone + '/' + options.contactName + '/' + options.phoneType, options);
+  };
   var deleteLanguage = function(options) {
     return $http.delete(urlDeleteLanguage + '/' + options.languageCode, options);
   };
@@ -67,6 +75,12 @@ angular.module('calcentral.factories').factory('profileFactory', function(apiSer
   };
 
   // Post
+  var postEmergencyContact = function(options) {
+    return $http.post(urlPostEmergencyContact, options);
+  };
+  var postEmergencyPhone = function(options) {
+    return $http.post(urlPostEmergencyPhone, options);
+  };
   var postLanguage = function(options) {
     return $http.post(urlPostLanguage, options);
   };
@@ -78,6 +92,8 @@ angular.module('calcentral.factories').factory('profileFactory', function(apiSer
   };
 
   return {
+    deleteEmergencyContact: deleteEmergencyContact,
+    deleteEmergencyPhone: deleteEmergencyPhone,
     deleteLanguage: deleteLanguage,
     deleteWorkExperience: deleteWorkExperience,
     getConfidentialStudentMessage: getConfidentialStudentMessage,
@@ -91,6 +107,8 @@ angular.module('calcentral.factories').factory('profileFactory', function(apiSer
     getTypesPayFrequency: getTypesPayFrequency,
     getTypesRelationship: getTypesRelationship,
     getWorkExperience: getWorkExperience,
+    postEmergencyContact: postEmergencyContact,
+    postEmergencyPhone: postEmergencyPhone,
     postLanguage: postLanguage,
     postName: postName,
     postWorkExperience: postWorkExperience
