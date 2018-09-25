@@ -75,8 +75,9 @@ angular.module('calcentral.controllers').controller('ProfileEmailController', fu
       type: item.type.code,
       email: item.emailAddress,
       isPreferred: item.primary ? 'Y' : 'N'
-    }).then(saveCompleted)
-      .catch(saveFailed);
+    })
+    .then(saveCompleted)
+    .catch(saveFailed);
   };
 
   $scope.showAdd = function() {

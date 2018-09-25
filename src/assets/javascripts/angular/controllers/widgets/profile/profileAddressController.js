@@ -64,9 +64,6 @@ angular.module('calcentral.controllers').controller('ProfileAddressController', 
     }
   };
 
-  /**
-   * Removes previous address data, we need to do this every time you change the country
-   */
   var removePreviousAddressData = function() {
     $scope.currentObject.data = _.fromPairs(_.map($scope.currentObject.data, function(value, key) {
       if (['country', 'type'].indexOf(key) === -1) {
@@ -105,9 +102,6 @@ angular.module('calcentral.controllers').controller('ProfileAddressController', 
     });
   };
 
-  /**
-   * We need to watch when the country changes, if so, load the address fields dynamically depending on the country
-   */
   var startCountryWatch = function() {
     countryWatcher = $scope.$watch('currentObject.data.country', countryWatch);
   };
@@ -166,9 +160,9 @@ angular.module('calcentral.controllers').controller('ProfileAddressController', 
     }, apiService.profile.matchFields($scope.currentObject.fields, item));
 
     apiService.profile
-      .save($scope, profileFactory.postAddress, merge)
-      .then(saveCompleted)
-      .catch(saveFailed);
+    .save($scope, profileFactory.postAddress, merge)
+    .then(saveCompleted)
+    .catch(saveFailed);
   };
 
   $scope.showAdd = function() {

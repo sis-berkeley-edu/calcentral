@@ -247,13 +247,6 @@ angular.module('calcentral.controllers').controller('EmergencyContactController'
     apiService.profile.showEdit($scope.emergencyPhone, item);
   };
 
-  /**
-   * Processes each emergencyContact for any emergencyPhones listed, creates a
-   * flattened one-dimensional array of all phone objects, associates the
-   * contactName with each phone for later use by post and delete, and assigns
-   * the flat array to the inner `emergencyPhone` scope's contents.
-   * @param {Array} emergencyContacts The user's emergencyContacts list.
-   */
   var parseEmergencyPhones = function(emergencyContacts) {
     $scope.emergencyPhone.isLoading = true;
 
@@ -344,12 +337,7 @@ angular.module('calcentral.controllers').controller('EmergencyContactController'
 
     $scope.relationshipTypes = sortRelationshipTypes(relationshipTypes);
   };
-  /**
-   * Sort relationshipTypes array in ascending order by description (text
-   * displayed in select element), while pushing options representing "Other
-   * Relative" (`R`), and generic "Other" (`O`) to the end of the sorted array.
-   * @return {Array} The sorted array of relationship types.
-   */
+
   var sortRelationshipTypes = function(types) {
     var OTHER_RELATIONSHIP = ['O', 'R'];
 
@@ -415,13 +403,6 @@ angular.module('calcentral.controllers').controller('EmergencyContactController'
     countryWatcher = $scope.$watch('currentObject.data.country', countryWatch);
   };
 
-  /**
-   *  If we're in the contact editor and we've updated a secondary emergency
-   *  phone in the phone editor, then we need to grab the current contact being
-   *  edited and match it with the updated item returned by the refreshed feed,
-   *  and then pass the updated item to `showEdit` which repopulates the form
-   *  with the updated information.
-   */
   var refreshContactEditor = function() {
     var editingContact = $scope.currentObject.data;
 
