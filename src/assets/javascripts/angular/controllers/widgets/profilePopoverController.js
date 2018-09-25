@@ -10,7 +10,7 @@ angular.module('calcentral.controllers').controller('ProfilePopoverController', 
 
   var loadLink = function() {
     csLinkFactory.getLink({
-      urlId: 'UC_CX_PROFILE'
+      urlId: 'UC_CC_PROFILE'
     }).then(function(response) {
       $scope.profilePopover.link = _.get(response, 'data.link');
       $scope.profilePopover.isLoading = false;

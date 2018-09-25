@@ -5,7 +5,7 @@ describe HubEdos::MyStudent do
     proxy.get_feed_internal
   }
   before do
-    allow_any_instance_of(LinkFetcher).to receive(:fetch_link).with('UC_CX_PROFILE', anything).and_return('edit profile link')
+    allow_any_instance_of(LinkFetcher).to receive(:fetch_link).with('UC_CC_PROFILE', anything).and_return('edit profile link')
   end
   context 'mock proxy' do
     it 'should return unfiltered feed' do

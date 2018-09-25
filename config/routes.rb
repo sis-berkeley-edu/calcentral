@@ -174,18 +174,21 @@ Calcentral::Application.routes.draw do
     get '/api/campus_solutions/holds' => 'campus_solutions/holds#get', :defaults => { :format => 'json' }
     get '/api/campus_solutions/language_code' => 'campus_solutions/language_code#get', :defaults => { :format => 'json' }
     get '/api/campus_solutions/link' => 'campus_solutions/link#get', :defaults => { :format => 'json' }
+    get '/api/campus_solutions/name_type' => 'campus_solutions/name_type#get', :defaults => { :format => 'json' }
     get '/api/campus_solutions/slr_deeplink' => 'campus_solutions/slr_deeplink#get', :defaults => { :format => 'json' }
     get '/api/campus_solutions/state' => 'campus_solutions/state#get', :defaults => { :format => 'json' }
     get '/api/campus_solutions/student_resources' => 'campus_solutions/student_resources#get', :defaults => { :format => 'json' }
     get '/api/campus_solutions/translate' => 'campus_solutions/translate#get', :defaults => { :format => 'json' }
     post '/api/campus_solutions/ethnicity' => 'campus_solutions/ethnicity#post', :defaults => { :format => 'json' }
     post '/api/campus_solutions/language' => 'campus_solutions/language#post', :defaults => { :format => 'json' }
+    post '/api/campus_solutions/person_name' => 'campus_solutions/person_name#post', :defaults => { :format => 'json' }
     post '/api/campus_solutions/sir_response' => 'campus_solutions/sir_response#post', :defaults => { :format => 'json' }
     post '/api/campus_solutions/terms_and_conditions' => 'campus_solutions/terms_and_conditions#post', :defaults => { :format => 'json' }
     post '/api/campus_solutions/title4' => 'campus_solutions/title4#post', :defaults => { :format => 'json' }
     post '/api/campus_solutions/work_experience' => 'campus_solutions/work_experience#post', :defaults => { :format => 'json' }
     delete '/api/campus_solutions/ethnicity/:ethnicGroupCode/:regRegion' => 'campus_solutions/ethnicity#delete', :defaults => { :format => 'json' }
     delete '/api/campus_solutions/language/:languageCode' => 'campus_solutions/language#delete', :defaults => { :format => 'json' }
+    delete '/api/campus_solutions/person_name/:type' => 'campus_solutions/person_name#delete', :defaults => { :format => 'json' }
     delete '/api/campus_solutions/work_experience/:sequenceNbr' => 'campus_solutions/work_experience#delete', :defaults => { :format => 'json' }
 
     # Redirect to College Scheduler

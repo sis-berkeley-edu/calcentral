@@ -21,6 +21,7 @@ angular.module('calcentral.factories').factory('profileFactory', function(apiSer
   var urlWorkExperience = '/api/edos/work_experience';
 
   var urlPostLanguage = '/api/campus_solutions/language';
+  var urlPostName = '/api/campus_solutions/person_name';
   var urlPostWorkExperience = '/api/campus_solutions/work_experience';
 
   var deleteLanguage = function(options) {
@@ -69,6 +70,9 @@ angular.module('calcentral.factories').factory('profileFactory', function(apiSer
   var postLanguage = function(options) {
     return $http.post(urlPostLanguage, options);
   };
+  var postName = function(options) {
+    return $http.post(urlPostName, options);
+  };
   var postWorkExperience = function(options) {
     return $http.post(urlPostWorkExperience, options);
   };
@@ -88,6 +92,7 @@ angular.module('calcentral.factories').factory('profileFactory', function(apiSer
     getTypesRelationship: getTypesRelationship,
     getWorkExperience: getWorkExperience,
     postLanguage: postLanguage,
+    postName: postName,
     postWorkExperience: postWorkExperience
   };
 });

@@ -1,0 +1,54 @@
+<div class="cc-page-widget-profile-section-content-item-editing">
+  <div class="cc-page-widget-profile-section-content-error cc-text-red" data-ng-if="errorMessage">
+    <i class="cc-icon-red fa fa-exclamation-circle"></i>
+    <span data-ng-bind="errorMessage"></span>
+  </div>
+  <div data-ng-if="!isDeleting">
+    <form data-ng-submit="save(currentObject.data)" name="cc_page_widget_basic_preferred_name">
+      <div>
+        <label for="cc-page-widget-basic-preferred-first-name">
+          <strong>First Name</strong>
+        </label>
+      </div>
+      <div>
+        <p>Preferred names are limited to alphabetical characters (A-Z), spaces, and hyphens. Consecutive spaces or hyphens are not allowed.</p>
+        <input type="text" id="cc-page-widget-basic-preferred-first-name" name="preferred_first_name" required aria-required="true" maxlength="30"
+          data-ng-class="{'cc-page-widget-profile-section-input-error': cc_page_widget_basic_preferred_name.preferred_first_name.$invalid}"
+          data-ng-model="currentObject.data.givenName" data-ng-pattern="preferredNamePattern">
+        <div class="cc-page-widget-profile-section-input-error-message cc-text-red" data-ng-if="cc_page_widget_basic_preferred_name.preferred_first_name.$invalid">
+          <i class="cc-icon-red fa fa-exclamation-circle"></i>
+          <strong>Invalid entry: </strong><span>Preferred name can only consist of letters, spaces, and hyphens. Please re-enter.</span>
+        </div>
+      </div>
+      <div>
+        <strong>Middle Name</strong>
+      </div>
+      <div>
+        <span data-ng-bind="currentObject.data.middleName" data-ng-if="currentObject.data.middleName"></span>
+        <span data-ng-if="!currentObject.data.middleName" class="cc-page-widget-profile-section-not-available">Not Available</span>
+      </div>
+      <div>
+        <strong>Last Name</strong>
+      </div>
+      <div>
+        <span data-ng-bind="currentObject.data.familyName" data-ng-if="currentObject.data.familyName"></span>
+        <span data-ng-if="!currentObject.data.familyName" class="cc-page-widget-profile-section-not-available">Not Available</span>
+      </div>
+      <div>
+        <strong>Suffix</strong>
+      </div>
+      <div>
+        <span data-ng-bind="currentObject.data.suffixName" data-ng-if="currentObject.data.suffixName"></span>
+        <span data-ng-if="!currentObject.data.suffixName" class="cc-page-widget-profile-section-not-available">Not Available</span>
+      </div>
+
+      <div>
+        <button class="cc-button cc-button-blue" type="submit" data-ng-disabled="cc_page_widget_basic_preferred_name.$invalid || isSaving">
+          <span data-ng-if="!isSaving">Save</span>
+          <span data-ng-if="isSaving">Updating&hellip;</span>
+        </button>
+        <button class="cc-button" data-ng-click="closeEditor()" data-ng-disabled="isSaving">Cancel</button>
+      </div>
+    </form>
+  </div>
+</div>
