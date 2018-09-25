@@ -24,6 +24,11 @@
     .cc-page-widget-profile-section {
       border-top: 1px solid $cc-color-very-light-grey;
     }
+    > div {
+      &:last-child:not(:first-child) {
+        border-bottom: 1px solid $cc-color-very-light-grey;
+      }
+    }
   }
   .cc-page-widget-profile-section {
     display: flex;
