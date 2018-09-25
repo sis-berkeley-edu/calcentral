@@ -19,7 +19,6 @@ describe HubEdos::MyStudent do
         expect(student).to have(2).items
         expect(student).to include *fields
         expect(student['affiliations'][0]['status']['code']).to_not be_nil
-        expect(subject[:feed][:links][:editContactInformation]).to be
       end
     end
   end

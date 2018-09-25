@@ -11,16 +11,11 @@ angular.module('calcentral.controllers').controller('ContactController', functio
     isErrored: false
   };
 
-  var parseContactInformation = function(response) {
-    $scope.contactInformation.isErrored = _.get(response, 'data.errored');
-    $scope.contactInformation.editLink = _.get(response, 'data.feed.links.editContactInformation');
-  };
-
   var loadInformation = function() {
     profileFactory.getPerson()
-    .then(parseContactInformation)
-    .finally(function() {
+    .then(function(response) {
       $scope.contactInformation.isLoading = false;
+      $scope.contactInformation.isErrored = _.get(response, 'data.errored');
     });
   };
 

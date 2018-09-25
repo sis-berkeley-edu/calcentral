@@ -10,7 +10,6 @@ module HubEdos
     # This feed is currently used only by front-end code and is cached in multiple view-as flavors.
     # That combination means a little CPU time can be gained by caching only the JSON output.
     include Cache::JsonifiedFeed
-    include LinkFetcher
 
     def get_feed_internal
       merged = {
@@ -34,11 +33,6 @@ module HubEdos
         end
       end
 
-      # TODO: replace link ID with the correct one
-      merged[:feed][:links] = {
-        editContactInformation: fetch_link('UC_CX_XFER_CREDIT_REPORT_STDNT', {EMPLID: campus_solutions_id.to_s})
-      }
-
       # When we don't have any identifiers for this student, we should send a 404 to the front-end
       if !merged[:errored] && !merged[:feed][:student]['identifiers']
         merged[:statusCode] = 404
@@ -47,10 +41,6 @@ module HubEdos
       end
 
       merged
-    end
-
-    def campus_solutions_id
-      CalnetCrosswalk::ByUid.new(user_id: @uid).lookup_campus_solutions_id
     end
 
     def instance_key

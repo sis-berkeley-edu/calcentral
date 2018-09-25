@@ -4,8 +4,8 @@ class ApiEdosStudentPage
   include ClassLogger
 
   def get_json(driver)
-    logger.info 'Parsing JSON from /api/my/profile'
-    navigate_to "#{WebDriverUtils.base_url}/api/my/profile"
+    logger.info 'Parsing JSON from /api/edos/student'
+    navigate_to "#{WebDriverUtils.base_url}/api/edos/student"
     wait_until(WebDriverUtils.page_load_timeout) { driver.find_element(:xpath, '//pre[contains(.,"statusCode")]') }
     @parsed = JSON.parse driver.find_element(:xpath, '//pre').text
   end

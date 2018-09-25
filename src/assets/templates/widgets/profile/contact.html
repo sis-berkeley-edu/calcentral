@@ -3,13 +3,6 @@
   data-ng-controller="ContactController"
   data-cc-spinner-directive="contactInformation.isLoading">
 
-  <div class="cc-page-widget-profile-action">
-    <a class="cc-button cc-button-blue"
-       data-cc-campus-solutions-link-directive="contactInformation.editLink"
-       data-cc-campus-solutions-link-directive-cc-page-name="currentPage.name"
-       data-cc-campus-solutions-link-directive-cc-page-url="currentPage.url"
-    >Edit Profile</a>
-  </div>
   <div data-ng-if="!contactInformation.isErrored">
     <!-- Phone Number -->
     <div data-ng-include="'widgets/profile/contact_phone.html'"></div>

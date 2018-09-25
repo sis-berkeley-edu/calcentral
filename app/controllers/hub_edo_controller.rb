@@ -6,6 +6,19 @@ class HubEdoController < ApplicationController
     json_passthrough MyAcademics::MyAcademicStatus
   end
 
+  def student
+    options = case
+                when current_user.authenticated_as_delegate?
+                  { include_fields: %w(affiliations identifiers) }
+                when current_user.authenticated_as_advisor?
+                  { include_fields: %w(addresses affiliations emails emergencyContacts identifiers names phones urls residency gender) }
+                else
+                  # Rely on the defaults per proxy class
+                  {}
+              end
+    json_passthrough HubEdos::MyStudent, options
+  end
+
   def work_experience
     # Delegates get an empty feed.
     if current_user.authenticated_as_delegate?
