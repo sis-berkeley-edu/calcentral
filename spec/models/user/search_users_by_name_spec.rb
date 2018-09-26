@@ -10,17 +10,17 @@ describe User::SearchUsersByName do
   let(:proxy) { User::SearchUsersByName.new }
   subject { proxy.search_by name, opts }
 
-  shared_examples "a search with empty input" do
-    context "nil input" do
+  shared_examples 'a search with empty input' do
+    context 'nil input' do
       it { should be_empty }
     end
-    context "blank input" do
-      let(:name) { "    " }
+    context 'blank input' do
+      let(:name) { '    ' }
       it { should be_empty }
     end
   end
 
-  context "SISEDO search" do
+  context 'SISEDO search' do
     let(:search_results) do
       [
         {
@@ -32,11 +32,11 @@ describe User::SearchUsersByName do
           'first_name_preferred' => nil,
           'middle_name_preferred' => nil,
           'email' => "dschrute@example.com",
-          'academic_programs' => "GACAD"
+          'academic_programs' => 'GACAD'
         }
       ]
     end
-    it_should_behave_like "a search with empty input"
+    it_should_behave_like 'a search with empty input'
     context 'filter by role' do
       let(:name) { random_name }
       let(:roles) { [:student, :exStudent] }
