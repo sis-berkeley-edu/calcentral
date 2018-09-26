@@ -3,14 +3,6 @@
   data-ng-controller="BasicController"
   data-cc-spinner-directive="basicInformation.isLoading">
 
-  <div class="cc-page-widget-profile-action">
-    <a class="cc-button cc-button-blue"
-       data-ng-disabled="!basicInformation.editLink.url"
-       data-cc-campus-solutions-link-directive="basicInformation.editLink"
-       data-cc-campus-solutions-link-directive-cc-page-name="currentPage.name"
-       data-cc-campus-solutions-link-directive-cc-page-url="currentPage.url"
-    >Edit Profile</a>
-  </div>
   <div data-ng-if="!basicInformation.isErrored">
     <!-- Name -->
     <div data-ng-include="'widgets/profile/basic_name.html'"></div>
