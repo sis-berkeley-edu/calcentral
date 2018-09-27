@@ -48,7 +48,7 @@ describe User::SearchUsersByName do
           allow(User::AggregatedAttributes).to receive(:new).with(uid).and_return double(get_feed: {ldapUid: uid, roles: { role => true }})
           {'campus_uid' => uid}
         end
-        allow(EdoOracle::Queries).to receive(:search_students).with(name).and_return sisedo_records
+        allow(EdoOracle::Queries).to receive(:search_students).and_return sisedo_records
       end
       it 'should only match on student-related roles' do
         expect(subject).to have(2).items
