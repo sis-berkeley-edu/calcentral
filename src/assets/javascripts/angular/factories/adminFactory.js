@@ -48,7 +48,8 @@ angular.module('calcentral.factories').factory('adminFactory', function(apiServi
   };
 
   var searchUsers = function(input) {
-    return $http.get(searchUsersURL + input);
+    var encodedInput = apiService.http.encode(input);
+    return $http.get(searchUsersURL + encodedInput + '/');
   };
 
   var getStoredUsers = function(options) {

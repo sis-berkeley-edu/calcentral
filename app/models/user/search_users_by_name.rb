@@ -14,8 +14,8 @@ module User
 
     def search_sisedo(name, opts)
       users = []
-      search_string = name.to_s.gsub(/[^0-9a-z ]/i, '')
-      sisedo_users = EdoOracle::Queries.search_students(name)
+      search_string = User::SearchUsersByNameFilter.new().prepare_for_query(name)
+      sisedo_users = EdoOracle::Queries.search_students(search_string)
       sisedo_users.each do |sisedo_user|
         if uid = get_ldap_uid(sisedo_user)
           if (user = User::SearchUsersByUid.new(opts.merge(id: uid)).search_users_by_uid)
