@@ -5,16 +5,15 @@ module CanvasCsv
     attr_accessor :users_csv_filename
     attr_accessor :term_to_memberships_csv_filename
 
-    def initialize(batch_or_incremental)
+    def initialize(accounts_or_all='all')
       super()
-      @users_csv_filename = "#{@export_dir}/canvas-#{DateTime.now.strftime('%F')}-users-#{batch_or_incremental}.csv"
-      @accounts_only = (batch_or_incremental == 'accounts')
+      @users_csv_filename = "#{@export_dir}/canvas-#{DateTime.now.strftime('%F')}-users-#{accounts_or_all}.csv"
+      @accounts_only = (accounts_or_all == 'accounts')
       unless @accounts_only
         @term_to_memberships_csv_filename = {}
-        @batch_mode = (batch_or_incremental == 'batch')
         term_ids = Canvas::Terms.current_sis_term_ids
         term_ids.each do |term_id|
-          csv_filename = "#{@export_dir}/canvas-#{DateTime.now.strftime('%F')}-#{file_safe(term_id)}-enrollments-#{batch_or_incremental}.csv"
+          csv_filename = "#{@export_dir}/canvas-#{DateTime.now.strftime('%F')}-#{file_safe(term_id)}-enrollments-#{accounts_or_all}.csv"
           @term_to_memberships_csv_filename[term_id] = csv_filename
         end
       end
@@ -62,15 +61,13 @@ module CanvasCsv
           sis_section_ids = csv_rows.collect { |row| row['section_id'] }
           sis_section_ids.delete_if {|section| section.blank? }
           # Process using cached enrollment data. See CanvasCsv::TermEnrollments
-          CanvasCsv::SiteMembershipsMaintainer.process(course_id, sis_section_ids, enrollments_csv, users_csv, known_users, @batch_mode, cached_enrollments_provider, sis_user_id_changes)
+          CanvasCsv::SiteMembershipsMaintainer.process(course_id, sis_section_ids, enrollments_csv, users_csv, known_users, cached_enrollments_provider, sis_user_id_changes)
         end
         logger.debug "Finished processing refresh for Course ID #{course_id}"
       end
     end
 
     # Uploading a single zipped archive containing both users and enrollments would be safer and more efficient.
-    # However, a batch update can only be done for one term. If we decide to limit Canvas refreshes
-    # to a single term, then we should change this code.
     def import_csv_files
       import_proxy = Canvas::SisImport.new
       if @users_csv_filename.blank? || import_proxy.import_users(@users_csv_filename)
@@ -78,13 +75,8 @@ module CanvasCsv
         unless @accounts_only
           @term_to_memberships_csv_filename.each do |term_id, csv_filename|
             if csv_filename.present?
-              if @batch_mode
-                import_proxy.import_batch_term_enrollments(term_id, csv_filename)
-                logger.warn "Batch enrollment import for #{term_id} succeeded"
-              else
-                import_proxy.import_all_term_enrollments(term_id, csv_filename)
-                logger.warn "Incremental enrollment import for #{term_id} succeeded"
-              end
+              import_proxy.import_all_term_enrollments(term_id, csv_filename)
+              logger.warn "Incremental enrollment import for #{term_id} succeeded"
             end
           end
         end

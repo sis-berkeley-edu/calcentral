@@ -14,10 +14,10 @@ module CanvasCsv
       'TeacherEnrollment' => 'teacher'
     }
 
-    def self.process(sis_course_id, sis_section_ids, enrollments_csv_output, users_csv_output, known_users, batch_mode = false, cached_enrollments_provider = nil, sis_user_id_changes = {})
+    def self.process(sis_course_id, sis_section_ids, enrollments_csv_output, users_csv_output, known_users, cached_enrollments_provider = nil, sis_user_id_changes = {})
       logger.info "Processing refresh of enrollments for SIS Course ID '#{sis_course_id}'"
       worker = self.new(sis_course_id, sis_section_ids,
-        enrollments_csv_output, users_csv_output, known_users, :batch_mode => batch_mode, :cached_enrollments_provider => cached_enrollments_provider, :sis_user_id_changes => sis_user_id_changes)
+        enrollments_csv_output, users_csv_output, known_users, :batch_mode => false, :cached_enrollments_provider => cached_enrollments_provider, :sis_user_id_changes => sis_user_id_changes)
       worker.refresh_sections_in_course
     end
 
