@@ -126,7 +126,7 @@ canvas_proxy:
   reporter_uid:
 
 ldap:
-  host: 'nds.berkeley.edu'
+  host: 'ldap.berkeley.edu'
   port: 636
   application_bind: 'uid=someApp,ou=applications,dc=berkeley,dc=edu'
   application_password: 'someMumboJumbo'
