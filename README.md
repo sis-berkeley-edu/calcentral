@@ -181,10 +181,14 @@ http://www.oracle.com/technetwork/java/javase/downloads/index.html
     npm install -g gulp
     ```
 
-1. Start the front-end build & watch for changes:
+1. Start the front-end development server, or kick off a Webpack build:
 
     ```bash
-    gulp build
+    # starts development server
+    npm run dev
+
+    # starts build process
+    npm run build
     ```
 
 1. Start the server:
@@ -193,8 +197,8 @@ http://www.oracle.com/technetwork/java/javase/downloads/index.html
     rails s
     ```
 
-1. Access your development server at [localhost:3000](http://localhost:3000/).
-Do not use 127.0.0.1:3000, as you will not be able to grant access to bApps.
+1. Access your rails server at [localhost:3000](http://localhost:3000/), or the Webpack development server at [localhost:3001](http://localhost:3001/).
+Do not use [127.0.0.1:3000](http://127.0.0.1:3000), as you will not be able to grant access to bApps.
 
 **Note**: Usually you won't have to do any of the following steps when you're developing on CalCentral.
 
@@ -224,31 +228,10 @@ You can even run Spork right inside [IntelliJ RubyMine or IDEA](http://www.jetbr
 Front-end linting can be done by running the following commands:
 
 ```bash
-rm -rf node_modules
-npm install
 npm run lint
 ```
 
 This will check for any potential JavaScript issues and whether you formatted the code correctly.
-
-## Browsersync
-
-[Browsersync](http://www.browsersync.io/) makes developing faster by synchronizing file changes and interactions across multiple devices. Browsersync will automatically:
-
-- Update the browser when SCSS files are changed
-- Reload the browser when a template or JS file is changed
-
-Browsersync is turned on by default during development mode. To turn it off, set the option to `false`:
-
-```bash
-gulp --browsersync false
-```
-
-During production mode, Browsersync is turned off.
-
-Your `rails server` must finish starting up before executing Browsersync. Once Browsersync is executed, access your development server at [localhost:3001](http://localhost:3001/). No real time file changes will be reflected at [localhost:3000](http://localhost:3000/).
-
-While the server is running, you can access Browsersync settings at [localhost:3002](http://localhost:3002/), where you can change sync options, view history, and more.
 
 ## Role-Aware Testing
 
@@ -289,7 +272,7 @@ These features may be invisible when logged in as yourself. In particular:
 1. Precompile the front-end assets
 
     ```bash
-    gulp build --env production
+    npm run build
     ```
 
 1. Start the server in production mode:
@@ -300,11 +283,7 @@ These features may be invisible when logged in as yourself. In particular:
 
 1. If you're not able to connect to Google or Canvas, export the data in the oauth2 from your development db and import them into the same table in your production db.
 
-1. After testing, remove the static assets:
-
-    ```bash
-    gulp build-clean
-    ```
+1. After testing, remember to remove the static assets, or run another build before the next task.
 
 ### Start the server with TorqueBox
 
