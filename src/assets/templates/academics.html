@@ -27,7 +27,7 @@
       <div data-ng-include="'widgets/academics/degree_progress_undergrad.html'" data-ng-controller="UndergraduateDegreeProgressController"></div>
       <div data-ng-include="'widgets/academics/degree_progress_graduate.html'" data-ng-controller="GraduateDegreeProgressController"></div>
       <div data-ng-include="'academics_teaching.html'" data-ng-if="!api.user.profile.delegateActingAsUid && hasTeachingClasses"></div>
-      <div data-ng-include="'widgets/final_exam_schedule.html'" data-ng-init="finalExamMode='instructor'" data-ng-if="!api.user.profile.delegateActingAsUid && hasTeachingClasses && api.user.profile.hasStudentHistory && api.user.profile.roles.student"></div>
+      <div data-ng-include="'widgets/final_exam_schedule.html'" data-ng-init="finalExamMode='instructor'" data-ng-if="!api.user.profile.delegateActingAsUid && hasTeachingClasses && api.user.profile.hasStudentHistory && (api.user.profile.roles.student || api.user.profile.roles.exStudent)"></div>
 
       <div data-ng-include="'academics_higher_degree_committees.html'" data-ng-if="api.user.profile.features.csCommittees && !api.user.profile.delegateActingAsUid && (api.user.profile.roles.student || api.user.profile.roles.exStudent)"></div>
       <div data-ng-include="'academics_higher_degree_faculty_committees.html'" data-ng-if="api.user.profile.features.csCommittees && !api.user.profile.delegateActingAsUid && api.user.profile.roles.faculty"></div>
