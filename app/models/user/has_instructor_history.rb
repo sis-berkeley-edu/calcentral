@@ -5,7 +5,7 @@ module User
     include Cache::UserCacheExpiry
 
     def has_instructor_history?(current_terms = nil)
-      self.class.fetch_from_cache @uid do
+      self.class.fetch_from_cache "#{@uid}-" + (current_terms && current_terms.collect {|t| t.slug}).to_s do
         grouped_terms = Berkeley::Terms.legacy_group(current_terms)
         has_legacy_instructor_history = Proc.new do
           # If no terms are specified, the query will search all terms by default.

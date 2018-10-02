@@ -2,8 +2,8 @@ describe User::HasInstructorHistory do
   let(:uid) { '2050' }
 
   describe 'has_instructor_history?' do
-    let(:legacy_term) { double(:term, :legacy? => true) }
-    let(:sisedo_term) { double(:term, :legacy? => false) }
+    let(:legacy_term) { double(:term, :legacy? => true, :slug => 'spring-2016') }
+    let(:sisedo_term) { double(:term, :legacy? => false, :slug => 'fall-2016') }
     let(:current_terms) { [sisedo_term, legacy_term] }
     let(:is_legacy_instructor) { false }
     let(:is_sisedo_instructor) { false }
