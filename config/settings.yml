@@ -117,6 +117,8 @@ canvas_proxy:
   inactivate_expired_users: true
   # Set to false if Canvas permissions block our ability to delete an invalid email address.
   delete_bad_emails: true
+  # Set to false to use an API loop to change SIS User IDs.
+  sis_id_changes_csv: true
   # URL for scripts to point to CalCentral/Junction
   app_provider_host: 'http://localhost:3000'
   test_admin_id:

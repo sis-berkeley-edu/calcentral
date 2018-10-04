@@ -319,7 +319,7 @@ describe CanvasCsv::SiteMembershipsMaintainer do
       end
 
       context 'when new sis user id present for dropped enrollment' do
-        let(:sis_user_id_changes) { { 'sis_login_id:7978' => '2018903' } }
+        let(:sis_user_id_changes) { { 'sis_login_id:7978' => {'old_id' => 'UID:7978', 'new_id' => '2018903'} } }
         it 'uses new sis user id' do
           expect(subject.count).to eq 3
           expect(subject[0]['user_id']).to eq "UID:#{uid}"

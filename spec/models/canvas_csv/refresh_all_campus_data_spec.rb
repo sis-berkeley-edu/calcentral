@@ -84,8 +84,8 @@ describe CanvasCsv::RefreshAllCampusData do
           enrollments_csv = subject.instance_eval { @term_to_memberships_csv_filename.values[0] }
           expected_course_id = 'CRS:COMPSCI-9D-2014-D'
           expected_sis_section_ids = ['SEC:2014-D-25123', 'SEC:2014-D-25124']
-          sis_user_id_changes = { 'sis_login_id:7978' => '2018903' }
-          expect(CanvasCsv::SiteMembershipsMaintainer).to receive(:process).with(expected_course_id, expected_sis_section_ids, enrollments_csv, users_csv, known_users, false, cached_enrollments_provider, sis_user_id_changes).once
+          sis_user_id_changes = { 'sis_login_id:7978' => {'old_id' => 'UID:7978', 'new_id' => '2018903'} }
+          expect(CanvasCsv::SiteMembershipsMaintainer).to receive(:process).with(expected_course_id, expected_sis_section_ids, enrollments_csv, users_csv, known_users, cached_enrollments_provider, sis_user_id_changes).once
           subject.refresh_existing_term_sections(term, enrollments_csv, known_users, users_csv, cached_enrollments_provider, sis_user_id_changes)
         end
       end
@@ -111,14 +111,23 @@ describe CanvasCsv::RefreshAllCampusData do
 
   describe 'user-accounts-only mode' do
     subject { CanvasCsv::RefreshAllCampusData.new 'accounts' }
+    before do
+      allow(Settings.canvas_proxy).to receive(:sis_id_changes_csv).and_return true
+    end
     it 'only refreshes existing user accounts and leaves memberships alone' do
       expect_any_instance_of(CanvasCsv::MaintainUsers).to receive(:refresh_existing_user_accounts).once.and_return nil
       expect(subject).to receive(:refresh_existing_term_sections).never
-      expect(subject).to receive(:csv_count).once.and_return 1
+      expect(subject).to receive(:csv_count).twice.and_return 1
       expect_any_instance_of(Canvas::SisImport).to receive(:import_users).once.and_return true
-      expect_any_instance_of(Canvas::SisImport).to receive(:import_batch_term_enrollments).never
+      expect_any_instance_of(Canvas::SisImport).to receive(:import_sis_ids).once.and_return true
       expect_any_instance_of(Canvas::SisImport).to receive(:import_all_term_enrollments).never
       subject.run
+    end
+    context 'using APIs to change SIS IDs' do
+      before { allow(Settings.canvas_proxy).to receive(:sis_id_changes_csv).and_return false }
+      it 'does not import SIS IDs CSV' do
+        expect_any_instance_of(Canvas::SisImport).to receive(:import_sis_ids).never
+      end
     end
   end
 

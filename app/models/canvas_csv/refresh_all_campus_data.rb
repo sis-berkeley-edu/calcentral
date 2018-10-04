@@ -5,16 +5,18 @@ module CanvasCsv
     attr_accessor :users_csv_filename
     attr_accessor :term_to_memberships_csv_filename
 
-    def initialize(batch_or_incremental)
+    def initialize(accounts_or_all='all')
       super()
-      @users_csv_filename = "#{@export_dir}/canvas-#{DateTime.now.strftime('%F')}-users-#{batch_or_incremental}.csv"
-      @accounts_only = (batch_or_incremental == 'accounts')
+      if Settings.canvas_proxy.sis_id_changes_csv
+        @sis_ids_csv_filename = "#{@export_dir}/canvas-#{DateTime.now.strftime('%F')}-sis-ids.csv"
+      end
+      @users_csv_filename = "#{@export_dir}/canvas-#{DateTime.now.strftime('%F')}-users-#{accounts_or_all}.csv"
+      @accounts_only = (accounts_or_all == 'accounts')
       unless @accounts_only
         @term_to_memberships_csv_filename = {}
-        @batch_mode = (batch_or_incremental == 'batch')
         term_ids = Canvas::Terms.current_sis_term_ids
         term_ids.each do |term_id|
-          csv_filename = "#{@export_dir}/canvas-#{DateTime.now.strftime('%F')}-#{file_safe(term_id)}-enrollments-#{batch_or_incremental}.csv"
+          csv_filename = "#{@export_dir}/canvas-#{DateTime.now.strftime('%F')}-#{file_safe(term_id)}-enrollments-#{accounts_or_all}.csv"
           @term_to_memberships_csv_filename[term_id] = csv_filename
         end
       end
@@ -27,9 +29,14 @@ module CanvasCsv
 
     def make_csv_files
       users_csv = make_users_csv(@users_csv_filename)
+      sis_ids_csv = make_sis_ids_csv(@sis_ids_csv_filename) if @sis_ids_csv_filename
       known_users = {}
-      user_maintainer = MaintainUsers.new(known_users, users_csv)
+      user_maintainer = MaintainUsers.new(known_users, users_csv, sis_ids_csv)
       user_maintainer.refresh_existing_user_accounts
+      if @sis_ids_csv_filename
+        sis_ids_csv.close
+        @sis_ids_csv_filename = nil if csv_count(@sis_ids_csv_filename) == 0
+      end
       original_user_count = known_users.length
       unless @accounts_only
         cached_enrollments_provider = CanvasCsv::TermEnrollments.new
@@ -62,29 +69,25 @@ module CanvasCsv
           sis_section_ids = csv_rows.collect { |row| row['section_id'] }
           sis_section_ids.delete_if {|section| section.blank? }
           # Process using cached enrollment data. See CanvasCsv::TermEnrollments
-          CanvasCsv::SiteMembershipsMaintainer.process(course_id, sis_section_ids, enrollments_csv, users_csv, known_users, @batch_mode, cached_enrollments_provider, sis_user_id_changes)
+          CanvasCsv::SiteMembershipsMaintainer.process(course_id, sis_section_ids, enrollments_csv, users_csv, known_users, cached_enrollments_provider, sis_user_id_changes)
         end
         logger.debug "Finished processing refresh for Course ID #{course_id}"
       end
     end
 
     # Uploading a single zipped archive containing both users and enrollments would be safer and more efficient.
-    # However, a batch update can only be done for one term. If we decide to limit Canvas refreshes
-    # to a single term, then we should change this code.
     def import_csv_files
       import_proxy = Canvas::SisImport.new
+      if @sis_ids_csv_filename.present? && import_proxy.import_sis_ids(@sis_ids_csv_filename)
+        logger.warn 'SIS IDs import succeeded'
+      end
       if @users_csv_filename.blank? || import_proxy.import_users(@users_csv_filename)
         logger.warn 'User import succeeded'
         unless @accounts_only
           @term_to_memberships_csv_filename.each do |term_id, csv_filename|
             if csv_filename.present?
-              if @batch_mode
-                import_proxy.import_batch_term_enrollments(term_id, csv_filename)
-                logger.warn "Batch enrollment import for #{term_id} succeeded"
-              else
-                import_proxy.import_all_term_enrollments(term_id, csv_filename)
-                logger.warn "Incremental enrollment import for #{term_id} succeeded"
-              end
+              import_proxy.import_all_term_enrollments(csv_filename)
+              logger.warn "Incremental enrollment import for #{term_id} succeeded"
             end
           end
         end

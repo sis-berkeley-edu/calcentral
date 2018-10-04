@@ -16,7 +16,7 @@ module Canvas
       end
     end
 
-    def import_all_term_enrollments(term_id, csv_file_path)
+    def import_all_term_enrollments(csv_file_path)
       import_with_check(csv_file_path)
     end
 
@@ -24,20 +24,16 @@ module Canvas
       import_with_check(csv_file_path)
     end
 
-    def import_enrollments(csv_file_path, extra_params = '')
-      import_with_check(csv_file_path, extra_params)
-    end
-
     def import_sections(csv_file_path)
       import_with_check(csv_file_path)
     end
 
-    def import_users(csv_file_path, extra_params = '')
-      import_with_check(csv_file_path, extra_params)
+    def import_sis_ids(csv_file_path)
+      import_with_check(csv_file_path)
     end
 
-    def import_batch_term_enrollments(term_id, csv_file_path)
-      import_with_check(csv_file_path, "&batch_mode=1&batch_mode_term_id=sis_term_id:#{term_id}")
+    def import_users(csv_file_path)
+      import_with_check(csv_file_path)
     end
 
     def import_with_check(csv_file_path, extra_params = '')

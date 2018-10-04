@@ -55,10 +55,11 @@ module CanvasCsv
       }
     end
 
-    def initialize(known_users, sis_user_import_csv)
+    def initialize(known_users, sis_user_import_csv, sis_ids_import_csv=nil)
       super()
       @known_users = known_users
       @user_import_csv = sis_user_import_csv
+      @sis_ids_import_csv = sis_ids_import_csv
       @sis_user_id_changes = {}
       @user_email_deletions = []
     end
@@ -68,7 +69,11 @@ module CanvasCsv
     # Makes any necessary changes to SIS user IDs.
     def refresh_existing_user_accounts
       check_all_user_accounts
-      handle_changed_sis_user_ids
+      if Settings.canvas_proxy.sis_id_changes_csv.present?
+        change_sis_user_ids_by_csv
+      else
+        change_sis_user_ids_by_api
+      end
       if Settings.canvas_proxy.delete_bad_emails.present?
         handle_email_deletions @user_email_deletions
       else
@@ -94,12 +99,13 @@ module CanvasCsv
 
     # Any changes to SIS user IDs must take effect before the enrollments CSV is generated.
     # Otherwise, the generated CSV may include a new ID that does not match the existing ID for a user account.
-    def handle_changed_sis_user_ids
+    def change_sis_user_ids_by_api
       if Settings.canvas_proxy.dry_run_import.present?
         logger.warn "DRY RUN MODE: Would change #{@sis_user_id_changes.length} SIS user IDs #{@sis_user_id_changes.inspect}"
       else
         logger.warn "About to change #{@sis_user_id_changes.length} SIS user IDs"
-        @sis_user_id_changes.each do |canvas_user_id, new_sis_id|
+        @sis_user_id_changes.each do |canvas_user_id, change|
+          new_sis_id = change['new_id']
           succeeded = self.class.change_sis_user_id(canvas_user_id, new_sis_id)
           unless succeeded
             # If we had ideal data sources, it would be prudent to remove any mention of the no-longer-going-to-be-changed
@@ -109,6 +115,22 @@ module CanvasCsv
             # to go on with the import.
             logger.error "Canvas user #{canvas_user_id} did not successfully have its SIS ID changed to #{new_sis_id}! Check for duplicated LDAP UIDs in bCourses."
           end
+        end
+      end
+    end
+
+    def change_sis_user_ids_by_csv
+      if !@sis_ids_import_csv
+        logger.error 'No Import CSV file provided to handle SIS ID changes - no changes will be made!'
+      else
+        logger.warn "About to add #{@sis_user_id_changes.length} SIS user ID changes to CSV"
+        @sis_user_id_changes.values.each do |change|
+          change_row = change.merge(
+            'integration_id' => nil,
+            'new_integration_id' => nil,
+            'type' => 'user'
+          )
+          @sis_ids_import_csv << change_row
         end
       end
     end
@@ -172,7 +194,10 @@ module CanvasCsv
         end
         if old_account_data['user_id'] != new_account_data['user_id']
           logger.warn "Will change SIS ID for user sis_login_id:#{old_account_data['login_id']} from #{old_account_data['user_id']} to #{new_account_data['user_id']}"
-          @sis_user_id_changes["sis_login_id:#{old_account_data['login_id']}"] = new_account_data['user_id']
+          @sis_user_id_changes["sis_login_id:#{old_account_data['login_id']}"] = {
+            'old_id' => old_account_data['user_id'],
+            'new_id' => new_account_data['user_id']
+          }
         end
         unless self.class.provisioned_account_eq_sis_account?(old_account_data, new_account_data)
           @user_import_csv << new_account_data

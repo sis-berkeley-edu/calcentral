@@ -8,12 +8,6 @@ namespace :canvas do
     end
   end
 
-  desc 'Get all Canvas users and sections for current terms, refresh user accounts, and update all section memberships'
-  task :batch_refresh => :environment do
-    canvas_worker = CanvasCsv::RefreshAllCampusData.new 'batch'
-    canvas_worker.run
-  end
-
   desc 'Add new guest user accounts, and update existing ones, within Canvas'
   task :guest_user_sync => :environment do
     canvas_worker = CanvasCsv::UpdateGuests.new
@@ -34,7 +28,7 @@ namespace :canvas do
 
   desc 'Get all Canvas users and sections for current terms, refresh user accounts, and add new section memberships'
   task :incremental_refresh => :environment do
-    canvas_worker = CanvasCsv::RefreshAllCampusData.new 'incremental'
+    canvas_worker = CanvasCsv::RefreshAllCampusData.new 'all'
     canvas_worker.run
   end
 
