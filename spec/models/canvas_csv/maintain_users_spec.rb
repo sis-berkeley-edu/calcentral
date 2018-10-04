@@ -69,7 +69,7 @@ describe CanvasCsv::MaintainUsers do
         expect(account_changes.length).to eq 0
         expect(subject.sis_user_id_changes.length).to eq 1
         expect(known_users.length).to eq 1
-        expect(subject.sis_user_id_changes["sis_login_id:#{changed_sis_id_uid}"]).to eq changed_sis_id_student_id
+        expect(subject.sis_user_id_changes["sis_login_id:#{changed_sis_id_uid}"]['new_id']).to eq changed_sis_id_student_id
       end
     end
 
@@ -201,7 +201,10 @@ describe CanvasCsv::MaintainUsers do
         expect(account_changes[0]['login_id']).to eq uid
         expect(account_changes[0]['user_id']).to eq student_id
         expect(account_changes[0]['email']).to eq "#{uid}@example.edu"
-        expect(subject.sis_user_id_changes).to eq({"sis_login_id:inactive-#{uid}" => student_id})
+        expect(subject.sis_user_id_changes).to eq({"sis_login_id:inactive-#{uid}" => {
+          'old_id' => "UID:#{uid}",
+          'new_id' => student_id
+        }})
         expect(subject.user_email_deletions).to be_blank
       end
       it 'updates known users hash' do
@@ -251,7 +254,9 @@ describe CanvasCsv::MaintainUsers do
         expect(account_changes[0]['login_id']).to eq "inactive-#{uid}"
         expect(account_changes[0]['user_id']).to eq "UID:#{uid}"
         expect(account_changes[0]['email']).to be_blank
-        expect(subject.sis_user_id_changes).to eq({"sis_login_id:#{uid}" => "UID:#{uid}"})
+        expect(subject.sis_user_id_changes).to eq({"sis_login_id:#{uid}" => {
+          'old_id' => student_id,
+          'new_id' => "UID:#{uid}"}})
         expect(known_users.length).to eq 1
         expect(subject.user_email_deletions).to eq [canvas_user_id]
       end
@@ -266,7 +271,9 @@ describe CanvasCsv::MaintainUsers do
         expect(account_changes[0]['login_id']).to eq "inactive-#{uid}"
         expect(account_changes[0]['user_id']).to eq "UID:#{uid}"
         expect(account_changes[0]['email']).to be_blank
-        expect(subject.sis_user_id_changes).to eq({"sis_login_id:#{uid}" => "UID:#{uid}"})
+        expect(subject.sis_user_id_changes).to eq({"sis_login_id:#{uid}" => {
+          'old_id' => student_id,
+          'new_id' => "UID:#{uid}"}})
         expect(known_users.length).to eq 1
         expect(subject.user_email_deletions).to eq [canvas_user_id]
       end
@@ -328,19 +335,19 @@ describe CanvasCsv::MaintainUsers do
     end
   end
 
-  describe '#handle_changed_sis_user_ids' do
+  describe '#change_sis_user_ids_by_api' do
     before do
       subject.sis_user_id_changes = {
-        'sis_login_id:1084726' => '289021',
-        'sis_login_id:1084727' => 'UID:289022',
-        'sis_login_id:1084728' => 'UID:289023',
+        'sis_login_id:1084726' => {'old_id' => 'UID:1084726', 'new_id' => '289021'},
+        'sis_login_id:1084727' => {'old_id' => '91084727', 'new_id' => 'UID:289022'},
+        'sis_login_id:1084728' => {'old_id' => '91084728', 'new_id' => 'UID:289023'},
       }
     end
     it 'sends call to change each sis user id update' do
       expect(CanvasCsv::MaintainUsers).to receive(:change_sis_user_id).with('sis_login_id:1084726', '289021').ordered
       expect(CanvasCsv::MaintainUsers).to receive(:change_sis_user_id).with('sis_login_id:1084727', 'UID:289022').ordered
       expect(CanvasCsv::MaintainUsers).to receive(:change_sis_user_id).with('sis_login_id:1084728', 'UID:289023').ordered
-      subject.handle_changed_sis_user_ids
+      subject.change_sis_user_ids_by_api
     end
     context 'in dry-run mode' do
       before do
@@ -348,7 +355,7 @@ describe CanvasCsv::MaintainUsers do
       end
       it 'does not tell Canvas to change the sis_user_ids' do
         expect(CanvasCsv::MaintainUsers).to receive(:change_sis_user_id).never
-        subject.handle_changed_sis_user_ids
+        subject.change_sis_user_ids_by_api
       end
     end
   end

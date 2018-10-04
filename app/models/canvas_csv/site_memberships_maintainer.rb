@@ -35,7 +35,7 @@ module CanvasCsv
       end
       logger.warn "Importing #{enrollments_rows.size} memberships for #{known_users.size} users to course site #{sis_course_id}"
       enrollments_csv = worker.make_enrollments_csv(enrollments_csv_filename, enrollments_rows)
-      response = Canvas::SisImport.new.import_enrollments(enrollments_csv)
+      response = Canvas::SisImport.new.import_with_check(enrollments_csv)
       if response.blank?
         logger.error "Enrollments import to course site #{sis_course_id} failed"
       else
@@ -59,7 +59,7 @@ module CanvasCsv
       end
       logger.warn "Importing #{enrollments_rows.size} membership deletions to course site #{sis_course_id}"
       enrollments_csv = worker.make_enrollments_csv(enrollments_csv_filename, enrollments_rows)
-      response = Canvas::SisImport.new.import_enrollments(enrollments_csv, '&override_sis_stickiness=true')
+      response = Canvas::SisImport.new.import_with_check(enrollments_csv, '&override_sis_stickiness=true')
       if response.blank?
         logger.error "Enrollment deletion import to course site #{sis_course_id} failed"
       else
@@ -227,7 +227,8 @@ module CanvasCsv
         # Only look at enrollments which are active and were due to an SIS import.
         if enrollment['sis_import_id'].present? && enrollment['enrollment_state'] == 'active'
           logger.info "No campus record for Canvas enrollment in Course ID: #{enrollment['course_id']}, Section ID: #{enrollment['course_section_id']} for user #{uid} with role #{enrollment['role']}"
-          sis_user_id = @sis_user_id_changes["sis_login_id:#{uid}"] || enrollment['user']['sis_user_id']
+          sis_user_id = @sis_user_id_changes.fetch("sis_login_id:#{uid}", {}).fetch('new_id', nil) ||
+            enrollment['user']['sis_user_id']
           append_enrollment_deletion(section_id, enrollment['role'], sis_user_id)
         end
       end

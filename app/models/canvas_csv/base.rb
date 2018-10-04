@@ -80,6 +80,10 @@ module CanvasCsv
       make_csv(filename, 'section_id,course_id,name,status,start_date,end_date', rows)
     end
 
+    def make_sis_ids_csv(filename, rows = nil)
+      make_csv(filename, 'old_id,new_id,old_integration_id,new_integration_id,type', rows)
+    end
+
     def make_users_csv(filename, rows = nil)
       make_csv(filename, 'user_id,login_id,first_name,last_name,email,status', rows)
     end

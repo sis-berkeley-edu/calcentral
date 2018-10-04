@@ -7,6 +7,9 @@ module CanvasCsv
 
     def initialize(accounts_or_all='all')
       super()
+      if Settings.canvas_proxy.sis_id_changes_csv
+        @sis_ids_csv_filename = "#{@export_dir}/canvas-#{DateTime.now.strftime('%F')}-sis-ids.csv"
+      end
       @users_csv_filename = "#{@export_dir}/canvas-#{DateTime.now.strftime('%F')}-users-#{accounts_or_all}.csv"
       @accounts_only = (accounts_or_all == 'accounts')
       unless @accounts_only
@@ -26,9 +29,14 @@ module CanvasCsv
 
     def make_csv_files
       users_csv = make_users_csv(@users_csv_filename)
+      sis_ids_csv = make_sis_ids_csv(@sis_ids_csv_filename) if @sis_ids_csv_filename
       known_users = {}
-      user_maintainer = MaintainUsers.new(known_users, users_csv)
+      user_maintainer = MaintainUsers.new(known_users, users_csv, sis_ids_csv)
       user_maintainer.refresh_existing_user_accounts
+      if @sis_ids_csv_filename
+        sis_ids_csv.close
+        @sis_ids_csv_filename = nil if csv_count(@sis_ids_csv_filename) == 0
+      end
       original_user_count = known_users.length
       unless @accounts_only
         cached_enrollments_provider = CanvasCsv::TermEnrollments.new
@@ -70,12 +78,15 @@ module CanvasCsv
     # Uploading a single zipped archive containing both users and enrollments would be safer and more efficient.
     def import_csv_files
       import_proxy = Canvas::SisImport.new
+      if @sis_ids_csv_filename.present? && import_proxy.import_sis_ids(@sis_ids_csv_filename)
+        logger.warn 'SIS IDs import succeeded'
+      end
       if @users_csv_filename.blank? || import_proxy.import_users(@users_csv_filename)
         logger.warn 'User import succeeded'
         unless @accounts_only
           @term_to_memberships_csv_filename.each do |term_id, csv_filename|
             if csv_filename.present?
-              import_proxy.import_all_term_enrollments(term_id, csv_filename)
+              import_proxy.import_all_term_enrollments(csv_filename)
               logger.warn "Incremental enrollment import for #{term_id} succeeded"
             end
           end
