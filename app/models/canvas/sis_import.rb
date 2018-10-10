@@ -36,21 +36,32 @@ module Canvas
       import_with_check(csv_file_path)
     end
 
-    def import_with_check(csv_file_path, extra_params = '')
+    def import_zipped(file_path)
+      import_with_check(file_path, nil, 'zip')
+    end
+
+    def import_with_check(file_path, extra_params = '', file_type = 'csv')
       if @dry_run_import.present?
-        logger.warn("DRY RUN MODE: Would import CSV file #{csv_file_path}")
+        logger.warn("DRY RUN MODE: Would import #{file_type} file #{file_path}")
         true
       else
-        response = post_sis_import(csv_file_path, extra_params)
+        response = post_sis_import(file_path, extra_params, file_type)
         return false unless response
         status = import_status response['id']
         import_successful? status
       end
     end
 
-    def post_sis_import(csv_file_path, extra_params)
-      upload_body = {attachment: Faraday::UploadIO.new(csv_file_path, 'text/csv')}
-      url = "accounts/#{settings.account_id}/sis_imports.json?import_type=instructure_csv&extension=csv#{extra_params}"
+    def post_sis_import(file_path, extra_params, file_type)
+      if file_type == 'csv'
+        content_type = 'text/csv'
+      elsif file_type == 'zip'
+        content_type = 'application/zip'
+      else
+        raise ArgumentError, "Unknown content type #{file_type}!"
+      end
+      upload_body = {attachment: Faraday::UploadIO.new(file_path, content_type)}
+      url = "accounts/#{settings.account_id}/sis_imports.json?import_type=instructure_csv&extension=#{file_type}#{extra_params}"
       callstack = caller(0).inject([]) do |list, meth|
         meth.split(' ').last =~ /([a-z_]+)/
         list << $1

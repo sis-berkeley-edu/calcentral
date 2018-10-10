@@ -101,6 +101,8 @@ gem 'net-ssh', '~>2.9.2' # v3 requires Ruby 2.0
 
 gem 'icalendar', '~> 2.2.2'
 
+gem 'rubyzip', '~> 1.2.0'
+
 # Data Loch integration
 gem 'aws-sdk-s3', '~> 1.8.2'
 

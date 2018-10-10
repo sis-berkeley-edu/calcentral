@@ -4,10 +4,11 @@ module CanvasCsv
   class RefreshAllCampusData < Base
     attr_accessor :users_csv_filename
     attr_accessor :term_to_memberships_csv_filename
+    include Zipper
 
     def initialize(accounts_or_all='all')
       super()
-      if Settings.canvas_proxy.sis_id_changes_csv
+      if Settings.canvas_proxy.import_zipped_csvs
         @sis_ids_csv_filename = "#{@export_dir}/canvas-#{DateTime.now.strftime('%F')}-sis-ids.csv"
       end
       @users_csv_filename = "#{@export_dir}/canvas-#{DateTime.now.strftime('%F')}-users-#{accounts_or_all}.csv"
@@ -24,7 +25,11 @@ module CanvasCsv
 
     def run
       make_csv_files
-      import_csv_files
+      if Settings.canvas_proxy.import_zipped_csvs
+        import_zipped_csv_files
+      else
+        import_single_csv_files
+      end
     end
 
     def make_csv_files
@@ -75,8 +80,7 @@ module CanvasCsv
       end
     end
 
-    # Uploading a single zipped archive containing both users and enrollments would be safer and more efficient.
-    def import_csv_files
+    def import_single_csv_files
       import_proxy = Canvas::SisImport.new
       if @sis_ids_csv_filename.present? && import_proxy.import_sis_ids(@sis_ids_csv_filename)
         logger.warn 'SIS IDs import succeeded'
@@ -92,6 +96,24 @@ module CanvasCsv
           end
         end
       end
+    end
+
+    def import_zipped_csv_files
+      import_proxy = Canvas::SisImport.new
+      import_files = [@sis_ids_csv_filename, @users_csv_filename]
+      unless @accounts_only
+        import_files.concat @term_to_memberships_csv_filename.values
+      end
+      import_files.reject! { |f| f.blank? }
+      if import_files.blank?
+        logger.warn "No CSV files to import"
+        return
+      end
+      import_type = @accounts_only ? 'accounts' : 'all'
+      zipped_csv_filename = "#{@export_dir}/canvas-#{DateTime.now.strftime('%F_%H%M%S')}-incremental_#{import_type}.zip"
+      zip_flattened(import_files, zipped_csv_filename)
+      import_proxy.import_zipped zipped_csv_filename
+      logger.warn "Import of #{zipped_csv_filename} succeeded, incorporating #{import_files}"
     end
 
   end
