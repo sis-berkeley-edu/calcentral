@@ -104,6 +104,7 @@ Calcentral::Application.routes.draw do
     get '/api/my/new_admit_resources' =>'new_admit_resources#get_feed', :defaults => { :format => 'json' }
     get '/api/my/photo' => 'photo#my_photo', :as => :my_photo, :defaults => {:format => 'jpeg' }
     get '/api/my/profile' => 'my_profile#get_feed', :defaults => { :format => 'json' }
+    get '/api/my/profile/link' => 'my_profile#get_edit_link', :defaults => { :format => 'json' }
     get '/api/my/registrations' => 'my_registrations#get_feed', :defaults => { :format => 'json' }
     get '/api/my/residency' => 'my_academics#residency', :defaults => { :format => 'json' }
     get '/api/my/sir_statuses' => 'sir_statuses#get_feed', :defaults => { :format => 'json' }

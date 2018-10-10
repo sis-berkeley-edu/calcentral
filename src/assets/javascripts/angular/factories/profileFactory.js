@@ -17,7 +17,6 @@ angular.module('calcentral.factories').factory('profileFactory', function(apiSer
   var urlStates = '/api/campus_solutions/state';
   var urlTypes = '/api/campus_solutions/translate';
   var urlTypesPayFrequency = urlTypes + '?field_name=PAY_FREQ_ABBRV';
-  var urlTypesRelationship = urlTypes + '?field_name=RELATIONSHIP';
   var urlWorkExperience = '/api/edos/work_experience';
 
   var urlPostEmergencyContact = '/api/campus_solutions/emergency_contact';
@@ -25,6 +24,7 @@ angular.module('calcentral.factories').factory('profileFactory', function(apiSer
   var urlPostLanguage = '/api/campus_solutions/language';
   var urlPostName = '/api/campus_solutions/person_name';
   var urlPostWorkExperience = '/api/campus_solutions/work_experience';
+  var urlProfileEditLink = '/api/my/profile/link';
 
   var deleteEmergencyContact = function(options) {
     return $http.delete(urlPostEmergencyContact + '/' + options.contactName, options);
@@ -61,6 +61,9 @@ angular.module('calcentral.factories').factory('profileFactory', function(apiSer
   var getPerson = function(options) {
     return apiService.http.request(options, urlPerson);
   };
+  var getProfileEditLink = function(options) {
+    return apiService.http.request(options, urlProfileEditLink);
+  };
   var getStates = function(options) {
     return apiService.http.request(options, urlStates + '?country=' + options.country);
   };
@@ -69,9 +72,6 @@ angular.module('calcentral.factories').factory('profileFactory', function(apiSer
   };
   var getTypesPayFrequency = function(options) {
     return apiService.http.request(options, urlTypesPayFrequency);
-  };
-  var getTypesRelationship = function(options) {
-    return apiService.http.request(options, urlTypesRelationship);
   };
 
   // Post
@@ -103,9 +103,9 @@ angular.module('calcentral.factories').factory('profileFactory', function(apiSer
     getEmergencyContacts: getEmergencyContacts,
     getLanguageCodes: getLanguageCodes,
     getPerson: getPerson,
+    getProfileEditLink: getProfileEditLink,
     getStates: getStates,
     getTypesPayFrequency: getTypesPayFrequency,
-    getTypesRelationship: getTypesRelationship,
     getWorkExperience: getWorkExperience,
     postEmergencyContact: postEmergencyContact,
     postEmergencyPhone: postEmergencyPhone,

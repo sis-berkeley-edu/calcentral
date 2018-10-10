@@ -23,4 +23,18 @@ describe MyProfileController do
     end
   end
 
+  describe '#get_edit_link' do
+    before do
+      allow_any_instance_of(LinkFetcher).to receive(:fetch_link).with('UC_CX_PROFILE', anything).and_return('edit profile link')
+      allow_any_instance_of(User::AggregatedAttributes).to receive(:get_feed).and_return({roles: { student: true } })
+    end
+    let(:feed) { :get_edit_link }
+    let(:feed_key) { 'editProfile' }
+
+    it_behaves_like 'an unauthenticated user'
+
+    context 'authenticated user' do
+      it_behaves_like 'a successful feed'
+    end
+  end
 end
