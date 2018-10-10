@@ -8,6 +8,9 @@ describe CanvasCsv::RefreshAllCampusData do
     end
 
     context 'with multiple terms' do
+      before do
+        allow(Settings.canvas_proxy).to receive(:import_zipped_csvs).and_return false
+      end
       let(:current_sis_term_ids) { ['TERM:2013-D', 'TERM:2014-B'] }
       it 'establishes the csv import files' do
         expect(subject.users_csv_filename).to eq "tmp/canvas/canvas-#{today}-users-incremental.csv"
@@ -16,13 +19,23 @@ describe CanvasCsv::RefreshAllCampusData do
       end
       it 'makes calls to each step of refresh in proper order' do
         expect(subject).to receive(:make_csv_files).ordered.and_return true
-        expect(subject).to receive(:import_csv_files).ordered.and_return true
+        expect(subject).to receive(:import_single_csv_files).ordered.and_return true
         subject.run
       end
       it 'should send call to populate incremental update csv for users and enrollments' do
         CanvasCsv::MaintainUsers.any_instance.should_receive(:refresh_existing_user_accounts).once.and_return nil
         expect_any_instance_of(CanvasCsv::RefreshAllCampusData).to receive(:refresh_existing_term_sections).twice.and_return nil
         subject.make_csv_files
+      end
+      context 'with zipped CSVs' do
+        before do
+          allow(Settings.canvas_proxy).to receive(:import_zipped_csvs).and_return true
+        end
+        it 'makes calls to each step of refresh in proper order' do
+          expect(subject).to receive(:make_csv_files).ordered.and_return true
+          expect(subject).to receive(:import_zipped_csv_files).ordered.and_return true
+          subject.run
+        end
       end
     end
 
@@ -112,21 +125,25 @@ describe CanvasCsv::RefreshAllCampusData do
   describe 'user-accounts-only mode' do
     subject { CanvasCsv::RefreshAllCampusData.new 'accounts' }
     before do
-      allow(Settings.canvas_proxy).to receive(:sis_id_changes_csv).and_return true
+      allow(Settings.canvas_proxy).to receive(:import_zipped_csvs).and_return true
     end
     it 'only refreshes existing user accounts and leaves memberships alone' do
       expect_any_instance_of(CanvasCsv::MaintainUsers).to receive(:refresh_existing_user_accounts).once.and_return nil
       expect(subject).to receive(:refresh_existing_term_sections).never
       expect(subject).to receive(:csv_count).twice.and_return 1
-      expect_any_instance_of(Canvas::SisImport).to receive(:import_users).once.and_return true
-      expect_any_instance_of(Canvas::SisImport).to receive(:import_sis_ids).once.and_return true
-      expect_any_instance_of(Canvas::SisImport).to receive(:import_all_term_enrollments).never
+      expect(subject).to receive(:zip_flattened) do |files, name|
+        expect(files.length).to eq 2
+      end
+      expect_any_instance_of(Canvas::SisImport).to receive(:import_zipped).once.and_return true
       subject.run
     end
     context 'using APIs to change SIS IDs' do
-      before { allow(Settings.canvas_proxy).to receive(:sis_id_changes_csv).and_return false }
+      before { allow(Settings.canvas_proxy).to receive(:import_zipped_csvs).and_return false }
       it 'does not import SIS IDs CSV' do
+        expect_any_instance_of(Canvas::SisImport).to receive(:import_users).once.and_return true
+        expect_any_instance_of(Canvas::SisImport).to receive(:import_all_term_enrollments).never
         expect_any_instance_of(Canvas::SisImport).to receive(:import_sis_ids).never
+        subject.run
       end
     end
   end

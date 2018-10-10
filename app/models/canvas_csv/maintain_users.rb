@@ -69,7 +69,7 @@ module CanvasCsv
     # Makes any necessary changes to SIS user IDs.
     def refresh_existing_user_accounts
       check_all_user_accounts
-      if Settings.canvas_proxy.sis_id_changes_csv.present?
+      if Settings.canvas_proxy.import_zipped_csvs.present?
         change_sis_user_ids_by_csv
       else
         change_sis_user_ids_by_api
