@@ -455,6 +455,10 @@ describe Berkeley::UserRoles do
         let(:affiliations) { ['GUEST-TYPE-COLLABORATOR'] }
         it_behaves_like 'a parser for roles', [:guest]
       end
+      context 'Cirrus-provided guest account' do
+        let(:affiliations) { ['GUEST-TYPE-SOCIAL'] }
+        it_behaves_like 'a parser for roles', [:guest]
+      end
       context 'student employee' do
         let(:affiliations) { ['EMPLOYEE-TYPE-STAFF', 'STUDENT-TYPE-REGISTERED'] }
         it_behaves_like 'a parser for roles', [:staff]
