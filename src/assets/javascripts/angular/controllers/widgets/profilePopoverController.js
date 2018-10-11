@@ -9,8 +9,9 @@ angular.module('calcentral.controllers').controller('ProfilePopoverController', 
   };
 
   var loadLink = function() {
+    // TODO: change this to the correct link ID
     csLinkFactory.getLink({
-      urlId: 'UC_CC_PROFILE'
+      urlId: 'UC_CX_GT_ACTION_CENTER'
     }).then(function(response) {
       $scope.profilePopover.link = _.get(response, 'data.link');
       $scope.profilePopover.isLoading = false;

@@ -11,11 +11,15 @@ angular.module('calcentral.controllers').controller('EmergencyController', funct
     isErrored: false
   };
 
+  var parseEmergencyContactInformation = function(response) {
+    $scope.emergencyContactInformation.isErrored = _.get(response, 'data.errored');
+    $scope.emergencyContactInformation.editLink = _.get(response, 'data.feed.links.editProfile');
+  };
+
   var loadInformation = function() {
     profileFactory.getPerson()
-    .then(function(response) {
+    .then(parseEmergencyContactInformation).finally(function() {
       $scope.emergencyContactInformation.isLoading = false;
-      $scope.emergencyContactInformation.isErrored = _.get(response, 'data.errored');
     });
   };
 
