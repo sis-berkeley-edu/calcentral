@@ -93,6 +93,12 @@ module MailingLists
       self.population_results[:add][:failure].any? || self.population_results[:remove][:failure].any?
     end
 
+    def can_send_to_mailing_list?(canvas_course_user)
+      Canvas::CourseUser.has_instructing_role?(canvas_course_user) ||
+        Canvas::CourseUser.is_project_maintainer?(canvas_course_user) ||
+        Canvas::CourseUser.is_project_owner?(canvas_course_user)
+    end
+
     def catch_request_failure
       errors[:base] << self.request_failure if self.request_failure
     end
@@ -218,9 +224,10 @@ module MailingLists
       # List members are keyed by email addresses; keep track of any needed removals in a separate set.
       addresses_to_remove = list_members.keys.to_set
 
-      # Note UIDs for users with send permission, defined for now as having a teacher role in the course site.
+      # Note UIDs for users with send permission, defined for now as having a teacher role in the course site,
+      # or an Owner or Maintainer role in a project site.
       sender_uids = Set.new
-      course_users.each { |user| sender_uids << user['login_id'] if Canvas::CourseUser.has_instructing_role?(user) }
+      course_users.each { |user| sender_uids << user['login_id'] if can_send_to_mailing_list?(user) }
 
       logger.info "Starting population of mailing list #{self.list_name} for course site #{self.canvas_site_id}."
       initialize_population_results
