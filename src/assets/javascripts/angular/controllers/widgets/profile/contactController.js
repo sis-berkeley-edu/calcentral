@@ -13,7 +13,7 @@ angular.module('calcentral.controllers').controller('ContactController', functio
 
   var parseContactInformation = function(response) {
     $scope.contactInformation.isErrored = _.get(response, 'data.errored');
-    $scope.contactInformation.editLink = _.get(response, 'data.feed.links.editProfile');
+    $scope.contactInformation.editLink = _.get(response, 'data.feed.links.editContactInformation');
   };
 
   var loadInformation = function() {
