@@ -72,6 +72,22 @@ module Canvas
       false
     end
 
+    def self.is_project_owner?(canvas_course_user)
+      return false if canvas_course_user.blank?
+      canvas_course_user['enrollments'].each do |enrollment|
+        return true if enrollment['role'] == 'Owner'
+      end
+      false
+    end
+
+    def self.is_project_maintainer?(canvas_course_user)
+      return false if canvas_course_user.blank?
+      canvas_course_user['enrollments'].each do |enrollment|
+        return true if enrollment['role'] == 'Maintainer'
+      end
+      false
+    end
+
     def self.has_instructing_role?(canvas_course_user)
       is_course_teacher?(canvas_course_user) || is_course_teachers_assistant?(canvas_course_user) || is_course_reader?(canvas_course_user)
     end

@@ -197,8 +197,13 @@ describe MailingLists::MailgunList do
 
         context 'owner role' do
           let(:role) { 'Owner' }
-          it_should_behave_like 'a member with sending permissions', false
-         end
+          it_should_behave_like 'a member with sending permissions', true
+        end
+
+        context 'maintainer role' do
+          let(:role) { 'Maintainer' }
+          it_should_behave_like 'a member with sending permissions', true
+        end
 
         context 'member role' do
           let(:role) { 'Member' }
