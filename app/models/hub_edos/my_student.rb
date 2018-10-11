@@ -34,8 +34,11 @@ module HubEdos
         end
       end
 
+      # TODO: replace link ID with the correct one
       merged[:feed][:links] = {
-        editProfile: fetch_link('UC_CC_PROFILE', {EMPLID: campus_solutions_id.to_s})
+        editContactInformation: fetch_link('UC_CX_XFER_CREDIT_REPORT_STDNT', {EMPLID: campus_solutions_id.to_s}),
+        editEmergencyContactInformation: fetch_link('UC_CX_XFER_CREDIT_REPORT_STDNT', {EMPLID: campus_solutions_id.to_s}),
+        editDemographicInformation: fetch_link('UC_CX_XFER_CREDIT_REPORT_STDNT', {EMPLID: campus_solutions_id.to_s})
       }
 
       # When we don't have any identifiers for this student, we should send a 404 to the front-end

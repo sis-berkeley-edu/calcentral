@@ -13,7 +13,7 @@ angular.module('calcentral.controllers').controller('DemographicController', fun
 
   var parseDemographicInformation = function(response) {
     $scope.demographicInformation.isErrored = _.get(response, 'data.errored');
-    $scope.demographicInformation.editLink = _.get(response, 'data.feed.links.editProfile');
+    $scope.demographicInformation.editLink = _.get(response, 'data.feed.links.editDemographicInformation');
   };
 
   var loadInformation = function() {

@@ -4,9 +4,6 @@ describe HubEdos::MyStudent do
     proxy = HubEdos::MyStudent.new(random_id, options)
     proxy.get_feed_internal
   }
-  before do
-    allow_any_instance_of(LinkFetcher).to receive(:fetch_link).with('UC_CC_PROFILE', anything).and_return('edit profile link')
-  end
   context 'mock proxy' do
     it 'should return unfiltered feed' do
       expect(subject[:statusCode]).to eq 200
@@ -22,8 +19,9 @@ describe HubEdos::MyStudent do
         expect(student).to have(2).items
         expect(student).to include *fields
         expect(student['affiliations'][0]['status']['code']).to_not be_nil
-        expect(subject[:feed][:links]).to be
-        expect(subject[:feed][:links][:editProfile]).to eq 'edit profile link'
+        expect(subject[:feed][:links][:editContactInformation]).to be
+        expect(subject[:feed][:links][:editEmergencyContactInformation]).to be
+        expect(subject[:feed][:links][:editDemographicInformation]).to be
       end
     end
   end
