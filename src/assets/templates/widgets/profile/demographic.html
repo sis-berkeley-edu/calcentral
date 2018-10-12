@@ -3,6 +3,13 @@
   data-ng-controller="DemographicController"
   data-cc-spinner-directive="demographicInformation.isLoading">
 
+  <div class="cc-page-widget-profile-action">
+    <a class="cc-button cc-button-blue"
+       data-cc-campus-solutions-link-directive="demographicInformation.editLink"
+       data-cc-campus-solutions-link-directive-cc-page-name="currentPage.name"
+       data-cc-campus-solutions-link-directive-cc-page-url="currentPage.url"
+    >Edit Profile</a>
+  </div>
   <div data-ng-if="!demographicInformation.isErrored">
     <!-- Gender -->
     <div data-ng-include="'widgets/profile/demographic_gender.html'" data-ng-if="!api.user.profile.delegateActingAsUid"></div>

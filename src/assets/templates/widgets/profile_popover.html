@@ -1,8 +1,15 @@
-<ul class="cc-popover-items cc-profile-popover-links">
+<ul class="cc-popover-items cc-profile-popover-links" data-ng-controller="ProfilePopoverController">
   <li class="cc-popover-item" data-ng-if="api.user.profile.showSisProfileUI">
     <button class="cc-button-link cc-popover-link"
       data-ng-click="api.popover.clickThrough('Gear - Profile');api.util.redirect('profile')">Profile
     </button>
+  </li>
+  <li class="cc-popover-item" data-ng-if="profilePopover.link.url">
+    <a class="cc-popover-link"
+       data-cc-campus-solutions-link-directive="profilePopover.link"
+       data-cc-campus-solutions-link-directive-cc-page-name="currentPage.name"
+       data-cc-campus-solutions-link-directive-cc-page-url="currentPage.url"
+    >Try the New Profile</a>
   </li>
   <li class="cc-popover-item">
     <button class="cc-button-link cc-popover-link"

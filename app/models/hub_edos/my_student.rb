@@ -33,6 +33,8 @@ module HubEdos
         end
       end
 
+      merged[:feed][:links] = MyProfile::EditLink.new(@uid).get_feed.try(:[], :feed)
+
       # When we don't have any identifiers for this student, we should send a 404 to the front-end
       if !merged[:errored] && !merged[:feed][:student]['identifiers']
         merged[:statusCode] = 404
