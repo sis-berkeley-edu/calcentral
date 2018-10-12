@@ -4,6 +4,7 @@ class ApiEdosAcademicStatusPage
   include ClassLogger
 
   def get_json(driver)
+    # Note: This API was removed in SISRP-37719 / SISRP-43077
     logger.info 'Fetching data from /api/edos/academic_status'
     navigate_to "#{WebDriverUtils.base_url}/api/edos/academic_status"
     @parsed = JSON.parse driver.find_element(:xpath => '//pre').text

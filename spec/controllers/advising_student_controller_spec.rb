@@ -135,31 +135,6 @@ describe AdvisingStudentController do
     end
   end
 
-  describe '#academic_status' do
-    let(:session_user_id) { random_id }
-    subject { get :academic_status, student_uid: student_uid }
-
-    context 'when not advisor authorized' do
-      it_behaves_like 'an endpoint refusing a request'
-    end
-    context 'when advisor asuthorized' do
-      let(:session_user_is_advisor) { true }
-
-      context 'when not viewing a student' do
-        it_behaves_like 'an endpoint refusing a request'
-      end
-      context 'when viewing a student' do
-        let(:student) { true }
-
-        it_behaves_like 'an endpoint receiving a valid request'
-        it 'should provide a filtered academics feed' do
-          feed = JSON.parse(body = subject.body)
-          expect(feed['feed']).to be
-        end
-      end
-    end
-  end
-
   describe '#degree_progress_graduate' do
     subject { get :degree_progress_graduate, student_uid: student_uid }
     let(:session_user_id) { random_id }

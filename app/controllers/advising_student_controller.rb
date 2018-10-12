@@ -18,10 +18,6 @@ class AdvisingStudentController < ApplicationController
     render :nothing => true
   end
 
-  def academic_status
-    render json: MyAcademics::MyAcademicStatus.new(student_uid_param).get_feed
-  end
-
   def advising
     render json: Advising::MyAdvising.new(student_uid_param).get_feed_as_json
   end
