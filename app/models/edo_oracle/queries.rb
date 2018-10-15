@@ -739,6 +739,7 @@ module EdoOracle
         WHERE
           INSTITUTION = '#{UC_BERKELEY}' AND
           STUDENT_ID = '#{student_id}'
+        ORDER BY TERM_ID DESC
       SQL
       return result
     end

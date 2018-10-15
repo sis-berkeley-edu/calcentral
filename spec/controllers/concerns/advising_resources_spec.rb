@@ -24,10 +24,18 @@ describe AdvisingResources do
     ]
   end
 
+  let(:term_cpp) do
+    [
+      {"term_id"=>"2192", "acad_career"=>"UGRD", "acad_program"=>"UCOE", "acad_plan"=>"162B0U"},
+      {"term_id"=>"2188", "acad_career"=>"UCBX", "acad_program"=>"XCCRT", "acad_plan"=>"30XCECCENX"},
+    ]
+  end
+
   before do
     allow(User::Identifiers).to receive(:lookup_campus_solutions_id).and_return empl_id
     allow_any_instance_of(MyAcademics::MyAcademicStatus).to receive(:get_feed).and_return({:feed=> { 'student'=> { 'academicStatuses'=> academic_statuses } } })
     allow(LinkFetcher).to receive(:fetch_link).and_return mock_link
+    allow(EdoOracle::Queries).to receive(:get_student_term_cpp).and_return term_cpp
   end
 
   describe '#empl_id' do
@@ -40,7 +48,7 @@ describe AdvisingResources do
   describe '#lookup_student_career' do
     subject { described_class.lookup_student_career random_id }
     it 'returns the career code' do
-      expect(subject).to eq 'LAW'
+      expect(subject).to eq 'UGRD'
     end
   end
 

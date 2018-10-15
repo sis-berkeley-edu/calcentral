@@ -80,61 +80,6 @@ describe Concerns::AcademicStatus do
     end
   end
 
-  describe '#newest_career' do
-    subject { described_class.newest_career(statuses)}
-
-    context 'when statuses is nil' do
-      let(:statuses) { nil }
-      it 'returns nil' do
-        expect(subject).to be nil
-      end
-    end
-    context 'when statuses is empty' do
-      let(:statuses) { [] }
-      it 'returns nil' do
-        expect(subject).to be nil
-      end
-    end
-    context 'when career is not populated or is malformed' do
-      let(:statuses) do
-        [
-          {},
-          { 'foo'=> 'bar' },
-          { 'studentCareer'=> nil },
-          { 'studentCareer'=> {} },
-          { 'studentCareer'=> { 'academicCareer' => nil } }
-        ]
-      end
-      it 'returns nil' do
-        expect(subject).to be nil
-      end
-    end
-    context 'when student has one career' do
-      let(:statuses) do
-        [
-          { 'studentCareer'=> { 'academicCareer' => { 'fromDate'=> 1 } } }
-        ]
-      end
-      it 'returns the one career' do
-        expect(subject).to be
-        expect(subject['fromDate']).to eq 1
-      end
-    end
-    context 'when student has multiple careers' do
-      let(:statuses) do
-        [
-          { 'studentCareer'=> { 'academicCareer' => { 'fromDate'=> 1 } } },
-          { 'studentCareer'=> { 'academicCareer' => { 'fromDate'=> 2 } } },
-          { 'studentCareer'=> { 'academicCareer' => { 'fromDate'=> 3 } } },
-        ]
-      end
-      it 'returns the career with the most recent fromDate' do
-        expect(subject).to be
-        expect(subject['fromDate']).to eq 3
-      end
-    end
-  end
-
   describe '#active?' do
     subject { described_class.active?(plan)}
 
