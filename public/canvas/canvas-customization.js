@@ -574,7 +574,7 @@
 
     // Replace the default footer links with the Berkeley footer links
     var footerLinks = [
-      '<div>',
+      '<div class="footer-rows">',
       '  <div>',
       '    <a href="http://www.ets.berkeley.edu/discover-services/bcourses" target="_blank">Support</a>',
       '    <a href="http://www.canvaslms.com/policies/privacy" target="_blank">Privacy Policy</a>',
@@ -583,6 +583,7 @@
       '    <a href="http://www.twitter.com/etsberkeley" target="_blank" class="icon-twitter"><span class="screenreader-only">Twitter</span></a>',
       '  </div>',
       '  <div>',
+      '    <a href="https://www.ets.berkeley.edu/bcourses-data-use-and-analytics" target="_blank">Data Use &amp; Analytics</a>',
       '    <a href="http://teaching.berkeley.edu/berkeley-honor-code" target="_blank">UC Berkeley Honor Code</a>',
       '    <a href="http://www.wellness.asuc.org" target="_blank">Student Wellness Resources</a>',
       '  </div>',
