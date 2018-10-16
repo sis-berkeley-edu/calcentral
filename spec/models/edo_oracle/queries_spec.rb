@@ -502,4 +502,17 @@ describe EdoOracle::Queries do
       end
     end
   end
+
+  describe '.search_students' do
+    subject { EdoOracle::Queries.search_students(search_string) }
+    context 'when matching name' do
+      let(:search_string) { 'lexander' }
+      it 'should return matching search results' do
+        expect(subject.count).to eq 2
+        subject.each do |search_result|
+          expect(search_result).to have_keys(['student_id', 'campus_uid', 'oprid', 'first_name_legal', 'middle_name_legal', 'last_name_legal', 'first_name_preferred', 'middle_name_preferred', 'email', 'academic_programs'])
+        end
+      end
+    end
+  end
 end

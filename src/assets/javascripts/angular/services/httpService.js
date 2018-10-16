@@ -1,5 +1,7 @@
 'use strict';
 
+var _ = require('lodash');
+
 angular.module('calcentral.services').factory('httpService', function($cacheFactory, $http) {
   /**
    * Clear the cache for a specific URL
@@ -11,6 +13,14 @@ angular.module('calcentral.services').factory('httpService', function($cacheFact
     if (options && options.refreshCache) {
       $cacheFactory.get('$http').remove(url);
     }
+  };
+
+  var encode = function(uri) {
+    var unencodable = ['~', '!', '*', '(', ')', '\'', '.'];
+    var cleanedUri = _.reject(uri, function(char) {
+      return _.includes(unencodable, char);
+    }).join('');
+    return encodeURIComponent(cleanedUri);
   };
 
   /**
@@ -30,6 +40,7 @@ angular.module('calcentral.services').factory('httpService', function($cacheFact
 
   return {
     clearCache: clearCache,
+    encode: encode,
     request: request
   };
 });

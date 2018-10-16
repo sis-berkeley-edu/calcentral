@@ -1,17 +1,9 @@
 module User
   class SearchUsersByName
-
-    def search_by(name, opts={})
+    def search_by(name, opts = {})
       return [] if name.blank?
-      raise Errors::BadRequestError, 'Wildcard-only searches are not allowed.' if only_special_characters?(name)
-      users = search_ldap(name, opts)
-      users.each do |user|
-        # We negotiate the differences between LDAP and Campus Solutions.
-        user[:name] ||= user[:person_name]
-        user[:sid] ||= user[:student_id]
-        user[:ldapUid] ||= user[:ldap_uid]
-      end
-      users
+      raise Errors::BadRequestError, "Wildcard-only searches are not allowed." if only_special_characters?(name)
+      search_sisedo(name, opts)
     end
 
     private
@@ -20,18 +12,28 @@ module User
       !!(name =~ /^[\*\?\s]+$/)
     end
 
-    def search_ldap(name, opts)
+    def search_sisedo(name, opts)
       users = []
-      ldap_users = CalnetLdap::UserAttributes.get_attributes_by_name(name, !!opts[:include_guest_users])
-      ldap_users.each do |ldap_user|
-        # Allow CalNet attributes to be overridden by other data sources.
-        uid = ldap_user[:ldap_uid]
-        if (user = User::SearchUsersByUid.new(opts.merge(id: uid)).search_users_by_uid)
-          users << user
+      search_string = User::SearchUsersByNameFilter.new().prepare_for_query(name)
+      sisedo_users = EdoOracle::Queries.search_students(search_string)
+      sisedo_users.each do |sisedo_user|
+        if uid = get_ldap_uid(sisedo_user)
+          if (user = User::SearchUsersByUid.new(opts.merge(id: uid)).search_users_by_uid)
+            sisedo_user[:sid] ||= user[:campusSolutionsId]
+            sisedo_user[:roles] ||= user[:roles]
+            sisedo_user[:ldapUid] ||= user[:ldapUid]
+            users << HashConverter.camelize(sisedo_user)
+          end
         end
       end
       users
     end
 
+    def get_ldap_uid(sisedo_user)
+      campus_uid = sisedo_user.try(:[], 'campus_uid').to_s.strip.presence
+      oprid = sisedo_user.try(:[], 'oprid').to_s.strip.presence
+      student_id = sisedo_user.try(:[], 'student_id')
+      campus_uid || oprid || User::Identifiers.lookup_ldap_uid(student_id)
+    end
   end
 end
