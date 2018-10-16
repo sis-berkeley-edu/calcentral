@@ -800,6 +800,7 @@ module EdoOracle
               ACAD_PROG AS academic_programs
             FROM SISEDO.CLC_STDNT_LOOKUP_V00_VW
             WHERE upper(UC_SRCH_CRIT) LIKE upper('%#{search_string}%')
+            AND ((CAMPUS_ID <> ' ' AND CAMPUS_ID IS NOT NULL) OR (OPRID <> ' ' AND OPRID IS NOT NULL))
           )
         WHERE rownum < 31
       SQL
