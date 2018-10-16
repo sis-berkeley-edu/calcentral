@@ -2,10 +2,6 @@ class HubEdoController < ApplicationController
   include AllowDelegateViewAs
   before_filter :api_authenticate_401, :authorize_for_enrollments
 
-  def academic_status
-    json_passthrough MyAcademics::MyAcademicStatus
-  end
-
   def work_experience
     # Delegates get an empty feed.
     if current_user.authenticated_as_delegate?

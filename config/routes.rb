@@ -125,7 +125,6 @@ Calcentral::Application.routes.draw do
 
     # Advisor endpoints
     get '/api/advising/academics/:student_uid' => 'advising_student#academics', :defaults => { :format => 'json' }
-    get '/api/advising/academic_status/:student_uid' => 'advising_student#academic_status', :defaults => { :format => 'json' }
     get '/api/advising/advising/:student_uid' => 'advising_student#advising', :defaults => { :format => 'json' }
     get '/api/advising/cache_expiry/academics/:student_uid' => 'advising_student#academics_cache_expiry', :defaults => { :format => 'json' }
     get '/api/advising/class_enrollments/:student_uid' => 'advising_student#enrollment_instructions', :defaults => { :format => 'json'}
@@ -200,7 +199,6 @@ Calcentral::Application.routes.draw do
     get '/clearing_house/clearing_house_url' => 'my_clearing_house_url#redirect'
 
     # EDOs from integration hub
-    get '/api/edos/academic_status' => 'hub_edo#academic_status', :defaults => { :format => 'json' }
     get '/api/edos/work_experience' => 'hub_edo#work_experience', :defaults => { :format => 'json' }
   end
 

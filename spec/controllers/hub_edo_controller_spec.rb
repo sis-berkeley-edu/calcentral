@@ -5,17 +5,6 @@ describe HubEdoController do
   end
   let(:user_id) { random_id }
 
-  describe '#academic_status' do
-    let(:feed) { :academic_status }
-
-    it_behaves_like 'an unauthenticated user'
-
-    context 'authenticated user' do
-      let(:feed_key) { 'student' }
-      it_behaves_like 'a successful feed'
-    end
-  end
-
   describe '#work_experience' do
     let(:feed) { :work_experience }
 
