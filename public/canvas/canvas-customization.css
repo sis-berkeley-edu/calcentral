@@ -70,6 +70,10 @@ form#ui-id-2[data-view='createUsers'] {
   width: 110px;
 }
 
+.footer-rows {
+  text-align: right;
+}
+
 /* HELP */
 
 /* Hide unneccesary Help links */
