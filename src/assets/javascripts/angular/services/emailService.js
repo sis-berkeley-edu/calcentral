@@ -4,7 +4,7 @@
 var angular = require('angular');
 
 angular.module('calcentral.services').factory('emailService', function() {
-  /**
+  /*
    * Returns link to gMail compose with TO address specified
    * @param {String} toAddress 'TO' address string
    */
