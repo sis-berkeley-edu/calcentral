@@ -36,8 +36,11 @@ module StudentSuccess
     end
 
     def get_active_careers
-      careers = careers(academic_statuses MyAcademics::MyAcademicStatus.new(@student_uid_param).get_feed)
-      careers.collect {|c| c.try(:[], 'formalDescription') }.uniq
+      if term_cpp = MyAcademics::MyTermCpp.new(@student_uid_param).get_feed
+        current_cpp = term_cpp.select {|cpp| cpp.try(:[], 'term_id') >= current_term.to_s }
+        return current_cpp.collect {|c| c.try(:[], 'acad_career_descr') }.uniq
+      end
+      []
     end
 
     def current_term
