@@ -40,6 +40,7 @@ module EdoOracle
               sec."sectionNumber" = sec2."sectionNumber"
           ) AS cross_listed_ccns,
           CASE mtg."location-code"
+            WHEN ' ' THEN NULL
             WHEN 'INTR' THEN NULL ELSE (
             SELECT listagg("id", ',') WITHIN GROUP (ORDER BY "id")
             FROM SISEDO.MEETINGV00_VW mtg2 JOIN SISEDO.CLASSSECTIONALLV01_MVW sec3 ON (
