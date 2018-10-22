@@ -23,18 +23,27 @@ describe StudentSuccess::TermGpa do
 
   context 'get_active_careers' do
     let(:subject) { StudentSuccess::TermGpa.new(user_id: user_id) }
-    let(:academic_statuses) do
-      [
-        { 'studentCareer' => { 'academicCareer' => {'code'=>'GRAD', 'description'=>'Graduate', 'formalDescription'=>'Graduate'} } },
-        { 'studentCareer' => { 'academicCareer' => {'code'=>'LAW', 'description'=>'Law', 'formalDescription'=>'Law'} } },
-        { 'studentCareer' => { 'academicCareer' => {'code'=>'GRAD', 'description'=>'Graduate', 'formalDescription'=>'Graduate'} } }
-      ]
-    end
     before do
-      allow_any_instance_of(MyAcademics::MyAcademicStatus).to receive(:get_feed).and_return({:feed=> { 'student'=> { 'academicStatuses'=> academic_statuses } } })
+      allow_any_instance_of(MyAcademics::MyTermCpp).to receive(:get_feed).and_return(term_cpp)
     end
-    it 'return unique career descriptions' do
-      expect(subject.get_active_careers).to eq ['Graduate', 'Law']
+    context 'when term cpp data is present' do
+      let(:term_cpp) do
+        [
+          {"term_id"=>"2135", "acad_career"=>"UGRD", "acad_career_descr"=>"Undergraduate", "acad_program"=>"UCLS", "acad_plan"=>"25000U"},
+          {"term_id"=>"2138", "acad_career"=>"GRAD", "acad_career_descr"=>"Graduate", "acad_program"=>"GPRFL", "acad_plan"=>"70141BAJDG"},
+          {"term_id"=>"2142", "acad_career"=>"GRAD", "acad_career_descr"=>"Graduate", "acad_program"=>"GPRFL", "acad_plan"=>"70141BAJDG"},
+          {"term_id"=>"2145", "acad_career"=>"LAW", "acad_career_descr"=>"Law", "acad_program"=>"LPRFL", "acad_plan"=>"84501JDBAG"},
+        ]
+      end
+      it 'return unique career descriptions' do
+        expect(subject.get_active_careers).to eq ['Graduate', 'Law']
+      end
+    end
+    context 'when term cpp data is not present' do
+      let(:term_cpp) { [] }
+      it 'returns empty array' do
+        expect(subject.get_active_careers).to eq []
+      end
     end
   end
 

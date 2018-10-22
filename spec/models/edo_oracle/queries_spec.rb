@@ -498,7 +498,7 @@ describe EdoOracle::Queries do
       let(:student_id) { '10167763' }
       it 'should return term cpp records' do
         expect(subject.count).to eq 8
-        expect(subject[0]).to have_keys(['term_id', 'acad_career', 'acad_program', 'acad_plan'])
+        expect(subject[0]).to have_keys(['term_id', 'acad_career', 'acad_career_descr', 'acad_program', 'acad_plan'])
       end
     end
   end
