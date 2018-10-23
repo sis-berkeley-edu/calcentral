@@ -23,12 +23,13 @@ describe EdoOracle::UserCourses::Base do
         'course_title' => 'Introduction to Selected Musics of the World',
         'course_title_short' => 'INTR MUSICS WORLD',
         'dept_name' => 'MUSIC',
+        'dept_code' => 'MUSIC',
         'section_display_name' => 'MUSIC 74',
         'term_id' => '2168',
       }
     end
 
-    let(:subject_areas) { ['MEC ENG', 'MUSIC'] }
+    let(:subject_areas) { ['MECENG', 'MUSIC'] }
     before do
       allow(EdoOracle::Queries).to receive(:get_subject_areas).and_return subject_areas.map { |area| {'subjectarea' => area} }
     end
@@ -195,6 +196,7 @@ describe EdoOracle::UserCourses::Base do
             'course_title' => 'The Stooges in Context',
             'course_title_short' => 'STGS CNTXT',
             'dept_name' => 'MUSIC',
+            'dept_code' => 'MUSIC',
             'enroll_limit' => 40,
             'instruction_format' => 'LEC',
             'primary' => 'true',
@@ -213,6 +215,7 @@ describe EdoOracle::UserCourses::Base do
             'course_title' => 'Einstuerzende Neubauten and Structural Failure',
             'course_title_short' => 'KOLLAPS',
             'dept_name' => 'MUSIC',
+            'dept_code' => 'MUSIC',
             'enroll_limit' => 35,
             'instruction_format' => 'LEC',
             'primary' => 'true',
@@ -227,14 +230,15 @@ describe EdoOracle::UserCourses::Base do
             'catalog_prefix' => 'C',
             'catalog_root' => '112',
             'catalog_suffix' => nil,
-            'course_display_name' => 'MEC ENG C112',
+            'course_display_name' => 'MECENG C112',
             'course_title' => 'Einstuerzende Neubauten and Structural Failure',
             'course_title_short' => 'KOLLAPS',
             'dept_name' => 'MEC ENG',
+            'dept_code' => 'MECENG',
             'enroll_limit' => 35,
             'instruction_format' => 'LEC',
             'primary' => 'true',
-            'section_display_name' => 'MEC ENG C112',
+            'section_display_name' => 'MECENG C112',
             'section_id' => '54807',
             'section_num' => '001',
             'waitlist_limit' => 9
@@ -315,7 +319,7 @@ describe EdoOracle::UserCourses::Base do
           expect(get_sections 'MUSIC 74').to have(4).items
           expect(get_sections 'MUSIC 99C').to have(1).items
           expect(get_sections 'MUSIC C105').to have(1).items
-          expect(get_sections 'MEC ENG C112').to have(1).items
+          expect(get_sections 'MECENG C112').to have(1).items
         end
       end
       include_examples 'proper section sorting'
@@ -326,11 +330,11 @@ describe EdoOracle::UserCourses::Base do
         shared_examples 'compensation for bad formatting' do
           include_examples 'proper section sorting'
           it 'deduces correct course codes' do
-            mec_eng_course = subject.find { |course| course[:course_code] == 'MEC ENG C112' }
+            mec_eng_course = subject.find { |course| course[:course_code] == 'MECENG C112' }
             expect(mec_eng_course).to include({
               catid: 'C112',
               course_catalog: 'C112',
-              dept: 'MEC ENG'
+              dept: 'MECENG'
             })
           end
         end
@@ -380,20 +384,20 @@ describe EdoOracle::UserCourses::Base do
         expect(get_course('MUSIC 99C')[:waitlist_limit]).to eq 10
         expect(get_course('MUSIC C105')[:enroll_limit]).to eq 35
         expect(get_course('MUSIC C105')[:waitlist_limit]).to eq 9
-        expect(get_course('MEC ENG C112')[:enroll_limit]).to eq 35
-        expect(get_course('MEC ENG C112')[:waitlist_limit]).to eq 9
+        expect(get_course('MECENG C112')[:enroll_limit]).to eq 35
+        expect(get_course('MECENG C112')[:waitlist_limit]).to eq 9
       end
 
       it 'assigns cross-listing hashes to matching cs_course_id and section only' do
         expect(get_sections('MUSIC 74').first).not_to include(:cross_listing_hash)
         expect(get_sections('MUSIC 99C').first).not_to include(:cross_listing_hash)
-        expect(get_sections('MUSIC C105').first[:cross_listing_hash]).to eq get_sections('MEC ENG C112').first[:cross_listing_hash]
+        expect(get_sections('MUSIC C105').first[:cross_listing_hash]).to eq get_sections('MECENG C112').first[:cross_listing_hash]
       end
 
       describe 'canonical course ordering' do
         before { EdoOracle::UserCourses::Base.new(user_id: random_id).sort_courses feed }
         it 'should order courses by code' do
-          expect(subject.map { |c| c[:course_code] }).to eq ['MEC ENG C112', 'MUSIC 74', 'MUSIC 99C', 'MUSIC C105']
+          expect(subject.map { |c| c[:course_code] }).to eq ['MECENG C112', 'MUSIC 74', 'MUSIC 99C', 'MUSIC C105']
         end
       end
 
@@ -428,7 +432,7 @@ describe EdoOracle::UserCourses::Base do
           expect(get_sections('MUSIC 74').first[:instructors].first[:name]).to eq 'minuscule bear'
         end
         it 'uses name from database when no directory entry found' do
-          expect(get_sections('MEC ENG C112').first[:instructors].first[:name]).to eq 'Professor Plum'
+          expect(get_sections('MECENG C112').first[:instructors].first[:name]).to eq 'Professor Plum'
         end
       end
     end
@@ -436,9 +440,9 @@ describe EdoOracle::UserCourses::Base do
     describe '#course_ids_from_row' do
       subject { EdoOracle::UserCourses::Base.new(user_id: random_id).class_from_row row }
       shared_examples 'a well-parsed id set' do
-        its([:slug]) { should eq 'mec_eng_i_res-0109al' }
-        its([:id])  {should eq 'mec_eng_i_res-0109al-2016-D' }
-        its([:course_code]) { should eq 'MEC ENG/I,RES 0109AL' }
+        its([:slug]) { should eq 'mecengires-0109al' }
+        its([:id])  {should eq 'mecengires-0109al-2016-D' }
+        its([:course_code]) { should eq 'MECENGIRES 0109AL' }
         its([:dept]) { should eq 'MEC ENG/I,RES' }
         its([:dept_code]) { should eq 'MECENGIRES' }
       end

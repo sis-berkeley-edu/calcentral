@@ -125,14 +125,14 @@ module EdoOracle
       #   "course_code" : the short course name as displayed in the UX
       def class_from_row(row)
         dept_name, dept_code, catalog_id = parse_course_code row
-        slug = [dept_name, catalog_id].map { |str| normalize_to_slug str }.join '-'
+        slug = [dept_code, catalog_id].map { |str| normalize_to_slug str }.join '-'
         term_code = Berkeley::TermCodes.edo_id_to_code row['term_id']
         session_code = Berkeley::TermCodes::SUMMER_SESSIONS[row['session_id']]
         course_id =  session_code.present? ? "#{slug}-#{term_code}-#{session_code}" : "#{slug}-#{term_code}"
         {
           catid: catalog_id,
           course_catalog: catalog_id,
-          course_code: "#{dept_name} #{catalog_id}",
+          course_code: "#{dept_code} #{catalog_id}",
           dept: dept_name,
           dept_code: dept_code,
           id: course_id,
