@@ -2,14 +2,8 @@
 
 var _ = require('lodash');
 
-angular.module('calcentral.controllers').controller('AcademicRecordsController', function(academicRecordsFactory, apiService, $scope, $window) {
-  $scope.officialTranscript = {
-    postParams: {},
-    postUrl: '',
-    postUrlHover: 'Transcript for Undergraduate or Graduate Students',
-    isLoading: true,
-    defaultRequestLink: 'http://registrar.berkeley.edu/academic-records/transcripts-diplomas'
-  };
+angular.module('calcentral.controllers').controller('AcademicRecordsController', function(academicRecordsFactory, apiService, $q, $scope, $window) {
+  $scope.hasExamResults = null;
   $scope.lawOfficialTranscript = {
     postParams: {},
     postUrl: '',
@@ -21,11 +15,18 @@ angular.module('calcentral.controllers').controller('AcademicRecordsController',
     link: 'http://www.law.berkeley.edu/php-programs/registrar/forms/transcriptrequestform.php',
     title: 'Transcript in printed format for Law students'
   };
+  $scope.lawUnofficialTranscriptLink = {};
+  $scope.officialTranscript = {
+    postParams: {},
+    postUrl: '',
+    postUrlHover: 'Transcript for Undergraduate or Graduate Students',
+    isLoading: true,
+    defaultRequestLink: 'http://registrar.berkeley.edu/academic-records/transcripts-diplomas'
+  };
   $scope.ucbxTranscriptLink = {
     link: 'http://extension.berkeley.edu/static/studentservices/transcripts/#ordertranscripts',
     title: 'Transcript for UCB Extension Concurrent Enrollment students'
   };
-  $scope.lawUnofficialTranscriptLink = {};
 
   /*
    * Constructs a post request to Credentials Solutions, as outlined by the Credentials Solutions documentation seen in
@@ -57,7 +58,7 @@ angular.module('calcentral.controllers').controller('AcademicRecordsController',
     newWindow.document.getElementsByName('transcriptRequestForm')[0].submit();
   };
 
-  var parseData = function(response) {
+  var parseTranscriptData = function(response) {
     $scope.lawUnofficialTranscriptLink = _.get(response, 'data.lawUnofficialTranscriptLink');
     var transcriptData = _.get(response, 'data.officialTranscriptRequestData');
     $scope.officialTranscript.postUrl = _.get(transcriptData, 'postUrl');
@@ -69,6 +70,11 @@ angular.module('calcentral.controllers').controller('AcademicRecordsController',
     lawPostParams.attto = lawPostParams.lawAttto;
     $scope.lawOfficialTranscript.postUrl = _.get(transcriptData, 'postUrl');
     $scope.lawOfficialTranscript.postParams = lawPostParams;
+  };
+
+  var parseTestHistory = function(response) {
+    var hasExamResults = _.get(response, 'data.hasExamResults');
+    _.set($scope, 'hasExamResults', hasExamResults);
   };
 
   $scope.requestTranscript = function() {
@@ -88,8 +94,11 @@ angular.module('calcentral.controllers').controller('AcademicRecordsController',
   };
 
   var loadAcademicRecordsData = function() {
-    academicRecordsFactory.getTranscriptData()
-    .then(parseData)
+    var transcriptDataRequest = academicRecordsFactory.getTranscriptData().then(parseTranscriptData);
+    var testHistoryRequest = academicRecordsFactory.getExamResultsExists().then(parseTestHistory);
+    var requests = [transcriptDataRequest, testHistoryRequest];
+
+    $q.all(requests)
     .finally(function() {
       $scope.officialTranscript.isLoading = false;
     });

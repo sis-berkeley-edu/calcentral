@@ -28,6 +28,9 @@
         <li data-ng-if="api.user.profile.features.enrollmentVerification && (api.user.profile.isDirectlyAuthenticated || api.user.profile.actingAsUid || api.user.profile.advisorActingAsUid)">
           <a title="Request Enrollment Verification" href="academics/enrollment_verification">Enrollment Verification</a>
         </li>
+        <li data-ng-if="hasExamResults">
+          <a data-ng-href="/academics/exam_results" title="Exam Results">Exam Results</a>
+        </li>
       </ul>
     </div>
   </div>
