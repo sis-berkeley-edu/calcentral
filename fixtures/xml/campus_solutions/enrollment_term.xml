@@ -82,6 +82,7 @@
         <TIME>M 4:00P-5:29P</TIME>
       </WHEN>
       <UNITS>4</UNITS>
+      <EDD>Y</EDD>
     </CLASS>
     <CLASS>
       <ID>19090</ID>
@@ -90,6 +91,7 @@
         <TIME>Tuesday  Thursday 12:30 PM-1:59 PM</TIME>
       </WHEN>
       <UNITS>4</UNITS>
+      <EDD>N</EDD>
     </CLASS>
   </ENROLLED_CLASSES>
   <WAITLISTED_CLASSES type="array">

@@ -178,6 +178,7 @@
           "title": "Advisor Only"
         }
       ],
+      "earlyDropDeadlineClasses": "MCELLBI 102, PLANTBI 40",
       "enrolledClasses": [
         {
           "acadCareer": "UGRD",
@@ -188,7 +189,8 @@
           "subjectCatalog": "MCELLBI 102",
           "title": "SURV BIOCHEM & MOBI",
           "units": 0.0,
-          "when": "M 10:00A-10:59A"
+          "when": "M 10:00A-10:59A",
+          "edd": "Y"
         },
         {
           "acadCareer": "UGRD",
@@ -199,7 +201,8 @@
           "subjectCatalog": "MCELLBI 102",
           "title": "SURV BIOCHEM & MOBI",
           "units": 4.0,
-          "when": "MWF 11:00A-11:59A"
+          "when": "MWF 11:00A-11:59A",
+          "edd": "Y"
         },
         {
           "acadCareer": "UGRD",
@@ -210,7 +213,8 @@
           "subjectCatalog": "PLANTBI 40",
           "title": "SECRET LIFE PLANTS",
           "units": 0.0,
-          "when": "Tu 4:00P-4:59P"
+          "when": "Tu 4:00P-4:59P",
+          "edd": "N"
         },
         {
           "acadCareer": "UGRD",
@@ -221,7 +225,8 @@
           "subjectCatalog": "PLANTBI 40",
           "title": "SECRET LIFE PLANTS",
           "units": 3.0,
-          "when": "TuTh 2:00P-2:59P"
+          "when": "TuTh 2:00P-2:59P",
+          "edd": "Y"
         },
         {
           "acadCareer": "UGRD",
@@ -232,7 +237,8 @@
           "subjectCatalog": "STAT 133",
           "title": "COMPUTING DATA",
           "units": 3.0,
-          "when": "TuTh 11:00A-12:29P"
+          "when": "TuTh 11:00A-12:29P",
+          "edd": "N"
         },
         {
           "acadCareer": "UGRD",
@@ -243,7 +249,8 @@
           "subjectCatalog": "STAT 133",
           "title": "COMPUTING DATA",
           "units": 0.0,
-          "when": "W 12:00P-1:59P"
+          "when": "W 12:00P-1:59P",
+          "edd": "N"
         },
         {
           "acadCareer": "UGRD",
@@ -254,7 +261,8 @@
           "subjectCatalog": "STAT 134",
           "title": "CONCEPTS OF PROB",
           "units": 3.0,
-          "when": "TuTh 9:30A-10:59A"
+          "when": "TuTh 9:30A-10:59A",
+          "edd": "N"
         },
         {
           "acadCareer": "UGRD",
@@ -265,7 +273,8 @@
           "subjectCatalog": "STAT 134",
           "title": "CONCEPTS OF PROB",
           "units": 0.0,
-          "when": "MW 9:00A-9:59A"
+          "when": "MW 9:00A-9:59A",
+          "edd": "N"
         }
       ],
       "enrolledClassesTotalUnits": 13.0,
@@ -372,6 +381,7 @@
           "title": "Advisor Only"
         }
       ],
+      "earlyDropDeadlineClasses": null,
       "enrolledClasses": [],
       "enrolledClassesTotalUnits": 0.0,
       "enrollmentPeriod": [
@@ -495,6 +505,7 @@
           "title": "Advisor Only"
         }
       ],
+      "earlyDropDeadlineClasses": null,
       "enrolledClasses": [],
       "enrolledClassesTotalUnits": 0.0,
       "enrollmentPeriod": [

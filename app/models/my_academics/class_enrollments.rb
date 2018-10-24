@@ -120,9 +120,23 @@ module MyAcademics
       get_active_term_ids.each do |term_id|
         instructions[term_id] = CampusSolutions::MyEnrollmentTerm.get_term(@uid, term_id)
         instructions[term_id][:termIsSummer] = Berkeley::TermCodes.edo_id_is_summer?(term_id)
+        parse_early_drop_deadline_classes(instructions[term_id])
         apply_period_timezones(instructions[term_id])
       end
       instructions
+    end
+
+    def parse_early_drop_deadline_classes(instruction)
+      instruction[:earlyDropDeadlineClasses] = nil
+      early_drop_deadline_classes = nil
+      if classes = instruction.try(:[], :enrolledClasses)
+        early_drop_deadline_classes = classes.collect do |c|
+          c[:edd] == 'Y' ? c[:subjectCatalog] : nil
+        end.compact.uniq
+      end
+      if early_drop_deadline_classes.present?
+        instruction[:earlyDropDeadlineClasses] = early_drop_deadline_classes.join(', ')
+      end
     end
 
     def apply_period_timezones(instruction)

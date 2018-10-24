@@ -110,6 +110,12 @@
     data-ng-class="{'cc-enrollment-card-margin-top' : ($index > 0)}"
     data-ng-repeat="(groupedSectionKey, groupedSection) in enrollmentInstruction.enrolledClassesGrouped"
   >
+
+    <div class="cc-enrollment-card-adjust-early-drop-deadline-notice" data-ng-if="!enrollmentInstruction.isEndOfDropAddTimePeriod && enrollmentInstruction.earlyDropDeadlineClasses">
+      Note: The early drop deadline (The second Friday after instruction begins) applies to:
+      <span data-ng-bind="enrollmentInstruction.earlyDropDeadlineClasses"></span>
+    </div>
+
     <table>
       <thead>
         <th scope="col" width="100px">
