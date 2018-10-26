@@ -52,18 +52,6 @@ describe Oec::ValidationTask do
     let(:sheet_name) { 'courses' }
     let(:key) { '2015-B-99999' }
 
-    context 'blank field' do
-      let(:invalid_row) { '2015-B-99999,2015-B-99999,BIOLOGY 150 LEC 001 VINDICATION OF RIGHTS,,,BIOLOGY,150,LEC,001,P,155555,UID:155555,Zachary,Zzzz,zzzz@berkeley.edu,23,Y,,F,,01-26-2015,05-11-2015' }
-      let(:expected_message) { 'Blank DEPT_FORM' }
-      include_examples 'validation error logging'
-    end
-
-    context 'invalid BIOLOGY department form' do
-      let(:invalid_row) { '2015-B-99999,2015-B-99999,BIOLOGY 150 LEC 001 VINDICATION OF RIGHTS,,,BIOLOGY,150,LEC,001,P,155555,UID:155555,Zachary,Zzzz,zzzz@berkeley.edu,23,Y,SPANISH,F,,01-26-2015,05-11-2015' }
-      let(:expected_message) { 'Unexpected for BIOLOGY course: DEPT_FORM SPANISH' }
-      include_examples 'validation error logging'
-    end
-
     context 'invalid course id' do
       let(:invalid_row) { '2015-B-999991,2015-B-999991,GWS 150 LEC 001 VINDICATION OF RIGHTS,,,GWS,150,LEC,001,P,155555,UID:155555,Zachary,Zzzz,zzzz@berkeley.edu,23,Y,GWS,F,,01-26-2015,05-11-2015' }
       let(:key) { '2015-B-999991' }

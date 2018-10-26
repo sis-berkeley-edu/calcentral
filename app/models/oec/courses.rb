@@ -23,7 +23,6 @@ module Oec
       )
     end
 
-    validate('DEPT_FORM') { |row| 'Unexpected for BIOLOGY course:' if row['DEPT_NAME'] == 'BIOLOGY' && !%w(INTEGBI MCELLBI).include?(row['DEPT_FORM']) }
     validate('COURSE_ID') { |row| 'Invalid' unless row['COURSE_ID'] =~ /\A20\d{2}-[ABCD]-\d{5}(_(A|B|GSI|CHEM|MCB|MID))?\Z/ }
     validate('COURSE_ID_2') { |row| 'Non-matching' unless row['COURSE_ID'] == row['COURSE_ID_2'] }
 
