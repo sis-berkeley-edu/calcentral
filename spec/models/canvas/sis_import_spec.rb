@@ -73,11 +73,10 @@ describe Canvas::SisImport do
       end
     end
 
-    context 'when no response or progress not completed' do
+    context 'when progress not completed' do
       let(:sis_import_status_json) do
-        JSON.parse(sis_import_status_hash.merge({'workflow_state' => 'failed', 'progress' => 85}).to_json)
+        JSON.parse(sis_import_status_hash.merge({'progress' => 85}).to_json)
       end
-
       it 'logs error' do
         logger_double = double
         allow(Canvas::SisImport).to receive(:logger).and_return(logger_double)
@@ -90,6 +89,24 @@ describe Canvas::SisImport do
         expect(result).to be_falsey
       end
     end
+
+    context 'when failure is explicit' do
+      let(:sis_import_status_json) do
+        JSON.parse(sis_import_status_hash.merge({'workflow_state' => 'failed_with_messages', 'progress' => 100}).to_json)
+      end
+      it 'logs error' do
+        logger_double = double
+        allow(Canvas::SisImport).to receive(:logger).and_return(logger_double)
+        expected_log_message = "SIS import failed or incompletely processed; status: #{sis_import_status_json}"
+        expect(logger_double).to receive(:error).with(expected_log_message).and_return nil
+        fake_proxy.import_successful?(sis_import_status_json)
+      end
+      it 'returns false' do
+        result = fake_proxy.import_successful?(sis_import_status_json)
+        expect(result).to be_falsey
+      end
+    end
+
   end
 
   context 'in dry-run mode' do
