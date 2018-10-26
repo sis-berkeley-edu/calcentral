@@ -81,6 +81,9 @@ gem 'rails_admin', '1.3.0'
 
 gem 'bootstrap-sass', '~> 3.3.1.0'
 
+# Background jobs without TorqueBox
+gem 'concurrent-ruby', '~> 1.0.5'
+
 # TorqueBox app server
 gem 'torquebox', '~> 3.2.0'
 gem 'torquebox-server', '~> 3.2.0'

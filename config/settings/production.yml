@@ -31,3 +31,9 @@ canvas_proxy:
   export_directory: '/home/app_calcentral/calcentral/tmp/canvas'
   # Set to "true" when Canvas allows it.
   delete_bad_emails: false
+
+background_torquebox: true
+background_threads:
+  min: 10,
+  max: 10,
+  max_queue: 0  # unbounded work queue

@@ -154,6 +154,7 @@ GEM
       execjs
     coffee-script-source (1.8.0)
     columnize (0.3.6)
+    concurrent-ruby (1.0.5-java)
     crack (0.4.2)
       safe_yaml (~> 1.0.0)
     crass (1.0.3)
@@ -531,6 +532,7 @@ DEPENDENCIES
   capistrano (~> 2.15.4)
   capybara (~> 2.4.4)
   closure-compiler (~> 1.1.11)
+  concurrent-ruby (~> 1.0.5)
   dalli (~> 2.7.2)
   faraday (~> 0.9.0)
   faraday_middleware (~> 0.9.1)

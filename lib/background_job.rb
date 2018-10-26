@@ -33,7 +33,7 @@ module BackgroundJob
   #   worker.background_job_initialize(:job_type => 'special_job', :total_steps => 3)
   #   worker.background_correlate(worker.background.perform_work)
   #
-  include TorqueBox::Messaging::Backgroundable
+  include BackgroundableShim
   include ClassLogger
 
   attr_reader :background_job_id
@@ -100,7 +100,7 @@ module BackgroundJob
   end
 
   def background_correlate(backgroundable_future)
-    torquebox_correlation_id = backgroundable_future.correlation_id
+    torquebox_correlation_id = backgroundable_future.try(:correlation_id, nil)
     logger.warn "background_job_id = #{@background_job_id}, Torquebox correlation_id = #{torquebox_correlation_id}"
     Rails.cache.write(correlation_cache_key, torquebox_correlation_id, expires_in: Settings.cache.expiration.CanvasBackgroundJobs)
     backgroundable_future

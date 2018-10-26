@@ -118,10 +118,6 @@ shared_examples 'a background job worker' do
     subject.background_job_initialize(:total_steps => 3)
   end
 
-  it 'supports Torquebox background jobs' do
-    expect(subject.background.class).to eq TorqueBox::Messaging::Backgroundable::BackgroundProxy
-  end
-
   it 'provides consistent background job id' do
     allow(BackgroundJob).to receive(:unique_job_id).and_return('generated.cache.key1','generated.cache.key2')
     subject.background_job_initialize(:total_steps => 3)
