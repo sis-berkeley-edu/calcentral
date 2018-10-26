@@ -77,7 +77,7 @@ module Canvas
     end
 
     def import_successful?(status)
-      if status.blank? || status['progress'] != 100
+      if status.blank? || status['progress'] != 100 || status['workflow_state'].start_with?('failed')
         logger.error "SIS import failed or incompletely processed; status: #{status}"
         false
       elsif status['workflow_state'] == 'imported'
