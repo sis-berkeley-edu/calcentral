@@ -1,6 +1,8 @@
 <div class="bc-canvas-application bc-page-course-grade-export">
 
   <div>
+    <div data-ng-if="appState === 'initializing'" data-cc-spinner-directive></div>
+
     <div data-ng-show="appState === 'error'">
 
       <!-- Standard Error -->
