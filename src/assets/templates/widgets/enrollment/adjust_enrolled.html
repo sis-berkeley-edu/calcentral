@@ -129,7 +129,11 @@
             <span class="cc-visuallyhidden" data-ng-bind-template="{{class.ssrComponentDescr}} -"></span>
             <span data-ng-bind="class.ssrComponent"></span>
           </td>
-          <td data-ng-bind="class.when"></td>
+          <td>
+            <ul class="cc-enrollment-meeting-times">
+              <li data-ng-repeat="meetingTime in class.when" data-ng-bind="meetingTime"></li>
+            </ul>
+          </td>
           <td class="cc-table-right">
             <span data-ng-if="class.units > 0" data-ng-bind="class.units | number:1"></span>
           </td>
