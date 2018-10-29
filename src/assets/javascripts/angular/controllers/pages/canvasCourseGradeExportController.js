@@ -132,12 +132,15 @@ angular.module('calcentral.controllers').controller('CanvasCourseGradeExportCont
 
   $scope.resolveIssues = function() {
     $scope.accessibilityAnnounce('Updating course settings');
+    $scope.resolvingCourseState = true;
     canvasCourseGradeExportFactory.resolveIssues($scope.canvasCourseId, $scope.enableDefaultGradingScheme, $scope.unmuteAllAssignments).then(
       function successCallback(response) {
         if (response.data.status && response.data.status === 'Resolved') {
           $scope.accessibilityAnnounce('Course settings updated. Export form options loaded.');
+          $scope.resolvingCourseState = false;
           $scope.switchToSelection();
         } else {
+          $scope.resolvingCourseState = false;
           $scope.appState = 'error';
           $scope.contactSupport = true;
           $scope.errorStatus = 'Error resolving course site state for E-Grades Export.';
