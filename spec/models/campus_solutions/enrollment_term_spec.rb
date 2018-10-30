@@ -32,6 +32,15 @@ describe CampusSolutions::EnrollmentTerm do
       )
     end
 
+    it 'provides a list of class meeting times' do
+      expect(subject[:feed][:enrollmentTerm][:enrolledClasses][0][:when]).to be_a Array
+      expect(subject[:feed][:enrollmentTerm][:enrolledClasses][0][:when][0]).to eq 'M 11:30A-12:59P'
+      expect(subject[:feed][:enrollmentTerm][:enrolledClasses][0][:when][1]).to eq 'M 4:00P-5:29P'
+
+      expect(subject[:feed][:enrollmentTerm][:waitlistedClasses][0][:when]).to be_a Array
+      expect(subject[:feed][:enrollmentTerm][:waitlistedClasses][0][:when][0]).to eq 'Monday  Wednesday 10:00 AM-10:59 AM'
+    end
+
     it 'forces year to the end of the term description' do
       expect(subject[:feed][:enrollmentTerm][:termDescr]).to eq 'Spring 2016'
     end
