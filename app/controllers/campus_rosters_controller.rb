@@ -21,9 +21,16 @@ class CampusRostersController < RostersController
 
   # GET /api/academics/rosters/campus/csv/:canvas_course_id.csv
   def get_csv
-    rosters_csv = Rosters::Campus.new(session['user_id'], course_id: params['campus_course_id']).get_csv
+    options = {
+      campus_course_id: params['campus_course_id'],
+      section_id: params['section_id'],
+      enroll_option: params['enroll_option'],
+    }
+    rosters_feed = Rosters::Campus.new(session['user_id'], course_id: params['campus_course_id']).get_feed
+    rosters_csv = Rosters::Csv.new(rosters_feed[:students], options)
+
     respond_to do |format|
-      format.csv { render csv: rosters_csv.to_s, filename: "course_#{params['campus_course_id']}_rosters" }
+      format.csv { render csv: rosters_csv.get_csv.to_s, filename: rosters_csv.get_filename }
     end
   end
 
@@ -34,5 +41,4 @@ class CampusRostersController < RostersController
     @photo = Rosters::Campus.new(session['user_id'], course_id: course_id).photo_data_or_file(course_user_id)
     serve_photo
   end
-
 end
