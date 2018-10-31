@@ -583,4 +583,45 @@ describe MyAcademics::ClassEnrollments do
       end
     end
   end
+
+  context '#parse_early_drop_deadline_classes' do
+    let(:instruction) do
+      {
+        enrolledClasses: [
+          {
+            edd: 'Y',
+            subjectCatalog: 'MATH 1A',
+            title: 'CALCULUS',
+          },
+          {
+            edd: 'N',
+            subjectCatalog: 'COLWRIT R1A',
+            title: 'COLLEGE WRITING 1A',
+          },
+          {
+            edd: 'Y',
+            subjectCatalog: 'PSYCH 1',
+            title: 'GENERAL PSYCHOLOGY',
+          },
+          {
+            edd: 'Y',
+            subjectCatalog: 'PSYCH 1',
+            title: 'GENERAL PSYCHOLOGY',
+          },
+        ]
+      }
+    end
+    it 'adds early drop deadline class list' do
+      subject.parse_early_drop_deadline_classes(instruction)
+      expect(instruction[:earlyDropDeadlineClasses]).to eq 'MATH 1A, PSYCH 1'
+    end
+    context 'when no early drop deadline classes are present' do
+      before { instruction[:enrolledClasses].each {|c| c[:edd] = 'N' } }
+      it 'sets early drop deadline class list as nil' do
+        puts "instruction: #{instruction.inspect}"
+        subject.parse_early_drop_deadline_classes(instruction)
+        expect(instruction[:earlyDropDeadlineClasses]).to eq nil
+      end
+    end
+  end
 end
