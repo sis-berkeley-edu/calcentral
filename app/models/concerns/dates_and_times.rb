@@ -10,5 +10,9 @@ module Concerns
       Time.parse(utc_time.strftime("%Y-%m-%d %H:%M:%S #{time_zone}"))
     end
 
+    def get_month(date_object)
+      date_object.strftime('%B')
+    end
+
   end
 end

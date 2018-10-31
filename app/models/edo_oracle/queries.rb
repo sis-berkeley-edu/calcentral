@@ -808,5 +808,27 @@ module EdoOracle
       SQL
       result
     end
+
+    def self.get_exam_results(student_id)
+      result = safe_query <<-SQL
+        SELECT TEST_ID AS id,
+          TEST_DESCRIPTION AS descr,
+          TEST_SCORE AS score,
+          TEST_DATE AS taken
+        FROM SISEDO.CLC_SR_TEST_RSLTV00_VW
+        WHERE STUDENT_ID = '#{student_id}'
+      SQL
+      result
+    end
+
+    def self.has_exam_results?(student_id)
+      result = safe_query <<-SQL
+        SELECT TEST_ID
+        FROM SISEDO.CLC_SR_TEST_RSLTV00_VW
+        WHERE STUDENT_ID = '#{student_id}' AND
+        rownum = 1
+      SQL
+      result.any?
+    end
   end
 end

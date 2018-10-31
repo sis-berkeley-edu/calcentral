@@ -1,13 +1,14 @@
 module DegreeProgress
   module RequirementsModule
     include Concerns::DatesAndTimes
+    include Concerns::TransferCredit
     include DatedFeed
     include LinkFetcher
 
     def process(response)
       degree_progress = response.try(:[], :feed).try(:[], :ucAaProgress)
       degree_progress[:progresses] = massage_progresses(degree_progress.try(:[], :progresses))
-      degree_progress[:transferCreditReviewDeadline] = is_pending_transfer_credit_review_deadline ? get_month(transfer_credit_review_deadline) : nil
+      degree_progress[:transferCreditReviewDeadline] = is_pending_transfer_credit_review_deadline(student_empl_id) ? get_month(transfer_credit_review_deadline(student_empl_id)) : nil
       degree_progress
     end
 
@@ -32,35 +33,15 @@ module DegreeProgress
       requirements = progress.fetch(:requirements)
       result = []
       requirements.each do |requirement|
-        result.push normalize(requirement, is_pending_transfer_credit_review_deadline) if should_include requirement
+        result.push normalize(requirement, is_pending_transfer_credit_review_deadline(student_empl_id)) if should_include requirement
       end
       sort result
-    end
-
-    def is_pending_transfer_credit_review_deadline
-      compare_dates = Proc.new do
-        current_date = Settings.terms.fake_now || DateTime.now
-        transfer_credit_review_deadline && current_date <= transfer_credit_review_deadline + 1.days
-      end
-      @is_pending_transfer_credit_review_deadline ||= compare_dates.call
-    end
-
-    def transfer_credit_review_deadline
-      return @transfer_credit_review_deadline if defined? @transfer_credit_review_deadline
-      @transfer_credit_review_deadline ||= begin
-        expiration = EdoOracle::Queries.get_transfer_credit_expiration(student_empl_id).try(:[], 'expire_date')
-        cast_utc_to_pacific(expiration) if expiration
-      end
     end
 
     def format_date_string(date_unformatted)
       return nil if date_unformatted.blank?
       date_object = strptime_in_time_zone(date_unformatted, '%Y-%m-%d')
       pretty_date date_object
-    end
-
-    def get_month(date_object)
-      date_object.strftime('%B')
     end
 
     def pretty_date(date_object)

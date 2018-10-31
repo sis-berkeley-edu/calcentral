@@ -1,0 +1,33 @@
+<div class="cc-widget">
+  <div class="cc-widget-title">
+    <h2>Exam Results</h2>
+  </div>
+  <div class="cc-widget-padding">
+    <p>Below are exam scores submitted during the admission process, or taken on the Berkeley campus for Entry Level Writing, Quantitative Reasoning, or Language Proficiency.</p>
+    <div class="cc-table">
+      <table>
+        <thead>
+          <tr>
+            <th>Exam ID&#42;</th>
+            <th>Exam Name</th>
+            <th class="cc-table-right">Score</th>
+            <th class="cc-table-right">Date Taken</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr data-ng-repeat="exam in examResults.exams | orderBy:['id', 'descr', 'taken']">
+            <td data-ng-bind="exam.id"></td>
+            <td data-ng-bind="exam.descr"></td>
+            <td data-ng-bind="exam.score | number:2" class="cc-table-right"></td>
+            <td data-ng-bind="exam.taken | date:'MMM yyyy'" class="cc-table-right"></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p>&#42; For ALEVEL exams: A Grades = Score 1.00, B Grades = 2.00, C Grades = Score 3.00</p>
+    <p>
+      Transfer Course and Test Credit is posted to your Transfer Credit Report.
+      <span data-ng-if="examResults.review.isPending">This report is updated for new incoming students by mid-<span data-ng-bind="examResults.review.displayMonth"></span>.</span>
+    </p>
+  </div>
+</div>
