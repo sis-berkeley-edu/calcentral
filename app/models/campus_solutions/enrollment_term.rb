@@ -18,8 +18,6 @@ module CampusSolutions
       enrollment_term['ENROLLMENT_PERIOD'].each do |period|
         format_cs_datetime(period, '%Y-%m-%dT%H:%M:%S')
       end
-      format_meeting_times enrollment_term['ENROLLED_CLASSES']
-      format_meeting_times enrollment_term['WAITLISTED_CLASSES']
 
       if enrollment_term['SCHEDULE_OF_CLASSES_PERIOD']
         format_cs_datetime(enrollment_term['SCHEDULE_OF_CLASSES_PERIOD'], '%Y-%m-%d')
@@ -28,16 +26,6 @@ module CampusSolutions
       {
         enrollment_term: enrollment_term
       }
-    end
-
-    def format_meeting_times(classes)
-      classes.each do |cls|
-        meeting_times = Array(cls.try(:[], 'WHEN').try(:[], 'TIME'))
-        meeting_times.map! do |time|
-          time.to_s.tr('[]','').tr('""','')
-        end
-        cls['WHEN'] = meeting_times
-      end
     end
 
     def format_cs_datetime(hash, format)
