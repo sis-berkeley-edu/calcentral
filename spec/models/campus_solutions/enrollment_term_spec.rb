@@ -34,10 +34,15 @@ describe CampusSolutions::EnrollmentTerm do
 
     it 'provides a list of class meeting times' do
       expect(subject[:feed][:enrollmentTerm][:enrolledClasses][0][:when]).to be_a Array
+      expect(subject[:feed][:enrollmentTerm][:enrolledClasses][0][:when].count).to eq 2
       expect(subject[:feed][:enrollmentTerm][:enrolledClasses][0][:when][0]).to eq 'M 11:30A-12:59P'
       expect(subject[:feed][:enrollmentTerm][:enrolledClasses][0][:when][1]).to eq 'M 4:00P-5:29P'
+      expect(subject[:feed][:enrollmentTerm][:enrolledClasses][1][:when]).to be_a Array
+      expect(subject[:feed][:enrollmentTerm][:enrolledClasses][1][:when].count).to eq 1
+      expect(subject[:feed][:enrollmentTerm][:enrolledClasses][1][:when][0]).to eq 'Tuesday  Thursday 12:30 PM-1:59 PM'
 
       expect(subject[:feed][:enrollmentTerm][:waitlistedClasses][0][:when]).to be_a Array
+      expect(subject[:feed][:enrollmentTerm][:waitlistedClasses][0][:when].count).to eq 1
       expect(subject[:feed][:enrollmentTerm][:waitlistedClasses][0][:when][0]).to eq 'Monday  Wednesday 10:00 AM-10:59 AM'
     end
 

@@ -77,7 +77,7 @@
     <CLASS>
       <ID>12081</ID>
       <SUBJECT_CATALOG>ARCH11A</SUBJECT_CATALOG>
-      <WHEN>
+      <WHEN type="array">
         <TIME>M 11:30A-12:59P</TIME>
         <TIME>M 4:00P-5:29P</TIME>
       </WHEN>
@@ -86,7 +86,7 @@
     <CLASS>
       <ID>19090</ID>
       <SUBJECT_CATALOG>MATHC103</SUBJECT_CATALOG>
-      <WHEN>
+      <WHEN type="array">
         <TIME>Tuesday  Thursday 12:30 PM-1:59 PM</TIME>
       </WHEN>
       <UNITS>4</UNITS>
@@ -96,7 +96,7 @@
     <CLASS>
       <ID>15636</ID>
       <SUBJECT_CATALOG>TAGALOG001</SUBJECT_CATALOG>
-      <WHEN>
+      <WHEN type="array">
         <TIME>Monday  Wednesday 10:00 AM-10:59 AM</TIME>
       </WHEN>
       <UNITS>4</UNITS>
