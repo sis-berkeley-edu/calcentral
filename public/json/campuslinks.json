@@ -2506,7 +2506,7 @@
     {
       "name": "National Student Loan Database System",
       "description": "The U.S. Department of Education's central database for student aid",
-      "url": "https://www.nslds.ed.gov/nslds/nslds_SA/",
+      "url": "https://nslds.ed.gov/nslds/nslds_SA/",
       "roles": {
         "student": true,
         "applicant": true,

@@ -516,7 +516,7 @@ class PopulateSisedosH2 < ActiveRecord::Base
 
       INSERT INTO SISEDO.CLC_FA_LNHST_RESOURCES (INSTITUTION, SEQ_NUM, RESOURCE_URL, RESOURCE_TITLE, RESOURCE_TEXT, RESOURCE_HOVER_OVER) VALUES('UCB01',	10,	'https://bearsforfinancialsuccess.berkeley.edu',	'Bears for Financial Success',	'Sit down with a financial wellness peer educator to help you understand your personal finances.', 	'Meet with a financial wellness peer educator'    );
       INSERT INTO SISEDO.CLC_FA_LNHST_RESOURCES (INSTITUTION, SEQ_NUM, RESOURCE_URL, RESOURCE_TITLE, RESOURCE_TEXT, RESOURCE_HOVER_OVER) VALUES('UCB01',	20,	'https://studentcentral.berkeley.edu',	          'Cal Student Central',	        'Contact with any questions regarding your loans.',	                                                'Get your loan questions answered'                );
-      INSERT INTO SISEDO.CLC_FA_LNHST_RESOURCES (INSTITUTION, SEQ_NUM, RESOURCE_URL, RESOURCE_TITLE, RESOURCE_TEXT, RESOURCE_HOVER_OVER) VALUES('UCB01',	30,	'http://www.nslds.ed.gov/',	                      'Federal Loan Detail',	        'Log in to National Student Loan Data Systems (NSLDS) to view your detailed federal loan history.',	'NSLDS website to view your Federal loan details' );
+      INSERT INTO SISEDO.CLC_FA_LNHST_RESOURCES (INSTITUTION, SEQ_NUM, RESOURCE_URL, RESOURCE_TITLE, RESOURCE_TEXT, RESOURCE_HOVER_OVER) VALUES('UCB01',	30,	'https://nslds.ed.gov/nslds/nslds_SA/',	                      'Federal Loan Detail',	        'Log in to National Student Loan Data Systems (NSLDS) to view your detailed federal loan history.',	'NSLDS website to view your Federal loan details' );
       INSERT INTO SISEDO.CLC_FA_LNHST_RESOURCES (INSTITUTION, SEQ_NUM, RESOURCE_URL, RESOURCE_TITLE, RESOURCE_TEXT, RESOURCE_HOVER_OVER) VALUES('UCB01',	40,	'https://studentaid.ed.gov/',	                    'Federal Loan Summary',	        'Log in to studentaid.ed.gov to view a summary of your federal loan history.',	                    'View your Federal Loan Summary'                  );
 
 
@@ -1429,7 +1429,7 @@ class PopulateSisedosH2 < ActiveRecord::Base
       INSERT INTO SISEDO.CLC_FA_FASO_V00_VW (STUDENT_ID,CAMPUS_UID,AID_YEAR,UC_COST_ATTENDANCE,UC_GIFT_AID_WAIVER,UC_NET_COST,UC_FUNDING_OFFERED,UC_GIFT_AID_OUT,UC_GRANTS_SCHOL,UC_WAIVERS_OTH,UC_FEE_WAIVERS,UC_LOANS_WRK_STUDY,UC_LOANS,UC_WORK_STUDY,SFA_SS_GROUP) VALUES ('11667051','61889','2018',33528,24728,8800,33528,24728,24728,0,0,8800,5500,3300,NULL);
       INSERT INTO SISEDO.CLC_FA_FASO_V00_VW (STUDENT_ID,CAMPUS_UID,AID_YEAR,UC_COST_ATTENDANCE,UC_GIFT_AID_WAIVER,UC_NET_COST,UC_FUNDING_OFFERED,UC_GIFT_AID_OUT,UC_GRANTS_SCHOL,UC_WAIVERS_OTH,UC_FEE_WAIVERS,UC_LOANS_WRK_STUDY,UC_LOANS,UC_WORK_STUDY,SFA_SS_GROUP) VALUES ('84307640','799934','2017',52093,23942,13019,41902,31112,10989,3938,87,31782,8787,1231,NULL);
       INSERT INTO SISEDO.CLC_FA_FASO_V00_VW (STUDENT_ID,CAMPUS_UID,AID_YEAR,UC_COST_ATTENDANCE,UC_GIFT_AID_WAIVER,UC_NET_COST,UC_FUNDING_OFFERED,UC_GIFT_AID_OUT,UC_GRANTS_SCHOL,UC_WAIVERS_OTH,UC_FEE_WAIVERS,UC_LOANS_WRK_STUDY,UC_LOANS,UC_WORK_STUDY,SFA_SS_GROUP) VALUES ('84307640','799934','2018',39389,38398,7878,49218,28272,38378,0,0,5898,3839,2635,'CCUGRD');
-      
+
       DROP TABLE IF EXISTS SISEDO.CLC_STDNT_LOOKUP_V00_VW;
       CREATE TABLE SISEDO.CLC_STDNT_LOOKUP_V00_VW (
         UC_SRCH_CRIT VARCHAR2(92 CHAR),
@@ -1475,7 +1475,7 @@ class PopulateSisedosH2 < ActiveRecord::Base
       INSERT INTO SISEDO.CLC_SR_TEST_RSLTV00_VW (STUDENT_ID,TEST_ID,TEST_DESCRIPTION,TEST_SCORE,TEST_DATE) VALUES ('11667051', 'SAT I', 'Pre-2016 Math Score', 780, PARSEDATETIME('01-MAY-12', 'dd-MMM-yy'));
 
       SQL
-      
+
       connection.execute sql
     end
   end
