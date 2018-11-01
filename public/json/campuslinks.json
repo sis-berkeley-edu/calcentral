@@ -3628,7 +3628,7 @@
     {
       "name": "UC Learning Center",
       "description": "Various services that help students and instructors succeed",
-      "url": "https://shib.berkeley.edu/idp/profile/Shibboleth/SSO?shire=https://uc.sumtotalsystems.com/Shibboleth.sso/SAML/POST\u0026target=https://uc.sumtotalsystems.com/secure/auth.aspx\u0026providerId=https://uc.sumtotalsystems.com/shibboleth",
+      "url": "https://uc.sumtotal.host/Core/dash/home?domain=4",
       "roles": {
         "student": false,
         "applicant": false,
