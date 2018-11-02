@@ -89,7 +89,7 @@ module Oec
     private
 
     def background_correlate(backgroundable_future, task_id)
-      torquebox_correlation_id = backgroundable_future.try(:correlation_id, nil)
+      torquebox_correlation_id = backgroundable_future.respond_to?(:correlation_id) ? backgroundable_future.correlation_id : nil
       logger.warn "#{@task_class.name} task_id = #{task_id}, Torquebox correlation_id = #{torquebox_correlation_id}"
       backgroundable_future
     end
