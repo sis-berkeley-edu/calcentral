@@ -73,9 +73,6 @@ public/styleguide
 # Npm log
 npm-debug.log
 
-# Npm package-lock.json
-package-lock.json
-
 # VScode IDE config
 .vscode
 
