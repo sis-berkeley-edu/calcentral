@@ -137,7 +137,7 @@
           </td>
           <td>
             <ul class="cc-enrollment-meeting-times">
-              <li data-ng-repeat="meetingTime in class.when" data-ng-bind="meetingTime"></li>
+              <li data-ng-repeat="meetingTime in class.when track by $index" data-ng-bind="meetingTime"></li>
             </ul>
           </td>
           <td class="cc-table-right">
