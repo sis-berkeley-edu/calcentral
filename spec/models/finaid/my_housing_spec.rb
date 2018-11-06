@@ -18,8 +18,8 @@ describe FinancialAid::MyHousing do
       end
     end
   end
-  let(:during_spring_housing_period) { DateTime.parse('2019-04-30 23:59:59 -0700') }
-  let(:after_spring_housing_period) { DateTime.parse('2019-05-01 00:00:00 -0700') }
+  let(:during_spring_housing_period) { Concerns::DatesAndTimes.cast_utc_to_pacific(DateTime.parse('2019-04-30')) }
+  let(:after_spring_housing_period) { Concerns::DatesAndTimes.cast_utc_to_pacific(DateTime.parse('2019-05-01')) }
   let(:new_admit_status) { nil }
 
   describe '#get_feed' do
