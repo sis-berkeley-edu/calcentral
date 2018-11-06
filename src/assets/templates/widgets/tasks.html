@@ -75,8 +75,8 @@
                 <div class="cc-flex cc-flex-space-between cc-flex-align-center">
                   <div>
                     <div>
-                      <strong data-ng-bind="taskSection.title">
-                      </strong>
+                      <strong data-ng-bind="taskSection.title"></strong>
+                      <span data-ng-if="taskSection.yearRange" data-ng-bind="taskSection.yearRange"></span>
                     </div>
                     <div class="cc-clearfix-container">
                       <div class="cc-left" data-ng-if="taskSection.tasks.incomplete.length > 0">
@@ -149,6 +149,7 @@
             <strong>
               <span data-ng-bind="taskSection.title"></span>
             </strong>
+            <span data-ng-if="taskSection.yearRange" data-ng-bind="taskSection.yearRange"></span>
           </div>
           <div class="cc-widget-tasks-list-header">
             <div class="cc-widget-tasks-col cc-widget-tasks-col-title">Title</div>
