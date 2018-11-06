@@ -4,28 +4,23 @@
       <tbody data-ng-repeat="standing in standings.currentStandings">
         <tr>
           <td>
-            <i class="fa fa-exclamation-circle cc-icon-red" aria-hidden="true" data-ng-if="standing.acadStandingStatus !== 'GST'"></i>
-            <i class="cc-icon fa fa-check-circle cc-icon-green" aria-hidden="true" data-ng-if="standing.acadStandingStatus === 'GST'"></i>
-          </td>
-          <td>
             <span data-ng-bind="standing.acadStandingStatusDescr"></span>
-          </td>
-          <td class="cc-table-right">
-            <div data-ng-bind="standing.termName"></div>
+            <span class="cc-standing-sub-title"> (Updated <span data-ng-bind="standing.actionDate"></span>)
+            </span>
           </td>
         </tr>
         <tr>
-          <td></td>
           <td colspan="2">
-            <span class="cc-standing-sub-title cc-italic"> Updated
-              <span data-ng-bind="standing.actionDate"></span>
-            </span><br>
-            <span data-ng-bind="standing.acadStandingActionDescr" class="cc-standing-sub-title"></span><br>
-            <span class="cc-standing-sub-title" data-ng-if="standing.acadStandingStatus !== 'GST'">Please consult with your college advisor for guidance.</span>
+            <span data-ng-bind="standing.acadStandingActionDescr" class="cc-standing-sub-title"></span>
+            <br>
+            <span class="cc-standing-sub-title" data-ng-if="standing.acadStandingStatus !== 'GST'">
+              Please consult with your college advisor for guidance.
+            </span>
+            <button class="cc-button-link cc-standing-sub-title" data-ng-click="academics.showLearnMore = true" data-ng-show="!academics.showLearnMore">Learn More</button>
+            <span data-ng-bind="standings.learnMoreMessage" class="cc-standing-sub-title" data-ng-show="academics.showLearnMore"></span>
           </td>
         </tr>
         <tr data-ng-if="standings.standingsHistory.length">
-          <td></td>
           <td colspan="2">
             <div>
               <button class="cc-button-link" data-ng-click="academics.showStandingHistory = true" data-ng-show="!academics.showStandingHistory">Show History</button>
@@ -33,22 +28,20 @@
           </td>
         </tr>
         <tr class="cc-standing-history-bg" data-ng-show="academics.showStandingHistory">
-          <td class="cc-standing-history-row"></td>
           <td colspan="2" class="cc-standing-history-row">
             <div data-ng-if="standings.standingsHistory.length">
               <table>
                 <thead>
                   <tr>
                     <th scope="col">Status History</th>
-                    <th scope="col" class="cc-table-right cc-table-right-spacing">Term</th>
+                    <th scope="col" class="cc-table-right cc-table-right-spacing">Term Ending</th>
                   </tr>
                 </thead>
                 <tbody data-ng-repeat="standing in standings.standingsHistory">
                   <tr>
                     <td>
-                      <span data-ng-bind="standing.acadStandingStatusDescr"></span><br>
-                      <span class="cc-standing-sub-title cc-italic"> Updated
-                        <span data-ng-bind="standing.actionDate"></span>
+                      <span data-ng-bind="standing.acadStandingStatusDescr"></span>
+                      <span class="cc-standing-sub-title"> (Updated <span data-ng-bind="standing.actionDate"></span>)
                       </span><br>
                       <span data-ng-if="standing.acadStandingStatus !== 'GST'" data-ng-bind="standing.acadStandingActionDescr" class="cc-standing-sub-title"></span>
                     </td>
