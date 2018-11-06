@@ -17,13 +17,13 @@
           <hr aria-hidden="true">
           <h3>Next Steps</h3>
           <div>
-            The next step for you to take is formal acceptance of our admission offer. Let us know your decision by <span data-ng-bind="api.date.moment(item.dueDt, 'YYYY-MM-DD').format('MMMM Do, YYYY')"></span>.
+            The next step for you to take is formal acceptance of our admission offer. Let us know your decision by <span data-ng-bind="api.date.format(item.dueDt, 'MMMM Do, YYYY')"></span>.
           </div>
         </div>
         <div data-ng-if="item.isUndergraduate">
           <br/>
           <div>
-            To reserve your seat, accept your Undergraduate Offer of Admission<span data-ng-if="item.deposit.required"> and pay a non-refundable deposit of <strong data-ng-bind="item.deposit.dueAmt | currency"></strong></span> by <span data-ng-bind="api.date.moment(item.dueDt, 'YYYY-MM-DD').format('MMMM Do, YYYY')"></span>
+            To reserve your seat, accept your Undergraduate Offer of Admission<span data-ng-if="item.deposit.required"> and pay a non-refundable deposit of <strong data-ng-bind="item.deposit.dueAmt | currency"></strong></span> by <span data-ng-bind="api.date.format(item.dueDt, 'MMMM Do, YYYY')"></span>
             (11:59pm PST) and you'll be on your way to becoming a Golden Bear!
           </div>
           <div data-ng-if="!item.deposit.required">
