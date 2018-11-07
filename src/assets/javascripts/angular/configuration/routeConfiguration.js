@@ -28,6 +28,10 @@ angular.module('calcentral.config').config(function($routeProvider, calcentralCo
       templateUrl: 'exam_results_page.html',
       controller: 'ExamResultsController',
       pageName: 'Exam Results'
+    }).when('/academics/graduation_checklist', {
+      templateUrl: 'academics_graduation_checklist.html',
+      controller: 'AcademicsController',
+      pageName: 'Graduation Checklist'
     }).when('/academics/semester/:semesterSlug', {
       templateUrl: 'academics_semester.html',
       controller: 'AcademicsController',

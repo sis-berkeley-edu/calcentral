@@ -126,6 +126,9 @@ describe MyAcademics::Graduation do
       expect(result[:graduation][:undergraduate][:expectedGraduationTerm][:termName]).to eq 'Summer 2020'
       expect(result[:graduation][:undergraduate][:activeTermsWithEnrollmentAppointments]).to eq ['2168', '2172', '2175']
       expect(result[:graduation][:undergraduate][:appointmentsInGraduatingTerm]).to eq false
+      expect(result[:graduation][:undergraduate][:messages][:required]).to_not be nil
+      expect(result[:graduation][:undergraduate][:messages][:studentsWithLoans]).to_not be nil
+      expect(result[:graduation][:undergraduate][:messages][:recommended]).to_not be nil
       result[:graduation][:gradLaw][:expectedGraduationTerms].should have(2).items
       result[:graduation][:gradLaw][:expectedGraduationTerms][0][:plans].should include 'Business Admin MBA-JD CDP'
     end
