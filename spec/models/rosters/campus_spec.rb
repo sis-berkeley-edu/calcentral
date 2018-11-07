@@ -408,41 +408,6 @@ describe Rosters::Campus do
           expect(feed[:students][1][:majors][0]).to eq 'Break Science BA'
           expect(feed[:students][1][:terms_in_attendance]).to eq '6'
         end
-
-        it 'returns rosters csv' do
-          rosters_csv_string = model.get_csv
-          expect(rosters_csv_string).to be_an_instance_of String
-          rosters_csv = CSV.parse(rosters_csv_string, {headers: true})
-          expect(rosters_csv.count).to eq 3
-          expect(rosters_csv.headers()).to include('Name', 'User ID', 'Student ID', 'Email Address', 'Role', 'Sections')
-          expect(rosters_csv.headers()).to include('Majors', 'Terms in Attendance', 'Units', 'Grading Basis', 'Waitlist Position')
-
-          expect(rosters_csv[0]).to be_an_instance_of CSV::Row
-          expect(rosters_csv[0]['Name']).to eq 'Last Name, First Name'
-          expect(rosters_csv[0]['User ID']).to eq enrolled_student_login_id
-          expect(rosters_csv[0]['Student ID']).to eq enrolled_student_student_id
-          expect(rosters_csv[0]['Email Address']).to eq "#{enrolled_student_login_id}@example.com"
-          expect(rosters_csv[0]['Role']).to eq 'Student'
-          expect(rosters_csv[0]['Sections']).to eq "INFO #{catid} LAB 001, INFO #{catid} LEC 001"
-          expect(rosters_csv[0]['Majors']).to eq 'Cognitive Science BA, Computer Science BA'
-          expect(rosters_csv[0]['Terms in Attendance']).to eq '2'
-          expect(rosters_csv[0]['Units']).to eq '4.0'
-          expect(rosters_csv[0]['Grading Basis']).to eq 'Letter'
-          expect(rosters_csv[0]['Waitlist Position']).to eq ''
-
-          expect(rosters_csv[1]).to be_an_instance_of CSV::Row
-          expect(rosters_csv[1]['Name']).to eq 'Last Wait, First Wait'
-          expect(rosters_csv[1]['User ID']).to eq waitlisted_student_login_id
-          expect(rosters_csv[1]['Student ID']).to eq waitlisted_student_student_id
-          expect(rosters_csv[1]['Email Address']).to eq "#{waitlisted_student_login_id}@example.com"
-          expect(rosters_csv[1]['Role']).to eq 'Waitlist Student'
-          expect(rosters_csv[1]['Sections']).to eq "INFO #{catid} LAB 001, INFO #{catid} LEC 001"
-          expect(rosters_csv[1]['Majors']).to eq 'Break Science BA'
-          expect(rosters_csv[1]['Terms in Attendance']).to eq '6'
-          expect(rosters_csv[1]['Units']).to eq '3.0'
-          expect(rosters_csv[1]['Grading Basis']).to eq 'S/U'
-          expect(rosters_csv[1]['Waitlist Position']).to eq '9'
-        end
       end
 
       context 'when no enrollments are present' do

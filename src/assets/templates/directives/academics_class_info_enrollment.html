@@ -4,7 +4,7 @@
     <div class="cc-academics-class-enrollment-options cc-right">
       <a class="cc-button hidden-for-small-only" target="_self"
         data-ng-disabled="!students.length"
-        data-ng-href="/api/academics/rosters/campus/csv/{{campusCourseId}}.csv">
+        data-ng-href="/api/academics/rosters/campus/csv/{{campusCourseId}}.csv?section_id={{searchFilters.section.ccn}}&enroll_option={{searchFilters.enrollStatus}}">
         <i class="fa fa-download" aria-hidden="true"></i>
         Export
       </a>

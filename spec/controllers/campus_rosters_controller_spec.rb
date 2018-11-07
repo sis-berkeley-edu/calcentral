@@ -58,7 +58,7 @@ describe CampusRostersController do
 
   context 'when serving course rosters csv download' do
     it_should_behave_like "an api endpoint" do
-      before { allow_any_instance_of(Rosters::Campus).to receive(:get_csv).and_raise(RuntimeError, "Something went wrong") }
+      before { allow_any_instance_of(Rosters::Csv).to receive(:get_csv).and_raise(RuntimeError, "Something went wrong") }
       let(:make_request) { get :get_csv, campus_course_id: campus_course_id, format: :csv }
     end
 
