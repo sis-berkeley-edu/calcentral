@@ -8,11 +8,12 @@
      <div data-ng-if="api.user.profile.features.standings && ((api.user.profile.academicRoles.current.ugrd && !api.user.profile.academicRoles.current.ugrdNonDegree) || (api.user.profile.roles.advisor && targetUser.academicRoles.current.ugrd && !targetUser.academicRoles.current.ugrdNonDegree))">
       <div class="cc-status-holds-section">
         <div>
-          <h4>Academic Status</h4>
-          <div>
-            <button class="cc-button-link" data-ng-click="academics.showStanding = true" data-ng-show="!academics.showStanding">Show Academic Status</button>
-            <button class="cc-button-link" data-ng-click="academics.showStanding = false" data-ng-show="academics.showStanding">Hide Academic Status</button>
-          </div>
+          <span>
+            <h4>
+              <i class="fa fa-exclamation-circle cc-icon-red" aria-hidden="true" data-ng-if="hasStandingAlert"></i>
+              Academic Status <button class="cc-button-link" data-ng-click="academics.showStanding = true" data-ng-show="!academics.showStanding">Show Status</button><button class="cc-button-link" data-ng-click="academics.showStanding = false" data-ng-show="academics.showStanding">Hide Status</button>
+            </h4>
+          </span>
           <div data-ng-show="academics.showStanding">
             <div data-ng-include="'widgets/academic_standing.html'"></div>
           </div>
