@@ -394,7 +394,7 @@ describe CanvasLti::Egrades do
         },
         # Below is an apparent DUPLICATE of the secondary section above. In the real world, our result-set might have
         # duplicate section ids. If the course has multiple primary sections (as above) then you might find a secondary
-        # section with more than one parent; see column "primaryAssociatedSectionId" in SISEDO.CLASSSECTIONV00_VW. That
+        # section with more than one parent; see column "primaryAssociatedSectionId" in SISEDO.CLASSSECTIONV00_VW.. That
         # might be useful info in other scenarios but the eGrades feature must filter out duplicates. This spec verifies
         # de-duplication logic.
         {
