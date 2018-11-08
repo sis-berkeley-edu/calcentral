@@ -1,0 +1,41 @@
+<div class="cc-page-academics">
+  <div data-ng-if="canViewAcademics">
+    <div class="column">
+      <h1 class="cc-heading-page-title cc-print-hide">
+        <a href="/academics">My Academics</a> &raquo; Graduation Checklist
+      </h1>
+    </div>
+
+    <div class="row">
+      <div class="medium-10 medium-offset-1 column">
+        <div class="cc-widget cc-academic-summary">
+          <div class="cc-widget-title">
+            <h2 class="cc-left">Graduation Checklist</h2>
+          </div>
+          <div>
+            <div class="cc-widget-padding">
+              Your expected graduation term is: <strong><span data-ng-bind="graduation.undergraduate.expectedGraduationTerm.termName"></span></strong>
+            </div>
+            <div class="cc-widget-padding">
+              It is expected that you complete the following before graduation.<br><br>
+              <div data-ng-if="graduation.undergraduate.messages.required">
+                <strong>Required Tasks</strong><br>
+                <div class="cc-list-bullets" data-ng-bind-html="graduation.undergraduate.messages.required"></div>
+              </div><br>
+              <div data-ng-if="graduation.undergraduate.messages.required">
+                <strong>For Students with Loans</strong><br>
+                <div class="cc-list-bullets" data-ng-bind-html="graduation.undergraduate.messages.studentsWithLoans"></div>
+              </div><br>
+              <div data-ng-if="graduation.undergraduate.messages.required">
+                <strong>Recommended Tasks</strong><br>
+                <div class="cc-list-bullets" data-ng-bind-html="graduation.undergraduate.messages.recommended"></div>
+              </div><br>
+            </div>
+          </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div data-ng-include="'404.html'" data-ng-if="!canViewAcademics"></div>

@@ -21,12 +21,19 @@ module MyAcademics
         terms_with_appts = active_terms_with_enrollment_appointments
         appts_in_graduating_term = appointments_in_graduating_term(ugrd_grad_term, terms_with_appts)
       end
-
+      required_message = CampusSolutions::MessageCatalog.new(message_set_nbr: 28000, message_nbr: 210).get
+      with_loans_message = CampusSolutions::MessageCatalog.new(message_set_nbr: 28000, message_nbr: 211).get
+      recommended_message = CampusSolutions::MessageCatalog.new(message_set_nbr: 28000, message_nbr: 212).get
       {
         undergraduate: {
           expectedGraduationTerm: ugrd_grad_term,
           activeTermsWithEnrollmentAppointments: terms_with_appts,
-          appointmentsInGraduatingTerm: appts_in_graduating_term
+          appointmentsInGraduatingTerm: appts_in_graduating_term,
+          messages: {
+            required: required_message.try(:[], :feed).try(:[], :root).try(:[], :getMessageCatDefn).try(:[], :descrlong),
+            studentsWithLoans: with_loans_message.try(:[], :feed).try(:[], :root).try(:[], :getMessageCatDefn).try(:[], :descrlong),
+            recommended: recommended_message.try(:[], :feed).try(:[], :root).try(:[], :getMessageCatDefn).try(:[], :descrlong)
+          }
         },
         gradLaw: {
           expectedGraduationTerms: extract_non_undergraduate_graduation_terms
