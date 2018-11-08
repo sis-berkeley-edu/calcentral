@@ -710,14 +710,6 @@ class PopulateSisedosH2 < ActiveRecord::Base
       INSERT INTO SISEDO.CLASSSECTIONALLV01_MVW ("id","cs-course-id","offeringNumber","term-id","session-id","sectionNumber","number","component-code","component-descr","displayName","instructionMode-code","instructionMode-descr","startDate","endDate","status-code","status-descr","classEnrollmentType-code","classEnrollmentType-descr","updatedDate","cancelDate","primary","primaryAssociatedComponent","primaryAssociatedSectionId","enrollmentStatus-code","enrollmentStatus-descr","enrolledCount","waitlistedCount","minEnroll","maxEnroll","maxWaitlist","instructorAddConsentRequired","instructorDropConsentRequired","printInScheduleOfClasses","graded","feesExist","roomShare","optionalSection","contactHours","finalExam","topic-id","topic-descr") VALUES (10795,'102890',1,'2178','1','103','001','DIS','Discussion','CHEM 1A','P','In person','2017-08-23','2017-12-08','A','Active','N','Non-Enrollment Section','?? updated date',null,'false','LEC',10780,'C','Closed',35,0,0,35,30,'N','N','Y','?? graded','false','?? roomShare',null,null,null,0,null);
       INSERT INTO SISEDO.CLASSSECTIONALLV01_MVW ("id","cs-course-id","offeringNumber","term-id","session-id","sectionNumber","number","component-code","component-descr","displayName","instructionMode-code","instructionMode-descr","startDate","endDate","status-code","status-descr","classEnrollmentType-code","classEnrollmentType-descr","updatedDate","cancelDate","primary","primaryAssociatedComponent","primaryAssociatedSectionId","enrollmentStatus-code","enrollmentStatus-descr","enrolledCount","waitlistedCount","minEnroll","maxEnroll","maxWaitlist","instructorAddConsentRequired","instructorDropConsentRequired","printInScheduleOfClasses","graded","feesExist","roomShare","optionalSection","contactHours","finalExam","topic-id","topic-descr") VALUES (10868,'102890',1,'2178','1','111','001','DIS','Discussion','CHEM 1A','P','In person','2017-08-23','2017-12-08','A','Active','N','Non-Enrollment Section','?? updated date',null,'false','LEC',10780,'O','Open',33,0,0,35,29,'N','N','Y','?? graded','false','?? roomShare',null,null,null,0,null);
 
-      DROP TABLE IF EXISTS SISEDO.DISPLAYNAMEXLAT_MVW;
-      CREATE TABLE SISEDO.DISPLAYNAMEXLAT_MVW (
-        "courseDisplayName" VARCHAR2(511),
-        "classDisplayName" VARCHAR2(19 CHAR)
-      );
-      INSERT INTO SISEDO.DISPLAYNAMEXLAT_MVW ("courseDisplayName", "classDisplayName") VALUES ('ART 120','ART 120');
-      INSERT INTO SISEDO.DISPLAYNAMEXLAT_MVW ("courseDisplayName", "classDisplayName") VALUES ('CHEM 1A','CHEM 1A');
-
       DROP TABLE IF EXISTS SISEDO.DISPLAYNAMEXLATV01_MVW;
       CREATE TABLE SISEDO.DISPLAYNAMEXLATV01_MVW (
         "courseDisplayName" VARCHAR2(511),
