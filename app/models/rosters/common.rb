@@ -6,7 +6,6 @@ module Rosters
     ENROLL_STATUS_TO_CSV_ROLE = {
       'E' => 'Student',
       'W' => 'Waitlist Student',
-      'C' => 'Concurrent Student'
     }
 
     def initialize(uid, options={})
