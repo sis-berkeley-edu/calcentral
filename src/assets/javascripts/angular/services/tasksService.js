@@ -3,7 +3,7 @@
 var _ = require('lodash');
 
 angular.module('calcentral.services').service('tasksService', function(apiService) {
-  var taskSections = [
+  var taskSectionsGroupOne = [
     {
       type: 'campusSolutions',
       id: 'admission',
@@ -15,13 +15,10 @@ angular.module('calcentral.services').service('tasksService', function(apiServic
       id: 'residency',
       title: 'Residency Tasks',
       show: false
-    },
-    {
-      type: 'campusSolutions',
-      id: 'finaid',
-      title: 'Financial Aid Tasks',
-      show: false
-    },
+    }
+  ];
+
+  var taskSectionsGroupTwo = [
     {
       type: 'campusSolutions',
       id: 'newStudent',
@@ -55,6 +52,35 @@ angular.module('calcentral.services').service('tasksService', function(apiServic
     };
   };
 
+  var csFinaidFilterFactory = function(taskSection) {
+    return function(task) {
+      var category = taskSection.id;
+      var taskSectionFinaidYearId = taskSection.aidYearId;
+      return (task.emitter === 'Campus Solutions' && task.cs.displayCategory === category && task.cs.finaidYearId === taskSectionFinaidYearId);
+    };
+  };
+
+  var getFinAidTaskSections = function(scope) {
+    var csFinAidTasks = _.filter(scope.tasks, isCsFinAidTask);
+    var csFinAidYearIds = _.map(csFinAidTasks, function(task) {
+      return _.get(task, 'cs.finaidYearId');
+    });
+    var uniqueCsFinAidYearIds = _.uniq(csFinAidYearIds);
+    var csFinAidTaskSections = _.map(uniqueCsFinAidYearIds, function(aidYearId) {
+      var previousYear = _.toInteger(aidYearId) - 1;
+      var yearRange = previousYear + '-' + aidYearId;
+      return {
+        type: 'campusSolutions',
+        id: 'finaid',
+        aidYearId: aidYearId,
+        yearRange: yearRange,
+        title: 'Financial Aid Tasks',
+        show: false
+      };
+    });
+    return csFinAidTaskSections;
+  };
+
   var isCanvasTask = function(task) {
     return (task.emitter === 'bCourses');
   };
@@ -65,6 +91,10 @@ angular.module('calcentral.services').service('tasksService', function(apiServic
 
   var isCsBeingProcessedTask = function(task) {
     return (task.emitter === 'Campus Solutions' && task.cs.displayStatus === 'beingProcessed');
+  };
+
+  var isCsFinAidTask = function(task) {
+    return (task.emitter === 'Campus Solutions' && task.cs && task.cs.displayCategory === 'finaid');
   };
 
   var isCsFurtherActionNeededTask = function(task) {
@@ -131,7 +161,8 @@ angular.module('calcentral.services').service('tasksService', function(apiServic
     };
 
     // populate task sections
-    $scope.taskSections = taskSections;
+    var finaidTaskSections = getFinAidTaskSections($scope);
+    $scope.taskSections = _.flatten(_.concat(taskSectionsGroupOne, [finaidTaskSections, taskSectionsGroupTwo]));
     angular.forEach($scope.taskSections, function(taskSection) {
       var taskFilter;
       var incompleteSortingMethod;
@@ -142,7 +173,11 @@ angular.module('calcentral.services').service('tasksService', function(apiServic
 
       switch (taskSection.type) {
         case 'campusSolutions': {
-          taskFilter = csCategoryFilterFactory(taskSection.id);
+          if (taskSection.id === 'finaid') {
+            taskFilter = csFinaidFilterFactory(taskSection);
+          } else {
+            taskFilter = csCategoryFilterFactory(taskSection.id);
+          }
           break;
         }
         case 'google': {
