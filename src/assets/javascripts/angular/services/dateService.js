@@ -1,9 +1,9 @@
 'use strict';
 
 angular.module('calcentral.services').service('dateService', [function() {
-  // Expose methods
-  return {
-    now: Date.now(),
-    moment: require('moment')
+  var dateService = {
+    now: Date.now()
   };
+  angular.extend(dateService, require('date-fns'));
+  return dateService;
 }]);

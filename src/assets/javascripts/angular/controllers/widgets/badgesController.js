@@ -45,25 +45,25 @@ angular.module('calcentral.controllers').controller('BadgesController', function
   };
 
   var processDisplayRange = function(epoch, isAllDay, isStartRange) {
-    var nowDate = dateService.moment().format('YYYYMMDD');
-    var itemMoment = dateService.moment(epoch * 1000);
-    var itemDate = itemMoment.format('YYYYMMDD');
+    var date = new Date(epoch * 1000);
+    var today = dateService.format(dateService.now, 'YYYYMMDD');
+    var dateIsToday = dateService.format(date, 'YYYYMMDD') === today;
 
     // not all day event, happening today.
-    if ((nowDate === itemDate) && !isAllDay) {
-      return itemMoment.format(dateFormats.today);
-    } else if ((nowDate !== itemDate) && !isAllDay) {
+    if (dateIsToday && !isAllDay) {
+      return dateService.format(date, dateFormats.today);
+    } else if (!dateIsToday && !isAllDay) {
       // not all day event, not happening today.
       if (isStartRange) {
         // start-range display doesn't need a date display since it's on the left graphic
-        return itemMoment.format(dateFormats.today);
+        return dateService.format(date, dateFormats.today);
       } else {
-        return itemMoment.format(dateFormats.notToday);
+        return dateService.format(date, dateFormats.notToday);
       }
-    } else if ((nowDate !== itemDate) && isAllDay) {
+    } else if (!dateIsToday && isAllDay) {
       // all day event, not happening today.
-      return itemMoment.format(dateFormats.notTodayAllDay);
-    } else if ((nowDate === itemDate) && isAllDay) {
+      return dateService.format(date, dateFormats.notTodayAllDay);
+    } else if (dateIsToday && isAllDay) {
       // all day event, happening today. No need for the range since the date's on the left.
       return '';
     } else {
@@ -95,15 +95,19 @@ angular.module('calcentral.controllers').controller('BadgesController', function
     return returnArray;
   };
 
+  var timeElapsed = function(time) {
+    return dateService.distanceInWords(new Date(), new Date(time * 1000), { addSuffix: true });
+  };
+
   var processCalendarEvents = function(rawData) {
     if (rawData.bcal && rawData.bcal.items) {
       rawData.bcal.items.forEach(function(value) {
         if (value.startTime && value.startTime.epoch) {
-          var momentizedStartTime = dateService.moment(value.startTime.epoch * 1000);
+          var startTime = new Date(value.startTime.epoch * 1000);
           value.startTime.display = {
-            'month': momentizedStartTime.format('MMM'),
-            'day': momentizedStartTime.format('DD'),
-            'dayOfWeek': momentizedStartTime.format('ddd'),
+            'month': dateService.format(startTime, 'MMM'),
+            'day': dateService.format(startTime, 'DD'),
+            'dayOfWeek': dateService.format(startTime, 'ddd'),
             'rangeStart': processDisplayRange(value.startTime.epoch, value.allDayEvent, true)
           };
 
@@ -113,15 +117,29 @@ angular.module('calcentral.controllers').controller('BadgesController', function
             };
           }
         }
+        value.modifiedTimeElapsed = timeElapsed(value.modifiedTime.epoch);
       });
     }
+  };
+
+  var processDriveEvents = function(rawData) {
+    if (rawData.bdrive && rawData.bdrive.items) {
+      rawData.bdrive.items.forEach(function(value) {
+        value.modifiedTimeElapsed = timeElapsed(value.modifiedTime.epoch);
+      });
+    }
+  };
+
+  var processEvents = function(rawData) {
+    processCalendarEvents(rawData);
+    processDriveEvents(rawData);
     return rawData;
   };
 
   var fetch = function(options) {
     badgesFactory.getBadges(options).then(
       function successCallback(response) {
-        decorateBadges(processCalendarEvents(response.data.badges || {}));
+        decorateBadges(processEvents(response.data.badges || {}));
       }
     );
   };
