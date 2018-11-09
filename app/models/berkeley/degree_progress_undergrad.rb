@@ -26,7 +26,7 @@ module Berkeley
     end
 
     def self.complete?(code)
-      code == 'COMP'
+      code == 'COMP' || code == 'EXMP'
     end
 
     def self.in_progress?(in_progress_value)
