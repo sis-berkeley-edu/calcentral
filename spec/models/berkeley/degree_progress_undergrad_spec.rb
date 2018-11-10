@@ -24,6 +24,10 @@ describe Berkeley::DegreeProgressUndergrad do
           let(:status_code) {'COMP'}
           it {should eq 'Satisfied'}
         end
+        context 'when status_code is EXMP' do
+          let(:status_code) {'EXMP'}
+          it {should eq 'Satisfied'}
+        end
         context 'when status_code is lowercase' do
           let(:status_code) {'comp'}
           it {should eq 'Satisfied'}
@@ -61,6 +65,10 @@ describe Berkeley::DegreeProgressUndergrad do
         end
         context 'when status_code is COMP' do
           let(:status_code) {'COMP'}
+          it {should eq 'Satisfied'}
+        end
+        context 'when status_code is EXMP' do
+          let(:status_code) {'EXMP'}
           it {should eq 'Satisfied'}
         end
         context 'when status_code is lowercase' do
