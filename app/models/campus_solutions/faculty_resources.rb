@@ -13,6 +13,7 @@ module CampusSolutions
 
       campus_solutions_link_settings = [
         { feed_key: :eforms_review_center, cs_link_key: 'UC_CX_GT_ACTION_CENTER' },
+        { feed_key: :work_center, cs_link_key: 'UC_CX_GT_WORK_CENTER'},
         { feed_key: :scarab_login, cs_link_key: 'UC_CX_DSP_FACULTY_LOGIN' }
       ]
 
