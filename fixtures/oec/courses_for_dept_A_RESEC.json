@@ -1,0 +1,33 @@
+[
+  {
+    "term_cd": "B",
+    "course_id": "2015-B-56212",
+    "course_name": "A,RESEC 213 LEC 001 APPLIED ECONOMETRIC",
+    "cross_listed_flag": null,
+    "course_title_short": "APPLIED ECONOMETRIC",
+    "dept_name": "A,RESEC",
+    "catalog_id": "213",
+    "instruction_format": "LEC",
+    "section_num": "001",
+    "primary_secondary_cd": "P",
+    "sis_id": "UID:10316",
+    "affiliations": "INSTRUCTOR",
+    "first_name": "Audria",
+    "last_name": "Blanco",
+    "email_address": "blanco@berkeley.edu",
+    "blue_role": "23",
+    "evaluate": null,
+    "dept_form": null,
+    "evaluation_type": null,
+    "modular_course": null,
+    "start_date": null,
+    "end_date": null,
+    "term_yr": "2015",
+    "course_cntl_num": "56212",
+    "ldap_uid": "10316",
+    "instructor_func": "1",
+    "enrollment_count": "800",
+    "cross_listed_ccns": null,
+    "co_scheduled_ccns": null
+  }
+]

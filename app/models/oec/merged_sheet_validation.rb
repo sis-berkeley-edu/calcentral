@@ -44,6 +44,7 @@ module Oec
 
       default_dates = default_term_dates
       participating_dept_names = Oec::DepartmentMappings.new(term_code: @term_code).participating_dept_names
+      participating_dept_forms = participating_dept_names.collect {|d| Oec::Worksheet.dept_form_from_name d}
 
       log :info, "Validating #{supervisor_confirmations.count} supervisor confirmation rows"
       add_from_supervisor_confirmations(supervisor_confirmations, supervisors, department_hierarchy, report_viewer_hierarchy)
@@ -75,9 +76,9 @@ module Oec
         end
 
         if confirmation['DEPT_FORM'].present?
-          dept_supervisors = supervisors.matching_dept_name(confirmation['DEPT_FORM'])
+          dept_supervisors = supervisors.matching_dept_form(confirmation['DEPT_FORM'])
           validate('courses', confirmation['COURSE_ID']) do |errors|
-            log :warn, "DEPT_FORM #{confirmation['DEPT_FORM']} not found among participating departments" unless participating_dept_names.include? confirmation['DEPT_FORM']
+            log :warn, "DEPT_FORM #{confirmation['DEPT_FORM']} not found among participating departments" unless participating_dept_forms.include? confirmation['DEPT_FORM']
             errors.add "No supervisors found for DEPT_FORM #{confirmation['DEPT_FORM']}" if dept_supervisors.none?
             dept_supervisors.each do |supervisor|
               course_supervisor_row = {

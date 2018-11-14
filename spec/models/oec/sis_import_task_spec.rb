@@ -54,7 +54,8 @@ describe Oec::SisImportTask do
         'STAT' => 'PSTAT',
         'ANTHRO' => 'SZANT',
         'POL SCI' => 'SPOLS',
-        'SPANISH' => 'LPSPP'
+        'SPANISH' => 'LPSPP',
+        'A,RESEC' => 'MBARC'
       }
     end
 
@@ -68,7 +69,7 @@ describe Oec::SisImportTask do
     def load_fixture_courses
       Dir.glob(Rails.root.join 'fixtures', 'oec', 'courses_for_dept_*.json').each do |json|
         courses = JSON.parse(File.read json)
-        courses_for_dept.concat courses if json.include? dept_name.gsub(' ', '_')
+        courses_for_dept.concat courses if json.include? dept_name.gsub(/[ ,]/, '_')
         courses.each do |course_info|
           courses_by_ccn[course_info['course_cntl_num']] ||= []
           courses_by_ccn[course_info['course_cntl_num']] << course_info
@@ -116,7 +117,7 @@ describe Oec::SisImportTask do
           if row['CROSS_LISTED_FLAG'] == 'Y'
             expect(row['DEPT_FORM']).to be_nil
           else
-            expect(row['DEPT_FORM']).to eq row['DEPT_NAME']
+            expect(row['DEPT_FORM']).to eq Oec::Worksheet.dept_form_from_name row['DEPT_NAME']
           end
         end
       end
@@ -129,7 +130,6 @@ describe Oec::SisImportTask do
 
     context 'ANTHRO dept' do
       let(:dept_name) { 'ANTHRO' }
-      let(:friendly_dept_name) { 'ANTHROPOLOGY' }
       let(:expected_ids) { %w(2015-B-02567) }
       include_examples 'expected CSV structure'
       include_examples 'expected DEPT_FORM and EVALUATION_TYPE'
@@ -138,9 +138,20 @@ describe Oec::SisImportTask do
       end
     end
 
+    context 'A,RESEC dept' do
+      let(:dept_name) { 'A,RESEC' }
+      let(:expected_ids) { %w(2015-B-56212) }
+      include_examples 'expected CSV structure'
+      include_examples 'expected DEPT_FORM and EVALUATION_TYPE'
+      it 'makes DEPT_FORM safe for Explorance scripts' do
+        subject.each do |row|
+          expect(row['DEPT_FORM']).to eq 'A_RESEC'
+        end
+      end
+    end
+
     context 'MATH dept' do
       let(:dept_name) { 'MATH' }
-      let(:friendly_dept_name) { 'MATHEMATICS' }
       let(:expected_ids) { %w(2015-B-54432 2015-B-54441 2015-B-87672 2015-B-87675 2015-B-87675_GSI) }
       before { allow_any_instance_of(Oec::DepartmentMappings).to receive(:included?).with('STAT', anything).and_return true  }
       include_examples 'expected CSV structure'
@@ -149,7 +160,6 @@ describe Oec::SisImportTask do
 
     context 'POL SCI dept' do
       let(:dept_name) { 'POL SCI' }
-      let(:friendly_dept_name) { 'POLITICAL SCIENCE' }
       let(:expected_ids) { %w(2015-B-87690 2015-B-72198 2015-B-72198_GSI 2015-B-72199) }
       include_examples 'expected CSV structure'
       include_examples 'expected DEPT_FORM and EVALUATION_TYPE'
@@ -221,7 +231,6 @@ describe Oec::SisImportTask do
 
     context 'STAT dept' do
       let(:dept_name) { 'STAT' }
-      let(:friendly_dept_name) { 'STATISTICS' }
       let(:expected_ids) { %w(2015-B-87672 2015-B-87673 2015-B-87675 2015-B-87675_GSI 2015-B-54432 2015-B-54441 2015-B-72199 2015-B-87690 2015-B-87693) }
       before { allow_any_instance_of(Oec::DepartmentMappings).to receive(:included?).with('MATH', anything).and_return math_included  }
       let(:math_included) { true }

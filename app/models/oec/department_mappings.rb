@@ -59,7 +59,7 @@ module Oec
         all_mappings.select {|c| c[:dept_name] == dept_name && c[:catalog_id] == '' && c[:include_in_oec]}.present?
     end
 
-    # Only used for cross-listings sort.
+    # Only used for merged validation and cross-listings sort.
     def participating_dept_names
       all_mappings.map {|c| c[:dept_name] if c[:include_in_oec]}.uniq.compact
     end
