@@ -4,6 +4,9 @@
 // Foundation Overrides
 @import "foundation_overrides";
 
+// Pikdaday styles
+@import "../../../node_modules/pikaday/css/pikaday.css";
+
 // CalCentral Specific
 @import "colors";
 @import "base";
