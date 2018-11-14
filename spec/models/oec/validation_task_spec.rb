@@ -20,6 +20,15 @@ describe Oec::ValidationTask do
         task.run
       end
     end
+    context 'Explorance-unfriendly DEPT_NAME' do
+      let(:valid_row) { '2015-B-56212,2015-B-56212,"A,RESEC 213 LEC 001 APPLIED ECONOMETRIC",,,"A,RESEC",213,LEC,001,P,155555,UID:155555,Zachary,Zzzz,zzzz@berkeley.edu,23,Y,A_RESEC,F,,01-26-2015,05-11-2015' }
+      it 'should pass validation' do
+        merged_course_confirmations_csv.concat valid_row
+        allow(Rails.logger).to receive(:info)
+        expect(Rails.logger).to receive(:info).with /Validation passed./
+        task.run
+      end
+    end
   end
 
   shared_examples 'validation error logging' do

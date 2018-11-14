@@ -24,6 +24,13 @@ module Oec
       )
     end
 
+    def matching_dept_form(dept_form)
+      return [] if dept_form.blank?
+      select do |row|
+        (1..10).map { |i| Oec::Worksheet.dept_form_from_name(row["DEPT_NAME_#{i}"]) }.include? dept_form
+      end
+    end
+
     def matching_dept_name(dept_name)
       return [] if dept_name.blank?
       select do |row|

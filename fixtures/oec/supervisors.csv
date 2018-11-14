@@ -37,3 +37,4 @@ LDAP_UID,SIS_ID,FIRST_NAME,LAST_NAME,EMAIL_ADDRESS,SUPERVISOR_GROUP,PRIMARY_ADMI
 459684,UID:459684,Stella,Spanish-Portug,spanishportug2@berkeley.edu,DEPT_ADMIN,,,SPANISH,PORTUG,CATALAN,ILA,,,,,,
 246522,UID:246522,Seamus,Stat,stat@berkeley.edu,DEPT_ADMIN,,,STAT,,,,,,,,,
 244566,UID:244566,Sharon,Stat,statchair@stat.berkeley.edu,CHAIR,,,STAT,,,,,,,,,
+244567,UID:244567,Ari,Aresec,aresecchair@aresec.berkeley.edu,CHAIR,,,"A,RESEC",,,,,,,,,

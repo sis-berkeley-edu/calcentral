@@ -129,7 +129,7 @@ module Oec
       return if course['cross_listed_flag'].present?
 
       # Sets 'dept_form' to either 'MCELLBI' or 'INTEGBI' for BIOLOGY courses; to 'FSSEM' for Freshman & Sophomore
-      # Seminars; otherwise uses 'dept_name'.
+      # Seminars; otherwise uses 'dept_name' (or similar).
       # Expressing this with our data is a bit complicated because the system consuming the data expects "department
       # names" to appear as they appear in course codes, but our mappings use L4 codes (IMMCB, IBIBI) and full
       # names ("Molecular and Cell Biology", "Integrative Biology") indicating actual campus departments.
@@ -140,7 +140,7 @@ module Oec
       elsif worksheet.dept_code == 'LPSPP'
         course['dept_form'] = 'SPANISH'
       else
-        course['dept_form'] = course['dept_name']
+        course['dept_form'] = Oec::Worksheet.dept_form_from_name course['dept_name']
       end
     end
 

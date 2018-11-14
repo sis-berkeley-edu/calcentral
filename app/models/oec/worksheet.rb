@@ -30,6 +30,15 @@ module Oec
       end
     end
 
+    def self.dept_form_from_name(dept_name)
+      # Make DEPT_FORM safe for Explorance scripts.
+      if dept_name
+        dept_name.gsub(/,/, '_')
+      else
+        dept_name
+      end
+    end
+
     def self.export_name
       self.name.demodulize.underscore
     end
