@@ -39,10 +39,10 @@ angular.module('calcentral.controllers').controller('FinaidController', function
   };
 
   var getFinaidSummary = function(options) {
-    return finaidFactory.getSummary(options).then(
+    return finaidFactory.getFinancialAidSummary(options).then(
       function successCallback(response) {
-        var finaidSummary = _.get(response, 'data.feed.finaidSummary');
-        var aidYears = _.get(finaidSummary, 'finaidYears');
+        var finaidSummary = _.get(response, 'data.financialAidSummary');
+        var aidYears = _.get(finaidSummary, 'aidYears');
         combinationExists(aidYears, $routeParams.finaidYearId);
         setFinaidYear(aidYears, $routeParams.finaidYearId);
         $scope.finaidSummary = finaidSummary;

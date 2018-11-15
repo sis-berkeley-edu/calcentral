@@ -26,17 +26,6 @@ angular.module('calcentral.controllers').controller('FinaidApprovalsController',
     });
   };
   $scope.sendResponseT4 = function(response) {
-    finaidFactory.postT4Response(response).then(function(data) {
-      if (response === 'N') {
-        // Primes the cache on aid_years without automatically refreshing the page.
-        finaidFactory.getSummary({
-          refreshCache: true
-        });
-        showDeclineMessage(data);
-      } else {
-        sendEvent();
-        $location.path('/finances');
-      }
-    });
+    finaidFactory.postT4Response(response).then(sendEvent());
   };
 });
