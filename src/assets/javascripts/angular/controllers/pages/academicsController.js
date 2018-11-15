@@ -234,7 +234,7 @@ angular.module('calcentral.controllers').controller('AcademicsController', funct
     $scope.isNonDegreeSeekingSummerVisitor = isNonDegreeSeekingSummerVisitor;
     $scope.showStatusAndBlocks = !$scope.filteredForDelegate &&
                                  ($scope.hasRegStatus || $scope.numberOfHolds || $scope.hasStandingAlert);
-    filterStanding();
+    $scope.standingIsVisible = filterStanding;
     $scope.showAdvising = !$scope.filteredForDelegate && apiService.user.profile.features.advising && apiService.user.profile.roles.student && isMbaJdOrNotLaw() && !isNonDegreeSeekingSummerVisitor;
     $scope.showProfileMessage = (!$scope.isAcademicInfoAvailable || !$scope.collegeAndLevel || _.isEmpty($scope.collegeAndLevel.careers));
     $scope.showResidency = apiService.user.profile.roles.student && academicsService.showResidency(apiService.user.profile.academicRoles.current);
@@ -242,9 +242,9 @@ angular.module('calcentral.controllers').controller('AcademicsController', funct
   };
 
   var filterStanding = function() {
-    var standingVisibleForStudent = $scope.hasStandingAlert || apiService.user.profile.academicRoles.current.ugrd;
-    var standingVisibleForAdvisor = apiService.user.profile.roles.advisor && ($scope.targetUser.academicRoles.current.ugrd || $scope.hasStandingAlert);
-    $scope.standingIsVisible = (standingVisibleForStudent || standingVisibleForAdvisor) && !$scope.targetUser.academicRoles.current.ugrdNonDegree;
+    var standingVisibleForStudent = !!($scope.hasStandingAlert || apiService.user.profile.academicRoles.current.ugrd);
+    var isNonDegreeSeeking = !!apiService.user.profile.academicRoles.current.ugrdNonDegree;
+    return !!(standingVisibleForStudent && !isNonDegreeSeeking);
   };
 
   /**
