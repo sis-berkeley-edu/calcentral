@@ -24,7 +24,7 @@ angular.module('calcentral.services').service('finaidService', function($rootSco
 
   var findDefaultFinaidYear = function(aidYears) {
     return _.find(aidYears, function(aidYear) {
-      return aidYear.default;
+      return aidYear.defaultAidYear;
     });
   };
 
