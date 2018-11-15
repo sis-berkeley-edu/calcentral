@@ -42,7 +42,13 @@ angular.module('calcentral.directives').directive('ccDatepickerDirective', funct
             // We do this because then we have less events hanging around + less elements in the DOM
             closeAll();
           },
-          theme: 'cc-datepicker-theme'
+          theme: 'cc-datepicker-theme',
+          toString: function(date) {
+            var day = ('0' + date.getDate()).slice(-2);
+            var month = ('0' + (date.getMonth() + 1)).slice(-2);
+            var year = date.getFullYear();
+            return month + '/' + day + '/' + year;
+          }
         });
 
         /**
