@@ -57,20 +57,15 @@ module.exports = {
         ]
       },
       { test: /\.(png|svg|jpg|gif|ico)$/,
-        loader: 'url-loader',
+        loader: 'file-loader',
         options: {
-          fallback: 'file-loader',
-          // sets our base64 encoding threshold at 8KB
-          limit: 8 * 1024,
           name: '[name].[ext]',
           outputPath: 'assets/images/'
         }
       },
       { test: /\.(woff|woff2|eot|ttf|otf)$/,
-        loader: 'url-loader',
+        loader: 'file-loader',
         options: {
-          fallback: 'file-loader',
-          limit: 8 * 1024,
           name: '[name].[ext]',
           outputPath: 'assets/fonts/'
         }
