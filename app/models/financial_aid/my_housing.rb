@@ -95,7 +95,7 @@ module FinancialAid
     end
 
     def my_aid_year
-      @my_aid_year ||= (@options[:aid_year] || FinancialAid::MyAidYears.new(@uid).default_aid_year).to_i.to_s
+      @my_aid_year ||= (@options[:aid_year] || CampusSolutions::MyAidYears.new(@uid).default_aid_year).to_i.to_s
     end
   end
 end

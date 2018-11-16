@@ -2,14 +2,12 @@ module CampusSolutions
   module FinancialAidExpiry
     def self.expire(uid=nil)
       [
+        MyAidYears,
         MyFinancialAidData,
         MyFinancialAidFundingSources,
         MyFinancialAidFundingSourcesTerm,
-        FinancialAid::MyAidYears,
         FinancialAid::MyFinancialAidSummary,
-        FinancialAid::MyHousing,
-        FinancialAid::MyTermsAndConditions,
-        FinancialAid::MyTitle4
+        FinancialAid::MyHousing
       ].each do |klass|
         klass.expire uid
       end

@@ -5,7 +5,7 @@ describe CampusSolutions::NewAdmitResources do
   let(:link_api_response) { {url: true} }
   before(:each) do
     allow_any_instance_of(LinkFetcher).to receive(:fetch_link).and_return link_api_response
-    FinancialAid::MyAidYears.stub_chain(:new, :get_feed).and_return aid_years_response
+    CampusSolutions::MyAidYears.stub_chain(:new, :get_feed).and_return aid_years_response
   end
 
   let(:sir_statuses_incomplete_base_response) {
@@ -112,7 +112,11 @@ describe CampusSolutions::NewAdmitResources do
 
   let(:aid_years_response) {
     {
-      aidYears: [{id: '2018'},{id: '2017'},{id: '2016'},{id: '2009'},{id: '2065'}]
+      feed: {
+        finaidSummary: {
+          finaidYears: [{ id: 2018 }, { id: 2017 }, { id: 2016 }, { id:2009 }, { id: 2065 }]
+        }
+      }
     }
   }
 

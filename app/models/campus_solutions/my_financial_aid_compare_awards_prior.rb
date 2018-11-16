@@ -12,7 +12,7 @@ module CampusSolutions
     attr_accessor :date
 
     def get_feed_internal
-      if is_feature_enabled && (self.aid_year ||= FinancialAid::MyAidYears.new(@uid).default_aid_year)
+      if is_feature_enabled && (self.aid_year ||= CampusSolutions::MyAidYears.new(@uid).default_aid_year)
         logger.debug "User #{@uid}; aid year #{aid_year}; date #{date}"
         CampusSolutions::FinancialAidCompareAwardsPrior.new(user_id: @uid, aid_year: aid_year, date: date).get
       else
