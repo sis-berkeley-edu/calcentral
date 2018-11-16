@@ -2,7 +2,7 @@ describe FinancialAid::MyHousing do
 
   before do
     allow(Settings.terms).to receive(:fake_now).and_return after_spring_housing_period
-    allow_any_instance_of(FinancialAid::MyAidYears).to receive(:default_aid_year).and_return '2019'
+    allow_any_instance_of(CampusSolutions::MyAidYears).to receive(:default_aid_year).and_return '2019'
     allow_any_instance_of(CampusSolutions::Sir::SirStatuses).to receive(:get_feed).and_return(new_admit_status)
     allow(LinkFetcher).to receive(:fetch_link).with('UC_CX_FA_STDNT_HOUSING_TYPE', {:AID_YEAR=>aid_year, :INSTITUTION=> 'UCB01'}).and_return('update housing link')
     allow(LinkFetcher).to receive(:fetch_link).with('UC_CX_FA_STDNT_HOUSING_TYPE_PW', {:AID_YEAR=>aid_year, :INSTITUTION=> 'UCB01'}).and_return('update housing/pathway link')
@@ -27,7 +27,7 @@ describe FinancialAid::MyHousing do
     let(:uid) { 61889 }
     let(:aid_year) { '2019' }
 
-    it_behaves_like 'a proxy that properly observes the financial_aid feature flag'
+    it_behaves_like 'a proxy that properly observes the finaid feature flag'
 
     it 'returns the expected result' do
       expect(subject).to be

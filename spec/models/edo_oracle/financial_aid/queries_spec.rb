@@ -128,48 +128,4 @@ describe EdoOracle::FinancialAid::Queries do
       expect(subject).to have_keys(%w(student_id uc_cost_attendance uc_gift_aid_waiver uc_net_cost uc_funding_offered uc_gift_aid_out uc_grants_schol uc_waivers_oth uc_fee_waivers uc_loans_wrk_study uc_loans uc_work_study sfa_ss_group))
     end
   end
-
-  describe '#get_aid_years' do
-    subject { described_class.get_aid_years(uid) }
-    let(:uid) { 61889 }
-
-    it_behaves_like 'a successful query'
-
-    it 'returns the expected result' do
-      expect(subject.count).to eq 2
-      expect(subject[0]).to have_keys(%w(aid_year aid_year_descr default_aid_year aid_received_fall aid_received_spring aid_received_summer))
-      expect(subject[1]).to have_keys(%w(aid_year aid_year_descr default_aid_year aid_received_fall aid_received_spring aid_received_summer))
-    end
-
-    it 'sorts the rows by aid year' do
-      expect(subject[0]['aid_year']).to eq '2018'
-      expect(subject[1]['aid_year']).to eq '2019'
-    end
-  end
-
-  describe '#get_title4' do
-    subject { described_class.get_title4(uid) }
-    let(:uid) { 61889 }
-
-    it_behaves_like 'a successful query that returns one result'
-
-    it 'returns the expected result' do
-      expect(subject.count).to eq 8
-      expect(subject).to have_keys(%w(approved response_descr main_header main_body dynamic_header dynamic_body dynamic_label contact_text))
-    end
-  end
-
-  describe '#get_terms_and_conditions' do
-    subject { described_class.get_terms_and_conditions(uid, aid_year) }
-    let(:uid) { 61889 }
-    let(:aid_year) { 2018 }
-
-    it_behaves_like 'a successful query that returns one result'
-
-    it 'returns the expected result' do
-      expect(subject.count).to eq 7
-      expect(subject).to have_keys(%w(aid_year approved response_descr main_header main_body dynamic_header dynamic_body))
-    end
-  end
-
 end

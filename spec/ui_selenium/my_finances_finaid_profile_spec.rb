@@ -130,7 +130,7 @@ describe 'My Finances Financial Aid Profile card', :testui => true do
                     ui_t_and_c = @fin_aid_page.t_and_c
                     it ("displays the T&C response for UID #{uid}") { expect(ui_t_and_c).to eql('Accepted') }
 
-                    ui_title_iv = @fin_aid_page.title4
+                    ui_title_iv = @fin_aid_page.title_iv
                     it ("displays Title IV response for UID #{uid}") { expect(ui_title_iv).to eql(api_title_iv) }
 
                     @fin_aid_page.click_title_iv_update
@@ -148,7 +148,7 @@ describe 'My Finances Financial Aid Profile card', :testui => true do
 
                       @fin_aid_page.load_fin_aid_profile year_id
                       @fin_aid_page.show_t_and_c
-                      updated_title_iv = @fin_aid_page.title4
+                      updated_title_iv = @fin_aid_page.title_iv
                       it ("updates the Title IV authorization on the FinAid Profile for UID #{uid}") { expect(updated_title_iv).to eql('Not Authorized') }
 
                     else
@@ -163,7 +163,7 @@ describe 'My Finances Financial Aid Profile card', :testui => true do
 
                       @fin_aid_page.load_fin_aid_profile year_id
                       @fin_aid_page.show_t_and_c
-                      updated_title_iv = @fin_aid_page.title4
+                      updated_title_iv = @fin_aid_page.title_iv
                       it ("updates the Title IV authorization on the FinAid Profile for UID #{uid}") { expect(updated_title_iv).to eql('Authorized') }
 
                     end

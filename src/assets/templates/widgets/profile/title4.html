@@ -3,74 +3,68 @@
   data-ng-controller="Title4Controller"
   data-cc-spinner-directive="title4.isLoading"
 >
-  <div
-    data-ng-if="!title4.hasFinaid"
-    data-ng-include="'widgets/finaid_not_available.html'"
-  ></div>
-  <div data-ng-if="title4.hasFinaid">
-    <div
-      class="cc-text-pre-line"
-      data-ng-bind="title4.longTitle"
-    ></div>
-    <button
-      class="cc-button-link"
-      data-ng-if="!title4.showMessage"
-      data-ng-click="title4.showMessage = !title4.showMessage"
-    >
-      Show more
-    </button>
-    <button
-      class="cc-button-link"
-      data-ng-if="title4.showMessage"
-      data-ng-click="title4.showMessage = !title4.showMessage"
-    >
-      Show less
-    </button>
-    <div data-ng-if="title4.showMessage" class="cc-text-pre-line">
-      <div
-        class="cc-text-pre-line"
-        data-ng-bind="title4.longMessage"
-      ></div>
-    </div>
-    <hr />
 
-    <div
-      data-ng-bind="title4.dynamicHeader"
-      class="cc-text-pre-line"
-    ></div>
-    <p></p>
-    <div
-      data-ng-bind="title4.dynamicBody"
-      class="cc-text-pre-line"
-    ></div>
-    <p></p>
-    <form class="cc-page-widget-profile-title4-form">
-      <input
-        type="checkbox"
-        id="cc-page-widget-profile-title4-check"
-        data-ng-model="title4.approved"
-        data-ng-change="sendResponseT4(title4.approved ? 'Y' : 'N')"
-        data-ng-disabled="!api.user.profile.actAsOptions.canPost"
-        data-ng-value="title4.approved"
-      />
-      <label
-        for="cc-page-widget-profile-title4-check"
-        data-ng-class="{'cc-text-light':(!api.user.profile.actAsOptions.canPost)}"
-      >
-        <strong>
-          <span
-            data-ng-bind="title4.dynamicLabel"
-          ></span>
-        </strong>
-      </label>
-    </form>
-    <p></p>
-    <div
-      data-ng-bind-html="title4.contactText"
-      class="cc-text-pre-line"
-    ></div>
-    <a class="cc-button cc-button-blue cc-button-title4" href="/finances"
-    >Return to My Finances</a
-    >
+  <div data-ng-if="!title4.hasFinaid" data-ng-include="'widgets/finaid_not_available.html'"></div>
+
+  <div data-ng-if="title4.hasFinaid">
+    <p>
+      <span data-ng-if="title4.isApproved">
+        I have authorized the University to apply my Title IV awards to pay all outstanding charges on my UCB student account, in addition to registration fees, housing, and phone bills.
+      </span>
+      <span data-ng-if="!title4.isApproved">
+        I have not authorized the University to apply my Title IV awards to pay all outstanding charges on my UCB student account, beyond registration fees, housing, and phone bills.
+      </span>
+
+      <button class="cc-button-link" data-ng-if="!title4.showMessage" data-ng-click="title4.showMessage = !title4.showMessage">Show more</button>
+      <button class="cc-button-link" data-ng-if="title4.showMessage" data-ng-click="title4.showMessage = !title4.showMessage">Show less</button>
+    </p>
+
+    <div data-ng-if="title4.showMessage" class="cc-text-pre-line">
+      <div data-ng-if="title4.isApproved">
+        <p>
+          By agreeing to this authorization, I understand that the University will apply my Title IV awards to pay all outstanding charges on my UCB student account beyond registration fees, housing and phone bills. These charges may include late fees, University Health Services charges, library fines, etc. If I choose not to authorize the use of my Title IV aid to pay all outstanding charges, I assume responsibility to pay for all non-registration, housing and phone bill charges on my UCB student account by their due date. I understand that payments made after the due date may result in late fees and registration holds.
+        </p>
+
+        <p>
+          I have authorized the use of my Title IV awards to be applied to pay all outstanding charges. If you would like to revoke this authorization, please uncheck the box below.
+        </p>
+      </div>
+      <div data-ng-if="title4.isApproved === false">
+        <p>
+          I authorize the use of my Title IV awards to be applied to pay all outstanding charges. If you would like to authorize the use of your Title IV awards to pay all outstanding charges, please check the box below.
+        </p>
+      </div>
+      <div data-ng-if="title4.isApproved === null">
+        <p>
+          Not authorizing the use of my Title IV aid to pay all outstanding charges means I assume responsibility to pay for all non-registration, housing and phone bill charges on my UCB student account by their due date. I understand that payments made after the due date may result in late fees and registration holds.
+        </p>
+        <p>
+          If you would like to authorize the use of your Title IV awards to pay all outstanding charges, please check the box below.
+        </p>
+      </div>
+    </div>
+
+    <p>
+      <form class="cc-page-widget-profile-title4-form">
+        <input
+          type="checkbox"
+          id="cc-page-widget-profile-title4-check"
+          data-ng-model="title4.isApproved"
+          data-ng-change="sendResponseT4(title4.isApproved ? 'Y' : 'N')"
+          data-ng-disabled="!api.user.profile.actAsOptions.canPost"
+        >
+        <label for="cc-page-widget-profile-title4-check" data-ng-class="{'cc-text-light':(!api.user.profile.actAsOptions.canPost)}">
+          <strong>
+            <span data-ng-if="title4.isApproved">I have authorized use of Title IV aid for charges</span>
+            <span data-ng-if="title4.isApproved === false">Authorized use of Title IV aid for charges</span>
+            <span data-ng-if="title4.isApproved === null">I authorize the use of my Title IV awards to be applied to pay all outstanding charges.</span>
+          </strong>
+        </label>
+      </form>
+    </p>
+
+    <div>
+      If you have any questions, please contact Cal Student Central at <a href="tel:15106649181">(510) 664-9181</a> or <a href="http://studentcentral.berkeley.edu/">submit an inquiry online.</a>
+    </div>
   </div>
 </div>

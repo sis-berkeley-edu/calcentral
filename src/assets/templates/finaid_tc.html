@@ -1,4 +1,4 @@
-<div class="cc-page-finaid" data-cc-spinner-directive="termsAndConditions.isLoading" data-ng-if="api.user.profile.features.csFinAid">
+<div class="cc-page-finaid" data-ng-controller="FinaidController" data-cc-spinner-directive="finaid.isLoading" data-ng-if="api.user.profile.features.csFinAid">
   <div class="row collapse">
     <div class="column">
       <h1 class="cc-heading-page-title cc-print-hide">
@@ -9,18 +9,29 @@
       </h1>
     </div>
     <div data-ng-controller="FinaidApprovalsController" class="columns">
-      <div
-        data-cc-finaid-permissions-directive
-        data-title="'Financial Aid Terms and Conditions'"
-        data-header="termsAndConditions.mainHeader"
-        data-text="termsAndConditions.mainBody"
-        data-response-header="termsAndConditions.dynamicHeader"
-        data-response-text="termsAndConditions.dynamicBody"
-        data-button-text-approve="'I Agree'"
-        data-button-action-approve="sendResponseTC(termsAndConditions.aidYear, 'Y')"
-        data-button-go-back="true"
-        data-can-post="api.user.profile.actAsOptions.canPost && !termsAndConditions.approved"
-      ></div>
+      <div data-ng-if="approvalMessage.ucHeaderDecline">
+        <div
+          data-cc-finaid-permissions-directive
+          data-title="approvalMessage.ucHeaderDecline"
+          data-text="approvalMessage.ucLongTextDecline"
+          data-button-go-back="true"
+          data-can-post="api.user.profile.actAsOptions.canPost"
+        ></div>
+      </div>
+      <div data-ng-if="!approvalMessage.ucHeaderDecline">
+        <div
+          data-cc-finaid-permissions-directive
+          data-title="'Financial Aid Terms and Conditions'"
+          data-header="finaidYear.termsAndConditions.longTitle"
+          data-text="finaidYear.termsAndConditions.longMessage"
+          data-button-text-dont-approve="'I Do Not Agree'"
+          data-button-text-approve="'I Do Agree'"
+          data-button-action-dont-approve="sendResponseTC(finaidYear.id, 'N')"
+          data-button-action-approve="sendResponseTC(finaidYear.id, 'Y')"
+          data-button-go-back="true"
+          data-can-post="api.user.profile.actAsOptions.canPost && !finaidYear.termsAndConditions.approved"
+        ></div>
+      </div>
     </div>
   </div>
 </div>
