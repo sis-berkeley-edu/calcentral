@@ -9,7 +9,7 @@ describe CampusRostersController do
     {
       :campus_course=>{ :id=>"compsci-9a-2014-D" },
       :sections=>[
-        {:id=>"25653", :name=>"COMPSCI 9A SLF 001"}
+        {:id=>"25653", :name=>"COMPSCI 9A SLF 001", :cross_listed=>false}
       ],
       :students=>[
         {:student_id=>"23154487", :first_name=>"Michael", :last_name=>"Scott", :email=>"michael.scott@example.com", :enroll_status=>"E", :section_ccns=>["25653"], :id=>"952576", :login_id=>"952576", :profile_url=>"http://www.berkeley.edu/directory/results?search-type=uid&search-base=all&search-term=952576", :sections=>[{:id=>"25653"}], :photo=>"/campus/compsci-9a-2014-D/photo/952576"},
