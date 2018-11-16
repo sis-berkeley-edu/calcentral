@@ -62,16 +62,16 @@ class ApiCSAidYearsPage
     t_and_c(year)['longMessage']
   end
 
-  def title4
+  def title_iv
     fin_aid_summary['title4']
   end
 
   def title_iv_approval
-    title4['approved']
+    title_iv['approved']
   end
 
   def title_iv_long_msg
-    title4['longMessage']
+    title_iv['longMessage']
   end
 
 end

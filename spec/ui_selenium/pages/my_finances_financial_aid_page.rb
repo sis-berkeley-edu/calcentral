@@ -73,11 +73,11 @@ module CalCentralPages
       elements(:unsubsidized_used_status, :div, :xpath => '//h3[text()="Unsubsidized Loans"]/../../following-sibling::ul/li//span[@data-ng-bind="item.rightColumn.value"]')
       elements(:unsubsidized_used_amount, :div, :xpath => '//h3[text()="Unsubsidized Loans"]/../../following-sibling::ul/li//div[@data-cc-amount-directive="item.rightColumn.amount"]')
 
-      button(:show_t_and_c_toggle, :xpath => '//h3[text()="Terms and Conditions"]/following-sibling::button[@class="cc-button-link cc-widget-financial_aid-profile-button-toggle"]')
+      button(:show_t_and_c_toggle, :xpath => '//h3[text()="Terms and Conditions"]/following-sibling::button[@class="cc-button-link cc-widget-finaid-profile-button-toggle"]')
 
       def load_page(aid_year)
         logger.info "Loading My Finances Financial Aid details page for aid year #{aid_year}"
-        navigate_to "#{WebDriverUtils.base_url}/finances/financial_aid/#{aid_year}"
+        navigate_to "#{WebDriverUtils.base_url}/finances/finaid/#{aid_year}"
       end
 
       def wait_for_fin_aid_semesters
@@ -217,7 +217,7 @@ module CalCentralPages
       link(:housing_update_link, :xpath => '//strong[text()="Housing"]/following-sibling::a')
       elements(:ship_health_insurance, :div, :xpath => '//strong[text()="SHIP Health Insurance"]/../following-sibling::div/div')
 
-      div(:title4, :xpath => '//strong[text()="Title IV"]/../following-sibling::div')
+      div(:title_iv, :xpath => '//strong[text()="Title IV"]/../following-sibling::div')
       link(:title_iv_update_link, :xpath => '//strong[text()="Title IV"]/following-sibling::a')
       div(:t_and_c, :xpath => '//strong[text()="Terms & Conditions"]/../following-sibling::div')
 

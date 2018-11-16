@@ -1,38 +1,21 @@
 describe CampusSolutions::AidYearsController do
-  before do
-    allow(CampusSolutions::MyAidYears).to receive(:from_session).and_return double get_feed_as_json: {feed: 'test' }
-  end
-  let(:user_id) { random_id }
 
-  describe '#get' do
-    let(:make_request) { get :get }
-    it_behaves_like 'an authenticated endpoint'
+  let(:user_id) { '12345' }
 
-    context 'when authenticated user exists' do
-      let(:uid) { random_id }
-      subject { make_request }
+  context 'aid years feed' do
+    let(:feed) { :get }
+    it_behaves_like 'an unauthenticated user'
 
-      context 'normal user session' do
-        it 'should return a feed' do
-          session['user_id'] = uid
-          json = JSON.parse subject.body
-          expect(json['feed']).to eq 'test'
-        end
-      end
-      context 'when delegate is viewing a student' do
-        include_context 'delegated access'
-        let(:campus_solutions_id) {random_id}
-        let(:privileges) do
-          {
-            financial: true
-          }
-        end
-        it 'should return a feed' do
-          session['user_id'] = uid
-          json = JSON.parse subject.body
-          expect(json['feed']).to eq 'test'
-        end
+    context 'authenticated user' do
+      let(:feed_key) { 'finaidSummary' }
+      it_behaves_like 'a successful feed'
+      it 'has some field mapping info' do
+        session['user_id'] = user_id
+        get feed
+        json = JSON.parse(response.body)
+        expect(json['feed']['finaidSummary']['finaidYears'][0]['id']).to eq '2015'
       end
     end
   end
+
 end
