@@ -21,7 +21,7 @@ module MyProfile
 
     def can_edit_profile?
       roles = User::AggregatedAttributes.new(@uid).get_feed.try(:[], :roles)
-      roles.try(:[], :student) || roles.try(:[], :applicant) || roles.try(:[], :releasedAdmit)
+      roles.try(:[], :student) || roles.try(:[], :applicant) || roles.try(:[], :releasedAdmit)   || roles.try(:[], :exStudent)
     end
 
     def campus_solutions_id
