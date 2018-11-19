@@ -27,7 +27,7 @@ class CampusRostersController < RostersController
       enroll_option: params['enroll_option'],
     }
     rosters_feed = Rosters::Campus.new(session['user_id'], course_id: params['campus_course_id']).get_feed
-    rosters_csv = Rosters::Csv.new(rosters_feed[:students], options)
+    rosters_csv = Rosters::Csv.new(rosters_feed, options)
 
     respond_to do |format|
       format.csv { render csv: rosters_csv.get_csv.to_s, filename: rosters_csv.get_filename }
