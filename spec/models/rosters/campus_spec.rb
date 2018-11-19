@@ -110,11 +110,13 @@ describe Rosters::Campus do
       expect(feed[:sections].length).to eq 3
       expect(feed[:sections][0][:ccn]).to eq ccn1
       expect(feed[:sections][0][:name]).to eq "INFO #{catid} LEC 001"
+      expect(feed[:sections][0][:course_name]).to eq "INFO #{catid}"
       expect(feed[:sections][0][:section_label]).to eq "LEC 001"
       expect(feed[:sections][0][:section_number]).to eq "001"
       expect(feed[:sections][0][:instruction_format]).to eq "LEC"
       expect(feed[:sections][0][:dates]).to eq ['TuTh 3:00P-3:59P', 'Fr 11:00A-11:59A']
       expect(feed[:sections][0][:locations]).to eq ['100 Soda', '102 Soda']
+      expect(feed[:sections][0][:cross_listing]).to eq false
       expect(feed[:sections][0][:is_primary]).to eq true
       expect(feed[:sections][0][:enroll_limit]).to eq 650
       expect(feed[:sections][0][:enroll_open]).to eq 648

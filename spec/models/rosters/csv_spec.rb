@@ -1,5 +1,64 @@
 describe Rosters::Csv do
 
+  let(:rosters_feed) do
+    {
+      campus_course: {id: campus_course_id},
+      sections: sections,
+      students: students,
+    }
+  end
+  let(:sections) do
+    [
+      {
+        ccn: '24291',
+        course_name: 'ECON 100B',
+        name: 'ECON 100B LEC 001',
+        section_label: primary_section_label,
+        section_number: '001',
+        instruction_format: 'LEC',
+        locations: ['1 Pimentel'],
+        dates: ['MWF 4:00P-4:59P'],
+        cross_listing: true,
+        is_primary: true,
+      },
+      {
+        ccn: '22050',
+        course_name: 'MATH 100B',
+        name: 'MATH 100B LEC 001',
+        section_label: primary_section_label,
+        section_number: '001',
+        instruction_format: 'LEC',
+        locations: ['1 Pimentel'],
+        dates: ['MWF 4:00P-4:59P'],
+        cross_listing: true,
+        is_primary: true,
+      },
+      {
+        ccn: '24292',
+        course_name: 'ECON 100B',
+        name: 'ECON 100B DIS 110',
+        section_label: 'DIS 110',
+        section_number: '110',
+        instruction_format: 'DIS',
+        locations: ['289 Cory'],
+        dates: ['MW 5:00P-5:59P'],
+        cross_listing: true,
+        is_primary: false,
+      },
+      {
+        ccn: '26893',
+        course_name: 'MATH 100B',
+        name: 'MATH 100B DIS 115',
+        section_label: 'DIS 115',
+        section_number: '115',
+        instruction_format: 'DIS',
+        locations: ['B56 Hildebrand'],
+        dates: ['TuTh 3:00P-3:59P'],
+        cross_listing: true,
+        is_primary: false,
+      },
+    ]
+  end
   let(:students) do
     [
       {
@@ -19,36 +78,28 @@ describe Rosters::Csv do
         profile_url: 'http://example.com/directory/results?search-type=uid&search-base=all&search-term=1000123',
         sections: [
           {
-            ccn: '22050',
+            ccn: '24291',
+            course_name: 'ECON 100B',
             name: 'ECON 100B LEC 001',
             section_label: primary_section_label,
             section_number: '001',
             instruction_format: 'LEC',
             locations: ['1 Pimentel'],
             dates: ['MWF 4:00P-4:59P'],
+            cross_listing: true,
             is_primary: true,
-            enroll_limit: 480,
-            enroll_count: 480,
-            enroll_open: 0,
-            waitlist_limit: 170,
-            waitlist_count: 91,
-            waitlist_open: 79,
           },
           {
-            ccn: '22060',
+            ccn: '24292',
+            course_name: 'ECON 100B',
             name: 'ECON 100B DIS 110',
             section_label: 'DIS 110',
             section_number: '110',
             instruction_format: 'DIS',
             locations: ['289 Cory'],
             dates: ['MW 5:00P-5:59P'],
+            cross_listing: true,
             is_primary: false,
-            enroll_limit: 30,
-            enroll_count: 30,
-            enroll_open: 0,
-            waitlist_limit: 10,
-            waitlist_count: 5,
-            waitlist_open: 5,
           },
         ],
         columns: [
@@ -83,35 +134,27 @@ describe Rosters::Csv do
         sections: [
           {
             ccn: '22050',
-            name: 'ECON 100B LEC 001',
+            course_name: 'MATH 100B',
+            name: 'MATH 100B LEC 001',
             section_label: primary_section_label,
             section_number: '001',
             instruction_format: 'LEC',
             locations: ['1 Pimentel'],
             dates: ['MWF 4:00P-4:59P'],
+            cross_listing: true,
             is_primary: true,
-            enroll_limit: 480,
-            enroll_count: 480,
-            enroll_open: 0,
-            waitlist_limit: 170,
-            waitlist_count: 91,
-            waitlist_open: 79,
           },
           {
             ccn: '26893',
-            name: 'ECON 100B DIS 115',
+            course_name: 'MATH 100B',
+            name: 'MATH 100B DIS 115',
             section_label: 'DIS 115',
             section_number: '115',
             instruction_format: 'DIS',
             locations: ['B56 Hildebrand'],
             dates: ['TuTh 3:00P-3:59P'],
+            cross_listing: true,
             is_primary: false,
-            enroll_limit: 30,
-            enroll_count: 30,
-            enroll_open: 0,
-            waitlist_limit: 10,
-            waitlist_count: 6,
-            waitlist_open: 4,
           },
         ],
         columns: [
@@ -141,7 +184,7 @@ describe Rosters::Csv do
       enroll_option: enroll_option,
     }
   end
-  subject { Rosters::Csv.new(students, options) }
+  subject { Rosters::Csv.new(rosters_feed, options) }
 
   describe '#get_filename' do
     let(:filename) { subject.get_filename }
@@ -165,7 +208,7 @@ describe Rosters::Csv do
       end
     end
     context 'when enroll option is present' do
-      let(:section_id) { '22050' }
+      let(:section_id) { '24291' }
       let(:enroll_option) { 'waitlisted' }
       it 'returns filename with enroll type' do
         expect(filename).to eq 'econ-100b-2019-B_LEC-001_waitlisted_rosters'
@@ -185,7 +228,7 @@ describe Rosters::Csv do
       expect(rosters_csv_string).to be_an_instance_of String
       rosters_csv = CSV.parse(rosters_csv_string, {headers: true})
       expect(rosters_csv.count).to eq 2
-      expect(rosters_csv.headers()).to include('Name', 'User ID', 'Student ID', 'Email Address', 'Role', 'LEC', 'DIS')
+      expect(rosters_csv.headers()).to include('Name', 'User ID', 'Student ID', 'Email Address', 'Role', 'Course', 'LEC', 'DIS')
       expect(rosters_csv.headers()).to include('Majors', 'Terms in Attendance', 'Units', 'Grading Basis', 'Waitlist Position')
 
       expect(rosters_csv[0]).to be_an_instance_of CSV::Row
@@ -194,6 +237,7 @@ describe Rosters::Csv do
       expect(rosters_csv[0]['Student ID']).to eq '12345'
       expect(rosters_csv[0]['Email Address']).to eq 'hdragica@example.com'
       expect(rosters_csv[0]['Role']).to eq 'Student'
+      expect(rosters_csv[0]['Course']).to eq 'ECON 100B'
       expect(rosters_csv[0]['LEC']).to eq '001'
       expect(rosters_csv[0]['DIS']).to eq '110'
       expect(rosters_csv[0]['Majors']).to eq 'Break Science BA'
@@ -208,6 +252,7 @@ describe Rosters::Csv do
       expect(rosters_csv[1]['Student ID']).to eq '12346'
       expect(rosters_csv[1]['Email Address']).to eq 'byuri@example.com'
       expect(rosters_csv[1]['Role']).to eq 'Waitlist Student'
+      expect(rosters_csv[1]['Course']).to eq 'MATH 100B'
       expect(rosters_csv[1]['LEC']).to eq '001'
       expect(rosters_csv[1]['DIS']).to eq '115'
       expect(rosters_csv[1]['Majors']).to eq 'Computer Science BA, Political Economy BA'
