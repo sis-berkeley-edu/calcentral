@@ -5,7 +5,7 @@ var _ = require('lodash');
 /**
  * Preview of user profile prior to viewing-as
  */
-angular.module('calcentral.controllers').controller('UserOverviewController', function(academicStandingsFactory, academicsService, adminService, advisingFactory, apiService, committeesService, enrollmentVerificationFactory, linkService, statusHoldsService, $route, $routeParams, $scope) {
+angular.module('calcentral.controllers').controller('UserOverviewController', function(academicsService, adminService, advisingFactory, apiService, committeesService, enrollmentVerificationFactory, linkService, statusHoldsService, $route, $routeParams, $scope) {
   linkService.addCurrentRouteSettings($scope);
 
   $scope.academics = {
@@ -222,26 +222,6 @@ angular.module('calcentral.controllers').controller('UserOverviewController', fu
     });
   };
 
-  var loadHasStanding = function() {
-    return academicStandingsFactory.getStandings().then(
-      function(response) {
-        var currentStandings = _.get(response, 'data.feed.currentStandings');
-        if (currentStandings.length !== 0 && currentStandings[0].acadStandingStatus !== 'GST') {
-          $scope.hasStandingAlert = true;
-        }
-        if (!apiService.user.profile.academicRoles.current.grad || !apiService.user.profile.academicRoles.current.law && !apiService.user.profile.academicRoles.current.ugrdNonDegree && !apiService.user.profile.academicRoles.current.concurrent) {
-          $scope.standingIsVisible = filterStanding;
-        }
-      }
-    );
-  };
-
-  var filterStanding = function() {
-    var standingVisibleForAdvisor = !!($scope.targetUser.academicRoles.current.ugrd || $scope.hasStandingAlert);
-    var isNonDegreeSeeking = !!$scope.targetUser.academicRoles.current.ugrdNonDegree;
-    return !!(standingVisibleForAdvisor && !isNonDegreeSeeking);
-  };
-
   var chartGpaTrend = function(termGpas) {
     var chartData = _.map(termGpas, 'termGpa');
 
@@ -324,8 +304,7 @@ angular.module('calcentral.controllers').controller('UserOverviewController', fu
       .then(loadStudentSuccess)
       .then(loadRegistrations)
       .then(loadDegreeProgresses)
-      .then(loadCommittees)
-      .then(loadHasStanding);
+      .then(loadCommittees);
     }
   });
 });
