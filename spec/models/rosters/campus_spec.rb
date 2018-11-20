@@ -26,7 +26,6 @@ describe Rosters::Campus do
           term_cd: term_cd,
           catid: catid,
           dept: 'INFO',
-          dept_code: 'INFO',
           course_code: "INFO #{catid}",
           emitter: 'Campus',
           name: 'Data Rules Everything Around Me',
