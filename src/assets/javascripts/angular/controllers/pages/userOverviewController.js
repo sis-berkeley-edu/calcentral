@@ -64,6 +64,7 @@ angular.module('calcentral.controllers').controller('UserOverviewController', fu
     undergraduate: {},
     isLoading: true
   };
+  $scope.standingIsVisible = false;
 
   var parseAdvisingResources = function(response) {
     var links = $scope.ucAdvisingResources.links;
@@ -222,26 +223,6 @@ angular.module('calcentral.controllers').controller('UserOverviewController', fu
     });
   };
 
-  var loadHasStanding = function() {
-    return academicStandingsFactory.getStandings().then(
-      function(response) {
-        var currentStandings = _.get(response, 'data.feed.currentStandings');
-        if (currentStandings.length !== 0 && currentStandings[0].acadStandingStatus !== 'GST') {
-          $scope.hasStandingAlert = true;
-        }
-        if (!apiService.user.profile.academicRoles.current.grad || !apiService.user.profile.academicRoles.current.law && !apiService.user.profile.academicRoles.current.ugrdNonDegree && !apiService.user.profile.academicRoles.current.concurrent) {
-          $scope.standingIsVisible = filterStanding;
-        }
-      }
-    );
-  };
-
-  var filterStanding = function() {
-    var standingVisibleForAdvisor = !!($scope.targetUser.academicRoles.current.ugrd || $scope.hasStandingAlert);
-    var isNonDegreeSeeking = !!$scope.targetUser.academicRoles.current.ugrdNonDegree;
-    return !!(standingVisibleForAdvisor && !isNonDegreeSeeking);
-  };
-
   var chartGpaTrend = function(termGpas) {
     var chartData = _.map(termGpas, 'termGpa');
 
@@ -293,6 +274,20 @@ angular.module('calcentral.controllers').controller('UserOverviewController', fu
       $scope.committees.isLoading = false;
       $scope.committees.showCommittees = ($scope.targetUser.roles.student || $scope.targetUser.roles.exStudent) && $scope.studentCommittees.length > 0;
     });
+  };
+
+  var loadHasStanding = function() {
+    return academicStandingsFactory.getStandings().then(
+      function(response) {
+        var currentStandings = _.get(response, 'data.feed.currentStandings');
+        if (currentStandings.length !== 0 && currentStandings[0].acadStandingStatus !== 'GST') {
+          $scope.hasStandingAlert = true;
+        }
+        if ($scope.targetUser.academicRoles.current.ugrd && !$scope.targetUser.academicRoles.current.ugrdNonDegree) {
+          $scope.standingIsVisible = true;
+        }
+      }
+    );
   };
 
   $scope.totalTransferUnits = function() {

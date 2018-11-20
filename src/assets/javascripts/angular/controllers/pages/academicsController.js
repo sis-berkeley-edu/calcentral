@@ -188,6 +188,7 @@ angular.module('calcentral.controllers').controller('AcademicsController', funct
         if (currentStandings.length !== 0 && currentStandings[0].acadStandingStatus !== 'GST') {
           $scope.hasStandingAlert = true;
         }
+        $scope.standingIsVisible = true;
       }
     );
   };
@@ -234,17 +235,10 @@ angular.module('calcentral.controllers').controller('AcademicsController', funct
     $scope.isNonDegreeSeekingSummerVisitor = isNonDegreeSeekingSummerVisitor;
     $scope.showStatusAndBlocks = !$scope.filteredForDelegate &&
                                  ($scope.hasRegStatus || $scope.numberOfHolds || $scope.hasStandingAlert);
-    $scope.standingIsVisible = filterStanding;
     $scope.showAdvising = !$scope.filteredForDelegate && apiService.user.profile.features.advising && apiService.user.profile.roles.student && isMbaJdOrNotLaw() && !isNonDegreeSeekingSummerVisitor;
     $scope.showProfileMessage = (!$scope.isAcademicInfoAvailable || !$scope.collegeAndLevel || _.isEmpty($scope.collegeAndLevel.careers));
     $scope.showResidency = apiService.user.profile.roles.student && academicsService.showResidency(apiService.user.profile.academicRoles.current);
     $scope.showGpaSection = academicsService.showGpa($scope.gpaUnits.gpa);
-  };
-
-  var filterStanding = function() {
-    var standingVisibleForStudent = !!($scope.hasStandingAlert || apiService.user.profile.academicRoles.current.ugrd);
-    var isNonDegreeSeeking = !!apiService.user.profile.academicRoles.current.ugrdNonDegree;
-    return !!(standingVisibleForStudent && !isNonDegreeSeeking);
   };
 
   /**
@@ -269,7 +263,7 @@ angular.module('calcentral.controllers').controller('AcademicsController', funct
       if (apiService.user.profile.roles.student || apiService.user.profile.roles.applicant || apiService.user.profile.roles.exStudent || apiService.user.profile.roles.concurrentEnrollmentStudent) {
         requests.push(loadNumberOfHolds());
       }
-      if (!apiService.user.profile.academicRoles.current.grad || !apiService.user.profile.academicRoles.current.law && !apiService.user.profile.academicRoles.current.ugrdNonDegree && !apiService.user.profile.academicRoles.current.concurrent) {
+      if (apiService.user.profile.academicRoles.current.ugrd && !apiService.user.profile.academicRoles.current.ugrdNonDegree) {
         requests.push(loadHasStanding());
       }
       $q.all(requests).then(filterWidgets);
