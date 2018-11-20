@@ -188,6 +188,7 @@ angular.module('calcentral.controllers').controller('AcademicsController', funct
         if (currentStandings.length !== 0 && currentStandings[0].acadStandingStatus !== 'GST') {
           $scope.hasStandingAlert = true;
         }
+        $scope.standingIsVisible = true;
       }
     );
   };
