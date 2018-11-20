@@ -5,7 +5,7 @@ var _ = require('lodash');
 /**
  * Preview of user profile prior to viewing-as
  */
-angular.module('calcentral.controllers').controller('UserOverviewController', function(academicsService, adminService, advisingFactory, apiService, committeesService, enrollmentVerificationFactory, linkService, statusHoldsService, $route, $routeParams, $scope) {
+angular.module('calcentral.controllers').controller('UserOverviewController', function(academicStandingsFactory, academicsService, adminService, advisingFactory, apiService, committeesService, enrollmentVerificationFactory, linkService, statusHoldsService, $route, $routeParams, $scope) {
   linkService.addCurrentRouteSettings($scope);
 
   $scope.academics = {
@@ -64,6 +64,7 @@ angular.module('calcentral.controllers').controller('UserOverviewController', fu
     undergraduate: {},
     isLoading: true
   };
+  $scope.standingIsVisible = false;
 
   var parseAdvisingResources = function(response) {
     var links = $scope.ucAdvisingResources.links;
@@ -275,6 +276,20 @@ angular.module('calcentral.controllers').controller('UserOverviewController', fu
     });
   };
 
+  var loadHasStanding = function() {
+    return academicStandingsFactory.getStandings().then(
+      function(response) {
+        var currentStandings = _.get(response, 'data.feed.currentStandings');
+        if (currentStandings.length !== 0 && currentStandings[0].acadStandingStatus !== 'GST') {
+          $scope.hasStandingAlert = true;
+        }
+        if ($scope.targetUser.academicRoles.current.ugrd && !$scope.targetUser.academicRoles.current.ugrdNonDegree) {
+          $scope.standingIsVisible = true;
+        }
+      }
+    );
+  };
+
   $scope.totalTransferUnits = function() {
     var unitsAdjusted = _.get($scope, 'transferCredit.ucTransferCrseSch.unitsAdjusted');
     var totalTestUnits = _.get($scope, 'transferCredit.ucTestComponent.totalTestUnits');
@@ -304,7 +319,8 @@ angular.module('calcentral.controllers').controller('UserOverviewController', fu
       .then(loadStudentSuccess)
       .then(loadRegistrations)
       .then(loadDegreeProgresses)
-      .then(loadCommittees);
+      .then(loadCommittees)
+      .then(loadHasStanding);
     }
   });
 });
