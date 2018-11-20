@@ -4,8 +4,8 @@
   </div>
 
   <div class="cc-widget-padding" data-cc-spinner-directive="statusHolds.isLoading">
-     <div data-ng-if="api.user.profile.features.standings && standingIsVisible">
-    <h3 class="cc-status-holds-status-header">Status</h3>
+    <h3 class="cc-status-holds-status-header" data-ng-if="regStatus.show || showResidency">Status</h3>
+     <div data-ng-if="api.user.profile.features.standings && ((api.user.profile.academicRoles.current.ugrd && !api.user.profile.academicRoles.current.ugrdNonDegree) || (api.user.profile.roles.advisor && targetUser.academicRoles.current.ugrd && !targetUser.academicRoles.current.ugrdNonDegree))">
       <div class="cc-status-holds-section">
         <div>
           <span>

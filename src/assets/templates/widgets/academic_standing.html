@@ -17,7 +17,7 @@
               Please consult with your college advisor for guidance.
             </span>
             <button class="cc-button-link cc-standing-sub-title" data-ng-click="academics.showLearnMore = true" data-ng-show="!academics.showLearnMore">Learn More</button>
-            <span data-ng-bind-html="standings.learnMoreMessage" class="cc-standing-sub-title" data-ng-show="academics.showLearnMore"></span>
+            <span data-ng-bind="standings.learnMoreMessage" class="cc-standing-sub-title" data-ng-show="academics.showLearnMore"></span>
           </td>
         </tr>
         <tr data-ng-if="standings.standingsHistory.length">
@@ -34,7 +34,7 @@
                 <thead>
                   <tr>
                     <th scope="col">Status History</th>
-                    <th scope="col" class="cc-table-right">Term Ending</th>
+                    <th scope="col" class="cc-table-right cc-table-right-spacing">Term Ending</th>
                   </tr>
                 </thead>
                 <tbody data-ng-repeat="standing in standings.standingsHistory">
@@ -45,7 +45,7 @@
                       </span><br>
                       <span data-ng-if="standing.acadStandingStatus !== 'GST'" data-ng-bind="standing.acadStandingActionDescr" class="cc-standing-sub-title"></span>
                     </td>
-                    <td class="cc-table-right">
+                    <td class="cc-table-right cc-table-right-spacing">
                       <div data-ng-bind="standing.termName"></div>
                     </td>
                   </tr>
