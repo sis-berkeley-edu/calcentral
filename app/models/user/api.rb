@@ -43,26 +43,6 @@ module User
       @override_name = val
     end
 
-    def self.delete(uid)
-      logger.warn "Removing all stored user data for user #{uid}"
-      user = nil
-      use_pooled_connection {
-        user = User::Data.where(:uid => uid).first
-        if !user.blank?
-          user.delete
-        end
-      }
-      if !user.blank?
-        GoogleApps::Revoke.new(user_id: uid).revoke
-        use_pooled_connection {
-          User::Oauth2Data.destroy_all(:uid => uid)
-          Notifications::Notification.destroy_all(:uid => uid)
-        }
-      end
-
-      Cache::UserCacheExpiry.notify uid
-    end
-
     def save
       use_pooled_connection {
         Retriable.retriable(:on => ActiveRecord::RecordNotUnique, :tries => 5) do
