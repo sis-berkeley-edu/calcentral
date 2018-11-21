@@ -80,18 +80,6 @@ describe CampusOracle::Queries do
     end
   end
 
-  it 'should find a course' do
-    course = CampusOracle::Queries.get_course_from_section('07366', '2013', 'B')
-    expect(course).to have_at_least(1).items
-    if CampusOracle::Queries.test_data?
-      # we will only have predictable data in our fake Oracle db.
-      expect(course['course_title']).to eq 'General Biology Lecture'
-      expect(course['course_title_short']).to eq 'GENERAL BIOLOGY LEC'
-      expect(course['dept_name']).to eq 'BIOLOGY'
-      expect(course['catalog_id']).to eq '1A'
-    end
-  end
-
   it 'should find sections from CCNs' do
     courses = CampusOracle::Queries.get_sections_from_ccns('2013', 'D', %w(7309 07366 919191 16171))
     expect(courses).to_not be_nil
