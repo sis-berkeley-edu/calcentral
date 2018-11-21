@@ -89,18 +89,6 @@ ActiveRecord::Schema.define(version: 20180824200053) do
     t.integer "user_role_id"
   end
 
-  create_table "notifications", force: true do |t|
-    t.string   "uid"
-    t.text     "data"
-    t.text     "translator"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
-    t.datetime "occurred_at"
-  end
-
-  add_index "notifications", ["occurred_at"], name: "index_notifications_on_occurred_at", using: :btree
-  add_index "notifications", ["uid"], name: "index_notifications_on_uid", using: :btree
-
   create_table "oauth2_data", force: true do |t|
     t.string  "uid"
     t.string  "app_id"
