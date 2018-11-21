@@ -191,22 +191,6 @@ module CampusOracle
       stringify_ints! result
     end
 
-    def self.get_course_from_section(ccn, term_yr, term_cd)
-      logger.warn 'Calling get_course_from_section on campus_oracle when allow_legacy_fallback flag set to false' unless Settings.features.allow_legacy_fallback
-      result = {}
-      use_pooled_connection {
-        sql = <<-SQL
-      select course_title, course_title_short, dept_name, catalog_id, term_yr, term_cd
-      from calcentral_course_info_vw
-      where term_yr = #{term_yr.to_i}
-        and term_cd = #{connection.quote(term_cd)}
-        and course_cntl_num = #{ccn.to_i}
-        SQL
-        result = connection.select_one(sql)
-      }
-      stringify_ints! result
-    end
-
     def self.get_sections_from_ccns(term_yr, term_cd, ccns)
       result = {}
       use_pooled_connection {
