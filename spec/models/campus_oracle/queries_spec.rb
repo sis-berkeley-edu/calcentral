@@ -33,25 +33,6 @@ describe CampusOracle::Queries do
     end
   end
 
-  it 'should find student registration status' do
-    data = CampusOracle::Queries.get_reg_status 300846, current_term.year, current_term.code
-    if CampusOracle::Queries.test_data?
-      expect(data['ldap_uid']).to eq '300846'
-      # we will only have predictable reg_status_cd values in our fake Oracle db.
-      expect(data['reg_status_cd']).to eq 'C'
-    end
-  end
-
-  it 'should return nil from get_reg_status if an existing user has no reg status' do
-    data = CampusOracle::Queries.get_reg_status '2040', current_term.year, current_term.code
-    expect(data).to be_nil
-  end
-
-  it 'should return nil from get_reg_status if the user does not exist' do
-    data = CampusOracle::Queries.get_reg_status '0', current_term.year, current_term.code
-    expect(data).to be_nil
-  end
-
   it 'should find some students in Biology 1a' do
     students = CampusOracle::Queries.get_enrolled_students('7309', '2013', 'D')
     expect(students).to_not be_nil

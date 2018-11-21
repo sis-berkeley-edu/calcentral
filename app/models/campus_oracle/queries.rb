@@ -151,25 +151,6 @@ module CampusOracle
       string.to_i.to_s == string
     end
 
-    def self.get_reg_status(person_id, term_yr, term_cd)
-      result = nil
-      use_pooled_connection {
-        sql = <<-SQL
-      select pi.ldap_uid, pi.student_id, reg.reg_status_cd
-      from calcentral_person_info_vw pi
-      left outer join calcentral_student_term_vw reg on
-        reg.ldap_uid = pi.ldap_uid
-      where pi.ldap_uid = #{person_id.to_i} and reg.term_yr = #{term_yr} and reg.term_cd = #{connection.quote(term_cd)}
-        SQL
-        result = connection.select_one(sql)
-      }
-      if result == nil || result["reg_status_cd"] == nil
-        nil
-      else
-        stringify_ints! result
-      end
-    end
-
     def self.get_enrolled_students(ccn, term_yr, term_cd)
       logger.warn 'Calling get_enrolled_students on campus_oracle when allow_legacy_fallback flag set to false' unless Settings.features.allow_legacy_fallback
       result = []
