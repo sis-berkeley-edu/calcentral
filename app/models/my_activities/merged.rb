@@ -9,7 +9,6 @@ module MyActivities
 
     def self.providers
       [
-        MyActivities::NotificationActivities,
         MyActivities::Webcasts,
         MyActivities::CampusSolutionsMessages,
         MyActivities::CanvasActivities

@@ -33,25 +33,6 @@ describe CampusOracle::Queries do
     end
   end
 
-  it 'should find student registration status' do
-    data = CampusOracle::Queries.get_reg_status 300846, current_term.year, current_term.code
-    if CampusOracle::Queries.test_data?
-      expect(data['ldap_uid']).to eq '300846'
-      # we will only have predictable reg_status_cd values in our fake Oracle db.
-      expect(data['reg_status_cd']).to eq 'C'
-    end
-  end
-
-  it 'should return nil from get_reg_status if an existing user has no reg status' do
-    data = CampusOracle::Queries.get_reg_status '2040', current_term.year, current_term.code
-    expect(data).to be_nil
-  end
-
-  it 'should return nil from get_reg_status if the user does not exist' do
-    data = CampusOracle::Queries.get_reg_status '0', current_term.year, current_term.code
-    expect(data).to be_nil
-  end
-
   it 'should find some students in Biology 1a' do
     students = CampusOracle::Queries.get_enrolled_students('7309', '2013', 'D')
     expect(students).to_not be_nil
@@ -96,18 +77,6 @@ describe CampusOracle::Queries do
     enrollments.each do |enrollment_row|
       expect(enrollment_row['enroll_status']).to be_present
       expect(enrollment_row['student_id']).to be_present
-    end
-  end
-
-  it 'should find a course' do
-    course = CampusOracle::Queries.get_course_from_section('07366', '2013', 'B')
-    expect(course).to have_at_least(1).items
-    if CampusOracle::Queries.test_data?
-      # we will only have predictable data in our fake Oracle db.
-      expect(course['course_title']).to eq 'General Biology Lecture'
-      expect(course['course_title_short']).to eq 'GENERAL BIOLOGY LEC'
-      expect(course['dept_name']).to eq 'BIOLOGY'
-      expect(course['catalog_id']).to eq '1A'
     end
   end
 
