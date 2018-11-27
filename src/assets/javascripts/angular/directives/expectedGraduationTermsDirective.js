@@ -5,7 +5,8 @@ angular.module('calcentral.directives').directive('ccExpectedGraduationTermsDire
     templateUrl: 'directives/expected_graduation_terms.html',
     scope: {
       termsInAttendance: '=',
-      graduation: '='
+      graduation: '=',
+      isAdvisingStudentLookup: '='
     }
   };
 }]);
