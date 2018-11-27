@@ -14,18 +14,18 @@
             <i class="fa fa-clock-o cc-icon-grey" data-ng-if="graduation.undergraduate.appointmentsInGraduatingTerm"></i>
             <strong><span data-ng-bind="graduation.undergraduate.expectedGraduationTerm.termName"></span><strong>
           </span>
-          <div class="cc-widget-profile-footnote">
-              <span data-ng-if="graduation.undergraduate.appointmentsInGraduatingTerm">
-                <a href="/academics/graduation_checklist">
-                  <strong>View Graduation Checklist</strong>
-                </a><br>
-                <span data-ng-bind="graduation.undergraduate.expectedGraduationTerm.termName"></span>
-                will be your final term to complete all degree requirements.
-                If you have questions, please contact your College Advisor.
-              </span>
+          <div class="cc-widget-profile-footnote" data-ng-if="!isAdvisingStudentLookup">
+            <span data-ng-if="graduation.undergraduate.appointmentsInGraduatingTerm">
+              <a href="/academics/graduation_checklist">
+                <strong>View Graduation Checklist</strong>
+              </a><br>
+              <span data-ng-bind="graduation.undergraduate.expectedGraduationTerm.termName"></span>
+              will be your final term to complete all degree requirements.
+              If you have questions, please contact your College Advisor.
+            </span>
             <span data-ng-if="!graduation.undergraduate.appointmentsInGraduatingTerm">
-                Consult your college advisor with questions or concerns.
-              </span>
+              Consult your college advisor with questions or concerns.
+            </span>
           </div>
         </div>
       </td>
