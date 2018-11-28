@@ -72,15 +72,15 @@ describe DataLoch::Zipper do
 
   context 'enrollments query' do
     let(:edo_oracle_columns) do
-      %w(section_id term_id ldap_uid sis_id enrollment_status waitlist_position units grade grade_points grading_basis)
+      %w(section_id term_id ldap_uid sis_id enrollment_status waitlist_position units grade grade_points grading_basis grade_midterm)
     end
 
     let(:edo_oracle_rows) do
       [
-        ['65536', 2182, 1234567, 87654321, 'E', nil, 4.0, 'A-', 14.8, 'GRD'],
-        ['65536', 2182, 1234568, 87654322, 'E', nil, 4.0, 'B+', 13.2, 'GRD'],
-        ['65537', 2182, 1234567, 87654321, 'E', nil, 3.0, ' ', 0.0, 'PNP'],
-        ['65537', 2182, 1234568, 87654322, 'W', 7, 3.0, ' ', 0.0, 'PNP']
+        ['65536', 2182, 1234567, 87654321, 'E', nil, 4.0, 'A-', 14.8, 'GRD', nil],
+        ['65536', 2182, 1234568, 87654322, 'E', nil, 4.0, 'B+', 13.2, 'GRD', 'D'],
+        ['65537', 2182, 1234567, 87654321, 'E', nil, 3.0, ' ', 0.0, 'PNP', nil],
+        ['65537', 2182, 1234568, 87654322, 'W', 7, 3.0, ' ', 0.0, 'PNP', nil]
       ]
     end
 
@@ -96,10 +96,10 @@ describe DataLoch::Zipper do
 
     it 'writes zipped enrollment results to the filesystem' do
       expect(csv_rows).to have(4).items
-      expect(csv_rows[0]).to eq '65536,2182,1234567,87654321,E,,4.0,A-,14.8,GRD'
-      expect(csv_rows[1]).to eq '65536,2182,1234568,87654322,E,,4.0,B+,13.2,GRD'
-      expect(csv_rows[2]).to eq '65537,2182,1234567,87654321,E,,3.0, ,0.0,PNP'
-      expect(csv_rows[3]).to eq '65537,2182,1234568,87654322,W,7,3.0, ,0.0,PNP'
+      expect(csv_rows[0]).to eq '65536,2182,1234567,87654321,E,,4.0,A-,14.8,GRD,'
+      expect(csv_rows[1]).to eq '65536,2182,1234568,87654322,E,,4.0,B+,13.2,GRD,D'
+      expect(csv_rows[2]).to eq '65537,2182,1234567,87654321,E,,3.0, ,0.0,PNP,'
+      expect(csv_rows[3]).to eq '65537,2182,1234568,87654322,W,7,3.0, ,0.0,PNP,'
     end
   end
 end
