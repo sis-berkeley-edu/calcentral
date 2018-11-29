@@ -240,7 +240,6 @@ cache:
     User::Api: NEXT_08_00
     User::AuthenticationValidator: <%= 8.hours %>
     User::AuthenticationValidator::short: <%= 5.minutes %>
-    User::Visit: <%= 4.hours %>
     Cal1card::Photo: <%= 4.hours %>
 
     Canvas::CourseStudents: <%= 15.minutes %>
@@ -485,6 +484,5 @@ features:
   standings: true
   textbooks: false
   transcript_request_link_cred_solutions: false
-  user_visits: false
   videos: false
   webcast_sign_up_on_calcentral: false
