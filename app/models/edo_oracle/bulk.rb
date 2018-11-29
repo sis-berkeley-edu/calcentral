@@ -21,8 +21,9 @@ module EdoOracle
               enroll."UNITS_TAKEN" AS units,
               enroll."GRADE_MARK" AS grade,
               enroll."GRADE_POINTS" AS grade_points,
-              enroll."GRADING_BASIS_CODE" AS grading_basis
-            FROM SISEDO.CC_ENROLLMENTV00_VW enroll
+              enroll."GRADING_BASIS_CODE" AS grading_basis,
+              enroll."GRADE_MARK_MID" as grade_midterm
+            FROM SISEDO.ETS_ENROLLMENTV00_VW enroll
             WHERE
               enroll."TERM_ID" = '#{term_id}'
             ORDER BY section_id, sis_id
