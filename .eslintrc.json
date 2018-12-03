@@ -1,6 +1,7 @@
 {
     "env": {
         "browser": true,
+        "es6": true,
         "commonjs": true,
         "node": true
     },
@@ -9,7 +10,7 @@
       "angular": false
     },
     "parserOptions": {
-        "ecmaVersion": 6
+        "ecmaVersion": 2018
     },
     "root": true,
     "rules": {
@@ -62,7 +63,9 @@
       "padded-blocks": ["error",
         { "blocks": "never" }
       ],
-      "quotes": ["error", "single"],
+      "quotes": ["error", "single",
+        {"allowTemplateLiterals": true}
+      ],
       "semi": ["error", "always"],
       "semi-spacing": ["error"],
       "space-before-function-paren": ["error", "never"],

@@ -8,6 +8,7 @@ angular.module('calcentral.controllers', []);
 angular.module('calcentral.directives', []);
 angular.module('calcentral.factories', []);
 angular.module('calcentral.filters', []);
+angular.module('calcentral.react', []);
 angular.module('calcentral.services', ['ng']);
 angular.module('templates', []);
 
@@ -18,6 +19,7 @@ angular.module('calcentral', [
   'calcentral.directives',
   'calcentral.factories',
   'calcentral.filters',
+  'calcentral.react',
   'calcentral.services',
   'ngRoute',
   'ngSanitize',
