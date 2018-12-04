@@ -9,7 +9,7 @@ module EdoOracle
       maximum_row_inclusive = mininum_row_exclusive + batch_size
       sql = <<-SQL
         SELECT section_id, term_id, ldap_uid, sis_id, enrollment_status, waitlist_position, units,
-               grade, grade_points, grading_basis FROM (
+               grade, grade_points, grading_basis, grade_midterm FROM (
           SELECT /*+ FIRST_ROWS(n) */ enrollments.*, ROWNUM rnum FROM (
             SELECT DISTINCT
               enroll."CLASS_SECTION_ID" as section_id,
