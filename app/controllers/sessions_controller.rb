@@ -10,12 +10,14 @@ class SessionsController < ApplicationController
     logger.info "Omniauth auth hash from SAML = #{auth.inspect}"
     auth_uid = auth['uid']
     logger.info "UID obtained from Omniauth auth hash = #{auth_uid}"
+    auth_handler = nil
 
     # Save crosswalk some work by caching critical IDs if they were asserted to us via SAML.
     if auth.respond_to?(:extra)
       logger.warn "Omniauth extra from SAML = #{auth.extra.inspect}"
       cs_id = auth.extra['berkeleyEduCSID']
       sid = auth.extra['berkeleyEduStuID']
+      auth_handler = auth.extra['successfulAuthenticationHandlers']
       if sid.present? && sid != cs_id
         logger.warn "Conflicting berkeleyEduStuID #{sid} and berkeleyEduCSID #{cs_id} for UID #{auth_uid}"
       end
@@ -57,7 +59,7 @@ class SessionsController < ApplicationController
       # of clearing the LTI-authenticated-only flag if the user happened to visit bCourses first.
       reset_session
     end
-    continue_login_success auth_uid
+    continue_login_success(auth_uid, auth_handler)
   end
 
   def create_reauth_cookie
@@ -108,11 +110,11 @@ class SessionsController < ApplicationController
     (params['url'].present?) ? params['url'] : url_for_path('/dashboard')
   end
 
-  def continue_login_success(uid)
+  def continue_login_success(uid, auth_handler=nil)
     # Force a new CSRF token to be generated on login.
     # http://homakov.blogspot.com.es/2013/06/cookie-forcing-protection-made-easy.html
     session.try(:delete, :_csrf_token)
-    uid = User::AuthenticationValidator.new(uid).validated_user_id
+    uid = User::AuthenticationValidator.new(uid, auth_handler).validated_user_id
     if (Integer(uid, 10) rescue nil).nil?
       logger.warn "FAILED login with CAS UID: #{uid}"
       redirect_to url_for_path('/uid_error')
