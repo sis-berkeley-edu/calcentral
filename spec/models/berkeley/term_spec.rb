@@ -67,6 +67,34 @@ describe Berkeley::Term do
         expect(subject.raw_source[0]['temporalPosition']).to eq 'Future'
       end
     end
+
+    describe 'to_h' do
+      let(:temporal_position) {HubTerm::Proxy::CURRENT_TERM}
+      it 'returns hash representation of term' do
+        expect(subject.to_h[:campus_solutions_id]).to eq '2165'
+        expect(subject.to_h[:name]).to eq 'Summer'
+        expect(subject.to_h[:year]).to eq 2016
+        expect(subject.to_h[:code]).to eq 'C'
+        expect(subject.to_h[:slug]).to eq 'summer-2016'
+        expect(subject.to_h[:to_english]).to eq 'Summer 2016'
+        expect(subject.to_h[:start]).to eq Time.zone.parse('2016-05-23 00:00:00').to_datetime
+        expect(subject.to_h[:end]).to eq Time.zone.parse('2016-08-12 23:59:59').to_datetime
+        expect(subject.to_h[:classes_start]).to eq Time.zone.parse('2016-05-23 00:00:00').to_datetime
+        expect(subject.to_h[:classes_end]).to eq Time.zone.parse('2016-08-12 23:59:59').to_datetime
+        expect(subject.to_h[:instruction_end]).to eq Time.zone.parse('2016-08-12 23:59:59').to_datetime
+        expect(subject.to_h[:grades_entered]).to eq Time.zone.parse('2016-09-09 23:59:59').to_datetime
+        expect(subject.to_h[:is_summer]).to eq true
+        expect(subject.to_h[:legacy?]).to eq true
+        expect(subject.to_h[:end_drop_add]).to eq false
+      end
+    end
+
+    describe 'to_s' do
+      let(:temporal_position) {HubTerm::Proxy::CURRENT_TERM}
+      it 'returns string representation of term' do
+        expect(subject.to_s).to eq '#<Berkeley::Term> {:campus_solutions_id=>"2165", :name=>"Summer", :year=>2016, :code=>"C", :slug=>"summer-2016", :to_english=>"Summer 2016", :start=>Mon, 23 May 2016 00:00:00 -0700, :end=>Fri, 12 Aug 2016 23:59:59 -0700, :classes_start=>Mon, 23 May 2016 00:00:00 -0700, :classes_end=>Fri, 12 Aug 2016 23:59:59 -0700, :instruction_end=>Fri, 12 Aug 2016 23:59:59 -0700, :grades_entered=>Fri, 09 Sep 2016 23:59:59 -0700, :is_summer=>true, :legacy?=>true, :end_drop_add=>false}'
+      end
+    end
   end
 
   context 'legacy SIS' do
@@ -144,5 +172,4 @@ describe Berkeley::Term do
       its(:to_english) {should eq 'Spring 2014'}
     end
   end
-
 end

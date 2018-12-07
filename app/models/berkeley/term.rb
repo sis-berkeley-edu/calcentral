@@ -103,8 +103,6 @@ module Berkeley
         @classes_start = term['classes_start'].to_date.in_time_zone.to_datetime
         @instruction_end = term['instruction_end'].to_date.in_time_zone.to_datetime
         @classes_end = term['classes_end'].to_date.in_time_zone.to_datetime
-        @final_exam_week_start = term['final_exam_week_start'].to_date.in_time_zone.to_datetime
-        @final_exam_cs_data_available = @end.advance(days: -56)
         @end_drop_add =term['end_drop_add'] if term['end_drop_add'].present?
       end
       self
@@ -129,8 +127,6 @@ module Berkeley
         @classes_start = db_row['class_begin_date'].to_date.in_time_zone.to_datetime  if db_row['class_begin_date'].present?
         @instruction_end = db_row['instruction_end_date'].to_date.in_time_zone.to_datetime if db_row['instruction_end_date'].present?
         @classes_end = db_row['class_end_date'].to_date.in_time_zone.to_datetime if db_row['class_end_date'].present?
-        @final_exam_week_start = db_row['final_exam_week_start_date'].to_date.in_time_zone.to_datetime if db_row['final_exam_week_start_date'].present?
-        @final_exam_cs_data_available = @end.advance(days: -56)
         @end_drop_add =db_row['end_drop_add_date'] if db_row['end_drop_add_date'].present?
       end
       self
@@ -189,7 +185,7 @@ module Berkeley
     def to_h
       methods = [:campus_solutions_id, :name, :year, :code, :slug, :to_english,
         :start, :end, :classes_start, :classes_end, :instruction_end, :grades_entered,
-        :is_summer, :legacy?, :final_exam_week_start, :end_drop_add]
+        :is_summer, :legacy?, :end_drop_add]
       Hash[methods.collect {|m| [m, send(m)]}]
     end
 
