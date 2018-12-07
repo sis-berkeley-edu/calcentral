@@ -18,7 +18,6 @@ describe Berkeley::Terms do
         'class_end_date'=>nil,
         'instruction_end_date'=>nil,
         'grades_entered_date'=>nil,
-        'final_exam_week_start_date'=>nil,
         'end_drop_add_date'=>'2019-09-18T00:00:00.000Z',
         'is_summer'=>'N'
       },
@@ -35,7 +34,6 @@ describe Berkeley::Terms do
         'class_end_date'=>nil,
         'instruction_end_date'=>nil,
         'grades_entered_date'=>nil,
-        'final_exam_week_start_date'=>nil,
         'end_drop_add_date'=>nil,
         'is_summer'=>'Y'
       },
@@ -52,7 +50,6 @@ describe Berkeley::Terms do
         'class_end_date'=>'2019-05-03T00:00:00.000Z',
         'instruction_end_date'=>'2019-05-10T00:00:00.000Z',
         'grades_entered_date'=>nil,
-        'final_exam_week_start_date'=>'2019-05-13T00:00:00.000Z',
         'end_drop_add_date'=>'2019-02-13T00:00:00.000Z',
         'is_summer'=>'N'
       },
@@ -69,7 +66,6 @@ describe Berkeley::Terms do
         'class_end_date'=>'2018-11-30T00:00:00.000Z',
         'instruction_end_date'=>'2018-12-07T00:00:00.000Z',
         'grades_entered_date'=>'2018-12-24T00:00:00.000Z',
-        'final_exam_week_start_date'=>'2018-12-10T00:00:00.000Z',
         'end_drop_add_date'=>'2018-09-12T00:00:00.000Z',
         'is_summer'=>'N'
       },
@@ -86,7 +82,6 @@ describe Berkeley::Terms do
         'class_end_date'=>nil,
         'instruction_end_date'=>nil,
         'grades_entered_date'=>nil,
-        'final_exam_week_start_date'=>nil,
         'end_drop_add_date'=>nil,
         'is_summer'=>'Y'
       },
@@ -103,7 +98,6 @@ describe Berkeley::Terms do
         'class_end_date'=>'2018-04-27T00:00:00.000Z',
         'instruction_end_date'=>'2018-05-04T00:00:00.000Z',
         'grades_entered_date'=>'2018-06-30T00:00:00.000Z',
-        'final_exam_week_start_date'=>'2018-05-07T00:00:00.000Z',
         'end_drop_add_date'=>'2018-02-16T00:00:00.000Z',
         'is_summer'=>'N'
       },
@@ -120,7 +114,6 @@ describe Berkeley::Terms do
         'class_end_date'=>'2017-12-01T00:00:00.000Z',
         'instruction_end_date'=>'2017-12-08T00:00:00.000Z',
         'grades_entered_date'=>'2017-12-20T00:00:00.000Z',
-        'final_exam_week_start_date'=>'2017-12-11T00:00:00.000Z',
         'end_drop_add_date'=>'2017-09-22T00:00:00.000Z',
         'is_summer'=>'N'
       },
@@ -137,7 +130,6 @@ describe Berkeley::Terms do
         'class_end_date'=>nil,
         'instruction_end_date'=>nil,
         'grades_entered_date'=>nil,
-        'final_exam_week_start_date'=>nil,
         'end_drop_add_date'=>nil,
         'is_summer'=>'Y'
       },
@@ -154,7 +146,6 @@ describe Berkeley::Terms do
         'class_end_date'=>nil,
         'instruction_end_date'=>nil,
         'grades_entered_date'=>nil,
-        'final_exam_week_start_date'=>nil,
         'end_drop_add_date'=>nil,
         'is_summer'=>'N'
       }
