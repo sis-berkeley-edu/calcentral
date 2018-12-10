@@ -2,7 +2,7 @@
 
 var _ = require('lodash');
 
-angular.module('calcentral.controllers').controller('Title4Controller', function(finaidFactory, $rootScope, $scope) {
+angular.module('calcentral.controllers').controller('Title4Controller', function(finaidFactory, title4Factory, $rootScope, $scope) {
   $scope.title4 = {
     isLoading: true,
     showMessage: false
@@ -18,42 +18,21 @@ angular.module('calcentral.controllers').controller('Title4Controller', function
     finaidFactory.postT4Response(response).then(sendEvent);
   };
 
-  // Parse the finaid information
-  var parseFinaid = function(data) {
-    angular.extend($scope.title4, {
-      isApproved: _.get(data, 'feed.finaidSummary.title4.approved')
-    });
-  };
-
-  var getFinaidPermissions = function(options) {
-    return finaidFactory.getSummary(options).then(
+  var getTitle4 = function(options) {
+    return title4Factory.getTitle4(options).then(
       function successCallback(response) {
-        $scope.title4.hasFinaid = !!_.get(response, 'data.feed.finaidSummary.finaidYears.length');
-        if ($scope.title4.hasFinaid) {
-          parseFinaid(response.data);
-        }
+        var title4 = _.get(response, 'data.title4');
+        $scope.title4 = title4;
         $scope.title4.isLoading = false;
-        return response.data;
       }
     );
   };
 
-  getFinaidPermissions();
-
-  var refreshAidYearInfo = function(response) {
-    var aidYears = _.get(response, 'data.feed.finaidSummary.finaidYears');
-    var aidYearsIds = _.map(aidYears, 'id');
-    _.forEach(aidYearsIds, function(aidYearId) {
-      finaidFactory.getFinaidYearInfo({
-        finaidYearId: aidYearId,
-        refreshCache: true
-      });
-    });
-  };
+  getTitle4();
 
   $scope.$on('calcentral.custom.api.finaid.approvals', function() {
-    getFinaidPermissions({
+    getTitle4({
       refreshCache: true
-    }).then(refreshAidYearInfo);
+    });
   });
 });

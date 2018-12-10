@@ -1,6 +1,6 @@
 describe CampusSolutions::TermsAndConditionsController do
 
-  let(:user_id) { '12345' }
+  let(:user_id) { '61889' }
 
   context 'updating terms and conditions' do
     it 'should not let an unauthenticated user post' do
@@ -18,7 +18,7 @@ describe CampusSolutions::TermsAndConditionsController do
              {
                bogus_field: 'abc',
                response: 'Y',
-               aidYear: '2015'
+               aidYear: '2019'
              }
         expect(response.status).to eq 200
         json = JSON.parse(response.body)
@@ -30,7 +30,7 @@ describe CampusSolutions::TermsAndConditionsController do
         post :post,
             {
               response: 'Y',
-              aidYear: '2018'
+              aidYear: '2001'
             }
         expect(response.status).to eq 400
         json = JSON.parse(response.body)

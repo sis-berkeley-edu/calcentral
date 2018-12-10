@@ -6,29 +6,25 @@ describe CampusSolutions::TermsAndConditions do
     let(:proxy) { CampusSolutions::TermsAndConditions.new(fake: true, user_id: user_id, params: params) }
     let(:aid_years_response) {
       {
-        feed: {
-          finaidSummary: {
-            finaidYears: [
-              {
-                id: 2016,
-                termsAndConditions: {
-                  approved: terms_and_conditions_approved
-                }
-              }, {
-                id:2015,
-                termsAndConditions: {
-                  approved: terms_and_conditions_approved
-                }
-              }
-            ]
+        aidYears: [
+          {
+            id: 2016,
+            termsAndConditions: {
+              approved: terms_and_conditions_approved
+            }
+          }, {
+            id:2015,
+            termsAndConditions: {
+              approved: terms_and_conditions_approved
+            }
           }
-        }
+        ]
       }
     }
     let(:terms_and_conditions_approved) { nil }
 
     before do
-      allow_any_instance_of(CampusSolutions::MyAidYears).to receive(:get_feed).and_return aid_years_response
+      allow_any_instance_of(FinancialAid::MyAidYears).to receive(:get_feed).and_return aid_years_response
     end
 
     context 'filtering out fields not on the whitelist' do
@@ -85,7 +81,7 @@ describe CampusSolutions::TermsAndConditions do
         proxy.post
       }
       it_should_behave_like 'a simple proxy that returns errors'
-      it_behaves_like 'a proxy that properly observes the finaid feature flag'
+      it_behaves_like 'a proxy that properly observes the financial_aid feature flag'
       it_behaves_like 'a proxy that got data successfully'
 
       context 'when response has already been recorded for this aid year' do
