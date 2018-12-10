@@ -18,8 +18,8 @@ angular.module('calcentral.controllers').controller('Title4Controller', function
     finaidFactory.postT4Response(response).then(sendEvent);
   };
 
-  var getTitle4 = function() {
-    return title4Factory.getTitle4().then(
+  var getTitle4 = function(options) {
+    return title4Factory.getTitle4(options).then(
       function successCallback(response) {
         var title4 = _.get(response, 'data.title4');
         $scope.title4 = title4;
@@ -31,6 +31,8 @@ angular.module('calcentral.controllers').controller('Title4Controller', function
   getTitle4();
 
   $scope.$on('calcentral.custom.api.finaid.approvals', function() {
-    getTitle4();
+    getTitle4({
+      refreshCache: true
+    });
   });
 });
