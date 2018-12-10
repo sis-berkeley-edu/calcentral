@@ -17,7 +17,7 @@ angular.module('calcentral.factories').factory('finaidFactory', function(apiServ
   // var urlFinaidYear = '/dummy/json/financial_aid_data.json';
   // var urlFinaidYear = '/dummy/json/financial_aid_data_summer_only.json';
   var urlFinancialAidSummary = 'api/my/financial_aid_summary';
-  var urlSummary = '/api/campus_solutions/aid_years';
+  var urlSummary = '/api/my/aid_years';
   // var urlSummary = '/dummy/json/finaid_summary.json';
 
   var urlPostTC = '/api/campus_solutions/terms_and_conditions';

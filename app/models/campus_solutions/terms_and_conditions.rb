@@ -20,8 +20,8 @@ module CampusSolutions
 
     def valid?(params)
       valid_aid_years = []
-      aid_years = CampusSolutions::MyAidYears.new(@uid).get_feed
-      aid_years.try(:[], :feed).try(:[], :finaidSummary).try(:[], :finaidYears).try(:each) do |aid_year|
+      aid_years = FinancialAid::MyAidYears.new(@uid).get_feed
+      aid_years.try(:[], :aidYears).try(:each) do |aid_year|
         unless prior_response_recorded? aid_year
           valid_aid_years.push(aid_year.try(:[], :id).try(:to_i))
         end

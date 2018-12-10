@@ -191,6 +191,56 @@ module EdoOracle
         SQL
         result.first
       end
+
+      def self.get_aid_years(person_id)
+        safe_query <<-SQL
+        SELECT UC.AID_YEAR,
+          UC.AID_YEAR_DESCR,
+          UC.DEFAULT_AID_YEAR,
+          UC.AID_RECEIVED_FALL,
+          UC.AID_RECEIVED_SPRING,
+          UC.AID_RECEIVED_SUMMER
+        FROM SISEDO.CLC_FA_AID_YEAR_V00_VW UC
+        WHERE UC.CAMPUS_ID   = '#{person_id}'
+          AND UC.INSTITUTION = '#{UC_BERKELEY}'
+        ORDER BY UC.AID_YEAR
+        SQL
+      end
+
+      def self.get_title4(person_id)
+        result = safe_query <<-SQL
+        SELECT UC.APPROVED,
+          UC.RESPONSE_DESCR,
+          UC.MAIN_HEADER,
+          UC.MAIN_BODY,
+          UC.DYNAMIC_HEADER,
+          UC.DYNAMIC_BODY,
+          UC.DYNAMIC_LABEL,
+          UC.CONTACT_TEXT
+        FROM SISEDO.CLC_FA_TITLE_IV_V00_VW UC
+        WHERE UC.CAMPUS_ID   = '#{person_id}'
+          AND UC.INSTITUTION = '#{UC_BERKELEY}'
+        SQL
+        result.first
+      end
+
+      def self.get_terms_and_conditions(person_id, aid_year)
+        result = safe_query <<-SQL
+        SELECT UC.AID_YEAR,
+          UC.APPROVED,
+          UC.RESPONSE_DESCR,
+          UC.MAIN_HEADER,
+          UC.MAIN_BODY,
+          UC.DYNAMIC_HEADER,
+          UC.DYNAMIC_BODY
+        FROM SISEDO.CLC_FA_T_C_V00_VW UC
+        WHERE UC.CAMPUS_ID   = '#{person_id}'
+          AND UC.INSTITUTION = '#{UC_BERKELEY}'
+          AND UC.AID_YEAR    = '#{aid_year}'
+        ORDER BY UC.AID_YEAR
+        SQL
+        result.first
+      end
     end
   end
 end

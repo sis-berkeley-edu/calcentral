@@ -84,12 +84,12 @@ Calcentral::Application.routes.draw do
     get '/api/my/academics' => 'my_academics#get_feed', :as => :my_academics, :defaults => { :format => 'json' }
     get '/api/my/academic_records' => 'my_academic_records#get_feed', :defaults => { :format => 'json' }
     get '/api/my/activities' => 'my_activities#get_feed', :as => :my_activities, :defaults => { :format => 'json' }
+    get '/api/my/aid_years' => 'my_aid_years#get_feed', :defaults => { :format => 'json' }
     get '/api/my/badges' => 'my_badges#get_feed', :as => :my_badges, :defaults => { :format => 'json' }
     get '/api/my/campuslinks' => 'my_campus_links#get_feed', :as => :my_campus_links, :defaults => { :format => 'json' }
     get '/api/my/campuslinks/expire' => 'my_campus_links#expire'
     get '/api/my/campuslinks/refresh' => 'my_campus_links#refresh', :defaults => { :format => 'json' }
     get '/api/my/financial_aid_summary' => 'my_financial_aid_summary#get_feed', :defaults => { :format => 'json' }
-    get '/api/my/housing/:aid_year' => 'my_housing#get_feed', :defaults => { :format => 'json' }
     get '/api/my/class_enrollments' => 'my_class_enrollments#get_feed', :defaults => { :format => 'json' }
     get '/api/my/classes' => 'my_classes#get_feed', :as => :my_classes, :defaults => { :format => 'json' }
     get '/api/my/committees' => 'my_committees#get_feed', :defaults => { :format => 'json' }
@@ -99,6 +99,7 @@ Calcentral::Application.routes.draw do
     get '/api/my/financials' => 'my_financials#get_feed', :as => :my_financials, :defaults => {:format => 'json'}
     get '/api/my/groups' => 'my_groups#get_feed', :as => :my_groups, :defaults => { :format => 'json' }
     get '/api/my/holds' => 'my_holds#get_feed', :as => :my_holds, :defaults => { :format => 'json' }
+    get '/api/my/housing/:aid_year' => 'my_housing#get_feed', :defaults => { :format => 'json' }
     get '/api/my/loan_history_aid_years' => 'loan_history#get_aid_years_feed', :defaults => { :format => 'json' }
     get '/api/my/loan_history_cumulative' => 'loan_history#get_cumulative_feed', :defaults => { :format => 'json' }
     get '/api/my/loan_history_inactive' => 'loan_history#get_inactive_feed', :defaults => { :format => 'json' }
@@ -112,7 +113,9 @@ Calcentral::Application.routes.draw do
     get '/api/my/sir_statuses' => 'sir_statuses#get_feed', :defaults => { :format => 'json' }
     get '/api/my/standings' => 'my_standings#get_feed', :as => :my_standings, :defaults => { :format => 'json' }
     get '/api/my/tasks' => 'my_tasks#get_feed', :as => :my_tasks, :defaults => { :format => 'json' }
+    get '/api/my/terms_and_conditions/:aid_year' => 'my_terms_and_conditions#get_feed', :defaults => { :format => 'json' }
     get '/api/my/textbooks_details' => 'my_textbooks#get_feed', :as => :my_textbooks, :defaults => { :format => 'json' }
+    get '/api/my/title4' => 'my_title4#get_feed', :defaults => { :format => 'json' }
     get '/api/my/up_next' => 'my_up_next#get_feed', :as => :my_up_next, :defaults => { :format => 'json' }
     get '/api/photo/:uid' => 'photo#photo', :as => :photo, :defaults => {:format => 'jpeg' }
     get '/api/service_alerts' => 'service_alerts#get_feed', :as => :service_alerts, :defaults => { :format => 'json' }
@@ -155,7 +158,6 @@ Calcentral::Application.routes.draw do
     # Campus Solutions general purpose endpoints
     get '/api/campus_solutions/address_label' => 'campus_solutions/address_label#get', :defaults => { :format => 'json' }
     get '/api/campus_solutions/advising_resources' => 'campus_solutions/advising_resources#get', :defaults => { :format => 'json' }
-    get '/api/campus_solutions/aid_years' => 'campus_solutions/aid_years#get', :defaults => { :format => 'json' }
     get '/api/campus_solutions/billing' => 'campus_solutions/billing#get', :defaults => { :format => 'json' }
     get '/api/campus_solutions/confidential_student_message' => 'campus_solutions/confidential_student#get_message', :defaults => { :format => 'json' }
     get '/api/campus_solutions/country' => 'campus_solutions/country#get', :defaults => { :format => 'json' }
