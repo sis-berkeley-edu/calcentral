@@ -61,7 +61,7 @@ module FinancialAid
     end
 
     def aid_years
-      @aid_years ||= CampusSolutions::MyAidYears.new(@uid).get_feed.try(:[], :feed).try(:[], :finaidSummary).try(:[], :finaidYears)
+      @aid_years ||= FinancialAid::MyAidYears.new(@uid).get_feed.try(:[], :aidYears)
     end
   end
 end

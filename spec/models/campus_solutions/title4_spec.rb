@@ -42,7 +42,7 @@ describe CampusSolutions::Title4 do
         proxy.get
       }
       it_should_behave_like 'a simple proxy that returns errors'
-      it_behaves_like 'a proxy that properly observes the finaid feature flag'
+      it_behaves_like 'a proxy that properly observes the financial_aid feature flag'
       it_behaves_like 'a proxy that got data successfully'
     end
   end

@@ -113,8 +113,8 @@ module CampusSolutions
 
     def get_latest_aid_year
       aid_years = []
-      aid_years_feed = CampusSolutions::MyAidYears.new(@uid).get_feed
-      aid_years_feed.try(:[], :feed).try(:[], :finaidSummary).try(:[], :finaidYears).try(:each) do |aid_year_obj|
+      aid_years_feed = FinancialAid::MyAidYears.new(@uid).get_feed
+      aid_years_feed.try(:[], :aidYears).try(:each) do |aid_year_obj|
         aid_years.push(aid_year_obj.try(:[], :id).try(:to_i))
       end
       aid_years.max
