@@ -9,15 +9,15 @@ module CanvasCsv
     def initialize(accounts_or_all='all')
       super()
       if Settings.canvas_proxy.import_zipped_csvs
-        @sis_ids_csv_filename = "#{@export_dir}/canvas-#{DateTime.now.strftime('%F')}-sis-ids.csv"
+        @sis_ids_csv_filename = "#{@export_dir}/canvas-#{DateTime.now.strftime('%F_%H%M%S')}-sis-ids.csv"
       end
-      @users_csv_filename = "#{@export_dir}/canvas-#{DateTime.now.strftime('%F')}-users-#{accounts_or_all}.csv"
+      @users_csv_filename = "#{@export_dir}/canvas-#{DateTime.now.strftime('%F_%H%M%S')}-users-#{accounts_or_all}.csv"
       @accounts_only = (accounts_or_all == 'accounts')
       unless @accounts_only
         @term_to_memberships_csv_filename = {}
         term_ids = Canvas::Terms.current_sis_term_ids
         term_ids.each do |term_id|
-          csv_filename = "#{@export_dir}/canvas-#{DateTime.now.strftime('%F')}-#{file_safe(term_id)}-enrollments-#{accounts_or_all}.csv"
+          csv_filename = "#{@export_dir}/canvas-#{DateTime.now.strftime('%F_%H%M%S')}-#{file_safe(term_id)}-enrollments-#{accounts_or_all}.csv"
           @term_to_memberships_csv_filename[term_id] = csv_filename
         end
       end

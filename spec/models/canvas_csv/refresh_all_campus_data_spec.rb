@@ -13,9 +13,9 @@ describe CanvasCsv::RefreshAllCampusData do
       end
       let(:current_sis_term_ids) { ['TERM:2013-D', 'TERM:2014-B'] }
       it 'establishes the csv import files' do
-        expect(subject.users_csv_filename).to eq "tmp/canvas/canvas-#{today}-users-incremental.csv"
-        expect(subject.term_to_memberships_csv_filename['TERM:2013-D']).to eq "tmp/canvas/canvas-#{today}-TERM_2013-D-enrollments-incremental.csv"
-        expect(subject.term_to_memberships_csv_filename['TERM:2014-B']).to eq "tmp/canvas/canvas-#{today}-TERM_2014-B-enrollments-incremental.csv"
+        expect(subject.users_csv_filename).to match Regexp.new("tmp/canvas/canvas-#{today}_[0-9]{6}-users-incremental.csv")
+        expect(subject.term_to_memberships_csv_filename['TERM:2013-D']).to match Regexp.new("tmp/canvas/canvas-#{today}_[0-9]{6}-TERM_2013-D-enrollments-incremental.csv")
+        expect(subject.term_to_memberships_csv_filename['TERM:2014-B']).to match Regexp.new("tmp/canvas/canvas-#{today}_[0-9]{6}-TERM_2014-B-enrollments-incremental.csv")
       end
       it 'makes calls to each step of refresh in proper order' do
         expect(subject).to receive(:make_csv_files).ordered.and_return true
