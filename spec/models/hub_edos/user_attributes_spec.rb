@@ -24,7 +24,7 @@ describe HubEdos::UserAttributes do
     expect(subject[:official_bmail_address]).to eq 'oski@berkeley.edu'
     expect(subject[:names]).to be
     expect(subject[:addresses]).to be
-    expect(subject[:roles]).to eq({applicant: true, releasedAdmit: true})
+    expect(subject[:roles]).to include(:applicant => true, :releasedAdmit => true)
   end
 
   describe 'student_id depends on role' do
@@ -72,7 +72,7 @@ describe HubEdos::UserAttributes do
   context 'Contacts feed contains all necessary data' do
     it 'does not bother calling the Affiliations API' do
       expect(HubEdos::Affiliations).to receive(:new).never
-      expect(subject[:roles]).to eq({applicant: true, releasedAdmit: true})
+      expect(subject[:roles]).to include({applicant: true, releasedAdmit: true})
     end
   end
   context 'Contacts feed is unexpectedly reticent' do
@@ -84,7 +84,7 @@ describe HubEdos::UserAttributes do
     end
     it 'reluctantly falls back on the Affiliations API' do
       expect(HubEdos::Affiliations).to receive(:new).and_return fake_affiliations_proxy
-      expect(subject[:roles]).to eq({applicant: true, releasedAdmit: true})
+      expect(subject[:roles]).to include({applicant: true, releasedAdmit: true})
     end
   end
 
