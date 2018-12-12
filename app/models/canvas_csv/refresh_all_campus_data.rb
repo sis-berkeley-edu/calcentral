@@ -90,8 +90,11 @@ module CanvasCsv
         unless @accounts_only
           @term_to_memberships_csv_filename.each do |term_id, csv_filename|
             if csv_filename.present?
-              import_proxy.import_all_term_enrollments(csv_filename)
-              logger.warn "Incremental enrollment import for #{term_id} succeeded"
+              if import_proxy.import_all_term_enrollments(csv_filename)
+                logger.warn "Incremental enrollment import for #{term_id} succeeded"
+              else
+                logger.error "Incremental enrollment import for #{term_id} failed"
+              end
             end
           end
         end
@@ -112,8 +115,11 @@ module CanvasCsv
       import_type = @accounts_only ? 'accounts' : 'all'
       zipped_csv_filename = "#{@export_dir}/canvas-#{DateTime.now.strftime('%F_%H%M%S')}-incremental_#{import_type}.zip"
       zip_flattened(import_files, zipped_csv_filename)
-      import_proxy.import_zipped zipped_csv_filename
-      logger.warn "Import of #{zipped_csv_filename} succeeded, incorporating #{import_files}"
+      if import_proxy.import_zipped zipped_csv_filename
+        logger.warn "Import of #{zipped_csv_filename} succeeded, incorporating #{import_files}"
+      else
+        logger.error "Failed import of #{zipped_csv_filename}, incorporating #{import_files}"
+      end
     end
 
   end

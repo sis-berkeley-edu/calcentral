@@ -81,7 +81,7 @@ module Canvas
         logger.error "SIS import failed or incompletely processed; status: #{status}"
         false
       elsif status['workflow_state'] == 'imported'
-        logger.debug "SIS import succeeded; status: #{status}"
+        logger.warn "SIS import succeeded; status: #{status}"
         true
       elsif status['workflow_state'] == 'imported_with_messages'
         logger.warn "SIS import partially succeeded; status: #{status}"
