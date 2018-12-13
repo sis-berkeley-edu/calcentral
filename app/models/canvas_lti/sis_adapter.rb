@@ -7,7 +7,7 @@ module CanvasLti
       if Berkeley::Terms.legacy?(term_year, term_code) && Settings.features.allow_legacy_fallback
         CampusOracle::Queries.get_enrolled_students(section_id, term_year, term_code)
       else
-        EdoOracle::Queries.get_enrolled_students(section_id, term_id(term_year, term_code)).each do |enrollment|
+        EdoOracle::Bcourses.get_enrolled_students(section_id, term_id(term_year, term_code)).each do |enrollment|
           adapt_pnp_flag enrollment
         end
       end
@@ -17,7 +17,7 @@ module CanvasLti
       if Berkeley::Terms.legacy?(term_year, term_code) && Settings.features.allow_legacy_fallback
         CampusOracle::Queries.get_section_instructors(term_year, term_code, section_id)
       else
-        EdoOracle::Queries.get_section_instructors(term_id(term_year, term_code), section_id).each do |instructor|
+        EdoOracle::Bcourses.get_section_instructors(term_id(term_year, term_code), section_id).each do |instructor|
           adapt_instructor_func instructor
         end
       end

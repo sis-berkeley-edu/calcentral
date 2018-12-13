@@ -11,13 +11,13 @@ describe CanvasLti::SisAdapter do
 
     it 'provides enrolled students from legacy source' do
       expect(CampusOracle::Queries).to receive(:get_enrolled_students).with(ccn, term_year, term_code)
-      expect(EdoOracle::Queries).to_not receive(:get_enrolled_students)
+      expect(EdoOracle::Bcourses).to_not receive(:get_enrolled_students)
       CanvasLti::SisAdapter.get_enrolled_students(ccn, term_year, term_code)
     end
 
     it 'provides instructors for section from sisedo source' do
       expect(CampusOracle::Queries).to receive(:get_section_instructors).with(term_year, term_code, ccn)
-      expect(EdoOracle::Queries).to_not receive(:get_section_instructors)
+      expect(EdoOracle::Bcourses).to_not receive(:get_section_instructors)
       CanvasLti::SisAdapter.get_section_instructors(ccn, term_year, term_code)
     end
 
@@ -42,9 +42,9 @@ describe CanvasLti::SisAdapter do
           {'ldap_uid' => '1237', 'student_id' => 'PI', 'enroll_status' => 'W', 'grading_basis' => 'PNP'}
         ]
       }
-      before { allow(EdoOracle::Queries).to receive(:get_enrolled_students).and_return(dummy_enrollments) }
+      before { allow(EdoOracle::Bcourses).to receive(:get_enrolled_students).and_return(dummy_enrollments) }
       it 'provides enrolled students from sisedo source' do
-        expect(EdoOracle::Queries).to receive(:get_enrolled_students).with(section_id, expected_term_id)
+        expect(EdoOracle::Bcourses).to receive(:get_enrolled_students).with(section_id, expected_term_id)
         expect(CampusOracle::Queries).to_not receive(:get_enrolled_students)
         CanvasLti::SisAdapter.get_enrolled_students(section_id, term_year, term_code)
       end
@@ -64,9 +64,9 @@ describe CanvasLti::SisAdapter do
           {'ldap_uid' => '1237', 'role_code' => 'INVT'},  # Teaching with Invalid Title
         ]
       }
-      before { allow(EdoOracle::Queries).to receive(:get_section_instructors).and_return(dummy_instructors) }
+      before { allow(EdoOracle::Bcourses).to receive(:get_section_instructors).and_return(dummy_instructors) }
       it 'provides instructors for section from sisedo source' do
-        expect(EdoOracle::Queries).to receive(:get_section_instructors).with(expected_term_id, section_id)
+        expect(EdoOracle::Bcourses).to receive(:get_section_instructors).with(expected_term_id, section_id)
         expect(CampusOracle::Queries).to_not receive(:get_section_instructors)
         CanvasLti::SisAdapter.get_section_instructors(section_id, term_year, term_code)
       end
