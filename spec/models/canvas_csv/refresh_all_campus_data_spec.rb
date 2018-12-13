@@ -120,6 +120,27 @@ describe CanvasCsv::RefreshAllCampusData do
       end
     end
 
+    describe 'enrollments_import_safe?' do
+      let(:current_sis_term_ids) { ['TERM:2018-D'] }
+      before do
+        allow(Settings.canvas_proxy).to receive(:max_deleted_enrollments).and_return max_deleted
+        subject.instance_eval do
+          @term_to_memberships_csv_filename = {'TERM:2018-D' => 'fixtures/csv/Canvas_sis_import_enrollments_all.csv'}
+        end
+      end
+      describe 'above the threshold' do
+        let(:max_deleted) { 3 }
+        it 'warns us' do
+          expect(subject.enrollments_import_safe?).to be_falsey
+        end
+      end
+      describe 'below the threshold' do
+        let(:max_deleted) { 4 }
+        it 'does not warn' do
+          expect(subject.enrollments_import_safe?).to be_truthy
+        end
+      end
+    end
   end
 
   describe 'user-accounts-only mode' do
