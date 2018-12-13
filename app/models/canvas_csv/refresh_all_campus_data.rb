@@ -101,6 +101,23 @@ module CanvasCsv
       end
     end
 
+    def enrollments_import_safe?
+      threshold = Settings.canvas_proxy.max_deleted_enrollments
+      if threshold > 0
+        for csv_file in @term_to_memberships_csv_filename.values
+          if csv_file.present?
+            enrollments_csv = CSV.read(csv_file, {headers: true})
+            drops = enrollments_csv.count {|r| r['status'] == 'deleted'}
+            if drops > threshold
+              logger.error "Enrollments import #{csv_file} has #{drops} deletions; max is #{threshold}"
+              return false
+            end
+          end
+        end
+      end
+      return true
+    end
+
     def import_zipped_csv_files
       import_proxy = Canvas::SisImport.new
       import_files = [@sis_ids_csv_filename, @users_csv_filename]
@@ -115,6 +132,14 @@ module CanvasCsv
       import_type = @accounts_only ? 'accounts' : 'all'
       zipped_csv_filename = "#{@export_dir}/canvas-#{DateTime.now.strftime('%F_%H%M%S')}-incremental_#{import_type}.zip"
       zip_flattened(import_files, zipped_csv_filename)
+
+      unless @accounts_only
+        if !enrollments_import_safe?
+          logger.error "Will not automatically import #{zipped_csv_filename}; import manually if desired"
+          return
+        end
+      end
+
       if import_proxy.import_zipped zipped_csv_filename
         logger.warn "Import of #{zipped_csv_filename} succeeded, incorporating #{import_files}"
       else
