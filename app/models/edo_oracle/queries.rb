@@ -773,7 +773,6 @@ module EdoOracle
           CLASS_END_DT as class_end_date,
           INSTRUCTION_END_DT as instruction_end_date,
           GRADES_ENTERED_DT as grades_entered_date,
-          FINAL_EXAM_WK_BEGIN_DT as final_exam_week_start_date,
           END_DROP_ADD_DT as end_drop_add_date,
           IS_SUMMER as is_summer
         FROM  SISEDO.CLC_TERMV00_VW
