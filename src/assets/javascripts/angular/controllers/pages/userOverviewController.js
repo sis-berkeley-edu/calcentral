@@ -66,6 +66,8 @@ angular.module('calcentral.controllers').controller('UserOverviewController', fu
   };
   $scope.standingIsVisible = false;
 
+  $scope.profilePicture = {};
+
   var parseAdvisingResources = function(response) {
     var links = $scope.ucAdvisingResources.links;
     angular.extend(links, _.get(response, 'data.feed'));

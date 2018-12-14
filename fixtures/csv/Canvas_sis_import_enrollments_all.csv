@@ -1,0 +1,8 @@
+course_id,user_id,role,section_id,status,associated_user_id
+CRS:MBA-59:9999,teacher,SEC:2019-B-99990,active,
+CRS:MBA-59,9999999,student,SEC:2019-B-99991,deleted,
+CRS:XMBA-59,UID:9999999,teacher,SEC:2019-B-99992,deleted,
+CRS:PHDBA-59,9999999,student,SEC:2019-B-99993,deleted,
+CRS:EWMBA-59,UID:9999,teacher,SEC:2019-B-99994,active,
+CRS:KOREAN-59,9999999,Waitlist Student,SEC:2019-B-99995,active,
+CRS:FRENCH-159,9999999,student,SEC:2019-B-9999,deleted,
