@@ -2,6 +2,7 @@ module FinancialAid
   class MyHousing < UserSpecificModel
     include Cache::CachedFeed
     include Cache::UserCacheExpiry
+    include Cache::RelatedCacheKeyTracker
     include CampusSolutions::FinaidFeatureFlagged
     include Concerns::DatesAndTimes
     include Concerns::NewAdmits
