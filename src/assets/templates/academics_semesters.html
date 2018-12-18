@@ -65,9 +65,9 @@
                 <td data-ng-bind="section.units | number:1" class="cc-table-center"></td>
                 <td data-ng-if="api.user.profile.canViewGrades && section.grading.grade" class="cc-table-center" data-ng-bind="section.grading.grade"></td>
                 <td data-ng-if="api.user.profile.canViewGrades && !section.grading.grade && section.grading.midpointGrade" class="cc-table-center">
-                  <span data-ng-click="api.widget.toggleShow($event, null, section, 'My Academics - Semesters')" class="cc-non-anchored-link">
+                  <button data-ng-click="api.widget.toggleShow($event, null, section, 'My Academics - Semesters')" class="cc-button-link cc-inherit-font-size">
                     <i class="fa fa-exclamation-triangle cc-icon-gold"></i> ?
-                  </span>
+                  </button>
                 </td>
                 <td data-ng-if="api.user.profile.canViewGrades && !section.grading.grade && !section.grading.midpointGrade" class="cc-table-center">
                   <span data-ng-if="!section.isLaw && !api.user.profile.roles.law && section.grading.gradingBasis" data-ng-bind="section.grading.gradingBasis"></span>
@@ -84,7 +84,7 @@
                         Your midpoint grade is: <strong><span data-ng-bind="section.grading.midpointGrade"></span></strong><br />
                         Your success is important to us.  Midpoint grades do not appear on transcripts. <br />
                         Please contact your instructor or an advisor as soon as possible. <br />
-                        <span data-ng-click="api.widget.toggleShow($event, null, section, 'My Academics - Semesters')" class="cc-non-anchored-link">Hide</span>
+                        <button data-ng-click="api.widget.toggleShow($event, null, section, 'My Academics - Semesters')" class="cc-button-link cc-inherit-font-size">Hide</button>
                       </td>
                     </tr>
                   </table>

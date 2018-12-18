@@ -29,24 +29,24 @@
           <div class="cc-roster-view-mode cc-left cc-roster-search-option">
             <ul class="cc-button-group" role="tablist">
               <li>
-                <a class="cc-button"
+                <button class="cc-button"
                   aria-selected="{{currentRosterViewType === 'photos'}}"
                   role="tab"
                   data-ng-click="currentRosterViewType = 'photos'"
                   data-ng-class="{'cc-button-selected cc-button-selected-roster':(currentRosterViewType === 'photos')}"
                 >
                   <i class="fa fa-user"></i> Photos
-                </a>
+                </button>
               </li>
               <li>
-                <a class="cc-button"
+                <button class="cc-button"
                   aria-selected="{{currentRosterViewType === 'list'}}"
                   role="tab"
                   data-ng-click="currentRosterViewType = 'list'"
                   data-ng-class="{'cc-button-selected cc-button-selected-roster':(currentRosterViewType === 'list')}"
                 >
                   <i class="fa fa-list"></i> List
-                </a>
+                </button>
               </li>
             </ul>
           </div>
@@ -58,9 +58,9 @@
             data-ng-href="/api/academics/rosters/{{context}}/csv/{{courseId}}.csv?section_id={{searchOptions.section.ccn}}&enroll_option={{searchOptions.enrollStatus}}">
             <i class="fa fa-download" aria-hidden="true"></i> Export
           </a>
-          <a class="cc-button cc-button-blue cc-button-spaced" data-ng-click="api.util.printPage()">
+          <button class="cc-button cc-button-blue cc-button-spaced" data-ng-click="api.util.printPage()">
             <i class="fa fa-print"></i> Print
-          </a>
+          </button>
         </div>
       </div>
       <div class="cc-roster-search-enroll-status cc-roster-search-row">

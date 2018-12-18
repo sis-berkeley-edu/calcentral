@@ -28,40 +28,40 @@
 
       <div class="visible-for-small-only cc-academics-class-enrollment-mobile-button-spacer"></div>
 
-      <a class="cc-button cc-class-enrollment-formatted-content-show-button"
+      <button class="cc-button cc-class-enrollment-formatted-content-show-button"
           data-ng-disabled="displayedSection === 'addresses' || noStudentsSelected()"
           data-ng-click="displaySection('addresses')">
         <i class="fa fa-clipboard" aria-hidden="true"></i>
         <span class="hidden-for-small-only">Copy Addresses</span>
-      </a>
+      </button>
 
-      <a class="cc-button cc-class-enrollment-formatted-content-show-button"
+      <button class="cc-button cc-class-enrollment-formatted-content-show-button"
           data-ng-if="searchFilters.enrollStatus === 'waitlisted' && !isLaw"
           data-ng-disabled="displayedSection === 'promote' || noStudentsSelected()"
           data-ng-click="displaySection('promote')">
         <span class="hidden-for-small-only">Request to</span> Promote
-      </a>
+      </button>
 
-      <a class="cc-button cc-class-enrollment-formatted-content-show-button"
+      <button class="cc-button cc-class-enrollment-formatted-content-show-button"
           data-ng-if="searchFilters.enrollStatus === 'waitlisted' && !isLaw"
           data-ng-disabled="displayedSection === 'enroll' || noStudentsSelected()"
           data-ng-click="displaySection('enroll')">
         <span class="hidden-for-small-only">Request to</span> Enroll
-      </a>
+      </button>
 
-      <a class="cc-button cc-class-enrollment-formatted-content-show-button"
+      <button class="cc-button cc-class-enrollment-formatted-content-show-button"
           data-ng-if="searchFilters.enrollStatus === 'waitlisted' && !isLaw"
           data-ng-disabled="displayedSection === 'remove' || noStudentsSelected()"
           data-ng-click="displaySection('remove')">
         <span class="hidden-for-small-only">Request to</span> Remove
-      </a>
+      </button>
 
-      <a class="cc-button cc-class-enrollment-formatted-content-show-button"
+      <button class="cc-button cc-class-enrollment-formatted-content-show-button"
           data-ng-if="searchFilters.enrollStatus !== 'waitlisted' && !isLaw"
           data-ng-disabled="displayedSection === 'drop' || noStudentsSelected()"
           data-ng-click="displaySection('drop')">
         <span class="hidden-for-small-only">Request to</span> Drop
-      </a>
+      </button>
     </div>
 
     <div data-ng-if="displayedSection === 'addresses'">
@@ -78,9 +78,9 @@
         </p>
       </div>
       <div class="cc-class-enrollment-formatted-content-hide-button">
-        <a class="cc-button" data-ng-disabled="displayedSection !== 'addresses'" data-ng-click="displaySection('default')">
+        <button class="cc-button" data-ng-disabled="displayedSection !== 'addresses'" data-ng-click="displaySection('default')">
           Hide Addresses
-        </a>
+        </button>
       </div>
       <textarea class="cc-class-enrollment-formatted-content" data-ng-bind="selectedStudentsEmailList()"></textarea>
     </div>
@@ -100,9 +100,9 @@
         </p>
       </div>
       <div class="cc-class-enrollment-formatted-content-hide-button">
-        <a class="cc-button" data-ng-disabled="displayedSection === 'default'" data-ng-click="displaySection('default')">
+        <button class="cc-button" data-ng-disabled="displayedSection === 'default'" data-ng-click="displaySection('default')">
           Hide <span class="cc-capitalize" data-ng-bind="displayedSection"></span> Message
-        </a>
+        </button>
       </div>
       <textarea class="cc-class-enrollment-formatted-content" data-ng-bind="messageForSelectedStudents()"></textarea>
     </div>

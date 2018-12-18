@@ -60,6 +60,11 @@
 .cc-image-responsive-square {
   padding-bottom: 100%;
 }
+.cc-inherit-font-size {
+  &, &:hover, &:focus {
+    font-size: inherit;
+  }
+}
 .cc-inline-block {
   display: inline-block;
 }

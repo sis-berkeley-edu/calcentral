@@ -87,8 +87,8 @@
                 </td>
                 <td data-ng-if="api.user.profile.features.reservedCapacity">
                   <div data-ng-if="section.waitlistPosition && section.hasReservedSeats">
-                    <span data-ng-click="course.capacity = section.capacity; course.showSeats = true" data-ng-show="!course.showSeats"><a href="#">Show</a></span>
-                    <span data-ng-click="course.showSeats = false" data-ng-show="course.showSeats"><a href="#">Hide</a></span>
+                    <button data-ng-click="course.capacity = section.capacity; course.showSeats = true" data-ng-show="!course.showSeats" class="cc-button-link">Show</button>
+                    <button data-ng-click="course.showSeats = false" data-ng-show="course.showSeats" class="cc-button-link">Hide</button>
                   </div>
                   <div data-ng-if="section.waitlistPosition && !section.hasReservedSeats">
                     N/A

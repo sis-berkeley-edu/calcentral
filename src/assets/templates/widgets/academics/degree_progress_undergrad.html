@@ -88,7 +88,7 @@
       </div>
     </div>
     <div data-ng-if="degreeProgress.undergraduate.transferCreditReviewDeadline" class="cc-degree-progress-footer">
-      <a href="#" data-ng-click="degreeProgress.undergraduate.showTip();" class="cc-text-line-height"><i class="cc-icon fa fa-info-circle cc-icon-air-force-blue"></i><span>What is "Under Review"?</span></a>
+      <button data-ng-click="degreeProgress.undergraduate.showTip();" class="cc-button-link cc-text-line-height"><i class="cc-icon fa fa-info-circle cc-icon-air-force-blue"></i><span>What is "Under Review"?</span></button>
       <p data-ng-show="degreeProgress.undergraduate.tipVisible">Coursework is being reviewed for all new students. Review will finish by mid&hyphen;<span data-ng-bind="degreeProgress.undergraduate.transferCreditReviewDeadline"></span>.</p>
     </div>
   </div>
