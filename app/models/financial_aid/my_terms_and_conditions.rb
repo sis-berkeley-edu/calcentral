@@ -2,6 +2,7 @@ module FinancialAid
   class MyTermsAndConditions < UserSpecificModel
     include Cache::CachedFeed
     include Cache::UserCacheExpiry
+    include Cache::RelatedCacheKeyTracker
     include CampusSolutions::FinaidFeatureFlagged
 
     attr_accessor :aid_year
