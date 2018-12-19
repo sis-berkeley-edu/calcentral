@@ -19,7 +19,7 @@ module MyAcademics
         Exams,
         CanvasSites,
         FacultyDelegate,
-        Grading,
+        Grading::Applicator,
         Graduation,
         StudentLinks
       ]
