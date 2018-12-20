@@ -1,28 +1,30 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import ErrorMessageContainer from '../../../containers/base/ErrorMessageContainer';
-import SpinnerContainer from '../../../containers/base/SpinnerContainer';
+import '../../../stylesheets/widgets.scss';
 
 class WidgetBody extends React.Component {
+  constructor(props) {
+    super(props);
+    this.renderPaddingClass = this.renderPaddingClass.bind(this);
+  }
+  renderPaddingClass() {
+    return this.props.padding ? 'cc-react-widget-padding' : '';
+  }
   render() {
     return (
-      <div className="cc-widget-padding">
-        <SpinnerContainer isLoading={this.props.isLoading} message={this.props.isLoadingMessage}>
-          <ErrorMessageContainer errored={this.props.errored} errorMessage={this.props.errorMessage}>
-            {this.props.children}
-          </ErrorMessageContainer>
-        </SpinnerContainer>
+      <div className={this.renderPaddingClass()}>
+        {this.props.children}
       </div>
     );
   }
 }
+WidgetBody.defaultProps = {
+  padding: true
+};
 WidgetBody.propTypes = {
   children: PropTypes.node.isRequired,
-  errored: PropTypes.bool.isRequired,
-  errorMessage: PropTypes.string.isRequired,
-  isLoading: PropTypes.bool.isRequired,
-  isLoadingMessage: PropTypes.string
+  padding: PropTypes.bool
 };
 
 export default WidgetBody;

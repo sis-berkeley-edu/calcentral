@@ -1,11 +1,13 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
+import '../../stylesheets/widgets.scss';
+
 class ErrorMessage extends React.Component {
   render() {
     return (
-      <div>
-        <p>{this.props.errorMessage}</p>
+      <div className="cc-react-widget-padding">
+        {this.props.errorMessage}
       </div>
     );
   }

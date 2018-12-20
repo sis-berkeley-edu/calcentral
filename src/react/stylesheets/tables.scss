@@ -1,0 +1,51 @@
+@import 'colors';
+@import 'foundation_overrides';
+
+.cc-react-table {
+  overflow-x: auto;
+  table {
+    background: transparent;
+    border: 0;
+    border-spacing: 0;
+    font-size: 12px;
+    margin: 12px 0;
+    overflow-y: hidden;
+    width: 100%;
+    thead {
+      background: transparent;
+    }
+    tr {
+      &:nth-of-type(even) {
+        background: transparent;
+      }
+      td, th {
+        color: $body-font-color;
+        padding: 2px 2px 2px 0;
+        vertical-align: top;
+      }
+      th {
+        color: $cc-color-dim-gray;
+        font-weight: bold;
+        line-height: normal;
+        text-align: left;
+      }
+      .cc-table-subheader {
+        color: $body-font-color;
+        font-weight: normal;
+        text-align: left;
+      }
+    }
+  }
+  ul {
+    margin-left: 35px;
+  }
+  .cc-react-table-center {
+    text-align: center;
+  }
+  .cc-react-table-right {
+    text-align: right;
+  }
+  @media #{$small-only} {
+    overflow: auto;
+  }
+}

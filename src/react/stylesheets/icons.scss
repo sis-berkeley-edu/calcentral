@@ -1,0 +1,17 @@
+@import 'colors';
+
+.cc-react-icon {
+  background-repeat: no-repeat;
+  background-size: 16px;
+  height: 16px;
+  margin-top: 1px;
+  width: 16px;
+}
+
+.cc-react-icon-green {
+  color: $cc-color-salem;
+}
+
+.cc-react-icon-red {
+  color: $cc-color-harley-davidson-orange;
+}

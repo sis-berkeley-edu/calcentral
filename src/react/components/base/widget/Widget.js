@@ -2,23 +2,21 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import WidgetHeader from './WidgetHeader';
-import WidgetBody from './WidgetBody';
+import '../../../stylesheets/widgets.scss';
 
-class Widget extends React.Component {
-  render() {
-    return (
-      <div className="cc-widget">
-        <WidgetHeader title={this.props.config.title} />
-        <WidgetBody errored={this.props.config.errored} errorMessage={this.props.config.errorMessage} isLoading={this.props.config.isLoading}>
-          {this.props.children}
-        </WidgetBody>
-      </div>
-    );
-  }
+const Widget = (props) => {
+  return (
+    // class "cc-widget" is necessary for now for 2-column and 3-column margins. See _widgets.scss
+    <div className="cc-react-widget cc-widget">
+      <WidgetHeader title={props.config.title} />
+      {props.renderWidgetBody()}
+    </div>
+  );
 }
 Widget.propTypes = {
   children: PropTypes.node.isRequired,
-  config: PropTypes.object.isRequired
+  config: PropTypes.object.isRequired,
+  renderWidgetBody: PropTypes.func.isRequired
 };
 
 export default Widget;

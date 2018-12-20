@@ -3,17 +3,17 @@ import PropTypes from 'prop-types';
 
 import '../../../stylesheets/widgets.scss';
 
-class WidgetHeader extends React.Component {
+class WidgetSectionHeader extends React.Component {
   render() {
     return (
-      <div className="cc-react-widget-title">
+      <div className="cc-react-widget-section-title">
         <h2>{this.props.title}</h2>
       </div>
     );
   }
 }
-WidgetHeader.propTypes = {
+WidgetSectionHeader.propTypes = {
   title: PropTypes.string.isRequired
 };
 
-export default WidgetHeader;
+export default WidgetSectionHeader;

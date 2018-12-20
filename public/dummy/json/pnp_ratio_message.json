@@ -1,0 +1,7 @@
+{
+  "messageSetNbr": "32000",
+  "messageNbr": "17",
+  "messageText": "P/NP Limit Calculator",
+  "msgSeverity": "M",
+  "descrlong": "The Ratio Calculation is based on the units needed to reach 120 (the overall minimum unit requirement) after subtracting transfer course and test units. This is the Calculation Base. If Berkeley units exceed the Calculation Base, the excess P/NP units are not factored into the ratio. If Berkeley P/NP units exceed the 1/3 limit, more Berkeley Letter Grade units are needed to meet the requirement.\n<br><br>\nFor the purpose of this calculation, Berkeley Letter Grade and P/NP units include courses completed in Fall Program for Freshmen (FPF), UCEAP and UCDC. If you participated in the UC Intercampus Visitor program, please alert your college advising office."
+}

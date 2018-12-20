@@ -1,0 +1,81 @@
+@import 'colors';
+@import 'foundation_overrides';
+
+button {
+  box-shadow: none;
+  font-family: $body-font-family;
+  &:hover, &:focus {
+    cursor: pointer;
+    text-decoration: underline;
+  }
+  &:active {
+    box-shadow: none;
+  }
+}
+.cc-react-button {
+  background: linear-gradient($cc-color-white, $cc-color-whisper), $cc-color-white;
+  border: 1px solid $cc-color-very-light-grey;
+  border-radius: 5px;
+  color: $cc-color-night-rider;
+  cursor: pointer;
+  display: inline;
+  font-size: 11px;
+  font-weight: bold;
+  line-height: 1;
+  padding: 6px 10px;
+  &:focus, &:hover {
+    background: linear-gradient($cc-color-white, $cc-color-very-light-grey), $cc-color-very-light-grey;
+    color: $cc-color-night-rider;
+    text-decoration: none;
+  }
+}
+.cc-react-button[disabled] {
+  background: $cc-color-white-smoke !important;
+  border: 1px solid $cc-color-very-light-grey !important;
+  color: $cc-color-very-light-grey !important;
+  cursor: auto !important;
+  opacity: 1 !important;
+  &:focus, &:hover {
+    background: $cc-color-white-smoke !important;
+    color: $cc-color-very-light-grey !important;
+  }
+}
+.cc-react-button-blue {
+  background: $cc-color-curious-blue;
+  border: 1px solid transparent;
+  color: $cc-color-white;
+  &:focus, &:hover {
+    background: $cc-color-lochmara;
+    color: $cc-color-white;
+  }
+  &.cc-react-button-large {
+    background: linear-gradient($cc-color-curious-blue, $cc-color-lochmara), $cc-color-lochmara;
+    &:focus, &:hover {
+      background: linear-gradient($cc-color-curious-blue, $cc-color-blue-lagoon);
+    }
+  }
+}
+.cc-react-button-blue[disabled] {
+  background: $cc-color-bali-hai !important;
+  &:focus, &:hover {
+    background: $cc-color-bali-hai !important;
+  }
+}
+.cc-react-button-link {
+  padding: 0;
+  &, &:hover, &:focus {
+    background-color: transparent;
+    border: 0;
+    color: $primary-color;
+    font-size: 13px;
+    font-weight: normal;
+  }
+  &:hover i, &:focus i {
+    text-decoration: underline;
+  }
+  &:disabled {
+    background-color: inherit;
+    color: $cc-color-nobel;
+    pointer-events: none;
+  }
+}

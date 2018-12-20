@@ -1,0 +1,73 @@
+@import 'colors';
+@import 'foundation_overrides';
+
+.cc-react-highlighted-section {
+  background-color: $cc-color-white-smoke;
+  margin: 12px 0;
+  padding: 4px 8px;
+}
+
+.cc-react-widget {
+  background: $cc-color-white;
+  margin: 15px 15px 0 0;
+
+  // See https://git.io/vITBH
+  // For an explanation of this magic
+  &::before, &::after {
+    content: " ";
+    display: table;
+  }
+  &::after {
+    clear: both;
+  }
+}
+@supports (display: flow-root) {
+  .cc-react-widget {
+    display: flow-root;
+    &::after {
+      content: none;
+    }
+  }
+}
+
+.cc-react-widget-padding {
+  padding: 15px;
+}
+
+.cc-react-widget-section-title, .cc-react-widget-title {
+  h2 {
+    font-family: Arial, sans-serif;
+    margin: 2px 0;
+  }
+}
+
+.cc-react-widget-section-title {
+  background-color: $cc-color-dim-gray;
+  h2 {
+    color: $cc-color-white;
+    font-size: 16px;
+    padding: 2px 15px;
+    @media print {
+      padding: 2px 10px;
+    }
+  }
+}
+
+.cc-react-widget-title {
+  background: $cc-color-whisper;
+  overflow: hidden;
+
+  h2 {
+    color: $cc-color-night-rider;
+    padding: 5px 15px;
+    @media print {
+      padding: 5px 10px;
+    }
+  }
+}
+
+@media #{$small-only} {
+  .cc-react-widget {
+    margin: 0;
+  }
+}

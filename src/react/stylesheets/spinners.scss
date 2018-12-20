@@ -1,0 +1,48 @@
+@import 'colors';
+
+.cc-react-spinner-message {
+  margin: 15px 0;
+  text-align: center;
+}
+
+@keyframes spin-normal {
+  from {
+    transform: rotate(0turn) scale(.47);
+  }
+  to {
+    transform: rotate(1turn) scale(.47);
+  }
+}
+
+$cc-react-spinner-even: 12px;
+$cc-react-spinner-uneven: 17px;
+
+.cc-react-spinner {
+  display: block;
+  font-size: 8px;
+  height: 50px;
+  position: relative;
+  text-align: center;
+  * {
+    display: none !important;
+  }
+  &::before {
+    animation: spin-normal 1s infinite steps(8);
+    border-radius: 50%;
+    box-shadow: 0 (-$cc-react-spinner-uneven) $cc-color-very-light-grey, // Top
+      $cc-react-spinner-even (-$cc-react-spinner-even $cc-color-very-light-grey), // Top right
+      $cc-react-spinner-uneven 0 $cc-color-nobel, // Right
+      $cc-react-spinner-even $cc-react-spinner-even $cc-color-night-rider, // Bottom right
+      0 $cc-react-spinner-uneven $cc-color-black, // Bottom
+      (-$cc-react-spinner-even) $cc-react-spinner-even $cc-color-very-light-grey, // Bottom left
+      (-$cc-react-spinner-uneven) 0 $cc-color-very-light-grey, // Left
+      (-$cc-react-spinner-even) (-$cc-react-spinner-even) $cc-color-very-light-grey; // Top left
+    content: "";
+    display: inline-block;
+    height: 10px;
+    left: 50%;
+    position: absolute;
+    top: 40%;
+    width: 10px;
+  }
+}

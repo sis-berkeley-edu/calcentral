@@ -76,6 +76,8 @@ Calcentral::Application.routes.draw do
     get '/api/academics/enrollment_verification' => 'enrollment_verification#get_feed', :defaults => { :format => 'json' }
     get '/api/academics/exam_results' => 'exam_results#get_exam_results', :defaults => { :format => 'json' }
     get '/api/academics/has_exam_results' => 'exam_results#has_exam_results', :defaults => { :format => 'json' }
+    get '/api/academics/pnp_calculator/calculator_values' => 'campus_solutions/pnp_calculator#get_calculator_values', :defaults => { :format => 'json' }
+    get '/api/academics/pnp_calculator/ratio_message' => 'campus_solutions/pnp_calculator#get_ratio_message', :defaults => { :format => 'json' }
     get '/api/academics/rosters/campus/:campus_course_id' => 'campus_rosters#get_feed', :as => :campus_roster, :defaults => { :format => 'json' }
     get '/api/academics/rosters/campus/csv/:campus_course_id' => 'campus_rosters#get_csv', :as => :campus_roster_csv, :defaults => { :format => 'csv' }
     get '/api/academics/transfer_credits' =>'transfer_credit#get_feed', :defaults => { :format => 'json' }
