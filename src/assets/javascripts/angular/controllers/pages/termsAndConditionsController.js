@@ -10,10 +10,7 @@ angular.module('calcentral.controllers').controller('TermsAndConditionsControlle
     isLoading: true
   };
 
-  var getTermsAndConditions = function() {
-    var options = {
-      finaidYear: $routeParams.finaidYearId
-    };
+  var getTermsAndConditions = function(options) {
     return termsAndConditionsFactory.getTermsAndConditions(options).then(
       function successCallback(response) {
         var termsAndConditions = _.get(response, 'data.termsAndConditions');
@@ -23,9 +20,12 @@ angular.module('calcentral.controllers').controller('TermsAndConditionsControlle
     );
   };
 
-  getTermsAndConditions();
+  getTermsAndConditions({ finaidYear: $routeParams.finaidYearId });
 
   $scope.$on('calcentral.custom.api.finaid.approvals', function() {
-    termsAndConditionsFactory.getTermsAndConditions();
+    termsAndConditionsFactory.getTermsAndConditions({
+      finaidYear: $routeParams.finaidYearId,
+      refreshCache: true
+    });
   });
 });
