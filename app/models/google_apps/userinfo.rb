@@ -9,7 +9,7 @@ module GoogleApps
     def mock_request
       super.merge(
         method: :get,
-        uri_matching: 'https://www.googleapis.com/plus/v1/people/me'
+        uri_matching: 'https://people.googleapis.com/v1/people/me'
       )
     end
 
@@ -19,7 +19,7 @@ module GoogleApps
 
     def user_info
       request(
-        api: 'plus',
+        api: 'people',
         api_version: 'v1',
         resource: 'people',
         method: 'get',
@@ -27,7 +27,8 @@ module GoogleApps
           'Content-Type' => 'application/json'
         },
         params: {
-          'userId' => 'me'
+          'resourceName' => 'people/me',
+          'personFields' => 'emailAddresses'
         }
       ).first
     end
