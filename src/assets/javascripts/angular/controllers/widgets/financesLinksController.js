@@ -134,7 +134,7 @@ angular.module('calcentral.controllers').controller('FinancesLinksController', f
       $scope.canViewEftLink = userService.profile.roles.student && (userService.profile.roles.undergrad || userService.profile.roles.graduate || userService.profile.academicRoles.current.law);
       $scope.canViewEmergencyLoanLink = !userService.profile.delegateActingAsUid && !userService.profile.academicRoles.current.summerVisitor;
       $scope.canViewFppEnrollment = !(userService.profile.actingAsUid || userService.profile.advisorActingAsUid || userService.profile.delegateActingAsUid) && userService.profile.roles.student &&
-                                    (userService.profile.roles.undergrad || userService.profile.roles.grad || userService.profile.roles.law) && !userService.profile.academicRoles.current.summerVisitor;
+                                    (userService.profile.roles.undergrad || userService.profile.roles.graduate || userService.profile.roles.law) && !userService.profile.academicRoles.current.summerVisitor;
       resolve();
     });
   };
