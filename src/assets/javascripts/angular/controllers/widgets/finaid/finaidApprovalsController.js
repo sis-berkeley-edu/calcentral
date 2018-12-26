@@ -12,10 +12,10 @@ angular.module('calcentral.controllers').controller('FinaidApprovalsController',
   };
 
   $scope.sendResponseTC = function(finaidYearId, response) {
-    finaidFactory.postTCResponse(finaidYearId, response).then(sendEvent()).then($route.reload());
+    finaidFactory.postTCResponse(finaidYearId, response).then(sendEvent).then($route.reload);
   };
 
   $scope.sendResponseT4 = function(response) {
-    finaidFactory.postT4Response(response).then(sendEvent());
+    finaidFactory.postT4Response(response).then(sendEvent);
   };
 });
