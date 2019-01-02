@@ -8,7 +8,7 @@ module User
     attr_reader :auth_uid
 
     def initialize(auth_uid, auth_handler=nil)
-      @auth_handler = auth_handler
+      @user_auth_handler = auth_handler
       @auth_uid = auth_uid
     end
 
@@ -17,7 +17,7 @@ module User
     end
 
     def slate_auth_handler
-      @slate_handler ||= Settings.authentication_handlers.slate.to_s.downcase
+      @slate_auth_handler ||= Settings.slate_auth_handler
     end
 
     def validated_user_id
@@ -53,8 +53,7 @@ module User
       if affiliations = cs_student.try(:[], 'affiliations')
         affiliations = HashConverter.symbolize affiliations
         cs_roles = roles_from_cs_affiliations(affiliations)
-        user_auth_handler = @auth_handler.to_s.downcase
-        if user_auth_handler.include?(slate_auth_handler)
+        if is_slate_auth_handler? @user_auth_handler
           return !cs_roles[:releasedAdmit]
         else
           unreleased = unreleased_applicant?(cs_roles)
@@ -65,6 +64,19 @@ module User
         # We don't know much about this person, but they're not a held applicant.
         false
       end
+    end
+
+    def is_slate_auth_handler?(user_auth_handler)
+      user_client = stringify_downcase user_auth_handler[:client]
+      user_handler = stringify_downcase user_auth_handler[:handler]
+      slate_client = stringify_downcase slate_auth_handler[:client]
+      slate_handler = stringify_downcase slate_auth_handler[:handler]
+      user_client.include?(slate_client) && user_handler.include?(slate_handler)
+    end
+
+    def stringify_downcase(string)
+      output = string || ""
+      output.to_s.downcase
     end
 
     def unreleased_applicant?(cs_roles)
