@@ -17,7 +17,10 @@ class SessionsController < ApplicationController
       logger.warn "Omniauth extra from SAML = #{auth.extra.inspect}"
       cs_id = auth.extra['berkeleyEduCSID']
       sid = auth.extra['berkeleyEduStuID']
-      auth_handler = auth.extra['successfulAuthenticationHandlers']
+      auth_handler = {
+        client: auth.extra['clientName'],
+        handler: auth.extra['successfulAuthenticationHandlers']
+      }
       if sid.present? && sid != cs_id
         logger.warn "Conflicting berkeleyEduStuID #{sid} and berkeleyEduCSID #{cs_id} for UID #{auth_uid}"
       end

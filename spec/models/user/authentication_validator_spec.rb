@@ -1,6 +1,6 @@
 describe User::AuthenticationValidator do
   let(:auth_uid) { random_id }
-  let(:auth_handler) { 'DuoAuthenticationHandlerJaasAuthenticationHandler' } # Default authentication handler
+  let(:auth_handler) { { client: nil, handler: "BerkeleyAuthenticationHandler" } } # Default authentication handler
   let(:feature_flag) { true }
   before do
     allow(Settings.features).to receive(:authentication_validator).and_return feature_flag
@@ -98,7 +98,7 @@ describe User::AuthenticationValidator do
       }
     end
     let(:ldap_affiliations) { nil }
-    let(:slate_auth_handler) { 'slateAuthenticationHandler' }
+    let(:slate_auth_handler) { { client: 'Slate', handler: 'ClientAuthenticationHandler' } }
 
     shared_examples 'it should not request data from LDAP' do
       it 'does not request data from LDAP' do
@@ -108,7 +108,7 @@ describe User::AuthenticationValidator do
     before do
       HubEdos::Affiliations.stub_chain(:new, :get).and_return cs_affiliations
       CalnetLdap::UserAttributes.stub_chain(:new, :get_feed).and_return ldap_affiliations
-      Settings.stub_chain(:authentication_handlers, :slate).and_return slate_auth_handler
+      Settings.stub_chain(:slate_auth_handler).and_return slate_auth_handler
     end
     subject { User::AuthenticationValidator.new(auth_uid, auth_handler).held_applicant? }
 
