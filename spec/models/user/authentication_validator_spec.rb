@@ -232,6 +232,17 @@ describe User::AuthenticationValidator do
         end
       end
     end
+
+    context 'no user authentication (view-as)' do
+      let(:cs_affiliations) { applicant_admitted_cs_affiliation }
+      let(:auth_handler) { nil }
+      it 'does not bother checking for slate auth handler' do
+        expect(described_class).to receive(:is_slate_auth_handler?).never
+      end
+      it 'falls back to the default non-slate logic' do
+        expect(subject).to eql(true)
+      end
+    end
   end
 
   describe '#validated_user_id' do
