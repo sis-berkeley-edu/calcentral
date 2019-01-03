@@ -53,7 +53,7 @@ module User
       if affiliations = cs_student.try(:[], 'affiliations')
         affiliations = HashConverter.symbolize affiliations
         cs_roles = roles_from_cs_affiliations(affiliations)
-        if is_slate_auth_handler? @user_auth_handler
+        if @user_auth_handler.present? && is_slate_auth_handler?(@user_auth_handler)
           return !cs_roles[:releasedAdmit]
         else
           unreleased = unreleased_applicant?(cs_roles)
