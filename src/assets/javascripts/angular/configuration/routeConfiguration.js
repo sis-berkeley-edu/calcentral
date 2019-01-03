@@ -95,7 +95,7 @@ angular.module('calcentral.config').config(function($routeProvider, calcentralCo
       pageName: 'Financial Aid and Scholarships'
     }).when('/finances/finaid/t4/auth', {
       templateUrl: 'finaid_t4.html',
-      controller: 'Title4Controller',
+      controller: 'MyFinancesController',
       pageName: 'Financial Aid and Scholarships'
     }).when('/finances/finaid/awards/:finaidYearId?', {
       templateUrl: 'finaid_awards_term.html',

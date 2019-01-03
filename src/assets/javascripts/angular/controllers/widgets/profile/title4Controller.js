@@ -2,7 +2,7 @@
 
 var _ = require('lodash');
 
-angular.module('calcentral.controllers').controller('Title4Controller', function(finaidFactory, title4Factory, $rootScope, $scope) {
+angular.module('calcentral.controllers').controller('Title4Controller', function(title4Factory, $rootScope, $scope) {
   $scope.title4 = {
     isLoading: true,
     showMessage: false
@@ -15,7 +15,7 @@ angular.module('calcentral.controllers').controller('Title4Controller', function
   $scope.sendResponseT4 = function(response) {
     $scope.title4.isLoading = true;
     $scope.title4.showMessage = false;
-    finaidFactory.postT4Response(response).then(sendEvent);
+    title4Factory.postT4Response(response).then(sendEvent);
   };
 
   var getTitle4 = function(options) {

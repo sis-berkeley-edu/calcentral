@@ -2,12 +2,18 @@
 
 var _ = require('lodash');
 
-/**
- * Financial Aid Terms and Conditions controller
- */
-angular.module('calcentral.controllers').controller('TermsAndConditionsController', function(termsAndConditionsFactory, $scope, $routeParams) {
+angular.module('calcentral.controllers').controller('TermsAndConditionsController', function(termsAndConditionsFactory, $scope, $routeParams, $rootScope) {
   $scope.termsAndConditions = {
     isLoading: true
+  };
+
+  var sendEvent = function() {
+    $rootScope.$broadcast('calcentral.custom.api.finaid.approvals');
+  };
+
+  $scope.sendResponseTC = function(finaidYearId, response) {
+    $scope.termsAndConditions.isLoading = true;
+    termsAndConditionsFactory.postTCResponse(finaidYearId, response).then(sendEvent);
   };
 
   var getTermsAndConditions = function(options) {
@@ -23,7 +29,7 @@ angular.module('calcentral.controllers').controller('TermsAndConditionsControlle
   getTermsAndConditions({ finaidYear: $routeParams.finaidYearId });
 
   $scope.$on('calcentral.custom.api.finaid.approvals', function() {
-    termsAndConditionsFactory.getTermsAndConditions({
+    getTermsAndConditions({
       finaidYear: $routeParams.finaidYearId,
       refreshCache: true
     });
