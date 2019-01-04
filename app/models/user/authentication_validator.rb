@@ -71,7 +71,8 @@ module User
       user_handler = stringify_downcase user_auth_handler[:handler]
       slate_client = stringify_downcase slate_auth_handler[:client]
       slate_handler = stringify_downcase slate_auth_handler[:handler]
-      user_client.include?(slate_client) && user_handler.include?(slate_handler)
+      slate_handler_casv5 = stringify_downcase slate_auth_handler[:handler_casv5]
+      user_handler.include?(slate_handler_casv5) || (user_client.include?(slate_client) && user_handler.include?(slate_handler))
     end
 
     def stringify_downcase(string)
