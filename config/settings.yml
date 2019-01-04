@@ -20,6 +20,7 @@ application:
 slate_auth_handler:
   client: 'Slate'
   handler: 'ClientAuthenticationHandler'
+  handler_casv5: 'slateAuthenticationHandler'
 
 logger:
   level: <%= ENV['LOGGER_LEVEL'] || WARN %>
