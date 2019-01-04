@@ -14,7 +14,7 @@
     <div data-ng-if="finalExams.ugrdCoursesPresent">
       <div class="cc-widget-exam-schedule-text">
         Exam information is subject to change.
-        <a data-ng-click="finalExams.changeNotice = !finalExams.changeNotice">Learn more</a>
+        <button class="cc-button-link" data-ng-click="finalExams.changeNotice = !finalExams.changeNotice">Learn more</button>
         <div class="cc-widget-exam-schedule-notice" data-ng-if="finalExams.changeNotice">
           <p class="cc-widget-exam-schedule-notice-paragraph" data-ng-bind-html="finalExams.message"></p>
         </div>
