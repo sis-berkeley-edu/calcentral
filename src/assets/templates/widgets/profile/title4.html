@@ -69,8 +69,9 @@
       data-ng-bind-html="title4.contactText"
       class="cc-text-pre-line"
     ></div>
-    <a class="cc-button cc-button-blue cc-button-title4" href="/finances"
-    >Return to My Finances</a
-    >
+    <a class="cc-button cc-button-blue cc-button-title4" href="/finances">
+      <span data-ng-if="title4.viaProfile">Go</span>
+      <span data-ng-if="!title4.viaProfile">Return</span> to My Finances
+    </a>
   </div>
 </div>
