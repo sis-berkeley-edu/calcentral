@@ -98,7 +98,9 @@ describe User::AuthenticationValidator do
       }
     end
     let(:ldap_affiliations) { nil }
+    let(:slate_auth_handler_settings) { { client: 'Slate', handler: 'ClientAuthenticationHandler', handler_casv5: 'slateAuthenticationHandler' } }
     let(:slate_auth_handler) { { client: 'Slate', handler: 'ClientAuthenticationHandler' } }
+    let(:slate_auth_handler_casv5) { { client: nil, handler: 'slateAuthenticationHandler' } }
 
     shared_examples 'it should not request data from LDAP' do
       it 'does not request data from LDAP' do
@@ -108,7 +110,7 @@ describe User::AuthenticationValidator do
     before do
       HubEdos::Affiliations.stub_chain(:new, :get).and_return cs_affiliations
       CalnetLdap::UserAttributes.stub_chain(:new, :get_feed).and_return ldap_affiliations
-      Settings.stub_chain(:slate_auth_handler).and_return slate_auth_handler
+      Settings.stub_chain(:slate_auth_handler).and_return slate_auth_handler_settings
     end
     subject { User::AuthenticationValidator.new(auth_uid, auth_handler).held_applicant? }
 
@@ -130,23 +132,33 @@ describe User::AuthenticationValidator do
           end
         end
         context 'authenticated via SSO from Slate' do
+          context 'with CAS v5.3' do
+            let(:auth_handler) { slate_auth_handler }
+            it 'should return true' do
+              expect(subject).to eql(true)
+            end
+            include_examples 'it should not request data from LDAP'
+          end
+          context 'with CAS v5.0' do
+            let(:auth_handler) { slate_auth_handler_casv5 }
+            it 'should return true' do
+              expect(subject).to eql(true)
+            end
+            include_examples 'it should not request data from LDAP'
+          end
+        end
+      end
+
+      context 'existing LDAP affiliations' do
+        context 'with CAS v5.3' do
           let(:auth_handler) { slate_auth_handler }
           it 'should return true' do
             expect(subject).to eql(true)
           end
           include_examples 'it should not request data from LDAP'
         end
-      end
-
-      context 'existing LDAP affiliations' do
-        let(:ldap_affiliations) { staff_ldap_roles }
-        context 'authenticated via CAS' do
-          it 'should return false' do
-            expect(subject).to eql(false)
-          end
-        end
-        context 'authenticated via SSO from Slate' do
-          let(:auth_handler) { slate_auth_handler }
+        context 'with CAS v5.0' do
+          let(:auth_handler) { slate_auth_handler_casv5 }
           it 'should return true' do
             expect(subject).to eql(true)
           end
@@ -167,11 +179,20 @@ describe User::AuthenticationValidator do
         end
 
         context 'authenticated via SSO from Slate' do
-          let(:auth_handler) { slate_auth_handler }
-          it 'should return false' do
-            expect(subject).to eql(false)
+          context 'with CAS v5.3' do
+            let(:auth_handler) { slate_auth_handler }
+            it 'should return false' do
+              expect(subject).to eql(false)
+            end
+            include_examples 'it should not request data from LDAP'
           end
-          include_examples 'it should not request data from LDAP'
+          context 'with CAS v5.0' do
+            let(:auth_handler) { slate_auth_handler_casv5 }
+            it 'should return false' do
+              expect(subject).to eql(false)
+            end
+            include_examples 'it should not request data from LDAP'
+          end
         end
       end
 
@@ -185,11 +206,20 @@ describe User::AuthenticationValidator do
         end
 
         context 'authenticated via SSO from Slate' do
-          let(:auth_handler) { slate_auth_handler }
-          it 'should return false' do
-            expect(subject).to eql(false)
+          context 'with CAS v5.3' do
+            let(:auth_handler) { slate_auth_handler }
+            it 'should return false' do
+              expect(subject).to eql(false)
+            end
+            include_examples 'it should not request data from LDAP'
           end
-          include_examples 'it should not request data from LDAP'
+          context 'with CAS v5.0' do
+            let(:auth_handler) { slate_auth_handler_casv5 }
+            it 'should return false' do
+              expect(subject).to eql(false)
+            end
+            include_examples 'it should not request data from LDAP'
+          end
         end
       end
     end
@@ -206,11 +236,20 @@ describe User::AuthenticationValidator do
         end
 
         context 'authenticated via SSO from Slate' do
-          let(:auth_handler) { slate_auth_handler }
-          it 'should return false' do
-            expect(subject).to eql(false)
+          context 'with CAS v5.3' do
+            let(:auth_handler) { slate_auth_handler }
+            it 'should return false' do
+              expect(subject).to eql(false)
+            end
+            include_examples 'it should not request data from LDAP'
           end
-          include_examples 'it should not request data from LDAP'
+          context 'with CAS v5.0' do
+            let(:auth_handler) { slate_auth_handler_casv5 }
+            it 'should return false' do
+              expect(subject).to eql(false)
+            end
+            include_examples 'it should not request data from LDAP'
+          end
         end
       end
 
@@ -224,11 +263,20 @@ describe User::AuthenticationValidator do
         end
 
         context 'authenticated via SSO from Slate' do
-          let(:auth_handler) { slate_auth_handler }
-          it 'should return false' do
-            expect(subject).to eql(false)
+          context 'with CAS v5.3' do
+            let(:auth_handler) { slate_auth_handler }
+            it 'should return false' do
+              expect(subject).to eql(false)
+            end
+            include_examples 'it should not request data from LDAP'
           end
-          include_examples 'it should not request data from LDAP'
+          context 'with CAS v5.0' do
+            let(:auth_handler) { slate_auth_handler_casv5 }
+            it 'should return false' do
+              expect(subject).to eql(false)
+            end
+            include_examples 'it should not request data from LDAP'
+          end
         end
       end
     end
