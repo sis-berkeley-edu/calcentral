@@ -2,10 +2,11 @@
 
 var _ = require('lodash');
 
-angular.module('calcentral.controllers').controller('Title4Controller', function(title4Factory, $rootScope, $scope) {
+angular.module('calcentral.controllers').controller('Title4Controller', function($location, title4Factory, $rootScope, $scope) {
   $scope.title4 = {
     isLoading: true,
-    showMessage: false
+    showMessage: false,
+    viaProfile: false
   };
 
   var sendEvent = function() {
@@ -24,6 +25,7 @@ angular.module('calcentral.controllers').controller('Title4Controller', function
         var title4 = _.get(response, 'data.title4');
         $scope.title4 = title4;
         $scope.title4.isLoading = false;
+        $scope.title4.viaProfile = $location.path() === '/profile/title4' ? true : false;
       }
     );
   };
