@@ -39,7 +39,6 @@
       ],
       "linebreak-style": ["error", "unix"],
       "max-depth": ["error", 5],
-      "multiline-ternary": ["error", "never"],
       "no-bitwise": ["error"],
       "no-console": ["error"],
       "no-empty": ["error"],
