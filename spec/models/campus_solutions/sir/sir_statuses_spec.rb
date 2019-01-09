@@ -98,6 +98,16 @@ describe CampusSolutions::Sir::SirStatuses do
           itemStatusCode: 'I',
           adminFunc: 'ADMP'
           },
+         {
+           chklstItemCd: 'AL0007',
+           checkListMgmtAdmp: {
+             acadCareer: 'LAW',
+             admApplNbr: '00157695'
+           },
+           itemStatus: 'Initiated',
+           itemStatusCode: 'I',
+           adminFunc: 'ADMP'
+         },
           {
           chklstItemCd: 'AUSIRF',
           checkListMgmtAdmp: {
@@ -436,7 +446,7 @@ describe CampusSolutions::Sir::SirStatuses do
       end
       subject { (proxy.new(uid).get_feed)[:sirStatuses] }
       it 'returns multiple sir applications' do
-        expect(subject).to have(3).items
+        expect(subject).to have(4).items
       end
     end
 
