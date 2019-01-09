@@ -62,7 +62,6 @@
     margin-top: 5px;
   }
   .cc-page-myfinances-due-date {
-    display: block;
     .cc-page-myfinances-due-date-icons-medium-up {
       margin-left: 10px;
     }
@@ -133,6 +132,7 @@
     margin: 20px 10px 10px;
   }
   .cc-page-myfinances-type {
+    white-space: nowrap;
     i {
       margin-left: 9px;
     }
