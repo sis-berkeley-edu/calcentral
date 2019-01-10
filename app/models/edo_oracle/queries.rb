@@ -617,7 +617,10 @@ module EdoOracle
           SISEDO.APPLICANT_ADMIT_DATAV00_VW
         WHERE
           STUDENT_ID = '#{student_id}' AND
-          PROG_ACTION <> 'DATA'
+          (
+            PROG_ACTION <> 'DATA' OR
+            (PROG_REASON = 'LMAY' AND PROG_STATUS <> 'C')
+          )
       SQL
       result
     end
