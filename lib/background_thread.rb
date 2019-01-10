@@ -34,7 +34,7 @@ module BackgroundThread
 
     def self.get_pool
       if !@inner
-        logger.info "No Background Thread Pool found - will create one now."
+        logger.warn "No Background Thread Pool found - will create one now."
         @inner = Concurrent::ThreadPoolExecutor.new(
           min_threads: Settings.background_threads.min,
           max_threads: Settings.background_threads.max,
