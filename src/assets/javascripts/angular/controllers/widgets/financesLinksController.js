@@ -5,7 +5,7 @@ var _ = require('lodash');
 /**
  * Footer controller
  */
-angular.module('calcentral.controllers').controller('FinancesLinksController', function(apiService, campusLinksFactory, finaidService, financesLinksFactory, sirFactory, userService, $scope, $q) {
+angular.module('calcentral.controllers').controller('FinancesLinksController', function(campusLinksFactory, csLinkFactory, financesLinksFactory, sirFactory, userService, $scope, $q) {
   $scope.isLoading = true;
   $scope.canViewEftLink = false;
   $scope.canViewEmergencyLoanLink = false;
@@ -144,7 +144,15 @@ angular.module('calcentral.controllers').controller('FinancesLinksController', f
       category: 'finances'
     }).then(parseCampusLinks);
 
-    var requests = [getCampusLinks];
+    var getTaxCreditFormLink = csLinkFactory.getLink({
+      urlId: 'UC_CX_STDNT_1098T_TAX_FORM'
+    }).then(
+      function successCallback(response) {
+        $scope.taxForm.viewFormLink = _.get(response, 'data.link');
+      }
+    );
+
+    var requests = [getCampusLinks, getTaxCreditFormLink];
 
     if ($scope.canViewFppEnrollment) {
       var getFppEnrollment = financesLinksFactory.getFppEnrollment().then(parseFppEnrollment);

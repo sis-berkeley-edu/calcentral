@@ -62,10 +62,10 @@
           <a data-ng-href="{{$parent.taxForm.taxFormLink.url}}"
             data-ng-attr-title="{{$parent.taxForm.taxFormLink.title}}">Tax 1098-T Form</a>
           <a class="cc-list-links-nested-dash"
-            data-ng-href="{{$parent.taxForm.viewFormLink.url}}"
-            data-ng-attr-title="{{$parent.taxForm.viewFormLink.title}}"
-            data-ng-if="!api.user.profile.delegateActingAsUid">
-            <strong>View Form</strong>
+            data-cc-campus-solutions-link-directive="{{$parent.taxForm.viewFormLink}}"
+            data-ng-if="!api.user.profile.delegateActingAsUid"
+          >
+            <strong data-ng-bind-template="{{$parent.taxForm.viewFormLink.name}}"></strong>
           </a>
         </li>
         <li data-ng-if="subcategory === 'Financial Assistance' && emergencyLoanLink.url && canViewEmergencyLoanLink">
