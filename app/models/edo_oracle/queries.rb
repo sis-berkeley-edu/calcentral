@@ -172,7 +172,7 @@ module EdoOracle
 
     def self.get_enrolled_sections(person_id, terms)
       # The push_pred hint below alerts Oracle to use indexes on SISEDO.API_COURSEV00_VW, aka crs.
-      in_term_where_clause = "enr.\"TERM_ID\" IN (#{terms_query_list terms}) AND " if Settings.features.hub_term_api
+      in_term_where_clause = "enr.\"TERM_ID\" IN (#{terms_query_list terms}) AND" unless terms.nil?
       safe_query <<-SQL
         SELECT DISTINCT
           #{SECTION_COLUMNS},
@@ -229,7 +229,7 @@ module EdoOracle
     #   - 'cs-course-id' added.
     def self.get_instructing_sections(person_id, terms = nil)
       # Reduce performance hit and only add Terms whare clause if limiting number of terms pulled
-      in_term_where_clause = " AND instr.\"term-id\" IN (#{terms_query_list terms})" if Settings.features.hub_term_api
+      in_term_where_clause = " AND instr.\"term-id\" IN (#{terms_query_list terms})" unless terms.nil?
       safe_query <<-SQL
         SELECT
           #{SECTION_COLUMNS},
