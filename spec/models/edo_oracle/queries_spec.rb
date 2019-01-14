@@ -404,15 +404,14 @@ describe EdoOracle::Queries do
   end
 
   describe '.get_enrolled_sections' do
-    let(:terms) { [Berkeley::Terms.fetch.campus['fall-2018']] }
+    let(:terms) { [Berkeley::Terms.fetch.campus['fall-2017']] }
     let(:uid) { '799934' }
     it 'fetches expected data' do
       results = EdoOracle::Queries.get_enrolled_sections(uid, terms)
-      expect(results.count).to eq 3
+      expect(results.count).to eq 2
       expected_keys = %w(section_id term_id session_id course_title course_title_short dept_name primary section_num instruction_format primary_associated_section_id course_display_name section_display_name catalog_id catalog_root catalog_prefix catalog_suffix enroll_limit enroll_status waitlist_position units_taken units_earned grade grade_points grading_basis acad_career rqmnt_designtn)
       expect(results[0]).to have_keys(expected_keys)
       expect(results[1]).to have_keys(expected_keys)
-      expect(results[2]).to have_keys(expected_keys)
       expect(results[0]['term_id']).to eq '2178'
       expect(results[0]['section_id']).to eq '12392'
     end
