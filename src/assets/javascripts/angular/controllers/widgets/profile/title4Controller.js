@@ -2,10 +2,11 @@
 
 var _ = require('lodash');
 
-angular.module('calcentral.controllers').controller('Title4Controller', function(finaidFactory, title4Factory, $rootScope, $scope) {
+angular.module('calcentral.controllers').controller('Title4Controller', function($location, title4Factory, $rootScope, $scope) {
   $scope.title4 = {
     isLoading: true,
-    showMessage: false
+    showMessage: false,
+    viaProfile: false
   };
 
   var sendEvent = function() {
@@ -15,15 +16,16 @@ angular.module('calcentral.controllers').controller('Title4Controller', function
   $scope.sendResponseT4 = function(response) {
     $scope.title4.isLoading = true;
     $scope.title4.showMessage = false;
-    finaidFactory.postT4Response(response).then(sendEvent);
+    title4Factory.postT4Response(response).then(sendEvent);
   };
 
-  var getTitle4 = function() {
-    return title4Factory.getTitle4().then(
+  var getTitle4 = function(options) {
+    return title4Factory.getTitle4(options).then(
       function successCallback(response) {
         var title4 = _.get(response, 'data.title4');
         $scope.title4 = title4;
         $scope.title4.isLoading = false;
+        $scope.title4.viaProfile = $location.path() === '/profile/title4' ? true : false;
       }
     );
   };
@@ -31,6 +33,8 @@ angular.module('calcentral.controllers').controller('Title4Controller', function
   getTitle4();
 
   $scope.$on('calcentral.custom.api.finaid.approvals', function() {
-    getTitle4();
+    getTitle4({
+      refreshCache: true
+    });
   });
 });
