@@ -18,10 +18,6 @@ class UserController < ApplicationController
     user_id = session['user_id']
 
     if user_id
-      #TODO: Either User::Visit model should be removed (if no longer needed), or User::Visit.record should be moved
-      # out into its own endpoint. The my_status endpoint is a GET, not a POST or PUT - it shouldn't be writing data
-      User::Visit.record user_id if current_user.directly_authenticated?
-
       status.merge! User::Api.from_session(session).get_feed
       status.merge!({
         :academicRoles => MyAcademics::MyAcademicRoles.from_session(session).get_feed

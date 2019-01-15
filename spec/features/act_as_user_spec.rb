@@ -64,7 +64,6 @@ feature 'act_as_user' do
     # you don't want the admin user to record a visit that's wasn't really made by the 'viewed as' user
     visit '/api/my/status'
     page.status_code.should == 200
-    User::Visit.where(:uid => '4').should be_empty
   end
 
   scenario 'check the footer message for a user that has logged in' do
