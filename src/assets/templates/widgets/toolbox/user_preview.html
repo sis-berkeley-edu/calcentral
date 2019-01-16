@@ -13,7 +13,12 @@
           <tbody>
           <tr>
             <th>
-              <div data-cc-profile-image-directive data-name="targetUser.fullName" data-uid="targetUser.ldapUid"></div>
+              <img data-cc-load-error-directive="profilePicture" data-ng-if="!profilePicture.loadError" class="cc-widget-profile-img" height="96" width="72"
+                   data-ng-attr-alt="{{ targetUser.fullName && targetUser.fullName.trim ? targetUser.fullName.trim() + '\'s photo' : 'profile photo' }}"
+                   data-ng-src="api/photo/{{ targetUser.ldapUid }}">
+              <div data-ng-if="profilePicture.loadError"  class="cc-widget-profile-picture-not-available">
+                <i class="fa fa-user"></i>
+              </div>
             </th>
             <td>
               <div>
