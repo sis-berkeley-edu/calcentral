@@ -178,7 +178,7 @@ module Rosters
           feed[:sections] << {
             ccn: section[:ccn],
             course_name: "#{course[:dept]} #{course[:catid]}",
-            name: "#{course[:dept]} #{course[:catid]} #{section[:section_label]}",
+            name: "#{course[:dept_code]} #{course[:catid]} #{section[:section_label]}",
             section_label: section[:section_label].to_s,
             section_number: section[:section_number].to_s,
             instruction_format: section[:instruction_format].to_s,
