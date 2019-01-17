@@ -1,6 +1,23 @@
 <?xml version="1.0"?>
 <UC_LINK_RESOURCES>
   <Link>
+    <URL_ID>UC_CX_STDNT_BPS_EFT</URL_ID>
+    <Description>Direct Deposit</Description>
+    <HOVER_OVER_TEXT>Some refunds, payments, and paychecks may be directly deposited to your bank account</HOVER_OVER_TEXT>
+    <PROPERTIES type="array">
+      <PROPERTY>
+        <NAME>CALCENTRAL</NAME>
+        <value>FINANCIAL</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>NEW_WINDOW</NAME>
+        <value>Y</value>
+      </PROPERTY>
+    </PROPERTIES>
+    <URL>http://studentbilling.berkeley.edu/eft.htm</URL>
+    <COMMENTS/>
+  </Link>
+  <Link>
     <URL_ID>UC_CX_STDNT_1098T_TAX_FORM</URL_ID>
     <Description>View Form (Use Site ID 11554)</Description>
     <HOVER_OVER_TEXT>Start here to access your 1098-T form</HOVER_OVER_TEXT>

@@ -11,8 +11,7 @@
           <a data-ng-href="/profile/delegate" data-ng-attr-title="{{$parent.delegateAccess.title}}">Delegate Access</a>
         </li>
         <li data-ng-if="subcategory === 'Billing & Payments' && canViewEftLink">
-          <a data-ng-href="{{$parent.eft.eftLink.url}}"
-            data-ng-attr-title="{{$parent.eft.eftLink.title}}">Electronic Funds Transfer / EFT </a>
+          <a data-cc-campus-solutions-link-directive="{{$parent.eft.eftLink}}"></a>
           <span class="cc-text-green-plus cc-list-links-nested-dash cc-list-links-text"
             data-ng-if="$parent.eft.studentActive && $parent.eft.data.data.eftStatus === 'active'">
             Status: <i class="fa fa-check cc-icon-green"></i> Active
@@ -26,11 +25,11 @@
           <span class="cc-list-links-nested-dash cc-list-links-text" data-ng-if="!$parent.eft.studentActive">
             Status: Not Active
           </span>
-          <a class="cc-list-links-nested-dash"
+          <a class="cc-list-links-nested-dash cc-strong"
             data-ng-href="{{$parent.eft.manageAccountLink.url}}"
             data-ng-attr-title="{{$parent.eft.manageAccountLink.title}}"
-            data-ng-if="!api.user.profile.delegateActingAsUid">
-            <strong>Manage Account</strong>
+            data-ng-if="!api.user.profile.delegateActingAsUid"
+            data-ng-bind="$parent.eft.manageAccountLink.name">
           </a>
         </li>
         <li data-ng-repeat-start="link in campusLinks.data.links | campusLinksSubcategoryFilter:subcategory">
