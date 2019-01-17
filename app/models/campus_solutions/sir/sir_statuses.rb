@@ -65,7 +65,32 @@ module CampusSolutions
         checklist_items.try(:each) do |checklist_item|
           sir_checklist_items.push(checklist_item) if checklist_item.try(:[], :adminFunc) == 'ADMP' && is_active_offer?(checklist_item)
         end
-        map_sir_configs(sir_checklist_items)
+        filtered_sir_items = filter_duplicate_items(sir_checklist_items)
+        map_sir_configs(filtered_sir_items)
+      end
+
+      def filter_duplicate_items(sir_checklist_items)
+        unique_sir_checklist_items = sir_checklist_items.uniq { |item| item[:checkListMgmtAdmp][:admApplNbr] }
+        if unique_sir_checklist_items.length == sir_checklist_items.length
+          sir_checklist_items
+        else
+          duplicate_application_nbrs = (sir_checklist_items - unique_sir_checklist_items).map { |item| item[:checkListMgmtAdmp][:admApplNbr] }.uniq
+          # create an array with the structure [[dup-a1, dup-a2], [dup-b1, dup-b2], [dup-c1, dup-c2, dup-c3, ...], ...]
+          duplicate_item_sets = []
+          duplicate_application_nbrs.each do |duplicate_nbr|
+            duplicate_item_sets.push(sir_checklist_items.select { |checklist_item| checklist_item[:checkListMgmtAdmp][:admApplNbr] == duplicate_nbr })
+          end
+          # reduce each subarray to the checklist item with the highest SEQ_3C
+          picked_from_duplicates = duplicate_item_sets.map { |item_set| item_set.sort_by! { |item| item[:seq3c].to_i }.last }
+          # remove unwanted duplicates from returned array
+          picked_from_duplicates.each do |picked|
+            sir_checklist_items.delete_if do |item|
+              picked[:checkListMgmtAdmp][:admApplNbr] == item[:checkListMgmtAdmp][:admApplNbr] &&
+              picked[:seq3c] != item[:seq3c]
+            end
+          end
+          sir_checklist_items
+        end
       end
 
       def map_sir_configs(sir_checklist_items)
