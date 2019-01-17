@@ -47,7 +47,8 @@ module User
         edo_roles = (@edo_attributes && @edo_attributes[:roles]) || {}
         # Do not introduce conflicts if CS is more up-to-date on active student status.
         campus_roles.except!(:exStudent) if edo_roles[:student]
-        campus_roles.merge edo_roles
+        # If there is a conflict between LDAP roles and EDO roles, keep the role as true
+        campus_roles.merge(edo_roles) { |key, r1, r2| r1 || r2 }
       else
         campus_roles
       end

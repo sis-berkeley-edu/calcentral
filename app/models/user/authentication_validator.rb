@@ -7,12 +7,17 @@ module User
 
     attr_reader :auth_uid
 
-    def initialize(auth_uid)
+    def initialize(auth_uid, auth_handler=nil)
+      @user_auth_handler = auth_handler
       @auth_uid = auth_uid
     end
 
     def feature_enabled?
       Settings.features.authentication_validator
+    end
+
+    def slate_auth_handler
+      @slate_auth_handler ||= Settings.slate_auth_handler
     end
 
     def validated_user_id
@@ -47,34 +52,43 @@ module User
       cs_student = cs_feed.try(:[], :feed).try(:[], 'student')
       if affiliations = cs_student.try(:[], 'affiliations')
         affiliations = HashConverter.symbolize affiliations
-        held = unreleased_applicant?(affiliations)
-        has_ldap_affiliations = held ? has_ldap_affiliations? : nil
-        is_graduate = held && (!has_ldap_affiliations.nil? && !has_ldap_affiliations) ? is_graduate_applicant? : nil
-        held && (!has_ldap_affiliations.nil? && !has_ldap_affiliations) && (!is_graduate.nil? && !is_graduate)
+        cs_roles = roles_from_cs_affiliations(affiliations)
+        if @user_auth_handler.present? && is_slate_auth_handler?(@user_auth_handler)
+          return !cs_roles[:releasedAdmit]
+        else
+          unreleased = unreleased_applicant?(cs_roles)
+          has_ldap_affiliations = unreleased ? has_ldap_affiliations? : nil
+          return unreleased && (!has_ldap_affiliations.nil? && !has_ldap_affiliations)
+        end
       else
         # We don't know much about this person, but they're not a held applicant.
         false
       end
     end
 
-    def unreleased_applicant?(cs_affiliations)
-      roles = roles_from_cs_affiliations(cs_affiliations)
-      is_applicant = roles.delete(:applicant)
-      !!is_applicant && roles.empty?
+    def is_slate_auth_handler?(user_auth_handler)
+      user_client = stringify_downcase user_auth_handler[:client]
+      user_handler = stringify_downcase user_auth_handler[:handler]
+      slate_client = stringify_downcase slate_auth_handler[:client]
+      slate_handler = stringify_downcase slate_auth_handler[:handler]
+      slate_handler_casv5 = stringify_downcase slate_auth_handler[:handler_casv5]
+      user_handler.include?(slate_handler_casv5) || (user_client.include?(slate_client) && user_handler.include?(slate_handler))
+    end
+
+    def stringify_downcase(string)
+      output = string || ""
+      output.to_s.downcase
+    end
+
+    def unreleased_applicant?(cs_roles)
+      is_applicant = cs_roles.delete(:applicant)
+      !!is_applicant && !cs_roles.has_value?(true)
     end
 
     def has_ldap_affiliations?
       ldap_attributes = CalnetLdap::UserAttributes.new(user_id: @auth_uid).get_feed
       ldap_roles = ldap_attributes.try(:[], :roles) || {}
       ldap_roles.has_value?(true)
-    end
-
-    def is_graduate_applicant?
-      sir_feed = CampusSolutions::Sir::SirStatuses.new(@auth_uid).get_feed
-      sir_statuses = sir_feed.try(:[], :sirStatuses) || []
-      sir_statuses.any? do |sir_status|
-        !sir_status.try(:[], :isUndergraduate)
-      end
     end
 
   end

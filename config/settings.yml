@@ -17,6 +17,11 @@ application:
   # The default is to support all CalCentral/Junction services.
   provided_services: ['calcentral', 'bcourses', 'oec']
 
+slate_auth_handler:
+  client: 'Slate'
+  handler: 'ClientAuthenticationHandler'
+  handler_casv5: 'slateAuthenticationHandler'
+
 logger:
   level: <%= ENV['LOGGER_LEVEL'] || WARN %>
   stdout: <%= ENV['LOGGER_STDOUT'] %>

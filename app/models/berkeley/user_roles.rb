@@ -8,7 +8,6 @@ module Berkeley
         advisor: false,
         applicant: false,
         concurrentEnrollmentStudent: false,
-        confidential: false,
         expiredAccount: false,
         exStudent: false,
         faculty: false,
@@ -25,7 +24,7 @@ module Berkeley
 
     def roles_from_affiliations(affiliations)
       affiliations ||= []
-      {
+      base_roles.merge({
         :student => affiliations.index {|a| (a.start_with? 'STUDENT-TYPE-')}.present?,
         :registered => affiliations.include?('STUDENT-TYPE-REGISTERED'),
         # TODO Remove '-STATUS-EXPIRED' logic once CalNet transition is complete.
@@ -33,7 +32,7 @@ module Berkeley
         :faculty => affiliations.include?('EMPLOYEE-TYPE-ACADEMIC'),
         :staff => affiliations.include?('EMPLOYEE-TYPE-STAFF'),
         :guest => (affiliations & ['GUEST-TYPE-COLLABORATOR', 'GUEST-TYPE-SOCIAL']).present?
-      }
+      })
     end
 
     def roles_from_ldap_affiliations(ldap_record)
@@ -135,7 +134,7 @@ module Berkeley
           result[:exStudent] = true
         end
       end
-      result
+      base_roles.merge(result)
     end
 
     def find_matching_roles(ldap_groups, group_to_role)
