@@ -98,6 +98,16 @@ describe CampusSolutions::Sir::SirStatuses do
           itemStatusCode: 'I',
           adminFunc: 'ADMP'
           },
+         {
+           chklstItemCd: 'AL0007',
+           checkListMgmtAdmp: {
+             acadCareer: 'LAW',
+             admApplNbr: '00157695'
+           },
+           itemStatus: 'Initiated',
+           itemStatusCode: 'I',
+           adminFunc: 'ADMP'
+         },
           {
           chklstItemCd: 'AUSIRF',
           checkListMgmtAdmp: {
@@ -107,6 +117,37 @@ describe CampusSolutions::Sir::SirStatuses do
           itemStatus: 'Completed',
           itemStatusCode: 'C',
           adminFunc: 'ADMP'
+          }
+        ]
+      }
+    }
+  }
+
+  let(:checklist_response_duplicate) {
+    {
+      feed: {
+        checkListItems: [
+          {
+           chklstItemCd: 'AUSIRF',
+           checkListMgmtAdmp: {
+             acadCareer: 'UGRD',
+             admApplNbr: '00157689'
+           },
+           itemStatus: 'Completed',
+           itemStatusCode: 'C',
+           adminFunc: 'ADMP',
+           seq3c: 10
+          },
+          {
+            chklstItemCd: 'AUSIRF',
+            checkListMgmtAdmp: {
+              acadCareer: 'UGRD',
+              admApplNbr: '00157689'
+            },
+            itemStatus: 'Completed',
+            itemStatusCode: 'C',
+            adminFunc: 'ADMP',
+            seq3c: 11
           }
         ]
       }
@@ -436,7 +477,20 @@ describe CampusSolutions::Sir::SirStatuses do
       end
       subject { (proxy.new(uid).get_feed)[:sirStatuses] }
       it 'returns multiple sir applications' do
-        expect(subject).to have(3).items
+        expect(subject).to have(4).items
+      end
+    end
+
+    context 'as a student with duplicate offers' do
+      before do
+        CampusSolutions::MyChecklist.stub_chain(:new, :get_feed).and_return checklist_response_duplicate
+        CampusSolutions::Sir::SirConfig.stub_chain(:new, :get).and_return sir_config_response_ugrd
+        allow(User::Identifiers).to receive(:lookup_campus_solutions_id).and_return new_admit_attributes_freshman_pathway_sid
+      end
+      subject { (proxy.new(uid).get_feed[:sirStatuses]) }
+      it 'only returns a single sir item with the highest seq3c value among the duplicates' do
+        expect(subject).to have(1).items
+        expect(subject[0][:seq3c]).to eql(11)
       end
     end
 
