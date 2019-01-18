@@ -81,12 +81,12 @@ module CampusSolutions
             duplicate_item_sets.push(sir_checklist_items.select { |checklist_item| checklist_item[:checkListMgmtAdmp][:admApplNbr] == duplicate_nbr })
           end
           # reduce each subarray to the checklist item with the highest SEQ_3C
-          picked_from_duplicates = duplicate_item_sets.map { |item_set| item_set.sort_by! { |item| item[:seq3c].to_i }.last }
+          picked_from_duplicates = duplicate_item_sets.map { |item_set| item_set.sort_by! { |item| item[:checklistSeq].to_i }.last }
           # remove unwanted duplicates from returned array
           picked_from_duplicates.each do |picked|
             sir_checklist_items.delete_if do |item|
               picked[:checkListMgmtAdmp][:admApplNbr] == item[:checkListMgmtAdmp][:admApplNbr] &&
-              picked[:seq3c] != item[:seq3c]
+              picked[:checklistSeq] != item[:checklistSeq]
             end
           end
           sir_checklist_items
