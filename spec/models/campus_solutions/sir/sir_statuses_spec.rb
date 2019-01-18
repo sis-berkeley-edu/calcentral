@@ -136,7 +136,7 @@ describe CampusSolutions::Sir::SirStatuses do
            itemStatus: 'Completed',
            itemStatusCode: 'C',
            adminFunc: 'ADMP',
-           seq3c: 10
+           checklistSeq: 100
           },
           {
             chklstItemCd: 'AUSIRF',
@@ -147,7 +147,7 @@ describe CampusSolutions::Sir::SirStatuses do
             itemStatus: 'Completed',
             itemStatusCode: 'C',
             adminFunc: 'ADMP',
-            seq3c: 11
+            checklistSeq: 200
           }
         ]
       }
@@ -490,7 +490,7 @@ describe CampusSolutions::Sir::SirStatuses do
       subject { (proxy.new(uid).get_feed[:sirStatuses]) }
       it 'only returns a single sir item with the highest seq3c value among the duplicates' do
         expect(subject).to have(1).items
-        expect(subject[0][:seq3c]).to eql(11)
+        expect(subject[0][:checklistSeq]).to eql(200)
       end
     end
 
