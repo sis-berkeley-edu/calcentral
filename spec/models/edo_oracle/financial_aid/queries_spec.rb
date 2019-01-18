@@ -172,4 +172,74 @@ describe EdoOracle::FinancialAid::Queries do
     end
   end
 
+  describe '#get_finaid_profile_status' do
+    subject { described_class.get_finaid_profile_status(uid, aid_year) }
+    let(:uid) { 61889 }
+    let(:aid_year) { 2018 }
+
+    it_behaves_like 'a successful query that returns one result'
+
+    it 'returns the expected result' do
+      puts subject
+      expect(subject.count).to eq 12
+      expect(subject).to have_keys(%w(aid_year acad_career_descr exp_grad_term sap_status verification_status award_status acad_holds candidacy filing_fee berkeley_pc title message))
+    end
+  end
+
+  describe '#get_finaid_profile_acad_level' do
+    subject { described_class.get_finaid_profile_acad_level(uid, aid_year) }
+    let(:uid) { 61889 }
+    let(:aid_year) { 2018 }
+
+    it_behaves_like 'a successful query'
+
+    it 'returns the expected result' do
+      expect(subject.count).to eq 3
+      expect(subject[0]).to have_keys(%w(aid_year term_id term_descr acad_level))
+      expect(subject[1]).to have_keys(%w(aid_year term_id term_descr acad_level))
+      expect(subject[2]).to have_keys(%w(aid_year term_id term_descr acad_level))
+    end
+
+    it 'sorts the rows by term' do
+      expect(subject[0]['term_id']).to eq '2178'
+      expect(subject[1]['term_id']).to eq '2182'
+      expect(subject[2]['term_id']).to eq '2185'
+    end
+  end
+
+  describe '#get_finaid_profile_enrollment' do
+    subject { described_class.get_finaid_profile_enrollment(uid, aid_year) }
+    let(:uid) { 61889 }
+    let(:aid_year) { 2018 }
+
+    it_behaves_like 'a successful query'
+
+    it 'returns the expected result' do
+      expect(subject.count).to eq 3
+      expect(subject[0]).to have_keys(%w(aid_year term_id term_descr term_units ship_status))
+      expect(subject[1]).to have_keys(%w(aid_year term_id term_descr term_units ship_status))
+      expect(subject[2]).to have_keys(%w(aid_year term_id term_descr term_units ship_status))
+    end
+
+    it 'sorts the rows by term' do
+      expect(subject[0]['term_id']).to eq '2178'
+      expect(subject[1]['term_id']).to eq '2182'
+      expect(subject[2]['term_id']).to eq '2185'
+    end
+  end
+
+  describe '#get_finaid_profile_isir' do
+    subject { described_class.get_finaid_profile_isir(uid, aid_year) }
+    let(:uid) { 61889 }
+    let(:aid_year) { 2018 }
+
+    it_behaves_like 'a successful query that returns one result'
+
+    it 'returns the expected result' do
+      puts subject
+      expect(subject.count).to eq 5
+      expect(subject).to have_keys(%w(aid_year dependency_status primary_efc summer_efc family_in_college))
+    end
+  end
+
 end

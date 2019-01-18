@@ -90,6 +90,7 @@ Calcentral::Application.routes.draw do
     get '/api/my/campuslinks/expire' => 'my_campus_links#expire'
     get '/api/my/campuslinks/refresh' => 'my_campus_links#refresh', :defaults => { :format => 'json' }
     get '/api/my/financial_aid_summary' => 'my_financial_aid_summary#get_feed', :defaults => { :format => 'json' }
+    get '/api/my/finaid_profile/:aid_year' => 'my_finaid_profile#get_feed', :defaults => { :format => 'json' }
     get '/api/my/class_enrollments' => 'my_class_enrollments#get_feed', :defaults => { :format => 'json' }
     get '/api/my/classes' => 'my_classes#get_feed', :as => :my_classes, :defaults => { :format => 'json' }
     get '/api/my/committees' => 'my_committees#get_feed', :defaults => { :format => 'json' }

@@ -241,6 +241,93 @@ module EdoOracle
         SQL
         result.first
       end
+
+      def self.get_finaid_profile_status(person_id, aid_year)
+        result = safe_query <<-SQL
+        SELECT
+          UC.AID_YEAR             AS AID_YEAR,
+          UC.DESCR                AS ACAD_CAREER_DESCR,
+          UC.DESCR2               AS EXP_GRAD_TERM,
+          UC.DESCR3               AS SAP_STATUS,
+          UC.DESCR4               AS VERIFICATION_STATUS,
+          UC.DESCR5               AS AWARD_STATUS,
+          UC.DESCR6               AS ACAD_HOLDS,
+          UC.DESCRFORMAL          AS CANDIDACY,
+          UC.DESCR7               AS FILING_FEE,
+          UC.DESCR8               AS BERKELEY_PC,
+          UC.TITLE                AS TITLE,
+          UC.MESSAGE_TEXT_LONG    AS MESSAGE
+          FROM SYSADM.PS_UCC_FA_PRFL_FAT UC
+        WHERE UC.CAMPUS_ID   = '#{person_id}'
+          AND UC.INSTITUTION = '#{UC_BERKELEY}'
+          AND UC.AID_YEAR    = '#{aid_year}'
+        ORDER BY UC.AID_YEAR
+        SQL
+        result.first
+      end
+
+      def self.get_finaid_profile_acad_level(person_id, aid_year)
+        result = safe_query <<-SQL
+        SELECT
+          UC.AID_YEAR             AS AID_YEAR,
+          UC.STRM                 AS TERM_ID,
+          UC.DESCR                AS TERM_DESCR,
+          UC.DESCR2               AS ACAD_LEVEL
+          FROM SYSADM.PS_UCC_FA_PRFL_LVL UC
+        WHERE UC.CAMPUS_ID   = '#{person_id}'
+          AND UC.INSTITUTION = '#{UC_BERKELEY}'
+          AND UC.AID_YEAR    = '#{aid_year}'
+        ORDER BY UC.AID_YEAR, UC.STRM
+        SQL
+      end
+
+      def self.get_finaid_profile_enrollment(person_id, aid_year)
+        result = safe_query <<-SQL
+        SELECT
+          UC.AID_YEAR                         AS AID_YEAR,
+          UC.STRM                             AS TERM_ID,
+          UC.DESCR                            AS TERM_DESCR,
+          RTRIM(UC.TOT_TERM_UNT_FA,'.0')      AS TERM_UNITS,
+          UC.DESCR2                           AS SHIP_STATUS
+          FROM SYSADM.PS_UCC_FA_PRFL_ENR UC
+        WHERE UC.CAMPUS_ID   = '#{person_id}'
+          AND UC.INSTITUTION = '#{UC_BERKELEY}'
+          AND UC.AID_YEAR    = '#{aid_year}'
+        ORDER BY UC.AID_YEAR, UC.STRM
+        SQL
+      end
+
+      def self.get_finaid_profile_residency(person_id, aid_year)
+        result = safe_query <<-SQL
+        SELECT
+          UC.AID_YEAR             AS AID_YEAR,
+          UC.STRM                 AS TERM_ID,
+          UC.DESCR                AS TERM_DESCR,
+          UC.DESCR2               AS RESIDENCY
+          FROM SYSADM.PS_UCC_FA_PRFL_RES UC
+        WHERE UC.CAMPUS_ID   = '#{person_id}'
+          AND UC.INSTITUTION = '#{UC_BERKELEY}'
+          AND UC.AID_YEAR    = '#{aid_year}'
+        ORDER BY UC.AID_YEAR, UC.STRM
+        SQL
+      end
+
+      def self.get_finaid_profile_isir(person_id, aid_year)
+        result = safe_query <<-SQL
+        SELECT
+          UC.AID_YEAR             AS AID_YEAR,
+          UC.DESCR                AS DEPENDENCY_STATUS,
+          UC.DESCR2               AS PRIMARY_EFC,
+          UC.DESCR3               AS SUMMER_EFC,
+          UC.DESCR4               AS FAMILY_IN_COLLEGE
+          FROM SYSADM.PS_UCC_FA_PRFL_ISR UC
+        WHERE UC.CAMPUS_ID   = '#{person_id}'
+          AND UC.INSTITUTION = '#{UC_BERKELEY}'
+          AND UC.AID_YEAR    = '#{aid_year}'
+        ORDER BY UC.AID_YEAR
+        SQL
+        result.first
+      end
     end
   end
 end
