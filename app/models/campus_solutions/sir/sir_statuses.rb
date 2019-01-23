@@ -30,7 +30,7 @@ module CampusSolutions
           background: 'cc-widget-sir-background-lawjd'
         },
         UGRD: {
-          name: 'Amy W. Jarich',
+          name: 'Olufemi Ogundele',
           title: 'Assistant Vice Chancellor & Director',
           background: 'cc-widget-sir-background-berkeley',
           picture: 'cc-widget-sir-picture-ugrad'
