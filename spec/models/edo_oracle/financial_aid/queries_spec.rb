@@ -1,4 +1,7 @@
 describe EdoOracle::FinancialAid::Queries do
+  let(:student_id) { 11667051 }
+  let(:uid) { 61889 }
+  let(:aid_year) { 2018 }
   shared_examples 'a successful query' do
     it 'returns a set of rows' do
       expect(subject).to be
@@ -34,7 +37,7 @@ describe EdoOracle::FinancialAid::Queries do
 
   describe '#get_housing' do
     subject { described_class.get_housing(uid, aid_year) }
-    let(:uid) { 61889 }
+
     let(:aid_year) { 2019 }
 
     it_behaves_like 'a successful query'
@@ -52,14 +55,12 @@ describe EdoOracle::FinancialAid::Queries do
 
   describe '#get_loan_history_status' do
     subject { described_class.get_loan_history_status(student_id) }
-    let(:student_id) { 11667051 }
 
     it_behaves_like 'a successful query that returns one result'
   end
 
   describe '#enrolled_pre_fall_2016' do
     subject { described_class.enrolled_pre_fall_2016(student_id) }
-    let(:student_id) { 11667051 }
 
     it_behaves_like 'a successful query that returns one result'
   end
@@ -72,7 +73,7 @@ describe EdoOracle::FinancialAid::Queries do
 
   describe '#get_loan_history_cumulative_loan_amount' do
     subject { described_class.get_loan_history_cumulative_loan_amount(student_id, view_name) }
-    let(:student_id) { 11667051 }
+
     let(:view_name) { 'CLC_FA_LNHST_DTL_AY_GRADPLUS' }
 
     it_behaves_like 'a successful query that returns one result'
@@ -80,14 +81,13 @@ describe EdoOracle::FinancialAid::Queries do
 
   describe '#get_loan_history_categories_aid_years' do
     subject { described_class.get_loan_history_categories_aid_years(student_id) }
-    let(:student_id) { 11667051 }
 
     it_behaves_like 'a successful query'
   end
 
   describe '#get_loan_history_aid_years_details' do
     subject { described_class.get_loan_history_aid_years_details(student_id, view_name) }
-    let(:student_id) { 11667051 }
+
     let(:view_name) { 'CLC_FA_LNHST_DTL_AY_GRADPLUS' }
 
     it_behaves_like 'a successful query'
@@ -119,8 +119,6 @@ describe EdoOracle::FinancialAid::Queries do
 
   describe '#get_financial_aid_scholarships_summary' do
     subject { described_class.get_financial_aid_summary(uid, aid_year) }
-    let(:uid) { 61889 }
-    let(:aid_year) { 2018 }
 
     it_behaves_like 'a successful query that returns one result'
 
@@ -131,7 +129,6 @@ describe EdoOracle::FinancialAid::Queries do
 
   describe '#get_aid_years' do
     subject { described_class.get_aid_years(uid) }
-    let(:uid) { 61889 }
 
     it_behaves_like 'a successful query'
 
@@ -149,7 +146,6 @@ describe EdoOracle::FinancialAid::Queries do
 
   describe '#get_title4' do
     subject { described_class.get_title4(uid) }
-    let(:uid) { 61889 }
 
     it_behaves_like 'a successful query that returns one result'
 
@@ -161,8 +157,6 @@ describe EdoOracle::FinancialAid::Queries do
 
   describe '#get_terms_and_conditions' do
     subject { described_class.get_terms_and_conditions(uid, aid_year) }
-    let(:uid) { 61889 }
-    let(:aid_year) { 2018 }
 
     it_behaves_like 'a successful query that returns one result'
 
@@ -174,13 +168,10 @@ describe EdoOracle::FinancialAid::Queries do
 
   describe '#get_finaid_profile_status' do
     subject { described_class.get_finaid_profile_status(uid, aid_year) }
-    let(:uid) { 61889 }
-    let(:aid_year) { 2018 }
 
     it_behaves_like 'a successful query that returns one result'
 
     it 'returns the expected result' do
-      puts subject
       expect(subject.count).to eq 12
       expect(subject).to have_keys(%w(aid_year acad_career_descr exp_grad_term sap_status verification_status award_status acad_holds candidacy filing_fee berkeley_pc title message))
     end
@@ -188,8 +179,6 @@ describe EdoOracle::FinancialAid::Queries do
 
   describe '#get_finaid_profile_acad_level' do
     subject { described_class.get_finaid_profile_acad_level(uid, aid_year) }
-    let(:uid) { 61889 }
-    let(:aid_year) { 2018 }
 
     it_behaves_like 'a successful query'
 
@@ -209,8 +198,6 @@ describe EdoOracle::FinancialAid::Queries do
 
   describe '#get_finaid_profile_enrollment' do
     subject { described_class.get_finaid_profile_enrollment(uid, aid_year) }
-    let(:uid) { 61889 }
-    let(:aid_year) { 2018 }
 
     it_behaves_like 'a successful query'
 
@@ -230,16 +217,12 @@ describe EdoOracle::FinancialAid::Queries do
 
   describe '#get_finaid_profile_isir' do
     subject { described_class.get_finaid_profile_isir(uid, aid_year) }
-    let(:uid) { 61889 }
-    let(:aid_year) { 2018 }
 
     it_behaves_like 'a successful query that returns one result'
 
     it 'returns the expected result' do
-      puts subject
       expect(subject.count).to eq 5
       expect(subject).to have_keys(%w(aid_year dependency_status primary_efc summer_efc family_in_college))
     end
   end
-
 end

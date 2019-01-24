@@ -62,48 +62,48 @@ module FinancialAid
     end
 
     def success?
-      (status || level || enrollment || residency || isir) && (title4 && terms_and_conditions)
+      my_aid_year.present? ? (status || level || enrollment || residency || isir) && (title4 && terms_and_conditions) : false
     end
 
     def subvaluesLevel
-      @subvaluesLevel ||= level.map do |item|
+      @subvaluesLevel ||= level.map.try(:each) do |item|
          {
           subvalue: [
-            item['term_descr'],
-            item['acad_level']
+            item.try(:[], 'term_descr'),
+            item.try(:[], 'acad_level')
           ]
         }
       end
     end
 
     def subvaluesResidency
-      @subvaluesResidency ||= residency.map do |item|
+      @subvaluesResidency ||= residency.map.try(:each) do |item|
          {
           subvalue: [
-            item['term_descr'],
-            item['residency']
+            item.try(:[], 'term_descr'),
+            item.try(:[], 'residency')
           ]
         }
       end
     end
 
     def subvaluesEnrollment
-      @subvaluesEnrollment ||= enrollment.map do |item|
+      @subvaluesEnrollment ||= enrollment.map.try(:each) do |item|
          {
           subvalue: [
-            item['term_descr'],
-            item['term_units']
+            item.try(:[], 'term_descr'),
+            item.try(:[], 'term_units')
           ]
         }
       end
     end
 
     def subvaluesSHIP
-      @subvaluesSHIP ||= enrollment.map do |item|
+      @subvaluesSHIP ||= enrollment.map.try(:each) do |item|
          {
           subvalue: [
-            item['term_descr'],
-            item['ship_status']
+            item.try(:[], 'term_descr'),
+            item.try(:[], 'ship_status')
           ]
         }
       end
@@ -114,64 +114,67 @@ module FinancialAid
         [
           {
             title: 'Academic Career',
-            value: status['acad_career_descr']
-          },{
+            value: status.try(:[], 'acad_career_descr')
+          },
+          {
             title: 'Level',
             values: subvaluesLevel
-          },{
+          },
+          {
             title: 'Expected Graduation',
-            value: status['exp_grad_term']
+            value: status.try(:[], 'exp_grad_term')
           }
         ],
         [
           {
             title: 'Candidacy',
-            value: status['candidacy']
-          },{
+            value: status.try(:[], 'candidacy')
+          },
+          {
             title: 'Filing Fee Status',
-            value: status['filing_fee']
+            value: status.try(:[], 'filing_fee')
           }
         ],
         [
           {
             title: 'Academic Holds',
-            value: status['acad_holds']
+            value: status.try(:[], 'acad_holds')
           }
         ],
         [
           {
             title: 'SAP Status',
-            value: status['sap_status']
+            value: status.try(:[], 'sap_status')
           },
           {
             title: 'Award Status',
-            value: status['award_status']
+            value: status.try(:[], 'award_status')
           },
           {
             title: 'Verification Status',
-            value: status['verification_status']
+            value: status.try(:[], 'verification_status')
           }
         ],
         [
           {
             title: 'Dependency Status',
-            value: isir['dependency_status']
+            value: isir.try(:[], 'dependency_status')
           },
           {
             title: 'Expected Family Contribution (EFC)',
-            value: isir['primary_efc']
+            value: isir.try(:[], 'primary_efc')
           },
           {
             title: 'Summer EFC',
-            value: isir['summer_efc']
+            value: isir.try(:[], 'summer_efc')
           },
           {
             title: 'Berkeley Parent Contribution',
-            value: status['berkeley_pc']
+            value: status.try(:[], 'berkeley_pc')
           },
           {
             title: 'Family Members in College',
-            value: isir['family_in_college']
+            value: isir.try(:[], 'family_in_college')
           }
         ],
         [
@@ -200,10 +203,11 @@ module FinancialAid
         [
           {
             title: 'Title IV',
-            value: title4['response_descr']
-          },{
+            value: title4.try(:[], 'response_descr')
+          },
+          {
             title: 'Terms & Conditions',
-            value: terms_and_conditions['response_descr']
+            value: terms_and_conditions.try(:[], 'response_descr')
           }
         ]
       ]
@@ -212,9 +216,10 @@ module FinancialAid
     def categories
       @categories ||= [
         {
-          title: status['title'],
+          title: status.try(:[], 'title'),
           itemGroups: itemGroupsProfile
-        },{
+        },
+        {
           title: 'Agreements',
           itemGroups: itemGroupsAgreements
         }
