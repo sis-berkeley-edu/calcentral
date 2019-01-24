@@ -8,7 +8,7 @@ describe MyAcademics::Merged do
       MyAcademics::Exams,
       MyAcademics::CanvasSites,
       MyAcademics::FacultyDelegate,
-      MyAcademics::Grading,
+      MyAcademics::Grading::Applicator,
       MyAcademics::Graduation,
       MyAcademics::StudentLinks
     ]

@@ -618,7 +618,6 @@ describe MyAcademics::ClassEnrollments do
     context 'when no early drop deadline classes are present' do
       before { instruction[:enrolledClasses].each {|c| c[:edd] = 'N' } }
       it 'sets early drop deadline class list as nil' do
-        puts "instruction: #{instruction.inspect}"
         subject.parse_early_drop_deadline_classes(instruction)
         expect(instruction[:earlyDropDeadlineClasses]).to eq nil
       end

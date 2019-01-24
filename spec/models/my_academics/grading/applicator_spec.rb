@@ -1,4 +1,4 @@
-describe MyAcademics::Grading do
+describe MyAcademics::Grading::Applicator do
 
   subject { described_class.new(uid) }
   let(:uid) { '123456' }
@@ -31,14 +31,14 @@ describe MyAcademics::Grading do
         slug: 'math-101',
         session_code: nil,
         course_code: 'MATH 101',
-        dept: semester_classes_dept,
+        courseCareerCode: semester_classes_course_career_code,
         courseCatalog: '101',
         course_id: 'math-101-2XXX-B',
         sections: [section_one, section_two]
       }
     ]
   end
-  let(:semester_classes_dept) { 'MATH' }
+  let(:semester_classes_course_career_code) { 'UGRD' }
   let(:section_one) do
     {
       ccn: '10001',
@@ -82,144 +82,167 @@ describe MyAcademics::Grading do
   let(:section_one_instructors) { [] }
   let(:section_two_instructors) { [] }
 
-  let(:edo_grading_dates) do
-    {
-      '2182' => {
-        'GRAD' => {
-          '1' => {
-            mid_term_begin_date: Date.parse('Mon, 05 Mar 2018'),
-            mid_term_end_date: Date.parse('Mon, 12 Mar 2018'),
-            final_begin_date: Date.parse('Mon, 26 Mar 2018'),
-            final_end_date: Date.parse('Wed, 16 May 2018'),
-            hasMidTerm: true
-          }
-        },
-        'LAW' => {
-          '1' => {
-            mid_term_begin_date: nil,
-            mid_term_end_date: nil,
-            final_begin_date: Date.parse('Mon, 05 Mar 2018'),
-            final_end_date: Date.parse('Wed, 06 Jun 2018'),
-            hasMidTerm: false
-          }
-        },
-        'UGRD' => {
-          '1' => {
-            mid_term_begin_date: Date.parse('Mon, 05 Mar 2018'),
-            mid_term_end_date: Date.parse('Sun, 11 Mar 2018'),
-            final_begin_date: Date.parse('Mon, 26 Mar 2018'),
-            final_end_date: Date.parse('Wed, 16 May 2018'),
-            hasMidTerm: true
-          }
-        }
+  let(:edo_grading_dates_array) do
+    [
+      edo_grading_session_2182_grad_1,
+      {
+        'acad_career' => 'LAW',
+        'term_id' => '2182',
+        'session_code' => '1',
+        'mid_term_begin_date' => nil,
+        'mid_term_end_date' => nil,
+        'final_begin_date' => Time.parse('2018-03-05 00:00:00 UTC'),
+        'final_end_date' => Time.parse('2018-06-06 00:00:00 UTC')
       },
-      '2185' => {
-        'GRAD' => {
-          '10W' => {
-            mid_term_begin_date: nil,
-            mid_term_end_date: nil,
-            final_begin_date: Date.parse('Mon, 06 Aug 2018'),
-            final_end_date: Date.parse('Wed, 15 Aug 2018'),
-            hasMidTerm: false
-          },
-          '3W' => {
-            mid_term_begin_date: nil,
-            mid_term_end_date: nil,
-            final_begin_date: Date.parse('Mon, 06 Aug 2018'),
-            final_end_date: Date.parse('Wed, 15 Aug 2018'),
-            hasMidTerm: false
-          },
-          '6W1' => {
-            mid_term_begin_date: nil,
-            mid_term_end_date: nil,
-            final_begin_date: Date.parse('Mon, 25 Jun 2018'),
-            final_end_date: Date.parse('Wed, 04 Jul 2018'),
-            hasMidTerm: false
-          },
-          '6W2' => {
-            mid_term_begin_date: nil,
-            mid_term_end_date: nil,
-            final_begin_date: Date.parse('Mon, 06 Aug 2018'),
-            final_end_date: Date.parse('Wed, 15 Aug 2018'),
-            hasMidTerm: false
-          },
-          '8W' => {
-            mid_term_begin_date: nil,
-            mid_term_end_date: nil,
-            final_begin_date: Date.parse('Mon, 06 Aug 2018'),
-            final_end_date: Date.parse('Wed, 15 Aug 2018'),
-            hasMidTerm: false
-          }
-        },
-        'UGRD' => {
-          '10W' => {
-            mid_term_begin_date: nil,
-            mid_term_end_date: nil,
-            final_begin_date: Date.parse('Mon, 06 Aug 2018'),
-            final_end_date: Date.parse('Wed, 15 Aug 2018'),
-            hasMidTerm: false
-          },
-          '3W' => {
-            mid_term_begin_date: nil,
-            mid_term_end_date: nil,
-            final_begin_date: Date.parse('Mon, 06 Aug 2018'),
-            final_end_date: Date.parse('Wed, 15 Aug 2018'),
-            hasMidTerm: false
-          },
-          '6W1' => {
-            mid_term_begin_date: nil,
-            mid_term_end_date: nil,
-            final_begin_date: Date.parse('Mon, 25 Jun 2018'),
-            final_end_date: Date.parse('Wed, 04 Jul 2018'),
-            hasMidTerm: false
-          },
-          '6W2' => {
-            mid_term_begin_date: nil,
-            mid_term_end_date: nil,
-            final_begin_date: Date.parse('Mon, 06 Aug 2018'),
-            final_end_date: Date.parse('Wed, 15 Aug 2018'),
-            hasMidTerm: false
-          },
-          '8W' => {
-            mid_term_begin_date: nil,
-            mid_term_end_date: nil,
-            final_begin_date: Date.parse('Mon, 06 Aug 2018'),
-            final_end_date: Date.parse('Wed, 15 Aug 2018'),
-            hasMidTerm: false
-          }
-        },
-        'LAW' => {
-          'Q1' => {
-            mid_term_begin_date: nil,
-            mid_term_end_date: nil,
-            final_begin_date: Date.parse('Mon, 04 Jun 2018'),
-            final_end_date: Date.parse('Tue, 19 Jun 2018'),
-            hasMidTerm: false
-          },
-          'Q2' => {
-            mid_term_begin_date: nil,
-            mid_term_end_date: nil,
-            final_begin_date: Date.parse('Sat, 09 Jun 2018'),
-            final_end_date: Date.parse('Tue, 10 Jul 2018'),
-            hasMidTerm: false
-          },
-          'Q3' => {
-            mid_term_begin_date: nil,
-            mid_term_end_date: nil,
-            final_begin_date: Date.parse('Mon, 02 Jul 2018'),
-            final_end_date: Date.parse('Fri, 03 Aug 2018'),
-            hasMidTerm: false
-          },
-          'Q4' => {
-            mid_term_begin_date: nil,
-            mid_term_end_date: nil,
-            final_begin_date: Date.parse('Fri, 27 Jul 2018'),
-            final_end_date: Date.parse('Tue, 28 Aug 2018'),
-            hasMidTerm: false
-          }}
-      }
+      {
+        'acad_career' => 'UGRD',
+        'term_id' => '2182',
+        'session_code' => '1',
+        'mid_term_begin_date' => Time.parse('2018-03-05 00:00:00 UTC'),
+        'mid_term_end_date' => Time.parse('2018-03-11 00:00:00 UTC'),
+        'final_begin_date' => Time.parse('2018-03-26 00:00:00 UTC'),
+        'final_end_date' => Time.parse('2018-05-16 00:00:00 UTC')
+      },
+      {
+        'acad_career' => 'GRAD',
+        'term_id' => '2185',
+        'session_code' => '10W',
+        'mid_term_begin_date' => nil,
+        'mid_term_end_date' => nil,
+        'final_begin_date' => Time.parse('2018-08-06 00:00:00 UTC'),
+        'final_end_date' => Time.parse('2018-08-15 00:00:00 UTC')
+      },
+      {
+        'acad_career' => 'GRAD',
+        'term_id' => '2185',
+        'session_code' => '3W',
+        'mid_term_begin_date' => nil,
+        'mid_term_end_date' => nil,
+        'final_begin_date' => Time.parse('2018-08-06 00:00:00 UTC'),
+        'final_end_date' => Time.parse('2018-08-15 00:00:00 UTC')
+      },
+      {
+        'acad_career' => 'GRAD',
+        'term_id' => '2185',
+        'session_code' => '6W1',
+        'mid_term_begin_date' => nil,
+        'mid_term_end_date' => nil,
+        'final_begin_date' => Time.parse('2018-06-25 00:00:00 UTC'),
+        'final_end_date' => Time.parse('2018-07-04 00:00:00 UTC')
+      },
+      {
+        'acad_career' => 'GRAD',
+        'term_id' => '2185',
+        'session_code' => '6W2',
+        'mid_term_begin_date' => nil,
+        'mid_term_end_date' => nil,
+        'final_begin_date' => Time.parse('2018-08-06 00:00:00 UTC'),
+        'final_end_date' => Time.parse('2018-08-15 00:00:00 UTC')
+      },
+      {
+        'acad_career' => 'GRAD',
+        'term_id' => '2185',
+        'session_code' => '8W',
+        'mid_term_begin_date' => nil,
+        'mid_term_end_date' => nil,
+        'final_begin_date' => Time.parse('2018-08-06 00:00:00 UTC'),
+        'final_end_date' => Time.parse('2018-08-15 00:00:00 UTC')
+      },
+      {
+        'acad_career' => 'UGRD',
+        'term_id' => '2185',
+        'session_code' => '10W',
+        'mid_term_begin_date' => nil,
+        'mid_term_end_date' => nil,
+        'final_begin_date' => Time.parse('2018-08-06 00:00:00 UTC'),
+        'final_end_date' => Time.parse('2018-08-15 00:00:00 UTC')
+      },
+      {
+        'acad_career' => 'UGRD',
+        'term_id' => '2185',
+        'session_code' => '3W',
+        'mid_term_begin_date' => nil,
+        'mid_term_end_date' => nil,
+        'final_begin_date' => Time.parse('2018-08-06 00:00:00 UTC'),
+        'final_end_date' => Time.parse('2018-08-15 00:00:00 UTC')
+      },
+      {
+        'acad_career' => 'UGRD',
+        'term_id' => '2185',
+        'session_code' => '6W1',
+        'mid_term_begin_date' => nil,
+        'mid_term_end_date' => nil,
+        'final_begin_date' => Time.parse('2018-06-25 00:00:00 UTC'),
+        'final_end_date' => Time.parse('2018-07-04 00:00:00 UTC')
+      },
+      {
+        'acad_career' => 'UGRD',
+        'term_id' => '2185',
+        'session_code' => '6W2',
+        'mid_term_begin_date' => nil,
+        'mid_term_end_date' => nil,
+        'final_begin_date' => Time.parse('2018-08-06 00:00:00 UTC'),
+        'final_end_date' => Time.parse('2018-08-15 00:00:00 UTC')
+      },
+      {
+        'acad_career' => 'UGRD',
+        'term_id' => '2185',
+        'session_code' => '8W',
+        'mid_term_begin_date' => nil,
+        'mid_term_end_date' => nil,
+        'final_begin_date' => Time.parse('2018-08-06 00:00:00 UTC'),
+        'final_end_date' => Time.parse('2018-08-15 00:00:00 UTC')
+      },
+      {
+        'acad_career' => 'LAW',
+        'term_id' => '2185',
+        'session_code' => 'Q1',
+        'mid_term_begin_date' => nil,
+        'mid_term_end_date' => nil,
+        'final_begin_date' => Time.parse('2018-06-04 00:00:00 UTC'),
+        'final_end_date' => Time.parse('2018-06-19 00:00:00 UTC')
+      },
+      {
+        'acad_career' => 'LAW',
+        'term_id' => '2185',
+        'session_code' => 'Q2',
+        'mid_term_begin_date' => nil,
+        'mid_term_end_date' => nil,
+        'final_begin_date' => Time.parse('2018-06-09 00:00:00 UTC'),
+        'final_end_date' => Time.parse('2018-07-10 00:00:00 UTC')
+      },
+      {
+        'acad_career' => 'LAW',
+        'term_id' => '2185',
+        'session_code' => 'Q3',
+        'mid_term_begin_date' => nil,
+        'mid_term_end_date' => nil,
+        'final_begin_date' => Time.parse('2018-07-02 00:00:00 UTC'),
+        'final_end_date' => Time.parse('2018-08-03 00:00:00 UTC')
+      },
+      {
+        'acad_career' => 'LAW',
+        'term_id' => '2185',
+        'session_code' => 'Q4',
+        'mid_term_begin_date' => nil,
+        'mid_term_end_date' => nil,
+        'final_begin_date' => Time.parse('2018-07-27 00:00:00 UTC'),
+        'final_end_date' => Time.parse('2018-08-28 00:00:00 UTC')
+      },
+    ]
+  end
+  let(:edo_grading_session_2182_grad_1) do
+    {
+      'acad_career' => 'GRAD',
+      'term_id' => '2182',
+      'session_code' => '1',
+      'mid_term_begin_date' => Time.parse('2018-03-05 00:00:00 UTC'),
+      'mid_term_end_date' => Time.parse('2018-03-12 00:00:00 UTC'),
+      'final_begin_date' => Time.parse('2018-03-26 00:00:00 UTC'),
+      'final_end_date' => Time.parse('2018-05-16 00:00:00 UTC')
     }
   end
+
   let(:grading_info_links) do
     {
       :general => Links::Link.new({
@@ -241,22 +264,37 @@ describe MyAcademics::Grading do
   end
 
   before do
-    allow(MyAcademics::GradingDates).to receive(:fetch).and_return(edo_grading_dates)
-    allow(MyAcademics::GradingInfoLinks).to receive(:fetch).and_return(grading_info_links)
+    allow(Settings.terms).to receive(:fake_now).and_return DateTime.parse('2018-08-10 12:00:00')
+    allow(EdoOracle::Queries).to receive(:get_grading_dates).and_return(edo_grading_dates_array)
+    allow(MyAcademics::Grading::InfoLinks).to receive(:fetch).and_return(grading_info_links)
   end
 
   context 'when adding grading information links' do
     describe '#add_grading_information_links' do
-      it 'adds general grading information link' do
-        subject.add_grading_information_links(semester_one)
-        expect(semester_one[:gradingAssistanceLink]).to eq 'http://example.berkeley.edu/final-grading/'
+      context 'when undergraduate classes present' do
+        let(:semester_classes_course_career_code) { 'UGRD' }
+        it 'adds general grading information link' do
+          subject.add_grading_information_links(semester_one)
+          expect(semester_one[:gradingAssistanceLink]).to eq 'http://example.berkeley.edu/final-grading/'
+        end
+        it 'adds midpoint grading information link' do
+          subject.add_grading_information_links(semester_one)
+          expect(semester_one[:gradingAssistanceLinkMidpoint]).to eq 'http://example.berkeley.edu/midterm-grading/'
+        end
       end
-      it 'adds midpoint grading information link' do
-        subject.add_grading_information_links(semester_one)
-        expect(semester_one[:gradingAssistanceLinkMidpoint]).to eq 'http://example.berkeley.edu/midterm-grading/'
+      context 'when graduate classes present' do
+        let(:semester_classes_course_career_code) { 'GRAD' }
+        it 'adds general grading information link' do
+          subject.add_grading_information_links(semester_one)
+          expect(semester_one[:gradingAssistanceLink]).to eq 'http://example.berkeley.edu/final-grading/'
+        end
+        it 'adds midpoint grading information link' do
+          subject.add_grading_information_links(semester_one)
+          expect(semester_one[:gradingAssistanceLinkMidpoint]).to eq 'http://example.berkeley.edu/midterm-grading/'
+        end
       end
       context 'when law classes present' do
-        before { semester_classes[0][:dept] = 'LAW' }
+        let(:semester_classes_course_career_code) { 'LAW' }
         it 'adds law grading information link' do
           subject.add_grading_information_links(semester_one)
           expect(semester_one[:gradingAssistanceLinkLaw]).to eq 'https://www.law.berkeley.edu/grading/'
@@ -306,7 +344,7 @@ describe MyAcademics::Grading do
             end
           end
           context 'when semester includes law dept classes' do
-            let(:semester_classes_dept) { 'LAW' }
+            let(:semester_classes_course_career_code) { 'LAW' }
             it 'delegates to law grading dates method' do
               expect(subject).to_not receive(:add_grading_dates_general)
               expect(subject).to receive(:add_grading_dates_law)
@@ -314,6 +352,132 @@ describe MyAcademics::Grading do
             end
           end
         end
+      end
+    end
+
+    describe '#add_grading_dates_general' do
+      let(:term_id) { '2182' }
+      context 'when semester only includes undergraduate courses' do
+        let(:semester_classes) { [{courseCareerCode: 'UGRD'}] }
+        it 'merges only undergraduate grading dates into semester' do
+          subject.add_grading_dates_general(semester_one, term_id)
+          expect(semester_one[:gradingPeriodStartMidpoint]).to eq 'Mar 05'
+          expect(semester_one[:gradingPeriodEndMidpoint]).to eq 'Mar 11'
+          expect(semester_one[:gradingPeriodStartFinal]).to eq 'Mar 26'
+          expect(semester_one[:gradingPeriodEndFinal]).to eq 'May 16'
+        end
+      end
+      context 'when semester only includes graduate courses' do
+        let(:semester_classes) { [{courseCareerCode: 'GRAD'}] }
+        let(:edo_grading_session_2182_grad_1) do
+          {
+            'acad_career' => 'GRAD',
+            'term_id' => '2182',
+            'session_code' => '1',
+            'mid_term_begin_date' => Time.parse('2018-03-12 00:00:00 UTC'),
+            'mid_term_end_date' => Time.parse('2018-03-19 00:00:00 UTC'),
+            'final_begin_date' => Time.parse('2018-04-02 00:00:00 UTC'),
+            'final_end_date' => Time.parse('2018-04-16 00:00:00 UTC')
+          }
+        end
+
+        it 'merges only graduate grading dates into semester' do
+          subject.add_grading_dates_general(semester_one, term_id)
+          expect(semester_one[:gradingPeriodStartMidpoint]).to eq 'Mar 12'
+          expect(semester_one[:gradingPeriodEndMidpoint]).to eq 'Mar 19'
+          expect(semester_one[:gradingPeriodStartFinal]).to eq 'Apr 02'
+          expect(semester_one[:gradingPeriodEndFinal]).to eq 'Apr 16'
+        end
+      end
+      context 'when semester includes both undergraduate and graduate courses' do
+        let(:semester_classes) do
+          [
+            {courseCareerCode: 'UGRD'},
+            {courseCareerCode: 'GRAD'},
+          ]
+        end
+        context 'when midpoint grading dates are identical for UGRD and GRAD' do
+          it 'provides general midpoint grading dates' do
+            subject.add_grading_dates_general(semester_one, term_id)
+            expect(semester_one[:gradingPeriodStartMidpoint]).to eq 'Mar 05'
+            expect(semester_one[:gradingPeriodEndMidpoint]).to eq 'Mar 11'
+            expect(semester_one[:gradingPeriodStartFinal]).to eq 'Mar 26'
+            expect(semester_one[:gradingPeriodEndFinal]).to eq 'May 16'
+          end
+        end
+        context 'when midpoint grading dates are different for UGRD and GRAD' do
+          let(:edo_grading_session_2182_grad_1) do
+            {
+              'acad_career' => 'GRAD',
+              'term_id' => '2182',
+              'session_code' => '1',
+              'mid_term_begin_date' => Time.parse('2018-03-12 00:00:00 UTC'),
+              'mid_term_end_date' => Time.parse('2018-03-19 00:00:00 UTC'),
+              'final_begin_date' => Time.parse('2018-03-26 00:00:00 UTC'),
+              'final_end_date' => Time.parse('2018-05-16 00:00:00 UTC')
+            }
+          end
+          it 'provides distinguished ugrd and grad midpoint grading dates' do
+            subject.add_grading_dates_general(semester_one, term_id)
+            expect(semester_one[:gradingPeriodStartMidpoint]).to eq 'Mar 05'
+            expect(semester_one[:gradingPeriodEndMidpoint]).to eq 'Mar 11'
+            expect(semester_one[:gradingPeriodStartMidpointGrad]).to eq 'Mar 12'
+            expect(semester_one[:gradingPeriodEndMidpointGrad]).to eq 'Mar 19'
+            expect(semester_one[:gradingPeriodStartFinal]).to eq 'Mar 26'
+            expect(semester_one[:gradingPeriodEndFinal]).to eq 'May 16'
+          end
+        end
+        context 'when final grading dates are identical for UGRD and GRAD' do
+          let(:edo_grading_session_2182_grad_1) do
+            {
+              'acad_career' => 'GRAD',
+              'term_id' => '2182',
+              'session_code' => '1',
+              'mid_term_begin_date' => Time.parse('2018-03-12 00:00:00 UTC'),
+              'mid_term_end_date' => Time.parse('2018-03-19 00:00:00 UTC'),
+              'final_begin_date' => Time.parse('2018-03-26 00:00:00 UTC'),
+              'final_end_date' => Time.parse('2018-05-16 00:00:00 UTC')
+            }
+          end
+          it 'provides general final grading dates' do
+            subject.add_grading_dates_general(semester_one, term_id)
+            expect(semester_one[:gradingPeriodStartMidpoint]).to eq 'Mar 05'
+            expect(semester_one[:gradingPeriodEndMidpoint]).to eq 'Mar 11'
+            expect(semester_one[:gradingPeriodStartFinal]).to eq 'Mar 26'
+            expect(semester_one[:gradingPeriodEndFinal]).to eq 'May 16'
+          end
+        end
+        context 'when final grading dates are different for UGRD and GRAD' do
+          let(:edo_grading_session_2182_grad_1) do
+            {
+              'acad_career' => 'GRAD',
+              'term_id' => '2182',
+              'session_code' => '1',
+              'mid_term_begin_date' => Time.parse('2018-03-05 00:00:00 UTC'),
+              'mid_term_end_date' => Time.parse('2018-03-12 00:00:00 UTC'),
+              'final_begin_date' => Time.parse('2018-04-02 00:00:00 UTC'),
+              'final_end_date' => Time.parse('2018-04-16 00:00:00 UTC')
+            }
+          end
+          it 'provides distinguished ugrd and grad final grading dates' do
+            subject.add_grading_dates_general(semester_one, term_id)
+            expect(semester_one[:gradingPeriodStartMidpoint]).to eq 'Mar 05'
+            expect(semester_one[:gradingPeriodEndMidpoint]).to eq 'Mar 11'
+            expect(semester_one[:gradingPeriodStartFinal]).to eq 'Mar 26'
+            expect(semester_one[:gradingPeriodEndFinal]).to eq 'May 16'
+            expect(semester_one[:gradingPeriodStartFinalGrad]).to eq 'Apr 02'
+            expect(semester_one[:gradingPeriodEndFinalGrad]).to eq 'Apr 16'
+          end
+        end
+      end
+    end
+
+    describe '#has_career_class?' do
+      it 'returns true when class with career code is present' do
+        expect(subject.has_career_class?('UGRD', semester_classes)).to eq true
+      end
+      it 'returns true when class with career code is NOT present' do
+        expect(subject.has_career_class?('GRAD', semester_classes)).to eq false
       end
     end
   end
@@ -605,16 +769,13 @@ describe MyAcademics::Grading do
         end
       end
       context 'when section not present' do
-        let(:grading_window) do
-          {
-            final_begin_date: Time.parse('2018-01-10 00:00:00 UTC'),
-            final_end_date: Time.parse('2018-02-15 00:00:00 UTC')
-          }
+        let(:mock_grading_session) do
+          double(:mock_grading_session)
         end
         context 'when before after begins' do
           before do
-            expect(subject).to receive(:get_grading_dates).with(term_id, :general).and_return(grading_window)
-            expect(subject).to receive(:find_grading_period_status).with(grading_window, is_midpoint).and_return(:afterGradingPeriod)
+            allow(MyAcademics::Grading::Session).to receive(:get_session).and_return(mock_grading_session)
+            expect(subject).to receive(:find_grading_period_status).with(mock_grading_session, is_midpoint).and_return(:afterGradingPeriod)
           end
           it 'provides grading period status for non-summer grading' do
             expect(cc_grading_status).to eq :gradesOverdue
@@ -622,8 +783,8 @@ describe MyAcademics::Grading do
         end
         context 'when before grading begins' do
           before do
-            expect(subject).to receive(:get_grading_dates).with(term_id, :general).and_return(grading_window)
-            expect(subject).to receive(:find_grading_period_status).with(grading_window, is_midpoint).and_return(:beforeGradingPeriod)
+            allow(MyAcademics::Grading::Session).to receive(:get_session).and_return(mock_grading_session)
+            expect(subject).to receive(:find_grading_period_status).with(mock_grading_session, is_midpoint).and_return(:beforeGradingPeriod)
           end
           context 'when midterm grading status' do
             let(:is_midpoint) { true }
@@ -652,49 +813,27 @@ describe MyAcademics::Grading do
     end
   end
 
-  describe '#get_grading_dates' do
-    let(:grading_type) { :general }
-    context 'when session id not specified' do
-      let(:grading_dates) { subject.get_grading_dates(semester_one_term_id, grading_type) }
-      it 'returns grading dates for session 1' do
-        expect(grading_dates[:mid_term_begin_date]).to eq Date.parse('Mon, 05 Mar 2018')
-        expect(grading_dates[:mid_term_end_date]).to eq Date.parse('Sun, 11 Mar 2018')
-        expect(grading_dates[:final_begin_date]).to eq Date.parse('Mon, 26 Mar 2018')
-        expect(grading_dates[:final_end_date]).to eq Date.parse('Wed, 16 May 2018')
-      end
-    end
-    context 'when session id specified' do
-      let(:semester_one_term_id) { '2185' }
-      let(:session_id) { '3W' }
-      let(:grading_dates) { subject.get_grading_dates(semester_one_term_id, grading_type, session_id) }
-      it 'returns grading dates for session 1' do
-        expect(grading_dates[:mid_term_begin_date]).to eq nil
-        expect(grading_dates[:mid_term_end_date]).to eq nil
-        expect(grading_dates[:final_begin_date]).to eq Date.parse('Mon, 06 Aug 2018')
-        expect(grading_dates[:final_end_date]).to eq Date.parse('Wed, 15 Aug 2018')
-      end
-    end
-  end
-
   describe '#find_grading_period_status' do
     let(:mid_term_begin_date) { Date.parse('Mon, 05 Mar 2018') }
     let(:mid_term_end_date) { Date.parse('Mon, 12 Mar 2018') }
     let(:final_begin_date) { Date.parse('Mon, 26 Mar 2018') }
     let(:final_end_date) { Date.parse('Wed, 16 May 2018') }
-    let(:has_mid_term) { true }
     let(:is_midpoint) { false }
-    let(:dates) do
+    let(:edo_hash) do
       {
-        mid_term_begin_date: mid_term_begin_date,
-        mid_term_end_date: mid_term_end_date,
-        final_begin_date: final_begin_date,
-        final_end_date: final_end_date,
-        hasMidTerm: has_mid_term
+        'term_id' => '2188',
+        'session_code' => '1',
+        'acad_career' => 'UGRD',
+        'mid_term_begin_date' => mid_term_begin_date,
+        'mid_term_end_date' => mid_term_end_date,
+        'final_begin_date' => final_begin_date,
+        'final_end_date' => final_end_date,
       }
     end
+    let(:grading_session) { MyAcademics::Grading::Session.new({edo_hash: edo_hash}) }
     # Daylight Times Savings in 2018 (PDT): Mar 11 - Nov 4
     let(:fake_date_time) { DateTime.parse('Tue, 1 Apr 2018 16:20:42 PDT') }
-    let(:grading_period_status) { subject.find_grading_period_status(dates, is_midpoint) }
+    let(:grading_period_status) { subject.find_grading_period_status(grading_session, is_midpoint) }
     before { allow(Settings.terms).to receive(:fake_now).and_return fake_date_time }
 
     context 'when status requested for midpoint test' do
@@ -777,69 +916,14 @@ describe MyAcademics::Grading do
     end
   end
 
-  describe '#get_grading_dates' do
-    let(:term_id) { '2182' }
-    let(:grading_type) { :general }
-    let(:session_id) { '1' }
-    let(:grading_dates) { subject.get_grading_dates(term_id, grading_type, session_id) }
-
-    context 'when grading term not configured' do
-      let(:term_id) { '2025' }
-      it 'returns nil' do
-        expect(grading_dates).to eq nil
-      end
-    end
-    context 'when grading type fails to map to configured career code' do
-      let(:grading_type) { :football_player }
-      it 'returns nil' do
-        expect(grading_dates).to eq nil
-      end
-    end
-    context 'when grading session is not configured' do
-      let(:session_id) { '2' }
-      it 'returns nil' do
-        expect(grading_dates).to eq nil
-      end
-    end
-    context 'when grading type is general' do
-      it 'returns grading periods hash' do
-        expect(grading_dates[:mid_term_begin_date]).to eq Date.parse('Mon, 05 Mar 2018')
-        expect(grading_dates[:mid_term_end_date]).to eq Date.parse('Sun, 11 Mar 2018')
-        expect(grading_dates[:final_begin_date]).to eq Date.parse('Mon, 26 Mar 2018')
-        expect(grading_dates[:final_end_date]).to eq Date.parse('Wed, 16 May 2018')
-        expect(grading_dates[:hasMidTerm]).to eq true
-      end
-    end
-    context 'when grading type is law' do
-      let(:grading_type) { :law }
-      it 'returns grading periods hash' do
-        expect(grading_dates[:mid_term_begin_date]).to eq nil
-        expect(grading_dates[:mid_term_end_date]).to eq nil
-        expect(grading_dates[:final_begin_date]).to eq Date.parse('Mon, 05 Mar 2018')
-        expect(grading_dates[:final_end_date]).to eq Date.parse('Wed, 06 Jun 2018')
-        expect(grading_dates[:hasMidTerm]).to eq false
-      end
-    end
-    context 'when session id not provided' do
-      let(:grading_dates) { subject.get_grading_dates(term_id, grading_type) }
-      it 'returns primary session grading periods' do
-        expect(grading_dates[:mid_term_begin_date]).to eq Date.parse('Mon, 05 Mar 2018')
-        expect(grading_dates[:mid_term_end_date]).to eq Date.parse('Sun, 11 Mar 2018')
-        expect(grading_dates[:final_begin_date]).to eq Date.parse('Mon, 26 Mar 2018')
-        expect(grading_dates[:final_end_date]).to eq Date.parse('Wed, 16 May 2018')
-        expect(grading_dates[:hasMidTerm]).to eq true
-      end
-    end
-  end
-
-  describe '#cs_grading_term?' do
-    it 'returns true when term is a CS supported grading term' do
-      expect(subject.cs_grading_term?('2182')).to eq true
-    end
-    it 'returns false when term is not a CS supported grading term' do
-      expect(subject.cs_grading_term?('2152')).to eq false
-    end
-  end
+  # describe '#cs_grading_term_present?' do
+  #   it 'returns true when term is a CS supported grading term' do
+  #     expect(subject.cs_grading_term_present?('2182')).to eq true
+  #   end
+  #   it 'returns false when term is not a CS supported grading term' do
+  #     expect(subject.cs_grading_term_present?('2152')).to eq false
+  #   end
+  # end
 
   describe '#cs_grading_session_config?' do
     let(:term_id) { '2182' }
