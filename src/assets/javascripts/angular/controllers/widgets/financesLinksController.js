@@ -25,13 +25,11 @@ angular.module('calcentral.controllers').controller('FinancesLinksController', f
   $scope.eft = {
     data: {},
     studentActive: true,
-    eftLink: {
-      url: 'http://studentbilling.berkeley.edu/eft.htm',
-      title: 'Some refunds, payments, and paychecks may be directly deposited to your bank account'
-    },
+    eftLink: {},
     manageAccountLink: {
       url: 'https://eftstudent.berkeley.edu/',
-      title: 'Manage your electronic fund transfer accounts'
+      title: 'Manage your electronic fund transfer accounts',
+      name: 'Enroll in Direct Deposit'
     }
   };
   $scope.fpp = {
@@ -51,10 +49,30 @@ angular.module('calcentral.controllers').controller('FinancesLinksController', f
     }
   };
 
-  var parseCampusLinks = function(response) {
-    angular.extend($scope.campusLinks.data, response);
-    $scope.campusLinks.data.links = sortCampusLinks(response.links);
-  };
+  var getCampusLinks = campusLinksFactory.getLinks({
+    category: 'finances'
+  }).then(
+    function successCallback(response) {
+      angular.extend($scope.campusLinks.data, response);
+      $scope.campusLinks.data.links = sortCampusLinks(response.links);
+    }
+  );
+
+  var getTaxCreditFormLink = csLinkFactory.getLink({
+    urlId: 'UC_CX_STDNT_1098T_TAX_FORM'
+  }).then(
+    function successCallback(response) {
+      $scope.taxForm.viewFormLink = _.get(response, 'data.link');
+    }
+  );
+
+  var getEftLink = csLinkFactory.getLink({
+    urlId: 'UC_CX_STDNT_BPS_EFT'
+  }).then(
+    function successCallback(response) {
+      $scope.eft.eftLink = _.get(response, 'data.link');
+    }
+  );
 
   var sortCampusLinks = function(campusLinks) {
     var orderedLinks = [];
@@ -80,6 +98,10 @@ angular.module('calcentral.controllers').controller('FinancesLinksController', f
     angular.merge($scope.eft, response);
     if (_.get($scope.eft, 'data.statusCode') === 404 || _.get($scope.eft, 'data.data.eftStatus') === 'inactive') {
       $scope.eft.studentActive = false;
+    } else {
+      if ($scope.eft.data.data.eftStatus === 'active') {
+        $scope.eft.manageAccountLink.name = 'Manage Direct Deposit';
+      }
     }
   };
 
@@ -136,19 +158,7 @@ angular.module('calcentral.controllers').controller('FinancesLinksController', f
   };
 
   var initialize = function() {
-    var getCampusLinks = campusLinksFactory.getLinks({
-      category: 'finances'
-    }).then(parseCampusLinks);
-
-    var getTaxCreditFormLink = csLinkFactory.getLink({
-      urlId: 'UC_CX_STDNT_1098T_TAX_FORM'
-    }).then(
-      function successCallback(response) {
-        $scope.taxForm.viewFormLink = _.get(response, 'data.link');
-      }
-    );
-
-    var requests = [getCampusLinks, getTaxCreditFormLink];
+    var requests = [getCampusLinks, getEftLink, getTaxCreditFormLink];
 
     if ($scope.canViewFppEnrollment) {
       var getFppEnrollment = financesLinksFactory.getFppEnrollment().then(parseFppEnrollment);
