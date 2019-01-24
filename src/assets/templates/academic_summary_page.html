@@ -1,16 +1,1 @@
-<div class="cc-page-academics">
-  <div data-ng-if="canViewAcademics">
-    <div class="column">
-      <h1 class="cc-heading-page-title cc-print-hide">
-        <a href="/academics">My Academics</a> &raquo; Academic Summary
-      </h1>
-    </div>
-
-    <div class="row">
-      <div class="medium-10 medium-offset-1 column">
-        <div data-ng-include="'widgets/academic_summary/academic_summary_card.html'"></div>
-      </div>
-    </div>
-  </div>
-</div>
-<div data-ng-include="'404.html'" data-ng-if="!canViewAcademics"></div>
+<academic-summary></academic-summary>

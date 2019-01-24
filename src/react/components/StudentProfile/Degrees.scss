@@ -1,0 +1,20 @@
+.Degree {
+  display: flex;
+  flex-direction: row;
+}
+
+.Degree + .Degree {
+  margin-top: 15px;
+}
+
+.Degree__icon-container {
+  width: 20px;
+}
+
+.Degree__description {
+  font-weight: bold;
+
+  span {
+    font-weight: normal;
+  }
+}

@@ -767,7 +767,8 @@ module EdoOracle
           TC.UNITS_TRNSFR as transfer_units,
           TC.UNITS_TRNSFR_LAW as law_transfer_units,
           TC.RQMNT_DESIGNTN_DESCRFORMAL as requirement_designation,
-          TC.TRF_GRADE_POINTS as grade_points
+          TC.TRF_GRADE_POINTS as grade_points,
+          TC.ARTICULATION_TERM as term_id
         FROM SISEDO.CLC_TRANSFER_CREDIT_SCHLV00_VW TC
         WHERE CAMPUS_UID = '#{person_id}'
           #{and_institution('TC')}
