@@ -6,6 +6,7 @@ module CampusSolutions
         MyFinancialAidFundingSources,
         MyFinancialAidFundingSourcesTerm,
         FinancialAid::MyAidYears,
+        FinancialAid::MyFinaidProfile,
         FinancialAid::MyFinancialAidSummary,
         FinancialAid::MyHousing,
         FinancialAid::MyTermsAndConditions,

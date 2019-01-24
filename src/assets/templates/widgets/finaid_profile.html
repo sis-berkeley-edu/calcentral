@@ -2,57 +2,59 @@
   <div class="cc-widget-title">
     <h2>Financial Aid &amp; Scholarships Profile</h2>
   </div>
-  <div class="cc-widget-text" data-cc-spinner-directive="finaidProfileInfo.isLoading">
-    <div data-ng-if="finaidProfileInfo.errored" data-ng-include="'widgets/finaid_errored.html'"></div>
-    <div data-ng-if="!finaidProfileInfo.errored">
-      <div class="cc-widget-finaid-profile-message" data-ng-bind="finaidProfile.message"></div>
-      <div data-ng-if="!finaidProfile.categories.length">
-        There is no profile available for you.
-      </div>
-      <div data-ng-if="finaidProfile.categories.length">
-        <div data-ng-repeat="category in finaidProfile.categories" class="cc-clearfix-container">
-          <div class="cc-clearfix-container">
-            <h3 class="cc-page-finaid-header cc-left" data-ng-bind="category.title"></h3>
-            <button class="cc-button-link cc-widget-finaid-profile-button-toggle" data-ng-click="api.widget.toggleShow($event, finaidProfile.categories, category, 'Financial Aid - Profile')">
-              <span data-ng-if="!category.show">Show</span>
-              <span data-ng-if="category.show">Hide</span>
-              <span class="cc-visuallyhidden" data-ng-bind="category.title"></span>
-            </button>
-          </div>
-          <div data-ng-if="category.show" data-ng-repeat="items in category.itemGroups" class="cc-widget-finaid-profile-itemgroup">
-            <div data-ng-repeat="item in items" class="cc-clearfix-container">
-              <div data-ng-if="item.title !== 'SHIP Health Insurance'">
-                <div class="cc-left">
-                  <strong data-ng-bind="item.title"></strong>
-                  <a data-ng-if="item.title === 'Title IV' && api.user.profile.actAsOptions.canSeeCSLinks" href="/profile/title4">
-                    Update
-                    <span class="cc-visuallyhidden" data-ng-bind="item.title"></span>
-                  </a>
-                  <a data-ng-if="item.link.url && api.user.profile.actAsOptions.canSeeCSLinks"
-                    data-cc-campus-solutions-link-directive
-                    data-cc-campus-solutions-link-directive-url="item.link.url"
-                    data-cc-campus-solutions-link-directive-cc-cache="finaid"
-                    data-cc-campus-solutions-link-directive-cc-page-name="currentPage.name"
-                    data-cc-campus-solutions-link-directive-cc-page-url="currentPage.url"
-                    data-cc-campus-solutions-link-directive-uc-from="true"
-                    data-cc-campus-solutions-link-directive-uc-from-link="true"
-                    data-cc-campus-solutions-link-directive-uc-from-text="true"
-                  >
-                    <span data-ng-bind="item.link.title"></span>
-                    <span class="cc-visuallyhidden" data-ng-bind="category.title"></span>
-                  </a>
-                </div>
-                <div class="cc-right" data-ng-bind="item.value" data-ng-if="item.value"></div>
-                <div class="cc-right" data-ng-if="item.values">
-                  <div data-ng-repeat="value in item.values" class="cc-text-right">
-                    <div data-ng-bind="value.subvalue.join(' &bull; ')"></div>
-                  </div>
+  <div class="cc-widget-text" data-cc-spinner-directive="finaidProfile.isLoading">
+    <div class="cc-widget-finaid-profile-message" data-ng-bind="finaidProfile.message"></div>
+    <div data-ng-if="!finaidProfile.categories.length">
+      There is no profile available for you.
+    </div>
+    <div data-ng-if="finaidProfile.categories.length">
+      <div data-ng-repeat="category in finaidProfile.categories" class="cc-clearfix-container">
+        <div class="cc-clearfix-container">
+          <h3 class="cc-page-finaid-header cc-left" data-ng-bind="category.title"></h3>
+          <button class="cc-button-link cc-widget-finaid-profile-button-toggle"
+                  data-ng-click="api.widget.toggleShow($event, finaidProfile.categories, category, 'Financial Aid - Profile')">
+            <span data-ng-if="!category.show">Show</span>
+            <span data-ng-if="category.show">Hide</span>
+            <span class="cc-visuallyhidden" data-ng-bind="category.title"></span>
+          </button>
+        </div>
+        <div data-ng-if="category.show" data-ng-repeat="items in category.itemGroups" class="cc-widget-finaid-profile-itemgroup">
+          <div data-ng-repeat="item in items" class="cc-clearfix-container">
+              <div class="cc-left">
+                <strong data-ng-bind="item.title" data-ng-if="item.value || item.values"></strong>
+                <a data-ng-if="item.title === 'Title IV' && api.user.profile.actAsOptions.canSeeCSLinks" href="/finances/finaid/t4/auth">
+                  Update
+                  <span class="cc-visuallyhidden" data-ng-bind="item.title"></span>
+                </a>
+                <a data-ng-if="item.title === 'Terms & Conditions' && api.user.profile.actAsOptions.canSeeCSLinks"
+                   ng-href="/finances/finaid/{{finaidProfile.aidYear}}/tc">
+                  <span data-ng-if="item.value === 'Accepted'">View</span>
+                  <span data-ng-if="item.value !== 'Accepted'">Update</span>
+                  <span class="cc-visuallyhidden" data-ng-bind="item.title"></span>
+                </a>
+                <a data-ng-if="item.link.url && api.user.profile.actAsOptions.canSeeCSLinks"
+                  data-cc-campus-solutions-link-directive
+                  data-cc-campus-solutions-link-directive-url="item.link.url"
+                  data-cc-campus-solutions-link-directive-cc-cache="finaid"
+                  data-cc-campus-solutions-link-directive-cc-page-name="currentPage.name"
+                  data-cc-campus-solutions-link-directive-cc-page-url="currentPage.url"
+                  data-cc-campus-solutions-link-directive-uc-from="true"
+                  data-cc-campus-solutions-link-directive-uc-from-link="true"
+                  data-cc-campus-solutions-link-directive-uc-from-text="true"
+                >
+                  <span data-ng-bind="item.link.title"></span>
+                  <span class="cc-visuallyhidden" data-ng-bind="category.title"></span>
+                </a>
+              </div>
+              <div class="cc-right" data-ng-bind="item.value" data-ng-if="item.value"></div>
+              <div class="cc-right" data-ng-if="item.values">
+                <div data-ng-repeat="value in item.values" class="cc-text-right">
+                  <div data-ng-bind="value.subvalue.join(' &bull; ')"></div>
                 </div>
               </div>
-            </div>
           </div>
-          <hr data-ng-if="!$last" aria-hidden="true">
         </div>
+        <hr data-ng-if="!$last" aria-hidden="true">
       </div>
     </div>
   </div>
