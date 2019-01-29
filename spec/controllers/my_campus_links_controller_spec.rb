@@ -8,8 +8,6 @@ describe MyCampusLinksController do
     before do
       allow(Settings.features).to receive(:campus_links_from_file).and_return(campus_links_from_file)
       allow_any_instance_of(AuthenticationStatePolicy).to receive(:can_author?).and_return is_user_authorized
-      # allow(Links::CampusLinkLoader).to receive(:delete_links!)
-      # allow(Links::CampusLinkLoader).to receive(:load_links!)
     end
 
     context 'when the campus_links_from_file feature flag is on' do
