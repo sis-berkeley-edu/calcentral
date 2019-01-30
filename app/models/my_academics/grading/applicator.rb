@@ -31,18 +31,18 @@ module MyAcademics
           # A termCode of 'C' denotes a summer term. Every non-law term has midpoint grading, except summer.
           if is_summer_semester? semester
             semester.merge!({
-              gradingAssistanceLink: grading_info_links[:general].try(:[], :url)
+              gradingAssistanceLink: grading_info_links[:general].try(:[], 'url')
             })
           else
             semester.merge!({
-              gradingAssistanceLinkMidpoint: grading_info_links[:midterm].try(:[], :url),
-              gradingAssistanceLink: grading_info_links[:general].try(:[], :url)
+              gradingAssistanceLinkMidpoint: grading_info_links[:midterm].try(:[], 'url'),
+              gradingAssistanceLink: grading_info_links[:general].try(:[], 'url')
             })
           end
         end
         if has_career_class?('LAW', semester[:classes])
           semester.merge!({
-            gradingAssistanceLinkLaw: grading_info_links[:law].try(:[], :url)
+            gradingAssistanceLinkLaw: grading_info_links[:law].try(:[], 'url')
           })
         end
       end
@@ -352,13 +352,16 @@ module MyAcademics
         if cs_grading_session_config?(term_id, acad_career_code, session_id)
           if section.present?
             # summer has no midterm
-            summer_grading_window = {
-              final_begin_date: section[:gradingPeriodStartDate],
-              final_end_date: section[:gradingPeriodEndDate]
+            edo_hash = {
+              'acad_career' => acad_career_code,
+              'term_id' => term_id,
+              'session_code' => session_id,
+              'final_begin_date' => section[:gradingPeriodStartDate],
+              'final_end_date' => section[:gradingPeriodEndDate]
             }
-            grading_status = find_grading_period_status(summer_grading_window, false)
+            grading_session = MyAcademics::Grading::Session.new({edo_hash: edo_hash})
+            grading_status = find_grading_period_status(grading_session, false)
           else
-            grading_session = MyAcademics::Grading::Session.get_session(term_id, acad_career_code)
             grading_status = find_grading_period_status(grading_session, is_midpoint)
           end
         else
@@ -385,10 +388,6 @@ module MyAcademics
       def grading_info_links
         @grading_info_links ||= MyAcademics::Grading::InfoLinks.fetch
       end
-
-      # def cs_grading_term_present?(term_id)
-      #   edo_grading_sessions.keys.include? term_id
-      # end
 
       def cs_grading_session_config?(term_id, acad_career_code, session_id)
         !!MyAcademics::Grading::Session.get_session(term_id, acad_career_code, session_id)
