@@ -245,21 +245,21 @@ describe MyAcademics::Grading::Applicator do
 
   let(:grading_info_links) do
     {
-      :general => Links::Link.new({
-        name: 'Assistance with Grading: General',
-        url: 'http://example.berkeley.edu/final-grading/',
-        description: 'Assistance with grading for general classes'
-      }),
-      :midterm => Links::Link.new({
-        name: 'Assistance with Midpoint Grading: General',
-        url: 'http://example.berkeley.edu/midterm-grading/',
-        description: 'Assistance with mid-term grading for general classes'
-      }),
-      :law => Links::Link.new({
-        name: 'Assistance with Grading: Law',
-        url: 'https://www.law.berkeley.edu/grading/',
-        description: 'Assistance with grading for Law classes'
-      })
+      :general => {
+        'name' => 'Assistance with Grading: General',
+        'description' => 'Assistance with grading for general classes',
+        'url' => 'http://example.berkeley.edu/final-grading/',
+      },
+      :midterm => {
+        'name' => 'Assistance with Midpoint Grading: General',
+        'description' => 'Assistance with mid-term grading for general classes',
+        'url' => 'http://example.berkeley.edu/midterm-grading/',
+      },
+      :law => {
+        'name' => 'Assistance with Grading: Law',
+        'description' => 'Assistance with grading for Law classes',
+        'url' => 'https://www.law.berkeley.edu/grading/',
+      }
     }
   end
 
@@ -750,6 +750,9 @@ describe MyAcademics::Grading::Applicator do
 
     context 'when cs grading session configuration present' do
       before { allow(subject).to receive(:cs_grading_session_config?).and_return(true) }
+      let(:mock_grading_session) do
+        double(:mock_grading_session)
+      end
       context 'when section present' do
         let(:section) do
           {
@@ -757,22 +760,12 @@ describe MyAcademics::Grading::Applicator do
             gradingPeriodEndDate: Time.parse('2018-02-15 00:00:00 UTC')
           }
         end
-        let(:summer_grading_window) do
-          {
-            final_begin_date: section[:gradingPeriodStartDate],
-            final_end_date: section[:gradingPeriodEndDate]
-          }
-        end
         it 'provides grading period status for summer grading window' do
-          expect(subject).to receive(:find_grading_period_status).with(summer_grading_window, is_midpoint).and_return(:afterGradingPeriod)
           expect(cc_grading_status).to eq :gradesOverdue
         end
       end
       context 'when section not present' do
-        let(:mock_grading_session) do
-          double(:mock_grading_session)
-        end
-        context 'when before after begins' do
+        context 'when after grading begins' do
           before do
             allow(MyAcademics::Grading::Session).to receive(:get_session).and_return(mock_grading_session)
             expect(subject).to receive(:find_grading_period_status).with(mock_grading_session, is_midpoint).and_return(:afterGradingPeriod)
@@ -915,15 +908,6 @@ describe MyAcademics::Grading::Applicator do
       end
     end
   end
-
-  # describe '#cs_grading_term_present?' do
-  #   it 'returns true when term is a CS supported grading term' do
-  #     expect(subject.cs_grading_term_present?('2182')).to eq true
-  #   end
-  #   it 'returns false when term is not a CS supported grading term' do
-  #     expect(subject.cs_grading_term_present?('2152')).to eq false
-  #   end
-  # end
 
   describe '#cs_grading_session_config?' do
     let(:term_id) { '2182' }
