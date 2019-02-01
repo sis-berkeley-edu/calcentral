@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20181121204721) do
+ActiveRecord::Schema.define(version: 20181129202212) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -177,14 +177,6 @@ ActiveRecord::Schema.define(version: 20181121204721) do
     t.string "name", limit: 255
     t.string "slug", limit: 255
   end
-
-  create_table "user_visits", id: false, force: :cascade do |t|
-    t.string   "uid",           limit: 255, null: false
-    t.datetime "last_visit_at",             null: false
-  end
-
-  add_index "user_visits", ["last_visit_at"], name: "index_user_visits_on_last_visit_at", using: :btree
-  add_index "user_visits", ["uid"], name: "index_user_visits_on_uid", unique: true, using: :btree
 
   create_table "webcast_course_site_log", force: :cascade do |t|
     t.integer  "canvas_course_site_id",    null: false
