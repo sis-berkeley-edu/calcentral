@@ -28,7 +28,7 @@ angular.module('calcentral.controllers').controller('FinancesLinksController', f
     eftLink: {},
     manageAccountLink: {
       url: 'https://eftstudent.berkeley.edu/',
-      title: 'Manage your electronic fund transfer accounts',
+      title: 'Manage direct deposit accounts',
       name: 'Enroll in Direct Deposit'
     }
   };
