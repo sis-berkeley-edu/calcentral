@@ -71,6 +71,8 @@ module Berkeley
         'IMMCB' =>  'Department of Molecular and Cell Biology',
         'IPPEP' =>  'Department of Physical Education',
         'IQBBB' =>  'QB3 Institute',
+        # Officially part of QHUIS.
+        'ISF' => 'Interdisciplinary Studies Field',
         'JYHST' =>  'Center for Science, Technology, Medicine and Society',
         'KDCJS' =>  'Center for Jewish Studies',
         'LPSPP' =>  'Department of Spanish and Portuguese',
