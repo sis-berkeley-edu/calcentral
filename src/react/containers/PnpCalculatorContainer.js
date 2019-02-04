@@ -4,11 +4,17 @@ import _ from 'lodash';
 import { react2angular } from 'react2angular';
 import { updateStateProperty } from '../helpers/stateHelper';
 
+import RedTimesCircle from '../components/base/icon/RedTimesCircle';
 import PnpCalculator from '../components/pnp_calculator/PnpCalculator';
 
 class PnpCalculatorContainer extends React.Component {
   constructor(props) {
     super(props);
+    const errorMessage = (
+      <React.Fragment>
+        <RedTimesCircle />This estimator is unavailable. Please try again later.
+      </React.Fragment>
+    );
     this.state = {
       calculator: {},
       calculatedProjectedValues: {
@@ -43,7 +49,7 @@ class PnpCalculatorContainer extends React.Component {
       },
       widgetConfig: {
         errored: false,
-        errorMessage: 'Calculator unavailable.',
+        errorMessage: errorMessage,
         isLoading: true,
         padding: false,
         title: 'Passed (P) Grade Limit',

@@ -22,7 +22,7 @@ const CurrentGradeRatio = (props) => {
       </p>
     </div>
   );
-}
+};
 CurrentGradeRatio.propTypes = {
   pnpRatio: PropTypes.number
 };

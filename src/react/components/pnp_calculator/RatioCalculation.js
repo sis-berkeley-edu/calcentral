@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import RedTimesCircle from '../base/icon/RedTimesCircle';
-import SpinnerContainer from '../../containers/base/SpinnerContainer';
+import Spinner from '../base/Spinner';
 
 import '../../stylesheets/buttons.scss';
 import '../../stylesheets/widgets.scss';
@@ -11,12 +11,12 @@ const renderRatioCalculationMessage = (errored, isLoading, message) => {
   if (errored) {
     return (
       <React.Fragment>
-        <RedTimesCircle /> Unable to retrieve message or text.
+        <RedTimesCircle />Unable to retrieve message or text.
       </React.Fragment>
     );
   } else if (isLoading) {
     return (
-      <SpinnerContainer />
+      <Spinner />
     );
   } else {
     return (
@@ -26,9 +26,9 @@ const renderRatioCalculationMessage = (errored, isLoading, message) => {
 };
 
 const renderRatioCalculationSection = (props) => {
-  const {ratio, countedGpaUnits, countedNoGpaUnits, excessNoGpaUnits} = props.calculatedProjectedValues;
-  const cepLabel = parseFloat(excessNoGpaUnits) > 0 ? '120 units - Transfer and Test units' : 'Berkeley units';
   if (props.ratioCalculation.show) {
+    const {ratio, countedGpaUnits, countedNoGpaUnits, excessNoGpaUnits} = props.calculatedProjectedValues;
+    const cepLabel = parseFloat(excessNoGpaUnits) > 0 ? '120 units - Transfer and Test units' : 'Berkeley units';
     return (
       <React.Fragment>
         <div className="cc-react-pnp-calculat-ratio-calc">

@@ -42,7 +42,7 @@ const renderProjectedRatio = (projectedRatio) => {
   if (Number.isFinite(projectedRatio)) {
     const icon = projectedRatio.toPrecision(2) > 0.33 ? <RedExclamationCircle /> : <GreenCheckmark />;
     return (
-      <div className="cc-react-highlighted-section cc-react-text-align-right">
+      <div className="cc-react-widget-highlighted-section cc-react-text-align-right">
         <p className="cc-react-no-margin">Projected Ratio</p>
         <h2 className='cc-react-no-margin cc-react-text-bold'>
           {icon} {projectedRatio.toFixed(2)}

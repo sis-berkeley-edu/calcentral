@@ -4,4 +4,14 @@
 .cc-react-no-margin { 
   margin: 0;
 }
-
+// Hide only visually, but have it available for screenreaders / accessibility: h5bp.com/v
+.cc-react-visuallyhidden {
+  border: 0;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+}

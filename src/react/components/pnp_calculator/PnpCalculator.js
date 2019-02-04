@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import WidgetContainer from '../../containers/base/widget/WidgetContainer';
+import Widget from '../base/widget/Widget';
 import WidgetSectionHeader from '../base/widget/WidgetSectionHeader';
 import CurrentGradeRatio from './CurrentGradeRatio';
 import PassedGradeLimitEstimator from './PassedGradeLimitEstimator';
@@ -11,7 +11,7 @@ import '../../stylesheets/widgets.scss';
 
 const PnpCalculator = (props) => {
   return (
-    <WidgetContainer config={{...props.widgetConfig}}>
+    <Widget config={{...props.widgetConfig}}>
       <div className="cc-react-widget-padding">
         <CurrentGradeRatio pnpRatio={props.calculator.pnpRatio} />
       </div>
@@ -32,9 +32,9 @@ const PnpCalculator = (props) => {
           ratioCalculation={props.ratioCalculation}
         />
       </div>
-    </WidgetContainer>
+    </Widget>
   );
-}
+};
 PnpCalculator.propTypes = {
   calculator: PropTypes.object.isRequired,
   calculatedProjectedValues: PropTypes.object.isRequired,

@@ -1,12 +1,6 @@
 @import 'colors';
 @import 'foundation_overrides';
 
-.cc-react-highlighted-section {
-  background-color: $cc-color-white-smoke;
-  margin: 12px 0;
-  padding: 4px 8px;
-}
-
 .cc-react-widget {
   background: $cc-color-white;
   margin: 15px 15px 0 0;
@@ -28,6 +22,12 @@
       content: none;
     }
   }
+}
+
+.cc-react-widget-highlighted-section {
+  background-color: $cc-color-white-smoke;
+  margin: 12px 0;
+  padding: 4px 8px;
 }
 
 .cc-react-widget-padding {

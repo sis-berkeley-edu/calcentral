@@ -2,9 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 
-import { fixLastQuestionMark, updateQueryStringParameter } from '../../../helpers/linkHelper';
-import CampusSolutionsLink from '../../../components/base/link/CampusSolutionsLink';
-import CampusSolutionsOutboundLink from '../../../components/base/link/CampusSolutionsOutboundLink';
+import { fixLastQuestionMark, updateQueryStringParameter } from '../helpers/linkHelper';
+import CampusSolutionsLink from '../components/base/link/CampusSolutionsLink';
+import CampusSolutionsOutboundLink from '../components/base/link/CampusSolutionsOutboundLink';
 
 class CampusSolutionsLinkContainer extends React.Component {
   constructor(props) {
