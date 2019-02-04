@@ -1,8 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import qs from 'querystringify';
+import './APILink.scss';
 
 const propTypes = {
+  disabled: PropTypes.bool,
   isCsLink: PropTypes.bool,
   name: PropTypes.string,
   title: PropTypes.string,
@@ -13,7 +15,11 @@ const propTypes = {
   urlId: PropTypes.string
 };
 
-const APILink = ({ title, name, url, ucFrom, ucFromText }) => {
+const APILink = ({ disabled, title, name, url, ucFrom, ucFromText }) => {
+  if (disabled) {
+    return <span className="APILink APILink--disabled">{name}</span>;
+  }
+
   const currentUrl = window.location.href;
 
   const href = url + qs.stringify({

@@ -45,6 +45,21 @@
         "contact": {
           "description": ""
         }
+      },
+      {
+        "type": {
+            "code": "F06",
+            "description": "CA Enrollment Acknowledgment"
+        },
+        "reason": {
+            "code": "F06",
+            "description": "CA Enrollment Acknowledgment",
+            "formalDescription": "Before you can complete class enrollment, please acknowledge notifications required by California State Law. Please use the link provided in the Class Enrollment section."
+        },
+        "fromTerm": {
+          "name": "2018 Spring"
+        },
+        "fromDate": "2016-03-23"
       }
     ]
   },

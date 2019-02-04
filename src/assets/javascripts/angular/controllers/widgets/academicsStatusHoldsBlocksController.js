@@ -5,7 +5,7 @@ var _ = require('lodash');
 /**
  * Academics status, holds & blocks controller
  */
-angular.module('calcentral.controllers').controller('AcademicsStatusHoldsBlocksController', function(apiService, academicsFactory, linkService, slrDeeplinkFactory, registrationsFactory, statusHoldsService, $scope) {
+angular.module('calcentral.controllers').controller('AcademicsStatusHoldsBlocksController', function(apiService, academicsFactory, linkService, slrDeeplinkFactory, registrationsFactory, statusHoldsService, holdsFactory, calGrantsFactory, $scope) {
   linkService.addCurrentRouteSettings($scope);
 
   $scope.statusHolds = {
@@ -72,11 +72,27 @@ angular.module('calcentral.controllers').controller('AcademicsStatusHoldsBlocksC
     angular.merge($scope.residency, residency);
   };
 
+  var getCalGrants = function() {
+    calGrantsFactory.getCalGrants()
+    .then(({ data: { acknowledgements, viewAllLink } }) => {
+      $scope.calgrantAcknowledgements = acknowledgements;
+      $scope.viewAllLink = viewAllLink;
+    });
+  };
+
+  var getHolds = function() {
+    return holdsFactory.getHolds().then(function(response) {
+      $scope.holds = _.get(response, 'data.feed.holds');
+    });
+  };
+
   var loadStatusInformation = function() {
     getCalResidency()
     .then(parseCalResidency)
     .then(getSlrDeeplink)
     .then(getRegistrations)
+    .then(getCalGrants)
+    .then(getHolds)
     .finally(function() {
       $scope.statusHolds.isLoading = false;
     });

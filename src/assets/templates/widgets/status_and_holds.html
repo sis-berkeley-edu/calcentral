@@ -70,6 +70,14 @@
                 </div>
               </div>
             </li>
+
+            <calgrant-acknowledgement-status
+              acknowledgements="calgrantAcknowledgements"
+              holds="holds"
+              term-id="registration.term.id"
+              view-all-link="viewAllLink"
+              data-ng-if="calgrantAcknowledgements && holds">
+            </calgrant-acknowledgement-status>
           </ul>
         </div>
       </div>
@@ -103,6 +111,5 @@
       <h3>Active Holds</h3>
       <div data-ng-include="'widgets/holds.html'"></div>
     </div>
-
   </div>
 </div>
