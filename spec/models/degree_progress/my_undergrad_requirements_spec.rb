@@ -41,10 +41,19 @@ describe DegreeProgress::MyUndergradRequirements do
           current: { 'ugrdEngineering' => true }
         }
       end
-      it 'includes the Academic Progress Report link in the response' do
-        expect(subject[:feed][:links]).to be
-        expect(subject[:feed][:links][:academicProgressReport]).to be
-        expect(subject[:feed][:links][:academicProgressReport][:url]).to eq 'https://bcswebqat.is.berkeley.edu/psp/bcsqat/EMPLOYEE/PSFT_CS/c/SA_LEARNER_SERVICES.SAA_SS_DPR_ADB.GBL?EMPLID=11667051'
+      context 'when Undergraduate College of Engineering APR Link feature is disabled' do
+        before { allow(Settings.features).to receive(:cs_degree_progress_ugrd_student_apr_coe).and_return(false) }
+        it 'excludes the Academic Progress Report link from the response' do
+          expect(subject[:feed][:links]).not_to be
+        end
+      end
+      context 'when Undergraduate College of Engineering APR Link feature is enabled' do
+        before { allow(Settings.features).to receive(:cs_degree_progress_ugrd_student_apr_coe).and_return(true) }
+        it 'includes the Academic Progress Report link in the response' do
+          expect(subject[:feed][:links]).to be
+          expect(subject[:feed][:links][:academicProgressReport]).to be
+          expect(subject[:feed][:links][:academicProgressReport][:url]).to eq 'https://bcswebqat.is.berkeley.edu/psp/bcsqat/EMPLOYEE/PSFT_CS/c/SA_LEARNER_SERVICES.SAA_SS_DPR_ADB.GBL?EMPLID=11667051'
+        end
       end
     end
     context 'when student is not active in the Letters and Science program' do
