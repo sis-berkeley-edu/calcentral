@@ -24,7 +24,7 @@ module FinancialAid
         finaidProfile: {
           aidYear: my_aid_year,
           message: status['message'],
-          categories: categories
+          itemGroups: itemGroupsProfile
         }
       }
     end
@@ -62,7 +62,7 @@ module FinancialAid
     end
 
     def success?
-      my_aid_year.present? ? (status || level || enrollment || residency || isir) && (title4 && terms_and_conditions) : false
+      my_aid_year.present? && status.present? ? true : false
     end
 
     def subvaluesLevel
@@ -165,12 +165,12 @@ module FinancialAid
             value: isir.try(:[], 'primary_efc')
           },
           {
-            title: 'Summer EFC',
-            value: isir.try(:[], 'summer_efc')
-          },
-          {
             title: 'Berkeley Parent Contribution',
             value: status.try(:[], 'berkeley_pc')
+          },
+          {
+            title: 'Summer EFC',
+            value: isir.try(:[], 'summer_efc')
           },
           {
             title: 'Family Members in College',
@@ -195,34 +195,6 @@ module FinancialAid
             values: subvaluesSHIP
           }
         ]
-      ]
-    end
-
-    def itemGroupsAgreements
-      @itemGroupsAgreements ||= [
-        [
-          {
-            title: 'Title IV',
-            value: title4.try(:[], 'response_descr')
-          },
-          {
-            title: 'Terms & Conditions',
-            value: terms_and_conditions.try(:[], 'response_descr')
-          }
-        ]
-      ]
-    end
-
-    def categories
-      @categories ||= [
-        {
-          title: status.try(:[], 'title'),
-          itemGroups: itemGroupsProfile
-        },
-        {
-          title: 'Agreements',
-          itemGroups: itemGroupsAgreements
-        }
       ]
     end
   end

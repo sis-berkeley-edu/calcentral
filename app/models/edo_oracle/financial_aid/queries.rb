@@ -287,8 +287,8 @@ module EdoOracle
           UC.AID_YEAR                         AS AID_YEAR,
           UC.STRM                             AS TERM_ID,
           UC.DESCR                            AS TERM_DESCR,
-          RTRIM(UC.TOT_TERM_UNT_FA,'.0')      AS TERM_UNITS,
-          UC.DESCR2                           AS SHIP_STATUS
+          UC.DESCR2                           AS TERM_UNITS,
+          UC.DESCR3                           AS SHIP_STATUS
           FROM SYSADM.PS_UCC_FA_PRFL_ENR UC
         WHERE UC.CAMPUS_ID   = '#{person_id}'
           AND UC.INSTITUTION = '#{UC_BERKELEY}'
