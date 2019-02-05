@@ -31,7 +31,15 @@ module DegreeProgress
 
     def should_see_links?
       roles = MyAcademics::MyAcademicRoles.new(@uid).get_feed
-      !!roles[:current]['lettersAndScience'] || !!roles[:current]['ugrdEngineering']
+      if is_college_of_engineering_apr_link_enabled?
+        !!roles[:current]['lettersAndScience'] || !!roles[:current]['ugrdEngineering']
+      else
+        !!roles[:current]['lettersAndScience']
+      end
+    end
+
+    def is_college_of_engineering_apr_link_enabled?
+      Settings.features.cs_degree_progress_ugrd_student_apr_coe
     end
 
     def is_feature_enabled?
