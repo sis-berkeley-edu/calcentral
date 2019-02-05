@@ -33,8 +33,8 @@ const StudentResources = (props) => {
       <div>
         {props.resources.map(resource => renderLinkSection(resource))}
         <div className="cc-react-student-resources-list">
-          <h3 className="cc-react-no-margin">Financial Aid Forms</h3>
-          <p className="cc-react-no-margin">Financial aid forms can be found in My Finances under Financial Resources</p>
+          <h3 className="cc-react--no-margin">Financial Aid Forms</h3>
+          <p className="cc-react--no-margin">Financial aid forms can be found in My Finances under Financial Resources</p>
         </div>
       </div>
     </Widget>
