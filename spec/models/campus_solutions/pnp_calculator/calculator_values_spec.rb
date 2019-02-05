@@ -1,5 +1,4 @@
 describe CampusSolutions::PnpCalculator::CalculatorValues do
-  require('pp')
   let(:uid) { 61889 }
   let(:ugrd_sid) { 11667051 }
   let(:no_data_sid) { 123456 }

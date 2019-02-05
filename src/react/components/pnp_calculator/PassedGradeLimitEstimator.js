@@ -76,7 +76,7 @@ const PassedGradeLimitEstimator = (props) => {
                 <td>Transfer and Test</td>
                 <td className="cc-react-table--right">{props.calculator.totalTransferUnits.toFixed(2)}</td>
                 <td>
-                  <input className="cc-react-form__input" type="number" min="0" name="totalTransferUnits" onChange={props.handleInputChange}/>
+                  <input className="cc-react-form__input cc-react-text--align-right" type="number" min="0" name="totalTransferUnits" onChange={props.handleInputChange}/>
                 </td>
                 <td className="cc-react-table--right">
                   {props.calculatedTotals.totalTransferUnits.toFixed(2)}
@@ -86,7 +86,7 @@ const PassedGradeLimitEstimator = (props) => {
                 <td>Berkeley Letter Grade</td>
                 <td className="cc-react-table--right">{props.calculator.totalGpaUnits.toFixed(2)}</td>
                 <td>
-                  <input className="cc-react-form__input" type="number" min="0" name="totalGpaUnits" onChange={props.handleInputChange}/>
+                  <input className="cc-react-form__input cc-react-text--align-right" type="number" min="0" name="totalGpaUnits" onChange={props.handleInputChange}/>
                 </td>
                 <td className="cc-react-table--right">
                   {props.calculatedTotals.totalGpaUnits.toFixed(2)}
@@ -96,7 +96,7 @@ const PassedGradeLimitEstimator = (props) => {
                 <td>Berkeley P/NP</td>
                 <td className="cc-react-table--right">{props.calculator.totalNoGpaUnits.toFixed(2)}</td>
                 <td>
-                  <input className="cc-react-form__input" type="number" min="0" name="totalNoGpaUnits" onChange={props.handleInputChange}/>
+                  <input className="cc-react-form__input cc-react-text--align-right" type="number" min="0" name="totalNoGpaUnits" onChange={props.handleInputChange}/>
                 </td>
                 <td className="cc-react-table--right">
                   {props.calculatedTotals.totalNoGpaUnits.toFixed(2)}
