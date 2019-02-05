@@ -1,5 +1,6 @@
 @import 'colors';
 
+// Blocks
 .cc-react-icon {
   background-repeat: no-repeat;
   background-size: 16px;
@@ -8,10 +9,11 @@
   width: 16px;
 }
 
+// Modifiers
 .cc-react-icon-green {
   color: $cc-color-salem;
 }
 
-.cc-react-icon-red {
+.cccc-react-icon--red {
   color: $cc-color-harley-davidson-orange;
 }

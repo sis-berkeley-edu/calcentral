@@ -1,9 +1,7 @@
 @import 'colors';
 
-.cc-react-spinner-message {
-  margin: 15px 0;
-  text-align: center;
-}
+$cc-react-spinner-even: 12px;
+$cc-react-spinner-uneven: 17px;
 
 @keyframes spin-normal {
   from {
@@ -14,9 +12,7 @@
   }
 }
 
-$cc-react-spinner-even: 12px;
-$cc-react-spinner-uneven: 17px;
-
+// Blocks
 .cc-react-spinner {
   display: block;
   font-size: 8px;
@@ -45,4 +41,9 @@ $cc-react-spinner-uneven: 17px;
     top: 40%;
     width: 10px;
   }
+}
+
+.cc-react-spinner-message {
+  margin: 15px 0;
+  text-align: center;
 }

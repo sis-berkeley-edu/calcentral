@@ -4,7 +4,7 @@ import '../../../stylesheets/icons.scss';
 
 const RedTimesCircle = () => {
   return (
-    <i className="fa fa-times-circle cc-react-icon-red cc-react-icon"></i>
+    <i className="fa fa-times-circle cccc-react-icon--red cc-react-icon"></i>
   );
 };
 

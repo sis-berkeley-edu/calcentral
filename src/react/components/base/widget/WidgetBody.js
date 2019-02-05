@@ -5,7 +5,7 @@ import '../../../stylesheets/widgets.scss';
 
 const WidgetBody = (props) => {
   return (
-    <div className={props.padding ? 'cc-react-widget-padding' : ''}>
+    <div className={props.padding ? 'cc-react-widget--padding' : ''}>
       {props.children}
     </div>
   );

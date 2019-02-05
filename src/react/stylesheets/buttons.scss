@@ -1,6 +1,7 @@
 @import 'colors';
 @import 'foundation_overrides';
 
+// Blocks
 button {
   box-shadow: none;
   font-family: $body-font-family;
@@ -40,7 +41,9 @@ button {
     color: $cc-color-very-light-grey !important;
   }
 }
-.cc-react-button-blue {
+
+// Modifiers
+.cc-react-button--blue {
   background: $cc-color-curious-blue;
   border: 1px solid transparent;
   color: $cc-color-white;
@@ -48,20 +51,14 @@ button {
     background: $cc-color-lochmara;
     color: $cc-color-white;
   }
-  &.cc-react-button-large {
-    background: linear-gradient($cc-color-curious-blue, $cc-color-lochmara), $cc-color-lochmara;
-    &:focus, &:hover {
-      background: linear-gradient($cc-color-curious-blue, $cc-color-blue-lagoon);
-    }
-  }
 }
-.cc-react-button-blue[disabled] {
+.cc-react-button--blue[disabled] {
   background: $cc-color-bali-hai !important;
   &:focus, &:hover {
     background: $cc-color-bali-hai !important;
   }
 }
-.cc-react-button-link {
+.cc-react-button--link {
   padding: 0;
   &, &:hover, &:focus {
     background-color: transparent;

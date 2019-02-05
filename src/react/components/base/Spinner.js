@@ -16,7 +16,7 @@ const renderMessage = (isLoadingMessage) => {
 
 const Spinner = (props) => {
   return (
-    <div className='cc-react-widget-padding'>
+    <div className='cc-react-widget--padding'>
       <div aria-live="polite" className="cc-react-spinner"></div>
       {renderMessage(props.isLoadingMessage)}
     </div>

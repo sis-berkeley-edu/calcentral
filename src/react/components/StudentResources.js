@@ -19,7 +19,7 @@ const renderLinkSectionList = (linkObj) => {
 const renderLinkSection = (resource) => {
   return (
     <div className="cc-react-student-resources-list" key={resource.section}>
-      <h3 className="cc-react-no-margin">{resource.section}</h3>
+      <h3 className="cc-react--no-margin">{resource.section}</h3>
       <ul className="cc-react-list-bullets">
         {resource.links.map(linkObj => renderLinkSectionList(linkObj))}
       </ul>
@@ -30,7 +30,7 @@ const renderLinkSection = (resource) => {
 const StudentResources = (props) => {
   return (
     <Widget config={{...props.widgetConfig}}>
-      <div className="cc-react-student-resources">
+      <div>
         {props.resources.map(resource => renderLinkSection(resource))}
         <div className="cc-react-student-resources-list">
           <h3 className="cc-react-no-margin">Financial Aid Forms</h3>

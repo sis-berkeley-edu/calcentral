@@ -1,17 +1,18 @@
 @import 'colors';
 
-.cc-react-text-align-right {
+// Modifiers
+.cc-react-text--align-right {
   text-align: right;
 }
-.cc-react-text-bold {
+.cc-react-text--bold {
   font-weight: bold;
 }
-.cc-react-text-normal {
+.cc-react-text--normal {
   font-weight: normal;
 }
-.cc-react-text-red {
+.cc-react-text--red {
   color: $cc-color-harley-davidson-orange;
 }
-.cc-react-text-small {
+.cc-react-text--small {
   font-size: 11px;
 }

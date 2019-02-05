@@ -1,6 +1,7 @@
 @import 'colors';
 @import 'foundation_overrides';
 
+// Blocks
 .cc-react-table {
   overflow-x: auto;
   table {
@@ -27,25 +28,18 @@
         color: $cc-color-dim-gray;
         font-weight: bold;
         line-height: normal;
-        text-align: left;
-      }
-      .cc-table-subheader {
-        color: $body-font-color;
-        font-weight: normal;
-        text-align: left;
       }
     }
   }
   ul {
     margin-left: 35px;
   }
-  .cc-react-table-center {
-    text-align: center;
-  }
-  .cc-react-table-right {
-    text-align: right;
-  }
   @media #{$small-only} {
     overflow: auto;
   }
+}
+
+// Modifiers
+.cc-react-table--right {
+  text-align: right;
 }

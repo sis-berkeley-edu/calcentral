@@ -5,7 +5,7 @@ import '../../../stylesheets/widgets.scss';
 
 const WidgetSectionHeader = (props) => {
   return (
-    <div className="cc-react-widget-section-title">
+    <div className="cc-react-widget__section-title">
       <h2>{props.title}</h2>
     </div>
   );

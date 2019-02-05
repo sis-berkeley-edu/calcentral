@@ -41,8 +41,8 @@ const renderRatioCalculationSection = (props) => {
     );
   } else {
     return (
-      <div className="cc-react-text-align-right">
-        <button className="cc-react-button-link" onClick={props.handleRatioCalculationButtonPressed}>How is this calculated?</button>
+      <div className="cc-react-text--align-right">
+        <button className="cc-react-button--link" onClick={props.handleRatioCalculationButtonPressed}>How is this calculated?</button>
       </div>
     );
   }

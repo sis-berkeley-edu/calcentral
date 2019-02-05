@@ -1,11 +1,12 @@
-.cc-react-float-right {
+// Modifiers
+.cc-react--float-right {
   float: right;
 }
-.cc-react-no-margin { 
+.cc-react--no-margin { 
   margin: 0;
 }
 // Hide only visually, but have it available for screenreaders / accessibility: h5bp.com/v
-.cc-react-visuallyhidden {
+.cc-react--visually-hidden {
   border: 0;
   clip: rect(0 0 0 0);
   height: 1px;

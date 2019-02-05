@@ -12,11 +12,11 @@ import '../../stylesheets/widgets.scss';
 const PnpCalculator = (props) => {
   return (
     <Widget config={{...props.widgetConfig}}>
-      <div className="cc-react-widget-padding">
+      <div className="cc-react-widget--padding">
         <CurrentGradeRatio pnpRatio={props.calculator.pnpRatio} />
       </div>
       <WidgetSectionHeader title="Passed (P) Grade Limit Estimator" />
-      <div className="cc-react-widget-padding">
+      <div className="cc-react-widget--padding">
         <PassedGradeLimitEstimator
           calculatedProjectedValues={{...props.calculatedProjectedValues}}
           calculatedTotals={{...props.calculatedTotals}}

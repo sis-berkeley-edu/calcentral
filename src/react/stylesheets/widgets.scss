@@ -1,6 +1,7 @@
 @import 'colors';
 @import 'foundation_overrides';
 
+// Blocks
 .cc-react-widget {
   background: $cc-color-white;
   margin: 15px 15px 0 0;
@@ -24,24 +25,27 @@
   }
 }
 
-.cc-react-widget-highlighted-section {
+@media #{$small-only} {
+  .cc-react-widget {
+    margin: 0;
+  }
+}
+
+// Elements
+.cc-react-widget__highlighted-section {
   background-color: $cc-color-white-smoke;
   margin: 12px 0;
   padding: 4px 8px;
 }
 
-.cc-react-widget-padding {
-  padding: 15px;
-}
-
-.cc-react-widget-section-title, .cc-react-widget-title {
+.cc-react-widget__section-title, .cc-react-widget__title {
   h2 {
     font-family: Arial, sans-serif;
     margin: 2px 0;
   }
 }
 
-.cc-react-widget-section-title {
+.cc-react-widget__section-title {
   background-color: $cc-color-dim-gray;
   h2 {
     color: $cc-color-white;
@@ -53,7 +57,7 @@
   }
 }
 
-.cc-react-widget-title {
+.cc-react-widget__title {
   background: $cc-color-whisper;
   overflow: hidden;
 
@@ -66,8 +70,8 @@
   }
 }
 
-@media #{$small-only} {
-  .cc-react-widget {
-    margin: 0;
-  }
+// Modifiers
+.cc-react-widget--padding {
+  padding: 15px;
 }
+

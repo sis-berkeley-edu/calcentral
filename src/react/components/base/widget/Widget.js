@@ -12,12 +12,12 @@ import '../../../stylesheets/widgets.scss';
 const renderErrorMessage = (errorMessage) => {
   let messageComponent;
   if (typeof errorMessage === 'string' || errorMessage instanceof String) {
-    messageComponent = (<p className="cc-react-no-margin">{errorMessage}</p>);
+    messageComponent = (<p className="cc-react--no-margin">{errorMessage}</p>);
   } else {
     messageComponent = errorMessage;
   }
   return (
-    <div className="cc-react-widget-padding">
+    <div className="cc-react-widget--padding">
       {messageComponent}
     </div>
   );
