@@ -88,14 +88,18 @@ class StudentResourcesContainer extends React.Component {
     });
   }
   renderLinkSection(resource) {
-    return (
-      <div key={resource.section}>
-        <ListHeader header={resource.section} />
-        <BulletList>
-          {_.map(resource.links, linkObj => this.renderLinkSectionList(linkObj))}
-        </BulletList>
-      </div>
-    );
+    if (resource.links.length > 0) {
+      return (
+        <div key={resource.section}>
+          <ListHeader header={resource.section} />
+          <BulletList>
+            {_.map(resource.links, linkObj => this.renderLinkSectionList(linkObj))}
+          </BulletList>
+        </div>
+      );
+    } else {
+      return null;
+    }
   }
   renderLinkSectionList(linkObj) {
     return (
@@ -118,7 +122,7 @@ StudentResourcesContainer.propTypes = {
   academicsService: PropTypes.object.isRequired,
   apiService: PropTypes.object.isRequired,
   linkService: PropTypes.object.isRequired,
-  studentResourcesFactory: PropTypes.object.isRequired 
+  studentResourcesFactory: PropTypes.object.isRequired
 };
 
 angular.module('calcentral.react').component('studentResourcesContainer', react2angular(StudentResourcesContainer, [], ['$route', '$location', 'academicsService', 'apiService', 'linkService', 'studentResourcesFactory']));

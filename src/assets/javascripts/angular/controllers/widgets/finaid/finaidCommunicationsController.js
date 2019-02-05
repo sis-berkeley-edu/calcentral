@@ -5,8 +5,9 @@ var _ = require('lodash');
 /**
  * Finaid Communications controller
  */
-angular.module('calcentral.controllers').controller('FinaidCommunicationsController', function($q, $scope, activityFactory, finaidFactory, finaidService, linkService, tasksFactory, tasksService) {
+angular.module('calcentral.controllers').controller('FinaidCommunicationsController', function($q, $scope, activityFactory, csLinkFactory, finaidFactory, finaidService, linkService, tasksFactory, tasksService) {
   $scope.communicationsInfo = {
+    csLinks: {},
     aidYear: '',
     isLoading: true,
     counts: {
@@ -64,12 +65,31 @@ angular.module('calcentral.controllers').controller('FinaidCommunicationsControl
     });
   };
 
-  var getFinaidYearInfo = function(options) {
-    return finaidFactory.getFinaidYearInfo({
-      finaidYearId: options.finaidYearId
+  var getVerificationAndAppealsLink = csLinkFactory.getLink({
+    urlId: 'UC_CX_FA_COMM_FAFSA'
+  }).then(
+    function successCallback(response) {
+      $scope.communicationsInfo.csLinks.verificationAndAppeals = _.get(response, 'data.link');
+    }
+  );
+
+  var getOptionalDocumentsLink = csLinkFactory.getLink({
+    urlId: 'UC_CX_FA_COMM_FORMS'
+  }).then(
+    function successCallback(response) {
+      $scope.communicationsInfo.csLinks.optionalDocuments = _.get(response, 'data.link');
+    }
+  );
+
+  var getOptionalDocumentsUploadLink = function(options) {
+    return csLinkFactory.getLink({
+      urlId: 'UC_CX_FA_FORM_UPLOAD',
+      placeholders: {
+        'AID_YEAR': options.finaidYearId
+      }
     }).then(
       function successCallback(response) {
-        $scope.communicationsInfo.unsolicitedResourcesUrl = _.get(response, 'data.feed.communications.unsolicitedResourcesUrl');
+        $scope.communicationsInfo.csLinks.optionalDocumentsUpload = _.get(response, 'data.link');
       }
     );
   };
@@ -84,9 +104,11 @@ angular.module('calcentral.controllers').controller('FinaidCommunicationsControl
       getMyFinaidTasks({
         finaidYearId: finaidYearId
       }),
-      getFinaidYearInfo({
+      getOptionalDocumentsUploadLink({
         finaidYearId: finaidYearId
-      })
+      }),
+      getVerificationAndAppealsLink,
+      getOptionalDocumentsLink
     ])
     .then(function() {
       $scope.communicationsInfo.isLoading = false;

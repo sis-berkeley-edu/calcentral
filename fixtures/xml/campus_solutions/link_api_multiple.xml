@@ -1,6 +1,107 @@
 <?xml version="1.0"?>
 <UC_LINK_RESOURCES>
   <Link>
+    <URL_ID>UC_CX_FA_FINRES_FAFSA</URL_ID>
+    <Description>Financial Aid Verification and Appeals Forms</Description>
+    <HOVER_OVER_TEXT>This is where you need to go if you have been selected for financial aid verification or if you need to appeal your aid package.</HOVER_OVER_TEXT>
+    <PROPERTIES type="array">
+      <PROPERTY>
+        <NAME>CALCENTRAL</NAME>
+        <value>FINANCIAL</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>NEW_WINDOW</NAME>
+        <value>Y</value>
+      </PROPERTY>
+    </PROPERTIES>
+    <URL>http://berkeley.verifymyfafsa.com/</URL>
+    <COMMENTS>Used in CalCentral Financial Resources card. Update also UC_CX_FA_COMM_FAFSA for Communications card</COMMENTS>
+  </Link>
+  <Link>
+    <URL_ID>UC_CX_FA_COMM_FAFSA</URL_ID>
+    <Description>Verification and Appeals Forms</Description>
+    <HOVER_OVER_TEXT>This is where you need to go if you have been selected for financial aid verification or if you need to appeal your aid package.</HOVER_OVER_TEXT>
+    <PROPERTIES type="array">
+      <PROPERTY>
+        <NAME>CALCENTRAL</NAME>
+        <value>FINANCIAL</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>NEW_WINDOW</NAME>
+        <value>Y</value>
+      </PROPERTY>
+    </PROPERTIES>
+    <URL>http://berkeley.verifymyfafsa.com/</URL>
+    <COMMENTS>Used in CalCentral Financial Aid Communications card. Update also UC_CX_FA_FINRES_FAFSA for Financial Resources card</COMMENTS>
+  </Link>
+  <Link>
+    <URL_ID>UC_CX_FA_FINRES_FORMS</URL_ID>
+    <Description>Financial Aid Optional Documents</Description>
+    <HOVER_OVER_TEXT>You can find other financial aid forms outside of verification and appeals - including how to apply for aid using the FAFSA or Cal ISIR- by going here.</HOVER_OVER_TEXT>
+    <PROPERTIES type="array">
+      <PROPERTY>
+        <NAME>CALCENTRAL</NAME>
+        <value>FINANCIAL</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>NEW_WINDOW</NAME>
+        <value>Y</value>
+      </PROPERTY>
+    </PROPERTIES>
+    <URL>http://financialaid.berkeley.edu/forms</URL>
+    <COMMENTS>Used in CalCentral Financial Resources card. Update UC_CX_FA_COMM_FORMS also for Communications card</COMMENTS>
+  </Link>
+  <Link>
+    <URL_ID>UC_CX_FA_COMM_FORMS</URL_ID>
+    <Description>Optional Documents</Description>
+    <HOVER_OVER_TEXT>You can find other financial aid forms outside of verification and appeals - including how to apply for aid using the FAFSA or Cal ISIR- by going here.</HOVER_OVER_TEXT>
+    <PROPERTIES type="array">
+      <PROPERTY>
+        <NAME>CALCENTRAL</NAME>
+        <value>FINANCIAL</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>NEW_WINDOW</NAME>
+        <value>Y</value>
+      </PROPERTY>
+    </PROPERTIES>
+    <URL>http://financialaid.berkeley.edu/forms</URL>
+    <COMMENTS>Used in CalCentral Financial Aid Communications card. Update also UC_CX_FA_FINRES_FORMS for Financial Resources card</COMMENTS>
+  </Link>
+  <Link>
+    <URL_ID>UC_CX_FA_FORM_UPLOAD</URL_ID>
+    <Description>Optional Documents Upload</Description>
+    <HOVER_OVER_TEXT/>
+    <PROPERTIES type="array">
+      <PROPERTY>
+        <NAME>CALCENTRAL</NAME>
+        <value>FORM</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>NEW_WINDOW</NAME>
+        <value>Y</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>URI_TYPE</NAME>
+        <value>PL</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>UCFROM</NAME>
+        <value>CalCentral</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>UCFROMLINK</NAME>
+        <value>https://calcentral-sis-dev-01.ist.berkeley.edu/</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>UCFROMTEXT</NAME>
+        <value>CalCentral</value>
+      </PROPERTY>
+    </PROPERTIES>
+    <URL>https://bcswebqat.is.berkeley.edu/psp/bcsdev/EMPLOYEE/SA/c/UC_CC_CHKLST_UPLOAD_FLU.UC_CC_FILE_UPL_FLU.GBL?ucAdminFunction=FINA&amp;ucAidYear={AID_YEAR}</URL>
+    <COMMENTS>Used in CalCentral Financial Aid Communications card.</COMMENTS>
+  </Link>
+  <Link>
     <URL_ID>UC_CX_STDNT_BPS_EFT</URL_ID>
     <Description>Direct Deposit</Description>
     <HOVER_OVER_TEXT>Some refunds, payments, and paychecks may be directly deposited to your bank account</HOVER_OVER_TEXT>

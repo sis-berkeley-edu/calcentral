@@ -19,13 +19,18 @@ angular.module('calcentral.controllers').controller('FinancesLinksController', f
       'Berkeley International Office', 'Have a loan?', 'Withdrawing or Canceling?', 'Summer Fees', 'Canceling and Withdrawing from Summer',
       'Summer Schedule & Deadlines', 'Summer Sessions Website', 'Cal Student Central', 'Debit Account', 'Meal Plan Balance', 'Learn about meal plans']
   };
+  $scope.csLinks = {
+    eft: {},
+    verificationAndAppeals: {},
+    optionalDocuments: {},
+    taxCreditFormLink: {}
+  };
   $scope.delegateAccess = {
     title: 'Authorize others to access your billing information'
   };
   $scope.eft = {
     data: {},
     studentActive: true,
-    eftLink: {},
     manageAccountLink: {
       url: 'https://eftstudent.berkeley.edu/',
       title: 'Manage direct deposit accounts',
@@ -58,11 +63,19 @@ angular.module('calcentral.controllers').controller('FinancesLinksController', f
     }
   );
 
-  var getTaxCreditFormLink = csLinkFactory.getLink({
-    urlId: 'UC_CX_STDNT_1098T_TAX_FORM'
+  var getVerificationAndAppealsLink = csLinkFactory.getLink({
+    urlId: 'UC_CX_FA_FINRES_FAFSA'
   }).then(
     function successCallback(response) {
-      $scope.taxForm.viewFormLink = _.get(response, 'data.link');
+      $scope.csLinks.verificationAndAppeals = _.get(response, 'data.link');
+    }
+  );
+
+  var getOptionalDocumentsLink = csLinkFactory.getLink({
+    urlId: 'UC_CX_FA_FINRES_FORMS'
+  }).then(
+    function successCallback(response) {
+      $scope.csLinks.optionalDocuments = _.get(response, 'data.link');
     }
   );
 
@@ -70,7 +83,15 @@ angular.module('calcentral.controllers').controller('FinancesLinksController', f
     urlId: 'UC_CX_STDNT_BPS_EFT'
   }).then(
     function successCallback(response) {
-      $scope.eft.eftLink = _.get(response, 'data.link');
+      $scope.csLinks.eft = _.get(response, 'data.link');
+    }
+  );
+
+  var getTaxCreditFormLink = csLinkFactory.getLink({
+    urlId: 'UC_CX_STDNT_1098T_TAX_FORM'
+  }).then(
+    function successCallback(response) {
+      $scope.csLinks.taxCreditFormLink = _.get(response, 'data.link');
     }
   );
 
@@ -158,7 +179,7 @@ angular.module('calcentral.controllers').controller('FinancesLinksController', f
   };
 
   var initialize = function() {
-    var requests = [getCampusLinks, getEftLink, getTaxCreditFormLink];
+    var requests = [getCampusLinks, getEftLink, getTaxCreditFormLink, getVerificationAndAppealsLink, getOptionalDocumentsLink];
 
     if ($scope.canViewFppEnrollment) {
       var getFppEnrollment = financesLinksFactory.getFppEnrollment().then(parseFppEnrollment);

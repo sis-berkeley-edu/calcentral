@@ -11,7 +11,7 @@
           <a data-ng-href="/profile/delegate" data-ng-attr-title="{{$parent.delegateAccess.title}}">Delegate Access</a>
         </li>
         <li data-ng-if="subcategory === 'Billing & Payments' && canViewEftLink">
-          <a data-cc-campus-solutions-link-directive="{{$parent.eft.eftLink}}"></a>
+          <a data-cc-campus-solutions-link-directive="{{$parent.csLinks.eft}}"></a>
           <span class="cc-text-green-plus cc-list-links-nested-dash cc-list-links-text"
             data-ng-if="$parent.eft.studentActive && $parent.eft.data.data.eftStatus === 'active'">
             Status: <i class="fa fa-check cc-icon-green"></i> Active
@@ -31,6 +31,12 @@
             data-ng-if="!api.user.profile.delegateActingAsUid"
             data-ng-bind="$parent.eft.manageAccountLink.name">
           </a>
+        </li>
+        <li data-ng-if="subcategory === 'Financial Assistance' && csLinks.verificationAndAppeals">
+          <a data-cc-campus-solutions-link-directive="csLinks.verificationAndAppeals"
+            data-cc-campus-solutions-link-directive-cc-page-name="currentPage.name"
+            data-cc-campus-solutions-link-directive-cc-page-url="currentPage.url"
+          ></a>
         </li>
         <li data-ng-repeat-start="link in campusLinks.data.links | campusLinksSubcategoryFilter:subcategory">
           <a data-ng-href="{{link.url}}"
@@ -61,14 +67,20 @@
           <a data-ng-href="{{$parent.taxForm.taxFormLink.url}}"
             data-ng-attr-title="{{$parent.taxForm.taxFormLink.title}}">Tax 1098-T Form</a>
           <a class="cc-list-links-nested-dash"
-            data-cc-campus-solutions-link-directive="{{$parent.taxForm.viewFormLink}}"
+            data-cc-campus-solutions-link-directive="{{$parent.csLinks.taxCreditFormLink}}"
             data-ng-if="!api.user.profile.delegateActingAsUid"
           >
-            <strong data-ng-bind-template="{{$parent.taxForm.viewFormLink.name}}"></strong>
+            <strong data-ng-bind-template="{{$parent.csLinks.taxCreditFormLink.name}}"></strong>
           </a>
         </li>
         <li data-ng-if="subcategory === 'Financial Assistance' && emergencyLoanLink.url && canViewEmergencyLoanLink">
           <a data-cc-campus-solutions-link-directive="emergencyLoanLink"
+            data-cc-campus-solutions-link-directive-cc-page-name="currentPage.name"
+            data-cc-campus-solutions-link-directive-cc-page-url="currentPage.url"
+          ></a>
+        </li>
+        <li data-ng-if="subcategory === 'Financial Assistance' && csLinks.optionalDocuments">
+          <a data-cc-campus-solutions-link-directive="csLinks.optionalDocuments"
             data-cc-campus-solutions-link-directive-cc-page-name="currentPage.name"
             data-cc-campus-solutions-link-directive-cc-page-url="currentPage.url"
           ></a>
