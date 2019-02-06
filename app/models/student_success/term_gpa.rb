@@ -9,7 +9,13 @@ module StudentSuccess
     end
 
     def merge(data={})
-      data[:termGpa] = get_term_gpas
+      term_gpas = get_term_gpas
+      data[:termGpaWithZero] = term_gpas.clone
+      data[:termGpa] = remove_zero_gpas(term_gpas)
+    end
+
+    def remove_zero_gpas(term_gpas)
+      term_gpas.delete_if {|term| term[:termGpaUnits].to_i == 0}
     end
 
     def get_term_gpas
@@ -28,7 +34,7 @@ module StudentSuccess
     end
 
     def invalid_term_gpa?(term)
-      term[:termId].to_i >= current_term.to_i || term[:termGpaUnits].to_i == 0 || !active_term_career?(term[:career])
+      term[:termId].to_i >= current_term.to_i || !active_term_career?(term[:career])
     end
 
     def active_term_career?(career)
