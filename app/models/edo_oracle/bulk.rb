@@ -100,5 +100,40 @@ module EdoOracle
       safe_query(sql, do_not_stringify: true)
     end
 
+    def self.get_demographics(advisee_sids)
+      batched_sids = advisee_sids.each_slice(1000).to_a
+      full_sql = ''
+      batched_sids.each do |sids|
+        if full_sql.present?
+          full_sql << ' UNION ALL '
+        else
+          full_sql = <<-SQLA
+          WITH ethn AS (
+            SELECT person_key,
+            LISTAGG(ethnicity_group_descr || ' : ' || ethnicity_detail_descr, ' ; ')
+            WITHIN GROUP (ORDER BY ethnicity_group_code, ethnicity_detail_code) AS ethnicities
+            FROM SISEDO.PERSON_ETHNICITYV00_VW
+            GROUP BY person_key
+          )
+          SQLA
+        end
+        sids_in = sids.map {|sid| "'#{sid}'"}.join ','
+        sql = <<-SQL
+          SELECT
+            p.person_key AS sid,
+            p.gender_genderofrecord_descr AS gender_of_record,
+            p.gender_genderidentity_descr AS gender_identity,
+            ethn.ethnicities
+          FROM SISEDO.PERSONV00_VW p
+          LEFT JOIN ethn ON p.person_key = ethn.person_key
+          WHERE p.person_key IN (#{sids_in})
+        SQL
+        full_sql << sql
+      end
+
+      # Result sets are too large for bulk stringification.
+      safe_query(full_sql, do_not_stringify: true)
+    end
+
   end
 end

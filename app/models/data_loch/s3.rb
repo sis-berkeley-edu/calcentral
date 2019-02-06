@@ -37,5 +37,18 @@ module DataLoch
       end
     end
 
+    def load_advisee_sids()
+      key = Settings.data_loch.advisees_key
+      begin
+        s3obj = @resource.bucket(@bucket).object(key)
+        sids = s3obj.get().body.string.split.to_set
+        logger.info("Fetched #{sids.length} SIDs from (bucket=#{@bucket}, key=#{key}")
+        sids
+      rescue => e
+        logger.error("Error on S3 SIDs fetch from (bucket=#{@bucket}, key=#{key}: #{e.message}")
+        nil
+      end
+    end
+
   end
 end

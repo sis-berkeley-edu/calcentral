@@ -28,15 +28,24 @@ module DataLoch
       path
     end
 
+    def self.zip_demographics(advisee_sids)
+      path = staging_path "demographics.gz"
+      Zlib::GzipWriter.open(path) do |gz|
+        demographics = EdoOracle::Bulk.get_demographics(advisee_sids)
+        zip_query_results(demographics, gz)
+      end
+      path
+    end
+
     def self.zip_query_results(results, gz)
-      raise StandardError, 'Enrollments query failed' unless results.respond_to?(:rows)
+      raise StandardError, 'DB query failed' unless results.respond_to?(:rows)
 
       columns = results.columns.map &:upcase
       section_id_idx = columns.index 'SECTION_ID'
 
       results.rows.each do |r|
         # Cast section ids to integers.
-        r[section_id_idx] = r[section_id_idx].to_i
+        r[section_id_idx] = r[section_id_idx].to_i if section_id_idx
         gz.write r.to_csv
       end
     end
