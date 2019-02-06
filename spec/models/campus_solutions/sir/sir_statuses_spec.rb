@@ -1,5 +1,4 @@
 describe CampusSolutions::Sir::SirStatuses do
-
   let(:uid) { 61889 }
   let(:proxy) { CampusSolutions::Sir::SirStatuses }
 
@@ -123,7 +122,7 @@ describe CampusSolutions::Sir::SirStatuses do
     }
   }
 
-  let(:checklist_response_duplicate) {
+  let(:checklist_response_duplicate_ugrd) {
     {
       feed: {
         checkListItems: [
@@ -143,6 +142,37 @@ describe CampusSolutions::Sir::SirStatuses do
             checkListMgmtAdmp: {
               acadCareer: 'UGRD',
               admApplNbr: '00157689'
+            },
+            itemStatus: 'Completed',
+            itemStatusCode: 'C',
+            adminFunc: 'ADMP',
+            checklistSeq: 200
+          }
+        ]
+      }
+    }
+  }
+
+  let(:checklist_response_duplicate_law) {
+    {
+      feed: {
+        checkListItems: [
+          {
+            chklstItemCd: 'AL0007',
+            checkListMgmtAdmp: {
+              acadCareer: 'LAW',
+              admApplNbr: '00157695'
+            },
+            itemStatus: 'Completed',
+            itemStatusCode: 'C',
+            adminFunc: 'ADMP',
+            checklistSeq: 100
+          },
+          {
+            chklstItemCd: 'AL0007',
+            checkListMgmtAdmp: {
+              acadCareer: 'LAW',
+              admApplNbr: '00157695'
             },
             itemStatus: 'Completed',
             itemStatusCode: 'C',
@@ -482,15 +512,31 @@ describe CampusSolutions::Sir::SirStatuses do
     end
 
     context 'as a student with duplicate offers' do
-      before do
-        CampusSolutions::MyChecklist.stub_chain(:new, :get_feed).and_return checklist_response_duplicate
-        CampusSolutions::Sir::SirConfig.stub_chain(:new, :get).and_return sir_config_response_ugrd
-        allow(User::Identifiers).to receive(:lookup_campus_solutions_id).and_return new_admit_attributes_freshman_pathway_sid
+      context 'duplicate law offers' do
+        before do
+          CampusSolutions::MyChecklist.stub_chain(:new, :get_feed).and_return checklist_response_duplicate_law
+          CampusSolutions::Sir::SirConfig.stub_chain(:new, :get).and_return sir_config_response_law
+          allow(User::Identifiers).to receive(:lookup_campus_solutions_id).and_return multiple_sir_offers_sid
+        end
+        subject { (proxy.new(uid).get_feed[:sirStatuses]) }
+        it 'removes duplicate checklist items' do
+          expect(subject).to have(1).items
+        end
+        it 'keeps the item with the highest checklist_seq' do
+          expect(subject[0][:checklistSeq]).to eql(200)
+        end
       end
-      subject { (proxy.new(uid).get_feed[:sirStatuses]) }
-      it 'only returns a single sir item with the highest seq3c value among the duplicates' do
-        expect(subject).to have(1).items
-        expect(subject[0][:checklistSeq]).to eql(200)
+
+      context 'duplicate non-law offers' do
+        before do
+          CampusSolutions::MyChecklist.stub_chain(:new, :get_feed).and_return checklist_response_duplicate_ugrd
+          CampusSolutions::Sir::SirConfig.stub_chain(:new, :get).and_return sir_config_response_ugrd
+          allow(User::Identifiers).to receive(:lookup_campus_solutions_id).and_return new_admit_attributes_freshman_pathway_sid
+        end
+        subject { (proxy.new(uid).get_feed[:sirStatuses]) }
+        it 'does not remove any duplicate items' do
+          expect(subject).to have(2).items
+        end
       end
     end
 
