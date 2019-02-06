@@ -225,10 +225,10 @@ describe MyAcademics::Semesters do
         schedules: {
           oneTime: [],
           recurring: [{
-                        buildingName: random_string(10),
-                        roomNumber: rand(9).to_s,
-                        schedule: 'MWF 11:00A-12:00P'
-                      }]
+            buildingName: random_string(10),
+            roomNumber: rand(9).to_s,
+            schedule: 'MWF 11:00A-12:00P'
+          }]
         },
         waitlisted: waitlisted,
         instructors: [{name: random_name, uid: random_id}]
@@ -563,7 +563,7 @@ describe MyAcademics::Semesters do
         let(:waitlisted_term) do
           enrollment_term('2016-D').tap do |term|
             term.first[:sections] = [
-              course_enrollment_section(waitlisted: true, ccn: '123456'),
+              course_enrollment_section(waitlisted: true, ccn: '123456', is_primary_section: true),
               course_enrollment_section(waitlisted: true, ccn: '654321')
             ]
           end
@@ -573,11 +573,101 @@ describe MyAcademics::Semesters do
           allow(EdoOracle::Queries).to receive(:get_section_reserved_capacity).with('2168','123456').and_return(reserved_capacity_data)
           allow(EdoOracle::Queries).to receive(:get_section_capacity).and_return(section_capacity_data)
         end
-        it 'should say that there are no reserved seats for all sections that are not ccn=123456' do
-          feed[:semesters].each do |semester|
-            semester[:classes].each do |course|
-              course[:sections].each do |section|
-                if section[:ccn] != '123456'
+
+        context '\'reserved_capacity\' feature flag is enabled' do
+          before { allow(Settings.features).to receive(:reserved_capacity).and_return(true) }
+
+          it 'should say that there are no reserved seats for all sections that are not ccn=123456' do
+            feed[:semesters].each do |semester|
+              semester[:classes].each do |course|
+                course[:sections].each do |section|
+                  if section[:ccn] != '123456'
+                    expect(section[:hasReservedSeats]).to be_nil
+                  end
+                end
+              end
+            end
+          end
+
+          it 'should say that there are reserved seats for all sections that are ccn=123456 in term 2016' do
+            feed[:semesters].each do |semester|
+              semester[:classes].each do |course|
+                course[:sections].each do |section|
+                  if section[:ccn] == '123456'
+                    expect(section[:hasReservedSeats]).to be true
+                    expect(semester[:termId]).to eq('2168')
+
+                    expect(section[:capacity]).to be
+                    expect(section[:capacity][:unreservedSeats]).to eq('14')
+                    expect(section[:capacity][:reservedSeats].length).to eq(3)
+                    expect(section[:capacity][:reservedSeats][0][:seats]).to eq('9')
+                    expect(section[:capacity][:reservedSeats][0][:seatsFor]).to eq('Music major')
+                  end
+                end
+              end
+            end
+          end
+
+          it 'should say N/A when there are negative reserved seats for sections that are ccn=123456 in term 2016' do
+            feed[:semesters].each do |semester|
+              semester[:classes].each do |course|
+                course[:sections].each do |section|
+                  if section[:ccn] == '123456'
+                    expect(section[:hasReservedSeats]).to be true
+                    expect(semester[:termId]).to eq('2168')
+                    expect(section[:capacity][:reservedSeats][2][:seats]).to eq('N/A')
+                  end
+                end
+              end
+            end
+          end
+        end
+
+        context '\'reserved_capacity_link\' feature flag is enabled' do
+          before do
+            allow(Settings.features).to receive(:reserved_capacity_link).and_return(true)
+            allow(EdoOracle::Queries).to receive(:section_reserved_capacity_count).and_return([{'reserved_seating_rules_count' => 0}])
+            allow(EdoOracle::Queries).to receive(:section_reserved_capacity_count).with('2168','123456').and_return([{'reserved_seating_rules_count' => 2}])
+          end
+
+          it 'should include the reserved seat link data only for sections that are ccn=123456 in term 2016' do
+            feed[:semesters].each do |semester|
+              semester[:classes].each do |course|
+                course[:sections].each do |section|
+                  if semester[:termYear] == '2016' && section[:ccn] == '123456'
+                    expect(section[:hasReservedSeats]).to eq true
+                    expect(section[:reservedSeatsInfoLink][:url]).to eq "https://classes.berkeley.edu/content/2016-fall-#{course[:dept].downcase}-#{course[:courseCatalog].downcase}-#{section[:section_number]}-#{section[:instruction_format].downcase}-#{section[:section_number]}"
+                  else
+                    expect(section[:hasReservedSeats]).to be_nil
+                    expect(section[:reservedSeatsInfoLink]).to be_nil
+                  end
+                end
+              end
+            end
+          end
+        end
+
+        context '\'reserved_capacity_link\' feature flag is disabled' do
+          before { allow(Settings.features).to receive(:reserved_capacity_link).and_return(false) }
+          it 'should not include reserved seat link data for all sections' do
+            feed[:semesters].each do |semester|
+              semester[:classes].each do |course|
+                course[:sections].each do |section|
+                  expect(section[:hasReservedSeats]).to be_nil
+                  expect(section[:reservedSeatsInfoLink]).to be_nil
+                  expect(section[:classScheduleLink]).to be_nil
+                end
+              end
+            end
+          end
+        end
+
+        context '\'reserved_capacity\' feature flag is disabled' do
+          before { allow(Settings.features).to receive(:reserved_capacity).and_return(false) }
+          it 'should not include reserved seat data for all sections' do
+            feed[:semesters].each do |semester|
+              semester[:classes].each do |course|
+                course[:sections].each do |section|
                   expect(section[:hasReservedSeats]).to be_nil
                 end
               end
@@ -585,38 +675,6 @@ describe MyAcademics::Semesters do
           end
         end
 
-        it 'should say that there are reserved seats for all sections that are ccn=123456 in term 2016' do
-          feed[:semesters].each do |semester|
-            semester[:classes].each do |course|
-              course[:sections].each do |section|
-                if section[:ccn] == '123456'
-                  expect(section[:hasReservedSeats]).to be true
-                  expect(semester[:termId]).to eq('2168')
-
-                  expect(section[:capacity]).to be
-                  expect(section[:capacity][:unreservedSeats]).to eq('14')
-                  expect(section[:capacity][:reservedSeats].length).to eq(3)
-                  expect(section[:capacity][:reservedSeats][0][:seats]).to eq('9')
-                  expect(section[:capacity][:reservedSeats][0][:seatsFor]).to eq('Music major')
-                end
-              end
-            end
-          end
-        end
-
-        it 'should say N/A when there are negative reserved seats for sections that are ccn=123456 in term 2016' do
-          feed[:semesters].each do |semester|
-            semester[:classes].each do |course|
-              course[:sections].each do |section|
-                if section[:ccn] == '123456'
-                  expect(section[:hasReservedSeats]).to be true
-                  expect(semester[:termId]).to eq('2168')
-                  expect(section[:capacity][:reservedSeats][2][:seats]).to eq('N/A')
-                end
-              end
-            end
-          end
-        end
       end
     end
 

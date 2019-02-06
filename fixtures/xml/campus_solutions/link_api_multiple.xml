@@ -1,6 +1,40 @@
 <?xml version="1.0"?>
 <UC_LINK_RESOURCES>
   <Link>
+    <URL_ID>UC_CX_WAITLIST_ACAD_GUIDE_CLS</URL_ID>
+    <Description>Review Reserved Seats</Description>
+    <HOVER_OVER_TEXT>View class schedule and reserve seating rules</HOVER_OVER_TEXT>
+    <PROPERTIES type="array">
+      <PROPERTY>
+        <NAME>CALCENTRAL</NAME>
+        <value>FINANCIAL</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>NEW_WINDOW</NAME>
+        <value>Y</value>
+      </PROPERTY>
+    </PROPERTIES>
+    <URL>https://classes.berkeley.edu/content/{TERM_YEAR}-{TERM_NAME}-{CLASS_SUBJECT}-{CATALOG_NBR}-{CLASS_SECTION}-{COMPONENT}-{CLASS_SECTION}</URL>
+    <COMMENTS/>
+  </Link>
+  <Link>
+    <URL_ID>UC_CX_WAITLIST_STDNT_OPTS</URL_ID>
+    <Description>Waitlists and Student Options</Description>
+    <HOVER_OVER_TEXT>Learn more about reserve capacity rules and how they affect enrollment</HOVER_OVER_TEXT>
+    <PROPERTIES type="array">
+      <PROPERTY>
+        <NAME>CALCENTRAL</NAME>
+        <value>FINANCIAL</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>NEW_WINDOW</NAME>
+        <value>Y</value>
+      </PROPERTY>
+    </PROPERTIES>
+    <URL>https://example.com/waitlists/student_options.html</URL>
+    <COMMENTS/>
+  </Link>
+  <Link>
     <URL_ID>UC_CX_FA_FINRES_FAFSA</URL_ID>
     <Description>Financial Aid Verification and Appeals Forms</Description>
     <HOVER_OVER_TEXT>This is where you need to go if you have been selected for financial aid verification or if you need to appeal your aid package.</HOVER_OVER_TEXT>

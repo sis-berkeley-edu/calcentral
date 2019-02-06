@@ -490,6 +490,7 @@ features:
   reauthentication: true
   regstatus: true
   reserved_capacity: false
+  reserved_capacity_link: false
   standings: true
   textbooks: false
   transcript_request_link_cred_solutions: false
