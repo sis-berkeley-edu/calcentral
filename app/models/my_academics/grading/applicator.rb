@@ -123,7 +123,7 @@ module MyAcademics
         semester.merge!(
           {
             gradingPeriodStartLaw: grading_session.try(:final_period).try(:formatted_start_date),
-            gradingPeriodEndLaw: grading_session..try(:final_period).try(:formatted_due_date)
+            gradingPeriodEndLaw: grading_session.try(:final_period).try(:formatted_due_date)
           }
         )
       end
