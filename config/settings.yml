@@ -434,6 +434,7 @@ calnet_crosswalk_proxy:
 data_loch:
   fake: true
   staging_directory: 'tmp/data_loch'
+  advisees_key: 'calnet-data/sids/snapshot000'
   targets:
     - name: 's3_test'
       aws_key: 'key'
