@@ -137,20 +137,42 @@
             &#9632; Assistance with Midpoint Grading: General
           </a>
         </span>
-        <span data-ng-if="selectedTeachingSemester.gradingPeriodStartMidpoint && selectedTeachingSemester.gradingPeriodEndMidpoint" class="cc-academics-course-grading-header-period">
-          <span class="cc-text-light">Midpoint Grades</span> Start: <strong><span data-ng-bind="selectedTeachingSemester.gradingPeriodStartMidpoint"></span></strong> | Due: <strong><span data-ng-bind="selectedTeachingSemester.gradingPeriodEndMidpoint"></span></strong>
-        </span>
+        <div class="cc-academics-course-grading-header-period">
+          <div data-ng-if="selectedTeachingSemester.gradingPeriodStartMidpoint && selectedTeachingSemester.gradingPeriodEndMidpoint" class="cc-academics-course-grading-header-period-dates">
+            <span class="cc-text-light">Midpoint Grades</span>
+            <span class="cc-text-light" data-ng-if="selectedTeachingSemester.gradingPeriodStartMidpointGrad && selectedTeachingSemester.gradingPeriodEndMidpointGrad">(Undergraduate)</span>
+            Start: <strong><span data-ng-bind="selectedTeachingSemester.gradingPeriodStartMidpoint"></span></strong>
+            | Due: <strong><span data-ng-bind="selectedTeachingSemester.gradingPeriodEndMidpoint"></span></strong>
+          </div>
+          <div data-ng-if="selectedTeachingSemester.gradingPeriodStartMidpointGrad && selectedTeachingSemester.gradingPeriodEndMidpointGrad" class="cc-academics-course-grading-header-period-dates">
+            <span class="cc-text-light">Midpoint Grades (Graduate)</span>
+            Start: <strong><span data-ng-bind="selectedTeachingSemester.gradingPeriodStartMidpointGrad"></span></strong>
+            | Due: <strong><span data-ng-bind="selectedTeachingSemester.gradingPeriodEndMidpointGrad"></span></strong>
+          </div>
+        </div>
       </div>
+
       <div class="cc-clearfix" data-ng-if="selectedTeachingSemester.gradingAssistanceLink">
         <span>
           <a data-ng-href="{{selectedTeachingSemester.gradingAssistanceLink}}" title="Assistance with grading for general classes">
             &#9632; Assistance with Grading: General
           </a>
         </span>
-        <span data-ng-if="selectedTeachingSemester.gradingPeriodStartFinal && selectedTeachingSemester.gradingPeriodEndFinal" class="cc-academics-course-grading-header-period">
-          <span class="cc-text-light">Final Grades</span> Start: <strong><span data-ng-bind="selectedTeachingSemester.gradingPeriodStartFinal"></span></strong> | Due: <strong><span data-ng-bind="selectedTeachingSemester.gradingPeriodEndFinal"></span></strong>
-        </span>
+        <div class="cc-academics-course-grading-header-period">
+          <div data-ng-if="selectedTeachingSemester.gradingPeriodStartFinal && selectedTeachingSemester.gradingPeriodEndFinal" class="cc-academics-course-grading-header-period-dates">
+            <span class="cc-text-light">Final Grades</span>
+            <span class="cc-text-light" data-ng-if="selectedTeachingSemester.gradingPeriodStartFinalGrad && selectedTeachingSemester.gradingPeriodEndFinalGrad">(Undergraduate)</span>
+            Start: <strong><span data-ng-bind="selectedTeachingSemester.gradingPeriodStartFinal"></span></strong>
+            | Due: <strong><span data-ng-bind="selectedTeachingSemester.gradingPeriodEndFinal"></span></strong>
+          </div>
+          <div data-ng-if="selectedTeachingSemester.gradingPeriodStartFinalGrad && selectedTeachingSemester.gradingPeriodEndFinalGrad" class="cc-academics-course-grading-header-period-dates">
+            <span class="cc-text-light">Final Grades (Graduate)</span>
+            Start: <strong><span data-ng-bind="selectedTeachingSemester.gradingPeriodStartFinalGrad"></span></strong>
+            | Due: <strong><span data-ng-bind="selectedTeachingSemester.gradingPeriodEndFinalGrad"></span></strong>
+          </div>
+        </div>
       </div>
+
       <div class="cc-clearfix" data-ng-if="selectedTeachingSemester.gradingAssistanceLinkLaw">
         <span>
           <a data-ng-href="{{selectedTeachingSemester.gradingAssistanceLinkLaw}}" title="Assistance with grading for Law classes">
@@ -158,7 +180,9 @@
           </a>
         </span>
         <span data-ng-if="selectedTeachingSemester.gradingPeriodStartLaw && selectedTeachingSemester.gradingPeriodEndLaw" class="cc-academics-course-grading-header-period">
-          <span class="cc-text-light">Final Grades (Law)</span> Start: <strong><span data-ng-bind="selectedTeachingSemester.gradingPeriodStartLaw"></span></strong> | Due: <strong><span data-ng-bind="selectedTeachingSemester.gradingPeriodEndLaw"></span></strong>
+          <span class="cc-text-light">Final Grades (Law)</span>
+          Start: <strong><span data-ng-bind="selectedTeachingSemester.gradingPeriodStartLaw"></span></strong>
+          | Due: <strong><span data-ng-bind="selectedTeachingSemester.gradingPeriodEndLaw"></span></strong>
         </span>
       </div>
     </div>
