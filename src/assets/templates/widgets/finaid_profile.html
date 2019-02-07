@@ -14,6 +14,7 @@
       data-ng-bind="finaidProfile.message"
     ></div>
     <div data-ng-if="!finaidProfile.itemGroups.length">
+      <i class="fa fa-exclamation-circle cc-icon-gold"></i>
       Profile data is unavailable. Please contact
       <a href="http://studentcentral.berkeley.edu"
          title="Contact Cal Student Central"
@@ -31,11 +32,12 @@
         data-ng-repeat="items in finaidProfile.itemGroups"
         class="cc-widget-finaid-profile-itemgroup"
       >
-        <div data-ng-repeat="item in items" class="cc-clearfix-container">
+        <div data-ng-repeat="item in items"
+             data-ng-if="item.value || (item.values && item.values.length)"
+             class="cc-clearfix-container">
           <div class="cc-left">
             <strong
               data-ng-bind="item.title"
-              data-ng-if="item.value || item.values"
             ></strong>
             <a
               data-ng-if="item.link.url && api.user.profile.actAsOptions.canSeeCSLinks"
@@ -60,7 +62,7 @@
             data-ng-bind="item.value"
             data-ng-if="item.value"
           ></div>
-          <div class="cc-right" data-ng-if="item.values">
+          <div class="cc-right" data-ng-if="item.values && item.values.length">
             <div data-ng-repeat="value in item.values" class="cc-text-right">
               <div data-ng-bind="value.subvalue.join(' &bull; ')"></div>
             </div>
@@ -70,7 +72,7 @@
       <hr aria-hidden="true" />
       <div class="cc-clearfix-container">
         <h3 class="cc-page-finaid-header cc-left">
-          Terms & Conditions / Update Title IV
+          Financial Aid Agreements
         </h3>
       </div>
       <div class="cc-widget-finaid-profile-itemgroup">
@@ -87,9 +89,7 @@
               >
             </a>
           </div>
-          <div class="cc-right">
-            {{ title4Description }}
-          </div>
+          <div data-ng-bind="title4Description" class="cc-right" ></div>
         </div>
         <div class="cc-clearfix-container">
           <div class="cc-left">
@@ -107,9 +107,7 @@
               <span class="cc-visuallyhidden">Terms and Conditions</span>
             </a>
           </div>
-          <div class="cc-right">
-            {{ termsAndConditionsDescription }}
-          </div>
+          <div data-ng-bind="termsAndConditionsDescription" class="cc-right"></div>
         </div>
       </div>
     </div>

@@ -269,7 +269,7 @@ class EdoOracle::ViewChecker
     },
     {
       :id => 'SYSADM.UCC_FA_PRFL_RES',
-      :columns => %w(EMPLID CAMPUS_ID INSTITUTION AID_YEAR STRM DESCR DESCR2)
+      :columns => %w(EMPLID CAMPUS_ID INSTITUTION AID_YEAR STRM DESCR DESCR100)
     }
   ]
 

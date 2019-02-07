@@ -303,11 +303,12 @@ module EdoOracle
           UC.AID_YEAR             AS AID_YEAR,
           UC.STRM                 AS TERM_ID,
           UC.DESCR                AS TERM_DESCR,
-          UC.DESCR2               AS RESIDENCY
+          UC.DESCR100             AS RESIDENCY
           FROM SYSADM.PS_UCC_FA_PRFL_RES UC
         WHERE UC.CAMPUS_ID   = '#{person_id}'
           AND UC.INSTITUTION = '#{UC_BERKELEY}'
           AND UC.AID_YEAR    = '#{aid_year}'
+          AND UC.DESCR100 IS NOT NULL
         ORDER BY UC.AID_YEAR, UC.STRM
         SQL
       end
