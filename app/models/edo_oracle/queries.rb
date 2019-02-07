@@ -607,16 +607,16 @@ module EdoOracle
           ACAD_PROG as applicant_program,
           ADMIT_TERM as admit_term,
           ADMIT_TYPE as admit_type,
-          ADMITTED_GEP as global_edge_program,
-          APPLICATION_NBR as application_nbr,
-          ATHLETE as athlete,
-          EXPIRE_DT_AD as expiration_date,
+          UC_ADMITTED_GEP as global_edge_program,
+          ADM_APPL_NBR as application_nbr,
+          UC_ATHLETE as athlete,
+          UC_EXPIRE_DT_ADTL as expiration_date,
           PROG_ACTION as admit_action,
           PROG_STATUS as admit_status
         FROM
-          SISEDO.APPLICANT_ADMIT_DATAV00_VW
+          SYSADM.PS_UCC_AD_ADMITSIR
         WHERE
-          STUDENT_ID = '#{student_id}' AND
+          EMPLID = '#{student_id}' AND
           (
             PROG_ACTION <> 'DATA' OR
             (PROG_REASON = 'LMAY' AND PROG_STATUS <> 'C')
