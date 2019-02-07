@@ -2,7 +2,7 @@
 
 angular
 .module('calcentral.controllers')
-.controller('FinaidProfileController', function(finaidProfileFactory, title4Factory, termsAndConditionsFactory, $scope, $routeParams) {
+.controller('FinaidProfileController', function(finaidProfileFactory, title4Factory, termsAndConditionsFactory, $scope, $routeParams, $q) {
   $scope.finaidProfile = {
     isLoading: true
   };
@@ -13,10 +13,7 @@ angular
       function(response) {
         $scope.finaidProfile = response.data.finaidProfile;
       }
-    )
-    .finally(function() {
-      $scope.finaidProfile.isLoading = false;
-    });
+    );
   };
 
   const getTitle4 = function(options) {
@@ -35,9 +32,16 @@ angular
     );
   };
 
-  getFinaidProfile({ finaidYear: $routeParams.finaidYearId });
+  const loadFAProfile = function() {
+    $q.all([
+      getFinaidProfile({ finaidYear: $routeParams.finaidYearId }),
+      getTitle4(),
+      getTermsAndConditions( {finaidYear: $routeParams.finaidYearId} )
+    ])
+    .then(function() {
+      $scope.finaidProfile.isLoading = false;
+    });
+  };
 
-  getTitle4();
-
-  getTermsAndConditions( {finaidYear: $routeParams.finaidYearId} );
+  loadFAProfile();
 });
