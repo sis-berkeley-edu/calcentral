@@ -697,6 +697,18 @@ module EdoOracle
       SQL
     end
 
+    def self.section_reserved_capacity_count(term_id, section_id)
+      safe_query <<-SQL
+        SELECT COUNT(*) as reserved_seating_rules_count
+        FROM
+          SISEDO.CLC_CURRENT_RESERVE_CAPACITYV00_VW
+        WHERE
+          TERM_ID = '#{term_id}' AND
+          CLASS_NBR = '#{section_id}' AND
+          RESERVED_SEATS > 0
+      SQL
+    end
+
     def self.get_section_reserved_capacity(term_id, section_id)
       safe_query <<-SQL
         SELECT CLASS_NBR as class_nbr,

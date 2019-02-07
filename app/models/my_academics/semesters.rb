@@ -167,6 +167,9 @@ module MyAcademics
             if section[:waitlisted] && Settings.features.reserved_capacity
               map_reserved_seats(term_id, section)
             end
+            if Settings.features.reserved_capacity_link
+              add_reserved_seating_rules_link(term_id, mapped_course, section)
+            end
             section[:grading][:gradePoints] = nil if hide_points? course
             section[:isLaw] = law_class? course
             section.merge!(law_class_enrollment(course, section))
@@ -174,6 +177,28 @@ module MyAcademics
           merge_multiple_primaries(mapped_course, course[:course_option]) if primaries_count > 1
         end
         mapped_course
+      end
+    end
+
+    def add_reserved_seating_rules_link(term_id, course, section)
+      if section[:waitlisted] && section[:is_primary_section]
+        reserved_capacity_count = EdoOracle::Queries.section_reserved_capacity_count(term_id, section[:ccn]).first['reserved_seating_rules_count'].to_i
+        if reserved_capacity_count > 0
+          term = Berkeley::Terms.find_by_campus_solutions_id(term_id)
+          class_subject = course[:dept]
+          catalog_nbr = course[:courseCatalog]
+          class_section = section[:section_number]
+          component = section[:instruction_format]
+          section[:hasReservedSeats] = true
+          section[:reservedSeatsInfoLink] = LinkFetcher.fetch_link('UC_CX_WAITLIST_ACAD_GUIDE_CLS', {
+            'TERM_YEAR' => term.year.to_s,
+            'TERM_NAME' => term.name.to_s.downcase,
+            'CLASS_SUBJECT' => class_subject.to_s.downcase,
+            'CATALOG_NBR' => catalog_nbr.to_s.downcase,
+            'CLASS_SECTION' => class_section.to_s.downcase,
+            'COMPONENT' => component.to_s.downcase,
+          })
+        end
       end
     end
 
@@ -193,9 +218,9 @@ module MyAcademics
           unreserved_seats_available = section_max_enroll.to_i - section_enrolled_count.to_i - available_reserved_total.to_i
         end
         section[:capacity] = {
-            unreservedSeats: format_capacity(unreserved_seats_available),
-            reservedSeats: []
-          }
+          unreservedSeats: format_capacity(unreserved_seats_available),
+          reservedSeats: []
+        }
         section_reserved_capacity.each do |row|
           available_reserved = row['reserved_seats'].to_i - row['reserved_seats_taken'].to_i
           section[:capacity][:reservedSeats].push(

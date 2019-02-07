@@ -491,6 +491,15 @@ describe EdoOracle::Queries do
     end
   end
 
+  describe '.section_reserved_capacity_count' do
+    let(:term_id) { '2188' }
+    let(:section_id) { '27893' }
+    subject { EdoOracle::Queries.section_reserved_capacity_count(term_id, section_id) }
+    it 'returns sections reserved capacity count' do
+      expect(subject.first['reserved_seating_rules_count']).to eq 1
+    end
+  end
+
   describe '.get_student_term_cpp' do
     subject { EdoOracle::Queries.get_student_term_cpp(student_id) }
     context 'when valid uid' do

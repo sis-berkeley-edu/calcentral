@@ -154,7 +154,6 @@ features:
   cs_profile_languages: true
   cs_profile_work_experience: true
   financials: true
-  reserved_capacity: true
   standings: true
   textbooks: true
   videos: true

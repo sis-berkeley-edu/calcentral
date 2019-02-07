@@ -9,11 +9,20 @@ describe MyAcademics::StudentLinks do
       }
     }
   end
+  let(:waitlistsAndStudentOptions) do
+    {
+      link: {
+        name: 'Waitlists and Student Options',
+        url: 'https://example.com/waitlists/student_options.html'
+      }
+    }
+  end
 
   before do
     # stub CS Link proxy responses
     fake_cs_link_proxy = double
     allow(fake_cs_link_proxy).to receive(:get_url).with('UC_CX_XFER_CREDIT_REPORT_STDNT').and_return(tcReportLink)
+    allow(fake_cs_link_proxy).to receive(:get_url).with('UC_CX_WAITLIST_STDNT_OPTS').and_return(waitlistsAndStudentOptions)
     allow(CampusSolutions::Link).to receive(:new).and_return(fake_cs_link_proxy)
   end
 
@@ -26,5 +35,8 @@ describe MyAcademics::StudentLinks do
     expect(subject[:studentLinks][:tcReportLink]).to be
     expect(subject[:studentLinks][:tcReportLink][:name]).to eq 'Transfer Credit Report'
     expect(subject[:studentLinks][:tcReportLink][:url]).to eq 'https://bcswebqat.is.berkeley.edu/psp/bcsqat/EMPLOYEE/HRMS/c/CSU_DA_TRN_CDT_STD.CSU_DA_TRN_CDT_STD.GBL'
+    expect(subject[:studentLinks][:waitlistsAndStudentOptions]).to be
+    expect(subject[:studentLinks][:waitlistsAndStudentOptions][:name]).to eq 'Waitlists and Student Options'
+    expect(subject[:studentLinks][:waitlistsAndStudentOptions][:url]).to eq 'https://example.com/waitlists/student_options.html'
   end
 end
