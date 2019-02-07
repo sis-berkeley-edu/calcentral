@@ -250,8 +250,9 @@ angular.module('calcentral.controllers').controller('UserOverviewController', fu
 
   var parseTermGpa = function(response) {
     var termGpas = _.get(response, 'data.termGpa');
+    var termGpasWithZero = _.get(response, 'data.termGpaWithZero');
     $scope.studentSuccess.termGpa = _.sortBy(termGpas, ['termId']);
-
+    $scope.studentSuccess.termGpaWithZero = _.sortBy(termGpasWithZero, ['termId']);
     if (termGpas.length >= 2) {
       chartGpaTrend(termGpas);
     } else {
