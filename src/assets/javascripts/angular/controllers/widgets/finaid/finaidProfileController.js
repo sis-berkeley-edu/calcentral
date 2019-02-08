@@ -38,7 +38,7 @@ angular
       getTitle4(),
       getTermsAndConditions( {finaidYear: $routeParams.finaidYearId} )
     ])
-    .then(function() {
+    .finally(function() {
       $scope.finaidProfile.isLoading = false;
     });
   };
