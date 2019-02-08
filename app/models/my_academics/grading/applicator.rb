@@ -144,9 +144,9 @@ module MyAcademics
           if acad_career_code == 'LAW'
             mapped_session_id = summer_law_session_mapping[session_id].to_s
           else
-            mapped_session_id = :session_id
+            mapped_session_id = session_id
           end
-          grading_session = MyAcademics::Grading::Session.get_session(term_id, 'LAW', mapped_session_id)
+          grading_session = MyAcademics::Grading::Session.get_session(term_id, acad_career_code, mapped_session_id)
           if (grading_session)
             begin_date = grading_session.final_period.start_date
             end_date = grading_session.final_period.due_date
@@ -156,7 +156,7 @@ module MyAcademics
               gradingPeriodEndDateFormatted: format_period_end_summer(end_date).to_s
             })
           else
-            logger.warn "No grading periods found for term: #{term_id}, career: #{acad_career_code}"
+            logger.warn "No grading periods found for term: #{term_id}, career: #{acad_career_code}, session: #{grading_session}"
           end
         else
           logger.error "No session ID found for section #{section[:ccn]}, course ID #{semester_class[:course_id]}"
