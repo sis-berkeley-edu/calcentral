@@ -1,0 +1,14 @@
+@import 'colors';
+
+//Blocks
+.cc-react-list-bullets {
+  margin: 4px 4px 0 15px;
+  li::before {
+    color: $cc-color-air-force-blue;
+    content: '\25A0';
+    float: left;
+    margin-left: -16px;
+    margin-top: -2px;
+    padding-right: 8px;
+  }
+}

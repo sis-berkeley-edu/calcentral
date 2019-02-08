@@ -844,5 +844,20 @@ module EdoOracle
       SQL
       result.any?
     end
+
+    def self.get_pnp_calculator_values(student_id)
+      result = safe_query <<-SQL
+        SELECT TOTAL_GPA_UNITS,
+          TOTAL_NOGPA_UNITS as total_no_gpa_units,
+          TOTAL_TRANSFER_UNITS,
+          MAX_RATIO_BASE_UNITS,
+          GPA_RATIO_UNITS,
+          NOGPA_RATIO_UNITS as no_gpa_ratio_units,
+          PNP_RATIO
+        FROM SISEDO.CLC_PNP_RATIOV00_VW
+        WHERE STUDENT_ID = '#{student_id}'
+      SQL
+      result.first
+    end
   end
 end

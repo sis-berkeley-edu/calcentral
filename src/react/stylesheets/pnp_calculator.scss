@@ -1,0 +1,30 @@
+.cc-react-pnp-calculator-table {
+  form {
+    background-color: transparent;
+    border: none;
+    padding: 0;
+  }
+  table {
+    margin-top: 12px;
+    table-layout: fixed;
+    td, th {
+      &:nth-child(3), &:nth-child(4) {
+        padding-left: 8px;
+      }
+    }
+    th {
+      &:nth-child(1) {
+        width: 45%;
+      }
+      &:nth-child(2), &:nth-child(3) {
+        width: 20%;
+      }
+    }
+  }
+}
+
+.cc-react-pnp-calculat-ratio-calc {
+  p {
+    margin: 6px 0;
+  }
+}

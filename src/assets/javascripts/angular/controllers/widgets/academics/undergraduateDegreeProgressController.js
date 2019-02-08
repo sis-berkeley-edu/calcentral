@@ -2,11 +2,17 @@
 
 var _ = require('lodash');
 
-angular.module('calcentral.controllers').controller('UndergraduateDegreeProgressController', function(academicsService, degreeProgressFactory, apiService, $scope) {
+angular.module('calcentral.controllers').controller('UndergraduateDegreeProgressController', function(academicsService, degreeProgressFactory, apiService, $rootScope, $scope) {
   $scope.degreeProgress = {
     undergraduate: {
-      isLoading: true
+      isLoading: true,
+      showPnpCalculator: false
     }
+  };
+
+  $scope.showPnpCalculator = function() {
+    $scope.degreeProgress.undergraduate.showPnpCalculator = true;
+    $rootScope.$broadcast('calcentral.custom.api.showPnpCalculator');
   };
 
   var showTip = function() {

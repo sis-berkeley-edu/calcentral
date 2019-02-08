@@ -5,9 +5,6 @@ import React from 'react';
 import { react2angular } from 'react2angular';
 import { updateStateProperty } from '../helpers/stateHelper';
 
-import BulletList from '../components/base/list/BulletList';
-import CampusSolutionsLinkContainer from '../containers/base/link/CampusSolutionsLinkContainer';
-import ListHeader from '../components/base/list/ListHeader';
 import StudentResources from '../components/StudentResources';
 class StudentResourcesContainer extends React.Component {
   constructor(props) {
@@ -25,8 +22,6 @@ class StudentResourcesContainer extends React.Component {
     this.getStudentResources = this.getStudentResources.bind(this);
     this.getStudentRoles = this.getStudentRoles.bind(this);
     this.parseStudentResources = this.parseStudentResources.bind(this);
-    this.renderLinkSection = this.renderLinkSection.bind(this);
-    this.renderLinkSectionList = this.renderLinkSectionList.bind(this);
     this.getWidgetVisibility = this.getWidgetVisibility.bind(this);
   }
   componentDidMount() {
@@ -87,31 +82,10 @@ class StudentResourcesContainer extends React.Component {
       resolve(decoratedResources);
     });
   }
-  renderLinkSection(resource) {
-    if (resource.links.length > 0) {
-      return (
-        <div key={resource.section}>
-          <ListHeader header={resource.section} />
-          <BulletList>
-            {_.map(resource.links, linkObj => this.renderLinkSectionList(linkObj))}
-          </BulletList>
-        </div>
-      );
-    } else {
-      return null;
-    }
-  }
-  renderLinkSectionList(linkObj) {
-    return (
-      <li key={linkObj.urlId}>
-        <CampusSolutionsLinkContainer linkObj={{...linkObj}}/>
-      </li>
-    );
-  }
   render() {
     return (
       <div>
-        <StudentResources renderLinkSection={this.renderLinkSection} resources={[...this.state.resources]} widgetConfig={{...this.state.widgetConfig}} />
+        <StudentResources resources={[...this.state.resources]} widgetConfig={{...this.state.widgetConfig}} />
       </div>
     );
   }

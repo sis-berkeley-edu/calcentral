@@ -25,6 +25,7 @@
       class="large-4 columns cc-column-2 cc-academics-row-margin">
       <div data-ng-include="'academics_semesters.html'" data-ng-if="api.user.profile.hasStudentHistory && semesters.length"></div>
       <div data-ng-include="'widgets/academics/degree_progress_undergrad.html'" data-ng-controller="UndergraduateDegreeProgressController"></div>
+      <pnp-calculator-container></pnp-calculator-container>
       <div data-ng-include="'widgets/academics/degree_progress_graduate.html'" data-ng-controller="GraduateDegreeProgressController"></div>
       <div data-ng-include="'academics_teaching.html'" data-ng-if="!api.user.profile.delegateActingAsUid && hasTeachingClasses"></div>
       <div data-ng-include="'widgets/final_exam_schedule.html'" data-ng-init="finalExamMode='instructor'" data-ng-if="!api.user.profile.delegateActingAsUid && hasTeachingClasses && api.user.profile.hasStudentHistory && (api.user.profile.roles.student || api.user.profile.roles.exStudent)"></div>
