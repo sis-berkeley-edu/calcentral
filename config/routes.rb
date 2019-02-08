@@ -144,6 +144,7 @@ Calcentral::Application.routes.draw do
     get '/api/advising/student/:student_uid' => 'advising_student#profile', :defaults => { :format => 'json' }
     get '/api/advising/student_success/:student_uid' => 'advising_student#student_success', :defaults => { :format => 'json' }
     get '/api/advising/transfer_credit/:student_uid' => 'advising_student#transfer_credit', :defaults => { :format => 'json' }
+    get '/api/advising/employment_appointments/:student_uid' =>  'advising_student#employment_appointments', :defaults => { :format => 'json' }
     get '/api/search_users/id_or_name/:input/' => 'search_users#by_id_or_name', :defaults => { :format => 'json' }
     post '/advisor_act_as' => 'advisor_act_as#start'
     post '/stop_advisor_act_as' => 'advisor_act_as#stop'
