@@ -13,6 +13,11 @@
     <li data-ng-repeat="info in errorConfig.supportInfo">
       <span data-ng-bind="info"></span>
     </li>
-    <li>The following error message: &quot;<span data-ng-bind="error"></span>&quot;</li>
+    <li data-ng-if="errors">The following error messages:</li>
+    <ul>
+      <li data-ng-repeat="msg in errors">
+        "<span data-ng-bind="msg"></span>"
+      </li>
+    </ul>
   </ul>
 </div>

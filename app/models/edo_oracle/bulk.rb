@@ -9,7 +9,7 @@ module EdoOracle
       maximum_row_inclusive = mininum_row_exclusive + batch_size
       sql = <<-SQL
         SELECT section_id, term_id, ldap_uid, sis_id, enrollment_status, waitlist_position, units,
-               grade, grade_points, grading_basis FROM (
+               grade, grade_points, grading_basis, grade_midterm FROM (
           SELECT /*+ FIRST_ROWS(n) */ enrollments.*, ROWNUM rnum FROM (
             SELECT DISTINCT
               enroll."CLASS_SECTION_ID" as section_id,
@@ -21,8 +21,9 @@ module EdoOracle
               enroll."UNITS_TAKEN" AS units,
               enroll."GRADE_MARK" AS grade,
               enroll."GRADE_POINTS" AS grade_points,
-              enroll."GRADING_BASIS_CODE" AS grading_basis
-            FROM SISEDO.CC_ENROLLMENTV00_VW enroll
+              enroll."GRADING_BASIS_CODE" AS grading_basis,
+              enroll."GRADE_MARK_MID" as grade_midterm
+            FROM SISEDO.ETS_ENROLLMENTV00_VW enroll
             WHERE
               enroll."TERM_ID" = '#{term_id}'
             ORDER BY section_id, sis_id

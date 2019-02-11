@@ -122,6 +122,8 @@ canvas_proxy:
   inactivate_expired_users: true
   # Set to false if Canvas permissions block our ability to delete an invalid email address.
   delete_bad_emails: true
+  # Throttle automatic site membership refresh if more than these many enrollments are being dropped.
+  max_deleted_enrollments: 1000
   # Set to false to use an API loop to change SIS User IDs and upload SIS Import files one at a time.
   import_zipped_csvs: true
   # URL for scripts to point to CalCentral/Junction
