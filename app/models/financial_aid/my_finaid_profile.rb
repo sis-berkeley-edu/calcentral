@@ -37,6 +37,10 @@ module FinancialAid
       @status ||= EdoOracle::FinancialAid::Queries.get_finaid_profile_status(@uid, my_aid_year)
     end
 
+    def careers
+      @careers ||= EdoOracle::FinancialAid::Queries.get_finaid_profile_acad_careers(@uid, my_aid_year)
+    end
+
     def level
       @level ||= EdoOracle::FinancialAid::Queries.get_finaid_profile_acad_level(@uid, my_aid_year)
     end
@@ -63,6 +67,17 @@ module FinancialAid
 
     def success?
       my_aid_year.present? && status.present? ? true : false
+    end
+
+    def subvaluesCareer
+      @subvaluesCareer ||= careers.map.try(:each) do |item|
+        {
+          subvalue: [
+            item.try(:[], 'term_descr'),
+            item.try(:[], 'acad_career')
+          ]
+        }
+      end
     end
 
     def subvaluesLevel
@@ -112,10 +127,18 @@ module FinancialAid
     def itemGroupsProfile
       @itemGroupsProfile ||= [
         [
-          {
+          subvaluesCareer.present? ?
+          ({
+            title: 'Academic Career',
+            values:subvaluesCareer
+          })
+          :
+          ({
             title: 'Academic Career',
             value: status.try(:[], 'acad_career_descr')
-          },
+          })
+        ],
+        [
           {
             title: 'Level',
             values: subvaluesLevel

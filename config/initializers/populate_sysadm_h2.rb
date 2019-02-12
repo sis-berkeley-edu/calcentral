@@ -42,6 +42,20 @@ class PopulateSysadmH2 < ActiveRecord::Base
       INSERT INTO SYSADM.PS_UCC_FA_PRFL_FAT (EMPLID,CAMPUS_ID,INSTITUTION,AID_YEAR,DESCR,DESCR2,DESCR3,DESCR4,DESCR5,DESCR6,DESCRFORMAL,DESCR7,DESCR8,TITLE,MESSAGE_TEXT_LONG) VALUES ('11667051','61889','UCB01','2018','Undergraduate','Spring 2019','Meeting Satis Acad Progress','Verified','Packaged','0',null,null,'$0','Financial Aid Profile','We take many factors into consideration when determining your funding package. Updates made elsewhere to your personal information may affect the amount of aid provided to you.');
       INSERT INTO SYSADM.PS_UCC_FA_PRFL_FAT (EMPLID,CAMPUS_ID,INSTITUTION,AID_YEAR,DESCR,DESCR2,DESCR3,DESCR4,DESCR5,DESCR6,DESCRFORMAL,DESCR7,DESCR8,TITLE,MESSAGE_TEXT_LONG) VALUES ('11667051','61889','UCB01','2019','Undergraduate','Spring 2019','Meeting Satis Acad Progress','Verified','Packaged','0',null,null,'$0','Financial Aid Profile','We take many factors into consideration when determining your funding package. Updates made elsewhere to your personal information may affect the amount of aid provided to you.');
 
+      DROP TABLE IF EXISTS SYSADM.PS_UCC_FA_PRFL_CAR;
+      CREATE TABLE SYSADM.PS_UCC_FA_PRFL_CAR (
+        EMPLID                      VARCHAR2(11 CHAR),
+        CAMPUS_ID                   VARCHAR2(16 CHAR),
+        INSTITUTION                 VARCHAR2(5 CHAR),
+        AID_YEAR                    VARCHAR2(4 CHAR),
+        STRM                        VARCHAR2(4 CHAR),
+        DESCR                       VARCHAR2(30 CHAR),
+        DESCR2                      VARCHAR2(30 CHAR)
+      );
+
+      INSERT INTO SYSADM.PS_UCC_FA_PRFL_CAR (EMPLID,CAMPUS_ID,INSTITUTION,AID_YEAR,STRM,DESCR,DESCR2) VALUES ('11667051','61889','UCB01','2018','2178','Fall 2017','Undergraduate');
+      INSERT INTO SYSADM.PS_UCC_FA_PRFL_CAR (EMPLID,CAMPUS_ID,INSTITUTION,AID_YEAR,STRM,DESCR,DESCR2) VALUES ('11667051','61889','UCB01','2018','2182','Spring 2018','Graduate');
+
       DROP TABLE IF EXISTS SYSADM.PS_UCC_FA_PRFL_LVL;
       CREATE TABLE SYSADM.PS_UCC_FA_PRFL_LVL (
         EMPLID                      VARCHAR2(11 CHAR),
