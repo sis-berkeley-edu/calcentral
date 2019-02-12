@@ -320,7 +320,7 @@ describe MyAcademics::Semesters do
           {
             'student_id'=>'25259127',
             'acadcareer_code'=>'UGRD',
-            'term_id'=>'2158',
+            'term_id'=>'2178',
             'withcncl_type_code'=>'WDR',
             'withcncl_type_descr'=>'Withdrew',
             'withcncl_reason_code'=>'RETR',
@@ -332,7 +332,7 @@ describe MyAcademics::Semesters do
       end
       let(:enrollment_data) { generate_enrollment_data }
       it 'should add withdrawal data' do
-        expect([feed[:semesters][3]]).to all include({hasWithdrawalData: true})
+        expect([feed[:semesters][0]]).to all include({hasWithdrawalData: true})
       end
     end
 
