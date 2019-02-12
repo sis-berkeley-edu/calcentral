@@ -266,9 +266,9 @@ describe EdoOracle::Queries do
 
     it 'returns the expected result' do
       expect(subject.count).to eq 3
-      expect(subject[0]).to have_keys(['career', 'school_descr', 'transfer_units', 'law_transfer_units', 'requirement_designation', 'grade_points'])
-      expect(subject[1]).to have_keys(['career', 'school_descr', 'transfer_units', 'law_transfer_units', 'requirement_designation', 'grade_points'])
-      expect(subject[2]).to have_keys(['career', 'school_descr', 'transfer_units', 'law_transfer_units', 'requirement_designation', 'grade_points'])
+      expect(subject[0]).to have_keys(['career', 'school_descr', 'transfer_units', 'law_transfer_units', 'requirement_designation', 'grade_points', 'term_id'])
+      expect(subject[1]).to have_keys(['career', 'school_descr', 'transfer_units', 'law_transfer_units', 'requirement_designation', 'grade_points', 'term_id'])
+      expect(subject[2]).to have_keys(['career', 'school_descr', 'transfer_units', 'law_transfer_units', 'requirement_designation', 'grade_points', 'term_id'])
     end
   end
 

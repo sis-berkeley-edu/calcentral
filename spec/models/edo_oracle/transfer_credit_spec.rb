@@ -21,7 +21,7 @@ describe EdoOracle::TransferCredit do
         expect(subject[:undergraduate][:detailed]).to have(2).items
 
         expect(subject[:undergraduate][:detailed][0]).to be
-        expect(subject[:undergraduate][:detailed][0].count).to eq 5
+        expect(subject[:undergraduate][:detailed][0].count).to eq 6
         expect(subject[:undergraduate][:detailed][0][:school]).to eql('Berkeley City College')
         expect(subject[:undergraduate][:detailed][0][:units]).to be_an_instance_of(Float)
         expect(subject[:undergraduate][:detailed][0][:units]).to eql(27.0)
@@ -31,7 +31,7 @@ describe EdoOracle::TransferCredit do
         expect(subject[:undergraduate][:detailed][0][:requirementDesignation]).to be nil
 
         expect(subject[:undergraduate][:detailed][1]).to be
-        expect(subject[:undergraduate][:detailed][1].count).to eq 5
+        expect(subject[:undergraduate][:detailed][1].count).to eq 6
         expect(subject[:undergraduate][:detailed][1][:school]).to eql('College Of Alameda')
         expect(subject[:undergraduate][:detailed][1][:units]).to be_an_instance_of(Float)
         expect(subject[:undergraduate][:detailed][1][:units]).to eql(0.5)
@@ -99,7 +99,7 @@ describe EdoOracle::TransferCredit do
           expect(subject[:law][:summary]).to be
         end
         it 'parses detailed data, casting Numerical values to Floats' do
-          expect(subject[:graduate][:detailed][0].count).to eq 5
+          expect(subject[:graduate][:detailed][0].count).to eq 6
           expect(subject[:graduate][:detailed][0][:school]).to eql('UNIV OF TORONTO')
           expect(subject[:graduate][:detailed][0][:units]).to be_an_instance_of(Float)
           expect(subject[:graduate][:detailed][0][:units]).to eql(15.0)
@@ -108,7 +108,7 @@ describe EdoOracle::TransferCredit do
           expect(subject[:graduate][:detailed][0][:lawUnits]).to be nil
           expect(subject[:graduate][:detailed][0][:requirementDesignation]).to be nil
 
-          expect(subject[:law][:detailed][0].count).to eq 5
+          expect(subject[:law][:detailed][0].count).to eq 6
           expect(subject[:law][:detailed][0][:school]).to eql('Georgetown Univ Law Center')
           expect(subject[:law][:detailed][0][:units]).to be_an_instance_of(Float)
           expect(subject[:law][:detailed][0][:units]).to eql(10.0)
@@ -117,7 +117,7 @@ describe EdoOracle::TransferCredit do
           expect(subject[:law][:detailed][0][:lawUnits]).to eq 0.0
           expect(subject[:law][:detailed][0][:requirementDesignation]).to be nil
 
-          expect(subject[:law][:detailed][1].count).to eq 5
+          expect(subject[:law][:detailed][1].count).to eq 6
           expect(subject[:law][:detailed][1][:school]).to eql('Georgetown Univ Law Center')
           expect(subject[:law][:detailed][1][:units]).to be_an_instance_of(Float)
           expect(subject[:law][:detailed][1][:units]).to eql(2.0)

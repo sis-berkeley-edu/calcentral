@@ -227,4 +227,28 @@ describe AdvisingStudentController do
       end
     end
   end
+
+  describe "#transfer_credit" do
+    let(:session_user_id) { random_id }
+
+    subject { get :transfer_credit, student_uid: student_uid }
+
+    context 'when not advisor authorized' do
+      it_behaves_like 'an endpoint refusing a request'
+    end
+
+    context 'when advisor authorized' do
+      let(:session_user_is_advisor) { true }
+
+      context 'when not viewing a student' do
+        it_behaves_like 'an endpoint refusing a request'
+      end
+
+      context 'when viewing a student' do
+        let(:student) { true }
+
+        it_behaves_like 'an endpoint receiving a valid request'
+      end
+    end
+  end
 end

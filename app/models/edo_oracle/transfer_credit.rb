@@ -51,7 +51,8 @@ module EdoOracle
           units: credit['transfer_units'].try(:to_f),
           gradePoints: is_law ? nil : credit['grade_points'].try(:to_f),
           lawUnits: is_law ? credit['law_transfer_units'].try(:to_f) : nil,
-          requirementDesignation: is_law ? credit['requirement_designation'] : nil
+          requirementDesignation: is_law ? credit['requirement_designation'] : nil,
+          termId: is_law ? credit['term_id'] : nil
         }
       end
       result
