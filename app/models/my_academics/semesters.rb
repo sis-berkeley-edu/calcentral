@@ -46,10 +46,10 @@ module MyAcademics
           semester[:hasEnrolledClasses] = has_enrolled_classes?(enrollment_terms[term_key])
           merge_grades(semester)
           semester.merge! unit_totals(enrollment_terms[term_key])
+        else
+          merge_withdrawals(semester, withdrawal_data)
         end
-
         merge_study_prog(semester, study_prog_data)
-        merge_withdrawals(semester, withdrawal_data)
         merge_standings(semester, standing_data)
         semester unless semester[:classes].empty? && !semester[:hasWithdrawalData] && !semester[:hasStudyProgData]
       end
