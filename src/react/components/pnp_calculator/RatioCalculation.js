@@ -33,7 +33,7 @@ const renderRatioCalculationSection = (props) => {
       <React.Fragment>
         <div className="cc-react-pnp-calculat-ratio-calc">
           <p>{`${ratio.toFixed(2)} = ${countedNoGpaUnits.toFixed(2)} units / ${(countedGpaUnits + countedNoGpaUnits).toFixed(2)} units`}</p>
-          <p>&emsp;{`${countedNoGpaUnits.toFixed(2)} units: Berkeley P/NP (${excessNoGpaUnits} excess units)`}</p>
+          <p>&emsp;{`${countedNoGpaUnits.toFixed(2)} units: Berkeley P/NP (${excessNoGpaUnits.toFixed(2)} excess units)`}</p>
           <p>&emsp;{`${(countedGpaUnits + countedNoGpaUnits).toFixed(2)} units: ${cepLabel}`}</p>
         </div>
         {renderRatioCalculationMessage(props.ratioCalculation.errored, props.ratioCalculation.isLoading, props.ratioCalculation.message)}
