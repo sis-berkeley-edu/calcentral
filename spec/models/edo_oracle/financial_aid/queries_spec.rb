@@ -177,6 +177,23 @@ describe EdoOracle::FinancialAid::Queries do
     end
   end
 
+  describe '#get_finaid_profile_acad_careers' do
+    subject { described_class.get_finaid_profile_acad_careers(uid, aid_year) }
+
+    it_behaves_like 'a successful query'
+
+    it 'returns the expected result' do
+      expect(subject.count).to eq 2
+      expect(subject[0]).to have_keys(%w(aid_year term_id term_descr acad_career))
+      expect(subject[1]).to have_keys(%w(aid_year term_id term_descr acad_career))
+    end
+
+    it 'sorts the rows by term' do
+      expect(subject[0]['term_id']).to eq '2178'
+      expect(subject[1]['term_id']).to eq '2182'
+    end
+  end
+
   describe '#get_finaid_profile_acad_level' do
     subject { described_class.get_finaid_profile_acad_level(uid, aid_year) }
 

@@ -248,6 +248,10 @@ class EdoOracle::ViewChecker
 
   VIEW_DEPENDENCIES_CLC_CS = [
     {
+      :id => 'SYSADM.UCC_FA_PRFL_CAR',
+      :columns => %w(EMPLID CAMPUS_ID INSTITUTION AID_YEAR STRM DESCR DESCR2)
+    },
+    {
       :id => 'SYSADM.UCC_FA_PRFL_ENR',
       :columns => %w(EMPLID CAMPUS_ID INSTITUTION AID_YEAR STRM DESCR DESCR2 DESCR3)
     },
