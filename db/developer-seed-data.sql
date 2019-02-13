@@ -1480,7 +1480,7 @@ INSERT INTO links_user_roles VALUES (1823, 1);
 --
 
 INSERT INTO oec_course_codes VALUES (1, 'A,RESEC', '', 'MBARC', true, '2015-08-13 23:26:35.356', '2015-08-13 23:26:35.356');
-INSERT INTO oec_course_codes VALUES (2, 'AEROSPC', '', 'QLROT', false, '2015-08-13 23:26:35.38', '2015-08-13 23:26:35.38');
+INSERT INTO oec_course_codes VALUES (2, 'AEROSPC', '', 'QLROT', true, '2015-08-13 23:26:35.38', '2015-08-13 23:26:35.38');
 INSERT INTO oec_course_codes VALUES (3, 'AFRICAM', '', 'SAAMS', true, '2015-08-13 23:26:35.388', '2015-08-13 23:26:35.388');
 INSERT INTO oec_course_codes VALUES (4, 'AFRKANS', '', 'HZGER', true, '2015-08-13 23:26:35.399', '2015-08-13 23:26:35.399');
 INSERT INTO oec_course_codes VALUES (5, 'AGR CHM', '', 'MEPMB', true, '2015-08-13 23:26:35.408', '2015-08-13 23:26:35.408');
@@ -1558,7 +1558,7 @@ INSERT INTO oec_course_codes VALUES (76, 'FILIPN', '', 'HVSSA', false, '2015-08-
 INSERT INTO oec_course_codes VALUES (77, 'FILM', '', 'HUFLM', false, '2015-08-13 23:26:36.01', '2015-08-13 23:26:36.01');
 INSERT INTO oec_course_codes VALUES (78, 'FINNISH', '', 'HSCAN', true, '2015-08-13 23:26:36.015', '2015-08-13 23:26:36.015');
 INSERT INTO oec_course_codes VALUES (79, 'FOLKLOR', '', 'SZANT', false, '2015-08-13 23:26:36.02', '2015-08-13 23:26:36.02');
-INSERT INTO oec_course_codes VALUES (80, 'FRENCH', '', 'HFREN', false, '2015-08-13 23:26:36.025', '2015-08-13 23:26:36.025');
+INSERT INTO oec_course_codes VALUES (80, 'FRENCH', '', 'HFREN', true, '2015-08-13 23:26:36.025', '2015-08-13 23:26:36.025');
 INSERT INTO oec_course_codes VALUES (81, 'GEOG', '', 'SGEOG', true, '2015-08-13 23:26:36.03', '2015-08-13 23:26:36.03');
 INSERT INTO oec_course_codes VALUES (82, 'GERMAN', '', 'HZGER', true, '2015-08-13 23:26:36.036', '2015-08-13 23:26:36.036');
 INSERT INTO oec_course_codes VALUES (83, 'GMS', '', 'BUGMS', false, '2015-08-13 23:26:36.04', '2015-08-13 23:26:36.04');
@@ -1606,7 +1606,7 @@ INSERT INTO oec_course_codes VALUES (124, 'MED ST', '', 'HPMED', false, '2015-08
 INSERT INTO oec_course_codes VALUES (125, 'MEDIAST', '', 'MEDIAST', true, '2015-08-13 23:26:36.239', '2015-08-13 23:26:36.239');
 INSERT INTO oec_course_codes VALUES (126, 'MFE', '', 'BAHSB', false, '2015-08-13 23:26:36.243', '2015-08-13 23:26:36.243');
 INSERT INTO oec_course_codes VALUES (127, 'MIL AFF', '', 'QLROT', true, '2015-08-13 23:26:36.247', '2015-08-13 23:26:36.247');
-INSERT INTO oec_course_codes VALUES (128, 'MIL SCI', '', 'QLROT', false, '2015-08-13 23:26:36.251', '2015-08-13 23:26:36.251');
+INSERT INTO oec_course_codes VALUES (128, 'MIL SCI', '', 'QLROT', true, '2015-08-13 23:26:36.251', '2015-08-13 23:26:36.251');
 INSERT INTO oec_course_codes VALUES (129, 'MONGOLN', '', 'HGEAL', true, '2015-08-13 23:26:36.256', '2015-08-13 23:26:36.256');
 INSERT INTO oec_course_codes VALUES (130, 'MUSIC', '', 'HMUSC', true, '2015-08-13 23:26:36.261', '2015-08-13 23:26:36.261');
 INSERT INTO oec_course_codes VALUES (131, 'NAT RES', '', 'MANRD', true, '2015-08-13 23:26:36.265', '2015-08-13 23:26:36.265');
