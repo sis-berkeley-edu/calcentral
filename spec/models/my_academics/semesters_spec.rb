@@ -188,6 +188,7 @@ describe MyAcademics::Semesters do
         term_id: 9999,
         session_code: [nil, 'A', 'B', 'C', 'D', 'E'].sample,
         dept: dept.upcase,
+        dept_code: dept.upcase.delete(' '),
         catid: catid,
         course_catalog: catid,
         emitter: 'Campus',
@@ -636,7 +637,7 @@ describe MyAcademics::Semesters do
                 course[:sections].each do |section|
                   if semester[:termYear] == '2016' && section[:ccn] == '123456'
                     expect(section[:hasReservedSeats]).to eq true
-                    expect(section[:reservedSeatsInfoLink][:url]).to eq "https://classes.berkeley.edu/content/2016-fall-#{course[:dept].downcase}-#{course[:courseCatalog].downcase}-#{section[:section_number]}-#{section[:instruction_format].downcase}-#{section[:section_number]}"
+                    expect(section[:reservedSeatsInfoLink][:url]).to eq "https://classes.berkeley.edu/content/2016-fall-#{course[:dept_code].downcase}-#{course[:courseCatalog].downcase}-#{section[:section_number]}-#{section[:instruction_format].downcase}-#{section[:section_number]}"
                   else
                     expect(section[:hasReservedSeats]).to be_nil
                     expect(section[:reservedSeatsInfoLink]).to be_nil
