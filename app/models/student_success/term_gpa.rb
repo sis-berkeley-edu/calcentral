@@ -34,7 +34,7 @@ module StudentSuccess
     end
 
     def invalid_term_gpa?(term)
-      term[:termId].to_i >= current_term.to_i || !active_term_career?(term[:career])
+      term[:termId].to_i >= current_term.to_i || !active_term_career?(term[:career]) || term[:termEnrolled] != 'Y'
     end
 
     def active_term_career?(career)
