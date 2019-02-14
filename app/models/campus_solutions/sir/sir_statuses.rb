@@ -21,7 +21,7 @@ module CampusSolutions
           picture: 'cc-widget-sir-picture-grad'
         },
         HAASGRAD: {
-          name: 'Richard Lyons',
+          name: 'Ann Harrison',
           title: 'Haas School of Business, Dean',
           background: 'cc-widget-sir-background-haasgrad',
           picture: 'cc-widget-sir-picture-haasgrad'
