@@ -7,12 +7,6 @@
 ></div>
 
 <div class="cc-enrollment-card-section-content" data-ng-if="section.show">
-  <div data-ng-if="enrollmentInstruction.enrollmentPeriod.length">
-    <strong>
-      Note: Times for enrollment phases are in the Pacific Time zone.
-    </strong>
-  </div>
-
   <div data-ng-if="api.user.profile.actAsOptions.canSeeCSLinks && !enrollmentInstruction.isEndOfDropAddTimePeriod && !isInstructionType(enrollmentInstruction, ['law','haasEveningWeekendMba','haasFullTimeMba'])">
     <div data-ng-if="enrollmentInstruction.isClassScheduleAvailable">
       <a data-cc-campus-solutions-link-directive
@@ -27,16 +21,18 @@
       ></a> for the upcoming semester.<br>
     </div>
   </div>
+
   <div data-ng-if="!enrollmentInstruction.isClassScheduleAvailable && !isInstructionType(enrollmentInstruction, ['haasEveningWeekendMba','haasFullTimeMba'])">
     Ability to enroll coming soon. Please try again later.
   </div>
+
   <div data-ng-if="!isInstructionType(enrollmentInstruction, ['law','haasEveningWeekendMba','haasFullTimeMba'])">
     <div data-ng-if="!enrollmentInstruction.termIsSummer">
       <div>
-        Learn more about <a href="http://registrar.berkeley.edu/Records/tbinfo.html">enrollment rules and information</a>.
+        <a href="http://registrar.berkeley.edu/Records/tbinfo.html">Enrollment Rules</a>.
       </div>
       <div>
-        View the <a href=" http://registrar.berkeley.edu/calendar?terms=current" title="Enrollment Deadline Calendar">enrollment calendar</a> for deadlines.
+        <a href=" http://registrar.berkeley.edu/calendar?terms=current" title="Enrollment Deadline Calendar">Enrollment Calendar (Deadlines)</a>
       </div>
     </div>
     <div data-ng-if="enrollmentInstruction.termIsSummer">
@@ -60,7 +56,7 @@
       class="cc-enrollment-card-margin-bottom">
       Below are your enrollment appointment start times. You will have continuous access to the system until the semester's add/drop deadline:
     </div>
-    <h4 class="cc-enrollment-card-headersub-title">Enrollment Period</h4>
+    <h4 class="cc-enrollment-card-headersub-title">Enrollment Period <span>(Pacific Time Zone)</span></h4>
     <div class="cc-table">
       <table>
         <thead class="cc-visuallyhidden">

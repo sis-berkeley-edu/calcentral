@@ -36,6 +36,7 @@ module Notifications
     EXPIRY_BY_TOPIC = {
       'sis:staff:advisor' => CampusSolutions::AdvisingExpiry,
       'sis:student:academic-progress-report' => CampusSolutions::DegreeProgress::UndergradRequirementsExpiry,
+      'sis:student:activityguide-ucfa0001' => CalGrant::AcknowledgementExpiry,
       'sis:student:affiliation' => CampusSolutions::UserApiExpiry,
       'sis:student:checklist' => CampusSolutions::ChecklistDataExpiry,
       'sis:student:delegate' => CampusSolutions::DelegateStudentsExpiry,

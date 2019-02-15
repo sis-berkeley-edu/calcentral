@@ -122,6 +122,7 @@ Calcentral::Application.routes.draw do
     get '/api/my/up_next' => 'my_up_next#get_feed', :as => :my_up_next, :defaults => { :format => 'json' }
     get '/api/photo/:uid' => 'photo#photo', :as => :photo, :defaults => {:format => 'jpeg' }
     get '/api/service_alerts' => 'service_alerts#get_feed', :as => :service_alerts, :defaults => { :format => 'json' }
+    get '/api/my/calgrant_acknowledgements' => 'cal_grant_acknowledgements#index', as: :calgrant_acknowledgements, :defaults => { :format => 'json' }
     get '/campus/:campus_course_id/photo/:person_id' => 'campus_rosters#photo', :defaults => { :format => 'jpeg' }, :action => 'show'
 
     # Google API writing endpoints
