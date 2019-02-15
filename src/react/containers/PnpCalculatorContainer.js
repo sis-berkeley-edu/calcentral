@@ -22,7 +22,7 @@ class PnpCalculatorContainer extends React.Component {
         countedGpaUnits: null,
         countedNoGpaUnits: null,
         excessNoGpaUnits: null,
-        ratio: null
+        percentage: null
       },
       calculatedTotals: {
         totalGpaUnits: null,
@@ -52,7 +52,7 @@ class PnpCalculatorContainer extends React.Component {
         errorMessage: errorMessage,
         isLoading: true,
         padding: false,
-        title: 'Passed (P) Grade Limit',
+        title: '1/3 Passed (P) Grade Limit',
         visible: false
       }
     };
@@ -77,7 +77,10 @@ class PnpCalculatorContainer extends React.Component {
     projectedValues.countedGpaUnits = Math.min(totals.totalGpaUnits, projectedValues.maxRatioBase);
     projectedValues.countedNoGpaUnits = Math.min(totals.totalNoGpaUnits, (projectedValues.maxRatioBase - projectedValues.countedGpaUnits));
     projectedValues.excessNoGpaUnits = totals.totalNoGpaUnits - projectedValues.countedNoGpaUnits;
-    projectedValues.ratio = projectedValues.countedNoGpaUnits / (projectedValues.countedGpaUnits + projectedValues.countedNoGpaUnits);
+    
+    const percentage = Math.round((projectedValues.countedNoGpaUnits / (projectedValues.countedGpaUnits + projectedValues.countedNoGpaUnits)) * 100);
+    projectedValues.percentage = Math.max(0, percentage);
+    
     updateStateProperty(this, {
       calculatedProjectedValues: {$set: projectedValues},
       inputStatus: {estimateButtonDisabled: {$set: true}}
@@ -102,6 +105,9 @@ class PnpCalculatorContainer extends React.Component {
     }).then(response => {
       return this.parseCalculatorValues(response);
     }).then(calculatorValues => {
+      const totalUnits = calculatorValues.totalGpaUnits + calculatorValues.totalNoGpaUnits + calculatorValues.totalTransferUnits;
+      const excessNoGpaUnits = calculatorValues.totalNoGpaUnits - calculatorValues.noGpaRatioUnits;
+      calculatorValues.hasExcessNoGpaUnits = totalUnits > 120 && excessNoGpaUnits > 0;
       return updateStateProperty(this, {calculator: {$set: calculatorValues}});
     }).then(() => {
       return this.calculateTotals();
@@ -137,18 +143,18 @@ class PnpCalculatorContainer extends React.Component {
   isValidInput(input) {
     const inputValues = Object.values(input);
     let isValid = false;
-    let hasNegative = false;
+    let hasNegativeTransferUnit = false;
     let hasTransferUnitInput = false;
     if (inputValues.some(value => Number.isFinite(value))) {
-      if (inputValues.some(value => parseFloat(value) < 0)) {
-        hasNegative = true;
+      if (Number.isFinite(input.totalTransferUnits) && parseFloat(input.totalTransferUnits) < 0) {
+        hasNegativeTransferUnit = true;
       } else {
         hasTransferUnitInput = Number.isFinite(input.totalTransferUnits);
         isValid = true;
       }
     }
     return {
-      hasNegative: hasNegative,
+      hasNegativeTransferUnit: hasNegativeTransferUnit,
       hasTransferUnitInput: hasTransferUnitInput,
       isValid: isValid
     };
@@ -158,10 +164,10 @@ class PnpCalculatorContainer extends React.Component {
       const {value, name} = event.target;
       const inputValues = {...this.state.inputValues};
       inputValues[name] = parseFloat(value);
-      const {hasNegative, hasTransferUnitInput, isValid} = this.isValidInput(inputValues);
+      const {hasNegativeTransferUnit, hasTransferUnitInput, isValid} = this.isValidInput(inputValues);
       updateStateProperty(this, {
         inputStatus: {
-          errored: {$set: hasNegative},
+          errored: {$set: hasNegativeTransferUnit},
           estimateButtonDisabled: {$set: !isValid},
           hasTransferUnitInput: {$set: hasTransferUnitInput}
         },

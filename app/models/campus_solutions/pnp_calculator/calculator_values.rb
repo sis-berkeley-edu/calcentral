@@ -17,7 +17,11 @@ module CampusSolutions
       def values
         @edo_values ||= {}.tap do |values|
           edo_response = EdoOracle::Queries.get_pnp_calculator_values campus_solutions_id
-          values.merge!(HashConverter.camelize(edo_response)) if edo_response.present?
+          if edo_response.present?
+            pnp_percentage = edo_response['pnp_ratio'] * 100
+            edo_response.merge!({ 'pnp_percentage': pnp_percentage })
+            values.merge!(HashConverter.camelize(edo_response)) if edo_response.present?
+          end
         end
       end
     end

@@ -17,6 +17,7 @@ describe CampusSolutions::PnpCalculator::CalculatorValues do
         expect(subject[:gpaRatioUnits]).to eql(45)
         expect(subject[:noGpaRatioUnits]).to eql(6)
         expect(subject[:pnpRatio]).to eql(0.12)
+        expect(subject[:pnpPercentage]).to eql(12)
       end
     end
 
