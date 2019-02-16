@@ -13,7 +13,7 @@ const propTypes = {
 };
 
 const CumulativeUnits = (props) => (
-  <table className="student-profile__cumulative-units">
+  <table className="student-profile__subtable">
     <tbody>
       <UnitsRow name="Total Units" value={props.totalUnits} />
 
