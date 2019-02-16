@@ -58,12 +58,16 @@ class Semester extends Component {
         const units = this.props.transferCredit.law.detailed.map(transfer => {
           if (transfer.termId === this.props.termId) {
             return transfer.units;
+          } else {
+            return 0;
           }
         }).reduce(sum);
 
         const lawUnits = this.props.transferCredit.law.detailed.map(transfer => {
           if (transfer.termId === this.props.termId) {
             return transfer.lawUnits;
+          } else {
+            return 0;
           }
         }).reduce(sum);
 
