@@ -27,12 +27,13 @@ const renderRatioCalculationMessage = (errored, isLoading, message) => {
 
 const renderRatioCalculationSection = (props) => {
   if (props.ratioCalculation.show) {
-    const {ratio, countedGpaUnits, countedNoGpaUnits, excessNoGpaUnits} = props.calculatedProjectedValues;
-    const cepLabel = parseFloat(excessNoGpaUnits) > 0 ? '120 units - Transfer and Test units' : 'Berkeley units';
+    const {percentage, countedGpaUnits, countedNoGpaUnits, excessNoGpaUnits} = props.calculatedProjectedValues;
+    const cepLabel = parseFloat(excessNoGpaUnits) > 0 ? '120 units - Transfer Credit' : 'Berkeley units';
     return (
       <React.Fragment>
+        <strong>Percentage Calculation</strong>
         <div className="cc-react-pnp-calculat-ratio-calc">
-          <p>{`${ratio.toFixed(2)} = ${countedNoGpaUnits.toFixed(2)} units / ${(countedGpaUnits + countedNoGpaUnits).toFixed(2)} units`}</p>
+          <p>{`${(percentage / 100).toFixed(2)} = ${countedNoGpaUnits.toFixed(2)} units / ${(countedGpaUnits + countedNoGpaUnits).toFixed(2)} units`}</p>
           <p>&emsp;{`${countedNoGpaUnits.toFixed(2)} units: Berkeley P/NP (${excessNoGpaUnits.toFixed(2)} excess units)`}</p>
           <p>&emsp;{`${(countedGpaUnits + countedNoGpaUnits).toFixed(2)} units: ${cepLabel}`}</p>
         </div>
@@ -42,14 +43,14 @@ const renderRatioCalculationSection = (props) => {
   } else {
     return (
       <div className="cc-react-text--align-right">
-        <button className="cc-react-button--link" onClick={props.handleRatioCalculationButtonPressed}>How is this calculated?</button>
+        <button className="cc-react-button--link" onClick={props.handleRatioCalculationButtonPressed}>How is this percentage calculated?</button>
       </div>
     );
   }
 };
 
 const RatioCalculation = (props) => {
-  return Number.isFinite(props.calculatedProjectedValues.ratio) ? renderRatioCalculationSection(props) : null;
+  return Number.isFinite(props.calculatedProjectedValues.percentage) ? renderRatioCalculationSection(props) : null;
 };
 RatioCalculation.propTypes = {
   calculatedProjectedValues: PropTypes.object.isRequired,

@@ -3,7 +3,7 @@ import React from 'react';
 
 import Widget from '../base/widget/Widget';
 import WidgetSectionHeader from '../base/widget/WidgetSectionHeader';
-import CurrentGradeRatio from './CurrentGradeRatio';
+import CurrentGradePercentage from './CurrentGradePercentage';
 import PassedGradeLimitEstimator from './PassedGradeLimitEstimator';
 import RatioCalculation from './RatioCalculation';
 
@@ -13,9 +13,9 @@ const PnpCalculator = (props) => {
   return (
     <Widget config={{...props.widgetConfig}}>
       <div className="cc-react-widget--padding">
-        <CurrentGradeRatio pnpRatio={props.calculator.pnpRatio} />
+        <CurrentGradePercentage pnpPercentage={props.calculator.pnpPercentage} hasExcessNoGpaUnits={props.calculator.hasExcessNoGpaUnits} />
       </div>
-      <WidgetSectionHeader title="Passed (P) Grade Limit Estimator" />
+      <WidgetSectionHeader title="Percentage Estimator" />
       <div className="cc-react-widget--padding">
         <PassedGradeLimitEstimator
           calculatedProjectedValues={{...props.calculatedProjectedValues}}

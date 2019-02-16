@@ -17,7 +17,7 @@ const renderInputErrorMessage = (errored) => {
     return (
       <div>
         <p className="cc-react-text--align-right cc-react-text--red">
-          <RedExclamationCircle /> Please use valid numeric values
+          <RedExclamationCircle /> Please use valid values
         </p>
       </div>
     );
@@ -30,7 +30,8 @@ const renderTransferUnitNote = (hasTransferUnitInput) => {
   if (hasTransferUnitInput) {
     return (
       <p className="cc-react-text--small cc-react--no-margin">
-        Note: Only exams completed as a high school student are eligible for test credit. Lower division transfer credit may not exceed 70 semester units.
+        *Note: Transfer credit includes both course and exam credit. Only exams completed as a high school student are eligible for exam credit. Lower division
+        transfer course credit may not exceed 70 semester units.
       </p>
     );
   } else {
@@ -38,15 +39,23 @@ const renderTransferUnitNote = (hasTransferUnitInput) => {
   }
 };
 
-const renderProjectedRatio = (projectedRatio) => {
-  if (Number.isFinite(projectedRatio)) {
-    const icon = projectedRatio.toPrecision(2) > 0.33 ? <RedExclamationCircle /> : <GreenCheckmark />;
+const renderProjectedPercentage = (projectedPercentage) => {
+  if (Number.isFinite(projectedPercentage)) {
+    let icon, message;
+    if (projectedPercentage > 33) {
+      icon = <RedExclamationCircle />;
+      message = 'You cannot exceed 33% by the time of graduation';
+    } else {
+      icon = <GreenCheckmark />;
+      message = 'Meets the 33% limit';
+    }
     return (
       <div className="cc-react-widget__highlighted-section cc-react-text--align-right">
-        <p className="cc-react--no-margin">Projected Ratio</p>
+        <p className="cc-react--no-margin">Projected Percentage</p>
         <h2 className='cc-react--no-margin cc-react-text--bold'>
-          {icon} {projectedRatio.toFixed(2)}
+          {icon} {`${projectedPercentage}%`}
         </h2>
+        <p className="cc-react--no-margin">{message}</p>
       </div>
     );
   } else {
@@ -58,7 +67,7 @@ const PassedGradeLimitEstimator = (props) => {
   return (
     <div>
       <p className="cc-react--no-margin">
-        Add units you plan to earn by your Expected Graduation:
+        Add units you expect to earn by your Expected Graduation Term:
       </p>
       <div className="cc-react-table cc-react-pnp-calculator-table">
         <form className="cc-react-form">
@@ -73,7 +82,7 @@ const PassedGradeLimitEstimator = (props) => {
             </thead>
             <tbody>
               <tr>
-                <td>Transfer and Test</td>
+                <td>Transfer Credit*</td>
                 <td className="cc-react-table--right">{props.calculator.totalTransferUnits.toFixed(2)}</td>
                 <td>
                   <input className="cc-react-form__input cc-react-text--align-right" type="number" min="0" name="totalTransferUnits" onChange={props.handleInputChange}/>
@@ -115,11 +124,11 @@ const PassedGradeLimitEstimator = (props) => {
           {renderTransferUnitNote(props.inputStatus.hasTransferUnitInput)}
           {renderInputErrorMessage(props.inputStatus.errored)}
           <div className="cc-react--float-right">
-            <button className="cc-react-button cc-react-button--blue" disabled={props.inputStatus.estimateButtonDisabled} onClick={props.handleEstimateButtonPressed}>Estimate</button>
+            <button className="cc-react-button cc-react-button--blue" disabled={props.inputStatus.estimateButtonDisabled} onClick={props.handleEstimateButtonPressed}>Estimate Percentage</button>
           </div>
         </form>
       </div>
-      {renderProjectedRatio(props.calculatedProjectedValues.ratio)}
+      {renderProjectedPercentage(props.calculatedProjectedValues.percentage)}
     </div>
   );
 };
