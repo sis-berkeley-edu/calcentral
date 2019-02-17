@@ -3,13 +3,6 @@ import PropTypes from 'prop-types';
 
 import TransferCreditTitle from './TransferCreditTitle';
 
-const postedIn = (transfer, semesters) => {
-  const match = semesters.find(semester => semester.termId === transfer.termId);
-  if (match) {
-    return match.name;
-  }
-};
-
 const propTypes = {
   detailed: PropTypes.array,
   summary: PropTypes.object,
@@ -39,8 +32,8 @@ const LawTransferCredit = (props) => {
                 </tr>
               </thead>
               <tbody>
-                {props.detailed.map(transfer => (
-                  <tr key={transfer.school}>
+                {props.detailed.map((transfer, index) => (
+                  <tr key={index}>
                     <td>
                       {transfer.school}
 
@@ -50,11 +43,9 @@ const LawTransferCredit = (props) => {
                         </div>
                       }
 
-                      {postedIn(transfer, props.semesters) &&
-                        <div className="cc-transfer-credit-summary__semester-posted">
-                          Posted {postedIn(transfer, props.semesters)}
-                        </div>
-                      }
+                      <div className="cc-transfer-credit-summary__semester-posted">
+                        Posted {transfer.termDescription}
+                      </div>
                     </td>
                     <td className="TranferCredit__unit-count">{transfer.units.toFixed(3)}</td>
                     <td className="TranferCredit__unit-count">{transfer.lawUnits.toFixed(3)}</td>
