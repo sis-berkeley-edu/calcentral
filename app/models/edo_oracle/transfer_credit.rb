@@ -52,7 +52,8 @@ module EdoOracle
           gradePoints: is_law ? nil : credit['grade_points'].try(:to_f),
           lawUnits: is_law ? credit['law_transfer_units'].try(:to_f) : nil,
           requirementDesignation: is_law ? credit['requirement_designation'] : nil,
-          termId: is_law ? credit['term_id'] : nil
+          termId: is_law ? credit['term_id'] : nil,
+          termDescription: is_law ? term_description(credit['term_id']) : nil
         }
       end
       result
@@ -118,6 +119,13 @@ module EdoOracle
     def law_student?
       roles = MyAcademics::MyAcademicRoles.new(@uid).get_feed
       !!roles[:current]['law']
+    end
+
+    private
+
+    def term_description(term_id)
+      data = Berkeley::TermCodes.from_edo_id(2018)
+      Berkeley::TermCodes.to_english(data[:term_yr], data[:term_cd])
     end
   end
 end

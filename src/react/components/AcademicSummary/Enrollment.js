@@ -15,8 +15,8 @@ const propTypes = {
 };
 
 const Enrollment = ({ gpaUnits, semesters, transferCredit, user, transferReportLink }) => {
-  const showSemesters = semesters.length && user.hasStudentHistory;
-  const showSummary = showSemesters && (user.roles.law || gpaUnits.totalLawUnits > 0);
+  const showSemesters = !!(semesters.length && user.hasStudentHistory);
+  const showSummary = !!(showSemesters && (user.roles.law || gpaUnits.totalLawUnits > 0));
 
   return (
     <Fragment>
