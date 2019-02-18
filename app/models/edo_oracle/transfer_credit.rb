@@ -124,7 +124,7 @@ module EdoOracle
     private
 
     def term_description(term_id)
-      data = Berkeley::TermCodes.from_edo_id(2018)
+      data = Berkeley::TermCodes.from_edo_id(term_id)
       Berkeley::TermCodes.to_english(data[:term_yr], data[:term_cd])
     end
   end
