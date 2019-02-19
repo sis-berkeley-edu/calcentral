@@ -72,6 +72,13 @@ class AcademicSummary extends Component {
     return (this.state.academics.semesters.length && this.state.user.hasStudentHistory) || this.state.showTransferCredit;
   }
 
+  tcReportLink() {
+    const links = this.state.academics.studentLinks || this.state.academics.advisorLinks;
+    if (links) {
+      return links.tcReportLink;
+    }
+  }
+
   render() {
     if (this.state.isPermitted) {
       return (
@@ -106,7 +113,7 @@ class AcademicSummary extends Component {
                           semesters={this.state.academics.semesters}
                           user={this.state.user}
                           transferCredit={this.state.transferCredit}
-                          transferReportLink={this.state.academics.studentLinks.tcReportLink}
+                          transferReportLink={this.tcReportLink()}
                         />
                       }
                     </div>
