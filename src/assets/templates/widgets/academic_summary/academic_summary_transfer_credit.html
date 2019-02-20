@@ -54,7 +54,7 @@
     <div class="cc-academic-summary-table-spacing" data-ng-if="hasTestUnits(career)" data-ng-class="{'small-6 columns': credit.detailed.length}">
       <table class="cc-transfer-credits" data-ng-class="{'cc-academic-summary-table-multiple':credit.detailed.length}">
         <thead>
-          <th>Exam Credit</th>
+          <th >Test Credit</th>
           <th class="cc-table-right">Units</th>
         </thead>
         <tbody>
@@ -71,7 +71,7 @@
             <td class="cc-text-right" data-ng-bind="credit.summary.alevelTestUnits | number:3"></td>
           </tr>
           <tr>
-            <td class="cc-text-right">Total Exam Units:</td>
+            <td class="cc-text-right">Total Test Units:</td>
             <td class="cc-text-right">
                 <strong data-ng-bind="credit.summary.apTestUnits + credit.summary.ibTestUnits + credit.summary.alevelTestUnits | number:3"></strong>
             </td>

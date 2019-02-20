@@ -27,7 +27,7 @@
                  data-cc-accessible-focus-directive
                  data-ng-click="api.widget.toggleShow($event, null, transferCredits.law, 'Transfer Credit')">
             <tr class="cc-transfer-credit-section-header">
-              <td>{{transferCredits.law.summary.careerDescr}} Transfer Course Units</td>
+              <td>{{transferCredits.law.summary.careerDescr}} Transfer Units</td>
               <td class="cc-text-right" data-ng-bind="transferCredits.law.summary.totalTransferUnitsLaw | number:3"></td>
               <td class="cc-text-right cc-toggle-triangle" data-ng-bind="transferCredits.law.summary.totalTransferUnits | number:3"></td>
             </tr>
@@ -54,7 +54,7 @@
                  data-cc-accessible-focus-directive
                  data-ng-click="api.widget.toggleShow($event, null, transferCredits.graduate, 'Transfer Credit')">
             <tr class="cc-transfer-credit-section-header">
-              <td>{{transferCredits.graduate.summary.careerDescr}} Course Units</td>
+              <td>{{transferCredits.graduate.summary.careerDescr}} Transfer Units</td>
               <td class="cc-text-right cc-toggle-triangle" data-ng-bind="transferCredits.graduate.summary.totalTransferUnits | number:3"></td>
             </tr>
             <tr data-ng-show="transferCredits.graduate.show" data-ng-repeat="detail in transferCredits.graduate.detailed">
@@ -77,20 +77,15 @@
                  data-ng-click="api.widget.toggleShow($event, null, transferCredits.undergraduate, 'Transfer Credit')"
                  data-ng-if="transferCredits.undergraduate.summary.totalTransferUnits">
             <tr class="cc-transfer-credit-section-header">
-              <td>{{transferCredits.undergraduate.summary.careerDescr}} Course Units</td>
+              <td>{{transferCredits.undergraduate.summary.careerDescr}} Transfer Units</td>
               <td class="cc-text-right cc-toggle-triangle">
                 <span data-ng-bind="transferCredits.undergraduate.summary.totalTransferUnits | number:3"></span>
+                <span data-ng-if="transferCredits.undergraduate.summary.totalTransferUnitsNonAdjusted" data-ng-bind-template="(Non-Adjusted: {{transferCredits.undergraduate.summary.totalTransferUnitsNonAdjusted | number:3}})"></span>
               </td>
             </tr>
             <tr data-ng-show="transferCredits.undergraduate.show" data-ng-repeat="detail in transferCredits.undergraduate.detailed">
               <td data-ng-bind="detail.school"></td>
               <td class="cc-text-right" data-ng-bind="detail.units | number:3"></td>
-            </tr>
-            <tr data-ng-show="transferCredits.undergraduate.show" data-ng-if="transferCredits.undergraduate.summary.totalTransferUnitsNonAdjusted">
-              <td colspan="2" class="cc-text-right">
-                <span data-ng-bind-template="(Non-Adjusted Course Units: {{transferCredits.undergraduate.summary.totalTransferUnitsNonAdjusted | number:3}})">
-                </span>
-              </td>
             </tr>
           </tbody>
           <tbody class="cc-widget-table-hover"
@@ -99,7 +94,7 @@
                  data-ng-click="api.widget.toggleShow($event, null, transferCredits.undergraduate.testUnits, 'Transfer Credit')"
                  data-ng-if="transferCredits.undergraduate.summary.alevelTestUnits || transferCredits.undergraduate.summary.apTestUnits || transferCredits.undergraduate.summary.ibTestUnits">
           <tr class="cc-transfer-credit-section-header">
-            <td>{{transferCredits.undergraduate.summary.careerDescr}} Exam Units</td>
+            <td>{{transferCredits.undergraduate.summary.careerDescr}} Test Units</td>
             <td class="cc-text-right cc-toggle-triangle" data-ng-bind="transferCredits.undergraduate.summary.alevelTestUnits + transferCredits.undergraduate.summary.apTestUnits + transferCredits.undergraduate.summary.ibTestUnits | number:3"></td>
           </tr>
           <tr data-ng-if="transferCredits.undergraduate.summary.apTestUnits" data-ng-show="transferCredits.undergraduate.testUnits.show">
