@@ -9,6 +9,7 @@ module Notifications
     ]
 
     def process(event, timestamp)
+      logger.debug "Received event topic: #{event.try(:[], 'topic')}; timestamp = #{timestamp}"
       return false unless accept? event
       logger.debug "Processing event: #{event}; timestamp = #{timestamp}"
       if (expiry_module = get_expiry event)
