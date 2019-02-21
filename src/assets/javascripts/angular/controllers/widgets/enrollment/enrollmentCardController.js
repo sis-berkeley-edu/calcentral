@@ -6,7 +6,7 @@ var _ = require('lodash');
  * Enrollment Card Controller
  * Main controller for the enrollment card on the My Academics and Student Overview pages
  */
-angular.module('calcentral.controllers').controller('EnrollmentCardController', function(apiService, enrollmentFactory, calGrantsFactory, linkService, $route, $scope) {
+angular.module('calcentral.controllers').controller('EnrollmentCardController', function(apiService, enrollmentFactory, calGrantsFactory, linkService, $route, $scope, $routeParams) {
   $scope.enrollment = {
     isLoading: true
   };
@@ -219,7 +219,15 @@ angular.module('calcentral.controllers').controller('EnrollmentCardController', 
   };
 
   var loadEnrollmentInstructionDecks = function() {
-    return enrollmentFactory.getEnrollmentInstructionDecks().then(parseEnrollmentInstructionDecks);
+    // When returning from CalGrant Activity Guide, refresh data with holds
+    // See academicsStatusHoldsBlocksController for more.
+    let refreshOptions = {};
+
+    if ($routeParams.refresh) {
+      refreshOptions = { refreshCache: true, params: { expireCache: true } };
+    }
+
+    return enrollmentFactory.getEnrollmentInstructionDecks(refreshOptions).then(parseEnrollmentInstructionDecks);
   };
 
   $scope.switchTerm = function(index, enrollmentDeck) {
