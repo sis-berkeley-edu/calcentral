@@ -18,14 +18,18 @@ class HoldListItem extends Component {
   }
 
   toggle() {
-    this.setState({ expanded: !this.state.expanded });
+    if (this.props.children) {
+      this.setState({ expanded: !this.state.expanded });
+    }
   }
 
   classNames() {
     if (this.state.expanded) {
       return 'cc-widget-list-hover cc-widget-list-hover-opened';
-    } else {
+    } else if (this.props.children) {
       return 'cc-widget-list-hover';
+    } else {
+      return 'cc-widget-list-hover cc-widget-list-hover-notriangle';
     }
   }
 
