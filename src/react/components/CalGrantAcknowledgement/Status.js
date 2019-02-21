@@ -35,16 +35,20 @@ const CalGrantAcknowledgementStatus = ({ acknowledgements, termId, viewAllLink, 
         return hold.typeCode === CALGRANT_SERVICE_INDICATOR_TYPE_CODE;
       }).find(hold => hold.fromTerm.id === termId);
 
-      return (
-        <HoldListItem
-          state="red"
-          title={acknowledgement.link.name}
-          actionLink={acknowledgement.link}
-        >
-          {serviceIndicator.reason.formalDescription}&nbsp;
-          <APILink {...viewAllLink} />
-        </HoldListItem>
-      );
+      if (serviceIndicator) {
+        return (
+          <HoldListItem
+            state="red"
+            title={acknowledgement.link.name}
+            actionLink={acknowledgement.link}
+          >
+            {serviceIndicator.reason.formalDescription}&nbsp;
+            <APILink {...viewAllLink} />
+          </HoldListItem>
+        );
+      } else {
+        return null;
+      }
     }
   } else {
     return null;

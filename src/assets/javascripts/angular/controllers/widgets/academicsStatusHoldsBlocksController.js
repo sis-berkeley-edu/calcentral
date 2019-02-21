@@ -5,7 +5,7 @@ var _ = require('lodash');
 /**
  * Academics status, holds & blocks controller
  */
-angular.module('calcentral.controllers').controller('AcademicsStatusHoldsBlocksController', function(apiService, academicsFactory, linkService, slrDeeplinkFactory, registrationsFactory, statusHoldsService, holdsFactory, calGrantsFactory, $scope) {
+angular.module('calcentral.controllers').controller('AcademicsStatusHoldsBlocksController', function(apiService, academicsFactory, linkService, slrDeeplinkFactory, registrationsFactory, statusHoldsService, holdsFactory, calGrantsFactory, $scope, $routeParams) {
   linkService.addCurrentRouteSettings($scope);
 
   $scope.statusHolds = {
@@ -72,8 +72,10 @@ angular.module('calcentral.controllers').controller('AcademicsStatusHoldsBlocksC
     angular.merge($scope.residency, residency);
   };
 
+  const refreshCache = $routeParams.refresh;
+
   var getCalGrants = function() {
-    calGrantsFactory.getCalGrants()
+    calGrantsFactory.getCalGrants({ refreshCache: refreshCache })
     .then(({ data: { acknowledgements, viewAllLink } }) => {
       $scope.calgrantAcknowledgements = acknowledgements;
       $scope.viewAllLink = viewAllLink;
@@ -81,7 +83,7 @@ angular.module('calcentral.controllers').controller('AcademicsStatusHoldsBlocksC
   };
 
   var getHolds = function() {
-    return holdsFactory.getHolds().then(function(response) {
+    return holdsFactory.getHolds({ refreshCache: refreshCache }).then(function(response) {
       $scope.holds = _.get(response, 'data.feed.holds');
     });
   };
