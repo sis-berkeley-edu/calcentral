@@ -4,6 +4,7 @@ module CalGrant
       CalGrant::Acknowledgement.expire uid
       MyAcademics::MyHolds.expire uid
       MyAcademics::MyAcademicStatus.expire uid
+      MyAcademics::ClassEnrollments.expire uid
     end
   end
 end
