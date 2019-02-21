@@ -28,13 +28,9 @@ describe DataLoch::S3 do
           version_id: 'SomethingSomethingSomething'
         }
       end
-      it 'returns object key under hashed current (fake) date' do
-        key = subject.upload('analytics', local_path)
+      it 'returns an object key based on parameters' do
+        key = subject.upload("daily/8e8847c1bdf012037ee13bb62da8a5c1-2013-10-10/analytics", local_path)
         expect(key).to eq 'exports/go/here/daily/8e8847c1bdf012037ee13bb62da8a5c1-2013-10-10/analytics/analytics_a_la_carte.gz'
-      end
-      it 'also handles historical data' do
-        key = subject.upload('analytics', local_path, true)
-        expect(key).to eq 'exports/go/here/historical/analytics/analytics_a_la_carte.gz'
       end
     end
 
