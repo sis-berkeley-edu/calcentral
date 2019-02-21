@@ -26,7 +26,7 @@ module EdwOracle
         SQL
         full_sql << sql
       end
-      safe_query(full_sql)
+      safe_query(full_sql, do_not_stringify: true)
     end
 
     def self.get_applicant_scores(advisee_sids)
@@ -56,7 +56,7 @@ module EdwOracle
       full_sql << <<-SQLA
         ORDER BY sid, applied_school_yr DESC, test_score_type_cd
       SQLA
-      safe_query(full_sql)
+      safe_query(full_sql, do_not_stringify: true)
     end
 
   end

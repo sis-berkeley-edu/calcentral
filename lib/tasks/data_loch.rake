@@ -1,11 +1,13 @@
 namespace :data_loch do
 
-  desc 'Upload course and enrollment data snapshot to data loch S3 (TERM_ID = 2XXX,2XXX...)'
+  desc 'Upload course, enrollment, and advisee data snapshots to data loch S3 (TERM_ID = 2XXX,2XXX...)'
   task :snapshot => :environment do
     term_ids = ENV['TERM_ID']
-    include_demographics = ENV['DEMOGRAPHICS']
-    if term_ids.blank? && !include_demographics
-      Rails.logger.error 'Neither TERM_ID nor DEMOGRAPHICS is specified. Nothing to upload.'
+    advisee_data = []
+    advisee_data << 'demographics' if ENV['DEMOGRAPHICS']
+    advisee_data.concat ['socio_econ', 'applicant_scores'] if ENV['EDW']
+    if term_ids.blank? && advisee_data.blank?
+      Rails.logger.error 'Neither TERM_ID, DEMOGRAPHICS, nor EDW is specified. Nothing to upload.'
     end
     if term_ids.present?
       term_ids = term_ids.split(',')
@@ -22,8 +24,8 @@ namespace :data_loch do
     if term_ids.present?
       stocker.upload_term_data(term_ids, targets, is_historical)
     end
-    if include_demographics
-      stocker.upload_advisee_demographics targets
+    if advisee_data.present?
+      stocker.upload_advisee_data(targets, advisee_data)
     end
   end
 
