@@ -6,8 +6,7 @@ module CalGrant
 
     def get_feed_internal
       {
-        acknowledgements: HashConverter.camelize(activity_guides),
-        viewAllLink: LinkFetcher.fetch_link('UC_CX_ACTIVITY_GUIDE_VIEW_ALL')
+        acknowledgements: HashConverter.camelize(activity_guides)
       }
     end
 

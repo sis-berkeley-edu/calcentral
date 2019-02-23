@@ -5,7 +5,7 @@ var _ = require('lodash');
 /**
  * Academics status, holds & blocks controller
  */
-angular.module('calcentral.controllers').controller('AcademicsStatusHoldsBlocksController', function(apiService, academicsFactory, linkService, slrDeeplinkFactory, registrationsFactory, statusHoldsService, holdsFactory, calGrantsFactory, $scope) {
+angular.module('calcentral.controllers').controller('AcademicsStatusHoldsBlocksController', function(apiService, academicsFactory, linkService, slrDeeplinkFactory, registrationsFactory, statusHoldsService, holdsFactory, calGrantsFactory, $scope, $routeParams) {
   linkService.addCurrentRouteSettings($scope);
 
   $scope.statusHolds = {
@@ -72,8 +72,20 @@ angular.module('calcentral.controllers').controller('AcademicsStatusHoldsBlocksC
     angular.merge($scope.residency, residency);
   };
 
+  // When returning from the CalGrant Activity Guide the querystring will
+  // contain refresh=true. We need to request fresh data, not using the browser
+  // cache. Also, passing expireCache=true to the server to clear memcached and
+  // ensure we receive the latest data immediately.
+  //
+  // Otherwise, pass empty options and use existing caches as usual.
+  let refreshOptions = {};
+
+  if ($routeParams.refresh) {
+    refreshOptions = { refreshCache: true, params: { expireCache: true } };
+  }
+
   var getCalGrants = function() {
-    calGrantsFactory.getCalGrants()
+    calGrantsFactory.getCalGrants(refreshOptions)
     .then(({ data: { acknowledgements, viewAllLink } }) => {
       $scope.calgrantAcknowledgements = acknowledgements;
       $scope.viewAllLink = viewAllLink;
@@ -81,7 +93,7 @@ angular.module('calcentral.controllers').controller('AcademicsStatusHoldsBlocksC
   };
 
   var getHolds = function() {
-    return holdsFactory.getHolds().then(function(response) {
+    return holdsFactory.getHolds(refreshOptions).then(function(response) {
       $scope.holds = _.get(response, 'data.feed.holds');
     });
   };
