@@ -14,10 +14,12 @@ describe Berkeley::LegacyTerms do
       Berkeley::LegacyTerms.cache(term_id, cached_cs_section_id, cached_legacy_ccn)
     end
     it 'only makes the necessary queries' do
-      expect(CampusOracle::Queries).to receive(:get_sections_from_ccns).with('2010', 'D', [legacy_ccn, second_legacy_ccn, missing_legacy_ccn]).and_return([
-        {'dept_name'=>'FIRST DEPT', 'catalog_id'=>'1A', 'term_yr'=>'2010', 'term_cd'=>'D', 'course_cntl_num'=>legacy_ccn, 'section_num'=>'001', 'instruction_format'=>'LEC'},
-        {'dept_name'=>'SECOND DEPT', 'catalog_id'=>'2B', 'term_yr'=>'2010', 'term_cd'=>'D', 'course_cntl_num'=>second_legacy_ccn, 'section_num'=>'202', 'instruction_format'=>'GRP'}
-      ])
+      expect(CSV).to receive(:read).and_return(
+        [
+          {'term_ccn'=>"2010-D-#{legacy_ccn}", 'dept_name'=>'FIRST DEPT', 'catalog_id'=>'1A', 'instruction_format'=>'LEC', 'section_num'=>'001'},
+          {'term_ccn'=>"2010-D-#{second_legacy_ccn}", 'dept_name'=>'SECOND DEPT', 'catalog_id'=>'2B', 'instruction_format'=>'GRP', 'section_num'=>'202'}
+        ]
+      )
       expect(EdoOracle::Queries).to receive(:get_section_id).with(term_id, 'FIRST DEPT','1A', 'LEC', '001').and_return(cs_section_id)
       expect(EdoOracle::Queries).to receive(:get_section_id).with(term_id, 'SECOND DEPT','2B', 'GRP', '202').and_return(second_cs_section_id)
       expect(Berkeley::LegacyTerms).to receive(:cache).exactly(3).times
