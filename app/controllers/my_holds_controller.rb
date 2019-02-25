@@ -3,7 +3,7 @@ class MyHoldsController < ApplicationController
   before_filter :api_authenticate_401
 
   def get_feed
-    if params[:expireCache] == true
+    if params[:expireCache]
       MyAcademics::MyHolds.expire session['user_id']
       MyAcademics::MyAcademicStatus.expire session['user_id']
     end
