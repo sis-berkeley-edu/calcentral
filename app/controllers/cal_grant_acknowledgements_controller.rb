@@ -1,6 +1,6 @@
 class CalGrantAcknowledgementsController < ApplicationController
   def index
-    if params[:expireCache] == true
+    if params[:expireCache]
       CalGrant::Acknowledgement.expire(session['user_id'])
     end
 
