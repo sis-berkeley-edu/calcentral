@@ -65,7 +65,6 @@ module Berkeley
         'HTAHN' =>  'Group in Ancient History and Mediterranean Archaeology',
         'HUFLM' =>  'Department of Film and Media',
         'HVSSA' =>  'Department of South and Southeast Asian Studies',
-        'HWBUD' =>  'Center for Buddhist Studies',
         'HZGER' =>  'Department of German',
         'IBIBI' =>  'Department of Integrative Biology',
         'IMMCB' =>  'Department of Molecular and Cell Biology',
