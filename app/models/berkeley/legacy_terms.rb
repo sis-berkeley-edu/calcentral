@@ -22,9 +22,9 @@ module Berkeley
       end
       if remaining.present?
         term_yr, term_cd = Berkeley::TermCodes.from_edo_id(cs_term_id).values
-        legacy_sections = CampusOracle::Queries.get_sections_from_ccns(term_yr, term_cd, remaining)
+        legacy_sections = self.get_sections_from_legacy_ccns(term_yr, term_cd, remaining)
         legacy_sections.each do |section|
-          legacy_ccn = normalized(section['course_cntl_num'])
+          legacy_ccn = section['ccn']
           cs_section_id = EdoOracle::Queries.get_section_id(cs_term_id,
             section['dept_name'], section['catalog_id'], section['instruction_format'], section['section_num'])
           if cs_section_id.blank?
@@ -41,6 +41,18 @@ module Berkeley
         end
       end
       mapping
+    end
+
+    def self.get_sections_from_legacy_ccns(term_yr, term_cd, legacy_ccns)
+      results = []
+      sections = CSV.read('public/csv/legacy_ccn_mappings.csv', headers: true)
+      legacy_ccns.each do |ccn|
+        key = "#{term_yr}-#{term_cd}-#{ccn}"
+        if (section_def = sections.find {|s| s['term_ccn'] == key})
+          results << section_def.to_h.merge('ccn' => ccn)
+        end
+      end
+      results
     end
 
     def self.cs_section_id_key(cs_term_id, legacy_ccn)
