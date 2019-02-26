@@ -156,11 +156,11 @@ class Semester extends Component {
                   {this.hasLawTransfer() &&
                     <tr>
                       <td colSpan="2" className="cc-table-right cc-academic-summary-table-units">
-                        Transfer Units Posted
+                        Transfer Units:
                       </td>
                       <td className="cc-text-right cc-academic-summary-table-units">{this.lawTransferUnits().units.toFixed(1)}</td>
                       <td className="cc-text-right cc-academic-summary-table-units">{this.lawTransferUnits().lawUnits.toFixed(1)}</td>
-                      <td className="cc-text-right"></td>
+                      <td>CR</td>
                       <td className="cc-text-right"></td>
                     </tr>
                   }

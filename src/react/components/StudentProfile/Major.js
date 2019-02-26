@@ -9,8 +9,8 @@ const Major = (props) => (
   <tr>
     <th>{props.majors.length === 1 ? 'Major' : 'Majors'}</th>
     <td>
-      {props.majors.map(major => (
-        <div key={major}>
+      {props.majors.map((major, index) => (
+        <div key={index}>
           <div className="cc-text-light">{major.college}</div>
           <div>{major.major}</div>
           {major.subPlan &&
