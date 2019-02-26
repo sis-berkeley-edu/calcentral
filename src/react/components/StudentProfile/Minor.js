@@ -9,8 +9,8 @@ const Minor = (props) => (
   <tr>
     <th>{props.minors.length === 1 ? 'Major' : 'Majors'}</th>
     <td>
-      {props.minors.map(minors => (
-        <div key={minors}>
+      {props.minors.map((minors, index) => (
+        <div key={index}>
           <div className="cc-text-light">{minors.college}</div>
           <div>{minors.minor}</div>
           {minors.minor.subPlan && <div className="cc-widget-profile-indent">{minors.minor.subPlan}</div>}
