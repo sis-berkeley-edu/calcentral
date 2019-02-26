@@ -75,10 +75,6 @@ class AdvisingStudentController < ApplicationController
     render json: MyAcademics::MyTransferCredit.new(student_uid_param).get_feed_as_json
   end
 
-  def employment_appointments
-    render json: MyEmploymentAppointments.new(student_uid_param).get_feed_as_json
-  end
-
   private
 
   def authorize_for_student

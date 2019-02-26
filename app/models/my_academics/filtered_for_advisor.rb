@@ -5,7 +5,7 @@ module MyAcademics
     include Cache::UserCacheExpiry
     include MergedModel
 
-    # Advisors do not see Course Website (aka CanvasSites) data.
+    # Advisors do not see Teaching or Course Website (aka CanvasSites) data.
     def self.providers
       [
         CollegeAndLevel,
@@ -14,8 +14,7 @@ module MyAcademics
         Exams,
         AcademicPlan,
         AdvisorLinks,
-        Graduation,
-        Teaching
+        Graduation
       ]
     end
 
