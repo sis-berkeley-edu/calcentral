@@ -11,8 +11,8 @@ const LawGraduation = (props) => {
       <tr>
         <th>Expected Graduation</th>
         <td>
-          {props.terms.map(term => (
-            <div key={term}>
+          {props.terms.map((term, index) => (
+            <div key={index}>
               {term.plans.map(plan => (
                 <div key={plan} className="cc-text-light">
                   <span key={plan}>{plan}</span>

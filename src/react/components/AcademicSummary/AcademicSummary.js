@@ -11,18 +11,17 @@ import StudentProfile from '../StudentProfile/StudentProfile';
 
 import './AcademicSummary.scss';
 
-const fetchAcademics = new Promise((resolve) => {
+const fetchStatus = () => {
   const STATUS_URL = '/api/my/status';
+  return fetch(STATUS_URL).then(data => data.json()).then(json => {
+    return { user: json };
+  });
+};
+
+const fetchAcademics = () => new Promise((resolve) => {
   const PROFILE_URL = '/api/my/profile';
   const ACADEMICS_URL = '/api/my/academics';
   const TRANSFER_CREDIT_URL = '/api/academics/transfer_credits';
-
-  const status = fetch(STATUS_URL).then(data => data.json()).then(json => {
-    return {
-      user: json,
-      isPermitted: json.hasAcademicsTab
-    };
-  });
 
   const profile = fetch(PROFILE_URL).then(data => data.json()).then(json => {
     return { studentProfile: json.feed.student };
@@ -39,7 +38,7 @@ const fetchAcademics = new Promise((resolve) => {
     };
   });
 
-  Promise.all([status, profile, academics, transferCredit]).then((responses) => {
+  Promise.all([profile, academics, transferCredit]).then((responses) => {
     resolve(responses);
   });
 });
@@ -49,18 +48,23 @@ class AcademicSummary extends Component {
     super(props);
 
     this.state = {
-      loaded: false,
-      academicsPermitted: false
+      loaded: false
     };
   }
 
   componentDidMount() {
-    fetchAcademics.then((responses) => {
-      responses.forEach(response => {
-        this.setState(response);
-      });
-    }).finally(() => {
-      this.setState({ loaded: true });
+    fetchStatus().then(response => {
+      this.setState(response);
+
+      if (response.user.hasAcademicsTab) {
+        fetchAcademics().then((responses) => {
+          responses.forEach(response => {
+            this.setState(response);
+          });
+        }).finally(() => {
+          this.setState({ loaded: true });
+        });
+      }
     });
   }
 
@@ -80,7 +84,11 @@ class AcademicSummary extends Component {
   }
 
   render() {
-    if (this.state.isPermitted) {
+    if (!this.state.user) {
+      return null;
+    }
+
+    if (this.state.user.hasAcademicsTab) {
       return (
         <div className="cc-page-academics">
           <div className="column">
