@@ -12,6 +12,8 @@ const propTypes = {
 };
 
 const LawTransferCredit = (props) => {
+  const byTermDescending = (a, b) => a.termId >= b.termId ? -1 : 1;
+
   if (props.detailed && props.summary) {
     return (
       <div className="TransferCredit cc-transfer-credit-summary">
@@ -32,7 +34,7 @@ const LawTransferCredit = (props) => {
                 </tr>
               </thead>
               <tbody>
-                {props.detailed.map((transfer, index) => (
+                {props.detailed.sort(byTermDescending).map((transfer, index) => (
                   <tr key={index}>
                     <td>
                       {transfer.school}
@@ -44,7 +46,7 @@ const LawTransferCredit = (props) => {
                       }
 
                       <div className="cc-transfer-credit-summary__semester-posted">
-                        Posted {transfer.termDescription}
+                        {transfer.termDescription}
                       </div>
                     </td>
                     <td className="TranferCredit__unit-count">{transfer.units.toFixed(3)}</td>
