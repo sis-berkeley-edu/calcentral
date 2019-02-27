@@ -46,7 +46,7 @@ const LawTransferCredit = (props) => {
                       }
 
                       <div className="cc-transfer-credit-summary__semester-posted">
-                        {transfer.termDescription}
+                        Posted {transfer.termDescription}
                       </div>
                     </td>
                     <td className="TranferCredit__unit-count">{transfer.units.toFixed(3)}</td>
