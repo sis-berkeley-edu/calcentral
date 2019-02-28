@@ -17,7 +17,7 @@ const Swap = (props) => {
     role: enrollmentRole
   } = props.instruction;
 
-  const link = props.instruction.links.dropEnrolledClasses;
+  const link = props.instruction.links.swapEnrolledClasses;
 
   if (!hasRoleInList('law', props.currentRoles) && scheduleAvailable && !endOfDropAdd && enrollmentRole !== 'concurrent') {
     return (
