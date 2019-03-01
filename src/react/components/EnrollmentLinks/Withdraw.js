@@ -11,7 +11,7 @@ const Withdraw = ({ instruction }) => {
     enrollmentPeriod: enrollmentPeriods
   } = instruction;
 
-  const link = instruction.links.addEnrolledClasses;
+  const link = instruction.links.withdrawFromSemester;
 
   if (enrollmentPeriods.length && enrollmentRole !== 'concurrent' && enrollmentRole !== 'law') {
     return (
