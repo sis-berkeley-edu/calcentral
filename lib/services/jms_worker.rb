@@ -1,5 +1,4 @@
 class JmsWorker
-
   extend Cache::StatAccumulator
 
   JMS_RECORDING = "#{Rails.root}/fixtures/jms_recordings/ist_jms.txt"
@@ -7,6 +6,7 @@ class JmsWorker
   RECEIVED_MESSAGES = 'Received Messages'
   LAST_MESSAGE_RECEIVED_TIME = 'Last Message Received Time'
 
+  attr_accessor :run_thread
   attr_reader :jms_connections
 
   # The unused opts argument is expected by Torquebox.
@@ -18,7 +18,15 @@ class JmsWorker
   def start
     if Settings.ist_jms.enabled
       Rails.logger.warn "#{self.class.name} Starting up"
-      Thread.new { run }
+
+      self.run_thread = Thread.new { run }
+
+      %w(INT TERM EXIT).each do |signal|
+        trap(signal) {
+          self.stop
+          exit 0
+        }
+      end
     else
       Rails.logger.warn "#{self.class.name} is disabled, not starting thread"
     end
@@ -26,8 +34,9 @@ class JmsWorker
 
   def stop
     @stopped = true
-    Rails.logger.warn "#{self.class.name} #{Thread.current} is stopping"
+    Rails.logger.warn "#{self.class.name} #{run_thread} is stopping"
     Rails.logger.warn "#{JmsWorker.ping}"
+    Thread.kill(self.run_thread)
   end
 
   def run
@@ -111,5 +120,4 @@ class JmsWorker
       "#{self.name} Running on #{server}; Stats are not available"
     end
   end
-
 end

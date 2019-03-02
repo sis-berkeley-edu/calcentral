@@ -53,6 +53,7 @@ module Calcentral
       # Initialize logging ASAP, rather than waiting for full application initialization.
       CalcentralLogging.init_logging
     end
+
     initializer :amend_rb_config, :after => :load_environment_config do
       CalcentralConfig.load_ruby_configs
     end
@@ -111,5 +112,9 @@ module Calcentral
 
     # always be caching
     config.action_controller.perform_caching = true
+
+    config.after_initialize do
+      JmsWorker.new.start if Settings.ist_jms.node == ServerRuntime.get_settings['hostname']
+    end
   end
 end
