@@ -11,15 +11,6 @@ import StudentProfile from '../StudentProfile/StudentProfile';
 
 import './AcademicSummary.scss';
 
-/** **************************** Testing for SISRP-45121 ************************************* **/
-
-fetch('/api/my/status');
-fetch('/api/my/profile');
-fetch('/api/my/academics');
-fetch('/api/academics/transfer_credits');
-
-/** **************************** Testing for SISRP-45121 ************************************* **/
-
 const fetchStatus = () => {
   const STATUS_URL = '/api/my/status';
   return fetch(STATUS_URL).then(data => data.json()).then(json => {
