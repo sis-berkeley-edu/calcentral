@@ -5,6 +5,7 @@ import _ from 'lodash';
 import { fixLastQuestionMark, updateQueryStringParameter } from '../helpers/linkHelper';
 import CampusSolutionsLink from '../components/base/link/CampusSolutionsLink';
 import CampusSolutionsOutboundLink from '../components/base/link/CampusSolutionsOutboundLink';
+import CampusSolutionsHigherDegreeCommitteeFormLink from '../components/base/link/CampusSolutionsHigherDegreeCommitteeFormLink';
 
 class CampusSolutionsLinkContainer extends React.Component {
   constructor(props) {
@@ -39,7 +40,8 @@ class CampusSolutionsLinkContainer extends React.Component {
     const ccPageName = _.get(linkObj, 'ccPageName') || 'CalCentral';
     const ccPageUrl = _.get(linkObj, 'ccPageUrl');
     const ucFromParamsConfig = this.getUcFromParamConfig(linkObj);
-    const linkUrl = this.decorateLinkUrl(linkObj.url, 
+    const linkId = _.get(linkObj, 'urlId');
+    const linkUrl = this.decorateLinkUrl(linkObj.url,
       ucFromParamsConfig.includeUcFrom,
       ucFromParamsConfig.includeUcFromLink,
       ucFromParamsConfig.includeUcFromText,
@@ -49,7 +51,7 @@ class CampusSolutionsLinkContainer extends React.Component {
     const showNewWindow = _.get(linkObj, 'shownewwindow') || _.get(linkObj, 'showNewWindow') || false;
     const linkBody = _.get(linkObj, 'name');
     const linkHoverText = _.get(linkObj, 'title') || false;
-    return { linkBody, linkHoverText, linkUrl, showNewWindow };
+    return { linkBody, linkHoverText, linkUrl, linkId, showNewWindow };
   }
   getUcFromParamConfig(linkObj) {
     const includeUcFrom = !!(_.get(linkObj, 'ucfrom') || _.get(linkObj, 'ucFrom')) || false;
@@ -59,6 +61,9 @@ class CampusSolutionsLinkContainer extends React.Component {
   }
   render() {
     const linkConfig = this.getLinkConfig(this.props.linkObj);
+    if (linkConfig.linkId === 'UC_CX_GT_AAQEAPPLIC_ADD') {
+      return (<CampusSolutionsHigherDegreeCommitteeFormLink linkConfig={linkConfig} />);
+    }
     if (linkConfig.showNewWindow) {
       return (<CampusSolutionsOutboundLink linkConfig={linkConfig} />);
     } else {
