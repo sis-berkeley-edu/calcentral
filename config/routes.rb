@@ -18,20 +18,8 @@ Calcentral::Application.routes.draw do
   get '/api/cache/delete/:key' => 'cache#delete', :defaults => { :format => 'json' }
   get '/api/config' => 'config#get', :defaults => { :format => 'json' }
   get '/api/ping' => 'ping#do', :defaults => {:format => 'json'}
-  get '/api/reload_yaml_settings' => 'yaml_settings#reload', :defaults => { :format => 'json' }
   get '/api/server_info' => 'server_runtime#get_info'
   get '/api/smoke_test_routes' => 'routes_list#smoke_test_routes', :as => :all_routes, :defaults => { :format => 'json' }
-
-  # Torquebox utility endpoints, not usable in a vanilla Rails deployment
-  if ENV['IS_TORQUEBOX'] || ENV['RAILS_ENV'] == 'test'
-    get '/api/torque/stats' => 'torquebox#stats', :defaults => {:format => 'json'}
-    get '/api/torque/bg' => 'torquebox#bg', :defaults => {:format => 'json'}
-    get '/api/torque/bg_msgs' => 'torquebox#bg_msgs', :defaults => {:format => 'json'}
-    get '/api/torque/bg_purge' => 'torquebox#bg_purge', :defaults => {:format => 'json'}
-    get '/api/torque/job' => 'torquebox#job', :defaults => {:format => 'json'}
-    get '/api/torque/test_no_wait' => 'torquebox#test_no_wait', :defaults => {:format => 'json'}
-    get '/api/torque/test_wait' => 'torquebox#test_wait', :defaults => {:format => 'json'}
-  end
 
   # Oauth endpoints: Google
   get '/api/google/request_authorization'=> 'google_auth#refresh_tokens'

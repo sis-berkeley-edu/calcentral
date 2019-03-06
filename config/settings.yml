@@ -338,8 +338,6 @@ developer_auth:
   enabled: false
   password: topsecret!
 
-# If false, background jobs are handled without Torquebox.
-background_torquebox: false
 background_threads:
   min: 2,
   max: 2,

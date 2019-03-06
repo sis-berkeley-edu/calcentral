@@ -28,13 +28,6 @@ namespace :calcentral_dev do
 
         # start it up
         run "cd #{project_root}; ./script/init.d/calcentral start", :hosts => server
-
-        if index < (servers.length - 1)
-          # Allow time for Torquebox to quiesce before adding a node to the cluster. This appears to
-          # be needed to ensure that message processing is properly spread across the cluster, although
-          # that constraint is undocumented. See CLC-4318.
-          sleep 120
-        end
       end
     end
   end

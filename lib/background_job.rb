@@ -33,7 +33,7 @@ module BackgroundJob
   #   worker.background_job_initialize(:job_type => 'special_job', :total_steps => 3)
   #   worker.background_correlate(worker.background.perform_work)
   #
-  include BackgroundableShim
+  include BackgroundThread
   include ClassLogger
 
   attr_reader :background_job_id

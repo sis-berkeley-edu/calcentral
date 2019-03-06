@@ -21,7 +21,6 @@ edodb:
 canvas_proxy:
   export_directory: '/home/app_calcentral/calcentral/tmp/canvas'
 
-background_torquebox: true
 background_threads:
   min: 10,
   max: 10,

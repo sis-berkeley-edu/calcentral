@@ -55,9 +55,6 @@ public/styleguide
 # Ignore git version stamp
 /versions/git.txt
 
-# Ignore torquebox build files
-*.knob
-
 # Ignore installed gem checking
 /vendor
 

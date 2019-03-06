@@ -12,9 +12,6 @@ class PingController < ApplicationController
       feed = {
         server_alive: true
       }
-      if Settings.features.background_jobs_check
-        feed[:background_jobs_check] = background_jobs_check
-      end
       render json: feed.to_json
     else
       render :nothing => true, :status => 503
@@ -34,13 +31,4 @@ class PingController < ApplicationController
       true
     }
   end
-
-  def background_jobs_check
-    Rails.cache.fetch(
-      "server_background_jobs_check",
-      :expires_in => Settings.background_jobs_check.time_between_pings) {
-      BackgroundJobsCheck.new.get_feed
-    }
-  end
-
 end
