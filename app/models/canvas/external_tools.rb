@@ -88,10 +88,8 @@ module Canvas
 
     def course_site_tab_list
       response = wrapped_get "#{@api_root}/tabs"
-      response[:statusCode] == 200 ? response[:body] : {}
+      response[:statusCode] == 200 ? response[:body] : []
     end
-
-    private
 
     def update_course_site_tab_hidden(tab, set_to_hidden)
       begin
@@ -102,14 +100,27 @@ module Canvas
         unless updated_tab && set_to_hidden == property_as_boolean(updated_tab, 'hidden')
           raise Errors::ProxyError.new("Failed to set hidden=#{set_to_hidden} on tab #{tab_id} of Canvas:#{@api_root}", uid: @uid, tab: tab)
         end
-        # Canvas Tab API has a bug whereby 'hidden' value is updated on un-targeted tabs. We must fix collateral damage, if any.
-        course_site_tabs_by_id.each do |id, tab_after_update|
+        # Canvas Tab API has a long-standing bug whereby 'hidden' values may be updated on un-targeted tabs, and
+        # possibly NOT updated on the specified tab (despite reporting a successful update in the response JSON).
+        # We must fix collateral damage, if any.
+        found_tabs_mismatch = false
+        tabs_after_update = course_site_tabs_by_id
+        tabs_after_update.each do |id, tab_after_update|
           tab_before_update = tabs_before_update[id]
-          # Only inspect the extraneous tabs
-          if id != tab_id && tab_before_update && tab_before_update['hidden'] != tab_after_update['hidden']
-            original_hidden_value = property_as_boolean(tab_before_update, 'hidden')
-            logger.warn "Restore #{tab_after_update['label']} to hidden=#{original_hidden_value} on #{@api_root}"
-            update_course_site_tab(id, options_for_tab_update(tab_after_update, original_hidden_value))
+          if (id != tab_id && tab_before_update && tab_before_update['hidden'] != tab_after_update['hidden']) ||
+            (id == tab_id && set_to_hidden != property_as_boolean(tab_after_update, 'hidden'))
+            if !found_tabs_mismatch
+              logger.debug("Before tabs: #{tabs_before_update}, \n After tabs: #{tabs_after_update}")
+              found_tabs_mismatch = true
+            end
+            if id != tab_id
+              original_hidden_value = property_as_boolean(tab_before_update, 'hidden')
+              logger.warn "Restore #{tab_after_update['label']} to hidden=#{original_hidden_value} on #{@api_root}"
+              update_course_site_tab(id, options_for_tab_update(tab_after_update, original_hidden_value))
+            else
+              logger.warn "Retry changing #{tab_after_update['label']} to hidden=#{set_to_hidden} on #{@api_root}"
+              updated_tab = update_course_site_tab(tab_id, options_for_tab_update(tab, set_to_hidden))
+            end
           end
         end
         updated_tab
@@ -145,7 +156,6 @@ module Canvas
         :body => {
           'id' => tab['id'],
           'hidden' => set_to_hidden,
-          'position' => tab['position'],
           'visibility' => 'public'
         }
       }

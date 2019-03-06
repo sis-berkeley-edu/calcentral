@@ -17,7 +17,10 @@ module Canvas
         course_sections.each do |s|
           next if s['sis_section_id'].blank?
           section_hash = Canvas::Terms.sis_section_id_to_ccn_and_term s['sis_section_id']
-          identifiers << s.merge(section_hash) if section_hash
+          if section_hash &&
+            "#{section_hash[:term_yr]}-#{section_hash[:term_cd]}" >= Settings.canvas_proxy.oldest_official_term
+            identifiers << s.merge(section_hash)
+          end
         end
       end
       identifiers

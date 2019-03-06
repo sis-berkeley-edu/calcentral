@@ -133,6 +133,8 @@ canvas_proxy:
   test_cas_url: 'https://auth-test.berkeley.edu/cas'
   # If reports are provided through Google Drive, this is the UID that creates them.
   reporter_uid:
+  # Course sites before this term will not be linked to campus SIS data.
+  oldest_official_term: 2016-D
 
 ldap:
   host: 'ldap.berkeley.edu'

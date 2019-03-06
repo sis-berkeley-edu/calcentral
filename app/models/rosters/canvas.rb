@@ -19,7 +19,7 @@ module Rosters
 
       # Look up Canvas course sections associated with official campus sections.
       official_sections = ::Canvas::CourseSections.new(course_id: @canvas_course_id).official_section_identifiers
-      return feed unless official_sections
+      return feed unless official_sections.present?
 
       term_yr, term_cd = official_sections.first.values_at(:term_yr, :term_cd)
       ccns = official_sections.map { |section| section[:ccn] }

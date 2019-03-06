@@ -10,6 +10,7 @@ logger:
 canvas_proxy:
   fake: true
   app_provider_host: 'https://cc-dev.example.com'
+  oldest_official_term: 2013-D
 
 edodb:
   fake: true
