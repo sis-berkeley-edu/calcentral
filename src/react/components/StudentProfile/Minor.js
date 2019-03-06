@@ -7,7 +7,7 @@ const propTypes = {
 
 const Minor = (props) => (
   <tr>
-    <th>{props.minors.length === 1 ? 'Major' : 'Majors'}</th>
+    <th>{props.minors.length === 1 ? 'Minor' : 'Minors'}</th>
     <td>
       {props.minors.map((minors, index) => (
         <div key={index}>
