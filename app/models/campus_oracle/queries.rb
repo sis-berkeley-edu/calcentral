@@ -2,25 +2,6 @@ module CampusOracle
   class Queries < Connection
     include ActiveRecordHelper
 
-    def self.get_person_attributes_with_term_reg(person_id, term_yr, term_cd)
-      result = {}
-      use_pooled_connection {
-        log_access(connection, connection_handler, name)
-        sql = <<-SQL
-      select pi.ldap_uid, pi.student_id, pi.ug_grad_flag, trim(pi.first_name) as first_name, trim(pi.last_name) as last_name,
-        pi.person_name, pi.email_address, pi.affiliations, pi.person_type, pi.alternateid AS official_bmail_address,
-        reg.reg_status_cd, reg.educ_level, reg.admin_cancel_flag, reg.acad_blk_flag, reg.admin_blk_flag,
-        reg.fin_blk_flag, reg.reg_blk_flag, reg.tot_enroll_unit, reg.fee_resid_cd, reg.reg_special_pgm_cd, reg.role_cd
-      from calcentral_person_info_vw pi
-      left outer join calcentral_student_term_vw reg on
-        reg.ldap_uid = pi.ldap_uid and reg.term_yr = #{term_yr} and reg.term_cd = #{connection.quote(term_cd)}
-      where pi.ldap_uid = #{person_id.to_i}
-        SQL
-        result = connection.select_one(sql)
-      }
-      stringify_ints!(result, ["tot_enroll_unit"])
-    end
-
     def self.get_basic_people_attributes(up_to_1000_ldap_uids)
       result = []
       use_pooled_connection {
@@ -105,23 +86,6 @@ module CampusOracle
             and (affiliations LIKE '%-TYPE-%') and (person_type != 'Z')
           order by trim(pi.last_name)
         ) outr #{limit_clause}
-        SQL
-        result = connection.select_all(sql)
-      }
-      stringify_ints! result
-    end
-
-    def self.find_people_by_uid(user_id_string)
-      raise ArgumentError, "Argument must be a string" if user_id_string.class != String
-      raise ArgumentError, "Argument is not an integer string" unless is_integer_string?(user_id_string)
-      result = []
-      use_pooled_connection {
-        sql = <<-SQL
-      select pi.ldap_uid, trim(pi.first_name) as first_name, trim(pi.last_name) as last_name, pi.email_address, pi.student_id, pi.affiliations,
-        pi.person_type, 1.0 row_number, 1.0 result_count
-      from calcentral_person_info_vw pi
-      where pi.ldap_uid = #{user_id_string}
-      and rownum <= 1
         SQL
         result = connection.select_all(sql)
       }

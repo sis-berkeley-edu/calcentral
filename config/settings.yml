@@ -492,6 +492,7 @@ features:
   gpa_calculator: true
   hub_term_api: true
   ldap_student_affiliations: false
+  legacy_caldap: true
   manage_site_mailing_lists: false
   my_fin_aid: false
   prevent_acting_as_users_from_posting: true

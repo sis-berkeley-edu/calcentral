@@ -292,6 +292,12 @@ class EdoOracle::ViewChecker
     if ProvidedServices.bcourses?
       VIEW_DEPENDENCIES.concat VIEW_DEPENDENCIES_JUNCTION
     end
+    if !Settings.features.legacy_caldap
+      VIEW_DEPENDENCIES << {
+        :id => 'SISEDO.CALCENTRAL_PERSON_INFO_VW',
+        :columns => %w(LDAP_UID FIRST_NAME LAST_NAME EMAIL_ADDRESS STUDENT_ID AFFILIATIONS PERSON_TYPE)
+      }
+    end
   end
 
   def perform_checks

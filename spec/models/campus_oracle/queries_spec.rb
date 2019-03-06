@@ -19,20 +19,6 @@ describe CampusOracle::Queries do
     expect(CampusOracle::Queries.settings).to be Settings.campusdb
   end
 
-  it 'should find a user who has a bunch of blocks' do
-    data = CampusOracle::Queries.get_person_attributes_with_term_reg 300847, current_term.year, current_term.code
-    if CampusOracle::Queries.test_data?
-      # we will only have predictable reg_status_cd values in our fake Oracle db.
-      expect(data['educ_level']).to eq 'Masters'
-      expect(data['admin_blk_flag']).to eq 'Y'
-      expect(data['acad_blk_flag']).to eq 'Y'
-      expect(data['fin_blk_flag']).to eq 'Y'
-      expect(data['reg_blk_flag']).to eq 'Y'
-      expect(data['tot_enroll_unit']).to eq '1'
-      expect(data['fee_resid_cd']).to eq 'N'
-    end
-  end
-
   it 'should find some students in Biology 1a' do
     students = CampusOracle::Queries.get_enrolled_students('7309', '2013', 'D')
     expect(students).to_not be_nil
@@ -278,44 +264,6 @@ describe CampusOracle::Queries do
 
     it 'should raise exception if row limit argument is not an integer' do
       expect { CampusOracle::Queries.find_people_by_email('test-', '15') }.to raise_error(ArgumentError, 'Limit argument must be a Fixnum')
-    end
-  end
-
-  context 'when searching for users by LDAP user id' do
-    it 'should raise exception if argument is not a string' do
-      expect { CampusOracle::Queries.find_people_by_uid(300847) }.to raise_error(ArgumentError, 'Argument must be a string')
-    end
-
-    it 'should raise exception if argument is not an integer string' do
-      expect { CampusOracle::Queries.find_people_by_uid('300abc') }.to raise_error(ArgumentError, 'Argument is not an integer string')
-    end
-
-    it 'should not find results by partial user id', if: CampusOracle::Queries.test_data? do
-      user_data = CampusOracle::Queries.find_people_by_uid('3008')
-      expect(user_data).to be_an_instance_of Array
-      expect(user_data).to have(0).items
-    end
-
-    it 'should find user by exact LDAP user ID', if: CampusOracle::Queries.test_data? do
-      user_data = CampusOracle::Queries.find_people_by_uid('300847')
-      expect(user_data).to be_an_instance_of Array
-      expect(user_data).to have(1).items
-      expect(user_data[0]).to be_an_instance_of Hash
-      expect(user_data[0]['first_name']).to eq 'STUDENT'
-      expect(user_data[0]['last_name']).to eq 'TEST-300847'
-    end
-
-    it 'should include row number and count as 1', if: CampusOracle::Queries.test_data? do
-      user_data = CampusOracle::Queries.find_people_by_uid('300847')
-      expect(user_data).to be_an_instance_of Array
-      expect(user_data[0]).to be_an_instance_of Hash
-      expect(user_data[0]['row_number'].to_i).to eq 1.0
-      expect(user_data[0]['result_count'].to_i).to eq 1.0
-    end
-
-    it 'should include the expired-account marker', if: CampusOracle::Queries.test_data? do
-      user_data = CampusOracle::Queries.find_people_by_uid('6188989')
-      expect(user_data.first['person_type']).to eq 'Z'
     end
   end
 
