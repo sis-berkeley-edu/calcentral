@@ -37,13 +37,13 @@ class StudentProfile extends Component {
   preferredName() {
     if (this.props.studentProfile && this.props.studentProfile.names) {
       return this.props.studentProfile.names.find(item => item.type.code === 'PRI').formattedName;
-    } 
+    }
   }
 
   sid() {
     return this.props.user.sid;
   }
- 
+
   showMajor() {
     return this.state.majors.length > 0;
   }
@@ -110,15 +110,15 @@ class StudentProfile extends Component {
             <th>Name</th>
             <td>{this.preferredName()}</td>
           </tr>
-          
+
           <tr>
             <th>Student ID</th>
             <td>{this.sid()}</td>
           </tr>
 
           {this.showMajor() && <Major majors={this.state.majors} />}
-          {this.showMinor() && <Minor majors={this.state.minors} />}
-          {this.showCareer() && 
+          {this.showMinor() && <Minor minors={this.state.minors} />}
+          {this.showCareer() &&
             <tr>
               <th>{this.state.careers.length === 1 ? 'Academic Career' : 'Academic Careers'}</th>
               <td>{this.state.careers.map(career => <div key={career}>{career}</div>)}</td>
