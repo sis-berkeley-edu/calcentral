@@ -8,7 +8,12 @@ module User
       attrs = []
       # Oracle dislikes ' IN ()' queries with more than 1000 items.
       uids.each_slice(1000) do |next_batch|
-        CampusOracle::Queries.get_basic_people_attributes(next_batch).each do |result|
+        rows = if Settings.features.legacy_caldap
+          CampusOracle::Queries.get_basic_people_attributes(next_batch)
+        else
+          EdoOracle::Queries.get_basic_people_attributes(next_batch)
+        end
+        rows.each do |result|
           uid_set.delete result['ldap_uid']
           attrs << transform_campus_row(result)
         end

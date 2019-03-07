@@ -90,6 +90,15 @@ module EdoOracle
       SQL
     end
 
+    def self.get_basic_people_attributes(up_to_1000_ldap_uids)
+      safe_query <<-SQL
+        select pi.ldap_uid, trim(pi.first_name) as first_name, trim(pi.last_name) as last_name, 
+          pi.email_address, pi.student_id, pi.affiliations, pi.person_type
+        from sisedo.calcentral_person_info_vw pi
+        where pi.ldap_uid in (#{up_to_1000_ldap_uids.collect { |id| id.to_i }.join(', ')})
+      SQL
+    end
+
     def self.get_term_unit_totals(person_id, academic_careers, term_id)
       result = safe_query <<-SQL
         SELECT

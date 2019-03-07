@@ -68,7 +68,12 @@ module CanvasCsv
 
     # Loads array of new active LDAP people/guests from campus Oracle view
     def new_active_user_uids
-      all_active_sis_user_uids = CampusOracle::Queries.get_all_active_people_uids.to_set
+      rows = if Settings.features.legacy_caldap
+        CampusOracle::Queries.get_all_active_people_uids
+      else
+        EdoOracle::Bcourses.get_all_active_people_uids
+      end
+      all_active_sis_user_uids = rows.to_set
       all_current_canvas_uids = []
       CSV.foreach(get_canvas_user_report_file, headers: :first_row) do |canvas_user|
         if (existing_ldap_uid = MaintainUsers.parse_login_id(canvas_user['login_id'])[:ldap_uid])

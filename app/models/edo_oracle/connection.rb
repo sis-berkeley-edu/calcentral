@@ -32,7 +32,7 @@ module EdoOracle
     end
 
     def self.stringified_columns
-      %w(campus-uid meeting_num section_id)
+      %w(campus-uid meeting_num section_id ldap_uid student_id)
     end
 
     def self.terms_query_list(terms = nil)

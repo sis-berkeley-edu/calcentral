@@ -48,5 +48,79 @@ module EdoOracle
       SQL
     end
 
+    def self.get_all_active_people_uids
+      rows = safe_query <<-SQL
+        select pi.ldap_uid
+        from sisedo.calcentral_person_info_vw pi
+        where (affiliations like '%-TYPE-%') and person_type not in ('A', 'Z')
+      SQL
+      rows.collect {|uid| uid['ldap_uid'] }
+    end
+
+    def self.find_people_by_name(name_search_string, limit = 0)
+      raise ArgumentError, "Search text argument must be a string" if name_search_string.class != String
+      raise ArgumentError, "Limit argument must be a Fixnum" if limit.class != Fixnum
+      limit_clause = (limit > 0) ? "where rownum <= #{limit}" : ""
+      search_text_array = name_search_string.split(',')
+      search_text_array.collect! { |e| e.strip }
+      clean_search_string = connection.quote_string(search_text_array.join(','))
+      safe_query <<-SQL
+        select outr.*
+        from (
+          select  pi.ldap_uid,
+                  trim(pi.first_name) as first_name,
+                  trim(pi.last_name) as last_name,
+                  pi.email_address,
+                  pi.student_id,
+                  pi.affiliations,
+                  pi.person_type,
+                  row_number() over(order by 1) row_number,
+                  count(*) over() result_count
+          from sisedo.calcentral_person_info_vw pi
+          where lower( concat(concat(trim(pi.last_name), ','), trim(pi.first_name)) ) like '#{clean_search_string.downcase}%'
+            and (affiliations like '%-TYPE-%') and person_type not in ('A', 'Z')
+          order by trim(pi.last_name)
+        ) outr #{limit_clause}
+      SQL
+    end
+
+    def self.find_people_by_email(email_search_string, limit = 0)
+      raise ArgumentError, "Search text argument must be a string" if email_search_string.class != String
+      raise ArgumentError, "Limit argument must be a Fixnum" if limit.class != Fixnum
+      limit_clause = (limit > 0) ? "where rownum <= #{limit}" : ""
+      clean_search_string = connection.quote_string(email_search_string)
+      safe_query <<-SQL
+        select outr.*
+        from (
+          select  pi.ldap_uid,
+                  trim(pi.first_name) as first_name,
+                  trim(pi.last_name) as last_name,
+                  pi.email_address,
+                  pi.student_id,
+                  pi.affiliations,
+                  pi.person_type,
+                  row_number() over(order by 1) row_number,
+                  count(*) over() result_count
+          from sisedo.calcentral_person_info_vw pi
+          where lower(pi.email_address) like '%#{clean_search_string.downcase}%'
+            and (affiliations like '%-TYPE-%') and person_type not in ('A', 'Z')
+          order by trim(pi.last_name)
+        ) outr #{limit_clause}
+      SQL
+    end
+
+    def self.find_active_uid(user_id_string)
+      raise ArgumentError, "Argument must be a string" if user_id_string.class != String
+      raise ArgumentError, "Argument is not an integer string" unless user_id_string.to_i.to_s == user_id_string
+      safe_query <<-SQL
+      select pi.ldap_uid, trim(pi.first_name) as first_name, trim(pi.last_name) as last_name, pi.email_address, pi.student_id, pi.affiliations,
+        pi.person_type, 1.0 row_number, 1.0 result_count
+      from sisedo.calcentral_person_info_vw pi
+      where pi.ldap_uid = #{user_id_string}
+        and (affiliations like '%-TYPE-%') and person_type not in ('A', 'Z')
+      and rownum <= 1
+      SQL
+    end
+
   end
 end
