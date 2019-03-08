@@ -69,6 +69,13 @@ describe Canvas::CourseSections do
         expect(sis_section_ids[1]).to eq course_sections[1].merge({:term_yr=>'2014', :term_cd=>'C', :ccn=>'06211'})
       end
 
+      context 'course site is too old to link to campus SIS' do
+        before { allow(Settings.canvas_proxy).to receive(:oldest_official_term).and_return '2016-D' }
+        it 'returns an empty list of official sections' do
+          expect(subject.official_section_identifiers).to eq []
+        end
+      end
+
       context 'when course sections returned includes invalid section ids' do
         let(:course_sections) do
           [

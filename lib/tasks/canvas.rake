@@ -131,4 +131,20 @@ namespace :canvas do
     CanvasCsv::LtiUsageReporter.new(ENV["TERM_ID"]).run
   end
 
+  desc 'Manage visibility of SIS-integrated LTI tools for a range of terms (TO_TERM="2016-C" FROM_TERM="2013-C" HIDE_THEM=true)'
+  task :toggle_sis_lti_tools => :environment do
+    to_term = ENV['TO_TERM']
+    hide_them = ENV['HIDE_THEM']
+    if to_term.blank? || hide_them.blank?
+      Rails.logger.error 'Must specify TO_TERM="yyyy-B" HIDE_THEM=true_or_false'
+    else
+      hide_them = ('true'.casecmp(hide_them.to_s) == 0)
+      options = {to_term: to_term, hide_them: hide_them}
+      if ENV['FROM_TERM']
+        options[:from_term] = ENV['FROM_TERM']
+      end
+      CanvasLti::ToggleSisLtiTools.new(options).run
+    end
+  end
+
 end

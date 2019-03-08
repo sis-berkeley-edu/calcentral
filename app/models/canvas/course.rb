@@ -24,6 +24,13 @@ module Canvas
       }
     end
 
+    def official_courses(term_id)
+      account_id = Settings.canvas_proxy.official_courses_account_id
+      paged_get "accounts/#{account_id}/courses", {
+        'enrollment_term_id' => term_id
+      }
+    end
+
     def to_s
       "Canvas Course ID #{@canvas_course_id}"
     end

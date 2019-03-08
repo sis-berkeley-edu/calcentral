@@ -216,7 +216,7 @@ angular.module('calcentral.controllers').controller('CanvasCourseGradeExportCont
       }
     } else {
       $scope.appState = 'error';
-      $scope.errorStatus = 'No sections found in this course representing an official campus term.';
+      $scope.errorStatus = 'No sections found in this course representing a currently maintained campus term.';
       $scope.unexpectedContactSupport = true;
     }
   };
