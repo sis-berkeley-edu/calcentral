@@ -123,9 +123,12 @@ angular.module('calcentral.controllers').controller('AcademicsController', funct
         $scope.allCourses = academicsService.getAllClasses(data.semesters);
         $scope.previousCourses = academicsService.getPreviousClasses(data.semesters);
         $scope.enrolledCourses = enrolledCourses;
-        $scope.waitlistedCourses = waitlistedCourses;
+        $scope.waitlisted = {
+          lawOnly: _.every(waitlistedCourses, {'courseCareerCode': 'LAW'}),
+          courses: waitlistedCourses,
+          haveTopics: academicsService.courseCollectionHasTopics(waitlistedCourses)
+        };
         $scope.enrolledCoursesHaveTopics = academicsService.courseCollectionHasTopics(enrolledCourses);
-        $scope.waitlistedCoursesHaveTopics = academicsService.courseCollectionHasTopics(waitlistedCourses);
       }
     }
     $scope.selectedStudentSemester = selectedStudentSemester;
