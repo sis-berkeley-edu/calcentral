@@ -96,7 +96,7 @@
                     <strong data-ng-bind="section.waitlistPosition"></strong> on list of class of <strong data-ng-bind="section.enroll_limit"></strong>
                   </div>
                   <div data-ng-if="api.user.profile.features.reservedCapacityLink && section.is_primary_section">
-                    <div data-ng-if="course.dept_code !== 'LAW' && section.waitlistPosition && section.hasReservedSeats">
+                    <div data-ng-if="course.courseCareerCode !== 'LAW' && section.waitlistPosition && section.hasReservedSeats">
                       <i class="cc-icon fa fa-exclamation-circle cc-icon-red"></i>
                       <span
                         data-ng-if="section.reservedSeatsInfoLink.linkDescriptionDisplay"
