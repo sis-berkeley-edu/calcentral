@@ -52,26 +52,28 @@
         </div>
       </div>
     </div>
-    <div data-ng-if="waitlistedCourses.length">
+    <div data-ng-if="waitlisted.courses.length">
       <div class="cc-academics-subtitle">
         <h3>Wait Lists</h3>
       </div>
       <div class="cc-widget-padding">
         <p data-ng-if="api.user.profile.features.reservedCapacityLink">
           You are waitlisted for the class(es) listed below.
-          Learn more about
-          <a data-cc-campus-solutions-link-directive="studentLinks.waitlistsAndStudentOptions"></a>
+          <span data-ng-if="!waitlisted.lawOnly">
+            Learn more about
+            <a data-cc-campus-solutions-link-directive="studentLinks.waitlistsAndStudentOptions"></a>
+          </span>
         </p>
         <div class="cc-table">
           <table>
             <thead>
               <th>Course Number &amp; Section</th>
               <th>Title</th>
-              <th data-ng-if="waitlistedCoursesHaveTopics">Topic</th>
+              <th data-ng-if="waitlisted.courses.haveTopics">Topic</th>
               <th>Waitlist Position / Class Size</th>
               <th data-ng-if="api.user.profile.features.reservedCapacity">Reserved Seats</th>
             </thead>
-            <tbody data-ng-repeat="course in waitlistedCourses">
+            <tbody data-ng-repeat="course in waitlisted.courses">
               <tr data-ng-repeat="section in course.sections">
                 <td>
                   <a data-ng-href="{{course.url}}" data-ng-bind="course.course_code">
@@ -79,7 +81,7 @@
                   <span data-ng-bind="section.section_label"></span>
                 </td>
                 <td data-ng-bind="course.title"></td>
-                <td data-ng-if="waitlistedCoursesHaveTopics">
+                <td data-ng-if="waitlisted.courses.haveTopics">
                   <div data-ng-if="!course.topics.length">
                     &mdash;
                   </div>
@@ -94,7 +96,7 @@
                     <strong data-ng-bind="section.waitlistPosition"></strong> on list of class of <strong data-ng-bind="section.enroll_limit"></strong>
                   </div>
                   <div data-ng-if="api.user.profile.features.reservedCapacityLink && section.is_primary_section">
-                    <div data-ng-if="section.waitlistPosition && section.hasReservedSeats">
+                    <div data-ng-if="course.dept_code !== 'LAW' && section.waitlistPosition && section.hasReservedSeats">
                       <i class="cc-icon fa fa-exclamation-circle cc-icon-red"></i>
                       <span
                         data-ng-if="section.reservedSeatsInfoLink.linkDescriptionDisplay"
