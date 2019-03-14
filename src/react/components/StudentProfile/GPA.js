@@ -1,16 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+const propTypes = {
+  gpa: PropTypes.array
+};
+
 const formatGpaCumulative = (gpa) => {
   if (gpa.role === 'law') {
     return 'N/A';
   } else {
     return parseFloat(gpa.cumulativeGpa).toFixed(3);
   }
-};
-
-const propTypes = {
-  gpa: PropTypes.array
 };
 
 const GPA = (props) => (

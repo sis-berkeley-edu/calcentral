@@ -6,6 +6,11 @@ import RedExclamationCircle from '../base/icon/RedExclamationCircle';
 import '../../stylesheets/box_model.scss';
 import '../../stylesheets/text.scss';
 
+const propTypes = {
+  hasExcessNoGpaUnits: PropTypes.bool,
+  pnpPercentage: PropTypes.number
+};
+
 const renderExcessUnitsMessage = (hasExcessNoGpaUnits) => {
   if (hasExcessNoGpaUnits) {
     return (
@@ -34,9 +39,6 @@ const CurrentGradePercentage = (props) => {
     </div>
   );
 };
-CurrentGradePercentage.propTypes = {
-  hasExcessNoGpaUnits: PropTypes.bool,
-  pnpPercentage: PropTypes.number
-};
+CurrentGradePercentage.propTypes = propTypes;
 
 export default CurrentGradePercentage;

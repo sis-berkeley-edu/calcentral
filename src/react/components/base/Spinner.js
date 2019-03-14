@@ -4,6 +4,10 @@ import PropTypes from 'prop-types';
 import '../../stylesheets/widgets.scss';
 import '../../stylesheets/spinners.scss';
 
+const propTypes = {
+  isLoadingMessage: PropTypes.string
+};
+
 const renderMessage = (isLoadingMessage) => {
   if (isLoadingMessage) {
     return (
@@ -22,8 +26,6 @@ const Spinner = (props) => {
     </div>
   );
 };
-Spinner.propTypes = {
-  isLoadingMessage: PropTypes.string
-};
+Spinner.propTypes = propTypes;
 
 export default Spinner;

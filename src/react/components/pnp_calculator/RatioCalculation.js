@@ -7,6 +7,13 @@ import Spinner from '../base/Spinner';
 import '../../stylesheets/buttons.scss';
 import '../../stylesheets/widgets.scss';
 
+const propTypes = {
+  calculatedProjectedValues: PropTypes.object.isRequired,
+  calculatedTotals: PropTypes.object.isRequired,
+  handleRatioCalculationButtonPressed: PropTypes.func.isRequired,
+  ratioCalculation: PropTypes.object.isRequired
+};
+
 const renderRatioCalculationMessage = (errored, isLoading, message) => {
   if (errored) {
     return (
@@ -52,11 +59,6 @@ const renderRatioCalculationSection = (props) => {
 const RatioCalculation = (props) => {
   return Number.isFinite(props.calculatedProjectedValues.percentage) ? renderRatioCalculationSection(props) : null;
 };
-RatioCalculation.propTypes = {
-  calculatedProjectedValues: PropTypes.object.isRequired,
-  calculatedTotals: PropTypes.object.isRequired,
-  handleRatioCalculationButtonPressed: PropTypes.func.isRequired,
-  ratioCalculation: PropTypes.object.isRequired
-};
+RatioCalculation.propTypes = propTypes;
 
 export default RatioCalculation;

@@ -6,6 +6,10 @@ import { fixLastQuestionMark, updateQueryStringParameter } from '../helpers/link
 import CampusSolutionsLink from '../components/base/link/CampusSolutionsLink';
 import CampusSolutionsOutboundLink from '../components/base/link/CampusSolutionsOutboundLink';
 
+const propTypes = {
+  linkObj: PropTypes.object.isRequired
+};
+
 class CampusSolutionsLinkContainer extends React.Component {
   constructor(props) {
     super(props);
@@ -66,8 +70,6 @@ class CampusSolutionsLinkContainer extends React.Component {
     }
   }
 }
-CampusSolutionsLinkContainer.propTypes = {
-  linkObj: PropTypes.object.isRequired
-};
+CampusSolutionsLinkContainer.propTypes = propTypes;
 
 export default CampusSolutionsLinkContainer;

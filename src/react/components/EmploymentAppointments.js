@@ -18,6 +18,11 @@ APILink.propTypes = {
   url: PropTypes.string.isRequired
 };
 
+const propTypes = {
+  user: PropTypes.object.isRequired,
+  teachingSemesters: PropTypes.array
+};
+
 const processAcademics = function(teachingSemesters) {
   const semesterClasses = (semester) => {
     return semester.classes.map(formatSemesterData(semester));
@@ -127,11 +132,7 @@ class EmploymentAppointments extends React.Component {
     }
   }
 }
-
-EmploymentAppointments.propTypes = {
-  user: PropTypes.object.isRequired,
-  teachingSemesters: PropTypes.array
-};
+EmploymentAppointments.propTypes = propTypes;
 
 angular.module('calcentral.react').component('employmentAppointments', react2angular(EmploymentAppointments));
 

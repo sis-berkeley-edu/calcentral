@@ -3,6 +3,10 @@ import PropTypes from 'prop-types';
 
 import '../../../stylesheets/widgets.scss';
 
+const propTypes = {
+  title: PropTypes.string.isRequired
+};
+
 const WidgetHeader = (props) => {
   return (
     <div className="cc-react-widget__title">
@@ -10,8 +14,6 @@ const WidgetHeader = (props) => {
     </div>
   );
 };
-WidgetHeader.propTypes = {
-  title: PropTypes.string.isRequired
-};
+WidgetHeader.propTypes = propTypes;
 
 export default WidgetHeader;

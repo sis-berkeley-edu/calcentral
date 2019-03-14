@@ -5,6 +5,11 @@ import Spinner from '../Spinner';
 
 import '../../../stylesheets/widgets.scss';
 
+const propTypes = {
+  children: PropTypes.node.isRequired,
+  widgetConfig: PropTypes.object.isRequired
+};
+
 const renderErrorMessage = (errorMessage) => {
   let messageComponent;
   if (typeof errorMessage === 'string' || errorMessage instanceof String) {
@@ -35,9 +40,6 @@ const WidgetBody = (props) => {
   }
 };
 
-WidgetBody.propTypes = {
-  children: PropTypes.node.isRequired,
-  widgetConfig: PropTypes.object.isRequired
-};
+WidgetBody.propTypes = propTypes;
 
 export default WidgetBody;

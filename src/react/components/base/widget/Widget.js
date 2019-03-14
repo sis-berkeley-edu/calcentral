@@ -8,6 +8,31 @@ import '../../../stylesheets/box_model.scss';
 import '../../../stylesheets/print.scss';
 import '../../../stylesheets/widgets.scss';
 
+const defaultProps = {
+  config: {
+    errored: false,
+    errorMessage: 'Card is unavailable at this time.',
+    isLoading: false,
+    padding: true,
+    visible: true
+  }
+};
+
+const propTypes = {
+  children: PropTypes.node.isRequired,
+  config: PropTypes.shape({
+    errored: PropTypes.bool,
+    errorMessage: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.node
+    ]),
+    isLoading: PropTypes.bool,
+    padding: PropTypes.bool,
+    title: PropTypes.string.isRequired,
+    visible: PropTypes.bool
+  })
+};
+
 const Widget = (props) => {
   const {config: widgetConfig, children} = props;
   if (widgetConfig.visible) {
@@ -25,28 +50,7 @@ const Widget = (props) => {
   }
 };
 
-Widget.defaultProps = {
-  config: {
-    errored: false,
-    errorMessage: 'Card is unavailable at this time.',
-    isLoading: false,
-    padding: true,
-    visible: true
-  }
-};
-Widget.propTypes = {
-  children: PropTypes.node.isRequired,
-  config: PropTypes.shape({
-    errored: PropTypes.bool,
-    errorMessage: PropTypes.oneOfType([
-      PropTypes.string,
-      PropTypes.node
-    ]),
-    isLoading: PropTypes.bool,
-    padding: PropTypes.bool,
-    title: PropTypes.string.isRequired,
-    visible: PropTypes.bool
-  })
-};
+Widget.defaultProps = defaultProps;
+Widget.propTypes = propTypes;
 
 export default Widget;

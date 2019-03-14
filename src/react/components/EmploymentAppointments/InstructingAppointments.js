@@ -2,6 +2,12 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import './InstructingAppointments.scss';
 
+const propTypes = {
+  classes: PropTypes.array.isRequired,
+  hasCurrentClasses: PropTypes.bool.isRequired,
+  hasPreviousClasses: PropTypes.bool.isRequired
+};
+
 class InstructingAppointments extends Component {
   constructor(props) {
     super(props);
@@ -42,10 +48,6 @@ class InstructingAppointments extends Component {
   }
 }
 
-InstructingAppointments.propTypes = {
-  classes: PropTypes.array.isRequired,
-  hasCurrentClasses: PropTypes.bool.isRequired,
-  hasPreviousClasses: PropTypes.bool.isRequired
-};
+InstructingAppointments.propTypes = propTypes;
 
 export default InstructingAppointments;

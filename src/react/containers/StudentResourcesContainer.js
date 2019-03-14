@@ -6,6 +6,16 @@ import { react2angular } from 'react2angular';
 import { updateStateProperty } from '../helpers/stateHelper';
 
 import StudentResources from '../components/StudentResources';
+
+const propTypes = {
+  $location: PropTypes.object.isRequired,
+  $route: PropTypes.object.isRequired,
+  academicsService: PropTypes.object.isRequired,
+  apiService: PropTypes.object.isRequired,
+  linkService: PropTypes.object.isRequired,
+  studentResourcesFactory: PropTypes.object.isRequired
+};
+
 class StudentResourcesContainer extends React.Component {
   constructor(props) {
     super(props);
@@ -90,13 +100,6 @@ class StudentResourcesContainer extends React.Component {
     );
   }
 }
-StudentResourcesContainer.propTypes = {
-  $location: PropTypes.object.isRequired,
-  $route: PropTypes.object.isRequired,
-  academicsService: PropTypes.object.isRequired,
-  apiService: PropTypes.object.isRequired,
-  linkService: PropTypes.object.isRequired,
-  studentResourcesFactory: PropTypes.object.isRequired
-};
+StudentResourcesContainer.propTypes = propTypes;
 
 angular.module('calcentral.react').component('studentResourcesContainer', react2angular(StudentResourcesContainer, [], ['$route', '$location', 'academicsService', 'apiService', 'linkService', 'studentResourcesFactory']));

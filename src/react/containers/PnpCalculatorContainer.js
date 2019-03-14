@@ -7,6 +7,11 @@ import { updateStateProperty } from '../helpers/stateHelper';
 import RedTimesCircle from '../components/base/icon/RedTimesCircle';
 import PnpCalculator from '../components/pnp_calculator/PnpCalculator';
 
+const propTypes = {
+  $scope: PropTypes.object.isRequired,
+  degreeProgressFactory: PropTypes.object.isRequired
+};
+
 class PnpCalculatorContainer extends React.Component {
   constructor(props) {
     super(props);
@@ -208,9 +213,6 @@ class PnpCalculatorContainer extends React.Component {
     );
   }
 }
-PnpCalculatorContainer.propTypes = {
-  $scope: PropTypes.object.isRequired,
-  degreeProgressFactory: PropTypes.object.isRequired
-};
+PnpCalculatorContainer.propTypes = propTypes;
 
 angular.module('calcentral.react').component('pnpCalculatorContainer', react2angular(PnpCalculatorContainer, [], ['$scope', 'degreeProgressFactory']));

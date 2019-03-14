@@ -3,6 +3,17 @@ import PropTypes from 'prop-types';
 import format from 'date-fns/format';
 import './AppointmentRow.scss';
 
+const propTypes = {
+  description: PropTypes.string.isRequired,
+  jobCode: PropTypes.string,
+  unit: PropTypes.string,
+  step: PropTypes.string,
+  startDate: PropTypes.string.isRequired,
+  endDate: PropTypes.string.isRequired,
+  compenstation: PropTypes.string,
+  distributionPercentage: PropTypes.string
+};
+
 class AppointmentRow extends React.Component {
   constructor(props) {
     super(props);
@@ -62,15 +73,6 @@ class AppointmentRow extends React.Component {
   }
 }
 
-AppointmentRow.propTypes = {
-  description: PropTypes.string.isRequired,
-  jobCode: PropTypes.string,
-  unit: PropTypes.string,
-  step: PropTypes.string,
-  startDate: PropTypes.string.isRequired,
-  endDate: PropTypes.string.isRequired,
-  compenstation: PropTypes.string,
-  distributionPercentage: PropTypes.string
-};
+AppointmentRow.propTypes = propTypes;
 
 export default AppointmentRow;

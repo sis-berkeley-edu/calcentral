@@ -8,6 +8,11 @@ import '../stylesheets/box_model.scss';
 import '../stylesheets/lists.scss';
 import '../stylesheets/student_resources.scss';
 
+const propTypes = {
+  resources: PropTypes.array.isRequired,
+  widgetConfig: PropTypes.object.isRequired
+};
+
 const renderLinkSectionList = (linkObj) => {
   return (
     <li key={linkObj.urlId}>
@@ -40,9 +45,6 @@ const StudentResources = (props) => {
     </Widget>
   );
 };
-StudentResources.propTypes = {
-  resources: PropTypes.array.isRequired,
-  widgetConfig: PropTypes.object.isRequired
-};
+StudentResources.propTypes = propTypes;
 
 export default StudentResources;

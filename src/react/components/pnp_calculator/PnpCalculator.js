@@ -9,6 +9,18 @@ import RatioCalculation from './RatioCalculation';
 
 import '../../stylesheets/widgets.scss';
 
+const propTypes = {
+  calculator: PropTypes.object.isRequired,
+  calculatedProjectedValues: PropTypes.object.isRequired,
+  calculatedTotals: PropTypes.object.isRequired,
+  handleEstimateButtonPressed: PropTypes.func.isRequired,
+  handleInputChange: PropTypes.func.isRequired,
+  handleRatioCalculationButtonPressed: PropTypes.func.isRequired,
+  inputStatus: PropTypes.object.isRequired,
+  ratioCalculation: PropTypes.object.isRequired,
+  widgetConfig: PropTypes.object.isRequired
+};
+
 const PnpCalculator = (props) => {
   return (
     <Widget config={{...props.widgetConfig}}>
@@ -35,16 +47,6 @@ const PnpCalculator = (props) => {
     </Widget>
   );
 };
-PnpCalculator.propTypes = {
-  calculator: PropTypes.object.isRequired,
-  calculatedProjectedValues: PropTypes.object.isRequired,
-  calculatedTotals: PropTypes.object.isRequired,
-  handleEstimateButtonPressed: PropTypes.func.isRequired,
-  handleInputChange: PropTypes.func.isRequired,
-  handleRatioCalculationButtonPressed: PropTypes.func.isRequired,
-  inputStatus: PropTypes.object.isRequired,
-  ratioCalculation: PropTypes.object.isRequired,
-  widgetConfig: PropTypes.object.isRequired
-};
+PnpCalculator.propTypes = propTypes;
 
 export default PnpCalculator;

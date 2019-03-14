@@ -12,6 +12,15 @@ import '../../stylesheets/tables.scss';
 import '../../stylesheets/text.scss';
 import '../../stylesheets/widgets.scss';
 
+const propTypes = {
+  calculator: PropTypes.object.isRequired,
+  calculatedProjectedValues: PropTypes.object.isRequired,
+  calculatedTotals: PropTypes.object.isRequired,
+  handleEstimateButtonPressed: PropTypes.func.isRequired,
+  handleInputChange: PropTypes.func.isRequired,
+  inputStatus: PropTypes.object.isRequired
+};
+
 const renderInputErrorMessage = (errored) => {
   if (errored) {
     return (
@@ -132,13 +141,6 @@ const PassedGradeLimitEstimator = (props) => {
     </div>
   );
 };
-PassedGradeLimitEstimator.propTypes = {
-  calculator: PropTypes.object.isRequired,
-  calculatedProjectedValues: PropTypes.object.isRequired,
-  calculatedTotals: PropTypes.object.isRequired,
-  handleEstimateButtonPressed: PropTypes.func.isRequired,
-  handleInputChange: PropTypes.func.isRequired,
-  inputStatus: PropTypes.object.isRequired
-};
+PassedGradeLimitEstimator.propTypes = propTypes;
 
 export default PassedGradeLimitEstimator;
