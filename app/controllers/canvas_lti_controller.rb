@@ -56,7 +56,7 @@ class CanvasLtiController < ApplicationController
     if lti
       authenticate_by_lti(lti)
       logger.warn "Session authenticated by LTI: #{session_message}"
-      render file: 'public/bcourses_embedded.html'
+      render file: 'public/bcourses_embedded.html', formats: [:html]
     else
       logger.error 'Error parsing LTI request; returning error message'
       # TODO Test the result of a redirect or an error status return.
