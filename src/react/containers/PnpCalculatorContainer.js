@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import _ from 'lodash';
 import { react2angular } from 'react2angular';
-import { updateStateProperty } from '../helpers/stateHelper';
+import { updateStateProperty } from '../helpers/state';
 
 import RedTimesCircle from '../components/base/icon/RedTimesCircle';
 import PnpCalculator from '../components/pnp_calculator/PnpCalculator';

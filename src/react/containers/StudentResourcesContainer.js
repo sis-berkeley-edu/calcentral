@@ -3,7 +3,7 @@ import _ from 'lodash';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { react2angular } from 'react2angular';
-import { updateStateProperty } from '../helpers/stateHelper';
+import { updateStateProperty } from '../helpers/state';
 
 import StudentResources from '../components/StudentResources';
 
