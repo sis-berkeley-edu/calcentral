@@ -1,12 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import CampusSolutionsLinkContainer from '../containers/CampusSolutionsLinkContainer';
-import Widget from './base/widget/Widget';
+import CampusSolutionsLinkContainer from '../base/link/CampusSolutionsLinkContainer';
+import Widget from '../base/widget/Widget';
 
-import '../stylesheets/box_model.scss';
-import '../stylesheets/lists.scss';
-import '../stylesheets/student_resources.scss';
+import '../../stylesheets/box_model.scss';
+import '../../stylesheets/lists.scss';
+import '../../stylesheets/student_resources.scss';
 
 const propTypes = {
   resources: PropTypes.array.isRequired,

@@ -3,9 +3,9 @@ import _ from 'lodash';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { react2angular } from 'react2angular';
-import { updateStateProperty } from '../helpers/state';
+import { updateStateProperty } from '../../helpers/state';
 
-import StudentResources from '../components/StudentResources';
+import StudentResources from './StudentResources';
 
 const propTypes = {
   $location: PropTypes.object.isRequired,
