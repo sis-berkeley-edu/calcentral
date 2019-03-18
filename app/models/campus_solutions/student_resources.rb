@@ -154,15 +154,15 @@ module CampusSolutions
     end
 
     def is_jd_llm_only?
-      ((current_academic_roles[:lawJdLlm] || current_academic_roles[:lawJdCdp]) && !current_academic_roles[:lawJspJsd] && !current_academic_roles[:grad])
+      ((current_academic_roles["lawJdLlm"] || current_academic_roles["lawJdCdp"]) && !current_academic_roles["lawJspJsd"] && !current_academic_roles["grad"])
     end
 
     def is_law_visiting?
-      current_academic_roles[:lawVisiting] && !current_academic_roles[:grad]
+      current_academic_roles["lawVisiting"] && !current_academic_roles["grad"]
     end
 
     def is_non_degree_seeking_summer_visitor?
-      historical_academic_roles[:summerVisitor] && !historical_academic_roles[:degreeSeeking]
+      historical_academic_roles["summerVisitor"] && !historical_academic_roles["degreeSeeking"]
     end
 
     def xml_filename
