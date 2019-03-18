@@ -23,40 +23,40 @@ describe CampusSolutions::StudentResources do
   end
   let(:current_academic_roles) do
     {
-      doctorScienceLaw: false,
-      fpf: false,
-      haasBusinessAdminMasters: false,
-      haasBusinessAdminPhD: false,
-      haasFullTimeMba: false,
-      haasEveningWeekendMba: false,
-      haasExecMba: false,
-      haasMastersFinEng: false,
-      haasMbaPublicHealth: false,
-      haasMbaJurisDoctor: false,
-      jurisSocialPolicyMasters: false,
-      jurisSocialPolicyPhC: false,
-      jurisSocialPolicyPhD: false,
-      ugrdUrbanStudies: false,
-      summerVisitor: false,
-      courseworkOnly: false,
-      lawJspJsd: false,
-      lawJdLlm: false,
-      masterOfLawsLlm: false,
-      lawVisiting: false,
-      lawJdCdp: false,
-      ugrd: false,
-      grad: false,
-      law: false,
-      concurrent: false,
-      lettersAndScience: false,
-      degreeSeeking: false,
-      ugrdNonDegree: false
+      "doctorScienceLaw" => false,
+      "fpf" => false,
+      "haasBusinessAdminMasters" => false,
+      "haasBusinessAdminPhD" => false,
+      "haasFullTimeMba" => false,
+      "haasEveningWeekendMba" => false,
+      "haasExecMba" => false,
+      "haasMastersFinEng" => false,
+      "haasMbaPublicHealth" => false,
+      "haasMbaJurisDoctor" => false,
+      "jurisSocialPolicyMasters" => false,
+      "jurisSocialPolicyPhC" => false,
+      "jurisSocialPolicyPhD" => false,
+      "ugrdUrbanStudies" => false,
+      "summerVisitor" => false,
+      "courseworkOnly" => false,
+      "lawJspJsd" => false,
+      "lawJdLlm" => false,
+      "masterOfLawsLlm" => false,
+      "lawVisiting" => false,
+      "lawJdCdp" => false,
+      "ugrd" => false,
+      "grad" => false,
+      "law" => false,
+      "concurrent" => false,
+      "lettersAndScience" => false,
+      "degreeSeeking" => false,
+      "ugrdNonDegree" => false
     }
   end
   let(:historical_academic_roles) do
     {
-      summerVisitor: false,
-      degreeSeeking: false
+      "summerVisitor" => false,
+      "degreeSeeking" => false
     }
   end
   let(:link_response) do
@@ -111,7 +111,7 @@ describe CampusSolutions::StudentResources do
 
   context 'as a visiting law student' do
     before do
-      current_academic_roles.merge!({lawVisiting: true})
+      current_academic_roles.merge!({"lawVisiting" => true})
       roles.merge!({student: true, law: true})
     end
     it 'returns the expected number of sections/links' do
@@ -125,7 +125,7 @@ describe CampusSolutions::StudentResources do
 
   context 'as a non-degree seeking summer visitor' do
     before do
-      historical_academic_roles.merge!({summerVisitor: true})
+      historical_academic_roles.merge!({"summerVisitor" => true})
       roles.merge!({student: true, undergrad: true})
     end
     it 'returns the expected number of sections/links' do
