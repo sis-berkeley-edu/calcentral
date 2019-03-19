@@ -20,12 +20,11 @@
         <a class="cc-button cc-button cc-button-finaid-permissions"
            data-ng-if="buttonGoBack"
            data-ng-show="canPost"
-           href="/finances">Return to My Finances</a>
+           data-ng-href="/finances/finaid/{{aidYear}}">Return to My Finances</a>
         <a class="cc-button cc-button-blue cc-button-finaid-permissions"
            data-ng-if="buttonGoBack"
            data-ng-show="!canPost"
-           href="/finances">Return to My Finances</a>
-
+           data-ng-href="/finances/finaid/{{aidYear}}">Return to My Finances</a>
       </div>
     </div>
   </div>
