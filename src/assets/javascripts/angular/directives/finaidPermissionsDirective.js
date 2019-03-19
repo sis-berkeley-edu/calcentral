@@ -7,6 +7,7 @@ angular.module('calcentral.directives').directive('ccFinaidPermissionsDirective'
   return {
     templateUrl: 'directives/finaid_permissions.html',
     scope: {
+      aidYear: '=',
       buttonActionApprove: '&',
       buttonGoBack: '=',
       buttonTextApprove: '=',
