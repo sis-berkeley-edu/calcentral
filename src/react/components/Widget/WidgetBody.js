@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import Spinner from '../base/Spinner';
+import Spinner from '../Spinner';
 
 import '../../stylesheets/widgets.scss';
 

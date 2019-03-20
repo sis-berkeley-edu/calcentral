@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import Icon from '../../Icon/Icon';
 import { ICON_TIMES_CIRCLE } from '../../Icon/IconTypes';
-import Spinner from '../../base/Spinner';
+import Spinner from '../../Spinner';
 
 import '../../../stylesheets/buttons.scss';
 import '../../../stylesheets/widgets.scss';
