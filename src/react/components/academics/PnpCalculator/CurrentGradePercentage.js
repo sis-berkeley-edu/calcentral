@@ -1,7 +1,8 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import RedExclamationCircle from '../../base/icon/RedExclamationCircle';
+import Icon from '../../Icon/Icon';
+import { ICON_EXCLAMATION } from '../../Icon/IconTypes';
 
 import '../../../stylesheets/box_model.scss';
 import '../../../stylesheets/text.scss';
@@ -22,7 +23,7 @@ const renderExcessUnitsMessage = (hasExcessNoGpaUnits) => {
 };
 
 const CurrentGradePercentage = (props) => {
-  const icon = props.pnpPercentage > 33 ? <RedExclamationCircle /> : null;
+  const icon = props.pnpPercentage > 33 ? <Icon name={ICON_EXCLAMATION} /> : null;
   return (
     <div>
       <h3 className='cc-react-text--normal cc-react--no-margin'>Your current Passed (P) grade percentage:</h3>

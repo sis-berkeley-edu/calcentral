@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import RedTimesCircle from '../../base/icon/RedTimesCircle';
+import Icon from '../../Icon/Icon';
+import { ICON_TIMES_CIRCLE } from '../../Icon/IconTypes';
 import Spinner from '../../base/Spinner';
 
 import '../../../stylesheets/buttons.scss';
@@ -18,7 +19,7 @@ const renderRatioCalculationMessage = (errored, isLoading, message) => {
   if (errored) {
     return (
       <React.Fragment>
-        <RedTimesCircle />Unable to retrieve message or text.
+        <Icon name={ICON_TIMES_CIRCLE} />Unable to retrieve message or text.
       </React.Fragment>
     );
   } else if (isLoading) {

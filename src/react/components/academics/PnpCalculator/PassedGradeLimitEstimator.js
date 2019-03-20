@@ -1,8 +1,8 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import GreenCheckmark from '../../base/icon/GreenCheckmark';
-import RedExclamationCircle from '../../base/icon/RedExclamationCircle';
+import Icon from '../../Icon/Icon';
+import { ICON_CHECKMARK, ICON_EXCLAMATION } from '../../Icon/IconTypes';
 
 import '../../../stylesheets/box_model.scss';
 import '../../../stylesheets/buttons.scss';
@@ -26,7 +26,7 @@ const renderInputErrorMessage = (errored) => {
     return (
       <div>
         <p className="cc-react-text--align-right cc-react-text--red">
-          <RedExclamationCircle /> Please use valid values
+          <Icon name={ICON_EXCLAMATION} /> Please use valid values
         </p>
       </div>
     );
@@ -52,10 +52,10 @@ const renderProjectedPercentage = (projectedPercentage) => {
   if (Number.isFinite(projectedPercentage)) {
     let icon, message;
     if (projectedPercentage > 33) {
-      icon = <RedExclamationCircle />;
+      icon = <Icon name={ICON_EXCLAMATION} />;
       message = 'You cannot exceed 33% by the time of graduation';
     } else {
-      icon = <GreenCheckmark />;
+      icon = <Icon name={ICON_CHECKMARK} />;
       message = 'Meets the 33% limit';
     }
     return (

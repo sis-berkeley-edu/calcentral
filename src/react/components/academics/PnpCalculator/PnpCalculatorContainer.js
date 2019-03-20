@@ -4,7 +4,8 @@ import _ from 'lodash';
 import { react2angular } from 'react2angular';
 import { updateStateProperty } from '../../../helpers/state';
 
-import RedTimesCircle from '../../base/icon/RedTimesCircle';
+import Icon from '../../Icon/Icon';
+import { ICON_TIMES_CIRCLE } from '../../Icon/IconTypes';
 import PnpCalculator from './PnpCalculator';
 
 const propTypes = {
@@ -17,7 +18,7 @@ class PnpCalculatorContainer extends React.Component {
     super(props);
     const errorMessage = (
       <React.Fragment>
-        <RedTimesCircle />This estimator is unavailable. Please try again later.
+        <Icon name={ICON_TIMES_CIRCLE} />This estimator is unavailable. Please try again later.
       </React.Fragment>
     );
     this.state = {

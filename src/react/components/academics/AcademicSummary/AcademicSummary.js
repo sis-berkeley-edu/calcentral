@@ -3,8 +3,8 @@ import { react2angular } from 'react2angular';
 
 import NotFound404 from '../../NotFound404';
 import Spinner from '../../Spinner';
-import Icon from '../../Icon';
-import { ICON_PRINT } from '../../IconTypes';
+import Icon from '../../Icon/Icon';
+import { ICON_PRINT } from '../../Icon/IconTypes';
 
 import Enrollment from './Enrollment';
 import StudentProfile from '../StudentProfile/StudentProfile';

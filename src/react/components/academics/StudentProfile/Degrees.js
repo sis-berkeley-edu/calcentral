@@ -1,8 +1,8 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import format from 'date-fns/format';
-import Icon from '../../Icon';
-import { ICON_GRADUATION, ICON_CERTIFICATE } from '../../IconTypes';
+import Icon from '../../Icon/Icon';
+import { ICON_GRADUATION, ICON_CERTIFICATE } from '../../Icon/IconTypes';
 
 import './Degrees.scss';
 
