@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import '../../../stylesheets/box_model.scss';
+import '../../stylesheets/box_model.scss';
 
 const CampusSolutionsOutboundLink = (props) => {
   return (

@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 
-import { fixLastQuestionMark, updateQueryStringParameter } from '../../../helpers/links';
+import { fixLastQuestionMark, updateQueryStringParameter } from '../../helpers/links';
 import CampusSolutionsLink from './CampusSolutionsLink';
 import CampusSolutionsOutboundLink from './CampusSolutionsOutboundLink';
 

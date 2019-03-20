@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import CampusSolutionsLinkContainer from '../../base/link/CampusSolutionsLinkContainer';
+import CampusSolutionsLinkContainer from '../../CampusSolutionsLink/CampusSolutionsLinkContainer';
 import Widget from '../../Widget/Widget';
 
 import '../../../stylesheets/box_model.scss';
