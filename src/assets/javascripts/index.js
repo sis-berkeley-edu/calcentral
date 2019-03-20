@@ -53,10 +53,6 @@ require('../stylesheets/calcentral.scss');
 require('../stylesheets/colors.scss');
 require('../../../node_modules/font-awesome/scss/font-awesome.scss');
 
-// React Container Components
-const reactContainers = require.context('../../react/containers', true, /\.js$/);
-reactContainers.keys().forEach(reactContainers);
-
 // React Presentational Components
 const reactPresentational = require.context('../../react/components', true, /\.js$/);
 reactPresentational.keys().forEach(reactPresentational);
