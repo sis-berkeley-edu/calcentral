@@ -102,7 +102,7 @@ module CampusSolutions
         when :withdraw_from_semester_add
           true unless !roles[:law]
         when :higher_degrees_committee_form, :special_enrollment_petition
-          true unless (roles[:graduate] || roles[:law]) && !(is_jd_llm_only? || is_law_visiting?)
+          true unless ((roles[:graduate] || roles[:law]) && !(is_jd_llm_only? || is_law_visiting?))
         when :submit_degree_candidacy_form
           true unless (roles[:graduate] || roles[:law])
         when :view_submitted_forms, :update_pending_forms
@@ -154,7 +154,7 @@ module CampusSolutions
     end
 
     def is_jd_llm_only?
-      ((current_academic_roles["lawJdLlm"] || current_academic_roles["lawJdCdp"]) && !current_academic_roles["lawJspJsd"] && !current_academic_roles["grad"])
+      (current_academic_roles["lawJdLlm"] || current_academic_roles["lawJdCdp"]) && !current_academic_roles["lawJspJsd"] && !current_academic_roles["grad"]
     end
 
     def is_law_visiting?
