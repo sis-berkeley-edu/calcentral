@@ -108,7 +108,7 @@ describe User::AuthenticationValidator do
       end
     end
     before do
-      HubEdos::Affiliations.stub_chain(:new, :get).and_return cs_affiliations
+      HubEdos::V1::Affiliations.stub_chain(:new, :get).and_return cs_affiliations
       CalnetLdap::UserAttributes.stub_chain(:new, :get_feed).and_return ldap_affiliations
       Settings.stub_chain(:slate_auth_handler).and_return slate_auth_handler_settings
     end
@@ -316,7 +316,7 @@ describe User::AuthenticationValidator do
     let(:feature_flag) { false }
     it 'should not waste time checking affiliations' do
       expect(CampusOracle::Queries).to receive(:get_basic_people_attributes).never
-      expect(HubEdos::Affiliations).to receive(:new).never
+      expect(HubEdos::V1::Affiliations).to receive(:new).never
       expect(User::AuthenticationValidator.new(auth_uid, auth_handler).validated_user_id).to eq auth_uid
     end
   end

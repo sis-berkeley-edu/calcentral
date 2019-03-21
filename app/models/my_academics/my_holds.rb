@@ -5,7 +5,7 @@ module MyAcademics
     include Cache::UserCacheExpiry
 
     def get_feed_internal
-      academic_status = HubEdos::AcademicStatus.new({user_id: @uid}).get
+      academic_status = HubEdos::V1::AcademicStatus.new({user_id: @uid}).get
       {
         feed: {
           holds: parse_holds(academic_status)

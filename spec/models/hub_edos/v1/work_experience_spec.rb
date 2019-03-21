@@ -1,7 +1,7 @@
-describe HubEdos::WorkExperience do
+describe HubEdos::V1::WorkExperience do
 
   context 'mock proxy' do
-    let(:proxy) { HubEdos::WorkExperience.new(fake: true, user_id: '61889') }
+    let(:proxy) { HubEdos::V1::WorkExperience.new(fake: true, user_id: '61889') }
     subject { proxy.get }
 
     it_behaves_like 'a proxy that properly observes the profile feature flag'

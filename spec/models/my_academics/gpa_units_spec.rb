@@ -18,14 +18,14 @@ describe MyAcademics::GpaUnits do
     }
   end
   let(:has_law_role) { false }
-  let(:status_proxy) { HubEdos::AcademicStatus.new(user_id: uid, fake: true) }
+  let(:status_proxy) { HubEdos::V1::AcademicStatus.new(user_id: uid, fake: true) }
 
   describe '#merge' do
     subject do
       {}.tap { |feed| MyAcademics::GpaUnits.new(uid).merge feed }
     end
     before do
-      allow(HubEdos::AcademicStatus).to receive(:new).and_return status_proxy
+      allow(HubEdos::V1::AcademicStatus).to receive(:new).and_return status_proxy
     end
 
     context 'when legacy user but non-legacy term' do
@@ -36,7 +36,7 @@ describe MyAcademics::GpaUnits do
       context 'CS data is ready to go' do
         it 'sources from Hub' do
           expect(CampusOracle::Queries).to receive(:get_student_info).never
-          expect(HubEdos::AcademicStatus).to receive(:new).and_return status_proxy
+          expect(HubEdos::V1::AcademicStatus).to receive(:new).and_return status_proxy
           expect(subject[:gpaUnits][:gpa][0][:cumulativeGpa]).to eq '3.8'
         end
       end

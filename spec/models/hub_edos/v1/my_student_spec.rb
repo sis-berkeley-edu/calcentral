@@ -1,6 +1,6 @@
-describe HubEdos::MyStudent do
+describe HubEdos::V1::MyStudent do
   subject {
-    proxy = HubEdos::MyStudent.new(random_id, options)
+    proxy = HubEdos::V1::MyStudent.new(random_id, options)
     proxy.get_feed_internal
   }
   before do
