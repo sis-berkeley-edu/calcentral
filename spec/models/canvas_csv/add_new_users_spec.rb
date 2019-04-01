@@ -30,7 +30,7 @@ describe CanvasCsv::AddNewUsers do
   before do
     allow(DateTime).to receive(:now).and_return(fake_now_datetime)
     allow_any_instance_of(Canvas::Report::Users).to receive(:get_csv).and_return(user_report_csv)
-    allow(CampusOracle::Queries).to receive(:get_all_active_people_uids).and_return(sis_active_uids)
+    allow(EdoOracle::Bcourses).to receive(:get_all_active_people_uids).and_return(sis_active_uids)
     allow(User::BasicAttributes).to receive(:attributes_for_uids).and_return(sis_active_people)
 
     # have to mock the responses due to dependency on Campus Oracle data

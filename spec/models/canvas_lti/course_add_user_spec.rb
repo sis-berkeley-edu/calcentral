@@ -115,7 +115,7 @@ describe CanvasLti::CourseAddUser do
 
     context 'when searching by name' do
       before do
-        allow(CampusOracle::Queries).to(
+        allow(EdoOracle::Bcourses).to(
           receive(:find_people_by_name).
           with("#{common_first_name} #{common_last_name}", CanvasLti::CourseAddUser::SEARCH_LIMIT).
           and_return(people_array))
@@ -126,7 +126,7 @@ describe CanvasLti::CourseAddUser do
 
     context 'when searching by email' do
       before do
-        allow(CampusOracle::Queries).to(
+        allow(EdoOracle::Bcourses).to(
           receive(:find_people_by_email).
           with(common_email, CanvasLti::CourseAddUser::SEARCH_LIMIT).
           and_return(people_array))
@@ -136,7 +136,7 @@ describe CanvasLti::CourseAddUser do
     end
 
     context 'when searching by LDAP uid' do
-      before { allow(CampusOracle::Queries).to receive(:find_active_uid).with(common_uid).and_return(people_array) }
+      before { allow(EdoOracle::Bcourses).to receive(:find_active_uid).with(common_uid).and_return(people_array) }
       subject { CanvasLti::CourseAddUser.search_users(common_uid, 'ldap_user_id') }
       it_should_behave_like 'a filtered result set'
     end

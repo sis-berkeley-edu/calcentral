@@ -28,15 +28,13 @@ module CanvasLti
       sentence_options = {:last_word_connector => ', or ', :two_words_connector => ' or '}
       raise ArgumentError, "Search type argument '#{search_type}' invalid. Must be #{SEARCH_TYPES.to_sentence(sentence_options)}" unless SEARCH_TYPES.include?(search_type)
 
-      query_class = Settings.features.legacy_caldap ? CampusOracle::Queries : EdoOracle::Bcourses
-
       case search_type
         when 'name'
-          people = query_class.find_people_by_name(search_text, SEARCH_LIMIT)
+          people = EdoOracle::Bcourses.find_people_by_name(search_text, SEARCH_LIMIT)
         when 'email'
-          people = query_class.find_people_by_email(search_text, SEARCH_LIMIT)
+          people = EdoOracle::Bcourses.find_people_by_email(search_text, SEARCH_LIMIT)
         when 'ldap_user_id'
-          people = query_class.find_active_uid(search_text)
+          people = EdoOracle::Bcourses.find_active_uid(search_text)
       end
       people.collect do |person|
         person.delete('student_id')

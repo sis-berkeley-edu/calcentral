@@ -257,7 +257,6 @@ These features may be invisible when logged in as yourself. In particular:
     ```yml
     secret_token: "Some random 30-char string"
     postgres: [credentials for your separate production db (copy/modify from development.local.yml)]
-    campusdb: [copy from main config/settings.yml, modify if needed]
     google_proxy: and canvas_proxy: [copy from development.local.yml]
       application:
         serve_static_assets: true

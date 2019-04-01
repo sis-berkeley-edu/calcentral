@@ -19,7 +19,7 @@ describe CanvasCsv::SiteMembershipsMaintainer do
     enrollments_csv
   }
   before do
-    allow(CampusOracle::Queries).to receive(:get_basic_people_attributes) do |uids|
+    allow(EdoOracle::Queries).to receive(:get_basic_people_attributes) do |uids|
       uid = uids.first
       [{
         'ldap_uid' => uid,

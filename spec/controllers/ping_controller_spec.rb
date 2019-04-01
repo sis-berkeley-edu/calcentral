@@ -3,7 +3,6 @@ describe PingController do
   context 'User database unavailable' do
     before do
       User::Data.stub(:database_alive?).and_return(false)
-      CampusOracle::Queries.stub(:database_alive?).and_return(true)
     end
     it 'raises error' do
       expect(Rails.logger).to receive(:fatal)
@@ -12,34 +11,9 @@ describe PingController do
     end
   end
 
-  context 'Campus database unavailable' do
+  context 'User database available' do
     before do
       User::Data.stub(:database_alive?).and_return(true)
-      CampusOracle::Queries.stub(:database_alive?).and_return(false)
-    end
-    it 'raises error' do
-      expect(Rails.logger).to receive(:fatal)
-      get :do
-      expect(response.status).to eq 503
-    end
-  end
-
-  context 'Both databases unavailable' do
-    before do
-      User::Data.stub(:database_alive?).and_return(false)
-      CampusOracle::Queries.stub(:database_alive?).and_return(false)
-    end
-    it 'raises error' do
-      expect(Rails.logger).to receive(:fatal)
-      get :do
-      expect(response.status).to eq 503
-    end
-  end
-
-  context 'Both databases available' do
-    before do
-      User::Data.stub(:database_alive?).and_return(true)
-      CampusOracle::Queries.stub(:database_alive?).and_return(true)
     end
 
     context 'do not do background jobs check' do
@@ -49,6 +23,7 @@ describe PingController do
       end
       it 'renders a json file with server status' do
         get :do
+        expect(response.status).to eq 200
         expect(response.body).to eq expected
       end
     end
@@ -62,6 +37,7 @@ describe PingController do
       end
       it 'renders a json file with server status and background jobs' do
         get :do
+        expect(response.status).to eq 200
         expect(response.body).to eq expected
       end
     end

@@ -31,9 +31,6 @@ class PingController < ApplicationController
       if !User::Data.database_alive?
         raise "CalCentral database is currently unavailable"
       end
-      if !CampusOracle::Queries.database_alive?
-        raise "Campus database is currently unavailable"
-      end
       true
     }
   end

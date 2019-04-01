@@ -3,6 +3,8 @@ module CampusOracle
     include ActiveRecordHelper
 
     def self.get_basic_people_attributes(up_to_1000_ldap_uids)
+      self.raise_non_test_error
+
       result = []
       use_pooled_connection {
         sql = <<-SQL
@@ -17,6 +19,8 @@ module CampusOracle
     end
 
     def self.get_all_active_people_uids
+      self.raise_non_test_error
+
       uids = []
       use_pooled_connection {
         sql = <<-SQL
@@ -31,6 +35,8 @@ module CampusOracle
     end
 
     def self.find_people_by_name(name_search_string, limit = 0)
+      self.raise_non_test_error
+
       raise ArgumentError, "Search text argument must be a string" if name_search_string.class != String
       raise ArgumentError, "Limit argument must be a Fixnum" if limit.class != Fixnum
       limit_clause = (limit > 0) ? "where rownum <= #{limit}" : ""
@@ -63,6 +69,8 @@ module CampusOracle
     end
 
     def self.find_people_by_email(email_search_string, limit = 0)
+      self.raise_non_test_error
+
       raise ArgumentError, "Search text argument must be a string" if email_search_string.class != String
       raise ArgumentError, "Limit argument must be a Fixnum" if limit.class != Fixnum
       limit_clause = (limit > 0) ? "where rownum <= #{limit}" : ""
@@ -93,6 +101,8 @@ module CampusOracle
     end
 
     def self.find_active_uid(user_id_string)
+      self.raise_non_test_error
+
       raise ArgumentError, "Argument must be a string" if user_id_string.class != String
       raise ArgumentError, "Argument is not an integer string" unless is_integer_string?(user_id_string)
       result = []
@@ -111,11 +121,15 @@ module CampusOracle
     end
 
     def self.is_integer_string?(string)
+      self.raise_non_test_error
+
       raise ArgumentError, "Argument must be a string" if string.class != String
       string.to_i.to_s == string
     end
 
     def self.get_enrolled_students(ccn, term_yr, term_cd)
+      self.raise_non_test_error
+
       logger.warn 'Calling get_enrolled_students on campus_oracle when allow_legacy_fallback flag set to false' unless Settings.features.allow_legacy_fallback
       result = []
       use_pooled_connection {
@@ -136,6 +150,8 @@ module CampusOracle
 
     # Version of get_enrolled_students for multiple CCNs.
     def self.get_enrolled_students_for_ccns(ccns, term_yr, term_cd)
+      self.raise_non_test_error
+
       logger.warn 'Calling get_enrolled_students_for_ccns on campus_oracle when allow_legacy_fallback flag set to false' unless Settings.features.allow_legacy_fallback
       result = []
       use_pooled_connection {
@@ -156,6 +172,8 @@ module CampusOracle
     end
 
     def self.get_sections_from_ccns(term_yr, term_cd, ccns)
+      self.raise_non_test_error
+
       result = {}
       use_pooled_connection {
         sql = <<-SQL
@@ -175,6 +193,8 @@ module CampusOracle
 
     # Catalog ID sorting is: "99", "101L", "C103", "C107L", "110", "110L", "C112", "C112L"
     def self.get_enrolled_sections(person_id, terms = nil)
+      self.raise_non_test_error
+
       logger.warn 'Calling get_enrolled_sections on campus_oracle when allow_legacy_fallback flag set to false' unless Settings.features.allow_legacy_fallback
       result = []
       terms_clause = terms_query_clause('r', terms)
@@ -203,6 +223,8 @@ module CampusOracle
     end
 
     def self.get_instructing_sections(person_id, terms = nil)
+      self.raise_non_test_error
+
       logger.warn 'Calling get_instructing_sections on campus_oracle when allow_legacy_fallback flag set to false' unless Settings.features.allow_legacy_fallback
       result = []
       terms_clause = terms_query_clause('i', terms)
@@ -228,6 +250,8 @@ module CampusOracle
     end
 
     def self.get_cross_listings(term_yr, term_cd, ccns)
+      self.raise_non_test_error
+
       logger.warn 'Calling get_cross_listings on campus_oracle when allow_legacy_fallback flag set to false' unless Settings.features.allow_legacy_fallback
       result = {}
       query_result = []
@@ -246,14 +270,20 @@ module CampusOracle
     end
 
     def self.get_course_secondary_sections(term_yr, term_cd, department, catalog_id)
+      self.raise_non_test_error
+
       get_course_sections(term_yr, term_cd, department, catalog_id, true)
     end
 
     def self.get_all_course_sections(term_yr, term_cd, department, catalog_id)
+      self.raise_non_test_error
+
       get_course_sections(term_yr, term_cd, department, catalog_id, false)
     end
 
     def self.get_section_schedules(term_yr, term_cd, ccn)
+      self.raise_non_test_error
+
       logger.warn 'Calling get_section_schedules on campus_oracle when allow_legacy_fallback flag set to false' unless Settings.features.allow_legacy_fallback
       result = []
       use_pooled_connection {
@@ -275,6 +305,8 @@ module CampusOracle
     end
 
     def self.get_section_instructors(term_yr, term_cd, ccn)
+      self.raise_non_test_error
+
       logger.warn 'Calling get_section_instructors on campus_oracle when allow_legacy_fallback flag set to false' unless Settings.features.allow_legacy_fallback
       result = []
       use_pooled_connection {
@@ -295,6 +327,8 @@ module CampusOracle
     end
 
     def self.get_student_info(ldap_uid)
+      self.raise_non_test_error
+
       result = {}
       use_pooled_connection {
         sql = <<-SQL
@@ -309,6 +343,8 @@ module CampusOracle
     end
 
     def self.database_alive?
+      self.raise_non_test_error
+
       is_alive = false
       begin
         use_pooled_connection {
@@ -322,6 +358,8 @@ module CampusOracle
     end
 
     def self.has_instructor_history?(ldap_uid, instructor_terms = nil)
+      self.raise_non_test_error
+
       logger.warn 'Calling has_instructor_history? on campus_oracle when allow_legacy_fallback flag set to false' unless Settings.features.allow_legacy_fallback
       result = {}
       instructor_terms_clause = terms_query_clause('r', instructor_terms)
@@ -340,6 +378,8 @@ module CampusOracle
     end
 
     def self.has_student_history?(ldap_uid, student_terms = nil)
+      self.raise_non_test_error
+
       logger.warn 'Calling has_student_history? on campus_oracle when allow_legacy_fallback flag set to false' unless Settings.features.allow_legacy_fallback
       result = {}
       student_terms_clause = terms_query_clause('r', student_terms)
@@ -358,6 +398,8 @@ module CampusOracle
     end
 
     def self.terms
+      self.raise_non_test_error
+
       logger.warn 'Calling terms on campus_oracle when allow_legacy_fallback flag set to false' unless Settings.features.allow_legacy_fallback
       result = []
       use_pooled_connection {
@@ -375,6 +417,8 @@ module CampusOracle
     private
 
     def self.get_course_sections(term_yr, term_cd, department, catalog_id, only_secondary_sections)
+      self.raise_non_test_error
+
       logger.warn 'Calling get_course_sections on campus_oracle when allow_legacy_fallback flag set to false' unless Settings.features.allow_legacy_fallback
       result = []
       section_type_condition = only_secondary_sections ? ' and c.primary_secondary_cd != \'P\' ' : ''
