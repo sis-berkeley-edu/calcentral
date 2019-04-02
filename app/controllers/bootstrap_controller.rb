@@ -36,10 +36,6 @@ class BootstrapController < ApplicationController
     if !User::Data.database_alive?
       raise "CalCentral database is currently unavailable"
     end
-    # so an error gets thrown if Oracle is dead.
-    if !CampusOracle::Queries.database_alive?
-      raise "Campus database is currently unavailable"
-    end
   end
 
   def check_cache_clear_flag

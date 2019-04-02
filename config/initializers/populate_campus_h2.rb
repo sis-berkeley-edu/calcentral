@@ -1,7 +1,7 @@
 
   class PopulateCampusH2 < ActiveRecord::Base
     Rails.application.config.after_initialize do
-      if Settings.campusdb.adapter == "h2"
+      if Settings.campusdb.adapter == "h2" && Rails.env.test?
         establish_connection :campusdb
         sql = <<-SQL
 

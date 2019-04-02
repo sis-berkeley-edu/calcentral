@@ -1,11 +1,12 @@
 describe User::BasicAttributes do
   let(:attributes) { described_class.attributes_for_uids(uids) }
   before do
-    allow(CampusOracle::Queries).to receive(:get_basic_people_attributes).and_return oracle_results
+    allow(EdoOracle::Queries).to receive(:get_basic_people_attributes).and_return sisedo_oracle_results
     allow(CalnetLdap::UserAttributes).to receive(:get_bulk_attributes).and_return ldap_results
   end
+
   let(:uids) { %w(2040 61889 211159 242881) }
-  let(:oracle_results) do
+  let(:sisedo_oracle_results) do
     [
       {
         'affiliations' => 'STUDENT-TYPE-NOT REGISTERED',
