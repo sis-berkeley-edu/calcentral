@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import APILink from '../../APILink';
 
 const propTypes = {
-  disabled: PropTypes.bool,
+  disabled: PropTypes.bool.isRequired,
   instruction: PropTypes.object.isRequired
 };
 
@@ -15,10 +15,11 @@ const OptionsGradingEnd = (props) => {
   } = props.instruction;
 
   const link = props.instruction.links.gradeBase;
+  const disabled = props.disabled;
 
   if (endOfDropAdd && enrollmentRole !== 'concurrent' && enrollmentRole !== 'law') {
     return (
-      <APILink {...link} disabled={props.disabled} name="Change Grading Option" title="Change Grading Option" />
+      <APILink {...link} disabled={disabled} name="Change Grading Option" title="Change Grading Option" />
     );
   } else {
     return null;

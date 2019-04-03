@@ -30,18 +30,19 @@ const EnrollmentInstructionLinks = (props) => {
   const currentTermId = props.instruction.termId;
   const acknowledgement = forTermId(props.calgrantAcknowledgements, currentTermId);
   const acknowledgementRequired = acknowledgement && isIncomplete(acknowledgement);
+  const disabled = acknowledgementRequired || false;
 
   return (
     <div className="EnrollmentLinks">
       <div className="EnrollmentLinks__link-container">
-        <Add instruction={props.instruction} disabled={acknowledgementRequired} />
-        <Drop instruction={props.instruction} disabled={acknowledgementRequired} />
-        <Swap instruction={props.instruction} currentRoles={activeRoles(props.currentRole)} disabled={acknowledgementRequired} />
-        <Options instruction={props.instruction} disabled={acknowledgementRequired} />
-        <OptionsGradingEnd instruction={props.instruction} disabled={acknowledgementRequired} />
+        <Add instruction={props.instruction} disabled={disabled} />
+        <Drop instruction={props.instruction} disabled={disabled} />
+        <Swap instruction={props.instruction} currentRoles={activeRoles(props.currentRole)} disabled={disabled} />
+        <Options instruction={props.instruction} disabled={disabled} />
+        <OptionsGradingEnd instruction={props.instruction} disabled={disabled} />
         <Withdraw instruction={props.instruction} />
-        <ConcurrentDrop instruction={props.instruction} disabled={acknowledgementRequired} />
-        <ConcurrentOptions instruction={props.instruction} disabled={acknowledgementRequired} />
+        <ConcurrentDrop instruction={props.instruction} disabled={disabled} />
+        <ConcurrentOptions instruction={props.instruction} disabled={disabled} />
       </div>
 
       {acknowledgementRequired &&
