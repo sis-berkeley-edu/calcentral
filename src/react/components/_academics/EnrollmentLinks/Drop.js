@@ -3,7 +3,10 @@ import PropTypes from 'prop-types';
 
 import APILink from '../../APILink';
 
-const propTypes = { instruction: PropTypes.object.isRequired };
+const propTypes = {
+  disabled: PropTypes.bool.isRequired,
+  instruction: PropTypes.object.isRequired
+};
 
 const Drop = (props) => {
   const {
@@ -13,10 +16,11 @@ const Drop = (props) => {
   } = props.instruction;
 
   const link = props.instruction.links.dropEnrolledClasses;
+  const disabled = props.disabled;
 
   if (scheduleAvailable && !endOfDropAdd && enrollmentRole !== 'concurrent') {
     return (
-      <APILink {...link} name="Drop" />
+      <APILink {...link} disabled={disabled} name="Drop" />
     );
   } else {
     return null;
