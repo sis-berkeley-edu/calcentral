@@ -101,7 +101,7 @@ describe EdoOracle::Queries do
 
     it 'returns the expected result' do
       expect(subject.count).to eq 3
-      expect(subject.first.count).to eq 29
+      expect(subject.first.count).to eq 30
       expect(subject.first['section_id']).to eq '12392'
       expect(subject.first['term_id']).to eq '2178'
       expect(subject.first['session_id']).to eq '1'
@@ -128,6 +128,7 @@ describe EdoOracle::Queries do
       expect(subject.first['units_earned']).to eq 1
       expect(subject.first['grade']).to eq 'P'
       expect(subject.first['grade_points']).to eq 0
+      expect(subject.first['include_in_gpa']).to eq 'Y'
       expect(subject.first['grading_basis']).to eq 'PNP'
       expect(subject.first['acad_career']).to eq 'UGRD'
       expect(subject.first['rqmnt_designtn']).to be nil
@@ -409,7 +410,7 @@ describe EdoOracle::Queries do
     it 'fetches expected data' do
       results = EdoOracle::Queries.get_enrolled_sections(uid, terms)
       expect(results.count).to eq 2
-      expected_keys = %w(section_id term_id session_id course_title course_title_short dept_name primary section_num instruction_format primary_associated_section_id course_display_name section_display_name catalog_id catalog_root catalog_prefix catalog_suffix enroll_limit enroll_status waitlist_position units_taken units_earned grade grade_points grading_basis acad_career rqmnt_designtn)
+      expected_keys = %w(section_id term_id session_id course_title course_title_short dept_name primary section_num instruction_format primary_associated_section_id course_display_name section_display_name catalog_id catalog_root catalog_prefix catalog_suffix enroll_limit enroll_status waitlist_position units_taken units_earned grade grade_points grading_basis include_in_gpa acad_career rqmnt_designtn)
       expect(results[0]).to have_keys(expected_keys)
       expect(results[1]).to have_keys(expected_keys)
       expect(results[0]['term_id']).to eq '2178'

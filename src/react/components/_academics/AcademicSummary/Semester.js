@@ -12,7 +12,7 @@ const propTypes = {
 class Semester extends Component {
   showPoints() {
     const result = this.props.classes.find(klass => {
-      return klass.sections.find(section => section.grading.gradePoints);
+      return klass.sections.find(section => section.grading.gradePointsAdjusted);
     });
 
     return result ? true : false;
@@ -98,7 +98,7 @@ class Semester extends Component {
             </h4>
           }
 
-          {(this.withdrawn() || !this.enrolled() || this.notEnrolledHasStudy()) && 
+          {(this.withdrawn() || !this.enrolled() || this.notEnrolledHasStudy()) &&
             <h4 className="cc-left">{this.props.name}</h4>
           }
 
@@ -128,7 +128,7 @@ class Semester extends Component {
                   <th>Title</th>
                   <th className="cc-table-right cc-academic-summary-table-units">Un.</th>
 
-                  {this.props.totalLawUnits && 
+                  {this.props.totalLawUnits &&
                     <th className="cc-table-right cc-academic-summary-table-units">Law Un.</th>
                   }
 
@@ -142,7 +142,7 @@ class Semester extends Component {
               <tbody>
                 {this.primarySections().map((section, index) => (
                   <PrimarySection
-                    key={index} 
+                    key={index}
                     showPoints={this.showPoints()}
                     canViewGrades={this.props.canViewGrades}
                     totalLawUnits={this.props.totalLawUnits}

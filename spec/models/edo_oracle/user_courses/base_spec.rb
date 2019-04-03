@@ -1,4 +1,5 @@
 describe EdoOracle::UserCourses::Base do
+
   context 'using stubbed proxy' do
     RSpec::Matchers.define :terms_following_and_including_cutoff do |cutoff|
       match do |terms|
@@ -527,6 +528,89 @@ describe EdoOracle::UserCourses::Base do
         let(:session_id) { '6W2' }
         it 'has converted session code' do
           expect(subject[:session_code]).to eq 'D'
+        end
+      end
+    end
+
+    describe '#get_section_grading' do
+      let(:section) { {is_primary_section: true} }
+      let(:db_row) do
+        {
+          'grade' => 'C',
+          'grade_points' => BigDecimal.new('8.0'),
+          'grading_basis' => 'GRD',
+          'include_in_gpa' => 'Y',
+        }
+      end
+      subject { EdoOracle::UserCourses::Base.new(user_id: random_id).get_section_grading(section, db_row) }
+      context 'when grade has spaces' do
+        let(:db_row) { super().merge('grade' => ' C   ') }
+        it 'includes grade without spaces' do
+          expect(subject[:grade]).to eq 'C'
+        end
+      end
+      context 'when grade is not present' do
+        let(:db_row) { super().merge('grade' => nil) }
+        it 'includes nil grade value' do
+          expect(subject.has_key?(:grade)).to eq true
+          expect(subject[:grade]).to eq nil
+        end
+      end
+      context 'when grade points are present' do
+        let(:db_row) { super().merge('grade_points' => BigDecimal.new('7.0')) }
+        it 'includes grade points' do
+          expect(subject[:gradePoints].to_f).to eq 7.0
+        end
+        it 'includes adjusted grade points' do
+          expect(subject[:gradePointsAdjusted].to_f).to eq 7.0
+        end
+      end
+      context 'when grade points are not present' do
+        let(:db_row) { super().merge('grade_points' => nil) }
+        it 'includes nil grade points value' do
+          expect(subject.has_key?(:gradePoints)).to eq true
+          expect(subject[:gradePoints]).to eq nil
+        end
+        it 'includes nil adjusted grade points value' do
+          expect(subject.has_key?(:gradePointsAdjusted)).to eq true
+          expect(subject[:gradePointsAdjusted]).to eq nil
+        end
+      end
+      context 'when section is a primary section' do
+        let(:section) { super().merge(is_primary_section: true) }
+        it 'includes grading basis value' do
+          expect(subject[:gradingBasis]).to eq 'GRD'
+        end
+      end
+      context 'when section is not a primary section' do
+        let(:section) { super().merge(is_primary_section: false) }
+        it 'includes nil grading basis value' do
+          expect(subject.has_key?(:gradingBasis)).to eq true
+          expect(subject[:gradingBasis]).to eq nil
+        end
+      end
+    end
+
+    describe '#adjusted_grade_points' do
+      let(:grade_points) { BigDecimal.new("6.0") }
+      let(:include_in_gpa) { nil }
+      subject { EdoOracle::UserCourses::Base.new(user_id: random_id).adjusted_grade_points(grade_points, include_in_gpa) }
+      context 'when include_in_gpa argument is nil' do
+        let(:include_in_gpa) { nil }
+        it 'returns same grade points' do
+          expect(subject.to_f).to eq 6.0
+        end
+      end
+      context 'when include_in_gpa is \'Y\'' do
+        let(:include_in_gpa) { 'Y' }
+        it 'returns same grade points' do
+          expect(subject.to_f).to eq 6.0
+        end
+      end
+      context 'when include_in_gpa is \'N\'' do
+        let(:include_in_gpa) { 'N' }
+        it 'returns 0.0 decimal value' do
+          expect(subject.to_f).to eq 0.0
         end
       end
     end
