@@ -722,13 +722,15 @@ module EdoOracle
 
     def self.section_reserved_capacity_count(term_id, section_id)
       safe_query <<-SQL
-        SELECT COUNT(*) as reserved_seating_rules_count
-        FROM
-          SISEDO.CLC_CURRENT_RESERVE_CAPACITYV00_VW
-        WHERE
-          TERM_ID = '#{term_id}' AND
-          CLASS_NBR = '#{section_id}' AND
-          RESERVED_SEATS > 0
+        SELECT COUNT(*) AS reserved_seating_rules_count
+        FROM SISEDO.CLC_CURRENT_RESERVE_CAPACITYV00_VW A
+        WHERE A.TERM_ID = '#{term_id}' 
+          AND A.CLASS_NBR = '#{section_id}'
+          AND A.RESERVED_SEATS > 0
+          AND A.START_DATE = (SELECT MAX(B.START_DATE) FROM SISEDO.CLC_CURRENT_RESERVE_CAPACITYV00_VW B
+                              WHERE B.TERM_ID = A.TERM_ID
+                                AND B.CLASS_NBR = A.CLASS_NBR
+                                AND B.START_DATE <= SYSDATE)
       SQL
     end
 
