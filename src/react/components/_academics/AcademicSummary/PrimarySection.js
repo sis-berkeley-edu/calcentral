@@ -51,7 +51,7 @@ const PrimarySection = (props) => (
     </td>
     <td>
       {props.canViewGrades && props.showPoints && props.grading &&
-        <ValueOrDash value={props.grading.gradePoints} />
+        <ValueOrDash value={props.grading.gradePointsAdjusted} />
       }
     </td>
   </tr>

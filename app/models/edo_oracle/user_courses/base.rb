@@ -167,11 +167,7 @@ module EdoOracle
 
         if row.include? 'enroll_status'
           # Grading and waitlist data relevant to students.
-          section_data[:grading] = {
-            grade: row['grade'].present? ? row['grade'].strip : nil,
-            gradePoints: row['grade_points'].present? ? row['grade_points'] : nil,
-            gradingBasis: section_data[:is_primary_section] ? row['grading_basis'] : nil
-          }
+          section_data[:grading] = get_section_grading(section_data, row)
           if row['enroll_status'] == 'W'
             section_data[:waitlisted] = true
             section_data[:waitlistPosition] = row['waitlist_position'].to_i
@@ -200,6 +196,28 @@ module EdoOracle
         end
 
         section_data
+      end
+
+      def get_section_grading(section, db_row)
+        grade = db_row['grade'].try(:strip)
+        grade_points = db_row['grade_points'].present? ? db_row['grade_points'] : nil
+        grade_points_adjusted = adjusted_grade_points(db_row['grade_points'], db_row['include_in_gpa'])
+        grading_basis = section[:is_primary_section] ? db_row['grading_basis'] : nil
+        {
+          grade: grade,
+          gradingBasis: grading_basis,
+          gradePoints: grade_points,
+          gradePointsAdjusted: grade_points_adjusted,
+          includeInGpa: db_row['include_in_gpa'],
+        }
+      end
+
+      def adjusted_grade_points(grade_points, include_in_gpa)
+        if include_in_gpa.present? && include_in_gpa == 'N'
+          return BigDecimal.new("0.0")
+        else
+          return grade_points
+        end
       end
 
       def remove_duplicate_sections(campus_classes)
