@@ -32,9 +32,7 @@ angular.module('calcentral.controllers').controller('AcademicsStatusHoldsBlocksC
   var parseRegistrations = function(response) {
     var registrations = _.get(response, 'data.registrations');
     _.forEach(registrations, function(registration) {
-      if (_.get(registration, 'showRegStatus')) {
-        $scope.regStatus.registrations.push(registration);
-      }
+      $scope.regStatus.registrations.push(registration);
     });
     if ($scope.regStatus.registrations.length) {
       $scope.regStatus.show = true;
