@@ -3,7 +3,7 @@ describe CampusSolutions::BillingController do
   let(:user_id) { '12345' }
 
   context 'billing feed' do
-    let(:feed) { :get }
+    let(:feed) { :get_activity }
     it_behaves_like 'an unauthenticated user'
 
     context 'authenticated user' do

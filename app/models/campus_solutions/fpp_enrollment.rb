@@ -1,7 +1,7 @@
 module CampusSolutions
   class FppEnrollment < GlobalCachedProxy
 
-    include BillingFeatureFlagged
+    include CampusSolutions::Billing::BillingFeatureFlagged
 
     def initialize(options = {})
       super options

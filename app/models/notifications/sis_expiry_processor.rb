@@ -46,7 +46,7 @@ module Notifications
       'sis:student:eft' => Eft::MyEftEnrollment,
       'sis:student:ferpa' => nil,
       'sis:student:finaid' => CampusSolutions::FinancialAidExpiry,
-      'sis:student:financials' => CampusSolutions::MyBilling,
+      'sis:student:financials' => CampusSolutions::Billing::MyActivity,
       'sis:student:messages' => MyActivities::Merged,
       'sis:student:serviceindicator' => MyAcademics::MyAcademicStatus,
       'sis:class:grade-roster' => CampusSolutions::SectionGradesExpiry

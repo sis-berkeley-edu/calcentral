@@ -1,0 +1,44 @@
+@import 'colors';
+
+.summary-section {
+  background-color: $cc-color-alice-blue;
+}
+
+.billing-summary-table {
+  td {
+    height: 32px;
+    &:nth-child(2) {
+      width: 100px;
+    }
+  }
+
+  .total-unpaid-balance {
+    padding: 10px 0;
+  }
+
+  .total-unpaid-balance-value {
+    border-top: 1px solid $cc-color-whisper;
+  }
+}
+
+.higher-one {
+  align-items: center;
+  display: flex;
+  border-bottom: 1px solid $cc-color-whisper;
+  padding-bottom: 12px;
+
+  a:first-child {
+    margin-right: 12px;
+  }
+
+  .pdf-statements[disabled] {
+    color: $cc-color-dim-gray;
+  }
+}
+
+.learn-more {
+  margin-bottom: 15px;
+  p:last-child {
+    margin-bottom: 0;
+  }
+}

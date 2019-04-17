@@ -4,8 +4,12 @@ module CampusSolutions
 
     before_filter :authorize_for_financial
 
-    def get
-      render json: CampusSolutions::MyBilling.from_session(session).get_feed_as_json
+    def get_activity
+      render json: CampusSolutions::Billing::MyActivity.from_session(session).get_feed_as_json
+    end
+
+    def get_links
+      render json: CampusSolutions::Billing::Links.new().get
     end
 
   end

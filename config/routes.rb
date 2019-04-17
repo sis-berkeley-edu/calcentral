@@ -163,7 +163,8 @@ Calcentral::Application.routes.draw do
     # Campus Solutions general purpose endpoints
     get '/api/campus_solutions/address_label' => 'campus_solutions/address_label#get', :defaults => { :format => 'json' }
     get '/api/campus_solutions/advising_resources' => 'campus_solutions/advising_resources#get', :defaults => { :format => 'json' }
-    get '/api/campus_solutions/billing' => 'campus_solutions/billing#get', :defaults => { :format => 'json' }
+    get '/api/campus_solutions/billing_activity' => 'campus_solutions/billing#get_activity', :defaults => { :format => 'json' }
+    get '/api/campus_solutions/billing_links' => 'campus_solutions/billing#get_links', :defaults => { :format => 'json' }
     get '/api/campus_solutions/confidential_student_message' => 'campus_solutions/confidential_student#get_message', :defaults => { :format => 'json' }
     get '/api/campus_solutions/country' => 'campus_solutions/country#get', :defaults => { :format => 'json' }
     get '/api/campus_solutions/currency_code' => 'campus_solutions/currency_code#get', :defaults => { :format => 'json' }
