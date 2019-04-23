@@ -1,7 +1,7 @@
 describe MyRegistrations::Statuses do
   let(:model) { MyRegistrations::Statuses.new('61889') }
-  let(:hub_student_registrations) { HubEdos::V1::Registrations.new(user_id: 61889, fake: true).get }
-  let(:hub_student_attributes) { HubEdos::V1::StudentAttributes.new(user_id: 61889, fake: true).get }
+  let(:hub_student_registrations) { HubEdos::Registrations.new(user_id: 61889, fake: true).get }
+  let(:hub_student_attributes) { HubEdos::StudentAttributes.new(user_id: 61889, fake: true).get }
   before(:each) do
     allow(model).to receive(Settings.terms.legacy_cutoff).and_return 'summer-2016'
     allow(model).to receive(:registrations).and_return(hub_student_registrations[:feed]['registrations'])

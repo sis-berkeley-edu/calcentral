@@ -1,9 +1,9 @@
-describe HubEdos::V1::AcademicStatus do
+describe HubEdos::AcademicStatus do
   subject { proxy.get }
   let(:student_feed) { subject[:feed]['student'] }
 
   context 'mock proxy' do
-    let(:proxy) { HubEdos::V1::AcademicStatus.new(fake: true, user_id: random_id) }
+    let(:proxy) { HubEdos::AcademicStatus.new(fake: true, user_id: random_id) }
 
     context 'successful response' do
       it_should_behave_like 'a simple proxy that returns errors'

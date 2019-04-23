@@ -1,8 +1,8 @@
-describe HubEdos::V1::Gender do
+describe HubEdos::Gender do
 
   context 'mock proxy' do
     let(:include_fields) { nil }
-    let(:proxy) { HubEdos::V1::Gender.new(fake: true, user_id: '61889', include_fields: include_fields) }
+    let(:proxy) { HubEdos::Gender.new(fake: true, user_id: '61889', include_fields: include_fields) }
     subject { proxy.get }
 
     it_should_behave_like 'a simple proxy that returns errors'

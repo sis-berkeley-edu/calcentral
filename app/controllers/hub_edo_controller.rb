@@ -7,7 +7,7 @@ class HubEdoController < ApplicationController
     if current_user.authenticated_as_delegate?
       return render json: {filteredForDelegate: true}
     end
-    json_proxy_passthrough HubEdos::V1::WorkExperience
+    json_proxy_passthrough HubEdos::WorkExperience
   end
 
   def json_passthrough(classname, options={})

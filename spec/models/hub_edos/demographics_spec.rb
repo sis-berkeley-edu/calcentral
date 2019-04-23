@@ -1,8 +1,8 @@
-describe HubEdos::V1::Demographics do
+describe HubEdos::Demographics do
 
   context 'mock proxy' do
     let(:include_fields) { nil }
-    let(:proxy) { HubEdos::V1::Demographics.new(fake: true, user_id: '61889', include_fields: include_fields) }
+    let(:proxy) { HubEdos::Demographics.new(fake: true, user_id: '61889', include_fields: include_fields) }
     subject { proxy.get }
 
     it_behaves_like 'a proxy that properly observes the profile feature flag'

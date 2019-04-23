@@ -128,12 +128,12 @@ module MyRegistrations
     end
 
     def student_attributes
-      @student_attributes ||= HubEdos::V1::StudentAttributes.new(user_id: @uid).get
+      @student_attributes ||= HubEdos::StudentAttributes.new(user_id: @uid).get
       @student_attributes.try(:[], :feed).try(:[], 'student').try(:[], 'studentAttributes') || []
     end
 
     def registrations
-      @registrations ||= HubEdos::V1::Registrations.new(user_id: @uid).get
+      @registrations ||= HubEdos::Registrations.new(user_id: @uid).get
       @registrations.try(:[], :feed).try(:[], 'registrations') || []
     end
 

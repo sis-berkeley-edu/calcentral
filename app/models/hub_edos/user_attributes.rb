@@ -26,9 +26,9 @@ module HubEdos
 
     def get_edo
       # A valid Hub Contacts payload will incorporate the payload of the Affiliations API.
-      contacts = get_edo_feed(HubEdos::V1::Contacts)
+      contacts = get_edo_feed(Contacts)
       if contacts.blank?
-        get_edo_feed(HubEdos::V1::Affiliations)
+        get_edo_feed(Affiliations)
       else
         contacts
       end
