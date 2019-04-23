@@ -4,7 +4,7 @@ module MyAcademics
     include Cache::UserCacheExpiry
 
     def get_feed_internal
-      cs_demographics = HubEdos::Demographics.new(user_id: @uid).get
+      cs_demographics = HubEdos::V1::Demographics.new(user_id: @uid).get
       residency = cs_demographics.try(:[], :feed).try(:[], 'student').try(:[], 'residency')
       return {} if residency.blank? || residency['fromTerm'].blank?
       residency = HashConverter.symbolize residency

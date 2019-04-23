@@ -6,7 +6,7 @@ module MyAcademics
     include Concerns::AcademicStatus
 
     def get_feed_internal
-      response = HubEdos::AcademicStatus.new({user_id: @uid}).get
+      response = HubEdos::V1::AcademicStatus.new({user_id: @uid}).get
       if (academic_statuses = academic_statuses response )
         assign_roles(academic_statuses)
       end

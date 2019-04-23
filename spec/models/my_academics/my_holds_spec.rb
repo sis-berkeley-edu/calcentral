@@ -12,19 +12,19 @@ describe MyAcademics::MyHolds do
 
     context 'when AcademicStatus response is nil' do
       before do
-        allow_any_instance_of(HubEdos::AcademicStatus).to receive(:get).and_return(nil)
+        allow_any_instance_of(HubEdos::V1::AcademicStatus).to receive(:get).and_return(nil)
       end
       it_behaves_like 'a model receiving no data'
     end
     context 'when AcademicStatus response is empty' do
       before do
-        allow_any_instance_of(HubEdos::AcademicStatus).to receive(:get).and_return({})
+        allow_any_instance_of(HubEdos::V1::AcademicStatus).to receive(:get).and_return({})
       end
       it_behaves_like 'a model receiving no data'
     end
     context 'when AcademicStatus returns an error response' do
       before do
-        allow_any_instance_of(HubEdos::AcademicStatus).to receive(:get).and_return(failure_response)
+        allow_any_instance_of(HubEdos::V1::AcademicStatus).to receive(:get).and_return(failure_response)
       end
       let(:failure_response) { {:errored=>true, :statusCode=>503, :body=>"An unknown server error occurred"} }
       it_behaves_like 'a model receiving no data'
@@ -35,8 +35,8 @@ describe MyAcademics::MyHolds do
     end
     context 'when AcademicStatus response is populated' do
       before do
-        fake_proxy = HubEdos::AcademicStatus.new(fake: true, user_id: '61889')
-        allow(HubEdos::AcademicStatus).to receive(:new).and_return fake_proxy
+        fake_proxy = HubEdos::V1::AcademicStatus.new(fake: true, user_id: '61889')
+        allow(HubEdos::V1::AcademicStatus).to receive(:new).and_return fake_proxy
       end
       it 'should successfully return a response' do
         holds = subject[:feed][:holds]
