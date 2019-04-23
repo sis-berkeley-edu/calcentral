@@ -1,6 +1,6 @@
-describe HubEdos::V1::Affiliations do
+describe HubEdos::Affiliations do
   context 'mock proxy' do
-    let(:proxy) { HubEdos::V1::Affiliations.new(fake: true, user_id: '61889') }
+    let(:proxy) { HubEdos::Affiliations.new(fake: true, user_id: '61889') }
     subject { proxy.get }
 
     it_behaves_like 'a proxy that properly observes the profile feature flag'

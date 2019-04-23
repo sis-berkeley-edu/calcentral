@@ -1,9 +1,0 @@
-{
-  "apiResponse": {
-      "httpStatus": {
-          "code": "404",
-          "description": "Not Found",
-          "formalDescription": "No data found for id = 1234"
-      }
-  }
-}
