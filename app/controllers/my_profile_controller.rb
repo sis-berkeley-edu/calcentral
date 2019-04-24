@@ -4,14 +4,14 @@ class MyProfileController < ApplicationController
 
   def get_feed
     options = case
-                when current_user.authenticated_as_delegate?
-                  { include_fields: %w(affiliations identifiers) }
-                when current_user.authenticated_as_advisor?
-                  { include_fields: %w(addresses affiliations emails emergencyContacts identifiers names phones urls residency gender) }
-                else
-                  {}
-              end
-    render json: HubEdos::MyStudent.from_session(session, options).get_feed_as_json
+      when current_user.authenticated_as_delegate?
+        { include_fields: %w(affiliations identifiers) }
+      when current_user.authenticated_as_advisor?
+        { include_fields: %w(addresses affiliations emails emergencyContacts identifiers names phones urls residency gender) }
+      else
+        {}
+    end
+    render json: HubEdos::V1::MyStudent.from_session(session, options).get_feed_as_json
   end
 
   def get_edit_link

@@ -5,7 +5,7 @@ describe MyAcademics::MyAcademicStatus do
 
     context 'when AcademicStatus response is nil' do
       before do
-        allow_any_instance_of(HubEdos::AcademicStatus).to receive(:get).and_return(nil)
+        allow_any_instance_of(HubEdos::V1::AcademicStatus).to receive(:get).and_return(nil)
       end
       it 'returns nil' do
         expect(subject).to be nil
@@ -13,7 +13,7 @@ describe MyAcademics::MyAcademicStatus do
     end
     context 'when AcademicStatus response is empty' do
       before do
-        allow_any_instance_of(HubEdos::AcademicStatus).to receive(:get).and_return({})
+        allow_any_instance_of(HubEdos::V1::AcademicStatus).to receive(:get).and_return({})
       end
       it 'returns an empty response' do
         expect(subject).to eq({})
@@ -21,8 +21,8 @@ describe MyAcademics::MyAcademicStatus do
     end
     context 'when AcademicStatus response is populated' do
       before do
-        fake_proxy = HubEdos::AcademicStatus.new(fake: true, user_id: '61889')
-        allow(HubEdos::AcademicStatus).to receive(:new).and_return fake_proxy
+        fake_proxy = HubEdos::V1::AcademicStatus.new(fake: true, user_id: '61889')
+        allow(HubEdos::V1::AcademicStatus).to receive(:new).and_return fake_proxy
       end
       it 'should successfully return a response' do
         expect(subject[:statusCode]).to eq 200
