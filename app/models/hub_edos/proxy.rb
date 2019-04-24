@@ -8,9 +8,6 @@ module HubEdos
     include SafeJsonParser
     include ResponseHandler
 
-    APP_ID = 'integrationhub'
-    APP_NAME = 'Integration Hub'
-
     def initialize(options = {})
       super(Settings.hub_edos_proxy, options)
       if @fake

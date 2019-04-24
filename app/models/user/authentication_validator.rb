@@ -48,7 +48,7 @@ module User
     end
 
     def held_applicant?
-      cs_feed = HubEdos::Affiliations.new(user_id: @auth_uid).get
+      cs_feed = HubEdos::V1::Affiliations.new(user_id: @auth_uid).get
       cs_student = cs_feed.try(:[], :feed).try(:[], 'student')
       if affiliations = cs_student.try(:[], 'affiliations')
         affiliations = HashConverter.symbolize affiliations

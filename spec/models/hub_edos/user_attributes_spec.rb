@@ -3,8 +3,8 @@ describe HubEdos::UserAttributes do
 
   let(:user_id) { '61889' }
   let(:confidential_student) { false }
-  let(:fake_contact_proxy) { HubEdos::Contacts.new(fake: true, user_id: user_id) }
-  before { allow(HubEdos::Contacts).to receive(:new).and_return fake_contact_proxy }
+  let(:fake_contact_proxy) { HubEdos::V1::Contacts.new(fake: true, user_id: user_id) }
+  before { allow(HubEdos::V1::Contacts).to receive(:new).and_return fake_contact_proxy }
 
   let(:fake_crosswalk_proxy) { CalnetCrosswalk::ByUid.new(fake:true, user_id: user_id) }
   before { allow(CalnetCrosswalk::ByUid).to receive(:new).and_return fake_crosswalk_proxy }
@@ -29,7 +29,7 @@ describe HubEdos::UserAttributes do
 
   describe 'student_id depends on role' do
     before do
-      allow_any_instance_of(HubEdos::Contacts).to receive(:get).and_return(
+      allow_any_instance_of(HubEdos::V1::Contacts).to receive(:get).and_return(
         {feed: {'student' => {
           'identifiers' => [{'id' => '11667051', 'type' => 'student-id'}],
           'affiliations' => affiliations,
@@ -71,26 +71,26 @@ describe HubEdos::UserAttributes do
 
   context 'Contacts feed contains all necessary data' do
     it 'does not bother calling the Affiliations API' do
-      expect(HubEdos::Affiliations).to receive(:new).never
+      expect(HubEdos::V1::Affiliations).to receive(:new).never
       expect(subject[:roles]).to include({applicant: true, releasedAdmit: true})
     end
   end
   context 'Contacts feed is unexpectedly reticent' do
-    let(:fake_affiliations_proxy) { HubEdos::Affiliations.new(fake: true, user_id: user_id) }
+    let(:fake_affiliations_proxy) { HubEdos::V1::Affiliations.new(fake: true, user_id: user_id) }
     before do
-      allow_any_instance_of(HubEdos::Contacts).to receive(:get).and_return(
+      allow_any_instance_of(HubEdos::V1::Contacts).to receive(:get).and_return(
         {feed: {'student' => {}}}
       )
     end
     it 'reluctantly falls back on the Affiliations API' do
-      expect(HubEdos::Affiliations).to receive(:new).and_return fake_affiliations_proxy
+      expect(HubEdos::V1::Affiliations).to receive(:new).and_return fake_affiliations_proxy
       expect(subject[:roles]).to include({applicant: true, releasedAdmit: true})
     end
   end
 
   context 'unexpected errors from Hub calls' do
     before do
-      allow_any_instance_of(HubEdos::Contacts).to receive(:get_internal).and_return({'non' => 'sense'})
+      allow_any_instance_of(HubEdos::V1::Contacts).to receive(:get_internal).and_return({'non' => 'sense'})
     end
     it 'returns from errors' do
       expect(subject).to eq({
