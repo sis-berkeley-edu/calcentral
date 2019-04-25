@@ -382,9 +382,14 @@ describe MyAcademics::CollegeAndLevel do
     })
   end
 
+  let(:hubedos_student) do
+    double(:hubedos_student, {max_terms_in_attendance: 5, student_academic_level: 'Senior'})
+  end
+
   before do
     allow_any_instance_of(CalnetCrosswalk::ByUid).to receive(:lookup_campus_solutions_id).and_return campus_solutions_id
     allow_any_instance_of(MyAcademics::MyAcademicStatus).to receive(:get_feed).and_return hub_academic_status_response
+    allow(HubEdos::Student).to receive(:new).and_return(hubedos_student)
   end
 
   context 'data sourcing' do
@@ -393,7 +398,7 @@ describe MyAcademics::CollegeAndLevel do
     end
     context 'when hub response is present' do
       it 'sources from EDO Hub' do
-        expect(feed[:collegeAndLevel][:level]).to eq 'Junior'
+        expect(feed[:collegeAndLevel][:termName]).to eq 'Fall 2016'
         expect(feed[:collegeAndLevel][:statusCode]).to eq 200
       end
     end
@@ -447,12 +452,12 @@ describe MyAcademics::CollegeAndLevel do
         expect(feed[:collegeAndLevel][:careers]).to eq ['Undergraduate']
       end
 
-      it 'translates level' do
-        expect(feed[:collegeAndLevel][:level]).to eq 'Junior'
+      it 'uses v2 academic level' do
+        expect(feed[:collegeAndLevel][:level]).to eq 'Senior'
       end
 
-      it 'translates terms in attendance' do
-        expect(feed[:collegeAndLevel][:termsInAttendance]).to eq '2'
+      it 'uses v2 terms in attendance' do
+        expect(feed[:collegeAndLevel][:termsInAttendance]).to eq '5'
       end
 
       it 'specifies term name' do
@@ -665,8 +670,8 @@ describe MyAcademics::CollegeAndLevel do
         expect(feed[:collegeAndLevel][:careers]).to eq ["Graduate", "Law"]
       end
 
-      it 'translates level' do
-        expect(feed[:collegeAndLevel][:level]).to eq 'Graduate and Professional Year 2'
+      it 'uses v2 academic level' do
+        expect(feed[:collegeAndLevel][:level]).to eq 'Senior'
       end
 
       it 'specifies term name' do
@@ -744,7 +749,6 @@ describe MyAcademics::CollegeAndLevel do
       it 'returns what data it can' do
         expect(feed[:collegeAndLevel][:careers]).to be_present
         expect(feed[:collegeAndLevel][:majors]).to be_present
-        expect(feed[:collegeAndLevel][:level]).to be nil
         expect(feed[:collegeAndLevel][:termName]).to be nil
         expect(feed[:collegeAndLevel][:termId]).to be nil
       end
