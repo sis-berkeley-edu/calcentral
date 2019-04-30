@@ -22,6 +22,7 @@ module MyAcademics
 
     def hub_college_and_level
       hub_response = MyAcademics::MyAcademicStatus.new(@uid).get_feed
+      hub_student = HubEdos::Student.new(@uid)
       college_and_level = {
         holds: parse_hub_holds(hub_response),
         awardHonors: parse_hub_award_honors(hub_response),
@@ -35,7 +36,7 @@ module MyAcademics
       if (status = statuses.first)
         registration_term = status.try(:[], 'currentRegistration').try(:[], 'term')
         college_and_level[:careers] = parse_hub_careers statuses
-        college_and_level[:level] = parse_hub_level statuses
+        college_and_level[:level] = hub_student.student_academic_level
         college_and_level[:termName] = parse_hub_term_name(registration_term).try(:[], 'name')
         college_and_level[:termId] = registration_term.try(:[], 'id')
         college_and_level[:termsInAttendance] = status.try(:[], 'termsInAttendance').try(:to_s)
@@ -44,6 +45,7 @@ module MyAcademics
       else
         college_and_level[:empty] = true
       end
+      college_and_level[:termsInAttendance] = hub_student.max_terms_in_attendance.to_s
       college_and_level
     end
 
@@ -91,13 +93,6 @@ module MyAcademics
     def parse_hub_careers(statuses)
       careers = careers(statuses)
       careers.collect {|career| career.try(:[], 'description') }.uniq
-    end
-
-    def parse_hub_level(statuses)
-      level = statuses.collect do |status|
-        status['currentRegistration'].try(:[], 'academicLevel').try(:[], 'level').try(:[], 'description')
-      end.uniq.reject { |level| level.to_s.empty? }.to_sentence
-      level.blank? ? nil : level
     end
 
     def parse_hub_plans(statuses)
