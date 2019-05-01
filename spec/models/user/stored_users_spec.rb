@@ -29,12 +29,12 @@ describe User::StoredUsers do
     {
       saved: [
         {
-          stored_uid: stored_uid
+          uc_clc_stor_id: stored_uid
         }
       ],
       recent: [
         {
-          stored_uid: stored_uid
+          uc_clc_stor_id: stored_uid
         }
       ]
     }
@@ -58,11 +58,13 @@ describe User::StoredUsers do
       stub_model.should_receive(:saved_uids).and_return saved_uids_stub
       stub_model.should_receive(:recent_uids).and_return recent_uids_stub
 
+      saved_uids_stub.should_receive(:stored_uid).at_least(:once).and_return(stored_uid)
       saved_uids_stub.should_receive(:order).with(:created_at).and_return saved_uids_stub
-      saved_uids_stub.should_receive(:reverse_order).and_return fake_stored_uid_entries[:saved]
+      saved_uids_stub.should_receive(:reverse_order).and_return [saved_uids_stub]
 
+      recent_uids_stub.should_receive(:stored_uid).at_least(:once).and_return(stored_uid)
       recent_uids_stub.should_receive(:order).with(:created_at).and_return recent_uids_stub
-      recent_uids_stub.should_receive(:reverse_order).and_return fake_stored_uid_entries[:recent]
+      recent_uids_stub.should_receive(:reverse_order).and_return [recent_uids_stub]
 
       User::BasicAttributes.should_receive(:attributes_for_uids).with([stored_uid, stored_uid]).and_return fake_ldap_user
 
@@ -103,7 +105,7 @@ describe User::StoredUsers do
       User::StoredUsers.should_receive(:get_user).with(owner_uid).and_return stub_model
       stub_model.should_receive(:saved_uids).and_return stub_model
       stub_model.should_receive(:where).with({ stored_uid: uid_to_store }).and_return []
-      stub_model.should_receive(:create).with({ stored_uid: uid_to_store })
+      stub_model.should_receive(:create).with({ stored_uid: uid_to_store}, without_protection:true )
 
       response = User::StoredUsers.store_saved_uid(owner_uid, uid_to_store)
       expect(response).to eq success_response
@@ -133,7 +135,7 @@ describe User::StoredUsers do
       User::StoredUsers.should_receive(:get_user).with(owner_uid).and_return stub_model
       stub_model.should_receive(:recent_uids).and_return stub_model
       stub_model.should_receive(:where).with({ stored_uid: uid_to_store }).and_return []
-      stub_model.should_receive(:create).with({ stored_uid: uid_to_store })
+      stub_model.should_receive(:create).with({ stored_uid: uid_to_store }, without_protection:true )
 
       response = User::StoredUsers.store_recent_uid(owner_uid, uid_to_store)
       expect(response).to eq success_response
@@ -154,8 +156,8 @@ describe User::StoredUsers do
       User::StoredUsers.store_recent_uid(owner_uid, uid.next)
 
       expect(owner.recent_uids.count).to eq User::RecentUid::MAX_PER_OWNER_ID
-      expect(owner.recent_uids.find_by id: oldest.id).to be_blank
-      expect(owner.recent_uids.find_by id: second_oldest.id).to be_present
+      expect(owner.recent_uids.find_by uc_clc_id: oldest.uc_clc_id).to be_blank
+      expect(owner.recent_uids.find_by uc_clc_id: second_oldest.uc_clc_id).to be_present
     end
 
     it 'should return error if owner_uid does not exist' do

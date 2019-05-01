@@ -49,6 +49,27 @@ postgres:
   sslcert: <%= ENV['DB_ENV_POSTGRESQL_SSLCERT'] || nil %>
   sslkey: <%= ENV['DB_ENV_POSTGRESQL_SSLKEY'] || nil %>
 
+oracle:
+  adapter: oracle_enhanced
+  database: <%= ENV['DB_ENV_ORACLE_DB'] || 'bcsdev' %>
+  username: <%= ENV['DB_ENV_ORACLE_USER'] || 'calcentral' %>
+  password: <%= ENV['DB_ENV_ORACLE_PASS'] || 'secret' %>
+  host: <%= ENV['DB_ENV_ORACLE_HOSTT'] || 'localhost' %>
+  port: <%= ENV['DB_ENV_ORACLE_PORT'] || '1521' %>
+  pool: 95
+  timeout: 5000
+
+devdb:
+  adapter: sqlite3
+  encoding: utf8
+  database: 'db/dev.sqlite3'
+  username:
+  password:
+  host:
+  port: 0
+  pool: 3
+  timeout: 5000
+
 edodb:
   fake: false
   adapter: h2
@@ -89,7 +110,8 @@ test_sqlite:
 # MUST BE SET FOR DEVELOPMENT & PRODUCTION
 # Example generated with SecureRandom.base64(32)
 oauth2:
-  key: "IeGpe9iq27Glqujd8pGH1+xM8C/ofm97Lp74N+6cN0I="
+  #local key: "IeGpe9iq27Glqujd8pGH1+xM8C/ofm97Lp74N+6cN0I="
+  key: 'znVwVn9oSKPIZhzr+7oSR2rk4dONsQyjH0EeW++uCY8'
   encryption: "aes-256-cbc"
 
 # Proxy settings
