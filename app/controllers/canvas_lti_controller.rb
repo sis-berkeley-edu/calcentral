@@ -91,14 +91,6 @@ class CanvasLtiController < ApplicationController
     lti_xml_configuration
   end
 
-  def lti_site_mailing_list
-    lti_xml_configuration
-  end
-
-  def lti_site_mailing_lists
-    lti_xml_configuration
-  end
-
   def lti_user_provision
     lti_xml_configuration
   end
