@@ -21,6 +21,7 @@ angular.module('calcentral.controllers').controller('FinancesLinksController', f
   };
   $scope.csLinks = {
     eft: {},
+    iGrad: {},
     verificationAndAppeals: {},
     optionalDocuments: {},
     taxCreditFormLink: {}
@@ -94,6 +95,12 @@ angular.module('calcentral.controllers').controller('FinancesLinksController', f
       $scope.csLinks.taxCreditFormLink = _.get(response, 'data.link');
     }
   );
+
+  var getIGradLink = csLinkFactory.getLink({
+    urlId: 'UC_CX_FA_IGRAD'
+  }).then(function(response) {
+    $scope.csLinks.iGrad = _.get(response, 'data.link');
+  });
 
   var sortCampusLinks = function(campusLinks) {
     var orderedLinks = [];
@@ -179,7 +186,7 @@ angular.module('calcentral.controllers').controller('FinancesLinksController', f
   };
 
   var initialize = function() {
-    var requests = [getCampusLinks, getEftLink, getTaxCreditFormLink, getVerificationAndAppealsLink, getOptionalDocumentsLink];
+    var requests = [getCampusLinks, getEftLink, getIGradLink, getTaxCreditFormLink, getVerificationAndAppealsLink, getOptionalDocumentsLink];
 
     if ($scope.canViewFppEnrollment) {
       var getFppEnrollment = financesLinksFactory.getFppEnrollment().then(parseFppEnrollment);

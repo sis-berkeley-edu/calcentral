@@ -61,6 +61,9 @@
             data-cc-campus-solutions-link-directive-title="$parent.fpp.activatePlanLink.title"
           ><strong>Activate Plan</strong></a>
         </li>
+        <li data-ng-if="subcategory === 'Financial Assistance' && $index === 7 && csLinks.iGrad.url">
+          <a data-cc-campus-solutions-link-directive="{{$parent.csLinks.iGrad}}"></a>
+        </li>
         <li data-ng-if="subcategory === 'Billing & Payments' && $index === 1 && api.user.profile.roles.student &&
           (api.user.profile.roles.undergrad || api.user.profile.roles.graduate || api.user.profile.roles.law)"
           data-ng-repeat-end>
