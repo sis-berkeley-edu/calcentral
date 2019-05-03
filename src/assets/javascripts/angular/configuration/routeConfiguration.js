@@ -153,33 +153,8 @@ angular.module('calcentral.config').config(function($routeProvider, calcentralCo
       controller: 'CanvasSiteCreationController',
       isBcourses: true,
       isEmbedded: true
-    }).when('/canvas/embedded/create_course_site', {
-      templateUrl: 'canvas_embedded/create_course_site.html',
-      controller: 'CanvasCreateCourseSiteController',
-      isBcourses: true,
-      isEmbedded: true
-    }).when('/canvas/embedded/create_project_site', {
-      templateUrl: 'canvas_embedded/create_project_site.html',
-      controller: 'CanvasCreateProjectSiteController',
-      isBcourses: true,
-      isEmbedded: true
-    }).when('/canvas/embedded/user_provision', {
-      templateUrl: 'canvas_embedded/user_provision.html',
-      controller: 'CanvasUserProvisionController',
-      isBcourses: true,
-      isEmbedded: true
-    }).when('/canvas/embedded/course_add_user', {
-      templateUrl: 'canvas_embedded/course_add_user.html',
-      controller: 'CanvasCourseAddUserController',
-      isBcourses: true,
-      isEmbedded: true
     }).when('/canvas/embedded/course_mediacasts', {
       templateUrl: 'canvas_embedded/course_mediacasts.html',
-      isBcourses: true,
-      isEmbedded: true
-    }).when('/canvas/embedded/course_manage_official_sections', {
-      templateUrl: 'canvas_embedded/course_manage_official_sections.html',
-      controller: 'CanvasCourseManageOfficialSectionsController',
       isBcourses: true,
       isEmbedded: true
     }).when('/canvas/embedded/course_grade_export', {
@@ -194,40 +169,13 @@ angular.module('calcentral.config').config(function($routeProvider, calcentralCo
       templateUrl: 'canvas_embedded/site_creation.html',
       controller: 'CanvasSiteCreationController',
       isBcourses: true
-    }).when('/canvas/create_course_site', {
-      templateUrl: 'canvas_embedded/create_course_site.html',
-      controller: 'CanvasCreateCourseSiteController',
-      isBcourses: true
-    }).when('/canvas/create_project_site', {
-      templateUrl: 'canvas_embedded/create_project_site.html',
-      controller: 'CanvasCreateProjectSiteController',
-      isBcourses: true
-    }).when('/canvas/course_manage_official_sections/:canvasCourseId', {
-      templateUrl: 'canvas_embedded/course_manage_official_sections.html',
-      controller: 'CanvasCourseManageOfficialSectionsController',
-      isBcourses: true
     }).when('/canvas/course_grade_export/:canvasCourseId', {
       templateUrl: 'canvas_embedded/course_grade_export.html',
       controller: 'CanvasCourseGradeExportController',
       isBcourses: true
-    }).when('/canvas/user_provision', {
-      templateUrl: 'canvas_embedded/user_provision.html',
-      controller: 'CanvasUserProvisionController',
-      isBcourses: true
-    }).when('/canvas/course_add_user/:canvasCourseId', {
-      templateUrl: 'canvas_embedded/course_add_user.html',
-      controller: 'CanvasCourseAddUserController',
-      isBcourses: true
     }).when('/canvas/course_mediacasts/:canvasCourseId', {
       templateUrl: 'canvas_embedded/course_mediacasts.html',
       isBcourses: true
-    });
-  }
-
-  if (providedServices.indexOf('oec') !== -1) {
-    $routeProvider.when('/oec', {
-      templateUrl: 'oec.html',
-      controller: 'OecController'
     });
   }
 

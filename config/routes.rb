@@ -222,7 +222,6 @@ Calcentral::Application.routes.draw do
     get '/canvas/lti_course_grade_export' => 'canvas_lti#lti_course_grade_export', :defaults => { :format => 'xml' }
     get '/canvas/lti_course_manage_official_sections' => 'canvas_lti#lti_course_manage_official_sections', :defaults => { :format => 'xml' }
     # A Canvas course ID of "embedded" means to retrieve from session properties.
-    get '/api/academics/canvas/course_user_roles/:canvas_course_id' => 'canvas_course_add_user#course_user_roles', :defaults => { :format => 'json' }
     get '/api/academics/canvas/external_tools' => 'canvas#external_tools', :defaults => { :format => 'json' }
     get '/api/academics/canvas/user_can_create_site' => 'canvas#user_can_create_site', :defaults => { :format => 'json' }
     get '/api/academics/canvas/egrade_export/download/:canvas_course_id' => 'canvas_course_grade_export#download_egrades_csv', :defaults => { :format => 'csv' }
@@ -235,18 +234,7 @@ Calcentral::Application.routes.draw do
     get '/api/academics/rosters/canvas/csv/:canvas_course_id' => 'canvas_rosters#get_csv', :as => :canvas_roster_csv, :defaults => { :format => 'csv' }
     get '/canvas/:canvas_course_id/photo/:person_id' => 'canvas_rosters#photo', :defaults => { :format => 'jpeg' }, :action => 'show'
     get '/canvas/:canvas_course_id/profile/:person_id' => 'canvas_rosters#profile'
-    get '/api/academics/canvas/course_provision' => 'canvas_course_provision#get_feed', :as => :canvas_course_provision, :defaults => { :format => 'json' }
-    get '/api/academics/canvas/course_provision_as/:admin_acting_as' => 'canvas_course_provision#get_feed', :as => :canvas_course_provision_as, :defaults => { :format => 'json' }
-    post '/api/academics/canvas/course_provision/create' => 'canvas_course_provision#create_course_site', :as => :canvas_course_create, :defaults => { :format => 'json' }
-    get '/api/academics/canvas/course_provision/sections_feed/:canvas_course_id' => 'canvas_course_provision#get_sections_feed', :as => :canvas_course_sections_feed, :defaults => { :format => 'json' }
-    post '/api/academics/canvas/course_provision/edit_sections/:canvas_course_id' => 'canvas_course_provision#edit_sections', :as => :canvas_course_edit_sections, :defaults => { :format => 'json' }
-    get '/api/academics/canvas/course_provision/status' => 'canvas_course_provision#job_status', :as => :canvas_course_job_status, :defaults => { :format => 'json' }
-    post '/api/academics/canvas/project_provision/create' => 'canvas_project_provision#create_project_site', :as => :canvas_project_create, :defaults => { :format => 'json' }
-    post '/api/academics/canvas/user_provision/user_import' => 'canvas_user_provision#user_import', :as => :canvas_user_provision_import, :defaults => { :format => 'json' }
     get '/api/academics/canvas/site_creation/authorizations' => 'canvas_site_creation#authorizations', :as => :canvas_site_creation_authorizations, :defaults => { :format => 'json' }
-    get '/api/academics/canvas/course_add_user/:canvas_course_id/search_users' => 'canvas_course_add_user#search_users', :as => :canvas_course_add_user_search_users, :defaults => { :format => 'json' }
-    get '/api/academics/canvas/course_add_user/:canvas_course_id/course_sections' => 'canvas_course_add_user#course_sections', :as => :canvas_course_add_user_course_sections, :defaults => { :format => 'json' }
-    post '/api/academics/canvas/course_add_user/:canvas_course_id/add_user' => 'canvas_course_add_user#add_user', :as => :canvas_course_add_user_add_user, :defaults => { :format => 'json' }
     get '/api/canvas/media/:canvas_course_id' => 'canvas_webcast_recordings#get_media', :defaults => { :format => 'json' }
     # Administer Canvas mailing list for a single course site
     get '/api/academics/canvas/mailing_list/:canvas_course_id' => 'canvas_mailing_list#show', :defaults => { :format => 'json' }
