@@ -254,10 +254,7 @@ cache:
     Cal1card::Photo: <%= 4.hours %>
 
     Canvas::CourseStudents: <%= 15.minutes %>
-    Canvas::CourseTeachers: <%= 5.minutes %>
     CanvasBackgroundJobs: <%= 24.hours %>
-    CanvasLti::Egrades: <%= 1.minute %>
-    CanvasLti::Lti: <%= 5.minutes %>
 
     Advising::MyAdvising: <%= 2.hours %>
 

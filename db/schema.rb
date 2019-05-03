@@ -12,6 +12,7 @@
 # It's strongly recommended that you check this file into your version control system.
 
 ActiveRecord::Schema.define(version: 20190422180339) do
+
   create_table "ps_uc_clc_oauth", primary_key: "uc_clc_id", force: :cascade do |t|
     t.string  "uc_clc_ldap_uid", limit: 255
     t.string  "uc_clc_app_id",   limit: 255
@@ -19,6 +20,9 @@ ActiveRecord::Schema.define(version: 20190422180339) do
     t.text    "refresh_token"
     t.integer "uc_clc_expire",   limit: 8
     t.text    "app_data"
+  end
+
+  add_index "ps_uc_clc_oauth", ["uc_clc_ldap_uid", "uc_clc_app_id"], name: "index_ps_uc_clc_oauth_on_uid_app_id", unique: true
 
   create_table "ps_uc_clc_srvalert", primary_key: "uc_clc_id", force: :cascade do |t|
     t.string   "uc_alrt_title",   limit: 255,                 null: false

@@ -519,7 +519,5 @@ describe User::Api do
 
     allow(CampusSolutions::DelegateStudents).to receive(:new).with(user_id: uid).and_return double(get: {})
     allow(CampusSolutions::DelegateStudents).to receive(:new).with(user_id: original_delegate_user_id).and_return double(get: delegate_students)
-
-    allow(ProvidedServices).to receive(:calcentral?).and_return is_calcentral
   end
 end

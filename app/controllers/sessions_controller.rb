@@ -1,7 +1,6 @@
 class SessionsController < ApplicationController
   include ActiveRecordHelper, ClassLogger
   include AllowDelegateViewAs
-  include AllowLti
 
   skip_before_filter :check_reauthentication, :only => [:lookup, :destroy]
 
