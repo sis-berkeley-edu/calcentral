@@ -144,10 +144,6 @@ angular.module('calcentral.config').config(function($routeProvider, calcentralCo
   }
 
   if (providedServices.indexOf('bcourses') !== -1) {
-    $routeProvider.when('/canvas/embedded/rosters', {
-      templateUrl: 'canvas_embedded/roster.html',
-      isBcourses: true,
-      isEmbedded: true
     }).when('/canvas/embedded/site_creation', {
       templateUrl: 'canvas_embedded/site_creation.html',
       controller: 'CanvasSiteCreationController',
@@ -162,9 +158,6 @@ angular.module('calcentral.config').config(function($routeProvider, calcentralCo
       controller: 'CanvasCourseGradeExportController',
       isBcourses: true,
       isEmbedded: true
-    }).when('/canvas/rosters/:canvasCourseId', {
-      templateUrl: 'canvas_embedded/roster.html',
-      isBcourses: true
     }).when('/canvas/site_creation', {
       templateUrl: 'canvas_embedded/site_creation.html',
       controller: 'CanvasSiteCreationController',

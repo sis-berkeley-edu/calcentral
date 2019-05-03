@@ -1,12 +1,9 @@
 'use strict';
 
 /**
- * Canvas roster photos LTI app controller
+ * Roster photos controller
  */
 angular.module('calcentral.controllers').controller('RosterController', function(apiService, emailService, rosterFactory, rosterService, $routeParams, $scope, $window) {
-  if ($routeParams.canvasCourseId) {
-    apiService.util.setTitle('Roster Photos');
-  }
   $scope.accessibilityAnnounce = apiService.util.accessibilityAnnounce;
   $scope.bmailLink = emailService.bmailLink;
   $scope.currentRosterViewType = 'photos';
@@ -26,11 +23,12 @@ angular.module('calcentral.controllers').controller('RosterController', function
   };
 
   var getRoster = function() {
-    $scope.context = $scope.campusCourseId ? 'campus' : 'canvas';
-    $scope.courseId = $scope.campusCourseId || $routeParams.canvasCourseId || 'embedded';
+    // TODO: Further refactor to remove 'canvas' context and possibly 'embedded' support
+    $scope.context = 'campus';
+    $scope.courseId = $scope.campusCourseId || 'embedded';
     $scope.origin = $window.location.origin;
 
-    rosterFactory.getRoster($scope.context, $scope.courseId).then(
+    rosterFactory.getRoster($scope.courseId).then(
       function successCallback(response) {
         angular.extend($scope, response.data);
         $scope.course = $scope[$scope.context + '_course'];
