@@ -59,17 +59,6 @@ oracle:
   pool: 95
   timeout: 5000
 
-devdb:
-  adapter: sqlite3
-  encoding: utf8
-  database: 'db/dev.sqlite3'
-  username:
-  password:
-  host:
-  port: 0
-  pool: 3
-  timeout: 5000
-
 edodb:
   fake: false
   adapter: h2
@@ -110,8 +99,7 @@ test_sqlite:
 # MUST BE SET FOR DEVELOPMENT & PRODUCTION
 # Example generated with SecureRandom.base64(32)
 oauth2:
-  #local key: "IeGpe9iq27Glqujd8pGH1+xM8C/ofm97Lp74N+6cN0I="
-  key: 'znVwVn9oSKPIZhzr+7oSR2rk4dONsQyjH0EeW++uCY8'
+  key: "IeGpe9iq27Glqujd8pGH1+xM8C/ofm97Lp74N+6cN0I="
   encryption: "aes-256-cbc"
 
 # Proxy settings

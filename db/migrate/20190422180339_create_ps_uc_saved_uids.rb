@@ -1,8 +1,4 @@
 class CreatePsUcSavedUids < ActiveRecord::Migration
-
-  # $ export RAILS_ENV=test
-  # $ bundle exec rake db:migrate VERSION=20190422180339 --trace
-
   def up
     if ActiveRecord::Base.connection.class.name == 'ActiveRecord::ConnectionAdapters::SQLite3Adapter'
       create_table "ps_uc_clc_oauth", {force: :cascade, primary_key:'uc_clc_id'} do |t|

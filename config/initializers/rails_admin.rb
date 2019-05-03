@@ -91,7 +91,7 @@ RailsAdmin.config do |config|
     label 'User Authorizations'
     list do
       field :uc_clc_id do
-        column_width 20
+        column_width 25
         label 'id'
       end
       field :uid do

@@ -27,7 +27,7 @@ module ServiceAlerts
     before_save :set_default_values
     before_create :set_id
 
-    if ENV["RAILS_ENV"]=='production' or (ENV["RAILS_ENV"]=='development' and Settings.devdb.adapter == 'oracle_enhanced')
+    if self.primary_database_is_oracle?
       set_boolean_columns :uc_alrt_display, :uc_alrt_splash
     end
 
@@ -37,11 +37,6 @@ module ServiceAlerts
 
     def self.get_latest_splash
       self.where(uc_alrt_display: true, uc_alrt_splash: true).order(created_at: :desc).first
-    end
-
-    def set_blank_default_values
-      self.uc_alrt_pubdt ||= Time.zone.today.in_time_zone.to_datetime
-      set_blank
     end
 
     def preview

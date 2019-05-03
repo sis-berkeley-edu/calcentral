@@ -1,13 +1,13 @@
 development:
-  adapter: <%= Settings.devdb.adapter %>
-  host: <%= Settings.devdb.host %>
-  port: <%= Settings.devdb.port %>
-  database: <%= Settings.devdb.database %>
-  username: <%= Settings.devdb.username %>
-  password: <%= Settings.devdb.password %>
-  pool: <%= Settings.devdb.pool %>
-  timeout: <%= Settings.devdb.timeout %>
-  encoding: <%= Settings.devdb.encoding %>
+  adapter: <%= Settings.oracle.adapter %>
+  host: <%= Settings.oracle.host %>
+  port: <%= Settings.oracle.port %>
+  database: <%= Settings.oracle.database %>
+  username: <%= Settings.oracle.username %>
+  password: <%= Settings.oracle.password %>
+  pool: <%= Settings.oracle.pool %>
+  timeout: <%= Settings.oracle.timeout %>
+  encoding: <%= Settings.oracle.encoding %>
 
 production:
   adapter: <%= Settings.oracle.adapter %>

@@ -27,7 +27,7 @@ module User
       is_recoverable = false
       begin
         use_pooled_connection {
-          if ENV["RAILS_ENV"]=='production' or (ENV["RAILS_ENV"]=='development' and Settings.devdb.adapter == 'oracle_enhanced')
+          if primary_database_is_oracle?
             find_by_sql("select 1 from dual").first
           else
             find_by_sql("select 1").first

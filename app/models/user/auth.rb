@@ -15,7 +15,7 @@ module User
     alias_attribute :uid, :uc_clc_ldap_uid
     alias_attribute :is_author, :uc_clc_is_au
 
-    if ENV["RAILS_ENV"]=='production' or (ENV["RAILS_ENV"]=='development' and Settings.devdb.adapter == 'oracle_enhanced')
+    if self.primary_database_is_oracle?
       set_boolean_columns :uc_clc_is_su, :uc_clc_is_au, :uc_clc_is_vw, :uc_clc_active
     end
 
