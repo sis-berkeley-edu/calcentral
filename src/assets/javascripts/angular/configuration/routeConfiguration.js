@@ -144,7 +144,7 @@ angular.module('calcentral.config').config(function($routeProvider, calcentralCo
   }
 
   if (providedServices.indexOf('bcourses') !== -1) {
-    }).when('/canvas/embedded/site_creation', {
+    $routeProvider.when('/canvas/embedded/site_creation', {
       templateUrl: 'canvas_embedded/site_creation.html',
       controller: 'CanvasSiteCreationController',
       isBcourses: true,
