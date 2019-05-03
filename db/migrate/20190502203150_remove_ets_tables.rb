@@ -3,7 +3,6 @@ class RemoveEtsTables < ActiveRecord::Migration
     drop_table :canvas_site_mailing_list_members
     drop_table :canvas_site_mailing_lists
     drop_table :canvas_synchronization
-    drop_table :oec_course_codes
     drop_table :webcast_course_site_log
   end
 
@@ -38,17 +37,6 @@ class RemoveEtsTables < ActiveRecord::Migration
       t.datetime "last_guest_user_sync"
       t.datetime "latest_term_enrollment_csv_set"
     end
-
-    create_table "oec_course_codes", force: :cascade do |t|
-      t.string   "dept_name",      limit: 255, null: false
-      t.string   "catalog_id",     limit: 255, null: false
-      t.string   "dept_code",      limit: 255, null: false
-      t.boolean  "include_in_oec",             null: false
-      t.datetime "created_at"
-      t.datetime "updated_at"
-    end
-    add_index "oec_course_codes", ["dept_code"], name: "index_oec_course_codes_on_dept_code", using: :btree
-    add_index "oec_course_codes", ["dept_name", "catalog_id"], name: "index_oec_course_codes_on_dept_name_and_catalog_id", unique: true, using: :btree
 
     create_table "webcast_course_site_log", force: :cascade do |t|
       t.integer  "canvas_course_site_id",    null: false

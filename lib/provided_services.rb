@@ -8,9 +8,4 @@ module ProvidedServices
   def bcourses?
     Settings.application.provided_services.include? 'bcourses'
   end
-
-  def oec?
-    Settings.application.provided_services.include? 'oec'
-  end
-
 end

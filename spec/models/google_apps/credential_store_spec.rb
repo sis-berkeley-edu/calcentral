@@ -59,14 +59,6 @@ describe GoogleApps::CredentialStore do
       end
     end
 
-    context 'OEC' do
-      let(:app_id) { GoogleApps::Proxy::OEC_APP_ID }
-
-      it 'should find settings per app_id' do
-        expect(store.load_credentials).to_not be_nil
-      end
-    end
-
     context 'errors' do
       it 'should raise error if uid is blank' do
         expect{ GoogleApps::CredentialStore.new(app_id, '  ') }.to raise_error ArgumentError

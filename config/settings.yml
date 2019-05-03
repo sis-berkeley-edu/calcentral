@@ -13,9 +13,9 @@ application:
   layer: development
   # Lifespan of session cookie
   session_expiration: <%= 4.hours %>
-  # Restrict deployment to the SIS service 'calcentral' or the ETS services 'bcourses' and 'oec'.
+  # Restrict deployment to the SIS service 'calcentral' or the ETS service 'bcourses'.
   # The default is to support all CalCentral/Junction services.
-  provided_services: ['calcentral', 'bcourses', 'oec']
+  provided_services: ['calcentral', 'bcourses']
 
 slate_auth_handler:
   client: 'Slate'
@@ -320,8 +320,6 @@ cache:
     # Merge of independently cached feeds.
     HubEdos::V1::MyStudent: <%= 5.minutes %>
 
-    Oec::DepartmentMappings: <%= 4.hours %>
-
 # Cache warmer settings
 cache_warmer:
   # Number to decrement db pool to limit the number of warmer threads
@@ -354,26 +352,6 @@ background_jobs_check:
   time_between_pings: <%= 5.minutes %>
 
 youtube_splash_id: '3Iz1NT9QKjI'
-
-oec:
-  administrator_uid: ''
-  enrollments_batch_size: 120000
-  local_write_directory: 'tmp/oec'
-  explorance:
-    sftp_server: ''
-    sftp_port: 22
-    sftp_user: ''
-    ssh_private_key_file: ''
-  google:
-    uid: ''
-    client_id: 'oecClientId'
-    client_secret: 'oecClientSecret'
-    scope: 'profile email https://mail.google.com/mail/feed/atom/ https://spreadsheets.google.com/feeds/ https://www.googleapis.com/auth/calendar https://www.googleapis.com/auth/drive https://www.googleapis.com/auth/drive.appdata https://www.googleapis.com/auth/drive.apps.readonly https://www.googleapis.com/auth/drive.file https://www.googleapis.com/auth/drive.readonly.metadata https://www.googleapis.com/auth/tasks'
-  current_terms_codes: [{
-    year: 2015,
-    code: "C"
-  }]
-  departments: [ 'A,RESEC', 'BIOLOGY', 'CATALAN', 'CHEM', 'DATASCI', 'ECON', 'ENE,RES', 'ENVECON', 'EPS', 'ESPM', 'GWS', 'INFO', 'INTEGBI', 'LGBT', 'LINGUIS', 'MATH', 'MCELLBI', 'NUSCTX', 'PHYSICS', 'PLANTBI', 'POL SCI', 'PORTUG', 'PSYCH', 'SPANISH', 'STAT' ]
 
 ui_selenium:
   base_url: https://calcentral-dev.berkeley.edu
