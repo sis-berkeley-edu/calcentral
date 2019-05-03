@@ -123,6 +123,7 @@ module Canvas
           @client.fetch_protected_resource(fetch_options)
         end
       end
+      logger.debug "Remote server status #{response.status}, Body = #{response.body.force_encoding('UTF-8')}"
       if response.status == 404
         if existence_check
           logger.debug "404 status returned for URL '#{fetch_options[:uri]}', UID #{@uid}"
