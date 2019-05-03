@@ -126,16 +126,8 @@ canvas_proxy:
   # Set to any string to make integration scripts create CSV files and log intended updates
   # without actually changing anything in Canvas.
   dry_run_import: <%= ENV['CANVAS_DRY_RUN_IMPORT'] || '' %>
-  # Set to false to disable synchronization of obfuscated names in Dev/QA.
-  maintain_user_names: true
-  # Set to false to disable user account inactivation based on campus data.
-  inactivate_expired_users: true
-  # Set to false if Canvas permissions block our ability to delete an invalid email address.
-  delete_bad_emails: true
   # Throttle automatic site membership refresh if more than these many enrollments are being dropped.
   max_deleted_enrollments: 1000
-  # Set to false to use an API loop to change SIS User IDs and upload SIS Import files one at a time.
-  import_zipped_csvs: true
   # URL for scripts to point to CalCentral/Junction
   app_provider_host: 'http://localhost:3000'
   test_admin_id:
