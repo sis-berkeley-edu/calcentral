@@ -31,4 +31,5 @@ class PingController < ApplicationController
       true
     }
   end
+
 end

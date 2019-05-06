@@ -31,7 +31,7 @@ module BackgroundJob
   #
   #   worker = MyClass.new(:course_id => course_id)
   #   worker.background_job_initialize(:job_type => 'special_job', :total_steps => 3)
-  #   worker.background_correlate(worker.background.perform_work)
+  #   worker.background.perform_work
   #
   include BackgroundThread
   include ClassLogger
@@ -91,19 +91,7 @@ module BackgroundJob
     }
     report[:errors] = @background_job_errors if @background_job_errors.count > 0
     report.reverse_merge!(background_job_report_custom)
-    report[:correlation_id] = Rails.cache.fetch correlation_cache_key
     report
-  end
-
-  def correlation_cache_key
-    @background_job_id + '.Correlation'
-  end
-
-  def background_correlate(backgroundable_future)
-    torquebox_correlation_id = backgroundable_future.respond_to?(:correlation_id) ? backgroundable_future.correlation_id : nil
-    logger.warn "background_job_id = #{@background_job_id}, Torquebox correlation_id = #{torquebox_correlation_id}"
-    Rails.cache.write(correlation_cache_key, torquebox_correlation_id, expires_in: Settings.cache.expiration.CanvasBackgroundJobs)
-    backgroundable_future
   end
 
   def background_job_set_type(type)
