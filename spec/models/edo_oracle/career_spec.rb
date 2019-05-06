@@ -42,7 +42,7 @@ describe EdoOracle::Career do
 
   describe '#get_cumulative_units' do
     subject { described_class.new({user_id: uid}).get_cumulative_units }
-    context 'user id 790833' do
+    context 'user id 790833 with 1 element, nil value for total_cumulative_law_units' do
       let(:uid) { 790833 }
       it 'returns the expected result' do
         expect(subject).to be
@@ -53,7 +53,7 @@ describe EdoOracle::Career do
       end
     end
 
-    context 'user id 300216' do
+    context 'user id 300216 with multiple elements, with non-nil values for total_cumulative_law_units' do
       let(:uid) {300216}
       it 'returns the expected result' do
       expect(subject).to be
