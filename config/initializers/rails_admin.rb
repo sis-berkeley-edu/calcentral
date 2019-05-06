@@ -86,7 +86,6 @@ RailsAdmin.config do |config|
   #   - Models are reloaded at each request in development mode (when modified), which may smooth your RailsAdmin development workflow.
   #
 
-
   config.model 'User::Auth' do
     label 'User Authorizations'
     list do
@@ -158,7 +157,6 @@ RailsAdmin.config do |config|
       end
     end
   end
-
 
   config.model 'ServiceAlerts::Alert' do
     label 'Service Alert'

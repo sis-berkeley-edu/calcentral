@@ -13,9 +13,9 @@ application:
   layer: development
   # Lifespan of session cookie
   session_expiration: <%= 4.hours %>
-  # Restrict deployment to the SIS service 'calcentral' or the ETS services 'bcourses' and 'oec'.
+  # Restrict deployment to the SIS service 'calcentral' or the ETS service 'bcourses'.
   # The default is to support all CalCentral/Junction services.
-  provided_services: ['calcentral', 'bcourses', 'oec']
+  provided_services: ['calcentral', 'bcourses']
 
 slate_auth_handler:
   client: 'Slate'
@@ -126,16 +126,8 @@ canvas_proxy:
   # Set to any string to make integration scripts create CSV files and log intended updates
   # without actually changing anything in Canvas.
   dry_run_import: <%= ENV['CANVAS_DRY_RUN_IMPORT'] || '' %>
-  # Set to false to disable synchronization of obfuscated names in Dev/QA.
-  maintain_user_names: true
-  # Set to false to disable user account inactivation based on campus data.
-  inactivate_expired_users: true
-  # Set to false if Canvas permissions block our ability to delete an invalid email address.
-  delete_bad_emails: true
   # Throttle automatic site membership refresh if more than these many enrollments are being dropped.
   max_deleted_enrollments: 1000
-  # Set to false to use an API loop to change SIS User IDs and upload SIS Import files one at a time.
-  import_zipped_csvs: true
   # URL for scripts to point to CalCentral/Junction
   app_provider_host: 'http://localhost:3000'
   test_admin_id:
@@ -262,10 +254,7 @@ cache:
     Cal1card::Photo: <%= 4.hours %>
 
     Canvas::CourseStudents: <%= 15.minutes %>
-    Canvas::CourseTeachers: <%= 5.minutes %>
     CanvasBackgroundJobs: <%= 24.hours %>
-    CanvasLti::Egrades: <%= 1.minute %>
-    CanvasLti::Lti: <%= 5.minutes %>
 
     Advising::MyAdvising: <%= 2.hours %>
 
@@ -328,8 +317,6 @@ cache:
     # Merge of independently cached feeds.
     HubEdos::V1::MyStudent: <%= 5.minutes %>
 
-    Oec::DepartmentMappings: <%= 4.hours %>
-
 # Cache warmer settings
 cache_warmer:
   # Number to decrement db pool to limit the number of warmer threads
@@ -362,30 +349,6 @@ background_jobs_check:
   time_between_pings: <%= 5.minutes %>
 
 youtube_splash_id: '3Iz1NT9QKjI'
-
-canvas_mailing_lists:
-  prefer_canvas_email_addresses: false
-  timestamp_tolerance: 60
-
-oec:
-  administrator_uid: ''
-  enrollments_batch_size: 120000
-  local_write_directory: 'tmp/oec'
-  explorance:
-    sftp_server: ''
-    sftp_port: 22
-    sftp_user: ''
-    ssh_private_key_file: ''
-  google:
-    uid: ''
-    client_id: 'oecClientId'
-    client_secret: 'oecClientSecret'
-    scope: 'profile email https://mail.google.com/mail/feed/atom/ https://spreadsheets.google.com/feeds/ https://www.googleapis.com/auth/calendar https://www.googleapis.com/auth/drive https://www.googleapis.com/auth/drive.appdata https://www.googleapis.com/auth/drive.apps.readonly https://www.googleapis.com/auth/drive.file https://www.googleapis.com/auth/drive.readonly.metadata https://www.googleapis.com/auth/tasks'
-  current_terms_codes: [{
-    year: 2015,
-    code: "C"
-  }]
-  departments: [ 'A,RESEC', 'BIOLOGY', 'CATALAN', 'CHEM', 'DATASCI', 'ECON', 'ENE,RES', 'ENVECON', 'EPS', 'ESPM', 'GWS', 'INFO', 'INTEGBI', 'LGBT', 'LINGUIS', 'MATH', 'MCELLBI', 'NUSCTX', 'PHYSICS', 'PLANTBI', 'POL SCI', 'PORTUG', 'PSYCH', 'SPANISH', 'STAT' ]
 
 ui_selenium:
   base_url: https://calcentral-dev.berkeley.edu
@@ -505,7 +468,6 @@ features:
   hub_term_api: true
   ldap_student_affiliations: false
   legacy_caldap: true
-  manage_site_mailing_lists: false
   my_fin_aid: false
   prevent_acting_as_users_from_posting: true
   reauthentication: true

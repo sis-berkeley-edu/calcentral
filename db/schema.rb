@@ -13,91 +13,6 @@
 
 ActiveRecord::Schema.define(version: 20190422180339) do
 
-  create_table "canvas_site_mailing_list_members", force: :cascade do |t|
-    t.integer  "mailing_list_id",                             null: false
-    t.string   "first_name",      limit: 255
-    t.string   "last_name",       limit: 255
-    t.string   "email_address",   limit: 255,                 null: false
-    t.boolean  "can_send",                    default: false, null: false
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "canvas_site_mailing_list_members", ["mailing_list_id", "email_address"], name: "mailing_list_membership_index", unique: true
-
-  create_table "canvas_site_mailing_lists", force: :cascade do |t|
-    t.string   "canvas_site_id",         limit: 255
-    t.string   "canvas_site_name",       limit: 255
-    t.string   "list_name",              limit: 255
-    t.string   "state",                  limit: 255
-    t.datetime "populated_at"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.integer  "members_count"
-    t.integer  "populate_add_errors"
-    t.integer  "populate_remove_errors"
-    t.string   "type",                   limit: 255
-  end
-
-  add_index "canvas_site_mailing_lists", ["canvas_site_id"], name: "index_canvas_site_mailing_lists_on_canvas_site_id", unique: true
-
-  create_table "canvas_synchronization", force: :cascade do |t|
-    t.datetime "last_guest_user_sync"
-    t.datetime "latest_term_enrollment_csv_set"
-  end
-
-  create_table "link_categories", force: :cascade do |t|
-    t.string   "name",       limit: 255,                 null: false
-    t.string   "slug",       limit: 255,                 null: false
-    t.boolean  "root_level",             default: false
-    t.datetime "created_at",                             null: false
-    t.datetime "updated_at",                             null: false
-  end
-
-  create_table "link_categories_link_sections", id: false, force: :cascade do |t|
-    t.integer "link_category_id"
-    t.integer "link_section_id"
-  end
-
-  create_table "link_sections", force: :cascade do |t|
-    t.integer  "link_root_cat_id"
-    t.integer  "link_top_cat_id"
-    t.integer  "link_sub_cat_id"
-    t.datetime "created_at",       null: false
-    t.datetime "updated_at",       null: false
-  end
-
-  create_table "link_sections_links", id: false, force: :cascade do |t|
-    t.integer "link_section_id"
-    t.integer "link_id"
-  end
-
-  create_table "links", force: :cascade do |t|
-    t.string   "name",        limit: 255
-    t.string   "url",         limit: 255
-    t.string   "description", limit: 255
-    t.boolean  "published",               default: true
-    t.datetime "created_at",                             null: false
-    t.datetime "updated_at",                             null: false
-  end
-
-  create_table "links_user_roles", id: false, force: :cascade do |t|
-    t.integer "link_id"
-    t.integer "user_role_id"
-  end
-
-  create_table "oec_course_codes", force: :cascade do |t|
-    t.string   "dept_name",      limit: 255, null: false
-    t.string   "catalog_id",     limit: 255, null: false
-    t.string   "dept_code",      limit: 255, null: false
-    t.boolean  "include_in_oec",             null: false
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "oec_course_codes", ["dept_code"], name: "index_oec_course_codes_on_dept_code"
-  add_index "oec_course_codes", ["dept_name", "catalog_id"], name: "index_oec_course_codes_on_dept_name_and_catalog_id", unique: true
-
   create_table "ps_uc_clc_oauth", primary_key: "uc_clc_id", force: :cascade do |t|
     t.string  "uc_clc_ldap_uid", limit: 255
     t.string  "uc_clc_app_id",   limit: 255
@@ -169,19 +84,5 @@ ActiveRecord::Schema.define(version: 20190422180339) do
   create_table "schema_migrations_fixed_backup", id: false, force: :cascade do |t|
     t.string "version", limit: 255
   end
-
-  create_table "user_roles", force: :cascade do |t|
-    t.string "name", limit: 255
-    t.string "slug", limit: 255
-  end
-
-  create_table "webcast_course_site_log", force: :cascade do |t|
-    t.integer  "canvas_course_site_id",    null: false
-    t.datetime "webcast_tool_unhidden_at", null: false
-    t.datetime "created_at",               null: false
-    t.datetime "updated_at",               null: false
-  end
-
-  add_index "webcast_course_site_log", ["canvas_course_site_id"], name: "webcast_course_site_log_unique_index", unique: true
 
 end

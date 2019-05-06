@@ -36,10 +36,6 @@ describe CampusRostersController do
       let(:make_request) { get :get_feed, campus_course_id: campus_course_id }
     end
 
-    it_behaves_like 'an unauthorized endpoint for LTI' do
-      let(:make_request) { get :get_feed, campus_course_id: campus_course_id }
-    end
-
     it "should return error if user is not authorized" do
       allow_any_instance_of(Berkeley::CoursePolicy).to receive(:can_view_roster_photos?).and_return(false)
       get :get_feed, campus_course_id: campus_course_id

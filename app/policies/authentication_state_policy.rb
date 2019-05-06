@@ -26,10 +26,6 @@ class AuthenticationStatePolicy
     can_administrate? || Canvas::Admins.new.admin_user?(@user.user_id)
   end
 
-  def can_administer_oec?
-    @user.directly_authenticated? && (can_administrate? || Oec::Administrator.is_admin?(@user.user_id))
-  end
-
   def can_author?
     @user.real_user_auth.active? && (@user.real_user_auth.is_superuser? || @user.real_user_auth.is_author?)
   end
