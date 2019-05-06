@@ -20,5 +20,24 @@ describe EdoOracle::Student do
         expect(subject).to be true
       end
     end
+
+    context 'when student doesn\'t exist, student ID is null' do
+      let(:uid) {000000}
+      let(:student_id) {nil}
+      it 'returns false' do
+        expect(subject).to be false
+      end
+    end
+  end
+
+  describe '#concurrent without stub' do
+    subject { described_class.new({user_id: uid}).concurrent? }
+
+    context 'when student is not in a concurrent program' do
+      let(:uid) { 300216 }
+      it 'returns false' do
+        expect(subject).to be false
+      end
+    end
   end
 end
