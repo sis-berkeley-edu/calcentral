@@ -48,4 +48,12 @@ describe Canvas::AccountRoles do
     end
   end
 
+  context 'when an invalid account' do
+    let(:account_id) {000000}
+    it 'does not have defined course roles' do
+      result = subject.defined_course_roles
+      expect(result).to eq([])
+    end
+  end
+
 end
