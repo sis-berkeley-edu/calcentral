@@ -128,6 +128,9 @@ describe EdoOracle::CourseSections do
         expect(subject[:schedules][:recurring][1][:buildingName]).to eq 'Room not yet assigned'
         expect(subject[:schedules][:recurring][1][:roomNumber]).to be_blank
       end
+      it 'does not unexpectedly create instructors' do
+        expect(subject[:instructors]).to be_empty
+      end
     end
 
     context 'instructor data' do
@@ -167,6 +170,10 @@ describe EdoOracle::CourseSections do
             printInSchedule: 'N'
           }
         ]
+      end
+      it 'does not unexpectedly create meeting schedules' do
+        expect(subject[:schedules][:oneTime]).to be_empty
+        expect(subject[:schedules][:recurring]).to be_empty
       end
     end
   end
