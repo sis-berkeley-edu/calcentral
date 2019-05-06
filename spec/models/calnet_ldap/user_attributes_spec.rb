@@ -196,6 +196,27 @@ describe CalnetLdap::UserAttributes do
           expect(feed[:roles][:staff]).to be_falsey
         end
       end
+
+      context 'when the student and Campus Solutions ID conflict' do
+        let(:ldap_result) do
+          {
+            uid: ['61889'],
+            berkeleyedustuid: ['11667051'],
+            berkeleyeducsid: ['11667061']
+          }
+        end
+        it 'properly logs the conflict' do
+          expect(Rails.logger).to receive(:warn).with('[CalnetLdap::UserAttributes] Conflicting berkeleyEduStuID 11667051 and berkeleyEduCSID 11667061 for UID 61889')
+          expect(feed).not_to be_empty
+        end
+      end
+
+      context 'when LDAP result is empty' do
+        let(:ldap_result) { nil }
+        it 'returns an empty feed' do
+          expect(feed).to be_empty
+        end
+      end
     end
   end
 end
