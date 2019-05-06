@@ -19,6 +19,10 @@ describe Canvas::AccountRoles do
   context 'when an academic department subaccount' do
     let(:account_id) {department_account_id}
     it_behaves_like 'a bCourses account'
+    it 'has defined course roles' do
+      result = subject.defined_course_roles
+      expect(result).not_to be_nil
+    end
     it 'has the extra official course roles' do
       result = subject.defined_course_roles
       labels = result.collect {|r| r['label']}
@@ -33,10 +37,22 @@ describe Canvas::AccountRoles do
   context 'when a project sites account' do
     let(:account_id) {project_account_id}
     it_behaves_like 'a bCourses account'
+    it 'has defined course roles' do
+      result = subject.defined_course_roles
+      expect(result).not_to be_nil
+    end
     it 'has the extra project site roles' do
       result = subject.defined_course_roles
       labels = result.collect {|r| r['label']}
       expect(labels).to include('Member', 'Owner', 'Maintainer')
+    end
+  end
+
+  context 'when an invalid account' do
+    let(:account_id) {000000}
+    it 'does not have defined course roles' do
+      result = subject.defined_course_roles
+      expect(result).to eq([])
     end
   end
 
