@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 # The core framework
 # https://github.com/rails/rails
-gem 'rails', '4.2.8'
+gem 'rails', '4.2.11.1'
 
 gem 'actionpack-action_caching', '~>1.1.1'
 gem 'actionpack-page_caching', '~>1.0.2'
@@ -159,6 +159,9 @@ group :development, :test do
 
   # Webmock is not thread-safe and should never be enabled in production-like environments.
   gem 'webmock', '~> 1.20.4'
+
+  # Currently needed by RubyMine.
+  gem 'test-unit'
 end
 
 group :development do
