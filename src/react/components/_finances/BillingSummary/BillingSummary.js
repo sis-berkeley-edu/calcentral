@@ -11,6 +11,7 @@ import '../../../stylesheets/box_model.scss';
 import '../../../stylesheets/widgets.scss';
 
 const propTypes = {
+  billingDetails: PropTypes.bool.isRequired,
   canActOnFinances: PropTypes.bool.isRequired,
   finances: PropTypes.object,
   handleShowMore: PropTypes.func.isRequired,
@@ -24,7 +25,7 @@ const propTypes = {
 const BillingSummary = (props) => {
   return (
     <div className="cc-react-widget cc-widget">
-      <WidgetHeader title={props.widgetConfig.title} link={props.widgetConfig.link} />
+      <WidgetHeader title={props.widgetConfig.title} link={!props.billingDetails ? props.widgetConfig.link : null} />
       <WidgetBody widgetConfig={props.widgetConfig}>
         <Balances 
           amountDueNow={props.finances.amountDueNow}

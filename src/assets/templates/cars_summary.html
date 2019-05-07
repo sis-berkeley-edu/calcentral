@@ -4,9 +4,6 @@
       Billing Summary
       <span data-ng-if="api.user.profile.features.csBilling" class="cc-widget-title-sub cc-text-uppercase">Prior to Fall 2016</span>
     </h2>
-    <a data-ng-if="!carsDetails && myfinances.activity && !myfinancesError" class="cc-right cc-widget-title-link" href="/finances/details">
-      <strong>Details</strong>
-    </a>
   </div>
 
   <div data-cc-spinner-directive>
@@ -97,10 +94,5 @@
     <p data-ng-if="!myfinancesError && !myfinances.activity" class="cc-widget-text cc-page-myfinances-account-summary-error">
       You are seeing this message because CalCentral does not have CARS billing data for your account. If you are a new student, your account may not have been assessed charges yet. Please try again later. Current or former students should contact us for further assistance using the Feedback link below.
     </p>
-    <div data-cc-spinner-directive="csActivity.isLoadingCs">
-      <div class="cc-page-myfinances-billing-summary-footnote cc-text-center" data-ng-if="api.user.profile.features.csBilling && carsDetails && csActivity.hasCsActivity">
-        <a href="/billing/details">View current activity.</a>
-      </div>
-    </div>
   </div>
 </div>

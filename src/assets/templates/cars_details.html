@@ -3,7 +3,7 @@
 
     <div class="column">
       <h1 class="cc-heading-page-title cc-print-hide">
-        <a href="/finances">My Finances</a> &raquo; Details <span data-ng-if="api.user.profile.features.csBilling">(Prior to Fall 2016)</span>
+        <a href="/finances">My Finances</a> &raquo; Transactions <span data-ng-if="api.user.profile.features.csBilling">(Prior to Fall 2016)</span>
       </h1>
       <h1 class="cc-heading-page-title cc-hidden cc-print-show">
         My Finances for <span data-ng-bind="api.user.profile.fullName"></span>
@@ -11,10 +11,10 @@
     </div>
 
     <div class="medium-4 columns">
-      <div data-ng-include="'cars_summary.html'" data-onload="carsDetails=true"></div>
+      <div data-ng-include="'cars_summary.html'"></div>
     </div>
     <div class="medium-8 columns cc-column-3">
-      <div data-ng-include="'cars_activity.html'"></div>
+      <div data-ng-include="'cars_transactions.html'"></div>
     </div>
 
   </div>
