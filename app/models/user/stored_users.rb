@@ -13,11 +13,11 @@ module User
       all_uids = []
 
       uid_entries[:saved].each do |entry|
-        all_uids << entry[:stored_uid]
+        all_uids << entry.stored_uid
       end
 
       uid_entries[:recent].each do |entry|
-        all_uids << entry[:stored_uid]
+        all_uids << entry.stored_uid
       end
 
       return users unless all_uids.present?
@@ -39,22 +39,21 @@ module User
       saved_uid_set = Set.new
 
       uid_entries[:saved].each do |entry|
-        user = uid_hash[entry[:stored_uid]]
+        user = uid_hash[entry.stored_uid]
         if user.present?
-          saved_uid_set.add entry[:stored_uid]
+          saved_uid_set.add entry.stored_uid
           user[:saved] = true
           users[:saved] << user
         end
       end
 
       uid_entries[:recent].each do |entry|
-        uid = entry[:stored_uid]
+        uid = entry.stored_uid
         user = uid_hash[uid]
         if user.present?
           users[:recent] << user.merge(saved: saved_uid_set.include?(uid))
         end
       end
-
       users
     end
 
@@ -111,7 +110,7 @@ module User
 
     def self.store(model, uid, uid_to_store)
       if model.where(stored_uid: uid_to_store.to_s).size == 0
-        model.create(stored_uid: uid_to_store.to_s)
+        model.create({stored_uid: uid_to_store.to_s}, :without_protection => true)
         success_response
       else
         error_response("UID #{uid_to_store} is already stored.")
