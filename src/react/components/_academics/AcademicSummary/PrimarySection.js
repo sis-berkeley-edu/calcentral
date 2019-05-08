@@ -1,62 +1,71 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+
 import ValueOrDash from './ValueOrDash';
 
 const propTypes = {
-  class: PropTypes.object,
-  requirementsDesignation: PropTypes.string,
-  units: PropTypes.string,
-  lawUnits: PropTypes.string,
-  grading: PropTypes.object,
-  isLaw: PropTypes.bool,
-  showPoints: PropTypes.bool,
-  canViewGrades: PropTypes.bool.isRequired,
-  totalLawUnits: PropTypes.string
+  section: PropTypes.object,
+  canViewGrades: PropTypes.bool,
+  showPoints: PropTypes.bool
 };
 
-const PrimarySection = (props) => (
-  <tr>
-    <td>
-      <a href={props.class.url}>
-        {props.class.course_code}&nbsp;
-        {props.class.session_code &&
-          <Fragment>
-            (Session {props.class.session_code})
-          </Fragment>
-        }
-      </a>
-    </td>
-    <td>
-      {props.class.title}&nbsp;
-      {props.requirementsDesignation &&
-        <div className="cc-requirements-designation">
-          {props.requirementsDesignation}
-        </div>
-      }
-    </td>
-    <td className="cc-text-right cc-academic-summary-table-units">
-      <ValueOrDash value={props.units} />
-    </td>
+const PrimarySection = ({ section, canViewGrades, showPoints }) => {
+  const {
+    class: klass,
+    requirementsDesignation,
+    units,
+    lawUnits,
+    grading
+  } = section;
 
-    {props.lawUnits &&
-      <td className="cc-text-right cc-academic-summary-table-units">
-        <ValueOrDash value={props.lawUnits} />
+  return (
+    <tr>
+      <td>
+        <a href={klass.url}>
+          {klass.course_code}&nbsp;
+          {klass.session_code &&
+            <Fragment>
+              (Session {klass.session_code})
+            </Fragment>
+          }
+        </a>
       </td>
-    }
-
-    <td>
-      {props.canViewGrades && props.grading &&
-        <ValueOrDash value={props.grading.grade} />
+      <td>
+        {klass.title}&nbsp;
+        {requirementsDesignation &&
+          <div className="cc-requirements-designation">
+            {requirementsDesignation}
+          </div>
+        }
+      </td>
+      <td className="cc-text-right cc-academic-summary-table-units">
+        <ValueOrDash value={units} />
+      </td>
+      {lawUnits &&
+        <td className="cc-text-right cc-academic-summary-table-units">
+          <ValueOrDash value={lawUnits} />
+        </td>
       }
-    </td>
-    <td>
-      {props.canViewGrades && props.showPoints && props.grading &&
-        <ValueOrDash value={props.grading.gradePointsAdjusted} />
-      }
-    </td>
-  </tr>
-);
+      <td>
+        {canViewGrades && grading &&
+          <ValueOrDash value={grading.grade} />
+        }
+      </td>
+      <td>
+        {canViewGrades && showPoints && grading &&
+          <ValueOrDash value={grading.gradePointsAdjusted} />
+        }
+      </td>
+    </tr>
+  );
+};
 
 PrimarySection.propTypes = propTypes;
 
-export default PrimarySection;
+const mapStateToProps = ({ myStatus }) => {
+  const { canViewGrades } = myStatus;
+  return { canViewGrades };
+};
+
+export default connect(mapStateToProps)(PrimarySection);

@@ -10,6 +10,7 @@ require('lodash');
 require('js-natural-sort');
 require('raven-js');
 require('pikaday');
+require('ng-redux');
 
 // CalCentral JS - Initialization
 require('./angular/calcentral.js');

@@ -1,9 +1,10 @@
-'use strict';
+import {
+  fetchProfileStart,
+  fetchProfileSuccess,
+  fetchProfileFailure
+} from 'Redux/actions/profileActions';
 
-/**
- * Profile Factory
- */
-angular.module('calcentral.factories').factory('profileFactory', function(apiService, $http) {
+angular.module('calcentral.factories').factory('profileFactory', function(apiService, $http, $ngRedux) {
   var urlAddressFields = '/api/campus_solutions/address_label';
   var urlConfidentialStudentMessage = '/api/campus_solutions/confidential_student_message';
   var urlCountries = '/api/campus_solutions/country';
@@ -11,9 +12,7 @@ angular.module('calcentral.factories').factory('profileFactory', function(apiSer
   var urlEmergencyContacts = '/api/campus_solutions/emergency_contacts';
   // var urlLanguageCodes = '/dummy/json/language_codes.json';
   var urlLanguageCodes = '/api/campus_solutions/language_code';
-  // var urlPerson = '/dummy/json/student_with_languages.json';
   var urlCurrencies = '/api/campus_solutions/currency_code';
-  var urlPerson = '/api/my/profile';
   var urlStates = '/api/campus_solutions/state';
   var urlTypes = '/api/campus_solutions/translate';
   var urlTypesPayFrequency = urlTypes + '?field_name=PAY_FREQ_ABBRV';
@@ -50,7 +49,26 @@ angular.module('calcentral.factories').factory('profileFactory', function(apiSer
     return apiService.http.request(options, urlCurrencies);
   };
   var getPerson = function(options) {
-    return apiService.http.request(options, urlPerson);
+    const url = '/api/my/profile';
+    // const url = '/dummy/json/student_with_languages.json';
+
+    const { myProfile } = $ngRedux.getState();
+
+    if (myProfile.loaded || myProfile.isLoading) {
+      return apiService.http.request(options, url);
+    } else {
+      $ngRedux.dispatch(fetchProfileStart());
+
+      const promise = apiService.http.request(options, url);
+
+      promise.then(({ data }) => {
+        $ngRedux.dispatch(fetchProfileSuccess(data.feed.student));
+      }).catch(error => {
+        $ngRedux.dispatch(fetchProfileFailure({ status: error.status, statusText: error.statusText }));
+      });
+
+      return promise;
+    }
   };
   var getProfileEditLink = function(options) {
     return apiService.http.request(options, urlProfileEditLink);

@@ -1,22 +1,21 @@
-import React, { Component, Fragment } from 'react';
+import React, { Fragment, useState } from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 
-class HubTermLegacyNote extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { showMore: false };
-  }
+const propTypes = {
+  hubTermApiEnabled: PropTypes.bool
+};
 
-  toggle() {
-    this.setState({ showMore: !this.state.showMore });
-  }
+const HubTermLegacyNote = ({ hubTermApiEnabled }) => {
+  const [showMore, setShowMore] = useState(false);
 
-  render() {
+  if (hubTermApiEnabled) {
     return (
       <span className="cc-academic-summary-legacy-note">
         <strong>Note: </strong>
         Enrollment data for current term and back to Spring 2010 (where applicable) is displayed.&nbsp;
 
-        {this.state.showMore
+        {showMore
           ? (
             <Fragment>
               If enrollments exist in terms prior to Spring 2010, the
@@ -24,11 +23,27 @@ class HubTermLegacyNote extends Component {
               now, please order a transcript.
             </Fragment>
           )
-          : <button className="cc-button-link" onClick={() => this.toggle()}>Show more</button>
+          : <button className="cc-button-link" onClick={() => setShowMore(!showMore)}>Show more</button>
         }
       </span>
     );
+  } else {
+    return null;
   }
-}
+};
 
-export default HubTermLegacyNote;
+HubTermLegacyNote.propTypes = propTypes;
+
+const mapStateToProps = ({ myStatus }) => {
+  const {
+    features: {
+      hubTermApi: hubTermApiEnabled
+    } = {}
+  } = myStatus;
+
+  return {
+    hubTermApiEnabled
+  };
+};
+
+export default connect(mapStateToProps)(HubTermLegacyNote);

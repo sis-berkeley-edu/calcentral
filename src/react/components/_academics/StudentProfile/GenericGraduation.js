@@ -1,14 +1,14 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 
 const propTypes = {
-  graduation: PropTypes.object.isRequired,
-  termsInAttendance: PropTypes.string,
+  appointmentsInGraduatingTerm: PropTypes.bool,
+  expectedGraduationTerm: PropTypes.object,
   isAdvisingStudentLookup: PropTypes.bool.isRequired
 };
 
-const GenericGraduation = (props) => {
-  if (props.graduation.undergraduate.expectedGraduationTerm) {
+const GenericGraduation = ({ appointmentsInGraduatingTerm, expectedGraduationTerm }) => {
+  if (expectedGraduationTerm) {
     return (
       <tr>
         <th>Terms Information</th>
@@ -16,33 +16,11 @@ const GenericGraduation = (props) => {
           <div className="cc-section-block">
             <div className="cc-text-light">Expected Graduation</div>
             <span>
-              { props.graduation.undergraduate.appointmentsInGraduatingTerm &&
+              { appointmentsInGraduatingTerm &&
                 <i className="fa fa-clock-o cc-icon-grey" style={{marginRight: '4px'}}></i>
               }
-              <strong><span>{props.graduation.undergraduate.expectedGraduationTerm.termName}</span></strong>
+              <strong><span>{expectedGraduationTerm.termName}</span></strong>
             </span>
-
-            { !props.isAdvisingStudentLookup &&
-              <div className="cc-widget-profile-footnote">
-                { props.graduation.undergraduate.appointmentsInGraduatingTerm
-                  ? (
-                    <Fragment>
-                      <a href="/academics/graduation_checklist">
-                        <strong>View Graduation Checklist</strong>
-                      </a>
-                      <br />
-
-                      <Fragment>
-                        {props.graduation.undergraduate.expectedGraduationTerm.termName}
-                        &nbsp;will be your final term to complete all degree requirements.
-                        If you have questions, please contact your College Advisor.
-                      </Fragment>
-                    </Fragment>
-                  )
-                  : <Fragment>Consult your college advisor with questions or concerns.</Fragment>
-                }
-              </div>
-            }
           </div>
         </td>
       </tr>

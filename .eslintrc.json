@@ -10,7 +10,8 @@
       "angular": false
     },
     "parserOptions": {
-        "ecmaVersion": 2018
+        "ecmaVersion": 2018,
+        "sourceType": "module"
     },
     "root": true,
     "rules": {
@@ -56,7 +57,7 @@
       "no-new": ["error"],
       "no-undef": ["error"],
       "no-underscore-dangle": ["error"],
-      "no-unused-vars": ["error"],
+      "no-unused-vars": ["error", { "argsIgnorePattern": "^_" }],
       "no-useless-escape": ["warn"],
       "no-with": ["error"],
       "padded-blocks": ["error",
@@ -70,7 +71,7 @@
       "space-before-function-paren": ["error", "never"],
       "space-infix-ops": ["error"],
       "spaced-comment": ["error", "always"],
-      "strict": ["error", "global"],
+      "strict": ["off"],
       "valid-jsdoc": ["error"],
       "wrap-iife": ["error"],
       "yoda": ["error", "never"]

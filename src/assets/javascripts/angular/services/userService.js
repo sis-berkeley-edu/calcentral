@@ -1,9 +1,13 @@
-'use strict';
+import {
+  fetchStatusStart,
+  fetchStatusSuccess,
+  fetchStatusFailure
+} from 'Redux/actions/statusActions';
 
 var _ = require('lodash');
 
 
-angular.module('calcentral.services').service('userService', function($http, $location, $route, analyticsService, httpService, utilService, calcentralConfig) {
+angular.module('calcentral.services').service('userService', function($http, $location, $route, analyticsService, httpService, utilService, calcentralConfig, $ngRedux) {
   var profile = {};
   var events = {
     isLoaded: false,
@@ -150,10 +154,14 @@ angular.module('calcentral.services').service('userService', function($http, $lo
   var fetch = function(options) {
     httpService.clearCache(options, statusUrl);
 
+    $ngRedux.dispatch(fetchStatusStart());
     return $http.get(statusUrl, {
       cache: true
     }).then(function(xhr) {
+      $ngRedux.dispatch(fetchStatusSuccess(xhr.data));
       return handleUserLoaded(xhr.data);
+    }).catch(error => {
+      $ngRedux.dispatch(fetchStatusFailure({ status: error.status, statusText: error.statusText }));
     });
   };
 

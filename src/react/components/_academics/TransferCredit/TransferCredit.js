@@ -1,5 +1,6 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 
 import GenericTransferCredit from './GenericTransferCredit';
 import LawTransferCredit from './LawTransferCredit';
@@ -15,21 +16,33 @@ const propTypes = {
   reportLink: PropTypes.object
 };
 
-const TransferCredit = ({ semesters, isStudent, reportLink, ...careers }) => {
+const TransferCredit = ({
+  semesters,
+  isStudent,
+  studentLinks,
+  advisorLinks, ...careers
+}) => {
+  const reportLink = () =>{
+    const links = studentLinks || advisorLinks;
+    if (links) {
+      return links.tcReportLink;
+    }
+  };
+
   return (
     <Fragment>
       <GenericTransferCredit {...careers.undergraduate}
         isStudent={isStudent}
-        reportLink={reportLink}
+        reportLink={reportLink()}
       />
       <GenericTransferCredit {...careers.graduate}
         isStudent={isStudent}
-        reportLink={reportLink}
+        reportLink={reportLink()}
       />
       <LawTransferCredit {...careers.law}
         semesters={semesters} 
         isStudent={isStudent}
-        reportLink={reportLink}
+        reportLink={reportLink()}
       />
     </Fragment>
   );
@@ -37,4 +50,31 @@ const TransferCredit = ({ semesters, isStudent, reportLink, ...careers }) => {
 
 TransferCredit.propTypes = propTypes;
 
-export default TransferCredit;
+const mapStateToProps = ({ myAcademics, myTransferCredit, myStatus }) => {
+  const {
+    semesters,
+    studentLinks,
+    advisorLinks
+  } = myAcademics;
+
+  const {
+    graduate,
+    undergraduate,
+    law
+  } = myTransferCredit;
+
+  const {
+    roles: {
+      student: isStudent
+    }
+  } = myStatus;
+
+  return {
+    law, undergraduate, graduate,
+    semesters, isStudent,
+    studentLinks,
+    advisorLinks
+  };
+};
+
+export default connect(mapStateToProps)(TransferCredit);
