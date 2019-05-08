@@ -504,6 +504,14 @@ describe 'Delegated access', :testui => true do
                   end
                   it ("prevents delegate UID #{uid} from hitting the delegate welcome page for UID #{student_uid}") { expect(blocks_delegate).to be true }
 
+                  # OEC
+
+                  blocks_oec = WebDriverUtils.verify_block do
+                    @driver.get "#{WebDriverUtils.base_url}/oec"
+                    wait.until { @driver.find_element(:xpath => '//h1[text()="Access Denied"]') }
+                  end
+                  it ("prevents UID #{uid} from reaching OEC for UID #{student_uid}") { expect(blocks_oec).to be true }
+
                   # CCAdmin
 
                   blocks_ccadmin = WebDriverUtils.verify_block do

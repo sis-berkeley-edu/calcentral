@@ -1,5 +1,6 @@
 class UserController < ApplicationController
   include AllowDelegateViewAs
+  include AllowLti
 
   def am_i_logged_in
     response.headers['Cache-Control'] = 'no-cache, no-store, private, must-revalidate'

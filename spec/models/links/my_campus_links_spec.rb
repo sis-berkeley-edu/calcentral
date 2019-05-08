@@ -1,10 +1,36 @@
 describe Links::MyCampusLinks do
 
   describe '#get_feed' do
-    subject { Links::MyCampusLinks.new }
-    it 'should return the links and navigation' do
-      links = subject.get_feed
-      expect(links.keys).to contain_exactly('links', 'navigation')
+    before do
+      allow(Settings.features).to receive(:campus_links_from_file).and_return(campus_links_from_file)
+    end
+    context 'when the campus_links_from_file feature flag is on' do
+      subject { Links::MyCampusLinks.new }
+      let(:campus_links_from_file) { true }
+
+      it 'should retrieve links configuration from the JSON file' do
+        expect(subject).to receive(:get_from_file)
+        expect(subject).not_to receive(:get_from_database)
+        subject.get_feed
+      end
+      it 'should return the links and navigation' do
+        links = subject.get_feed
+        expect(links.keys).to contain_exactly('links', 'navigation')
+      end
+    end
+    context 'when the campus_links_from_file feature flag is off' do
+      subject { Links::MyCampusLinks.new }
+      let(:campus_links_from_file) { false }
+
+      it 'should retrieve links configuration from Postgres' do
+        expect(subject).to receive(:get_from_database)
+        expect(subject).not_to receive(:get_from_file)
+        subject.get_feed
+      end
+      it 'should return the links and navigation' do
+        links = subject.get_feed
+        expect(links.keys).to contain_exactly('links', 'navigation')
+      end
     end
   end
 

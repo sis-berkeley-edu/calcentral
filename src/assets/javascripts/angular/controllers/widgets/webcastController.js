@@ -3,7 +3,9 @@
 /**
  * Webcast controller
  */
-angular.module('calcentral.controllers').controller('WebcastController', function(apiService, webcastFactory, $routeParams, $scope) {
+angular.module('calcentral.controllers').controller('WebcastController', function(apiService, webcastFactory, $route, $routeParams, $scope) {
+  // Is this for an official campus class or for a Canvas course site?
+  var courseMode = 'campus';
   var outerTabs = ['Course Capture Sign-up', 'Course Captures'];
   $scope.accessibilityAnnounce = apiService.util.accessibilityAnnounce;
 
@@ -23,7 +25,11 @@ angular.module('calcentral.controllers').controller('WebcastController', functio
 
   var webcastUrl = function(courseId) {
     // return '/dummy/json/media.json';
-    return '/api/media/' + courseId;
+    if (courseMode === 'canvas') {
+      return '/api/canvas/media/' + courseId;
+    } else {
+      return '/api/media/' + courseId;
+    }
   };
 
   var getWebcasts = function(title) {
@@ -59,10 +65,24 @@ angular.module('calcentral.controllers').controller('WebcastController', functio
     $scope.accessibilityAnnounce('Selected video \'' + $scope.selectedVideo.lecture + '\' loaded');
   };
 
-  $scope.$watchCollection('[$parent.selectedCourse.sections, api.user.profile.features.videos]', function(returnValues) {
-    if (returnValues[0] && returnValues[1] === true) {
-      formatClassTitle();
-      $scope.outerTabOptions = outerTabs;
+  if ($routeParams.canvasCourseId || $route.current.isEmbedded) {
+    courseMode = 'canvas';
+    var canvasCourseId;
+    if ($route.current.isEmbedded) {
+      canvasCourseId = 'embedded';
+      $scope.isEmbedded = true;
+    } else {
+      canvasCourseId = $routeParams.canvasCourseId;
     }
-  });
+    apiService.util.setTitle('Course Captures');
+    getWebcasts(canvasCourseId);
+    $scope.outerTabOptions = outerTabs;
+  } else {
+    $scope.$watchCollection('[$parent.selectedCourse.sections, api.user.profile.features.videos]', function(returnValues) {
+      if (returnValues[0] && returnValues[1] === true) {
+        formatClassTitle();
+        $scope.outerTabOptions = outerTabs;
+      }
+    });
+  }
 });
