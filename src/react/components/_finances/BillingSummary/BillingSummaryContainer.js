@@ -9,6 +9,7 @@ import Icon from '../../Icon/Icon';
 import { ICON_EXCLAMATION_TRIANGLE } from '../../Icon/IconTypes';
 
 const propTypes = {
+  analyticsService: PropTypes.object.isRequired,
   billingDetails: PropTypes.bool.isRequired,
   financesFactory: PropTypes.object.isRequired,
   userService: PropTypes.object.isRequired
@@ -90,6 +91,8 @@ class BillingSummaryContainer extends React.Component {
     } else {
       this.fetchLearnMoreLinks();
     }
+
+    this.props.analyticsService.sendEvent('Content expansion', 'Click', 'Learn more about billing expansion');
   }
   render() {
     return (
@@ -102,6 +105,7 @@ class BillingSummaryContainer extends React.Component {
         learnMoreConfig={{...this.state.learnMoreConfig}}
         learnMoreLinks={{...this.state.learnMoreLinks}}
         showMore={this.state.showMore}
+        trackAnalytics={this.props.analyticsService.sendEvent}
         widgetConfig={{...this.state.widgetConfig}} 
       />
     );
@@ -109,4 +113,4 @@ class BillingSummaryContainer extends React.Component {
 }
 BillingSummaryContainer.propTypes = propTypes;
 
-angular.module('calcentral.react').component('billingSummaryContainer', react2angular(BillingSummaryContainer, ['billingDetails'], ['financesFactory', 'userService']));
+angular.module('calcentral.react').component('billingSummaryContainer', react2angular(BillingSummaryContainer, ['billingDetails'], ['analyticsService', 'financesFactory', 'userService']));

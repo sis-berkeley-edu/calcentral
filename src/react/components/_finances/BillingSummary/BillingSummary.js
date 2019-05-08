@@ -19,13 +19,21 @@ const propTypes = {
   learnMoreConfig: PropTypes.object.isRequired,
   learnMoreLinks: PropTypes.object.isRequired,
   showMore: PropTypes.bool.isRequired,
+  trackAnalytics: PropTypes.func.isRequired,
   widgetConfig: PropTypes.object.isRequired
 };
 
 const BillingSummary = (props) => {
+  const analyticsMetadata = {
+    viewPdfStatement: {category: 'External link', action: 'Click', label: 'View PDF statement link'},
+    makePayment: {category: 'External link', action: 'Click', label: 'Make payment link'}
+  };
+
   return (
     <div className="cc-react-widget cc-widget">
-      <WidgetHeader title={props.widgetConfig.title} link={!props.billingDetails ? props.widgetConfig.link : null} />
+      <WidgetHeader 
+        title={props.widgetConfig.title}
+        link={!props.billingDetails ? props.widgetConfig.link : null} />
       <WidgetBody widgetConfig={props.widgetConfig}>
         <Balances 
           amountDueNow={props.finances.amountDueNow}
@@ -35,7 +43,10 @@ const BillingSummary = (props) => {
       </WidgetBody>
       <HigherOneButtons
         canActOnFinances={props.canActOnFinances}
-        higherOneUrl={props.higherOneUrl}/>
+        higherOneUrl={props.higherOneUrl}
+        trackAnalytics={props.trackAnalytics}
+        analyticsMakePayment={Object.values(analyticsMetadata.makePayment)}
+        analyticsViewPdf={Object.values(analyticsMetadata.viewPdfStatement)} />
       <LearnMore
         handleShowMore={props.handleShowMore}
         learnMoreConfig={props.learnMoreConfig}
