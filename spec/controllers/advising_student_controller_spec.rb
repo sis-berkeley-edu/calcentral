@@ -23,7 +23,7 @@ describe AdvisingStudentController do
   }
 
   let(:hubedos_student) do
-    double(:hubedos_student, {max_terms_in_attendance: 5, student_academic_level: 'Senior'})
+    double(:hubedos_student, {max_terms_in_attendance: 5, student_academic_levels: ['Senior']})
   end
 
   before do

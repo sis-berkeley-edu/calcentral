@@ -9,7 +9,7 @@ import GPA from './GPA';
 import Major from './Major';
 import Minor from './Minor';
 import Degrees from './Degrees';
-import Level from './Level';
+import Levels from './Levels';
 
 const propTypes = {
   academics: PropTypes.object.isRequired,
@@ -27,7 +27,7 @@ class StudentProfile extends Component {
       careers: props.academics.collegeAndLevel.careers || [],
       gpa: props.academics.gpaUnits.gpa,
       gpaUnits: props.academics.gpaUnits,
-      level: props.academics.collegeAndLevel.level,
+      levels: props.academics.collegeAndLevel.levels,
       nonApLevel: props.academics.collegeAndLevel.nonApLevel,
       majors: props.academics.collegeAndLevel.majors || [],
       minors: props.academics.collegeAndLevel.minors || []
@@ -56,8 +56,8 @@ class StudentProfile extends Component {
     return !this.hasCurrentRole('summerVisitor') && this.state.careers.length > 0;
   }
 
-  showLevel() {
-    return !this.hasCurrentRole('summerVisitor') && this.state.level;
+  showLevels() {
+    return !this.hasCurrentRole('summerVisitor') && this.state.levels;
   }
 
   showCumulativeUnits() {
@@ -125,7 +125,7 @@ class StudentProfile extends Component {
             </tr>
           }
 
-          {this.showLevel() && <Level level={this.state.level} nonApLevel={this.state.nonApLevel} />}
+          {this.showLevels() && <Levels levels={this.state.levels} />}
 
           {this.showGraduation() &&
             <ExpectedGraduation

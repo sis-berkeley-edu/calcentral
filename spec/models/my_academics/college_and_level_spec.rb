@@ -383,7 +383,7 @@ describe MyAcademics::CollegeAndLevel do
   end
 
   let(:hubedos_student) do
-    double(:hubedos_student, {max_terms_in_attendance: 5, student_academic_level: 'Senior'})
+    double(:hubedos_student, {max_terms_in_attendance: 5, student_academic_levels: ['Graduate','Professional Year 3']})
   end
 
   before do
@@ -453,7 +453,7 @@ describe MyAcademics::CollegeAndLevel do
       end
 
       it 'uses v2 academic level' do
-        expect(feed[:collegeAndLevel][:level]).to eq 'Senior'
+        expect(feed[:collegeAndLevel][:levels]).to eq ['Graduate','Professional Year 3']
       end
 
       it 'uses v2 terms in attendance' do
@@ -671,7 +671,7 @@ describe MyAcademics::CollegeAndLevel do
       end
 
       it 'uses v2 academic level' do
-        expect(feed[:collegeAndLevel][:level]).to eq 'Senior'
+        expect(feed[:collegeAndLevel][:levels]).to eq ['Graduate','Professional Year 3']
       end
 
       it 'specifies term name' do
