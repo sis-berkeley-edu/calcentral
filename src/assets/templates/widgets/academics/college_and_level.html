@@ -3,25 +3,16 @@
 <div data-cc-academic-plans-directive data-ng-if="collegeAndLevel.designatedEmphases.length" data-plans="collegeAndLevel.designatedEmphases" data-options="{labels: {'1': 'Designated Emphasis', 'other': 'Designated Emphases'}}" data-type="designatedEmphasis"></div>
 <div data-cc-academic-careers-directive data-ng-if="!isNonDegreeSeekingSummerVisitor && collegeAndLevel.careers.length" data-careers="collegeAndLevel.careers"></div>
 
-<div class="cc-table cc-table-top-border cc-clearfix" data-ng-if="!isNonDegreeSeekingSummerVisitor && collegeAndLevel.level">
+<div class="cc-table cc-table-top-border cc-clearfix" data-ng-if="!isNonDegreeSeekingSummerVisitor && collegeAndLevel.levels">
   <table class="cc-widget-profile-table">
     <tbody>
       <tr>
         <th>Level</th>
-        <th class="cc-table-subheader" scope="col" data-ng-if="collegeAndLevel.nonApLevel">Including AP</th>
-        <td data-ng-if="!collegeAndLevel.nonApLevel" data-ng-bind="collegeAndLevel.level"></td>
-      </tr>
-      <tr data-ng-if="collegeAndLevel.nonApLevel">
-        <td></td>
-        <td data-ng-bind="collegeAndLevel.level"></td>
-      </tr>
-      <tr data-ng-if="collegeAndLevel.nonApLevel">
-        <th></th>
-        <th class="cc-table-subheader" scope="col">Not Including AP</th>
-      </tr>
-      <tr data-ng-if="collegeAndLevel.nonApLevel">
-        <td></td>
-        <td data-ng-bind="collegeAndLevel.nonApLevel"></td>
+        <td>
+          <div data-ng-repeat="level in collegeAndLevel.levels">
+            <span data-ng-bind="level"></span>
+          </div>
+        </td>
       </tr>
     </tbody>
   </table>

@@ -36,7 +36,7 @@ module MyAcademics
       if (status = statuses.first)
         registration_term = status.try(:[], 'currentRegistration').try(:[], 'term')
         college_and_level[:careers] = parse_hub_careers statuses
-        college_and_level[:level] = hub_student.student_academic_level
+        college_and_level[:levels] = hub_student.student_academic_levels
         college_and_level[:termName] = parse_hub_term_name(registration_term).try(:[], 'name')
         college_and_level[:termId] = registration_term.try(:[], 'id')
         college_and_level[:termsInAttendance] = status.try(:[], 'termsInAttendance').try(:to_s)

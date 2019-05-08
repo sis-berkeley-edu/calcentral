@@ -10,10 +10,8 @@ module HubEdos
       end
     end
 
-    def student_academic_level
-      type_code = current_registration['academicCareer']['code'] == 'LAW' ? 'EOT' : 'BOT'
-      level = current_registration['academicLevels'].find {|al| al['type']['code'] == type_code }
-      level['level']['description']
+    def student_academic_levels
+      current_term_registrations.collect {|registration| academic_level_description(registration) }
     end
 
     private
@@ -22,10 +20,19 @@ module HubEdos
       @student_data ||= HubEdos::V2::Student.new(user_id: @uid).get
     end
 
-    def current_registration
-      @current_registration ||= begin
+    def academic_level_description(registration)
+      type_code = registration['academicCareer']['code'] == 'LAW' ? 'EOT' : 'BOT'
+      level = registration['academicLevels'].find {|al| al['type']['code'] == type_code }
+      level['level']['description']
+    end
+
+    def current_term_registrations
+      @current_term_registrations ||= begin
+        current_term_id = Berkeley::Terms.fetch.current.campus_solutions_id
         if registrations = student_data[:feed]['registrations']
-          registrations.find { |r| r['term']['id'] == Berkeley::Terms.fetch.current.campus_solutions_id }
+          registrations.select { |r| r['term']['id'] == current_term_id }
+        else
+          []
         end
       end
     end
