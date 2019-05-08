@@ -1,6 +1,7 @@
 class MyCampusLinksController < ApplicationController
   extend Cache::Cacheable
   include AllowDelegateViewAs
+  include Links::CampusLinksFromFileFeatureFlagged
 
   before_filter :api_authenticate
 
@@ -17,4 +18,14 @@ class MyCampusLinksController < ApplicationController
     self.class.expire
     get_feed
   end
+
+  def refresh
+    authorize(current_user, :can_author?)
+    unless is_campus_links_from_file_feature_enabled
+      Links::CampusLinkLoader.delete_links!
+      Links::CampusLinkLoader.load_links! "/public/json/campuslinks.json"
+    end
+    expire
+  end
+
 end

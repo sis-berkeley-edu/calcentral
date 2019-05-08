@@ -29,12 +29,12 @@ describe User::StoredUsers do
     {
       saved: [
         {
-          uc_clc_stor_id: stored_uid
+          stored_uid: stored_uid
         }
       ],
       recent: [
         {
-          uc_clc_stor_id: stored_uid
+          stored_uid: stored_uid
         }
       ]
     }
@@ -54,19 +54,17 @@ describe User::StoredUsers do
       saved_uids_stub = double
       recent_uids_stub = double
 
-      expect(User::StoredUsers).to receive(:get_user).with(owner_uid).and_return stub_model
-      expect(stub_model).to receive(:saved_uids).and_return saved_uids_stub
-      expect(stub_model).to receive(:recent_uids).and_return recent_uids_stub
+      User::StoredUsers.should_receive(:get_user).with(owner_uid).and_return stub_model
+      stub_model.should_receive(:saved_uids).and_return saved_uids_stub
+      stub_model.should_receive(:recent_uids).and_return recent_uids_stub
 
-      expect(saved_uids_stub).to receive(:stored_uid).at_least(:once).and_return(stored_uid)
-      expect(saved_uids_stub).to receive(:order).with(:created_at).and_return saved_uids_stub
-      expect(saved_uids_stub).to receive(:reverse_order).and_return [saved_uids_stub]
+      saved_uids_stub.should_receive(:order).with(:created_at).and_return saved_uids_stub
+      saved_uids_stub.should_receive(:reverse_order).and_return fake_stored_uid_entries[:saved]
 
-      expect(recent_uids_stub).to receive(:stored_uid).at_least(:once).and_return(stored_uid)
-      expect(recent_uids_stub).to receive(:order).with(:created_at).and_return recent_uids_stub
-      expect(recent_uids_stub).to receive(:reverse_order).and_return [recent_uids_stub]
+      recent_uids_stub.should_receive(:order).with(:created_at).and_return recent_uids_stub
+      recent_uids_stub.should_receive(:reverse_order).and_return fake_stored_uid_entries[:recent]
 
-      expect(User::BasicAttributes).to receive(:attributes_for_uids).with([stored_uid, stored_uid]).and_return fake_ldap_user
+      User::BasicAttributes.should_receive(:attributes_for_uids).with([stored_uid, stored_uid]).and_return fake_ldap_user
 
       users = User::StoredUsers.get owner_uid
 
@@ -102,17 +100,17 @@ describe User::StoredUsers do
   describe '#store_saved_uid' do
     it 'should store uid successfully if uid is not already stored and current user exists' do
       stub_model = double
-      expect(User::StoredUsers).to receive(:get_user).with(owner_uid).and_return stub_model
-      expect(stub_model).to receive(:saved_uids).and_return stub_model
-      expect(stub_model).to receive(:where).with({ stored_uid: uid_to_store }).and_return []
-      expect(stub_model).to receive(:create).with({ stored_uid: uid_to_store}, without_protection:true )
+      User::StoredUsers.should_receive(:get_user).with(owner_uid).and_return stub_model
+      stub_model.should_receive(:saved_uids).and_return stub_model
+      stub_model.should_receive(:where).with({ stored_uid: uid_to_store }).and_return []
+      stub_model.should_receive(:create).with({ stored_uid: uid_to_store })
 
       response = User::StoredUsers.store_saved_uid(owner_uid, uid_to_store)
       expect(response).to eq success_response
     end
 
     it 'should return error if owner_uid does not exist' do
-      expect(User::StoredUsers).to receive(:get_user).with(owner_uid).and_return nil
+      User::StoredUsers.should_receive(:get_user).with(owner_uid).and_return nil
 
       response = User::StoredUsers.store_saved_uid(owner_uid, uid_to_store)
       expect(response).to eq not_found_error
@@ -120,9 +118,9 @@ describe User::StoredUsers do
 
     it 'should return error if uid_to_store is already stored' do
       stub_model = double
-      expect(User::StoredUsers).to receive(:get_user).with(owner_uid).and_return stub_model
-      expect(stub_model).to receive(:saved_uids).and_return stub_model
-      expect(stub_model).to receive(:where).with({ stored_uid: uid_to_store }).and_return [1, 2]
+      User::StoredUsers.should_receive(:get_user).with(owner_uid).and_return stub_model
+      stub_model.should_receive(:saved_uids).and_return stub_model
+      stub_model.should_receive(:where).with({ stored_uid: uid_to_store }).and_return [1, 2]
 
       response = User::StoredUsers.store_saved_uid(owner_uid, uid_to_store)
       expect(response).to eq already_stored_error
@@ -132,10 +130,10 @@ describe User::StoredUsers do
   describe '#store_recent_uid' do
     it 'should store uid successfully if uid is not already stored and current user exists' do
       stub_model = double
-      expect(User::StoredUsers).to receive(:get_user).with(owner_uid).and_return stub_model
-      expect(stub_model).to receive(:recent_uids).and_return stub_model
-      expect(stub_model).to receive(:where).with({ stored_uid: uid_to_store }).and_return []
-      expect(stub_model).to receive(:create).with({ stored_uid: uid_to_store }, without_protection:true )
+      User::StoredUsers.should_receive(:get_user).with(owner_uid).and_return stub_model
+      stub_model.should_receive(:recent_uids).and_return stub_model
+      stub_model.should_receive(:where).with({ stored_uid: uid_to_store }).and_return []
+      stub_model.should_receive(:create).with({ stored_uid: uid_to_store })
 
       response = User::StoredUsers.store_recent_uid(owner_uid, uid_to_store)
       expect(response).to eq success_response
@@ -156,12 +154,12 @@ describe User::StoredUsers do
       User::StoredUsers.store_recent_uid(owner_uid, uid.next)
 
       expect(owner.recent_uids.count).to eq User::RecentUid::MAX_PER_OWNER_ID
-      expect(owner.recent_uids.find_by uc_clc_id: oldest.uc_clc_id).to be_blank
-      expect(owner.recent_uids.find_by uc_clc_id: second_oldest.uc_clc_id).to be_present
+      expect(owner.recent_uids.find_by id: oldest.id).to be_blank
+      expect(owner.recent_uids.find_by id: second_oldest.id).to be_present
     end
 
     it 'should return error if owner_uid does not exist' do
-      expect(User::StoredUsers).to receive(:get_user).with(owner_uid).and_return nil
+      User::StoredUsers.should_receive(:get_user).with(owner_uid).and_return nil
 
       response = User::StoredUsers.store_recent_uid(owner_uid, uid_to_store)
       expect(response).to eq not_found_error
@@ -169,9 +167,9 @@ describe User::StoredUsers do
 
     it 'should return error if uid_to_store is already stored' do
       stub_model = double
-      expect(User::StoredUsers).to receive(:get_user).with(owner_uid).and_return stub_model
-      expect(stub_model).to receive(:recent_uids).and_return stub_model
-      expect(stub_model).to receive(:where).with({ stored_uid: uid_to_store }).and_return [1, 2]
+      User::StoredUsers.should_receive(:get_user).with(owner_uid).and_return stub_model
+      stub_model.should_receive(:recent_uids).and_return stub_model
+      stub_model.should_receive(:where).with({ stored_uid: uid_to_store }).and_return [1, 2]
 
       response = User::StoredUsers.store_recent_uid(owner_uid, uid_to_store)
       expect(response).to eq already_stored_error
@@ -181,10 +179,10 @@ describe User::StoredUsers do
   describe '#delete_saved_uid' do
     it 'should delete uid successfully' do
       stub_model = double
-      expect(User::StoredUsers).to receive(:get_user).with(owner_uid).and_return stub_model
-      expect(stub_model).to receive(:saved_uids).and_return stub_model
-      expect(stub_model).to receive(:find_by).with(stored_uid: uid_to_delete).and_return stub_model
-      expect(stub_model).to receive :destroy
+      User::StoredUsers.should_receive(:get_user).with(owner_uid).and_return stub_model
+      stub_model.should_receive(:saved_uids).and_return stub_model
+      stub_model.should_receive(:find_by).with(stored_uid: uid_to_delete).and_return stub_model
+      stub_model.should_receive :destroy
 
       response = User::StoredUsers.delete_saved_uid(owner_uid, uid_to_delete)
       expect(response).to eq success_response
@@ -192,16 +190,16 @@ describe User::StoredUsers do
 
     it 'should still return success if uid_to_delete is already absent' do
       stub_model = double
-      expect(User::StoredUsers).to receive(:get_user).with(owner_uid).and_return stub_model
-      expect(stub_model).to receive(:saved_uids).and_return stub_model
-      expect(stub_model).to receive(:find_by).with(stored_uid: uid_to_delete).and_return nil
+      User::StoredUsers.should_receive(:get_user).with(owner_uid).and_return stub_model
+      stub_model.should_receive(:saved_uids).and_return stub_model
+      stub_model.should_receive(:find_by).with(stored_uid: uid_to_delete).and_return nil
 
       response = User::StoredUsers.delete_saved_uid(owner_uid, uid_to_delete)
       expect(response).to eq success_response
     end
 
     it 'should return error if owner_uid does not exist' do
-      expect(User::StoredUsers).to receive(:get_user).with(owner_uid).and_return nil
+      User::StoredUsers.should_receive(:get_user).with(owner_uid).and_return nil
 
       response = User::StoredUsers.delete_saved_uid(owner_uid, uid_to_delete)
       expect(response).to eq not_found_error
@@ -211,10 +209,10 @@ describe User::StoredUsers do
   describe '#delete_recent_uid' do
     it 'should delete uid successfully' do
       stub_model = double
-      expect(User::StoredUsers).to receive(:get_user).with(owner_uid).and_return stub_model
-      expect(stub_model).to receive(:recent_uids).and_return stub_model
-      expect(stub_model).to receive(:find_by).with(stored_uid: uid_to_delete).and_return stub_model
-      expect(stub_model).to receive :destroy
+      User::StoredUsers.should_receive(:get_user).with(owner_uid).and_return stub_model
+      stub_model.should_receive(:recent_uids).and_return stub_model
+      stub_model.should_receive(:find_by).with(stored_uid: uid_to_delete).and_return stub_model
+      stub_model.should_receive :destroy
 
       response = User::StoredUsers.delete_recent_uid(owner_uid, uid_to_delete)
       expect(response).to eq success_response
@@ -222,16 +220,16 @@ describe User::StoredUsers do
 
     it 'should still return success if uid_to_delete is already absent' do
       stub_model = double
-      expect(User::StoredUsers).to receive(:get_user).with(owner_uid).and_return stub_model
-      expect(stub_model).to receive(:recent_uids).and_return stub_model
-      expect(stub_model).to receive(:find_by).with(stored_uid: uid_to_delete).and_return nil
+      User::StoredUsers.should_receive(:get_user).with(owner_uid).and_return stub_model
+      stub_model.should_receive(:recent_uids).and_return stub_model
+      stub_model.should_receive(:find_by).with(stored_uid: uid_to_delete).and_return nil
 
       response = User::StoredUsers.delete_recent_uid(owner_uid, uid_to_delete)
       expect(response).to eq success_response
     end
 
     it 'should return error if owner_uid does not exist' do
-      expect(User::StoredUsers).to receive(:get_user).with(owner_uid).and_return nil
+      User::StoredUsers.should_receive(:get_user).with(owner_uid).and_return nil
 
       response = User::StoredUsers.delete_recent_uid(owner_uid, uid_to_delete)
       expect(response).to eq not_found_error
@@ -241,16 +239,16 @@ describe User::StoredUsers do
   describe '#delete_all_recent' do
     it 'should delete recent uids successfully' do
       stub_model = double
-      expect(User::StoredUsers).to receive(:get_user).with(owner_uid).and_return stub_model
-      expect(stub_model).to receive(:recent_uids).and_return stub_model
-      expect(stub_model).to receive :destroy_all
+      User::StoredUsers.should_receive(:get_user).with(owner_uid).and_return stub_model
+      stub_model.should_receive(:recent_uids).and_return stub_model
+      stub_model.should_receive :destroy_all
 
       response = User::StoredUsers.delete_all_recent owner_uid
       expect(response).to eq success_response
     end
 
     it 'should return error if owner_uid does not exist' do
-      expect(User::StoredUsers).to receive(:get_user).with(owner_uid).and_return nil
+      User::StoredUsers.should_receive(:get_user).with(owner_uid).and_return nil
 
       response = User::StoredUsers.delete_all_recent owner_uid
       expect(response).to eq not_found_error
@@ -260,16 +258,16 @@ describe User::StoredUsers do
   describe '#delete_all_saved' do
     it 'should delete saved uids successfully' do
       stub_model = double
-      expect(User::StoredUsers).to receive(:get_user).with(owner_uid).and_return stub_model
-      expect(stub_model).to receive(:saved_uids).and_return stub_model
-      expect(stub_model).to receive :destroy_all
+      User::StoredUsers.should_receive(:get_user).with(owner_uid).and_return stub_model
+      stub_model.should_receive(:saved_uids).and_return stub_model
+      stub_model.should_receive :destroy_all
 
       response = User::StoredUsers.delete_all_saved owner_uid
       expect(response).to eq success_response
     end
 
     it 'should return error if owner_uid does not exist' do
-      expect(User::StoredUsers).to receive(:get_user).with(owner_uid).and_return nil
+      User::StoredUsers.should_receive(:get_user).with(owner_uid).and_return nil
 
       response = User::StoredUsers.delete_all_saved owner_uid
       expect(response).to eq not_found_error

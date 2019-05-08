@@ -11,6 +11,9 @@ class Ability
       can :dashboard, :all
       if user.policy.can_administrate?
         can :manage, [
+          MailingLists::Member,
+          MailingLists::SiteMailingList,
+          Oec::CourseCode,
           ServiceAlerts::Alert,
           User::Auth
         ]
@@ -65,6 +68,9 @@ RailsAdmin.config do |config|
 
   # Include specific models (exclude the others):
   config.included_models = %w(
+    Links::Link Links::LinkCategory Links::LinkSection Links::UserRole
+    MailingLists::Member MailingLists::SiteMailingList
+    Oec::CourseCode
     ServiceAlerts::Alert
     User::Auth
   )
@@ -86,32 +92,62 @@ RailsAdmin.config do |config|
   #   - Models are reloaded at each request in development mode (when modified), which may smooth your RailsAdmin development workflow.
   #
 
+  config.model 'Links::LinkSection' do
+    label 'Section'
+
+    object_label_method do
+      :link_section_label_method
+    end
+
+    field :link_root_cat do
+      associated_collection_scope do
+        Proc.new { |scope|
+          scope = scope.where(root_level: true)
+        }
+      end
+    end
+
+    field :link_top_cat
+    field :link_sub_cat
+  end
+
+# Represent instances of the Linksection model as:
+  def link_section_label_method
+    if self.id
+      "#{self.link_root_cat.try(:name)}/#{self.link_top_cat.try(:name)}/#{self.link_sub_cat.try(:name)}"
+    end
+  end
+
+  config.model 'Links::LinkCategory' do
+    label 'Category'
+  end
+
+  # Links::UserRole needs to be available so we can set perms on Links, but should not be in left nav
+  config.model 'Links::UserRole' do
+    visible false
+  end
+
+  config.model 'Links::Link' do
+    label 'Link'
+  end
+
   config.model 'User::Auth' do
     label 'User Authorizations'
     list do
-      field :uc_clc_id do
-        column_width 25
-        label 'id'
-      end
       field :uid do
         column_width 60
-        label 'uid'
       end
-      field :uc_clc_is_su do
+      field :is_superuser do
         column_width 20
-        label 'superuser?'
       end
-      field :uc_clc_is_au do
+      field :is_author do
         column_width 20
-        label 'author'
       end
-      field :uc_clc_is_vw do
+      field :is_viewer do
         column_width 20
-        label 'viewer'
       end
-      field :uc_clc_active do
+      field :active do
         column_width 20
-        label 'active'
       end
       field :created_at do
         column_width 130
@@ -120,128 +156,34 @@ RailsAdmin.config do |config|
         column_width 130
       end
     end
-    create do
-      field :uid do
-        label 'uid'
-        required true
-      end
-      field :uc_clc_is_su do
-        label 'superuser?'
-      end
-      field :uc_clc_is_au do
-        label 'author?'
-      end
-      field :uc_clc_is_vw do
-        label 'viewer?'
-      end
-      field :uc_clc_active do
-        label 'active?'
-      end
-    end
-    edit do
-      field :uid do
-        label 'uid'
-        required true
-      end
-      field :uc_clc_is_su do
-        label 'superuser?'
-      end
-      field :uc_clc_is_au do
-        label 'author?'
-      end
-      field :uc_clc_is_vw do
-        label 'viewer?'
-      end
-      field :uc_clc_active do
-        label 'active?'
-      end
-    end
+  end
+
+  config.model 'MailingLists::Member' do
+    label 'Mailing List Memberships'
+  end
+
+  config.model 'MailingLists::SiteMailingList' do
+    label 'Mailing Lists'
+  end
+
+  config.model 'Oec::CourseCode' do
+    label 'Course Code Mapping'
   end
 
   config.model 'ServiceAlerts::Alert' do
     label 'Service Alert'
 
-    list do
-      field :uc_clc_id do
-        label 'ID'
-        column_width 10
-      end
-      field :uc_alrt_title do
-        label 'Title'
-        column_width 40
-      end
-      field :uc_alrt_snippt do
-        label 'Snippet'
-        column_width 40
-      end
-      field :uc_alrt_body do
-        label 'Body'
-        column_width 60
-      end
-      field :uc_alrt_pubdt do
-        label 'Pub Date'
-        column_width 40
-      end
-      field :uc_alrt_display do
-        label 'Display'
-        column_width 1
-      end
-      field :uc_alrt_splash do
-        label 'Splash'
-        column_width 1
-      end
-      field :created_at do
-        column_width 10
-      end
-      field :updated_at do
-        column_width 10
-      end
+    include_fields :title, :snippet, :body, :publication_date
+
+    field :splash do
+      label 'Only on splash page'
     end
-    create do
-      field :uc_alrt_title do
-        label 'Title'
-        required true
-      end
-      field :uc_alrt_snippt do
-        label 'Snippet'
-      end
-      field :uc_alrt_body do
-        label 'Body'
-        required true
-      end
-      field :uc_alrt_pubdt do
-        label 'Pub Date'
-        required true
-      end
-      field :uc_alrt_display do
-        label 'Display'
-      end
-      field :uc_alrt_splash do
-        label 'Splash'
-      end
-    end
-    edit do
-      field :uc_alrt_title do
-        label 'Title'
-        required true
-      end
-      field :uc_alrt_snippt do
-        label 'Snippet'
-      end
-      field :uc_alrt_body do
-        label 'Body'
-        required true
-      end
-      field :uc_alrt_pubdt do
-        label 'Pub Date'
-        required true
-      end
-      field :uc_alrt_display do
-        label 'Display'
-      end
-      field :uc_alrt_splash do
-        label 'Splash'
-      end
+
+    include_fields :display
+
+    configure :preview do
+      help false
+      read_only true
     end
   end
 

@@ -19,6 +19,9 @@
 #       - Also display the "next Aid Year" between "the day admissions letters are released"
 #         and the last day of Summer term. The admissions-release day is not available in the
 #         campus DB, and so it is maintained in the CalCentral application DB.
+#   * OEC :
+#       - Still manually configured for now.
+
 
 module Berkeley
   class Terms

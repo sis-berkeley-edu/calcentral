@@ -1,0 +1,284 @@
+module Oec
+  class Task
+    extend Cache::Cacheable
+    include ClassLogger
+
+    LOG_DIRECTORY = Pathname.new Settings.oec.local_write_directory
+
+    class << self; attr_accessor :success_callback; end
+
+    class UnexpectedDataError < StandardError; end
+
+    def self.on_success_run(task_class, opts={})
+      self.success_callback = opts.merge(class: task_class)
+    end
+
+    def self.date_format
+      '%F'
+    end
+
+    def self.cache_key(id)
+      "Oec::Task/#{id}"
+    end
+
+    def self.opts_from_environment
+      term_code = ENV['term_code']
+      raise ArgumentError, 'term_code required' unless term_code
+      {
+        app_id: GoogleApps::Proxy::OEC_APP_ID,
+        term_code: term_code,
+        allow_past_term: ENV['allow_past_term'].present?,
+        local_write: ENV['local_write'].present?,
+        dept_codes: ENV['dept_codes']
+      }
+    end
+
+    def self.timestamp_format
+      '%H:%M:%S'
+    end
+
+    def initialize(opts)
+      @opts = opts
+      @log = []
+      @status = 'In progress'
+      @api_task_id = opts[:api_task_id]
+
+      initialize_remote_drive
+      write_status_to_cache if opts[:log_to_cache]
+
+      @term_code = opts[:term_code]
+      set_term_dates
+
+      @date_time = opts[:date_time] || default_date_time
+      @departments_filter = if opts[:dept_codes]
+                             {dept_code: opts[:dept_codes].split}
+                           else
+                             {include_in_oec: true}
+                           end
+    end
+
+    def run
+      logger.warn "OEC job started. Job state updated in cache key #{@api_task_id}"
+      return if @status == 'Error'
+      begin
+        log :info, "Starting #{self.class.name}"
+        if !@opts[:allow_past_term] && @term_end < DateTime.now
+          raise StandardError, "Past ending date #{@term_end} for term #{@term_code}"
+        end
+        run_internal
+        @status = 'Success' unless (@status == 'Error' || self.class.success_callback)
+        true
+      rescue UnexpectedDataError => e
+        log :warn, "#{self.class.name} aborted with unexpected data: #{e.message}"
+        @status = 'Error'
+        nil
+      rescue => e
+        log :error, "#{self.class.name} aborted with error: #{e.message}\n#{e.backtrace.join "\n\t"}"
+        @status = 'Error'
+        nil
+      ensure
+        write_log
+        write_status_to_cache if @opts[:log_to_cache]
+        run_success_callback if self.class.success_callback && @status != 'Error'
+      end
+    end
+
+    private
+
+    def initialize_remote_drive
+      @remote_drive = Oec::RemoteDrive.new
+    rescue => e
+      log :error, "Error connecting to Google Drive: #{e.message}\n#{e.backtrace.join "\n\t"}"
+      @status = 'Error'
+    end
+
+    def default_date_time
+      DateTime.now
+    end
+
+    def copy_file(file, dest_folder)
+      return if @opts[:local_write]
+      @remote_drive.check_conflicts_and_copy_file(file, dest_folder,
+        on_success: -> { log :debug, "Copied file '#{file.title}' to remote drive folder '#{dest_folder.title}'" }
+      )
+    end
+
+    def create_folder(folder_name, parent=nil)
+      return if @opts[:local_write]
+      @remote_drive.check_conflicts_and_create_folder(folder_name, parent,
+        on_conflict: :error,
+        on_creation: -> { log :debug, "Created remote folder '#{folder_name}'" }
+      )
+    end
+
+    def datestamp(arg = @date_time)
+      arg.strftime self.class.date_format
+    end
+
+    def default_term_dates
+      if (course_overrides_sheet = get_overrides_worksheet Oec::Courses)
+        default_term_dates_row = course_overrides_sheet.find do |row|
+          row['DEPT_NAME'].blank? &&
+            row['CATALOG_ID'].blank? &&
+            row['INSTRUCTION_FORMAT'].blank? &&
+            row['SECTION_NUM'].blank? &&
+            row['START_DATE'].present? &&
+            row['END_DATE'].present?
+        end
+        default_term_dates_row.slice('START_DATE', 'END_DATE') if default_term_dates_row
+      end
+    end
+
+    def export_sheet(worksheet, dest_folder)
+      if @opts[:local_write]
+        worksheet.write_csv
+        log :debug, "Exported worksheet to local file #{worksheet.csv_export_path}"
+      else
+        upload_worksheet(worksheet, worksheet.export_name, dest_folder)
+      end
+    end
+
+    def export_sheet_headers(klass, dest_folder)
+      worksheet = klass.new
+      if @opts[:local_write]
+        worksheet.write_csv
+        log :debug, "Exported to header-only local file #{worksheet.csv_export_path}"
+      else
+        @remote_drive.check_conflicts_and_upload(worksheet, klass.export_name, Oec::Worksheet, dest_folder,
+          on_success: -> { log :debug, "Uploaded header-only sheet '#{klass.export_name}' to remote drive folder '#{dest_folder.title}'" })
+      end
+    end
+
+    def find_csv_in_folder(term_folder, title)
+      @remote_drive.find_items_by_title(title, parent_id: term_folder.id, mime_type: 'text/csv').first
+    end
+
+    def find_last_export(term_folder)
+      if (exports = @remote_drive.find_first_matching_folder(Oec::Folder.published, term_folder))
+        @remote_drive.find_folders(exports.id).sort_by(&:title).last
+      end
+    end
+
+    def find_or_create_folder(folder_name, parent=nil)
+      @remote_drive.check_conflicts_and_create_folder(folder_name, parent,
+        on_conflict: :return_existing,
+        on_creation: -> { log :debug, "Created remote folder '#{folder_name}'" }
+      )
+    end
+
+    def find_or_create_now_subfolder(category_name)
+      return if @opts[:local_write]
+      parent = @remote_drive.find_nested([@term_code, category_name], on_failure: :error)
+      find_or_create_folder("#{datestamp} #{timestamp}", parent)
+    end
+
+    def find_or_create_today_subfolder(category_name, date_time = @date_time)
+      return if @opts[:local_write]
+      parent = @remote_drive.find_nested([@term_code, category_name], on_failure: :error)
+      find_or_create_folder(datestamp(date_time), parent)
+    end
+
+    def find_previous_term_folder
+      if (folders = @remote_drive.find_folders)
+        folders.select { |f| f.title.match(/\A\d{4}-[A-D]\Z/) && f.title < @term_code }.sort_by(&:title).last
+      end
+    end
+
+    def get_overrides_worksheet(klass)
+      if (overrides_sheet = @remote_drive.find_nested [@term_code, Oec::Folder.overrides, klass.export_name])
+        klass.from_csv @remote_drive.export_csv overrides_sheet
+      end
+    end
+
+    def date_time_of_most_recent(category_name)
+      # Deduce date from folder title
+      parent = @remote_drive.find_nested([@term_code, category_name])
+      folders = @remote_drive.find_folders(parent.id)
+      unless (last = folders.sort_by(&:title).last)
+        raise UnexpectedDataError, "#{self.class.name} requires a non-empty '#{@term_code}/#{category_name}' folder"
+      end
+      log :info, "#{self.class.name} will pull data from '#{@term_code}/#{category_name}/#{last.title}'"
+      datetime_format = "#{self.class.date_format} #{self.class.timestamp_format}"
+      begin
+        DateTime.strptime(last.title, datetime_format)
+      rescue
+        raise UnexpectedDataError, "Folder '#{@term_code}/#{category_name}/#{last.title}' failed to match datetime format '#{datetime_format}'"
+      end
+    end
+
+    def log(level, message, opts={})
+      logger.send level, message
+      if opts[:timestamp] == false
+        @log << "           #{message}"
+      else
+        @log << "[#{Time.now.strftime '%T'}] #{message}"
+        write_status_to_cache if @opts[:log_to_cache]
+      end
+    end
+
+    def run_success_callback
+      return if (condition = self.class.success_callback[:if]) && !instance_eval(&condition)
+      task_opts = @opts.merge(previous_task_log: @log)
+      self.class.success_callback[:class].new(task_opts).run
+    end
+
+    def set_term_dates
+      term = Berkeley::Terms.fetch.campus[Berkeley::TermCodes.to_slug *@term_code.split('-')]
+      raise ArgumentError, "Unrecognized term code #{@term_code}" unless term
+      @term_start = term.classes_start
+      # Our default date to finalize course and enrollment data for evaluation is the Sunday following
+      # the last week of instruction. Campus data gives us the Friday of that week.
+      @term_end = term.instruction_end.advance(days: 2)
+    end
+
+    def timestamp(arg = @date_time)
+      arg.strftime self.class.timestamp_format
+    end
+
+    def upload_file(path, remote_name, type, folder)
+      @remote_drive.check_conflicts_and_upload(path, remote_name, type, folder,
+        on_success: -> { log :debug, "Uploaded item #{path} to remote drive folder '#{folder.title}'" })
+    end
+
+    def upload_worksheet(worksheet, title, folder)
+      @remote_drive.check_conflicts_and_upload(worksheet, title, Oec::Worksheet, folder,
+        on_success: -> { log :debug, "Uploaded sheet '#{title}' to remote drive folder '#{folder.title}'" })
+    end
+
+    def write_log
+      now = DateTime.now
+      log_name = "#{timestamp now} #{self.class.name.demodulize.underscore.tr('_', ' ')}.log"
+      log :debug, "Exporting log file '#{log_name}'"
+      FileUtils.mkdir_p LOG_DIRECTORY unless File.exists? LOG_DIRECTORY
+      # Local files need colons taken out of the timestamp, but remote sheets are happy to include them.
+      log_path = LOG_DIRECTORY.join log_name.gsub(':', '')
+      File.open(log_path, 'wb') { |f| f.puts @log }
+      if @opts[:local_write]
+        logger.debug "Wrote log file to path #{log_path}"
+      else
+        if (logs_today = find_or_create_today_subfolder(Oec::Folder.logs, now))
+          begin
+            upload_file(log_path, log_name, 'text/plain', logs_today)
+          ensure
+            File.delete log_path
+          end
+        end
+      end
+    rescue => e
+      log :error, "Could not write log: #{e.message}\n#{e.backtrace.join "\n\t"}"
+    end
+
+    def write_status_to_cache
+      lines_to_cache = []
+      # Cache only timestamped lines for browser display.
+      [@opts[:previous_task_log], @log].each do |log|
+        lines_to_cache.concat log.select { |line| line.start_with? '[' } if log
+      end
+      self.class.write_cache(
+        {status: @status, log: lines_to_cache},
+        @api_task_id
+      )
+    end
+
+  end
+end

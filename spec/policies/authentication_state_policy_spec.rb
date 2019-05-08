@@ -16,6 +16,7 @@ describe AuthenticationStatePolicy do
   let(:author_uid) {random_id}
   let(:viewer_uid) {random_id}
   let(:inactive_viewer_uid) {random_id}
+  let(:oec_administrator_uid) {random_id}
   let(:average_joe_uid) {random_id}
   let(:inactive_average_joe_uid) {random_id}
   let(:inactive_superuser_uid) {random_id}
@@ -28,12 +29,14 @@ describe AuthenticationStatePolicy do
       average_joe_uid => {uid: average_joe_uid, is_superuser: false, is_author: false, is_viewer: false, active: true},
       inactive_average_joe_uid => {uid: average_joe_uid, is_superuser: false, is_author: false, is_viewer: false, active: false},
       inactive_superuser_uid => {uid: inactive_superuser_uid, is_superuser: true, is_author: false, is_viewer: false, active: false},
+      oec_administrator_uid => {uid: oec_administrator_uid, is_superuser: false, is_author: false, is_viewer: false, active: true}
     }
   end
   before do
     allow(User::Auth).to receive(:get) do |uid|
       User::Auth.new auth_map[uid]
     end
+    allow(Settings.oec).to receive(:administrator_uid).and_return oec_administrator_uid
   end
 
   subject { AuthenticationState.new(session_state).policy }
@@ -86,6 +89,36 @@ describe AuthenticationStatePolicy do
       let(:user_id) {superuser_uid}
       let(:lti_authenticated_only) {true}
       its(:can_administrate?) { is_expected.to be false }
+    end
+  end
+
+  describe '#can_administer_oec?' do
+    context 'superuser as self' do
+      let(:user_id) {superuser_uid}
+      its(:can_administer_oec?) { is_expected.to be true }
+    end
+    context 'oec administrator' do
+      let(:user_id) {oec_administrator_uid}
+      its(:can_administer_oec?) { is_expected.to be true }
+    end
+    context 'average joe' do
+      let(:user_id) {average_joe_uid}
+      its(:can_administer_oec?) { is_expected.to be false }
+    end
+    context 'view-as mode' do
+      let(:user_id) {oec_administrator_uid}
+      context 'traditional view-as' do
+        let(:original_user_id) {viewer_uid}
+        its(:can_administer_oec?) { is_expected.to be false }
+      end
+      context 'advisor view-as' do
+        let(:original_advisor_user_id) {random_id}
+        its(:can_administer_oec?) { is_expected.to be false }
+      end
+      context 'delegate view-as' do
+        let(:original_delegate_user_id) {random_id}
+        its(:can_administer_oec?) { is_expected.to be false }
+      end
     end
   end
 

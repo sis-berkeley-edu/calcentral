@@ -3,7 +3,7 @@ describe 'User::Data' do
   it "should report DB outage" do
     User::Data.stub(:find_by_sql).and_raise(
         ActiveRecord::StatementInvalid,
-        "Primary DB Connection refused. Check that the hostname and port are correct and that the postmaster is accepting TCP/IP connections.: select 1"
+        "Java::OrgPostgresqlUtil::PSQLException: Connection refused. Check that the hostname and port are correct and that the postmaster is accepting TCP/IP connections.: select 1"
     )
     is_ok = User::Data.database_alive?
     is_ok.should be_falsey
