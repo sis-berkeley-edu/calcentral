@@ -1,0 +1,16 @@
+@import '../../../stylesheets/_colors.scss';
+
+.MissingPhoto {
+  background: $light-gray;
+  display: block;
+  font-size: 80px;
+  height: 96px;
+  padding-top: 10px;
+  text-align: center;
+  width: 72px;
+  line-height: 1.5;
+
+  i {
+    color: $white;
+  }
+}

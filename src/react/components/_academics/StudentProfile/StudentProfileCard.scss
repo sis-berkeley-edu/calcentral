@@ -1,0 +1,35 @@
+@import '../../../stylesheets/mixins';
+@import '../../../stylesheets/variables';
+
+.StudentProfileCard {
+  @include card;
+  @include card-in-column;
+}
+
+.StudentProfileCard--body {
+  @include card-body;
+
+  table tr th {
+    width: 92px;
+  }
+}
+
+table.student-profile {
+  tr {
+    th, td {
+      border-bottom: $hairline-border;
+    }
+  }
+
+  tr.NameAndPhoto {
+    th, td {
+      padding: $medium-spacing 0;
+    }
+
+    td {
+      font-size: $title-font-size - 2px;
+      font-weight: bold;
+      line-height: 1.5;
+    }
+  }
+}

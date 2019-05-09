@@ -5,6 +5,7 @@ import { react2angular } from 'react2angular';
 
 import store from 'Redux/store';
 import { fetchAcademics } from 'Redux/actions/academicsActions';
+import { fetchLawAwards } from 'Redux/actions/lawAwardsActions';
 import { fetchProfile } from 'Redux/actions/profileActions';
 import { fetchTransferCredit } from 'Redux/actions/transferCreditActions';
 
@@ -14,7 +15,7 @@ import Icon from '../../Icon/Icon';
 import { ICON_PRINT } from '../../Icon/IconTypes';
 
 import Enrollment from './Enrollment';
-import StudentProfile from '../StudentProfile/StudentProfile';
+import StudentProfile from './StudentProfile';
 
 import './AcademicSummary.scss';
 
@@ -29,12 +30,14 @@ const AcademicSummary = ({
   academicsLoaded,
   profileLoaded,
   statusLoaded,
-  transferCreditLoaded
+  transferCreditLoaded,
+  lawAwardsLoaded
 }) => {
   useEffect(() => {
     dispatch(fetchAcademics());
     dispatch(fetchProfile());
     dispatch(fetchTransferCredit());
+    dispatch(fetchLawAwards());
   }, []);
 
   const printPage = () => {
@@ -42,7 +45,7 @@ const AcademicSummary = ({
   };
 
   if (featureEnabled) {
-    const loaded = academicsLoaded && profileLoaded && statusLoaded && transferCreditLoaded;
+    const loaded = academicsLoaded && profileLoaded && statusLoaded && transferCreditLoaded && lawAwardsLoaded;
 
     return (
       <div className="cc-page-academics">
@@ -90,6 +93,7 @@ const mapStateToProps = (state) => {
       loaded: statusLoaded
     } = {},
     myAcademics: { loaded: academicsLoaded },
+    myLawAwards: { loaded: lawAwardsLoaded },
     myProfile: { loaded: profileLoaded },
     myTransferCredit: { loaded: transferCreditLoaded }
   } = state;
@@ -99,6 +103,7 @@ const mapStateToProps = (state) => {
   return {
     featureEnabled,
     academicsLoaded,
+    lawAwardsLoaded,
     profileLoaded,
     statusLoaded,
     transferCreditLoaded,
@@ -113,7 +118,6 @@ const AcademicSummaryContainer = () => (
     <ConnectedSummary />
   </Provider>
 );
-
 
 angular.module('calcentral.react').component('academicSummary', react2angular(AcademicSummaryContainer));
 

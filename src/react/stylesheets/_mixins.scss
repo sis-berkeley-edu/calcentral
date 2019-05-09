@@ -1,0 +1,33 @@
+@import './variables';
+
+// Cards
+$card-title-bg: $very-light-gray;
+$card-title-padding: $small-spacing $large-spacing;
+
+$card-body-bg: $white;
+$card-body-padding: $small-spacing $large-spacing;
+
+@mixin card {
+  background-color: $white;
+
+  > header {
+    background-color: $very-light-gray;
+    padding: $small-spacing $large-spacing;
+
+    h2 {
+      font-weight: normal;
+      font-size: 18px;
+      margin: $tiny-spacing 0;
+      padding: 0;
+    }
+  }
+}
+
+@mixin card-in-column {
+  margin-top: $large-spacing;
+  margin-right: $large-spacing;
+}
+
+@mixin card-body {
+  padding: $small-spacing $large-spacing;
+}

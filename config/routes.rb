@@ -103,6 +103,11 @@ Calcentral::Application.routes.draw do
     get '/api/my/groups' => 'my_groups#get_feed', :as => :my_groups, :defaults => { :format => 'json' }
     get '/api/my/holds' => 'my_holds#get_feed', :as => :my_holds, :defaults => { :format => 'json' }
     get '/api/my/housing/:aid_year' => 'my_housing#get_feed', :defaults => { :format => 'json' }
+
+    with_options defaults: { format: :json } do
+      get '/api/my/law_awards' => 'my_law_awards#get_feed'
+    end
+
     get '/api/my/loan_history_aid_years' => 'loan_history#get_aid_years_feed', :defaults => { :format => 'json' }
     get '/api/my/loan_history_cumulative' => 'loan_history#get_cumulative_feed', :defaults => { :format => 'json' }
     get '/api/my/loan_history_inactive' => 'loan_history#get_inactive_feed', :defaults => { :format => 'json' }

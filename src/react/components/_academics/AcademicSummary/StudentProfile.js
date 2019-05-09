@@ -2,20 +2,19 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import './StudentProfile.scss';
-
-import Major from './Major';
-import Minor from './Minor';
-
-import Emphases from './Emphases';
-import Careers from './Careers';
-import Levels from './Levels';
-import LawGraduation from './LawGraduation';
-import UndergraduateGraduation from './UndergraduateGraduation';
-import GraduateGraduation from './GraduateGraduation';
-import CumulativeUnits from './CumulativeUnits';
-import GPA from './GPA';
-import Degrees from './Degrees';
+import '../StudentProfile/StudentProfile.scss';
+import Major from '../StudentProfile/Major';
+import Minor from '../StudentProfile/Minor';
+import Emphases from '../StudentProfile/Emphases';
+import Careers from '../StudentProfile/Careers';
+import Levels from '../StudentProfile/Levels';
+import LawGraduation from '../StudentProfile/LawGraduation';
+import UndergraduateGraduation from '../StudentProfile/UndergraduateGraduation';
+import GraduateGraduation from '../StudentProfile/GraduateGraduation';
+import CumulativeUnits from '../StudentProfile/CumulativeUnits';
+import GPA from '../StudentProfile/GPA';
+import Degrees from '../StudentProfile/Degrees';
+import LawAwards from '../StudentProfile/LawAwards';
 
 const propTypes = {
   names: PropTypes.array,
@@ -49,6 +48,7 @@ const StudentProfile = (props) => {
         <CumulativeUnits />
         <GPA />
         <Degrees />
+        <LawAwards />
       </tbody>
     </table>
   );
