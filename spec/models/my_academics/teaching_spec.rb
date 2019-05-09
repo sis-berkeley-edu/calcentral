@@ -286,13 +286,6 @@ describe MyAcademics::Teaching do
       expect(bio1a[:enrollLimit]).to eq 50
       expect(bio1a[:waitlistLimit]).to eq 10
     end
-    context 'when running ETS-only services' do
-      it 'does not call SIS-only code' do
-        allow(Settings.application).to receive(:provided_services).and_return ['bcourses']
-        expect(instance).not_to receive(:get_legacy_teaching_semesters)
-        expect(feed[:legacyTeachingSemesters]).to eq []
-      end
-    end
   end
 
   describe '#courses_list_from_ccns' do

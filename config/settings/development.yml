@@ -97,3 +97,14 @@ features:
   reauthentication: false
   textbooks: true
   videos: true
+
+oracle:
+  adapter: sqlite3
+  encoding: utf8
+  database: 'db/dev.sqlite3'
+  username:
+  password:
+  host:
+  port: 0
+  pool: 3
+  timeout: 5000

@@ -9,7 +9,7 @@ module MyAcademics
       teaching_semesters = format_teaching_semesters feed
       if teaching_semesters.present?
         data[:teachingSemesters] = teaching_semesters
-        data[:legacyTeachingSemesters] = ProvidedServices.calcentral? ? get_legacy_teaching_semesters : []
+        data[:legacyTeachingSemesters] = get_legacy_teaching_semesters
         data[:pastSemestersTeachingCount] = teaching_semesters.select {|sem| sem[:timeBucket] == 'past'}.length
         data[:pastSemestersTeachingLimit] = teaching_semesters.length - data[:pastSemestersTeachingCount] + 1;
       end

@@ -13,7 +13,7 @@ describe BackgroundJob do
     it 'raises exception if unique id not found after 15 attempts' do
       allow(SecureRandom).to receive(:hex).and_return('67f4b934525501cb')
       Rails.cache.write('2017-02-03T14:37:18-08:00-67f4b934525501cb', 'test_payload', expires_in: 3000)
-      expect { BackgroundJob.unique_job_id }.to raise_error(RuntimeError, 'Unable to find unique Canvas Background Job ID')
+      expect { BackgroundJob.unique_job_id }.to raise_error(RuntimeError, 'Unable to find unique Background Job ID')
     end
   end
 
