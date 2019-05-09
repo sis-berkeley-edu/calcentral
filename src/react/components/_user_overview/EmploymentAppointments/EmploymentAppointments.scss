@@ -1,0 +1,12 @@
+@import '../../../stylesheets/mixins';
+@import '../../../stylesheets/variables';
+
+.EmploymentAppointments {
+  @include card;
+  @include card-in-column;
+}
+
+.EmploymentAppointments--body {
+  @include card-body;
+  padding: $large-spacing;
+}

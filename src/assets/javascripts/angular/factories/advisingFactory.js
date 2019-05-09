@@ -1,9 +1,9 @@
-'use strict';
+import {
+  fetchAdvisingAcademicsStart,
+  fetchAdvisingAcademicsSuccess
+} from 'Redux/actions/advisingActions';
 
-/**
- * Advising Factory
- */
-angular.module('calcentral.factories').factory('advisingFactory', function(apiService) {
+angular.module('calcentral.factories').factory('advisingFactory', function(apiService, $ngRedux) {
   var urlAdvisingAcademics = '/api/advising/academics/';
   var urlAdvisingAcademicsCacheExpiry = '/api/advising/cache_expiry/academics/';
   var urlAdvisingCommittees = '/api/advising/student_committees/';
@@ -39,7 +39,25 @@ angular.module('calcentral.factories').factory('advisingFactory', function(apiSe
   };
 
   var getStudentAcademics = function(options) {
-    return apiService.http.request(options, urlAdvisingAcademics + options.uid);
+    const {
+      advising: {
+        academics = {}
+      } = {}
+    } = $ngRedux.getState();
+
+    if (academics.loaded || academics.isLoading) {
+      return new Promise((resolve, _reject) => resolve({ data: academics }));
+    } else {
+      $ngRedux.dispatch(fetchAdvisingAcademicsStart());
+
+      const promise = apiService.http.request(options, urlAdvisingAcademics + options.uid);
+
+      promise.then(response => {
+        $ngRedux.dispatch(fetchAdvisingAcademicsSuccess(response.data));
+      });
+
+      return promise;
+    }
   };
 
   var getStudentRegistrations = function(options) {

@@ -1,6 +1,8 @@
 import { combineReducers } from 'redux';
 
 import AcademicsReducer from './AcademicsReducer';
+import ActivitiesReducer from './ActivitiesReducer';
+import AdvisingReducer from './AdvisingReducer';
 import CalGrantsReducer from './CalGrantsReducer';
 import ConfigReducer from './ConfigReducer';
 import HoldsReducer from './HoldsReducer';
@@ -14,10 +16,12 @@ import RouteReducer from './RouteReducer';
 import StandingsReducer from './StandingsReducer';
 
 const AppReducer = combineReducers({
+  advising: AdvisingReducer,
   config: ConfigReducer,
   currentRoute: RouteReducer,
   links: LinksReducer,
   myAcademics: AcademicsReducer,
+  myActivities: ActivitiesReducer,
   myCalGrants: CalGrantsReducer,
   myHolds: HoldsReducer,
   myLawAwards: LawAwardsReducer,
