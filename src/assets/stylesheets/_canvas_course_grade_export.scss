@@ -1,0 +1,134 @@
+.bc-page-course-grade-export {
+  background-color: $bc-color-white;
+  padding: 15px 25px;
+
+  // Reset to avoid default Foundation form styling
+  p {
+    font-family: $bc-base-font-family;
+    font-size: 14px;
+    font-weight: 300;
+    margin-bottom: 10px;
+  }
+
+  .bc-page-course-grade-export-button-link {
+    font-weight: 300;
+  }
+
+  .bc-page-course-grade-export-header {
+    font-family: $bc-base-font-family;
+    font-size: 23px;
+    font-weight: 400;
+    padding: 12px 0 0;
+  }
+
+  .bc-page-course-grade-export-sub-header {
+    font-family: $bc-base-font-family;
+    font-size: 20px;
+    font-weight: 400;
+    margin: 15px 0;
+  }
+
+  .bc-page-course-grade-export-download-button-container {
+    border: $bc-color-off-black 1px solid;
+    margin: 10px;
+  }
+
+  .bc-page-course-grade-export-download-description {
+    line-height: 18px;
+    margin-bottom: 10px;
+    padding: 4px 0;
+  }
+
+  .bc-page-course-grade-export-download-header {
+    font-size: 20px;
+    font-weight: 400;
+    margin: 30px 0 5px;
+  }
+
+  .bc-page-course-grade-export-more-info-container {
+    margin-top: 40px;
+  }
+
+  .bc-page-course-grade-export-more-info {
+    margin: 20px 0;
+  }
+
+  .bc-page-course-grade-export-section {
+    margin: 10px 0;
+  }
+
+  .bc-page-course-grade-export-form-label {
+    display: inline-block;
+    margin: 8px 0;
+  }
+
+  .bc-page-course-grade-export-notice-pending-request {
+    margin: 15px auto;
+  }
+
+  .bc-page-course-grade-export-muted-assignments-table-header {
+    margin: 15px 0 5px;
+  }
+
+  .bc-page-course-grade-export-muted-assignments-table-container {
+    border: $bc-color-table-border-grey 1px solid;
+    border-radius: 5px;
+  }
+
+  .bc-page-course-grade-export-muted-assignments-table {
+    margin-bottom: 20px;
+    th, td {
+      padding: 14px 20px;
+    }
+  }
+
+  .bc-page-course-grade-export-assignments-name-column {
+    width: 150px;
+  }
+
+  .bc-page-course-grade-export-assignments-due-at-column {
+    width: 170px;
+  }
+
+  .bc-page-course-grade-export-error {
+    margin-bottom: 15px;
+  }
+
+  .bc-page-course-grade-export-error-grading-scheme-header {
+    margin: 15px 0;
+  }
+
+  .bc-page-course-grade-export-error-description {
+    line-height: 17px;
+    margin-bottom: 8px;
+  }
+
+  .bc-page-course-grade-export-refresh-button {
+    font-size: 11px;
+    padding: 1px 5px;
+    text-decoration: none;
+  }
+
+  .bc-page-course-grade-export-enable-grading-scheme-checkbox-container {
+    float: left;
+    padding: 2px;
+  }
+
+  .bc-page-course-grade-export-error-resolution-action-container {
+    float: left;
+    padding: 2px;
+  }
+
+  .bc-page-course-grade-export-muted-assignments-see-gradebook {
+    float: right;
+    padding: 2px;
+  }
+
+  .bc-page-course-grade-export-error-resolution-action-label {
+    font-weight: bold;
+  }
+
+  .bc-page-course-grade-export-unmute-action-container {
+    margin-bottom: 10px;
+  }
+}

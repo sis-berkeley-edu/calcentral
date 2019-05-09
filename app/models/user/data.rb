@@ -1,48 +1,29 @@
 module User
   class Data < ActiveRecord::Base
-    include ActiveRecordHelper, OraclePrimaryHelper
+    include ActiveRecordHelper
 
-    self.table_name = 'PS_UC_USER_DATA'
-    self.primary_key = 'uc_clc_id'
+    self.table_name = 'user_data'
 
-    has_many :saved_uids, :class_name => 'User::SavedUid', :foreign_key => 'uc_clc_oid'
-    has_many :recent_uids, :class_name => 'User::RecentUid', :foreign_key => 'uc_clc_oid'
+    has_many :saved_uids, :class_name => 'User::SavedUid', :foreign_key => 'owner_id'
+    has_many :recent_uids, :class_name => 'User::RecentUid', :foreign_key => 'owner_id'
 
     after_initialize :log_access
-    attr_accessible :uc_clc_prefnm, :uc_clc_ldap_uid, :uc_clc_fst_at, :uc_clc_id, :created_at, :updated_at
-    attr_accessible :uid
-    alias_attribute :uid, :uc_clc_ldap_uid
-    alias_attribute :first_login_at, :uc_clc_fst_at
-    alias_attribute :preferred_name, :uc_clc_prefnm
-
-    def self.attributeDefaults
-      {uc_clc_prefnm: ' '}
-    end
-
-    before_save :set_default_values
-    before_create :set_id
+    attr_accessible :preferred_name, :uid, :first_login_at
 
     def self.database_alive?
       is_alive = false
       is_recoverable = false
       begin
         use_pooled_connection {
-          if primary_database_is_oracle?
-            find_by_sql("select 1 from dual").first
-          else
-            find_by_sql("select 1").first
-          end
-
+          find_by_sql("select 1").first
           is_alive = true
         }
       rescue ActiveRecord::ActiveRecordError => exception
         if exception.message.include?('This connection has been closed')
-          Rails.logger.warn("Attempting to reconnect to primary DB server...")
+          Rails.logger.warn("Attempting to reconnect to PostgreSQL server...")
           is_recoverable = true
-
-
         else
-          Rails.logger.warn("Primary DB server is down: #{exception}")
+          Rails.logger.warn("PostgreSQL server is down: #{exception}")
           is_alive = false
         end
       end
@@ -51,7 +32,7 @@ module User
           connection.reconnect!
           is_alive = true
         rescue Java::JavaSql::SQLException => reconnect_exception
-          Rails.logger.warn("Primary DB server is still down: #{reconnect_exception}")
+          Rails.logger.warn("PostgreSQL server is still down: #{reconnect_exception}")
           is_alive = false
         end
       end

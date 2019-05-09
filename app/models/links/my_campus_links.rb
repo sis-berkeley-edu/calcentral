@@ -1,17 +1,53 @@
 module Links
-  # NOTES:
-  # - Navigation consists of Main Categories, Subcategories, and On-page categories
-  # - A Section is defined as a unique aggregate of MainCat/SubCat/PageCat
-  # - A single Categories table serves all three purposes by being referred to thrice in the Sections model
-  # - A Link can belong to multiple Sections; a Section consists of multiple links
-  # - Links (or their URLs) are guaranteed unique
-  # - RailsAdmin is whitelisting only the Models we want to display (in rails_admin.rb)
-  # - RailsAdmin comes with an optional History feature to track who changed what, but it's disabled here.
   class MyCampusLinks
+    include CampusLinksFromFileFeatureFlagged
+
+=begin
+  NOTES:
+
+  - Navigation consists of Main Categories, Subcategories, and On-page categories
+  - A Section is defined as a unique aggregate of MainCat/SubCat/PageCat
+  - A single Categories table serves all three purposes by being referred to thrice in the Sections model
+  - A Link can belong to multiple Sections; a Section consists of multiple links
+  - Links (or their URLs) are guaranteed unique
+  - RailsAdmin is whitelisting only the Models we want to display (in rails_admin.rb)
+  - RailsAdmin comes with an optional History feature to track who changed what, but it's disabled here.
+
+=end
+
     def get_feed
+      return get_from_file if is_campus_links_from_file_feature_enabled
+      get_from_database
+    end
+
+    def get_from_file
       file = File.open("#{Rails.root}/public/json/campuslinks.json")
       contents = File.read(file)
       JSON.parse(contents)
+    end
+
+    def get_from_database
+      navigation = []
+      Links::LinkCategory.where('root_level = ?', true).order('LOWER(name)').each do |category|
+        navigation.push({
+          'label' => category.name,
+          'categories' => get_subsections_for_nav(category)
+        })
+      end
+      links = []
+      Links::Link.where('published = ?', true).order('LOWER(name)').each do |link|
+        links.push({
+           'name' => link.name,
+           'description' => link.description,
+           'url' => link.url,
+           'roles' => get_roles_for_link(link),
+           'categories' => get_cats_for_link(link)
+         })
+      end
+      {
+        'links' => links,
+        'navigation' => navigation
+      }
     end
 
     def get_subsections_for_nav(cat)

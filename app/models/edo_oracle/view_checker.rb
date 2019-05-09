@@ -273,13 +273,25 @@ class EdoOracle::ViewChecker
     }
   ]
 
+  VIEW_DEPENDENCIES_JUNCTION = [
+    {
+      :id => 'SISEDO.ETS_ENROLLMENTV00_VW',
+      :columns => %w(CRSE_CAREER RQMNT_DESIGNTN GRADE_MARK_MID STUDENT_ID CAMPUS_UID ACAD_CAREER INSTITUTION STDNT_ENRL_STATUS_CODE WAITLISTPOSITION UNITS_TAKEN UNITS_EARNED GRADE_MARK GRADING_BASIS_CODE TERM_ID SESSION_ID CLASS_SECTION_ID GRADE_POINTS)
+    }
+  ]
+
   def initialize
     @report = {
       :successes => [],
       :errors => []
     }
-    VIEW_DEPENDENCIES.concat VIEW_DEPENDENCIES_CLC_SISEDO
-    VIEW_DEPENDENCIES.concat VIEW_DEPENDENCIES_CLC_CS
+    if ProvidedServices.calcentral?
+      VIEW_DEPENDENCIES.concat VIEW_DEPENDENCIES_CLC_SISEDO
+      VIEW_DEPENDENCIES.concat VIEW_DEPENDENCIES_CLC_CS
+    end
+    if ProvidedServices.bcourses?
+      VIEW_DEPENDENCIES.concat VIEW_DEPENDENCIES_JUNCTION
+    end
     if !Settings.features.legacy_caldap
       VIEW_DEPENDENCIES << {
         :id => 'SISEDO.CALCENTRAL_PERSON_INFO_VW',

@@ -1,5 +1,6 @@
 class RoutesListController < ApplicationController
   extend Cache::Cacheable
+  include ProvidedServices
 
   respond_to :json
 
@@ -16,20 +17,30 @@ class RoutesListController < ApplicationController
       /api/my/status
       /api/ping
       /api/server_info
-      /api/my/academics
-      /api/my/activities
-      /api/my/badges
-      /api/my/campuslinks
-      /api/my/classes
-      /api/my/financials
-      /api/my/groups
-      /api/my/photo
-      /api/my/tasks
-      /api/my/up_next
-      /api/my/updated_feeds
-      /api/service_alerts
-      /api/stats
     )
+    if calcentral?
+      routes.concat %w(
+        /api/my/academics
+        /api/my/activities
+        /api/my/badges
+        /api/my/campuslinks
+        /api/my/classes
+        /api/my/financials
+        /api/my/groups
+        /api/my/photo
+        /api/my/tasks
+        /api/my/up_next
+        /api/my/updated_feeds
+        /api/service_alerts
+        /api/stats
+      )
+    end
+    if bcourses?
+      routes.concat %w(
+        /api/academics/canvas/external_tools
+        /api/academics/canvas/user_can_create_site
+      )
+    end
     routes
   end
 end

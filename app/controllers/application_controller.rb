@@ -66,6 +66,9 @@ class ApplicationController < ActionController::Base
   def allow_if_classic_view_as?
     true
   end
+  def allow_if_canvas_lti?
+    false
+  end
   def deny_if_filtered
     if !allow_if_classic_view_as? && current_user.classic_viewing_as?
       raise Pundit::NotAuthorizedError.new("By View As user #{current_user.original_user_id}")
@@ -73,6 +76,8 @@ class ApplicationController < ActionController::Base
       raise Pundit::NotAuthorizedError.new("By delegate #{current_user.original_delegate_user_id}")
     elsif !allow_if_advisor_view_as? && current_user.authenticated_as_advisor?
       raise Pundit::NotAuthorizedError.new("By advisor #{current_user.original_advisor_user_id}")
+    elsif !allow_if_canvas_lti? && current_user.lti_authenticated_only
+      raise Pundit::NotAuthorizedError.new('In LTI session')
     end
   end
 

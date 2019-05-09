@@ -4,18 +4,18 @@ class OecIsf < ActiveRecord::Migration
       update <<-SQL
         UPDATE oec_course_codes SET
           dept_code = 'ISF',
-          include_in_oec = 1
+          include_in_oec = TRUE
           WHERE dept_name = 'ISF'
       SQL
       update <<-SQL
         UPDATE oec_course_codes SET
           dept_code = 'HGEAL',
-          include_in_oec = 1
+          include_in_oec = TRUE
           WHERE dept_name = 'BUDDSTD'
       SQL
       update <<-SQL
         UPDATE oec_course_codes SET
-          include_in_oec = 1
+          include_in_oec = TRUE
           WHERE dept_code in ('HGEAL')
       SQL
     end
@@ -26,18 +26,18 @@ class OecIsf < ActiveRecord::Migration
       update <<-SQL
         UPDATE oec_course_codes SET
           dept_code = 'QHUIS',
-          include_in_oec = 0
+          include_in_oec = FALSE
           WHERE dept_name = 'ISF'
       SQL
       update <<-SQL
         UPDATE oec_course_codes SET
           dept_code = 'HWBUD',
-          include_in_oec = 0
+          include_in_oec = FALSE
           WHERE dept_name = 'BUDDSTD'
       SQL
       update <<-SQL
         UPDATE oec_course_codes SET
-          include_in_oec = 0
+          include_in_oec = FALSE
           WHERE dept_code in ('HGEAL')
       SQL
     end
