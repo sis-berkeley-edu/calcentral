@@ -31,14 +31,14 @@ describe User::Oauth2Data do
     tokens = User::Oauth2Data.get(user_id, app_id)
     expect(tokens[:access_token]).to eq access_token
     expect(tokens[:refresh_token]).to eq refresh_token
-    expect(tokens[:uc_clc_expire]).to eq 1
+    expect(tokens[:expiration_time]).to eq 1
     expect(Cache::UserCacheExpiry).to receive(:notify).once
     updated_access_token = random_string 10
     User::Oauth2Data.new_or_update(user_id, app_id, updated_access_token)
     updated_tokens = User::Oauth2Data.get(user_id, app_id)
     expect(updated_tokens[:access_token]).to eq updated_access_token
-    expect(updated_tokens[:refresh_token]).to be_empty
-    expect(updated_tokens[:uc_clc_expire]).to eq 0
+    expect(updated_tokens[:refresh_token]).to be_nil
+    expect(updated_tokens[:expiration_time]).to be_nil
     expect(updated_tokens).to_not eq tokens
   end
 
@@ -58,9 +58,6 @@ describe User::Oauth2Data do
   end
 
   it 'should be able to handle a malformed app_data entry' do
-    app_data_null = {
-      'clc_null' => true
-    }
     suppress_rails_logging do
       User::Oauth2Data.new_or_update(
         user_id,
@@ -68,10 +65,10 @@ describe User::Oauth2Data do
         access_token,
         refresh_token,
         1,
-        app_data: '')
+        app_data: 'foo')
     end
     tokens = User::Oauth2Data.get(user_id, app_id)
-    expect(tokens[:app_data]).to eq app_data_null
+    expect(tokens[:app_data]).to be_empty
   end
 
   it 'should be able to get and update google email for authenticated users' do

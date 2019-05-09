@@ -57,6 +57,18 @@ shared_examples 'an unauthorized endpoint for users in advisor-view-as mode' do
   end
 end
 
+shared_examples 'an unauthorized endpoint for LTI' do
+  before do
+    session['user_id'] = random_id
+    session[SessionKey.lti_authenticated_only] = true
+  end
+  it 'denies all access' do
+    make_request
+    expect(response.status).to eq 403
+    expect(response.body).to eq ''
+  end
+end
+
 shared_examples 'an api endpoint' do
   context 'when standarderror exception raised' do
     it 'returns json formatted 500 error' do

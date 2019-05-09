@@ -1,33 +1,18 @@
 module User
   class Oauth2Data < ActiveRecord::Base
-    include ActiveRecordHelper, SafeJsonParser, OraclePrimaryHelper
-
-    self.table_name = 'PS_UC_CLC_OAUTH'
-    self.primary_key = 'uc_clc_id'
-
+    include ActiveRecordHelper, SafeJsonParser
     after_initialize :log_access, :log_threads
 
     attr_accessible :uid, :app_id, :access_token, :expiration_time, :refresh_token, :app_data
-
     serialize :access_token
     serialize :refresh_token
     serialize :app_data, Hash
-    before_create :set_id
-    before_save :set_default_values, :encrypt_tokens
+    before_save :encrypt_tokens
     after_save :decrypt_tokens, :expire_user
     after_destroy :expire_user
     after_find :decrypt_tokens
     @@encryption_algorithm = Settings.oauth2.encryption
     @@encryption_key = Settings.oauth2.key
-
-    alias_attribute :uid, :uc_clc_ldap_uid
-    alias_attribute :app_id, :uc_clc_app_id
-    alias_attribute :expiration_time, :uc_clc_expire
-
-
-    def self.attributeDefaults
-      {refresh_token:'', app_data:{'clc_null' => true}, uc_clc_expire:0}
-    end
 
     def self.get(user_id, app_id)
       hash = {}
@@ -67,7 +52,6 @@ module User
         return unless authenticated_entry
         userinfo = GoogleApps::Userinfo.new(user_id: user_id).user_info
         return unless userinfo && userinfo.response.status == 200 && userinfo.data["emailAddresses"].present? && userinfo.data["emailAddresses"].length > 0
-        authenticated_entry.app_data_will_change!
         authenticated_entry.app_data["email"] = userinfo.data["emailAddresses"].first["value"]
         authenticated_entry.save
       }
@@ -80,7 +64,6 @@ module User
         return unless authenticated_entry
         login_info = Canvas::SisUserProfile.new(user_id: user_id).get
         if login_info && login_info["primary_email"]
-          authenticated_entry.app_data_will_change!
           authenticated_entry.app_data["email"] = login_info["primary_email"]
           authenticated_entry.save
         end
@@ -97,8 +80,7 @@ module User
           if !options.blank?
             if !options[:app_data].blank? && options[:app_data].is_a?(Hash)
               entry.app_data ||= {}
-              new_app_data = entry.app_data.merge options[:app_data]
-              entry.app_data = new_app_data
+              entry.app_data.merge! options[:app_data]
             else
               Rails.logger.warn "#{self.class.name}: User::Oauth2Data:app_data not saved (either blank? or not a hash): #{options[:app_data]}"
             end
@@ -123,10 +105,8 @@ module User
     end
 
     def decrypt_tokens
-      if self.has_attribute?(:access_token)
-        self.access_token = self.class.decrypt_with_iv(self.access_token)
-        self.refresh_token = self.class.decrypt_with_iv(self.refresh_token) if self.refresh_token
-      end
+      self.access_token = self.class.decrypt_with_iv(self.access_token)
+      self.refresh_token = self.class.decrypt_with_iv(self.refresh_token) if self.refresh_token
     end
 
     def expire_user

@@ -1,6 +1,7 @@
 class BootstrapController < ApplicationController
   include ActiveRecordHelper
   include AllowDelegateViewAs
+  include AllowLti
   before_filter :get_settings, :initialize_calcentral_config
   before_filter :check_lti_only
   before_filter :check_databases_alive, :check_cache_clear_flag
@@ -10,7 +11,11 @@ class BootstrapController < ApplicationController
   # We don't want to serve index-main statically because that would skip the check_databases_alive and
   # check_reauthentication code.
   def index
-    render file: 'public/index-main.html', formats: [:html]
+    if @calcentral_config[:providedServices].include? 'calcentral'
+      render file: 'public/index-main.html', formats: [:html]
+    else
+      render file: 'public/index-junction.html', formats: [:html]
+    end
   end
 
   # CalCentral cannot fully trust a user session which was initiated via an LTI embedded app,

@@ -38,6 +38,9 @@ module GoogleApps
                          when GoogleApps::Proxy::APP_ID
                            # Google API call for 'self' to update tokens of current user.
                            (info = user_info) && info.response && info.response.status == 200
+                         when GoogleApps::Proxy::OEC_APP_ID
+                           # We rely on the invoking controller to verify 'can_administer_oec' privileges.
+                           @uid == Settings.oec.google.uid
                          else
                            false
                        end

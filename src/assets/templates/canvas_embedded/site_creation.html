@@ -1,0 +1,76 @@
+<div class="bc-page-site-creation" data-cc-spinner-directive>
+
+  <div data-ng-if="!displayError">
+    <h2 class="bc-header bc-header2 bc-page-site-creation-primary-header">Create a Site</h2>
+
+    <div class="row">
+      <div class="small-12 medium-3 columns">
+        <div class="bc-page-site-creation-feature-icon-container">
+          <div class="bc-page-site-creation-feature-icon-box">
+            <i class="fa fa-graduation-cap bc-page-site-creation-feature-icon" data-ng-class="{'bc-page-site-creation-feature-icon-disabled':(!authorizations.canCreateCourseSite)}"></i>
+          </div>
+        </div>
+      </div>
+
+      <div class="small-12 medium-5 columns end">
+        <div class="bc-page-site-creation-feature-details">
+          <h3 class="bc-header bc-header3">Course Sites</h3>
+          <p class="bc-page-site-creation-feature-description" data-ng-if="authorizations.canCreateCourseSite">
+            Set up course sites to communicate with and manage the work of students enrolled in your classes.
+          </p>
+          <p class="bc-page-site-creation-feature-description" data-ng-if="!authorizations.canCreateCourseSite">
+            It appears that you do not have permissions to create a Course Site in the current or upcoming terms.
+            If you still wish to request a Course Site, please contact
+            <a href="http://www.ets.berkeley.edu/discover-services/bcourses">bCourses support</a>.
+          </p>
+          <div class="bc-page-site-creation-feature-button-wrapper">
+            <a data-cc-disabled="!authorizations.canCreateCourseSite" data-ng-href="{{linkToCreateCourseSite}}"
+              class="bc-canvas-button bc-canvas-button-primary" data-ng-attr-tabindex="{{createCourseSiteButtonFocus}}">Create a Course Site</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="small-12 medium-8 columns">
+        <div class="bc-page-site-creation-features-divider-wrapper">
+          <div class="bc-page-site-creation-features-divider"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="small-12 medium-3 columns">
+        <div class="bc-page-site-creation-feature-icon-container">
+          <div class="bc-page-site-creation-feature-icon-box">
+            <i class="fa fa-cubes bc-page-site-creation-feature-icon"></i>
+          </div>
+        </div>
+      </div>
+
+      <div class="small-12 medium-5 columns end">
+        <div class="bc-page-site-creation-feature-details">
+          <h3 class="bc-header bc-header3">Project Sites</h3>
+          <p class="bc-page-site-creation-feature-description">
+            Share files and collaborate with your team. Projects are best suited for instructors and GSIs who already
+            use bCourses.
+          </p>
+          <p class="bc-page-site-creation-feature-description">
+            Project sites do not have access to all bCourses tools, including assignments, and are not intended for
+            lecture, lab, or discussion sections. <a href="https://berkeley.service-now.com/kb_view.do?sysparm_article=KB0010457">Learn
+            more about collaboration tools available at UC Berkeley.</a>
+          </p>
+          <div class="bc-page-site-creation-feature-button-wrapper">
+            <a data-cc-disabled="!authorizations.canCreateProjectSite" data-ng-attr-tabindex="{{createProjectSiteButtonFocus}}"
+              data-ng-href="{{linkToCreateProjectSite}}" class="bc-canvas-button bc-canvas-button-primary">Create a Project Site</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div data-ng-if="displayError" class="bc-alert-container">
+    <div data-ng-include src="'canvas_embedded/_shared/canvas_errors.html'"></div>
+  </div>
+
+</div>
