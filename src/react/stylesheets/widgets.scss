@@ -58,20 +58,38 @@
 }
 
 .cc-react-widget__title {
+  align-items: center;
   background: $cc-color-whisper;
+  display: flex;
   overflow: hidden;
 
-  h2 {
-    color: $cc-color-night-rider;
+  .cc-react-widget__title-link, .cc-react-widget__title-text {
+    display: block;
     padding: 5px 15px;
     @media print {
       padding: 5px 10px;
     }
+  }
+
+  .cc-react-widget__title-link {
+    font-size: 14px;
+    font-weight: bold;
+    text-align: right;
+    width: 100%;
+  }
+
+  .cc-react-widget__title-text {
+    color: $cc-color-night-rider;
+    width: 100%;
   }
 }
 
 // Modifiers
 .cc-react-widget--padding {
   padding: 15px;
+}
+
+.cc-react-widget--padding-sides {
+  padding: 0 15px;
 }
 

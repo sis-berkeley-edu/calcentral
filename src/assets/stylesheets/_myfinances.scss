@@ -44,10 +44,6 @@
   .cc-page-myfinances-amount {
     text-align: right;
   }
-  .cc-page-myfinances-billing-summary-footnote {
-    font-size: 11px;
-    margin: 10px 0;
-  }
   .cc-page-myfinances-date-input {
     width: auto;
   }
@@ -130,6 +126,10 @@
   }
   .cc-page-myfinances-table {
     margin: 20px 10px 10px;
+  }
+  .cc-page-myfinances-transactions-link {
+    font-size: 11px;
+    text-align: right;
   }
   .cc-page-myfinances-type {
     white-space: nowrap;

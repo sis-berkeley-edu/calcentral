@@ -2,7 +2,7 @@
   <div class="row collapse">
     <div class="column">
       <h1 class="cc-heading-page-title cc-print-hide">
-        <a href="/finances">My Finances</a> &raquo; Details
+        <a href="/finances">My Finances</a> &raquo; Transactions
       </h1>
       <h1 class="cc-heading-page-title cc-hidden cc-print-show">
         My Finances for <span data-ng-bind="api.user.profile.fullName"></span>
@@ -10,10 +10,10 @@
     </div>
 
     <div class="medium-4 columns cc-column-2">
-      <div data-ng-include="'widgets/billing_summary.html'" data-onload="billingDetails=true"></div>
+      <billing-summary-container billing-details="true"></billing-summary-container>
     </div>
     <div class="medium-8 columns cc-column-3">
-      <div data-ng-include="'widgets/billing_activity.html'"></div>
+      <div data-ng-include="'widgets/billing_transactions.html'"></div>
     </div>
 
   </div>

@@ -27,6 +27,7 @@ const propTypes = {
       PropTypes.node
     ]),
     isLoading: PropTypes.bool,
+    link: PropTypes.object,
     padding: PropTypes.bool,
     title: PropTypes.string.isRequired,
     visible: PropTypes.bool
@@ -39,7 +40,7 @@ const Widget = (props) => {
     return (
       // class "cc-widget" is necessary for now for 2-column and 3-column margins. See _widgets.scss
       <div className="cc-react-widget cc-widget">
-        <WidgetHeader title={widgetConfig.title} />
+        <WidgetHeader title={widgetConfig.title} link={widgetConfig.link} />
         <WidgetBody widgetConfig={widgetConfig}>
           {children}
         </WidgetBody>

@@ -1,0 +1,28 @@
+{
+  "statusCode":200,
+  "feed":{
+     "resources":{
+        "student_billing":{
+           "url":"http://studentbilling.berkeley.edu/studentBilling.htm",
+           "urlId":"UC_CX_FA_STU_BILL",
+           "showNewWindow":true,
+           "name":"Student Billing",
+           "title":"Learn more about the student billing process on the Student Billing Services website."
+        },
+        "delinquent_accounts":{
+           "url":"http://studentbilling.berkeley.edu/delinquentaccounts.htm",
+           "urlId":"UC_CX_FA_DEL_ACC",
+           "showNewWindow":true,
+           "name":"Delinquent Accounts",
+           "title":"Learn more about delinquent accounts on the Student Billing Services website."
+        },
+        "making_payments":{
+           "url":"http://studentbilling.berkeley.edu/PaymentOptions.htm",
+           "urlId":"UC_CX_FA_PAY_OPTS",
+           "showNewWindow":true,
+           "name":"Making Payments",
+           "title":"Learn more about your payment options and the payment process."
+        }
+     }
+  }
+}

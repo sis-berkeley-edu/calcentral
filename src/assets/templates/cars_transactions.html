@@ -1,6 +1,6 @@
 <div class="cc-widget cc-page-myfinances-account-activity" data-ng-show="myfinances.activity.length" data-ng-controller="CarsController">
   <div class="cc-widget-title">
-    <h2 class="cc-left">Activity</h2>
+    <h2 class="cc-left">Transactions</h2>
     <button class="cc-button cc-right cc-widget-title-button" data-ng-click="printPage()">
       <i class="fa fa-print"></i> Print
     </button>
@@ -64,6 +64,9 @@
                 <strong>Search: </strong>
               </label>
               <input type="text" placeholder="Search..." data-ng-model="search.$" aria-label="Search" name="search">
+            </div>
+            <div class="cc-right cc-page-myfinances-transactions-link" data-ng-if="api.user.profile.features.csBilling && csActivity.hasCsActivity">
+              <a href="/billing/details">View Current Transactions</a>
             </div>
             <div class="cc-clearfix">
               <p class="cc-alert cc-alert-text" role="alert" data-ng-show="cc_page_myfinances_account_filter.cc_page_myfinances_date_start.$error.ccDateValidator">
@@ -212,7 +215,7 @@
             <i class="fa fa-exclamation-circle cc-icon-red"></i> Overdue
           </li>
           <li>
-            <i class="fa fa-arrow-right"></i> Due in the future
+            <i class="fa fa-arrow-right"></i> Not Yet Due
           </li>
           <li class="cc-page-myfinances-footer-updated">
             Updated on <span data-ng-bind="myfinances.summary.lastUpdateDate | date:'MM/dd/yy'"></span> at 5am PST.

@@ -1,11 +1,17 @@
 @import 'colors';
 
 // Modifiers
+.cc-react-text--align-center {
+  text-align: center;
+}
 .cc-react-text--align-right {
   text-align: right;
 }
 .cc-react-text--bold {
   font-weight: bold;
+}
+.cc-react-text--callout {
+  font-size: 26px;
 }
 .cc-react-text--normal {
   font-weight: normal;

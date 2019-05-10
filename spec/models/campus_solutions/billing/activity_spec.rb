@@ -1,4 +1,4 @@
-describe CampusSolutions::Billing do
+describe CampusSolutions::Billing::Activity do
 
   shared_examples 'a proxy that gets data' do
     subject { proxy.get }
@@ -11,7 +11,7 @@ describe CampusSolutions::Billing do
   end
 
   context 'mock proxy' do
-    let(:proxy) { CampusSolutions::Billing.new(fake: true, user_id: '61889') }
+    let(:proxy) { CampusSolutions::Billing::Activity.new(fake: true, user_id: '61889') }
     it_should_behave_like 'a proxy that gets data'
   end
 
