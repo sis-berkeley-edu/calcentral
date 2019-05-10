@@ -6,13 +6,15 @@ var _ = require('lodash');
 /**
  * Textbook controller
  */
-angular.module('calcentral.controllers').controller('TextbookController', function(academicsService, textbookFactory, $q, $scope) {
+angular.module('calcentral.controllers').controller('TextbookController', function(academicsService, csLinkFactory, textbookFactory, $q, $scope) {
   /**
    * Get Textbooks for the selected course
    * @param  {Object} selectedCourse Selected Course Object
    */
   var requests = [];
   $scope.bookListsBySection = [];
+  $scope.isLawCourse = false;
+  $scope.lawTextbooksLink = {};
   $scope.textbooksCount = 0;
 
   var setErrorBody = function(errorBody) {
@@ -43,7 +45,27 @@ angular.module('calcentral.controllers').controller('TextbookController', functi
     );
   };
 
+  var fetchLawTextbooksLink = function() {
+    csLinkFactory.getLink({
+      urlId: 'UC_CX_LAW_BOOK'
+    }).then(function(response) {
+      $scope.lawTextbooksLink = _.get(response, 'data.link');
+    }).finally(function() {
+      $scope.isLoading = false;
+    });
+  };
+
+  var isLawCourse = function(selectedCourse) {
+    return selectedCourse.courseCareerCode.includes('LAW');
+  };
+
   var getCourseTextbooks = function(selectedCourse) {
+    if (isLawCourse(selectedCourse)) {
+      $scope.isLawCourse = true;
+      fetchLawTextbooksLink();
+      return;
+    }
+
     var semester = $scope.isInstructorOrGsi ? $scope.selectedTeachingSemester : $scope.selectedStudentSemester;
     var separatedPrimaries = academicsService.getClassesSections(semester.classes, false, selectedCourse.course_code);
     // Include waitlisted enrollments.

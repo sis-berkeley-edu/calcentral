@@ -236,15 +236,20 @@
         </div>
         <div data-cc-spinner-directive>
           <div class="cc-widget-padding">
-            <div class="cc-text-line-height" data-ng-if="!textbooksCount && textbookError.body" data-ng-bind-html="textbookError.body"></div>
-            <div data-ng-if="textbooksCount" data-ng-repeat="sectionBookList in bookListsBySection" class="cc-academics-class-textbooks">
-              <h3 class="cc-book-title" data-ng-bind="sectionBookList.sectionLabel" data-ng-if="bookListsBySection.length > 1"></h3>
-              <div data-ng-repeat="books in sectionBookList">
-                <div data-ng-if="books.items.length" data-ng-include="'textbook.html'"></div>
-                <div class="cc-text-line-height" data-ng-if="!books.items.length" data-ng-bind-html="books.bookUnavailableError"></div>
+            <div data-ng-if="!isLawCourse">
+              <div class="cc-text-line-height" data-ng-if="!textbooksCount && textbookError.body" data-ng-bind-html="textbookError.body"></div>
+              <div data-ng-if="textbooksCount" data-ng-repeat="sectionBookList in bookListsBySection" class="cc-academics-class-textbooks">
+                <h3 class="cc-book-title" data-ng-bind="sectionBookList.sectionLabel" data-ng-if="bookListsBySection.length > 1"></h3>
+                <div data-ng-repeat="books in sectionBookList">
+                  <div data-ng-if="books.items.length" data-ng-include="'textbook.html'"></div>
+                  <div class="cc-text-line-height" data-ng-if="!books.items.length" data-ng-bind-html="books.bookUnavailableError"></div>
+                </div>
+                <div class="cc-text-line-height" data-ng-if="textbooksCount && sectionBookList.errorMessage" data-ng-bind="sectionBookList.errorMessage"></div>
               </div>
-              <div class="cc-text-line-height" data-ng-if="textbooksCount && sectionBookList.errorMessage" data-ng-bind="sectionBookList.errorMessage"></div>
             </div>
+            <div data-ng-if="isLawCourse">
+                Please visit the <a data-cc-campus-solutions-link-directive="lawTextbooksLink"></a> for textbook information of Law classes.
+              </div>
           </div>
         </div>
       </div>

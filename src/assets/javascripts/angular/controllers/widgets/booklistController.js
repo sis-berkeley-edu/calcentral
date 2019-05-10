@@ -5,15 +5,16 @@ var _ = require('lodash');
 /**
  * Textbook controller
  */
-angular.module('calcentral.controllers').controller('BooklistController', function(academicsService, textbookFactory, $routeParams, $scope, $q) {
+angular.module('calcentral.controllers').controller('BooklistController', function(academicsService, apiService, csLinkFactory, textbookFactory, $routeParams, $scope, $q) {
   $scope.semesterBooks = [];
+  $scope.lawTextbooksLink = {};
   var requests = [];
 
   var getTextbook = function(courseInfo, courseNumber) {
     return textbookFactory.getTextbooks({
       params: courseInfo
     }).then(
-      function successCallback(response) {
+      function successCallback(response) { 
         var data = _.get(response, 'data');
         data.course = courseNumber;
         if (data.statusCode && data.statusCode >= 400) {
@@ -57,9 +58,21 @@ angular.module('calcentral.controllers').controller('BooklistController', functi
     });
   };
 
+  $scope.isLawCourse = function(course) {
+    return course.includes('LAW');
+  };
+
   $scope.$watchCollection('[$parent.semesters, api.user.profile.features.textbooks]', function(returnValues) {
     if (returnValues[0] && returnValues[1] === true) {
       getSemesterTextbooks(returnValues[0]);
+
+      if (apiService.user.profile.roles.law) {
+        csLinkFactory.getLink({
+          urlId: 'UC_CX_LAW_BOOK'
+        }).then(function(response) {
+          $scope.lawTextbooksLink = _.get(response, 'data.link');
+        });
+      }
     }
   });
 });

@@ -19,9 +19,9 @@
       <div data-cc-spinner-directive class="cc-academics-semester-books">
         <div class="cc-widget-padding" data-ng-if="api.user.profile.features.textbooks">
           <div data-ng-if="api.user.profile.roles.law" class="cc-alerts-law">
-            <h3>Law School students, please visit the <a href="https://www.law.berkeley.edu/php-programs/courses/allCourseBooks.php">Law School booklist website</a> for textbook information.</h3>
+            <h3>Law School students, please visit the <a data-cc-campus-solutions-link-directive="lawTextbooksLink"></a> for textbook information.</h3>
           </div>
-          <div data-ng-repeat="courseBooks in semesterBooks" class="cc-clearfix-container">
+          <div data-ng-repeat="courseBooks in semesterBooks" class="cc-clearfix-container" data-ng-if="!isLawCourse(courseBooks.course)">
             <h3 class="cc-book-title" data-ng-bind="courseBooks.course"></h3>
             <div data-ng-if="courseBooks.errorMessage" data-ng-bind-html="courseBooks.errorMessage"></div>
             <div data-ng-if="!courseBooks.errorMessage">
