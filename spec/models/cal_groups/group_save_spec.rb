@@ -16,6 +16,12 @@ describe CalGroups::GroupSave do
       expect_valid_group_data(result[:group])
     end
 
+    it 'returns correct group data' do
+      expect(result[:group][:index]).to eq("19235")
+      expect(result[:group][:uuid]).to eq("1cc4398e7aa246af945be1157f448561")
+      expect(result[:group][:qualifiedName]).to eq("edu:berkeley:app:bcourses:testgroup")
+    end
+
     context 'when group already exists' do
       before do
         proxy.set_response({
@@ -37,6 +43,7 @@ describe CalGroups::GroupSave do
         end
       end
       it 'returns an error' do
+        expect(result[:group]).to be_nil
         expect(result[:statusCode]).to eq 503
       end
     end
