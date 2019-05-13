@@ -519,6 +519,13 @@ describe EdoOracle::UserCourses::Base do
           expect(subject[:name]).to eq 'KOLLAPS'
         end
       end
+      context 'course has a null COURSE_TITLE column and COURSE_TITLE_SHORT column' do
+        let(:course_title) { nil }
+        let(:row) { super().merge('course_title_short' => nil) }
+        it 'it uses a nil title' do
+          expect(subject[:name]).to eq nil
+        end
+      end
       context 'course has regular academic session id' do
         it 'has nil session code' do
           expect(subject[:session_code]).to eq nil
@@ -574,6 +581,12 @@ describe EdoOracle::UserCourses::Base do
         it 'includes nil adjusted grade points value' do
           expect(subject.has_key?(:gradePointsAdjusted)).to eq true
           expect(subject[:gradePointsAdjusted]).to eq nil
+        end
+      end
+      context 'when grading basis is not present' do
+        let(:db_row) { super().merge('grading_basis' => nil) }
+        it 'includes nil grading basis value' do
+          expect(subject[:gradingBasis]).to eq nil
         end
       end
       context 'when section is a primary section' do
