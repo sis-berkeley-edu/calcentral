@@ -33,6 +33,15 @@ describe CalGroups::FindGroups do
     end
   end
 
+  shared_examples 'unexpected response' do
+    it 'raises a properly formatted error on group query' do
+      expect(name_available_response[:statusCode]).to eq 503
+    end
+    it 'returns an error on name query' do
+      expect { || find_group }.to raise_error(Errors::ProxyError){|error| expect(error.log_message).to eq 'Error response from CalGroups'}
+    end
+  end
+
   context 'using fake data feed' do
     let(:fake) { true }
 
@@ -49,15 +58,13 @@ describe CalGroups::FindGroups do
       include_examples 'group not found'
     end
 
-    context 'on unspecified failure' do
+    context 'on unsuccessful response' do
       before do
         proxy.override_json do |json|
           json['WsFindGroupsResults']['resultMetadata']['success'] = 'F'
         end
       end
-      it 'returns an error' do
-        expect(name_available_response[:statusCode]).to eq 503
-      end
+      include_examples 'unexpected response'
     end
   end
 end
