@@ -15,7 +15,14 @@ module User
       is_recoverable = false
       begin
         use_pooled_connection {
-          find_by_sql("select 1").first
+          if primary_database_is_oracle?
+            Rails.logger.debug 'Primary database detected as Oracle'
+            find_by_sql("select 1 from dual").first
+          else
+            Rails.logger.debug 'Primary database not detected as Oracle'
+            find_by_sql("select 1").first
+          end
+
           is_alive = true
         }
       rescue ActiveRecord::ActiveRecordError => exception
