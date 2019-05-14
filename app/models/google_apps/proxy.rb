@@ -9,11 +9,8 @@ module GoogleApps
 
     APP_ID = 'Google'
 
-    OEC_APP_ID = 'OEC'
-
     def self.config_of(app_id = nil)
       case app_id
-        when OEC_APP_ID then Settings.oec.google
         when APP_ID then Settings.google_proxy
         else nil
       end

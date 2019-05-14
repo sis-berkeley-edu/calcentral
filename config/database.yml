@@ -1,29 +1,23 @@
 development:
-  adapter: postgresql
-  database: <%= Settings.postgres.database %>
-  encoding: unicode
-  pool: <%= Settings.postgres.pool %>
-  timeout: 5000
-  username: <%= Settings.postgres.username %>
-  password: <%= Settings.postgres.password %>
-  host: <%= Settings.postgres.host %>
-  port: <%= Settings.postgres.port %>
-  properties:
-    sslcert: <%= Settings.postgres.sslcert %>
-    sslkey: <%= Settings.postgres.sslkey %>
-    sslmode: <%= Settings.postgres.sslmode %>
+  adapter: <%= Settings.oracle.adapter %>
+  host: <%= Settings.oracle.host %>
+  port: <%= Settings.oracle.port %>
+  database: <%= Settings.oracle.database %>
+  username: <%= Settings.oracle.username %>
+  password: <%= Settings.oracle.password %>
+  pool: <%= Settings.oracle.pool %>
+  timeout: <%= Settings.oracle.timeout %>
+  encoding: <%= Settings.oracle.encoding %>
 
 production:
-  adapter: postgresql
-  database: <%= Settings.postgres.database %>
-  encoding: unicode
-  pool: <%= Settings.postgres.pool %>
-  timeout: 5000
-  username: <%= Settings.postgres.username %>
-  password: <%= Settings.postgres.password %>
-  host: <%= Settings.postgres.host %>
-  port: <%= Settings.postgres.port %>
-  sslmode: <%= Settings.postgres.sslmode %>
+  adapter: <%= Settings.oracle.adapter %>
+  database: <%= Settings.oracle.database %>
+  pool: <%= Settings.oracle.pool %>
+  timeout: <%= Settings.oracle.timeout %>
+  username: <%= Settings.oracle.username %>
+  password: <%= Settings.oracle.password %>
+  host: <%= Settings.oracle.host %>
+  port: <%= Settings.oracle.port %>
 
 test:
   adapter: sqlite3

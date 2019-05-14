@@ -29,7 +29,7 @@ module BackgroundJob
   #     end
   #   end
   #
-  #   worker = Canvas::MyClass.new(:canvas_course_id => canvas_course_id)
+  #   worker = MyClass.new(:course_id => course_id)
   #   worker.background_job_initialize(:job_type => 'special_job', :total_steps => 3)
   #   worker.background_correlate(worker.background.perform_work)
   #
@@ -43,7 +43,7 @@ module BackgroundJob
       cache_key_candidate = "#{DateTime.now.to_s}-#{SecureRandom.hex(8)}"
       return cache_key_candidate if Rails.cache.read(cache_key_candidate).nil?
     end
-    raise RuntimeError, 'Unable to find unique Canvas Background Job ID'
+    raise RuntimeError, 'Unable to find unique Background Job ID'
   end
 
   def self.find(cache_key)
