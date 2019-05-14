@@ -1,17 +1,26 @@
-'use strict';
+import {
+  fetchStandingsSuccess
+} from 'Redux/actions/standingsActions';
 
-/**
- * Standings Factory
- */
-angular.module('calcentral.factories').factory('academicStandingsFactory', function(apiService, $route, $routeParams) {
-  var urlStandings = '/api/my/standings';
-  // var urlStandings = '/dummy/json/standings_present.json';
-  var urlAdvisingStudentStandings = '/api/advising/standings/';
-  // var urlAdvisingStudentHolds = '/dummy/json/standings_present.json';
-
+angular.module('calcentral.factories').factory('academicStandingsFactory', function(apiService, $route, $routeParams, $ngRedux) {
   var getStandings = function(options) {
-    var url = $route.current.isAdvisingStudentLookup ? urlAdvisingStudentStandings + $routeParams.uid : urlStandings;
-    return apiService.http.request(options, url);
+    if ($route.current.isAdvisingStudentLookup) {
+      const url = '/api/advising/standings/';
+      // var url = '/dummy/json/standings_present.json';
+
+      return apiService.http.request(options, url);
+    } else {
+      const url = '/api/my/standings';
+      // var urlStandings = '/dummy/json/standings_present.json';
+
+      const promise = apiService.http.request(options, url);
+
+      promise.then((response) => {
+        $ngRedux.dispatch(fetchStandingsSuccess(response.data.feed));
+      });
+
+      return promise;
+    }
   };
 
   return {

@@ -1,19 +1,36 @@
-'use strict';
+import {
+  fetchHoldsStart,
+  fetchHoldsSuccess
+} from 'Redux/actions/holdsActions';
 
-/**
- * Holds Factory
- */
-angular.module('calcentral.factories').factory('holdsFactory', function(apiService, $route, $routeParams) {
-  var urlHolds = '/api/my/holds';
-  // var urlHolds = '/dummy/json/holds_empty.json';
-  // var urlHolds = '/dummy/json/holds_errored.json';
-  // var urlHolds = '/dummy/json/holds_present.json';
-  var urlAdvisingStudentHolds = '/api/advising/holds/';
-  // var urlAdvisingStudentHolds = '/dummy/json/holds_present.json';
-
+angular.module('calcentral.factories').factory('holdsFactory', function(apiService, $route, $ngRedux) {
   var getHolds = function(options) {
-    var url = $route.current.isAdvisingStudentLookup ? urlAdvisingStudentHolds + $routeParams.uid : urlHolds;
-    return apiService.http.request(options, url);
+    if ($route.current.isAdvisingStudentLookup) {
+      const url = '/api/advising/holds/';
+      // var urlAdvisingStudentHolds = '/dummy/json/holds_present.json';
+
+      return apiService.http.request(options, url);
+    } else {
+      const url = '/api/my/holds';
+      // var urlHolds = '/dummy/json/holds_empty.json';
+      // var urlHolds = '/dummy/json/holds_errored.json';
+      // var urlHolds = '/dummy/json/holds_present.json';
+
+      const { myHolds } = $ngRedux.getState();
+
+      if (myHolds.loaded || myHolds.isLoading) {
+        return apiService.http.request(options, url);
+      } else {
+        $ngRedux.dispatch(fetchHoldsStart());
+        const promise = apiService.http.request(options, url);
+
+        promise.then(({ data }) => {
+          $ngRedux.dispatch(fetchHoldsSuccess(data.feed.holds));
+        });
+
+        return promise;
+      }
+    }
   };
 
   return {

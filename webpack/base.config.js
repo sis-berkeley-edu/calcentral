@@ -1,6 +1,7 @@
 'use strict';
 const fs = require('fs');
 const path = require('path');
+const webpack = require('webpack');
 
 const cleanWebpackPlugin = require('clean-webpack-plugin');
 const htmlWebpackPlugin = require('html-webpack-plugin');
@@ -73,6 +74,7 @@ module.exports = {
     ]
   },
   plugins: [
+    new webpack.IgnorePlugin(/moment/),
     new cleanWebpackPlugin(pathsToClean, { root: path.resolve(__dirname, '../public/') }),
     new htmlWebpackPlugin({
       filename: paths.public.templates.bCoursesEmbedded,
@@ -95,6 +97,7 @@ module.exports = {
   ],
   resolve: {
     alias: {
+      React: path.resolve(__dirname, '../src/react'),
       Redux: path.resolve(__dirname, '../src/redux')
     }
   }

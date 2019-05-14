@@ -1,5 +1,3 @@
-'use strict';
-
 var _ = require('lodash');
 
 /**
@@ -7,6 +5,9 @@ var _ = require('lodash');
  */
 angular.module('calcentral.controllers').controller('AcademicsStatusHoldsBlocksController', function(apiService, academicsFactory, linkService, slrDeeplinkFactory, registrationsFactory, statusHoldsService, holdsFactory, calGrantsFactory, $scope, $routeParams) {
   linkService.addCurrentRouteSettings($scope);
+
+  $scope.holdsLoaded = false;
+  $scope.calGrantsLoaded = false;
 
   $scope.statusHolds = {
     isLoading: true
@@ -37,6 +38,7 @@ angular.module('calcentral.controllers').controller('AcademicsStatusHoldsBlocksC
     if ($scope.regStatus.registrations.length) {
       $scope.regStatus.show = true;
     }
+    $scope.registrationsLoaded = true;
   };
 
   var getSlrDeeplink = function() {
@@ -87,12 +89,14 @@ angular.module('calcentral.controllers').controller('AcademicsStatusHoldsBlocksC
     .then(({ data: { acknowledgements, viewAllLink } }) => {
       $scope.calgrantAcknowledgements = acknowledgements;
       $scope.viewAllLink = viewAllLink;
+      $scope.calGrantsLoaded = true;
     });
   };
 
   var getHolds = function() {
     return holdsFactory.getHolds(refreshOptions).then(function(response) {
       $scope.holds = _.get(response, 'data.feed.holds');
+      $scope.holdsLoaded = true;
     });
   };
 

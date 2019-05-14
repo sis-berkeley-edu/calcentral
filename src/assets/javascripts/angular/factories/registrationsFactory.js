@@ -1,14 +1,27 @@
-'use strict';
+import {
+  fetchRegistrationsStart,
+  fetchRegistrationsSuccess,
+  fetchRegistrationsFailure
+} from 'Redux/actions/registrationsActions';
 
-/**
- * Registrations Factory
- */
-angular.module('calcentral.factories').factory('registrationsFactory', function(apiService) {
-  var url = '/api/my/registrations';
-  // var url = '/dummy/json/my_registrations.json'
-
+angular.module('calcentral.factories').factory('registrationsFactory', function(apiService, $ngRedux) {
   var getRegistrations = function(options) {
-    return apiService.http.request(options, url);
+    const url = '/api/my/registrations';
+    const { myRegistrations } = $ngRedux.getState();
+
+    if (!(myRegistrations.loaded || myRegistrations.isLoading)) {
+      $ngRedux.dispatch(fetchRegistrationsStart());
+    }
+
+    const promise = apiService.http.request(options, url);
+
+    promise.then(({ data }) => {
+      $ngRedux.dispatch(fetchRegistrationsSuccess(data));
+    }).catch(error => {
+      $ngRedux.dispatch(fetchRegistrationsFailure({ status: error.status, statusText: error.statusText }));
+    });
+
+    return promise;
   };
 
   return {

@@ -1,11 +1,14 @@
 require('../angularlib/swipeDirective');
 
 import store from 'Redux/store';
+import { setConfig } from 'Redux/actions/configActions';
 
 // Initialize all of the submodules
 angular.module('calcentral.config', ['ngRoute']);
 angular.module('calcentral.controllers', ['ngRedux']).config($ngReduxProvider => {
   $ngReduxProvider.provideStore(store);
+}).run(function($ngRedux, calcentralConfig) {
+  $ngRedux.dispatch(setConfig(calcentralConfig));
 });
 
 angular.module('calcentral.directives', []);

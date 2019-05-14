@@ -29,7 +29,7 @@ const APILink = ({ disabled, title, name, url, ucFrom, ucFromText }) => {
   }, true);
 
   return (
-    <a href={href} title={title}>
+    <a href={href} title={title} onClick={(e) => e.stopPropagation()}>
       {name}
     </a>
   );

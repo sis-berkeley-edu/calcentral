@@ -1,8 +1,10 @@
-'use strict';
+import {
+  setCurrentRouteProperties
+} from 'Redux/actions/routeActions';
 
 var _ = require('lodash');
 
-angular.module('calcentral.services').factory('linkService', function($location, $route) {
+angular.module('calcentral.services').factory('linkService', function($location, $route, $ngRedux) {
   /*
    * Add the page name and url to a link object
    * Designed for use on objects used with ccCampusSolutionsLinkDirective to include current page name and URL
@@ -38,6 +40,8 @@ angular.module('calcentral.services').factory('linkService', function($location,
       name: $route.current.pageName,
       url: $location.absUrl()
     };
+
+    $ngRedux.dispatch(setCurrentRouteProperties($scope.currentPage));
   };
 
   /*

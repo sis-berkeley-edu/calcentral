@@ -1,0 +1,47 @@
+@import '../stylesheets/variables';
+
+$disclosure-triangle-hover-color: #474747;
+$disclosure-triangle-color: #999;
+
+.DisclosureItem {
+  outline: 0;
+  padding: $medium-spacing $large-spacing $medium-spacing 0;
+  position: relative;
+  border-bottom: 1px solid #eee;
+
+  &:hover, &:focus {
+    background: #f2f9fe;
+    cursor: pointer;
+
+    &::before {
+      border-right-color: $disclosure-triangle-hover-color;
+    }
+  }
+}
+
+.DisclosureItem::before {
+  border-width: 4px;
+  border-color: transparent;
+  border-style: solid;
+  border-right-color: #999;
+  content: "";
+  height: 0px;
+  width: 0px;
+  position: absolute;
+  right: 7px;
+  top: 17px;
+}
+
+.DisclosureItem--open {
+  &::before {
+    border-top-color: #999;
+    border-right-color: transparent;
+  }
+
+  &:hover, &:focus {
+    &::before {
+      border-top-color: $disclosure-triangle-hover-color;
+      border-right-color: transparent;
+    }
+  }
+}

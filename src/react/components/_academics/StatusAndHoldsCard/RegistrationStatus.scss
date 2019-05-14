@@ -1,0 +1,23 @@
+@import '../../../stylesheets/variables';
+
+.SemesterStatuses {
+  margin-bottom: $large-spacing;
+}
+
+.StatusItem {
+  padding: $medium-spacing 0;
+  border-bottom: 1px solid #eee;
+}
+
+.RegistrationPeriod + .RegistrationPeriod {
+  margin-top: 15px;
+}
+
+.DisclosureItem__StatusDisclosure {
+  margin-left: 10px;
+  margin-top: 8px;
+
+  p:last-child {
+    margin-bottom: 0;
+  }
+}
