@@ -17,9 +17,11 @@ module MyAcademics
       terms_with_appts = nil
       appts_in_graduating_term = nil
       ugrd_grad_term = extract_latest_undergraduate_graduation_term
+      show_graduation_checklist = false
       if ugrd_grad_term.present?
         terms_with_appts = active_terms_with_enrollment_appointments
         appts_in_graduating_term = appointments_in_graduating_term(ugrd_grad_term, terms_with_appts)
+        show_graduation_checklist = ['EG', 'AP', 'AW'].include?(ugrd_grad_term[:degreeCheckoutStatus])
       end
       required_message = CampusSolutions::MessageCatalog.new(message_set_nbr: 28000, message_nbr: 210).get
       with_loans_message = CampusSolutions::MessageCatalog.new(message_set_nbr: 28000, message_nbr: 211).get
@@ -27,6 +29,7 @@ module MyAcademics
       {
         undergraduate: {
           expectedGraduationTerm: ugrd_grad_term,
+          showGraduationChecklist: show_graduation_checklist,
           activeTermsWithEnrollmentAppointments: terms_with_appts,
           appointmentsInGraduatingTerm: appts_in_graduating_term,
           messages: {
@@ -75,6 +78,7 @@ module MyAcademics
         plan_with_latest_grad_term = plans.try(:first)
       end
       {
+        degreeCheckoutStatus: plan_with_latest_grad_term.try(:[], 'degreeCheckoutStatus').try(:[], 'code'),
         termId: plan_with_latest_grad_term.try(:[], 'expectedGraduationTerm').try(:[], 'id'),
         termName: Berkeley::TermCodes.normalized_english(plan_with_latest_grad_term.try(:[], 'expectedGraduationTerm').try(:[], 'name'))
       }
