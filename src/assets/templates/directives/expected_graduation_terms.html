@@ -15,11 +15,11 @@
             <strong><span data-ng-bind="graduation.undergraduate.expectedGraduationTerm.termName"></span><strong>
           </span>
           <div class="cc-widget-profile-footnote" data-ng-if="!isAdvisingStudentLookup">
-            <span data-ng-if="graduation.undergraduate.appointmentsInGraduatingTerm">
-              <a href="/academics/graduation_checklist">
+            <span>
+              <a data-ng-if="graduation.undergraduate.showGraduationChecklist" href="/academics/graduation_checklist">
                 <strong>View Graduation Checklist</strong>
               </a><br>
-              <span data-ng-bind="graduation.undergraduate.expectedGraduationTerm.termName"></span>
+              <span data-ng-if="graduation.undergraduate.appointmentsInGraduatingTerm" data-ng-bind="graduation.undergraduate.expectedGraduationTerm.termName"></span>
               will be your final term to complete all degree requirements.
               If you have questions, please contact your College Advisor.
             </span>
