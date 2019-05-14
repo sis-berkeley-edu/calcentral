@@ -14,48 +14,43 @@ button {
   }
 }
 .cc-react-button {
-  background: linear-gradient($cc-color-white, $cc-color-whisper), $cc-color-white;
-  border: 1px solid $cc-color-very-light-grey;
+  background: $button-secondary-default-gray;
+  border: 1px solid $button-secondary-border;
   border-radius: 5px;
-  color: $cc-color-night-rider;
+  color: $button-font-secondary;
   cursor: pointer;
   display: inline;
-  font-size: 11px;
+  font-size: 12px;
   font-weight: bold;
   line-height: 1;
-  padding: 6px 10px;
+  padding: 8px 20px;
   &:focus, &:hover {
-    background: linear-gradient($cc-color-white, $cc-color-very-light-grey), $cc-color-very-light-grey;
-    color: $cc-color-night-rider;
+    background: $button-secondary-hover-gray;
+    color: $button-font-secondary;
     text-decoration: none;
   }
 }
 .cc-react-button[disabled] {
-  background: $cc-color-white-smoke !important;
-  border: 1px solid $cc-color-very-light-grey !important;
-  color: $cc-color-very-light-grey !important;
-  cursor: auto !important;
-  opacity: 1 !important;
+  background: $button-disabled-gray;
+  border: none;
+  color: $button-font-disabled;
+  cursor: auto;
+  opacity: 1;
   &:focus, &:hover {
-    background: $cc-color-white-smoke !important;
-    color: $cc-color-very-light-grey !important;
+    background: $button-disabled-gray;
+    border: none;
+    color: $button-font-disabled;
   }
 }
 
 // Modifiers
 .cc-react-button--blue {
-  background: $cc-color-curious-blue;
-  border: 1px solid transparent;
-  color: $cc-color-white;
+  background: $button-primary-default-blue;
+  border: none;
+  color: $button-font-primary;
   &:focus, &:hover {
-    background: $cc-color-lochmara;
+    background: $button-primary-hover-blue;
     color: $cc-color-white;
-  }
-}
-.cc-react-button--blue[disabled] {
-  background: $cc-color-bali-hai !important;
-  &:focus, &:hover {
-    background: $cc-color-bali-hai !important;
   }
 }
 .cc-react-button--link {
