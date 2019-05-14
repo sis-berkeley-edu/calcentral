@@ -107,7 +107,7 @@ module EdoOracle
         FROM
           SISEDO.#{view_name} A
         WHERE
-          STUDENT_ID = '#{student_id}' 
+          STUDENT_ID = '#{student_id}'
           #{and_institution('A')}
         SQL
       end
@@ -203,7 +203,7 @@ module EdoOracle
         FROM SISEDO.CLC_FA_AID_YEAR_V00_VW UC
         WHERE UC.CAMPUS_ID   = '#{person_id}'
           AND UC.INSTITUTION = '#{UC_BERKELEY}'
-        ORDER BY UC.AID_YEAR
+        ORDER BY UC.AID_YEAR DESC
         SQL
       end
 

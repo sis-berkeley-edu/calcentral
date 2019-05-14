@@ -11,15 +11,17 @@ describe FinancialAid::MyAidYears do
       expect(subject[:aidYears]).to be
       expect(subject[:aidYears].count).to eq 2
       expect(subject[:aidYears][0].count).to eq 4
-      expect(subject[:aidYears][0][:id]).to eq '2018'
-      expect(subject[:aidYears][0][:name]).to eq '2017-2018'
-      expect(subject[:aidYears][0][:defaultAidYear]).to be_falsey
-      expect(subject[:aidYears][0][:availableSemesters]).to eq ['Fall', 'Spring', 'Summer']
+      expect(subject[:aidYears][0][:id]).to eq '2019'
+      expect(subject[:aidYears][0][:name]).to eq '2018-2019'
+      expect(subject[:aidYears][0][:defaultAidYear]).to be_truthy
+      expect(subject[:aidYears][0][:availableSemesters]).to eq ['Fall', 'Spring']
 
-      expect(subject[:aidYears][1][:id]).to eq '2019'
-      expect(subject[:aidYears][1][:name]).to eq '2018-2019'
-      expect(subject[:aidYears][1][:defaultAidYear]).to be_truthy
-      expect(subject[:aidYears][1][:availableSemesters]).to eq ['Fall', 'Spring']
+      expect(subject[:aidYears][1][:id]).to eq '2018'
+      expect(subject[:aidYears][1][:name]).to eq '2017-2018'
+      expect(subject[:aidYears][1][:defaultAidYear]).to be_falsey
+      expect(subject[:aidYears][1][:availableSemesters]).to eq ['Fall', 'Spring', 'Summer']
+
+
     end
   end
 

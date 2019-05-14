@@ -139,8 +139,8 @@ describe EdoOracle::FinancialAid::Queries do
     end
 
     it 'sorts the rows by aid year' do
-      expect(subject[0]['aid_year']).to eq '2018'
-      expect(subject[1]['aid_year']).to eq '2019'
+      expect(subject[0]['aid_year']).to eq '2019'
+      expect(subject[1]['aid_year']).to eq '2018'
     end
   end
 
