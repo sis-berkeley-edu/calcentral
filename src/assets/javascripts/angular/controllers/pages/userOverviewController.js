@@ -1,11 +1,10 @@
-'use strict';
+import {
+  setTargetUserId
+} from 'Redux/actions/advisingActions';
 
 var _ = require('lodash');
 
-/**
- * Preview of user profile prior to viewing-as
- */
-angular.module('calcentral.controllers').controller('UserOverviewController', function(academicStandingsFactory, academicsService, adminService, advisingFactory, apiService, committeesService, enrollmentVerificationFactory, linkService, statusHoldsService, $route, $routeParams, $scope) {
+angular.module('calcentral.controllers').controller('UserOverviewController', function(academicStandingsFactory, academicsService, adminService, advisingFactory, apiService, committeesService, enrollmentVerificationFactory, linkService, statusHoldsService, $route, $routeParams, $scope, $ngRedux) {
   linkService.addCurrentRouteSettings($scope);
 
   $scope.academics = {
@@ -92,6 +91,9 @@ angular.module('calcentral.controllers').controller('UserOverviewController', fu
 
   var loadProfile = function() {
     var targetUserUid = $routeParams.uid;
+
+    $ngRedux.dispatch(setTargetUserId(targetUserUid));
+
     advisingFactory.getStudent({
       uid: targetUserUid
     }).then(

@@ -27,7 +27,9 @@ class MyEmploymentAppointments
   end
 
   def appointments
-    EdoOracle::EmploymentAppointmentQueries.get_appointments(uid)
+    EdoOracle::EmploymentAppointmentQueries.get_appointments(uid).map do |appointment|
+      HashConverter.camelize(appointment)
+    end
   end
 
   def reporting_center

@@ -25,10 +25,17 @@ module EdoOracle
           DISTRIB_BEGIN_DT as start_date,
           DISTRIB_END_DT as end_date,
           DIST_PCT as distribution_percentage,
-          COMPRATE as compenstation,
+          COMPRATE as compensation,
           UC_L4_DESCR as unit,
           JOBCODE as job_code,
-          STEP
+          STEP,
+          BUSINESS_UNIT_GL as business_unit,
+          ACCOUNT as account,
+          FUND_CODE as fund_code,
+          DEPTID_ORG_UC as department_id,
+          PROGRAM_CODE as program_code,
+          PROJECT_ID as chartfield_1,
+          FLEXFIELD_CD_UC as chartfield_2
         FROM SYSADM.PS_UCC_GRCURAPTVW
         WHERE CAMPUS_ID = '#{uid}'
       SQL

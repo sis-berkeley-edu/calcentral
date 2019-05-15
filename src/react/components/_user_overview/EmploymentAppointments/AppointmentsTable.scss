@@ -1,0 +1,95 @@
+@import '../../../stylesheets/variables';
+
+@mixin reset-table {
+  background: transparent;
+  margin-bottom: 0;
+  border-width: 0;
+  border-spacing: 0;
+
+  tr:nth-of-type(even) {
+    background: transparent;
+  }
+
+  thead {
+    background: transparent;
+
+    tr {
+      th {
+        padding: 0;
+        font-size: 13px;
+        font-weight: bold;
+        color: #222;
+        text-align: left;
+      }
+    }
+  }
+
+  tbody {
+    tr {
+      td {
+        padding: 0;
+        font-size: 13px;
+        color: #222;
+        text-align: left;
+      }
+    }
+  }
+}
+
+table.AppointmentsTable {
+  @include reset-table;
+
+  width: 100%;
+
+  tbody {
+    tr.AppointmentRow--disclosure-row:hover, tr.AppointmentRow--disclosure-row:focus {
+      td {
+        background: $sky-blue;
+      }
+    }
+
+    tr.AppointmentRow--disclosure-row:hover + tr.AppointmentRow--disclosed-row,
+    tr.AppointmentRow--disclosure-row:focus + tr.AppointmentRow--disclosed-row {
+      td {
+        background: $sky-blue;
+      }
+    }
+
+    tr td {
+      padding: $medium-spacing 0;
+    }
+
+    .AppointmentRow--disclosure-row {
+      position: relative;
+
+      td:last-child {
+        position: relative;
+
+        &::after {
+          border-width: 4px;
+          border-color: transparent;
+          border-style: solid;
+          border-top-color: #999;
+          content: "";
+          height: 0px;
+          width: 0px;
+          position: absolute;
+          right: 0px;
+          top: $medium-spacing + 7px;
+        }
+      }
+    }
+
+    tr + .AppointmentRow--disclosure-row {
+      td {
+        border-top: 1px solid #999;
+      }
+    }
+
+    .AppointmentRow--disclosed-row {
+      td {
+        padding-top: 0;
+      }
+    }
+  }
+}

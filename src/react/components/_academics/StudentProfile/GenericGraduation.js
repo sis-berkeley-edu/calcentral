@@ -27,7 +27,6 @@ const GenericGraduation = ({
               }
               <strong><span>{expectedGraduationTerm.termName}</span></strong>
             </span>
-
             { showCheckListLink && !isAdvisingStudentLookup &&
               <div className="cc-widget-profile-footnote">
                 { appointmentsInGraduatingTerm

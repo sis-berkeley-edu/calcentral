@@ -1,11 +1,14 @@
-'use strict';
+import {
+  fetchActivitiesStart,
+  fetchActivitiesSuccess
+} from 'Redux/actions/activitiesActions';
 
 var _ = require('lodash');
 
 /**
  * Activity Factory
  */
-angular.module('calcentral.factories').factory('activityFactory', function(apiService) {
+angular.module('calcentral.factories').factory('activityFactory', function(apiService, $ngRedux) {
   var activityUrl = '/api/my/activities';
   // var activityUrl = '/dummy/json/activities.json';
 
@@ -201,7 +204,15 @@ angular.module('calcentral.factories').factory('activityFactory', function(apiSe
   var getActivityAll = function(options, url) {
     return apiService.user.fetch()
     .then(function() {
-      return apiService.http.request(options, url);
+      $ngRedux.dispatch(fetchActivitiesStart());
+
+      const promise = apiService.http.request(options, url);
+
+      promise.then((response) => {
+        $ngRedux.dispatch(fetchActivitiesSuccess(response.data));
+      });
+
+      return promise;
     })
     .then(function(data) {
       return parseActivities(data, options);

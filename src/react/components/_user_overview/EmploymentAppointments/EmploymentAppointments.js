@@ -1,9 +1,16 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
+import { Provider, connect } from 'react-redux';
 import { react2angular } from 'react2angular';
-import WidgetHeader from '../../Widget/WidgetHeader';
-import AppointmentRow from './AppointmentRow';
+
+import store from 'Redux/store';
+import { fetchAppointments } from 'Redux/actions/advisingActions';
+
+import Spinner from 'React/components/Spinner';
+import AppointmentsTable from './AppointmentsTable';
 import InstructingAppointments from './InstructingAppointments';
+
+import './EmploymentAppointments.scss';
 
 const APILink = (props) => {
   if (props.showNewWindow) {
@@ -18,111 +25,90 @@ APILink.propTypes = {
   url: PropTypes.string.isRequired
 };
 
+// Returns the classes for a semester, formatted
+const semesterClasses = (semester) => {
+  return semester.classes.map(formatSemesterData(semester));
+};
+
+const formatSemesterData = (semester) => {
+  return (klass) => {
+    klass.semester = semester;
+
+    return {
+      title: klass.title,
+      role: klass.role,
+      semesterName: semester.name,
+      timeBucket: semester.timeBucket
+    };
+  };
+};
+
 const propTypes = {
-  user: PropTypes.object.isRequired,
-  teachingSemesters: PropTypes.array
+  dispatch: PropTypes.func,
+  userId: PropTypes.string.isRequired,
+  academicsLoaded: PropTypes.bool,
+  appointmentsLoaded: PropTypes.bool,
+  appointments: PropTypes.array.isRequired,
+  teachingSemesters: PropTypes.array.isRequired,
+  termsTaught: PropTypes.number,
+  appointmentLink: PropTypes.object
 };
 
-const processAcademics = function(teachingSemesters) {
-  const semesterClasses = (semester) => {
-    return semester.classes.map(formatSemesterData(semester));
-  };
+const EmploymentAppointments = ({
+  dispatch,
+  userId,
+  academicsLoaded,
+  appointmentsLoaded,
+  appointments,
+  teachingSemesters,
+  termsTaught,
+  appointmentLink
+}) => {
+  useEffect(() => {
+    dispatch(fetchAppointments(userId));
+  }, [userId]);
 
-  const formatSemesterData = (semester) => {
-    return (klass) => {
-      klass.semester = semester;
+  const [showAll, setShowAll] = useState(false);
+  const classes = (teachingSemesters).flatMap(semesterClasses).filter(klass => klass.role === 'Instructor');
+  const hasPreviousClasses = classes.find(klass => klass.timeBucket === 'past') !== undefined;
+  const hasCurrentClasses = classes.find(klass => klass.timeBucket !== 'past') !== undefined;
+  const shouldRender = (termsTaught > 0 || classes.length > 0 || appointments.length > 0);
+  const showFirst = 10;
 
-      return {
-        title: klass.title,
-        role: klass.role,
-        semesterName: semester.name,
-        timeBucket: semester.timeBucket
-      };
-    };
-  };
-
-  return new Promise((resolve) => {
-    const classes = (teachingSemesters || []).flatMap(semesterClasses).filter(klass => klass.role === 'Instructor');
-    const hasPreviousClasses = classes.find(klass => klass.timeBucket === 'past') !== undefined;
-    const hasCurrentClasses = classes.find(klass => klass.timeBucket !== 'past') !== undefined;
-    resolve({ classes, hasPreviousClasses, hasCurrentClasses });
-  });
-};
-
-const fetchAppointments = function(studentId) {
-  return new Promise((resolve) => {
-    fetch(`/api/advising/employment_appointments/${studentId}`).then(response => response.json()).then(json => resolve(json));
-  });
-};
-
-class EmploymentAppointments extends React.Component {
-  constructor(props) {
-    super(props);
-
-    const loadAppointments = fetchAppointments(props.user.ldapUid).then(data => this.setState(data));
-    const loadAcademics = processAcademics(props.teachingSemesters).then(data => {
-      this.setState(data);
-    });
-
-    this.state = {
-      appointments: [],
-      classes: [],
-      termsTaught: 0,
-      hasCurrentClasses: false,
-      hasPreviousClasses: false
-    };
-
-    Promise.all([loadAppointments, loadAcademics]).finally(() => this.setState({ ready: true }));
-  }
-
-  shouldRender() {
-    return this.state.termsTaught > 0 || this.state.classes.length || this.state.appointments.length;
-  }
-
-  render() {
-    if (this.state.ready && this.shouldRender()) {
+  if (academicsLoaded && appointmentsLoaded) {
+    if (shouldRender) {
       return (
-        <div className="cc-widget EmploymentAppointments">
-          <WidgetHeader title="Employment Appointments" />
-          <div className="cc-widget-padding">
+        <div className='EmploymentAppointments'>
+          <header>
+            <h2>Employment Appointments</h2>
+          </header>
+          <div className='EmploymentAppointments--body'>
             <p>
-              Use <APILink {...this.state.link} /> to view &quot;Appointment History&quot;
+              Use <APILink {...appointmentLink} /> to view &quot;Appointment History&quot;
               or &quot;Appointment Eligibility&quot; report.
             </p>
 
-            { this.state.termsTaught > 0 &&
+            { termsTaught > 0 &&
               <p>
-                <strong>{this.state.termsTaught}</strong> Terms Teaching
+                <strong>{termsTaught}</strong> Terms Teaching
                 (past, current, and future)
               </p>
             }
-  
+
             <h3>Appointments <span>(current and future)</span></h3>
-  
-            { this.state.appointments.length 
-              ? (
-                <div className="apppointments">
-                  { this.state.appointments.map((appointment, index) => {
-                    return (
-                      <AppointmentRow 
-                        key={index}
-                        jobCode={appointment.job_code}
-                        startDate={appointment.start_date}
-                        endDate={appointment.end_date}
-                        distributionPercentage={appointment.distribution_percentage}
-                        {...appointment}>
-                      </AppointmentRow>
-                    );
-                  })
-                  }
-                </div>
-              )
-              : <p>No current or future appointments.</p>
+            <AppointmentsTable appointments={appointments} showAll={showAll} showFirst={showFirst} />
+
+            {appointments.length > showFirst && !showAll &&
+              <div className="ButtonContainer">
+                <button className="cc-button" onClick={() => setShowAll(!showAll)}>
+                  Show All Appointments
+                </button>
+              </div>
             }
-  
-            <InstructingAppointments classes={this.state.classes}
-              hasCurrentClasses={this.state.hasCurrentClasses}
-              hasPreviousClasses={this.state.hasPreviousClasses}
+
+            <InstructingAppointments classes={classes}
+              hasCurrentClasses={hasCurrentClasses}
+              hasPreviousClasses={hasPreviousClasses}
             />
           </div>
         </div>
@@ -130,10 +116,43 @@ class EmploymentAppointments extends React.Component {
     } else {
       return null;
     }
+  } else {
+    return <Spinner />;
   }
-}
+};
+
 EmploymentAppointments.propTypes = propTypes;
 
-angular.module('calcentral.react').component('employmentAppointments', react2angular(EmploymentAppointments));
+const mapStateToProps = ({ advising = {} }) => {
+  const {
+    userId,
+    academics: {
+      loaded: academicsLoaded,
+      teachingSemesters
+    } = {},
+    appointments: {
+      loaded: appointmentsLoaded,
+      appointments,
+      termsTaught,
+      link: appointmentLink
+    } = {}
+  } = advising;
 
-export default EmploymentAppointments;
+  return {
+    userId, academicsLoaded, appointmentsLoaded,
+    appointments: (appointments || []),
+    teachingSemesters: (teachingSemesters || []),
+    termsTaught,
+    appointmentLink
+  };
+};
+
+const ConnectedAppointments = connect(mapStateToProps)(EmploymentAppointments);
+
+const EmploymentAppointmentsContainer = () => (
+  <Provider store={store}>
+    <ConnectedAppointments />
+  </Provider>
+);
+
+angular.module('calcentral.react').component('employmentAppointments', react2angular(EmploymentAppointmentsContainer));
