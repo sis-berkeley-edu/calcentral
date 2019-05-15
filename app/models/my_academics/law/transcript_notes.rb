@@ -6,7 +6,7 @@ module MyAcademics
       include Cache::UserCacheExpiry
 
       def notes
-        @notes ||= HashConverter.camelize(Query.transcript_notes_for_user(@uid))
+        @notes ||= HashConverter.camelize(Queries.transcript_notes_for_user(@uid))
       end
     end
   end

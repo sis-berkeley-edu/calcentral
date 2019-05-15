@@ -16,7 +16,7 @@ module MyAcademics
         SQL
       end
 
-      def self.notes_for_user(uid)
+      def self.transcript_notes_for_user(uid)
         safe_query <<-SQL
           SELECT
             STRM           as term_id,
