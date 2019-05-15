@@ -6,7 +6,7 @@ module MyAcademics
       include Cache::UserCacheExpiry
 
       def awards
-        @awards ||= HashConverter.camelize(Query.awards_for_user(@uid))
+        @awards ||= HashConverter.camelize(Queries.awards_for_user(@uid))
       end
     end
   end
