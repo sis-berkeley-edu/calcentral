@@ -2,13 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 const propTypes = {
-  graduation: PropTypes.object.isRequired,
-  termsInAttendance: PropTypes.string,
+  appointmentsInGraduatingTerm: PropTypes.bool,
+  expectedGraduationTerm: PropTypes.object,
   isAdvisingStudentLookup: PropTypes.bool.isRequired
 };
 
-const GenericGraduation = (props) => {
-  if (props.graduation.undergraduate.expectedGraduationTerm) {
+const GenericGraduation = ({ appointmentsInGraduatingTerm, expectedGraduationTerm }) => {
+  if (expectedGraduationTerm) {
     return (
       <tr>
         <th>Terms Information</th>
@@ -16,10 +16,10 @@ const GenericGraduation = (props) => {
           <div className="cc-section-block">
             <div className="cc-text-light">Expected Graduation</div>
             <span>
-              { props.graduation.undergraduate.appointmentsInGraduatingTerm &&
+              { appointmentsInGraduatingTerm &&
                 <i className="fa fa-clock-o cc-icon-grey" style={{marginRight: '4px'}}></i>
               }
-              <strong><span>{props.graduation.undergraduate.expectedGraduationTerm.termName}</span></strong>
+              <strong><span>{expectedGraduationTerm.termName}</span></strong>
             </span>
           </div>
         </td>

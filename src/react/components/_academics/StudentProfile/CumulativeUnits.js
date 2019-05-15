@@ -1,10 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+
 import UnitsRow from './UnitsRow';
 
 const unitsPresent = (units) => units !== null && units > 0;
 
 const propTypes = {
+  isCurrentSummerVisitor: PropTypes.bool,
   totalUnits: PropTypes.number,
   totalLawUnits: PropTypes.number,
   totalTransferAndTestingUnits: PropTypes.number,
@@ -12,30 +15,77 @@ const propTypes = {
   totalUnitsPassedNotForGpa: PropTypes.number
 };
 
-const CumulativeUnits = (props) => (
-  <table className="student-profile__subtable">
-    <tbody>
-      <UnitsRow name="Total Units" value={props.totalUnits} />
+const CumulativeUnits = ({
+  isCurrentSummerVisitor,
+  totalUnits,
+  totalLawUnits,
+  totalTransferAndTestingUnits,
+  totalUnitsTakenNotForGpa,
+  totalUnitsPassedNotForGpa
+}) => {
+  if (!isCurrentSummerVisitor && (totalUnits > 0 || totalLawUnits > 0)) {
+    return (
+      <tr>
+        <th>Cumulative Units</th>
+        <td>
+          <table className="student-profile__subtable">
+            <tbody>
+              <UnitsRow name="Total Units" value={totalUnits} />
 
-      {unitsPresent(props.totalLawUnits) &&
-        <UnitsRow name="Law Units" value={props.totalLawUnits} />
-      }
+              {unitsPresent(totalLawUnits) &&
+                <UnitsRow name="Law Units" value={totalLawUnits} />
+              }
 
-      {unitsPresent(props.totalTransferAndTestingUnits) &&
-        <UnitsRow name="Transfer Units" value={props.totalTransferAndTestingUnits} />
-      }
+              {unitsPresent(totalTransferAndTestingUnits) &&
+                <UnitsRow name="Transfer Units" value={totalTransferAndTestingUnits} />
+              }
 
-      {unitsPresent(props.totalUnitsTakenNotForGpa) &&
-        <UnitsRow name="P/NP Total" value={props.totalUnitsTakenNotForGpa} />
-      }
+              {unitsPresent(totalUnitsTakenNotForGpa) &&
+                <UnitsRow name="P/NP Total" value={totalUnitsTakenNotForGpa} />
+              }
 
-      {unitsPresent(props.totalUnitsPassedNotForGpa) &&
-        <UnitsRow name="P/NP Passed" value={props.totalUnitsPassedNotForGpa} />
-      }
-    </tbody>
-  </table>
-);
+              {unitsPresent(totalUnitsPassedNotForGpa) &&
+                <UnitsRow name="P/NP Passed" value={totalUnitsPassedNotForGpa} />
+              }
+            </tbody>
+          </table>
+        </td>
+      </tr>
+    );
+  } else {
+    return null;
+  }
+};
 
 CumulativeUnits.propTypes = propTypes;
 
-export default CumulativeUnits;
+const mapStateToProps = ({ myAcademics, myStatus }) => {
+  const {
+    academicRoles: {
+      current: {
+        summerVisitor: isCurrentSummerVisitor
+      } = {}
+    } = {}
+  } = myStatus;
+
+  const {
+    gpaUnits: {
+      totalUnits,
+      totalLawUnits,
+      totalTransferAndTestingUnits,
+      totalUnitsTakenNotForGpa,
+      totalUnitsPassedNotForGpa
+    } = {}
+  } = myAcademics;
+
+  return {
+    isCurrentSummerVisitor, 
+    totalUnits,
+    totalLawUnits,
+    totalTransferAndTestingUnits,
+    totalUnitsTakenNotForGpa,
+    totalUnitsPassedNotForGpa
+  };
+};
+
+export default connect(mapStateToProps)(CumulativeUnits);

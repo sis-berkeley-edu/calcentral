@@ -1,56 +1,50 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 
 import HubTermLegacyNote from './HubTermLegacyNote';
 import TransferCredit from '../TransferCredit/TransferCredit';
-import Semester from './Semester';
+import Semesters from './Semesters';
 import SemestersSummary from './SemestersSummary';
 
 const propTypes = {
   gpaUnits: PropTypes.object,
-  semesters: PropTypes.array.isRequired,
-  transferCredit: PropTypes.object.isRequired,
-  user: PropTypes.object.isRequired,
-  transferReportLink: PropTypes.object
+  semesters: PropTypes.array.isRequired
 };
 
-const Enrollment = ({ gpaUnits, semesters, transferCredit, user, transferReportLink }) => {
-  const showSemesters = !!(semesters.length && user.hasStudentHistory);
-  const showSummary = !!(showSemesters && (user.roles.law || gpaUnits.totalLawUnits > 0));
+const Enrollment = ({
+  semesters,
+  transferCredit,
+  hasStudentHistory
+}) => {
+  const showTransferCredit = transferCredit.law.detailed || transferCredit.graduate.detailed || transferCredit.undergraduate.detailed;
+  const showEnrollment = (semesters.length > 0 && hasStudentHistory) || showTransferCredit;
 
-  return (
-    <Fragment>
-      <h3 className="cc-enrollment-header">Enrollment</h3>
-
-      {user.features.hubTermApi && <HubTermLegacyNote />}
-
-      <TransferCredit
-        semesters={semesters}
-        isStudent={user.roles.student}
-        reportLink={transferReportLink}
-        {...transferCredit}
-      />
-
-      {showSemesters && semesters.reverse().map(semester => (
-        <Semester
-          key={semester.slug}
-          canViewGrades={user.canViewGrades}
-          transferCredit={transferCredit}
-          {...semester}
-        />
-      ))}
-
-      {showSummary &&
-        <SemestersSummary
-          semesters={semesters}
-          totalLawUnits={gpaUnits.totalLawUnits}
-          totalUnits={gpaUnits.totalUnits}
-        />
-      }
-    </Fragment>
-  );
+  if (showEnrollment) {
+    return (
+      <Fragment>
+        <h3 className="cc-enrollment-header">Enrollment</h3>
+        <HubTermLegacyNote />
+        <TransferCredit />
+        <Semesters />
+        <SemestersSummary />
+      </Fragment>
+    );
+  } else {
+    return null;
+  }
 };
 
 Enrollment.propTypes = propTypes;
 
-export default Enrollment;
+const mapStateToProps = ({
+  myAcademics: { semesters },
+  myStatus: { hasStudentHistory },
+  myTransferCredit: transferCredit
+}) => ({
+  hasStudentHistory,
+  semesters,
+  transferCredit
+});
+
+export default connect(mapStateToProps)(Enrollment);

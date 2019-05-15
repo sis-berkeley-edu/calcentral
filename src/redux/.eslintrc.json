@@ -1,0 +1,11 @@
+{
+  "rules": {
+    "no-unused-vars": ["error", { "argsIgnorePattern": "^_" }],
+    "indent": ["warn", 2,
+      { "MemberExpression": 1,
+        "SwitchCase": 1
+      }
+    ],
+    "strict": ["off"]
+  }
+}

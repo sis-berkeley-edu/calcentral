@@ -1,8 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 
 const propTypes = {
-  gpa: PropTypes.array
+  gpa: PropTypes.array,
+  currentlySummerVisitor: PropTypes.bool
 };
 
 const formatGpaCumulative = (gpa) => {
@@ -13,29 +15,55 @@ const formatGpaCumulative = (gpa) => {
   }
 };
 
-const GPA = (props) => (
-  <tr>
-    <th>Cumulative GPA</th>
-    <td>
-      {props.gpa.length === 1
-        ? formatGpaCumulative(props.gpa[0])
-        : (
-          <table className="student-profile__subtable">
-            <tbody>
-              {props.gpa.map(theGpa => (
-                <tr key={theGpa.roleDescr}>
-                  <th>{theGpa.roleDescr}</th>
-                  <td>{formatGpaCumulative(theGpa)}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        )
-      }
-    </td>
-  </tr>
-);
+const GPA = ({ gpa, currentlySummerVisitor }) => {
+  const nonLawGpaRole = gpa.find(item => item.role !== 'law');
+
+  if (gpa.length && !currentlySummerVisitor && nonLawGpaRole) {
+    return (
+      <tr>
+        <th>Cumulative GPA</th>
+        <td>
+          {gpa.length === 1
+            ? formatGpaCumulative(gpa[0])
+            : (
+              <table className="student-profile__subtable">
+                <tbody>
+                  {gpa.map(theGpa => (
+                    <tr key={theGpa.roleDescr}>
+                      <th>{theGpa.roleDescr}</th>
+                      <td>{formatGpaCumulative(theGpa)}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            )
+          }
+        </td>
+      </tr>
+    );
+  } else {
+    return null;
+  }
+};
 
 GPA.propTypes = propTypes;
 
-export default GPA;
+const mapStateToProps = ({ myAcademics, myStatus }) => {
+  const {
+    gpaUnits: {
+      gpa = []
+    } = {}
+  } = myAcademics;
+
+  const {
+    academicRoles: {
+      current: {
+        summerVisitor: currentlySummerVisitor
+      }
+    }
+  } = myStatus;
+
+  return { gpa, currentlySummerVisitor };
+};
+
+export default connect(mapStateToProps)(GPA);

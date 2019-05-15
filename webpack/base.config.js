@@ -92,5 +92,10 @@ module.exports = {
       injectedHtml: paths.source.templates.index,
       template: paths.source.templates.base
     })
-  ]
+  ],
+  resolve: {
+    alias: {
+      Redux: path.resolve(__dirname, '../src/redux')
+    }
+  }
 };

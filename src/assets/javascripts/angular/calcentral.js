@@ -1,10 +1,13 @@
-'use strict';
-
 require('../angularlib/swipeDirective');
+
+import store from 'Redux/store';
 
 // Initialize all of the submodules
 angular.module('calcentral.config', ['ngRoute']);
-angular.module('calcentral.controllers', []);
+angular.module('calcentral.controllers', ['ngRedux']).config($ngReduxProvider => {
+  $ngReduxProvider.provideStore(store);
+});
+
 angular.module('calcentral.directives', []);
 angular.module('calcentral.factories', []);
 angular.module('calcentral.filters', []);
@@ -24,8 +27,14 @@ angular.module('calcentral', [
   'ngRoute',
   'ngSanitize',
   'ngTouch',
-  'templates'
+  'templates',
+  'ngRedux'
 ]);
+
+// Configure the ngRedux to use the shared store
+angular.module('calcentral').config($ngReduxProvider => {
+  $ngReduxProvider.provideStore(store);
+});
 
 // Inject the CalCentral config as a constant that can be use accross modules
 var injectConfigConstant = function(response) {
