@@ -6,7 +6,8 @@ module CalGrant
 
     def get_feed_internal
       {
-        acknowledgements: HashConverter.camelize(activity_guides)
+        acknowledgements: HashConverter.camelize(activity_guides),
+        viewAllLink: view_all_link
       }
     end
 
@@ -28,6 +29,10 @@ module CalGrant
       LinkFetcher.fetch_link('UC_CX_ACTIVITY_GUIDE_CA_ENROLL', {
         'INSTANCE_ID' => activity_guide_id
       })
+    end
+
+    def view_all_link
+      LinkFetcher.fetch_link('UC_CX_ACTIVITY_GUIDE_VIEW_ALL')
     end
   end
 end

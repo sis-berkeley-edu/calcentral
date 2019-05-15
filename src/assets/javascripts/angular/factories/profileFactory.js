@@ -4,6 +4,11 @@ import {
   fetchProfileFailure
 } from 'Redux/actions/profileActions';
 
+import {
+  fetchLinkStart,
+  fetchLinkSuccess
+} from 'Redux/actions/linksActions';
+
 angular.module('calcentral.factories').factory('profileFactory', function(apiService, $http, $ngRedux) {
   var urlAddressFields = '/api/campus_solutions/address_label';
   var urlConfidentialStudentMessage = '/api/campus_solutions/confidential_student_message';
@@ -71,7 +76,15 @@ angular.module('calcentral.factories').factory('profileFactory', function(apiSer
     }
   };
   var getProfileEditLink = function(options) {
-    return apiService.http.request(options, urlProfileEditLink);
+    $ngRedux.dispatch(fetchLinkStart('profileEdit'));
+
+    const promise = apiService.http.request(options, urlProfileEditLink);
+
+    promise.then(({ data }) => {
+      $ngRedux.dispatch(fetchLinkSuccess('profileEdit', data.feed.editProfile));
+    });
+
+    return promise;
   };
   var getStates = function(options) {
     return apiService.http.request(options, urlStates + '?country=' + options.country);

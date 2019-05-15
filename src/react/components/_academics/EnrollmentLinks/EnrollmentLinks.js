@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { react2angular } from 'react2angular';
 
 import APILink from '../../APILink';
-import { isIncomplete } from '../CalGrantAcknowledgement/states';
+import { isIncomplete } from 'React/helpers/calgrants';
 import { activeRoles } from '../../../helpers/roles';
 import { forTermId } from '../../../helpers/terms';
 

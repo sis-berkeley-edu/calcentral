@@ -1,10 +1,5 @@
-'use strict';
-
 var _ = require('lodash');
 
-/**
- * Status controller
- */
 angular.module('calcentral.controllers').controller('StatusController', function(academicStandingsFactory, holdsFactory, activityFactory, apiService, statusHoldsService, badgesFactory, financesFactory, registrationsFactory, $http, $scope, $q) {
   $scope.finances = {};
   $scope.regStatus = {
@@ -127,6 +122,7 @@ angular.module('calcentral.controllers').controller('StatusController', function
       deferred.resolve();
       return deferred.promise;
     }
+
     return holdsFactory.getHolds().then(
       function(response) {
         var holdsCount;
