@@ -4,6 +4,7 @@ import AcademicsReducer from './AcademicsReducer';
 import CalGrantsReducer from './CalGrantsReducer';
 import ConfigReducer from './ConfigReducer';
 import HoldsReducer from './HoldsReducer';
+import LawAwardsReducer from './LawAwardsReducer';
 import StatusReducer from './StatusReducer';
 import ProfileReducer from './ProfileReducer';
 import RegistrationsReducer from './RegistrationsReducer';
@@ -19,6 +20,7 @@ const AppReducer = combineReducers({
   myAcademics: AcademicsReducer,
   myCalGrants: CalGrantsReducer,
   myHolds: HoldsReducer,
+  myLawAwards: LawAwardsReducer,
   myProfile: ProfileReducer,
   myRegistrations: RegistrationsReducer,
   myStandings: StandingsReducer,

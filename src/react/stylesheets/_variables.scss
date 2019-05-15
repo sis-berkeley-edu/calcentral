@@ -1,4 +1,16 @@
+@import './colors';
+
+// Base variables
 $tiny-spacing: 2px;
 $small-spacing: 5px;
 $medium-spacing: 10px;
 $large-spacing: 15px;
+
+// Typography:
+$base-font-color: #333;
+$base-font-family: Arial, sans-serif;
+
+$base-font-size: 12px;
+$title-font-size: 18px;
+
+$hairline-border: 1px solid #ccc;
