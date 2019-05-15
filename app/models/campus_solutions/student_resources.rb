@@ -104,7 +104,7 @@ module CampusSolutions
         when :higher_degrees_committee_form, :special_enrollment_petition
           true unless ((roles[:graduate] || roles[:law]) && !(is_jd_llm_only? || is_law_visiting?))
         when :submit_degree_candidacy_form
-          true unless (roles[:graduate] || roles[:law])
+          true unless (roles[:graduate] || current_academic_roles["lawJspJsd"])
         when :view_submitted_forms, :update_pending_forms
           true unless !(is_jd_llm_only? || is_law_visiting?)
         when :disabled_students_program_services, :scarab_login
