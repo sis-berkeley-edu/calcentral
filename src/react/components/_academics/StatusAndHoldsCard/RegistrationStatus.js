@@ -39,7 +39,7 @@ const RegistrationStatus = ({ explanation, summary }) => {
     return (
       <div className='StatusItem'>
         <i className={iconClass} style={{ marginRight: '4px' }}></i>
-        summary
+        { summary }
       </div>
     );
   } else {
