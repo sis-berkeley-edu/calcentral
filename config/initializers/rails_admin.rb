@@ -180,20 +180,22 @@ RailsAdmin.config do |config|
       end
       field :uc_alrt_pubdt do
         label 'Pub Date'
-        column_width 40
+        column_width 60
       end
       field :uc_alrt_display do
         label 'Display'
         column_width 1
       end
       field :uc_alrt_splash do
-        label 'Splash'
+        label 'Splash Only'
         column_width 1
       end
       field :created_at do
+        label 'Created'
         column_width 10
       end
       field :updated_at do
+        label 'Updated'
         column_width 10
       end
     end
@@ -217,10 +219,33 @@ RailsAdmin.config do |config|
         label 'Display'
       end
       field :uc_alrt_splash do
-        label 'Splash'
+        label 'Splash Only'
       end
     end
     edit do
+        field :uc_alrt_title do
+          label 'Title'
+          required true
+        end
+        field :uc_alrt_snippt do
+          label 'Snippet'
+        end
+        field :uc_alrt_body do
+          label 'Body'
+          required true
+        end
+        field :uc_alrt_pubdt do
+          label 'Pub Date'
+          required true
+        end
+        field :uc_alrt_display do
+          label 'Display'
+        end
+        field :uc_alrt_splash do
+          label 'Splash Only'
+        end
+    end
+    show do
       field :uc_alrt_title do
         label 'Title'
         required true
@@ -240,7 +265,7 @@ RailsAdmin.config do |config|
         label 'Display'
       end
       field :uc_alrt_splash do
-        label 'Splash'
+        label 'Splash Only'
       end
     end
   end
