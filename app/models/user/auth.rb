@@ -1,11 +1,30 @@
 module User
   class Auth < ActiveRecord::Base
-    include ActiveRecordHelper
+    include ActiveRecordHelper, OraclePrimaryHelper
 
-    self.table_name = 'user_auths'
+    self.table_name = 'PS_UC_USER_AUTHS'
+    self.primary_key = 'uc_clc_id'
 
     after_initialize :log_access
     attr_accessible :uid, :is_superuser, :is_author, :is_viewer, :active
+    attr_accessible :uc_clc_id, :uc_clc_is_su, :uc_clc_is_au, :uc_clc_is_vw, :uc_clc_active
+
+    alias_attribute :active, :uc_clc_active
+    alias_attribute :is_viewer, :uc_clc_is_vw
+    alias_attribute :is_superuser, :uc_clc_is_su
+    alias_attribute :uid, :uc_clc_ldap_uid
+    alias_attribute :is_author, :uc_clc_is_au
+
+    if self.primary_database_is_oracle?
+      set_boolean_columns :uc_clc_is_su, :uc_clc_is_au, :uc_clc_is_vw, :uc_clc_active
+    end
+
+    before_save :set_default_values
+    before_create :set_id
+
+    def self.attributeDefaults
+      {uc_clc_is_su:false, uc_clc_is_au:false, uc_clc_is_vw:false, uc_clc_active:false}
+    end
 
     def self.get(uid)
       user_auth = uid.nil? ? nil : User::Auth.where(:uid => uid.to_s).first

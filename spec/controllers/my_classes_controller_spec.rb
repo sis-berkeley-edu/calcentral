@@ -26,7 +26,6 @@ describe MyClassesController do
   let(:make_request) { get :get_feed }
   it_should_behave_like 'a user authenticated api endpoint'
   it_behaves_like 'an unauthorized endpoint for delegates'
-  it_behaves_like 'an unauthorized endpoint for LTI'
 
   context 'test data', if: CampusOracle::Queries.test_data? do
     subject do
