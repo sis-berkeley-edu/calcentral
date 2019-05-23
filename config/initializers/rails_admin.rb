@@ -96,6 +96,8 @@ RailsAdmin.config do |config|
       field :uid do
         column_width 60
         label 'uid'
+        queryable true
+        searchable :UC_CLC_LDAP_UID
       end
       field :uc_clc_is_su do
         column_width 20
