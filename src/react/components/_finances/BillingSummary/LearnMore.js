@@ -15,7 +15,7 @@ const propTypes = {
   showMore: PropTypes.bool.isRequired
 };
 
-const renderCsLink = (link) => {
+const learnMoreLink = (link) => {
   if (link) {
     return (
       <span>
@@ -32,13 +32,19 @@ const expandedView = (config, links) => {
     <WidgetBody widgetConfig={config}>
       <div className="cc-react-widget--padding-sides learn-more">
         <strong>Due Now</strong>
-        <p>All charges with a due date of today or before today. Due Now also includes Overdue charges. {renderCsLink(links.studentBilling)}</p>
+        <p>
+          All charges currently due. Due Now also includes Overdue charges. {learnMoreLink(links.studentBilling)}
+        </p>
+
         <strong>Not Yet Due</strong>
-        <p>All charges with a due date of tomorrow or any date in the future. {renderCsLink(links.studentBilling)}</p>
+        <p>
+          All charges with a due date in the future. {learnMoreLink(links.studentBilling)}
+        </p>
+
         <strong>Overdue</strong>
-        <p>All charges with a due date before today. Overdue charges can result in late fees and enrollment cancellation. {renderCsLink(links.delinquentAccounts)}</p>
+        <p>All charges with a due date before today. Overdue charges can result in late fees and enrollment cancellation. {learnMoreLink(links.delinquentAccounts)}</p>
         <strong>Making Payments</strong>
-        <p>Make Payment links to the student payment portal where you can pay your bill. {renderCsLink(links.makingPayments)}</p>
+        <p>Make Payment links to the student payment portal where you can pay your bill. {learnMoreLink(links.makingPayments)}</p>
         <strong>View PDF Statement</strong>
         <p>Links to PDF statements that are easy to download or print.</p>
       </div>
@@ -46,14 +52,12 @@ const expandedView = (config, links) => {
   );
 };
 
-const text = 'Learn more about Billing';
-
 const LearnMore = (props) => {
   return (
     <ShowMore 
       clickHandler={props.handleShowMore}
       expanded={props.showMore}
-      text={text}
+      text='Learn more about Billing'
       view={expandedView(props.learnMoreConfig, props.learnMoreLinks)} />
   );
 };

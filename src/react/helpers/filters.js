@@ -1,4 +1,7 @@
 export function usdFilter(value) {
-  let usdString = Number.parseFloat(value).toFixed(2);
-  return `$ ${usdString}`;
+  return '$ ' + value.toLocaleString('en-US', {
+    style: 'currency',
+    currency: 'USD',
+    minimumFractionDigits: 2
+  }).slice(1);
 }
