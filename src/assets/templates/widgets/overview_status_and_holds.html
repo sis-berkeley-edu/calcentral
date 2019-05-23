@@ -1,0 +1,107 @@
+<div class="cc-widget cc-status-holds">
+  <div class="cc-widget-title">
+    <h2>Status and Holds</h2>
+  </div>
+
+  <div class="cc-widget-padding" data-cc-spinner-directive="statusHolds.isLoading">
+    <div data-ng-if="api.user.profile.features.standings && standingIsVisible">
+      <h3 class="cc-status-holds-status-header">Status</h3>
+      <div class="cc-status-holds-section">
+        <div>
+          <span>
+            <h4>
+              <i class="fa fa-exclamation-circle cc-icon-red" aria-hidden="true" data-ng-if="hasStandingAlert"></i>
+              Academic Status <button class="cc-button-link" data-ng-click="academics.showStanding = true" data-ng-show="!academics.showStanding">Show Status</button><button class="cc-button-link" data-ng-click="academics.showStanding = false" data-ng-show="academics.showStanding">Hide Status</button>
+            </h4>
+          </span>
+          <div data-ng-show="academics.showStanding">
+            <div data-ng-include="'widgets/academic_standing.html'"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div data-ng-if="api.user.profile.features.regstatus">
+      <div data-ng-if="regStatus.show">
+        <div class="cc-status-holds-section" data-ng-repeat="registration in regStatus.registrations | orderBy:'-id'">
+          <h4 data-ng-bind="registration.term.name"></h4>
+          <ul class="cc-widget-list cc-status-holds-list">
+            <li class="cc-widget-list-hover"
+                data-ng-if="registration.regStatus.explanation"
+                data-ng-class="{'cc-widget-list-hover-opened':(registration.regStatus.show)}"
+                data-cc-accessible-focus-directive
+                data-ng-click="api.widget.toggleShow($event, null, registration.regStatus, 'My Academics - Status and Holds')">
+              <div class="cc-status-holds-list-section">
+                <div class="cc-status-holds-list-item">
+                  <span>
+                    <i class="cc-icon fa" data-ng-class="regStatusIcon(registration.regStatus.summary)"></i>
+                  </span>
+                  <span data-ng-bind="registration.regStatus.summary"></span>
+                </div>
+                <div class="cc-status-holds-expanded-text" data-ng-show="registration.regStatus.show">
+                  <span data-ng-bind-html="registration.regStatus.explanation"></span>
+                </div>
+              </div>
+            </li>
+            <li data-ng-if="!registration.regStatus.explanation">
+              <div class="cc-status-holds-list-section">
+                <div class="cc-status-holds-list-item">
+                  <span>
+                    <i class="cc-icon fa" data-ng-class="regStatusIcon(registration.regStatus.summary)"></i>
+                  </span>
+                  <span data-ng-bind="registration.regStatus.summary"></span>
+                </div>
+              </div>
+            </li>
+            <li class="cc-widget-list-hover"
+                data-ng-if="registration.showCnp"
+                data-ng-class="{'cc-widget-list-hover-opened':(registration.cnpStatus.show)}"
+                data-cc-accessible-focus-directive
+                data-ng-click="api.widget.toggleShow($event, null, registration.cnpStatus, 'My Academics - Status and Holds')">
+              <div class="cc-status-holds-list-section">
+                <div class="cc-status-holds-list-item">
+                  <span>
+                    <i class="cc-icon fa" data-ng-class="cnpStatusIcon(registration)"></i>
+                  </span>
+                  <span data-ng-bind="registration.cnpStatus.summary"></span>
+                </div>
+                <div class="cc-status-holds-expanded-text" data-ng-show="registration.cnpStatus.show">
+                  <span data-ng-bind-html="registration.cnpStatus.explanation"></span>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div data-ng-if="!isNonDegreeSeekingSummerVisitor && showResidency">
+      <div class="cc-status-holds-section">
+        <div data-ng-if="residency.official.description">
+          <h4>California Residency</h4>
+          <ul class="cc-widget-list cc-status-holds-list">
+            <li class="cc-widget-list-hover"
+                data-ng-class="{'cc-widget-list-hover-opened':(residency.show)}"
+                data-cc-accessible-focus-directive
+                data-ng-click="api.widget.toggleShow($event, null, residency, 'My Academics - Status and Holds')">
+              <div class="cc-status-holds-list-section">
+                <div class="cc-status-holds-list-item">
+                  <i class="cc-icon fa fa-exclamation-circle cc-icon-red" aria-hidden="true" data-ng-if="residency.official.code === ''"></i>
+                  <i class="cc-icon fa fa-warning cc-icon-gold" aria-hidden="true" data-ng-if="residency.official.code === 'PEND'"></i>
+                  <i class="cc-icon fa fa-check-circle cc-icon-green" aria-hidden="true" data-ng-if="residency.official.code === 'NON' || residency.official.code === 'RES'"></i>
+                  <span data-ng-bind="residency.official.description"></span>
+                </div>
+                <div class="cc-status-holds-expanded-text" data-ng-show="residency.show" data-ng-include="'california_residency_status.html'"></div>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <h3>Active Holds</h3>
+      <div data-ng-include="'widgets/holds.html'"></div>
+    </div>
+  </div>
+</div>
