@@ -4,16 +4,19 @@ import GenericGraduation from './GenericGraduation';
 
 const mapStateToProps = ({ myAcademics }) => {
   const {
+    collegeAndLevel: {
+      termsInAttendance
+    } = {},
     graduation: {
       undergraduate: {
         appointmentsInGraduatingTerm = false,
-        expectedGraduationTerm = null
+        expectedGraduationTerm
       } = {}
     } = {}
   } = myAcademics;
 
   return {
-    appointmentsInGraduatingTerm, expectedGraduationTerm
+    appointmentsInGraduatingTerm, expectedGraduationTerm, termsInAttendance
   };
 };
 

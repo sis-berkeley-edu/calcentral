@@ -5,20 +5,26 @@ const propTypes = {
   showCheckListLink: PropTypes.bool,
   appointmentsInGraduatingTerm: PropTypes.bool,
   expectedGraduationTerm: PropTypes.object,
-  isAdvisingStudentLookup: PropTypes.bool.isRequired
+  isAdvisingStudentLookup: PropTypes.bool.isRequired,
+  termsInAttendance: PropTypes.string
 };
 
 const GenericGraduation = ({
   appointmentsInGraduatingTerm,
   expectedGraduationTerm,
   isAdvisingStudentLookup,
-  showCheckListLink
+  showCheckListLink,
+  termsInAttendance
 }) => {
   if (expectedGraduationTerm) {
     return (
       <tr>
         <th>Terms Information</th>
         <td>
+          <div className="cc-section-block">
+            <div className="cc-text-light">Terms in Attendance</div>
+            <div>{ termsInAttendance }</div>
+          </div>
           <div className="cc-section-block">
             <div className="cc-text-light">Expected Graduation</div>
             <span>
