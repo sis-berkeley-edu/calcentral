@@ -4,16 +4,18 @@ import PropTypes from 'prop-types';
 const propTypes = {
   showCheckListLink: PropTypes.bool,
   appointmentsInGraduatingTerm: PropTypes.bool,
+  showGraduationChecklist: PropTypes.bool,
   expectedGraduationTerm: PropTypes.object,
   isAdvisingStudentLookup: PropTypes.bool.isRequired,
   termsInAttendance: PropTypes.string
 };
 
 const GenericGraduation = ({
+  showCheckListLink,
   appointmentsInGraduatingTerm,
+  showGraduationChecklist,
   expectedGraduationTerm,
   isAdvisingStudentLookup,
-  showCheckListLink,
   termsInAttendance
 }) => {
   if (expectedGraduationTerm) {
@@ -35,7 +37,7 @@ const GenericGraduation = ({
             </span>
             { showCheckListLink && !isAdvisingStudentLookup &&
               <div className="cc-widget-profile-footnote">
-                { appointmentsInGraduatingTerm
+                { showGraduationChecklist
                   ? (
                     <Fragment>
                       <a href="/academics/graduation_checklist">
