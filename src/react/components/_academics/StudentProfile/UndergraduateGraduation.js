@@ -10,13 +10,14 @@ const mapStateToProps = ({ myAcademics }) => {
     graduation: {
       undergraduate: {
         appointmentsInGraduatingTerm = false,
-        expectedGraduationTerm
+        expectedGraduationTerm,
+        showGraduationChecklist = false
       } = {}
     } = {}
   } = myAcademics;
 
   return {
-    appointmentsInGraduatingTerm, expectedGraduationTerm, termsInAttendance
+    appointmentsInGraduatingTerm, expectedGraduationTerm, termsInAttendance, showGraduationChecklist
   };
 };
 

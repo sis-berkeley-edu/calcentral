@@ -64,9 +64,9 @@ const StudentProfileCard = ({ dispatch }) => {
             <Emphases />
             <Careers />
             <Levels />
-            <UndergraduateGraduation isAdvisingStudentLookup={false} />
+            <UndergraduateGraduation isAdvisingStudentLookup={false} showCheckListLink={true} />
+            <GraduateGraduation isAdvisingStudentLookup={false} showCheckListLink={true} />
             <LawGraduation isAdvisingStudentLookup={false} />
-            <GraduateGraduation isAdvisingStudentLookup={false} />
             <CumulativeUnits />
             <GPAToggle />
             <Degrees />
