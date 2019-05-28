@@ -23,10 +23,12 @@ const GenericGraduation = ({
       <tr>
         <th>Terms Information</th>
         <td>
-          <div className="cc-section-block">
-            <div className="cc-text-light">Terms in Attendance</div>
-            <div>{ termsInAttendance }</div>
-          </div>
+          { termsInAttendance &&
+            <div className="cc-section-block">
+              <div className="cc-text-light">Terms in Attendance</div>
+              <div>{ termsInAttendance }</div>
+            </div>
+          }
           <div className="cc-section-block">
             <div className="cc-text-light">Expected Graduation</div>
             <span>
