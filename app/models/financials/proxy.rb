@@ -31,7 +31,7 @@ module Financials
           'app_key' => @settings.app_key
         }
       elsif @settings.username.present? && @settings.password.present?
-        opts[:digest_auth] = {
+        opts[:basic_auth] = {
           username: @settings.username,
           password: @settings.password
         }
