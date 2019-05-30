@@ -4,41 +4,85 @@
       <tr>
         <th>Estimated Cost of Attendance</th>
         <td>
-          <span data-ng-if="isMainFinaid"
-            class="cc-right"
-            data-cc-amount-directive="financialAidSummary.selected.totalCostOfAttendance"
-            data-cc-amount-directive-color="false"
+          <span
+            data-ng-if="isMainFinaid"
+            class="cc-flex cc-flex-justify-end"
+            data-cc-amount-directive="financialAidSummary.formatCurrency(financialAidSummary.selected.totalCostOfAttendance)"
           ></span>
-          <a data-ng-if="!isMainFinaid"
-             class="cc-right"
-             data-cc-amount-directive="financialAidSummary.selected.totalCostOfAttendance"
-             data-cc-amount-directive-color="false"
-             data-ng-href="finances/finaid/{{financialAidSummary.selected.finaidYear.id}}"
-             title="View Estimated Cost of Attendance"
+          <a
+            data-ng-if="!isMainFinaid"
+            class="cc-flex cc-flex-justify-end"
+            data-cc-amount-directive="financialAidSummary.formatCurrency(financialAidSummary.selected.totalCostOfAttendance)"
+            data-ng-href="finances/finaid/{{ financialAidSummary.selected.finaidYear.id }}"
+            title="View Estimated Cost of Attendance"
           ></a>
         </td>
       </tr>
-      <tr>
+      <tr data-ng-if="financialAidSummary.selected.totalGiftAidAndWaivers">
         <th>
-          <span>Gift Aid and Waivers</span>
-          <span class="cc-text-light">(Money you don't repay)</span>
+          <span>Gift Aid and Waivers </span>
+          <button
+            data-ng-click="financialAidSummary.toggleTipGiftAid();"
+            data-ng-if="financialAidSummary.messages.giftAidMoreInfoMessage"
+            data-ng-show="!financialAidSummary.selected.tipVisibleGiftAid"
+            class="cc-button-link cc-text-line-height"
+          >
+            <i class="cc-icon fa fa-info-circle cc-icon-air-force-blue"></i>
+          </button>
+          <p data-ng-show="financialAidSummary.selected.tipVisibleGiftAid">
+            <span data-ng-bind-html="financialAidSummary.messages.giftAidMoreInfoMessage"></span>
+            <button data-ng-click="financialAidSummary.toggleTipGiftAid();" class="cc-button-link cc-text-line-height">
+              Show less
+            </button>
+          </p>
+        </th>
+        <td class="cc-flex cc-flex-justify-end" 
+            data-cc-amount-directive="financialAidSummary.formatCurrency(financialAidSummary.selected.totalGiftAidAndWaivers)"></td>
+      </tr>
+      <tr data-ng-if="financialAidSummary.selected.totalThirdPartyContracts">
+        <th>
+          <span>Third Party Contracts </span>
+          <button
+            data-ng-if="financialAidSummary.messages.thirdPartyMoreInfoMessage"
+            data-ng-click="financialAidSummary.toggleTipThirdParty();"
+            data-ng-show="!financialAidSummary.selected.tipVisibleThirdParty"
+            class="cc-button-link cc-text-line-height"
+          >
+            <i class="cc-icon fa fa-info-circle cc-icon-air-force-blue"></i>
+          </button>
+          <p data-ng-show="financialAidSummary.selected.tipVisibleThirdParty">
+            <span data-ng-bind-html="financialAidSummary.messages.thirdPartyMoreInfoMessage"></span>
+            <button data-ng-click="financialAidSummary.toggleTipThirdParty();" class="cc-button-link cc-text-line-height">
+              Show less
+            </button>
+          </p>
         </th>
         <td
-          class="cc-right"
-          data-cc-amount-directive="financialAidSummary.selected.totalGiftAidAndWaivers"
-          data-cc-amount-directive-color="false"
+          class="cc-flex cc-flex-justify-end"
+          data-cc-amount-directive="financialAidSummary.formatCurrency(financialAidSummary.selected.totalThirdPartyContracts)"
         ></td>
+      </tr>
+      <tr data-ng-if="financialAidSummary.selected.totalGiftAidAndWaivers">
+        <th>
+          <span class="cc-strong">Net Cost </span>
+          <button
+            data-ng-if="financialAidSummary.messages.netCostMoreInfoMessage"
+            data-ng-click="financialAidSummary.toggleTipNetCost();"
+            data-ng-show="!financialAidSummary.selected.tipVisibleNetCost"
+            class="cc-button-link cc-text-line-height"
+          >
+            <i class="cc-icon fa fa-info-circle cc-icon-air-force-blue"></i>
+          </button>
+          <p data-ng-show="financialAidSummary.selected.tipVisibleNetCost">
+            <span data-ng-bind-html="financialAidSummary.messages.netCostMoreInfoMessage"></span>
+            <button data-ng-click="financialAidSummary.toggleTipNetCost();" class="cc-button-link cc-text-line-height">
+              Show less
+            </button>
+          </p>
+        </th>
+        <td class="cc-strong cc-flex cc-flex-justify-end" 
+            data-cc-amount-directive="financialAidSummary.formatCurrency(financialAidSummary.selected.totalNetCost)"></td>
       </tr>
     </tbody>
-    <tfoot>
-      <tr>
-        <th>Net Cost</th>
-        <td
-          class="cc-right"
-          data-cc-amount-directive="financialAidSummary.selected.totalNetCost"
-          data-cc-amount-directive-color="false"
-        ></td>
-      </tr>
-    </tfoot>
   </table>
 </div>

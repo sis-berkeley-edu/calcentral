@@ -123,7 +123,7 @@ describe EdoOracle::FinancialAid::Queries do
     it_behaves_like 'a successful query that returns one result'
 
     it 'returns the expected result' do
-      expect(subject).to have_keys(%w(student_id uc_cost_attendance uc_gift_aid_waiver uc_net_cost uc_funding_offered uc_gift_aid_out uc_grants_schol uc_waivers_oth uc_fee_waivers uc_loans_wrk_study uc_loans uc_work_study sfa_ss_group))
+      expect(subject).to have_keys(%w(student_id uc_cost_attendance uc_gift_aid_waiver uc_third_party uc_net_cost uc_funding_offered uc_gift_aid_out uc_grants_schol uc_outside_resrces uc_waivers_oth uc_fee_waivers uc_loans_wrk_study uc_loans uc_work_study sfa_ss_group))
     end
   end
 

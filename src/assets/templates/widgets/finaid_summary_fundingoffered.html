@@ -3,78 +3,106 @@
     <thead>
       <tr class="cc-padded">
         <td class="cc-text-bold">Funding Offered</td>
-        <td class="cc-right cc-text-bold"
-          data-cc-amount-directive="financialAidSummary.selected.totalFundingOffered"
-          data-cc-amount-directive-color="false"
+        <td
+          class="cc-right cc-text-bold"
+          data-cc-amount-directive="financialAidSummary.formatCurrency(financialAidSummary.selected.totalFundingOffered)"
         ></td>
       </tr>
     </thead>
-    <tbody class="cc-widget-table-hover"
-           data-ng-class="{'cc-widget-table-hover-opened':(financialAidSummary.giftAidDetail.show)}"
-           data-cc-accessible-focus-directive
-           data-ng-click="api.widget.toggleShow($event, null, financialAidSummary.giftAidDetail, 'My Finances - Financial Aid and Scholarships')">
+    <tbody
+      class="cc-widget-table-hover"
+      data-ng-class="{'cc-widget-table-hover-opened':(financialAidSummary.giftAidDetail.show)}"
+      data-cc-accessible-focus-directive
+      data-ng-click="api.widget.toggleShow($event, null, financialAidSummary.giftAidDetail, 'My Finances - Financial Aid and Scholarships')"
+    >
       <tr>
         <td>Gift Aid and Outside Resources</td>
-        <td data-ng-class="financialAidSummary.selected.grantsAndScholarships ? 'cc-right cc-toggle-triangle' : 'cc-right'"
-          data-cc-amount-directive="financialAidSummary.selected.giftAidAndOutsideResources"
-          data-cc-amount-directive-color="false"
+        <td
+          data-ng-class="financialAidSummary.selected.grantsAndScholarships ? 'cc-right cc-toggle-triangle' : 'cc-right'"
+          data-cc-amount-directive="financialAidSummary.formatCurrency(financialAidSummary.selected.giftAidAndOutsideResources)"
         ></td>
       </tr>
       <tr data-ng-if="financialAidSummary.selected.grantsAndScholarships && financialAidSummary.giftAidDetail.show">
         <td><span class="cc-widget-finaid-summary-indent">Grants and Scholarships</span></td>
-        <td><span
-          class="cc-right"
-          data-cc-amount-directive="financialAidSummary.selected.grantsAndScholarships"
-          data-cc-amount-directive-color="false"
-        ></span></td>
+        <td>
+          <span
+            class="cc-right"
+            data-cc-amount-directive="financialAidSummary.formatCurrency(financialAidSummary.selected.grantsAndScholarships)"
+          ></span>
+        </td>
+      </tr>
+      <tr data-ng-if="financialAidSummary.selected.outsideResources && financialAidSummary.giftAidDetail.show">
+        <td><span class="cc-widget-finaid-summary-indent">Outside Resources</span></td>
+        <td>
+          <span
+            class="cc-right"
+            data-cc-amount-directive="financialAidSummary.formatCurrency(financialAidSummary.selected.outsideResources)"
+          ></span>
+        </td>
       </tr>
     </tbody>
-    <tbody class="cc-widget-table-hover"
-           data-ng-class="{'cc-widget-table-hover-opened':(financialAidSummary.waiversDetail.show)}"
-           data-cc-accessible-focus-directive
-           data-ng-click="api.widget.toggleShow($event, null, financialAidSummary.waiversDetail, 'My Finances - Financial Aid and Scholarships')">
+    <tbody
+      class="cc-widget-table-hover"
+      data-ng-class="{'cc-widget-table-hover-opened':(financialAidSummary.waiversDetail.show)}"
+      data-cc-accessible-focus-directive
+      data-ng-click="api.widget.toggleShow($event, null, financialAidSummary.waiversDetail, 'My Finances - Financial Aid and Scholarships')"
+    >
       <tr>
         <td>Waivers and Other Funding</td>
-        <td data-ng-class="financialAidSummary.selected.feeWaivers ? 'cc-right cc-toggle-triangle' : 'cc-right'"
-            data-cc-amount-directive="financialAidSummary.selected.waiversAndOtherFunding"
-            data-cc-amount-directive-color="false"
+        <td
+          data-ng-class="financialAidSummary.selected.waiversAndOtherFunding ? 'cc-right cc-toggle-triangle' : 'cc-right'"
+          data-cc-amount-directive="financialAidSummary.formatCurrency(financialAidSummary.selected.waiversAndOtherFunding)"
         ></td>
       </tr>
       <tr data-ng-if="financialAidSummary.selected.feeWaivers && financialAidSummary.waiversDetail.show">
         <td><span class="cc-widget-finaid-summary-indent">Fee Waivers</span></td>
-        <td><span
-          class="cc-right"
-          data-cc-amount-directive="financialAidSummary.selected.feeWaivers"
-          data-cc-amount-directive-color="false"
-        ></span></td>
+        <td>
+          <span
+            class="cc-right"
+            data-cc-amount-directive="financialAidSummary.formatCurrency(financialAidSummary.selected.feeWaivers)"
+          ></span>
+        </td>
+      </tr>
+      <tr data-ng-if="financialAidSummary.selected.thirdPartyContracts && financialAidSummary.waiversDetail.show">
+        <td><span class="cc-widget-finaid-summary-indent">Third Party Contracts</span></td>
+        <td>
+          <span
+            class="cc-right"
+            data-cc-amount-directive="financialAidSummary.formatCurrency(financialAidSummary.selected.thirdPartyContracts)"
+          ></span>
+        </td>
       </tr>
     </tbody>
-    <tbody class="cc-widget-table-hover"
-           data-ng-class="{'cc-widget-table-hover-opened':(financialAidSummary.loansWorkStudyDetail.show)}"
-           data-cc-accessible-focus-directive
-           data-ng-click="api.widget.toggleShow($event, null, financialAidSummary.loansWorkStudyDetail, 'My Finances - Financial Aid and Scholarships')">
+    <tbody
+      class="cc-widget-table-hover"
+      data-ng-class="{'cc-widget-table-hover-opened':(financialAidSummary.loansWorkStudyDetail.show)}"
+      data-cc-accessible-focus-directive
+      data-ng-click="api.widget.toggleShow($event, null, financialAidSummary.loansWorkStudyDetail, 'My Finances - Financial Aid and Scholarships')"
+    >
       <tr>
         <td>Loans and Work-Study</td>
-        <td data-ng-class="(financialAidSummary.selected.workStudy || financialAidSummary.selected.loans) ? 'cc-right cc-toggle-triangle' : 'cc-right'"
-          data-cc-amount-directive="financialAidSummary.selected.loansAndWorkStudy"
-          data-cc-amount-directive-color="false"
+        <td
+          data-ng-class="(financialAidSummary.selected.workStudy || financialAidSummary.selected.loans) ? 'cc-right cc-toggle-triangle' : 'cc-right'"
+          data-cc-amount-directive="financialAidSummary.formatCurrency(financialAidSummary.selected.loansAndWorkStudy)"
         ></td>
       </tr>
       <tr data-ng-if="financialAidSummary.selected.workStudy && financialAidSummary.loansWorkStudyDetail.show">
         <td><span class="cc-widget-finaid-summary-indent">Work-Study</span></td>
-        <td><span
-          class="cc-right"
-          data-cc-amount-directive="financialAidSummary.selected.workStudy"
-          data-cc-amount-directive-color="false"
-        ></span></td>
+        <td>
+          <span
+            class="cc-right"
+            data-cc-amount-directive="financialAidSummary.formatCurrency(financialAidSummary.selected.workStudy)"
+          ></span>
+        </td>
       </tr>
       <tr data-ng-if="financialAidSummary.selected.loans && financialAidSummary.loansWorkStudyDetail.show">
         <td><span class="cc-widget-finaid-summary-indent">Loans</span></td>
-        <td><span
-          class="cc-right"
-          data-cc-amount-directive="financialAidSummary.selected.loans"
-          data-cc-amount-directive-color="false"
-        ></span></td>
+        <td>
+          <span
+            class="cc-right"
+            data-cc-amount-directive="financialAidSummary.formatCurrency(financialAidSummary.selected.loans)"
+          ></span>
+        </td>
       </tr>
     </tbody>
   </table>
