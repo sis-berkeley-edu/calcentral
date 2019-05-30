@@ -38,7 +38,7 @@
       <li>API Version: <span data-ng-bind="versions.api"></span></li>
       <li>Current DB Schema: <span data-ng-bind="versions.currentDbSchema"></span></li>
       <li>Up Since: <span data-ng-bind="firstVisited"></span></li>
-      <li>Git commit: <a data-ng-href="https://github.com/ets-berkeley-edu/calcentral/commit/{{gitCommit}}" data-ng-bind="gitCommit | limitTo: 7"></a></li>
+      <li>Git commit: <a data-ng-href="https://github.com/sis-berkeley-edu/calcentral/commit/{{gitCommit}}" data-ng-bind="gitCommit | limitTo: 7"></a></li>
     </ul>
     <div data-ng-controller="BasicAuthController" data-ng-if="api.user.profile.isBasicAuthEnabled">
       <form class="cc-footer-form" data-ng-submit="basicauth.connect()">
