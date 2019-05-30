@@ -60,7 +60,7 @@ module Financials
     end
 
     def request_url
-      "#{@settings.base_url}/student/#{@student_id}"
+      "#{@settings.base_url}/#{@student_id}"
     end
 
   end
