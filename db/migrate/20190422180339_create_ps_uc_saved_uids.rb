@@ -6,7 +6,7 @@ class CreatePsUcSavedUids < ActiveRecord::Migration
         t.string  "uc_clc_app_id",          limit: 255
         t.text    "access_token"
         t.text    "refresh_token"
-        t.integer "uc_clc_expire", limit: 8
+        t.integer "expiration_time", limit: 8
         t.text    "app_data"
       end
 
