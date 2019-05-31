@@ -31,14 +31,14 @@ describe User::Oauth2Data do
     tokens = User::Oauth2Data.get(user_id, app_id)
     expect(tokens[:access_token]).to eq access_token
     expect(tokens[:refresh_token]).to eq refresh_token
-    expect(tokens[:uc_clc_expire]).to eq 1
+    expect(tokens[:expiration_time]).to eq 1
     expect(Cache::UserCacheExpiry).to receive(:notify).once
     updated_access_token = random_string 10
     User::Oauth2Data.new_or_update(user_id, app_id, updated_access_token)
     updated_tokens = User::Oauth2Data.get(user_id, app_id)
     expect(updated_tokens[:access_token]).to eq updated_access_token
     expect(updated_tokens[:refresh_token]).to be_empty
-    expect(updated_tokens[:uc_clc_expire]).to eq 0
+    expect(updated_tokens[:expiration_time]).to eq 0
     expect(updated_tokens).to_not eq tokens
   end
 

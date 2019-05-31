@@ -22,11 +22,9 @@ module User
 
     alias_attribute :uid, :uc_clc_ldap_uid
     alias_attribute :app_id, :uc_clc_app_id
-    alias_attribute :expiration_time, :uc_clc_expire
-
 
     def self.attributeDefaults
-      {refresh_token:'', app_data:{'clc_null' => true}, uc_clc_expire:0}
+      {refresh_token:'', app_data:{'clc_null' => true}, expiration_time:0}
     end
 
     def self.get(user_id, app_id)
