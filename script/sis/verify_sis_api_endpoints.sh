@@ -302,18 +302,16 @@ if [ "${APP_MODE}" == "calcentral" ] ; then
     "/UC_SR_FACULTY_COMMITTEE.v1/UC_SR_FACULTY_COMMITTEE_GET?EMPLID=${CAMPUS_SOLUTIONS_ID}"
 fi
 
-verify_hub 'always_enabled' true \
-  "/${CAMPUS_SOLUTIONS_ID}/affiliation" \
-  "/${CAMPUS_SOLUTIONS_ID}/contacts"
-
-if [ "${APP_MODE}" == "calcentral" ] ; then
 verify_hub 'profile' true \
-  "/${CAMPUS_SOLUTIONS_ID}/academic-status" \
-  "/${CAMPUS_SOLUTIONS_ID}/all" \
-  "/${CAMPUS_SOLUTIONS_ID}/demographic" \
-  "/${CAMPUS_SOLUTIONS_ID}/registrations" \
-  "/${CAMPUS_SOLUTIONS_ID}/work-experiences"
-fi
+  "/v1/students/${CAMPUS_SOLUTIONS_ID}/academic-status" \
+  "/v1/students/${CAMPUS_SOLUTIONS_ID}/affiliation" \
+  "/v1/students/${CAMPUS_SOLUTIONS_ID}/contacts" \
+  "/v1/students/${CAMPUS_SOLUTIONS_ID}/gender" \
+  "/v1/students/${CAMPUS_SOLUTIONS_ID}/all" \
+  "/v1/students/${CAMPUS_SOLUTIONS_ID}/demographic" \
+  "/v1/students/${CAMPUS_SOLUTIONS_ID}/registrations" \
+  "/v1/students/${CAMPUS_SOLUTIONS_ID}/work-experiences" \
+  "/v2/students/${CAMPUS_SOLUTIONS_ID}?inc-acad=true&inc-regs=true"
 
 # Custom credentials are needed for the Hub's Term API
 export HUB_APP_ID="${yml_hub_term_proxy_app_id//\'}"
