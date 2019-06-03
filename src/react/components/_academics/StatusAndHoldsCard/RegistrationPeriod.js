@@ -5,18 +5,30 @@ import RegistrationStatus from './RegistrationStatus';
 import CNPWarning from './CNPWarning';
 import CalGrantStatusItem from './CalGrantStatusItem';
 
+import { isIncomplete } from 'React/helpers/calgrants';
+
 const propTypes = {
   period: PropTypes.object.isRequired
 };
 
-const RegistrationPeriod = ({ period }) => (
-  <div className="RegistrationPeriod">
-    <h4>{ period.semester } { period.year }</h4>
-    <CNPWarning registration={period} />
-    <RegistrationStatus {...period.regStatus} />
-    <CalGrantStatusItem acknowledgement={period.calGrantAcknowledgement} />
-  </div>
-);
+const RegistrationPeriod = ({ period }) => {
+  const showPeriod = period.showCnp
+    || (period.regStatus && period.regStatus.explanation)
+    || (period.calGrantAcknowledgement && isIncomplete(period.calGrantAcknowledgement));
+
+  if (showPeriod) {
+    return (
+      <div className="RegistrationPeriod">
+        <h4>{ period.semester } { period.year }</h4>
+        <CNPWarning registration={period} />
+        <RegistrationStatus {...period.regStatus} />
+        <CalGrantStatusItem acknowledgement={period.calGrantAcknowledgement} />
+      </div>
+    );
+  } else {
+    return null;
+  }
+};
 
 RegistrationPeriod.propTypes = propTypes;
 
