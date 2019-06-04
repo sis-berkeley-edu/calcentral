@@ -12,6 +12,10 @@ import InstructingAppointments from './InstructingAppointments';
 
 import './EmploymentAppointments.scss';
 
+// TODO: Remove this when core-js is upgraded to v3
+// flatMap is required for IE and current Edge (18)
+import 'core-js/fn/array/flat-map';
+
 const APILink = (props) => {
   if (props.showNewWindow) {
     return <a href={props.url} target="_top">{props.name}</a>;
