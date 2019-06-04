@@ -5,8 +5,6 @@ import RegistrationStatus from './RegistrationStatus';
 import CNPWarning from './CNPWarning';
 import CalGrantStatusItem from './CalGrantStatusItem';
 
-import { isIncomplete } from 'React/helpers/calgrants';
-
 const propTypes = {
   period: PropTypes.object.isRequired
 };
@@ -14,7 +12,7 @@ const propTypes = {
 const RegistrationPeriod = ({ period }) => {
   const showPeriod = period.showCnp
     || (period.regStatus && period.regStatus.explanation)
-    || (period.calGrantAcknowledgement && isIncomplete(period.calGrantAcknowledgement));
+    || period.calGrantAcknowledgement;
 
   if (showPeriod) {
     return (
