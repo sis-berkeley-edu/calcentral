@@ -26,12 +26,6 @@ namespace :calcentral_dev do
         # update source
         run "cd #{project_root}; ./script/update-build.sh", :hosts => server
 
-        # Run db migrate on the first app server ONLY
-        # if index == 0
-        #   logger.debug "---- Server: #{server.host} running migrate in transaction on offline app servers"
-        #   run "cd #{project_root}; ./script/migrate.sh", :hosts => server
-        # end
-
         # start it up
         run "cd #{project_root}; ./script/init.d/calcentral start", :hosts => server
 
