@@ -460,6 +460,7 @@ features:
   cs_profile_languages: false
   cs_profile_work_experience: false
   cs_sir: true
+  employment_appointments: true
   enrollment_verification: false
   final_exam_schedule_student: false
   final_exam_schedule_instructor: false
