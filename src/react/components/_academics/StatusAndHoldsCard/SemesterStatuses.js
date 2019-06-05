@@ -38,7 +38,8 @@ const statusForTerm = (registration) => {
 };
 
 const propTypes = {
-  registrations: PropTypes.array
+  registrations: PropTypes.array,
+  viewCompletedCalgrantLink: PropTypes.bool
 };
 
 const SemesterStatuses = ({ registrations }) => {

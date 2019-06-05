@@ -8,6 +8,8 @@ import GreenCheckIcon from 'React/components/Icon/GreenCheckIcon';
 import { DisclosureItem, DisclosureItemTitle } from 'React/components/DisclosureItem';
 import StatusDisclosure from './StatusDisclosure';
 
+import CalGrantAcknowledgementStatus from './CalGrantAcknowledgement/Status';
+
 import {
   isComplete,
   isIncomplete,
@@ -17,10 +19,11 @@ import {
 const propTypes = {
   acknowledgement: PropTypes.object,
   holds: PropTypes.array,
-  viewAllLink: PropTypes.object
+  viewAllLink: PropTypes.object,
+  viewCompletedCalgrantLink: PropTypes.bool
 };
 
-const CalGrantStatusItem = ({ acknowledgement, holds, viewAllLink }) => {
+const CalGrantStatusItem = ({ acknowledgement, holds, viewAllLink, viewCompletedCalgrantLink }) => {
   if (acknowledgement) {
     if (isIncomplete(acknowledgement)) {
       const hold = holds.find(findCalGrantHoldForTermId(acknowledgement.termId));
@@ -42,17 +45,27 @@ const CalGrantStatusItem = ({ acknowledgement, holds, viewAllLink }) => {
         </DisclosureItem>
       );
     } else if (isComplete(acknowledgement)) {
-      return (
-        <DisclosureItem>
-          <DisclosureItemTitle>
-            <GreenCheckIcon />
-            { acknowledgement.link.name } Completed
-          </DisclosureItemTitle>
-          <StatusDisclosure>
-            <APILink { ...viewAllLink } />
-          </StatusDisclosure>
-        </DisclosureItem>
-      );
+      if (viewCompletedCalgrantLink) {
+        return (
+          <DisclosureItem>
+            <DisclosureItemTitle>
+              <GreenCheckIcon />
+              { acknowledgement.link.name } Completed
+            </DisclosureItemTitle>
+            <StatusDisclosure>
+              <APILink { ...viewAllLink } />
+            </StatusDisclosure>
+          </DisclosureItem>
+        );
+      } else {
+        return (
+          <CalGrantAcknowledgementStatus
+            acknowledgement={acknowledgement}
+            termId={acknowledgement.termId}
+            holds={holds}
+          />
+        );
+      }
     }
   } else {
     return null;
@@ -61,11 +74,13 @@ const CalGrantStatusItem = ({ acknowledgement, holds, viewAllLink }) => {
 
 const mapStateToProps = ({
   myHolds: { holds } = {},
-  myCalGrants: { viewAllLink } = {}
+  myCalGrants: { viewAllLink } = {},
+  myStatus: { features: { viewCompletedCalgrantLink } = {} } = {}
 }) => {
   return {
     holds: holds || [],
-    viewAllLink
+    viewAllLink,
+    viewCompletedCalgrantLink
   };
 };
 
