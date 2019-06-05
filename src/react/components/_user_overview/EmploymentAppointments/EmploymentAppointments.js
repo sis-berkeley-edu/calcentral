@@ -55,7 +55,8 @@ const propTypes = {
   appointments: PropTypes.array.isRequired,
   teachingSemesters: PropTypes.array.isRequired,
   termsTaught: PropTypes.number,
-  appointmentLink: PropTypes.object
+  appointmentLink: PropTypes.object,
+  featureEnabled: PropTypes.bool
 };
 
 const EmploymentAppointments = ({
@@ -66,8 +67,13 @@ const EmploymentAppointments = ({
   appointments,
   teachingSemesters,
   termsTaught,
-  appointmentLink
+  appointmentLink,
+  featureEnabled
 }) => {
+  if (!featureEnabled) {
+    return null;
+  }
+
   useEffect(() => {
     dispatch(fetchAppointments(userId));
   }, [userId]);
@@ -127,7 +133,7 @@ const EmploymentAppointments = ({
 
 EmploymentAppointments.propTypes = propTypes;
 
-const mapStateToProps = ({ advising = {} }) => {
+const mapStateToProps = ({ advising = {}, myStatus = {} }) => {
   const {
     userId,
     academics: {
@@ -142,12 +148,19 @@ const mapStateToProps = ({ advising = {} }) => {
     } = {}
   } = advising;
 
+  const {
+    features: {
+      employmentAppointments
+    } = {}
+  } = myStatus;
+
   return {
     userId, academicsLoaded, appointmentsLoaded,
     appointments: (appointments || []),
     teachingSemesters: (teachingSemesters || []),
     termsTaught,
-    appointmentLink
+    appointmentLink,
+    featureEnabled: employmentAppointments
   };
 };
 
