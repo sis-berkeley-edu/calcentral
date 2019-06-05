@@ -478,3 +478,4 @@ features:
   transcript_request_link_cred_solutions: false
   videos: false
   webcast_sign_up_on_calcentral: false
+  view_completed_calgrant_link: true
