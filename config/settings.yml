@@ -186,7 +186,7 @@ mailgun_proxy:
 
 financials_proxy:
   fake: false
-  base_url: 'https://apis.berkeley.edu/uat/cfv'
+  base_url: 'https://apis.berkeley.edu/uat/sis/v2/cfv/students'
   app_id: ''
   app_key: ''
 

@@ -31,7 +31,7 @@ module Financials
           'app_key' => @settings.app_key
         }
       elsif @settings.username.present? && @settings.password.present?
-        opts[:digest_auth] = {
+        opts[:basic_auth] = {
           username: @settings.username,
           password: @settings.password
         }
@@ -60,7 +60,7 @@ module Financials
     end
 
     def request_url
-      "#{@settings.base_url}/student/#{@student_id}"
+      "#{@settings.base_url}/#{@student_id}"
     end
 
   end
