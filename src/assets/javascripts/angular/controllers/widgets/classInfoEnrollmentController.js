@@ -12,7 +12,7 @@ angular.module('calcentral.controllers').controller('ClassInfoEnrollmentControll
   };
 
   var getStudents = function() {
-    rosterFactory.getRoster('campus', $scope.campusCourseId).then(
+    rosterFactory.getRoster($scope.campusCourseId).then(
       function successCallback(response) {
         angular.extend($scope, _.get(response, 'data'));
         partitionStudentsByEnrollmentStatus();
