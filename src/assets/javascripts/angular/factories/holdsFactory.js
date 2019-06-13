@@ -3,10 +3,10 @@ import {
   fetchHoldsSuccess
 } from 'Redux/actions/holdsActions';
 
-angular.module('calcentral.factories').factory('holdsFactory', function(apiService, $route, $ngRedux) {
+angular.module('calcentral.factories').factory('holdsFactory', function(apiService, $route, $ngRedux, $routeParams) {
   var getHolds = function(options) {
     if ($route.current.isAdvisingStudentLookup) {
-      const url = '/api/advising/holds/';
+      const url = `/api/advising/holds/${$routeParams.uid}`;
       // var urlAdvisingStudentHolds = '/dummy/json/holds_present.json';
 
       return apiService.http.request(options, url);
