@@ -5,8 +5,8 @@ import {
 angular.module('calcentral.factories').factory('academicStandingsFactory', function(apiService, $route, $routeParams, $ngRedux) {
   var getStandings = function(options) {
     if ($route.current.isAdvisingStudentLookup) {
-      const url = '/api/advising/standings/';
-      // var url = '/dummy/json/standings_present.json';
+      // const url = '/dummy/json/standings_present.json';
+      const url = '/api/advising/standings/' + $routeParams.uid;
 
       return apiService.http.request(options, url);
     } else {
