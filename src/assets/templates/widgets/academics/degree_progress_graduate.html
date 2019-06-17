@@ -46,7 +46,7 @@
           </div>
           <div class="cc-milestone-detail">
             <div data-ng-if="!requirement.attempts.length">
-              <span data-ng-bind="requirement.status"></span> <span data-ng-bind="requirement.dateCompleted"></span> <span data-ng-bind="requirement.formNotification"></span>
+              <span data-ng-bind="requirement.status"></span> <span data-ng-if="requirement.statusCode === 'Y'" data-ng-bind="requirement.dateCompleted"></span> <span data-ng-bind="requirement.formNotification"></span>
             </div>
             <div data-ng-if="requirement.proposedExamDate">
               <span>Proposed Exam Date:</span> <span data-ng-bind="requirement.proposedExamDate"></span>
