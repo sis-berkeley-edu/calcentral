@@ -315,7 +315,7 @@ cache:
     User::Identifiers::Cached: <%= 4.hours %>
 
     # Merge of independently cached feeds.
-    HubEdos::StudentApi::V1::MyStudent: <%= 5.minutes %>
+    HubEdos::MyStudent: <%= 5.minutes %>
 
 # Cache warmer settings
 cache_warmer:
@@ -385,6 +385,13 @@ campus_solutions_proxy:
   http_timeout_seconds: 30
 
 hub_edos_proxy:
+  fake: true
+  base_url: 'https://sis-integration.berkeley.edu/apis/sis'
+  username: secret
+  password: secret
+  http_timeout_seconds: 30
+
+hub_person_proxy:
   fake: true
   base_url: 'https://sis-integration.berkeley.edu/apis/sis'
   username: secret

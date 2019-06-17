@@ -31,7 +31,7 @@ module CampusSolutionsHelperModule
       get feed
       json = JSON.parse(response.body)
       expect(json['statusCode']).to eq 200
-      expect(json['feed'][feed_key]).to be
+      expect(json.dig(*feed_path)).to be
     end
   end
 
@@ -45,7 +45,7 @@ module CampusSolutionsHelperModule
       get feed
       json = JSON.parse response.body
       expect(json['statusCode']).to eq 200
-      feed = json['feed'][feed_key]
+      feed = json.dig(*feed_path)
       expect(feed).to have(expected_elements.length).items
       expect(feed).to include *expected_elements
     end

@@ -2,7 +2,7 @@ describe User::HasStudentHistory do
   let(:uid) { '2050' }
 
   describe 'has_student_history?' do
-    let(:sisedo_term) { double(:term, :legacy? => true) }
+    let(:sisedo_term) { double(:term, :legacy? => false) }
     let(:current_terms) { [sisedo_term] }
     let(:is_sisedo_student) { false }
     before do

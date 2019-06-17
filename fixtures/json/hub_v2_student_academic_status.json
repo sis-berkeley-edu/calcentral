@@ -1,0 +1,614 @@
+{
+  "apiResponse": {
+    "httpStatus": {
+      "code": "200",
+      "description": "OK"
+    },
+    "responseType": "namespaceURI=\"http://bmeta.berkeley.edu/student/studentV1.xsd\" element=\"student\"",
+    "response": {
+      "identifiers": [
+        {
+          "type": "student-id",
+          "id": "11667051",
+          "disclose": true
+        },
+        {
+          "type": "campus-uid",
+          "id": "61889",
+          "disclose": true
+        },
+        {
+          "type": "Social Security Number",
+          "id": "***-**-****",
+          "primary": true,
+          "disclose": false
+        },
+        {
+          "type": "DB2",
+          "id": "11667051",
+          "disclose": false,
+          "fromDate": "1902-02-01"
+        }
+      ],
+      "names": [
+        {
+          "type": {
+            "code": "PRF",
+            "description": "Preferred"
+          },
+          "familyName": "Bear",
+          "givenName": "Oski",
+          "formattedName": "Oski Bear",
+          "preferred": true,
+          "disclose": true,
+          "uiControl": {
+            "code": "U",
+            "description": "Edit - No Delete"
+          },
+          "fromDate": "2016-05-13"
+        },
+        {
+          "type": {
+            "code": "PRI",
+            "description": "Primary"
+          },
+          "familyName": "Bear",
+          "givenName": "Oski",
+          "formattedName": "Oski Bear",
+          "preferred": false,
+          "disclose": true,
+          "uiControl": {
+            "code": "D",
+            "description": "Display Only"
+          },
+          "fromDate": "1902-02-01"
+        }
+      ],
+      "affiliations": [
+        {
+          "type": {
+            "code": "ADMT_UX",
+            "description": "Admitted student's access to Cal Central",
+            "formalDescription": "Admitted student's access to Cal Central"
+          },
+          "detail": "Active",
+          "status": {
+            "code": "ACT",
+            "description": "Active",
+            "formalDescription": "Active"
+          },
+          "fromDate": "2018-10-07"
+        },
+        {
+          "type": {
+            "code": "APPLICANT",
+            "description": "Applicant",
+            "formalDescription": "Applied for admission to UC Berkeley."
+          },
+          "detail": "SIR Completed",
+          "status": {
+            "code": "ACT",
+            "description": "Active",
+            "formalDescription": "Active"
+          },
+          "fromDate": "2018-02-02"
+        },
+        {
+          "type": {
+            "code": "GRADUATE",
+            "description": "Graduate Student",
+            "formalDescription": "An individual with a Graduate-based Career/Program/Plan."
+          },
+          "detail": "Active",
+          "status": {
+            "code": "ACT",
+            "description": "Active",
+            "formalDescription": "Active"
+          },
+          "fromDate": "2017-03-13"
+        },
+        {
+          "type": {
+            "code": "UNDERGRAD",
+            "description": "Undergraduate Student",
+            "formalDescription": "An individual with an Undergraduate-based Career/Program/Plan."
+          },
+          "detail": "Active",
+          "status": {
+            "code": "ACT",
+            "description": "Active",
+            "formalDescription": "Active"
+          },
+          "fromDate": "2016-03-19"
+        }
+      ],
+      "confidential": false,
+      "academicStatuses": [
+        {
+          "studentCareer": {
+            "academicCareer": {
+              "code": "UGRD",
+              "description": "Undergrad",
+              "formalDescription": "Undergraduate"
+            },
+            "matriculation": {
+              "term": {
+                "id": "2168",
+                "name": "2016 Fall",
+                "category": {
+                  "code": "R",
+                  "description": "Regular Term"
+                },
+                "academicYear": "2017",
+                "beginDate": "2016-08-17",
+                "endDate": "2016-12-16"
+              },
+              "type": {
+                "code": "TRN",
+                "description": "Transfer",
+                "formalDescription": "Transfer Student"
+              },
+              "homeLocation": {
+                "code": "016",
+                "description": "Kings County"
+              }
+            },
+            "fromDate": "2016-03-19",
+            "toDate": "2018-12-14"
+          },
+          "studentPlans": [
+            {
+              "academicPlan": {
+                "plan": {
+                  "code": "25240U",
+                  "description": "Earth Science BA",
+                  "formalDescription": "Earth Science"
+                },
+                "type": {
+                  "code": "MAJ",
+                  "description": "Major - Regular Acad/Prfnl",
+                  "formalDescription": "Major - Regular Acad/Prfnl"
+                },
+                "cipCode": "40.0601",
+                "targetDegree": {
+                  "type": {
+                    "code": "AB",
+                    "description": "Bachelor of Arts",
+                    "formalDescription": "Bachelor of Arts"
+                  }
+                },
+                "ownedBy": [
+                  {
+                    "organization": {
+                      "code": "EPS",
+                      "description": "Earth & Planetary Science",
+                      "formalDescription": "Earth and Planetary Science"
+                    },
+                    "percentage": 100
+                  }
+                ],
+                "academicProgram": {
+                  "program": {
+                    "code": "UCLS",
+                    "description": "UG L&S",
+                    "formalDescription": "Undergrad Letters & Science"
+                  },
+                  "academicGroup": {
+                    "code": "CLS",
+                    "description": "L&S",
+                    "formalDescription": "College of Letters and Science"
+                  },
+                  "academicCareer": {
+                    "code": "UGRD",
+                    "description": "Undergrad",
+                    "formalDescription": "Undergraduate"
+                  }
+                }
+              },
+              "statusInPlan": {
+                "status": {
+                  "code": "AC",
+                  "description": "Active",
+                  "formalDescription": "Active in Program"
+                },
+                "action": {
+                  "code": "DATA",
+                  "description": "Data Chg",
+                  "formalDescription": "Data Change"
+                }
+              },
+              "primary": true,
+              "expectedGraduationTerm": {
+                "id": "2188",
+                "name": "2018 Fall",
+                "category": {
+                  "code": "R",
+                  "description": "Regular Term"
+                },
+                "academicYear": "2019",
+                "beginDate": "2018-08-15",
+                "endDate": "2018-12-14"
+              },
+              "degreeCheckoutStatus": {
+                "code": "EG",
+                "description": "Eligible",
+                "formalDescription": "Eligible for Graduation"
+              },
+              "fromDate": "2018-01-01",
+              "toDate": "2018-12-14"
+            },
+            {
+              "academicPlan": {
+                "plan": {
+                  "code": "19912U",
+                  "description": "Urban Studies BA",
+                  "formalDescription": "Urban Studies"
+                },
+                "type": {
+                  "code": "MAJ",
+                  "description": "Major - Regular Acad/Prfnl",
+                  "formalDescription": "Major - Regular Acad/Prfnl"
+                },
+                "cipCode": "45.1201",
+                "targetDegree": {
+                  "type": {
+                    "code": "AB",
+                    "description": "Bachelor of Arts",
+                    "formalDescription": "Bachelor of Arts"
+                  }
+                },
+                "academicProgram": {
+                  "program": {
+                    "code": "UCED",
+                    "description": "UG Env Des",
+                    "formalDescription": "Undergrad Environmental Design"
+                  },
+                  "academicGroup": {
+                    "code": "CED",
+                    "description": "CED",
+                    "formalDescription": "Clg of Environmental Design"
+                  },
+                  "academicCareer": {
+                    "code": "UGRD",
+                    "description": "Undergrad",
+                    "formalDescription": "Undergraduate"
+                  }
+                }
+              },
+              "statusInPlan": {
+                "status": {
+                  "code": "DC",
+                  "description": "Discontinu",
+                  "formalDescription": "Discontinued"
+                },
+                "action": {
+                  "code": "DISC",
+                  "description": "Discontinu",
+                  "formalDescription": "Discontinuation"
+                }
+              },
+              "primary": false,
+              "fromDate": "2016-08-01"
+            },
+            {
+              "academicPlan": {
+                "plan": {
+                  "code": "09V00U",
+                  "description": "Non-UC Campus Visitor EVCP UG",
+                  "formalDescription": "Undergraduate Non-UC Campus Visitor"
+                },
+                "type": {
+                  "code": "MAJ",
+                  "description": "Major - Regular Acad/Prfnl",
+                  "formalDescription": "Major - Regular Acad/Prfnl"
+                },
+                "academicProgram": {
+                  "program": {
+                    "code": "UNODG",
+                    "description": "UG NonDeg",
+                    "formalDescription": "Undergrad Non-Degree/NonFinAid"
+                  },
+                  "academicGroup": {
+                    "code": "UGND",
+                    "description": "UG Non-Deg",
+                    "formalDescription": "Undergraduate Non-Degree"
+                  },
+                  "academicCareer": {
+                    "code": "UGRD",
+                    "description": "Undergrad",
+                    "formalDescription": "Undergraduate"
+                  }
+                }
+              },
+              "statusInPlan": {
+                "status": {
+                  "code": "DC",
+                  "description": "Discontinu",
+                  "formalDescription": "Discontinued"
+                },
+                "action": {
+                  "code": "DISC",
+                  "description": "Discontinu",
+                  "formalDescription": "Discontinuation"
+                },
+                "reason": {
+                  "code": "CONV",
+                  "description": "Conversion"
+                }
+              },
+              "primary": false,
+              "fromDate": "2012-05-11"
+            },
+            {
+              "academicPlan": {
+                "plan": {
+                  "code": "09V00U",
+                  "description": "Non-UC Campus Visitor EVCP UG",
+                  "formalDescription": "Undergraduate Non-UC Campus Visitor"
+                },
+                "type": {
+                  "code": "MAJ",
+                  "description": "Major - Regular Acad/Prfnl",
+                  "formalDescription": "Major - Regular Acad/Prfnl"
+                },
+                "academicProgram": {
+                  "program": {
+                    "code": "UNODG",
+                    "description": "UG NonDeg",
+                    "formalDescription": "Undergrad Non-Degree/NonFinAid"
+                  },
+                  "academicGroup": {
+                    "code": "UGND",
+                    "description": "UG Non-Deg",
+                    "formalDescription": "Undergraduate Non-Degree"
+                  },
+                  "academicCareer": {
+                    "code": "UGRD",
+                    "description": "Undergrad",
+                    "formalDescription": "Undergraduate"
+                  }
+                }
+              },
+              "statusInPlan": {
+                "status": {
+                  "code": "DC",
+                  "description": "Discontinu",
+                  "formalDescription": "Discontinued"
+                },
+                "action": {
+                  "code": "DISC",
+                  "description": "Discontinu",
+                  "formalDescription": "Discontinuation"
+                },
+                "reason": {
+                  "code": "CONV",
+                  "description": "Conversion"
+                }
+              },
+              "primary": false,
+              "fromDate": "1995-05-19"
+            }
+          ],
+          "cumulativeGPA": {
+            "type": {
+              "code": "CGPA",
+              "description": "Cumulative GPA"
+            },
+            "average": 2.43,
+            "source": "UCB"
+          },
+          "cumulativeUnits": [
+            {
+              "type": {
+                "code": "Total",
+                "description": "Total Units"
+              },
+              "unitsEnrolled": 4,
+              "unitsTaken": 71,
+              "unitsPassed": 56,
+              "unitsTest": 13.3,
+              "unitsCumulative": 69.3
+            },
+            {
+              "type": {
+                "code": "For GPA",
+                "description": "Units For GPA"
+              },
+              "unitsTaken": 68,
+              "unitsPassed": 56
+            },
+            {
+              "type": {
+                "code": "Not For GPA",
+                "description": "Units Not For GPA"
+              },
+              "unitsEnrolled": 4,
+              "unitsTaken": 3,
+              "unitsTest": 13.3
+            }
+          ]
+        }
+      ],
+      "holds": [
+        {
+          "type": {
+            "code": "R01",
+            "description": "Missing Required Documents"
+          },
+          "reason": {
+            "code": "NOID",
+            "description": "No ID Provided at Cal 1 Card",
+            "formalDescription": "A government issue ID is required to receive a Cal 1 Card. A temporary Cal 1 Card was granted because you could not provide the required ID. You must provide a valid government issue ID to the Office of the Registrar before enrolling for the next term."
+          },
+          "fromTerm": {
+            "id": "2182",
+            "name": "2018 Spring",
+            "category": {
+              "code": "R",
+              "description": "Regular Term"
+            },
+            "academicYear": "2018",
+            "beginDate": "2018-01-09",
+            "endDate": "2018-05-11"
+          },
+          "toTerm": {
+            "id": "2182",
+            "name": "2018 Spring",
+            "category": {
+              "code": "R",
+              "description": "Regular Term"
+            },
+            "academicYear": "2018",
+            "beginDate": "2018-01-09",
+            "endDate": "2018-05-11"
+          },
+          "reference": " ",
+          "amountRequired": 0,
+          "department": {
+            "code": "UCBKL",
+            "description": "Department"
+          },
+          "contact": {
+            "code": " ",
+            "description": " "
+          }
+        },
+        {
+          "type": {
+            "code": "V01",
+            "description": "Academic Review"
+          },
+          "reason": {
+            "code": "DISRV",
+            "description": "Academic Status Review",
+            "formalDescription": "If you are a financial aid recipient, your financial aid will not disburse until your academic status has been determined by your college."
+          },
+          "fromTerm": {
+            "id": "2192",
+            "name": "2019 Spring",
+            "category": {
+              "code": "R",
+              "description": "Regular Term"
+            },
+            "academicYear": "2019",
+            "beginDate": "2019-01-15",
+            "endDate": "2019-05-17"
+          },
+          "fromDate": "2019-01-10",
+          "reference": " ",
+          "amountRequired": 0,
+          "department": {
+            "code": "UCBKL",
+            "description": "Department"
+          },
+          "contact": {
+            "code": " ",
+            "description": " "
+          }
+        },
+        {
+          "type": {
+            "code": "F06",
+            "description": "CA Enrollment Acknowledgment"
+          },
+          "reason": {
+            "code": "FCEA",
+            "description": "CA Enrollment Acknowledgment",
+            "formalDescription": "Before you can complete class enrollment for the Fall 2019 term, please acknowledge notifications required by California State Law. Please use the link provided in the Class Adjustment section (see #5) under Class Enrollment for Fall 2019. Be sure to select the Fall 2019 term at the top of the Class Enrollment section."
+          },
+          "fromTerm": {
+            "id": "2198",
+            "name": "2019 Fall",
+            "category": {
+              "code": "R",
+              "description": "Regular Term"
+            },
+            "academicYear": "2020",
+            "beginDate": "2019-08-21",
+            "endDate": "2019-12-20"
+          },
+          "fromDate": "2019-04-10",
+          "toDate": "2019-04-30",
+          "reference": " ",
+          "amountRequired": 0,
+          "department": {
+            "code": "UCBKL",
+            "description": "Department"
+          },
+          "contact": {
+            "code": " ",
+            "description": " "
+          }
+        },
+        {
+          "type": {
+            "code": "S02",
+            "description": "No Refund"
+          },
+          "reason": {
+            "code": "EAP",
+            "description": "EAP - Preventative Refund Hold"
+          },
+          "fromTerm": {
+            "id": "2195",
+            "name": "2019 Summer",
+            "category": {
+              "code": "S",
+              "description": "Summer Term"
+            },
+            "academicYear": "2020",
+            "beginDate": "2019-05-28",
+            "endDate": "2019-08-16"
+          },
+          "toTerm": {
+            "id": "2195",
+            "name": "2019 Summer",
+            "category": {
+              "code": "S",
+              "description": "Summer Term"
+            },
+            "academicYear": "2020",
+            "beginDate": "2019-05-28",
+            "endDate": "2019-08-16"
+          },
+          "fromDate": "2019-05-02",
+          "reference": " ",
+          "amountRequired": 0,
+          "department": {
+            "code": "UCBKL",
+            "description": "Department"
+          },
+          "contact": {
+            "code": " ",
+            "description": " "
+          },
+          "comments": "EAP Hold"
+        },
+        {
+          "type": {
+            "code": "S02",
+            "description": "No Refund"
+          },
+          "reason": {
+            "code": "CRBAL",
+            "description": "Credit Balance Write Off Comp",
+            "formalDescription": "Credit Balance Write Off Completed"
+          },
+          "fromDate": "2019-05-31",
+          "reference": " ",
+          "amountRequired": 0,
+          "department": {
+            "code": "UCBKL",
+            "description": "Department"
+          },
+          "contact": {
+            "code": " ",
+            "description": " "
+          }
+        }
+      ],
+      "awardHonors": [],
+      "degrees": []
+    }
+  }
+}

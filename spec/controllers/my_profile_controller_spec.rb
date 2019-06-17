@@ -7,7 +7,7 @@ describe MyProfileController do
 
   describe '#get_feed' do
     let(:feed) { :get_feed }
-    let(:feed_key) { 'student' }
+    let(:feed_path) { ['feed'] }
 
     it_behaves_like 'an unauthenticated user'
 
@@ -17,7 +17,7 @@ describe MyProfileController do
     context 'view-as session' do
       context 'advisor-view-as' do
         let(:view_as_key) { SessionKey.original_advisor_user_id }
-        let(:expected_elements) { %w(addresses affiliations emails emergencyContacts identifiers names phones urls residency gender) }
+        let(:expected_elements) { %w(identifiers names affiliations emails addresses phones emergencyContacts ethnicities usaCountry residency gender links) }
         it_behaves_like 'a successful feed during view-as session'
       end
     end
@@ -29,7 +29,7 @@ describe MyProfileController do
       allow_any_instance_of(User::AggregatedAttributes).to receive(:get_feed).and_return({roles: { student: true } })
     end
     let(:feed) { :get_edit_link }
-    let(:feed_key) { 'editProfile' }
+    let(:feed_path) { ['feed','editProfile'] }
 
     it_behaves_like 'an unauthenticated user'
 

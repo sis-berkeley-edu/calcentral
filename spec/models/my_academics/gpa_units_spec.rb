@@ -18,14 +18,14 @@ describe MyAcademics::GpaUnits do
     }
   end
   let(:has_law_role) { false }
-  let(:status_proxy) { HubEdos::StudentApi::V1::AcademicStatus.new(user_id: uid, fake: true) }
+  let(:status_proxy) { HubEdos::StudentApi::V2::AcademicStatuses.new(user_id: uid, fake: true) }
 
   describe '#merge' do
     subject do
       {}.tap { |feed| MyAcademics::GpaUnits.new(uid).merge feed }
     end
     before do
-      allow(HubEdos::StudentApi::V1::AcademicStatus).to receive(:new).and_return status_proxy
+      allow(HubEdos::StudentApi::V2::AcademicStatuses).to receive(:new).and_return status_proxy
     end
 
     context 'when legacy user but non-legacy term' do
@@ -36,8 +36,8 @@ describe MyAcademics::GpaUnits do
       context 'CS data is ready to go' do
         it 'sources from Hub' do
           expect(CampusOracle::Queries).to receive(:get_student_info).never
-          expect(HubEdos::StudentApi::V1::AcademicStatus).to receive(:new).and_return status_proxy
-          expect(subject[:gpaUnits][:gpa][0][:cumulativeGpa]).to eq '3.8'
+          expect(HubEdos::StudentApi::V2::AcademicStatuses).to receive(:new).and_return status_proxy
+          expect(subject[:gpaUnits][:gpa][0][:cumulativeGpa]).to eq '2.43'
         end
       end
     end
@@ -51,17 +51,16 @@ describe MyAcademics::GpaUnits do
       let(:uid) { '300216' }
 
       it 'translates GPA, grouped by career' do
-        expect(subject[:gpaUnits][:gpa][0][:cumulativeGpa]).to eq '3.8'
+        expect(subject[:gpaUnits][:gpa].count).to eq 1
+        expect(subject[:gpaUnits][:gpa][0][:cumulativeGpa]).to eq '2.43'
         expect(subject[:gpaUnits][:gpa][0][:role]).to eq 'ugrd'
-        expect(subject[:gpaUnits][:gpa][1][:cumulativeGpa]).to eq '0'
-        expect(subject[:gpaUnits][:gpa][1][:role]).to eq 'concurrent'
       end
       it 'provides total units and total Law units' do
         expect(subject[:gpaUnits][:totalUnits]).to be
         expect(subject[:gpaUnits][:totalLawUnits]).to be
       end
       it 'translates total units attempted' do
-        expect(subject[:gpaUnits][:totalUnitsAttempted]).to eq 8
+        expect(subject[:gpaUnits][:totalUnitsAttempted]).to eq 68
       end
       it 'provides the pass/no pass unit totals' do
         expect(subject[:gpaUnits][:totalUnitsTakenNotForGpa]).to eq 3
@@ -99,7 +98,7 @@ describe MyAcademics::GpaUnits do
       context 'when academic status feed lacking some data' do
         before do
           status_proxy.override_json do |json|
-            json['apiResponse']['response']['any']['students'][0]['academicStatuses'][0].delete 'cumulativeUnits'
+            json['apiResponse']['response']['academicStatuses'][0].delete 'cumulativeUnits'
           end
         end
         it 'returns what data it can' do

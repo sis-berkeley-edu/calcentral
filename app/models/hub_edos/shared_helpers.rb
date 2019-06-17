@@ -1,5 +1,5 @@
 module HubEdos
-  # Helper methods shared between V1 and V2 proxies
+  # TODO: Remove this after V1 proxies are deprecated
   module SharedHelpers
     def self.filter_fields(input_hash, whitelisted_fields = nil)
       return input_hash if whitelisted_fields.blank?

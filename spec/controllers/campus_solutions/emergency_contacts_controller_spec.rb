@@ -5,7 +5,7 @@ describe CampusSolutions::EmergencyContactsController do
 
     context 'authenticated user' do
       let(:user_id) { '1024600' }
-      let(:feed_key) { 'students' }
+      let(:feed_path) { ['feed','students'] }
       it_behaves_like 'a successful feed'
     end
   end

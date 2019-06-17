@@ -1,0 +1,16 @@
+{
+  "apiResponse": {
+    "source": "UCB-SIS-STUDENT",
+    "correlationId": "abcdef12-1234-4321-1234-abcdabcdabcd",
+    "responseType": "http://bmeta.berkeley.edu/foo/barV0.xsd/foobar",
+    "response": {
+      "any": {
+        "foobars": [
+          {
+            "foo": "bar"
+          }
+        ]
+      }
+    }
+  }
+}

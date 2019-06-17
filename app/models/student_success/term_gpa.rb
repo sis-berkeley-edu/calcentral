@@ -1,7 +1,6 @@
 module StudentSuccess
   class TermGpa
     include Concerns::AcademicsModule
-    include Concerns::AcademicStatus
 
     def initialize(opts={})
       @student_uid_param = opts[:user_id]

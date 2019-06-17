@@ -8,7 +8,7 @@ describe CampusSolutions::HigherOneUrlController do
     it_behaves_like 'an unauthenticated user'
 
     context 'authenticated user' do
-      let(:feed_key) { 'root' }
+      let(:feed_path) { ['feed','root'] }
       it_behaves_like 'a successful feed'
       it 'has some field mapping info' do
         session['user_id'] = user_id

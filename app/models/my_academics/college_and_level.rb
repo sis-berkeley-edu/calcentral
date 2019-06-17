@@ -2,7 +2,6 @@ module MyAcademics
   class CollegeAndLevel < UserSpecificModel
     include ClassLogger
     include DatedFeed
-    include Concerns::AcademicStatus
 
     CS_DATE_FORMAT = "%Y-%m-%d"
 
@@ -24,15 +23,18 @@ module MyAcademics
       hub_response = MyAcademics::MyAcademicStatus.new(@uid).get_feed
       hub_student = HubEdos::Student.new(@uid)
       college_and_level = {
-        holds: parse_hub_holds(hub_response),
-        awardHonors: parse_hub_award_honors(hub_response),
-        roles: parse_hub_roles(hub_response),
-        statusCode: hub_response.try(:[], :statusCode),
-        errored: hub_response.try(:[], :errored),
-        body: hub_response.try(:[], :body)
+        holds: {
+          hasHolds: MyAcademics::MyAcademicStatus.has_holds?(@uid)
+        },
+        awardHonors: parse_hub_award_honors(MyAcademics::MyAcademicStatus.award_honors(@uid)),
+        degrees: parse_hub_degrees(MyAcademics::MyAcademicStatus.degrees(@uid)),
+        roles: MyAcademics::MyAcademicStatus.roles(@uid),
+        statusCode: MyAcademics::MyAcademicStatus.status_code(@uid),
+        errored: MyAcademics::MyAcademicStatus.errored?(@uid),
+        body: MyAcademics::MyAcademicStatus.error_message(@uid),
       }
 
-      statuses = academic_statuses hub_response
+      statuses = MyAcademics::MyAcademicStatus.academic_statuses(@uid)
       if (status = statuses.first)
         registration_term = status.try(:[], 'currentRegistration').try(:[], 'term')
         college_and_level[:careers] = parse_hub_careers statuses
@@ -41,7 +43,6 @@ module MyAcademics
         college_and_level[:termId] = registration_term.try(:[], 'id')
         college_and_level[:termsInAttendance] = status.try(:[], 'termsInAttendance').try(:to_s)
         college_and_level.merge! parse_hub_plans statuses
-        college_and_level[:degrees] = parse_hub_degrees hub_response
       else
         college_and_level[:empty] = true
       end
@@ -49,14 +50,8 @@ module MyAcademics
       college_and_level
     end
 
-    def parse_hub_holds(response)
-      {
-        hasHolds: has_holds?(response)
-      }
-    end
-
-    def parse_hub_award_honors(response)
-      honors = sort_award_honors response.try(:[], :feed).try(:[], 'student').try(:[], 'awardHonors')
+    def parse_hub_award_honors(award_honors)
+      honors = sort_award_honors(award_honors)
       honors_by_term = {}
       honors.try(:each) do |honor|
         term_id = honor.try(:[], 'term').try(:[], 'id')
@@ -86,13 +81,14 @@ module MyAcademics
       pretty_date
     end
 
-    def parse_hub_roles(response)
-      response.try(:[], :feed).try(:[], 'student').try(:[], 'roles')
-    end
-
     def parse_hub_careers(statuses)
-      careers = careers(statuses)
-      careers.collect {|career| career.try(:[], 'description') }.uniq
+      [].tap do |career_descriptions|
+        statuses.try(:each) do |status|
+          if (career_description = status['studentCareer'].try(:[], 'academicCareer').try(:[], 'description'))
+            career_descriptions << career_description
+          end
+        end
+      end.uniq
     end
 
     def parse_hub_plans(statuses)
@@ -123,8 +119,8 @@ module MyAcademics
       plan_set
     end
 
-    def parse_hub_degrees(response)
-      if (degrees = response.try(:[], :feed).try(:[], 'student').try(:[], 'degrees'))
+    def parse_hub_degrees(degrees)
+      if degrees.present?
         awarded_degrees = []
         degrees.each do |degree|
           if degree.try(:[], 'status').try(:[], 'code') == 'Awarded'
@@ -180,7 +176,7 @@ module MyAcademics
     def filter_inactive_status_plans(statuses)
       statuses.each do |status|
         status['studentPlans'].select! do |plan|
-          active? plan
+          MyAcademics::MyAcademicStatus.active_plan?(plan)
         end
       end
       statuses

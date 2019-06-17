@@ -2,7 +2,6 @@ module MyAcademics
   class GpaUnits < UserSpecificModel
     include ClassLogger
     include User::Identifiers
-    include Concerns::AcademicStatus
     include Concerns::Careers
 
     def merge(data)
@@ -10,13 +9,11 @@ module MyAcademics
     end
 
     def gpa_units
-      feed = MyAcademics::MyAcademicStatus.new(@uid).get_feed
-      # TODO: Eventually we want to use #parse_academic_statuses to pull all careers and parse associated values for each career
-      academic_statuses = parse_academic_statuses feed
+      academic_statuses = MyAcademics::MyAcademicStatus.academic_statuses(@uid)
       academic_status_first = academic_statuses.try(:first)
 
       result = {
-        :errored => feed.try(:[], :errored),
+        :errored => MyAcademics::MyAcademicStatus.errored?(@uid),
         :gpa => parse_cumulative_gpa(academic_statuses),
         :totalUnitsTakenNotForGpa => parse_total_units_not_for_gpa(pnp_units, 'pnp_taken'),
         :totalUnitsPassedNotForGpa => parse_total_units_not_for_gpa(pnp_units, 'pnp_passed'),
@@ -26,10 +23,6 @@ module MyAcademics
       result.merge!(parse_total_transfer_units academic_status_first)
       result.merge!(parse_total_units_for_gpa academic_status_first)
       result
-    end
-
-    def parse_academic_statuses(feed)
-      academic_statuses(feed)
     end
 
     def pnp_units

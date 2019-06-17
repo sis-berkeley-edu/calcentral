@@ -5,27 +5,6 @@ describe MyAcademics::CollegeAndLevel do
   let(:legacy_campus_solutions_id) { '11667051' }
   let(:fake_spring_term) { double(is_summer: false, :year => 2015, :code => 'B') }
   let(:feed) { {}.tap { |feed| subject.merge feed } }
-
-  # Hub Academic Status - Response / Feed
-  let(:hub_academic_status_response) do
-    {
-      :statusCode => hub_academic_status_code,
-      :feed => hub_academic_status_feed,
-      :studentNotFound => nil
-    }
-  end
-  let(:hub_academic_status_code) { 200 }
-  let(:hub_academic_status_feed) do
-    {
-      "student" => {
-        "academicStatuses" => hub_academic_statuses,
-        "holds" => hub_holds,
-        "awardHonors" => hub_award_honors,
-        "degrees" => hub_degrees
-      }
-    }
-  end
-
   let(:hub_holds) do
     [
       {
@@ -381,6 +360,10 @@ describe MyAcademics::CollegeAndLevel do
       ]
     })
   end
+  let(:has_holds) { false }
+  let(:feed_errored) { false }
+  let(:feed_error_body) { '' }
+  let(:feed_status_code) { 200 }
 
   let(:hubedos_student) do
     double(:hubedos_student, {max_terms_in_attendance: 5, student_academic_levels: ['Graduate','Professional Year 3']})
@@ -388,7 +371,15 @@ describe MyAcademics::CollegeAndLevel do
 
   before do
     allow_any_instance_of(CalnetCrosswalk::ByUid).to receive(:lookup_campus_solutions_id).and_return campus_solutions_id
-    allow_any_instance_of(MyAcademics::MyAcademicStatus).to receive(:get_feed).and_return hub_academic_status_response
+    # allow_any_instance_of(MyAcademics::MyAcademicStatus).to receive(:get_feed).and_return hub_academic_status_response
+    allow(MyAcademics::MyAcademicStatus).to receive(:academic_statuses).and_return(hub_academic_statuses)
+    allow(MyAcademics::MyAcademicStatus).to receive(:award_honors).and_return(hub_award_honors)
+    allow(MyAcademics::MyAcademicStatus).to receive(:degrees).and_return(hub_degrees)
+    allow(MyAcademics::MyAcademicStatus).to receive(:roles).and_return(hub_award_honors)
+    allow(MyAcademics::MyAcademicStatus).to receive(:has_holds?).and_return(has_holds)
+    allow(MyAcademics::MyAcademicStatus).to receive(:errored?).and_return(feed_errored)
+    allow(MyAcademics::MyAcademicStatus).to receive(:error_message).and_return(feed_error_body)
+    allow(MyAcademics::MyAcademicStatus).to receive(:status_code).and_return(feed_status_code)
     allow(HubEdos::Student).to receive(:new).and_return(hubedos_student)
   end
 
@@ -404,7 +395,7 @@ describe MyAcademics::CollegeAndLevel do
     end
 
     context 'when hub response is empty' do
-      let(:hub_academic_status_feed) { {} }
+      let(:hub_academic_statuses) { [] }
       let(:campus_solutions_id) { legacy_campus_solutions_id }
       context 'when current term is summer' do
         before { allow(subject).to receive(:current_term).and_return(double(is_summer: true)) }
@@ -430,10 +421,10 @@ describe MyAcademics::CollegeAndLevel do
 
   context 'when sourced from Hub academic status' do
     context 'failed response' do
-      let(:failure_response) { {:errored=>true, :statusCode=>503, :body=>"An unknown server error occurred"} }
-      before do
-        allow_any_instance_of(MyAcademics::MyAcademicStatus).to receive(:get_feed).and_return(failure_response)
-      end
+      let(:feed_status_code) { 503 }
+      let(:feed_errored) { true }
+      let(:feed_error_body) { 'An unknown server error occurred' }
+      let(:hub_academic_statuses) { [] }
       it 'reports failure' do
         expect(feed[:collegeAndLevel][:statusCode]).to eq 503
         expect(feed[:collegeAndLevel][:empty]).to eq true
@@ -442,6 +433,7 @@ describe MyAcademics::CollegeAndLevel do
       end
     end
     context 'undergrad with single academic status' do
+      let(:has_holds) { true }
       let(:has_law_role) { false }
 
       it 'reports success' do
@@ -724,21 +716,16 @@ describe MyAcademics::CollegeAndLevel do
     end
 
     context 'empty status feed' do
-      let(:hub_academic_status_feed) { {} }
+      let(:hub_academic_statuses) { [] }
       it 'reports empty' do
         expect(feed[:collegeAndLevel][:empty]).to eq true
       end
     end
 
     context 'errored status feed' do
-      let(:hub_academic_status_response) do
-        {
-          :statusCode => 502,
-          :body => "An unknown server error occurred",
-          :errored => true,
-          :studentNotFound => nil
-        }
-      end
+      let(:feed_errored) { true }
+      let(:feed_status_code) { 502 }
+      let(:feed_error_body) { 'Bad Gateway' }
       it 'reports error' do
         expect(feed[:collegeAndLevel][:errored]).to eq true
       end
@@ -756,7 +743,7 @@ describe MyAcademics::CollegeAndLevel do
   end
 
   describe '#parse_hub_award_honors' do
-    subject { described_class.new(uid).parse_hub_award_honors hub_academic_status_response }
+    subject { described_class.new(uid).parse_hub_award_honors(hub_award_honors) }
 
     it 'groups and orders award honors by term' do
       expect(subject.count).to eq(3)
