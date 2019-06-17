@@ -12,7 +12,7 @@ angular.module('calcentral.factories').factory('transferCreditFactory', function
 
   var getTransferCredit = function(options) {
     if ($route.current.isAdvisingStudentLookup) {
-      const url = '/api/advising/transfer_credit/';
+      const url = '/api/advising/transfer_credit/' + $routeParams.uid;
       return apiService.http.request(options, url);
     } else {
       const url = '/api/academics/transfer_credits';
