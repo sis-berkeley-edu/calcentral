@@ -158,7 +158,7 @@ describe HubEdos::Student do
       ]
     end
     let(:student_proxy) { double(:student_proxy, :get => student_api_response) }
-    before { allow(HubEdos::V2::Student).to receive(:new).and_return(student_proxy) }
+    before { allow(HubEdos::StudentApi::V2::Student).to receive(:new).and_return(student_proxy) }
     it 'returns ihub student api v2 feed' do
       expect(subject.instance_eval { student_data[:feed].has_key?('registrations') }).to eq true
     end

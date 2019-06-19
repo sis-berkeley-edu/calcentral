@@ -1,4 +1,4 @@
-describe HubEdos::V2::Base do
+describe HubEdos::StudentApi::V2::Base do
   let(:uid) { random_id }
   let(:student_id) { random_id }
   let(:student_api_v2_response_payload) do
@@ -41,7 +41,7 @@ describe HubEdos::V2::Base do
     }
   end
 
-  class Worker < HubEdos::V2::Base
+  class Worker < HubEdos::StudentApi::V2::Base
     def json_filename
       'hub_v2_academic_status.json'
     end

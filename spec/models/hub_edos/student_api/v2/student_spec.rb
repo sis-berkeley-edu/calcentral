@@ -1,6 +1,6 @@
-describe HubEdos::V2::Student do
+describe HubEdos::StudentApi::V2::Student do
   let(:uid) { random_id }
-  subject { HubEdos::V2::Student.new(fake: true, user_id: random_id) }
+  subject { HubEdos::StudentApi::V2::Student.new(fake: true, user_id: random_id) }
 
   context '#get' do
     it 'returns feed' do
