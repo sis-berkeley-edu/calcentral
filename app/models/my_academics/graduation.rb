@@ -23,9 +23,9 @@ module MyAcademics
         appts_in_graduating_term = appointments_in_graduating_term(ugrd_grad_term, terms_with_appts)
         show_graduation_checklist = ['EG', 'AP', 'AW'].include?(ugrd_grad_term[:degreeCheckoutStatus])
       end
-      required_message = CampusSolutions::MessageCatalog.new(message_set_nbr: 28000, message_nbr: 210).get
-      with_loans_message = CampusSolutions::MessageCatalog.new(message_set_nbr: 28000, message_nbr: 211).get
-      recommended_message = CampusSolutions::MessageCatalog.new(message_set_nbr: 28000, message_nbr: 212).get
+      required_message = CampusSolutions::MessageCatalog.get_message(:graduation_required)
+      with_loans_message = CampusSolutions::MessageCatalog.get_message(:graduation_with_loans)
+      recommended_message = CampusSolutions::MessageCatalog.get_message(:graduation_recommended)
       {
         undergraduate: {
           expectedGraduationTerm: ugrd_grad_term,
@@ -33,9 +33,9 @@ module MyAcademics
           activeTermsWithEnrollmentAppointments: terms_with_appts,
           appointmentsInGraduatingTerm: appts_in_graduating_term,
           messages: {
-            required: required_message.try(:[], :feed).try(:[], :root).try(:[], :getMessageCatDefn).try(:[], :descrlong),
-            studentsWithLoans: with_loans_message.try(:[], :feed).try(:[], :root).try(:[], :getMessageCatDefn).try(:[], :descrlong),
-            recommended: recommended_message.try(:[], :feed).try(:[], :root).try(:[], :getMessageCatDefn).try(:[], :descrlong)
+            required: required_message.try(:[], :descrlong),
+            studentsWithLoans: with_loans_message.try(:[], :descrlong),
+            recommended: recommended_message.try(:[], :descrlong)
           }
         },
         gradLaw: {

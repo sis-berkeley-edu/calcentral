@@ -21,9 +21,16 @@ describe CampusSolutions::MessageCatalog do
       }
     }
   end
+  let(:message_catalog_constant) do
+    {
+      max_cancel_amount: { message_set_nbr: '26500', message_nbr: '112' }
+    }
+  end
+  before { stub_const("CampusSolutions::MessageCatalog::CATALOG", message_catalog_constant) }
 
-  context '.get_message_catalog_definition' do
-    subject { described_class.get_message_catalog_definition(message_set_nbr, message_nbr) }
+  describe '.get_message' do
+    let(:message_key) { :max_cancel_amount }
+    subject { described_class.get_message(message_key) }
     before { allow_any_instance_of(described_class).to receive(:get).and_return(mocked_response) }
 
     context 'when failed response' do
@@ -36,15 +43,30 @@ describe CampusSolutions::MessageCatalog do
     end
     context 'when message catalog definition is present' do
       it 'returns definition' do
-        expect(subject).to have_key(:messageSetNbr)
-        expect(subject).to have_key(:messageNbr)
-        expect(subject).to have_key(:messageText)
-        expect(subject).to have_key(:descrlong)
+        expect(subject[:messageSetNbr]).to eq '26500'
+        expect(subject[:messageNbr]).to eq '112'
+        expect(subject[:messageText]).to eq 'message text'
+        expect(subject[:msgSeverity]).to eq 'M'
+        expect(subject[:descrlong]).to eq 'long message description'
       end
     end
   end
 
-  context '#get' do
+  describe '.get_message_collection' do
+    let(:message_keys) { [:max_cancel_amount] }
+    subject { described_class.get_message_collection(message_keys) }
+    it 'returns messages hash' do
+      expect(subject).to be_an_instance_of Hash
+      expect(subject.keys).to eq [:max_cancel_amount]
+      expect(subject[:max_cancel_amount][:messageSetNbr]).to eq '26500'
+      expect(subject[:max_cancel_amount][:messageNbr]).to eq '112'
+      expect(subject[:max_cancel_amount][:messageText]).to eq 'Reduce/Cancel: Max Cancelable Amount is Zero'
+      expect(subject[:max_cancel_amount][:msgSeverity]).to eq 'M'
+      expect(subject[:max_cancel_amount][:descrlong]).to eq 'YOU CANNOT REDUCE OR CANCEL THIS LOAN.'
+    end
+  end
+
+  describe '#get' do
     let(:message_set_nbr) {'26500'}
     let(:message_nbr) {'112'}
     let(:fake_flag) { true }

@@ -14,10 +14,10 @@ module CampusSolutions
       if is_feature_enabled && (self.aid_year ||= FinancialAid::MyAidYears.new(@uid).default_aid_year)
         logger.debug "User #{@uid}; aid year #{aid_year}"
         funding_sources = CampusSolutions::FinancialAidFundingSources.new(user_id: @uid, aid_year: aid_year).get
-        message = CampusSolutions::MessageCatalog.new(message_set_nbr: 26500, message_nbr: 115).get
+        message = CampusSolutions::MessageCatalog.get_message(:financial_awards_coa)
         {
           awards: funding_sources.try(:[], :feed).try(:[], :awards),
-          message: message.try(:[], :feed).try(:[], :root).try(:[], :getMessageCatDefn).try(:[], :descrlong),
+          message: message.try(:[], :descrlong),
           errored: funding_sources.try(:[], :errored)
         }
       else

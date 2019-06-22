@@ -18,7 +18,7 @@ angular.module('calcentral.factories').factory('enrollmentFactory', function(api
    * @param {object} instructionType enrollment instruction object
    * @param {object} termId          term code for enrollment instruction object
    * @param {object} academicPlanner raw academic planner object
-   * @return {object} instructionType 
+   * @return {object} instructionType
    */
   var setAcademicPlanner = function(instructionType, termId, academicPlanner) {
     var planner = _.get(academicPlanner, termId);
@@ -42,6 +42,7 @@ angular.module('calcentral.factories').factory('enrollmentFactory', function(api
     var instructions = _.get(response, 'data.enrollmentTermInstructions');
     var hasHolds = _.get(response, 'data.hasHolds');
     var links = _.get(response, 'data.links');
+    var messages = _.get(response, 'data.messages');
     if (!instructionTypeDecks || !academicPlanner || !instructions) {
       return;
     }
@@ -62,6 +63,7 @@ angular.module('calcentral.factories').factory('enrollmentFactory', function(api
           angular.extend(card, instructions[typeTermId]);
           card.hasHolds = hasHolds;
           card.csLinks = links;
+          card.csMessages = messages;
           card = setAcademicPlanner(card, typeTermId, academicPlanner);
           return card;
         });
