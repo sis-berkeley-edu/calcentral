@@ -241,6 +241,10 @@ $cc-spinner-uneven: 17px;
   width: 1px;
 }
 
+.cc-margin-auto {
+  margin: auto;
+}
+
 @media #{$small-only} {
   .cc-hide-for-small {
     display: none !important;

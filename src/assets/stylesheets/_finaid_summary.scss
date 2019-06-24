@@ -1,10 +1,14 @@
 .cc-widget-finaid-summary {
+  .cc-widget-finaid-summary-title-item {
+    width: 100%;
+  }
+
   .cc-widget-finaid-summary-label {
     display: block;
     width: 85px;
   }
   .cc-widget-finaid-summary-select-year-container {
-    width: 100px;
+    width: 104px;
   }
   .cc-widget-finaid-summary-available-semesters {
     margin-left: 75px;
@@ -22,20 +26,22 @@
     padding: 5px 10px;
 
     table {
-      tfoot {
-        background: none;
-        tr th, tr td {
-          padding: 10px 0 0;
-        }
-      }
       tr th, tr td {
         color: $body-font-color;
         font-weight: 400;
       }
+      tr td {
+        width: 72px;
+      }
     }
   }
+  .cc-widget-finaid-summary-value-container {
+    width: 72px;
+  }
+
   .cc-widget-finaid-summary-funding-offered {
     margin: 20px 0 0;
+    padding: 0 0 0 10px;
     table th td, table tr td {
       font-size: 12px;
       padding-right: 24px;

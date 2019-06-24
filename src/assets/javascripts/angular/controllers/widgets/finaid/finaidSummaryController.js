@@ -12,13 +12,34 @@ angular.module('calcentral.controllers').controller('FinaidSummaryController', f
     tasksCount: 0,
     giftAidDetail: {},
     waiversDetail: {},
-    loansWorkStudyDetail: {}
+    loansWorkStudyDetail: {},
+    tipVisibleGiftAid: false,
+    tipVisibleNetCost: false,
+    tipVisibleThirdParty: false,
+    showDecimals: false
   };
 
   $scope.financialAidSummary.changeAidYear = function() {
     finaidService.setFinaidYear($scope.financialAidSummary.selected.finaidYear);
     updateSummary();
     updateUrl();
+    checkForDecimalValues($scope.financialAidSummary.selected);
+  };
+
+  var formatCurrency = function(amount) {
+    return $scope.financialAidSummary.showDecimals ? amount.toFixed(2) : amount;
+  };
+
+  var toggleTipGiftAid = function() {
+    $scope.financialAidSummary.selected.tipVisibleGiftAid = !$scope.financialAidSummary.selected.tipVisibleGiftAid;
+  };
+
+  var toggleTipNetCost = function() {
+    $scope.financialAidSummary.selected.tipVisibleNetCost = !$scope.financialAidSummary.selected.tipVisibleNetCost;
+  };
+
+  var toggleTipThirdParty = function() {
+    $scope.financialAidSummary.selected.tipVisibleThirdParty = !$scope.financialAidSummary.selected.tipVisibleThirdParty;
   };
 
   var updateUrl = function() {
@@ -34,6 +55,20 @@ angular.module('calcentral.controllers').controller('FinaidSummaryController', f
     angular.extend($scope.financialAidSummary.selected, _.get($scope.financialAidSummary.aid, finaidService.options.finaidYear.id));
   };
 
+  var checkForDecimalValues = function(incoming) {
+    let b = false;
+    const values = Object.values(incoming);
+
+    values.forEach(function(amount) {
+      if (typeof amount === 'number') {
+        if ((!Number.isInteger(amount)) && (!b)) {
+          b = true;
+        }
+      }
+    });
+    $scope.financialAidSummary.showDecimals = b;
+  };
+
   var selectFinaidYear = function() {
     $scope.financialAidSummary.selected.finaidYear = finaidService.options.finaidYear;
   };
@@ -46,6 +81,7 @@ angular.module('calcentral.controllers').controller('FinaidSummaryController', f
     finaidService.setDefaultFinaidYear(aidYears, $routeParams.finaidYearId);
     selectFinaidYear(feed);
     updateSummary();
+    checkForDecimalValues($scope.financialAidSummary.selected);
   };
 
   var loadTasksIncompleteCount = function() {
@@ -81,6 +117,10 @@ angular.module('calcentral.controllers').controller('FinaidSummaryController', f
     )
     .finally(function() {
       $scope.financialAidSummary.isLoading = false;
+      $scope.financialAidSummary.formatCurrency = formatCurrency;
+      $scope.financialAidSummary.toggleTipGiftAid = toggleTipGiftAid;
+      $scope.financialAidSummary.toggleTipNetCost = toggleTipNetCost;
+      $scope.financialAidSummary.toggleTipThirdParty = toggleTipThirdParty;
     });
   };
 

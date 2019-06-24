@@ -1,17 +1,18 @@
 <div class="cc-widget cc-widget-finaid-summary" data-ng-controller="FinaidSummaryController">
-  <div class="cc-widget-title">
-    <h2 class="cc-left">Financial Aid and Scholarships</h2>
+  <div class="cc-widget-title cc-flex cc-flex-space-between cc-flex-align-center">
+    <h2 class="cc-left" style="padding-right: 0">Financial Aid & Scholarships</h2>
+    <div class="cc-right cc-widget-title-link cc-nowrap" data-ng-if="financialAidSummary.isMainPage && !financialAidSummary.errored && financialAidSummary.aidYears.length">
+        <a data-ng-href="finances/finaid/{{financialAidSummary.selected.finaidYear.id}}">
+          <strong>View Awards </strong><i class="fa fa-arrow-right"></i>
+        </a>
+    
+    </div>
   </div>
   <div class="cc-widget-text" data-cc-spinner-directive="financialAidSummary.isLoading">
-    <a data-ng-if="financialAidSummary.isMainPage && !financialAidSummary.errored && financialAidSummary.aidYears.length" class="cc-button cc-button-blue" data-ng-href="finances/finaid/{{financialAidSummary.selected.finaidYear.id}}">
-      <strong>View Awards</strong>
-    </a>
     <div data-ng-if="!financialAidSummary.errored">
       <div data-ng-if="financialAidSummary.aidYears.length">
-        <hr data-ng-if="!isMainFinaid" aria-hidden="true">
         <div data-ng-include="'widgets/finaid_summary_aidyear.html'"></div>
         <div data-ng-include="'widgets/finaid_summary_semester.html'"></div>
-        <hr data-ng-if="financialAidSummary.selected.finaidYear.availableSemesters.length" aria-hidden="true">
         <div>
           <div data-ng-if="financialAidSummary.tasksCount > 0">
             <a data-ng-href="{{financialAidSummary.url}}" data-ng-disabled="isMainFinaid">

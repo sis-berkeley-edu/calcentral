@@ -13,7 +13,8 @@ module FinancialAid
         financialAidSummary: {
           aidYears: aid_years,
           aid: aid,
-          links: links
+          links: links,
+          messages: messages
         }
       }
     end
@@ -28,12 +29,15 @@ module FinancialAid
         aid[aid_year_id.to_s] = {
           totalCostOfAttendance: format_currency(financial_aid_summary.try(:[], 'uc_cost_attendance')),
           totalGiftAidAndWaivers: format_currency(financial_aid_summary.try(:[], 'uc_gift_aid_waiver')),
+          totalThirdPartyContracts: format_currency(financial_aid_summary.try(:[], 'uc_third_party')),
           totalNetCost: format_currency(financial_aid_summary.try(:[], 'uc_net_cost')),
           totalFundingOffered: format_currency(financial_aid_summary.try(:[], 'uc_funding_offered')),
           giftAidAndOutsideResources: format_currency(financial_aid_summary.try(:[], 'uc_gift_aid_out')),
           grantsAndScholarships: format_currency(financial_aid_summary.try(:[], 'uc_grants_schol')),
+          outsideResources: format_currency(financial_aid_summary.try(:[], 'uc_outside_resrces')),
           waiversAndOtherFunding: format_currency(financial_aid_summary.try(:[], 'uc_waivers_oth')),
           feeWaivers: format_currency(financial_aid_summary.try(:[], 'uc_fee_waivers')),
+          thirdPartyContracts: format_currency(financial_aid_summary.try(:[], 'uc_third_party')),
           loansAndWorkStudy: format_currency(financial_aid_summary.try(:[], 'uc_loans_wrk_study')),
           loans: format_currency(financial_aid_summary.try(:[], 'uc_loans')),
           workStudy: format_currency(financial_aid_summary.try(:[], 'uc_work_study')),
@@ -41,6 +45,14 @@ module FinancialAid
         }
       end
       aid
+    end
+
+    def messages
+      {
+        giftAidMoreInfoMessage: CampusSolutions::MessageCatalog.get_message_catalog_definition('26400', '1').try(:[], :descrlong),
+        netCostMoreInfoMessage: CampusSolutions::MessageCatalog.get_message_catalog_definition('26400', '3').try(:[], :descrlong),
+        thirdPartyMoreInfoMessage: CampusSolutions::MessageCatalog.get_message_catalog_definition('26400', '2').try(:[], :descrlong)
+      }
     end
 
     def links
