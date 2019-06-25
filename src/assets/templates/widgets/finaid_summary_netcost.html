@@ -18,7 +18,7 @@
           ></a>
         </td>
       </tr>
-      <tr data-ng-if="financialAidSummary.selected.totalGiftAidAndWaivers">
+      <tr>
         <th>
           <span>Gift Aid and Waivers </span>
           <button
@@ -39,7 +39,7 @@
         <td class="cc-flex cc-flex-justify-end" 
             data-cc-amount-directive="financialAidSummary.formatCurrency(financialAidSummary.selected.totalGiftAidAndWaivers)"></td>
       </tr>
-      <tr data-ng-if="financialAidSummary.selected.totalThirdPartyContracts">
+      <tr>
         <th>
           <span>Third Party Contracts </span>
           <button
@@ -62,7 +62,7 @@
           data-cc-amount-directive="financialAidSummary.formatCurrency(financialAidSummary.selected.totalThirdPartyContracts)"
         ></td>
       </tr>
-      <tr data-ng-if="financialAidSummary.selected.totalGiftAidAndWaivers">
+      <tr>
         <th>
           <span class="cc-strong">Net Cost </span>
           <button
