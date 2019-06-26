@@ -18,16 +18,26 @@ namespace :calcentral_dev do
   desc "Update and restart the calcentral_dev machine"
   task :update, :roles => :calcentral_dev_host do
     # Take everything offline first.
-    run "cd #{project_root}; ./script/init.d/calcentral stop"
+    #run "cd #{project_root}; ./script/init.d/calcentral stop"
+    run "cd /home/app_calcentral/bin; ./tomcat9-calcentral.sh stop"
     servers = find_servers_for_task(current_task)
 
     transaction do
       servers.each_with_index do |server, index|
         # update source
-        run "cd #{project_root}; ./script/update-build.sh", :hosts => server
+        #run "cd #{project_root}; ./script/update-build.sh", :hosts => server
+        run "cd #{project_root}; ./script/update-build-tomcat.sh", :hosts => server
 
         # start it up
-        run "cd #{project_root}; ./script/init.d/calcentral start", :hosts => server
+        #run "cd #{project_root}; ./script/init.d/calcentral start", :hosts => server
+        run "cd /home/app_calcentral/bin; ./tomcat9-calcentral.sh start", :hosts => server
+
+        if index < (servers.length - 1)
+          # Allow time for Torquebox to quiesce before adding a node to the cluster. This appears to
+          # be needed to ensure that message processing is properly spread across the cluster, although
+          # that constraint is undocumented. See CLC-4318.
+          sleep 120
+        end
       end
     end
   end
