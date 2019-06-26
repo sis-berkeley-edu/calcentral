@@ -4,6 +4,8 @@ source 'https://rubygems.org'
 # https://github.com/rails/rails
 gem 'rails', '4.2.11.1'
 
+gem 'rake'
+
 gem 'actionpack-action_caching', '~>1.1.1'
 gem 'actionpack-page_caching', '~>1.0.2'
 gem 'actionpack-xml_parser', '~>1.0.1'
