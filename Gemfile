@@ -81,7 +81,9 @@ gem 'link_header', '~> 0.0.7'
 # for simplified relational data management
 gem 'rails_admin', '1.3.0'
 
-gem 'bootstrap-sass', '~> 3.4.1'
+# bootstrap-sass is used for rails_admin styling - limit to development and
+# because we precompile the assets.
+gem 'bootstrap-sass', '~> 3.4.1', group: :development
 
 gem 'concurrent-ruby', '~> 1.0.5'
 
