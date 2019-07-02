@@ -89,7 +89,7 @@ gem 'concurrent-ruby', '~> 1.0.5'
 
 # for building a WAR to deploy on Tomcat
 gem 'warbler', '~> 2.0.5'
-gem 'jruby-jars', '9.1.4.0'
+gem 'jruby-jars', '9.1.14.0'
 
 # for trying, and trying again, and then giving up.
 gem 'retriable', '~> 1.4'
