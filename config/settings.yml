@@ -315,7 +315,7 @@ cache:
     User::Identifiers::Cached: <%= 4.hours %>
 
     # Merge of independently cached feeds.
-    HubEdos::V1::MyStudent: <%= 5.minutes %>
+    HubEdos::StudentApi::V1::MyStudent: <%= 5.minutes %>
 
 # Cache warmer settings
 cache_warmer:

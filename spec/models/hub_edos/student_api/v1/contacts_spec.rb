@@ -1,10 +1,10 @@
-describe HubEdos::V1::Contacts do
+describe HubEdos::StudentApi::V1::Contacts do
 
   context 'mock proxy' do
     before(:each) do
       allow(Settings.terms).to receive(:fake_now).and_return('2017-11-07 00:00:00')
     end
-    let(:proxy) { HubEdos::V1::Contacts.new(fake: true, user_id: '61889') }
+    let(:proxy) { HubEdos::StudentApi::V1::Contacts.new(fake: true, user_id: '61889') }
     subject { proxy.get }
 
     it_behaves_like 'a proxy that properly observes the profile feature flag'
