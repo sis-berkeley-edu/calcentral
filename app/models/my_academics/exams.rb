@@ -26,7 +26,7 @@ module MyAcademics
     end
 
     def exam_message
-      CampusSolutions::MessageCatalog.get_message_catalog_definition('32500', '110').try(:[], :descrlong)
+      CampusSolutions::MessageCatalog.get_message(:final_exams_term_begin).try(:[], :descrlong)
     end
 
     def collect_semester_course_career_codes(semester)

@@ -584,7 +584,7 @@ describe MyAcademics::ClassEnrollments do
     end
   end
 
-  context '#parse_early_drop_deadline_classes' do
+  describe '#parse_early_drop_deadline_classes' do
     let(:instruction) do
       {
         enrolledClasses: [

@@ -21,6 +21,7 @@ module MyAcademics
         FacultyDelegate,
         Grading::Applicator,
         Graduation,
+        Messages,
         StudentLinks
       ]
     end
