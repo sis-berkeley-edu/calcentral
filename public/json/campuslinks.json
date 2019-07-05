@@ -1650,7 +1650,7 @@
     {
       "name": "DeCal Courses",
       "description": "Catalog of student-led courses",
-      "url": "http://www.decal.org/ ",
+      "url": "https://decal.berkeley.edu/ ",
       "roles": {
         "student": true,
         "applicant": true,
