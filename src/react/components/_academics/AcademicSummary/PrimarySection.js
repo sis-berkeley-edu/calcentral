@@ -10,20 +10,36 @@ const propTypes = {
   showPoints: PropTypes.bool
 };
 
-const PrimarySection = ({ section, canViewGrades, showPoints }) => {
-  const {
-    class: klass,
-    requirementsDesignation,
-    units,
-    lawUnits,
-    grading
-  } = section;
+const propTypesSingleSection = {
+  klass: PropTypes.object,
+  canViewGrades: PropTypes.bool,
+  showPoints: PropTypes.bool,
+  requirementsDesignation: PropTypes.string,
+  units: PropTypes.string,
+  lawUnits: PropTypes.string,
+  grading: PropTypes.object,
+  sectionLabel: PropTypes.string
+};
 
+const SingleSection = ({
+  showPoints,
+  canViewGrades,
+  klass,
+  requirementsDesignation,
+  units,
+  lawUnits,
+  grading,
+  sectionLabel}) => {
   return (
     <tr>
       <td>
         <a href={klass.url}>
           {klass.course_code}&nbsp;
+          {sectionLabel &&
+            <Fragment>
+              {sectionLabel}&nbsp;
+            </Fragment>
+          }
           {klass.session_code &&
             <Fragment>
               (Session {klass.session_code})
@@ -61,7 +77,34 @@ const PrimarySection = ({ section, canViewGrades, showPoints }) => {
   );
 };
 
+const PrimarySection = ({ section, canViewGrades, showPoints }) => {
+  if (section.class.multiplePrimaries) {
+    return section.class.sections.map((sek, index) => (
+      <SingleSection
+        key={index}
+        showPoints={showPoints}
+        canViewGrades={canViewGrades}
+        klass={section.class}
+        requirementsDesignation={section.requirementsDesignation}
+        units={sek.units}
+        lawUnits={section.lawUnits}
+        grading={sek.grading}
+        sectionLabel={sek.section_label} />
+    ));
+  }
+  return <SingleSection
+    showPoints={showPoints}
+    canViewGrades={canViewGrades}
+    klass={section.class}
+    requirementsDesignation={section.requirementsDesignation}
+    units={section.units}
+    lawUnits={section.lawUnits}
+    grading={section.grading}
+    sectionLabel={null} />;
+};
+
 PrimarySection.propTypes = propTypes;
+SingleSection.propTypes = propTypesSingleSection;
 
 const mapStateToProps = ({ myStatus }) => {
   const { canViewGrades } = myStatus;
