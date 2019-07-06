@@ -20,8 +20,6 @@ module HubEdos
       # Hub and CampusSolutions APIs will be unreachable unless a CS ID is provided from Crosswalk or SAML assertions.
       @campus_solutions_id = lookup_campus_solutions_id
       result[:campus_solutions_id] = @campus_solutions_id
-
-      result[:is_legacy_student] = has_legacy_student_data?(@campus_solutions_id)
     end
 
     def get_edo

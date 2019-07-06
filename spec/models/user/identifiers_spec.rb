@@ -10,41 +10,6 @@ describe User::Identifiers do
   let(:uid) { random_id }
   let(:ldap_student_id) { random_id }
 
-  context 'legacy student check' do
-    subject { StudentTestClass.new(double(fake: true), user_id: uid).has_legacy_student_data? }
-    let(:legacy_id) { '12345678' }
-    let(:cs_id) { '9876543210' }
-    before do
-      allow_any_instance_of(CalnetCrosswalk::ByUid).to receive(:lookup_campus_solutions_id).and_return campus_solutions_id
-    end
-    context 'ten-digit CS ID' do
-      let(:campus_solutions_id) { cs_id }
-      it { should be_falsey }
-    end
-    context 'eight-digit legacy ID' do
-      let(:campus_solutions_id) { legacy_id }
-      it { should be_truthy }
-    end
-    context 'Crosswalk disabled' do
-      before do
-        allow(Settings.calnet_crosswalk_proxy).to receive(:enabled).and_return false
-      end
-      let(:campus_solutions_id) { nil }
-      context 'eight-digit LDAP SID' do
-        let(:ldap_student_id) { legacy_id }
-        it { should be_truthy }
-      end
-      context 'ten-digit LDAP SID' do
-        let(:ldap_student_id) { cs_id }
-        it { should be_falsey }
-      end
-      context 'SID unavailable' do
-        let(:ldap_student_id) { nil }
-        it { should be_falsey }
-      end
-    end
-  end
-
   describe '#lookup_campus_solutions_id' do
     subject { StudentTestClass.new(double(fake: true), user_id: uid).lookup_campus_solutions_id }
     context 'with Crosswalk enabled' do
