@@ -4,10 +4,6 @@ module User
       User::Identifiers.lookup_campus_solutions_id(uid || @uid)
     end
 
-    def has_legacy_student_data?(id = nil)
-      User::Identifiers.has_legacy_student_data?(id || lookup_campus_solutions_id)
-    end
-
     def self.cache(ldap_uid, campus_solutions_id)
       Cached.write_cache(ldap_uid, uid_key(campus_solutions_id))
       Cached.write_cache(campus_solutions_id, cs_id_key(ldap_uid))
@@ -37,10 +33,6 @@ module User
         cache(ldap_uid, cs_id)
       end
       ldap_uid
-    end
-
-    def self.has_legacy_student_data?(student_id)
-      student_id.present? && student_id.to_s.length < 10
     end
 
     def self.cs_id_key(ldap_uid)

@@ -70,10 +70,6 @@ class ApiMyStatusPage
     roles['law']
   end
 
-  def is_legacy_user?
-    @parsed['isLegacyStudent']
-  end
-
   def has_student_history?
     @parsed['hasStudentHistory']
   end
