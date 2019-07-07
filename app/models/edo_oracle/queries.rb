@@ -208,7 +208,14 @@ module EdoOracle
             WHEN ENR.CRSE_CAREER = 'LAW'
             THEN ENR.RQMNT_DESIGNTN
             ELSE NULL
-          END AS RQMNT_DESIGNTN
+          END AS RQMNT_DESIGNTN,
+          CASE
+            WHEN
+              enr.GRADE_MARK = 'I' AND term.TERM_END_DT + 30 <= SYSDATE
+            THEN 'Y'
+            ELSE 'N'
+          END AS grading_lapse_deadline_display,
+          lapse_dt.LAPSE_DEADLINE as grading_lapse_deadline
         FROM SISEDO.EXTENDED_TERM_MVW term,
              SISEDO.CLC_ENROLLMENTV00_VW enr
         JOIN SISEDO.CLASSSECTIONALLV01_MVW sec ON (
@@ -217,6 +224,13 @@ module EdoOracle
           enr."CLASS_SECTION_ID" = sec."id" AND
           sec."status-code" IN ('A','S') )
         #{JOIN_SECTION_TO_COURSE}
+        LEFT OUTER JOIN SYSADM.PS_UCC_SR_LAPSE_DT lapse_dt ON (
+          enr.INSTITUTION = lapse_dt.INSTITUTION AND
+          enr.CRSE_CAREER = lapse_dt.ACAD_CAREER AND
+          enr.TERM_ID = lapse_dt.STRM AND
+          enr.CLASS_SECTION_ID = lapse_dt.CLASS_NBR AND
+          enr.STUDENT_ID = lapse_dt.EMPLID
+        )
         WHERE  #{in_term_where_clause}
           enr."CAMPUS_UID" = '#{person_id}'
           #{and_institution('enr')}
@@ -226,7 +240,6 @@ module EdoOracle
         ORDER BY term_id DESC, #{CANONICAL_SECTION_ORDERING}
       SQL
     end
-
 
     def self.get_law_enrollment(person_id, academic_career, term, section, require_desig_code = nil)
       require_desig_field = require_desig_code.blank? ? 'NULL' : 'RD.DESCRFORMAL'
@@ -587,7 +600,7 @@ module EdoOracle
       end
     end
 
-    def self.get_registration_status (person_id)
+    def self.get_registration_status(person_id)
       safe_query <<-SQL
         SELECT STUDENT_ID as student_id,
           ACADCAREER_CODE as acadcareer_code,
@@ -610,7 +623,7 @@ module EdoOracle
       SQL
     end
 
-    def self.get_pnp_unit_count (student_id)
+    def self.get_pnp_unit_count(student_id)
       result = safe_query <<-SQL
         SELECT STUDENT_ID,
                PNP_TOT_UNITS_TAKEN as pnp_taken,
@@ -678,7 +691,7 @@ module EdoOracle
       result.first
     end
 
-    def self.get_concurrent_student_status (student_id)
+    def self.get_concurrent_student_status(student_id)
       result = safe_query <<-SQL
         SELECT
           CONCURRENT_PROGRAM as concurrent_status
@@ -690,7 +703,7 @@ module EdoOracle
       result.first
     end
 
-    def self.get_academic_standings (student_id)
+    def self.get_academic_standings(student_id)
       safe_query <<-SQL
         SELECT STUDENT_ID as student_id,
           ACAD_STANDING_STATUS as acad_standing_status,
@@ -725,7 +738,7 @@ module EdoOracle
       safe_query <<-SQL
         SELECT COUNT(*) AS reserved_seating_rules_count
         FROM SISEDO.CLC_CURRENT_RESERVE_CAPACITYV00_VW A
-        WHERE A.TERM_ID = '#{term_id}' 
+        WHERE A.TERM_ID = '#{term_id}'
           AND A.CLASS_NBR = '#{section_id}'
           AND A.RESERVED_SEATS > 0
           AND A.START_DATE = (SELECT MAX(B.START_DATE) FROM SISEDO.CLC_CURRENT_RESERVE_CAPACITYV00_VW B
@@ -786,7 +799,7 @@ module EdoOracle
       return result
     end
 
-    def self.get_transfer_credit_detailed (person_id)
+    def self.get_transfer_credit_detailed(person_id)
       safe_query <<-SQL
         SELECT TC.ACAD_CAREER as career,
           TC.SCHOOL_DESCR as school_descr,

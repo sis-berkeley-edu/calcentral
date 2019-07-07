@@ -203,11 +203,15 @@ module EdoOracle
         grade_points = db_row['grade_points'].present? ? db_row['grade_points'] : nil
         grade_points_adjusted = adjusted_grade_points(db_row['grade_points'], db_row['include_in_gpa'])
         grading_basis = section[:is_primary_section] ? db_row['grading_basis'] : nil
+        grading_lapse_deadline = db_row['grading_lapse_deadline'].try(:strftime, '%m/%d/%Y')
+        grading_lapse_deadline_display = db_row['grading_lapse_deadline_display'] == 'Y'
         {
           grade: grade,
           gradingBasis: grading_basis,
           gradePoints: grade_points,
           gradePointsAdjusted: grade_points_adjusted,
+          gradingLapseDeadline: grading_lapse_deadline,
+          gradingLapseDeadlineDisplay: grading_lapse_deadline_display,
           includeInGpa: db_row['include_in_gpa'],
         }
       end

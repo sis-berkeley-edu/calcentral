@@ -1,9 +1,9 @@
 class PopulateSysadmH2 < ActiveRecord::Base
   include ClassLogger
   Rails.application.config.after_initialize do
-    logger.warn('Initializing SYSADM')
-    if Settings.edodb.adapter == 'h2'
-      logger.warn('Connecting to SYSADM')
+    logger.warn("Initializing SYSADM")
+    if Settings.edodb.adapter == "h2"
+      logger.warn("Connecting to SYSADM")
       establish_connection :edodb
       sql = <<-SQL
 
@@ -163,6 +163,17 @@ class PopulateSysadmH2 < ActiveRecord::Base
       INSERT INTO SYSADM.PS_UCC_AD_ADMITSIR (UC_ADMITTED_GEP, UC_EXPIRE_DT_ADTL, UC_EXPIRE_DT_TDTL, UC_ATHLETE, EMPLID, ACAD_CAREER, DESCR, STDNT_CAR_NBR, ADM_APPL_NBR, APPL_PROG_NBR, ADM_APPL_CTR, ADMIT_TERM, DESCR1, ADMIT_TYPE, DESCR2, PROG_STATUS, PROG_REASON, XLATLONGNAME, PROG_ACTION, DESCR3, ACAD_PROG, DESCR4) VALUES('Y', '2018-07-15', '2018-07-01', 'N', '12345681', 'UGRD', 'Undergraduate', 0, '00157691', 0, 'UGRD', '2165', '2016 Fall', 'TRN', 'Transfer', 'APP', '', 'Active in Program', 'MATR', 'Matriculation', 'UCLS', 'College of Letters and Science');
       INSERT INTO SYSADM.PS_UCC_AD_ADMITSIR (UC_ADMITTED_GEP, UC_EXPIRE_DT_ADTL, UC_EXPIRE_DT_TDTL, UC_ATHLETE, EMPLID, ACAD_CAREER, DESCR, STDNT_CAR_NBR, ADM_APPL_NBR, APPL_PROG_NBR, ADM_APPL_CTR, ADMIT_TERM, DESCR1, ADMIT_TYPE, DESCR2, PROG_STATUS, PROG_REASON, XLATLONGNAME, PROG_ACTION, DESCR3, ACAD_PROG, DESCR4) VALUES('N', '2018-07-15', '2018-07-01', 'N', '12345681', 'LAW', 'Law', 0, '00157695', 0, 'LAW', '2165', '2016 Fall', 'TRN', 'Transfer', 'APP', 'LMAY', 'Active in Program', 'MATR', 'Matriculation', 'LPRFL', 'Law Professional Programs');
       INSERT INTO SYSADM.PS_UCC_AD_ADMITSIR (UC_ADMITTED_GEP, UC_EXPIRE_DT_ADTL, UC_EXPIRE_DT_TDTL, UC_ATHLETE, EMPLID, ACAD_CAREER, DESCR, STDNT_CAR_NBR, ADM_APPL_NBR, APPL_PROG_NBR, ADM_APPL_CTR, ADMIT_TERM, DESCR1, ADMIT_TYPE, DESCR2, PROG_STATUS, PROG_REASON, XLATLONGNAME, PROG_ACTION, DESCR3, ACAD_PROG, DESCR4) VALUES('N', '2018-07-15', '2018-07-01', 'N', '12345682', 'LAW', 'Law', 0, '00157692', 0, 'LAW', '2185', '2018 Summer', 'FYR', 'First Year Student', 'PM', '', 'Prematriculant', 'DEIN', 'Intention to Matriculate', 'LPRFL', 'Law Professional Programs');
+
+      DROP TABLE IF EXISTS SYSADM.PS_UCC_SR_LAPSE_DT;
+      CREATE TABLE SYSADM.PS_UCC_SR_LAPSE_DT (
+        INSTITUTION	VARCHAR2(5),
+        STRM VARCHAR2(4),
+        CLASS_NBR	NUMBER(38),
+        LAPSE_DEADLINE DATE,
+        EMPLID VARCHAR2(11),
+        ACAD_CAREER	VARCHAR2(4)
+      );
+      INSERT INTO SYSADM.PS_UCC_SR_LAPSE_DT (INSTITUTION, STRM, CLASS_NBR, LAPSE_DEADLINE, EMPLID, ACAD_CAREER) VALUES('UCB01','2178','12392',PARSEDATETIME('2019-07-31', 'yyyy-mm-dd'),'11667051','UGRD');
 
       SQL
 
