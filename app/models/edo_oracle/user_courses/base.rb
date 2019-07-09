@@ -155,7 +155,7 @@ module EdoOracle
           section_label: "#{row['instruction_format']} #{row['section_num']}",
           section_number: row['section_num'],
           topic_description: row['topic_description'],
-        }
+         }
         if section_data[:is_primary_section]
           section_data[:units] = row['units_taken']
           section_data[:start_date] = row['start_date'] if row['start_date']
@@ -172,6 +172,13 @@ module EdoOracle
             section_data[:waitlisted] = true
             section_data[:waitlistPosition] = row['waitlist_position'].to_i
             section_data[:enroll_limit] = row['enroll_limit'].to_i
+            section_data[:drop_class_if_enrl] = row['drop_class_if_enrl']
+            section_data[:last_enrl_dt_stmp] = row['last_enrl_dt_stmp']
+            section_data[:message_nbr] = row['message_nbr']
+            section_data[:error_message_txt] = row['error_message_txt']
+            section_data[:error_short_txt] = row['error_short_txt']
+            section_data[:uc_enrl_lastattmpt_date] = row['uc_enrl_lastattmpt_date']
+            section_data[:uc_enrl_lastattmpt_time] = row['uc_enrl_lastattmpt_time']
           end
         else
           # Enrollment and waitlist data relevant to instructors.

@@ -8,11 +8,11 @@ module MyAcademics
     end
 
     def links
-      tcReportLink = fetch_link('UC_CX_XFER_CREDIT_REPORT_STDNT')
-      waitlistsAndStudentOptions = fetch_link('UC_CX_WAITLIST_STDNT_OPTS')
       {
-        tcReportLink: tcReportLink,
-        waitlistsAndStudentOptions: waitlistsAndStudentOptions,
+        tcReportLink: fetch_link('UC_CX_XFER_CREDIT_REPORT_STDNT'),
+        waitlistsAndStudentOptions: fetch_link('UC_CX_WAITLIST_STDNT_OPTS'),
+        waitlistReasonLink: fetch_link('UC_CX_WAITLIST_REASON_NOT_ENRL'),
+        swapClassInfoLink: fetch_link('UC_CX_WAITLIST_SWAP')
       }
     end
   end

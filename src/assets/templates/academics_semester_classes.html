@@ -10,9 +10,10 @@
     <div class="cc-widget-padding">
       <h3 data-ng-if="selectedSemester.timeBucket === 'current'">Current</h3>
       <div class="cc-table">
-        <table data-ng-if="enrolledCourses.length">
+        <table data-ng-if="enrolledCourses.length" cellspacing="0" cellpadding="0">
           <thead>
-            <th scope="col" class="cc-table-right-spacing">Course</th>
+            <th data-ng-if="swapCount>0" scope="col" colspan="2" class="cc-table-right-spacing" >Course</th>
+            <th data-ng-if="swapCount==0" scope="col" class="cc-table-right-spacing">Course</th>
             <th scope="col">Title</th>
             <th scope="col" data-ng-if="enrolledCoursesHaveTopics">Topic</th>
             <th scope="col">Grade Basis</th>
@@ -20,6 +21,8 @@
           </thead>
           <tbody data-ng-repeat="course in enrolledCourses" data-ng-class-even="'cc-academics-even'">
             <tr>
+              <td data-ng-if="swapCount>0 && course.swap_number>0" class="cc-academics-semester-class-swap-number cc-academics-semester-class-swap-number-width"><span class="cc-academics-semester-class-swap-number">{{course.swap_number}}</span>&#x21C4;</td>
+              <td data-ng-if="swapCount>0 && course.swap_number==0" class="cc-academics-semester-class-swap-number"></td>
               <td class="cc-table-right-spacing cc-academics-course-number cc-academics-classes-course-number">
                 <a data-ng-href="{{course.url}}" data-ng-bind="course.course_code">
                 </a>
@@ -50,6 +53,10 @@
         <div data-ng-if="!enrolledCourses.length">
           You are not currently enrolled in any courses for <span data-ng-bind="selectedSemester.name"></span>.
         </div>
+        <div data-ng-if="swapCount>0">
+          <p></p>
+          Classes marked &#x21C4; have had a swap requested. See "Swaps" below.
+        </div>
       </div>
     </div>
     <div data-ng-if="waitlisted.courses.length">
@@ -69,18 +76,23 @@
         <div class="cc-table">
           <table>
             <thead>
-              <th>Course Number &amp; Section</th>
+              <th data-ng-if="swapCount>0" scope="col" colspan="2" class="cc-table-right-spacing">Course</th>
+              <th data-ng-if="swapCount==0" scope="col" class="cc-table-right-spacing">Course</th>
               <th>Title</th>
               <th data-ng-if="waitlisted.courses.haveTopics">Topic</th>
               <th>Waitlist Position / Class Size</th>
               <th data-ng-if="api.user.profile.features.reservedCapacity">Reserved Seats</th>
             </thead>
-            <tbody data-ng-repeat="course in waitlisted.courses">
-              <tr data-ng-repeat="section in course.sections">
+            <tbody data-ng-repeat="course in waitlisted.courses" data-ng-class-even="'cc-academics-even'">
+              <tr>
+                <td data-ng-if="swapCount>0 && course.swap_number>0" class="cc-academics-semester-class-swap-number cc-academics-semester-class-swap-number-width"><span class="cc-academics-semester-class-swap-number">{{course.swap_number}}</span>&#x21C4;</td>
+                <td data-ng-if="swapCount>0 && course.swap_number==0" class="cc-academics-semester-class-swap-number"></td>
                 <td>
                   <a data-ng-href="{{course.url}}" data-ng-bind="course.course_code">
                   </a>
-                  <span data-ng-bind="section.section_label"></span>
+                  <div data-ng-repeat="section in course.sections">
+                    <span data-ng-bind="section.section_label"></span>
+                  </div>
                 </td>
                 <td data-ng-bind="course.title"></td>
                 <td data-ng-if="waitlisted.courses.haveTopics">
@@ -94,30 +106,41 @@
                   </div>
                 </td>
                 <td>
-                  <div data-ng-if="section.waitlisted && section.waitlistPosition">
-                    <strong data-ng-bind="section.waitlistPosition"></strong> on list of class of <strong data-ng-bind="section.enroll_limit"></strong>
-                  </div>
-                  <div data-ng-if="api.user.profile.features.reservedCapacityLink && course.courseCareerCode !== 'LAW' && section.is_primary_section">
-                    <div data-ng-if="section.waitlistPosition && section.hasReservedSeats">
-                      <i class="cc-icon fa fa-exclamation-circle cc-icon-red"></i>
-                      <span
-                        data-ng-if="section.reservedSeatsInfoLink.linkDescriptionDisplay"
-                        data-ng-bind="section.reservedSeatsInfoLink.linkDescription"
-                      ></span>
-                      <a data-cc-campus-solutions-link-directive="section.reservedSeatsInfoLink"></a>
+                  <div data-ng-repeat="section in course.sections">
+                    <div data-ng-if="section.waitlisted && section.waitlistPosition">
+                      <strong data-ng-bind="section.waitlistPosition"></strong> on list of class of <strong data-ng-bind="section.enroll_limit"></strong>
                     </div>
-                    <div data-ng-if="!section.waitlistPosition || !section.hasReservedSeats">
-                      <i>No Reserved Seats</i>
+                    <div data-ng-if="api.user.profile.features.reservedCapacityLink && course.courseCareerCode !== 'LAW' && section.is_primary_section">
+                      <div data-ng-if="section.waitlistPosition && section.hasReservedSeats">
+                        <i class="cc-icon fa fa-exclamation-circle cc-icon-red"></i>
+                        <span
+                          data-ng-if="section.reservedSeatsInfoLink.linkDescriptionDisplay"
+                          data-ng-bind="section.reservedSeatsInfoLink.linkDescription"
+                        ></span>
+                        <a data-cc-campus-solutions-link-directive="section.reservedSeatsInfoLink"></a>
+                      </div>
+                      <div data-ng-if="!section.waitlistPosition || !section.hasReservedSeats">
+                        <i>No Reserved Seats</i>
+                      </div>
+                      <div data-ng-if="section.uc_enrl_lastattmpt_date && section.error_short_txt">
+                        <strong>Enrollment last attempted: </strong><span data-ng-bind="section.uc_enrl_lastattmpt_time"></span> on <span data-ng-bind="section.uc_enrl_lastattmpt_date"></span>
+                      </div>
+                      <div data-ng-if="section.error_short_txt">
+                        <li><a data-cc-campus-solutions-link-directive="studentLinks.waitlistReasonLink"></a>: <span data-ng-bind="section.error_short_txt"></span></li>
+                        <li>Other conditions may block future attempts</li>
+                      </div>
                     </div>
                   </div>
                 </td>
                 <td data-ng-if="api.user.profile.features.reservedCapacity">
-                  <div data-ng-if="section.waitlistPosition && section.hasReservedSeats">
-                    <button data-ng-click="course.capacity = section.capacity; course.showSeats = true" data-ng-show="!course.showSeats" class="cc-button-link">Show</button>
-                    <button data-ng-click="course.showSeats = false" data-ng-show="course.showSeats" class="cc-button-link">Hide</button>
-                  </div>
-                  <div data-ng-if="section.waitlistPosition && !section.hasReservedSeats">
-                    N/A
+                  <div data-ng-repeat="section in course.sections">
+                    <div data-ng-if="section.waitlistPosition && section.hasReservedSeats">
+                      <button data-ng-click="course.capacity = section.capacity; course.showSeats = true" data-ng-show="!course.showSeats" class="cc-button-link">Show</button>
+                      <button data-ng-click="course.showSeats = false" data-ng-show="course.showSeats" class="cc-button-link">Hide</button>
+                    </div>
+                    <div data-ng-if="section.waitlistPosition && !section.hasReservedSeats">
+                      N/A
+                    </div>
                   </div>
                 </td>
               </tr>
@@ -151,6 +174,53 @@
         </div>
       </div>
     </div>
+
+    <div data-ng-if="swapCount>0">
+      <div class="cc-academics-subtitle">
+        <h3>Swaps</h3>
+      </div>
+      <div class="cc-widget-padding">
+        <p>
+          You have requested swap(s) for the class(es) listed below. They are marked by &#x21C4; in the Enrollments section above.
+          Learn more about
+          <a data-cc-campus-solutions-link-directive="studentLinks.swapClassInfoLink"></a>.
+          <br/>
+        </p>
+        <div class="cc-table">
+          <table>
+            <thead>
+            <th colspan="2">Swap From</th>
+            <th>Swap To</th>
+            <th class="cc-academics-semester-class-swap-date-width">Date Requested</th>
+            </thead>
+            <tbody>
+            <tr data-ng-repeat="swapClass in swapClassList">
+              <td>
+                <span class="cc-academics-semester-class-swap-number cc-academics-semester-class-swap-number-width">{{swapClass.swapFromCourse.swap_number}}</span><span class="cc-academics-semester-class-swap-number-small-padding">&#x21C4;</span>
+              </td>
+              <td>
+              <span>
+                <a data-ng-href="{{course.url}}" data-ng-bind="swapClass.swapFromCourse.course_code">
+                </a>
+                <span data-ng-bind="swapClass.swapFromCourse.title"></span>
+              </td>
+              <td>
+                <a data-ng-href="{{course.url}}" data-ng-bind="swapClass.swapToCourse.course_code">
+                </a>
+                <span data-ng-bind="swapClass.swapFromCourse.title"></span>
+              </td>
+              <td>
+                <span data-ng-bind="swapClass.dateRequested"></span>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+
+
   </div>
   <div data-ng-if="selectedTeachingSemester && (selectedTeachingSemester.gradingAssistanceLinkMidpoint || selectedTeachingSemester.gradingAssistanceLink || selectedTeachingSemester.gradingAssistanceLinkLaw)">
     <div class="cc-academics-subtitle">
