@@ -183,6 +183,43 @@ angular.module('calcentral.services').service('academicsService', function() {
     return classes;
   };
 
+  var getSwapClasses = function(enrolledCourses, waitlistedCourses) {
+    var count=0;
+    var swapClassList = [];
+    // initialize swap_number
+    for (var i=0; i<enrolledCourses.length; i++) {
+      enrolledCourses[i].swap_number = 0;
+    }
+    for (var i=0; i<waitlistedCourses.length; i++) {
+      waitlistedCourses[i].swap_number = 0;
+    }
+
+    for (var i=0; i<enrolledCourses.length; i++) {
+      for (var sec=0; sec<enrolledCourses[i].sections.length; sec++) {
+        for (var w=0; w<waitlistedCourses.length; w++) {
+          for (var wsec=0; wsec<waitlistedCourses[w].sections.length; wsec++) {
+            if (waitlistedCourses[w].sections[wsec].drop_class_if_enrl==enrolledCourses[i].sections[sec].ccn &&
+                enrolledCourses[i].sections[sec].is_primary_section==true &&
+                waitlistedCourses[w].sections[wsec].is_primary_section==true) {
+              enrolledCourses[i].swap_number = count+1;
+              waitlistedCourses[w].swap_number = count+1;
+              count++;
+              var swapClass = {};
+              swapClass.swapFromCourse = enrolledCourses[i];
+              swapClass.swapFromSection = enrolledCourses[i].sections[sec];
+              swapClass.swapToCourse = waitlistedCourses[w];
+              swapClass.swapToSection = waitlistedCourses[w].sections[wsec];
+              swapClass.dateRequested = waitlistedCourses[w].sections[wsec].last_enrl_dt_stmp;
+              swapClassList.push(swapClass);
+            }
+          }
+        }
+      }
+    }
+
+    return swapClassList;
+  };
+
   /*
    * Collects unique course sections topics for course
    */
@@ -401,6 +438,7 @@ angular.module('calcentral.services').service('academicsService', function() {
     getAllClasses: getAllClasses,
     getUniqueCareerCodes: getUniqueCareerCodes,
     getClassesSections: getClassesSections,
+    getSwapClasses: getSwapClasses,
     getPreviousClasses: getPreviousClasses,
     hasTeachingClasses: hasTeachingClasses,
     isLSStudent: isLSStudent,

@@ -204,6 +204,8 @@ module EdoOracle
           ENR.GRADING_BASIS_CODE AS grading_basis,
           ENR.INCLUDE_IN_GPA AS include_in_gpa,
           ENR.ACAD_CAREER,
+          TRIM(TO_CHAR(ENR.DROP_CLASS_IF_ENRL, 9999999)) AS drop_class_if_enrl,
+          TO_CHAR(ENR.LAST_ENRL_DT_STMP, 'MON DD, YYYY') AS last_enrl_dt_stmp,
           CASE
             WHEN ENR.CRSE_CAREER = 'LAW'
             THEN ENR.RQMNT_DESIGNTN
@@ -215,7 +217,30 @@ module EdoOracle
             THEN 'Y'
             ELSE 'N'
           END AS grading_lapse_deadline_display,
-          lapse_dt.LAPSE_DEADLINE as grading_lapse_deadline
+          lapse_dt.LAPSE_DEADLINE as grading_lapse_deadline,
+          TRIM(TO_CHAR(reason.message_nbr, 9999999)) as message_nbr,
+          CASE
+            WHEN reason.message_nbr='5' THEN 'Already enrolled'
+            WHEN reason.message_nbr='7' THEN 'Class full'
+            WHEN reason.message_nbr='17' THEN 'Time conflict'
+            WHEN reason.message_nbr='18' THEN 'Requirement not met'
+            WHEN reason.message_nbr='30' THEN 'Unit Limit'
+            WHEN reason.message_nbr='50' THEN 'Class changed - see department'
+            WHEN reason.message_nbr='84' THEN 'Unit Limit'
+            WHEN reason.message_nbr='87' THEN 'Enrollment Hold'
+            WHEN reason.message_nbr='91' THEN 'Unit Limit'
+            WHEN reason.message_nbr='133' THEN 'Permission required'
+            WHEN reason.message_nbr='146' THEN 'Already enrolled'
+            WHEN reason.message_nbr='163' THEN 'Class full'
+            WHEN reason.message_nbr='164' THEN 'Class full'
+            WHEN reason.message_nbr='212' THEN 'Class full'
+            WHEN reason.message_nbr='213' THEN 'Reserved Seats'
+            WHEN reason.message_nbr='215' THEN 'Class full'
+            ELSE NULL
+          END AS error_short_txt,
+          reason.error_message_txt,
+          TO_CHAR(reason.UC_ENRL_LASTATTMPT, 'HH12:MIAM') as uc_enrl_lastattmpt_time,
+          TO_CHAR(reason.UC_ENRL_LASTATTMPT, 'MON DD, YYYY') as uc_enrl_lastattmpt_date
         FROM SISEDO.EXTENDED_TERM_MVW term,
              SISEDO.CLC_ENROLLMENTV00_VW enr
         JOIN SISEDO.CLASSSECTIONALLV01_MVW sec ON (
@@ -231,6 +256,12 @@ module EdoOracle
           enr.CLASS_SECTION_ID = lapse_dt.CLASS_NBR AND
           enr.STUDENT_ID = lapse_dt.EMPLID
         )
+        LEFT JOIN SYSADM.PS_UCC_NOTENRL_RSN reason on (
+          reason.EMPLID=enr.STUDENT_ID and
+          reason.CLASS_NBR=enr.CLASS_SECTION_ID and
+          reason.STRM=enr.TERM_ID and
+          reason.ACAD_CAREER=enr.ACAD_CAREER and
+          reason.INSTITUTION=enr.INSTITUTION)
         WHERE  #{in_term_where_clause}
           enr."CAMPUS_UID" = '#{person_id}'
           #{and_institution('enr')}
