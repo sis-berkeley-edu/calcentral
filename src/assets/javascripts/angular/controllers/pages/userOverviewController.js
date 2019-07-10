@@ -31,6 +31,10 @@ angular.module('calcentral.controllers').controller('UserOverviewController', fu
     show: false
   };
   $scope.residency = {};
+  $scope.visa = {
+    code: '',
+    description: ''
+  };
   $scope.targetUser = {
     isLoading: true
   };
@@ -100,6 +104,7 @@ angular.module('calcentral.controllers').controller('UserOverviewController', fu
       function successCallback(response) {
         angular.extend($scope.targetUser, _.get(response, 'data.attributes'));
         angular.extend($scope.residency, _.get(response, 'data.residency.residency'));
+        setVisa(_.get(response, 'data.demographics.feed.student.usaCountry.visa'));
         $scope.targetUser.academicRoles = _.get(response, 'data.academicRoles');
         $scope.targetUser.ldapUid = targetUserUid;
         $scope.targetUser.addresses = apiService.profile.fixFormattedAddresses(_.get(response, 'data.contacts.feed.student.addresses'));
@@ -120,6 +125,16 @@ angular.module('calcentral.controllers').controller('UserOverviewController', fu
     ).finally(function() {
       $scope.targetUser.isLoading = false;
     });
+  };
+
+  var setVisa = function(visa) {
+    if (visa.status !== 'G') {
+      return;
+    }
+    var visaCodes = ['F1', 'J1', 'PR'];
+    var visaDescription = 'Other Verified';
+    $scope.visa.code = visa.type.code;
+    $scope.visa.description = (visaCodes.includes(visa.type.code)) ? visa.type.description : visaDescription;
   };
 
   var processSemesters = function(planSemesters) {

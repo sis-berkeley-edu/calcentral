@@ -55,7 +55,8 @@ class AdvisingStudentController < ApplicationController
       academicRoles: MyAcademics::MyAcademicRoles.new(student_uid).get_feed,
       attributes: User::AggregatedAttributes.new(student_uid).get_feed,
       contacts: HubEdos::StudentApi::V1::Contacts.new(user_id: student_uid, include_fields: %w(names addresses phones emails)).get,
-      residency: MyAcademics::Residency.new(student_uid).get_feed
+      residency: MyAcademics::Residency.new(student_uid).get_feed,
+      demographics: HubEdos::StudentApi::V1::Demographics.new(user_id: student_uid).get
     }
   end
 
