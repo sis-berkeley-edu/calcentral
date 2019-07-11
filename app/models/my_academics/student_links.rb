@@ -12,8 +12,7 @@ module MyAcademics
         tcReportLink: fetch_link('UC_CX_XFER_CREDIT_REPORT_STDNT'),
         waitlistsAndStudentOptions: fetch_link('UC_CX_WAITLIST_STDNT_OPTS'),
         waitlistReasonLink: fetch_link('UC_CX_WAITLIST_REASON_NOT_ENRL'),
-        swapClassInfoLink: fetch_link('UC_CX_WAITLIST_SWAP'),
-        waitListOtherCondition: fetch_link('UC_CX_WAITLIST_OTHER_CONDITION')
+        swapClassInfoLink: fetch_link('UC_CX_WAITLIST_SWAP')
       }
     end
   end
