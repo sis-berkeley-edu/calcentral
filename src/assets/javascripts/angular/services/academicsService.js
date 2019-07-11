@@ -187,13 +187,13 @@ angular.module('calcentral.services').service('academicsService', function() {
     var count=0;
     var swapClassList = [];
     // initialize swap_number
-    for (var i=0; i<enrolledCourses.length; i++) {
-      enrolledCourses[i].swap_number = 0;
-    }
-    for (var i=0; i<waitlistedCourses.length; i++) {
-      waitlistedCourses[i].swap_number = 0;
-    }
-
+    _.forEach(enrolledCourses, function(course) {
+      course.swap_number = 0;
+    });
+    _.forEach(waitlistedCourses, function(course) {
+      course.swap_number = 0;
+    });
+    // the following code matches the waitlist's swap with the enrolled class
     for (var i=0; i<enrolledCourses.length; i++) {
       for (var sec=0; sec<enrolledCourses[i].sections.length; sec++) {
         for (var w=0; w<waitlistedCourses.length; w++) {
