@@ -73,6 +73,7 @@ describe AdvisingStudentController do
           expect(feed['attributes']['roles']).to be
           expect(feed['contacts']['feed']).to be
           expect(feed['residency']['residency']).to be
+          expect(feed['demographics']['feed']).to be
         end
         context 'when viewing a confidential student' do
           let(:confidential) { true }
