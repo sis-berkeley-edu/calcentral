@@ -17,12 +17,32 @@ describe MyAcademics::StudentLinks do
       }
     }
   end
+  let(:waitlistReasonLink) do
+    {
+      link: {
+        name: 'Reasons not enrolled',
+        url: '/help/enrollment-faq/errors'
+      }
+    }
+  end
+  let(:swapClassInfoLink) do
+    {
+      link: {
+        name: 'Swap',
+        url: '/help/enrollment-faq/swap'
+      }
+    }
+  end
+
+
 
   before do
     # stub CS Link proxy responses
     fake_cs_link_proxy = double
     allow(fake_cs_link_proxy).to receive(:get_url).with('UC_CX_XFER_CREDIT_REPORT_STDNT').and_return(tcReportLink)
     allow(fake_cs_link_proxy).to receive(:get_url).with('UC_CX_WAITLIST_STDNT_OPTS').and_return(waitlistsAndStudentOptions)
+    allow(fake_cs_link_proxy).to receive(:get_url).with('UC_CX_WAITLIST_REASON_NOT_ENRL').and_return(waitlistReasonLink)
+    allow(fake_cs_link_proxy).to receive(:get_url).with('UC_CX_WAITLIST_SWAP').and_return(swapClassInfoLink)
     allow(CampusSolutions::Link).to receive(:new).and_return(fake_cs_link_proxy)
   end
 
@@ -38,5 +58,11 @@ describe MyAcademics::StudentLinks do
     expect(subject[:studentLinks][:waitlistsAndStudentOptions]).to be
     expect(subject[:studentLinks][:waitlistsAndStudentOptions][:name]).to eq 'Waitlists and Student Options'
     expect(subject[:studentLinks][:waitlistsAndStudentOptions][:url]).to eq 'https://example.com/waitlists/student_options.html'
+    expect(subject[:studentLinks][:waitlistReasonLink]).to be
+    expect(subject[:studentLinks][:waitlistReasonLink][:name]).to eq 'Reasons not enrolled'
+    expect(subject[:studentLinks][:waitlistReasonLink][:url]).to eq '/help/enrollment-faq/errors'
+    expect(subject[:studentLinks][:swapClassInfoLink]).to be
+    expect(subject[:studentLinks][:swapClassInfoLink][:name]).to eq 'Swap'
+    expect(subject[:studentLinks][:swapClassInfoLink][:url]).to eq '/help/enrollment-faq/swap'
   end
 end
