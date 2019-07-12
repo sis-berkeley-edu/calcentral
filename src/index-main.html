@@ -2,12 +2,12 @@
 <div data-ng-include="'ieold.html'"></div>
 <div data-ng-include="'launcher.html'"></div>
 
-<div class="cc-off-canvas-container" data-ng-swipe-left="offCanvasMenu.show=false">
+<div data-ng-class="{'cc-off-canvas-container':(controllerName !== 'SplashController'), 'cc-offcanvas-footer-offset':(controllerName === 'SplashController')}" data-ng-swipe-left="offCanvasMenu.show=false">
   <div class="cc-offcanvas-left cc-print-hide" id="cc-navigation">
     <div data-ng-include="'navigation.html'"></div>
   </div>
 
-  <div class="cc-offcanvas-right">
+  <div data-ng-class="{'cc-offcanvas-right':(controllerName !== 'SplashController'), 'cc-offcanvas-footer-offset':(controllerName === 'SplashController')}">
     <div
     class="row cc-container-main"
     data-ng-class="{'collapse':(controllerName === 'DashboardController' || controllerName === 'AcademicsController')}"
@@ -16,9 +16,10 @@
       <div data-ng-include="'alerts.html'" data-ng-if="controllerName !== 'CalCentralUpdateController'"></div>
       <div class="cc-clearfix-container" data-ng-view></div>
     </div>
-    <div data-ng-include="'footer.html'"></div>
+    <div data-ng-if="(controllerName !== 'SplashController')" data-ng-include="'footer.html'"></div>
   </div>
 </div>
+<div class="footer-container" data-ng-if="(controllerName === 'SplashController')" data-ng-include="'footer.html'"></div>
 <div data-ng-include="'acting_as.html'"></div>
 <div data-ng-include="'advisor_acting_as.html'"></div>
 <div data-ng-include="'delegate_acting_as.html'"></div>
