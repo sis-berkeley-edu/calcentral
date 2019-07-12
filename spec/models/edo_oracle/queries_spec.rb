@@ -101,7 +101,7 @@ describe EdoOracle::Queries do
 
     it "returns the expected result" do
       expect(subject.count).to eq 3
-      expect(subject.first.count).to eq 32
+      expect(subject.first.count).to eq 39
       expect(subject.first["section_id"]).to eq "12392"
       expect(subject.first["term_id"]).to eq "2178"
       expect(subject.first["session_id"]).to eq "1"
@@ -132,6 +132,13 @@ describe EdoOracle::Queries do
       expect(subject.first["grading_basis"]).to eq "PNP"
       expect(subject.first["acad_career"]).to eq "UGRD"
       expect(subject.first["rqmnt_designtn"]).to be nil
+      expect(subject.first["drop_class_if_enrl"]).to be nil
+      expect(subject.first["last_enrl_dt_stmp"]).to be nil
+      expect(subject.first["message_nbr"]).to be nil
+      expect(subject.first["uc_reason_desc"]).to be nil
+      expect(subject.first["error_message_txt"]).to be nil
+      expect(subject.first["uc_enrl_lastattmpt_time"]).to be nil
+      expect(subject.first["uc_enrl_lastattmpt_date"]).to be nil
     end
     context "when a class has a requirements designation" do
       let(:uid) { 490452 }

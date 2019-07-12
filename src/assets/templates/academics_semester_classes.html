@@ -122,11 +122,11 @@
                       <div data-ng-if="!section.waitlistPosition || !section.hasReservedSeats">
                         <i>No Reserved Seats</i>
                       </div>
-                      <div data-ng-if="section.error_short_txt">
+                      <div data-ng-if="section.uc_reason_desc">
                         <strong>Reasons Not Enrolled</strong>
                       </div>
-                      <div data-ng-if="section.error_short_txt">
-                        <li><a data-cc-campus-solutions-link-directive="studentLinks.waitlistReasonLink"><span data-ng-bind="section.error_short_txt"></span></a></li>
+                      <div data-ng-if="section.uc_reason_desc">
+                        <li><a data-cc-campus-solutions-link-directive="studentLinks.waitlistReasonLink"><span data-ng-bind="section.uc_reason_desc"></span></a></li>
                         <li><a data-cc-campus-solutions-link-directive="studentLinks.waitlistReasonLink">Other conditions</a> may block future attempts</li>
                       </div>
                     </div>

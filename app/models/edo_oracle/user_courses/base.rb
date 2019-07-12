@@ -176,7 +176,7 @@ module EdoOracle
             section_data[:last_enrl_dt_stmp] = row['last_enrl_dt_stmp']
             section_data[:message_nbr] = row['message_nbr']
             section_data[:error_message_txt] = row['error_message_txt']
-            section_data[:error_short_txt] = row['error_short_txt']
+            section_data[:uc_reason_desc] = row['uc_reason_desc']
             section_data[:uc_enrl_lastattmpt_date] = row['uc_enrl_lastattmpt_date']
             section_data[:uc_enrl_lastattmpt_time] = row['uc_enrl_lastattmpt_time']
           end
