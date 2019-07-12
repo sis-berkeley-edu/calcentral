@@ -22,7 +22,7 @@
         <div data-ng-include="'widgets/finaid_summary_semester.html'"></div>
         <div>
           <div data-ng-if="financialAidSummary.tasksCount > 0">
-            <a data-ng-href="{{financialAidSummary.url}}" data-ng-disabled="isMainFinaid">
+            <a data-ng-href="finances/finaid/{{financialAidSummary.selected.finaidYear.id}}" data-ng-disabled="isMainFinaid">
               <i class="fa fa-bell cc-icon" data-ng-class="{'cc-icon-gold':(isMainFinaid), 'cc-non-anchored-link':(!isMainFinaid)}"></i><span data-ng-bind="financialAidSummary.tasksCount"></span>&nbsp;incomplete
             </a>
             <span data-ng-pluralize count="financialAidSummary.tasksCount" when="{'1': 'financial aid task', 'other': 'financial aid tasks'}"></span>

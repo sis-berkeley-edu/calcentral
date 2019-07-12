@@ -10,9 +10,9 @@ module FinancialAid
     attr_accessor :aid_year
 
     INSTRUCTIONAL_MESSAGE_KEYS = {
-      generic: :financial_housing_instruction_generic,
-      fall_pathways: :financial_housing_instruction_fall_pathways,
-      spring_pathways: :financial_housing_instruction_spring_pathways,
+      generic: :financial_aid_housing_instruction_generic,
+      fall_pathways: :financial_aid_housing_instruction_fall_pathways,
+      spring_pathways: :financial_aid_housing_instruction_spring_pathways,
     }
 
     def get_feed_internal

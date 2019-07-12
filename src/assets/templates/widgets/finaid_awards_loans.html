@@ -2,8 +2,8 @@
   <div>
     <h3 class="cc-page-finaid-header cc-text-uppercase">Loans</h3>
   </div>
-  <div data-ng-if="finaidAwards.awards.loans.links && api.user.profile.actAsOptions.canSeeCSLinks">
-    <a data-ng-repeat="link in finaidAwards.awards.loans.links"
+  <div data-ng-if="finaidAwards.awards.loans && api.user.profile.actAsOptions.canSeeCSLinks">
+    <a data-ng-repeat="link in finaidAwards.awards.loans"
       data-cc-campus-solutions-link-directive
       data-cc-campus-solutions-link-directive-name="link.title"
       data-cc-campus-solutions-link-directive-url="link.url"

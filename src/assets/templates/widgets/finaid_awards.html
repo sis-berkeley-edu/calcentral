@@ -1,6 +1,11 @@
 <div class="cc-widget cc-widget-finaid-awards" data-ng-controller="FinaidAwardsController">
-  <div class="cc-widget-title">
+  <div class="cc-widget-title cc-flex cc-flex-space-between cc-flex-align-center">
     <h2>Awards</h2>
+    <div class="cc-right cc-widget-title-link cc-nowrap" data-ng-if="finaidAwards.awards.grandtotal.total.amount">
+      <a data-ng-href="/finances/finaid/awards/{{finaidYear.id}}">
+        <strong>View By Term </strong><i class="fa fa-arrow-right"></i>
+      </a>
+  </div>
   </div>
   <div data-cc-spinner-directive="finaidAwardsInfo.isLoading">
     <div
@@ -11,24 +16,20 @@
     <div data-ng-if="!finaidAwardsInfo.errored && !finaidSummaryInfo.errored">
       <div data-ng-if="finaidAwards.hasAwards">
         <div class="cc-widget-text cc-widget-finaid-awards-message">
-          <div data-ng-bind="finaidAwards.message"></div>
-
+          <div data-ng-bind="finaidAwards.messages.messageInfo"></div>
           <div class="cc-widget-finaid-awards-padding-top" data-ng-if="finaidAwards.awards.grandtotal.total.amount">
-            <a data-ng-href="/finances/finaid/awards/{{finaidYear.id}}">Term View</a>
             <span data-ng-if="api.user.profile.features.csFinAidAwardCompare">
-              <span aria-hidden> | </span>
               <a data-ng-href="/finances/finaid/compare/{{finaidYear.id}}">
                 Compare Packages
               </a>
             </span>
           </div>
         </div>
-
         <div
           data-ng-repeat="key in finaidAwardsInfo.keysGiftWork"
           data-ng-include="'widgets/finaid_awards_section.html'"
           data-onload="section = finaidAwards.awards[key]"
-          data-ng-if="finaidAwards.awards[key]"
+          data-ng-if="finaidAwards.awards[key].total.amount > 0"
         ></div>
         <div
           data-ng-if="finaidAwards.hasLoans"

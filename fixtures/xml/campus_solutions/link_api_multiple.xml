@@ -2233,4 +2233,89 @@ This link should take an instructor to the Grade Roster in BCS of the identified
     <URL>https://bcswebqat.is.berkeley.edu/psp/bcsqat/EMPLOYEE/PSFT_CS/q/?ICAction=ICQryNameURL=PUBLIC.UCCS_R_BF_EGRD_INSTR&amp;Parameters&amp;BIND1={TERM_ID}</URL>
     <COMMENTS/>
   </Link>
+  <Link>
+    <URL_ID>UC_CX_FA_AWRD_ADDL_SRC</URL_ID>
+    <Description>Report Outside Resources</Description>
+    <HOVER_OVER_TEXT>Report additional aid you are receiveing</HOVER_OVER_TEXT>
+    <PROPERTIES type="array">
+      <PROPERTY>
+        <NAME>CALCENTRAL</NAME>
+        <value>FINANCIAL</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>NEW_WINDOW</NAME>
+        <value>Y</value>
+      </PROPERTY>
+    </PROPERTIES>
+    <URL>EMPLOYEE/SA/c/UC_FA_ADDL_SRC_FLU.UC_FA_ADDL_SRC_FLU.GBL?ucInstitution={INSTITUTION}&amp;ucAidYear={AID_YEAR}</URL>
+    <COMMENTS/>
+  </Link>
+  <Link>
+    <URL_ID>UC_CX_FA_AWRD_CONV_AID_W2L</URL_ID>
+    <Description>Convert Aid - Work-Study to Loan</Description>
+    <HOVER_OVER_TEXT>Convert your Work-Study to loans</HOVER_OVER_TEXT>
+    <PROPERTIES type="array">
+      <PROPERTY>
+        <NAME>CALCENTRAL</NAME>
+        <value>FINANCIAL</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>NEW_WINDOW</NAME>
+        <value>Y</value>
+      </PROPERTY>
+    </PROPERTIES>
+    <URL>EMPLOYEE/SA/c/UC_FA_CONV_AID_FLU.UC_FA_CONV_AID_FLU.GBL?ucInstitution={INSTITUTION}&amp;ucAidYear={AID_YEAR}&amp;ucConvertType=WKStoLoan</URL>
+    <COMMENTS/>
+  </Link>
+  <Link>
+    <URL_ID>UC_CX_FA_AWRD_CONV_AID_L2W</URL_ID>
+    <Description>Convert Aid - Loan to Work-Study</Description>
+    <HOVER_OVER_TEXT>Convert your loans to work-study</HOVER_OVER_TEXT>
+    <PROPERTIES type="array">
+      <PROPERTY>
+        <NAME>CALCENTRAL</NAME>
+        <value>FINANCIAL</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>NEW_WINDOW</NAME>
+        <value>Y</value>
+      </PROPERTY>
+    </PROPERTIES>
+    <URL>EMPLOYEE/SA/c/UC_FA_CONV_AID_FLU.UC_FA_CONV_AID_FLU.GBL?ucInstitution={INSTITUTION}&amp;ucAidYear={AID_YEAR}&amp;ucConvertType=LoanToWKS</URL>
+    <COMMENTS/>
+  </Link>
+  <Link>
+    <URL_ID>UC_CX_FA_AWRD_AWD_MGT</URL_ID>
+    <Description>Accept</Description>
+    <HOVER_OVER_TEXT>Accept loans offered to you</HOVER_OVER_TEXT>
+    <PROPERTIES type="array">
+      <PROPERTY>
+        <NAME>CALCENTRAL</NAME>
+        <value>FINANCIAL</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>NEW_WINDOW</NAME>
+        <value>Y</value>
+      </PROPERTY>
+    </PROPERTIES>
+    <URL>EMPLOYEE/SA/c/UC_FA_AWD_MGT_FLU.UC_FA_AWD_MGT_FLU.GBL?ucInstitution={INSTITUTION}&amp;ucAidYear={AID_YEAR}</URL>
+    <COMMENTS/>
+  </Link>
+  <Link>
+    <URL_ID>UC_CX_FA_AWRD_RDC_CNCL</URL_ID>
+    <Description>Reduce/Cancel</Description>
+    <HOVER_OVER_TEXT>Reduce or Cancel existing loans</HOVER_OVER_TEXT>
+    <PROPERTIES type="array">
+      <PROPERTY>
+        <NAME>CALCENTRAL</NAME>
+        <value>FINANCIAL</value>
+      </PROPERTY>
+      <PROPERTY>
+        <NAME>NEW_WINDOW</NAME>
+        <value>Y</value>
+      </PROPERTY>
+    </PROPERTIES>
+    <URL>EMPLOYEE/SA/c/UC_FA_RDC_CNCL_FLU.UC_FA_RDC_CNCL_FLU.GBL?ucInstitution={INSTITUTION}&amp;ucAidYear={AID_YEAR}</URL>
+    <COMMENTS/>
+  </Link>
 </UC_LINK_RESOURCES>
