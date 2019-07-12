@@ -201,8 +201,8 @@ angular.module('calcentral.services').service('academicsService', function() {
             if (waitlistedCourses[w].sections[wsec].drop_class_if_enrl === enrolledCourses[i].sections[sec].ccn &&
                 enrolledCourses[i].sections[sec].is_primary_section === true &&
                 waitlistedCourses[w].sections[wsec].is_primary_section === true) {
-              enrolledCourses[i].swap_number = count+1;
-              waitlistedCourses[w].swap_number = count+1;
+              enrolledCourses[i].swap_number = count + 1;
+              waitlistedCourses[w].swap_number = count + 1;
               count++;
               var swapClass = {};
               swapClass.swapFromCourse = enrolledCourses[i];
