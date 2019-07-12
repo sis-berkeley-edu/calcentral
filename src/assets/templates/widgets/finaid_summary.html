@@ -5,10 +5,17 @@
         <a data-ng-href="finances/finaid/{{financialAidSummary.selected.finaidYear.id}}">
           <strong>View Awards </strong><i class="fa fa-arrow-right"></i>
         </a>
-    
     </div>
   </div>
   <div class="cc-widget-text" data-cc-spinner-directive="financialAidSummary.isLoading">
+    <div data-ng-if="financialAidSummary.isMainPage && !financialAidSummary.errored && financialAidSummary.aidYears.length"  
+        style="margin-bottom: 15px">
+    <a class="cc-button cc-button-blue" 
+      data-ng-href="finances/finaid/{{financialAidSummary.selected.finaidYear.id}}"
+      style="margin-bottom: 15px">
+      <strong>View Awards</strong>
+    </a>
+  </div>
     <div data-ng-if="!financialAidSummary.errored">
       <div data-ng-if="financialAidSummary.aidYears.length">
         <div data-ng-include="'widgets/finaid_summary_aidyear.html'"></div>
