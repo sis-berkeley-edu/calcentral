@@ -1,0 +1,7 @@
+<div data-ng-if="section.grading.gradingLapseDeadlineDisplay && section.grading.gradingLapseDeadline">
+  <a data-cc-campus-solutions-link-directive="academicGuideGradesPolicyLink">Lapse Date</a>
+  <span data-ng-bind="section.grading.gradingLapseDeadline"></span>
+</div>
+<div data-ng-if="section.grading.gradingBasis === 'FRZ'">
+  <a data-cc-campus-solutions-link-directive="academicGuideGradesPolicyLink">Frozen</a>
+</div>

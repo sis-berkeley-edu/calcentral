@@ -1,7 +1,6 @@
 module MyAcademics
   class StudentLinks < UserSpecificModel
     include ClassLogger
-    include LinkFetcher
 
     def merge(data)
       data[:studentLinks] = links
@@ -9,10 +8,11 @@ module MyAcademics
 
     def links
       {
-        tcReportLink: fetch_link('UC_CX_XFER_CREDIT_REPORT_STDNT'),
-        waitlistsAndStudentOptions: fetch_link('UC_CX_WAITLIST_STDNT_OPTS'),
-        waitlistReasonLink: fetch_link('UC_CX_WAITLIST_REASON_NOT_ENRL'),
-        swapClassInfoLink: fetch_link('UC_CX_WAITLIST_SWAP')
+        tcReportLink: LinkFetcher.fetch_link('UC_CX_XFER_CREDIT_REPORT_STDNT'),
+        waitlistsAndStudentOptions: LinkFetcher.fetch_link('UC_CX_WAITLIST_STDNT_OPTS'),
+        academicGuideGradesPolicy: LinkFetcher.fetch_link('UC_CX_ACAD_GUIDE_GRADES'),
+        waitlistReasonLink: LinkFetcher.fetch_link('UC_CX_WAITLIST_REASON_NOT_ENRL'),
+        swapClassInfoLink: LinkFetcher.fetch_link('UC_CX_WAITLIST_SWAP')
       }
     end
   end

@@ -33,6 +33,14 @@ describe MyAcademics::StudentLinks do
       }
     }
   end
+  let(:academicGuideGradesPolicy) do
+    {
+      link: {
+        name: 'Grading Policies',
+        url: 'https://example.com/academic-policies/#gradestext',
+      }
+    }
+  end
 
 
   before do
@@ -42,6 +50,7 @@ describe MyAcademics::StudentLinks do
     allow(fake_cs_link_proxy).to receive(:get_url).with('UC_CX_WAITLIST_STDNT_OPTS').and_return(waitlistsAndStudentOptions)
     allow(fake_cs_link_proxy).to receive(:get_url).with('UC_CX_WAITLIST_REASON_NOT_ENRL').and_return(waitlistReasonLink)
     allow(fake_cs_link_proxy).to receive(:get_url).with('UC_CX_WAITLIST_SWAP').and_return(swapClassInfoLink)
+    allow(fake_cs_link_proxy).to receive(:get_url).with('UC_CX_ACAD_GUIDE_GRADES').and_return(academicGuideGradesPolicy)
     allow(CampusSolutions::Link).to receive(:new).and_return(fake_cs_link_proxy)
   end
 
@@ -63,5 +72,8 @@ describe MyAcademics::StudentLinks do
     expect(subject[:studentLinks][:swapClassInfoLink]).to be
     expect(subject[:studentLinks][:swapClassInfoLink][:name]).to eq 'Swap'
     expect(subject[:studentLinks][:swapClassInfoLink][:url]).to eq '/help/enrollment-faq/swap'
+    expect(subject[:studentLinks][:academicGuideGradesPolicy]).to be
+    expect(subject[:studentLinks][:academicGuideGradesPolicy][:name]).to eq 'Grading Policies'
+    expect(subject[:studentLinks][:academicGuideGradesPolicy][:url]).to eq 'https://example.com/academic-policies/#gradestext'
   end
 end
