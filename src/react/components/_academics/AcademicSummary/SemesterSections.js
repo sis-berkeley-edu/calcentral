@@ -72,16 +72,14 @@ const SemesterSections = ({ semester, transferCredit }) => {
           <th>{showPoints && <Fragment>Pts.</Fragment>}</th>
         </tr>
       </thead>
-      <tbody>
-        {primarySections.map((section, index) => (
-          <PrimarySection
-            key={index}
-            showPoints={showPoints}
-            totalLawUnits={totalLawUnits}
-            section={section}
-          />
-        ))}
-      </tbody>
+      {primarySections.map((section, index) => (
+        <PrimarySection
+          key={index}
+          showPoints={showPoints}
+          totalLawUnits={totalLawUnits}
+          section={section}
+        />
+      ))}
 
       {showUnitTotals &&
         <tfoot>

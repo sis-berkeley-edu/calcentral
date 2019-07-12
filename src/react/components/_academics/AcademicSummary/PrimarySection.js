@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import ValueOrDash from './ValueOrDash';
+import SectionIncompleteGradingStatus from './SectionIncompleteGradingStatus';
 
 const propTypes = {
   section: PropTypes.object,
@@ -31,49 +32,55 @@ const SingleSection = ({
   grading,
   sectionLabel}) => {
   return (
-    <tr>
-      <td>
-        <a href={klass.url}>
-          {klass.course_code}&nbsp;
-          {sectionLabel &&
-            <Fragment>
-              {sectionLabel}&nbsp;
-            </Fragment>
-          }
-          {klass.session_code &&
-            <Fragment>
-              (Session {klass.session_code})
-            </Fragment>
-          }
-        </a>
-      </td>
-      <td>
-        {klass.title}&nbsp;
-        {requirementsDesignation &&
-          <div className="cc-requirements-designation">
-            {requirementsDesignation}
-          </div>
-        }
-      </td>
-      <td className="cc-text-right cc-academic-summary-table-units">
-        <ValueOrDash value={units} />
-      </td>
-      {lawUnits &&
-        <td className="cc-text-right cc-academic-summary-table-units">
-          <ValueOrDash value={lawUnits} />
+    <tbody>
+      <tr>
+        <td>
+          <a href={klass.url}>
+            {klass.course_code}&nbsp;
+            {sectionLabel &&
+              <Fragment>
+                {sectionLabel}&nbsp;
+              </Fragment>
+            }
+            {klass.session_code &&
+              <Fragment>
+                (Session {klass.session_code})
+              </Fragment>
+            }
+          </a>
         </td>
-      }
-      <td>
-        {canViewGrades && grading &&
-          <ValueOrDash value={grading.grade} />
+        <td>
+          {klass.title}&nbsp;
+          {requirementsDesignation &&
+            <div className="cc-requirements-designation">
+              {requirementsDesignation}
+            </div>
+          }
+        </td>
+        <td className="cc-text-right cc-academic-summary-table-units">
+          <ValueOrDash value={units} />
+        </td>
+        {lawUnits &&
+          <td className="cc-text-right cc-academic-summary-table-units">
+            <ValueOrDash value={lawUnits} />
+          </td>
         }
-      </td>
-      <td>
-        {canViewGrades && showPoints && grading &&
-          <ValueOrDash value={grading.gradePointsAdjusted} />
-        }
-      </td>
-    </tr>
+        <td>
+          {canViewGrades && grading &&
+            <ValueOrDash value={grading.grade} />
+          }
+        </td>
+        <td>
+          {canViewGrades && showPoints && grading &&
+            <ValueOrDash value={grading.gradePointsAdjusted} />
+          }
+        </td>
+      </tr>
+      <SectionIncompleteGradingStatus
+        gradingLapseDeadlineDisplay={grading.gradingLapseDeadlineDisplay}
+        gradingLapseDeadline={grading.gradingLapseDeadline}
+        gradingBasis={grading.gradingBasis}/>
+    </tbody>
   );
 };
 

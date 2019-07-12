@@ -574,7 +574,7 @@ describe EdoOracle::UserCourses::Base do
         context 'when grading lapse deadline is present' do
           let(:db_row) { super().merge('grading_lapse_deadline' => Time.parse('2019-07-30 00:00:00 UTC')) }
           it 'should return a formated date' do
-            expect(subject[:gradingLapseDeadline]).to eq '07/30/2019'
+            expect(subject[:gradingLapseDeadline]).to eq '07/30/19'
           end
         end
       end
