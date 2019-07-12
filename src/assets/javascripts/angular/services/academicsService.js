@@ -193,30 +193,28 @@ angular.module('calcentral.services').service('academicsService', function() {
     _.forEach(waitlistedCourses, function(course) {
       course.swap_number = 0;
     });
-    // the following code matches the waitlist's swap with the enrolled class
-    for (var i = 0; i < enrolledCourses.length; i++) {
-      for (var sec = 0; sec < enrolledCourses[i].sections.length; sec++) {
-        for (var w = 0; w < waitlistedCourses.length; w++) {
-          for (var wsec = 0; wsec < waitlistedCourses[w].sections.length; wsec++) {
-            if (waitlistedCourses[w].sections[wsec].drop_class_if_enrl === enrolledCourses[i].sections[sec].ccn &&
-                enrolledCourses[i].sections[sec].is_primary_section === true &&
-                waitlistedCourses[w].sections[wsec].is_primary_section === true) {
-              enrolledCourses[i].swap_number = count + 1;
-              waitlistedCourses[w].swap_number = count + 1;
+
+    _.forEach(enrolledCourses, function(enrollCourse) {
+      _.forEach(enrollCourse.sections, function(enrollSection) {
+        _.forEach(waitlistedCourses, function(waitCourse) {
+          _.forEach(waitCourse.sections, function(waitSection) {
+            if (waitSection.drop_class_if_enrl === enrollSection.ccn &&
+                enrollSection.is_primary_section === true && waitSection.is_primary_section === true) {
+              enrollCourse.swap_number = count + 1;
+              waitCourse.swap_number = count + 1;
               count++;
               var swapClass = {};
-              swapClass.swapFromCourse = enrolledCourses[i];
-              swapClass.swapFromSection = enrolledCourses[i].sections[sec];
-              swapClass.swapToCourse = waitlistedCourses[w];
-              swapClass.swapToSection = waitlistedCourses[w].sections[wsec];
-              swapClass.dateRequested = waitlistedCourses[w].sections[wsec].last_enrl_dt_stmp;
+              swapClass.swapFromCourse = enrollCourse;
+              swapClass.swapFromSection = enrollSection;
+              swapClass.swapToCourse = waitCourse;
+              swapClass.swapToSection = waitSection;
+              swapClass.dateRequested = waitSection.last_enrl_dt_stmp;
               swapClassList.push(swapClass);
             }
-          }
-        }
-      }
-    }
-
+          });
+        });
+      });
+    });
     return swapClassList;
   };
 
