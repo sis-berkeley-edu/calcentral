@@ -204,6 +204,8 @@ module EdoOracle
           ENR.GRADING_BASIS_CODE AS grading_basis,
           ENR.INCLUDE_IN_GPA AS include_in_gpa,
           ENR.ACAD_CAREER,
+          TRIM(TO_CHAR(ENR.DROP_CLASS_IF_ENRL, 9999999)) AS drop_class_if_enrl,
+          TO_CHAR(ENR.LAST_ENRL_DT_STMP, 'MON DD, YYYY') AS last_enrl_dt_stmp,
           CASE
             WHEN ENR.CRSE_CAREER = 'LAW'
             THEN ENR.RQMNT_DESIGNTN
@@ -215,7 +217,12 @@ module EdoOracle
             THEN 'Y'
             ELSE 'N'
           END AS grading_lapse_deadline_display,
-          lapse_dt.LAPSE_DEADLINE as grading_lapse_deadline
+          lapse_dt.LAPSE_DEADLINE as grading_lapse_deadline,
+          TRIM(TO_CHAR(reason.message_nbr, 9999999)) as message_nbr,
+          reason.uc_reason_desc,
+          reason.error_message_txt,
+          TO_CHAR(reason.UC_ENRL_LASTATTMPT, 'HH12:MIAM') as uc_enrl_lastattmpt_time,
+          TO_CHAR(reason.UC_ENRL_LASTATTMPT, 'MON DD, YYYY') as uc_enrl_lastattmpt_date
         FROM SISEDO.EXTENDED_TERM_MVW term,
              SISEDO.CLC_ENROLLMENTV00_VW enr
         JOIN SISEDO.CLASSSECTIONALLV01_MVW sec ON (
@@ -230,6 +237,13 @@ module EdoOracle
           enr.TERM_ID = lapse_dt.STRM AND
           enr.CLASS_SECTION_ID = lapse_dt.CLASS_NBR AND
           enr.STUDENT_ID = lapse_dt.EMPLID
+        )
+        LEFT OUTER JOIN SYSADM.PS_UCC_NOTENRL_RSN reason on (
+          enr.INSTITUTION = reason.INSTITUTION AND
+          enr.CRSE_CAREER = reason.ACAD_CAREER AND
+          enr.TERM_ID = reason.STRM AND
+          enr.CLASS_SECTION_ID = reason.CLASS_NBR AND
+          enr.STUDENT_ID = reason.EMPLID
         )
         WHERE  #{in_term_where_clause}
           enr."CAMPUS_UID" = '#{person_id}'
