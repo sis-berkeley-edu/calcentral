@@ -133,7 +133,7 @@ angular.module('calcentral.controllers').controller('UserOverviewController', fu
     }
     var visaCodes = ['F1', 'J1', 'PR'];
     var visaDescription = 'Other Verified';
-    $scope.visa.code = visa.type.code;
+    $scope.visa.code = (visaCodes.includes(visa.type.code)) ? visa.type.code : '';
     $scope.visa.description = (visaCodes.includes(visa.type.code)) ? visa.type.description : visaDescription;
   };
 
