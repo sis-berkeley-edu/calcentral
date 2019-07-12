@@ -35,7 +35,6 @@ describe MyAcademics::StudentLinks do
   end
 
 
-
   before do
     # stub CS Link proxy responses
     fake_cs_link_proxy = double
