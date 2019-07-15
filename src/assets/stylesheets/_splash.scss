@@ -1,4 +1,8 @@
 .cc-page-splash {
+  background-attachment: fixed;
+  background-image: url('../images/uc_berkeley_bay_view.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
   h1 {
     color: $cc-color-dark-cerulean;
     font-family: Arial;
@@ -58,7 +62,7 @@
     background: $cc-color-curious-blue;
     border: 0;
     display: block;
-    font-size: 12px;
+    font-size: 14px;
     margin: 10px auto 0;
     text-align: center;
     width: 200px;
