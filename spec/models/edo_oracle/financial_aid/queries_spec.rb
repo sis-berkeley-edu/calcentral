@@ -242,4 +242,84 @@ describe EdoOracle::FinancialAid::Queries do
       expect(subject).to have_keys(%w(aid_year dependency_status primary_efc summer_efc family_in_college))
     end
   end
+
+  describe '#get_awards' do
+    subject { described_class.get_awards(uid, aid_year) }
+
+    let(:aid_year) { 2020 }
+
+    it_behaves_like 'a successful query'
+
+  end
+
+  describe '#get_awards_total' do
+    subject { described_class.get_awards_total(uid, aid_year) }
+
+    let(:aid_year) { 2020 }
+
+    it_behaves_like 'a successful query'
+
+    it 'returns the expected result' do
+      expect(subject.count).to eq 1
+      expect(subject[0]).to have_keys(%w(total))
+    end
+  end
+
+  describe '#get_awards_disbursements' do
+    subject { described_class.get_awards_disbursements(uid, aid_year, '951101500000') }
+
+    let(:aid_year) { 2020 }
+
+    it_behaves_like 'a successful query'
+  end
+
+  describe '#get_awards_alert_details' do
+    subject { described_class.get_awards_alert_details(uid, aid_year, '951101500000') }
+
+    let(:aid_year) { 2020 }
+
+    it_behaves_like 'a successful query'
+  end
+
+  describe '#get_awards_convert_wks_to_loan' do
+    subject { described_class.get_awards_convert_wks_to_loan(uid, aid_year) }
+
+    let(:aid_year) { 2020 }
+
+    it_behaves_like 'a successful query that returns one result'
+  end
+
+  describe '#get_awards_convert_loan_to_wks' do
+    subject { described_class.get_awards_convert_loan_to_wks(uid, aid_year) }
+
+    let(:aid_year) { 2020 }
+
+    it_behaves_like 'a successful query that returns one result'
+  end
+
+  describe '#get_awards_outside_resources' do
+    subject { described_class.get_awards_outside_resources(aid_year) }
+
+    let(:aid_year) { 2020 }
+
+    it_behaves_like 'a successful query that returns one result'
+  end
+
+  describe '#get_awards_reduce_cancel' do
+    subject { described_class.get_awards_reduce_cancel(uid, aid_year) }
+
+    let(:aid_year) { 2020 }
+
+    it_behaves_like 'a successful query that returns one result'
+  end
+
+  describe '#get_awards_accept_loans' do
+    subject { described_class.get_awards_accept_loans(uid, aid_year, '961100200000') }
+
+    let(:aid_year) { 2020 }
+
+    it_behaves_like 'a successful query that returns one result'
+  end
+
+
 end

@@ -2,5 +2,7 @@
   <div class="cc-page-finaid-header-container">
     <h3 data-ng-bind="finaidAwards.awards.grandtotal.total.title" class="cc-page-finaid-header"></h3>
   </div>
-  <div class="cc-text-left cc-text-big cc-text-bold cc-text-right cc-widget-finaid-awards-section-total cc-widget-finaid-awards-section-total-grand" data-cc-amount-directive="finaidAwards.awards.grandtotal.total.amount" data-cc-amount-directive-color="false"></div>
+  <div class="cc-text-left cc-text-big cc-text-bold cc-text-right cc-widget-finaid-awards-section-total cc-widget-finaid-awards-section-total-grand" 
+    data-cc-amount-directive="finaidAwardsInfo.formatCurrency(finaidAwards.awards.grandtotal.total.amount)" 
+    data-cc-amount-directive-color="false"></div>
 </div>

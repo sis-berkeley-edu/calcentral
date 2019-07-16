@@ -9,11 +9,11 @@ describe FinancialAid::MyHousing do
     allow(LinkFetcher).to receive(:fetch_link).with('UC_ADMT_FYPATH_FA_SPG').and_return('first-year pathway financial aid link')
     allow(CampusSolutions::MessageCatalog).to receive(:get_message) do |msg_key|
       case msg_key
-        when :financial_housing_instruction_generic
+        when :financial_aid_housing_instruction_generic
           {descrlong: 'generic message'}
-        when :financial_housing_instruction_fall_pathways
+        when :financial_aid_housing_instruction_fall_pathways
           {descrlong: 'fall pathway message'}
-        when :financial_housing_instruction_spring_pathways
+        when :financial_aid_housing_instruction_spring_pathways
           {descrlong: 'spring pathway message'}
       end
     end
