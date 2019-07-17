@@ -2,7 +2,8 @@
   <div class="cc-widget-title cc-flex cc-flex-space-between cc-flex-align-center">
     <h2 class="cc-left" style="padding-right: 0">Financial Aid & Scholarships</h2>
     <div class="cc-right cc-widget-title-link cc-nowrap" data-ng-if="financialAidSummary.isMainPage && !financialAidSummary.errored && financialAidSummary.aidYears.length">
-        <a data-ng-href="finances/finaid/{{financialAidSummary.selected.finaidYear.id}}">
+        <a data-ng-href="finances/finaid/{{financialAidSummary.selected.finaidYear.id}}"
+        data-ng-click="api.analytics.sendEvent('Open new CLC page', 'Click', 'View Awards link')">
           <strong>View Awards </strong><i class="fa fa-arrow-right"></i>
         </a>
     </div>
@@ -12,6 +13,7 @@
         style="margin-bottom: 15px">
     <a class="cc-button cc-button-blue" 
       data-ng-href="finances/finaid/{{financialAidSummary.selected.finaidYear.id}}"
+      data-ng-click="api.analytics.sendEvent('Open new CLC page', 'Click', 'View Awards button')"
       style="margin-bottom: 15px">
       <strong>View Awards</strong>
     </a>
