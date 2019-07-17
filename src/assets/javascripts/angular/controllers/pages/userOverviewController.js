@@ -131,10 +131,27 @@ angular.module('calcentral.controllers').controller('UserOverviewController', fu
     if (visa.status !== 'G') {
       return;
     }
-    var visaCodes = ['F1', 'J1', 'PR'];
-    var visaDescription = 'Other Verified';
-    $scope.visa.code = (visaCodes.includes(visa.type.code)) ? visa.type.code : '';
-    $scope.visa.description = (visaCodes.includes(visa.type.code)) ? visa.type.description : visaDescription;
+    switch (visa.type.code) {
+      case 'F1': {
+        $scope.visa.code = 'F-1';
+        $scope.visa.description = 'International Student';
+        break;
+      }
+      case 'J1': {
+        $scope.visa.code = 'J-1';
+        $scope.visa.description = 'International Student';
+        break;
+      }
+      case 'PR': {
+        $scope.visa.code = 'PR';
+        $scope.visa.description = 'Verified';
+        break;
+      }
+      default: {
+        $scope.visa.code = '';
+        $scope.visa.description = 'Other Verified';
+      }
+    }
   };
 
   var processSemesters = function(planSemesters) {
