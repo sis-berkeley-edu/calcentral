@@ -1,0 +1,30 @@
+@import '../../../../stylesheets/variables';
+
+.BillingItemFilters {
+  .ButtonGroup {
+    width: 100%;
+  }
+
+  .TermDropdown {
+    margin-top: 10px;
+  }
+}
+
+@media only screen and (min-width: $small-breakpoint) {
+  .BillingItemFilters {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: auto;
+
+    .ButtonGroup {
+      width: 360px;
+    }
+
+    .TermDropdown {
+      margin-top: 0;
+      margin-left: 15px;
+      margin-right: 15px;
+    }
+  }
+}

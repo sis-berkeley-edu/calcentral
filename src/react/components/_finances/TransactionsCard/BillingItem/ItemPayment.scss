@@ -1,0 +1,12 @@
+.ItemPayment .flex {
+  display: flex;
+  justify-content: space-between;
+}
+
+.ItemPayment + .ItemPayment {
+  margin-top: 10px;
+}
+
+.ItemPayment__paid-on {
+  color: #737373;
+}

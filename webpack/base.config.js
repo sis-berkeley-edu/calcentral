@@ -98,6 +98,7 @@ module.exports = {
     })
   ],
   resolve: {
+    modules: ['node_modules', path.resolve(__dirname, '../src')],
     alias: {
       React: path.resolve(__dirname, '../src/react'),
       Redux: path.resolve(__dirname, '../src/redux')

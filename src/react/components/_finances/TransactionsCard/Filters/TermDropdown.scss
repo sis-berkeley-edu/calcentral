@@ -1,0 +1,16 @@
+@import '../../../../stylesheets/variables';
+
+.TermDropdown label {
+  font-size: 10px;
+  text-transform: uppercase;
+}
+
+@media only screen and (min-width: $small-breakpoint) {
+  .TermDropdown {
+    display: flex;
+  }
+
+  .TermDropdown select {
+    margin-left: 10px;
+  }
+}

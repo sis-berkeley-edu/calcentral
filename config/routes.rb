@@ -106,6 +106,12 @@ Calcentral::Application.routes.draw do
 
   with_options defaults: { format: :json } do
     get '/api/my/law_awards' => 'my_law_awards#get_feed'
+
+    scope '/api/my', module: 'user' do
+      scope '/finances', module: 'finances' do
+        resources :billing_items, only: [:index, :show]
+      end
+    end
   end
 
   get '/api/my/loan_history_aid_years' => 'loan_history#get_aid_years_feed', :defaults => { :format => 'json' }

@@ -1,0 +1,43 @@
+.Badge {
+  border-radius: 3px;
+  display: inline-block;
+  font-size: 12px;
+  line-height: 18px;
+  height: 18px;
+  background-color: #E5E5E5;
+  white-space: nowrap;
+  padding-left: 7px;
+  padding-right: 7px;
+}
+
+.Badge--icon {
+  padding-left: 22px;
+  background-repeat: no-repeat;
+  background-position: left;
+  background-position-x: 7px;
+}
+
+.Badge--not-due {
+  background-color: rgba(247, 199, 0, 0.15);
+
+  &.Badge--icon {
+    background-image: url('/assets/images/not-due.svg');
+  }
+}
+
+.Badge--due {
+  background-color: rgba(255, 108, 0, 0.15);
+
+  &.Badge--icon {
+    background-image: url('/assets/images/due.svg');
+  }
+}
+
+.Badge--overdue {
+  background-color: rgba(206, 23, 22, 0.15);
+  
+  &.Badge--icon {
+    background-image: url('/assets/images/overdue.svg');
+  }
+}
+
