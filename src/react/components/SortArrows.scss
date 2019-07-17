@@ -1,0 +1,15 @@
+.SortArrows {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.SortArrows__arrow-group {
+  display: flex;
+  flex-direction: column;
+  margin-left: 5px;
+}
+
+.SortArrows__arrow-group img:first-child {
+  margin-bottom: 2px;
+}
