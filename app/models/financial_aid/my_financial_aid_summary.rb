@@ -58,6 +58,7 @@ module FinancialAid
     def links
       {
         financialAidWebsite: fetch_link('UC_CX_FA_UCB_FA_WEBSITE'),
+        financialAidTranscript: fetch_link('UC_CX_FA_FIN_AID_TRANSCRIPT'),
         calStudentCentral: fetch_link('UC_CX_CAL_STUDENT_CENTRAL')
       }
     end
