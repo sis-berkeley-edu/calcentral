@@ -184,7 +184,8 @@ angular.module('calcentral.services').service('academicsService', function() {
   };
 
   var getSwapClasses = function(enrolledCourses, waitlistedCourses) {
-    var count = 0;
+    // handle multiple swaps to one enrolled class
+    var enrolledClassSet = new Set();
     var swapClassList = [];
     // initialize swap_number
     _.forEach(enrolledCourses, function(course) {
@@ -200,9 +201,9 @@ angular.module('calcentral.services').service('academicsService', function() {
           _.forEach(waitCourse.sections, function(waitSection) {
             if (waitSection.drop_class_if_enrl === enrollSection.ccn &&
                 enrollSection.is_primary_section === true && waitSection.is_primary_section === true) {
-              enrollCourse.swap_number = count + 1;
-              waitCourse.swap_number = count + 1;
-              count++;
+              enrolledClassSet.add(enrollSection.ccn);
+              enrollCourse.swap_number = enrolledClassSet.size;
+              waitCourse.swap_number = enrolledClassSet.size;
               var swapClass = {};
               swapClass.swapFromCourse = enrollCourse;
               swapClass.swapFromSection = enrollSection;
