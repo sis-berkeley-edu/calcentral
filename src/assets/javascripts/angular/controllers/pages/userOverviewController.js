@@ -128,7 +128,7 @@ angular.module('calcentral.controllers').controller('UserOverviewController', fu
   };
 
   var setVisa = function(visa) {
-    if (visa.status !== 'G') {
+    if (!visa || visa.status !== 'G') {
       return;
     }
     switch (visa.type.code) {
