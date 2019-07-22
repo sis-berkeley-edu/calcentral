@@ -39,8 +39,16 @@ module User
             XREF_AMT as amount_paid,
             POSTED_DATE,
             EFFDT as effective_date
-          FROM SYSADM.PS_UCC_SF_BILLPYMT
-          WHERE CAMPUS_ID = '#{uid}' AND ITEM_NBR='#{item_number}'
+          FROM SYSADM.PS_UCC_SF_BILLPYMT payment
+          WHERE payment.CAMPUS_ID = '#{uid}'
+          AND payment.ITEM_NBR='#{item_number}'
+          AND payment.POSTED_DATE=(
+            SELECT MAX(line_item.POSTED_DATE)
+            FROM SYSADM.PS_UCC_SF_BILLLINE line_item
+            WHERE line_item.CAMPUS_ID = payment.CAMPUS_ID
+            AND line_item.ITEM_NBR = payment.ITEM_NBR
+            AND line_item.PAYMENT_ID_NBR = payment.PAYMENT_ID_NBR
+          )
         SQL
       end
     end
