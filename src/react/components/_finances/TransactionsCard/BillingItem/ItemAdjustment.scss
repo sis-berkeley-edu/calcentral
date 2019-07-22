@@ -5,6 +5,7 @@
   background-position-y: center;
   padding-left: 15px;
   margin-left: -4px;
+  line-height: 23px;
 
   .ItemAdjustment__date {
     width: 114px;
@@ -22,13 +23,23 @@
     color: #737373;
   }
 
+  &.ItemAdjustment--show-more {
+    background-image: url('/assets/images/timeline-center-blue.svg');
+    color: #2C84BC;
+  }
+
+  &.ItemAdjustment--too-many {
+    background-image: url('/assets/images/timeline-empty.svg');
+    color: #737373;
+  }
+
   &:first-child {
     background-image: url('/assets/images/timeline-top-cap.svg');
     background-position-y: 6px;
   }
 
   &:last-child {
-    background-position-y: -12px;
+    background-position-y: -10px;
     background-image: url('/assets/images/timeline-bottom-cap.svg');
   }
 }
