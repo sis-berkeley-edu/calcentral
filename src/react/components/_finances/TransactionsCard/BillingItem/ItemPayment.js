@@ -5,6 +5,7 @@ import formatCurrency from 'functions/formatCurrency';
 import formatDate from 'functions/formatDate';
 
 import './ItemPayment.scss';
+import parseDate from 'date-fns/parse';
 
 const ItemPayment = ({ payment }) => {
   return (
@@ -13,7 +14,7 @@ const ItemPayment = ({ payment }) => {
         <div className="ItemPayment__description">
           <div>{ payment.description }</div>
           <div className="ItemPayment__paid-on">
-            Paid on { formatDate(payment.posted_date) }
+            Paid on { formatDate(parseDate(payment.effective_date)) }
           </div>
         </div>
         <div className="ItemPayment__amount">
