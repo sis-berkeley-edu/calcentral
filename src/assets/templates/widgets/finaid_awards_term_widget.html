@@ -1,25 +1,19 @@
 <div class="cc-widget cc-widget-finaid-awards" data-ng-controller="FinaidAwardsTermController">
-  <div class="cc-widget-title">
+  <div class="cc-widget-title cc-flex cc-flex-space-between cc-flex-align-center">
     <h2>Awards by Term</h2>
+    <div class="cc-right cc-widget-title-link cc-nowrap">
+        <a data-ng-href="/finances/finaid/{{finaidYear.id}}">
+          <strong>View By Year </strong><i class="fa fa-arrow-right"></i>
+        </a>
+    </div>
   </div>
   <div data-cc-spinner-directive="finaidAwardsTerm.isLoading">
     <div data-ng-if="finaidAwardsTerm.errored" class="cc-widget-text" data-ng-include="'widgets/finaid_errored.html'"></div>
     <div data-ng-if="!finaidAwardsTerm.errored">
       <div class="cc-widget-text cc-widget-finaid-awards-message">
         <div data-ng-bind="finaidAwardsTerm.feed.message"></div>
-
-        <div class="cc-widget-finaid-awards-padding-top">
-          <a data-ng-href="/finances/finaid/{{finaidYear.id}}">
-            View Award Details
-          </a>
-        </div>
       </div>
-      <div
-        class="cc-widget-text"
-        data-cc-finaid-table-directive
-        data-data="finaidAwardsTerm.feed.awards.semester.data"
-        data-toggle="api.widget.toggleShow"
-      ></div>
+      <div data-ng-include="'widgets/finaid_awards_table_widget.html'" class="cc-widget-text"></div>
     </div>
   </div>
 </div>

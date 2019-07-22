@@ -1,0 +1,77 @@
+<div
+  class="cc-table cc-widget-finaid-table"
+  data-ng-class="{'cc-widget-finaid-table-grand-total':(category.title === 'Grand Total')}"
+  data-ng-repeat="category in finaidAwardsTerm.feed.awards.semester.data"
+>
+  <table>
+    <thead>
+      <tr>
+        <th data-ng-bind="category.titleHeader" scope="col"></th>
+        <th data-ng-repeat="header in category.headers" class="cc-table-right cc-table-right-spacing" scope="col" width="15%">
+          <span data-ng-bind="header"></span>
+          <span data-ng-if="$last && category.change" data-cc-amount-change-symbol-directive="changeTags.blank"></span>
+        </th>
+      </tr>
+    </thead>
+    <tbody
+      data-cc-accessible-focus-directive="!!item.subItems.length"
+      data-ng-repeat="item in category.items"
+      data-ng-class="{'cc-widget-table-hover-opened cc-widget-list-selected':(item.show), 'cc-widget-table-hover': (item.subItems.length)}"
+      data-ng-click="!item.subItems.length || toggle($event, category.items, item, 'Financial Aid - Table')">
+      <tr data-ng-if="!item.totals">
+        <td data-ng-bind="item.title"></td>
+        <td data-ng-if="!item.show" data-ng-repeat="amount in item.amounts track by $index" class="cc-table-right">
+          <span data-ng-if="amount !== null"
+                data-cc-amount-directive="finaidAwardsTerm.formatCurrency(amount, finaidAwardsTerm.showDecimals)"
+                data-cc-amount-directive-color="false"></span>
+          <span data-ng-if="amount === null">N/A</span>
+          <span data-ng-if="$last && category.change && item.total === undefined" data-cc-amount-change-symbol-directive="item.change"></span>
+        </td>
+        <td data-ng-if="!item.show && item.total !== undefined" class="cc-table-right cc-toggle-triangle">
+          <span data-ng-if="item.total !== null"
+                data-cc-amount-directive="finaidAwardsTerm.formatCurrency(item.total, finaidAwardsTerm.showDecimals)"
+                data-cc-amount-directive-color="false"></span>
+          <span data-ng-if="item.total === null">N/A</span>
+          <span data-ng-if="category.change" data-cc-amount-change-symbol-directive="item.change"></span>
+        </td>
+        <td data-ng-if="item.show" data-ng-repeat="amount in item.amounts track by $index" class="cc-table-right"></td>
+        <td data-ng-if="item.show" class="cc-table-right cc-toggle-triangle">
+          <span data-ng-if="category.change" data-cc-amount-change-symbol-directive="changeTags.blank"></span>
+        </td>
+      </tr>
+      <tr data-ng-if="item.totals.length">
+        <td
+          data-ng-attr-colspan="{{item.totals.length + 1}}"
+          class="cc-table-right cc-table-right-spacing cc-table-top-border cc-text-small cc-widget-finaid-table-budget-total cc-widget-finaid-table-budget-total-title cc-text-uppercase"
+        >
+          <span data-ng-bind="category.titleTotal"></span>
+          <span data-ng-if="category.change" data-cc-amount-change-symbol-directive="changeTags.blank"></span>
+        </td>
+      </tr>
+      <tr data-ng-if="item.totals.length">
+        <td>&nbsp;</td>
+        <td data-ng-repeat="total in item.totals track by $index"
+            data-ng-if="total !== undefined"
+            class="cc-table-right cc-table-right-spacing cc-widget-finaid-table-budget-total">
+          <span data-ng-if="total !== null"
+                data-cc-amount-directive="finaidAwardsTerm.formatCurrency(total, finaidAwardsTerm.showDecimals)"
+                data-cc-amount-directive-color="false"></span>
+          <span data-ng-if="total === null">N/A</span>
+          <span data-ng-if="$last && category.change" data-cc-amount-change-symbol-directive="item.change"></span>
+        </td>
+      </tr>
+      <tr data-ng-if="item.show && item.subItems.length" data-ng-repeat="subItem in item.subItems">
+        <td class="cc-widget-finaid-sub-total-title" data-ng-bind="subItem.title"></td>
+        <td data-ng-repeat="amount in subItem.amounts track by $index"
+            data-cc-amount-directive="finaidAwardsTerm.formatCurrency(amount)"
+            data-cc-amount-directive-color="false"
+            class="cc-table-right"></td>
+        <td class="cc-table-right cc-table-right-spacing">
+          <span data-ng-if="subItem.total !== null" data-cc-amount-directive="subItem.total" data-cc-amount-directive-color="false"></span>
+          <span data-ng-if="subItem.total === null">N/A</span>
+          <span data-ng-if="category.change" data-cc-amount-change-symbol-directive="subItem.change"></span>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

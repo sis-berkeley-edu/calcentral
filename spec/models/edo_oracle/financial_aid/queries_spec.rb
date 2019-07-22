@@ -321,5 +321,21 @@ describe EdoOracle::FinancialAid::Queries do
     it_behaves_like 'a successful query that returns one result'
   end
 
+  describe '#get_awards_by_term_types' do
+    subject { described_class.get_awards_by_term_types(uid, aid_year) }
+
+    let(:aid_year) { 2020 }
+
+    it_behaves_like 'a successful query'
+  end
+
+  describe '#get_awards_by_term_by_type' do
+    subject { described_class.get_awards_by_term_by_type(uid, aid_year, 'giftaid') }
+
+    let(:aid_year) { 2020 }
+
+    it_behaves_like 'a successful query'
+  end
+
 
 end
