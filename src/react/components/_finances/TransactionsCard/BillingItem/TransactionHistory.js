@@ -6,7 +6,7 @@ import ItemAdjustment, { GenericAdjustment } from './ItemAdjustment';
 import formatCurrency from 'functions/formatCurrency';
 
 import './TransactionHistory.scss';
-const TransactionHistory = ({ item: { adjustments, amount: itemAmount } }) => {
+const TransactionHistory = ({ item: { adjustments, amount: itemAmount, type: itemType } }) => {
   const [showAll, setShowAll] = useState(false);
 
   const first = adjustments[0];
@@ -28,7 +28,7 @@ const TransactionHistory = ({ item: { adjustments, amount: itemAmount } }) => {
               description={`Current Amount: ${formatCurrency(Math.abs(itemAmount))}`}
             />
 
-            {firstFour.map((adjustment, index) => <ItemAdjustment key={index} adjustment={adjustment} />)}
+            {firstFour.map((adjustment, index) => <ItemAdjustment key={index} adjustment={adjustment} itemType={itemType} />)}
 
             {nextFour.length > 0 &&
               <li
@@ -38,7 +38,7 @@ const TransactionHistory = ({ item: { adjustments, amount: itemAmount } }) => {
               </li>
             }
 
-            {showAll && nextFour.map((adjustment, index) => <ItemAdjustment key={index} adjustment={adjustment} />)}
+            {showAll && nextFour.map((adjustment, index) => <ItemAdjustment key={index} adjustment={adjustment} itemType={itemType} />)}
             {showAll && tooMany &&
               <li
                 className="ItemAdjustment ItemAdjustment--too-many">

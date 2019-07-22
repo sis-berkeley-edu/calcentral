@@ -16,8 +16,8 @@ import { chargeTypes } from '../types';
 
 import parseDate from 'date-fns/parse';
 
-const directionForAdjustment = ({ type, amount }) => {
-  if (chargeTypes.has(type)) {
+const directionForAdjustment = (amount, itemType) => {
+  if (chargeTypes.has(itemType)) {
     return amount > 0 ? 'Increased by' : 'Decreased by';
   } else {
     return amount < 0 ? 'Increased by' : 'Decreased by';
@@ -42,16 +42,17 @@ GenericAdjustment.propTypes = {
   date: PropTypes.instanceOf(Date).isRequired
 };
 
-const ItemAdjustment = ({ adjustment }) => {
+const ItemAdjustment = ({ adjustment, itemType }) => {
   const date = parseDate(adjustment.posted);
-  const direction = directionForAdjustment(adjustment);
+  const direction = directionForAdjustment(adjustment.amount, itemType);
   const amount = Math.abs(adjustment.amount);
   const description = `${direction} ${formatCurrency(amount)}`;
 
   return <GenericAdjustment className="ItemAdjustment--change" date={date} description={description} />;
 };
 ItemAdjustment.propTypes = {
-  adjustment: PropTypes.object
+  adjustment: PropTypes.object,
+  itemType: PropTypes.string
 };
 
 export default ItemAdjustment;
