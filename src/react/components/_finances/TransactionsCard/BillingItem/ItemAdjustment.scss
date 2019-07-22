@@ -26,6 +26,7 @@
   &.ItemAdjustment--show-more {
     background-image: url('/assets/images/timeline-center-blue.svg');
     color: #2C84BC;
+    cursor: pointer;
   }
 
   &.ItemAdjustment--too-many {
