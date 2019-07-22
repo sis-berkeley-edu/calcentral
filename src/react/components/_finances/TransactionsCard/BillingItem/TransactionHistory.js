@@ -24,7 +24,7 @@ const TransactionHistory = ({ item: { adjustments, amount: itemAmount } }) => {
         ? (
           <div className="ItemAdjustments">
             <GenericAdjustment className="ItemAdjustment--first"
-              posted={parseDate(first.posted)}
+              date={parseDate(first.posted)}
               description={`Current Amount: ${formatCurrency(Math.abs(itemAmount))}`}
             />
 
@@ -47,7 +47,7 @@ const TransactionHistory = ({ item: { adjustments, amount: itemAmount } }) => {
             }
 
             <GenericAdjustment className="ItemAdjustment--last"
-              posted={parseDate(original.posted)}
+              date={parseDate(original.posted)}
               description={`Original Amount: ${formatCurrency(Math.abs(original.amount))}`}
             />
           </div>
