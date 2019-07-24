@@ -6,6 +6,10 @@ import { differenceInDays, distanceInWordsStrict } from 'date-fns';
 
 import './ItemUpdated.scss';
 const ItemUpdated = ({ item }) => {
+  if (item.updated_on === item.posted_on) {
+    return null;
+  }
+
   const date = parseDate(item.updated_on);
   const diff = Math.abs(differenceInDays(date, new Date()));
 
