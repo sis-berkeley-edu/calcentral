@@ -72,12 +72,12 @@
             </div>
           </div>
         </div>
-
         <div data-ng-if="item.show">
           <div data-ng-if="item.subItems.alertDetails.length" class="cc-widget-finaid-awards-section-item-margin-top">
             <strong data-ng-pluralize count="item.subItems.alertDetails.length" when="{'1': 'Alert', 'other': 'Alerts'}"></strong>
             <div data-ng-repeat="alert in item.subItems.alertDetails" data-ng-bind-template="{{alert.alertTerm}} - {{alert.alertMessage}}">
             </div>
+            <div data-ng-bind-html="item.subItems.authFailedMessage" class="cc-widget-finaid-awards-section-item-margin-top"></div>
           </div>
           <div data-ng-if="item.subItems.remainingAmount !== undefined" class="cc-widget-finaid-awards-section-item-margin-top">
             <strong>Remaining Work-Study:</strong>
@@ -113,7 +113,6 @@
               <div data-ng-bind="item.subItems.awardMessage"></div>
             </div>
           </div>
-
         </div>
       </div>
     </li>
