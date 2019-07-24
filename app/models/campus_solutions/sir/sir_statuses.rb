@@ -15,8 +15,8 @@ module CampusSolutions
           background: 'cc-widget-sir-background-berkeley'
         },
         GRADDIV: {
-          name: 'Fiona M. Doyle',
-          title: 'Dean of the Graduate Division',
+          name: 'Lisa García Bedolla',
+          title: 'Vice Provost for Graduate Studies and Dean of the Graduate Division',
           background: 'cc-widget-sir-background-berkeley',
           picture: 'cc-widget-sir-picture-grad'
         },
