@@ -1,2 +1,2 @@
-export const chargeTypes = new Set(['Charge', 'Refund', 'Adjustment']);
-export const paymentTypes = new Set(['Financial Aid', 'Payment', 'Waiver', 'Deposit']);
+export const chargeTypes = new Set(['Charge', 'Refund']);
+export const paymentTypes = new Set(['Financial Aid', 'Payment', 'Adjustment', 'Deposit']);

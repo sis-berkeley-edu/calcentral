@@ -82,9 +82,9 @@ module User
           'F' => 'Financial Aid',
           'P' => 'Payment',
           'R' => 'Refund',
-          'W' => 'Waiver',
-          'X' => 'Adjustment' # X is for "Write-Off", but we want to display
-                              # "Adjustment" in the front end
+          'W' => 'Adjustment',
+          'X' => 'Charge' # X is for "Write-Off", but we want to display
+                          # "Charge" in the front end
         }
       end
     end
