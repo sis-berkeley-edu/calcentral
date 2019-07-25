@@ -49,7 +49,7 @@ module FinancialAid
     end
 
     def grand_total
-      grand_total ||= EdoOracle::FinancialAid::Queries.get_awards_total(@uid, my_aid_year)
+      grand_total = EdoOracle::FinancialAid::Queries.get_awards_total(@uid, my_aid_year)
       return nil unless grand_total
       total = {
         total: {
@@ -69,7 +69,7 @@ module FinancialAid
     end
 
     def award_total(award_type, award_title)
-      award_total ||= EdoOracle::FinancialAid::Queries.get_awards_total_by_type(@uid, my_aid_year, award_type)
+      award_total = EdoOracle::FinancialAid::Queries.get_awards_total_by_type(@uid, my_aid_year, award_type)
       return nil unless award_total
       {
         amount: award_total[0]['total'].to_f,
@@ -97,8 +97,6 @@ module FinancialAid
     end
 
     def accept_loans_link(item_type)
-      accept_loans_link = {}
-
       if loans_acceptable?(item_type)
         accept_loans_link = {
           url: fetch_link('UC_CX_FA_AWRD_AWD_MGT', link_params)[:url],
@@ -109,7 +107,6 @@ module FinancialAid
     end
 
     def links(award_type)
-
       case award_type
       when 'giftaid'
         if outside_resources_available?
@@ -119,6 +116,7 @@ module FinancialAid
             isCsLink: true
           ]
         end
+
       when 'loans'
         if loans_reducable_cancelable?
           links = [
@@ -158,7 +156,7 @@ module FinancialAid
             title: "Convert to Loan(s)",
             isCsLink: true
           }
-          
+
           links.push(fluid_link)
         else
           links
@@ -177,31 +175,6 @@ module FinancialAid
       }
     end
 
-    def outside_resources_available?
-      exists ||= EdoOracle::FinancialAid::Queries.get_awards_outside_resources(my_aid_year) 
-      exists ? true : false
-    end
-
-    def loans_acceptable?(item_type)
-      puts item_type
-      exists ||= EdoOracle::FinancialAid::Queries.get_awards_accept_loans(@uid, my_aid_year, item_type) 
-      exists ? true : false
-    end
-
-    def loans_reducable_cancelable?
-      exists ||= EdoOracle::FinancialAid::Queries.get_awards_reduce_cancel(@uid, my_aid_year) 
-      exists ? true : false
-    end
-
-    def loans_convertable?
-      exists ||= EdoOracle::FinancialAid::Queries.get_awards_convert_loan_to_wks(@uid, my_aid_year) 
-      exists ? true : false
-    end
-
-    def workstudy_convertable?
-      exists ||= EdoOracle::FinancialAid::Queries.get_awards_convert_wks_to_loan(@uid, my_aid_year) 
-      exists ? true : false
-    end
 
     def sub_items(award_type, item)
       unless award_type === 'workstudy'
@@ -209,6 +182,7 @@ module FinancialAid
           alertDetails: alert_details(item['item_type']),
           termDetails: disbursements(item['item_type']),
           awardMessage: item['award_message'],
+          authFailedMessage: auth_failed_message(item['item_type']),
           itemTypeDescr: item['title']
         }
       else
@@ -216,13 +190,44 @@ module FinancialAid
           alertDetails: alert_details(item['item_type']),
           remainingAmount: (item['left_col_amt'] - item['right_col_amt']).to_f,
           awardMessage: item['award_message'],
+          authFailedMessage: auth_failed_message(item['item_type']),
           itemTypeDescr: item['title']
-        } 
+        }
       end
     end
 
+    def outside_resources_available?
+      !!EdoOracle::FinancialAid::Queries.get_awards_outside_resources(my_aid_year)
+    end
+
+    def loans_acceptable?(item_type)
+      !!EdoOracle::FinancialAid::Queries.get_awards_accept_loans(@uid, my_aid_year, item_type)
+    end
+
+    def loans_reducable_cancelable?
+      !!EdoOracle::FinancialAid::Queries.get_awards_reduce_cancel(@uid, my_aid_year)
+    end
+
+    def loans_convertable?
+      !!EdoOracle::FinancialAid::Queries.get_awards_convert_loan_to_wks(@uid, my_aid_year)
+    end
+
+    def workstudy_convertable?
+      !!EdoOracle::FinancialAid::Queries.get_awards_convert_wks_to_loan(@uid, my_aid_year)
+    end
+
+    def auth_failed_message_exists?(item_type)
+      !!EdoOracle::FinancialAid::Queries.get_auth_failed_message(@uid, my_aid_year, item_type)
+    end
+
+    def auth_failed_message(item_type)
+
+      return nil unless auth_failed_message_exists?(item_type)
+      CampusSolutions::MessageCatalog.get_message(:financial_aid_awards_card_auth_failed).try(:[], :descrlong)
+    end
+
     def alert_details(item_type)
-      alert_details ||= EdoOracle::FinancialAid::Queries.get_awards_alert_details(@uid, my_aid_year, item_type)
+      alert_details = EdoOracle::FinancialAid::Queries.get_awards_alert_details(@uid, my_aid_year, item_type)
         return [] unless alert_details
         alert_details.map.try(:each) do |item|
         {
@@ -233,7 +238,12 @@ module FinancialAid
     end
 
     def disbursements(item_type)
-      disbursements ||= EdoOracle::FinancialAid::Queries.get_awards_disbursements(@uid, my_aid_year, item_type)
+      if item_type
+        disbursements = EdoOracle::FinancialAid::Queries.get_awards_disbursements(@uid, my_aid_year, item_type)
+      else
+        disbursements = EdoOracle::FinancialAid::Queries.get_awards_disbursements_tuition_fee_remission(@uid, my_aid_year)
+      end
+
         return [] unless disbursements
         disbursements.map.try(:each) do |item|
         {
