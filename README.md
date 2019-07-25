@@ -13,7 +13,6 @@
 * [Java 8 SDK](http://www.oracle.com/technetwork/java/javase/downloads/index.html)
 * [JRuby 9.1.14.0](http://jruby.org/)
 * [Node.js >=8.9.4](http://nodejs.org/)
-* [PostgreSQL](http://www.postgresql.org/)
 * [Rubygems 2.5.1](https://rubygems.org/pages/download)
 * [RVM](https://rvm.io/rvm/install/) - Ruby version managers
 * [xvfb](http://xquartz.macosforge.org/landing/) - xvfb headless browser, included for Macs with XQuartz
@@ -23,57 +22,17 @@
 1. Install Java 8 JDK ([8u172](http://www.oracle.com/technetwork/java/javase/downloads/index.html)):
 http://www.oracle.com/technetwork/java/javase/downloads/index.html
 
-1. Install Postgres:
+1. Install Homebrew:
 
-    **Note**: To install Postgres, you must first install [Homebrew](http://brew.sh/).
-
-    Install Homebrew with the following command:
+    Install [Homebrew](http://brew.sh/)
     ```bash
-    ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
-    ```
-    Run the following command in Terminal after installation:
-    ```bash
-    brew --version
+    /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
     ```
 
-    Then run the following:
+    Update Homebrew
     ```bash
     brew update
-    brew install postgresql
     ```
-
-    1. __For Mountain Lion & Mavericks users ONLY:__  [Fix Postgres paths](http://nextmarvel.net/blog/2011/09/brew-install-postgresql-on-os-x-lion/).
-
-    1. __For Mountain Lion & Mavericks users ONLY:__ If you can connect to Postgres via psql, but not via JDBC (you see "Connection refused" errors in the CalCentral app log), then edit `/usr/local/var/postgres/pg_hba.conf` and make sure you have these lines:
-
-        ```
-        host    all             all             127.0.0.1/32            md5
-        host    all             all             samehost                md5
-        ```
-
-    1. __For Mountain Lion & Mavericks users ONLY:__ [Install XQuartz](http://xquartz.macosforge.org/landing/) and make sure that /opt/X11/bin is on your `PATH`.
-
-1. Start Postgres, add users and create the necessary databases. (If your PostgreSQL server is managed externally, you'll probably need to create a schema that matches the database username. See [CLC-893](https://jira.media.berkeley.edu/jira/browse/CLC-893) for details.):
-
-    ```bash
-    pg_ctl -D /usr/local/var/postgres -l /usr/local/var/postgres/server.log start
-    psql postgres
-    create database calcentral_development;
-    create user calcentral_development with password 'secret' createdb;
-    grant all privileges on database calcentral_development to calcentral_development;
-    alter database calcentral_development owner to calcentral_development;
-    create database calcentral;
-    create user calcentral with password 'secret' createdb;
-    grant all privileges on database calcentral to calcentral;
-    alter database calcentral owner to calcentral;
-    create database calcentral_test;
-    create user calcentral_test with password 'secret' createdb;
-    grant all privileges on database calcentral_test to calcentral_test;
-    alter database calcentral_test owner to calcentral_test;
-    \q
-    ```
-
-    **Note**: At this point, exit out of Postgres. To do this, type "\q" and then press ENTER.
 
 1. [Fork this repository](https://github.com/ets-berkeley-edu/calcentral/wiki/Workflow), then:
 
@@ -160,13 +119,7 @@ http://www.oracle.com/technetwork/java/javase/downloads/index.html
     * Rename the file to `ojdbc7.jar`
     * Copy `ojdbc7.jar` to `~/.rvm/rubies/jruby-9.1.14.0/lib/`
 
-1. Initialize PostgreSQL database tables:
-
-    ```bash
-    bundle exec rake environment db:schema:load db:seed
-    ```
-
-1. Make yourself powerful:
+1. Make yourself a super-user:
 
     ```bash
     bundle exec rake superuser:create UID=[your numeric CalNet UID]
