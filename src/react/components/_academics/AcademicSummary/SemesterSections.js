@@ -53,8 +53,10 @@ const SemesterSections = ({ semester, transferCredit }) => {
       return section.is_primary_section && !section.waitlisted;
     });
 
-    return {...primary, class: klass};
-  });
+    if (primary) {
+      return {...primary, class: klass};
+    }
+  }).filter(e => e !== undefined);
 
   const showPoints = classes.find(klass => {
     return klass.sections.find(section => section.grading.gradePointsAdjusted);
