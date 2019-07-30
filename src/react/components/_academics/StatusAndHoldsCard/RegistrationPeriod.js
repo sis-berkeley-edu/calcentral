@@ -18,8 +18,8 @@ const RegistrationPeriod = ({ period }) => {
     return (
       <div className="RegistrationPeriod">
         <h4>{ period.semester } { period.year }</h4>
-        <CNPWarning registration={period} />
         <RegistrationStatus {...period.regStatus} />
+        <CNPWarning registration={period} />
         <CalGrantStatusItem acknowledgement={period.calGrantAcknowledgement} />
       </div>
     );
