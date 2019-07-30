@@ -254,6 +254,7 @@ angular.module('calcentral.controllers').controller('UserOverviewController', fu
       }).finally(function() {
         $scope.degreeProgress.undergraduate.showCard = apiService.user.profile.features.csDegreeProgressUgrdAdvising && ($scope.targetUser.academicRoles.historical.ugrd || $scope.degreeProgress.undergraduate.progresses.length);
         $scope.degreeProgress.graduate.showCard = apiService.user.profile.features.csDegreeProgressGradAdvising && ($scope.degreeProgress.graduate.progresses.length || $scope.targetUser.academicRoles.current.grad || $scope.targetUser.academicRoles.current.law);
+        $scope.degreeProgress.undergraduate.showCard = $scope.degreeProgress.graduate.showCard ? false : $scope.degreeProgress.undergraduate.showCard;
         $scope.degreeProgress.isLoading = false;
       });
     });
