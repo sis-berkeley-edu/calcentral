@@ -17,23 +17,29 @@ const SectionIncompleteGradingStatus = ({
   gradingLapseDeadline,
   gradingBasis,
   academicGuideGradesPolicyLink}) => {
-  return (
-    <tr>
-      <td colSpan={3}>&nbsp;</td>
-      <td className="SectionIncompleteGradingStatus__table_cell">
-        {gradingLapseDeadlineDisplay && gradingLapseDeadline &&
-          <CampusSolutionsLinkContainer linkObj={academicGuideGradesPolicyLink}>Lapse Date</CampusSolutionsLinkContainer>
-        }
-        {gradingLapseDeadlineDisplay && gradingLapseDeadline &&
-          ': ' + gradingLapseDeadline
-        }
-        {gradingBasis === 'FRZ' &&
-          <CampusSolutionsLinkContainer linkObj={academicGuideGradesPolicyLink}>Frozen</CampusSolutionsLinkContainer>
-        }
-      </td>
-      <td>&nbsp;</td>
-    </tr>
-  );
+  const showGradingLapseDeadline = (gradingLapseDeadlineDisplay && gradingLapseDeadline);
+  const gradingBasisIsFrozen = (gradingBasis === 'FRZ');
+  if (showGradingLapseDeadline || gradingBasisIsFrozen) {
+    return (
+      <tr>
+        <td colSpan={3}>&nbsp;</td>
+        <td className="SectionIncompleteGradingStatus__table_cell">
+          {showGradingLapseDeadline &&
+            <CampusSolutionsLinkContainer linkObj={academicGuideGradesPolicyLink}>Lapse Date</CampusSolutionsLinkContainer>
+          }
+          {showGradingLapseDeadline &&
+            ': ' + gradingLapseDeadline
+          }
+          {gradingBasisIsFrozen &&
+            <CampusSolutionsLinkContainer linkObj={academicGuideGradesPolicyLink}>Frozen</CampusSolutionsLinkContainer>
+          }
+        </td>
+        <td>&nbsp;</td>
+      </tr>
+    );
+  } else {
+    return null;
+  }
 };
 
 SectionIncompleteGradingStatus.propTypes = propTypes;
