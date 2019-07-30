@@ -1,6 +1,9 @@
 module User
   module Finances
     class BillingItemsController < ApplicationController
+      include AllowDelegateViewAs
+      before_action :authorize_for_financial
+
       def index
         render json: billing_items
       end
