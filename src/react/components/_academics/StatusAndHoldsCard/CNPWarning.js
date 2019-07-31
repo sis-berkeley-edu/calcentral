@@ -38,9 +38,7 @@ const CNPWarning = ({ registration }) => {
           <i className={iconClass} style={{ marginRight: '4px' }}></i>
           { summary }
         </DisclosureItemTitle>
-        <StatusDisclosure>
-          { explanation }
-        </StatusDisclosure>
+        <StatusDisclosure dangerouslySetInnerHTML={{__html: explanation }} />
       </DisclosureItem>
     );
   } else {
