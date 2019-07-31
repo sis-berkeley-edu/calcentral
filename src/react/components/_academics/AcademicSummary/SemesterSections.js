@@ -6,10 +6,11 @@ import PrimarySection from './PrimarySection';
 
 const propTypes = {
   semester: PropTypes.object.isRequired,
-  transferCredit: PropTypes.object.isRequired
+  transferCredit: PropTypes.object.isRequired,
+  isLawStudent: PropTypes.bool
 };
 
-const SemesterSections = ({ semester, transferCredit }) => {
+const SemesterSections = ({ semester, transferCredit, isLawStudent }) => {
   const { totalUnits, totalLawUnits, isGradingComplete, classes, termId } = semester;
 
   const showUnitTotals = classes.map(klass => klass.academicCareer).find((career) => {
@@ -71,17 +72,20 @@ const SemesterSections = ({ semester, transferCredit }) => {
           <th className="cc-table-right cc-academic-summary-table-units">Un.</th>
           {totalLawUnits && <th className="cc-table-right cc-academic-summary-table-units">Law Un.</th>}
           <th>Gr.</th>
-          <th>{showPoints && <Fragment>Pts.</Fragment>}</th>
+          <th>{!isLawStudent && showPoints && <Fragment>Pts.</Fragment>}</th>
         </tr>
       </thead>
-      {primarySections.map((section, index) => (
-        <PrimarySection
-          key={index}
-          showPoints={showPoints}
-          totalLawUnits={totalLawUnits}
-          section={section}
-        />
-      ))}
+      <tbody>
+        {primarySections.map((section, index) => (
+          <PrimarySection
+            key={index}
+            showPoints={showPoints}
+            totalLawUnits={totalLawUnits}
+            section={section}
+            isLawStudent={isLawStudent}
+          />
+        ))}
+      </tbody>
 
       {showUnitTotals &&
         <tfoot>
@@ -116,8 +120,14 @@ const SemesterSections = ({ semester, transferCredit }) => {
 
 SemesterSections.propTypes = propTypes;
 
-const mapStateToProps = ({ myTransferCredit: transferCredit }) => {
-  return { transferCredit };
+const mapStateToProps = ({ myStatus, myTransferCredit: transferCredit }) => {
+  const {
+    roles: {
+      law: isLawStudent
+    }
+  } = myStatus;
+
+  return { isLawStudent, transferCredit };
 };
 
 export default connect(mapStateToProps)(SemesterSections);
