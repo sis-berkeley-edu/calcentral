@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 
 import ValueOrDash from './ValueOrDash';
 import SectionIncompleteGradingStatus from './SectionIncompleteGradingStatus';
+import LawSection from './LawSection';
 
 const propTypes = {
   section: PropTypes.object,
@@ -11,18 +12,8 @@ const propTypes = {
   showPoints: PropTypes.bool
 };
 
-const propTypesSingleSection = {
-  klass: PropTypes.object,
-  canViewGrades: PropTypes.bool,
-  showPoints: PropTypes.bool,
-  requirementsDesignation: PropTypes.string,
-  units: PropTypes.string,
-  lawUnits: PropTypes.string,
-  grading: PropTypes.object,
-  sectionLabel: PropTypes.string
-};
 
-const SingleSection = ({
+let SingleSection = ({
   showPoints,
   canViewGrades,
   klass,
@@ -30,9 +21,24 @@ const SingleSection = ({
   units,
   lawUnits,
   grading,
-  sectionLabel}) => {
+  sectionLabel,
+  isLawStudent
+}) => {
+  if (lawUnits > 0) {
+    return (
+      <LawSection
+        klass={klass}
+        requirementsDesignation={requirementsDesignation}
+        sectionLabel={sectionLabel}
+        lawUnits={lawUnits}
+        grading={grading}
+        units={units}
+      />
+    );
+  }
+
   return (
-    <tbody>
+    <Fragment>
       <tr>
         <td>
           <a href={klass.url}>
@@ -71,7 +77,7 @@ const SingleSection = ({
           }
         </td>
         <td>
-          {canViewGrades && showPoints && grading &&
+          {!isLawStudent && canViewGrades && showPoints && grading &&
             <ValueOrDash value={grading.gradePointsAdjusted} />
           }
         </td>
@@ -80,9 +86,30 @@ const SingleSection = ({
         gradingLapseDeadlineDisplay={grading.gradingLapseDeadlineDisplay}
         gradingLapseDeadline={grading.gradingLapseDeadline}
         gradingBasis={grading.gradingBasis}/>
-    </tbody>
+    </Fragment>
   );
 };
+SingleSection.propTypes = {
+  klass: PropTypes.object,
+  canViewGrades: PropTypes.bool,
+  showPoints: PropTypes.bool,
+  requirementsDesignation: PropTypes.string,
+  units: PropTypes.string,
+  lawUnits: PropTypes.string,
+  grading: PropTypes.object,
+  sectionLabel: PropTypes.string,
+  isLawStudent: PropTypes.bool
+};
+
+const mapSectionStateToProps = ({
+  myStatus: {
+    roles: {
+      law: isLawStudent
+    } = {}
+  } = {}
+}) => ({ isLawStudent });
+
+SingleSection = connect(mapSectionStateToProps)(SingleSection);
 
 const PrimarySection = ({ section, canViewGrades, showPoints }) => {
   if (section.class.multiplePrimaries) {
@@ -94,7 +121,7 @@ const PrimarySection = ({ section, canViewGrades, showPoints }) => {
         klass={section.class}
         requirementsDesignation={section.requirementsDesignation}
         units={sek.units}
-        lawUnits={section.lawUnits}
+        lawUnits={sek.lawUnits}
         grading={sek.grading}
         sectionLabel={sek.section_label} />
     ));
@@ -111,7 +138,6 @@ const PrimarySection = ({ section, canViewGrades, showPoints }) => {
 };
 
 PrimarySection.propTypes = propTypes;
-SingleSection.propTypes = propTypesSingleSection;
 
 const mapStateToProps = ({ myStatus }) => {
   const { canViewGrades } = myStatus;
