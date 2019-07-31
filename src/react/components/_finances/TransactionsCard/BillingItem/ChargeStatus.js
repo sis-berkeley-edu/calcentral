@@ -14,6 +14,10 @@ import 'icons/not-due.svg';
 
 import DueBadge from '../Badges/DueBadge';
 
+const PartiallyPaidStatus = () => (
+  <div className="PartiallyPaid">Partially Paid</div>
+);
+
 const ChargeStatus = ({ item }) => {
   switch (item.status) {
     case CHARGE_PAID:
@@ -27,8 +31,8 @@ const ChargeStatus = ({ item }) => {
     case CHARGE_NOT_DUE:
       return (
         <Fragment>
-          <DueBadge status={item.status}/>
-          { item.amount_due !== item.amount && 'Partially Paid' }
+          <DueBadge status={ item.status } />
+          { item.amount_due !== item.amount && <PartiallyPaidStatus /> }
         </Fragment>
       );
     default:
