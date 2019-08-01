@@ -33,6 +33,7 @@ let SingleSection = ({
         lawUnits={lawUnits}
         grading={grading}
         units={units}
+        canViewGrades={canViewGrades}
       />
     );
   }

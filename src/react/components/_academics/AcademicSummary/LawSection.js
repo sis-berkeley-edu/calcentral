@@ -10,7 +10,8 @@ const LawSection = ({
   requirementsDesignation,
   lawUnits,
   grading,
-  units
+  units,
+  canViewGrades
 }) => {
   return (
     <Fragment>
@@ -44,7 +45,11 @@ const LawSection = ({
         <td className="cc-text-right cc-academic-summary-table-units">
           <ValueOrDash value={lawUnits} />
         </td>
-        <td></td>
+        <td>
+          {canViewGrades && grading &&
+            <ValueOrDash value={grading.grade} />
+          }
+        </td>
         <td></td>
       </tr>
       <SectionIncompleteGradingStatus
