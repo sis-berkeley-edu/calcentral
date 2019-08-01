@@ -11,7 +11,7 @@ const propTypes = {
   isLawStudent: PropTypes.bool
 };
 
-const SemesterRedux = ({ semester, isLawStudent }) => {
+const Semester = ({ semester, isLawStudent }) => {
   const {
     hasEnrolledClasses: isEnrolled,
     hasWithdrawalData: hasWithdrawn,
@@ -60,7 +60,7 @@ const SemesterRedux = ({ semester, isLawStudent }) => {
   }
 };
 
-SemesterRedux.propTypes = propTypes;
+Semester.propTypes = propTypes;
 
 const mapStateToProps = ({ myStatus, myTransferCredit: transferCredit }) => {
   const {
@@ -72,4 +72,4 @@ const mapStateToProps = ({ myStatus, myTransferCredit: transferCredit }) => {
   return { transferCredit, isLawStudent };
 };
 
-export default connect(mapStateToProps)(SemesterRedux);
+export default connect(mapStateToProps)(Semester);
