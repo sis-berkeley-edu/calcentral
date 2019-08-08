@@ -519,6 +519,18 @@ module EdoOracle
         result.first
       end
 
+      def self.get_awards_has_loans(person_id, aid_year)
+        result = safe_query <<-SQL
+        SELECT 'X'
+          FROM SYSADM.PS_UCC_FA_AWRD_SRC UC
+        WHERE UC.CAMPUS_ID   = '#{person_id}'
+          AND UC.INSTITUTION = '#{UC_BERKELEY}'
+          AND UC.AID_YEAR    = '#{aid_year}'
+          AND UC.UC_AWARD_TYPE IN ('subsidizedloans', 'unsubsidizedloans', 'plusloans', 'alternativeloans')
+        SQL
+        result.first
+      end
+
     end
   end
 end
