@@ -18,10 +18,6 @@ angular.module('calcentral.controllers').controller('FinaidAwardsController', fu
   };
   $scope.finaidAwards = {};
 
-  var checkKeys = function(keys, object) {
-    return _.some(keys, _.partial(_.get, object));
-  };
-
   var addColors = function(feed) {
     _.mapValues(feed.awards, function(value, key) {
       if (value && _.includes(keysLoans, key)) {
@@ -39,12 +35,6 @@ angular.module('calcentral.controllers').controller('FinaidAwardsController', fu
     if (!feed) {
       return;
     }
-
-    // Check whether this student has any awards at all
-    // and see whether they have any loans
-    var allKeys = keysGiftWork.concat(keysLoans);
-    feed.hasAwards = checkKeys(allKeys, feed.awards);
-    feed.hasLoans = checkKeys(keysLoans, feed.awards);
 
     feed = addColors(feed);
 
@@ -135,7 +125,7 @@ angular.module('calcentral.controllers').controller('FinaidAwardsController', fu
       $scope.finaidAwardsInfo.errored = _.get(response, 'data.errored');
       $scope.finaidAwardsInfo.showDecimals = shouldShowDecimals(_.get(response, 'data'));
     })
-    .finally(function() {      
+    .finally(function() {
       $scope.finaidAwardsInfo.checkForDisbursementDates = checkForDisbursementDates;
       $scope.finaidAwardsInfo.formatCurrency = formatCurrency;
       $scope.finaidAwardsInfo.isLoading = false;
