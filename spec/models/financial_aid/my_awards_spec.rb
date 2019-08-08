@@ -15,7 +15,7 @@ describe FinancialAid::MyAwards do
       puts subject
       expect(subject).to be
       expect(subject[:awards]).to be
-      expect(subject[:awards].count).to eq 9
+      expect(subject[:awards].count).to eq 10
       expect(subject[:messages]).to be
       expect(subject[:messages][:messageInfo]).to be
       expect(subject[:messages][:messageEstDisbursements]).to be

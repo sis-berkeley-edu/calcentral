@@ -14,8 +14,7 @@ module FinancialAid
         messages: {
           messageInfo: CampusSolutions::MessageCatalog.get_message(:financial_aid_awards_card_info).try(:[], :descrlong),
           messageEstDisbursements: CampusSolutions::MessageCatalog.get_message(:financial_aid_awards_card_info_est_disbursements).try(:[], :descrlong)
-        },
-        errored: all_awards ? false : true
+        }
       }
     end
 
@@ -28,7 +27,7 @@ module FinancialAid
     def awards
       return nil unless all_awards
       {
-        giftaid: get_awards('giftaid', 'Gift Aid'),
+        giftaid: get_awards_giftaid(),
         waiversAndOther: get_awards('waiversAndOther', 'Waivers and Other Funding'),
         workstudy: get_awards('workstudy', 'Work-Study'),
         subsidizedloans: get_awards('subsidizedloans', 'Subsidized Loans'),
@@ -36,6 +35,7 @@ module FinancialAid
         plusloans: get_awards('plusloans', 'PLUS Loans'),
         alternativeloans: get_awards('alternativeloans', 'Alternative Loans'),
         grandtotal: grand_total,
+        hasLoans: has_loans?,
         loans: links('loans')
       }
     end
@@ -56,6 +56,18 @@ module FinancialAid
           amount: grand_total[0]['total'].to_f,
           title: 'Grand Total'
         }
+      }
+    end
+
+    def get_awards_giftaid()
+      # Gift Aid is unique in that if none exists for the student, we still want the section to show because
+      # it includes a link for student to Report Outside Resources.  However, if the link is turned off
+      # in the Campus Solutions configuration we do not want the link to show
+      return nil unless (EdoOracle::FinancialAid::Queries.get_awards_total_by_type(@uid, my_aid_year, 'giftaid')[0]['total'].to_f > 0 || outside_resources_available?)
+      {
+        total: award_total('giftaid', 'Gift Aid'),
+        items: award_items('giftaid'),
+        links: links('giftaid')
       }
     end
 
@@ -126,6 +138,8 @@ module FinancialAid
               isCsLink: true
             }
           ]
+        else
+          links = []
         end
 
         if loans_convertable?
@@ -175,7 +189,6 @@ module FinancialAid
       }
     end
 
-
     def sub_items(award_type, item)
       unless award_type === 'workstudy'
         {
@@ -194,6 +207,10 @@ module FinancialAid
           itemTypeDescr: item['title']
         }
       end
+    end
+
+    def has_loans?
+      !!EdoOracle::FinancialAid::Queries.get_awards_has_loans(@uid, my_aid_year)
     end
 
     def outside_resources_available?
@@ -221,7 +238,6 @@ module FinancialAid
     end
 
     def auth_failed_message(item_type)
-
       return nil unless auth_failed_message_exists?(item_type)
       CampusSolutions::MessageCatalog.get_message(:financial_aid_awards_card_auth_failed).try(:[], :descrlong)
     end
