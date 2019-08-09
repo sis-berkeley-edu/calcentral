@@ -11,7 +11,7 @@ const propTypes = {
 
 const RegistrationPeriod = ({ period }) => {
   const showPeriod = period.showCnp
-    || (period.regStatus && period.regStatus.explanation)
+    || (period.regStatus)
     || period.calGrantAcknowledgement;
 
   if (showPeriod) {
