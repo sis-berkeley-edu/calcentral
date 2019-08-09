@@ -58,7 +58,6 @@ module MyRegistrations
     def set_regstatus_messaging(term_registrations)
       term_registrations.each do |term_id, term_value|
         show_regstatus = term_value.try(:[], :showRegStatus)
-
         if show_regstatus
           undergrad = term_value.try(:[], 'academicCareer').try(:[], 'code') == 'UGRD'
           registered = {isActive: term_includes_indicator?(term_value, '+REG')}
@@ -81,13 +80,17 @@ module MyRegistrations
           summary = 'You have access to campus services.'
         else
           if has_r99_sf20
-            summary = 'You may not have access to campus services due to a hold. Please address your holds to become entitled to campus services.'
+            summary = 'Limit access to campus services'
           else
             summary = 'Fees Unpaid'
           end
         end
       else
-        summary = 'Not Enrolled'
+        if has_r99_sf20 && term_includes_indicator?(term, '+S09')
+          summary = 'Limit access to campus services'
+        else
+          summary = 'Not Enrolled'
+        end
       end
       summary
     end
@@ -99,7 +102,7 @@ module MyRegistrations
         when 'Not Enrolled'
           return regstatus_messages[:notEnrolledGrad]
         else
-          return nil
+          return summary
       end
     end
 
