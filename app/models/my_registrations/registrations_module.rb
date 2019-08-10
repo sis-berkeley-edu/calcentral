@@ -101,6 +101,10 @@ module MyRegistrations
           return regstatus_messages[:feesUnpaidGrad]
         when 'Not Enrolled'
           return regstatus_messages[:notEnrolledGrad]
+        when 'Limit access to campus services'
+          return nil
+        when 'You have access to campus services.'
+          return nil
         else
           return summary
       end
