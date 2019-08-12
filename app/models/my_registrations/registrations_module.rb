@@ -87,7 +87,7 @@ module MyRegistrations
         end
       else
         if has_r99_sf20 && term_includes_indicator?(term, '+S09')
-          summary = 'Limit access to campus services'
+          summary = 'Limited access to campus services'
         else
           summary = 'Not Enrolled'
         end
