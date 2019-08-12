@@ -80,7 +80,7 @@ module MyRegistrations
           summary = 'You have access to campus services.'
         else
           if has_r99_sf20
-            summary = 'Limit access to campus services'
+            summary = 'Limited access to campus services'
           else
             summary = 'Fees Unpaid'
           end
@@ -101,8 +101,8 @@ module MyRegistrations
           return regstatus_messages[:feesUnpaidGrad]
         when 'Not Enrolled'
           return regstatus_messages[:notEnrolledGrad]
-        when 'Limit access to campus services'
-          return nil
+        when 'Limited access to campus services'
+          return 'You may not have access to campus services due to a hold. Please address your holds to become entitled to campus services'
         when 'You have access to campus services.'
           return nil
         else
