@@ -183,6 +183,42 @@ angular.module('calcentral.services').service('academicsService', function() {
     return classes;
   };
 
+  var getSwapClasses = function(enrolledCourses, waitlistedCourses) {
+    // handle multiple swaps to one enrolled class
+    var enrolledClassSet = new Set();
+    var swapClassList = [];
+    // initialize swap_number
+    _.forEach(enrolledCourses, function(course) {
+      course.swap_number = 0;
+    });
+    _.forEach(waitlistedCourses, function(course) {
+      course.swap_number = 0;
+    });
+
+    _.forEach(enrolledCourses, function(enrollCourse) {
+      _.forEach(enrollCourse.sections, function(enrollSection) {
+        _.forEach(waitlistedCourses, function(waitCourse) {
+          _.forEach(waitCourse.sections, function(waitSection) {
+            if (waitSection.drop_class_if_enrl === enrollSection.ccn &&
+                enrollSection.is_primary_section === true && waitSection.is_primary_section === true) {
+              enrolledClassSet.add(enrollSection.ccn);
+              enrollCourse.swap_number = enrolledClassSet.size;
+              waitCourse.swap_number = enrolledClassSet.size;
+              var swapClass = {};
+              swapClass.swapFromCourse = enrollCourse;
+              swapClass.swapFromSection = enrollSection;
+              swapClass.swapToCourse = waitCourse;
+              swapClass.swapToSection = waitSection;
+              swapClass.dateRequested = waitSection.last_enrl_dt_stmp;
+              swapClassList.push(swapClass);
+            }
+          });
+        });
+      });
+    });
+    return swapClassList;
+  };
+
   /*
    * Collects unique course sections topics for course
    */
@@ -401,6 +437,7 @@ angular.module('calcentral.services').service('academicsService', function() {
     getAllClasses: getAllClasses,
     getUniqueCareerCodes: getUniqueCareerCodes,
     getClassesSections: getClassesSections,
+    getSwapClasses: getSwapClasses,
     getPreviousClasses: getPreviousClasses,
     hasTeachingClasses: hasTeachingClasses,
     isLSStudent: isLSStudent,

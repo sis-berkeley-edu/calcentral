@@ -1,0 +1,30 @@
+@import '../billing-items-grid.scss';
+
+.ChargesPaid {
+  grid-column: 1/3;
+  cursor: auto;
+};
+
+.ChargesPaid--loading {
+  grid-column: 1/-1;
+};
+
+.ChargesPaid--error {
+  grid-column: 1/-1;
+  display: flex;
+};
+
+.ChargesPaid h3 {
+  font-size: 12px;
+  margin-top: 0;
+}
+
+.ChargesPaid ol {
+  list-style-type: decimal;
+  margin-left: 15px;
+  margin-bottom: 0;
+}
+
+.PartiallyPaid {
+  color: #737373;
+}

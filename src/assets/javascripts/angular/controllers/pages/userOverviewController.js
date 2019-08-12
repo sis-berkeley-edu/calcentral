@@ -31,6 +31,10 @@ angular.module('calcentral.controllers').controller('UserOverviewController', fu
     show: false
   };
   $scope.residency = {};
+  $scope.visa = {
+    code: '',
+    description: ''
+  };
   $scope.targetUser = {
     isLoading: true
   };
@@ -100,6 +104,7 @@ angular.module('calcentral.controllers').controller('UserOverviewController', fu
       function successCallback(response) {
         angular.extend($scope.targetUser, _.get(response, 'data.attributes'));
         angular.extend($scope.residency, _.get(response, 'data.residency.residency'));
+        setVisa(_.get(response, 'data.demographics.feed.student.usaCountry.visa'));
         $scope.targetUser.academicRoles = _.get(response, 'data.academicRoles');
         $scope.targetUser.ldapUid = targetUserUid;
         $scope.targetUser.addresses = apiService.profile.fixFormattedAddresses(_.get(response, 'data.contacts.feed.student.addresses'));
@@ -120,6 +125,33 @@ angular.module('calcentral.controllers').controller('UserOverviewController', fu
     ).finally(function() {
       $scope.targetUser.isLoading = false;
     });
+  };
+
+  var setVisa = function(visa) {
+    if (!visa || visa.status !== 'G') {
+      return;
+    }
+    switch (visa.type.code) {
+      case 'F1': {
+        $scope.visa.code = 'F-1';
+        $scope.visa.description = 'International Student';
+        break;
+      }
+      case 'J1': {
+        $scope.visa.code = 'J-1';
+        $scope.visa.description = 'International Student';
+        break;
+      }
+      case 'PR': {
+        $scope.visa.code = 'PR';
+        $scope.visa.description = 'Verified';
+        break;
+      }
+      default: {
+        $scope.visa.code = '';
+        $scope.visa.description = 'Other Verified';
+      }
+    }
   };
 
   var processSemesters = function(planSemesters) {
@@ -222,6 +254,7 @@ angular.module('calcentral.controllers').controller('UserOverviewController', fu
       }).finally(function() {
         $scope.degreeProgress.undergraduate.showCard = apiService.user.profile.features.csDegreeProgressUgrdAdvising && ($scope.targetUser.academicRoles.historical.ugrd || $scope.degreeProgress.undergraduate.progresses.length);
         $scope.degreeProgress.graduate.showCard = apiService.user.profile.features.csDegreeProgressGradAdvising && ($scope.degreeProgress.graduate.progresses.length || $scope.targetUser.academicRoles.current.grad || $scope.targetUser.academicRoles.current.law);
+        $scope.degreeProgress.undergraduate.showCard = $scope.degreeProgress.graduate.showCard ? false : $scope.degreeProgress.undergraduate.showCard;
         $scope.degreeProgress.isLoading = false;
       });
     });

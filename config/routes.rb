@@ -74,6 +74,7 @@ Calcentral::Application.routes.draw do
   get '/api/my/academic_records' => 'my_academic_records#get_feed', :defaults => { :format => 'json' }
   get '/api/my/activities' => 'my_activities#get_feed', :as => :my_activities, :defaults => { :format => 'json' }
   get '/api/my/aid_years' => 'my_aid_years#get_feed', :defaults => { :format => 'json' }
+  get '/api/my/awards/:aid_year' => 'my_awards#get_feed', :defaults => { :format => 'json' }
   get '/api/my/badges' => 'my_badges#get_feed', :as => :my_badges, :defaults => { :format => 'json' }
   get '/api/my/campuslinks' => 'my_campus_links#get_feed', :as => :my_campus_links, :defaults => { :format => 'json' }
   get '/api/my/campuslinks/expire' => 'my_campus_links#expire'
@@ -93,6 +94,12 @@ Calcentral::Application.routes.draw do
 
   with_options defaults: { format: :json } do
     get '/api/my/law_awards' => 'my_law_awards#get_feed'
+
+    scope '/api/my', module: 'user' do
+      scope '/finances', module: 'finances' do
+        resources :billing_items, only: [:index, :show]
+      end
+    end
   end
 
   get '/api/my/loan_history_aid_years' => 'loan_history#get_aid_years_feed', :defaults => { :format => 'json' }

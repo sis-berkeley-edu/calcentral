@@ -17,7 +17,7 @@ module HubEdos
     private
 
     def student_data
-      @student_data ||= HubEdos::V2::Student.new(user_id: @uid).get
+      @student_data ||= HubEdos::StudentApi::V2::Student.new(user_id: @uid).get
     end
 
     def student_registrations

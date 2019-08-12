@@ -3,6 +3,8 @@ import { combineReducers } from 'redux';
 import AcademicsReducer from './AcademicsReducer';
 import ActivitiesReducer from './ActivitiesReducer';
 import AdvisingReducer from './AdvisingReducer';
+import BillingItemsReducer from './BillingItemsReducer';
+import CarsDataReducer from './CarsDataReducer';
 import CalGrantsReducer from './CalGrantsReducer';
 import ConfigReducer from './ConfigReducer';
 import HoldsReducer from './HoldsReducer';
@@ -19,6 +21,8 @@ const AppReducer = combineReducers({
   advising: AdvisingReducer,
   config: ConfigReducer,
   currentRoute: RouteReducer,
+  billingItems: BillingItemsReducer,
+  carsData: CarsDataReducer,
   links: LinksReducer,
   myAcademics: AcademicsReducer,
   myActivities: ActivitiesReducer,

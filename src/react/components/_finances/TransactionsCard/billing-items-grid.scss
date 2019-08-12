@@ -1,0 +1,27 @@
+@mixin billing-items-grid {
+  display: grid;
+  grid-template-columns: 100px 300px 1fr 120px 10px;
+  column-gap: 30px;
+  padding: 10px;
+
+  // The description/amount columns have labels that longer than the columns
+  // need to be use display: flex and space-between to allow each row to divide
+  // the space as appropriate.
+  .TableColumn__description-amount {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .TableColumn__due {
+    display: flex;
+  }
+
+  .TableColumn__chevron {
+    width: 10px;
+    text-align: right;
+  }
+
+  .TableColumn__amount {
+    text-align: right;
+  }
+}

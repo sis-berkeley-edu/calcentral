@@ -7,7 +7,8 @@ import CampusSolutionsLink from './CampusSolutionsLink';
 import CampusSolutionsOutboundLink from './CampusSolutionsOutboundLink';
 
 const propTypes = {
-  linkObj: PropTypes.object.isRequired
+  linkObj: PropTypes.object.isRequired,
+  children: PropTypes.any.isRequired
 };
 
 class CampusSolutionsLinkContainer extends React.Component {
@@ -43,7 +44,7 @@ class CampusSolutionsLinkContainer extends React.Component {
     const ccPageName = _.get(linkObj, 'ccPageName') || 'CalCentral';
     const ccPageUrl = _.get(linkObj, 'ccPageUrl');
     const ucFromParamsConfig = this.getUcFromParamConfig(linkObj);
-    const linkUrl = this.decorateLinkUrl(linkObj.url, 
+    const linkUrl = this.decorateLinkUrl(linkObj.url,
       ucFromParamsConfig.includeUcFrom,
       ucFromParamsConfig.includeUcFromLink,
       ucFromParamsConfig.includeUcFromText,
@@ -63,6 +64,9 @@ class CampusSolutionsLinkContainer extends React.Component {
   }
   render() {
     const linkConfig = this.getLinkConfig(this.props.linkObj);
+    if (this.props.children) {
+      linkConfig.linkBody = this.props.children;
+    }
     if (linkConfig.showNewWindow) {
       return (<CampusSolutionsOutboundLink linkConfig={linkConfig} />);
     } else {

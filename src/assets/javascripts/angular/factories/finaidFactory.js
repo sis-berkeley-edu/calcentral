@@ -4,9 +4,6 @@
  * Financial Aid Factory
  */
 angular.module('calcentral.factories').factory('finaidFactory', function(apiService) {
-  var urlAwards = '/api/campus_solutions/financial_aid_funding_sources';
-  // var urlAwards = '/dummy/json/financial_aid_funding_sources.json';
-
   var urlAwardsTerm = '/api/campus_solutions/financial_aid_funding_sources_term';
 
   var urlCompareAwardsCurrent = '/api/campus_solutions/financial_aid_compare_awards_current';
@@ -20,9 +17,6 @@ angular.module('calcentral.factories').factory('finaidFactory', function(apiServ
   var urlSummary = '/api/my/aid_years';
   // var urlSummary = '/dummy/json/finaid_summary.json';
 
-  var getAwards = function(options) {
-    return apiService.http.request(options, urlAwards + '?aid_year=' + options.finaidYearId);
-  };
   var getAwardsTerm = function(options) {
     return apiService.http.request(options, urlAwardsTerm + '?aid_year=' + options.finaidYearId);
   };
@@ -57,7 +51,6 @@ angular.module('calcentral.factories').factory('finaidFactory', function(apiServ
   };
 
   return {
-    getAwards: getAwards,
     getAwardsTerm: getAwardsTerm,
     getAwardCompareCurrent: getAwardCompareCurrent,
     getAwardCompareList: getAwardCompareList,

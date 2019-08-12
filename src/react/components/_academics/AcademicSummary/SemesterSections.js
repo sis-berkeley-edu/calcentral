@@ -6,10 +6,11 @@ import PrimarySection from './PrimarySection';
 
 const propTypes = {
   semester: PropTypes.object.isRequired,
-  transferCredit: PropTypes.object.isRequired
+  transferCredit: PropTypes.object.isRequired,
+  isLawStudent: PropTypes.bool
 };
 
-const SemesterSections = ({ semester, transferCredit }) => {
+const SemesterSections = ({ semester, transferCredit, isLawStudent }) => {
   const { totalUnits, totalLawUnits, isGradingComplete, classes, termId } = semester;
 
   const showUnitTotals = classes.map(klass => klass.academicCareer).find((career) => {
@@ -53,8 +54,10 @@ const SemesterSections = ({ semester, transferCredit }) => {
       return section.is_primary_section && !section.waitlisted;
     });
 
-    return {...primary, class: klass};
-  });
+    if (primary) {
+      return {...primary, class: klass};
+    }
+  }).filter(e => e !== undefined);
 
   const showPoints = classes.find(klass => {
     return klass.sections.find(section => section.grading.gradePointsAdjusted);
@@ -69,7 +72,7 @@ const SemesterSections = ({ semester, transferCredit }) => {
           <th className="cc-table-right cc-academic-summary-table-units">Un.</th>
           {totalLawUnits && <th className="cc-table-right cc-academic-summary-table-units">Law Un.</th>}
           <th>Gr.</th>
-          <th>{showPoints && <Fragment>Pts.</Fragment>}</th>
+          <th>{!isLawStudent && showPoints && <Fragment>Pts.</Fragment>}</th>
         </tr>
       </thead>
       <tbody>
@@ -79,6 +82,7 @@ const SemesterSections = ({ semester, transferCredit }) => {
             showPoints={showPoints}
             totalLawUnits={totalLawUnits}
             section={section}
+            isLawStudent={isLawStudent}
           />
         ))}
       </tbody>
@@ -116,8 +120,14 @@ const SemesterSections = ({ semester, transferCredit }) => {
 
 SemesterSections.propTypes = propTypes;
 
-const mapStateToProps = ({ myTransferCredit: transferCredit }) => {
-  return { transferCredit };
+const mapStateToProps = ({ myStatus, myTransferCredit: transferCredit }) => {
+  const {
+    roles: {
+      law: isLawStudent
+    }
+  } = myStatus;
+
+  return { isLawStudent, transferCredit };
 };
 
 export default connect(mapStateToProps)(SemesterSections);

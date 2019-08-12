@@ -7,13 +7,13 @@ describe FinancialAid::MyHousing do
     allow(LinkFetcher).to receive(:fetch_link).with('UC_CX_FA_STDNT_HOUSING_TYPE', {:AID_YEAR=>aid_year, :INSTITUTION=> 'UCB01'}).and_return('update housing link')
     allow(LinkFetcher).to receive(:fetch_link).with('UC_CX_FA_STDNT_HOUSING_TYPE_PW', {:AID_YEAR=>aid_year, :INSTITUTION=> 'UCB01'}).and_return('update housing/pathway link')
     allow(LinkFetcher).to receive(:fetch_link).with('UC_ADMT_FYPATH_FA_SPG').and_return('first-year pathway financial aid link')
-    allow(CampusSolutions::MessageCatalog).to receive(:get_message_catalog_definition) do |msg_set_nbr, msg_nbr|
-      case msg_nbr
-        when '117'
+    allow(CampusSolutions::MessageCatalog).to receive(:get_message) do |msg_key|
+      case msg_key
+        when :financial_aid_housing_instruction_generic
           {descrlong: 'generic message'}
-        when '116'
+        when :financial_aid_housing_instruction_fall_pathways
           {descrlong: 'fall pathway message'}
-        when '118'
+        when :financial_aid_housing_instruction_spring_pathways
           {descrlong: 'spring pathway message'}
       end
     end

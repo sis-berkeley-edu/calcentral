@@ -218,7 +218,6 @@ module User
         isDelegateUser: is_delegate_user?,
         isDirectlyAuthenticated: directly_authenticated,
         isGoogleReminderDismissed: is_google_reminder_dismissed,
-        isLegacyStudent: @user_attributes[:isLegacyStudent],
         isSuperuser: super_user?,
         isViewer: viewer?(current_user_policy),
         lastName: names[:last_name],

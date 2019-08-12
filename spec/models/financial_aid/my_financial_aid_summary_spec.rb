@@ -4,6 +4,7 @@ describe FinancialAid::MyFinancialAidSummary do
     allow_any_instance_of(LinkFetcher).to receive(:fetch_link).with('UC_CX_FA_SHOPPING_SHEET', {EMPLID: cs_id, AID_YEAR: '2017', ACAD_CAREER: 'UGRD', INSTITUTION: 'UCB01', SFA_SS_GROUP: 'CCUGRD'}).and_return('2017 shopping sheet link')
     allow_any_instance_of(LinkFetcher).to receive(:fetch_link).with('UC_CX_FA_SHOPPING_SHEET', {EMPLID: cs_id,AID_YEAR: '2018', ACAD_CAREER: 'UGRD', INSTITUTION: 'UCB01', SFA_SS_GROUP: 'CCUGRD'}).and_return('2018 shopping sheet link')
     allow_any_instance_of(LinkFetcher).to receive(:fetch_link).with('UC_CX_FA_UCB_FA_WEBSITE').and_return('financial_aid website link')
+    allow_any_instance_of(LinkFetcher).to receive(:fetch_link).with('UC_CX_FA_FIN_AID_TRANSCRIPT').and_return('financial_aid transcript link')
     allow_any_instance_of(LinkFetcher).to receive(:fetch_link).with('UC_CX_CAL_STUDENT_CENTRAL').and_return('cal student central link')
   end
   let(:aid_years) do
@@ -63,8 +64,9 @@ describe FinancialAid::MyFinancialAidSummary do
     end
     it 'provides the expected links' do
       expect(subject[:financialAidSummary][:links]).to be
-      expect(subject[:financialAidSummary][:links].count).to eq 2
+      expect(subject[:financialAidSummary][:links].count).to eq 3
       expect(subject[:financialAidSummary][:links][:financialAidWebsite]).to eq 'financial_aid website link'
+      expect(subject[:financialAidSummary][:links][:financialAidTranscript]).to eq 'financial_aid transcript link'
       expect(subject[:financialAidSummary][:links][:calStudentCentral]).to eq 'cal student central link'
     end
     it 'does not provide a link to the Shopping Sheet' do

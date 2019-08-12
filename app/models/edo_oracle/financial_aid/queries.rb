@@ -346,7 +346,191 @@ module EdoOracle
         SQL
         result.first
       end
+
+      def self.get_awards(person_id, aid_year)
+        result = safe_query <<-SQL
+        SELECT UC.ITEM_TYPE       AS ITEM_TYPE,
+          UC.DESCR                AS TITLE,
+          UC.DESCRLONG            AS SUBTITLE,
+          UC.UC_AWARD_TYPE        AS AWARD_TYPE,
+          UC.UC_LEFT_COL_VAL      AS LEFT_COL_VAL,
+          UC.UC_AWARD_AMOUNT      AS LEFT_COL_AMT,
+          UC.UC_RIGHT_COL_VAL     AS RIGHT_COL_VAL,
+          UC.UC_DISBURSE_AMOUNT   AS RIGHT_COL_AMT,
+          TRIM(UC.UC_DESCRLONG)   AS AWARD_MESSAGE
+          FROM SYSADM.PS_UCC_FA_AWRD_SRC UC
+         WHERE UC.CAMPUS_ID   = '#{person_id}'
+           AND UC.INSTITUTION = '#{UC_BERKELEY}'
+           AND UC.AID_YEAR    = '#{aid_year}'
+         ORDER BY UC.UC_AWARD_TYPE, UC.ITEM_TYPE
+        SQL
+      end
+
+      def self.get_awards_by_type(person_id, aid_year, award_type)
+        result = safe_query <<-SQL
+        SELECT UC.ITEM_TYPE       AS ITEM_TYPE,
+          UC.DESCR                AS TITLE,
+          UC.DESCRLONG            AS SUBTITLE,
+          UC.UC_AWARD_TYPE        AS AWARD_TYPE,
+          UC.UC_LEFT_COL_VAL      AS LEFT_COL_VAL,
+          UC.UC_AWARD_AMOUNT      AS LEFT_COL_AMT,
+          UC.UC_RIGHT_COL_VAL     AS RIGHT_COL_VAL,
+          UC.UC_DISBURSE_AMOUNT   AS RIGHT_COL_AMT,
+          UC.UC_DESCRLONG         AS AWARD_MESSAGE
+          FROM SYSADM.PS_UCC_FA_AWRD_SRC UC
+         WHERE UC.CAMPUS_ID   = '#{person_id}'
+           AND UC.INSTITUTION = '#{UC_BERKELEY}'
+           AND UC.AID_YEAR    = '#{aid_year}'
+           AND UC.UC_AWARD_TYPE = '#{award_type}'
+        SQL
+      end
+
+      def self.get_awards_total_by_type(person_id, aid_year, award_type)
+        result = safe_query <<-SQL
+        SELECT SUM(UC.UC_AWARD_AMOUNT)  AS TOTAL
+          FROM SYSADM.PS_UCC_FA_AWRD_SRC UC
+         WHERE UC.CAMPUS_ID   = '#{person_id}'
+           AND UC.INSTITUTION = '#{UC_BERKELEY}'
+           AND UC.AID_YEAR    = '#{aid_year}'
+           AND UC.UC_AWARD_TYPE = '#{award_type}'
+        SQL
+      end
+
+      def self.get_awards_total(person_id, aid_year)
+        result = safe_query <<-SQL
+        SELECT SUM(UC.UC_AWARD_AMOUNT)  AS TOTAL
+          FROM SYSADM.PS_UCC_FA_AWRD_SRC UC
+         WHERE UC.CAMPUS_ID   = '#{person_id}'
+           AND UC.INSTITUTION = '#{UC_BERKELEY}'
+           AND UC.AID_YEAR    = '#{aid_year}'
+        SQL
+      end
+
+      def self.get_awards_disbursements(person_id, aid_year, item_type)
+        result = safe_query <<-SQL
+        SELECT DISTINCT UC.DISBURSEMENT_ID AS DISBURSEMENTID,
+          UC.DESCR                AS TERM,
+          UC.OFFER_BALANCE        AS OFFERED,
+          UC.DISBURSED_BALANCE    AS DISBURSED,
+          UC.DESCR1               AS DISBURSEMENT_DATE
+          FROM SYSADM.PS_UCC_FA_AWRD_DSB UC
+         WHERE UC.CAMPUS_ID   = '#{person_id}'
+           AND UC.INSTITUTION = '#{UC_BERKELEY}'
+           AND UC.AID_YEAR    = '#{aid_year}'
+           AND UC.ITEM_TYPE   = '#{item_type}'
+        SQL
+      end
+
+      def self.get_awards_disbursements_tuition_fee_remission(person_id, aid_year)
+        result = safe_query <<-SQL
+        SELECT DISTINCT UC.DISBURSEMENT_ID AS DISBURSEMENTID,
+          UC.DESCR                  AS TERM,
+          SUM(UC.OFFER_BALANCE)     AS OFFERED,
+          SUM(UC.DISBURSED_BALANCE) AS DISBURSED,
+          NULL                      AS DISBURSEMENT_DATE
+          FROM SYSADM.PS_UCC_FA_AWRD_DSB UC
+         WHERE UC.CAMPUS_ID   = '#{person_id}'
+           AND UC.INSTITUTION = '#{UC_BERKELEY}'
+           AND UC.AID_YEAR    = '#{aid_year}'
+           AND UC.ITEM_TYPE BETWEEN '992000000010' AND '995999999999'
+         GROUP BY UC.DISBURSEMENT_ID, UC.DESCR
+        SQL
+      end
+
+      def self.get_awards_alert_details(person_id, aid_year, item_type)
+        result = safe_query <<-SQL
+        SELECT UC.DISBURSEMENT_ID AS DISBURSEMENTID,
+          UC.MESSAGE_TEXT AS ALERT_MESSAGE,
+          UC.DESCR AS ALERT_TERM
+         FROM SYSADM.PS_UCC_FA_AWRD_DSB UC
+        WHERE UC.CAMPUS_ID   = '#{person_id}'
+          AND UC.INSTITUTION = '#{UC_BERKELEY}'
+          AND UC.AID_YEAR    = '#{aid_year}'
+          AND UC.ITEM_TYPE   = '#{item_type}'
+          AND UC.MESSAGE_TEXT <> ' '
+        ORDER BY UC.DISBURSEMENT_ID
+        SQL
+      end
+
+      def self.get_awards_convert_wks_to_loan(person_id, aid_year)
+        result = safe_query <<-SQL
+        SELECT 'X'
+          FROM SYSADM.PS_UCC_FA_AWRD_W2L UC
+         WHERE UC.CAMPUS_ID   = '#{person_id}'
+           AND UC.INSTITUTION = '#{UC_BERKELEY}'
+           AND UC.AID_YEAR    = '#{aid_year}'
+        SQL
+        result.first
+      end
+
+      def self.get_awards_convert_loan_to_wks(person_id, aid_year)
+        result = safe_query <<-SQL
+        SELECT 'X'
+          FROM SYSADM.PS_UCC_FA_AWRD_L2W UC
+         WHERE UC.CAMPUS_ID   = '#{person_id}'
+           AND UC.INSTITUTION = '#{UC_BERKELEY}'
+           AND UC.AID_YEAR    = '#{aid_year}'
+        SQL
+        result.first
+      end
+
+      def self.get_awards_outside_resources(aid_year)
+        result = safe_query <<-SQL
+        SELECT 'X'
+          FROM SYSADM.PS_UCC_FA_AWRD_OUT UC
+          WHERE UC.INSTITUTION = '#{UC_BERKELEY}'
+            AND UC.AID_YEAR    = '#{aid_year}'
+        SQL
+        result.first
+      end
+
+      def self.get_awards_reduce_cancel(person_id, aid_year)
+        result = safe_query <<-SQL
+        SELECT 'X'
+          FROM SYSADM.PS_UCC_FA_AWRD_RDC UC
+        WHERE UC.CAMPUS_ID   = '#{person_id}'
+          AND UC.INSTITUTION = '#{UC_BERKELEY}'
+          AND UC.AID_YEAR    = '#{aid_year}'
+        SQL
+        result.first
+      end
+
+      def self.get_awards_accept_loans(person_id, aid_year, item_type)
+        result = safe_query <<-SQL
+        SELECT 'X'
+          FROM SYSADM.PS_UCC_FA_AWRD_LNS UC
+        WHERE UC.CAMPUS_ID   = '#{person_id}'
+          AND UC.INSTITUTION = '#{UC_BERKELEY}'
+          AND UC.AID_YEAR    = '#{aid_year}'
+          AND UC.ITEM_TYPE   = '#{item_type}'
+        SQL
+        result.first
+      end
+
+      def self.get_auth_failed_message(person_id, aid_year, item_type)
+        result = safe_query <<-SQL
+        SELECT 'X'
+          FROM SYSADM.PS_UCC_FA_AWRD_ATH UC
+        WHERE UC.CAMPUS_ID   = '#{person_id}'
+          AND UC.INSTITUTION = '#{UC_BERKELEY}'
+          AND UC.AID_YEAR    = '#{aid_year}'
+          AND UC.ITEM_TYPE   = '#{item_type}'
+        SQL
+        result.first
+      end
+
+      def self.get_awards_has_loans(person_id, aid_year)
+        result = safe_query <<-SQL
+        SELECT 'X'
+          FROM SYSADM.PS_UCC_FA_AWRD_SRC UC
+        WHERE UC.CAMPUS_ID   = '#{person_id}'
+          AND UC.INSTITUTION = '#{UC_BERKELEY}'
+          AND UC.AID_YEAR    = '#{aid_year}'
+          AND UC.UC_AWARD_TYPE IN ('subsidizedloans', 'unsubsidizedloans', 'plusloans', 'alternativeloans')
+        SQL
+        result.first
+      end
+
     end
   end
 end
-

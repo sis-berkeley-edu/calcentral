@@ -20,15 +20,13 @@ module HubEdos
       # Hub and CampusSolutions APIs will be unreachable unless a CS ID is provided from Crosswalk or SAML assertions.
       @campus_solutions_id = lookup_campus_solutions_id
       result[:campus_solutions_id] = @campus_solutions_id
-
-      result[:is_legacy_student] = has_legacy_student_data?(@campus_solutions_id)
     end
 
     def get_edo
       # A valid Hub Contacts payload will incorporate the payload of the Affiliations API.
-      contacts = get_edo_feed(HubEdos::V1::Contacts)
+      contacts = get_edo_feed(HubEdos::StudentApi::V1::Contacts)
       if contacts.blank?
-        get_edo_feed(HubEdos::V1::Affiliations)
+        get_edo_feed(HubEdos::StudentApi::V1::Affiliations)
       else
         contacts
       end

@@ -124,6 +124,17 @@ module FinancialAid
       end
     end
 
+    def acad_holds
+      return nil unless status.try(:[], 'acad_holds').to_i > 0
+      [
+        {
+          title: 'Academic Holds',
+          value: status.try(:[], 'acad_holds')
+        }
+      ]
+    end
+
+
     def itemGroupsProfile
       @itemGroupsProfile ||= [
         [
@@ -158,12 +169,7 @@ module FinancialAid
             value: status.try(:[], 'filing_fee')
           }
         ],
-        [
-          {
-            title: 'Academic Holds',
-            value: status.try(:[], 'acad_holds')
-          }
-        ],
+        acad_holds,
         [
           {
             title: 'SAP Status',

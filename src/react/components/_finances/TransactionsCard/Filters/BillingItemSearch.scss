@@ -1,0 +1,38 @@
+@import '../../../../stylesheets/variables';
+
+.BillingItemSearch {
+  margin-top: 10px;
+  width: 100%;
+}
+
+.BillingItemSearch label {
+  font-size: 10px;
+  text-transform: uppercase;
+  color: #000;
+}
+
+.BillingItemSearch input {
+  border: 1px solid #cbcbcb;
+  background-image: url('/assets/images/search.svg');
+  background-repeat: no-repeat;
+  background-position-x: 10px;
+  background-position-y: center;
+
+  font-size: 12px;
+  padding-left: 25px;
+  padding-right: 10px;
+  height: 32px;
+  line-height: 14px;
+  width: 100%;
+}
+
+@media only screen and (min-width: $small-breakpoint) {
+  .BillingItemSearch {
+    width: 130px;
+    margin-top: 0;
+  }
+
+  .BillingItemSearch label {
+    display: none;
+  }
+}

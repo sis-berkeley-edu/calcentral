@@ -9,10 +9,10 @@ module FinancialAid
 
     attr_accessor :aid_year
 
-    INSTRUCTIONAL_MESSAGE_NUMBERS = {
-      generic: '117',
-      fall_pathways: '116',
-      spring_pathways: '118'
+    INSTRUCTIONAL_MESSAGE_KEYS = {
+      generic: :financial_aid_housing_instruction_generic,
+      fall_pathways: :financial_aid_housing_instruction_fall_pathways,
+      spring_pathways: :financial_aid_housing_instruction_spring_pathways,
     }
 
     def get_feed_internal
@@ -75,7 +75,7 @@ module FinancialAid
     end
 
     def get_message(type)
-      CampusSolutions::MessageCatalog.get_message_catalog_definition('26500', INSTRUCTIONAL_MESSAGE_NUMBERS[type]).try(:[], :descrlong)
+      CampusSolutions::MessageCatalog.get_message(INSTRUCTIONAL_MESSAGE_KEYS[type]).try(:[], :descrlong)
     end
 
     def can_update_housing?

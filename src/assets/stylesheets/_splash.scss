@@ -1,4 +1,8 @@
 .cc-page-splash {
+  background-attachment: fixed;
+  background-image: url('../images/uc_berkeley_bay_view.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
   h1 {
     color: $cc-color-dark-cerulean;
     font-family: Arial;
@@ -9,17 +13,35 @@
   p {
     line-height: 1.3;
   }
+  .cc-splash-page-push {
+    height: 66px;
+  }
+  .cc-splash-page-note-title {
+    color: $cc-color-dim-gray;
+    font-size: 14px;
+    margin-bottom: 5px;
+  }
   .cc-masthead, .cc-navigation-bar {
     display: none;
   }
   .cc-container-main {
-    background: $cc-color-white;
+    background: transparent;
+    height: 100%;
     padding: 30px;
   }
+  .cc-page-splash-card {
+    background: $cc-color-white;
+    border-radius: 5px;
+    margin: auto;
+    margin-bottom: 30px;
+    max-width: 450px;
+    padding: 20px;
+  }
+  .cc-page-splash-more {
+    text-align: center;
+    width: 100%;
+  }
   .cc-page-splash-blog-panel {
-    background: $cc-color-white-smoke;
-    margin: 135px 0 0 !important;
-    padding: 10px;
     .cc-page-splash-blog-date {
       padding: 0;
       p {
@@ -42,7 +64,10 @@
     }
   }
   .cc-page-splash-buttons .cc-button {
+    background: $cc-color-curious-blue;
+    border: 0;
     display: block;
+    font-size: 14px;
     margin: 10px auto 0;
     text-align: center;
     width: 200px;
@@ -51,8 +76,8 @@
     text-align: center;
   }
   .cc-page-splash-container {
-    margin: 0 auto;
-    overflow: hidden;
+    height: 100%;
+    margin: 0;
     padding-top: 10px;
     > .columns {
       @include cc-column-sameheight;
@@ -114,7 +139,6 @@
   }
   .cc-page-splash-logo-container {
     margin: 0 auto;
-    overflow: hidden;
   }
 
   // Mobile only
@@ -125,8 +149,8 @@
     .cc-container-main {
       padding: 0 10px;
     }
-    .cc-page-splash-blog-panel {
-      margin-top: 80px !important;
+    .cc-splash-page-push {
+      height: 84px;
     }
     .cc-page-splash-container-left {
       border-right: 0;

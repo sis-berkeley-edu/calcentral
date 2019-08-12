@@ -1,0 +1,24 @@
+.UnappliedPaymentsInfo {
+  margin-top: 20px;
+
+  .UnappliedPaymentsInfo__header {
+    display: flex;
+    flex-direction: row;
+    align-items: baseline;
+
+    h2 {
+      margin: 0;
+      font-size: 14px;
+      font-weight: bold;
+    }
+
+    a {
+      font-size: 12px;
+      margin-left: 12px;
+    }
+  }
+
+  .UnappliedPaymentsInfo__more {
+    margin-top: 15px;
+  }
+}

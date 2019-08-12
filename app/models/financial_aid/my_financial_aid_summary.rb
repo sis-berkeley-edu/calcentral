@@ -49,15 +49,16 @@ module FinancialAid
 
     def messages
       {
-        giftAidMoreInfoMessage: CampusSolutions::MessageCatalog.get_message_catalog_definition('26400', '1').try(:[], :descrlong),
-        netCostMoreInfoMessage: CampusSolutions::MessageCatalog.get_message_catalog_definition('26400', '3').try(:[], :descrlong),
-        thirdPartyMoreInfoMessage: CampusSolutions::MessageCatalog.get_message_catalog_definition('26400', '2').try(:[], :descrlong)
+        giftAidMoreInfoMessage: CampusSolutions::MessageCatalog.get_message(:financial_aid_gift_aid_more_info).try(:[], :descrlong),
+        netCostMoreInfoMessage: CampusSolutions::MessageCatalog.get_message(:financial_aid_net_cost_more_info).try(:[], :descrlong),
+        thirdPartyMoreInfoMessage: CampusSolutions::MessageCatalog.get_message(:financial_aid_third_party_more_info).try(:[], :descrlong)
       }
     end
 
     def links
       {
         financialAidWebsite: fetch_link('UC_CX_FA_UCB_FA_WEBSITE'),
+        financialAidTranscript: fetch_link('UC_CX_FA_FIN_AID_TRANSCRIPT'),
         calStudentCentral: fetch_link('UC_CX_CAL_STUDENT_CENTRAL')
       }
     end

@@ -120,6 +120,8 @@ angular.module('calcentral.controllers').controller('AcademicsController', funct
       if (!isOnlyInstructor) {
         enrolledCourses = academicsService.getClassesSections(selectedStudentSemester.classes, false);
         waitlistedCourses = academicsService.getClassesSections(selectedStudentSemester.classes, true);
+        $scope.swapClassList = academicsService.getSwapClasses(enrolledCourses, waitlistedCourses);
+        $scope.swapCount = $scope.swapClassList.length;
         $scope.allCourses = academicsService.getAllClasses(data.semesters);
         $scope.previousCourses = academicsService.getPreviousClasses(data.semesters);
         $scope.enrolledCourses = enrolledCourses;

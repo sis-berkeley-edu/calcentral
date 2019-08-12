@@ -155,7 +155,7 @@ module EdoOracle
           section_label: "#{row['instruction_format']} #{row['section_num']}",
           section_number: row['section_num'],
           topic_description: row['topic_description'],
-        }
+         }
         if section_data[:is_primary_section]
           section_data[:units] = row['units_taken']
           section_data[:start_date] = row['start_date'] if row['start_date']
@@ -172,6 +172,13 @@ module EdoOracle
             section_data[:waitlisted] = true
             section_data[:waitlistPosition] = row['waitlist_position'].to_i
             section_data[:enroll_limit] = row['enroll_limit'].to_i
+            section_data[:drop_class_if_enrl] = row['drop_class_if_enrl']
+            section_data[:last_enrl_dt_stmp] = row['last_enrl_dt_stmp']
+            section_data[:message_nbr] = row['message_nbr']
+            section_data[:error_message_txt] = row['error_message_txt']
+            section_data[:uc_reason_desc] = row['uc_reason_desc']
+            section_data[:uc_enrl_lastattmpt_date] = row['uc_enrl_lastattmpt_date']
+            section_data[:uc_enrl_lastattmpt_time] = row['uc_enrl_lastattmpt_time']
           end
         else
           # Enrollment and waitlist data relevant to instructors.
@@ -203,11 +210,15 @@ module EdoOracle
         grade_points = db_row['grade_points'].present? ? db_row['grade_points'] : nil
         grade_points_adjusted = adjusted_grade_points(db_row['grade_points'], db_row['include_in_gpa'])
         grading_basis = section[:is_primary_section] ? db_row['grading_basis'] : nil
+        grading_lapse_deadline = db_row['grading_lapse_deadline'].try(:strftime, '%m/%d/%y')
+        grading_lapse_deadline_display = db_row['grading_lapse_deadline_display'] == 'Y'
         {
           grade: grade,
           gradingBasis: grading_basis,
           gradePoints: grade_points,
           gradePointsAdjusted: grade_points_adjusted,
+          gradingLapseDeadline: grading_lapse_deadline,
+          gradingLapseDeadlineDisplay: grading_lapse_deadline_display,
           includeInGpa: db_row['include_in_gpa'],
         }
       end

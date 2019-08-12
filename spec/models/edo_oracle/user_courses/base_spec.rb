@@ -547,9 +547,37 @@ describe EdoOracle::UserCourses::Base do
           'grade_points' => BigDecimal.new('8.0'),
           'grading_basis' => 'GRD',
           'include_in_gpa' => 'Y',
+          'grading_lapse_deadline_display' => 'N',
+          'grading_lapse_deadline' => nil,
         }
       end
       subject { EdoOracle::UserCourses::Base.new(user_id: random_id).get_section_grading(section, db_row) }
+      context 'grading lapse deadline' do
+        context 'when grading lapse deadline display value is \'N\'' do
+          let(:db_row) { super().merge('grading_lapse_deadline_display' => 'N') }
+          it 'indicates that deadline should not be displayed' do
+            expect(subject[:gradingLapseDeadlineDisplay]).to eq false
+          end
+        end
+        context 'when grading lapse deadline display value is \'Y\'' do
+          let(:db_row) { super().merge('grading_lapse_deadline_display' => 'Y') }
+          it 'indicates that deadline should be displayed' do
+            expect(subject[:gradingLapseDeadlineDisplay]).to eq true
+          end
+        end
+        context 'when grading lapse deadline is not present' do
+          let(:db_row) { super().merge('grading_lapse_deadline' => nil) }
+          it 'should return a nil value' do
+            expect(subject[:gradingLapseDeadline]).to eq nil
+          end
+        end
+        context 'when grading lapse deadline is present' do
+          let(:db_row) { super().merge('grading_lapse_deadline' => Time.parse('2019-07-30 00:00:00 UTC')) }
+          it 'should return a formated date' do
+            expect(subject[:gradingLapseDeadline]).to eq '07/30/19'
+          end
+        end
+      end
       context 'when grade has spaces' do
         let(:db_row) { super().merge('grade' => ' C   ') }
         it 'includes grade without spaces' do

@@ -1,3 +1,13 @@
+.cc-offcanvas-footer-offset {
+  margin-bottom: -66px;
+  min-height: 100%;
+  }
+.footer-sticky-container {
+  background-color: $cc-color-white-smoke;
+  height: 66px;
+  margin-top: 0;
+  width: 100%;
+}
 @media #{$small-up} {
   .cc-offcanvas-icon {
     display: none;
@@ -55,5 +65,11 @@
         text-decoration: none;
       }
     }
+  }
+  .cc-offcanvas-footer-offset {
+    margin-bottom: -84px;
+  }
+  .footer-sticky-container {
+    height: 84px;
   }
 }

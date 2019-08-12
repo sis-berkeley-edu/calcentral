@@ -7,12 +7,12 @@ module MyAcademics
     def get_feed_internal
       academic_standings = get_academic_standings
       parsed_standings = parse_standings(academic_standings)
-      message = CampusSolutions::MessageCatalog.new(message_set_nbr: 28000, message_nbr: 213).get
+      message = CampusSolutions::MessageCatalog.get_message(:academic_standings_learn_more)
       {
         feed: {
           currentStandings: parsed_standings[:current_standings],
           standingsHistory: parsed_standings[:standings_history],
-          learnMoreMessage: message.try(:[], :feed).try(:[], :root).try(:[], :getMessageCatDefn).try(:[], :descrlong)
+          learnMoreMessage: message.try(:[], :descrlong)
         }
       }
     end

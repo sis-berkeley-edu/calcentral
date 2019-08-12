@@ -1,0 +1,22 @@
+.Tabs {
+  border-bottom: 1px solid #eee;
+  margin-left: -10px;
+  margin-right: -10px;
+  margin-bottom: 10px;
+}
+
+.Tab {
+  display: inline-block;
+  margin-bottom: -1px;
+  padding: 5px 15px;
+  color: #2C84BC;
+
+  &:first-child {
+    margin-left: 10px;
+  }
+}
+
+.Tab--active {
+  border-bottom: 1px solid #2C84BC;
+  font-weight: bold;
+}

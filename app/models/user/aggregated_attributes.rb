@@ -13,8 +13,6 @@ module User
       @ldap_attributes = CalnetLdap::UserAttributes.new(user_id: @uid).get_feed
       campus_solutions_id = @edo_attributes[:campus_solutions_id] if @edo_attributes.present?
       unknown = @ldap_attributes.blank? && campus_solutions_id.blank?
-      # TODO isLegacyStudent is no longer used.
-      is_legacy_student = !unknown && (campus_solutions_id.blank? || @edo_attributes[:is_legacy_student])
       @sis_profile_visible = is_cs_profile_feature_enabled
       @roles = get_campus_roles
       first_name = get_campus_attribute('first_name', :string) || ''
@@ -22,7 +20,6 @@ module User
       {
         ldapUid: @uid,
         unknown: unknown,
-        isLegacyStudent: is_legacy_student,
         sisProfileVisible: @sis_profile_visible,
         roles: @roles,
         defaultName: get_campus_attribute('person_name', :string),

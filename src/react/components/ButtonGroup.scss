@@ -1,0 +1,51 @@
+@import '../stylesheets/variables';
+
+.ButtonGroup {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  cursor: pointer;
+
+  .GroupedButton {
+    font-size: 12px;
+    line-height: 14px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    text-align: center;
+    border: 1px solid $light-gray;
+    border-left-width: 0;
+    border-right-width: 0;
+  
+    &:first-child {
+      border-left-width: 1px;
+      border-top-left-radius: 5px;
+      border-bottom-left-radius: 5px;
+    }
+  
+    &:last-child {
+      border-right-width: 1px;
+      border-top-right-radius: 5px;
+      border-bottom-right-radius: 5px;
+    }
+  }
+  
+  .GroupedButton--inactive + .GroupedButton--inactive {
+    border-left-width: 1px;
+  }
+  
+  .GroupedButton--active + .GroupedButton--inactive {
+    border-left-width: 0;
+  }
+  
+  .GroupedButton.GroupedButton--active {
+    font-weight: bold;
+    color: #2C84BC;
+    border: 1px solid #2C84BC;
+    background: #F3F9FD;
+  }
+  
+  .GroupedButton.GroupedButton--inactive {
+    color: #5E5D5D;
+    background: #FBFAFA;
+    border-color: #CBCBCB;
+  }
+}

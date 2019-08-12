@@ -84,7 +84,7 @@ describe MyAcademics::Exams do
   end
 
   describe '#exam_message' do
-    before { allow(CampusSolutions::MessageCatalog).to receive(:get_message_catalog_definition).with('32500', '110').and_return(message_object) }
+    before { allow(CampusSolutions::MessageCatalog).to receive(:get_message).with(:final_exams_term_begin).and_return(message_object) }
     let(:message_object) do
       {
         messageSetNbr: '32500',

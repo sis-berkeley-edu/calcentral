@@ -17,7 +17,8 @@ module MyAcademics
         enrollmentTermInstructions: get_enrollment_term_instructions,
         enrollmentTermAcademicPlanner: get_enrollment_term_academic_planner,
         hasHolds: has_holds?(MyAcademics::MyAcademicStatus.new(@uid).get_feed),
-        links: get_links
+        links: get_links,
+        messages: get_messages,
       })
     end
 
@@ -198,6 +199,11 @@ module MyAcademics
       end
 
       cs_links
+    end
+
+    def get_messages
+      message_keys = [:waitlisted_units_warning]
+      CampusSolutions::MessageCatalog.get_message_collection(message_keys)
     end
 
     private

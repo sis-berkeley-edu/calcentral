@@ -1,12 +1,15 @@
 .cc-alerts-bar {
-  background: $cc-color-lynch;
-  color: $cc-color-white;
+  background: $cc-color-white;
+  border-color: $cc-color-very-light-grey;
+  border-style: solid;
+  border-width: 1px;
+  color: $cc-color-dim-gray;
   overflow: hidden;
   padding: 10px 15px;
   width: 100%;
 
   .cc-alerts-bar-more {
-    color: $cc-color-white;
+    color: $cc-color-curious-blue;
     margin-left: 10px;
   }
   .cc-alerts-bar-more-container {

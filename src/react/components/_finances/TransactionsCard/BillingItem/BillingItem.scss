@@ -1,0 +1,145 @@
+@import '../../../../stylesheets/variables';
+@import '../billing-items-grid.scss';
+
+.BillingItem {
+  font-size: 12px;
+  border-bottom: 1px solid #eee;
+  cursor: pointer;
+
+  &.BillingItem--expanded, &:hover {
+    box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.3)
+  }
+
+  &.BillingItem--desktop {
+    display: none;
+  }
+}
+
+.BillingItem.BillingItem--mobile {
+  display: block;
+
+  margin-left: -15px;
+  margin-right: -15px;
+  padding: 15px;
+
+  display: grid;
+  grid-template-columns: 2fr 1fr 20px;
+  grid-gap: 0 10px;
+
+  .BillingItem__posted {
+    color: #737373;
+  }
+
+  .BillingItem__type {
+    color: #737373;
+    text-align: right;
+  }
+
+  .BillingItem__description {
+    font-size: 14px;
+  }
+
+  .BillingItem__amount {
+    font-size: 14px;
+    text-align: right;
+  }
+
+  .BillingItem__due {
+    text-align: right;
+  }
+
+  .BillingItem__description {
+    grid-column-start: 1;
+  }
+
+  .TableColumn__chevron {
+    grid-column: 3/4;
+    grid-row: 1/4;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+  }
+
+  .TableColumn__status {
+    grid-column: 1/2;
+  }
+}
+
+.BillingItem + .ShowMore {
+  margin-left: -10px;
+  margin-right: -10px;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.BillingItem.BillingItem--mobile {
+  .Tabs {
+    grid-column: 1/-1;
+    margin-left: -15px;
+    margin-right: -15px;
+    margin-top: 10px;
+  }
+}
+
+@media only screen and (min-width: $small-breakpoint) {
+  .BillingItem.BillingItem--mobile {
+    display: none;
+  }
+
+  .BillingItem.BillingItem--desktop {
+    @include billing-items-grid;
+
+    border-top-width: 0;
+    padding: 10px;
+
+    .Tabs {
+      grid-column: 1/-1;
+      margin-top: 10px;
+    }
+
+    .Tabs + .ItemDetails {
+      margin-top: 0;
+      padding-top: 0;
+    }
+  }
+}
+
+.BillingItem--payment {
+  .TableColumn__status {
+    grid-column: 3/5;
+  }
+}
+
+.BillingItem__type {
+  color: #737373;
+}
+
+.Transaction__column-labels {
+  @include billing-items-grid;
+}
+
+.BillingItem__column-labels {
+  padding-bottom: 5px;
+}
+
+.T__description-amount {
+  grid-column: span 2;
+}
+
+.type-and-updated {
+  grid-column: 2 / 4;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.BillingItem__details {
+  background-color: palegoldenrod;
+  grid-column: 1 / -1;
+  height: 100px;
+}
+
+.BillingItem__type {
+  color: #737373;
+}

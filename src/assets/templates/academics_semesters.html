@@ -3,7 +3,7 @@
     <h2 class="cc-left">Semesters</h2>
     <span class="cc-right cc-widget-title-link" data-ng-if="!isAdvisingStudentLookup && !api.user.profile.delegateActingAsUid">
       <a href="/academics/academic_summary">
-        <strong>View Academic Summary</strong>
+        <strong>View Academic Summary </strong><i class="fa fa-arrow-right"></i>
       </a>
     </span>
   </div>
@@ -36,7 +36,7 @@
           </thead>
           <tbody data-ng-repeat="class in semester.classes">
               <tr data-ng-repeat-start="section in class.sections" data-ng-if="section.is_primary_section && !section.waitlisted && !class.transcript">
-                <td>
+                <td class="cc-text-bold">
                   <span data-ng-if="class.multiplePrimaries && section.url && !isAdvisingStudentLookup">
                     <a data-ng-href="{{section.url}}">
                       <span data-ng-bind-template="{{class.course_code}} {{section.section_label}}"></span>
@@ -72,6 +72,11 @@
                 <td data-ng-if="api.user.profile.canViewGrades && !section.grading.grade && !section.grading.midpointGrade" class="cc-table-center">
                   <span data-ng-if="!section.isLaw && !api.user.profile.roles.law && section.grading.gradingBasis" data-ng-bind="section.grading.gradingBasis"></span>
                   <span data-ng-if="section.isLaw || api.user.profile.roles.law || !section.grading.gradingBasis">&mdash;</span>
+                </td>
+              </tr>
+              <tr data-ng-if="section.is_primary_section && ((section.grading.gradingLapseDeadlineDisplay && section.grading.gradingLapseDeadline) || section.grading.gradingBasis === 'FRZ')">
+                <td colspan="4" class="cc-text-right cc-academics-semester-incomplete-notice">
+                  <div cc-academic-section-incomplete-grading-status section="section" academic-guide-grades-policy-link="studentLinks.academicGuideGradesPolicy"></div>
                 </td>
               </tr>
               <tr data-ng-repeat-end data-ng-if="section.is_primary_section && !section.waitlisted && section.grading.midpointGrade && section.show">

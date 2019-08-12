@@ -35,8 +35,6 @@ describe FinancialAid::MyFinaidProfile do
       expect(subject[:finaidProfile][:itemGroups][2][0][:value]).to eq nil
       expect(subject[:finaidProfile][:itemGroups][2][1][:title]).to eq 'Filing Fee Status'
       expect(subject[:finaidProfile][:itemGroups][2][1][:value]).to eq nil
-      expect(subject[:finaidProfile][:itemGroups][3][0][:title]).to eq 'Academic Holds'
-      expect(subject[:finaidProfile][:itemGroups][3][0][:value]).to eq '0'
       expect(subject[:finaidProfile][:itemGroups][4][0][:title]).to eq 'SAP Status'
       expect(subject[:finaidProfile][:itemGroups][4][0][:value]).to eq 'Meeting Satis Acad Progress'
       expect(subject[:finaidProfile][:itemGroups][4][1][:title]).to eq 'Award Status'
@@ -104,8 +102,6 @@ describe FinancialAid::MyFinaidProfile do
         expect(subject[:finaidProfile][:itemGroups][2][0][:value]).to eq nil
         expect(subject[:finaidProfile][:itemGroups][2][1][:title]).to eq 'Filing Fee Status'
         expect(subject[:finaidProfile][:itemGroups][2][1][:value]).to eq nil
-        expect(subject[:finaidProfile][:itemGroups][3][0][:title]).to eq 'Academic Holds'
-        expect(subject[:finaidProfile][:itemGroups][3][0][:value]).to eq '0'
         expect(subject[:finaidProfile][:itemGroups][4][0][:title]).to eq 'SAP Status'
         expect(subject[:finaidProfile][:itemGroups][4][0][:value]).to eq 'Meeting Satis Acad Progress'
         expect(subject[:finaidProfile][:itemGroups][4][1][:title]).to eq 'Award Status'

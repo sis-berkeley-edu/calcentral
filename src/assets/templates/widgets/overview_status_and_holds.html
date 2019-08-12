@@ -99,6 +99,18 @@
       </div>
     </div>
 
+
+    <div data-ng-if="visa.description">
+      <div class="cc-status-holds-section">
+        <div>
+          <h4>Visa</h4>
+          <div>
+            <span data-ng-bind="visa.code"></span> <span data-ng-bind="visa.description"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <div>
       <h3>Active Holds</h3>
       <div data-ng-include="'widgets/holds.html'"></div>

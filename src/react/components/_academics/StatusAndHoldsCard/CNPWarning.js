@@ -28,9 +28,9 @@ const propTypes = {
 
 const CNPWarning = ({ registration }) => {
   const iconClass = `cc-icon fa ${iconForSummary(registration)}`;
-  const { showCnp } = registration;
+  const { hasCNPWarning } = registration;
 
-  if (showCnp) {
+  if (hasCNPWarning) {
     const { cnpStatus: { explanation, summary } = {} } = registration;
     return (
       <DisclosureItem>
@@ -38,9 +38,7 @@ const CNPWarning = ({ registration }) => {
           <i className={iconClass} style={{ marginRight: '4px' }}></i>
           { summary }
         </DisclosureItemTitle>
-        <StatusDisclosure>
-          { explanation }
-        </StatusDisclosure>
+        <StatusDisclosure dangerouslySetInnerHTML={{__html: explanation }} />
       </DisclosureItem>
     );
   } else {
