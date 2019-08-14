@@ -198,18 +198,32 @@
                 <span class="cc-academics-semester-class-swap-number cc-academics-semester-class-swap-number-width">{{swapClass.swapFromCourse.swap_number}}</span><span class="cc-academics-semester-class-swap-number-small-padding">&#x21C4;</span>
               </td>
               <td>
-              <span>
-                <a data-ng-href="{{course.url}}" data-ng-bind="swapClass.swapFromCourse.course_code">
+                <a data-ng-href="{{swapClass.swapFromCourse.url}}" data-ng-bind="swapClass.swapFromCourse.course_code">
                 </a>
                 <span data-ng-bind="swapClass.swapFromCourse.title"></span>
               </td>
               <td>
-                <a data-ng-href="{{course.url}}" data-ng-bind="swapClass.swapToCourse.course_code">
-                </a>
-                <span data-ng-bind="swapClass.swapToCourse.title"></span>
+                <span>
+                  <a data-ng-href="{{swapClass.swapToCourse.url}}" data-ng-bind="swapClass.swapToCourse.course_code">
+                  </a>
+                  <span data-ng-bind="swapClass.swapToCourse.title"></span>
+                </span>
+                <span data-ng-repeat="swapAdditional in swapClass.swapToAdditionalCourse">
+                  <br>
+                  <span>OR</span>
+                  <br>
+                  <a data-ng-href="{{swapAdditional.url}}" data-ng-bind="swapAdditional.course_code">
+                  </a>
+                  <span data-ng-bind="swapAdditional.title"></span>
+                </span>
               </td>
               <td>
-                <span data-ng-bind="swapClass.dateRequested"></span>
+                <span data-ng-bind="swapClass.swapToSection.last_enrl_dt_stmp"></span>
+                <span data-ng-repeat="swapAdditionalSec in swapClass.swapToAdditionalSection">
+                  <br>
+                  <br>
+                  <span data-ng-bind="swapAdditionalSec.last_enrl_dt_stmp"</span>
+                </span>
               </td>
             </tr>
             </tbody>
