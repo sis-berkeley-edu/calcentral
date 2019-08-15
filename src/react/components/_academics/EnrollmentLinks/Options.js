@@ -17,8 +17,8 @@ const Options = (props) => {
 
   const link = props.instruction.links.gradeBase;
   const disabled = props.disabled;
-  
-  if (scheduleAvailable && !endOfDropAdd && enrollmentRole !== 'concurrent' && enrollmentRole !== 'law') {
+
+  if (scheduleAvailable && !endOfDropAdd && enrollmentRole !== 'concurrent') {
     return (
       <APILink {...link} disabled={disabled} name="Options" title="Change Grading Option" />
     );
