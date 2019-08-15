@@ -8,7 +8,7 @@ module User
       end
 
       def as_json(options={})
-        billing_items.values.sort_by { |item| item.id }
+        all
       end
 
       def query_results
@@ -17,6 +17,10 @@ module User
 
       def find_by_id(id)
         billing_items.fetch(id) { raise "Billling Item not found" }
+      end
+
+      def all
+        @all ||= billing_items.values.sort_by { |item| item.id }
       end
 
       private

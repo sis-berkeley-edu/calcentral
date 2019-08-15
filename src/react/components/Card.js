@@ -21,12 +21,14 @@ CardError.propTypes = {
   message: PropTypes.string
 };
 
-const Card = ({ children, title, loading, error, className }) => {
+const Card = ({ children, title, loading, error, className, secondaryContent }) => {
   const classNames = ['Card', className].join(' ');
+
   return (
     <div className={classNames}>
       <div className="Card__title">
         <h2>{title}</h2>
+        {secondaryContent}
       </div>
       <div className="Card__body">
         { loading
@@ -43,7 +45,8 @@ Card.propTypes = {
   title: PropTypes.string,
   children: PropTypes.node,
   loading: PropTypes.bool,
-  className: PropTypes.string
+  className: PropTypes.string,
+  secondaryContent: PropTypes.object
 };
 
 export default Card;

@@ -1,7 +1,9 @@
+@import '../../../../stylesheets/variables';
+
 .Badge {
   border-radius: 3px;
   display: inline-block;
-  font-size: 12px;
+  font-size: $base-font-size;
   line-height: 18px;
   height: 18px;
   background-color: #E5E5E5;

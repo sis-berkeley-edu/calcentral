@@ -2,14 +2,13 @@
 
 .TransactionsCard {
   color: #474747;
-  font-size: 12px;
+  font-size: $base-font-size;
   min-height: 350px;
 }
 
 .transform-y {
   transform: scaleY(-1);
 }
-
 
 .TransactionCard__pretable {
   padding-left: 15px;

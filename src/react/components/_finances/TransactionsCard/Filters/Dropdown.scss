@@ -1,0 +1,52 @@
+$borderColor: #CBCBCB;
+$backgroundColor: #F8F8F8;
+
+.Dropdown {
+  background-color: $backgroundColor;
+  border: 1px solid $borderColor;
+  font-size: 13px;
+  line-height: 18px;
+  margin-left: 15px;
+  height: 32px;
+  padding-left: 15px;
+  line-height: 32px;
+  border-radius: 5px;
+  position: relative;
+  width: 100%;
+  background-image: url('/assets/images/triangle.svg');
+  background-repeat: no-repeat;
+  background-position: center right 10px;
+  background-position-x: right 10px;
+
+  .Dropdown__overlay {
+    position: absolute;
+    left: -1px;
+    border-radius: 5px;
+    background-color: $backgroundColor;
+    border: 1px solid $borderColor;
+    box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.3);
+  }
+}
+
+
+.Dropdown__option {
+  padding: 0 18px 0 18px;
+  white-space: nowrap;
+
+  &:hover {
+    background-color: #2683BC;
+    color: white;
+  }
+}
+
+.Dropdown__option--selected {
+  color: #2C84BC;
+  background-image: url('/assets/images/blue-bullet.svg');
+  background-repeat: no-repeat;
+  background-position-y: center;
+  background-position-x: 8px;
+
+  &:hover {
+    background-image: url('/assets/images/white-bullet.svg');
+  }
+}

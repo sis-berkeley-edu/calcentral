@@ -21,6 +21,8 @@ const propTypes = {
   tab: PropTypes.string
 };
 
+import dueLabel from './dueLabel';
+
 const MobileView = ({ item, expanded, onExpand }) => {
   return (
     <div className={`BillingItem BillingItem--charge BillingItem--mobile ${expanded ? 'BillingItem--expanded' : ''}`}
@@ -45,7 +47,7 @@ const MobileView = ({ item, expanded, onExpand }) => {
       <div className="BillingItem__due">
         { item.status === CHARGE_PAID
           ? CHARGE_PAID
-          : `Due ${ formatDate(item.due_date) }`
+          : dueLabel(item.due_date)
         }
       </div>
 
