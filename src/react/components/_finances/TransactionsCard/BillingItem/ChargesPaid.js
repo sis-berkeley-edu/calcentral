@@ -19,7 +19,7 @@ const ChargesPaidTab = ({ item }) => {
 
   if (loading) {
     return (
-      <div className='ChargesPaid ChargesPaid--loading'>
+      <div className='ChargesPaid ChargesPaid--loading' onClick={(e) => e.stopPropagation()}>
         <Spinner />
       </div>
     );
@@ -27,7 +27,7 @@ const ChargesPaidTab = ({ item }) => {
 
   if (error) {
     return (
-      <div className='ChargesPaid ChargesPaid--error'>
+      <div className='ChargesPaid ChargesPaid--error' onClick={(e) => e.stopPropagation()}>
         <img src="/assets/images/warning.svg" />
         There is a problem displaying this information. Please try again soon.
       </div>
@@ -35,7 +35,7 @@ const ChargesPaidTab = ({ item }) => {
   }
 
   return (
-    <div className='ChargesPaid'>
+    <div className='ChargesPaid' onClick={(e) => e.stopPropagation()}>
       <h3>Charges paid by this transactions</h3>
 
       {payments.length > 0

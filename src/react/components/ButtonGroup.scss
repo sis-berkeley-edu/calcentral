@@ -3,6 +3,7 @@
 .ButtonGroup {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
+  cursor: pointer;
 
   .GroupedButton {
     font-size: 12px;

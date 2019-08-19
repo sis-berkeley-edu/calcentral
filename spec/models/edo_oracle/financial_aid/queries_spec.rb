@@ -273,6 +273,14 @@ describe EdoOracle::FinancialAid::Queries do
     it_behaves_like 'a successful query'
   end
 
+  describe '#get_awards_disbursements_tuition_fee_remission' do
+    subject { described_class.get_awards_disbursements_tuition_fee_remission(uid, aid_year) }
+
+    let(:aid_year) { 2020 }
+
+    it_behaves_like 'a successful query'
+  end
+
   describe '#get_awards_alert_details' do
     subject { described_class.get_awards_alert_details(uid, aid_year, '951101500000') }
 
@@ -321,6 +329,15 @@ describe EdoOracle::FinancialAid::Queries do
     it_behaves_like 'a successful query that returns one result'
   end
 
+  describe '#get_auth_failed_message' do
+    subject { described_class.get_auth_failed_message(uid, aid_year, '946200300000') }
+
+    let(:aid_year) { 2020 }
+
+    it_behaves_like 'a successful query that returns one result'
+  end
+
+
   describe '#get_awards_by_term_types' do
     subject { described_class.get_awards_by_term_types(uid, aid_year) }
 
@@ -336,6 +353,5 @@ describe EdoOracle::FinancialAid::Queries do
 
     it_behaves_like 'a successful query'
   end
-
-
+  
 end

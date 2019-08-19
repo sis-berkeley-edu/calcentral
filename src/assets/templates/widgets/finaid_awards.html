@@ -9,12 +9,12 @@
   </div>
   <div data-cc-spinner-directive="finaidAwardsInfo.isLoading">
     <div
-      data-ng-if="finaidAwardsInfo.errored || finaidSummaryInfo.errored"
+      data-ng-if="finaidSummaryInfo.errored"
       class="cc-widget-text"
       data-ng-include="'widgets/finaid_errored.html'"
     ></div>
-    <div data-ng-if="!finaidAwardsInfo.errored && !finaidSummaryInfo.errored">
-      <div data-ng-if="finaidAwards.hasAwards">
+    <div data-ng-if="!finaidSummaryInfo.errored">
+      <div data-ng-if="finaidAwards.awards.grandtotal.total.amount">
         <div class="cc-widget-text cc-widget-finaid-awards-message">
           <div data-ng-bind="finaidAwards.messages.messageInfo"></div>
           <div class="cc-widget-finaid-awards-padding-top" data-ng-if="finaidAwards.awards.grandtotal.total.amount">
@@ -29,10 +29,11 @@
           data-ng-repeat="key in finaidAwardsInfo.keysGiftWork"
           data-ng-include="'widgets/finaid_awards_section.html'"
           data-onload="section = finaidAwards.awards[key]"
-          data-ng-if="finaidAwards.awards[key].total.amount > 0"
+          data-ng-if="(finaidAwards.awards[key].total.amount > 0 ||
+                      (finaidAwards.awards[key].total.title === 'Gift Aid'  && finaidAwards.awards[key].links[0]))"
         ></div>
         <div
-          data-ng-if="finaidAwards.hasLoans"
+          data-ng-if="finaidAwards.awards.hasLoans"
           data-ng-include="'widgets/finaid_awards_loans.html'"
         ></div>
         <div
@@ -46,7 +47,7 @@
           data-ng-include="'widgets/finaid_awards_grandtotal.html'"
         ></div>
       </div>
-      <div class="cc-widget-text" data-ng-if="!finaidAwards.hasAwards">
+      <div class="cc-widget-text" data-ng-if="!finaidAwards.awards.grandtotal.total.amount">
         There is currently no awards information available for this aid year.
       </div>
     </div>

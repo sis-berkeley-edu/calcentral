@@ -1,14 +1,15 @@
 module User
   module Finances
-    class CachedPayments
+    class CachedPayments < UserSpecificModel
       include Cache::CachedFeed
       include Cache::UserCacheExpiry
+      include Cache::RelatedCacheKeyTracker
 
       def initialize(uid, id)
         @uid = uid
         @id = id
       end
-      
+
       def instance_key
         "#{@uid}-#{@id}"
       end

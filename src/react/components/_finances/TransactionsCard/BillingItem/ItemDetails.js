@@ -8,7 +8,7 @@ import './ItemDetails.scss';
 
 const ItemDetails = ({ item }) => {
   return (
-    <div className="ItemDetails">
+    <div className="ItemDetails" onClick={(e) => e.stopPropagation()}>
       <TransactionHistory item={item} />
       <MoreDetails item={item} />
     </div>

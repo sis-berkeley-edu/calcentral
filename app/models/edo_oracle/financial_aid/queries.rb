@@ -421,6 +421,22 @@ module EdoOracle
         SQL
       end
 
+      def self.get_awards_disbursements_tuition_fee_remission(person_id, aid_year)
+        result = safe_query <<-SQL
+        SELECT DISTINCT UC.DISBURSEMENT_ID AS DISBURSEMENTID,
+          UC.DESCR                  AS TERM,
+          SUM(UC.OFFER_BALANCE)     AS OFFERED,
+          SUM(UC.DISBURSED_BALANCE) AS DISBURSED,
+          NULL                      AS DISBURSEMENT_DATE
+          FROM SYSADM.PS_UCC_FA_AWRD_DSB UC
+         WHERE UC.CAMPUS_ID   = '#{person_id}'
+           AND UC.INSTITUTION = '#{UC_BERKELEY}'
+           AND UC.AID_YEAR    = '#{aid_year}'
+           AND UC.ITEM_TYPE BETWEEN '992000000010' AND '995999999999'
+         GROUP BY UC.DISBURSEMENT_ID, UC.DESCR
+        SQL
+      end
+
       def self.get_awards_alert_details(person_id, aid_year, item_type)
         result = safe_query <<-SQL
         SELECT UC.DISBURSEMENT_ID AS DISBURSEMENTID,
@@ -487,6 +503,30 @@ module EdoOracle
           AND UC.INSTITUTION = '#{UC_BERKELEY}'
           AND UC.AID_YEAR    = '#{aid_year}'
           AND UC.ITEM_TYPE   = '#{item_type}'
+        SQL
+        result.first
+      end
+
+      def self.get_auth_failed_message(person_id, aid_year, item_type)
+        result = safe_query <<-SQL
+        SELECT 'X'
+          FROM SYSADM.PS_UCC_FA_AWRD_ATH UC
+        WHERE UC.CAMPUS_ID   = '#{person_id}'
+          AND UC.INSTITUTION = '#{UC_BERKELEY}'
+          AND UC.AID_YEAR    = '#{aid_year}'
+          AND UC.ITEM_TYPE   = '#{item_type}'
+        SQL
+        result.first
+      end
+
+      def self.get_awards_has_loans(person_id, aid_year)
+        result = safe_query <<-SQL
+        SELECT 'X'
+          FROM SYSADM.PS_UCC_FA_AWRD_SRC UC
+        WHERE UC.CAMPUS_ID   = '#{person_id}'
+          AND UC.INSTITUTION = '#{UC_BERKELEY}'
+          AND UC.AID_YEAR    = '#{aid_year}'
+          AND UC.UC_AWARD_TYPE IN ('subsidizedloans', 'unsubsidizedloans', 'plusloans', 'alternativeloans')
         SQL
         result.first
       end

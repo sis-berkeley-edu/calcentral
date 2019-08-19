@@ -1,5 +1,9 @@
 @import '../../../../stylesheets/variables';
 
+.TermDropdown select {
+  cursor: pointer;
+}
+
 .TermDropdown label {
   font-size: 10px;
   text-transform: uppercase;

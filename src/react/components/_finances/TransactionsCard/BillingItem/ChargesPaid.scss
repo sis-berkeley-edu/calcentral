@@ -2,6 +2,7 @@
 
 .ChargesPaid {
   grid-column: 1/3;
+  cursor: auto;
 };
 
 .ChargesPaid--loading {
@@ -22,4 +23,8 @@
   list-style-type: decimal;
   margin-left: 15px;
   margin-bottom: 0;
+}
+
+.PartiallyPaid {
+  color: #737373;
 }
