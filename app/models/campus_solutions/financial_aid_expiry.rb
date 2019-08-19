@@ -3,9 +3,9 @@ module CampusSolutions
     def self.expire(uid=nil)
       [
         MyFinancialAidData,
-        MyFinancialAidFundingSourcesTerm,
         FinancialAid::MyAidYears,
         FinancialAid::MyAwards,
+        FinancialAid::MyAwardsByTerm,
         FinancialAid::MyFinaidProfile,
         FinancialAid::MyFinancialAidSummary,
         FinancialAid::MyHousing,
