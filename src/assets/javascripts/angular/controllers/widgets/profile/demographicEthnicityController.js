@@ -5,7 +5,7 @@
  */
 angular.module('calcentral.controllers').controller('DemographicEthnicityController', function(profileFactory, $scope, $q) {
   var parsePerson = function(data) {
-    var person = data.data.feed.student;
+    var person = data.data.feed;
     angular.extend($scope, {
       ethnicities: {
         content: person.ethnicities

@@ -61,7 +61,6 @@ describe HubEdos::Proxy do
     context 'when campus solutions id cannot be found' do
       before { allow_any_instance_of(HubEdosProxyWorker).to receive(:lookup_campus_solutions_id).and_return(nil) }
       it 'returns http response indicating no student' do
-        puts "subject: #{subject.inspect}"
         expect(subject.has_key?(:statusCode)).to eq false
         expect(subject[:feed].empty?).to eq true
         expect(subject[:feed].keys).to eq []

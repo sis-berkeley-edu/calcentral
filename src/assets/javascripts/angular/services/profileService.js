@@ -106,7 +106,7 @@ angular.module('calcentral.services').service('profileService', function() {
   };
 
   var parseSection = function($scope, data, section) {
-    var person = data.data.feed.student;
+    var person = data.data.feed;
     angular.extend($scope, {
       items: {
         content: person[section]

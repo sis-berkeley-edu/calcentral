@@ -5,7 +5,7 @@
  */
 angular.module('calcentral.controllers').controller('BasicNameController', function(apiService, profileFactory, $scope, $q) {
   var parsePerson = function(data) {
-    var person = data.data.feed.student;
+    var person = data.data.feed;
     var name = apiService.profile.findPrimary(person.names);
     angular.extend($scope, {
       name: {
