@@ -106,7 +106,7 @@ module MyAcademics
           add_expected_graduation_term(flattened_plan, plan)
 
           # TODO: Need to re-evaluate the proper field for college name. See adminOwners
-          flattened_plan[:college] = plan.try(:[], 'academicPlan').try(:[], 'academicProgram').try(:[], 'program').try(:[], 'description')
+          flattened_plan[:college] = plan.try(:[], 'academicPlan').try(:[], 'academicProgram').try(:[], 'program').try(:[], 'formalDescription')
           flattened_plan[:role] = plan[:role]
           flattened_plan[:primary] = !!plan['primary']
 
@@ -206,7 +206,7 @@ module MyAcademics
         })
         flat_plan[:program].merge!({
           code: program.try(:[], 'code'),
-          description: program.try(:[], 'description')
+          description: program.try(:[], 'formalDescription')
         })
         flat_plan[:plan].merge!({
           code: plan.try(:[], 'code'),
