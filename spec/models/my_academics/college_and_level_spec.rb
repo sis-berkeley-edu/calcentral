@@ -5,27 +5,6 @@ describe MyAcademics::CollegeAndLevel do
   let(:legacy_campus_solutions_id) { '11667051' }
   let(:fake_spring_term) { double(is_summer: false, :year => 2015, :code => 'B') }
   let(:feed) { {}.tap { |feed| subject.merge feed } }
-
-  # Hub Academic Status - Response / Feed
-  let(:hub_academic_status_response) do
-    {
-      :statusCode => hub_academic_status_code,
-      :feed => hub_academic_status_feed,
-      :studentNotFound => nil
-    }
-  end
-  let(:hub_academic_status_code) { 200 }
-  let(:hub_academic_status_feed) do
-    {
-      "student" => {
-        "academicStatuses" => hub_academic_statuses,
-        "holds" => hub_holds,
-        "awardHonors" => hub_award_honors,
-        "degrees" => hub_degrees
-      }
-    }
-  end
-
   let(:hub_holds) do
     [
       {
@@ -265,7 +244,8 @@ describe MyAcademics::CollegeAndLevel do
       career_code: 'UGRD',
       career_description: 'Undergraduate',
       program_code: 'UCLS',
-      program_description: 'Undergrad Letters & Science',
+      program_description: 'UGRD L&S',
+      program_formal_description: 'Undergrad Letters & Science',
       plan_code: '25345U',
       plan_description: 'English BA',
       role: nil,
@@ -279,7 +259,8 @@ describe MyAcademics::CollegeAndLevel do
       career_code: 'UGRD',
       career_description: 'Undergraduate',
       program_code: 'UCLS',
-      program_description: 'Undergrad Letters & Science',
+      program_description: 'UGRD L&S',
+      program_formal_description: 'Undergrad Letters & Science',
       plan_code: '25971U',
       plan_description: 'MCB-Cell & Dev Biology BA',
       role: nil,
@@ -296,7 +277,8 @@ describe MyAcademics::CollegeAndLevel do
       career_code: 'UGRD',
       career_description: 'Undergraduate',
       program_code: 'UCLS',
-      program_description: 'Undergrad Letters & Science',
+      program_description: 'UGRD L&S',
+      program_formal_description: 'Undergrad Letters & Science',
       plan_code: '25090U',
       plan_description: 'Art BA',
       role: nil,
@@ -312,7 +294,8 @@ describe MyAcademics::CollegeAndLevel do
       career_code: 'GRAD',
       career_description: 'Graduate',
       program_code: 'GACAD',
-      program_description: 'Graduate Academic Programs',
+      program_description: 'Grad AcadPgrm',
+      program_formal_description: 'Graduate Academic Programs',
       plan_code: '00E017G',
       plan_description: 'Women, Gender and Sexuality DE',
       role: nil,
@@ -327,7 +310,8 @@ describe MyAcademics::CollegeAndLevel do
       career_code: 'GRAD',
       career_description: 'Graduate',
       program_code: 'GPRFL',
-      program_description: 'Graduate Professional Programs',
+      program_description: 'Grad Prof Prgms',
+      program_formal_description: 'Graduate Professional Programs',
       plan_code: '82790PPJDG',
       plan_description: 'Public Policy MPP-JD CDP',
       role: nil,
@@ -342,7 +326,8 @@ describe MyAcademics::CollegeAndLevel do
       career_code: 'LAW',
       career_description: 'Law',
       program_code: 'LPRFL',
-      program_description: 'Law Professional Programs',
+      program_description: 'Law Prfl',
+      program_formal_description: 'Law Professional Programs',
       plan_code: '84501JDPPG',
       plan_description: 'Law JD-MPP CDP',
       role: 'law',
@@ -357,7 +342,8 @@ describe MyAcademics::CollegeAndLevel do
       career_code: 'GRAD',
       career_description: 'Graduate',
       program_code: 'GPRFL',
-      program_description: 'Graduate Professional Programs',
+      program_description: 'Grad Prof Prgms',
+      program_formal_description: 'Graduate Professional Programs',
       plan_code: '96789PHBAG',
       plan_description: 'Public Health MPH-MBA CDP',
       admin_owners: [
@@ -371,7 +357,8 @@ describe MyAcademics::CollegeAndLevel do
       career_code: 'GRAD',
       career_description: 'Graduate',
       program_code: 'GPRFL',
-      program_description: 'Graduate Professional Programs',
+      program_description: 'Grad Prof Prgms',
+      program_formal_description: 'Graduate Professional Programs',
       plan_code: '70141BAPHG',
       plan_description: 'Business Admin MBA-MPH CDP',
       role: 'haasMbaPublicHealth',
@@ -381,15 +368,36 @@ describe MyAcademics::CollegeAndLevel do
       ]
     })
   end
+  let(:max_terms_in_attendance) { '5' }
+  let(:has_holds) { false }
+  let(:feed_errored) { false }
+  let(:feed_error_body) { '' }
+  let(:feed_status_code) { 200 }
 
   let(:hubedos_student) do
     double(:hubedos_student, {max_terms_in_attendance: 5, student_academic_levels: ['Graduate','Professional Year 3']})
   end
 
+  let(:my_academic_status) do
+    double(:my_academic_status, {
+      status_code: feed_status_code,
+      errored?: feed_errored,
+      error_message: feed_error_body,
+      award_honors: hub_award_honors,
+      degrees: hub_degrees,
+      academic_statuses: hub_academic_statuses,
+      max_terms_in_attendance: max_terms_in_attendance,
+    })
+  end
+  let(:academic_levels_model) do
+    double(:academic_levels, get_feed: {academic_levels: ["Graduate", "Professional Year 3"]})
+  end
+
   before do
     allow_any_instance_of(CalnetCrosswalk::ByUid).to receive(:lookup_campus_solutions_id).and_return campus_solutions_id
-    allow_any_instance_of(MyAcademics::MyAcademicStatus).to receive(:get_feed).and_return hub_academic_status_response
-    allow(HubEdos::Student).to receive(:new).and_return(hubedos_student)
+    allow(MyAcademics::MyAcademicStatus).to receive(:new).and_return(my_academic_status)
+    allow(MyAcademics::MyAcademicStatus).to receive(:has_holds?).and_return(has_holds)
+    allow(MyAcademics::AcademicLevels).to receive(:new).and_return(academic_levels_model)
   end
 
   context 'data sourcing' do
@@ -404,7 +412,7 @@ describe MyAcademics::CollegeAndLevel do
     end
 
     context 'when hub response is empty' do
-      let(:hub_academic_status_feed) { {} }
+      let(:hub_academic_statuses) { [] }
       let(:campus_solutions_id) { legacy_campus_solutions_id }
       context 'when current term is summer' do
         before { allow(subject).to receive(:current_term).and_return(double(is_summer: true)) }
@@ -430,10 +438,10 @@ describe MyAcademics::CollegeAndLevel do
 
   context 'when sourced from Hub academic status' do
     context 'failed response' do
-      let(:failure_response) { {:errored=>true, :statusCode=>503, :body=>"An unknown server error occurred"} }
-      before do
-        allow_any_instance_of(MyAcademics::MyAcademicStatus).to receive(:get_feed).and_return(failure_response)
-      end
+      let(:feed_status_code) { 503 }
+      let(:feed_errored) { true }
+      let(:feed_error_body) { 'An unknown server error occurred' }
+      let(:hub_academic_statuses) { [] }
       it 'reports failure' do
         expect(feed[:collegeAndLevel][:statusCode]).to eq 503
         expect(feed[:collegeAndLevel][:empty]).to eq true
@@ -442,6 +450,7 @@ describe MyAcademics::CollegeAndLevel do
       end
     end
     context 'undergrad with single academic status' do
+      let(:has_holds) { true }
       let(:has_law_role) { false }
 
       it 'reports success' do
@@ -724,21 +733,16 @@ describe MyAcademics::CollegeAndLevel do
     end
 
     context 'empty status feed' do
-      let(:hub_academic_status_feed) { {} }
+      let(:hub_academic_statuses) { [] }
       it 'reports empty' do
         expect(feed[:collegeAndLevel][:empty]).to eq true
       end
     end
 
     context 'errored status feed' do
-      let(:hub_academic_status_response) do
-        {
-          :statusCode => 502,
-          :body => "An unknown server error occurred",
-          :errored => true,
-          :studentNotFound => nil
-        }
-      end
+      let(:feed_errored) { true }
+      let(:feed_status_code) { 502 }
+      let(:feed_error_body) { 'Bad Gateway' }
       it 'reports error' do
         expect(feed[:collegeAndLevel][:errored]).to eq true
       end
@@ -756,7 +760,7 @@ describe MyAcademics::CollegeAndLevel do
   end
 
   describe '#parse_hub_award_honors' do
-    subject { described_class.new(uid).parse_hub_award_honors hub_academic_status_response }
+    subject { described_class.new(uid).parse_hub_award_honors(hub_award_honors) }
 
     it 'groups and orders award honors by term' do
       expect(subject.count).to eq(3)

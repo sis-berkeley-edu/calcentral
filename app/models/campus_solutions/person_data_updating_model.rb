@@ -3,7 +3,7 @@ module CampusSolutions
     def passthrough(model_name, params)
       proxy = model_name.new({user_id: @uid, params: params})
       result = proxy.post
-      PersonDataExpiry.expire @uid
+      UserApiExpiry.expire @uid
       result
     end
   end

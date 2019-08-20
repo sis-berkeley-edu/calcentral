@@ -8,7 +8,7 @@ describe MyDegreeProgressController do
     it_behaves_like 'an unauthenticated user'
     context 'authenticated user' do
       let(:user_id) { '12345' }
-      let(:feed_key) { 'degreeProgress' }
+      let(:feed_path) { ['feed','degreeProgress'] }
 
       it_behaves_like 'a successful feed'
     end
@@ -20,7 +20,7 @@ describe MyDegreeProgressController do
 
     context 'authenticated user' do
       let(:user_id) { '12345' }
-      let(:feed_key) { 'degreeProgress' }
+      let(:feed_path) { ['feed','degreeProgress'] }
 
       it_behaves_like 'a successful feed'
     end

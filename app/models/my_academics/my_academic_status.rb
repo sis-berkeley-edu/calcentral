@@ -3,18 +3,56 @@ module MyAcademics
     include Cache::CachedFeed
     include Cache::UserCacheExpiry
     include Concerns::AcademicRoles
-    include Concerns::AcademicStatus
+
+    def self.careers(uid)
+      [].tap do |careers|
+        self.new(uid).academic_statuses(uid).try(:each) do |status|
+          if (career = status['studentCareer'].try(:[], 'academicCareer'))
+            careers << career
+          end
+        end
+      end.uniq
+    end
+
+    def self.statuses_by_career_role(uid, career_role_matchers = [])
+      self.new(uid).academic_statuses(uid).try(:select) do |status|
+        role = status.try(:[], 'studentCareer').try(:[], :role)
+        career_role_matchers.include?(role)
+      end
+    end
+
+    def self.has_holds?(uid)
+      (self.new(uid).holds.try(:to_a).try(:length) || 0) > 0
+    end
+
+    def self.active_plans(uid)
+      [].tap do |plans|
+        self.new(uid).academic_statuses.try(:each) do |status|
+          status.try(:[], 'studentPlans').try(:each) do |plan|
+            if (plan.try(:[], 'statusInPlan').try(:[], 'status').try(:[], 'code') == 'AC')
+              plan[:careerRole] = status.try(:[], 'studentCareer').try(:[], :role)
+              plans.push(plan)
+            end
+          end
+        end
+      end
+    end
+
+    def self.active_plan?(plan)
+      plan.try(:[], 'statusInPlan').try(:[], 'status').try(:[], 'code') == 'AC'
+    end
 
     def get_feed_internal
-      response = HubEdos::StudentApi::V1::AcademicStatus.new({user_id: @uid}).get
-      if (academic_statuses = academic_statuses response )
-        assign_roles(academic_statuses)
+      response = HubEdos::StudentApi::V2::AcademicStatuses.new(user_id: @uid).get
+      statuses = response.try(:[], :feed).try(:[], 'academicStatuses') || []
+      if (statuses)
+        assign_roles(statuses)
       end
       response
     end
 
-    # Beware: roles may be used as a whitelist (to show certain info), a blacklist (to hide certain info),
-    #  or as some combination of the two in custom logic.
+    # Beware: roles may be used as a whitelist (to show certain info), a blacklist
+    # (to hide certain info), or as some combination of the two in custom logic.
     def assign_roles(academic_statuses)
       academic_statuses.each do |status|
         process_career(status)
@@ -31,7 +69,7 @@ module MyAcademics
     def process_plans(status)
       if (plans = status.try(:[], 'studentPlans'))
         plans.each do |plan|
-          if active? plan
+          if self.class.active_plan?(plan)
             # TODO: Update to use :roles
             plan[:role] = plan_based_roles plan
             if (program = plan.try(:[], 'academicPlan').try(:[], 'academicProgram'))
@@ -55,6 +93,43 @@ module MyAcademics
     def program_based_role(studentProgram)
       program_code = studentProgram.try(:[], 'program').try(:[], 'code')
       get_academic_program_roles(program_code).try(:first) if studentProgram
+    end
+
+    def feed
+      get_feed.try(:[], :feed)
+    end
+
+    def status_code
+      get_feed.try(:[], :statusCode)
+    end
+
+    def errored?
+      get_feed.try(:[], :errored)
+    end
+
+    def error_message
+      return get_feed.try(:[], :body) if errored?
+      nil
+    end
+
+    def academic_statuses
+      feed.try(:[], 'academicStatuses')
+    end
+
+    def holds
+      feed.try(:[], 'holds') || []
+    end
+
+    def award_honors
+      feed.try(:[], 'awardHonors')
+    end
+
+    def degrees
+      feed.try(:[], 'degrees')
+    end
+
+    def max_terms_in_attendance
+      (academic_statuses || []).collect {|s| s['termsInAttendance']}.sort.last
     end
   end
 end

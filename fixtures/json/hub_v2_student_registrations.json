@@ -1,0 +1,1794 @@
+{
+  "apiResponse": {
+    "httpStatus": {
+      "code": "200",
+      "description": "OK"
+    },
+    "responseType": "namespaceURI=\"http://bmeta.berkeley.edu/student/studentV1.xsd\" element=\"student\"",
+    "response": {
+      "identifiers": [
+        {
+          "type": "student-id",
+          "id": "11667051",
+          "disclose": true
+        },
+        {
+          "type": "campus-uid",
+          "id": "61889",
+          "disclose": true
+        },
+        {
+          "type": "Social Security Number",
+          "id": "***-**-****",
+          "primary": true,
+          "disclose": false
+        },
+        {
+          "type": "DB2",
+          "id": "11667051",
+          "disclose": false,
+          "fromDate": "1902-02-01"
+        }
+      ],
+      "names": [
+        {
+          "type": {
+            "code": "PRF",
+            "description": "Preferred"
+          },
+          "familyName": "Bear",
+          "givenName": "Oski",
+          "formattedName": "Oski Bear",
+          "preferred": true,
+          "disclose": true,
+          "uiControl": {
+            "code": "U",
+            "description": "Edit - No Delete"
+          },
+          "fromDate": "2016-05-13"
+        },
+        {
+          "type": {
+            "code": "PRI",
+            "description": "Primary"
+          },
+          "familyName": "Bear",
+          "givenName": "Oski",
+          "formattedName": "Oski Bear",
+          "preferred": false,
+          "disclose": true,
+          "uiControl": {
+            "code": "D",
+            "description": "Display Only"
+          },
+          "fromDate": "1902-02-01"
+        }
+      ],
+      "affiliations": [
+        {
+          "type": {
+            "code": "ADMT_UX",
+            "description": "Admitted student's access to Cal Central",
+            "formalDescription": "Admitted student's access to Cal Central"
+          },
+          "detail": "Active",
+          "status": {
+            "code": "ACT",
+            "description": "Active",
+            "formalDescription": "Active"
+          },
+          "fromDate": "2018-10-07"
+        },
+        {
+          "type": {
+            "code": "APPLICANT",
+            "description": "Applicant",
+            "formalDescription": "Applied for admission to UC Berkeley."
+          },
+          "detail": "SIR Completed",
+          "status": {
+            "code": "ACT",
+            "description": "Active",
+            "formalDescription": "Active"
+          },
+          "fromDate": "2018-02-02"
+        },
+        {
+          "type": {
+            "code": "GRADUATE",
+            "description": "Graduate Student",
+            "formalDescription": "An individual with a Graduate-based Career/Program/Plan."
+          },
+          "detail": "Active",
+          "status": {
+            "code": "ACT",
+            "description": "Active",
+            "formalDescription": "Active"
+          },
+          "fromDate": "2017-03-13"
+        },
+        {
+          "type": {
+            "code": "UNDERGRAD",
+            "description": "Undergraduate Student",
+            "formalDescription": "An individual with an Undergraduate-based Career/Program/Plan."
+          },
+          "detail": "Active",
+          "status": {
+            "code": "ACT",
+            "description": "Active",
+            "formalDescription": "Active"
+          },
+          "fromDate": "2016-03-19"
+        }
+      ],
+      "confidential": false,
+      "registrations": [
+        {
+          "term": {
+            "id": "1915",
+            "name": "1991 Summer",
+            "category": {
+              "code": "S",
+              "description": "Summer Term"
+            },
+            "academicYear": "1992",
+            "beginDate": "1991-06-10",
+            "endDate": "1991-08-16"
+          },
+          "academicCareer": {
+            "code": "UGRD",
+            "description": "Undergraduate"
+          },
+          "eligibleToRegister": true,
+          "eligibilityStatus": {
+            "code": "N",
+            "description": "New"
+          },
+          "registered": false,
+          "disabled": false,
+          "athlete": false,
+          "intendsToGraduate": false,
+          "academicLevels": [
+            {
+              "type": {
+                "code": "BOT",
+                "description": "Begining of Term"
+              },
+              "level": {
+                "code": "10",
+                "description": "Freshman"
+              }
+            },
+            {
+              "type": {
+                "code": "EOT",
+                "description": "End of Term"
+              },
+              "level": {
+                "code": "10",
+                "description": "Freshman"
+              }
+            }
+          ],
+          "termUnits": [
+            {
+              "type": {
+                "code": "Total",
+                "description": "Total Units"
+              },
+              "unitsMin": 0.5,
+              "unitsMax": 20.5,
+              "unitsEnrolled": 4,
+              "unitsTaken": 4,
+              "unitsPassed": 4
+            },
+            {
+              "type": {
+                "code": "For GPA",
+                "description": "Units For GPA"
+              },
+              "unitsTaken": 4,
+              "unitsPassed": 4
+            },
+            {
+              "type": {
+                "code": "Not For GPA",
+                "description": "Units Not For GPA"
+              },
+              "unitsMax": 20.5,
+              "unitsEnrolled": 4
+            }
+          ],
+          "termGPA": {
+            "type": {
+              "code": "TGPA",
+              "description": "Term GPA"
+            },
+            "average": 2,
+            "source": "UCB"
+          }
+        },
+        {
+          "term": {
+            "id": "1928",
+            "name": "1992 Fall",
+            "category": {
+              "code": "R",
+              "description": "Regular Term"
+            },
+            "academicYear": "1993",
+            "beginDate": "1992-08-25",
+            "endDate": "1992-12-19"
+          },
+          "academicCareer": {
+            "code": "UGRD",
+            "description": "Undergraduate"
+          },
+          "eligibleToRegister": true,
+          "eligibilityStatus": {
+            "code": "N",
+            "description": "New"
+          },
+          "registered": false,
+          "disabled": false,
+          "athlete": false,
+          "intendsToGraduate": false,
+          "academicLevels": [
+            {
+              "type": {
+                "code": "BOT",
+                "description": "Begining of Term"
+              },
+              "level": {
+                "code": "10",
+                "description": "Freshman"
+              }
+            },
+            {
+              "type": {
+                "code": "EOT",
+                "description": "End of Term"
+              },
+              "level": {
+                "code": "10",
+                "description": "Freshman"
+              }
+            }
+          ],
+          "termUnits": [
+            {
+              "type": {
+                "code": "Total",
+                "description": "Total Units"
+              },
+              "unitsMin": 0.5,
+              "unitsMax": 20.5,
+              "unitsTaken": 8,
+              "unitsPassed": 8
+            },
+            {
+              "type": {
+                "code": "For GPA",
+                "description": "Units For GPA"
+              },
+              "unitsTaken": 8,
+              "unitsPassed": 8
+            },
+            {
+              "type": {
+                "code": "Not For GPA",
+                "description": "Units Not For GPA"
+              },
+              "unitsMax": 20.5
+            }
+          ],
+          "termGPA": {
+            "type": {
+              "code": "TGPA",
+              "description": "Term GPA"
+            },
+            "average": 3.7,
+            "source": "UCB"
+          }
+        },
+        {
+          "term": {
+            "id": "1932",
+            "name": "1993 Spring",
+            "category": {
+              "code": "R",
+              "description": "Regular Term"
+            },
+            "academicYear": "1993",
+            "beginDate": "1993-01-19",
+            "endDate": "1993-05-22"
+          },
+          "academicCareer": {
+            "code": "UGRD",
+            "description": "Undergraduate"
+          },
+          "eligibleToRegister": true,
+          "eligibilityStatus": {
+            "code": "N",
+            "description": "New"
+          },
+          "registered": false,
+          "disabled": false,
+          "athlete": false,
+          "intendsToGraduate": false,
+          "academicLevels": [
+            {
+              "type": {
+                "code": "BOT",
+                "description": "Begining of Term"
+              },
+              "level": {
+                "code": "10",
+                "description": "Freshman"
+              }
+            },
+            {
+              "type": {
+                "code": "EOT",
+                "description": "End of Term"
+              },
+              "level": {
+                "code": "10",
+                "description": "Freshman"
+              }
+            }
+          ],
+          "termUnits": [
+            {
+              "type": {
+                "code": "Total",
+                "description": "Total Units"
+              },
+              "unitsMin": 0.5,
+              "unitsMax": 20.5,
+              "unitsTaken": 3
+            },
+            {
+              "type": {
+                "code": "For GPA",
+                "description": "Units For GPA"
+              }
+            },
+            {
+              "type": {
+                "code": "Not For GPA",
+                "description": "Units Not For GPA"
+              },
+              "unitsMax": 20.5,
+              "unitsTaken": 3
+            }
+          ],
+          "termGPA": {
+            "type": {
+              "code": "TGPA",
+              "description": "Term GPA"
+            },
+            "average": 0,
+            "source": "UCB"
+          }
+        },
+        {
+          "term": {
+            "id": "1952",
+            "name": "1995 Spring",
+            "category": {
+              "code": "R",
+              "description": "Regular Term"
+            },
+            "academicYear": "1995",
+            "beginDate": "1995-01-10",
+            "endDate": "1995-05-20"
+          },
+          "academicCareer": {
+            "code": "UGRD",
+            "description": "Undergraduate"
+          },
+          "eligibleToRegister": true,
+          "eligibilityStatus": {
+            "code": "N",
+            "description": "New"
+          },
+          "registered": false,
+          "disabled": false,
+          "athlete": false,
+          "intendsToGraduate": false,
+          "academicLevels": [
+            {
+              "type": {
+                "code": "BOT",
+                "description": "Begining of Term"
+              },
+              "level": {
+                "code": "10",
+                "description": "Freshman"
+              }
+            },
+            {
+              "type": {
+                "code": "EOT",
+                "description": "End of Term"
+              },
+              "level": {
+                "code": "10",
+                "description": "Freshman"
+              }
+            }
+          ],
+          "termUnits": [
+            {
+              "type": {
+                "code": "Total",
+                "description": "Total Units"
+              },
+              "unitsMin": 0.5,
+              "unitsMax": 20.5,
+              "unitsTaken": 8,
+              "unitsPassed": 8
+            },
+            {
+              "type": {
+                "code": "For GPA",
+                "description": "Units For GPA"
+              },
+              "unitsTaken": 8,
+              "unitsPassed": 8
+            },
+            {
+              "type": {
+                "code": "Not For GPA",
+                "description": "Units Not For GPA"
+              },
+              "unitsMax": 20.5
+            }
+          ],
+          "termGPA": {
+            "type": {
+              "code": "TGPA",
+              "description": "Term GPA"
+            },
+            "average": 3,
+            "source": "UCB"
+          }
+        },
+        {
+          "term": {
+            "id": "1968",
+            "name": "1996 Fall",
+            "category": {
+              "code": "R",
+              "description": "Regular Term"
+            },
+            "academicYear": "1997",
+            "beginDate": "1996-08-20",
+            "endDate": "1996-12-19"
+          },
+          "academicCareer": {
+            "code": "UGRD",
+            "description": "Undergraduate"
+          },
+          "eligibleToRegister": true,
+          "eligibilityStatus": {
+            "code": "N",
+            "description": "New"
+          },
+          "registered": false,
+          "disabled": false,
+          "athlete": false,
+          "intendsToGraduate": false,
+          "academicLevels": [
+            {
+              "type": {
+                "code": "BOT",
+                "description": "Begining of Term"
+              },
+              "level": {
+                "code": "10",
+                "description": "Freshman"
+              }
+            },
+            {
+              "type": {
+                "code": "EOT",
+                "description": "End of Term"
+              },
+              "level": {
+                "code": "10",
+                "description": "Freshman"
+              }
+            }
+          ],
+          "termUnits": [
+            {
+              "type": {
+                "code": "Total",
+                "description": "Total Units"
+              },
+              "unitsMin": 0.5,
+              "unitsMax": 20.5,
+              "unitsTaken": 4,
+              "unitsPassed": 4
+            },
+            {
+              "type": {
+                "code": "For GPA",
+                "description": "Units For GPA"
+              },
+              "unitsTaken": 4,
+              "unitsPassed": 4
+            },
+            {
+              "type": {
+                "code": "Not For GPA",
+                "description": "Units Not For GPA"
+              },
+              "unitsMax": 20.5
+            }
+          ],
+          "termGPA": {
+            "type": {
+              "code": "TGPA",
+              "description": "Term GPA"
+            },
+            "average": 3,
+            "source": "UCB"
+          }
+        },
+        {
+          "term": {
+            "id": "1978",
+            "name": "1997 Fall",
+            "category": {
+              "code": "R",
+              "description": "Regular Term"
+            },
+            "academicYear": "1998",
+            "beginDate": "1997-08-19",
+            "endDate": "1997-12-18"
+          },
+          "academicCareer": {
+            "code": "UGRD",
+            "description": "Undergraduate"
+          },
+          "eligibleToRegister": true,
+          "eligibilityStatus": {
+            "code": "N",
+            "description": "New"
+          },
+          "registered": false,
+          "disabled": false,
+          "athlete": false,
+          "intendsToGraduate": false,
+          "academicLevels": [
+            {
+              "type": {
+                "code": "BOT",
+                "description": "Begining of Term"
+              },
+              "level": {
+                "code": "10",
+                "description": "Freshman"
+              }
+            },
+            {
+              "type": {
+                "code": "EOT",
+                "description": "End of Term"
+              },
+              "level": {
+                "code": "10",
+                "description": "Freshman"
+              }
+            }
+          ],
+          "termUnits": [
+            {
+              "type": {
+                "code": "Total",
+                "description": "Total Units"
+              },
+              "unitsMin": 0.5,
+              "unitsMax": 20.5,
+              "unitsTaken": 3,
+              "unitsPassed": 3
+            },
+            {
+              "type": {
+                "code": "For GPA",
+                "description": "Units For GPA"
+              },
+              "unitsTaken": 3,
+              "unitsPassed": 3
+            },
+            {
+              "type": {
+                "code": "Not For GPA",
+                "description": "Units Not For GPA"
+              },
+              "unitsMax": 20.5
+            }
+          ],
+          "termGPA": {
+            "type": {
+              "code": "TGPA",
+              "description": "Term GPA"
+            },
+            "average": 3,
+            "source": "UCB"
+          }
+        },
+        {
+          "term": {
+            "id": "1988",
+            "name": "1998 Fall",
+            "category": {
+              "code": "R",
+              "description": "Regular Term"
+            },
+            "academicYear": "1999",
+            "beginDate": "1998-08-18",
+            "endDate": "1998-12-17"
+          },
+          "academicCareer": {
+            "code": "UGRD",
+            "description": "Undergraduate"
+          },
+          "eligibleToRegister": true,
+          "eligibilityStatus": {
+            "code": "N",
+            "description": "New"
+          },
+          "registered": false,
+          "disabled": false,
+          "athlete": false,
+          "intendsToGraduate": false,
+          "academicLevels": [
+            {
+              "type": {
+                "code": "BOT",
+                "description": "Begining of Term"
+              },
+              "level": {
+                "code": "10",
+                "description": "Freshman"
+              }
+            },
+            {
+              "type": {
+                "code": "EOT",
+                "description": "End of Term"
+              },
+              "level": {
+                "code": "20",
+                "description": "Sophomore"
+              }
+            }
+          ],
+          "termUnits": [
+            {
+              "type": {
+                "code": "Total",
+                "description": "Total Units"
+              },
+              "unitsMin": 0.5,
+              "unitsMax": 20.5,
+              "unitsTaken": 12,
+              "unitsPassed": 4
+            },
+            {
+              "type": {
+                "code": "For GPA",
+                "description": "Units For GPA"
+              },
+              "unitsTaken": 12,
+              "unitsPassed": 4
+            },
+            {
+              "type": {
+                "code": "Not For GPA",
+                "description": "Units Not For GPA"
+              },
+              "unitsMax": 20.5
+            }
+          ],
+          "termGPA": {
+            "type": {
+              "code": "TGPA",
+              "description": "Term GPA"
+            },
+            "average": 0.9,
+            "source": "UCB"
+          }
+        },
+        {
+          "term": {
+            "id": "1998",
+            "name": "1999 Fall",
+            "category": {
+              "code": "R",
+              "description": "Regular Term"
+            },
+            "academicYear": "2000",
+            "beginDate": "1999-08-17",
+            "endDate": "1999-12-16"
+          },
+          "academicCareer": {
+            "code": "UGRD",
+            "description": "Undergraduate"
+          },
+          "eligibleToRegister": true,
+          "eligibilityStatus": {
+            "code": "N",
+            "description": "New"
+          },
+          "registered": false,
+          "disabled": false,
+          "athlete": false,
+          "intendsToGraduate": false,
+          "academicLevels": [
+            {
+              "type": {
+                "code": "BOT",
+                "description": "Begining of Term"
+              },
+              "level": {
+                "code": "20",
+                "description": "Sophomore"
+              }
+            },
+            {
+              "type": {
+                "code": "EOT",
+                "description": "End of Term"
+              },
+              "level": {
+                "code": "20",
+                "description": "Sophomore"
+              }
+            }
+          ],
+          "termUnits": [
+            {
+              "type": {
+                "code": "Total",
+                "description": "Total Units"
+              },
+              "unitsMin": 0.5,
+              "unitsMax": 20.5,
+              "unitsTaken": 7,
+              "unitsPassed": 7
+            },
+            {
+              "type": {
+                "code": "For GPA",
+                "description": "Units For GPA"
+              },
+              "unitsTaken": 7,
+              "unitsPassed": 7
+            },
+            {
+              "type": {
+                "code": "Not For GPA",
+                "description": "Units Not For GPA"
+              },
+              "unitsMax": 20.5
+            }
+          ],
+          "termGPA": {
+            "type": {
+              "code": "TGPA",
+              "description": "Term GPA"
+            },
+            "average": 2.828,
+            "source": "UCB"
+          }
+        },
+        {
+          "term": {
+            "id": "2028",
+            "name": "2002 Fall",
+            "category": {
+              "code": "R",
+              "description": "Regular Term"
+            },
+            "academicYear": "2003",
+            "beginDate": "2002-08-20",
+            "endDate": "2002-12-19"
+          },
+          "academicCareer": {
+            "code": "UGRD",
+            "description": "Undergraduate"
+          },
+          "eligibleToRegister": true,
+          "eligibilityStatus": {
+            "code": "N",
+            "description": "New"
+          },
+          "registered": false,
+          "disabled": false,
+          "athlete": false,
+          "intendsToGraduate": false,
+          "academicLevels": [
+            {
+              "type": {
+                "code": "BOT",
+                "description": "Begining of Term"
+              },
+              "level": {
+                "code": "20",
+                "description": "Sophomore"
+              }
+            },
+            {
+              "type": {
+                "code": "EOT",
+                "description": "End of Term"
+              },
+              "level": {
+                "code": "20",
+                "description": "Sophomore"
+              }
+            }
+          ],
+          "termUnits": [
+            {
+              "type": {
+                "code": "Total",
+                "description": "Total Units"
+              },
+              "unitsMin": 0.5,
+              "unitsMax": 20.5,
+              "unitsTaken": 4
+            },
+            {
+              "type": {
+                "code": "For GPA",
+                "description": "Units For GPA"
+              },
+              "unitsTaken": 4
+            },
+            {
+              "type": {
+                "code": "Not For GPA",
+                "description": "Units Not For GPA"
+              },
+              "unitsMax": 20.5
+            }
+          ],
+          "termGPA": {
+            "type": {
+              "code": "TGPA",
+              "description": "Term GPA"
+            },
+            "average": 0,
+            "source": "UCB"
+          }
+        },
+        {
+          "term": {
+            "id": "2058",
+            "name": "2005 Fall",
+            "category": {
+              "code": "R",
+              "description": "Regular Term"
+            },
+            "academicYear": "2006",
+            "beginDate": "2005-08-23",
+            "endDate": "2005-12-20"
+          },
+          "academicCareer": {
+            "code": "UGRD",
+            "description": "Undergraduate"
+          },
+          "eligibleToRegister": true,
+          "eligibilityStatus": {
+            "code": "N",
+            "description": "New"
+          },
+          "registered": false,
+          "disabled": false,
+          "athlete": false,
+          "intendsToGraduate": false,
+          "academicLevels": [
+            {
+              "type": {
+                "code": "BOT",
+                "description": "Begining of Term"
+              },
+              "level": {
+                "code": "20",
+                "description": "Sophomore"
+              }
+            },
+            {
+              "type": {
+                "code": "EOT",
+                "description": "End of Term"
+              },
+              "level": {
+                "code": "20",
+                "description": "Sophomore"
+              }
+            }
+          ],
+          "termUnits": [
+            {
+              "type": {
+                "code": "Total",
+                "description": "Total Units"
+              },
+              "unitsMin": 0.5,
+              "unitsMax": 20.5,
+              "unitsTaken": 8,
+              "unitsPassed": 8
+            },
+            {
+              "type": {
+                "code": "For GPA",
+                "description": "Units For GPA"
+              },
+              "unitsTaken": 8,
+              "unitsPassed": 8
+            },
+            {
+              "type": {
+                "code": "Not For GPA",
+                "description": "Units Not For GPA"
+              },
+              "unitsMax": 20.5
+            }
+          ],
+          "termGPA": {
+            "type": {
+              "code": "TGPA",
+              "description": "Term GPA"
+            },
+            "average": 2.5,
+            "source": "UCB"
+          }
+        },
+        {
+          "term": {
+            "id": "2072",
+            "name": "2007 Spring",
+            "category": {
+              "code": "R",
+              "description": "Regular Term"
+            },
+            "academicYear": "2007",
+            "beginDate": "2007-01-09",
+            "endDate": "2007-05-18"
+          },
+          "academicCareer": {
+            "code": "UGRD",
+            "description": "Undergraduate"
+          },
+          "eligibleToRegister": true,
+          "eligibilityStatus": {
+            "code": "N",
+            "description": "New"
+          },
+          "registered": false,
+          "disabled": false,
+          "athlete": false,
+          "intendsToGraduate": false,
+          "academicLevels": [
+            {
+              "type": {
+                "code": "BOT",
+                "description": "Begining of Term"
+              },
+              "level": {
+                "code": "20",
+                "description": "Sophomore"
+              }
+            },
+            {
+              "type": {
+                "code": "EOT",
+                "description": "End of Term"
+              },
+              "level": {
+                "code": "20",
+                "description": "Sophomore"
+              }
+            }
+          ],
+          "termUnits": [
+            {
+              "type": {
+                "code": "Total",
+                "description": "Total Units"
+              },
+              "unitsMin": 0.5,
+              "unitsMax": 20.5,
+              "unitsTaken": 3,
+              "unitsPassed": 3
+            },
+            {
+              "type": {
+                "code": "For GPA",
+                "description": "Units For GPA"
+              },
+              "unitsTaken": 3,
+              "unitsPassed": 3
+            },
+            {
+              "type": {
+                "code": "Not For GPA",
+                "description": "Units Not For GPA"
+              },
+              "unitsMax": 20.5
+            }
+          ],
+          "termGPA": {
+            "type": {
+              "code": "TGPA",
+              "description": "Term GPA"
+            },
+            "average": 3,
+            "source": "UCB"
+          }
+        },
+        {
+          "term": {
+            "id": "2122",
+            "name": "2012 Spring",
+            "category": {
+              "code": "R",
+              "description": "Regular Term"
+            },
+            "academicYear": "2012",
+            "beginDate": "2012-01-10",
+            "endDate": "2012-05-11"
+          },
+          "academicCareer": {
+            "code": "UGRD",
+            "description": "Undergraduate"
+          },
+          "eligibleToRegister": true,
+          "eligibilityStatus": {
+            "code": "N",
+            "description": "New"
+          },
+          "registered": false,
+          "disabled": false,
+          "athlete": false,
+          "intendsToGraduate": false,
+          "academicLevels": [
+            {
+              "type": {
+                "code": "BOT",
+                "description": "Begining of Term"
+              },
+              "level": {
+                "code": "20",
+                "description": "Sophomore"
+              }
+            },
+            {
+              "type": {
+                "code": "EOT",
+                "description": "End of Term"
+              },
+              "level": {
+                "code": "20",
+                "description": "Sophomore"
+              }
+            }
+          ],
+          "termUnits": [
+            {
+              "type": {
+                "code": "Total",
+                "description": "Total Units"
+              },
+              "unitsMin": 0.5,
+              "unitsMax": 20.5,
+              "unitsTaken": 7,
+              "unitsPassed": 7
+            },
+            {
+              "type": {
+                "code": "For GPA",
+                "description": "Units For GPA"
+              },
+              "unitsTaken": 7,
+              "unitsPassed": 7
+            },
+            {
+              "type": {
+                "code": "Not For GPA",
+                "description": "Units Not For GPA"
+              },
+              "unitsMax": 20.5
+            }
+          ],
+          "termGPA": {
+            "type": {
+              "code": "TGPA",
+              "description": "Term GPA"
+            },
+            "average": 3.3,
+            "source": "UCB"
+          }
+        },
+        {
+          "term": {
+            "id": "2168",
+            "name": "2016 Fall",
+            "category": {
+              "code": "R",
+              "description": "Regular Term"
+            },
+            "academicYear": "2017",
+            "beginDate": "2016-08-17",
+            "endDate": "2016-12-16"
+          },
+          "academicCareer": {
+            "code": "UGRD",
+            "description": "Undergraduate"
+          },
+          "eligibleToRegister": true,
+          "eligibilityStatus": {
+            "code": "N",
+            "description": "New"
+          },
+          "registered": false,
+          "disabled": false,
+          "athlete": false,
+          "intendsToGraduate": false,
+          "academicLevels": [
+            {
+              "type": {
+                "code": "BOT",
+                "description": "Begining of Term"
+              },
+              "level": {
+                "code": "30",
+                "description": "Junior"
+              }
+            },
+            {
+              "type": {
+                "code": "EOT",
+                "description": "End of Term"
+              },
+              "level": {
+                "code": "30",
+                "description": "Junior"
+              }
+            }
+          ],
+          "termUnits": [
+            {
+              "type": {
+                "code": "Total",
+                "description": "Total Units"
+              },
+              "unitsMin": 12,
+              "unitsMax": 25,
+              "unitsTest": 13.3
+            },
+            {
+              "type": {
+                "code": "For GPA",
+                "description": "Units For GPA"
+              }
+            },
+            {
+              "type": {
+                "code": "Not For GPA",
+                "description": "Units Not For GPA"
+              },
+              "unitsMax": 20.5,
+              "unitsTest": 13.3
+            }
+          ],
+          "termGPA": {
+            "type": {
+              "code": "TGPA",
+              "description": "Term GPA"
+            },
+            "average": 0,
+            "source": "UCB"
+          }
+        },
+        {
+          "term": {
+            "id": "2172",
+            "name": "2017 Spring",
+            "category": {
+              "code": "R",
+              "description": "Regular Term"
+            },
+            "academicYear": "2017",
+            "beginDate": "2017-01-10",
+            "endDate": "2017-05-12"
+          },
+          "academicCareer": {
+            "code": "GRAD",
+            "description": "Graduate"
+          },
+          "eligibleToRegister": false,
+          "eligibilityStatus": {
+            "code": "N",
+            "description": "New"
+          },
+          "registered": false,
+          "disabled": false,
+          "athlete": false,
+          "intendsToGraduate": false,
+          "academicLevels": [
+            {
+              "type": {
+                "code": "BOT",
+                "description": "Begining of Term"
+              },
+              "level": {
+                "code": "GR",
+                "description": "Graduate"
+              }
+            },
+            {
+              "type": {
+                "code": "EOT",
+                "description": "End of Term"
+              },
+              "level": {
+                "code": "GR",
+                "description": "Graduate"
+              }
+            }
+          ],
+          "academicStanding": {
+            "standing": {
+              "code": "AP1",
+              "description": "Academic Probation 1"
+            },
+            "status": {
+              "code": "PRO",
+              "description": "Probation"
+            },
+            "fromDate": "2018-07-02"
+          },
+          "termUnits": [
+            {
+              "type": {
+                "code": "Total",
+                "description": "Total Units"
+              },
+              "unitsMin": 0.5,
+              "unitsMax": 20.5
+            },
+            {
+              "type": {
+                "code": "For GPA",
+                "description": "Units For GPA"
+              }
+            },
+            {
+              "type": {
+                "code": "Not For GPA",
+                "description": "Units Not For GPA"
+              },
+              "unitsMax": 20.5
+            }
+          ],
+          "termGPA": {
+            "type": {
+              "code": "TGPA",
+              "description": "Term GPA"
+            },
+            "average": 0,
+            "source": "UCB"
+          }
+        },
+        {
+          "term": {
+            "id": "2172",
+            "name": "2017 Spring",
+            "category": {
+              "code": "R",
+              "description": "Regular Term"
+            },
+            "academicYear": "2017",
+            "beginDate": "2017-01-10",
+            "endDate": "2017-05-12"
+          },
+          "academicCareer": {
+            "code": "UGRD",
+            "description": "Undergraduate"
+          },
+          "eligibleToRegister": false,
+          "eligibilityStatus": {
+            "code": "C",
+            "description": "Continuing"
+          },
+          "registered": false,
+          "disabled": false,
+          "athlete": false,
+          "intendsToGraduate": false,
+          "academicLevels": [
+            {
+              "type": {
+                "code": "BOT",
+                "description": "Begining of Term"
+              },
+              "level": {
+                "code": "30",
+                "description": "Junior"
+              }
+            },
+            {
+              "type": {
+                "code": "EOT",
+                "description": "End of Term"
+              },
+              "level": {
+                "code": "30",
+                "description": "Junior"
+              }
+            }
+          ],
+          "termUnits": [
+            {
+              "type": {
+                "code": "Total",
+                "description": "Total Units"
+              },
+              "unitsMin": 0.5,
+              "unitsMax": 20.5
+            },
+            {
+              "type": {
+                "code": "For GPA",
+                "description": "Units For GPA"
+              }
+            },
+            {
+              "type": {
+                "code": "Not For GPA",
+                "description": "Units Not For GPA"
+              },
+              "unitsMax": 20.5
+            }
+          ],
+          "termGPA": {
+            "type": {
+              "code": "TGPA",
+              "description": "Term GPA"
+            },
+            "average": 0,
+            "source": "UCB"
+          }
+        },
+        {
+          "term": {
+            "id": "2175",
+            "name": "2017 Summer",
+            "category": {
+              "code": "S",
+              "description": "Summer Term"
+            },
+            "academicYear": "2018",
+            "beginDate": "2017-05-22",
+            "endDate": "2017-08-11"
+          },
+          "academicCareer": {
+            "code": "GRAD",
+            "description": "Graduate"
+          },
+          "eligibleToRegister": true,
+          "eligibilityStatus": {
+            "code": "R",
+            "description": "Readmit"
+          },
+          "registered": false,
+          "disabled": false,
+          "athlete": false,
+          "intendsToGraduate": false,
+          "academicLevels": [
+            {
+              "type": {
+                "code": "BOT",
+                "description": "Begining of Term"
+              },
+              "level": {
+                "code": "GR",
+                "description": "Graduate"
+              }
+            },
+            {
+              "type": {
+                "code": "EOT",
+                "description": "End of Term"
+              },
+              "level": {
+                "code": "GR",
+                "description": "Graduate"
+              }
+            }
+          ],
+          "academicStanding": {
+            "standing": {
+              "code": "AP1",
+              "description": "Academic Probation 1"
+            },
+            "status": {
+              "code": "PRO",
+              "description": "Probation"
+            },
+            "fromDate": "2018-07-05"
+          },
+          "termUnits": [
+            {
+              "type": {
+                "code": "Total",
+                "description": "Total Units"
+              },
+              "unitsMin": 0.5,
+              "unitsMax": 20.5
+            },
+            {
+              "type": {
+                "code": "For GPA",
+                "description": "Units For GPA"
+              }
+            },
+            {
+              "type": {
+                "code": "Not For GPA",
+                "description": "Units Not For GPA"
+              },
+              "unitsMax": 20.5
+            }
+          ],
+          "termGPA": {
+            "type": {
+              "code": "TGPA",
+              "description": "Term GPA"
+            },
+            "average": 0,
+            "source": "UCB"
+          },
+          "specialStudyProgram": {
+            "type": {
+              "code": "BGNNFILING",
+              "description": "Filing Fee"
+            },
+            "organization": {
+              "code": "UCEAP",
+              "description": "UC Education Abroad Program"
+            },
+            "country": {
+              "code": "USA",
+              "description": "United States"
+            }
+          }
+        },
+        {
+          "term": {
+            "id": "2175",
+            "name": "2017 Summer",
+            "category": {
+              "code": "S",
+              "description": "Summer Term"
+            },
+            "academicYear": "2018",
+            "beginDate": "2017-05-22",
+            "endDate": "2017-08-11"
+          },
+          "academicCareer": {
+            "code": "UGRD",
+            "description": "Undergraduate"
+          },
+          "eligibleToRegister": true,
+          "eligibilityStatus": {
+            "code": "R",
+            "description": "Readmit"
+          },
+          "registered": false,
+          "disabled": false,
+          "athlete": false,
+          "intendsToGraduate": false,
+          "academicLevels": [
+            {
+              "type": {
+                "code": "BOT",
+                "description": "Begining of Term"
+              },
+              "level": {
+                "code": "30",
+                "description": "Junior"
+              }
+            },
+            {
+              "type": {
+                "code": "EOT",
+                "description": "End of Term"
+              },
+              "level": {
+                "code": "30",
+                "description": "Junior"
+              }
+            }
+          ],
+          "termUnits": [
+            {
+              "type": {
+                "code": "Total",
+                "description": "Total Units"
+              },
+              "unitsMin": 0.5,
+              "unitsMax": 20.5
+            },
+            {
+              "type": {
+                "code": "For GPA",
+                "description": "Units For GPA"
+              }
+            },
+            {
+              "type": {
+                "code": "Not For GPA",
+                "description": "Units Not For GPA"
+              },
+              "unitsMax": 20.5
+            }
+          ],
+          "termGPA": {
+            "type": {
+              "code": "TGPA",
+              "description": "Term GPA"
+            },
+            "average": 0,
+            "source": "UCB"
+          }
+        },
+        {
+          "term": {
+            "id": "2192",
+            "name": "2019 Spring",
+            "category": {
+              "code": "R",
+              "description": "Regular Term"
+            },
+            "academicYear": "2019",
+            "beginDate": "2019-01-15",
+            "endDate": "2019-05-17"
+          },
+          "academicCareer": {
+            "code": "GRAD",
+            "description": "Graduate"
+          },
+          "eligibleToRegister": true,
+          "eligibilityStatus": {
+            "code": "N",
+            "description": "New"
+          },
+          "registered": false,
+          "disabled": false,
+          "athlete": false,
+          "intendsToGraduate": false,
+          "academicLevels": [
+            {
+              "type": {
+                "code": "BOT",
+                "description": "Begining of Term"
+              },
+              "level": {
+                "code": "GR",
+                "description": "Graduate"
+              }
+            },
+            {
+              "type": {
+                "code": "EOT",
+                "description": "End of Term"
+              },
+              "level": {
+                "code": "GR",
+                "description": "Graduate"
+              }
+            }
+          ],
+          "termUnits": [
+            {
+              "type": {
+                "code": "Total",
+                "description": "Total Units"
+              },
+              "unitsMin": 0.5,
+              "unitsMax": 20.5
+            },
+            {
+              "type": {
+                "code": "For GPA",
+                "description": "Units For GPA"
+              }
+            },
+            {
+              "type": {
+                "code": "Not For GPA",
+                "description": "Units Not For GPA"
+              },
+              "unitsMax": 20.5
+            }
+          ],
+          "termGPA": {
+            "type": {
+              "code": "TGPA",
+              "description": "Term GPA"
+            },
+            "average": 0,
+            "source": "UCB"
+          }
+        },
+        {
+          "term": {
+            "id": "2192",
+            "name": "2019 Spring",
+            "category": {
+              "code": "R",
+              "description": "Regular Term"
+            },
+            "academicYear": "2019",
+            "beginDate": "2019-01-15",
+            "endDate": "2019-05-17"
+          },
+          "academicCareer": {
+            "code": "UGRD",
+            "description": "Undergraduate"
+          },
+          "eligibleToRegister": true,
+          "eligibilityStatus": {
+            "code": "C",
+            "description": "Continuing"
+          },
+          "registered": false,
+          "disabled": false,
+          "athlete": false,
+          "intendsToGraduate": false,
+          "academicLevels": [
+            {
+              "type": {
+                "code": "BOT",
+                "description": "Begining of Term"
+              },
+              "level": {
+                "code": "30",
+                "description": "Junior"
+              }
+            },
+            {
+              "type": {
+                "code": "EOT",
+                "description": "End of Term"
+              },
+              "level": {
+                "code": "30",
+                "description": "Junior"
+              }
+            }
+          ],
+          "termUnits": [
+            {
+              "type": {
+                "code": "Total",
+                "description": "Total Units"
+              },
+              "unitsMin": 0.5,
+              "unitsMax": 20.5
+            },
+            {
+              "type": {
+                "code": "For GPA",
+                "description": "Units For GPA"
+              }
+            },
+            {
+              "type": {
+                "code": "Not For GPA",
+                "description": "Units Not For GPA"
+              },
+              "unitsMax": 20.5
+            }
+          ],
+          "termGPA": {
+            "type": {
+              "code": "TGPA",
+              "description": "Term GPA"
+            },
+            "average": 0,
+            "source": "UCB"
+          }
+        },
+        {
+          "term": {
+            "id": "2195",
+            "name": "2019 Summer",
+            "category": {
+              "code": "S",
+              "description": "Summer Term"
+            },
+            "academicYear": "2020",
+            "beginDate": "2019-05-28",
+            "endDate": "2019-08-16"
+          },
+          "academicCareer": {
+            "code": "UGRD",
+            "description": "Undergraduate"
+          },
+          "eligibleToRegister": true,
+          "eligibilityStatus": {
+            "code": "C",
+            "description": "Continuing"
+          },
+          "registered": false,
+          "disabled": false,
+          "athlete": false,
+          "intendsToGraduate": false,
+          "academicLevels": [
+            {
+              "type": {
+                "code": "BOT",
+                "description": "Begining of Term"
+              },
+              "level": {
+                "code": "30",
+                "description": "Junior"
+              }
+            },
+            {
+              "type": {
+                "code": "EOT",
+                "description": "End of Term"
+              },
+              "level": {
+                "code": "30",
+                "description": "Junior"
+              }
+            }
+          ],
+          "termUnits": [
+            {
+              "type": {
+                "code": "Total",
+                "description": "Total Units"
+              },
+              "unitsMin": 0.5,
+              "unitsMax": 20.5
+            },
+            {
+              "type": {
+                "code": "For GPA",
+                "description": "Units For GPA"
+              }
+            },
+            {
+              "type": {
+                "code": "Not For GPA",
+                "description": "Units Not For GPA"
+              },
+              "unitsMax": 20.5
+            }
+          ],
+          "termGPA": {
+            "type": {
+              "code": "TGPA",
+              "description": "Term GPA"
+            },
+            "average": 0,
+            "source": "UCB"
+          }
+        }
+      ]
+    }
+  }
+}

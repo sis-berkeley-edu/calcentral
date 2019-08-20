@@ -1,0 +1,148 @@
+{
+  "apiResponse": {
+    "httpStatus": {
+      "code": "200",
+      "description": "OK"
+    },
+    "responseType": "namespaceURI=\"http://bmeta.berkeley.edu/common/personV0.xsd\" element=\"person\"",
+    "response": {
+      "person": {
+        "identifiers": [
+          {
+            "type": "student-id",
+            "id": "11667051",
+            "disclose": false
+          },
+          {
+            "type": "campus-uid",
+            "id": "61889",
+            "disclose": false
+          },
+          {
+            "type": "Social Security Number",
+            "id": "000-00-0000",
+            "disclose": false
+          },
+          {
+            "type": "DB2",
+            "id": "11667051",
+            "disclose": false,
+            "fromDate": "1902-02-01"
+          }
+        ],
+        "names": [
+          {
+            "type": {
+              "code": "PRF",
+              "description": "Preferred"
+            },
+            "familyName": "Stardust",
+            "givenName": "Ziggy",
+            "formattedName": "Ziggy  Stardust",
+            "preferred": true,
+            "disclose": false,
+            "uiControl": {
+              "code": "U",
+              "description": "Edit - No Delete"
+            },
+            "fromDate": "2016-05-13"
+          },
+          {
+            "type": {
+              "code": "PRI",
+              "description": "Primary"
+            },
+            "familyName": "Bear",
+            "givenName": "Oski",
+            "formattedName": "Oski  Bear",
+            "preferred": false,
+            "disclose": false,
+            "uiControl": {
+              "code": "D",
+              "description": "Display Only"
+            },
+            "fromDate": "1902-02-01"
+          }
+        ],
+        "affiliations": [
+          {
+            "type": {
+              "code": "ADMT_UX",
+              "description": "Admitted student's access to Cal Central"
+            },
+            "detail": "Active",
+            "status": {
+              "code": "ACT",
+              "description": "Active"
+            },
+            "fromDate": "2018-10-07"
+          },
+          {
+            "type": {
+              "code": "ALUMFORMER",
+              "description": "Alum/Former Student"
+            },
+            "detail": "Former Student",
+            "status": {
+              "code": "ACT",
+              "description": "Active"
+            },
+            "fromDate": "2019-04-12"
+          },
+          {
+            "type": {
+              "code": "APPLICANT",
+              "description": "Applicant"
+            },
+            "detail": "SIR Completed",
+            "status": {
+              "code": "ACT",
+              "description": "Active"
+            },
+            "fromDate": "2018-02-02"
+          },
+          {
+            "type": {
+              "code": "INSTRUCTOR",
+              "description": "Instructor"
+            },
+            "detail": "Active",
+            "status": {
+              "code": "ACT",
+              "description": "Active"
+            },
+            "fromDate": "2017-07-02"
+          }
+        ],
+        "emails": [
+          {
+            "type": {
+              "code": "CAMP",
+              "description": "Campus"
+            },
+            "emailAddress": "oski@berkeley.edu",
+            "primary": false,
+            "disclose": false,
+            "uiControl": {
+              "code": "F",
+              "description": "Full Edit"
+            }
+          },
+          {
+            "type": {
+              "code": "OTHR",
+              "description": "Other"
+            },
+            "emailAddress": "oski@gmail.com",
+            "primary": true,
+            "disclose": false,
+            "uiControl": {
+              "code": "F",
+              "description": "Full Edit"
+            }
+          }
+        ]
+      }
+    }
+  }
+}

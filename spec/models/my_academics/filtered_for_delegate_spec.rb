@@ -55,7 +55,6 @@ describe MyAcademics::FilteredForDelegate do
 
       it 'should return grades' do
         expect(feed['gpaUnits']['gpa'][0]).to include 'cumulativeGpa'
-        expect(feed['gpaUnits']['gpa'][1]).to include 'cumulativeGpa'
         feed['semesters'].each do |semester|
           semester['classes'].each do |course|
             expect(course['transcript'].first).to include 'grade'

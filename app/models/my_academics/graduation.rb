@@ -4,7 +4,6 @@ module MyAcademics
     include Cache::CachedFeed
     include Cache::UserCacheExpiry
     include ClassLogger
-    include Concerns::AcademicStatus
     include User::Identifiers
 
     def merge(data)
@@ -13,7 +12,7 @@ module MyAcademics
     end
 
     def get_feed_internal
-      return {} unless HubEdos::UserAttributes.new(user_id: @uid).has_role?(:student) && hub_statuses.present?
+      return {} unless HubEdos::UserAttributes.new(user_id: @uid).has_role?(:student) && !MyAcademics::MyAcademicStatus.new(@uid).errored?
       terms_with_appts = nil
       appts_in_graduating_term = nil
       ugrd_grad_term = extract_latest_undergraduate_graduation_term
@@ -64,7 +63,7 @@ module MyAcademics
     end
 
     def extract_latest_undergraduate_graduation_term
-      ugrd_statuses = all_undergraduate_statuses hub_statuses
+      ugrd_statuses = MyAcademics::MyAcademicStatus.statuses_by_career_role(@uid, ['ugrd'])
       return nil if ugrd_statuses.empty?
 
       plans = active_plans_from_statuses(ugrd_statuses)
@@ -85,15 +84,16 @@ module MyAcademics
     end
 
     def extract_non_undergraduate_graduation_terms
-      non_ugrd_statuses = all_grad_law_statuses hub_statuses
+      non_ugrd_statuses = MyAcademics::MyAcademicStatus.statuses_by_career_role(@uid, ['grad','law'])
       return nil if non_ugrd_statuses.empty?
 
       if non_ugrd_statuses.length >= 1
+        all_law_statuses = MyAcademics::MyAcademicStatus.statuses_by_career_role(@uid, ['law'])
         # CalCentral only shows expected graduation for GRAD careers if the student has concurrent status
-        non_ugrd_statuses = is_concurrent_student ? non_ugrd_statuses : all_law_statuses(non_ugrd_statuses)
+        non_ugrd_statuses = is_concurrent_student ? non_ugrd_statuses : all_law_statuses
       end
 
-      plans = active_plans_from_statuses non_ugrd_statuses
+      plans = active_plans_from_statuses(non_ugrd_statuses)
       return nil if plans.empty?
 
       sort_plans_by_program plans
@@ -139,5 +139,21 @@ module MyAcademics
       @statuses ||= academic_statuses MyAcademics::MyAcademicStatus.new(@uid).get_feed
     end
 
+    def active_plans_from_statuses(statuses)
+      [].tap do |plans|
+        statuses.try(:each) do |status|
+          status.try(:[], 'studentPlans').try(:each) do |plan|
+            if active_plan? plan
+              plan[:careerRole] = status.try(:[], 'studentCareer').try(:[], :role)
+              plans.push(plan)
+            end
+          end
+        end
+      end
+    end
+
+    def active_plan?(plan)
+      plan.try(:[], 'statusInPlan').try(:[], 'status').try(:[], 'code') == 'AC'
+    end
   end
 end

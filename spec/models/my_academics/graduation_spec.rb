@@ -37,23 +37,6 @@ describe MyAcademics::Graduation do
       'studentCareer' => career('UGRD', 'ugrd')
     }
   end
-  let(:ugrd_career_academic_status_multiple) do
-    {
-      'studentPlans' => [
-        student_plan('2205', '2020 Summer'),
-        student_plan('2212', '2021 Spring')
-      ],
-      'studentCareer' => career('UGRD', 'ugrd')
-    }
-  end
-  let(:ugrd_career_inactive_academic_status) do
-    {
-      'studentPlans' => [
-        student_plan(grad_term_id = '2225', grad_term_name = '2022 Summer', plan = nil, program = nil, is_active = false)
-      ],
-      'studentCareer' => career('UGRD', 'ugrd')
-    }
-  end
   let(:grad_career_academic_status) do
     {
       'studentPlans' => [
@@ -105,12 +88,17 @@ describe MyAcademics::Graduation do
     [{:id=>'phase1'}, {:id=>'phase2'}, {:id=>'adjust'}]
   end
 
+  let(:ugrd_career_statuses) { [ugrd_career_academic_status] }
+  let(:law_career_statuses) { [law_career_academic_status] }
+  let(:non_ugrd_career_statuses) { [grad_career_academic_status, law_career_academic_status] }
 
   subject { MyAcademics::Graduation.new(uid) }
 
   before do
     allow_any_instance_of(HubEdos::UserAttributes).to receive(:has_role?).and_return(true)
-    allow_any_instance_of(MyAcademics::MyAcademicStatus).to receive(:get_feed).and_return({:feed=> { 'student'=> { 'academicStatuses'=> academic_statuses } } })
+    allow(MyAcademics::MyAcademicStatus).to receive(:statuses_by_career_role).with(uid, ['ugrd']).and_return(ugrd_career_statuses)
+    allow(MyAcademics::MyAcademicStatus).to receive(:statuses_by_career_role).with(uid, ['grad','law']).and_return(non_ugrd_career_statuses)
+    allow(MyAcademics::MyAcademicStatus).to receive(:statuses_by_career_role).with(uid, ['law']).and_return(law_career_statuses)
     allow(EdoOracle::Queries).to receive(:get_concurrent_student_status).and_return({ 'concurrent_status' => 'N' })
     allow(CampusSolutions::MyEnrollmentTerms).to receive(:get_terms).and_return(enrollment_terms)
     allow(CampusSolutions::MyEnrollmentTerm).to receive(:get_term) do |uid, term_id|
@@ -158,8 +146,26 @@ describe MyAcademics::Graduation do
   end
 
   context 'last expected graduation term' do
+    let(:ugrd_career_academic_status_multiple) do
+      {
+        'studentPlans' => [
+          student_plan('2205', '2020 Summer'),
+          student_plan('2212', '2021 Spring')
+        ],
+        'studentCareer' => career('UGRD', 'ugrd')
+      }
+    end
+    let(:ugrd_career_inactive_academic_status) do
+      {
+        'studentPlans' => [
+          student_plan(grad_term_id = '2225', grad_term_name = '2022 Summer', plan = nil, program = nil, is_active = false)
+        ],
+        'studentCareer' => career('UGRD', 'ugrd')
+      }
+    end
     context 'when only single academic career status' do
-      let(:academic_statuses) { [ugrd_career_academic_status] }
+      let(:law_career_statuses) { [] }
+      let(:non_ugrd_career_statuses) { [] }
       it 'returns latest expected graduation term' do
         result = subject.get_feed
         expect(result[:undergraduate][:expectedGraduationTerm][:termId]).to eq '2205'
@@ -167,7 +173,9 @@ describe MyAcademics::Graduation do
       end
     end
     context 'when multiple academic career statuses' do
-      let(:academic_statuses) { [ugrd_career_academic_status_multiple] }
+      let(:ugrd_career_statuses) { [ugrd_career_academic_status_multiple] }
+      let(:law_career_statuses) { [] }
+      let(:non_ugrd_career_statuses) { [] }
       it 'returns latest expected graduation term' do
         result = subject.get_feed
         expect(result[:undergraduate][:expectedGraduationTerm][:termId]).to eq '2212'
@@ -175,7 +183,9 @@ describe MyAcademics::Graduation do
       end
     end
     context 'when student has an inactive plan' do
-      let(:academic_statuses) { [ugrd_career_inactive_academic_status, ugrd_career_academic_status_multiple] }
+      let(:ugrd_career_statuses) { [ugrd_career_inactive_academic_status, ugrd_career_academic_status_multiple] }
+      let(:law_career_statuses) { [] }
+      let(:non_ugrd_career_statuses) { [] }
       it 'does not include the inactive plan in determining latest expected graduation term' do
         result = subject.get_feed
         expect(result[:undergraduate][:expectedGraduationTerm][:termId]).to eq '2212'

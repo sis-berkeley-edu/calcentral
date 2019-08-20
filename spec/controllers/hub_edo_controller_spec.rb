@@ -11,7 +11,7 @@ describe HubEdoController do
     it_behaves_like 'an unauthenticated user'
 
     context 'authenticated user' do
-      let(:feed_key) { 'workExperiences' }
+      let(:feed_path) { ['feed','workExperiences'] }
       it_behaves_like 'a successful feed'
     end
   end

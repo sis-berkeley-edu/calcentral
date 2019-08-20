@@ -12,10 +12,7 @@ describe User::AuthenticationValidator do
       {
         statusCode: 200,
         feed: {
-          'student' =>
-            {
-              'affiliations' => nil
-            }
+          'affiliations' => nil
         }
       }
     end
@@ -23,15 +20,19 @@ describe User::AuthenticationValidator do
       {
         statusCode: 200,
         feed: {
-          'student'=>
-            {'affiliations'=>
-              [{'type'=>{'code'=>'APPLICANT', 'description'=>'Applicant'},
-                'detail'=> 'Admitted',
-                'status'=> {
-                  'code'=>'ACT',
-                  'description'=>'Active'},
-                'fromDate'=>'2016-01-06'}]
+          'affiliations'=> [
+            {
+              'type'=>{
+                'code'=>'APPLICANT', 'description'=>'Applicant'
+              },
+              'detail'=> 'Admitted',
+              'status'=> {
+                'code'=>'ACT',
+                'description'=>'Active'
+              },
+              'fromDate'=>'2016-01-06'
             }
+          ]
         },
         studentNotFound: nil
       }
@@ -40,21 +41,30 @@ describe User::AuthenticationValidator do
       {
         statusCode: 200,
         feed: {
-          'student'=>
-            {'affiliations'=>
-              [{'type'=>
-                {'code'=>'ADMT_UX',
-                  'description'=>'Admitted Students CalCentral Access'},
-                'status'=> {
-                  'code'=>'ACT',
-                  'description'=>'Active'},
-                'fromDate'=>'2016-01-11'},
-                {'type'=>{'code'=>'APPLICANT', 'description'=>'Applicant'},
-                  'detail' => 'Admitted',
-                  'status'=> {
-                    'code'=>'ACT',
-                    'description'=>'Active'},
-                  'fromDate'=>'2016-01-06'}]}
+          'affiliations'=> [
+            {
+              'type'=> {
+                'code'=>'ADMT_UX',
+                'description'=>'Admitted Students CalCentral Access'
+              },
+              'status'=> {
+                'code'=>'ACT',
+                'description'=>'Active'
+              },
+              'fromDate'=>'2016-01-11'
+            },
+            {
+              'type'=>{
+                'code'=>'APPLICANT', 'description'=>'Applicant'
+              },
+              'detail' => 'Admitted',
+              'status'=> {
+                'code'=>'ACT',
+                'description'=>'Active'
+              },
+              'fromDate'=>'2016-01-06'
+            }
+          ]
         },
         studentNotFound: nil
       }
@@ -62,26 +72,43 @@ describe User::AuthenticationValidator do
     let(:reverted_cs_affiliations) do
       {
         statusCode: 200,
-        feed:
-          {'student'=>
-             {'affiliations'=>
-                [{'type'=>
-                    {'code'=>'ADMT_UX',
-                     'description'=>'Admitted Students CalCentral Access'},
-                  'status'=> {
-                    'code'=>'ACT',
-                    'description'=>'Active'},
-                  'fromDate'=>'2016-01-11'},
-                  {'type'=>{'code'=>'STUDENT', 'description'=>''},
-                  'status'=> {
-                    'code'=>'ACT',
-                    'description'=>'Active'},
-                  'fromDate'=>'2015-12-14'},
-                 {'type'=>{'code'=>'UNDERGRAD', 'description'=>'Undergraduate Student'},
-                  'status'=> {
-                    'code'=>'INA',
-                    'description'=>'Inactive'},
-                  'fromDate'=>'2015-12-14'}]}},
+        feed: {
+          'affiliations' => [
+            {
+              'type' => {
+                'code' => 'ADMT_UX',
+                'description' => 'Admitted Students CalCentral Access'
+              },
+              'status' => {
+                'code' => 'ACT',
+                'description' => 'Active'
+              },
+              'fromDate' => '2016-01-11'
+            },
+            {
+              'type' => {
+                'code' => 'STUDENT',
+                'description' => ''
+              },
+              'status' => {
+                'code' => 'ACT',
+                'description' => 'Active'
+              },
+              'fromDate' => '2015-12-14'
+            },
+            {
+              'type' => {
+                'code'=>'UNDERGRAD',
+                'description'=>'Undergraduate Student'
+              },
+              'status'=> {
+                'code'=>'INA',
+                'description'=>'Inactive'
+              },
+              'fromDate'=>'2015-12-14'
+            }
+          ]
+        },
         studentNotFound: nil
       }
     end
@@ -108,8 +135,8 @@ describe User::AuthenticationValidator do
       end
     end
     before do
-      HubEdos::StudentApi::V1::Affiliations.stub_chain(:new, :get).and_return cs_affiliations
-      CalnetLdap::UserAttributes.stub_chain(:new, :get_feed).and_return ldap_affiliations
+      HubEdos::PersonApi::V1::SisPerson.stub_chain(:new, :get).and_return(cs_affiliations)
+      CalnetLdap::UserAttributes.stub_chain(:new, :get_feed).and_return(ldap_affiliations)
       Settings.stub_chain(:slate_auth_handler).and_return slate_auth_handler_settings
     end
     subject { User::AuthenticationValidator.new(auth_uid, auth_handler).held_applicant? }
@@ -316,7 +343,6 @@ describe User::AuthenticationValidator do
     let(:feature_flag) { false }
     it 'should not waste time checking affiliations' do
       expect(CampusOracle::Queries).to receive(:get_basic_people_attributes).never
-      expect(HubEdos::StudentApi::V1::Affiliations).to receive(:new).never
       expect(User::AuthenticationValidator.new(auth_uid, auth_handler).validated_user_id).to eq auth_uid
     end
   end

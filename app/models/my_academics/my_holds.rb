@@ -5,7 +5,7 @@ module MyAcademics
     include Cache::UserCacheExpiry
 
     def get_feed_internal
-      academic_status = HubEdos::StudentApi::V1::AcademicStatus.new({user_id: @uid}).get
+      academic_status = HubEdos::StudentApi::V2::AcademicStatuses.new({user_id: @uid}).get
       {
         feed: {
           holds: parse_holds(academic_status)
@@ -16,7 +16,7 @@ module MyAcademics
     end
 
     def parse_holds(academic_status)
-      hub_response = academic_status.try(:[], :feed).try(:[], 'student').try(:[], 'holds') || []
+      hub_response = academic_status.try(:[], :feed).try(:[], 'holds') || []
       hub_response.map do |hub_hold|
         {
           :typeCode => hub_hold.try(:[], 'type').try(:[], 'code'),

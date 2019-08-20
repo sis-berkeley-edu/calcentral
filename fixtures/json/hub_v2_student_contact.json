@@ -1,0 +1,270 @@
+{
+  "apiResponse": {
+    "httpStatus": {
+      "code": "200",
+      "description": "OK"
+    },
+    "responseType": "namespaceURI=\"http://bmeta.berkeley.edu/student/studentV1.xsd\" element=\"student\"",
+    "response": {
+      "identifiers": [
+        {
+          "type": "student-id",
+          "id": "11667051",
+          "disclose": true
+        },
+        {
+          "type": "campus-uid",
+          "id": "61889",
+          "disclose": true
+        },
+        {
+          "type": "Social Security Number",
+          "id": "***-**-****",
+          "primary": true,
+          "disclose": false
+        },
+        {
+          "type": "DB2",
+          "id": "11667051",
+          "disclose": false,
+          "fromDate": "1902-02-01"
+        }
+      ],
+      "names": [
+        {
+          "type": {
+            "code": "PRF",
+            "description": "Preferred"
+          },
+          "familyName": "Bear",
+          "givenName": "Oski",
+          "formattedName": "Oski Bear",
+          "preferred": true,
+          "disclose": true,
+          "uiControl": {
+            "code": "U",
+            "description": "Edit - No Delete"
+          },
+          "fromDate": "2016-05-13"
+        },
+        {
+          "type": {
+            "code": "PRI",
+            "description": "Primary"
+          },
+          "familyName": "Bear",
+          "givenName": "Oski",
+          "formattedName": "Oski Bear",
+          "preferred": false,
+          "disclose": true,
+          "uiControl": {
+            "code": "D",
+            "description": "Display Only"
+          },
+          "fromDate": "1902-02-01"
+        }
+      ],
+      "affiliations": [
+        {
+          "type": {
+            "code": "ADMT_UX",
+            "description": "Admitted student's access to Cal Central",
+            "formalDescription": "Admitted student's access to Cal Central"
+          },
+          "detail": "Active",
+          "status": {
+            "code": "ACT",
+            "description": "Active",
+            "formalDescription": "Active"
+          },
+          "fromDate": "2018-10-07"
+        },
+        {
+          "type": {
+            "code": "APPLICANT",
+            "description": "Applicant",
+            "formalDescription": "Applied for admission to UC Berkeley."
+          },
+          "detail": "SIR Completed",
+          "status": {
+            "code": "ACT",
+            "description": "Active",
+            "formalDescription": "Active"
+          },
+          "fromDate": "2018-02-02"
+        },
+        {
+          "type": {
+            "code": "GRADUATE",
+            "description": "Graduate Student",
+            "formalDescription": "An individual with a Graduate-based Career/Program/Plan."
+          },
+          "detail": "Active",
+          "status": {
+            "code": "ACT",
+            "description": "Active",
+            "formalDescription": "Active"
+          },
+          "fromDate": "2017-03-13"
+        },
+        {
+          "type": {
+            "code": "UNDERGRAD",
+            "description": "Undergraduate Student",
+            "formalDescription": "An individual with an Undergraduate-based Career/Program/Plan."
+          },
+          "detail": "Active",
+          "status": {
+            "code": "ACT",
+            "description": "Active",
+            "formalDescription": "Active"
+          },
+          "fromDate": "2016-03-19"
+        }
+      ],
+      "addresses": [
+        {
+          "type": {
+            "code": "DIPL",
+            "description": "Diploma"
+          },
+          "address1": "2111 BANCROFT WAY #4880",
+          "city": "BERKELEY",
+          "stateCode": "CA",
+          "stateName": "California",
+          "postalCode": "94720-4880",
+          "countryCode": "USA",
+          "countryName": "United States",
+          "formattedAddress": "2111 BANCROFT WAY #4880\nBERKELEY, California 94720-4880",
+          "disclose": true,
+          "uiControl": {
+            "code": "U",
+            "description": "Edit - No Delete"
+          },
+          "fromDate": "2015-10-11"
+        },
+        {
+          "type": {
+            "code": "HOME",
+            "description": "Home"
+          },
+          "address1": "2111 BANCROFT WAY  #550",
+          "countryCode": "USA",
+          "countryName": "United States",
+          "formattedAddress": "2111 BANCROFT WAY  #550\n",
+          "disclose": true,
+          "uiControl": {
+            "code": "U",
+            "description": "Edit - No Delete"
+          },
+          "fromDate": "2017-05-22"
+        },
+        {
+          "type": {
+            "code": "LOCL",
+            "description": "Local"
+          },
+          "address1": "200 SPROUL HALL",
+          "city": "BERKELEY",
+          "stateCode": "CA",
+          "stateName": "California",
+          "postalCode": "94720",
+          "countryCode": "USA",
+          "countryName": "United States",
+          "formattedAddress": "200 SPROUL HALL\nBERKELEY, California 94720",
+          "disclose": true,
+          "uiControl": {
+            "code": "U",
+            "description": "Edit - No Delete"
+          },
+          "fromDate": "2015-07-20"
+        }
+      ],
+      "phones": [
+        {
+          "type": {
+            "code": "HOME",
+            "description": "Home/Permanent"
+          },
+          "number": "510/642-1234",
+          "extension": "123",
+          "primary": false,
+          "disclose": true,
+          "uiControl": {
+            "code": "U",
+            "description": "Edit - No Delete"
+          }
+        },
+        {
+          "type": {
+            "code": "LOCL",
+            "description": "Local"
+          },
+          "number": "510/555-1212",
+          "primary": true,
+          "disclose": true,
+          "uiControl": {
+            "code": "F",
+            "description": "Full Edit"
+          }
+        }
+      ],
+      "emails": [
+        {
+          "type": {
+            "code": "CAMP",
+            "description": "Campus"
+          },
+          "emailAddress": "clisa@berkeley.edu",
+          "primary": true,
+          "disclose": false,
+          "uiControl": {
+            "code": "D",
+            "description": "Display Only"
+          }
+        },
+        {
+          "type": {
+            "code": "OTHR",
+            "description": "Other"
+          },
+          "emailAddress": "sacommunications@berkeley.edu",
+          "primary": false,
+          "disclose": false,
+          "uiControl": {
+            "code": "F",
+            "description": "Full Edit"
+          }
+        }
+      ],
+      "emergencyContacts": [
+        {
+          "name": "Ursa Bear",
+          "address": {
+            "type": {
+              "code": "HOME",
+              "description": "Home"
+            }
+          },
+          "phones": [
+            {
+              "type": {
+                "code": "CELL",
+                "description": "Mobile"
+              },
+              "number": "555/123-4567",
+              "primary": false
+            }
+          ],
+          "email": "ursabear@fake.berkeley.edu",
+          "relationship": {
+            "code": "O",
+            "description": "Other"
+          },
+          "preferred": true
+        }
+      ],
+      "confidential": false
+    }
+  }
+}

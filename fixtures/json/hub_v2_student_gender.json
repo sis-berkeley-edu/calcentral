@@ -1,0 +1,122 @@
+{
+  "apiResponse": {
+    "httpStatus": {
+      "code": "200",
+      "description": "OK"
+    },
+    "responseType": "namespaceURI=\"http://bmeta.berkeley.edu/student/studentV1.xsd\" element=\"student\"",
+    "response": {
+      "identifiers": [
+        {
+          "type": "student-id",
+          "id": "11667051",
+          "disclose": true
+        },
+        {
+          "type": "campus-uid",
+          "id": "61889",
+          "disclose": true
+        },
+        {
+          "type": "Social Security Number",
+          "id": "000-00-0000",
+          "primary": true,
+          "disclose": false
+        },
+        {
+          "type": "DB2",
+          "id": "11667051",
+          "disclose": false,
+          "fromDate": "1902-02-01"
+        }
+      ],
+      "names": [
+        {
+          "type": {
+            "code": "PRF",
+            "description": "Preferred"
+          },
+          "familyName": "Bear",
+          "givenName": "Oski",
+          "formattedName": "Oski Bear",
+          "preferred": true,
+          "disclose": true,
+          "uiControl": {
+            "code": "U",
+            "description": "Edit - No Delete"
+          },
+          "fromDate": "2016-05-13"
+        },
+        {
+          "type": {
+            "code": "PRI",
+            "description": "Primary"
+          },
+          "familyName": "Bear",
+          "givenName": "Oski",
+          "formattedName": "Oski Bear",
+          "preferred": false,
+          "disclose": true,
+          "uiControl": {
+            "code": "D",
+            "description": "Display Only"
+          },
+          "fromDate": "1902-02-01"
+        }
+      ],
+      "gender": {
+        "genderOfRecord": {
+          "code": "M",
+          "description": "Male"
+        },
+        "discloseGenderOfRecord": true,
+        "fromDate": "2016-05-10"
+      },
+      "affiliations": [
+        {
+          "type": {
+            "code": "ALUMFORMER",
+            "description": "Alum/Former Student",
+            "formalDescription": "An individual who has graduated or is no longer active as a Student."
+          },
+          "detail": "Former Student",
+          "status": {
+            "code": "ACT",
+            "description": "Active",
+            "formalDescription": "Active"
+          },
+          "fromDate": "2019-04-12"
+        },
+        {
+          "type": {
+            "code": "ADMT_UX",
+            "description": "Admitted student's access to Cal Central",
+            "formalDescription": "Admitted student's access to Cal Central"
+          },
+          "detail": "Active",
+          "status": {
+            "code": "ACT",
+            "description": "Active",
+            "formalDescription": "Active"
+          },
+          "fromDate": "2018-10-07"
+        },
+        {
+          "type": {
+            "code": "APPLICANT",
+            "description": "Applicant",
+            "formalDescription": "Applied for admission to UC Berkeley."
+          },
+          "detail": "SIR Completed",
+          "status": {
+            "code": "ACT",
+            "description": "Active",
+            "formalDescription": "Active"
+          },
+          "fromDate": "2018-02-02"
+        }
+      ],
+      "confidential": false
+    }
+  }
+}
