@@ -360,6 +360,7 @@ describe MyAcademics::CollegeAndLevel do
       ]
     })
   end
+  let(:max_terms_in_attendance) { '5' }
   let(:has_holds) { false }
   let(:feed_errored) { false }
   let(:feed_error_body) { '' }
@@ -369,18 +370,26 @@ describe MyAcademics::CollegeAndLevel do
     double(:hubedos_student, {max_terms_in_attendance: 5, student_academic_levels: ['Graduate','Professional Year 3']})
   end
 
+  let(:my_academic_status) do
+    double(:my_academic_status, {
+      status_code: feed_status_code,
+      errored?: feed_errored,
+      error_message: feed_error_body,
+      award_honors: hub_award_honors,
+      degrees: hub_degrees,
+      academic_statuses: hub_academic_statuses,
+      max_terms_in_attendance: max_terms_in_attendance,
+    })
+  end
+  let(:academic_levels_model) do
+    double(:academic_levels, get_feed: {academic_levels: ["Graduate", "Professional Year 3"]})
+  end
+
   before do
     allow_any_instance_of(CalnetCrosswalk::ByUid).to receive(:lookup_campus_solutions_id).and_return campus_solutions_id
-    # allow_any_instance_of(MyAcademics::MyAcademicStatus).to receive(:get_feed).and_return hub_academic_status_response
-    allow(MyAcademics::MyAcademicStatus).to receive(:academic_statuses).and_return(hub_academic_statuses)
-    allow(MyAcademics::MyAcademicStatus).to receive(:award_honors).and_return(hub_award_honors)
-    allow(MyAcademics::MyAcademicStatus).to receive(:degrees).and_return(hub_degrees)
-    allow(MyAcademics::MyAcademicStatus).to receive(:roles).and_return(hub_award_honors)
+    allow(MyAcademics::MyAcademicStatus).to receive(:new).and_return(my_academic_status)
     allow(MyAcademics::MyAcademicStatus).to receive(:has_holds?).and_return(has_holds)
-    allow(MyAcademics::MyAcademicStatus).to receive(:errored?).and_return(feed_errored)
-    allow(MyAcademics::MyAcademicStatus).to receive(:error_message).and_return(feed_error_body)
-    allow(MyAcademics::MyAcademicStatus).to receive(:status_code).and_return(feed_status_code)
-    allow(HubEdos::Student).to receive(:new).and_return(hubedos_student)
+    allow(MyAcademics::AcademicLevels).to receive(:new).and_return(academic_levels_model)
   end
 
   context 'data sourcing' do

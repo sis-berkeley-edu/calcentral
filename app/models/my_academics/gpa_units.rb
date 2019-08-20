@@ -9,11 +9,12 @@ module MyAcademics
     end
 
     def gpa_units
-      academic_statuses = MyAcademics::MyAcademicStatus.academic_statuses(@uid)
+      my_academic_status = MyAcademics::MyAcademicStatus.new(@uid)
+      academic_statuses = my_academic_status.academic_statuses
       academic_status_first = academic_statuses.try(:first)
 
       result = {
-        :errored => MyAcademics::MyAcademicStatus.errored?(@uid),
+        :errored => my_academic_status.errored?,
         :gpa => parse_cumulative_gpa(academic_statuses),
         :totalUnitsTakenNotForGpa => parse_total_units_not_for_gpa(pnp_units, 'pnp_taken'),
         :totalUnitsPassedNotForGpa => parse_total_units_not_for_gpa(pnp_units, 'pnp_passed'),

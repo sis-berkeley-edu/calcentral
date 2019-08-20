@@ -321,50 +321,121 @@ describe MyAcademics::MyAcademicStatus do
     end
   end
 
+  context '#status_code' do
+    let(:feed) { {:statusCode => 200 } }
+    let(:result) { subject.status_code }
+    before { allow(subject).to receive(:get_feed).and_return(feed) }
+    it 'returns api feed status code' do
+      expect(result).to eq 200
+    end
+  end
+
+  context '#errored?' do
+    let(:feed) { {:errored => true } }
+    let(:result) { subject.errored? }
+    before { allow(subject).to receive(:get_feed).and_return(feed) }
+    it 'returns api feed error boolean' do
+      expect(result).to eq true
+    end
+  end
+
+  context '#error_message' do
+    let(:feed) { {:errored => error_status, :body => 'SOMETHING BROKE'} }
+    let(:result) { subject.error_message }
+    before { allow(subject).to receive(:get_feed).and_return(feed) }
+    context 'when feed has not errored' do
+      let(:error_status) { false }
+      it 'returns nil' do
+        expect(result).to eq nil
+      end
+    end
+    context 'when feed has errored' do
+      let(:error_status) { true }
+      it 'returns body' do
+        expect(result).to eq 'SOMETHING BROKE'
+      end
+    end
+  end
+
+  context '#academic_statuses' do
+    let(:feed) do
+      {
+        'academicStatuses' => [
+          {'studentCareer' => 'student_career_data1'},
+          {'studentCareer' => 'student_career_data2'},
+        ]
+      }
+    end
+    let(:result) { subject.academic_statuses }
+    before { allow(subject).to receive(:feed).and_return(feed) }
+    it 'returns academic statuses from feed' do
+      expect(result[0]['studentCareer']).to eq 'student_career_data1'
+      expect(result[1]['studentCareer']).to eq 'student_career_data2'
+    end
+  end
+
+  context '#holds' do
+    let(:feed) { {'holds' => [{'type' => 'hold_type'}]} }
+    let(:result) { subject.holds }
+    before { allow(subject).to receive(:feed).and_return(feed) }
+    it 'returns holds from feed' do
+      expect(result[0]['type']).to eq 'hold_type'
+    end
+    context 'when no holds available' do
+      let(:feed) { {} }
+      it 'returns empty array' do
+        expect(result).to eq([])
+      end
+    end
+  end
+
+  context '#award_honors' do
+    let(:feed) { {'awardHonors' => ['honor1','honor2']} }
+    let(:result) { subject.award_honors }
+    before { allow(subject).to receive(:feed).and_return(feed) }
+    it 'returns award honors from feed' do
+      expect(result).to eq(['honor1','honor2'])
+    end
+  end
+
+  context '#degrees' do
+    let(:feed) { {'degrees' => ['degree1','degree2']} }
+    let(:result) { subject.degrees }
+    before { allow(subject).to receive(:feed).and_return(feed) }
+    it 'returns degrees from feed' do
+      expect(result).to eq(['degree1','degree2'])
+    end
+  end
+
+  context '#max_terms_in_attendance' do
+    let(:result) { subject.max_terms_in_attendance }
+    before { allow(subject).to receive(:academic_statuses).and_return(academic_statuses) }
+    context 'when no academic statuses are present' do
+      let(:academic_statuses) { [] }
+      it 'returns nil' do
+        expect(result).to eq nil
+      end
+    end
+    context 'when academic statuses are present' do
+      let(:academic_statuses) do
+        [
+          {'termsInAttendance' => 5},
+          {'termsInAttendance' => 8},
+          {'termsInAttendance' => 2},
+        ]
+      end
+      it 'returns maximum count' do
+        expect(result).to eq 8
+      end
+    end
+  end
+
   describe 'class methods' do
     let(:statuses) { [] }
-    let(:feed) { {feed: {'academicStatuses' => statuses}} }
-    let(:mocked_instance) { double(:my_academic_status, get_feed: feed) }
+    let(:holds) { [] }
+    let(:feed) { {'academicStatuses' => statuses} }
+    let(:mocked_instance) { double(:my_academic_status, feed: feed, academic_statuses: statuses, holds: holds) }
     before { allow(described_class).to receive(:new).and_return(mocked_instance) }
-
-    describe '.errored?' do
-      let(:error_status) { true }
-      let(:feed) do
-        {
-          errored: error_status,
-          feed: {}
-        }
-      end
-      subject { described_class.errored?(random_id) }
-      context 'when no error' do
-        let(:error_status) { false }
-        it 'returns false' do
-          expect(subject).to eq false
-        end
-      end
-      context 'when error occurred' do
-        let(:error_status) { true }
-        it 'returns true' do
-          expect(subject).to eq true
-        end
-      end
-    end
-
-    describe '.academic_statuses' do
-      subject { described_class.academic_statuses(random_id) }
-      context 'when feed is nil' do
-        let(:feed) { nil }
-        it 'returns an empty array' do
-          expect(subject).to eq []
-        end
-      end
-      context 'when feed contains academic statuses' do
-        let(:statuses) { ['STATUS1', 'STATUS2', 'STATUS3'] }
-        it 'returns an array of academic statuses' do
-          expect(subject).to eq ['STATUS1', 'STATUS2', 'STATUS3']
-        end
-      end
-    end
 
     describe '.statuses_by_career_role' do
       let(:career_role_matchers) { ['ugrd'] }
@@ -521,44 +592,28 @@ describe MyAcademics::MyAcademicStatus do
 
     describe '.has_holds?' do
       subject { described_class.has_holds?(random_id) }
-      context 'when feed is nil' do
-        let(:feed) { nil }
+      context 'when holds is nil' do
+        let(:holds) { nil }
         it 'returns false' do
           expect(subject).to eq false
         end
       end
-      context 'when feed is empty' do
-        let(:feed) { {} }
+      context 'when holds is not an array' do
+        let(:holds) { 'garbage' }
         it 'returns false' do
           expect(subject).to eq false
         end
       end
-      context 'when feed is present' do
-        let(:feed) { { :feed=> {'holds' => holds} } }
-
-        context 'when holds is nil' do
-          let(:holds) { nil }
-          it 'returns false' do
-            expect(subject).to eq false
-          end
+      context 'when student has no holds' do
+        let(:holds) { [] }
+        it 'returns false' do
+          expect(subject).to eq false
         end
-        context 'when holds is not an array' do
-          let(:holds) { 'garbage' }
-          it 'returns false' do
-            expect(subject).to eq false
-          end
-        end
-        context 'when student has no holds' do
-          let(:holds) { [] }
-          it 'returns false' do
-            expect(subject).to eq false
-          end
-        end
-        context 'when student has holds' do
-          let(:holds) { [ 1 ] }
-          it 'returns true' do
-            expect(subject).to eq true
-          end
+      end
+      context 'when student has holds' do
+        let(:holds) { [ 1 ] }
+        it 'returns true' do
+          expect(subject).to eq true
         end
       end
     end

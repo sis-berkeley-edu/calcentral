@@ -1,31 +1,26 @@
-module HubEdos
-  class Student
-    def initialize(uid)
-      @uid = uid
+module MyAcademics
+  class AcademicLevels < UserSpecificModel
+    include Cache::CachedFeed
+    include Cache::UserCacheExpiry
+
+    def get_feed_internal
+      {
+        academic_levels: student_academic_levels,
+      }
     end
 
-    def max_terms_in_attendance
-      if student_academic_statuses
-        return student_academic_statuses.collect {|s| s['termsInAttendance']}.sort.last
-      end
-    end
+    private
 
     def student_academic_levels
       latest_term_registrations.collect {|registration| academic_level_description(registration) }
     end
 
-    private
-
     def student_data
-      @student_data ||= HubEdos::StudentApi::V2::Student.new(user_id: @uid).get
+      @student_data ||= HubEdos::StudentApi::V2::Registrations.new(user_id: @uid).get
     end
 
     def student_registrations
       student_data[:feed]['registrations']
-    end
-
-    def student_academic_statuses
-      student_data[:feed]['academicStatuses']
     end
 
     def academic_level_description(registration)
@@ -48,5 +43,6 @@ module HubEdos
     def highest_registrations_term_id
       student_registrations.collect {|reg| reg['term'].try(:[], 'id') }.sort.last
     end
+
   end
 end

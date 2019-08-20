@@ -12,7 +12,7 @@ module MyAcademics
     end
 
     def get_feed_internal
-      return {} unless HubEdos::UserAttributes.new(user_id: @uid).has_role?(:student) && !MyAcademics::MyAcademicStatus.errored?(@uid)
+      return {} unless HubEdos::UserAttributes.new(user_id: @uid).has_role?(:student) && !MyAcademics::MyAcademicStatus.new(@uid).errored?
       terms_with_appts = nil
       appts_in_graduating_term = nil
       ugrd_grad_term = extract_latest_undergraduate_graduation_term

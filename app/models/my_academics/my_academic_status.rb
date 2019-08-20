@@ -4,14 +4,9 @@ module MyAcademics
     include Cache::UserCacheExpiry
     include Concerns::AcademicRoles
 
-    # TODO: Make this method private
-    def self.academic_statuses(uid)
-      user_feed(uid).try(:[], 'academicStatuses') || []
-    end
-
     def self.careers(uid)
       [].tap do |careers|
-        academic_statuses(uid).try(:each) do |status|
+        self.new(uid).academic_statuses(uid).try(:each) do |status|
           if (career = status['studentCareer'].try(:[], 'academicCareer'))
             careers << career
           end
@@ -20,48 +15,19 @@ module MyAcademics
     end
 
     def self.statuses_by_career_role(uid, career_role_matchers = [])
-      academic_statuses(uid).try(:select) do |status|
+      self.new(uid).academic_statuses(uid).try(:select) do |status|
         role = status.try(:[], 'studentCareer').try(:[], :role)
         career_role_matchers.include?(role)
       end
     end
 
     def self.has_holds?(uid)
-      holds = user_feed(uid).try(:[], 'holds') || []
-      (holds.try(:to_a).try(:length) || 0) > 0
-    end
-
-    def self.roles(uid)
-      user_feed(uid).try(:[], :feed).try(:[], 'student').try(:[], 'roles')
-    end
-
-    def self.award_honors(uid)
-      user_feed(uid).try(:[], :feed).try(:[], 'student').try(:[], 'awardHonors')
-    end
-
-    def self.degrees(uid)
-      user_feed(uid).try(:[], :feed).try(:[], 'student').try(:[], 'degrees')
-    end
-
-    def self.user_feed(uid)
-      self.new(uid).get_feed.try(:[], :feed)
-    end
-
-    def self.status_code(uid)
-      self.new(uid).get_feed.try(:[], :statusCode)
-    end
-
-    def self.errored?(uid)
-      self.new(uid).get_feed.try(:[], :errored)
-    end
-
-    def self.error_message(uid)
-      self.new(uid).get_feed.try(:[], :body)
+      (self.new(uid).holds.try(:to_a).try(:length) || 0) > 0
     end
 
     def self.active_plans(uid)
       [].tap do |plans|
-        academic_statuses(uid).try(:each) do |status|
+        self.new(uid).academic_statuses.try(:each) do |status|
           status.try(:[], 'studentPlans').try(:each) do |plan|
             if (plan.try(:[], 'statusInPlan').try(:[], 'status').try(:[], 'code') == 'AC')
               plan[:careerRole] = status.try(:[], 'studentCareer').try(:[], :role)
@@ -127,6 +93,43 @@ module MyAcademics
     def program_based_role(studentProgram)
       program_code = studentProgram.try(:[], 'program').try(:[], 'code')
       get_academic_program_roles(program_code).try(:first) if studentProgram
+    end
+
+    def feed
+      get_feed.try(:[], :feed)
+    end
+
+    def status_code
+      get_feed.try(:[], :statusCode)
+    end
+
+    def errored?
+      get_feed.try(:[], :errored)
+    end
+
+    def error_message
+      return get_feed.try(:[], :body) if errored?
+      nil
+    end
+
+    def academic_statuses
+      feed.try(:[], 'academicStatuses')
+    end
+
+    def holds
+      feed.try(:[], 'holds') || []
+    end
+
+    def award_honors
+      feed.try(:[], 'awardHonors')
+    end
+
+    def degrees
+      feed.try(:[], 'degrees')
+    end
+
+    def max_terms_in_attendance
+      (academic_statuses || []).collect {|s| s['termsInAttendance']}.sort.last
     end
   end
 end

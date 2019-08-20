@@ -28,7 +28,6 @@ describe AdvisingStudentController do
 
   before do
     session['user_id'] = session_user_id
-    allow(HubEdos::Student).to receive(:new).and_return(hubedos_student)
     allow(User::AggregatedAttributes).to receive(:new).with(student_uid).and_return double get_feed: student_attributes
     allow(User::AggregatedAttributes).to receive(:new).with(session_user_id).and_return double get_feed: session_user_attributes
   end
@@ -130,8 +129,6 @@ describe AdvisingStudentController do
         it_behaves_like 'an endpoint receiving a valid request'
         it 'should return data' do
           feed = JSON.parse(body = subject.body)
-          puts "feed.key: #{feed.keys}"
-          puts "feed: #{feed.inspect}"
           expect(feed['collegeAndLevel']).to be
         end
       end

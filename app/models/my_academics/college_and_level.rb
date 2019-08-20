@@ -20,25 +20,23 @@ module MyAcademics
     end
 
     def hub_college_and_level
-      hub_response = MyAcademics::MyAcademicStatus.new(@uid).get_feed
-      hub_student = HubEdos::Student.new(@uid)
+      hub_academic_statuses = MyAcademics::MyAcademicStatus.new(@uid)
       college_and_level = {
         holds: {
           hasHolds: MyAcademics::MyAcademicStatus.has_holds?(@uid)
         },
-        awardHonors: parse_hub_award_honors(MyAcademics::MyAcademicStatus.award_honors(@uid)),
-        degrees: parse_hub_degrees(MyAcademics::MyAcademicStatus.degrees(@uid)),
-        roles: MyAcademics::MyAcademicStatus.roles(@uid),
-        statusCode: MyAcademics::MyAcademicStatus.status_code(@uid),
-        errored: MyAcademics::MyAcademicStatus.errored?(@uid),
-        body: MyAcademics::MyAcademicStatus.error_message(@uid),
+        awardHonors: parse_hub_award_honors(hub_academic_statuses.award_honors),
+        degrees: parse_hub_degrees(hub_academic_statuses.degrees),
+        statusCode: hub_academic_statuses.status_code,
+        errored: hub_academic_statuses.errored?,
+        body:hub_academic_statuses.error_message,
       }
 
-      statuses = MyAcademics::MyAcademicStatus.academic_statuses(@uid)
+      statuses = hub_academic_statuses.academic_statuses
       if (status = statuses.first)
         registration_term = status.try(:[], 'currentRegistration').try(:[], 'term')
         college_and_level[:careers] = parse_hub_careers statuses
-        college_and_level[:levels] = hub_student.student_academic_levels
+        college_and_level[:levels] = MyAcademics::AcademicLevels.new(@uid).get_feed[:academic_levels]
         college_and_level[:termName] = parse_hub_term_name(registration_term).try(:[], 'name')
         college_and_level[:termId] = registration_term.try(:[], 'id')
         college_and_level[:termsInAttendance] = status.try(:[], 'termsInAttendance').try(:to_s)
@@ -46,7 +44,7 @@ module MyAcademics
       else
         college_and_level[:empty] = true
       end
-      college_and_level[:termsInAttendance] = hub_student.max_terms_in_attendance.to_s
+      college_and_level[:termsInAttendance] = hub_academic_statuses.max_terms_in_attendance.to_s
       college_and_level
     end
 

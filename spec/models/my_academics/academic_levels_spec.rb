@@ -1,32 +1,49 @@
-describe HubEdos::Student do
+describe MyAcademics::AcademicLevels do
   let(:uid) { random_id }
+
   let(:student_api_response) { {:feed => student_feed} }
   let(:student_feed) { {'names' => []} }
   subject { described_class.new(uid) }
 
-  describe '#max_terms_in_attendance' do
-    let(:academic_statuses_array) { [academic_status_one] }
-    let(:student_feed) { {'academicStatuses' => academic_statuses_array} }
-    before { allow(subject).to receive(:student_data).and_return(student_api_response) }
-    context 'when single status includes terms in attendance count' do
-      let(:academic_status_one) { {'termsInAttendance' => 4} }
-      it 'returns term in attendance integer' do
-        expect(subject.max_terms_in_attendance).to eq 4
-      end
+  let(:registrations_feed) do
+    {
+      statusCode: 200,
+      feed: {
+        'registrations' => [
+          {'term' => {'id' => '2198'}, 'academicCareer' => {'code' => 'LAW'}},
+          {'term' => {'id' => '2195'}, 'academicCareer' => {'code' => 'UGRD'}},
+          {'term' => {'id' => '2192'}, 'academicCareer' => {'code' => 'UGRD'}},
+        ]
+      }
+    }
+  end
+
+  describe '#get_feed' do
+    it 'returns student academic levels' do
+      allow(subject).to receive(:student_academic_levels).and_return(['Professional Year 3'])
+      expect(subject.get_feed[:academic_levels]).to eq ['Professional Year 3']
     end
-    context 'when multiple statuses include terms in attendance count' do
-      let(:academic_status_one) { {'termsInAttendance' => 6} }
-      let(:academic_status_two) { {'termsInAttendance' => 5} }
-      let(:academic_statuses_array) { [academic_status_one, academic_status_two] }
-      it 'returns highest term in attendance integer' do
-        expect(subject.max_terms_in_attendance).to eq 6
-      end
+  end
+
+  describe '#student_data' do
+    let(:registrations_proxy) { double(:registrations_proxy, get: registrations_feed) }
+    before { allow(HubEdos::StudentApi::V2::Registrations).to receive(:new).and_return(registrations_proxy) }
+    it 'loads registration proxy data' do
+      result = subject.instance_eval { student_data }
+      expect(result[:statusCode]).to eq 200
+      expect(result[:feed].has_key?('registrations')).to eq true
+      expect(result[:feed]['registrations'].count).to eq 3
     end
-    context 'when no statuses include terms in attendance counts' do
-      let(:academic_status_one) { {} }
-      it 'returns nil' do
-        expect(subject.max_terms_in_attendance).to eq nil
-      end
+    it 'memoizes registration proxy data' do
+      expect(HubEdos::StudentApi::V2::Registrations).to receive(:new).once.and_return(registrations_proxy)
+      result1 = subject.instance_eval { student_data }
+      result2 = subject.instance_eval { student_data }
+      expect(result1[:statusCode]).to eq 200
+      expect(result1[:feed].has_key?('registrations')).to eq true
+      expect(result1[:feed]['registrations'].count).to eq 3
+      expect(result2[:statusCode]).to eq 200
+      expect(result2[:feed].has_key?('registrations')).to eq true
+      expect(result2[:feed]['registrations'].count).to eq 3
     end
   end
 
@@ -158,7 +175,7 @@ describe HubEdos::Student do
       ]
     end
     let(:student_proxy) { double(:student_proxy, :get => student_api_response) }
-    before { allow(HubEdos::StudentApi::V2::Student).to receive(:new).and_return(student_proxy) }
+    before { allow(HubEdos::StudentApi::V2::Registrations).to receive(:new).and_return(student_proxy) }
     it 'returns ihub student api v2 feed' do
       expect(subject.instance_eval { student_data[:feed].has_key?('registrations') }).to eq true
     end
