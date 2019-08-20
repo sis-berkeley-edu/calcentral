@@ -7,7 +7,7 @@ var _ = require('lodash');
  */
 angular.module('calcentral.controllers').controller('DemographicVeteranController', function(profileFactory, $scope, $q) {
   var parsePerson = function(data) {
-    var person = data.data.feed.student;
+    var person = data.data.feed;
     angular.extend($scope, {
       veteranStatus: {
         content: _.get(person, 'usaCountry.militaryStatus')
