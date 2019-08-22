@@ -172,8 +172,8 @@ describe EdoOracle::FinancialAid::Queries do
     it_behaves_like 'a successful query that returns one result'
 
     it 'returns the expected result' do
-      expect(subject.count).to eq 12
-      expect(subject).to have_keys(%w(aid_year acad_career_descr exp_grad_term sap_status verification_status award_status acad_holds candidacy filing_fee berkeley_pc title message))
+      expect(subject.count).to eq 11
+      expect(subject).to have_keys(%w(aid_year acad_career_descr exp_grad_term sap_status verification_status award_status candidacy filing_fee berkeley_pc title message))
     end
   end
 
@@ -353,5 +353,5 @@ describe EdoOracle::FinancialAid::Queries do
 
     it_behaves_like 'a successful query'
   end
-  
+
 end
