@@ -253,7 +253,6 @@ module EdoOracle
           UC.DESCR3               AS SAP_STATUS,
           UC.DESCR4               AS VERIFICATION_STATUS,
           UC.DESCR5               AS AWARD_STATUS,
-          UC.DESCR6               AS ACAD_HOLDS,
           UC.DESCRFORMAL          AS CANDIDACY,
           UC.DESCR7               AS FILING_FEE,
           UC.DESCR8               AS BERKELEY_PC,

@@ -30,7 +30,6 @@ class PopulateSysadmH2 < ActiveRecord::Base
         DESCR3                      VARCHAR2(30 CHAR),
         DESCR4                      VARCHAR2(30 CHAR),
         DESCR5                      VARCHAR2(30 CHAR),
-        DESCR6                      VARCHAR2(30 CHAR),
         DESCRFORMAL                 VARCHAR2(50 CHAR),
         DESCR7                      VARCHAR2(30 CHAR),
         DESCR8                      VARCHAR2(30 CHAR),
@@ -38,9 +37,9 @@ class PopulateSysadmH2 < ActiveRecord::Base
         MESSAGE_TEXT_LONG           CLOB
       );
 
-      INSERT INTO SYSADM.PS_UCC_FA_PRFL_FAT (EMPLID,CAMPUS_ID,INSTITUTION,AID_YEAR,DESCR,DESCR2,DESCR3,DESCR4,DESCR5,DESCR6,DESCRFORMAL,DESCR7,DESCR8,TITLE,MESSAGE_TEXT_LONG) VALUES ('11667051','61889','UCB01','2017','Undergraduate','Spring 2019','Meeting Satis Acad Progress','Non Select','Packaged','0',null,null,'$0','Financial Aid Profile','We take many factors into consideration when determining your funding package. Updates made elsewhere to your personal information may affect the amount of aid provided to you.');
-      INSERT INTO SYSADM.PS_UCC_FA_PRFL_FAT (EMPLID,CAMPUS_ID,INSTITUTION,AID_YEAR,DESCR,DESCR2,DESCR3,DESCR4,DESCR5,DESCR6,DESCRFORMAL,DESCR7,DESCR8,TITLE,MESSAGE_TEXT_LONG) VALUES ('11667051','61889','UCB01','2018','Undergraduate','Spring 2019','Meeting Satis Acad Progress','Verified','Packaged','0',null,null,'$0','Financial Aid Profile','We take many factors into consideration when determining your funding package. Updates made elsewhere to your personal information may affect the amount of aid provided to you.');
-      INSERT INTO SYSADM.PS_UCC_FA_PRFL_FAT (EMPLID,CAMPUS_ID,INSTITUTION,AID_YEAR,DESCR,DESCR2,DESCR3,DESCR4,DESCR5,DESCR6,DESCRFORMAL,DESCR7,DESCR8,TITLE,MESSAGE_TEXT_LONG) VALUES ('11667051','61889','UCB01','2019','Undergraduate','Spring 2019','Meeting Satis Acad Progress','Verified','Packaged','0',null,null,'$0','Financial Aid Profile','We take many factors into consideration when determining your funding package. Updates made elsewhere to your personal information may affect the amount of aid provided to you.');
+      INSERT INTO SYSADM.PS_UCC_FA_PRFL_FAT (EMPLID,CAMPUS_ID,INSTITUTION,AID_YEAR,DESCR,DESCR2,DESCR3,DESCR4,DESCR5,DESCRFORMAL,DESCR7,DESCR8,TITLE,MESSAGE_TEXT_LONG) VALUES ('11667051','61889','UCB01','2017','Undergraduate','Spring 2019','Meeting Satis Acad Progress','Non Select','Packaged',null,null,'$0','Financial Aid Profile','We take many factors into consideration when determining your funding package. Updates made elsewhere to your personal information may affect the amount of aid provided to you.');
+      INSERT INTO SYSADM.PS_UCC_FA_PRFL_FAT (EMPLID,CAMPUS_ID,INSTITUTION,AID_YEAR,DESCR,DESCR2,DESCR3,DESCR4,DESCR5,DESCRFORMAL,DESCR7,DESCR8,TITLE,MESSAGE_TEXT_LONG) VALUES ('11667051','61889','UCB01','2018','Undergraduate','Spring 2019','Meeting Satis Acad Progress','Verified','Packaged',null,null,'$0','Financial Aid Profile','We take many factors into consideration when determining your funding package. Updates made elsewhere to your personal information may affect the amount of aid provided to you.');
+      INSERT INTO SYSADM.PS_UCC_FA_PRFL_FAT (EMPLID,CAMPUS_ID,INSTITUTION,AID_YEAR,DESCR,DESCR2,DESCR3,DESCR4,DESCR5,DESCRFORMAL,DESCR7,DESCR8,TITLE,MESSAGE_TEXT_LONG) VALUES ('11667051','61889','UCB01','2019','Undergraduate','Spring 2019','Meeting Satis Acad Progress','Verified','Packaged',null,null,'$0','Financial Aid Profile','We take many factors into consideration when determining your funding package. Updates made elsewhere to your personal information may affect the amount of aid provided to you.');
 
       DROP TABLE IF EXISTS SYSADM.PS_UCC_FA_PRFL_CAR;
       CREATE TABLE SYSADM.PS_UCC_FA_PRFL_CAR (
