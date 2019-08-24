@@ -267,7 +267,8 @@ cache:
     CampusOracle::UserCourses::All: NEXT_08_00
 
     EdoOracle::CourseSections: <%= 8.hours %>
-    EdoOracle::UserCourses::All: <%= 8.hours %>
+    EdoOracle::UserCourses::All: <%= 15.minutes %>
+    EdoOracle::UserCourses::Base: <%= 8.hours %>
 
     Canvas::MergedUserSites: <%= 30.minutes %>
     Canvas::UserCourses: <%= 30.minutes %>

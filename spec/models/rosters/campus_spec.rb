@@ -169,7 +169,7 @@ describe Rosters::Campus do
     before do
       expect(Berkeley::Terms).to receive(:legacy?).at_least(1).times.and_return is_legacy
       allow(CampusOracle::UserCourses::All).to receive(:new).with(user_id: user_id).and_return(double(get_all_campus_courses: fake_oracle))
-      allow(EdoOracle::UserCourses::All).to receive(:new).with(user_id: user_id).and_return(double(get_all_campus_courses: fake_edo))
+      allow(EdoOracle::UserCourses::All).to receive(:new).with(user_id: user_id).and_return(double(all_campus_courses: fake_edo))
     end
 
     context 'two-section course from legacy data' do

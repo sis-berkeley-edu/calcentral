@@ -189,6 +189,50 @@ module EdoOracle
       SQL
     end
 
+    def self.get_enrollment_grading(person_id, terms)
+      in_term_where_clause = "enr.\"TERM_ID\" IN (#{terms_query_list terms}) AND" unless terms.nil?
+      safe_query <<-SQL
+      SELECT DISTINCT
+        enr.STUDENT_ID,
+        enr.INSTITUTION,
+        enr.TERM_ID,
+        enr.SESSION_ID,
+        enr.ACAD_CAREER,
+        enr.CRSE_CAREER,
+        TO_CHAR(enr.CLASS_SECTION_ID) AS class_section_id,
+        enr.UNITS_TAKEN,
+        enr.UNITS_EARNED,
+        enr.GRADE_MARK AS grade,
+        enr.GRADE_POINTS AS grade_points,
+        enr.GRADING_BASIS_CODE AS grading_basis,
+        enr.INCLUDE_IN_GPA AS include_in_gpa,
+        CASE
+          WHEN
+            enr.GRADE_MARK = 'I' AND term.TERM_END_DT + 30 <= SYSDATE
+          THEN 'Y'
+          ELSE 'N'
+        END AS grading_lapse_deadline_display,
+        lapse_dt.LAPSE_DEADLINE as grading_lapse_deadline
+      FROM SISEDO.CLC_ENROLLMENTV00_VW enr
+      LEFT OUTER JOIN SYSADM.PS_UCC_SR_LAPSE_DT lapse_dt ON (
+        enr.INSTITUTION = lapse_dt.INSTITUTION AND
+        enr.CRSE_CAREER = lapse_dt.ACAD_CAREER AND
+        enr.TERM_ID = lapse_dt.STRM AND
+        enr.CLASS_SECTION_ID = lapse_dt.CLASS_NBR AND
+        enr.STUDENT_ID = lapse_dt.EMPLID
+      )
+      INNER JOIN SISEDO.EXTENDED_TERM_MVW term ON (
+        enr.TERM_ID = term.STRM AND
+        enr.ACAD_CAREER = term.ACAD_CAREER
+      )
+      WHERE
+        enr.STDNT_ENRL_STATUS_CODE != 'D' AND
+        #{in_term_where_clause}
+        enr.CAMPUS_UID = '#{person_id}'
+        #{and_institution('enr')}
+      SQL
+    end
+
     def self.get_enrolled_sections(person_id, terms)
       # The push_pred hint below alerts Oracle to use indexes on SISEDO.API_COURSEV00_VW, aka crs.
       in_term_where_clause = "enr.\"TERM_ID\" IN (#{terms_query_list terms}) AND" unless terms.nil?
@@ -198,12 +242,6 @@ module EdoOracle
           sec."maxEnroll" AS enroll_limit,
           ENR.STDNT_ENRL_STATUS_CODE AS enroll_status,
           ENR.WAITLISTPOSITION AS waitlist_position,
-          ENR.UNITS_TAKEN,
-          ENR.UNITS_EARNED,
-          ENR.GRADE_MARK AS grade,
-          ENR.GRADE_POINTS AS grade_points,
-          ENR.GRADING_BASIS_CODE AS grading_basis,
-          ENR.INCLUDE_IN_GPA AS include_in_gpa,
           ENR.ACAD_CAREER,
           TRIM(TO_CHAR(ENR.DROP_CLASS_IF_ENRL, 9999999)) AS drop_class_if_enrl,
           TO_CHAR(ENR.LAST_ENRL_DT_STMP, 'MON DD, YYYY') AS last_enrl_dt_stmp,
@@ -212,13 +250,6 @@ module EdoOracle
             THEN ENR.RQMNT_DESIGNTN
             ELSE NULL
           END AS RQMNT_DESIGNTN,
-          CASE
-            WHEN
-              enr.GRADE_MARK = 'I' AND term.TERM_END_DT + 30 <= SYSDATE
-            THEN 'Y'
-            ELSE 'N'
-          END AS grading_lapse_deadline_display,
-          lapse_dt.LAPSE_DEADLINE as grading_lapse_deadline,
           TRIM(TO_CHAR(reason.message_nbr, 9999999)) as message_nbr,
           reason.uc_reason_desc,
           reason.error_message_txt,
@@ -232,13 +263,6 @@ module EdoOracle
           enr."CLASS_SECTION_ID" = sec."id" AND
           sec."status-code" IN ('A','S') )
         #{JOIN_SECTION_TO_COURSE}
-        LEFT OUTER JOIN SYSADM.PS_UCC_SR_LAPSE_DT lapse_dt ON (
-          enr.INSTITUTION = lapse_dt.INSTITUTION AND
-          enr.CRSE_CAREER = lapse_dt.ACAD_CAREER AND
-          enr.TERM_ID = lapse_dt.STRM AND
-          enr.CLASS_SECTION_ID = lapse_dt.CLASS_NBR AND
-          enr.STUDENT_ID = lapse_dt.EMPLID
-        )
         LEFT OUTER JOIN SYSADM.PS_UCC_NOTENRL_RSN reason on (
           enr.INSTITUTION = reason.INSTITUTION AND
           enr.CRSE_CAREER = reason.ACAD_CAREER AND
