@@ -10,7 +10,7 @@ class ServerRuntime
 
     settings = {}
     settings['firstVisited'] = `date`.strip
-    settings['hostname'] = `hostname -s`.strip
+    settings['hostname'] = `hostname`.strip
 
     begin
       git_file = File.open Rails.root.join('versions', 'git.txt')
