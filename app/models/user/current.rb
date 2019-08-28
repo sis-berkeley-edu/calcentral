@@ -13,5 +13,25 @@ module User
     def billing_summary
       @billing_summary ||= User::Finances::BillingSummary.new(self)
     end
+
+    def registrations
+      @registrations ||= User::Academics::Registrations.new(self)
+    end
+
+    def user_attributes
+      @user_attributes ||= User::UserAttributes.new(self)
+    end
+
+    def student_attributes
+      @student_attributes ||= User::Academics::StudentAttributes.new(self)
+    end
+
+    def term_registrations
+      @term_registrations ||= User::Academics::TermRegistrations.new(self)
+    end
+
+    def status_and_holds
+      @status_and_holds ||= User::Academics::StatusAndHolds.new(self)
+    end
   end
 end

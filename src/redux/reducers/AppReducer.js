@@ -16,6 +16,7 @@ import TransferCreditReducer from './TransferCreditReducer';
 import LinksReducer from './LinksReducer';
 import RouteReducer from './RouteReducer';
 import StandingsReducer from './StandingsReducer';
+import StatusAndHoldsReducer from './StatusAndHoldsReducer';
 
 const AppReducer = combineReducers({
   advising: AdvisingReducer,
@@ -33,6 +34,7 @@ const AppReducer = combineReducers({
   myRegistrations: RegistrationsReducer,
   myStandings: StandingsReducer,
   myStatus: StatusReducer,
+  myStatusAndHolds: StatusAndHoldsReducer,
   myTransferCredit: TransferCreditReducer
 });
 
