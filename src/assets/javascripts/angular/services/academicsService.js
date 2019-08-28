@@ -208,7 +208,7 @@ angular.module('calcentral.services').service('academicsService', function() {
                   // add to the existing swapToCourse and swapToSection
                   existingSwap.swapToAdditionalCourse.push(waitCourse);
                   existingSwap.swapToAdditionalSection.push(waitSection);
-                  waitCourse.swap_number = index;
+                  waitCourse.swap_number = index + 1;
                   foundSwapClass = true;
                 }
               });
