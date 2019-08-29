@@ -5,6 +5,17 @@
   .cc-widget-finaid-awards-padding-top {
     margin-top: 10px;
   }
+  .cc-widget-finaid-awards-link {
+    display: flex;
+    margin: 10px 15px;
+  }
+  .cc-widget-finaid-awards-link-download-icon {
+    background-image: url('/assets/images/download.svg');
+    background-position-y: center;
+    background-repeat: no-repeat;
+    background-size: 12px 11px;
+    padding-left: 18px;
+  }
   .cc-widget-finaid-awards-section {
     margin-top: 15px;
   }

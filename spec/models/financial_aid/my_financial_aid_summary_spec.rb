@@ -64,9 +64,8 @@ describe FinancialAid::MyFinancialAidSummary do
     end
     it 'provides the expected links' do
       expect(subject[:financialAidSummary][:links]).to be
-      expect(subject[:financialAidSummary][:links].count).to eq 3
+      expect(subject[:financialAidSummary][:links].count).to eq 2
       expect(subject[:financialAidSummary][:links][:financialAidWebsite]).to eq 'financial_aid website link'
-      expect(subject[:financialAidSummary][:links][:financialAidTranscript]).to eq 'financial_aid transcript link'
       expect(subject[:financialAidSummary][:links][:calStudentCentral]).to eq 'cal student central link'
     end
     it 'does not provide a link to the Shopping Sheet' do
