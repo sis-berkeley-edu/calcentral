@@ -9,7 +9,7 @@ describe MyAcademics::AdvisorLinks do
       }
     }
   end
-  let(:updatePlanUrl) do
+  let(:updatePlanLink) do
     {
       link: {
         name: 'Update Multi-Year Planner',
@@ -18,15 +18,16 @@ describe MyAcademics::AdvisorLinks do
     }
   end
 
-  before do
-    crosswalk_double = double(lookup_campus_solutions_id: user_cs_id)
-    allow(CalnetCrosswalk::ByUid).to receive(:new).with(user_id: uid).and_return(crosswalk_double)
-
-    # stub CS Link proxy responses
+  let(:crosswalk) { double(lookup_campus_solutions_id: user_cs_id) }
+  let(:cs_link_proxy) do
     fake_cs_link_proxy = double
     allow(fake_cs_link_proxy).to receive(:get_url).with('UC_CX_XFER_CREDIT_REPORT_ADVSR').and_return(tcReportLink)
-    allow(fake_cs_link_proxy).to receive(:get_url).with('UC_CX_PLANNER_ADV_STDNT').and_return(updatePlanUrl)
-    allow(CampusSolutions::Link).to receive(:new).and_return(fake_cs_link_proxy)
+    allow(fake_cs_link_proxy).to receive(:get_url).with('UC_CX_PLANNER_ADV_STDNT').and_return(updatePlanLink)
+    fake_cs_link_proxy
+  end
+  before do
+    allow(CalnetCrosswalk::ByUid).to receive(:new).with(user_id: uid).and_return(crosswalk)
+    allow(CampusSolutions::Link).to receive(:new).and_return(cs_link_proxy)
   end
 
   subject do
