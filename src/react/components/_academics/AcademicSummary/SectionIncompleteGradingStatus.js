@@ -46,7 +46,7 @@ SectionIncompleteGradingStatus.propTypes = propTypes;
 
 const mapStateToProps = ({ myAcademics }) => {
   const {
-    studentLinks: { academicGuideGradesPolicy: academicGuideGradesPolicyLink }
+    studentLinks: { academicGuideGradesPolicy: academicGuideGradesPolicyLink } = {}
   } = myAcademics;
   return { academicGuideGradesPolicyLink };
 };
