@@ -10,16 +10,7 @@
       data-cc-campus-solutions-link-directive-uc-from-text="true"
     >{{financialAidSummary.selected.shoppingSheetLink.name}}<i class="fa fa-file-text"></i></a>
   </div>
-  <div data-ng-if="financialAidSummary.links.financialAidTranscript.url">
-    <ul class="cc-list-links">
-      <li><a data-ng-if="financialAidSummary.links.financialAidWebsite.url"
-        data-cc-campus-solutions-link-directive="financialAidSummary.links.financialAidWebsite"
-      ></a></li>
-      <li><a data-ng-if="financialAidSummary.links.financialAidTranscript.url"
-        data-cc-campus-solutions-link-directive="financialAidSummary.links.financialAidTranscript"
-      ></a></li>
-  </div>
-  <div data-ng-if="!financialAidSummary.links.financialAidTranscript.url">
+  <div data-ng-if="financialAidSummary.links.financialAidWebsite.url">
       <a data-ng-if="financialAidSummary.links.financialAidWebsite.url"
         data-cc-campus-solutions-link-directive="financialAidSummary.links.financialAidWebsite"
       ></a>
