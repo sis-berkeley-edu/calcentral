@@ -13,7 +13,7 @@ const NotFound404 = () => (
           <p>
             For some reason CalCentral is unable to find the page you requested.
             To go to CalCentral, click the button below.
-            To report a missing page, click the <a href="http://ets.berkeley.edu/calcentral-feedback">Feedback</a> link.
+            To report a missing page, click the <a href="https://sis.berkeley.edu/help/report-issue">Feedback</a> link.
           </p>
         </div>
         <div className="cc-right cc-page-status-magnifying"></div>
