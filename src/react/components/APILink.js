@@ -21,12 +21,12 @@ const APILink = ({ disabled, title, name, url, ucFrom, ucFromText }) => {
   }
 
   const currentUrl = window.location.href;
-
+  const queryStringPrefix = url.includes('?') ? '&' : true;
   const href = url + qs.stringify({
     ucFrom,
     ucFromText,
-    ucFromLink: currentUrl  
-  }, true);
+    ucFromLink: currentUrl
+  }, queryStringPrefix);
 
   return (
     <a href={href} title={title} onClick={(e) => e.stopPropagation()}>
