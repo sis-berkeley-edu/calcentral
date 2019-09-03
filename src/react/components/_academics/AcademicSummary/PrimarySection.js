@@ -12,7 +12,6 @@ const propTypes = {
   showPoints: PropTypes.bool
 };
 
-
 let SingleSection = ({
   showPoints,
   canViewGrades,
@@ -83,10 +82,13 @@ let SingleSection = ({
           }
         </td>
       </tr>
-      <SectionIncompleteGradingStatus
-        gradingLapseDeadlineDisplay={grading.gradingLapseDeadlineDisplay}
-        gradingLapseDeadline={grading.gradingLapseDeadline}
-        gradingBasis={grading.gradingBasis}/>
+      {grading &&
+        <SectionIncompleteGradingStatus
+          gradingLapseDeadlineDisplay={grading.gradingLapseDeadlineDisplay}
+          gradingLapseDeadline={grading.gradingLapseDeadline}
+          gradingBasis={grading.gradingBasis}
+          klass={klass}/>
+      }
     </Fragment>
   );
 };

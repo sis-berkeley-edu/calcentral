@@ -14,6 +14,7 @@ module MyAcademics
         Exams,
         AcademicPlan,
         AdvisorLinks,
+        StudentLinks,
         Graduation,
         Teaching
       ]

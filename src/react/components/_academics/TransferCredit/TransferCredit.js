@@ -23,7 +23,7 @@ const TransferCredit = ({
   advisorLinks, ...careers
 }) => {
   const reportLink = () =>{
-    const links = studentLinks || advisorLinks;
+    const links = advisorLinks || studentLinks;
     if (links) {
       return links.tcReportLink;
     }
@@ -40,7 +40,7 @@ const TransferCredit = ({
         reportLink={reportLink()}
       />
       <LawTransferCredit {...careers.law}
-        semesters={semesters} 
+        semesters={semesters}
         isStudent={isStudent}
         reportLink={reportLink()}
       />
