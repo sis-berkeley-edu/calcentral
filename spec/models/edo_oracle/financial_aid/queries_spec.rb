@@ -354,4 +354,10 @@ describe EdoOracle::FinancialAid::Queries do
     it_behaves_like 'a successful query'
   end
 
+  describe '#get_financial_resources_links' do
+    subject { described_class.get_financial_resources_links() }
+
+    it_behaves_like 'a successful query'
+  end
+
 end
