@@ -44,7 +44,8 @@ module SpecHelperModule
         "academicProgram" => {
           "program" => {
             "code" => cpp_hash[:program_code],
-            "description" => cpp_hash[:program_description]
+            "description" => cpp_hash[:program_description],
+            "formalDescription" => cpp_hash[:program_formal_description]
           },
           "academicCareer" => {
             "code" => cpp_hash[:career_code],

@@ -28,7 +28,7 @@ export const fetchProfile = () => {
       dispatch(fetchProfileStart());
       return axios.get('/api/my/profile')
         .then(({ data }) => {
-          dispatch(fetchProfileSuccess(data.feed.student));
+          dispatch(fetchProfileSuccess(data.feed));
         })
         .catch(error => {
           if (error.response) {

@@ -11,7 +11,7 @@ class MyProfileController < ApplicationController
       else
         {}
     end
-    render json: HubEdos::StudentApi::V1::MyStudent.from_session(session, options).get_feed_as_json
+    render json: HubEdos::MyStudent.from_session(session, options).get_feed_as_json
   end
 
   def get_edit_link

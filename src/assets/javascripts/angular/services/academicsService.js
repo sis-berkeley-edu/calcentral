@@ -185,8 +185,8 @@ angular.module('calcentral.services').service('academicsService', function() {
 
   var getSwapClasses = function(enrolledCourses, waitlistedCourses) {
     // handle multiple swaps to one enrolled class
-    var enrolledClassSet = new Set();
     var swapClassList = [];
+    let foundSwapClass = false;
     // initialize swap_number
     _.forEach(enrolledCourses, function(course) {
       course.swap_number = 0;
@@ -201,16 +201,29 @@ angular.module('calcentral.services').service('academicsService', function() {
           _.forEach(waitCourse.sections, function(waitSection) {
             if (waitSection.drop_class_if_enrl === enrollSection.ccn &&
                 enrollSection.is_primary_section === true && waitSection.is_primary_section === true) {
-              enrolledClassSet.add(enrollSection.ccn);
-              enrollCourse.swap_number = enrolledClassSet.size;
-              waitCourse.swap_number = enrolledClassSet.size;
-              var swapClass = {};
-              swapClass.swapFromCourse = enrollCourse;
-              swapClass.swapFromSection = enrollSection;
-              swapClass.swapToCourse = waitCourse;
-              swapClass.swapToSection = waitSection;
-              swapClass.dateRequested = waitSection.last_enrl_dt_stmp;
-              swapClassList.push(swapClass);
+              foundSwapClass = false;
+              // find if the enrolled class already has swap
+              swapClassList.map( (existingSwap, index) => {
+                if (existingSwap.swapFromSection.ccn === enrollSection.ccn) {
+                  // add to the existing swapToCourse and swapToSection
+                  existingSwap.swapToAdditionalCourse.push(waitCourse);
+                  existingSwap.swapToAdditionalSection.push(waitSection);
+                  waitCourse.swap_number = index + 1;
+                  foundSwapClass = true;
+                }
+              });
+              if (foundSwapClass === false) {
+                let newSwapClass = {};
+                waitCourse.swap_number = swapClassList.length + 1;
+                enrollCourse.swap_number = swapClassList.length + 1;
+                newSwapClass.swapFromCourse = enrollCourse;
+                newSwapClass.swapFromSection = enrollSection;
+                newSwapClass.swapToCourse = waitCourse;
+                newSwapClass.swapToSection = waitSection;
+                newSwapClass.swapToAdditionalCourse = [];
+                newSwapClass.swapToAdditionalSection = [];
+                swapClassList.push(newSwapClass);
+              }
             }
           });
         });

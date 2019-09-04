@@ -24,5 +24,4 @@ class UserSpecificModel
   def self.filtered(session={})
     Hash[SessionKey::ALL_KEYS.collect { |k| [k, session[k]] }]
   end
-
 end

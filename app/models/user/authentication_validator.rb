@@ -48,9 +48,8 @@ module User
     end
 
     def held_applicant?
-      cs_feed = HubEdos::StudentApi::V1::Affiliations.new(user_id: @auth_uid).get
-      cs_student = cs_feed.try(:[], :feed).try(:[], 'student')
-      if affiliations = cs_student.try(:[], 'affiliations')
+      cs_feed = HubEdos::PersonApi::V1::SisPerson.new(user_id: @auth_uid).get
+      if affiliations = cs_feed.try(:[], :feed).try(:[], 'affiliations')
         affiliations = HashConverter.symbolize affiliations
         cs_roles = roles_from_cs_affiliations(affiliations)
         if @user_auth_handler.present? && is_slate_auth_handler?(@user_auth_handler)

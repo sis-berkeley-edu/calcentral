@@ -6,14 +6,17 @@ module HubEdos
     include CampusSolutions::ProfileFeatureFlagged
     include User::Identifiers
     include SafeJsonParser
-    include ResponseHandler
 
     def initialize(options = {})
-      super(Settings.hub_edos_proxy, options)
+      super(settings, options)
       if @fake
         @campus_solutions_id = lookup_campus_solutions_id
         initialize_mocks
       end
+    end
+
+    def settings
+      Settings.hub_edos_proxy
     end
 
     def instance_key
@@ -68,21 +71,16 @@ module HubEdos
         response = get_response(url, opts)
         logger.debug "Remote server status #{response.code}, Body = #{response.body.force_encoding('UTF-8')}"
         if response.code == 404
-          if response['StudentResponse'] && response['StudentResponse']['message'].in?(['Student Not Found', 'Data not found.'])
-            logger.warn "Response '#{response['StudentResponse']['message']}' for UID #{@uid}, Campus Solutions ID #{@campus_solutions_id}"
-            feed = build_feed response
-            student_not_found = true
-          else
-            logger.error "Unexpected 404 response for UID #{@uid}, Campus Solutions ID #{@campus_solutions_id}: #{response}"
-            feed = empty_feed
-          end
+          logger.error "Unexpected 404 response for UID #{@uid}, Campus Solutions ID #{@campus_solutions_id}: #{response}"
+          feed = empty_feed
+          student_not_found = true
         else
           feed = build_feed response
         end
         {
           statusCode: response.code,
           feed: feed,
-          studentNotFound: student_not_found
+          studentNotFound: student_not_found,
         }
       end
     end
@@ -124,6 +122,26 @@ module HubEdos
 
     def empty_feed
       {}
+    end
+
+    def unwrap_response(response)
+      raise Errors::ApiContractError, "Invalid response received from #{url}" unless response.is_a? Hash
+      unwrapped = wrapper_keys.inject(response) do |feed, key|
+        unless feed.is_a?(Hash) && feed.has_key?(key)
+          raise Errors::ApiContractError, "'#{key}' node not found in request to #{url}"
+        end
+        feed[key]
+      end
+      if unwrapped.respond_to?(:each)
+        return unwrapped
+      else
+        raise Errors::ApiContractError, "Unwrapped response from #{url} is an invalid type"
+      end
+    end
+
+    # Student API v2 default wrapper
+    def wrapper_keys
+      %w(apiResponse response)
     end
 
   end

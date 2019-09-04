@@ -4,7 +4,6 @@ module MyAcademics
     include Cache::CachedFeed
     include Cache::UserCacheExpiry
     include CampusSolutions::EnrollmentCardFeatureFlagged
-    include Concerns::AcademicStatus
     include Concerns::AcademicRoles
     include LinkFetcher
 
@@ -16,7 +15,7 @@ module MyAcademics
         enrollmentTermInstructionTypeDecks: get_career_term_role_decks,
         enrollmentTermInstructions: get_enrollment_term_instructions,
         enrollmentTermAcademicPlanner: get_enrollment_term_academic_planner,
-        hasHolds: has_holds?(MyAcademics::MyAcademicStatus.new(@uid).get_feed),
+        hasHolds: MyAcademics::MyAcademicStatus.has_holds?(@uid),
         links: get_links,
         messages: get_messages,
       })

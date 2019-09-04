@@ -14,7 +14,7 @@ angular.module('calcentral.controllers').controller('BasicPreferredNameControlle
   });
 
   var parsePerson = function(data) {
-    var person = data.data.feed.student;
+    var person = data.data.feed;
     var preferredName = apiService.profile.findPreferred(person.names);
     $scope.primary = apiService.profile.findPrimary(person.names);
     angular.extend($scope, {

@@ -14,7 +14,7 @@ angular.module('calcentral.controllers').controller('HonorsAwardsSectionControll
   };
 
   var parsePerson = function(data) {
-    var person = data.data.feed.student;
+    var person = data.data.feed;
     angular.extend($scope, {
       awardHonors: {
         content: parseAwardHonors(person.awardHonors)

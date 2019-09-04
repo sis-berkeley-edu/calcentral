@@ -25,6 +25,11 @@
             </span>
           </div>
         </div>
+        <div data-ng-if="finaidAwards.linkFinaidTranscript.url" class="cc-widget-finaid-awards-link">
+          <a data-ng-if="finaidAwards.linkFinaidTranscript.url"
+            data-cc-campus-solutions-link-directive="finaidAwards.linkFinaidTranscript"
+            class="cc-widget-finaid-awards-link-download-icon"></a>
+        </div>
         <div
           data-ng-repeat="key in finaidAwardsInfo.keysGiftWork"
           data-ng-include="'widgets/finaid_awards_section.html'"

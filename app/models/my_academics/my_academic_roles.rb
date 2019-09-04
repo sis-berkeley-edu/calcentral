@@ -2,7 +2,6 @@ module MyAcademics
   class MyAcademicRoles < UserSpecificModel
     include Cache::CachedFeed
     include Cache::UserCacheExpiry
-    include Concerns::AcademicStatus
     include Concerns::AcademicRoles
 
     def get_feed_internal

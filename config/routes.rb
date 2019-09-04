@@ -75,6 +75,7 @@ Calcentral::Application.routes.draw do
   get '/api/my/activities' => 'my_activities#get_feed', :as => :my_activities, :defaults => { :format => 'json' }
   get '/api/my/aid_years' => 'my_aid_years#get_feed', :defaults => { :format => 'json' }
   get '/api/my/awards/:aid_year' => 'my_awards#get_feed', :defaults => { :format => 'json' }
+  get '/api/my/awards_by_term/:aid_year' => 'my_awards_by_term#get_feed', :defaults => { :format => 'json' }
   get '/api/my/badges' => 'my_badges#get_feed', :as => :my_badges, :defaults => { :format => 'json' }
   get '/api/my/campuslinks' => 'my_campus_links#get_feed', :as => :my_campus_links, :defaults => { :format => 'json' }
   get '/api/my/campuslinks/expire' => 'my_campus_links#expire'
@@ -174,8 +175,6 @@ Calcentral::Application.routes.draw do
   get '/api/campus_solutions/financial_aid_compare_awards_list' => 'campus_solutions/financial_aid_compare_awards_list#get', :defaults => { :format => 'json' }
   get '/api/campus_solutions/financial_aid_compare_awards_prior' => 'campus_solutions/financial_aid_compare_awards_prior#get', :defaults => { :format => 'json' }
   get '/api/campus_solutions/financial_aid_data' => 'campus_solutions/financial_aid_data#get', :defaults => { :format => 'json' }
-  get '/api/campus_solutions/financial_aid_funding_sources' => 'campus_solutions/financial_aid_funding_sources#get', :defaults => { :format => 'json' }
-  get '/api/campus_solutions/financial_aid_funding_sources_term' => 'campus_solutions/financial_aid_funding_sources_term#get', :defaults => { :format => 'json' }
   get '/api/campus_solutions/financial_resources/emergency_loan' => 'campus_solutions/financial_resources#get_emergency_loan', :defaults => { :format => 'json' }
   get '/api/campus_solutions/financial_resources/summer_estimator' => 'campus_solutions/financial_resources#get_summer_estimator', :defaults => { :format => 'json' }
   get '/api/campus_solutions/fpp_enrollment' => 'campus_solutions/fpp_enrollment#get', :defaults => { :format => 'json' }

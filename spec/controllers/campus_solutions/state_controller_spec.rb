@@ -4,7 +4,7 @@ describe CampusSolutions::StateController do
     it_behaves_like 'an unauthenticated user'
     context 'authenticated user' do
       let(:user_id) { random_id }
-      let(:feed_key) { 'states' }
+      let(:feed_path) { ['feed','states'] }
       it_behaves_like 'a successful feed'
     end
   end

@@ -1,0 +1,501 @@
+{
+  "apiResponse": {
+    "httpStatus": {
+      "code": "200",
+      "description": "OK"
+    },
+    "responseType": "namespaceURI=\"http://bmeta.berkeley.edu/student/studentV1.xsd\" element=\"student\"",
+    "response": {
+      "identifiers": [
+        {
+          "type": "student-id",
+          "id": "11667051",
+          "disclose": true
+        },
+        {
+          "type": "campus-uid",
+          "id": "61889",
+          "disclose": true
+        },
+        {
+          "type": "Social Security Number",
+          "id": "000-00-0000",
+          "primary": true,
+          "disclose": false
+        },
+        {
+          "type": "DB2",
+          "id": "11667051",
+          "disclose": false,
+          "fromDate": "1902-02-01"
+        }
+      ],
+      "names": [
+        {
+          "type": {
+            "code": "PRF",
+            "description": "Preferred"
+          },
+          "familyName": "Bear",
+          "givenName": "Oski",
+          "formattedName": "Oski Bear",
+          "preferred": true,
+          "disclose": true,
+          "uiControl": {
+            "code": "U",
+            "description": "Edit - No Delete"
+          },
+          "fromDate": "2016-05-13"
+        },
+        {
+          "type": {
+            "code": "PRI",
+            "description": "Primary"
+          },
+          "familyName": "Bear",
+          "givenName": "Oski",
+          "formattedName": "Oski Bear",
+          "preferred": false,
+          "disclose": true,
+          "uiControl": {
+            "code": "D",
+            "description": "Display Only"
+          },
+          "fromDate": "1902-02-01"
+        }
+      ],
+      "affiliations": [
+        {
+          "type": {
+            "code": "ALUMFORMER",
+            "description": "Alum/Former Student",
+            "formalDescription": "An individual who has graduated or is no longer active as a Student."
+          },
+          "detail": "Former Student",
+          "status": {
+            "code": "ACT",
+            "description": "Active",
+            "formalDescription": "Active"
+          },
+          "fromDate": "2019-04-12"
+        },
+        {
+          "type": {
+            "code": "ADMT_UX",
+            "description": "Admitted student's access to Cal Central",
+            "formalDescription": "Admitted student's access to Cal Central"
+          },
+          "detail": "Active",
+          "status": {
+            "code": "ACT",
+            "description": "Active",
+            "formalDescription": "Active"
+          },
+          "fromDate": "2018-10-07"
+        },
+        {
+          "type": {
+            "code": "APPLICANT",
+            "description": "Applicant",
+            "formalDescription": "Applied for admission to UC Berkeley."
+          },
+          "detail": "SIR Completed",
+          "status": {
+            "code": "ACT",
+            "description": "Active",
+            "formalDescription": "Active"
+          },
+          "fromDate": "2018-02-02"
+        }
+      ],
+      "confidential": false,
+      "studentAttributes": [
+        {
+          "type": {
+            "code": "AHC",
+            "description": "American History - Completed"
+          },
+          "fromDate": "2017-04-18"
+        },
+        {
+          "type": {
+            "code": "AIC",
+            "description": "Amer Institutions - Completed"
+          },
+          "fromDate": "2017-04-18"
+        },
+        {
+          "type": {
+            "code": "MCAN",
+            "description": "Summer Cancellation Fee Waiver"
+          },
+          "fromDate": "2018-05-09"
+        },
+        {
+          "type": {
+            "code": "PKGF",
+            "description": "Perkins Loan Grandfathered"
+          },
+          "fromDate": "2017-09-06",
+          "comments": "Oski with Perkins"
+        },
+        {
+          "type": {
+            "code": "RL4",
+            "description": "EOP Recalc based on FASFA"
+          },
+          "fromDate": "2016-03-21"
+        },
+        {
+          "type": {
+            "code": "RL5",
+            "description": "EOP Pool for GB"
+          },
+          "fromDate": "2016-03-21"
+        },
+        {
+          "type": {
+            "code": "RPRI",
+            "description": "Priority Enrollment"
+          },
+          "fromDate": "2019-03-25"
+        },
+        {
+          "type": {
+            "code": "RVT",
+            "description": "Veteran - Priority Enrollment"
+          },
+          "fromDate": "2016-03-21"
+        },
+        {
+          "type": {
+            "code": "UAP",
+            "description": "University Affiliate Program"
+          },
+          "fromDate": "2016-10-18"
+        },
+        {
+          "type": {
+            "code": "VAC",
+            "description": "American Cultures"
+          },
+          "fromDate": "2001-01-01"
+        },
+        {
+          "type": {
+            "code": "VELW",
+            "description": "Entry Level Writing"
+          },
+          "fromDate": "2001-01-01"
+        },
+        {
+          "type": {
+            "code": "+R99",
+            "description": "CNP Exception"
+          },
+          "reason": {
+            "code": "FARVW",
+            "description": "Exception from CNP",
+            "formalDescription": "You have an exception from Cancellation for Non Payment (CNP) for this term. You will not be dropped from your classes for this term. You remain financially responsible for all charges on your Student Account. Please monitor your communications and tasks in CalCentral for updates."
+          },
+          "fromTerm": {
+            "id": "2172",
+            "name": "2017 Spring",
+            "category": {
+              "code": "R",
+              "description": "Regular Term"
+            },
+            "academicYear": "2017",
+            "beginDate": "2017-01-10",
+            "endDate": "2017-05-12"
+          },
+          "toTerm": {
+            "id": "2172",
+            "name": "2017 Spring",
+            "category": {
+              "code": "R",
+              "description": "Regular Term"
+            },
+            "academicYear": "2017",
+            "beginDate": "2017-01-10",
+            "endDate": "2017-05-12"
+          },
+          "fromDate": "2017-01-12"
+        },
+        {
+          "type": {
+            "code": "+R99",
+            "description": "CNP Exception"
+          },
+          "reason": {
+            "code": "FARVW",
+            "description": "Exception from CNP",
+            "formalDescription": "You have an exception from Cancellation for Non Payment (CNP) for this term. You will not be dropped from your classes for this term. You remain financially responsible for all charges on your Student Account. Please monitor your communications and tasks in CalCentral for updates."
+          },
+          "fromTerm": {
+            "id": "2178",
+            "name": "2017 Fall",
+            "category": {
+              "code": "R",
+              "description": "Regular Term"
+            },
+            "academicYear": "2018",
+            "beginDate": "2017-08-16",
+            "endDate": "2017-12-15"
+          },
+          "toTerm": {
+            "id": "2178",
+            "name": "2017 Fall",
+            "category": {
+              "code": "R",
+              "description": "Regular Term"
+            },
+            "academicYear": "2018",
+            "beginDate": "2017-08-16",
+            "endDate": "2017-12-15"
+          },
+          "fromDate": "2017-08-14"
+        },
+        {
+          "type": {
+            "code": "+R99",
+            "description": "CNP Exception"
+          },
+          "reason": {
+            "code": "FARVW",
+            "description": "Exception from CNP",
+            "formalDescription": "You have an exception from Cancellation for Non Payment (CNP) for this term. You will not be dropped from your classes for this term. You remain financially responsible for all charges on your Student Account. Please monitor your communications and tasks in CalCentral for updates."
+          },
+          "fromTerm": {
+            "id": "2188",
+            "name": "2018 Fall",
+            "category": {
+              "code": "R",
+              "description": "Regular Term"
+            },
+            "academicYear": "2019",
+            "beginDate": "2018-08-15",
+            "endDate": "2018-12-14"
+          },
+          "toTerm": {
+            "id": "2188",
+            "name": "2018 Fall",
+            "category": {
+              "code": "R",
+              "description": "Regular Term"
+            },
+            "academicYear": "2019",
+            "beginDate": "2018-08-15",
+            "endDate": "2018-12-14"
+          },
+          "fromDate": "2018-08-17"
+        },
+        {
+          "type": {
+            "code": "+R99",
+            "description": "CNP Exception"
+          },
+          "reason": {
+            "code": "SFRVW",
+            "description": "Exception from CNP",
+            "formalDescription": "You have an exception from Cancellation for Non Payment (CNP) for this term. You will not be dropped from your classes for this term. You remain financially responsible for all charges on your Student Account. Please monitor your communications and tasks in CalCentral for updates."
+          },
+          "fromTerm": {
+            "id": "2178",
+            "name": "2017 Fall",
+            "category": {
+              "code": "R",
+              "description": "Regular Term"
+            },
+            "academicYear": "2018",
+            "beginDate": "2017-08-16",
+            "endDate": "2017-12-15"
+          },
+          "fromDate": "2017-08-13"
+        },
+        {
+          "type": {
+            "code": "+S09",
+            "description": "Tuition Calculated"
+          },
+          "reason": {
+            "code": "TCALC",
+            "description": "Tuition Calculated for term",
+            "formalDescription": "Tuition and fees have been calculated for the term."
+          },
+          "fromTerm": {
+            "id": "2168",
+            "name": "2016 Fall",
+            "category": {
+              "code": "R",
+              "description": "Regular Term"
+            },
+            "academicYear": "2017",
+            "beginDate": "2016-08-17",
+            "endDate": "2016-12-16"
+          },
+          "toTerm": {
+            "id": "2168",
+            "name": "2016 Fall",
+            "category": {
+              "code": "R",
+              "description": "Regular Term"
+            },
+            "academicYear": "2017",
+            "beginDate": "2016-08-17",
+            "endDate": "2016-12-16"
+          },
+          "fromDate": "2016-07-23"
+        },
+        {
+          "type": {
+            "code": "+S09",
+            "description": "Tuition Calculated"
+          },
+          "reason": {
+            "code": "TCALC",
+            "description": "Tuition Calculated for term",
+            "formalDescription": "Tuition and fees have been calculated for the term."
+          },
+          "fromTerm": {
+            "id": "2172",
+            "name": "2017 Spring",
+            "category": {
+              "code": "R",
+              "description": "Regular Term"
+            },
+            "academicYear": "2017",
+            "beginDate": "2017-01-10",
+            "endDate": "2017-05-12"
+          },
+          "toTerm": {
+            "id": "2172",
+            "name": "2017 Spring",
+            "category": {
+              "code": "R",
+              "description": "Regular Term"
+            },
+            "academicYear": "2017",
+            "beginDate": "2017-01-10",
+            "endDate": "2017-05-12"
+          },
+          "fromDate": "2017-01-25"
+        },
+        {
+          "type": {
+            "code": "+R01",
+            "description": "Missing Required Documents"
+          },
+          "reason": {
+            "code": "NOID",
+            "description": "No ID Provided at Cal 1 Card",
+            "formalDescription": "A government issue ID is required to receive a Cal 1 Card. A temporary Cal 1 Card was granted because you could not provide the required ID. You must provide a valid government issue ID to the Office of the Registrar before enrolling for the next term."
+          },
+          "fromTerm": {
+            "id": "2182",
+            "name": "2018 Spring",
+            "category": {
+              "code": "R",
+              "description": "Regular Term"
+            },
+            "academicYear": "2018",
+            "beginDate": "2018-01-09",
+            "endDate": "2018-05-11"
+          },
+          "toTerm": {
+            "id": "2182",
+            "name": "2018 Spring",
+            "category": {
+              "code": "R",
+              "description": "Regular Term"
+            },
+            "academicYear": "2018",
+            "beginDate": "2018-01-09",
+            "endDate": "2018-05-11"
+          }
+        },
+        {
+          "type": {
+            "code": "+V01",
+            "description": "Academic Review"
+          },
+          "reason": {
+            "code": "DISRV",
+            "description": "Academic Status Review",
+            "formalDescription": "If you are a financial aid recipient, your financial aid will not disburse until your academic status has been determined by your college."
+          },
+          "fromTerm": {
+            "id": "2192",
+            "name": "2019 Spring",
+            "category": {
+              "code": "R",
+              "description": "Regular Term"
+            },
+            "academicYear": "2019",
+            "beginDate": "2019-01-15",
+            "endDate": "2019-05-17"
+          },
+          "fromDate": "2019-01-10"
+        },
+        {
+          "type": {
+            "code": "+S02",
+            "description": "No Refund"
+          },
+          "reason": {
+            "code": "EAP",
+            "description": "EAP - Preventative Refund Hold"
+          },
+          "fromTerm": {
+            "id": "2195",
+            "name": "2019 Summer",
+            "category": {
+              "code": "S",
+              "description": "Summer Term"
+            },
+            "academicYear": "2020",
+            "beginDate": "2019-05-28",
+            "endDate": "2019-08-16"
+          },
+          "toTerm": {
+            "id": "2195",
+            "name": "2019 Summer",
+            "category": {
+              "code": "S",
+              "description": "Summer Term"
+            },
+            "academicYear": "2020",
+            "beginDate": "2019-05-28",
+            "endDate": "2019-08-16"
+          },
+          "fromDate": "2019-05-02",
+          "comments": "EAP Hold"
+        },
+        {
+          "type": {
+            "code": "+F06",
+            "description": "CA Enrollment Acknowledgment"
+          },
+          "reason": {
+            "code": "FCEA",
+            "description": "CA Enrollment Acknowledgment",
+            "formalDescription": "Before you can complete class enrollment for the Fall 2019 term, please acknowledge notifications required by California State Law. Please use the link provided in the Class Adjustment section (see #5) under Class Enrollment for Fall 2019. Be sure to select the Fall 2019 term at the top of the Class Enrollment section."
+          },
+          "fromTerm": {
+            "id": "2198",
+            "name": "2019 Fall",
+            "category": {
+              "code": "R",
+              "description": "Regular Term"
+            },
+            "academicYear": "2020",
+            "beginDate": "2019-08-21",
+            "endDate": "2019-12-20"
+          },
+          "fromDate": "2019-04-10",
+          "toDate": "2019-04-30"
+        }
+      ]
+    }
+  }
+}

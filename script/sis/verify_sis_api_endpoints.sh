@@ -241,7 +241,6 @@ if [ "${APP_MODE}" == "calcentral" ] ; then
     "/UC_CC_CURRENCY_CD.v1/Currency_Cd/Get" \
     "/UC_CC_LANGUAGES.v1/get/languages/" \
     "/UC_CC_NAME_TYPE.v1/getNameTypes/" \
-    "/UC_CC_SERVC_IND.v1/Servc_ind/Get?/EMPLID=${CAMPUS_SOLUTIONS_ID}" \
     "/UC_CC_SS_ETH_SETUP.v1/GetEthnicitytype/" \
     "/UC_CC_STDNT_FERPA.v1/FERPA/GET?EMPLID=${CAMPUS_SOLUTIONS_ID}" \
     "/UC_CM_XLAT_VALUES.v1/GetXlats?FIELDNAME=PHONE_TYPE" \

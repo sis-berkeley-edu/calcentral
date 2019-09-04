@@ -7,7 +7,7 @@ describe CampusSolutions::FppEnrollmentController do
     it_behaves_like 'an unauthenticated user'
 
     context 'authenticated user' do
-      let(:feed_key) { 'ucSfFppEnroll' }
+      let(:feed_path) { ['feed','ucSfFppEnroll'] }
       it_behaves_like 'a successful feed'
       it 'has some field mapping info' do
         session['user_id'] = user_id

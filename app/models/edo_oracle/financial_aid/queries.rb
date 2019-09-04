@@ -253,7 +253,6 @@ module EdoOracle
           UC.DESCR3               AS SAP_STATUS,
           UC.DESCR4               AS VERIFICATION_STATUS,
           UC.DESCR5               AS AWARD_STATUS,
-          UC.DESCR6               AS ACAD_HOLDS,
           UC.DESCRFORMAL          AS CANDIDACY,
           UC.DESCR7               AS FILING_FEE,
           UC.DESCR8               AS BERKELEY_PC,
@@ -529,6 +528,52 @@ module EdoOracle
           AND UC.UC_AWARD_TYPE IN ('subsidizedloans', 'unsubsidizedloans', 'plusloans', 'alternativeloans')
         SQL
         result.first
+      end
+
+      def self.get_awards_by_term_types(person_id, aid_year)
+        result = safe_query <<-SQL
+        SELECT DISTINCT UC.UC_AWARD_TYPE AS AWARD_TYPE,
+          CASE
+            WHEN UC.UC_AWARD_TYPE = 'giftaid'           THEN 'Gift Aid'
+            WHEN UC.UC_AWARD_TYPE = 'waiversAndOther'   THEN 'Waivers and Other Funding'
+            WHEN UC.UC_AWARD_TYPE = 'workstudy'         THEN 'Work-Study'
+            WHEN UC.UC_AWARD_TYPE = 'subsidizedloans'   THEN 'Subsidized Loans'
+            WHEN UC.UC_AWARD_TYPE = 'unsubsidizedloans' THEN 'Unsubsidized Loans'
+            WHEN UC.UC_AWARD_TYPE = 'plusloans'         THEN 'PLUS Loans'
+            WHEN UC.UC_AWARD_TYPE = 'alternativeloans'  THEN 'Alternative Loans'
+            ELSE null
+          END AS AWARD_TYPE_DESCR
+          FROM SYSADM.PS_UCC_FA_AWRD_TRM UC
+        WHERE UC.CAMPUS_ID          = '#{person_id}'
+          AND UC.INSTITUTION        = '#{UC_BERKELEY}'
+          AND UC.AID_YEAR           = '#{aid_year}'
+        ORDER BY (CASE UC.UC_AWARD_TYPE
+          WHEN 'giftaid'            THEN 10
+          WHEN 'waiversAndOther'    THEN 20
+          WHEN 'workstudy'          THEN 30
+          WHEN 'subsidizedloans'    THEN 40
+          WHEN 'unsubsidizedloans'  THEN 50
+          WHEN 'plusloans'          THEN 60
+          WHEN 'alternativeloans'   THEN 70
+          ELSE 80 END) ASC
+        SQL
+      end
+
+      def self.get_awards_by_term_by_type(person_id, aid_year, award_type)
+        result = safe_query <<-SQL
+        SELECT UC.ITEM_TYPE         AS ITEM_TYPE,
+          UC.DESCR                  AS TITLE,
+          UC.UC_AWARD_TYPE          AS AWARD_TYPE,
+          UC.UC_AWARD_AMT_FAL       AS AMOUNT_FALL,
+          UC.UC_AWARD_AMT_SPR       AS AMOUNT_SPRING,
+          UC.UC_AWARD_AMT_SUM       AS AMOUNT_SUMMER
+          FROM SYSADM.PS_UCC_FA_AWRD_TRM UC
+        WHERE UC.CAMPUS_ID          = '#{person_id}'
+          AND UC.INSTITUTION        = '#{UC_BERKELEY}'
+          AND UC.AID_YEAR           = '#{aid_year}'
+          AND UC.UC_AWARD_TYPE         = '#{award_type}'
+        ORDER BY  UC.ITEM_TYPE ASC
+        SQL
       end
 
     end

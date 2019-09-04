@@ -4,19 +4,9 @@ module MyAcademics
     include Cache::UserCacheExpiry
 
     def get_feed_internal
-      cs_demographics = HubEdos::StudentApi::V1::Demographics.new(user_id: @uid).get
-      residency = cs_demographics.try(:[], :feed).try(:[], 'student').try(:[], 'residency')
-      return {} if residency.blank? || residency['fromTerm'].blank?
-      residency = HashConverter.symbolize residency
-
-      # Add residency.fromTerm.label to the response
-      residency[:fromTerm][:label] = Berkeley::TermCodes.normalized_english(residency[:fromTerm][:name])
-
+      residency = get_hub_residency
       # Add residency.message.code to the response
-      slr_status = residency[:statementOfLegalResidenceStatus].try(:[], :code)
-      official_status = residency[:official].try(:[], :code)
-      tuition_exception = residency[:tuitionException].try(:[], :code)
-      if (message_code = Berkeley::ResidencyMessageCode.residency_message_code(slr_status, official_status, tuition_exception))
+      if message_code = get_residency_message_code(residency)
         residency[:message] = {code: message_code}
         # Having unearthed the code, use it to fetch the message text.
         decoded_message = CampusSolutions::ResidencyMessage.new(messageNbr: message_code).get
@@ -32,6 +22,23 @@ module MyAcademics
       {
         residency: residency
       }
+    end
+
+    def get_hub_residency
+      cs_demographics = HubEdos::StudentApi::V2::Demographics.new(user_id: @uid).get
+      residency = cs_demographics.try(:[], :feed).try(:[], 'residency')
+      return {} if residency.blank? || residency['fromTerm'].blank?
+      residency = HashConverter.symbolize residency
+
+      residency[:fromTerm][:label] = Berkeley::TermCodes.normalized_english(residency[:fromTerm][:name])
+      residency
+    end
+
+    def get_residency_message_code(residency)
+      slr_status = residency[:statementOfLegalResidenceStatus].try(:[], :code)
+      official_status = residency[:official].try(:[], :code)
+      tuition_exception = residency[:tuitionException].try(:[], :code)
+      Berkeley::ResidencyMessageCode.residency_message_code(slr_status, official_status, tuition_exception)
     end
   end
 end

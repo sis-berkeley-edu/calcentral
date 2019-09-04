@@ -42,20 +42,9 @@ describe MyAcademics::ClassEnrollments do
       waitlistedClassesTotalUnits: 2.0,
     }
   end
-  let(:academic_status_feed) do
-    {
-      feed: {
-        'student'=> {
-          'holds'=> holds,
-          'academicStatuses'=> academic_statuses
-        }
-      }
-    }
-  end
-  let(:holds) { [] }
+  let(:has_holds) { false }
   let(:term_id) { '2168' }
   let(:term_cpp) { :ugrd_nutritional_science_plan_2168_term_cpp }
-  let(:academic_statuses) { [] }
   let(:student_plans) { [undergrad_nutritional_science_plan] }
   let(:undergrad_career) do
     {
@@ -135,7 +124,7 @@ describe MyAcademics::ClassEnrollments do
   before do
     allow(subject).to receive(:is_feature_enabled).and_return(is_feature_enabled_flag)
     allow(subject).to receive(:user_is_student?).and_return(user_is_student)
-    allow_any_instance_of(MyAcademics::MyAcademicStatus).to receive(:get_feed).and_return(academic_status_feed)
+    allow(MyAcademics::MyAcademicStatus).to receive(:has_holds?).and_return(has_holds)
     allow(CampusSolutions::MyEnrollmentTerms).to receive(:get_terms).and_return(cs_enrollment_career_terms)
     allow(CampusSolutions::MyEnrollmentTerm).to receive(:get_term) do |uid, term_id|
       cs_enrollment_term_detail.merge({:term => term_id})

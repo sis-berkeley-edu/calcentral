@@ -12,7 +12,6 @@ describe FinancialAid::MyAwards do
     it_behaves_like 'a proxy that properly observes the financial_aid feature flag'
 
     it 'returns the expected result' do
-      puts subject
       expect(subject).to be
       expect(subject[:awards]).to be
       expect(subject[:awards].count).to eq 10

@@ -10,7 +10,7 @@ describe MyHoldsController do
     it_behaves_like 'an unauthenticated user'
 
     context 'authenticated user' do
-      let(:feed_key) { 'holds' }
+      let(:feed_path) { ['feed','holds'] }
       it_behaves_like 'a successful feed'
     end
   end

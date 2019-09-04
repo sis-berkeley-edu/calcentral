@@ -2,6 +2,8 @@
 
 var _ = require('lodash');
 
+import 'icons/download.svg';
+
 /**
  * Financial Aid - Awards controller
  */

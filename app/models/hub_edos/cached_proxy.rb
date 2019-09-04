@@ -1,4 +1,5 @@
 module HubEdos
+  # Intended to override #get in classes inheriting from HubEdos::Proxy
   module CachedProxy
     def get(opts = {})
       return {} unless is_feature_enabled

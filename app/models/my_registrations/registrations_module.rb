@@ -4,45 +4,6 @@ module MyRegistrations
 
     include Berkeley::TermCodes
 
-    PRIORITIZED_CAREERS = ['LAW', 'GRAD', 'UGRD', 'UCBX']
-
-    def is_positive_service_indicator?(attribute)
-      attribute.try(:[], 'type').try(:[], 'code').try(:start_with?, '+')
-    end
-
-    def check_indicator_dates(indicator)
-      term_start = indicator.try(:[], 'fromTerm').try(:[], 'id').to_i
-      term_end = indicator.try(:[], 'toTerm').try(:[], 'id').to_i
-      if term_start != term_end
-        indicator_type = indicator.try(:[], 'type').try(:[], 'code')
-        logger.warn "Positive service indicator spanning multiple terms found.  Indicator: #{indicator_type}, termStart ID: #{term_start}, termEnd ID: #{term_end}. Using termStart ID to parse registration status."
-      end
-    end
-
-    # If a student is activated for more than one career within a term, we prioritize the careers
-    # and only show the most relevant one.  Prioritization of careers follows the pattern of LAW -> GRAD -> UGRD
-    def find_relevant_career(registrations)
-      if registrations.length > 1
-        find_relevant_career_multiple(registrations)
-      # If there is only one registration for the term, return that registration hash.
-      elsif registrations.length == 1
-        registrations[0]
-      # And lastly, if there are no registrations at all, return nil.
-      else
-        nil
-      end
-    end
-
-    def find_relevant_career_multiple(registrations)
-      PRIORITIZED_CAREERS.each do |career|
-        relevant_career = registrations.find do |registration|
-          registration.try(:[], 'academicCareer').try(:[], 'code') == career
-        end
-        return relevant_career if relevant_career
-      end
-      nil
-    end
-
     def set_regstatus_flags(term_registrations)
       term_registrations.each do |term_id, term_value|
         term_value[:showRegStatus] = show_regstatus? term_value
@@ -80,14 +41,14 @@ module MyRegistrations
           summary = 'You have access to campus services.'
         else
           if has_r99_sf20
-            summary = 'Limit access to campus services'
+            summary = 'Limited access to campus services'
           else
             summary = 'Fees Unpaid'
           end
         end
       else
         if has_r99_sf20 && term_includes_indicator?(term, '+S09')
-          summary = 'Limit access to campus services'
+          summary = 'Limited access to campus services'
         else
           summary = 'Not Enrolled'
         end
@@ -98,11 +59,11 @@ module MyRegistrations
     def set_regstatus_explanation_grad(term, summary)
       case summary
         when 'Fees Unpaid'
-          return regstatus_messages[:feesUnpaidGrad]
+          return MyRegistrations::Messages.regstatus_messages[:feesUnpaidGrad]
         when 'Not Enrolled'
-          return regstatus_messages[:notEnrolledGrad]
-        when 'Limit access to campus services'
-          return nil
+          return MyRegistrations::Messages.regstatus_messages[:notEnrolledGrad]
+        when 'Limited access to campus services'
+          return 'You may not have access to campus services due to a hold. Please address your holds to become entitled to campus services'
         when 'You have access to campus services.'
           return nil
         else
@@ -137,10 +98,10 @@ module MyRegistrations
           if summer
             return 'You are not officially registered for this term.'
           else
-            return regstatus_messages[:notOfficiallyRegistered]
+            return MyRegistrations::Messages.regstatus_messages[:notOfficiallyRegistered]
           end
         when 'Not Enrolled'
-          return regstatus_messages[:notEnrolledUndergrad]
+          return MyRegistrations::Messages.regstatus_messages[:notEnrolledUndergrad]
       end
     end
 
@@ -200,9 +161,9 @@ module MyRegistrations
         return rop[:message]
       elsif !r99[:isActive] && !rop[:isActive]
         if !past_financial_disbursement
-          return regstatus_messages[:cnpNotificationUndergrad]
+          return MyRegistrations::Messages.regstatus_messages[:cnpNotificationUndergrad]
         else past_financial_disbursement
-          return regstatus_messages[:cnpWarningUndergrad]
+          return MyRegistrations::Messages.regstatus_messages[:cnpWarningUndergrad]
         end
       end
     end

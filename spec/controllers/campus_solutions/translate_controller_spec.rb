@@ -4,7 +4,7 @@ describe CampusSolutions::TranslateController do
     it_behaves_like 'an unauthenticated user'
     context 'authenticated user' do
       let(:user_id) { random_id }
-      let(:feed_key) { 'xlatvalues' }
+      let(:feed_path) { ['feed','xlatvalues'] }
       it_behaves_like 'a successful feed'
     end
   end

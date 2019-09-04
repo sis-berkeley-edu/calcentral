@@ -42,7 +42,7 @@ class BootstrapController < ApplicationController
       when 'finaid'
         CampusSolutions::FinancialAidExpiry.expire current_user.user_id
       when 'profile'
-        CampusSolutions::PersonDataExpiry.expire current_user.user_id
+        CampusSolutions::UserApiExpiry.expire current_user.user_id
       when 'advisingAcademics'
         # Since current_user does not know the student-overview UID the advisor is looking-up, we strip it from the URL
         if (student_uid = url[/[0-9]+/])
