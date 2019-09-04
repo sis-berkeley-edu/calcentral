@@ -25,9 +25,19 @@
             </span>
           </div>
         </div>
-        <div data-ng-if="finaidAwards.linkFinaidTranscript.url" class="cc-widget-finaid-awards-link">
+        <div data-ng-if="finaidAwards.linkFinaidTranscript.url && isStudentOrExStudent"
+             class="cc-widget-finaid-awards-link">
           <a data-ng-if="finaidAwards.linkFinaidTranscript.url"
-            data-cc-campus-solutions-link-directive="finaidAwards.linkFinaidTranscript"
+            data-cc-campus-solutions-link-directive
+            data-cc-campus-solutions-link-directive-name="finaidAwards.linkFinaidTranscript.title"
+            data-cc-campus-solutions-link-directive-url="finaidAwards.linkFinaidTranscript.url"
+            data-cc-campus-solutions-link-directive-cc-cache="finaid"
+            data-cc-campus-solutions-link-directive-cc-page-name="currentPage.name"
+            data-cc-campus-solutions-link-directive-cc-page-url="currentPage.url"
+            data-cc-campus-solutions-link-directive-uc-from="finaidAwards.linkFinaidTranscript.isCsLink"
+            data-cc-campus-solutions-link-directive-uc-from-link="finaidAwards.linkFinaidTranscript.isCsLink"
+            data-cc-campus-solutions-link-directive-uc-from-text="finaidAwards.linkFinaidTranscript.isCsLink"
+            data-cc-campus-solutions-link-directive-show-new-window="!finaidAwards.linkFinaidTranscript.isCsLink"
             class="cc-widget-finaid-awards-link-download-icon"></a>
         </div>
         <div

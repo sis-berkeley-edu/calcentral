@@ -2319,9 +2319,9 @@ This link should take an instructor to the Grade Roster in BCS of the identified
     <COMMENTS/>
   </Link>
   <Link>
-    <URL_ID>UC_CX_FA_FIN_AID_TRANSCRIPT</URL_ID>
-    <Description>Download Financial Aid Summary Report</Description>
-    <HOVER_OVER_TEXT>Download Financial Aid Summary Report</HOVER_OVER_TEXT>
+    <URL_ID>UC_CX_FA_FIN_AID_SUMMARY</URL_ID>
+    <Description>My Financial Aid Summary Report</Description>
+    <HOVER_OVER_TEXT>My Financial Aid Summary provides a downloadable PDF report on the financial aid you have received during your time as a student at UC Berkeley.</HOVER_OVER_TEXT>
     <PROPERTIES type="array">
       <PROPERTY>
         <NAME>CALCENTRAL</NAME>
@@ -2329,10 +2329,10 @@ This link should take an instructor to the Grade Roster in BCS of the identified
       </PROPERTY>
       <PROPERTY>
         <NAME>NEW_WINDOW</NAME>
-        <value>Y</value>
+        <value>N</value>
       </PROPERTY>
     </PROPERTIES>
-    <URL>EMPLOYEE/SA/c/UC_FA_RDC_CNCL_FLU.UC_FA_RDC_CNCL_FLU.GBL?ucInstitution={INSTITUTION}&amp;ucAidYear={AID_YEAR}</URL>
+    <URL>EMPLOYEE/SA/c/UC_FA_SUMMARY_FLU.UC_FA_SUMMARY_FLU.GBL?ucInstitution={INSTITUTION}&amp;ucAidYear={AID_YEAR}</URL>
     <COMMENTS/>
   </Link>
 </UC_LINK_RESOURCES>
