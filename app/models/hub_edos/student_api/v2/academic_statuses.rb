@@ -3,7 +3,7 @@ module HubEdos
     module V2
       class AcademicStatuses < ::HubEdos::StudentApi::V2::Proxy
         def url
-          "#{@settings.base_url}/v2/students/#{@campus_solutions_id}?inc-acad=true&inc-completed-programs=true&inc-inactive-programs=true"
+          "#{@settings.base_url}/v2/students/#{@campus_solutions_id}?inc-acad=true&inc-completed-programs=false&inc-inactive-programs=false"
         end
 
         def json_filename
