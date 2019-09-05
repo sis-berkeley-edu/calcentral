@@ -4,8 +4,8 @@ import PropTypes from 'prop-types';
 import ExamRow from './ExamRow';
 
 const sum = (acc, value) => acc + value;
-const totalExamUnits = ({ apTestUnits, ibTestUnits, alevelTestUnits }) => {
-  return [apTestUnits, ibTestUnits, alevelTestUnits].reduce(sum);
+const totalExamUnits = ({ apTestUnits, ibTestUnits, alevelTestUnits, otherCreditUnits }) => {
+  return [apTestUnits, ibTestUnits, alevelTestUnits, otherCreditUnits].reduce(sum);
 };
 
 const propTypes = {
@@ -19,7 +19,7 @@ const ExamTransferCredit = (props) => {
         <table className="cc-transfer-credits">
           <thead>
             <tr>
-              <th>Exam Credits</th>
+              <th>Exam/Other Credits</th>
               <th className="cc-table-right">Units</th>
             </tr>
           </thead>
@@ -27,6 +27,7 @@ const ExamTransferCredit = (props) => {
             <ExamRow name="Advanced Placement (AP)" value={props.summary.apTestUnits} />
             <ExamRow name="International Baccalaureate (IB)" value={props.summary.ibTestUnits} />
             <ExamRow name="GCE Advanced-Level (A-level)" value={props.summary.alevelTestUnits} />
+            <ExamRow name="Other Credit" value={props.summary.otherCreditUnits} />
 
             <tr>
               <td className="cc-table-right">Total Exam Units:</td>
