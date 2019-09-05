@@ -155,6 +155,7 @@ module EdoOracle
           CAR.TRANSFER_TEST_UNITS_AP as ap_test_units,
           CAR.TRANSFER_TEST_UNITS_IB as ib_test_units,
           CAR.TRANSFER_TEST_UNITS_ALEVEL as alevel_test_units,
+          CAR.TRANSFER_OTHR_CRED_UNITS as other_credit_units,
           LAW.TOTAL_TRANSFER_UNITS_LAW as total_transfer_units_law
           FROM SISEDO.CLC_STUDENT_CAREERV00_VW CAR
           LEFT OUTER JOIN SISEDO.CLC_STUDENT_CAREER_LAWV00_VW LAW

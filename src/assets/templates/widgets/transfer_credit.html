@@ -115,6 +115,12 @@
             <td class="cc-text-right" data-ng-bind="transferCredits.undergraduate.summary.alevelTestUnits | number:3"></td>
           </tr>
           </tbody>
+          <tbody class="cc-widget-list-hover" data-ng-if="transferCredits.undergraduate.summary.otherCreditUnits">
+            <tr class="cc-transfer-credit-section-header">
+              <td>{{transferCredits.undergraduate.summary.careerDescr}} Other Credits</td>
+              <td class="cc-text-right cc-toggle-triangle" data-ng-bind="transferCredits.undergraduate.summary.otherCreditUnits | number:3"></td>
+            </tr>
+          </tbody>
         </table>
       </div>
     </div>
