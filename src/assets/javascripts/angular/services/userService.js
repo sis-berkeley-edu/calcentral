@@ -7,7 +7,7 @@ import {
 var _ = require('lodash');
 
 
-angular.module('calcentral.services').service('userService', function($http, $location, $route, analyticsService, httpService, utilService, calcentralConfig, $ngRedux) {
+angular.module('calcentral.services').service('userService', function($http, $location, $route, analyticsService, authService, httpService, utilService, calcentralConfig, $ngRedux) {
   var profile = {};
   var events = {
     isLoaded: false,
@@ -87,7 +87,7 @@ angular.module('calcentral.services').service('userService', function($http, $lo
     // Redirect to the login page when the page is private and you aren't authenticated
     if (!$route.current.isPublic && !events.isAuthenticated) {
       analyticsService.sendEvent('Authentication', 'Sign in - redirect to login');
-      signIn();
+      authService.signIn();
     // Record that the user visited calcentral
     } else if (events.isAuthenticated && !profile.firstLoginAt && !profile.actingAsUid && !profile.delegateActingAsUid && !profile.advisorActingAsUid) {
       analyticsService.sendEvent('Authentication', 'First login');
@@ -177,11 +177,6 @@ angular.module('calcentral.services').service('userService', function($http, $lo
       handleAccessToPage();
     }
   };
-  
-  var signIn = function() {
-    analyticsService.sendEvent('Authentication', 'Redirect to login');
-    window.location = '/auth/cas';
-  };
 
   /**
    * Remove OAuth permissions for a service for the currently logged in user
@@ -229,7 +224,6 @@ angular.module('calcentral.services').service('userService', function($http, $lo
     redirectToPage: redirectToPage,
     removeOAuth: removeOAuth,
     setFirstLogin: setFirstLogin,
-    signIn: signIn,
     signOut: signOut
   };
 });
