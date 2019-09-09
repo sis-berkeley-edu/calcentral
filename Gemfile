@@ -31,9 +31,6 @@ gem 'json', '~> 1.8.0'
 # provided by Steven Hansen.
 gem 'omniauth-cas', '~> 1.1.0', git: 'https://github.com/ets-berkeley-edu/omniauth-cas.git'
 
-# Provides CSRF protection on OmniAuth request endpoint
-gem 'omniauth-rails_csrf_protection', '~> 0.1'
-
 # LDAP
 gem 'net-ldap', '~> 0.16.0'
 
