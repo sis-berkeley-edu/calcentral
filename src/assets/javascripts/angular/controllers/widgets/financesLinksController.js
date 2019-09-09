@@ -9,6 +9,7 @@ angular.module('calcentral.controllers').controller('FinancesLinksController', f
   $scope.isLoading = true;
   $scope.canViewEftLink = false;
   $scope.canViewEmergencyLoanLink = false;
+  $scope.canViewFinancialAidSummaryLink = false;
   $scope.canViewSummerEstimatorLink = false;
 
   $scope.campusLinks = {
@@ -142,6 +143,11 @@ angular.module('calcentral.controllers').controller('FinancesLinksController', f
     $scope.emergencyLoanLink = _.get(links, 'emergencyLoan');
   };
 
+  var parseFinancialAidSummaryLink = function(response) {
+    var links = _.get(response, 'data');
+    $scope.financialAidSummaryLink = _.get(links, 'financialAidSummaryLink');
+  };
+
   var parseSummerEstimatorLink = function(response) {
     var links = _.get(response, 'data');
     $scope.summerEstimatorLink = _.get(links, 'summerEstimator');
@@ -179,6 +185,7 @@ angular.module('calcentral.controllers').controller('FinancesLinksController', f
     return $q(function(resolve) {
       $scope.canViewEftLink = userService.profile.roles.student && (userService.profile.roles.undergrad || userService.profile.roles.graduate || userService.profile.academicRoles.current.law);
       $scope.canViewEmergencyLoanLink = !userService.profile.delegateActingAsUid && !userService.profile.academicRoles.current.summerVisitor;
+      $scope.canViewFinancialAidSummaryLink = userService.profile.roles.student || userService.profile.roles.exStudent;
       $scope.canViewFppEnrollment = !(userService.profile.actingAsUid || userService.profile.advisorActingAsUid || userService.profile.delegateActingAsUid) && userService.profile.roles.student &&
                                     (userService.profile.roles.undergrad || userService.profile.roles.graduate || userService.profile.roles.law) && !userService.profile.academicRoles.current.summerVisitor;
       resolve();
@@ -192,14 +199,22 @@ angular.module('calcentral.controllers').controller('FinancesLinksController', f
       var getFppEnrollment = financesLinksFactory.getFppEnrollment().then(parseFppEnrollment);
       requests.push(getFppEnrollment);
     }
+
     if ($scope.canViewEftLink) {
       var getEftEnrollment = financesLinksFactory.getEftEnrollment().then(parseEftEnrollment);
       requests.push(getEftEnrollment);
     }
+
     if ($scope.canViewEmergencyLoanLink) {
       var getEmergencyLoanLink = financesLinksFactory.getEmergencyLoan().then(parseEmergencyLoanLink);
       requests.push(getEmergencyLoanLink);
     }
+
+    if ($scope.canViewFinancialAidSummaryLink) {
+      var getFinancialAidSummaryLink = financesLinksFactory.getFinancialAidSummary().then(parseFinancialAidSummaryLink);
+      requests.push(getFinancialAidSummaryLink);
+    }
+
     if ($scope.canViewSummerEstimatorLink) {
       var getSummerEstimatorLink = financesLinksFactory.getSummerEstimator().then(parseSummerEstimatorLink);
       requests.push(getSummerEstimatorLink);

@@ -88,6 +88,12 @@
             data-cc-campus-solutions-link-directive-cc-page-url="currentPage.url"
           ></a>
         </li>
+        <li data-ng-if="subcategory === 'Financial Assistance' && financialAidSummaryLink.url && canViewFinancialAidSummaryLink">
+          <a data-cc-campus-solutions-link-directive="financialAidSummaryLink"
+            data-cc-campus-solutions-link-directive-cc-page-name="currentPage.name"
+            data-cc-campus-solutions-link-directive-cc-page-url="currentPage.url"
+          ></a>
+        </li>
         <li data-ng-if="subcategory === 'Summer Sessions' && summerEstimatorLink.url && canViewSummerEstimatorLink">
           <a data-cc-campus-solutions-link-directive="summerEstimatorLink"
             data-cc-campus-solutions-link-directive-cc-page-name="currentPage.name"

@@ -6,6 +6,10 @@ module CampusSolutions
       render json: CampusSolutions::EmergencyLoanLink.new().get_feed
     end
 
+    def get_financial_aid_summary
+      render json: CampusSolutions::FinancialAidSummaryLink.new().get_feed
+    end
+
     def get_summer_estimator
       render json: CampusSolutions::SummerEstimatorLink.new().get_feed
     end
