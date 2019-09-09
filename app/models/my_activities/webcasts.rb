@@ -50,7 +50,7 @@ module MyActivities
 
     def self.get_courses_by_ccn(uid, term_code)
       courses = {}
-      all_courses = EdoOracle::UserCourses::All.new(user_id: uid).get_all_campus_courses
+      all_courses = EdoOracle::UserCourses::All.new(user_id: uid).all_campus_courses
       if (current_term_courses = all_courses[term_code])
         current_term_courses.each do |course|
           course[:sections].each { |section| courses[section[:ccn]] = course }

@@ -1,37 +1,88 @@
 module EdoOracle
   module UserCourses
-    class All < Base
-
+    class All
+      extend Cache::Cacheable
       include Cache::UserCacheExpiry
 
-      def get_all_campus_courses()
-        # Because this data structure is used by multiple top-level feeds, it's essential
-        # that it be cached efficiently.
+      def self.expire(id = nil)
+        super(id)
+        super("summary-#{id}")
+      end
+
+      def initialize(options)
+        @uid = options[:user_id]
+      end
+
+      def all_campus_courses
         self.class.fetch_from_cache @uid do
-          campus_classes = {}
-          merge_instructing campus_classes
-          merge_enrollments campus_classes
-          sort_courses campus_classes
-
-          # Sort the hash in descending order of semester.
-          campus_classes = Hash[campus_classes.sort.reverse]
-
-          # Merge each section's schedule, location, and instructor list.
-          # TODO Is this information useful for non-current terms?
-          merge_detailed_section_data(campus_classes)
-
-          campus_classes
+          base_courses = EdoOracle::UserCourses::Base.new(user_id: @uid).get_all_campus_courses
+          merge_enrollment_grading base_courses
+          base_courses
         end
       end
 
-      def get_enrollments_summary(academic_careers = nil)
+      def enrollments_summary
         self.class.fetch_from_cache "summary-#{@uid}" do
-          campus_classes = {}
-          merge_enrollments campus_classes
-          sort_courses campus_classes
-          campus_classes = Hash[campus_classes.sort.reverse]
-          remove_duplicate_sections(campus_classes)
-          campus_classes
+          enrollments_summary = EdoOracle::UserCourses::Base.new(user_id: @uid).get_enrollments_summary
+          merge_enrollment_grading enrollments_summary
+          enrollments_summary
+        end
+      end
+
+      def merge_enrollment_grading(courses)
+        grading_table = get_grading_table
+        courses.keys.each do |term_key|
+          courses[term_key].each do |course|
+            course[:sections].each do |section|
+              term_id = course[:term_id]
+              class_nbr = section[:ccn]
+              section_grading = grading_table.try(:[], term_id).try(:[], class_nbr)
+              if section_grading
+                section[:units] = section_grading['units_taken']
+                section[:grading] = get_section_grading(section, section_grading)
+              end
+            end
+          end
+        end
+        courses
+      end
+
+      def get_grading_table
+        terms = Berkeley::Summer16EnrollmentTerms.non_legacy_terms
+        grading = EdoOracle::Queries.get_enrollment_grading(@uid, terms)
+        grading_section_table = {}
+        grading.each do |section|
+          term_id = section['term_id']
+          class_section_id = section['class_section_id']
+          grading_section_table[term_id] ||= {}
+          grading_section_table[term_id][class_section_id] = section
+        end
+        grading_section_table
+      end
+
+      def get_section_grading(section, db_row)
+        grade = db_row['grade'].try(:strip)
+        grade_points = db_row['grade_points']
+        grade_points_adjusted = adjusted_grade_points(db_row['grade_points'], db_row['include_in_gpa'])
+        grading_basis = section[:is_primary_section] ? db_row['grading_basis'] : nil
+        grading_lapse_deadline = db_row['grading_lapse_deadline'].try(:strftime, '%m/%d/%y')
+        grading_lapse_deadline_display = db_row['grading_lapse_deadline_display'] == 'Y'
+        {
+          grade: grade,
+          gradingBasis: grading_basis,
+          gradePoints: grade_points,
+          gradePointsAdjusted: grade_points_adjusted,
+          gradingLapseDeadline: grading_lapse_deadline,
+          gradingLapseDeadlineDisplay: grading_lapse_deadline_display,
+          includeInGpa: db_row['include_in_gpa'],
+        }
+      end
+
+      def adjusted_grade_points(grade_points, include_in_gpa)
+        if include_in_gpa.present? && include_in_gpa == 'N'
+          return BigDecimal.new("0.0")
+        else
+          return grade_points
         end
       end
 

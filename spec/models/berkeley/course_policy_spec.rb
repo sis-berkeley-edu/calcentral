@@ -104,7 +104,7 @@ describe Berkeley::CoursePolicy do
   describe '#can_view_roster_photos?' do
     before do
       allow_any_instance_of(CampusOracle::UserCourses::All).to receive(:get_all_campus_courses).and_return campus_oracle_courses
-      allow_any_instance_of(EdoOracle::UserCourses::All).to receive(:get_all_campus_courses).and_return edo_oracle_courses
+      allow_any_instance_of(EdoOracle::UserCourses::All).to receive(:all_campus_courses).and_return edo_oracle_courses
     end
     context 'instructor according to legacy data' do
       let(:campus_oracle_courses) { instructor_courses }

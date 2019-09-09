@@ -49,7 +49,7 @@ describe MyClasses::Campus do
   shared_context 'Campus Solutions source' do
     before do
       allow(Settings.terms).to receive(:legacy_cutoff).and_return 'spring-2013'
-      expect(EdoOracle::UserCourses::All).to receive(:new).with(user_id: user_id).at_least(1).times.and_return double(get_all_campus_courses: fake_edo_feed)
+      expect(EdoOracle::UserCourses::All).to receive(:new).with(user_id: user_id).at_least(1).times.and_return double(all_campus_courses: fake_edo_feed)
     end
   end
 

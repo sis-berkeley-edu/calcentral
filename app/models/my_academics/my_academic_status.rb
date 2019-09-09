@@ -6,7 +6,7 @@ module MyAcademics
 
     def self.careers(uid)
       [].tap do |careers|
-        self.new(uid).academic_statuses(uid).try(:each) do |status|
+        self.new(uid).academic_statuses.try(:each) do |status|
           if (career = status['studentCareer'].try(:[], 'academicCareer'))
             careers << career
           end
@@ -15,7 +15,7 @@ module MyAcademics
     end
 
     def self.statuses_by_career_role(uid, career_role_matchers = [])
-      self.new(uid).academic_statuses(uid).try(:select) do |status|
+      self.new(uid).academic_statuses.try(:select) do |status|
         role = status.try(:[], 'studentCareer').try(:[], :role)
         career_role_matchers.include?(role)
       end

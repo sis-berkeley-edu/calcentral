@@ -5,34 +5,20 @@ module MyAcademics
 
     def initialize(uid)
       super(uid)
+      @campus_solutions_id = CalnetCrosswalk::ByUid.new(user_id: @uid).lookup_campus_solutions_id
     end
 
     def merge(data)
       if (@filtered = data[:filteredForDelegate])
-        enrollments = EdoOracle::UserCourses::All.new(user_id: @uid).get_enrollments_summary
+        enrollments = EdoOracle::UserCourses::All.new(user_id: @uid).enrollments_summary
       else
-        enrollments = EdoOracle::UserCourses::All.new(user_id: @uid).get_all_campus_courses
+        enrollments = EdoOracle::UserCourses::All.new(user_id: @uid).all_campus_courses
       end
-
-      campus_solution_id = CalnetCrosswalk::ByUid.new(user_id: @uid).lookup_campus_solutions_id
-      reg_status_data = EdoOracle::Queries.get_registration_status(campus_solution_id)
-      standing_data = get_academic_standings(campus_solution_id)
-      standing_data.sort_by!{|s| [s['term_id'], s['action_date']]}.reverse!
-
-      data[:semesters] = semester_feed(enrollments, reg_status_data, standing_data).compact
+      data[:semesters] = semester_feed(enrollments).compact
       merge_semesters_count data
     end
 
-    def get_academic_standings(campus_solution_id)
-      academic_standings = EdoOracle::Queries.get_academic_standings(campus_solution_id) if Settings.features.standings
-      academic_standings ||= []
-    end
-
-    def semester_feed(enrollment_terms, reg_status_data, standing_data)
-      academic_careers = find_academic_careers
-      study_prog_data = reg_status_data.select{|row| row['splstudyprog_type_code'].present?}
-      withdrawal_data = reg_status_data.select{|row| row['withcncl_type_code'].present?}
-
+    def semester_feed(enrollment_terms)
       withdrawal_terms = withdrawal_data.map{|row| Berkeley::TermCodes.edo_id_to_code(row['term_id'])}
       study_prog_terms = study_prog_data.map{|row| Berkeley::TermCodes.edo_id_to_code(row['term_id'])}
 
@@ -42,22 +28,39 @@ module MyAcademics
         semester[:filteredForDelegate] = !!@filtered
         if enrollment_terms[term_key]
           semester[:hasEnrollmentData] = true
-          semester[:classes] = map_enrollments(enrollment_terms[term_key], academic_careers, semester[:termId]).compact
+          semester[:classes] = map_enrollments(enrollment_terms[term_key], semester[:termId]).compact
           semester[:hasEnrolledClasses] = has_enrolled_classes?(enrollment_terms[term_key])
           merge_grades(semester)
           semester.merge! unit_totals(enrollment_terms[term_key])
         else
-          merge_withdrawals(semester, withdrawal_data)
+          merge_withdrawals(semester)
         end
-        merge_study_prog(semester, study_prog_data)
-        merge_standings(semester, standing_data)
+        merge_study_prog(semester)
+        merge_standings(semester)
         semester unless semester[:classes].empty? && !semester[:hasWithdrawalData] && !semester[:hasStudyProgData]
       end
     end
 
-    def find_academic_careers
-      careers = active_or_all EdoOracle::Career.new(user_id: @uid).fetch
-      careers.try(:map) {|career| career.try(:[], 'acad_career')}
+    def study_prog_data
+      registration_status.select{|row| row['splstudyprog_type_code'].present?}
+    end
+
+    def withdrawal_data
+      registration_status.select{|row| row['withcncl_type_code'].present?}
+    end
+
+    def registration_status
+      @registration_status ||= begin
+        EdoOracle::Queries.get_registration_status(@campus_solutions_id)
+      end
+    end
+
+    def academic_careers
+      @academic_careers ||= begin
+        careers = EdoOracle::Career.new(user_id: @uid).fetch
+        active_or_all_careers = Concerns::Careers.active_or_all(careers)
+        active_or_all_careers.try(:map) {|career| career.try(:[], 'acad_career')}
+      end
     end
 
     def unit_totals(enrollments = [])
@@ -71,8 +74,8 @@ module MyAcademics
       }
     end
 
-    def merge_study_prog(semester, filing_fee_data)
-      filing_fee_data.each do |row|
+    def merge_study_prog(semester)
+      study_prog_data.each do |row|
         if row['term_id'] == Berkeley::TermCodes.slug_to_edo_id(semester[:slug])
           semester.merge! map_study_prog(row)
         end
@@ -82,15 +85,14 @@ module MyAcademics
     def map_study_prog(row)
       {
         hasStudyProgData: true,
-        studyProg:
-          {
-            studyprogTypeCode: row['splstudyprog_type_code'],
-            studyprogTypeDescr: row['splstudyprog_type_descr'],
-          }
+        studyProg: {
+          studyprogTypeCode: row['splstudyprog_type_code'],
+          studyprogTypeDescr: row['splstudyprog_type_descr'],
+        }
       }
     end
 
-    def merge_withdrawals(semester, withdrawal_data)
+    def merge_withdrawals(semester)
       withdrawal_data.each do |row|
         if row['term_id'] == Berkeley::TermCodes.slug_to_edo_id(semester[:slug])
           withdrawal_status = map_withdrawal_status(row)
@@ -115,18 +117,22 @@ module MyAcademics
       }
     end
 
-    def merge_standings(semester, standing_data)
-      if (standing = standing_data.find {|row| row['term_id'] == Berkeley::TermCodes.slug_to_edo_id(semester[:slug])})
-        standing_data = map_standings(standing)
+    def merge_standings(semester)
+      if (standing = academic_standings.find {|row| row['term_id'] == Berkeley::TermCodes.slug_to_edo_id(semester[:slug])})
+        standing_data = {
+          hasStandingData: true,
+          standing: Concerns::AcademicsModule.standings_info(standing)
+        }
         semester.merge! standing_data
       end
     end
 
-    def map_standings(standing)
-      {
-        hasStandingData: true,
-        standing: Concerns::AcademicsModule.standings_info(standing)
-      }
+    def academic_standings
+      @academic_standings ||= begin
+        academic_standings = EdoOracle::Queries.get_academic_standings(@campus_solutions_id) if Settings.features.standings
+        academic_standings ||= []
+        academic_standings.sort_by!{|s| [s['term_id'], s['action_date']]}.reverse!
+      end
     end
 
     def has_enrolled_classes?(enrollment_term)
@@ -146,7 +152,7 @@ module MyAcademics
       data
     end
 
-    def map_enrollments(enrollment_term, academic_careers, term_id)
+    def map_enrollments(enrollment_term, term_id)
       enrollment_term.map do |course|
         next unless course[:role] == 'Student'
         next if law_student? && !academic_careers.include?(course[:academicCareer])
@@ -154,29 +160,37 @@ module MyAcademics
         if @filtered
           mapped_course.delete :url
         else
-          primaries_count = 0
-          mapped_course[:sections].each do |section|
-            if section[:is_primary_section]
-              if section.has_key? :grading_basis
-                section[:gradeOption] = Berkeley::GradeOptions.grade_option_from_basis(section[:grading_basis])
-              else
-                section[:gradeOption] = Berkeley::GradeOptions.grade_option_for_enrollment(section[:cred_cd], section[:pnp_flag])
-              end
-              primaries_count += 1
-            end
-            if section[:waitlisted] && Settings.features.reserved_capacity
-              map_reserved_seats(term_id, section)
-            end
-            if Settings.features.reserved_capacity_link
-              add_reserved_seating_rules_link(term_id, mapped_course, section)
-            end
-            section[:grading][:gradePoints] = nil if hide_points? course
-            section[:isLaw] = law_class? course
-            section.merge!(law_class_enrollment(course, section))
-          end
-          merge_multiple_primaries(mapped_course, course[:course_option]) if primaries_count > 1
+          process_unfiltered_course(course, term_id)
         end
         mapped_course
+      end
+    end
+
+    def process_unfiltered_course(course, term_id)
+      primaries_count = 0
+      course[:sections].each do |section|
+        if section[:is_primary_section]
+          add_section_grade_option(section)
+          primaries_count += 1
+        end
+        if section[:waitlisted] && Settings.features.reserved_capacity
+          map_reserved_seats(term_id, section)
+        end
+        if Settings.features.reserved_capacity_link
+          add_reserved_seating_rules_link(term_id, course, section)
+        end
+        section[:grading][:gradePoints] = nil if hide_points? course
+        section[:isLaw] = law_class? course
+        section.merge!(law_class_enrollment(course, section))
+      end
+      merge_multiple_primaries(course, course[:course_option]) if primaries_count > 1
+    end
+
+    def add_section_grade_option(section)
+      if section.has_key? :grading_basis
+        section[:gradeOption] = Berkeley::GradeOptions.grade_option_from_basis(section[:grading_basis])
+      else
+        section[:gradeOption] = Berkeley::GradeOptions.grade_option_for_enrollment(section[:cred_cd], section[:pnp_flag])
       end
     end
 
@@ -257,17 +271,15 @@ module MyAcademics
 
     def add_midpoint_grade(course)
       current_enrollments = hub_current_enrollments.try(:[], :feed)
-      course.try(:[], :sections).try(:each) do |section|
-        if section.try(:[], :is_primary_section)
-          section_midpoint_grade = current_enrollments.try(:find) do |enrollment|
-            # Find the relevant enrollment object, matching on CCN
-            enrollment.try(:[], 'classSection').try(:[], 'id').try(:to_i) == section.try(:[], :ccn).try(:to_i)
-          end.try(:[], 'grades').try(:find) do |grade|
-            # Return the object containing the midpoint grade
-            grade.try(:[], 'type').try(:[], 'code') == 'MID'
-          end.try(:[], 'mark')
-          section[:grading].merge!({midpointGrade: section_midpoint_grade}) if section_midpoint_grade.present?
-        end
+      primary_section = course.try(:[], :sections).to_a.find {|sec| sec[:is_primary_section] }
+      primary_enrollment = current_enrollments.try(:find) do |enrollment|
+        enrollment.try(:[], 'classSection').try(:[], 'id').try(:to_i) == primary_section.try(:[], :ccn).try(:to_i)
+      end
+      section_midpoint_grade = primary_enrollment.try(:[], 'grades').try(:find) do |grade|
+        grade.try(:[], 'type').try(:[], 'code') == 'MID'
+      end
+      if section_midpoint_grade.present?
+        primary_section[:grading].merge!({midpointGrade: section_midpoint_grade.try(:[], 'mark')})
       end
     end
 
@@ -284,8 +296,10 @@ module MyAcademics
     end
 
     def law_student?
-      roles = MyAcademics::MyAcademicRoles.new(@uid).get_feed
-      !!roles[:current]['law']
+      @is_law_student ||= begin
+        roles = MyAcademics::MyAcademicRoles.new(@uid).get_feed
+        !!roles[:current]['law']
+      end
     end
 
     def law_class?(course)

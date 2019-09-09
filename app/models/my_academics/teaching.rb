@@ -3,7 +3,7 @@ module MyAcademics
     include Concerns::AcademicsModule
 
     def merge(data)
-      feed = EdoOracle::UserCourses::All.new(user_id: @uid).get_all_campus_courses
+      feed = EdoOracle::UserCourses::All.new(user_id: @uid).all_campus_courses
       feed.merge!  CampusOracle::UserCourses::All.new(user_id: @uid).get_all_campus_courses if Settings.features.allow_legacy_fallback
 
       teaching_semesters = format_teaching_semesters feed

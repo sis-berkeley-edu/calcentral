@@ -13,7 +13,7 @@ module MyClasses
       if term.try(:legacy?) && Settings.features.allow_legacy_fallback
         all_courses = CampusOracle::UserCourses::All.new(user_id: @uid).get_all_campus_courses
       else
-        all_courses = EdoOracle::UserCourses::All.new(user_id: @uid).get_all_campus_courses
+        all_courses = EdoOracle::UserCourses::All.new(user_id: @uid).all_campus_courses
       end
       semester_key = "#{term.year}-#{term.code}"
       if all_courses[semester_key]

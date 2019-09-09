@@ -95,7 +95,7 @@ describe MyAcademics::Teaching do
   context 'academic data from Campus Solutions' do
     before do
       allow(Settings.terms).to receive(:legacy_cutoff).and_return 'fall-2009'
-      expect(EdoOracle::UserCourses::All).to receive(:new).and_return double(get_all_campus_courses: edo_courses)
+      expect(EdoOracle::UserCourses::All).to receive(:new).and_return double(all_campus_courses: edo_courses)
       expect(CampusOracle::Queries).not_to receive :get_instructing_sections
     end
     let(:uid) { '242881' }

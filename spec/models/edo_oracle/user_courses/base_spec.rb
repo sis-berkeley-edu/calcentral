@@ -1,5 +1,27 @@
 describe EdoOracle::UserCourses::Base do
 
+  subject { described_class.new(user_id: random_id).get_all_campus_courses }
+
+  before do
+    allow(Settings.terms).to receive(:legacy_cutoff).and_return 'fall-2013'
+  end
+
+  context 'EDO DB errors' do
+    before do
+      # Fetch CampusOracle terms in advance before we start forcing database errors.
+      fetched_terms = Berkeley::Terms.fetch
+      allow(Berkeley::Terms).to receive(:fetch).and_return fetched_terms
+
+      allow(Settings.edodb).to receive(:fake).and_return false
+      allow_any_instance_of(ActiveRecord::ConnectionAdapters::JdbcAdapter).to receive(:select_all)
+        .and_raise ActiveRecord::JDBCError, "Hornets' nest in the btree"
+    end
+    it 'logs errors and returns a blank hash' do
+      expect(Rails.logger).to receive(:error).with(/JDBCError/).at_least :once
+      expect(subject).to eq({})
+    end
+  end
+
   context 'using stubbed proxy' do
     RSpec::Matchers.define :terms_following_and_including_cutoff do |cutoff|
       match do |terms|
@@ -140,12 +162,9 @@ describe EdoOracle::UserCourses::Base do
           expect(section[:section_label]).to eq "#{enrollment['instruction_format']} #{enrollment['section_num']}"
           expect(section[:section_number]).to eq enrollment['section_num']
           if (enrollment['primary'] == 'true')
-            expect(section[:grading][:gradingBasis]).to eq enrollment['grading_basis']
             expect(section[:is_primary_section]).to eq true
-            expect(section[:units]).to eq enrollment['units_taken']
           else
             expect(section[:is_primary_section]).to eq false
-            expect(section).not_to include(:grading_basis, :units)
           end
           if enrollment['enroll_status'] == 'W'
             expect(section[:enroll_limit]).to eq enrollment['enroll_limit'].to_i
@@ -156,10 +175,6 @@ describe EdoOracle::UserCourses::Base do
           end
           expect(section).not_to include :cross_listing_hash
         end
-      end
-      it 'includes only non-blank grades' do
-        expect(course[:sections][0][:grading][:grade]).to eq 'B'
-        expect(course[:sections][1][:grading][:grade]).to be_nil
       end
       context 'when cross-listed course is missing title' do
         before do
@@ -372,8 +387,7 @@ describe EdoOracle::UserCourses::Base do
               :ccn, :enroll_limit, :instruction_format, :is_primary_section, :section_label,
               :section_number, :waitlist_limit
             )
-            expect(section.keys).to include(:units) if section[:is_primary_section]
-            expect(section.keys).not_to include(:grading_basis, :waitlistPosition, :waitlisted)
+            expect(section.keys).not_to include(:waitlistPosition, :waitlisted)
           end
         end
       end
@@ -539,121 +553,5 @@ describe EdoOracle::UserCourses::Base do
       end
     end
 
-    describe '#get_section_grading' do
-      let(:section) { {is_primary_section: true} }
-      let(:db_row) do
-        {
-          'grade' => 'C',
-          'grade_points' => BigDecimal.new('8.0'),
-          'grading_basis' => 'GRD',
-          'include_in_gpa' => 'Y',
-          'grading_lapse_deadline_display' => 'N',
-          'grading_lapse_deadline' => nil,
-        }
-      end
-      subject { EdoOracle::UserCourses::Base.new(user_id: random_id).get_section_grading(section, db_row) }
-      context 'grading lapse deadline' do
-        context 'when grading lapse deadline display value is \'N\'' do
-          let(:db_row) { super().merge('grading_lapse_deadline_display' => 'N') }
-          it 'indicates that deadline should not be displayed' do
-            expect(subject[:gradingLapseDeadlineDisplay]).to eq false
-          end
-        end
-        context 'when grading lapse deadline display value is \'Y\'' do
-          let(:db_row) { super().merge('grading_lapse_deadline_display' => 'Y') }
-          it 'indicates that deadline should be displayed' do
-            expect(subject[:gradingLapseDeadlineDisplay]).to eq true
-          end
-        end
-        context 'when grading lapse deadline is not present' do
-          let(:db_row) { super().merge('grading_lapse_deadline' => nil) }
-          it 'should return a nil value' do
-            expect(subject[:gradingLapseDeadline]).to eq nil
-          end
-        end
-        context 'when grading lapse deadline is present' do
-          let(:db_row) { super().merge('grading_lapse_deadline' => Time.parse('2019-07-30 00:00:00 UTC')) }
-          it 'should return a formated date' do
-            expect(subject[:gradingLapseDeadline]).to eq '07/30/19'
-          end
-        end
-      end
-      context 'when grade has spaces' do
-        let(:db_row) { super().merge('grade' => ' C   ') }
-        it 'includes grade without spaces' do
-          expect(subject[:grade]).to eq 'C'
-        end
-      end
-      context 'when grade is not present' do
-        let(:db_row) { super().merge('grade' => nil) }
-        it 'includes nil grade value' do
-          expect(subject.has_key?(:grade)).to eq true
-          expect(subject[:grade]).to eq nil
-        end
-      end
-      context 'when grade points are present' do
-        let(:db_row) { super().merge('grade_points' => BigDecimal.new('7.0')) }
-        it 'includes grade points' do
-          expect(subject[:gradePoints].to_f).to eq 7.0
-        end
-        it 'includes adjusted grade points' do
-          expect(subject[:gradePointsAdjusted].to_f).to eq 7.0
-        end
-      end
-      context 'when grade points are not present' do
-        let(:db_row) { super().merge('grade_points' => nil) }
-        it 'includes nil grade points value' do
-          expect(subject.has_key?(:gradePoints)).to eq true
-          expect(subject[:gradePoints]).to eq nil
-        end
-        it 'includes nil adjusted grade points value' do
-          expect(subject.has_key?(:gradePointsAdjusted)).to eq true
-          expect(subject[:gradePointsAdjusted]).to eq nil
-        end
-      end
-      context 'when grading basis is not present' do
-        let(:db_row) { super().merge('grading_basis' => nil) }
-        it 'includes nil grading basis value' do
-          expect(subject[:gradingBasis]).to eq nil
-        end
-      end
-      context 'when section is a primary section' do
-        let(:section) { super().merge(is_primary_section: true) }
-        it 'includes grading basis value' do
-          expect(subject[:gradingBasis]).to eq 'GRD'
-        end
-      end
-      context 'when section is not a primary section' do
-        let(:section) { super().merge(is_primary_section: false) }
-        it 'includes nil grading basis value' do
-          expect(subject.has_key?(:gradingBasis)).to eq true
-          expect(subject[:gradingBasis]).to eq nil
-        end
-      end
-    end
-
-    describe '#adjusted_grade_points' do
-      let(:grade_points) { BigDecimal.new("6.0") }
-      let(:include_in_gpa) { nil }
-      subject { EdoOracle::UserCourses::Base.new(user_id: random_id).adjusted_grade_points(grade_points, include_in_gpa) }
-      context 'when include_in_gpa argument is nil' do
-        let(:include_in_gpa) { nil }
-        it 'returns same grade points' do
-          expect(subject.to_f).to eq 6.0
-        end
-      end
-      context 'when include_in_gpa is \'Y\'' do
-        let(:include_in_gpa) { 'Y' }
-        it 'returns same grade points' do
-          expect(subject.to_f).to eq 6.0
-        end
-      end
-      context 'when include_in_gpa is \'N\'' do
-        let(:include_in_gpa) { 'N' }
-        it 'returns 0.0 decimal value' do
-          expect(subject.to_f).to eq 0.0
-        end
-      end
-    end
   end
 end
