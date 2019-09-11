@@ -31,7 +31,13 @@ module DegreeProgress
 
     def should_see_links?
       roles = MyAcademics::MyAcademicRoles.new(@uid).get_feed
-      !!roles[:current]['lettersAndScience'] || !!roles[:current]['ugrdEngineering'] || !!roles[:current]['ugrdEnvironmentalDesign']
+      authorized_program_roles = [
+        'lettersAndScience',
+        'ugrdEngineering',
+        'ugrdEnvironmentalDesign',
+        'ugrdHaasBusiness',
+      ]
+      !!authorized_program_roles.find {|role_string| roles[:current][role_string] }
     end
 
     def is_feature_enabled?
