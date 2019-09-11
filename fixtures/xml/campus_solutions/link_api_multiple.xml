@@ -2319,7 +2319,7 @@ This link should take an instructor to the Grade Roster in BCS of the identified
     <COMMENTS/>
   </Link>
   <Link>
-    <URL_ID>UC_CX_FA_FIN_AID_SUMMARY</URL_ID>
+    <URL_ID>UC_FA_FINRES_FA_SUMMARY</URL_ID>
     <Description>My Financial Aid Summary Report</Description>
     <HOVER_OVER_TEXT>My Financial Aid Summary provides a downloadable PDF report on the financial aid you have received during your time as a student at UC Berkeley.</HOVER_OVER_TEXT>
     <PROPERTIES type="array">
