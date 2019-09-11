@@ -15,7 +15,7 @@ module FinancialAid
           messageInfo: CampusSolutions::MessageCatalog.get_message(:financial_aid_awards_card_info).try(:[], :descrlong),
           messageEstDisbursements: CampusSolutions::MessageCatalog.get_message(:financial_aid_awards_card_info_est_disbursements).try(:[], :descrlong)
         },
-        linkFinaidTranscript: fetch_link('UC_CX_FA_FIN_AID_SUMMARY', link_params)
+        linkFinaidTranscript: fetch_link('UC_FA_FINRES_FA_SUMMARY', link_params)
       }
     end
 
