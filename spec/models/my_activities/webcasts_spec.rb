@@ -73,8 +73,8 @@ describe MyActivities::Webcasts do
 
     before {
       allow(Webcast::Recordings).to receive(:new).and_return recordings_proxy
-      expect(EdoOracle::UserCourses::All).to receive(:new).with(user_id: uid).once.and_return (queries = double)
-      expect(queries).to receive(:get_all_campus_courses).and_return(term => my_current_courses)
+      expect(EdoOracle::UserCourses::All).to receive(:new).with(user_id: uid).once.and_return(queries = double)
+      expect(queries).to receive(:all_campus_courses).and_return(term => my_current_courses)
     }
 
     context 'user enrolled or teaching a course with recordings' do

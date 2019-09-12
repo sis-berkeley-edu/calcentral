@@ -516,59 +516,82 @@ describe MyAcademics::ClassEnrollments do
     end
   end
 
-  context 'when providing active career term data' do
-    let(:active_career_terms) { subject.get_active_career_terms }
-    let(:active_term_ids) { subject.get_active_term_ids }
-    context 'when active terms are not returned' do
-      let(:cs_enrollment_career_terms) { [] }
+  context '#get_active_term_ids' do
+    let(:result) { subject.get_active_term_ids }
+    let(:active_career_terms) { [] }
+    before { allow(subject).to receive(:get_active_career_terms).and_return(active_career_terms) }
+    context 'when enrollment terms are not available' do
+      let(:active_career_terms) { [] }
       it 'returns empty array' do
-        expect(active_career_terms).to eq []
+        expect(result).to eq []
       end
     end
-
-    context 'when active terms are returned' do
-      context 'when providing career terms' do
-        it 'returns active terms for each career' do
-          expect(active_career_terms.count).to eq 3
-          expect(active_career_terms[0][:termId]).to eq '2165'
-          expect(active_career_terms[0][:termDescr]).to eq '2016 Summer'
-          expect(active_career_terms[0][:termName]).to eq 'Summer 2016'
-          expect(active_career_terms[0][:termIsSummer]).to eq true
-          expect(active_career_terms[0][:acadCareer]).to eq 'UGRD'
-          expect(active_career_terms[1][:termId]).to eq '2168'
-          expect(active_career_terms[1][:termDescr]).to eq '2016 Fall'
-          expect(active_career_terms[1][:termName]).to eq 'Fall 2016'
-          expect(active_career_terms[1][:termIsSummer]).to eq false
-          expect(active_career_terms[1][:acadCareer]).to eq 'GRAD'
-          expect(active_career_terms[2][:termId]).to eq '2168'
-          expect(active_career_terms[2][:termDescr]).to eq '2016 Fall'
-          expect(active_career_terms[2][:termName]).to eq 'Fall 2016'
-          expect(active_career_terms[2][:termIsSummer]).to eq false
-          expect(active_career_terms[2][:acadCareer]).to eq 'LAW'
-        end
+    context 'when enrollment terms are available' do
+      let(:active_career_terms) do
+        [
+          {
+            termId: '2195',
+            termDescr: '2019 Summer',
+            termName: 'Summer 2019',
+            termIsSummer: true,
+            acadCareer: 'UGRD',
+          },
+          {
+            termId: '2198',
+            termDescr: '2019 Fall',
+            termName: 'Fall 2019',
+            termIsSummer: false,
+            acadCareer: 'UGRD',
+          },
+        ]
       end
-
-      context 'when providing unique term ids' do
-        it 'provides unique term codes for active career terms' do
-          expect(active_term_ids.count).to eq 2
-          expect(active_term_ids[0]).to eq '2165'
-          expect(active_term_ids[1]).to eq '2168'
+      it 'provides term ids for each active career term' do
+        expect(result).to eq ['2195', '2198']
+      end
+      context 'when duplicate enrollment terms are provided' do
+        let(:active_career_terms) do
+          [
+            {termId: '2195'},
+            {termId: '2195'},
+            {termId: '2195'},
+            {termId: '2198'},
+            {termId: '2198'},
+          ]
+        end
+        it 'provides unique term ids for each active career term' do
+          expect(result).to eq ['2195', '2198']
         end
       end
     end
+  end
 
-    context 'when no active terms are returned' do
-      let(:cs_enrollment_career_terms) { [] }
-      context 'when providing career terms' do
-        it 'returns no active career terms' do
-          expect(active_career_terms).to eq []
-        end
+  context '#get_active_career_terms' do
+    let(:result) { subject.get_active_career_terms }
+    before do
+      allow(CampusSolutions::MyEnrollmentTerms).to receive(:get_terms).and_return(my_enrollment_terms)
+    end
+    context 'when enrollment terms are available' do
+      let(:my_enrollment_terms) { [{termId: '2195', termDescr: '2019 Summer', acadCareer: 'UGRD'}] }
+      it 'returns active terms for each career' do
+        expect(result.count).to eq 1
+        expect(result[0][:termId]).to eq '2195'
+        expect(result[0][:termDescr]).to eq '2019 Summer'
+        expect(result[0][:termName]).to eq 'Summer 2019'
+        expect(result[0][:termIsSummer]).to eq true
+        expect(result[0][:acadCareer]).to eq 'UGRD'
       end
-
-      context 'when providing unique terms' do
-        it 'provides empty array for active term ids' do
-          expect(active_term_ids).to eq []
-        end
+      it 'memoizes enrollment terms data' do
+        expect(CampusSolutions::MyEnrollmentTerms).to receive(:get_terms).once.and_return(my_enrollment_terms)
+        result1 = subject.get_active_career_terms
+        result2 = subject.get_active_career_terms
+        expect(result1.first[:termId]).to eq '2195'
+        expect(result2.first[:termId]).to eq '2195'
+      end
+    end
+    context 'when enrollment terms are not available' do
+      let(:my_enrollment_terms) { nil }
+      it 'returns empty array' do
+        expect(result).to eq([])
       end
     end
   end

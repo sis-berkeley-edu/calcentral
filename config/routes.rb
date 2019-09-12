@@ -97,6 +97,10 @@ Calcentral::Application.routes.draw do
     get '/api/my/law_awards' => 'my_law_awards#get_feed'
 
     scope '/api/my', module: 'user' do
+      scope '/academics', module: 'academics' do
+        resources :status_and_holds, only: [:index]
+      end
+
       scope '/finances', module: 'finances' do
         resources :billing_items, only: [:index, :show]
       end
@@ -176,6 +180,7 @@ Calcentral::Application.routes.draw do
   get '/api/campus_solutions/financial_aid_compare_awards_prior' => 'campus_solutions/financial_aid_compare_awards_prior#get', :defaults => { :format => 'json' }
   get '/api/campus_solutions/financial_aid_data' => 'campus_solutions/financial_aid_data#get', :defaults => { :format => 'json' }
   get '/api/campus_solutions/financial_resources/emergency_loan' => 'campus_solutions/financial_resources#get_emergency_loan', :defaults => { :format => 'json' }
+  get '/api/campus_solutions/financial_resources/financial_aid_summary' => 'campus_solutions/financial_resources#get_financial_aid_summary', :defaults => { :format => 'json' }
   get '/api/campus_solutions/financial_resources/summer_estimator' => 'campus_solutions/financial_resources#get_summer_estimator', :defaults => { :format => 'json' }
   get '/api/campus_solutions/fpp_enrollment' => 'campus_solutions/fpp_enrollment#get', :defaults => { :format => 'json' }
   get '/api/campus_solutions/higher_one_url' => 'campus_solutions/higher_one_url#get', :defaults => { :format => 'json' }

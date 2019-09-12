@@ -1,15 +1,15 @@
 describe EdoOracle::Queries do
   shared_examples "a successful query" do
     it "returns a set of rows" do
-      expect(subject).to be
-      expect(subject).to be_a Array
+      expect(result).to be
+      expect(result).to be_a Array
     end
   end
 
   shared_examples "a successful query that returns one result" do
     it "returns a single row" do
-      expect(subject).to be
-      expect(subject).to be_a Hash
+      expect(result).to be
+      expect(result).to be_a Hash
     end
   end
 
@@ -33,7 +33,7 @@ describe EdoOracle::Queries do
   end
 
   describe "#get_term_unit_totals" do
-    subject { described_class.get_term_unit_totals(uid, academic_careers, term_id) }
+    let(:result) { described_class.get_term_unit_totals(uid, academic_careers, term_id) }
     let(:uid) { 799934 }
     let(:academic_careers) { ["UGRD"] }
     let(:term_id) { 2178 }
@@ -41,15 +41,15 @@ describe EdoOracle::Queries do
     it_behaves_like "a successful query that returns one result"
 
     it "returns the expected result" do
-      expect(subject.count).to eq 3
-      expect(subject["total_earned_units"]).to eq 96.67
-      expect(subject["total_enrolled_units"]).to eq 6
-      expect(subject["grading_complete"]).to eq "Y"
+      expect(result.count).to eq 3
+      expect(result["total_earned_units"]).to eq 96.67
+      expect(result["total_enrolled_units"]).to eq 6
+      expect(result["grading_complete"]).to eq "Y"
     end
   end
 
   describe "#get_term_law_unit_totals" do
-    subject { described_class.get_term_law_unit_totals(uid, academic_careers, term_id) }
+    let(:result) { described_class.get_term_law_unit_totals(uid, academic_careers, term_id) }
     let(:uid) { 300216 }
     let(:academic_careers) { %w(GRAD LAW) }
     let(:term_id) { 2172 }
@@ -57,99 +57,134 @@ describe EdoOracle::Queries do
     it_behaves_like "a successful query that returns one result"
 
     it "returns the expected result" do
-      expect(subject.count).to eq 2
-      expect(subject["total_earned_law_units"]).to eq 15
-      expect(subject["total_enrolled_law_units"]).to eq 18
+      expect(result.count).to eq 2
+      expect(result["total_earned_law_units"]).to eq 15
+      expect(result["total_enrolled_law_units"]).to eq 18
     end
   end
 
   describe "#get_careers" do
-    subject { described_class.get_careers(uid) }
+    let(:result) { described_class.get_careers(uid) }
     let(:uid) { 300216 }
 
     it_behaves_like "a successful query"
 
     it "returns the expected result" do
-      expect(subject.count).to eq 3
-      expect(subject[0]).to be
-      expect(subject[1]).to be
-      expect(subject[2]).to be
+      expect(result.count).to eq 3
+      expect(result[0]).to be
+      expect(result[1]).to be
+      expect(result[2]).to be
 
-      expect(subject[0]["acad_career"]).to eq "GRAD"
-      expect(subject[0]["program_status"]).to eq "AC"
-      expect(subject[0]["total_cumulative_units"]).to eq 16
-      expect(subject[0]["total_cumulative_law_units"]).to eq 0
+      expect(result[0]["acad_career"]).to eq "GRAD"
+      expect(result[0]["program_status"]).to eq "AC"
+      expect(result[0]["total_cumulative_units"]).to eq 16
+      expect(result[0]["total_cumulative_law_units"]).to eq 0
 
-      expect(subject[1]["acad_career"]).to eq "LAW"
-      expect(subject[1]["program_status"]).to eq "AC"
-      expect(subject[1]["total_cumulative_units"]).to eq 61
-      expect(subject[1]["total_cumulative_law_units"]).to eq 46
+      expect(result[1]["acad_career"]).to eq "LAW"
+      expect(result[1]["program_status"]).to eq "AC"
+      expect(result[1]["total_cumulative_units"]).to eq 61
+      expect(result[1]["total_cumulative_law_units"]).to eq 46
 
-      expect(subject[2]["acad_career"]).to eq "UGRD"
-      expect(subject[2]["program_status"]).to be_falsey
-      expect(subject[2]["total_cumulative_units"]).to eq 157
-      expect(subject[2]["total_cumulative_law_units"]).to eq 0
+      expect(result[2]["acad_career"]).to eq "UGRD"
+      expect(result[2]["program_status"]).to be_falsey
+      expect(result[2]["total_cumulative_units"]).to eq 157
+      expect(result[2]["total_cumulative_law_units"]).to eq 0
+    end
+  end
+
+  describe '#get_enrollment_grading' do
+    let(:result) { described_class.get_enrollment_grading(uid, terms) }
+    let(:uid) { 799934 }
+    let(:terms) { nil }
+
+    it_behaves_like "a successful query"
+
+    it "returns expected records" do
+      expect(result.count).to eq 4
+      summer_2016_enrollment = result.find { |enr| enr['term_id'] == '2165' && enr['class_section_id'] == '46611' }
+      expect(summer_2016_enrollment["student_id"]).to eq '84307640'
+      expect(summer_2016_enrollment["institution"]).to eq 'UCB01'
+      expect(summer_2016_enrollment["term_id"]).to eq '2165'
+      expect(summer_2016_enrollment["session_id"]).to eq '6W1'
+      expect(summer_2016_enrollment["acad_career"]).to eq 'UGRD'
+      expect(summer_2016_enrollment["crse_career"]).to eq 'UGRD'
+      expect(summer_2016_enrollment["class_section_id"]).to eq '46611'
+      expect(summer_2016_enrollment["units_taken"]).to eq 3.0
+      expect(summer_2016_enrollment["units_earned"]).to eq 3.0
+      expect(summer_2016_enrollment["grade"]).to eq "P"
+      expect(summer_2016_enrollment["grade_points"]).to eq 0
+      expect(summer_2016_enrollment["grading_basis"]).to eq "EPN"
+      expect(summer_2016_enrollment["include_in_gpa"]).to eq "Y"
+      expect(summer_2016_enrollment["grading_lapse_deadline_display"]).to eq "N"
+      expect(summer_2016_enrollment["grading_lapse_deadline"]).to eq nil
+    end
+
+    it "populates the grading lapse deadline appropriately" do
+      incomplete_enrollment = result.find { |enr| enr['term_id'] == '2178' && enr['class_section_id'] == '11950' }
+      expect(incomplete_enrollment["units_taken"]).to eq 4.0
+      expect(incomplete_enrollment["units_earned"]).to eq 4.0
+      expect(incomplete_enrollment["grade"]).to eq "I"
+      expect(incomplete_enrollment["grade_points"]).to eq 16.0
+      expect(incomplete_enrollment["grading_basis"]).to eq "GRD"
+      expect(incomplete_enrollment["include_in_gpa"]).to eq "Y"
+      expect(incomplete_enrollment["grading_lapse_deadline_display"]).to eq "Y"
+      expect(incomplete_enrollment["grading_lapse_deadline"]).to eq DateTime.parse('Wed, 10 Jan 2018')
     end
   end
 
   describe "#get_enrolled_sections" do
-    subject { described_class.get_enrolled_sections(uid, terms) }
+    let(:result) { described_class.get_enrolled_sections(uid, terms) }
     let(:uid) { 799934 }
     let(:terms) { nil }
 
     it_behaves_like "a successful query"
 
     it "returns the expected result" do
-      expect(subject.count).to eq 3
-      expect(subject.first.count).to eq 39
-      expect(subject.first["section_id"]).to eq "12392"
-      expect(subject.first["term_id"]).to eq "2178"
-      expect(subject.first["session_id"]).to eq "1"
-      expect(subject.first["course_title"]).to eq "Senior Seminar"
-      expect(subject.first["course_title_short"]).to eq "SENIOR SEMINAR"
-      expect(subject.first["dept_name"]).to eq "AMERSTD"
-      expect(subject.first["dept_code"]).to eq "AMERSTD"
-      expect(subject.first["course_career_code"]).to eq "UGRD"
-      expect(subject.first["primary"]).to eq "TRUE"
-      expect(subject.first["section_num"]).to eq "3"
-      expect(subject.first["instruction_format"]).to eq "SEM"
-      expect(subject.first["primary_associated_section_id"]).to eq "12392"
-      expect(subject.first["section_display_name"]).to eq "AMERSTD 191"
-      expect(subject.first["topic_description"]).to be nil
-      expect(subject.first["course_display_name"]).to eq "AMERSTD 191"
-      expect(subject.first["catalog_id"]).to eq "191"
-      expect(subject.first["catalog_root"]).to eq "191"
-      expect(subject.first["catalog_prefix"]).to be nil
-      expect(subject.first["catalog_suffix"]).to be nil
-      expect(subject.first["enroll_limit"]).to eq 20
-      expect(subject.first["enroll_status"]).to eq "E"
-      expect(subject.first["waitlist_position"]).to be nil
-      expect(subject.first["units_taken"]).to eq 1
-      expect(subject.first["units_earned"]).to eq 1
-      expect(subject.first["grade"]).to eq "P"
-      expect(subject.first["grade_points"]).to eq 0
-      expect(subject.first["include_in_gpa"]).to eq "Y"
-      expect(subject.first["grading_basis"]).to eq "PNP"
-      expect(subject.first["acad_career"]).to eq "UGRD"
-      expect(subject.first["rqmnt_designtn"]).to be nil
-      expect(subject.first["drop_class_if_enrl"]).to be nil
-      expect(subject.first["last_enrl_dt_stmp"]).to be nil
-      expect(subject.first["message_nbr"]).to be nil
-      expect(subject.first["uc_reason_desc"]).to be nil
-      expect(subject.first["error_message_txt"]).to be nil
-      expect(subject.first["uc_enrl_lastattmpt_time"]).to be nil
-      expect(subject.first["uc_enrl_lastattmpt_date"]).to be nil
+      expect(result.count).to eq 3
+      expect(result.first.keys.count).to eq 31
+      expect(result.first["section_id"]).to eq "12392"
+      expect(result.first["term_id"]).to eq "2178"
+      expect(result.first["session_id"]).to eq "1"
+      expect(result.first["course_title"]).to eq "Senior Seminar"
+      expect(result.first["course_title_short"]).to eq "SENIOR SEMINAR"
+      expect(result.first["dept_name"]).to eq "AMERSTD"
+      expect(result.first["dept_code"]).to eq "AMERSTD"
+      expect(result.first["course_career_code"]).to eq "UGRD"
+      expect(result.first["primary"]).to eq "TRUE"
+      expect(result.first["section_num"]).to eq "3"
+      expect(result.first["instruction_format"]).to eq "SEM"
+      expect(result.first["primary_associated_section_id"]).to eq "12392"
+      expect(result.first["section_display_name"]).to eq "AMERSTD 191"
+      expect(result.first["topic_description"]).to be nil
+      expect(result.first["course_display_name"]).to eq "AMERSTD 191"
+      expect(result.first["catalog_id"]).to eq "191"
+      expect(result.first["catalog_root"]).to eq "191"
+      expect(result.first["catalog_prefix"]).to be nil
+      expect(result.first["catalog_suffix"]).to be nil
+      expect(result.first["enroll_limit"]).to eq 20
+      expect(result.first["enroll_status"]).to eq "E"
+      expect(result.first["waitlist_position"]).to be nil
+      expect(result.first["acad_career"]).to eq "UGRD"
+      expect(result.first["rqmnt_designtn"]).to be nil
+      expect(result.first["drop_class_if_enrl"]).to be nil
+      expect(result.first["last_enrl_dt_stmp"]).to be nil
+      expect(result.first["message_nbr"]).to be nil
+      expect(result.first["uc_reason_desc"]).to be nil
+      expect(result.first["error_message_txt"]).to be nil
+      expect(result.first["uc_enrl_lastattmpt_time"]).to be nil
+      expect(result.first["uc_enrl_lastattmpt_date"]).to be nil
     end
+
     context "when a class has a requirements designation" do
       let(:uid) { 490452 }
       context "and the course career is not LAW" do
         it "does not provide the requirements designation" do
-          expect(subject[0]["rqmnt_designtn"]).to be nil
+          expect(result[0]["rqmnt_designtn"]).to be nil
         end
       end
       context "and the course career is LAW" do
         it "provides the requirements designation" do
-          expect(subject[1]["rqmnt_designtn"]).to eq "LPR"
+          expect(result[1]["rqmnt_designtn"]).to eq "LPR"
         end
       end
     end
@@ -172,9 +207,9 @@ describe EdoOracle::Queries do
       let(:terms) { [Berkeley::Term.new(term)] }
       it_behaves_like "a successful query"
       it "returns only enrollments belonging to the specified terms" do
-        expect(subject.count).to eq 2
-        expect(subject[0]["term_id"]).to eq "2178"
-        expect(subject[1]["term_id"]).to eq "2178"
+        expect(result.count).to eq 2
+        expect(result[0]["term_id"]).to eq "2178"
+        expect(result[1]["term_id"]).to eq "2178"
       end
     end
     context "when no UID provided" do
@@ -190,93 +225,93 @@ describe EdoOracle::Queries do
   describe ".get_instructing_sections" do
     let(:term) { Berkeley::Terms.fetch.campus["fall-2018"] }
     let(:uid) { "27" }
-    subject { described_class.get_instructing_sections(uid, [term]) }
+    let(:result) { described_class.get_instructing_sections(uid, [term]) }
     it "returns the expected result" do
-      expect(subject.count).to eq 1
-      expect(subject.first["section_id"]).to eq "12392"
-      expect(subject.first["term_id"]).to eq "2188"
-      expect(subject.first["session_id"]).to eq "1"
-      expect(subject.first["course_title"]).to eq "Supervised Research: Biological Sciences"
-      expect(subject.first["course_title_short"]).to eq "RESEARCH BIOL SCI"
-      expect(subject.first["course_career_code"]).to eq "UGRD"
-      expect(subject.first["dept_name"]).to eq "UGIS"
-      expect(subject.first["dept_code"]).to eq "UGIS"
-      expect(subject.first["primary"]).to eq "TRUE"
-      expect(subject.first["section_num"]).to eq "16"
-      expect(subject.first["instruction_format"]).to eq "TUT"
-      expect(subject.first["primary_associated_section_id"]).to eq "12392"
-      expect(subject.first["section_display_name"]).to eq "UGIS 192C"
-      expect(subject.first["topic_description"]).to be nil
-      expect(subject.first["course_display_name"]).to eq "UGIS 192C"
-      expect(subject.first["catalog_id"]).to eq "192C"
-      expect(subject.first["catalog_root"]).to eq "192"
-      expect(subject.first["catalog_prefix"]).to be nil
-      expect(subject.first["catalog_suffix"]).to eq "C"
-      expect(subject.first["enroll_limit"]).to eq 30.0
-      expect(subject.first["waitlist_limit"]).to eq 30.0
-      expect(subject.first["start_date"]).to eq Date.parse("Wed, 22 Aug 2018")
-      expect(subject.first["end_date"]).to eq Date.parse("Fri, 07 Dec 2018")
+      expect(result.count).to eq 1
+      expect(result.first["section_id"]).to eq "12392"
+      expect(result.first["term_id"]).to eq "2188"
+      expect(result.first["session_id"]).to eq "1"
+      expect(result.first["course_title"]).to eq "Supervised Research: Biological Sciences"
+      expect(result.first["course_title_short"]).to eq "RESEARCH BIOL SCI"
+      expect(result.first["course_career_code"]).to eq "UGRD"
+      expect(result.first["dept_name"]).to eq "UGIS"
+      expect(result.first["dept_code"]).to eq "UGIS"
+      expect(result.first["primary"]).to eq "TRUE"
+      expect(result.first["section_num"]).to eq "16"
+      expect(result.first["instruction_format"]).to eq "TUT"
+      expect(result.first["primary_associated_section_id"]).to eq "12392"
+      expect(result.first["section_display_name"]).to eq "UGIS 192C"
+      expect(result.first["topic_description"]).to be nil
+      expect(result.first["course_display_name"]).to eq "UGIS 192C"
+      expect(result.first["catalog_id"]).to eq "192C"
+      expect(result.first["catalog_root"]).to eq "192"
+      expect(result.first["catalog_prefix"]).to be nil
+      expect(result.first["catalog_suffix"]).to eq "C"
+      expect(result.first["enroll_limit"]).to eq 30.0
+      expect(result.first["waitlist_limit"]).to eq 30.0
+      expect(result.first["start_date"]).to eq Date.parse("Wed, 22 Aug 2018")
+      expect(result.first["end_date"]).to eq Date.parse("Fri, 07 Dec 2018")
     end
 
     describe ".get_section_final_exams" do
       let(:term_id) { "2178" }
       let(:section_id) { "11950" }
-      subject { described_class.get_section_final_exams(term_id, section_id) }
+      let(:result) { described_class.get_section_final_exams(term_id, section_id) }
       it "returns the expected result" do
-        expect(subject[0]["term_id"]).to eq "2178"
-        expect(subject[0]["session_id"]).to eq "1"
-        expect(subject[0]["section_id"]).to eq "11950"
-        expect(subject[0]["exam_type"]).to eq "N"
-        expect(subject[0]["exam_date"]).to eq Date.parse("Thu, 17 Dec 2015")
-        expect(subject[0]["exam_start_time"].utc).to be
-        expect(subject[0]["exam_end_time"].utc).to be
-        expect(subject[0]["location"]).to eq "Hearst Gym 188"
-        expect(subject[0]["exam_exception"]).to eq "Y"
-        expect(subject[0]["finalized"]).to eq "N"
+        expect(result[0]["term_id"]).to eq "2178"
+        expect(result[0]["session_id"]).to eq "1"
+        expect(result[0]["section_id"]).to eq "11950"
+        expect(result[0]["exam_type"]).to eq "N"
+        expect(result[0]["exam_date"]).to eq Date.parse("Thu, 17 Dec 2015")
+        expect(result[0]["exam_start_time"].utc).to be
+        expect(result[0]["exam_end_time"].utc).to be
+        expect(result[0]["location"]).to eq "Hearst Gym 188"
+        expect(result[0]["exam_exception"]).to eq "Y"
+        expect(result[0]["finalized"]).to eq "N"
       end
     end
   end
 
   describe "#get_law_enrollment" do
-    subject { described_class.get_law_enrollment(uid, academic_career, term, section, require_desig_code) }
-    let (:uid) { 490452 }
-    let (:academic_career) { "LAW" }
-    let (:term) { 2185 }
-    let (:section) { 11950 }
-    let (:require_desig_code) { "LPR" }
+    let(:result) { described_class.get_law_enrollment(uid, academic_career, term, section, require_desig_code) }
+    let(:uid) { 490452 }
+    let(:academic_career) { "LAW" }
+    let(:term) { 2185 }
+    let(:section) { 11950 }
+    let(:require_desig_code) { "LPR" }
 
     it_behaves_like "a successful query that returns one result"
 
     it "returns the expected result" do
-      expect(subject.count).to eq 3
-      expect(subject["units_taken_law"]).to eq 3
-      expect(subject["units_earned_law"]).to eq 0
-      expect(subject["rqmnt_desg_descr"]).to eq "Fulfills Professional Responsibility Requirement"
+      expect(result.count).to eq 3
+      expect(result["units_taken_law"]).to eq 3
+      expect(result["units_earned_law"]).to eq 0
+      expect(result["rqmnt_desg_descr"]).to eq "Fulfills Professional Responsibility Requirement"
     end
   end
 
   describe "#get_concurrent_student_status" do
-    subject { described_class.get_concurrent_student_status(student_id) }
-    let (:student_id) { 95727964 }
+    let(:result) { described_class.get_concurrent_student_status(student_id) }
+    let(:student_id) { 95727964 }
 
     it_behaves_like "a successful query that returns one result"
 
     it "returns the expected result" do
-      expect(subject["concurrent_status"]).to eq "Y"
+      expect(result["concurrent_status"]).to eq "Y"
     end
   end
 
   describe "#get_transfer_credit_detailed" do
-    subject { EdoOracle::Queries.get_transfer_credit_detailed(uid) }
+    let(:result) { EdoOracle::Queries.get_transfer_credit_detailed(uid) }
     let(:uid) { 300216 }
 
     it_behaves_like "a successful query"
 
     it "returns the expected result" do
-      expect(subject.count).to eq 3
-      expect(subject[0]).to have_keys(["career", "school_descr", "transfer_units", "law_transfer_units", "requirement_designation", "grade_points", "term_id"])
-      expect(subject[1]).to have_keys(["career", "school_descr", "transfer_units", "law_transfer_units", "requirement_designation", "grade_points", "term_id"])
-      expect(subject[2]).to have_keys(["career", "school_descr", "transfer_units", "law_transfer_units", "requirement_designation", "grade_points", "term_id"])
+      expect(result.count).to eq 3
+      expect(result[0]).to have_keys(["career", "school_descr", "transfer_units", "law_transfer_units", "requirement_designation", "grade_points", "term_id"])
+      expect(result[1]).to have_keys(["career", "school_descr", "transfer_units", "law_transfer_units", "requirement_designation", "grade_points", "term_id"])
+      expect(result[2]).to have_keys(["career", "school_descr", "transfer_units", "law_transfer_units", "requirement_designation", "grade_points", "term_id"])
     end
   end
 
@@ -408,20 +443,6 @@ describe EdoOracle::Queries do
           expect(result).to have_key(expected_key)
         end
       end
-    end
-  end
-
-  describe ".get_enrolled_sections" do
-    let(:terms) { [Berkeley::Terms.fetch.campus["fall-2017"]] }
-    let(:uid) { "799934" }
-    it "fetches expected data" do
-      results = EdoOracle::Queries.get_enrolled_sections(uid, terms)
-      expect(results.count).to eq 2
-      expected_keys = %w(section_id term_id session_id course_title course_title_short dept_name primary section_num instruction_format primary_associated_section_id course_display_name section_display_name catalog_id catalog_root catalog_prefix catalog_suffix enroll_limit enroll_status waitlist_position units_taken units_earned grade grade_points grading_basis include_in_gpa acad_career rqmnt_designtn)
-      expect(results[0]).to have_keys(expected_keys)
-      expect(results[1]).to have_keys(expected_keys)
-      expect(results[0]["term_id"]).to eq "2178"
-      expect(results[0]["section_id"]).to eq "12392"
     end
   end
 

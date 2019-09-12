@@ -1,140 +1,806 @@
 describe MyAcademics::Semesters do
+  subject { described_class.new(uid) }
+  let(:uid) { random_id }
+  let(:campus_solutions_id) { random_id }
+  let(:crosswalk) { double(lookup_campus_solutions_id: campus_solutions_id)}
+  before do
+    allow(CalnetCrosswalk::ByUid).to receive(:new).and_return(crosswalk)
+  end
 
-  describe '#find_academic_careers' do
-    subject { described_class.new(uid).find_academic_careers }
-    let(:uid) { 300216 }
+  let(:registration_status) {
+    [
+      {
+        'student_id' => campus_solutions_id,
+        'acadcareer_code' => 'UGRD',
+        'term_id' => '2198',
+        'withcncl_type_code' => nil,
+        'withcncl_type_descr' => nil,
+        'withcncl_reason_code' => nil,
+        'withcncl_reason_descr' => nil,
+        'withcncl_fromdate' => nil,
+        'withcncl_lastattendate' => nil,
+        'splstudyprog_type_code' => 'BGNNFILING',
+        'splstudyprog_type_descr' => 'Filing Fee'
+      }
+    ]
+  }
 
-    context 'with an active career' do
-      it 'returns a list of active careers' do
-        expect(subject).to contain_exactly('GRAD', 'LAW')
+  describe '#initialize' do
+    it 'initializes campus solutions id' do
+      expect(subject.instance_eval { @campus_solutions_id }).to eq campus_solutions_id
+    end
+  end
+
+  describe '#merge' do
+    let(:data) { {} }
+    let(:semester_feed) { [{}] }
+    let(:populated_semester_feed) { [{}] }
+    let(:data_with_semester_count) { {pastSemestersLimit: 3, pastSemestersCount: 5} }
+    let(:result) { subject.merge(data) }
+    let(:user_courses_all) { double(enrollments_summary: enrollments_summary, all_campus_courses: all_campus_courses) }
+    let(:registration_status_data) { 'registration_status_data' }
+    let(:enrollments_summary) { 'enrollments_summary' }
+    let(:all_campus_courses) { 'all_campus_courses' }
+    let(:academic_standings_data) do
+      [
+        {'term_id' => '2198', 'action_date' => DateTime.parse('2019-09-15')},
+        {'term_id' => '2198', 'action_date' => DateTime.parse('2019-09-10')},
+        {'term_id' => '2195', 'action_date' => DateTime.parse('2019-09-28')},
+      ]
+    end
+    before do
+      allow(EdoOracle::UserCourses::All).to receive(:new).with(user_id: uid).and_return(user_courses_all)
+      allow(EdoOracle::Queries).to receive(:get_registration_status).with(uid).and_return(registration_status_data)
+      allow(subject).to receive(:get_academic_standings).with(campus_solutions_id).and_return(academic_standings_data)
+      allow(subject).to receive(:semester_feed).and_return(populated_semester_feed)
+      allow(subject).to receive(:merge_semesters_count) do |data|
+        data.merge({pastSemestersLimit: 3, pastSemestersCount: 5})
       end
     end
-    context 'with no active career' do
-      let(:uid) { 790833 }
-      it 'returns a list of all careers' do
-        expect(subject).to contain_exactly('UGRD', 'UCBX')
+    context 'when feed is filtered for delegates' do
+      let(:data) { {filteredForDelegate: true} }
+      it 'sources enrollments from summary data' do
+        expect(user_courses_all).to receive(:enrollments_summary).and_return(enrollments_summary)
+        expect(user_courses_all).to_not receive(:all_campus_courses)
+        expect(result).to be_an_instance_of Hash
+      end
+    end
+    context 'when feed is not filtered for delegates' do
+      let(:data) { {} }
+      it 'sources enrollments from full courses data' do
+        expect(user_courses_all).to receive(:all_campus_courses).and_return(all_campus_courses)
+        expect(user_courses_all).to_not receive(:enrollments_summary)
+        expect(result).to be_an_instance_of Hash
+      end
+    end
+    context 'when nil elements returned from semesters feed' do
+      let(:populated_semester_feed) { [{name: 'Fall 2019'}, nil] }
+      it 'removes nil elements' do
+        allow(subject).to receive(:semester_feed).and_return(populated_semester_feed)
+        expect(result).to be_an_instance_of Hash
+        expect(data[:semesters]).to eq([{name: 'Fall 2019'}])
+      end
+    end
+    it 'passes expected data in semesters feed call' do
+      expect(subject).to receive(:semester_feed).with(all_campus_courses).and_return(populated_semester_feed)
+      expect(result).to be_an_instance_of Hash
+    end
+    it 'passes data to merge_semesters_count' do
+      expect(subject).to receive(:merge_semesters_count).with({:semesters=>[{}]})
+      expect(result).to be_an_instance_of Hash
+    end
+  end
+
+  describe '#merge_semesters_count' do
+    let(:data) { {} }
+    let(:result) { subject.merge_semesters_count(data) }
+    context 'when semesters present' do
+      let(:data) do
+        {
+          semesters: [
+            {timeBucket: 'past'},
+            {timeBucket: 'past'},
+            {timeBucket: 'past'},
+            {timeBucket: 'past'},
+            {timeBucket: 'past'},
+            {timeBucket: 'current'},
+            {timeBucket: 'future'},
+          ]
+        }
+      end
+      it 'merges past semesters limit into data' do
+        expect(result[:pastSemestersLimit]).to eq 3
+      end
+      it 'merges past semesters count into data' do
+        expect(result[:pastSemestersCount]).to eq 5
+      end
+    end
+    context 'when semesters not present' do
+      let(:data) { {not_semesters: []} }
+      it 'returns data' do
+        expect(result.has_key?(:semesters)).to eq false
+        expect(result[:not_semesters]).to eq([])
       end
     end
   end
 
-  describe '#semester_feed' do
-    subject { described_class.new(uid).semester_feed(enrollment_terms, reg_status_data, standing_data) }
-
+  describe '#academic_standings' do
+    let(:result) { subject.academic_standings }
+    let(:standings_feature_flag) { true }
+    let(:academic_standings) { [] }
     before do
-      allow(Settings.edodb).to receive(:fake).and_return false
-      allow(Settings.terms).to receive(:fake_now).and_return nil
-      allow(Settings.terms).to receive(:use_term_definitions_json_file).and_return true
-      allow(Settings.features).to receive(:hub_term_api).and_return false
+      allow(Settings.features).to receive(:standings).and_return(standings_feature_flag)
+      allow(EdoOracle::Queries).to receive(:get_academic_standings).with(campus_solutions_id).and_return(academic_standings)
     end
-
-    let(:enrollment_terms) { EdoOracle::UserCourses::All.new(user_id: uid, fake: false).get_all_campus_courses }
-    let(:reg_status_data) { [] }
-    let(:standing_data) { [] }
-    let(:uid) { 790833 }
-
-    it 'sorts the terms in descending order' do
-      expect(subject.count).to eq 2
-      expect(subject[0][:termId]).to eq '2178'
-      expect(subject[1][:termId]).to eq '2172'
-    end
-    it 'provides grading data' do
-      expect(subject[0][:classes][0][:sections][0][:grading][:gradePoints]).to eq 0
-      expect(subject[0][:classes][0][:sections][0][:grading][:gradingBasis]).to eq 'GRD'
-      expect(subject[1][:classes][0][:sections][0][:grading][:gradePoints]).to eq 0
-      expect(subject[1][:classes][0][:sections][0][:grading][:gradingBasis]).to eq 'GRD'
-    end
-    it 'flags class sections as non-Law based on the class academic career' do
-      expect(subject[0][:classes][0][:sections][0][:isLaw]).to be_falsey
-      expect(subject[1][:classes][0][:sections][0][:isLaw]).to be_falsey
-    end
-    context 'when all of student\'s grades have been received for the term' do
-      it 'provides the total earned units' do
-        expect(subject[0][:totalUnits]).to eq 3
-        expect(subject[0][:totalLawUnits]).to be nil
-        expect(subject[0][:isGradingComplete]).to eq true
+    context 'when feature flag is disabled' do
+      let(:standings_feature_flag) { false }
+      it 'returns empty array' do
+        expect(result).to eq([])
       end
     end
-    context 'when grades have not all been received for the term' do
-      it 'provides the total enrolled units' do
-        expect(subject[1][:totalUnits]).to eq 4
-        expect(subject[1][:totalLawUnits]).to be nil
-        expect(subject[1][:isGradingComplete]).to eq false
+    context 'when feature flag is enabled' do
+      let(:standings_feature_flag) { true }
+      context 'when query returns no standings' do
+        let(:academic_standings) { [] }
+        it 'returns empty array' do
+          expect(result).to eq([])
+        end
       end
-    end
-    context 'when student has a LAW career term' do
-      let(:uid) { 490452 }
-      context 'when grades have not all been received for the term' do
-        it 'provides the total enrolled units and law units' do
-          expect(subject.count).to eq 1
-          expect(subject[0][:termId]).to eq '2185'
-          expect(subject[0][:totalUnits]).to eq 0
-          expect(subject[0][:totalLawUnits]).to eq 16
-          expect(subject[0][:isGradingComplete]).to eq false
+      context 'when query returns standings' do
+        let(:academic_standings) do
+          [
+            {'term_id' => '2198', 'action_date' => DateTime.parse('2019-09-15')},
+            {'term_id' => '2195', 'action_date' => DateTime.parse('2019-09-28')},
+            {'term_id' => '2198', 'action_date' => DateTime.parse('2019-09-10')},
+          ]
         end
-        it 'provides the classes and sections the student was enrolled in' do
-          expect(subject[0][:classes]).to be
-          expect(subject[0][:classes].count).to eq 2
-
-          expect(subject[0][:classes][0][:sections]).to be
-          expect(subject[0][:classes][0][:sections].count).to eq 1
-          expect(subject[0][:classes][0][:sections][0][:ccn]).to eq '12392'
-          expect(subject[0][:classes][0][:sections][0][:units]).to eq 2
-          expect(subject[0][:classes][0][:sections][0][:lawUnits]).to eq 3
-          expect(subject[0][:classes][0][:sections][0][:requirementsDesignation]).to be nil
-
-          expect(subject[0][:classes][1][:sections]).to be
-          expect(subject[0][:classes][1][:sections].count).to eq 1
-          expect(subject[0][:classes][1][:sections][0][:ccn]).to eq '11950'
-          expect(subject[0][:classes][1][:sections][0][:units]).to eq 3
-          expect(subject[0][:classes][1][:sections][0][:lawUnits]).to eq 3
-          expect(subject[0][:classes][1][:sections][0][:requirementsDesignation]).to eq 'Fulfills Professional Responsibility Requirement'
+        it 'sorts standings in descending order by term and action date' do
+          expect(result.count).to eq 3
+          expect(result[0]['term_id']).to eq '2198'
+          expect(result[1]['term_id']).to eq '2198'
+          expect(result[2]['term_id']).to eq '2195'
+          expect(result[0]['action_date']).to eq DateTime.parse('2019-09-15')
+          expect(result[1]['action_date']).to eq DateTime.parse('2019-09-10')
+          expect(result[2]['action_date']).to eq DateTime.parse('2019-09-28')
         end
-        it 'suppresses Grade Points on Law classes' do
-          expect(subject[0][:classes][0][:sections][0][:grading][:gradePoints]).to be nil
-          expect(subject[0][:classes][0][:sections][0][:grading][:gradingBasis]).to eq 'LAW'
-          expect(subject[0][:classes][1][:sections][0][:grading][:gradePoints]).to be nil
-          expect(subject[0][:classes][1][:sections][0][:grading][:gradingBasis]).to eq 'LAW'
-        end
-        it 'flags class sections as Law based on the class academic career' do
-          expect(subject[0][:classes][0][:sections][0][:isLaw]).to be true
-          expect(subject[0][:classes][1][:sections][0][:isLaw]).to be true
+        it 'memoizes academic standing data' do
+          expect(EdoOracle::Queries).to receive(:get_academic_standings).with(campus_solutions_id).once.and_return(academic_standings)
+          result1 = subject.academic_standings
+          result2 = subject.academic_standings
+          expect(result1[0]['term_id']).to eq '2198'
+          expect(result1[1]['term_id']).to eq '2198'
+          expect(result1[2]['term_id']).to eq '2195'
+          expect(result2[0]['term_id']).to eq '2198'
+          expect(result2[1]['term_id']).to eq '2198'
+          expect(result2[2]['term_id']).to eq '2195'
         end
       end
     end
-    context 'when student is in a concurrent (GRAD+LAW) program' do
-      before do
-        allow(User::Identifiers).to receive(:lookup_campus_solutions_id).and_return '95727964'
+  end
+
+  describe '#registration_status' do
+    let(:registration_status) { [{'student_id' => campus_solutions_id}] }
+    before { allow(EdoOracle::Queries).to receive(:get_registration_status).and_return(registration_status) }
+    it 'returns registration status' do
+      result = subject.registration_status
+      expect(result.count).to eq 1
+      expect(result[0]['student_id']).to eq campus_solutions_id
+    end
+    it 'memoizes registration status data' do
+      expect(EdoOracle::Queries).to receive(:get_registration_status).with(campus_solutions_id).once.and_return(registration_status)
+      result1 = subject.registration_status
+      result2 = subject.registration_status
+      expect(result1[0]['student_id']).to eq campus_solutions_id
+      expect(result2[0]['student_id']).to eq campus_solutions_id
+    end
+  end
+
+  describe '#academic_careers' do
+    let(:result) { subject.academic_careers }
+    let(:grad_program_status) { 'AC' }
+    let(:law_program_status) { 'AC' }
+    let(:career_rows) do
+      [
+        {'acad_career' => 'GRAD', 'program_status' => grad_program_status },
+        {'acad_career' => 'LAW', 'program_status' => law_program_status },
+      ]
+    end
+    let(:edo_oracle_career) { double(fetch: career_rows) }
+    before { allow(EdoOracle::Career).to receive(:new).with(user_id: uid).and_return(edo_oracle_career) }
+    it 'memoizes the careers data' do
+      expect(EdoOracle::Career).to receive(:new).with(user_id: uid).once.and_return(edo_oracle_career)
+      result1 = subject.academic_careers
+      result2 = subject.academic_careers
+      expect(result1.count).to eq 2
+      expect(result2.count).to eq 2
+      expect(result1).to eq(['GRAD','LAW'])
+      expect(result2).to eq(['GRAD','LAW'])
+    end
+    context 'when active and inactive careers are present' do
+      let(:grad_program_status) { 'AC' }
+      let(:law_program_status) { 'DC' }
+      it 'returns only the active careers' do
+        expect(result).to eq(['GRAD'])
       end
-      let(:uid) { 300216 }
-      it 'suppresses Grade Points on both Grad and Law classes' do
-        expect(subject[0][:classes][0][:academicCareer]).to eq 'GRAD'
-        expect(subject[0][:classes][0][:sections][0][:grading][:gradePoints]).to be nil
-        expect(subject[0][:classes][0][:sections][0][:grading][:gradingBasis]).to eq 'CNC'
+    end
+    context 'when only inactive careers are present' do
+      let(:grad_program_status) { 'DC' }
+      let(:law_program_status) { 'DC' }
+      it 'returns all the careers' do
+        expect(result).to eq(['GRAD','LAW'])
+      end
+    end
+  end
 
-        expect(subject[0][:classes][1][:academicCareer]).to eq 'LAW'
-        expect(subject[0][:classes][1][:sections][0][:grading][:gradePoints]).to be nil
-        expect(subject[0][:classes][1][:sections][0][:grading][:gradingBasis]).to eq 'GRD'
+  describe '#process_unfiltered_course' do
+    let(:term_id) { '2198' }
+    let(:course) do
+      {
+        role: 'Student',
+        sections: course_sections,
+        slug: 'econ-1',
+        session_code: nil,
+        academicCareer: 'UGRD',
+        courseCareerCode: 'UGRD',
+        title: 'Introduction to Economics',
+        url: '/academics/semester/fall-2019/class/econ-1-2019-D',
+        course_code: 'ECON 1',
+        dept: 'ECON',
+        dept_code: 'ECON',
+        courseCatalog: '1',
+        course_id: 'econ-1-2019-D',
+      }
+    end
+    let(:course_sections) { [] }
+    let(:reserved_capacity_feature_flag) { false }
+    let(:reserved_capacity_link_feature_flag) { false }
+    let(:hide_grade_points) { false }
+    let(:is_law_class) { false }
+    before do
+      allow(subject).to receive(:add_section_grade_option) {|section| section.merge({gradeOption: 'Letter'}) }
+      allow(subject).to receive(:hide_points?).and_return(hide_grade_points)
+      allow(subject).to receive(:law_class?).and_return(is_law_class)
+      allow(subject).to receive(:law_class_enrollment).and_return({})
+      allow(Settings.features).to receive(:reserved_capacity).and_return(reserved_capacity_feature_flag)
+      allow(Settings.features).to receive(:reserved_capacity_link).and_return(reserved_capacity_link_feature_flag)
+    end
+    context 'when sections are present for course' do
+      let(:course_sections) do
+        [
+          {
+            is_primary_section: true,
+            grading: {
+              gradePoints: BigDecimal.new('1.0')
+            }
+          },
+          {
+            is_primary_section: section_two_is_primary_section,
+            waitlisted: section_two_is_waitlisted,
+            grading: {
+              gradePoints: BigDecimal.new('0.0')
+            }
+          },
+        ]
+      end
+      let(:section_two_is_waitlisted) { false }
+      let(:section_two_is_primary_section) { false }
+      context 'when section is waitlisted' do
+        let(:section_two_is_waitlisted) { true }
+        context 'when reserved capacity feature flag is disabled' do
+          let(:reserved_capacity_feature_flag) { false }
+          it 'does not attempt to map reserved seats for section' do
+            expect(subject).to_not receive(:map_reserved_seats)
+            subject.process_unfiltered_course(course, term_id)
+          end
+        end
+        context 'when reserved capacity feature flag is enabled' do
+          let(:reserved_capacity_feature_flag) { true }
+          it 'does not map reserved seats for the non-waitlisted section' do
+            expect(subject).to receive(:map_reserved_seats) { |term_id, section| section[:capacity] = {unreservedSeats: 5, reservedSeats: []} }
+            subject.process_unfiltered_course(course, term_id)
+            expect(course[:sections][0].has_key?(:capacity)).to eq false
+          end
+          it 'maps reserved seats for the waitlisted section' do
+            expect(subject).to receive(:map_reserved_seats) { |term_id, section| section[:capacity] = {unreservedSeats: 5, reservedSeats: []} }
+            subject.process_unfiltered_course(course, term_id)
+            expect(course[:sections][1][:capacity][:unreservedSeats]).to eq 5
+          end
+        end
+      end
+      context 'when reserved capacity link feature flag is disabled' do
+        let(:reserved_capacity_link_feature_flag) { false }
+        it 'does not add reserved seating rules link' do
+          expect(subject).to_not receive(:add_reserved_seating_rules_link)
+          subject.process_unfiltered_course(course, term_id)
+          expect(course[:sections][0].has_key?(:hasReservedSeats)).to eq false
+          expect(course[:sections][0].has_key?(:reservedSeatsInfoLink)).to eq false
+          expect(course[:sections][1].has_key?(:hasReservedSeats)).to eq false
+          expect(course[:sections][1].has_key?(:reservedSeatsInfoLink)).to eq false
+        end
+      end
+      context 'when reserved capacity link feature flag is enabled' do
+        let(:reserved_capacity_link_feature_flag) { true }
+        it 'adds reserved seating rules link' do
+          expect(subject).to receive(:add_reserved_seating_rules_link) do |term_id, course, section|
+            section.merge!({hasReservedSeats: true, reservedSeatsInfoLink: 'http://example.com/'})
+          end.twice
+          subject.process_unfiltered_course(course, term_id)
+          expect(course[:sections][0][:hasReservedSeats]).to eq true
+          expect(course[:sections][0][:reservedSeatsInfoLink]).to eq 'http://example.com/'
+          expect(course[:sections][1][:hasReservedSeats]).to eq true
+          expect(course[:sections][1][:reservedSeatsInfoLink]).to eq 'http://example.com/'
+        end
+      end
+      context 'when grade points should be hidden for course' do
+        let(:hide_grade_points) { true }
+        it 'returns nil for section grade points' do
+          subject.process_unfiltered_course(course, term_id)
+          expect(course[:sections][0][:grading][:gradePoints]).to eq nil
+          expect(course[:sections][1][:grading][:gradePoints]).to eq nil
+        end
+      end
+      context 'when grade points should not be hidden for course ' do
+        let(:hide_grade_points) { false }
+        it 'returns section grade points' do
+          subject.process_unfiltered_course(course, term_id)
+          expect(course[:sections][0][:grading][:gradePoints]).to eq 1.0
+          expect(course[:sections][1][:grading][:gradePoints]).to eq 0.0
+        end
+      end
+      context 'when processing a law course' do
+        let(:is_law_class) { true }
+        it 'tags the section as a law section' do
+          subject.process_unfiltered_course(course, term_id)
+          expect(course[:sections][0][:isLaw]).to eq true
+        end
+      end
+      context 'when processing a non-law course' do
+        let(:is_law_class) { false }
+        it 'tag the section as a non-law section' do
+          subject.process_unfiltered_course(course, term_id)
+          expect(course[:sections][0][:isLaw]).to eq false
+        end
+      end
+      context 'when multiple primary sections present' do
+        let(:section_two_is_primary_section) { true }
+        it 'makes call to merge multiple primaries' do
+          expect(subject).to receive(:merge_multiple_primaries).once.and_return(nil)
+          subject.process_unfiltered_course(course, term_id)
+        end
+      end
+      it 'merges law enrollment data with section' do
+        allow(subject).to receive(:law_class_enrollment).and_return({lawUnits: 5})
+        subject.process_unfiltered_course(course, term_id)
+        expect(course[:sections][0][:lawUnits]).to eq 5
+      end
+    end
+  end
 
-        expect(subject[0][:classes][2][:academicCareer]).to eq 'LAW'
-        expect(subject[0][:classes][2][:sections][0][:grading][:gradePoints]).to be nil
-        expect(subject[0][:classes][2][:sections][0][:grading][:gradingBasis]).to eq 'GRD'
+  describe '#add_section_grade_option' do
+    let(:result) { subject.add_section_grade_option(section) }
+    context 'when section originates from campus solutions' do
+      let(:section) { {grading_basis: 'GRD'} }
+      it 'sets grade option description based on grading basis' do
+        expect(Berkeley::GradeOptions).to receive(:grade_option_from_basis).with('GRD').and_return('Letter')
+        subject.add_section_grade_option(section)
+        expect(section[:gradeOption]).to eq 'Letter'
+      end
+    end
+    context 'when section originates from legacy oracle' do
+      let(:section) { {cred_cd: 'PF', pnp_flag: 'Y'} }
+      it 'sets grade option description based on pnp flag and credit code' do
+        expect(Berkeley::GradeOptions).to receive(:grade_option_for_enrollment).with('PF', 'Y').and_return('P/NP')
+        subject.add_section_grade_option(section)
+        expect(section[:gradeOption]).to eq 'P/NP'
+      end
+    end
+  end
+
+  describe '#add_reserved_seating_rules_link' do
+    let(:term_id) { '2198' }
+    let(:course) { {dept_code: 'ECON', courseCatalog: '1'} }
+    let(:section) do
+      {
+        waitlisted: section_waitlisted,
+        is_primary_section: section_is_primary_section,
+        section_number: '001',
+        instruction_format: 'LEC',
+      }
+    end
+    let(:section_reserved_capacity_result) { [{'reserved_seating_rules_count' => reserved_seating_rules_count}] }
+    let(:reserved_seating_rules_count) { BigDecimal.new('5.0') }
+    let(:reserved_seats_info_link) { 'https://classes.berkeley.edu/content/2019-fall-econ-1-001-lec-001' }
+    let(:fall_2019_term) { double(year: 2019, name: 'Fall 2019') }
+    before do
+      allow(Berkeley::Terms).to receive(:find_by_campus_solutions_id).with(term_id).and_return(fall_2019_term)
+      allow(EdoOracle::Queries).to receive(:section_reserved_capacity_count).and_return(section_reserved_capacity_result)
+      allow(LinkFetcher).to receive(:fetch_link).and_return(reserved_seats_info_link)
+      subject.add_reserved_seating_rules_link(term_id, course, section)
+    end
+    context 'when section is not waitlisted' do
+      let(:section_waitlisted) { false }
+      let(:section_is_primary_section) { true }
+      it 'does not add reserved seats info' do
+        expect(section.has_key?(:hasReservedSeats)).to eq false
+        expect(section.has_key?(:reservedSeatsInfoLink)).to eq false
+      end
+    end
+    context 'when section is waitlisted' do
+      let(:section_waitlisted) { true }
+      context 'when section is not a primary section' do
+        let(:section_is_primary_section) { false }
+        it 'does not add reserved seats info' do
+          expect(section.has_key?(:hasReservedSeats)).to eq false
+          expect(section.has_key?(:reservedSeatsInfoLink)).to eq false
+        end
+      end
+      context 'when section is a primary section' do
+        let(:section_is_primary_section) { true }
+        context 'when reserved capacity count is less than zero' do
+          let(:reserved_seating_rules_count) { BigDecimal.new('-3.0') }
+          it 'does not add reserved seats info' do
+            expect(section.has_key?(:hasReservedSeats)).to eq false
+            expect(section.has_key?(:reservedSeatsInfoLink)).to eq false
+          end
+        end
+        context 'when reserved capacity count is zero' do
+          let(:reserved_seating_rules_count) { BigDecimal.new('0.0') }
+          it 'does not add reserved seats info' do
+            expect(section.has_key?(:hasReservedSeats)).to eq false
+            expect(section.has_key?(:reservedSeatsInfoLink)).to eq false
+          end
+        end
+        context 'when reserved capacity count is more than zero' do
+          let(:reserved_seating_rules_count) { BigDecimal.new('3.0') }
+          it 'indicates that the section has reserved seats' do
+            expect(section[:hasReservedSeats]).to eq true
+          end
+          it 'includes the reserved seats info link' do
+            expect(section[:reservedSeatsInfoLink]).to eq reserved_seats_info_link
+          end
+        end
+      end
+    end
+  end
+
+  describe '#map_reserved_seats' do
+    let(:term_id) { '2198' }
+    let(:section) { {ccn: '27604'} }
+    let(:section_reserved_capacity) { [] }
+    let(:section_capacity) { [] }
+    before do
+      allow(EdoOracle::Queries).to receive(:get_section_reserved_capacity).with(term_id, section[:ccn]).and_return(section_reserved_capacity)
+      allow(EdoOracle::Queries).to receive(:get_section_capacity).with(term_id, section[:ccn]).and_return(section_capacity)
+    end
+    context 'when no section reserved capacity available' do
+      let(:section_reserved_capacity) { [] }
+      it 'does not add reserved capacity data' do
+        subject.map_reserved_seats(term_id, section)
+        expect(section.has_key?(:capacity)).to eq false
+      end
+      it 'does not add hasReservedSeats boolean' do
+        subject.map_reserved_seats(term_id, section)
+        expect(section[:hasReservedSeats]).to eq nil
+      end
+    end
+    context 'when section reserved capacity available' do
+      let(:section_reserved_capacity) do
+        [
+          {
+            'class_nbr' => BigDecimal.new('27604.0'),
+            'class_section' => '001',
+            'component' => 'LEC',
+            'catalog_nbr' => '61A',
+            'reserved_seats' => BigDecimal.new('10.0'),
+            'reserved_seats_taken' =>BigDecimal.new('5.0'),
+            'requirement_group_descr' => 'EECS/(MSE or NE), or Eng Undec',
+            'term_id' => '2198'
+          },
+          {
+            'class_nbr' => BigDecimal.new('27604.0'),
+            'class_section' => '001',
+            'component' => 'LEC',
+            'catalog_nbr' => '61A',
+            'reserved_seats' => BigDecimal.new('35.0'),
+            'reserved_seats_taken' =>BigDecimal.new('34.0'),
+            'requirement_group_descr' => 'BioE or BioE/MSE or Engin Und',
+            'term_id' => '2198'
+          },
+        ]
+      end
+      context 'when section capacity figures unavailable' do
+        let(:section_capacity) { [] }
+        it 'adds hasReservedSeats boolean' do
+          subject.map_reserved_seats(term_id, section)
+          expect(section[:hasReservedSeats]).to eq true
+        end
+        it 'returns section with unreserved seat count unavailable' do
+          subject.map_reserved_seats(term_id, section)
+          expect(section[:capacity][:unreservedSeats]).to eq 'N/A'
+        end
+        it 'returns section with reserve counts' do
+          subject.map_reserved_seats(term_id, section)
+          expect(section[:capacity][:reservedSeats][0][:seats]).to eq '5'
+          expect(section[:capacity][:reservedSeats][0][:seatsFor]).to eq 'EECS/(MSE or NE), or Eng Undec'
+          expect(section[:capacity][:reservedSeats][1][:seats]).to eq '1'
+          expect(section[:capacity][:reservedSeats][1][:seatsFor]).to eq 'BioE or BioE/MSE or Engin Und'
+        end
+      end
+      context 'when section capacity figures available' do
+        let(:section_capacity) do
+          [
+            {
+              'enrolled_count' => BigDecimal.new('1955.0'),
+              'waitlisted_count' => BigDecimal.new('2.0'),
+              'min_enroll' => BigDecimal.new('0.0'),
+              'max_enroll' => BigDecimal.new('2000.0'),
+              'max_waitlist' => BigDecimal.new('300.0'),
+            }
+          ]
+        end
+        it 'adds hasReservedSeats boolean' do
+          subject.map_reserved_seats(term_id, section)
+          expect(section[:hasReservedSeats]).to eq true
+        end
+        it 'returns section with unreserved seat count' do
+          subject.map_reserved_seats(term_id, section)
+          expect(section[:capacity][:unreservedSeats]).to eq '39'
+        end
+        it 'returns section with reserve counts' do
+          subject.map_reserved_seats(term_id, section)
+          expect(section[:capacity][:reservedSeats][0][:seats]).to eq '5'
+          expect(section[:capacity][:reservedSeats][0][:seatsFor]).to eq 'EECS/(MSE or NE), or Eng Undec'
+          expect(section[:capacity][:reservedSeats][1][:seats]).to eq '1'
+          expect(section[:capacity][:reservedSeats][1][:seatsFor]).to eq 'BioE or BioE/MSE or Engin Und'
+        end
+      end
+    end
+  end
+
+  describe '#format_capacity' do
+    let(:result) { subject.format_capacity(capacity_number) }
+    context 'when capacity number is a negative integer' do
+      let(:capacity_number) { -5 }
+      it 'returns N/A' do
+        expect(result).to eq 'N/A'
+      end
+    end
+    context 'when capacity number is zero' do
+      let(:capacity_number) { 0 }
+      it 'returns number string' do
+        expect(result).to eq '0'
+      end
+    end
+    context 'when capacity number is a positive integer' do
+      let(:capacity_number) { 23 }
+      it 'returns number string' do
+        expect(result).to eq '23'
+      end
+    end
+  end
+
+  describe '#law_class_enrollment' do
+    let(:course) { {academicCareer: 'UGRD', term_id: '2192', requirementsDesignationCode: 'LPR'} }
+    let(:section) { {ccn: '12345'} }
+    let(:is_law_class) { true }
+    let(:is_law_student) { true }
+    let(:law_enrollment) { {'units_taken_law' => 5, 'rqmnt_desg_descr' => 'requirements designation description'}}
+    let(:result) { subject.law_class_enrollment(course, section) }
+    before do
+      allow(EdoOracle::Queries).to receive(:get_law_enrollment).and_return(law_enrollment)
+      allow(subject).to receive(:law_class?).and_return(is_law_class)
+      allow(subject).to receive(:law_student?).and_return(is_law_student)
+    end
+    context 'when course is not a law class' do
+      let(:is_law_class) { false }
+      context 'when user is a law student' do
+        let(:is_law_student) { true }
+        it 'returns law units count' do
+          expect(EdoOracle::Queries).to receive(:get_law_enrollment).and_return(law_enrollment)
+          expect(result[:lawUnits]).to eq 5
+        end
+        it 'returns requirements designation description' do
+          expect(EdoOracle::Queries).to receive(:get_law_enrollment).and_return(law_enrollment)
+          expect(result[:requirementsDesignation]).to eq 'requirements designation description'
+        end
+      end
+      context 'when user is not a law student' do
+        let(:is_law_student) { false }
+        it 'returns nil law units count' do
+          expect(result[:lawUnits]).to eq nil
+        end
+        it 'returns nil requirements designation description' do
+          expect(result[:requirementsDesignation]).to eq nil
+        end
+      end
+    end
+    context 'when course is a law class' do
+      let(:is_law_class) { false }
+      it 'returns law units count' do
+        expect(EdoOracle::Queries).to receive(:get_law_enrollment).and_return(law_enrollment)
+        expect(result[:lawUnits]).to eq 5
+      end
+      it 'returns requirements designation description' do
+        expect(EdoOracle::Queries).to receive(:get_law_enrollment).and_return(law_enrollment)
+        expect(result[:requirementsDesignation]).to eq 'requirements designation description'
+      end
+    end
+  end
+
+  describe '#merge_grades' do
+    let(:semester) do
+      {
+        name: 'Fall 2019',
+        termId: '2198',
+        termCode: 'D',
+        termYear: '2019',
+        timeBucket: time_bucket,
+        classes: semester_classes,
+      }
+    end
+    let(:semester_classes) { [] }
+    context 'when semester is not a current semester' do
+      let(:time_bucket) { 'past' }
+      it 'does not attempt to add midpoint grades' do
+        expect(subject).to_not receive(:add_midpoint_grade)
+        subject.merge_grades(semester)
+      end
+    end
+    context 'when semester is a current semester' do
+      let(:time_bucket) { 'current' }
+      context 'when classes not present' do
+        let(:semester_classes) { [] }
+        it 'does not attempt to add midpoint grades' do
+          expect(subject).to_not receive(:add_midpoint_grade)
+          subject.merge_grades(semester)
+        end
+      end
+      context 'when classes present' do
+        let(:semester_classes) { [{role: class_role}] }
+        context 'when class role is not student' do
+          let(:class_role) { 'NotStudent' }
+          it 'does not attempt to add midpoint grades' do
+            expect(subject).to_not receive(:add_midpoint_grade)
+            subject.merge_grades(semester)
+          end
+        end
+        context 'when class role is student' do
+          let(:class_role) { 'Student' }
+          it 'attempts to add midpoint grades' do
+            expect(subject).to receive(:add_midpoint_grade).with(semester_classes[0]).and_return(nil)
+            subject.merge_grades(semester)
+          end
+        end
+      end
+    end
+  end
+
+  describe '#add_midpoint_grade' do
+    let(:course) do
+      {
+        sections: [
+          {ccn: '12345', is_primary_section: true, grading: {}},
+          {ccn: '12346', is_primary_section: false, grading: {}},
+        ]
+      }
+    end
+    let(:hub_term_enrollments) do
+      {
+        feed: [
+          {
+            'classSection' => {
+              'id' => hub_enrollment_class_section_id,
+            },
+            'grades' => hub_enrollment_primary_section_grades,
+          }
+        ]
+      }
+    end
+    let(:final_grade) { {'type' => {'code' => 'FIN'}, 'mark' => 'A'} }
+    let(:midpoint_grade) { {'type' => {'code' => 'MID'}, 'mark' => 'B'} }
+    before { allow(subject).to receive(:hub_current_enrollments).and_return(hub_term_enrollments) }
+    context 'when no midpoint grades present in primary class section' do
+      let(:hub_enrollment_class_section_id) { '12345' }
+      let(:hub_enrollment_primary_section_grades) { [] }
+      it 'does not merge midpoint grade into section'  do
+        subject.add_midpoint_grade(course)
+        primary_section = course[:sections].find {|sec| sec[:is_primary_section] }
+        expect(primary_section[:grading].has_key?(:midpointGrade)).to eq false
+      end
+    end
+    context 'when no matching midpoint grades present' do
+      let(:hub_enrollment_class_section_id) { '12347' }
+      let(:hub_enrollment_primary_section_grades) { [final_grade, midpoint_grade] }
+      it 'does not merge midpoint grade into section'  do
+        subject.add_midpoint_grade(course)
+        primary_section = course[:sections].find {|sec| sec[:is_primary_section] }
+        expect(primary_section[:grading].has_key?(:midpointGrade)).to eq false
+      end
+    end
+    context 'when matching midpoint grade is present' do
+      let(:hub_enrollment_class_section_id) { '12345' }
+      let(:hub_enrollment_primary_section_grades) { [final_grade, midpoint_grade] }
+      it 'merges midpoint grade into section'  do
+        subject.add_midpoint_grade(course)
+        primary_section = course[:sections].find {|sec| sec[:is_primary_section] }
+        expect(primary_section[:grading].has_key?(:midpointGrade)).to eq true
+        expect(primary_section[:grading][:midpointGrade]).to eq 'B'
+      end
+    end
+  end
+
+  describe '#hub_current_enrollments' do
+    let(:result) { subject.hub_current_enrollments }
+    let(:current_term) { double(campus_solutions_id: '2198') }
+    let(:hub_term_enrollments_response) do
+      {
+        statusCode: hub_term_enrollments_response_status_code,
+        feed: hub_term_enrollments_response_feed,
+        studentNotFound: hub_term_enrollments_response_student_not_found,
+      }
+    end
+    let(:my_term_enrollments) { double(get_feed: hub_term_enrollments_response) }
+    before { allow(subject).to receive(:current_term).and_return(current_term) }
+    context 'when current term not present' do
+      let(:current_term) { nil }
+      it 'returns empty hash' do
+        expect(result).to eq({})
+      end
+    end
+    context 'when current term is present' do
+      let(:current_term) { double(campus_solutions_id: '2198') }
+      before { allow(HubEnrollments::MyTermEnrollments).to receive(:new).with(user_id: uid, term_id: '2198').and_return(my_term_enrollments) }
+      context 'when student not found' do
+        let(:hub_term_enrollments_response_status_code) { 404 }
+        let(:hub_term_enrollments_response_feed) { [] }
+        let(:hub_term_enrollments_response_student_not_found) { true }
+        it 'memoizes api response' do
+          expect(HubEnrollments::MyTermEnrollments).to receive(:new).with(user_id: uid, term_id: '2198').once.and_return(my_term_enrollments)
+          result1 = subject.hub_current_enrollments
+          result2 = subject.hub_current_enrollments
+          expect(result1[:statusCode]).to eq 404
+          expect(result2[:statusCode]).to eq 404
+          expect(result1[:studentNotFound]).to eq true
+          expect(result2[:studentNotFound]).to eq true
+        end
+      end
+      context 'when student is found' do
+        let(:hub_term_enrollments_response_status_code) { 200 }
+        let(:hub_term_enrollments_response_student_not_found) { nil }
+        let(:hub_term_enrollments_response_feed) do
+          [
+            {
+              'enrollmentStatus' => {},
+              'enrolledUnits' => {},
+              'gradingBasis' => {},
+              'classSection' => {}
+            }
+          ]
+        end
+        it 'memoizes api response' do
+          expect(HubEnrollments::MyTermEnrollments).to receive(:new).with(user_id: uid, term_id: '2198').once.and_return(my_term_enrollments)
+          result1 = subject.hub_current_enrollments
+          result2 = subject.hub_current_enrollments
+          expect(result1[:statusCode]).to eq 200
+          expect(result2[:statusCode]).to eq 200
+          expect(result1[:feed].count).to eq 1
+          expect(result2[:feed].count).to eq 1
+          expect(result1[:studentNotFound]).to eq nil
+          expect(result2[:studentNotFound]).to eq nil
+        end
       end
     end
   end
 
   describe '#hide_points?' do
-    subject { described_class.new(uid).hide_points? course  }
+    let(:result) { subject.hide_points? course  }
     let(:uid) { 300216 }
-    let(:course) do
-      {
-        academicCareer: class_career
-      }
-    end
+    let(:course) { {academicCareer: class_career} }
 
     context 'when class is for Law' do
       let(:class_career) { 'LAW' }
       it 'returns true' do
-        expect(subject).to be true
+        expect(result).to be true
       end
     end
     context 'when student is in a concurrent (GRAD+LAW) program' do
@@ -144,639 +810,86 @@ describe MyAcademics::Semesters do
       context 'and class is for Undergrad' do
         let(:class_career) { 'UGRD' }
         it 'returns false' do
-          expect(subject).to be false
+          expect(result).to be false
         end
       end
       context 'and class is for Grad' do
         let(:class_career) { 'GRAD' }
         it 'returns true' do
-          expect(subject).to be true
+          expect(result).to be true
         end
       end
       context 'and class is for Law' do
         let(:class_career) { 'LAW' }
         it 'returns true' do
-          expect(subject).to be true
+          expect(result).to be true
         end
       end
     end
   end
 
-  context 'using stubbed proxy' do
-    let(:feed) { {}.tap { |feed| MyAcademics::Semesters.new(random_id).merge(feed) } }
-
-    let(:term_keys) { ['2015-D', '2016-B', '2016-C', '2016-D'] }
-
-    def generate_enrollment_data(opts={})
-      Hash[term_keys.map{|key| [key, enrollment_term(key, opts)]}]
+  describe '#law_student?' do
+    let(:is_law_student) { true }
+    let(:academic_roles_data) { {current: {'law' => is_law_student}} }
+    let(:my_academic_roles) { double(get_feed: academic_roles_data) }
+    let(:result) { subject.law_student? }
+    it 'memoizes the law student boolean' do
+      expect(MyAcademics::MyAcademicRoles).to receive(:new).with(uid).once.and_return(my_academic_roles)
+      result1 = subject.law_student?
+      result2 = subject.law_student?
+      expect(result1).to eq true
+      expect(result2).to eq true
     end
-
-    def enrollment_term(key, opts={})
-      rand(2..4).times.map { course_enrollment(key, opts) }
-    end
-
-    def course_enrollment(term_key, opts={})
-      term_yr, term_cd = term_key.split('-')
-      dept = random_string(5)
-      catid = rand(999).to_s
-      enrollment = {
-        id: "#{dept}-#{catid}-#{term_key}",
-        slug: "#{dept}-#{catid}",
-        course_code: "#{dept.upcase} #{catid}",
-        term_yr: term_yr,
-        term_cd: term_cd,
-        term_id: 9999,
-        session_code: [nil, 'A', 'B', 'C', 'D', 'E'].sample,
-        dept: dept.upcase,
-        dept_code: dept.upcase.delete(' '),
-        catid: catid,
-        course_catalog: catid,
-        emitter: 'Campus',
-        name: random_string(15).capitalize,
-        sections: course_enrollment_sections(opts),
-        role: 'Student'
-      }
-      enrollment
-    end
-
-    def course_enrollment_sections(opts)
-      sections = [ course_enrollment_section(opts.merge(is_primary_section: true)) ]
-      rand(1..3).times { sections << course_enrollment_section(opts.merge(is_primary_section: false)) }
-      sections
-    end
-
-    def course_enrollment_section(opts={})
-      format = opts[:format] || ['LEC', 'DIS', 'SEM'].sample
-      section_number = opts[:section_number] || "00#{rand(9)}"
-      is_primary_section = opts[:is_primary_section] || false
-      waitlisted = opts[:waitlisted]
-      section = {
-        associated_primary_id: opts[:associated_primary_id],
-        ccn: opts[:ccn] || random_ccn,
-        instruction_format: format,
-        is_primary_section: is_primary_section,
-        section_label: "#{format} #{section_number}",
-        section_number: section_number,
-        units: (is_primary_section ? rand(1.0..5.0).round(1) : 0.0),
-        grading: {
-          grade: is_primary_section ? random_grade : nil,
-          gradingBasis: 'GRD',
-          gradePoints: rand(0.0..16.0)
-        },
-        schedules: {
-          oneTime: [],
-          recurring: [{
-            buildingName: random_string(10),
-            roomNumber: rand(9).to_s,
-            schedule: 'MWF 11:00A-12:00P'
-          }]
-        },
-        waitlisted: waitlisted,
-        instructors: [{name: random_name, uid: random_id}]
-      }
-      section
-    end
-
-    shared_examples 'semester ordering' do
-      it 'should include the expected semesters in reverse order' do
-        expect(feed[:semesters].length).to eq 4
-        term_keys.sort.reverse.each_with_index do |key, index|
-          term_year, term_code = key.split('-')
-          expect(feed[:semesters][index]).to include(
-           {
-             termCode: term_code,
-             termYear: term_year,
-             name: Berkeley::TermCodes.to_english(term_year, term_code)
-           })
-        end
-      end
-
-      it 'should place semesters in the right buckets' do
-        current_term = Berkeley::Terms.fetch.current
-        current_term_key = "#{current_term.year}-#{current_term.code}"
-        feed[:semesters].each do |s|
-          semester_key = "#{s[:termYear]}-#{s[:termCode]}"
-          if semester_key < current_term_key
-            expect(s[:timeBucket]).to eq 'past'
-          elsif semester_key > current_term_key
-            expect(s[:timeBucket]).to eq 'future'
-          else
-            expect(s[:timeBucket]).to eq 'current'
-          end
-        end
+    context 'when student does not have law academic role' do
+      let(:is_law_student) { false }
+      it 'returns false' do
+        expect(result).to eq false
       end
     end
+  end
 
-    shared_examples 'a good and proper munge' do
-      include_examples 'semester ordering'
-      it 'should preserve structure of enrollment data' do
-        feed[:semesters].each do |s|
-          expect(s[:hasEnrollmentData]).to eq true
-          enrollment_semester = enrollment_data["#{s[:termYear]}-#{s[:termCode]}"]
-          expect(s[:classes].length).to eq enrollment_semester.length
-          s[:classes].each do |course|
-            matching_enrollment = enrollment_semester.find { |e| e[:id] == course[:course_id] }
-            expect(course[:sections].count).to eq matching_enrollment[:sections].count
-            expect(course[:title]).to eq matching_enrollment[:name]
-            expect(course[:courseCatalog]).to eq matching_enrollment[:course_catalog]
-            expect(course[:url]).to include matching_enrollment[:slug]
-            [:course_code, :dept, :dept_desc, :role, :slug, :session_code].each do |key|
-              expect(course[key]).to eq matching_enrollment[key]
-            end
-          end
-        end
-      end
-
-      it 'should not flag it as filtered for delegate' do
-        feed[:semesters].each do |s|
-          expect(s[:filteredForDelegate]).to eq false
-        end
+  describe '#law_class?' do
+    let(:course) { {academicCareer: career_code} }
+    let(:result) { subject.law_class?(course) }
+    context 'when career code is \'LAW\'' do
+      let(:career_code) { 'LAW' }
+      it 'returns true' do
+        expect(result).to eq true
       end
     end
-
-    context 'Campus Solutions academic data' do
-      before do
-        allow(Settings.terms).to receive(:fake_now).and_return '2016-04-01'
-        allow(Settings.terms).to receive(:legacy_cutoff).and_return 'fall-2009'
-        expect(CampusOracle::Queries).not_to receive :get_enrolled_sections
-        allow_any_instance_of(EdoOracle::UserCourses::All).to receive(:get_all_campus_courses).and_return enrollment_data
-      end
-      let(:enrollment_data) { generate_enrollment_data }
-      it_should_behave_like 'a good and proper munge'
-      it 'advertises Campus Solutions source' do
-        expect(feed[:semesters]).to all include({campusSolutionsTerm: true})
+    context 'when career code is not \'LAW\'' do
+      let(:career_code) { 'GRAD' }
+      it 'returns false' do
+        expect(result).to eq false
       end
     end
+  end
 
-    context 'Has withdrawal data' do
-      before do
-        allow(Settings.terms).to receive(:fake_now).and_return '2016-04-01'
-        allow(Settings.terms).to receive(:legacy_cutoff).and_return 'fall-2009'
-        expect(CampusOracle::Queries).not_to receive :get_enrolled_sections
-        allow_any_instance_of(EdoOracle::UserCourses::All).to receive(:get_all_campus_courses).and_return enrollment_data
-        allow(EdoOracle::Queries).to receive(:get_registration_status).and_return withdrawal_data
-      end
-      let(:withdrawal_data) do
-        [
-          {
-            'student_id'=>'25259127',
-            'acadcareer_code'=>'UGRD',
-            'term_id'=>'2178',
-            'withcncl_type_code'=>'WDR',
-            'withcncl_type_descr'=>'Withdrew',
-            'withcncl_reason_code'=>'RETR',
-            'withcncl_reason_descr'=>'Retroactive',
-            'withcncl_fromdate'=> Time.parse('2016-02-04 00:00:00 UTC'),
-            'withcncl_lastattendate'=> Time.parse('2014-12-12 00:00:00 UTC')
-          }
-        ]
-      end
-      let(:enrollment_data) { generate_enrollment_data }
-      it 'should add withdrawal data' do
-        expect([feed[:semesters][0]]).to all include({hasWithdrawalData: true})
+  describe '#grad_class?' do
+    let(:course) { {academicCareer: career_code} }
+    let(:result) { subject.grad_class?(course) }
+    context 'when career code is \'GRAD\'' do
+      let(:career_code) { 'GRAD' }
+      it 'returns true' do
+        expect(result).to eq true
       end
     end
-
-    context 'Has standing data' do
-      before do
-        allow(Settings.terms).to receive(:fake_now).and_return '2016-04-01'
-        allow(Settings.terms).to receive(:legacy_cutoff).and_return 'fall-2009'
-        allow_any_instance_of(EdoOracle::UserCourses::All).to receive(:get_all_campus_courses).and_return enrollment_data
-        allow(EdoOracle::Queries).to receive(:get_academic_standings).and_return standing_data
-      end
-      let(:standing_data) {
-        [
-          {
-            'acad_standing_status' => 'GST',
-            'acad_standing_status_descr'=>  'Good Standing',
-            'acad_standing_action_descr'=> 'Probation Ended',
-            'term_id' => '2158',
-            'action_date'=> DateTime.parse('07-AUG-14')
-          }
-        ]
-      }
-      let(:enrollment_data) { generate_enrollment_data }
-      it 'should add standing data' do
-        expect(feed[:semesters][3]).to include({hasStandingData: true})
-        expect(feed[:semesters][3][:standing][:acadStandingStatus]).to eq 'GST'
+    context 'when career code is not \'GRAD\'' do
+      let(:career_code) { 'UGRD' }
+      it 'returns false' do
+        expect(result).to eq false
       end
     end
+  end
 
-    context 'Has Absentia data' do
-      before do
-        allow(Settings.terms).to receive(:fake_now).and_return '2016-04-01'
-        allow(Settings.terms).to receive(:legacy_cutoff).and_return 'fall-2009'
-        expect(CampusOracle::Queries).not_to receive :get_enrolled_sections
-        allow_any_instance_of(EdoOracle::UserCourses::All).to receive(:get_all_campus_courses).and_return enrollment_data
-        allow(EdoOracle::Queries).to receive(:get_registration_status).and_return study_prog_data
-      end
-      let(:study_prog_data) do
-        [
-          {
-            'student_id'=>'25259127',
-            'acadcareer_code'=>'UGRD',
-            'term_id'=>'2158',
-            'splstudyprog_type_code'=>'OGPFABSENT',
-            'splstudyprog_type_descr'=>'In Absentia'
-          }
-        ]
-      end
-      let(:enrollment_data) { generate_enrollment_data }
-      it 'should add study program  data' do
-        expect([feed[:semesters][3]]).to all include({hasStudyProgData: true})
-      end
-    end
-
-    context 'Has Filing Fee data' do
-      before do
-        allow(Settings.terms).to receive(:fake_now).and_return '2016-04-01'
-        allow(Settings.terms).to receive(:legacy_cutoff).and_return 'fall-2009'
-        expect(CampusOracle::Queries).not_to receive :get_enrolled_sections
-        allow_any_instance_of(EdoOracle::UserCourses::All).to receive(:get_all_campus_courses).and_return enrollment_data
-        allow(EdoOracle::Queries).to receive(:get_registration_status).and_return study_prog_data
-      end
-      let(:study_prog_data) do
-        [
-          {
-            'student_id'=>'25259127',
-            'acadcareer_code'=>'UGRD',
-            'term_id'=>'2158',
-            'splstudyprog_type_code'=>'BGNNFILING',
-            'splstudyprog_type_descr'=>'Filing Fee'
-          }
-        ]
-      end
-      let(:enrollment_data) { generate_enrollment_data }
-      it 'should add study program data' do
-        expect([feed[:semesters][3]]).to all include({hasStudyProgData: true})
-      end
-    end
-
-
-    shared_examples 'a good and proper multiple-primary munge' do
-      let(:term_keys) { ['2013-D'] }
-      let(:enrollment_data) { {'2013-D' => multiple_primary_enrollment_term} }
-
-      let(:classes) { feed[:semesters].first[:classes] }
-      let(:multiple_primary_class) { classes.first }
-      let(:single_primary_classes) { classes[1..-1] }
-
-      it 'should flag multiple primaries' do
-        expect(multiple_primary_class[:multiplePrimaries]).to eq true
-        single_primary_classes.each { |c| expect(c).not_to include(:multiplePrimaries) }
-      end
-
-      it 'should include slugs and URLs only for primary sections of multiple-primary courses' do
-        multiple_primary_class[:sections].each do |s|
-          if s[:is_primary_section]
-            expect(s[:slug]).to eq "#{s[:instruction_format].downcase}-#{s[:section_number]}"
-            expect(s[:url]).to eq "#{multiple_primary_class[:url]}/#{s[:slug]}"
-          else
-            expect(s).not_to include(:slug)
-            expect(s).not_to include(:url)
-          end
-        end
-        single_primary_classes.each do |c|
-          c[:sections].each do |s|
-            expect(s).not_to include(:slug)
-            expect(s).not_to include(:url)
-          end
-        end
-      end
-
-      it 'should associate secondary sections with the correct primaries' do
-        expect(multiple_primary_class[:sections][0]).not_to include(:associatedWithPrimary)
-        expect(multiple_primary_class[:sections][1]).not_to include(:associatedWithPrimary)
-        expect(multiple_primary_class[:sections][2][:associatedWithPrimary]).to eq multiple_primary_class[:sections][0][:slug]
-        expect(multiple_primary_class[:sections][3][:associatedWithPrimary]).to eq multiple_primary_class[:sections][1][:slug]
-      end
-    end
-
-    context 'Campus Solutions multiple-primary munge' do
-      before do
-        allow(Settings.terms).to receive(:legacy_cutoff).and_return 'summer-2009'
-        allow_any_instance_of(EdoOracle::UserCourses::All).to receive(:get_all_campus_courses).and_return enrollment_data
-      end
-      let(:multiple_primary_enrollment_term) do
-        enrollment_term('2013-D').tap do |term|
-          term.first[:sections] = [
-            course_enrollment_section(ccn: '10001', is_primary_section: true, format: 'LEC', section_number: '001'),
-            course_enrollment_section(ccn: '10002', is_primary_section: true, format: 'LEC', section_number: '002'),
-            course_enrollment_section(ccn: '10003', is_primary_section: false, format: 'DIS', section_number: '101', associated_primary_id: '10001'),
-            course_enrollment_section(ccn: '10004', is_primary_section: false, format: 'DIS', section_number: '201', associated_primary_id: '10002')
-          ]
-          term
-        end
-      end
-      it_should_behave_like 'a good and proper multiple-primary munge'
-    end
-
-    context 'when a semester has all waitlisted courses, or no enrolled courses' do
-      before do
-        allow(Settings.terms).to receive(:fake_now).and_return '2016-04-01'
-        allow(Settings.terms).to receive(:legacy_cutoff).and_return 'fall-2009'
-        expect(CampusOracle::Queries).not_to receive :get_enrolled_sections
-        allow_any_instance_of(EdoOracle::UserCourses::All).to receive(:get_all_campus_courses).and_return enrollment_data
-      end
-      let(:term_keys) { ['2016-D'] }
-      let(:enrollment_data) { {'2016-D' => waitlisted_term} }
-
-      context 'all waitlisted courses' do
-        let(:waitlisted_term) do
-          enrollment_term('2016-D').tap do |term|
-            term.each do |course|
-              course[:sections] = [
-                course_enrollment_section(is_primary_section: true, waitlisted: true),
-                course_enrollment_section(is_primary_section: false, waitlisted: true),
-              ]
-            end
-          end
-        end
-        it 'should say that there are no enrolled courses' do
-          feed[:semesters].each do |semester|
-            expect(semester[:hasEnrolledClasses]).to be false
-          end
-        end
-      end
-
-      context 'some waitlisted courses and no reserved seats' do
-        before do
-          allow_any_instance_of(EdoOracle::Queries).to receive(:get_section_reserved_capacity).and_return([])
-        end
-        let(:waitlisted_term) do
-          enrollment_term('2016-D').tap do |term|
-            term.first[:sections] = [
-              course_enrollment_section(is_primary_section: true, waitlisted: true),
-              course_enrollment_section(is_primary_section: false,waitlisted: true)
-            ]
-          end
-        end
-        it 'should say that there are enrolled courses' do
-          feed[:semesters].each do |semester|
-            expect(semester[:hasEnrolledClasses]).to be true
-          end
-        end
-        it 'should say that there are no reserved seats for all sections' do
-          feed[:semesters].each do |semester|
-            semester[:classes].each do |course|
-              course[:sections].each do |section|
-                expect(section[:hasReservedSeats]).to be_nil
-              end
-            end
-          end
-        end
-      end
-
-      context 'some waitlisted courses with reserved seats' do
-        let(:reserved_capacity_data) {
-          [
-            {
-              'term_id' => '2168',
-              'class_nbr' => '123456',
-              'reserved_seats' => '20',
-              'reserved_seats_taken' => '11',
-              'requirement_group_descr' => 'Music major'
-            },
-            {
-              'term_id' => '2168',
-              'class_nbr' => '123456',
-              'reserved_seats' => '30',
-              'reserved_seats_taken' => '22',
-              'requirement_group_descr' => 'New L&S Transfer Admits'
-            },
-            {
-              'term_id' => '2168',
-              'class_nbr' => '123456',
-              'reserved_seats' => '40',
-              'reserved_seats_taken' => '41',
-              'requirement_group_descr' => 'Enrollment by Permission'
-            },
-          ]
-        }
-        let(:section_capacity_data) {
-          [
-            {
-              'enrolled_count' => '20',
-              'max_enroll' => '50'
-            }
-          ]
-        }
-        let(:waitlisted_term) do
-          enrollment_term('2016-D').tap do |term|
-            term.first[:sections] = [
-              course_enrollment_section(waitlisted: true, ccn: '123456', is_primary_section: true),
-              course_enrollment_section(waitlisted: true, ccn: '654321')
-            ]
-          end
-        end
-        before do
-          allow(EdoOracle::Queries).to receive(:get_section_reserved_capacity).and_return([])
-          allow(EdoOracle::Queries).to receive(:get_section_reserved_capacity).with('2168','123456').and_return(reserved_capacity_data)
-          allow(EdoOracle::Queries).to receive(:get_section_capacity).and_return(section_capacity_data)
-        end
-
-        context '\'reserved_capacity\' feature flag is enabled' do
-          before { allow(Settings.features).to receive(:reserved_capacity).and_return(true) }
-
-          it 'should say that there are no reserved seats for all sections that are not ccn=123456' do
-            feed[:semesters].each do |semester|
-              semester[:classes].each do |course|
-                course[:sections].each do |section|
-                  if section[:ccn] != '123456'
-                    expect(section[:hasReservedSeats]).to be_nil
-                  end
-                end
-              end
-            end
-          end
-
-          it 'should say that there are reserved seats for all sections that are ccn=123456 in term 2016' do
-            feed[:semesters].each do |semester|
-              semester[:classes].each do |course|
-                course[:sections].each do |section|
-                  if section[:ccn] == '123456'
-                    expect(section[:hasReservedSeats]).to be true
-                    expect(semester[:termId]).to eq('2168')
-
-                    expect(section[:capacity]).to be
-                    expect(section[:capacity][:unreservedSeats]).to eq('14')
-                    expect(section[:capacity][:reservedSeats].length).to eq(3)
-                    expect(section[:capacity][:reservedSeats][0][:seats]).to eq('9')
-                    expect(section[:capacity][:reservedSeats][0][:seatsFor]).to eq('Music major')
-                  end
-                end
-              end
-            end
-          end
-
-          it 'should say N/A when there are negative reserved seats for sections that are ccn=123456 in term 2016' do
-            feed[:semesters].each do |semester|
-              semester[:classes].each do |course|
-                course[:sections].each do |section|
-                  if section[:ccn] == '123456'
-                    expect(section[:hasReservedSeats]).to be true
-                    expect(semester[:termId]).to eq('2168')
-                    expect(section[:capacity][:reservedSeats][2][:seats]).to eq('N/A')
-                  end
-                end
-              end
-            end
-          end
-        end
-
-        context '\'reserved_capacity_link\' feature flag is enabled' do
-          before do
-            allow(Settings.features).to receive(:reserved_capacity_link).and_return(true)
-            allow(EdoOracle::Queries).to receive(:section_reserved_capacity_count).and_return([{'reserved_seating_rules_count' => 0}])
-            allow(EdoOracle::Queries).to receive(:section_reserved_capacity_count).with('2168','123456').and_return([{'reserved_seating_rules_count' => 2}])
-          end
-
-          it 'should include the reserved seat link data only for sections that are ccn=123456 in term 2016' do
-            feed[:semesters].each do |semester|
-              semester[:classes].each do |course|
-                course[:sections].each do |section|
-                  if semester[:termYear] == '2016' && section[:ccn] == '123456'
-                    expect(section[:hasReservedSeats]).to eq true
-                    expect(section[:reservedSeatsInfoLink][:url]).to eq "https://classes.berkeley.edu/content/2016-fall-#{course[:dept_code].downcase}-#{course[:courseCatalog].downcase}-#{section[:section_number]}-#{section[:instruction_format].downcase}-#{section[:section_number]}"
-                  else
-                    expect(section[:hasReservedSeats]).to be_nil
-                    expect(section[:reservedSeatsInfoLink]).to be_nil
-                  end
-                end
-              end
-            end
-          end
-        end
-
-        context '\'reserved_capacity_link\' feature flag is disabled' do
-          before { allow(Settings.features).to receive(:reserved_capacity_link).and_return(false) }
-          it 'should not include reserved seat link data for all sections' do
-            feed[:semesters].each do |semester|
-              semester[:classes].each do |course|
-                course[:sections].each do |section|
-                  expect(section[:hasReservedSeats]).to be_nil
-                  expect(section[:reservedSeatsInfoLink]).to be_nil
-                  expect(section[:classScheduleLink]).to be_nil
-                end
-              end
-            end
-          end
-        end
-
-        context '\'reserved_capacity\' feature flag is disabled' do
-          before { allow(Settings.features).to receive(:reserved_capacity).and_return(false) }
-          it 'should not include reserved seat data for all sections' do
-            feed[:semesters].each do |semester|
-              semester[:classes].each do |course|
-                course[:sections].each do |section|
-                  expect(section[:hasReservedSeats]).to be_nil
-                end
-              end
-            end
-          end
-        end
-
-      end
-    end
-
-    describe 'merging grade data' do
-      before do
-        allow(Settings.terms).to receive(:fake_now).and_return(fake_now)
-        allow_any_instance_of(EdoOracle::UserCourses::All).to receive(:get_all_campus_courses).and_return enrollment_data
-      end
-
-      let(:term_yr) { '2016' }
-      let(:term_cd) { 'B' }
-      let(:enrollment_data) { generate_enrollment_data  }
-      let(:feed_semester) { feed[:semesters].find { |s| s[:name] == Berkeley::TermCodes.to_english(term_yr, term_cd) } }
-      let(:feed_semester_grades) { feed_semester[:classes].map { |course| course[:sections].map {|s| s[:grading] if s[:is_primary_section]}.compact }.flatten! }
-
-      shared_examples 'grades from enrollment' do
-        it 'returns enrollment grades' do
-          grades_from_enrollment = enrollment_data["#{term_yr}-#{term_cd}"].map { |e| e[:sections].map{ |s| s[:grading] if s[:is_primary_section] }.compact }.flatten!
-          expect(feed_semester_grades).to match_array grades_from_enrollment
-        end
-      end
-
-      shared_examples 'grading in progress' do
-        it { expect(feed_semester[:gradingInProgress]).to be_truthy }
-      end
-
-      shared_examples 'grading not in progress' do
-        it { expect(feed_semester[:gradingInProgress]).to be_nil }
-      end
-
-      context 'current semester' do
-        let(:fake_now) {DateTime.parse('2016-04-10')}
-        include_examples 'grades from enrollment'
-        include_examples 'grading not in progress'
-      end
-
-      context 'semester just ended' do
-        let(:fake_now) {DateTime.parse('2016-05-22')}
-        include_examples 'grades from enrollment'
-        include_examples 'grading in progress'
-      end
-
-      context 'past semester' do
-        let(:fake_now) {DateTime.parse('2016-08-10')}
-        include_examples 'grading not in progress'
-      end
-    end
-
-    context 'filtered view for delegate' do
-      def enrollment_summary_term(key)
-        rand(2..4).times.map { enrollment_summary(key) }
-      end
-
-      def enrollment_summary(key)
-        enrollment = course_enrollment key
-        enrollment[:sections].map! { |section| section.except(:instructors, :schedules) }
-        enrollment
-      end
-
-      let(:feed) { {filteredForDelegate: true}.tap { |feed| MyAcademics::Semesters.new(random_id).merge(feed) } }
-      let(:enrollment_data) { generate_enrollment_data }
-      let(:enrollment_summary_data) { Hash[term_keys.map{|key| [key, enrollment_summary_term(key)]}] }
-      before do
-        allow(Settings.terms).to receive(:legacy_cutoff).and_return 'summer-2014'
-        allow_any_instance_of(EdoOracle::UserCourses::All).to receive(:get_enrollments_summary).and_return enrollment_summary_data
-      end
-
-      include_examples 'semester ordering'
-
-      it 'should preserve structure of enrollment summary data' do
-        feed[:semesters].each do |s|
-          expect(s[:hasEnrollmentData]).to eq true
-          expect(s).to include :slug
-          enrollment_semester = enrollment_summary_data["#{s[:termYear]}-#{s[:termCode]}"]
-          expect(s[:classes].length).to eq enrollment_semester.length
-          s[:classes].each do |course|
-            matching_enrollment = enrollment_semester.find { |e| e[:id] == course[:course_id] }
-            expect(course[:sections].count).to eq matching_enrollment[:sections].count
-            expect(course[:title]).to eq matching_enrollment[:name]
-            expect(course[:courseCatalog]).to eq matching_enrollment[:course_catalog]
-            [:course_code, :dept, :dept_desc, :role, :slug, :session_code].each do |key|
-              expect(course[key]).to eq matching_enrollment[key]
-            end
-          end
-        end
-      end
-
-      it 'should filter out course URLs' do
-        feed[:semesters].each do |s|
-          s[:classes].each do |course|
-            expect(course).not_to include :url
-          end
-        end
-      end
-
-      it 'should flag it as filtered for delegate' do
-        feed[:semesters].each do |s|
-          expect(s[:filteredForDelegate]).to eq true
-        end
-      end
-
+  describe '#is_concurrent_student' do
+    let(:edo_oracle_student) { double(concurrent?: true) }
+    it 'memoizes the student concurrent boolean' do
+      expect(EdoOracle::Student).to receive(:new).with(user_id: uid).once.and_return(edo_oracle_student)
+      result1 = subject.is_concurrent_student
+      result2 = subject.is_concurrent_student
+      expect(result1).to eq true
+      expect(result2).to eq true
     end
   end
 end

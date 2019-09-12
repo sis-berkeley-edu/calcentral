@@ -7,7 +7,7 @@ import 'icons/download.svg';
 /**
  * Financial Aid - Awards controller
  */
-angular.module('calcentral.controllers').controller('FinaidAwardsController', function($scope, finaidAwardsFactory, finaidService) {
+angular.module('calcentral.controllers').controller('FinaidAwardsController', function($scope, finaidAwardsFactory, finaidService, apiService) {
   var keysGiftWork = ['giftaid', 'waiversAndOther', 'workstudy'];
   var keysLoans = ['subsidizedloans', 'unsubsidizedloans', 'alternativeloans', 'plusloans'];
 
@@ -19,6 +19,7 @@ angular.module('calcentral.controllers').controller('FinaidAwardsController', fu
     showDecimals: false
   };
   $scope.finaidAwards = {};
+  $scope.isStudentOrExStudent = false;
 
   var addColors = function(feed) {
     _.mapValues(feed.awards, function(value, key) {
@@ -130,6 +131,7 @@ angular.module('calcentral.controllers').controller('FinaidAwardsController', fu
     .finally(function() {
       $scope.finaidAwardsInfo.checkForDisbursementDates = checkForDisbursementDates;
       $scope.finaidAwardsInfo.formatCurrency = formatCurrency;
+      $scope.isStudentOrExStudent = (apiService.user.profile.roles.student || apiService.user.profile.roles.exStudent);
       $scope.finaidAwardsInfo.isLoading = false;
     });
   };

@@ -1,6 +1,16 @@
 module EdoOracle
   module UserCourses
     class Base < BaseProxy
+      include Cache::UserCacheExpiry
+
+      def self.expire(id = nil)
+        super(id)
+        super("summary-#{id}")
+      end
+
+      def self.access_granted?(uid)
+        !uid.blank?
+      end
 
       def initialize(options = {})
         super(Settings.edodb, options)
@@ -8,8 +18,35 @@ module EdoOracle
         @non_legacy_academic_terms = Berkeley::Summer16EnrollmentTerms.non_legacy_terms
       end
 
-      def self.access_granted?(uid)
-        !uid.blank?
+      def get_all_campus_courses
+        # Because this data structure is used by multiple top-level feeds, it's essential
+        # that it be cached efficiently.
+        self.class.fetch_from_cache @uid do
+          campus_classes = {}
+          merge_instructing campus_classes
+          merge_enrollments campus_classes
+          sort_courses campus_classes
+
+          # Sort the hash in descending order of semester.
+          campus_classes = Hash[campus_classes.sort.reverse]
+
+          # Merge each section's schedule, location, and instructor list.
+          # TODO Is this information useful for non-current terms?
+          merge_detailed_section_data(campus_classes)
+
+          campus_classes
+        end
+      end
+
+      def get_enrollments_summary
+        self.class.fetch_from_cache "summary-#{@uid}" do
+          campus_classes = {}
+          merge_enrollments campus_classes
+          sort_courses campus_classes
+          campus_classes = Hash[campus_classes.sort.reverse]
+          remove_duplicate_sections(campus_classes)
+          campus_classes
+        end
       end
 
       def merge_enrollments(campus_classes)
@@ -157,7 +194,7 @@ module EdoOracle
           topic_description: row['topic_description'],
          }
         if section_data[:is_primary_section]
-          section_data[:units] = row['units_taken']
+          # section_data[:units] = row['units_taken']
           section_data[:start_date] = row['start_date'] if row['start_date']
           section_data[:end_date] = row['end_date'] if row['end_date']
           section_data[:session_id] = row['session_id'] if row['session_id']
@@ -166,8 +203,7 @@ module EdoOracle
         end
 
         if row.include? 'enroll_status'
-          # Grading and waitlist data relevant to students.
-          section_data[:grading] = get_section_grading(section_data, row)
+          # Waitlist data relevant to students.
           if row['enroll_status'] == 'W'
             section_data[:waitlisted] = true
             section_data[:waitlistPosition] = row['waitlist_position'].to_i
@@ -203,32 +239,6 @@ module EdoOracle
         end
 
         section_data
-      end
-
-      def get_section_grading(section, db_row)
-        grade = db_row['grade'].try(:strip)
-        grade_points = db_row['grade_points'].present? ? db_row['grade_points'] : nil
-        grade_points_adjusted = adjusted_grade_points(db_row['grade_points'], db_row['include_in_gpa'])
-        grading_basis = section[:is_primary_section] ? db_row['grading_basis'] : nil
-        grading_lapse_deadline = db_row['grading_lapse_deadline'].try(:strftime, '%m/%d/%y')
-        grading_lapse_deadline_display = db_row['grading_lapse_deadline_display'] == 'Y'
-        {
-          grade: grade,
-          gradingBasis: grading_basis,
-          gradePoints: grade_points,
-          gradePointsAdjusted: grade_points_adjusted,
-          gradingLapseDeadline: grading_lapse_deadline,
-          gradingLapseDeadlineDisplay: grading_lapse_deadline_display,
-          includeInGpa: db_row['include_in_gpa'],
-        }
-      end
-
-      def adjusted_grade_points(grade_points, include_in_gpa)
-        if include_in_gpa.present? && include_in_gpa == 'N'
-          return BigDecimal.new("0.0")
-        else
-          return grade_points
-        end
       end
 
       def remove_duplicate_sections(campus_classes)

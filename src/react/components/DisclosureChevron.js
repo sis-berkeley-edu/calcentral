@@ -1,18 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import 'icons/chevron-up.svg';
-import 'icons/chevron-down.svg';
+import 'icons/chevron-down-large.svg';
 
-const DisclosureChevron = ({ expanded, onClick }) => {
-  const icon = expanded ? 'chevron-up' : 'chevron-down';
+const DisclosureChevron = ({ expanded, onClick }) => (
+  <img
+    src={`/assets/images/chevron-down-large.svg`}
+    style={expanded ? { transform: `scaleY(-1)` } : null }
+    onClick={onClick}
+  />
+);
 
-  return (
-    <div className={icon} onClick={onClick}>
-      <img src={`/assets/images/${icon}.svg`} />
-    </div>
-  );
-};
 DisclosureChevron.propTypes = {
   expanded: PropTypes.bool,
   onClick: PropTypes.func

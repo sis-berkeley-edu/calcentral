@@ -67,7 +67,8 @@ module EdoOracle
         result[:ibTestUnits].to_i +
         result[:alevelTestUnits].to_i +
         result[:totalTestUnits].to_i +
-        result[:totalTransferUnitsLaw].to_i
+        result[:totalTransferUnitsLaw].to_i +
+        result[:otherCreditUnits].to_i
       (all_units > 0)
     end
 
@@ -86,6 +87,7 @@ module EdoOracle
         ap_test_units = summary['ap_test_units'].try(:to_f)
         ib_test_units = summary['ib_test_units'].try(:to_f)
         alevel_test_units = summary['alevel_test_units'].try(:to_f)
+        other_credit_units = summary['other_credit_units'].try(:to_f)
 
         result[career_description.downcase] = {
           :career => career,
@@ -96,6 +98,7 @@ module EdoOracle
           :apTestUnits => is_undergrad ? ap_test_units : nil,
           :ibTestUnits => is_undergrad ? ib_test_units : nil,
           :alevelTestUnits => is_undergrad ? alevel_test_units : nil,
+          :otherCreditUnits => is_undergrad ? other_credit_units : nil,
           :totalTestUnits => is_undergrad ? ap_test_units + ib_test_units + alevel_test_units : nil,
           :totalTransferUnitsLaw => summary['total_transfer_units_law'].try(:to_f)
         }

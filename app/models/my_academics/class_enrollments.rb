@@ -170,15 +170,14 @@ module MyAcademics
     end
 
     def get_active_career_terms
-      get_career_terms = Proc.new do
-        terms = CampusSolutions::MyEnrollmentTerms.get_terms(@uid)
+      @career_terms ||= begin
+        terms = CampusSolutions::MyEnrollmentTerms.get_terms(@uid).to_a
         terms.collect do |term|
           term[:termName] = Berkeley::TermCodes.normalized_english(term[:termDescr])
           term[:termIsSummer] = Berkeley::TermCodes.edo_id_is_summer?(term[:termId])
           term
         end
       end
-      @career_terms ||= get_career_terms.call
     end
 
     def get_links

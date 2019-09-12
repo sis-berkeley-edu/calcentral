@@ -1,20 +1,6 @@
 <ul class="cc-popover-items" data-ng-click="api.popover.clickThrough('Status')">
-  <li class="cc-popover-item"
-    data-ng-repeat="registration in regStatus.registrations | orderBy:'-id'"
-    data-ng-if="api.user.profile.roles.student && api.user.profile.features.regstatus">
-    <a href="/academics" data-ng-if="registration.regStatus.summary !== 'Officially Registered' && registration.regStatus.explanation">
-      <div class="cc-launcher-status-description">
-        <i class="cc-icon fa" data-ng-class="regStatusIcon(registration.regStatus.summary)"></i>
-        <strong><span data-ng-bind="registration.term.name"></span>: </strong> <span data-ng-bind="registration.regStatus.summary"></span><br>
-      </div>
-      <div class="cc-launcher-status-description" data-ng-if="registration.showCnp">
-        <div>
-          <i class="cc-icon fa" data-ng-class="cnpStatusIcon(registration)"></i>
-          <span data-ng-bind-html="registration.cnpStatus.popoverSummary"></span>
-        </div>
-      </div>
-    </a>
-  </li>
+  <registration-status-items></registration-status-items>
+
   <li class="cc-popover-item" data-ng-if="holds.length || holds.errored">
     <a href="/academics">
       <div class="cc-launcher-status-description">

@@ -122,6 +122,11 @@
                         <span data-ng-if="!section.grading.gradingBasis">&mdash;</span>
                       </td>
                     </tr>
+                    <tr data-ng-if="section.is_primary_section && !section.waitlisted && ((section.grading.gradingLapseDeadlineDisplay && section.grading.gradingLapseDeadline) || section.grading.gradingBasis === 'FRZ')">
+                      <td class="cc-text-right" colspan="3">
+                        <div cc-academic-section-incomplete-grading-status section="section" academic-guide-grades-policy-link="studentLinks.academicGuideGradesPolicy"></div>
+                      </td>
+                    </tr>
                     <tr data-ng-repeat-end data-ng-if="api.user.profile.canViewGrades && !section.grading.grade && section.grading.midpointGrade && section.show">
                       <td colspan="3">
                         <table>

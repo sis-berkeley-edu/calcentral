@@ -1,13 +1,13 @@
 describe DegreeProgress::MyUndergradRequirements do
-
+  subject { described_class.new(user_id) }
   let(:emplid) { 11667051 }
   let(:user_id) { 61889 }
-
+  let(:feature_flag_enabled) { true }
   before do
     proxy_class = CampusSolutions::DegreeProgress::UndergradRequirements
     fake_proxy = proxy_class.new(user_id: user_id, fake: true)
     allow(proxy_class).to receive(:new).and_return fake_proxy
-    allow(Settings.features).to receive(flag).and_return(true)
+    allow(Settings.features).to receive(:cs_degree_progress_ugrd_student).and_return(feature_flag_enabled)
   end
 
   describe '#get_feed_internal' do
@@ -76,4 +76,54 @@ describe DegreeProgress::MyUndergradRequirements do
     end
 
   end
+
+  describe '#should_see_links?' do
+    let(:result) { subject.should_see_links? }
+    let(:roles_feed) do
+      {
+        current: {
+          'lettersAndScience' => ugrd_ls_role_present,
+          'ugrdEngineering' => ugrd_eng_role_present,
+          'ugrdEnvironmentalDesign' => ugrd_env_role_present,
+          'ugrdHaasBusiness' => ugrd_haas_bus_role_present,
+        }
+      }
+    end
+    let(:ugrd_ls_role_present) { false }
+    let(:ugrd_eng_role_present) { false }
+    let(:ugrd_env_role_present) { false }
+    let(:ugrd_haas_bus_role_present) { false }
+    let(:my_academic_roles) { double(:get_feed => roles_feed) }
+    before { allow(MyAcademics::MyAcademicRoles).to receive(:new).and_return(my_academic_roles) }
+    context 'when student has no matching role' do
+      it 'returns false' do
+        expect(result).to eq false
+      end
+    end
+    context 'when student is in undergraduate letters and science program' do
+      let(:ugrd_ls_role_present) { true }
+      it 'returns true' do
+        expect(result).to eq true
+      end
+    end
+    context 'when student is in undergraduate engineering program' do
+      let(:ugrd_eng_role_present) { true }
+      it 'returns true' do
+        expect(result).to eq true
+      end
+    end
+    context 'when student is in undergraduate environmental design program' do
+      let(:ugrd_env_role_present) { true }
+      it 'returns true' do
+        expect(result).to eq true
+      end
+    end
+    context 'when student is in undergraduate haas business program' do
+      let(:ugrd_haas_bus_role_present) { true }
+      it 'returns true' do
+        expect(result).to eq true
+      end
+    end
+  end
+
 end

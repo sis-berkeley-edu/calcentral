@@ -4,7 +4,7 @@ module Rosters
 
     def all_courses
       worker = Proc.new do
-        all_courses = EdoOracle::UserCourses::All.new({user_id: @uid}).get_all_campus_courses
+        all_courses = EdoOracle::UserCourses::All.new({user_id: @uid}).all_campus_courses
         all_courses.merge! CampusOracle::UserCourses::All.new(user_id: @uid).get_all_campus_courses if Settings.features.allow_legacy_fallback
         all_courses
       end

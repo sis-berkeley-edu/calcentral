@@ -19,7 +19,7 @@ describe MyAcademics::MyAcademicRoles do
     it 'provides a set of roles based on the user\'s current academic status' do
       expect(subject).to be
       expect(subject[:current]).to be
-      expect(subject[:current].keys.count).to eq 30
+      expect(subject[:current].keys.count).to eq 31
       expect(subject[:current]['ugrd']).to eq false
       expect(subject[:current]['grad']).to eq true
       expect(subject[:current]['fpf']).to eq false
@@ -46,6 +46,7 @@ describe MyAcademics::MyAcademicRoles do
       expect(subject[:current]['ugrdNonDegree']).to eq false
       expect(subject[:current]['ugrdEngineering']).to eq false
       expect(subject[:current]['ugrdEnvironmentalDesign']).to eq false
+      expect(subject[:current]['ugrdHaasBusiness']).to eq false
       expect(subject[:current]['ugrdUrbanStudies']).to eq false
       expect(subject[:current]['summerVisitor']).to eq false
       expect(subject[:current]['courseworkOnly']).to eq false
@@ -54,7 +55,7 @@ describe MyAcademics::MyAcademicRoles do
     it 'provides a set of roles based on all of the user\'s past academic data' do
       expect(subject).to be
       expect(subject[:historical]).to be
-      expect(subject[:historical].keys.count).to eq 30
+      expect(subject[:historical].keys.count).to eq 31
       expect(subject[:historical]['ugrd']).to eq true
       expect(subject[:historical]['grad']).to eq true
       expect(subject[:historical]['fpf']).to eq false
@@ -81,6 +82,7 @@ describe MyAcademics::MyAcademicRoles do
       expect(subject[:historical]['ugrdUrbanStudies']).to eq false
       expect(subject[:historical]['ugrdEngineering']).to eq false
       expect(subject[:historical]['ugrdEnvironmentalDesign']).to eq false
+      expect(subject[:historical]['ugrdHaasBusiness']).to eq false
       expect(subject[:historical]['summerVisitor']).to eq false
       expect(subject[:historical]['courseworkOnly']).to eq false
       expect(subject[:historical]['lawJdCdp']).to eq false

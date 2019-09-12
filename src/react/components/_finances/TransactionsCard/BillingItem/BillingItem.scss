@@ -2,7 +2,7 @@
 @import '../billing-items-grid.scss';
 
 .BillingItem {
-  font-size: 12px;
+  font-size: $base-font-size;
   border-bottom: 1px solid #eee;
   cursor: pointer;
 

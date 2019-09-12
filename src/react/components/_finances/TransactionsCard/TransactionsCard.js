@@ -97,11 +97,33 @@ export const TransactionsCard = ({ dispatch, billingItems, carsData }) => {
     ? { message: 'There is a problem displaying your billing information. Please try again soon.' }
     : false;
   
+
+  const DownloadButton = () => {
+    const style = {
+      background: `#F8F8F8`,
+      border: `1px solid #CBCBCB`,
+      borderRadius: `5px`,
+      padding: `5px 15px`,
+      cursor: `pointer`
+    };
+
+    const onClick = () => {
+      document.location.pathname = '/api/my/finances/billing_items.csv';
+    };
+
+    return (
+      <div style={style} onClick={() => onClick()}>
+        Download
+      </div>
+    );
+  };
+
   return (
     <Card className="TransactionsCard"
       title="Transactions"
       loading={isBillingLoading || isCarsLoading}
       error={error}
+      secondaryContent={<DownloadButton />}
     >
       <div className="TransactionCard__pretable">
         <BillingItemFilters tab={tab}
