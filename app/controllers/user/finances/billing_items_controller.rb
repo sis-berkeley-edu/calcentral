@@ -5,7 +5,15 @@ module User
       before_action :authorize_for_financial
 
       def index
-        render json: billing_items
+        respond_to do |format|
+          format.json do
+            render json: billing_items
+          end
+
+          format.csv do
+            render text: billing_summary.as_csv
+          end
+        end
       end
 
       def show
@@ -16,6 +24,10 @@ module User
 
       def billing_items
         user.billing_items
+      end
+
+      def billing_summary
+        user.billing_summary
       end
 
       def user

@@ -18,9 +18,9 @@ module User
           id: id,
           transaction_number: transaction_number,
           balance: data['balance'].to_f,
-          description:  data['description'],
-          amount: data['amount'].to_f,
-          amount_due: data['amount_due'].to_f,
+          description:  description,
+          amount: amount,
+          amount_due: amount_due,
           due_date: due_date,
           adjustments: sequence_items,
           term_id: term_id,
@@ -35,6 +35,18 @@ module User
         json.merge({
           payments: payments
         })
+      end
+
+      def amount
+        data['amount'].to_f
+      end
+
+      def amount_due
+        data['amount_due'].to_f
+      end
+
+      def description
+        data['description']
       end
 
       def transaction_number
@@ -65,7 +77,24 @@ module User
         @payments ||= Payments.new(user, id).all
       end
 
+      def status
+        return nil unless charge_type?
+        return 'Paid' if amount_due <= 0
+        return 'Not Yet Due' if due_date.nil?
+        return 'Overdue' if days_past_due > 0
+        return 'Due Now' if days_past_due >= -15
+        return 'Not Yet Due' if days_past_due < -15
+      end
+
+      def days_past_due
+        (now - due_date).to_i
+      end
+
       private
+
+      def charge_type?
+        ['Charge', 'Refund'].include?(type)
+      end
 
       def sequence_items
         @sequence_items ||= []
@@ -86,6 +115,10 @@ module User
           'X' => 'Charge' # X is for "Write-Off", but we want to display
                           # "Charge" in the front end
         }
+      end
+
+      def now
+        Settings.terms.fake_now || DateTime.now
       end
     end
   end

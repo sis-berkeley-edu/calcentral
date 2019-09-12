@@ -10,8 +10,7 @@ module User
           description: @data['description'],
           amount_paid: @data['amount_paid'],
           posted_date: @data['posted_date']&.to_date,
-          effective_date: @data['effective_date']&.to_date,
-          raw: @data
+          effective_date: @data['effective_date']&.to_date
         }
       end
     end

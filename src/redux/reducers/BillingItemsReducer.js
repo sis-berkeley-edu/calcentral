@@ -1,3 +1,6 @@
+/* eslint camelcase: 0 */
+// TODO: change API to camelcase
+
 import parseDate from 'date-fns/parse';
 import differenceInCalendarDays from 'date-fns/difference_in_calendar_days';
 
@@ -28,9 +31,13 @@ const dueStatus = (item) => {
     return CHARGE_PAID;
   }
 
+  if (item.due_date === null) {
+    return CHARGE_NOT_DUE;
+  }
+
   const daysPastDue = differenceInCalendarDays(
     new Date(),
-    parseDate(item.due_date)
+    item.due_date
   );
 
   if (daysPastDue > 0) {
@@ -43,6 +50,14 @@ const dueStatus = (item) => {
 
   if (daysPastDue < -15 ) {
     return CHARGE_NOT_DUE;
+  }
+};
+
+const setDate = (item) => {
+  if (item.due_date === null) {
+    return item;
+  } else {
+    return { ...item, due_date: parseDate(item.due_date) };
   }
 };
 
@@ -67,7 +82,10 @@ const BillingItemsReducer = (state = {}, action) => {
     case FETCH_BILLING_ITEMS_FAILURE:
       return { ...state, isLoading: false, error: action.value };
     case FETCH_BILLING_ITEMS_SUCCESS:
-      return { ...state, items: action.value.map(appendChargeStatus), isLoading: false, loaded: true, error: null };
+      return { ...state,
+        items: action.value.map(setDate).map(appendChargeStatus),
+        isLoading: false, loaded: true, error: null
+      };
     case FETCH_BILLING_ITEM_START:
       return updateItemDetails(state, { id: action.value, isLoadingPayments: true, loadingPaymentsError: null });
     case FETCH_BILLING_ITEM_SUCCESS:

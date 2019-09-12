@@ -1,8 +1,8 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 
-import formatDate from 'functions/formatDate';
 import formatCurrency from 'functions/formatCurrency';
+import dueLabel from './dueLabel';
 
 import {
   CHARGE_OVERDUE,
@@ -20,9 +20,7 @@ const ChargeAmountDue = ({ item }) => {
       return (
         <Fragment>
           <DueAmountBadge amount={item.amount_due} status={item.status} />
-          <div>
-            Due { formatDate(item.due_date) }
-          </div>
+          <div>{ dueLabel(item.due_date) }</div>
         </Fragment>
       );
     default:
@@ -30,9 +28,7 @@ const ChargeAmountDue = ({ item }) => {
         return (
           <Fragment>
             {formatCurrency(item.amount_due)}
-            <div>
-              Due { formatDate(item.due_date) }
-            </div>
+            <div>{ dueLabel(item.due_date) }</div>
           </Fragment>
         );
       }

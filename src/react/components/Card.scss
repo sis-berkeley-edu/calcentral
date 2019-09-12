@@ -14,6 +14,10 @@
     font-size: 18px;
     font-weight: normal;
   }
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .Card__error {

@@ -42,7 +42,7 @@ const BillingItemsHeaders = ({ tab, sortBy, setSortBy, sortOrder, setSortOrder }
         { tab !== BILLING_VIEW_PAYMENTS_AID &&
           <SortArrows
             label="Due"
-            column="due"
+            column="due_date"
             defaultOrder="ASC"
             sortBy={sortBy}
             sortOrder={sortOrder}

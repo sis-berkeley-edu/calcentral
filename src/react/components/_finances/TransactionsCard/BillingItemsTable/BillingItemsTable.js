@@ -56,7 +56,7 @@ const BillingItemsTable = ({ items, tab, hasActiveFilters }) => {
       ))}
 
       { showMore &&
-        <ShowMore expanded={showAll}onClick={() => setShowAll(!showAll)} />
+        <ShowMore expanded={showAll} onClick={() => setShowAll(!showAll)} />
       }
 
       { filteredItems.length === 0 &&

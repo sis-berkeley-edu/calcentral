@@ -3,20 +3,25 @@ import PropTypes from 'prop-types';
 
 import { termFromId } from 'React/helpers/terms';
 
+import Dropdown from './Dropdown';
+
 import './TermDropdown.scss';
 
 const TermDropdown = ({ value, termIds, onChange }) => {
   const terms = termIds.map(termFromId);
 
+  const options = [
+    { label: 'All Terms', value: 'all' },
+    ...terms.map(term => ({
+      value: term.id, label: `${term.semester} ${term.year}`
+    }))
+  ];
+
   return (
     <div className="TermDropdown">
       <label>Showing</label>
-      <select value={value} onChange={(e) => onChange(e.target.value)}>
-        <option value="all">All Terms</option>
-        {terms.map(({ id, semester, year}) => (
-          <option value={id} key={id}>{semester} {year}</option>
-        ))}
-      </select>
+
+      <Dropdown value={value} options={options} onChange={onChange} />
     </div>
   );
 };
