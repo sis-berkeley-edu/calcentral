@@ -12,10 +12,10 @@
       <span data-ng-if="!api.user.profile.delegateActingAsUid">
         <span class="cc-visuallyhidden">.</span>
         <span data-ng-if="hasAlerts" class="cc-icon-status-person-layover cc-icon-status-person-layover-red">
-          <span data-ng-bind="count"></span><span class="cc-visuallyhidden"> active alerts.</span>
+          <span data-ng-bind="badgeCount"></span><span class="cc-visuallyhidden"> active alerts.</span>
         </span>
         <span data-ng-if="!hasAlerts && hasWarnings" class="cc-icon-status-person-layover cc-icon-status-person-layover-white">
-          <span data-ng-bind="count"></span><span class="cc-visuallyhidden"> warnings.</span>
+          <span data-ng-bind="badgeCount"></span><span class="cc-visuallyhidden"> warnings.</span>
         </span>
       </span>
       <span class="cc-visuallyhidden" data-ng-hide="api.popover.status('cc-popover-menu')">Show</span>

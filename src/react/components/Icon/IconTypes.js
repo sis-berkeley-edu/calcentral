@@ -8,3 +8,5 @@ export const ICON_EXCLAMATION_TRIANGLE = 'exclamation-triangle';
 export const ICON_GRADUATION = 'graduation-cap';
 export const ICON_PRINT = 'print';
 export const ICON_TIMES_CIRCLE = 'times-circle';
+export const ICON_CHECK_CIRCLE = 'check-circle';
+export const ICON_WARNING = 'warning';

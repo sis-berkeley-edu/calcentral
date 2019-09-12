@@ -1,6 +1,36 @@
 var _ = require('lodash');
 
-angular.module('calcentral.controllers').controller('StatusController', function(academicStandingsFactory, holdsFactory, activityFactory, apiService, statusHoldsService, badgesFactory, financesFactory, registrationsFactory, $http, $scope, $q) {
+import { fetchStatusAndHolds } from 'Redux/actions/statusActions';
+
+const StatusController = (academicStandingsFactory,
+  holdsFactory,
+  activityFactory,
+  apiService,
+  statusHoldsService,
+  badgesFactory,
+  financesFactory,
+  registrationsFactory,
+  $http,
+  $scope,
+  $q,
+  $ngRedux
+) => {
+  $ngRedux.subscribe(() => {
+    const {
+      myStatusAndHolds: {
+        termRegistrations = []
+      }
+    } = $ngRedux.getState();
+
+    const badgeCount = termRegistrations.map(reg => reg.badgeCount).reduce((val, prev) => (val + prev), 0);
+
+    if (badgeCount > 0) {
+      $scope.hasAlerts = true;
+    }
+
+    $scope.badgeCount = $scope.count + badgeCount;
+  });
+
   $scope.finances = {};
   $scope.regStatus = {
     hasData: false,
@@ -90,27 +120,11 @@ angular.module('calcentral.controllers').controller('StatusController', function
     _.forEach($scope.regStatus.registrations, function(registration) {
       var positiveIndicators = _.get(registration, 'positiveIndicators');
       var indicatorTypes = [];
-      var career = _.get(registration, 'academicCareer.code');
+
       _.forEach(positiveIndicators, function(indicator) {
         var indicatorType = _.get(indicator, 'type.code');
         indicatorTypes.push(indicatorType);
       });
-
-      // Count for registration status
-      // Graduates can have a regStatus that is not equal to 'Officially Registered', but if it's not accompanied by an explanation, then it should not count as an alert.
-      if (registration.regStatus.summary !== 'Officially Registered' && registration.regStatus.explanation) {
-        $scope.count++;
-        $scope.hasAlerts = true;
-      }
-      // Count for CNP status.  Per design, we do not want an alert for CNP if a student is "Not Enrolled" or "Officially Registered".
-      if (career === 'UGRD' && registration.regStatus.summary === 'Not Officially Registered') {
-        if (!_.includes(indicatorTypes, '+ROP') && !_.includes(indicatorTypes, '+R99') && registration.termFlags.pastFinancialDisbursement) {
-          if (!registration.termFlags.pastClassesStart) {
-            $scope.count++;
-            $scope.hasAlerts = true;
-          }
-        }
-      }
     });
   };
 
@@ -181,6 +195,8 @@ angular.module('calcentral.controllers').controller('StatusController', function
       // Make sure to only load this once
       hasLoaded = true;
 
+      $ngRedux.dispatch(fetchStatusAndHolds());
+
       // Set the error count to 0
       $scope.count = 0;
       $scope.hasAlerts = false;
@@ -219,4 +235,6 @@ angular.module('calcentral.controllers').controller('StatusController', function
       }).then(finishLoading);
     }
   });
-});
+};
+
+angular.module('calcentral.controllers').controller('StatusController', StatusController);

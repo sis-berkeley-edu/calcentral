@@ -20,6 +20,31 @@ module CampusSolutions
       graduation_with_loans: { message_set_nbr: '28000', message_nbr: '211' },
       pnp_calculator_ratio: { message_set_nbr: '32000', message_nbr: '17' },
       waitlisted_units_warning: { message_set_nbr: '28000', message_nbr: '216' },
+
+      status_not_officially_registered: {
+        message_set_nbr: '32500',
+        message_nbr: '100'
+      },
+
+      status_cnp_exception_before_disbursement: {
+        message_set_nbr: '32500',
+        message_nbr: '101'
+      },
+
+      status_cnp_exception_after_disbursement: {
+        message_set_nbr: '32500',
+        message_nbr: '103'
+      },
+
+      status_grad_or_law_not_enrolled: {
+        message_set_nbr: '32500',
+        message_nbr: '106'
+      },
+
+      status_grad_or_law_fees_unpaid: {
+        message_set_nbr: '32500',
+        message_nbr: '102'
+      }
     }
 
     def self.get_message(message_key)

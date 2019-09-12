@@ -109,6 +109,10 @@ Calcentral::Application.routes.draw do
     get '/api/my/law_awards' => 'my_law_awards#get_feed'
 
     scope '/api/my', module: 'user' do
+      scope '/academics', module: 'academics' do
+        resources :status_and_holds, only: [:index]
+      end
+
       scope '/finances', module: 'finances' do
         resources :billing_items, only: [:index, :show]
       end

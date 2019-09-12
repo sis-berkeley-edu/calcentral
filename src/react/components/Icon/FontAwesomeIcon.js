@@ -5,14 +5,15 @@ import '../../stylesheets/icons.scss';
 
 const propTypes = {
   name: PropTypes.string.isRequired,
-  color: PropTypes.string
+  color: PropTypes.string,
+  style: PropTypes.oneOfType([PropTypes.object, PropTypes.string])
 };
 
-const FontAwesomeIcon = (props) => {
-  if (props.color) {
-    return <i className={`fa fa-${props.name} cc-react-icon cc-react-icon--${props.color}`}></i>;
+const FontAwesomeIcon = ({ name, color, style }) => {
+  if (color) {
+    return <i className={`fa fa-${name} cc-react-icon cc-react-icon--${color}`} style={style}></i>;
   } else {
-    return <i className={`fa fa-${props.name}`}></i>;
+    return <i className={`fa fa-${name}`} style={style}></i>;
   }
 };
 
