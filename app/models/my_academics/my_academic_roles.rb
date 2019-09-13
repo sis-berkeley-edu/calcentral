@@ -7,30 +7,38 @@ module MyAcademics
     def get_feed_internal
       {
         current: get_current_roles,
-        historical: get_historical_roles
+        historical: get_historical_roles,
       }
     end
 
     def get_current_roles
-      current_term = Berkeley::Terms.fetch.current.try(:campus_solutions_id)
-      current_term_cpp = term_cpp.select {|t| t['term_id'].to_s >= current_term.to_s }
-      get_roles(current_term_cpp)
+      current_roles = role_defaults
+      map_roles(current_roles, current_term_career_program_and_plan_roles)
+      map_roles(current_roles, student_group_roles)
+      current_roles
     end
 
-    def get_roles(terms)
-      assigned_roles = []
-      roles = role_defaults
+    def student_group_roles
+      group_roles = []
+      student_group_codes.each do |group_code|
+        group_roles << Concerns::AcademicRoles.get_student_group_roles(group_code)
+      end
+      group_roles.flatten.uniq
+    end
 
-      terms.each do |term|
+    def current_term_cpp
+      current_term = Berkeley::Terms.fetch.current.try(:campus_solutions_id)
+      term_cpp.select {|t| t['term_id'].to_s >= current_term.to_s }
+    end
+
+    def current_term_career_program_and_plan_roles
+      assigned_roles = []
+      current_term_cpp.each do |term|
         assigned_roles << get_academic_career_roles(term['acad_career'])
         assigned_roles << get_academic_program_roles(term['acad_program'])
         assigned_roles << get_academic_plan_roles(term['acad_plan'])
       end
-      assigned_roles.flatten!
-      assigned_roles.uniq!
-
-      map_roles(roles, assigned_roles)
-      roles
+      assigned_roles.flatten.uniq
     end
 
     def get_historical_roles
@@ -42,10 +50,8 @@ module MyAcademics
         assigned_roles << get_academic_program_roles(term['acad_program'])
         assigned_roles << get_academic_plan_roles(term['acad_plan'])
       end
-      assigned_roles.flatten!
-      assigned_roles.uniq!
 
-      map_roles(roles, assigned_roles)
+      map_roles(roles, assigned_roles.flatten.uniq)
       roles
     end
 
@@ -59,6 +65,10 @@ module MyAcademics
 
     def term_cpp
       @term_cpp ||= MyAcademics::MyTermCpp.new(@uid).get_feed
+    end
+
+    def student_group_codes
+      @student_group_codes ||= User::Current.new(@uid).student_groups.codes
     end
   end
 end

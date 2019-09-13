@@ -1,4 +1,6 @@
 module MyAcademics
+  # Provides a students Career, Program, and Plans (CPP) within
+  # the context of a specific term (e.g. Spring, Summer, or Fall)
   class MyTermCpp < UserSpecificModel
     include Cache::CachedFeed
     include Cache::UserCacheExpiry

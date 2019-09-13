@@ -40,6 +40,11 @@ describe Concerns::AcademicRoles do
     it_behaves_like 'a map of academic status codes to roles'
   end
 
+  context 'when defining group roles' do
+    subject { described_class::STUDENT_GROUP_ROLES }
+    it_behaves_like 'a map of academic status codes to roles'
+  end
+
   describe '#get_academic_plan_roles' do
     subject { described_class.get_academic_plan_roles code }
     it_behaves_like 'a translator that handles invalid input'
@@ -90,10 +95,18 @@ describe Concerns::AcademicRoles do
     end
   end
 
+  describe '#get_student_group_roles' do
+    subject { described_class.get_student_group_roles(group_code) }
+    context 'when a match is found' do
+      let(:group_code) { 'LJD' }
+      it { should contain_exactly 'lawJointDegree' }
+    end
+  end
+
   describe '#role_defaults' do
     subject { described_class.role_defaults }
     it 'returns all possible roles set to false' do
-      expect(subject.keys.count).to eq (31)
+      expect(subject.keys.count).to eq 32
       expect(subject['concurrent']).to eq false
       expect(subject['courseworkOnly']).to eq false
       expect(subject['degreeSeeking']).to eq false
@@ -114,6 +127,7 @@ describe Concerns::AcademicRoles do
       expect(subject['law']).to eq false
       expect(subject['lawJdCdp']).to eq false
       expect(subject['lawJdLlm']).to eq false
+      expect(subject['lawJointDegree']).to eq false
       expect(subject['lawJspJsd']).to eq false
       expect(subject['lawVisiting']).to eq false
       expect(subject['lettersAndScience']).to eq false

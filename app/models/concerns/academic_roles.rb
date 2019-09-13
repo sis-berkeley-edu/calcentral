@@ -66,6 +66,10 @@ module Concerns
       {role_code: 'concurrent', match: ['UCBX']}
     ]
 
+    STUDENT_GROUP_ROLES = [
+      {role_code: 'lawJointDegree', match: ['LJD']},
+    ]
+
     def get_academic_plan_roles(plan_code)
       get_matched_roles(ACADEMIC_PLAN_ROLES, plan_code)
     end
@@ -76,6 +80,10 @@ module Concerns
 
     def get_academic_career_roles(career_code)
       get_matched_roles(ACADEMIC_CAREER_ROLES, career_code)
+    end
+
+    def get_student_group_roles(group_code)
+      get_matched_roles(STUDENT_GROUP_ROLES, group_code)
     end
 
     def role_defaults
@@ -99,7 +107,7 @@ module Concerns
     end
 
     def role_codes
-      (ACADEMIC_PLAN_ROLES | ACADEMIC_CAREER_ROLES | ACADEMIC_PROGRAM_ROLES).collect do |matcher|
+      (ACADEMIC_PLAN_ROLES | ACADEMIC_CAREER_ROLES | ACADEMIC_PROGRAM_ROLES | STUDENT_GROUP_ROLES).collect do |matcher|
         matcher[:role_code]
       end
     end
