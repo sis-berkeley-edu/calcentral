@@ -6,6 +6,10 @@ module User
       @uid = uid
     end
 
+    def campus_solutions_id
+      @campus_solutions_id ||= User::Identifiers.lookup_campus_solutions_id(uid)
+    end
+
     def billing_items
       @billing_items ||= User::Finances::BillingItems.new(self)
     end
@@ -32,6 +36,10 @@ module User
 
     def status_and_holds
       @status_and_holds ||= User::Academics::StatusAndHolds.new(self)
+    end
+
+    def student_groups
+      @student_groups ||= User::Academics::StudentGroups.new(self)
     end
   end
 end

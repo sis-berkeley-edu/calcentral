@@ -28,7 +28,7 @@ module MyAcademics
         semester[:filteredForDelegate] = !!@filtered
         if enrollment_terms[term_key]
           semester[:hasEnrollmentData] = true
-          semester[:classes] = map_enrollments(enrollment_terms[term_key], semester[:termId]).compact
+          semester[:classes] = process_enrollments(enrollment_terms[term_key], semester[:termId])
           semester[:hasEnrolledClasses] = has_enrolled_classes?(enrollment_terms[term_key])
           merge_grades(semester)
           semester.merge! unit_totals(enrollment_terms[term_key])
@@ -152,23 +152,38 @@ module MyAcademics
       data
     end
 
-    def map_enrollments(enrollment_term, term_id)
-      enrollment_term.map do |course|
-        next unless course[:role] == 'Student'
-        next if law_student? && !academic_careers.include?(course[:academicCareer])
-        mapped_course = course_info course
+    def process_enrollments(enrollment_term, term_id)
+      filtered_enrollment_term = filter_enrollments(enrollment_term)
+      enrollment_term.map do |enrollment|
+        mapped_enrollment = course_info enrollment
         if @filtered
-          mapped_course.delete :url
+          mapped_enrollment.delete :url
         else
-          process_unfiltered_course(course, term_id)
+          process_unfiltered_enrollment(enrollment, term_id)
         end
-        mapped_course
+        mapped_enrollment
+      end.compact
+    end
+
+    def filter_enrollments(enrollment_term)
+      enrollment_term.delete_if do |enrollment|
+        enrollment[:role] != 'Student' || exclude_enrollment_for_law?(enrollment)
       end
     end
 
-    def process_unfiltered_course(course, term_id)
+    def exclude_enrollment_for_law?(enrollment)
+      return true if law_student? && current_academic_roles['lawJointDegree'] && !['GRAD','LAW'].include?(enrollment[:academicCareer])
+      return true if law_student? && !current_academic_roles['lawJointDegree'] && !academic_careers.include?(enrollment[:academicCareer])
+      false
+    end
+
+    def current_academic_roles
+      @current_academic_roles ||= MyAcademics::MyAcademicRoles.new(@uid).get_feed[:current]
+    end
+
+    def process_unfiltered_enrollment(enrollment, term_id)
       primaries_count = 0
-      course[:sections].each do |section|
+      enrollment[:sections].each do |section|
         if section[:is_primary_section]
           add_section_grade_option(section)
           primaries_count += 1
@@ -177,13 +192,13 @@ module MyAcademics
           map_reserved_seats(term_id, section)
         end
         if Settings.features.reserved_capacity_link
-          add_reserved_seating_rules_link(term_id, course, section)
+          add_reserved_seating_rules_link(term_id, enrollment, section)
         end
-        section[:grading][:gradePoints] = nil if hide_points? course
-        section[:isLaw] = law_class? course
-        section.merge!(law_class_enrollment(course, section))
+        section[:grading][:gradePoints] = nil if hide_points? enrollment
+        section[:isLaw] = law_class? enrollment
+        section.merge!(law_class_enrollment(enrollment, section))
       end
-      merge_multiple_primaries(course, course[:course_option]) if primaries_count > 1
+      merge_multiple_primaries(enrollment, enrollment[:course_option]) if primaries_count > 1
     end
 
     def add_section_grade_option(section)
