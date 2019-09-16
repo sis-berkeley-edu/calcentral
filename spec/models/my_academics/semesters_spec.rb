@@ -233,34 +233,57 @@ describe MyAcademics::Semesters do
         expect(result).to eq false
       end
     end
-    context 'when user is a law student' do
-      let(:is_law_student) { true }
-      context 'when user is in the law joint degree student group' do
-        let(:in_law_joint_degree_student_group) { true }
-        context 'when enrollment matches GRAD or LAW career' do
-          let(:enrollment_academic_career) { 'GRAD' }
-          it 'returns false' do
+    shared_examples 'filters non-GRAD and non-LAW' do
+      context 'when enrollment matches GRAD career' do
+        let(:enrollment_academic_career) { 'GRAD' }
+        it 'returns false' do
+          expect(result).to eq false
+        end
+      end
+      context 'when enrollment matches LAW career' do
+        let(:enrollment_academic_career) { 'LAW' }
+        it 'returns false' do
+          expect(result).to eq false
+        end
+      end
+      context 'when enrollment matches UGRD career' do
+        let(:enrollment_academic_career) { 'UGRD' }
+        it 'returns true' do
+          expect(result).to eq true
+        end
+      end
+      context 'when enrollment matches UCBX career' do
+        let(:enrollment_academic_career) { 'UCBX' }
+        it 'returns true' do
+          expect(result).to eq true
+        end
+      end
+    end
+    context 'when user is in the law joint degree student group' do
+      let(:in_law_joint_degree_student_group) { true }
+      context 'when user is a law student' do
+        let(:is_law_student) { true }
+        it_should_behave_like 'filters non-GRAD and non-LAW'
+      end
+      context 'when user is not a law student' do
+        let(:is_law_student) { false }
+        it_should_behave_like 'filters non-GRAD and non-LAW'
+      end
+    end
+    context 'when user is not in the law joint degree student group' do
+      let(:in_law_joint_degree_student_group) { false }
+      context 'when user is not a law student' do
+        let(:is_law_student) { false }
+        context 'when the enrollment does not match the users active academic careers' do
+          let(:users_active_academic_careers) { ['GRAD','LAW'] }
+          let(:enrollment_academic_career) { 'UCBX' }
+          it 'returns true' do
             expect(result).to eq false
           end
         end
-        context 'when user is only active in law career' do
-          let(:users_active_academic_careers) { ['LAW'] }
-          context 'when grad enrollment' do
-            let(:enrollment_academic_career) { 'GRAD' }
-            it 'returns false' do
-              expect(result).to eq false
-            end
-          end
-        end
-        context 'when enrollment does not match GRAD or LAW career' do
-          let(:enrollment_academic_career) { 'UGRD' }
-          it 'returns true' do
-            expect(result).to eq true
-          end
-        end
       end
-      context 'when user is not in the law joint degree student group' do
-        let(:in_law_joint_degree_student_group) { false }
+      context 'when user is a law student' do
+        let(:is_law_student) { true }
         context 'when the enrollment matches the users active academic careers' do
           let(:users_active_academic_careers) { ['GRAD','LAW'] }
           let(:enrollment_academic_career) { 'LAW' }
