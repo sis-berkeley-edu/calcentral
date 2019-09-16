@@ -8,7 +8,8 @@ const stringify = require('json-stringify-safe');
 const webpackMerge = require('webpack-merge');
 const webSocket = require('ws');
 
-const port = 3001;
+const port = process.env.PORT || 3001;
+const apiHost = process.env.API_HOST || 'http://localhost:3000';
 const baseConfig = require('./base.config.js');
 
 // These endpoints (from routes.rb) will return a response from localhost:3000
@@ -87,7 +88,7 @@ module.exports = webpackMerge(baseConfig, {
     add: (app) => {
       app.use(convert(proxy({
         context: railsApiRoutes,
-        target: 'http://localhost:3000'
+        target: apiHost
       })));
     },
     devMiddleware: {

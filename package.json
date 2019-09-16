@@ -22,7 +22,8 @@
   "scripts": {
     "build": "webpack --config webpack/prod.config.js",
     "dev": "webpack-serve --config webpack/dev.config.js",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "start": "PORT=8080 API_HOST=http://localhost:4000 webpack-serve --config webpack/dev.config.js"
   },
   "engines": {
     "node": ">=10.1.0"

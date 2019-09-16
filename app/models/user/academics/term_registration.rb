@@ -16,18 +16,12 @@ module User
           termName: term.to_english,
           termId: term_id,
           careerCodes: career_codes,
-          isInPopover: in_popover?,
-          badgeCount: status_badge_count,
-          status: {
-            message: status_message,
-            severity: status_severity,
-            detailedMessageHTML: status_detailed_message_html
-          },
-          cnpStatus: {
-            message: cnp_message,
-            severity: cnp_severity,
-            detailedMessageHTML: cnp_detailed_message_html
-          }
+          badgeCount: badge_count,
+          isShown: shown?,
+          inPopover: in_popover?,
+          registrationStatus: registration_status,
+          cnpStatus: cnp_status,
+          calgrantStatus: calgrant_status
         }
       end
 
@@ -65,7 +59,7 @@ module User
       end
 
       def cnp_exception_service_indicator_message
-        student_attributes.find?(&:is_cnp_exception?).service_indicator_message
+        student_attributes.find(&:is_cnp_exception?).service_indicator_message
       end
 
       def cnp_exception?
@@ -98,45 +92,28 @@ module User
         registration_records.map(&:career_code)
       end
 
-      def cnp_message
-        cnp_status.message
-      end
-
-      def cnp_severity
-        cnp_status.severity
-      end
-
-      def cnp_detailed_message_html
-        cnp_status.detailed_message_html
-      end
-
-      def status_message
-        return Status::Messages::MSG_NONE if summer?
-        return Status::Messages::MSG_NONE unless tuition_calculated?
-
-        career_status.message
-      end
-
-      def status_severity
-        career_status.severity
-      end
-
-      def status_detailed_message_html
-        career_status.detailed_message_html
+      def shown?
+        ![registration_status, calgrant_status, cnp_status].all? { |status| status.message.nil? }
       end
 
       def in_popover?
-        return true if undergraduate?
-        return true if [MSG_LIMITED_ACCESS, MSG_FEES_UNPAID, MSG_NOT_ENROLLED].include?(status_message)
-        false
+        [registration_status, calgrant_status, cnp_status].any?(&:in_popover?)
       end
 
-      def popover_badge_count
-        status_badge_count + cnp_badge_count
+      def badge_count
+        [registration_status, calgrant_status, cnp_status].sum(&:badge_count)
       end
 
-      def career_status
-        @career_status ||= if undergraduate?
+      def status_message
+        registration_status.message
+      end
+
+      def registration_status
+        @registration_status ||= if summer?
+          null_status
+        elsif !tuition_calculated?
+          null_status
+        elsif undergraduate?
           User::Academics::Status::Undergraduate.new(self)
         elsif graduate? && law?
           User::Academics::Status::Concurrent.new(self)
@@ -145,18 +122,28 @@ module User
         end
       end
 
-      private
+      def calgrant_status
+        @calgrant_status ||= if calgrant_acknowledgement
+          User::Academics::Status::CalgrantAcknowledgement.new(self)
+        else
+          null_status
+        end
+      end
 
       def cnp_status
-        @cnp_status ||= User::Academics::Status::CancellationForNonPayment.new(self)
+        @cnp_status ||= if cnp_exception?
+          User::Academics::Status::CancellationForNonPayment.new(self)
+        else
+          null_status
+        end
       end
 
-      def status_badge_count
-        in_popover? ? 1 : 0
+      def null_status
+        @null_status ||= User::Academics::Status::NullStatus.new
       end
 
-      def cnp_badge_count
-        cnp_severity == ICON_WARNING ? 1 : 0
+      def calgrant_acknowledgement
+        @calgrant_acknowledgement ||= user.calgrant_acknowledgements.find_by_term_id(term_id)
       end
     end
   end
