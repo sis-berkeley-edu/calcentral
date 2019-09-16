@@ -31,7 +31,7 @@ module User
         end
 
         def in_popover?
-          true unless message == MSG_NONE
+          [SEVERITY_WARNING].include?(severity)
         end
 
         def badge_count
