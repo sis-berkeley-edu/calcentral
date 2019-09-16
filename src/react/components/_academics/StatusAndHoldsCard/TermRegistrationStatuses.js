@@ -6,37 +6,8 @@ import { react2angular } from 'react2angular';
 import store from 'Redux/store';
 
 import { fetchStatusAndHolds } from 'Redux/actions/statusActions';
-import { DisclosureItem, DisclosureItemTitle } from 'React/components/DisclosureItem';
-import StatusDisclosure from './StatusDisclosure';
-import RegistrationStatusIcon from '../RegistrationStatusIcon';
 
-const StatusItem = ({
-  status: {
-    message, severity, detailedMessageHTML
-  }
-}) => {
-  if (message === '') {
-    return null;
-  }
-
-  return (
-    <DisclosureItem>
-      <DisclosureItemTitle>
-        <RegistrationStatusIcon severity={severity} />
-        {message}
-      </DisclosureItemTitle>
-      { detailedMessageHTML && (
-        <StatusDisclosure>
-          <div dangerouslySetInnerHTML={{__html: detailedMessageHTML}} />
-        </StatusDisclosure>
-      )}
-    </DisclosureItem>
-  );
-};
-
-StatusItem.propTypes = {
-  status: PropTypes.object.isRequired
-};
+import TermRegistrationStatus from './TermRegistrationStatus';
 
 const TermRegistrationStatuses = ({
   dispatch,
@@ -49,11 +20,10 @@ const TermRegistrationStatuses = ({
   return (
     <div className="TermRegistrationStatuses" style={{ marginBottom: `15px` }}>
       {termRegistrations.map(reg => (
-        <div className="TermRegistrationStatus" key={reg.termId} style={{ marginBottom: `15px` }}>
-          <h4>{reg.termName}</h4>
-          <StatusItem status={reg.status} />
-          <StatusItem status={reg.cnpStatus} />
-        </div>
+        <TermRegistrationStatus
+          key={reg.termId}
+          termRegistration={reg}
+        />
       ))}
     </div>
   );

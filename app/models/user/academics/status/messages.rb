@@ -2,7 +2,7 @@ module User
   module Academics
     module Status
       module Messages
-        MSG_NONE = ''
+        MSG_NONE = nil
         MSG_NOT_ENROLLED = 'Not Enrolled'
         MSG_OFFICIALLY_REGISTERED = 'Officially Registered'
         MSG_NOT_OFFICIALLY_REGISTERED = 'Not Officially Registered'

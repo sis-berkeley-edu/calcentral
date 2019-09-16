@@ -1,21 +1,19 @@
 module User
   module Academics
     module Status
-      class Base < SimpleDelegator
-        include ::User::Academics::Status::Messages
-        include ::User::Academics::Status::Severity
-
+      class NullStatus
         def as_json(options={})
           {
             message: message,
-            severity: severity,
-            detailedMessageHTML: detailed_message_html,
+            severity: nil,
+            detailedMessageHTML: nil,
             inPopover: in_popover?,
             badgeCount: badge_count
           }
         end
 
         def message
+          nil
         end
 
         def in_popover?
@@ -24,10 +22,6 @@ module User
 
         def badge_count
           0
-        end
-
-        def message_catalog(key)
-          CampusSolutions::MessageCatalog.get_message(key)[:descrlong]
         end
       end
     end

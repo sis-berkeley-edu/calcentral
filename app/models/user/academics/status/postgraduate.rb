@@ -58,6 +58,14 @@ module User
             '<p>You may not have access to campus services due to a hold. Please address your holds to become entitled to campus services.</p>'
           end
         end
+
+        def in_popover?
+          [MSG_LIMITED_ACCESS, MSG_FEES_UNPAID, MSG_NOT_ENROLLED].include?(message)
+        end
+
+        def badge_count
+          in_popover? ? 1 : 0
+        end
       end
     end
   end

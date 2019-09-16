@@ -39,6 +39,14 @@ module User
             message_catalog(:status_cnp_exception_after_disbursement)
           end
         end
+
+        def in_popover?
+          [SEVERITY_NOTICE, SEVERITY_WARNING].include?(severity)
+        end
+
+        def badge_count
+          [SEVERITY_WARNING].include?(severity) ? 1 : 0
+        end
       end
     end
   end

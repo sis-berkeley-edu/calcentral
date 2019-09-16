@@ -29,6 +29,14 @@ module User
             message_catalog(:status_not_officially_registered)
           end
         end
+
+        def in_popover?
+          true unless message == MSG_NONE
+        end
+
+        def badge_count
+          [SEVERITY_WARNING].include?(severity) ? 1 : 0
+        end
       end
     end
   end

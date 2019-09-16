@@ -2,7 +2,7 @@ module User
   module Academics
     module Status
       class Concurrent < Base
-        delegate :message, :severity, :detailed_message_html, :to => :prioritized_status
+        delegate :message, :severity, :detailed_message_html, :in_popover?, :badge_count, :to => :prioritized_status
 
         private
 

@@ -4,13 +4,19 @@ import PropTypes from 'prop-types';
 import CNPStatusItem from './CNPStatusItem';
 import RegistrationStatusItem from './RegistrationStatusItem';
 
-const RegistrationStatusItemsForTerm = ({ termRegistration }) => {
-  if (termRegistration.isInPopover) {
+const RegistrationStatusItemsForTerm = ({
+  termRegistration
+}) => {
+  if (termRegistration.inPopover) {
     return (
       <li className="cc-popover-item">
         <a href="/academics">
-          <RegistrationStatusItem termRegistration={termRegistration} />
-          <CNPStatusItem termRegistration={termRegistration} />
+          <RegistrationStatusItem
+            registrationStatus={termRegistration.registrationStatus}
+            termName={termRegistration.termName}
+          />
+
+          <CNPStatusItem cnpStatus={termRegistration.cnpStatus} />
         </a>
       </li>
     );

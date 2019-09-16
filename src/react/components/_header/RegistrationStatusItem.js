@@ -3,16 +3,23 @@ import PropTypes from 'prop-types';
 
 import RegistrationStatusIcon from 'React/components/_academics/RegistrationStatusIcon';
 
-const RegistrationStatusItem = ({ termRegistration }) => (
-  <div className="cc-launcher-status-description">
-    <RegistrationStatusIcon severity={ termRegistration.status.severity } />
-    <strong>{ termRegistration.termName }: </strong>
-    { termRegistration.status.message }
-  </div>
-);
+const RegistrationStatusItem = ({ registrationStatus, termName }) => {
+  if (registrationStatus === null) {
+    return null;
+  }
+
+  return (
+    <div className="cc-launcher-status-description">
+      <RegistrationStatusIcon severity={ registrationStatus.severity } />
+      <strong>{ termName }: </strong>
+      { registrationStatus.message }
+    </div>
+  );
+};
 
 RegistrationStatusItem.propTypes = {
-  termRegistration: PropTypes.object.isRequired
+  registrationStatus: PropTypes.object,
+  termName: PropTypes.string
 };
 
 export default RegistrationStatusItem;
