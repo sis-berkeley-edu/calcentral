@@ -12,11 +12,13 @@ const Minor = ({ minors }) => {
       <tr>
         <th>{minors.length === 1 ? 'Minor' : 'Minors'}</th>
         <td>
-          {minors.map((minors, index) => (
+          {minors.map((minorObj, index) => (
             <div key={index}>
-              <div className="cc-text-light">{minors.college}</div>
-              <div>{minors.minor}</div>
-              {minors.minor.subPlan && <div className="cc-widget-profile-indent">{minors.minor.subPlan}</div>}
+              <div className="cc-text-light">{minorObj.college}</div>
+              <div>{minorObj.minor}</div>
+              {minorObj.subPlans.map((subPlan, index) => (
+                <div key={index} className="cc-widget-profile-indent">{subPlan}</div>
+              ))}
             </div>
           ))}
         </td>

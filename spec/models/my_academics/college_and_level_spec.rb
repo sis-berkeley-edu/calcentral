@@ -482,7 +482,7 @@ describe MyAcademics::CollegeAndLevel do
           college: 'Undergrad Letters & Science',
           minor: 'Art BA',
           description: nil,
-          subPlan: nil,
+          subPlans: [],
           type: 'MIN'
         })
       end
@@ -492,14 +492,14 @@ describe MyAcademics::CollegeAndLevel do
           college: 'Undergrad Letters & Science',
           major: 'English BA',
           description: nil,
-          subPlan: nil,
+          subPlans: [],
           type: 'MAJ'
         })
         expect(feed[:collegeAndLevel][:majors][1]).to eq({
           college: 'Undergrad Letters & Science',
           major: 'MCB-Cell & Dev Biology BA',
           description: nil,
-          subPlan: 'Biological Chemistry',
+          subPlans: ['Biological Chemistry'],
           type: 'SP'
         })
       end
@@ -550,9 +550,9 @@ describe MyAcademics::CollegeAndLevel do
       end
 
       it 'translates sub-plans' do
-        expect(feed[:collegeAndLevel][:plans][1][:subPlan]).to be
-        expect(feed[:collegeAndLevel][:plans][1][:subPlan][:code]).to eq '25966SA02U'
-        expect(feed[:collegeAndLevel][:plans][1][:subPlan][:description]).to eq 'Biological Chemistry'
+        expect(feed[:collegeAndLevel][:plans][1][:subPlans].count).to eq 1
+        expect(feed[:collegeAndLevel][:plans][1][:subPlans][0][:code]).to eq '25966SA02U'
+        expect(feed[:collegeAndLevel][:plans][1][:subPlans][0][:description]).to eq 'Biological Chemistry'
       end
 
       it 'translates holds' do
@@ -696,14 +696,14 @@ describe MyAcademics::CollegeAndLevel do
           college: 'Law Professional Programs',
           major: 'Law JD-MPP CDP',
           description: nil,
-          subPlan: nil,
+          subPlans: [],
           type: 'MAJ'
         })
         expect(feed[:collegeAndLevel][:majors][1]).to eq({
           college: 'Graduate Professional Programs',
           major: 'Public Policy MPP-JD CDP',
           description: nil,
-          subPlan: nil,
+          subPlans: [],
           type: 'MAJ'
         })
       end
@@ -788,7 +788,6 @@ describe MyAcademics::CollegeAndLevel do
 
   describe '#parse_hub_plans' do
     subject { described_class.new(uid).parse_hub_plans(hub_academic_statuses) }
-
     it 'puts all the plans with the \'major\' type into a list' do
       expect(subject[:majors]).to be
       expect(subject[:majors].count).to eq 2
@@ -819,9 +818,125 @@ describe MyAcademics::CollegeAndLevel do
       expect(subject[:plans][3][:primary]).to eq false
     end
     it 'sets the sub-plan on each plan if it has one' do
-      expect(subject[:plans][1][:subPlan]).to be
-      expect(subject[:plans][1][:subPlan][:code]).to eq '25966SA02U'
-      expect(subject[:plans][1][:subPlan][:description]).to eq 'Biological Chemistry'
+      expect(subject[:plans][1][:subPlans].count).to eq 1
+      expect(subject[:plans][1][:subPlans][0][:code]).to eq '25966SA02U'
+      expect(subject[:plans][1][:subPlans][0][:description]).to eq 'Biological Chemistry'
+    end
+  end
+
+  describe '#group_plans_by_type' do
+    let(:plan_set) { {majors: [], minors: [], designatedEmphases: []} }
+    let(:plan) do
+      {
+        college: 'Berkeley School of Magic',
+        type: {
+          category: plan_category,
+          code: 'MAJ',
+        },
+        plan: {
+          description: 'Architecture BA',
+          formalDescription: 'Architecture',
+          code: '19084U',
+        },
+        subPlans: [
+          {description: 'Design Research'}
+        ]
+      }
+    end
+    let(:result) { subject.group_plans_by_type(plan_set, plan) }
+    context 'when plan is a Major' do
+      let(:plan_category) { 'Major' }
+      it 'populates majors in plan set' do
+        subject.group_plans_by_type(plan_set, plan)
+        expect(plan_set[:majors].count).to eq 1
+      end
+      it 'assembles properties of plan properly' do
+        subject.group_plans_by_type(plan_set, plan)
+        expect(plan_set[:majors][0][:college]).to eq 'Berkeley School of Magic'
+        expect(plan_set[:majors][0][:major]).to eq 'Architecture BA'
+        expect(plan_set[:majors][0][:description]).to eq 'Architecture'
+        expect(plan_set[:majors][0][:subPlans]).to eq ['Design Research']
+        expect(plan_set[:majors][0][:type]).to eq 'MAJ'
+      end
+    end
+    context 'when plan is a Minor' do
+      let(:plan_category) { 'Minor' }
+      it 'populates minors in plan set' do
+        subject.group_plans_by_type(plan_set, plan)
+        expect(plan_set[:minors].count).to eq 1
+      end
+      it 'assembles properties of plan properly' do
+        subject.group_plans_by_type(plan_set, plan)
+        expect(plan_set[:minors][0][:college]).to eq 'Berkeley School of Magic'
+        expect(plan_set[:minors][0][:minor]).to eq 'Architecture BA'
+        expect(plan_set[:minors][0][:description]).to eq 'Architecture'
+        expect(plan_set[:minors][0][:subPlans]).to eq ['Design Research']
+        expect(plan_set[:minors][0][:type]).to eq 'MAJ'
+      end
+    end
+    context 'when plan is a Designated Emphasis' do
+      let(:plan_category) { 'Designated Emphasis' }
+      it 'populates designated emphases in plan set' do
+        subject.group_plans_by_type(plan_set, plan)
+        expect(plan_set[:designatedEmphases].count).to eq 1
+      end
+      it 'assembles properties of plan properly' do
+        subject.group_plans_by_type(plan_set, plan)
+        expect(plan_set[:designatedEmphases][0][:college]).to eq 'Berkeley School of Magic'
+        expect(plan_set[:designatedEmphases][0][:designatedEmphasis]).to eq 'Architecture BA'
+        expect(plan_set[:designatedEmphases][0][:description]).to eq 'Architecture'
+        expect(plan_set[:designatedEmphases][0][:subPlans]).to eq ['Design Research']
+        expect(plan_set[:designatedEmphases][0][:type]).to eq 'MAJ'
+      end
+    end
+  end
+
+  describe '#subplan_descriptions' do
+    let(:subplans) do
+      [
+        {description: 'desc 1'},
+        {description: 'desc 2'},
+      ]
+    end
+    let(:result) { subject.subplan_descriptions(subplans) }
+    it 'returns aray of descriptions' do
+      expect(result).to eq ['desc 1', 'desc 2']
+    end
+  end
+
+  describe '#add_sub_plans' do
+    let(:flattened_plan) do
+      {
+        career: {},
+        program: {},
+        plan: {},
+        subPlans: [],
+      }
+    end
+    context 'when no academic subplans are present' do
+      let(:plan) { {} }
+      it 'adds empty subplans array to flattened plan' do
+        subject.add_sub_plans(flattened_plan, plan)
+        expect(flattened_plan[:subPlans].count).to eq 0
+      end
+    end
+    context 'when academic subplans are present' do
+      let(:plan) do
+        {
+          'academicSubPlans' => [
+            {'subPlan' =>{'code' => 'ABC123456', 'description' => 'Subplan 1'}},
+            {'subPlan' =>{'code' => 'ABC123457', 'description' => 'Subplan 2'}}
+          ],
+        }
+      end
+      it 'adds subplans array to flattened plan' do
+        subject.add_sub_plans(flattened_plan, plan)
+        expect(flattened_plan[:subPlans].count).to eq 2
+        expect(flattened_plan[:subPlans][0][:code]).to eq 'ABC123456'
+        expect(flattened_plan[:subPlans][0][:description]).to eq 'Subplan 1'
+        expect(flattened_plan[:subPlans][1][:code]).to eq 'ABC123457'
+        expect(flattened_plan[:subPlans][1][:description]).to eq 'Subplan 2'
+      end
     end
   end
 

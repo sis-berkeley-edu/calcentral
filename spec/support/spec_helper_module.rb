@@ -64,12 +64,14 @@ module SpecHelperModule
           "administrativeOwners" => adminOwners
         },
       },
-      "academicSubPlan" => {
-        "subPlan" => {
-          "code" => cpp_hash[:sub_plan_code],
-          "description" => cpp_hash[:sub_plan_description]
+      "academicSubPlans" => [
+        {
+          "subPlan" => {
+            "code" => cpp_hash[:sub_plan_code],
+            "description" => cpp_hash[:sub_plan_description]
+          }
         }
-      },
+      ],
       "primary" => cpp_hash[:is_primary],
       "statusInPlan" => {
         "action" => {

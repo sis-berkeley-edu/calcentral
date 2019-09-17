@@ -21,9 +21,9 @@ const Emphases = ({ emphases }) => {
             <div key={index}>
               <div className="cc-text-light">{emphasis.college}</div>
               <div>{emphasis.designatedEmphasis}</div>
-              {emphasis.subPlan &&
-                <div className="cc-widget-profile-indent">{emphasis.subPlan}</div>
-              }
+              {emphasis.subPlans.map((subPlan, index) => (
+                <div key={index} className="cc-widget-profile-indent">{subPlan}</div>
+              ))}
             </div>
           ))}
         </td>

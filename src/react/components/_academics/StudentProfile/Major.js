@@ -16,9 +16,9 @@ const Major = ({ majors }) => {
             <div key={index}>
               <div className="cc-text-light">{major.college}</div>
               <div>{major.major}</div>
-              {major.subPlan &&
-                <div className="cc-widget-profile-indent">{major.subPlan}</div>
-              }
+              {major.subPlans.map((subPlan, index) => (
+                <div key={index} className="cc-widget-profile-indent">{subPlan}</div>
+              ))}
             </div>
           ))}
         </td>
