@@ -5,7 +5,31 @@ var _ = require('lodash');
 /**
  * Academics controller
  */
-angular.module('calcentral.controllers').controller('AcademicsController', function(academicsFactory, academicsService, academicStandingsFactory, holdsFactory, apiService, linkService, registrationsFactory, $q, $routeParams, $scope, $location) {
+angular.module('calcentral.controllers').controller('AcademicsController', function(
+  academicsFactory,
+  academicsService,
+  academicStandingsFactory,
+  holdsFactory,
+  apiService,
+  linkService,
+  registrationsFactory,
+  $q,
+  $routeParams,
+  $scope,
+  $location,
+  $ngRedux
+) {
+  $ngRedux.subscribe(() => {
+    const {
+      myStatusAndHolds: {
+        termRegistrations = []
+      }
+    } = $ngRedux.getState();
+
+    const shownRegistrations = termRegistrations.find(reg => reg.isShown);
+    $scope.showStatusAndBlocks = !$scope.filteredForDelegate && ($scope.hasRegStatus || $scope.numberOfHolds || $scope.hasStandingAlert || shownRegistrations);
+  });
+
   linkService.addCurrentRouteSettings($scope);
   apiService.util.setTitle($scope.currentPage.name);
 
@@ -238,8 +262,6 @@ angular.module('calcentral.controllers').controller('AcademicsController', funct
     $scope.isAcademicInfoAvailable = !!($scope.hasRegStatus ||
                                        ($scope.semesters && $scope.semesters.length));
     $scope.isNonDegreeSeekingSummerVisitor = isNonDegreeSeekingSummerVisitor;
-    $scope.showStatusAndBlocks = !$scope.filteredForDelegate &&
-                                 ($scope.hasRegStatus || $scope.numberOfHolds || $scope.hasStandingAlert);
     $scope.showAdvising = !$scope.filteredForDelegate && apiService.user.profile.features.advising && apiService.user.profile.roles.student && isMbaJdOrNotLaw() && !isNonDegreeSeekingSummerVisitor;
     $scope.showProfileMessage = (!$scope.isAcademicInfoAvailable || !$scope.collegeAndLevel || _.isEmpty($scope.collegeAndLevel.careers));
     $scope.showResidency = apiService.user.profile.roles.student && academicsService.showResidency(apiService.user.profile.academicRoles.current);
