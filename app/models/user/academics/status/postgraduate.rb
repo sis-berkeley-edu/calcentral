@@ -60,7 +60,7 @@ module User
         end
 
         def in_popover?
-          [MSG_LIMITED_ACCESS, MSG_FEES_UNPAID, MSG_NOT_ENROLLED].include?(message)
+          [MSG_FEES_UNPAID, MSG_NOT_ENROLLED].include?(message)
         end
 
         def badge_count
