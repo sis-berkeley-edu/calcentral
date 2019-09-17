@@ -242,6 +242,7 @@ cache:
     failure: <%= 30.seconds %>
     BackgroundJobsCheck: <%= 29.days %>
     MyAcademics::Merged: <%= 15.minutes %>
+    MyAcademics::MyAcademicStatus: <%= 15.minutes %>
     MyActivities::Merged: <%= 10.minutes %>
     MyBadges::Merged: <%= 2.hours %>
     MyCampusLinksController: NEXT_08_00

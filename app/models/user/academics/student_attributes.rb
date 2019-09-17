@@ -26,7 +26,7 @@ module User
       end
 
       def feed_data
-        @feed_data ||= HubEdos::StudentApi::V2::StudentAttributes.new(user_id: user.uid).get[:feed]['studentAttributes']
+        @feed_data ||= HubEdos::StudentApi::V2::StudentAttributes.new(user_id: user.uid).get[:feed]['studentAttributes'] || []
       rescue NoMethodError
         []
       end

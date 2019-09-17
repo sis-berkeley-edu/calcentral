@@ -124,6 +124,214 @@ describe MyAcademics::Semesters do
     end
   end
 
+  describe '#process_enrollments' do
+    let(:enrollment_term) do
+      [
+        {
+          academicCareer: 'GRAD',
+          course_code: 'PUBPOL 205',
+          name: 'Advanced Policy Analysis',
+          url: '/academics/semester/spring-2019/class/pubpol-205-2019-B',
+        },
+        {
+          academicCareer: 'LAW',
+          course_code: 'LAW 207.5',
+          name: 'Advanced Legal Writing',
+          url: '/academics/semester/spring-2019/class/law-207_5-2019-B',
+        },
+      ]
+    end
+    let(:term_id) { '2198' }
+    let(:result) { subject.process_enrollments(enrollment_term, term_id) }
+    before do
+      allow(subject).to receive(:filter_enrollments).with(enrollment_term).and_return(enrollment_term)
+      allow(subject).to receive(:course_info) {|enrollment| enrollment[:title] = enrollment[:name]; enrollment }
+      allow(subject).to receive(:process_unfiltered_enrollment) {|enrollment| enrollment[:processed] = true; }
+    end
+    it 'filters enrollments' do
+      expect(subject).to receive(:filter_enrollments).with(enrollment_term).and_return(enrollment_term)
+      expect(result.count).to eq 2
+    end
+    context 'when feed is filtered for delegates' do
+      before { subject.instance_eval { @filtered = true } }
+      it 'does not process the enrollment' do
+        expect(subject).to_not receive(:process_unfiltered_enrollment)
+        expect(result[0][:course_code]).to eq 'PUBPOL 205'
+        expect(result[1][:course_code]).to eq 'LAW 207.5'
+      end
+      it 'deletes the url for the enrollments' do
+        expect(result[0].has_key?(:url)).to eq false
+        expect(result[1].has_key?(:url)).to eq false
+      end
+    end
+    context 'when feed is not filtered for delegates' do
+      before { subject.instance_eval { @filtered = false } }
+      it 'processes the enrollment' do
+        expect(subject).to receive(:process_unfiltered_enrollment) {|enrollment| enrollment[:processed] = true; }
+        expect(result.first[:processed]).to eq true
+      end
+      it 'does not delete the url for the enrollment' do
+        expect(result[0][:url]).to eq '/academics/semester/spring-2019/class/pubpol-205-2019-B'
+        expect(result[1][:url]).to eq '/academics/semester/spring-2019/class/law-207_5-2019-B'
+      end
+    end
+  end
+
+  describe '#filter_enrollments' do
+    let(:enrollment_term) do
+      [
+        {course_code: 'Class A', role: class_a_role},
+        {course_code: 'Class B', role: class_b_role},
+        {course_code: 'Class C', role: class_c_role},
+        {course_code: 'Class D', role: class_d_role},
+      ]
+    end
+    let(:class_a_role) { 'Student' }
+    let(:class_b_role) { 'Student' }
+    let(:class_c_role) { 'Student' }
+    let(:class_d_role) { 'Student' }
+    let(:result) { subject.filter_enrollments(enrollment_term) }
+    before { allow(subject).to receive(:exclude_enrollment_for_law?).and_return(false) }
+    context 'when non-student enrollments present' do
+      let(:class_b_role) { 'Instructor' }
+      let(:class_d_role) { 'Instructor' }
+      it 'filters out non-student enrollments' do
+        expect(result.count).to eq 2
+        expect(result[0][:course_code]).to eq 'Class A'
+        expect(result[1][:course_code]).to eq 'Class C'
+      end
+    end
+    context 'when enrollments are excluded for law' do
+      before do
+        allow(subject).to receive(:exclude_enrollment_for_law?) {|enrollment| enrollment[:course_code] == 'Class C' }
+      end
+      it 'filters out law excluded enrollments' do
+        expect(result.count).to eq 3
+        expect(result[0][:course_code]).to eq 'Class A'
+        expect(result[1][:course_code]).to eq 'Class B'
+        expect(result[2][:course_code]).to eq 'Class D'
+      end
+    end
+  end
+
+  describe '#exclude_enrollment_for_law?' do
+    let(:enrollment) { {academicCareer: enrollment_academic_career} }
+    let(:enrollment_academic_career) { 'UGRD' }
+    let(:is_law_student) { false }
+    let(:current_academic_roles) { { 'lawJointDegree' => in_law_joint_degree_student_group } }
+    let(:in_law_joint_degree_student_group) { false }
+    let(:users_active_academic_careers) { ['GRAD','LAW'] }
+    let(:result) { subject.exclude_enrollment_for_law?(enrollment) }
+    before do
+      allow(subject).to receive(:law_student?).and_return(is_law_student)
+      allow(subject).to receive(:current_academic_roles).and_return(current_academic_roles)
+      allow(subject).to receive(:academic_careers).and_return(users_active_academic_careers)
+    end
+    context 'when user is not a law student' do
+      let(:is_law_student) { false }
+      it 'returns false' do
+        expect(result).to eq false
+      end
+    end
+    shared_examples 'filters non-GRAD and non-LAW' do
+      context 'when enrollment matches GRAD career' do
+        let(:enrollment_academic_career) { 'GRAD' }
+        it 'returns false' do
+          expect(result).to eq false
+        end
+      end
+      context 'when enrollment matches LAW career' do
+        let(:enrollment_academic_career) { 'LAW' }
+        it 'returns false' do
+          expect(result).to eq false
+        end
+      end
+      context 'when enrollment matches UGRD career' do
+        let(:enrollment_academic_career) { 'UGRD' }
+        it 'returns true' do
+          expect(result).to eq true
+        end
+      end
+      context 'when enrollment matches UCBX career' do
+        let(:enrollment_academic_career) { 'UCBX' }
+        it 'returns true' do
+          expect(result).to eq true
+        end
+      end
+    end
+    context 'when user is in the law joint degree student group' do
+      let(:in_law_joint_degree_student_group) { true }
+      context 'when user is a law student' do
+        let(:is_law_student) { true }
+        it_should_behave_like 'filters non-GRAD and non-LAW'
+      end
+      context 'when user is not a law student' do
+        let(:is_law_student) { false }
+        it_should_behave_like 'filters non-GRAD and non-LAW'
+      end
+    end
+    context 'when user is not in the law joint degree student group' do
+      let(:in_law_joint_degree_student_group) { false }
+      context 'when user is not a law student' do
+        let(:is_law_student) { false }
+        context 'when the enrollment does not match the users active academic careers' do
+          let(:users_active_academic_careers) { ['GRAD','LAW'] }
+          let(:enrollment_academic_career) { 'UCBX' }
+          it 'returns true' do
+            expect(result).to eq false
+          end
+        end
+      end
+      context 'when user is a law student' do
+        let(:is_law_student) { true }
+        context 'when the enrollment matches the users active academic careers' do
+          let(:users_active_academic_careers) { ['GRAD','LAW'] }
+          let(:enrollment_academic_career) { 'LAW' }
+          it 'returns false' do
+            expect(result).to eq false
+          end
+        end
+        context 'when the enrollment does not match the users active academic careers' do
+          let(:users_active_academic_careers) { ['GRAD','LAW'] }
+          let(:enrollment_academic_career) { 'UCBX' }
+          it 'returns true' do
+            expect(result).to eq true
+          end
+        end
+      end
+    end
+  end
+
+  describe '#current_academic_roles' do
+    let(:my_academic_roles_feed) do
+      {
+        current: {
+          'fpf' => false,
+          'ugrd' => true,
+          'grad' => false,
+        }
+      }
+    end
+    let(:my_academic_roles) do
+      instance_double("MyAcademics::MyAcademicRoles").tap do |mock|
+        allow(mock).to receive(:get_feed).and_return(my_academic_roles_feed)
+      end
+    end
+    before do
+      allow(MyAcademics::MyAcademicRoles).to receive(:new).with(uid).and_return(my_academic_roles)
+    end
+    let(:result) { subject.current_academic_roles }
+    it 'memoizes academic roles' do
+      expect(my_academic_roles).to receive(:get_feed).once.and_return(my_academic_roles_feed)
+      result1 = subject.current_academic_roles
+      result2 = subject.current_academic_roles
+      expect(result1['ugrd']).to eq true
+      expect(result1['fpf']).to eq false
+      expect(result2['ugrd']).to eq true
+      expect(result2['fpf']).to eq false
+    end
+  end
+
   describe '#academic_standings' do
     let(:result) { subject.academic_standings }
     let(:standings_feature_flag) { true }
@@ -232,12 +440,12 @@ describe MyAcademics::Semesters do
     end
   end
 
-  describe '#process_unfiltered_course' do
+  describe '#process_unfiltered_enrollment' do
     let(:term_id) { '2198' }
-    let(:course) do
+    let(:enrollment) do
       {
         role: 'Student',
-        sections: course_sections,
+        sections: class_sections,
         slug: 'econ-1',
         session_code: nil,
         academicCareer: 'UGRD',
@@ -251,7 +459,7 @@ describe MyAcademics::Semesters do
         course_id: 'econ-1-2019-D',
       }
     end
-    let(:course_sections) { [] }
+    let(:class_sections) { [] }
     let(:reserved_capacity_feature_flag) { false }
     let(:reserved_capacity_link_feature_flag) { false }
     let(:hide_grade_points) { false }
@@ -264,8 +472,8 @@ describe MyAcademics::Semesters do
       allow(Settings.features).to receive(:reserved_capacity).and_return(reserved_capacity_feature_flag)
       allow(Settings.features).to receive(:reserved_capacity_link).and_return(reserved_capacity_link_feature_flag)
     end
-    context 'when sections are present for course' do
-      let(:course_sections) do
+    context 'when sections are present for enrollment' do
+      let(:class_sections) do
         [
           {
             is_primary_section: true,
@@ -290,20 +498,20 @@ describe MyAcademics::Semesters do
           let(:reserved_capacity_feature_flag) { false }
           it 'does not attempt to map reserved seats for section' do
             expect(subject).to_not receive(:map_reserved_seats)
-            subject.process_unfiltered_course(course, term_id)
+            subject.process_unfiltered_enrollment(enrollment, term_id)
           end
         end
         context 'when reserved capacity feature flag is enabled' do
           let(:reserved_capacity_feature_flag) { true }
           it 'does not map reserved seats for the non-waitlisted section' do
             expect(subject).to receive(:map_reserved_seats) { |term_id, section| section[:capacity] = {unreservedSeats: 5, reservedSeats: []} }
-            subject.process_unfiltered_course(course, term_id)
-            expect(course[:sections][0].has_key?(:capacity)).to eq false
+            subject.process_unfiltered_enrollment(enrollment, term_id)
+            expect(enrollment[:sections][0].has_key?(:capacity)).to eq false
           end
           it 'maps reserved seats for the waitlisted section' do
             expect(subject).to receive(:map_reserved_seats) { |term_id, section| section[:capacity] = {unreservedSeats: 5, reservedSeats: []} }
-            subject.process_unfiltered_course(course, term_id)
-            expect(course[:sections][1][:capacity][:unreservedSeats]).to eq 5
+            subject.process_unfiltered_enrollment(enrollment, term_id)
+            expect(enrollment[:sections][1][:capacity][:unreservedSeats]).to eq 5
           end
         end
       end
@@ -311,11 +519,11 @@ describe MyAcademics::Semesters do
         let(:reserved_capacity_link_feature_flag) { false }
         it 'does not add reserved seating rules link' do
           expect(subject).to_not receive(:add_reserved_seating_rules_link)
-          subject.process_unfiltered_course(course, term_id)
-          expect(course[:sections][0].has_key?(:hasReservedSeats)).to eq false
-          expect(course[:sections][0].has_key?(:reservedSeatsInfoLink)).to eq false
-          expect(course[:sections][1].has_key?(:hasReservedSeats)).to eq false
-          expect(course[:sections][1].has_key?(:reservedSeatsInfoLink)).to eq false
+          subject.process_unfiltered_enrollment(enrollment, term_id)
+          expect(enrollment[:sections][0].has_key?(:hasReservedSeats)).to eq false
+          expect(enrollment[:sections][0].has_key?(:reservedSeatsInfoLink)).to eq false
+          expect(enrollment[:sections][1].has_key?(:hasReservedSeats)).to eq false
+          expect(enrollment[:sections][1].has_key?(:reservedSeatsInfoLink)).to eq false
         end
       end
       context 'when reserved capacity link feature flag is enabled' do
@@ -324,54 +532,54 @@ describe MyAcademics::Semesters do
           expect(subject).to receive(:add_reserved_seating_rules_link) do |term_id, course, section|
             section.merge!({hasReservedSeats: true, reservedSeatsInfoLink: 'http://example.com/'})
           end.twice
-          subject.process_unfiltered_course(course, term_id)
-          expect(course[:sections][0][:hasReservedSeats]).to eq true
-          expect(course[:sections][0][:reservedSeatsInfoLink]).to eq 'http://example.com/'
-          expect(course[:sections][1][:hasReservedSeats]).to eq true
-          expect(course[:sections][1][:reservedSeatsInfoLink]).to eq 'http://example.com/'
+          subject.process_unfiltered_enrollment(enrollment, term_id)
+          expect(enrollment[:sections][0][:hasReservedSeats]).to eq true
+          expect(enrollment[:sections][0][:reservedSeatsInfoLink]).to eq 'http://example.com/'
+          expect(enrollment[:sections][1][:hasReservedSeats]).to eq true
+          expect(enrollment[:sections][1][:reservedSeatsInfoLink]).to eq 'http://example.com/'
         end
       end
       context 'when grade points should be hidden for course' do
         let(:hide_grade_points) { true }
         it 'returns nil for section grade points' do
-          subject.process_unfiltered_course(course, term_id)
-          expect(course[:sections][0][:grading][:gradePoints]).to eq nil
-          expect(course[:sections][1][:grading][:gradePoints]).to eq nil
+          subject.process_unfiltered_enrollment(enrollment, term_id)
+          expect(enrollment[:sections][0][:grading][:gradePoints]).to eq nil
+          expect(enrollment[:sections][1][:grading][:gradePoints]).to eq nil
         end
       end
       context 'when grade points should not be hidden for course ' do
         let(:hide_grade_points) { false }
         it 'returns section grade points' do
-          subject.process_unfiltered_course(course, term_id)
-          expect(course[:sections][0][:grading][:gradePoints]).to eq 1.0
-          expect(course[:sections][1][:grading][:gradePoints]).to eq 0.0
+          subject.process_unfiltered_enrollment(enrollment, term_id)
+          expect(enrollment[:sections][0][:grading][:gradePoints]).to eq 1.0
+          expect(enrollment[:sections][1][:grading][:gradePoints]).to eq 0.0
         end
       end
       context 'when processing a law course' do
         let(:is_law_class) { true }
         it 'tags the section as a law section' do
-          subject.process_unfiltered_course(course, term_id)
-          expect(course[:sections][0][:isLaw]).to eq true
+          subject.process_unfiltered_enrollment(enrollment, term_id)
+          expect(enrollment[:sections][0][:isLaw]).to eq true
         end
       end
       context 'when processing a non-law course' do
         let(:is_law_class) { false }
         it 'tag the section as a non-law section' do
-          subject.process_unfiltered_course(course, term_id)
-          expect(course[:sections][0][:isLaw]).to eq false
+          subject.process_unfiltered_enrollment(enrollment, term_id)
+          expect(enrollment[:sections][0][:isLaw]).to eq false
         end
       end
       context 'when multiple primary sections present' do
         let(:section_two_is_primary_section) { true }
         it 'makes call to merge multiple primaries' do
           expect(subject).to receive(:merge_multiple_primaries).once.and_return(nil)
-          subject.process_unfiltered_course(course, term_id)
+          subject.process_unfiltered_enrollment(enrollment, term_id)
         end
       end
       it 'merges law enrollment data with section' do
         allow(subject).to receive(:law_class_enrollment).and_return({lawUnits: 5})
-        subject.process_unfiltered_course(course, term_id)
-        expect(course[:sections][0][:lawUnits]).to eq 5
+        subject.process_unfiltered_enrollment(enrollment, term_id)
+        expect(enrollment[:sections][0][:lawUnits]).to eq 5
       end
     end
   end

@@ -3,28 +3,28 @@ import PropTypes from 'prop-types';
 
 import RegistrationStatusIcon from 'React/components/_academics/RegistrationStatusIcon';
 
-const CNPStatusItem = ({ termRegistration: { cnpStatus = {} } }) => {
-  if (cnpStatus.message === '') {
-    return null;
+const CNPStatusItem = ({ cnpStatus }) => {
+  if (cnpStatus.inPopover) {
+    return (
+      <div className="cc-launcher-status-description">
+        <RegistrationStatusIcon severity={ cnpStatus.severity } />
+
+        { cnpStatus.severity === 'warning' &&
+          (
+            <strong>Warning: </strong>
+          )
+        }
+
+        { cnpStatus.message }
+      </div>
+    );
   }
 
-  return (
-    <div className="cc-launcher-status-description">
-      <RegistrationStatusIcon severity={ cnpStatus.severity } />
-
-      { cnpStatus.severity === 'warning' &&
-        (
-          <strong>Warning: </strong>
-        )
-      }
-
-      { cnpStatus.message }
-    </div>
-  );
+  return null;
 };
 
 CNPStatusItem.propTypes = {
-  termRegistration: PropTypes.object.isRequired
+  cnpStatus: PropTypes.object
 };
 
 export default CNPStatusItem;

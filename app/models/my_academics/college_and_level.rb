@@ -101,8 +101,9 @@ module MyAcademics
 
       filtered_statuses.each do |status|
         Array.wrap(status.try(:[], 'studentPlans')).each do |plan|
+
           flattened_plan = flatten_plan(plan.try(:[], 'academicPlan'))
-          add_sub_plan(flattened_plan, plan)
+          add_sub_plans(flattened_plan, plan)
           add_expected_graduation_term(flattened_plan, plan)
 
           # TODO: Need to re-evaluate the proper field for college name. See adminOwners
@@ -151,24 +152,28 @@ module MyAcademics
           plan_set[:majors] << college_plan.merge({
             major: plan.try(:[], :plan).try(:[], :description),
             description: plan.try(:[], :plan).try(:[], :formalDescription),
-            subPlan: plan.try(:[], :subPlan).try(:[], :description),
+            subPlans: subplan_descriptions(plan.try(:[], :subPlans)),
             type: plan.try(:[], :type).try(:[], :code)
           })
         when 'Minor'
           plan_set[:minors] << college_plan.merge({
             minor: plan.try(:[], :plan).try(:[], :description),
             description: plan.try(:[], :plan).try(:[], :formalDescription),
-            subPlan: plan.try(:[], :subPlan).try(:[], :description),
+            subPlans: subplan_descriptions(plan.try(:[], :subPlans)),
             type: plan.try(:[], :type).try(:[], :code)
           })
         when 'Designated Emphasis'
           plan_set[:designatedEmphases] << college_plan.merge({
             designatedEmphasis: plan.try(:[], :plan).try(:[], :description),
             description: plan.try(:[], :plan).try(:[], :formalDescription),
-            subPlan: plan.try(:[], :subPlan).try(:[], :description),
+            subPlans: subplan_descriptions(plan.try(:[], :subPlans)),
             type: plan.try(:[], :type).try(:[], :code)
           })
       end
+    end
+
+    def subplan_descriptions(subplans)
+      subplans.to_a.collect {|sp| sp.try(:[], :description)}.compact
     end
 
     def filter_inactive_status_plans(statuses)
@@ -192,7 +197,7 @@ module MyAcademics
         career: {},
         program: {},
         plan: {},
-        subPlan: {}
+        subPlans: [],
       }
       if (hub_plan)
         academic_program = hub_plan.try(:[], 'academicProgram')
@@ -219,13 +224,15 @@ module MyAcademics
       flat_plan
     end
 
-    def add_sub_plan(flattened_plan, plan)
-      if (academic_sub_plan = plan.try(:[], 'academicSubPlan'))
-        sub_plan = academic_sub_plan.try(:[], 'subPlan')
-        flattened_plan[:subPlan].merge!({
-          code: sub_plan.try(:[], 'code'),
-          description: sub_plan.try(:[], 'description')
-        })
+    def add_sub_plans(flattened_plan, plan)
+      if (academic_sub_plans = plan.try(:[], 'academicSubPlans'))
+        academic_sub_plans.to_a.each do |academic_sub_plan|
+          sub_plan = academic_sub_plan.try(:[], 'subPlan')
+          flattened_plan[:subPlans] << {
+            code: sub_plan.try(:[], 'code'),
+            description: sub_plan.try(:[], 'description')
+          }
+        end
       end
     end
 

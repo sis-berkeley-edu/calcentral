@@ -18,7 +18,7 @@ module User
       end
 
       def past?
-        now > berkeley_term.end
+        now > berkeley_term&.end
       end
 
       def active?

@@ -1,8 +1,23 @@
 describe MyAcademics::MyAcademicRoles do
+  let(:uid) { random_id }
+  subject { described_class.new(uid) }
 
-  before do
-    allow_any_instance_of(Berkeley::Term).to receive(:campus_solutions_id).and_return('2172')
-    allow_any_instance_of(MyAcademics::MyTermCpp).to receive(:get_feed).and_return(term_cpp)
+  let(:current_user) do
+    instance_double('User::Current').tap do |mock|
+      allow(mock).to receive(:student_groups).and_return(student_groups)
+    end
+  end
+  let(:student_groups) do
+    instance_double('User::Academics::StudentGroups').tap do |mock|
+      allow(mock).to receive(:codes).and_return(group_codes)
+    end
+  end
+  let(:group_codes) { ['AHC', 'AIC', 'VAC', 'LJD'] }
+
+  let(:my_term_cpp) do
+    instance_double('MyAcademics::MyTermCpp').tap do |mock|
+      allow(mock).to receive(:get_feed).and_return(term_cpp)
+    end
   end
   let(:term_cpp) do
     [
@@ -12,80 +27,87 @@ describe MyAcademics::MyAcademicRoles do
       {'term_id'=>'2172', 'acad_career'=>'GRAD', 'acad_program'=>'UCNR', 'acad_plan'=>'04606U'},
     ]
   end
-  let(:described_class_instance) { described_class.new(random_id) }
+
+  before do
+    allow_any_instance_of(Berkeley::Term).to receive(:campus_solutions_id).and_return('2172')
+    allow(User::Current).to receive(:new).with(uid).and_return(current_user)
+    allow(MyAcademics::MyTermCpp).to receive(:new).with(uid).and_return(my_term_cpp)
+  end
 
   describe '#get_feed_internal' do
-    subject { described_class_instance.get_feed_internal }
+    let(:result) { subject.get_feed_internal }
     it 'provides a set of roles based on the user\'s current academic status' do
-      expect(subject).to be
-      expect(subject[:current]).to be
-      expect(subject[:current].keys.count).to eq 31
-      expect(subject[:current]['ugrd']).to eq false
-      expect(subject[:current]['grad']).to eq true
-      expect(subject[:current]['fpf']).to eq false
-      expect(subject[:current]['law']).to eq false
-      expect(subject[:current]['concurrent']).to eq false
-      expect(subject[:current]['degreeSeeking']).to eq true
-      expect(subject[:current]['doctorScienceLaw']).to eq false
-      expect(subject[:current]['lettersAndScience']).to eq false
-      expect(subject[:current]['haasBusinessAdminMasters']).to eq false
-      expect(subject[:current]['haasBusinessAdminPhD']).to eq false
-      expect(subject[:current]['haasFullTimeMba']).to eq false
-      expect(subject[:current]['haasEveningWeekendMba']).to eq false
-      expect(subject[:current]['haasExecMba']).to eq false
-      expect(subject[:current]['haasMastersFinEng']).to eq false
-      expect(subject[:current]['haasMbaPublicHealth']).to eq false
-      expect(subject[:current]['haasMbaJurisDoctor']).to eq false
-      expect(subject[:current]['jurisSocialPolicyMasters']).to eq false
-      expect(subject[:current]['jurisSocialPolicyPhC']).to eq false
-      expect(subject[:current]['jurisSocialPolicyPhD']).to eq false
-      expect(subject[:current]['lawJspJsd']).to eq false
-      expect(subject[:current]['lawJdLlm']).to eq false
-      expect(subject[:current]['lawVisiting']).to eq false
-      expect(subject[:current]['masterOfLawsLlm']).to eq false
-      expect(subject[:current]['ugrdNonDegree']).to eq false
-      expect(subject[:current]['ugrdEngineering']).to eq false
-      expect(subject[:current]['ugrdEnvironmentalDesign']).to eq false
-      expect(subject[:current]['ugrdHaasBusiness']).to eq false
-      expect(subject[:current]['ugrdUrbanStudies']).to eq false
-      expect(subject[:current]['summerVisitor']).to eq false
-      expect(subject[:current]['courseworkOnly']).to eq false
-      expect(subject[:current]['lawJdCdp']).to eq false
+      expect(result).to be
+      expect(result[:current]).to be
+      expect(result[:current].keys.count).to eq 32
+      expect(result[:current]['ugrd']).to eq false
+      expect(result[:current]['grad']).to eq true
+      expect(result[:current]['fpf']).to eq false
+      expect(result[:current]['law']).to eq false
+      expect(result[:current]['concurrent']).to eq false
+      expect(result[:current]['degreeSeeking']).to eq true
+      expect(result[:current]['doctorScienceLaw']).to eq false
+      expect(result[:current]['lettersAndScience']).to eq false
+      expect(result[:current]['haasBusinessAdminMasters']).to eq false
+      expect(result[:current]['haasBusinessAdminPhD']).to eq false
+      expect(result[:current]['haasFullTimeMba']).to eq false
+      expect(result[:current]['haasEveningWeekendMba']).to eq false
+      expect(result[:current]['haasExecMba']).to eq false
+      expect(result[:current]['haasMastersFinEng']).to eq false
+      expect(result[:current]['haasMbaPublicHealth']).to eq false
+      expect(result[:current]['haasMbaJurisDoctor']).to eq false
+      expect(result[:current]['jurisSocialPolicyMasters']).to eq false
+      expect(result[:current]['jurisSocialPolicyPhC']).to eq false
+      expect(result[:current]['jurisSocialPolicyPhD']).to eq false
+      expect(result[:current]['lawJspJsd']).to eq false
+      expect(result[:current]['lawJdLlm']).to eq false
+      expect(result[:current]['lawJointDegree']).to eq true
+      expect(result[:current]['lawVisiting']).to eq false
+      expect(result[:current]['masterOfLawsLlm']).to eq false
+      expect(result[:current]['ugrdNonDegree']).to eq false
+      expect(result[:current]['ugrdEngineering']).to eq false
+      expect(result[:current]['ugrdEnvironmentalDesign']).to eq false
+      expect(result[:current]['ugrdHaasBusiness']).to eq false
+      expect(result[:current]['ugrdUrbanStudies']).to eq false
+      expect(result[:current]['summerVisitor']).to eq false
+      expect(result[:current]['courseworkOnly']).to eq false
+      expect(result[:current]['lawJdCdp']).to eq false
     end
     it 'provides a set of roles based on all of the user\'s past academic data' do
-      expect(subject).to be
-      expect(subject[:historical]).to be
-      expect(subject[:historical].keys.count).to eq 31
-      expect(subject[:historical]['ugrd']).to eq true
-      expect(subject[:historical]['grad']).to eq true
-      expect(subject[:historical]['fpf']).to eq false
-      expect(subject[:historical]['law']).to eq false
-      expect(subject[:historical]['concurrent']).to eq false
-      expect(subject[:historical]['degreeSeeking']).to eq true
-      expect(subject[:historical]['doctorScienceLaw']).to eq false
-      expect(subject[:historical]['lettersAndScience']).to eq false
-      expect(subject[:historical]['haasBusinessAdminMasters']).to eq false
-      expect(subject[:historical]['haasBusinessAdminPhD']).to eq false
-      expect(subject[:historical]['haasFullTimeMba']).to eq false
-      expect(subject[:historical]['haasEveningWeekendMba']).to eq false
-      expect(subject[:historical]['haasExecMba']).to eq false
-      expect(subject[:historical]['haasMastersFinEng']).to eq false
-      expect(subject[:historical]['haasMbaPublicHealth']).to eq false
-      expect(subject[:historical]['haasMbaJurisDoctor']).to eq false
-      expect(subject[:historical]['jurisSocialPolicyMasters']).to eq false
-      expect(subject[:historical]['jurisSocialPolicyPhC']).to eq false
-      expect(subject[:historical]['jurisSocialPolicyPhD']).to eq false
-      expect(subject[:historical]['lawJspJsd']).to eq false
-      expect(subject[:historical]['lawJdLlm']).to eq false
-      expect(subject[:historical]['lawVisiting']).to eq false
-      expect(subject[:historical]['ugrdNonDegree']).to eq false
-      expect(subject[:historical]['ugrdUrbanStudies']).to eq false
-      expect(subject[:historical]['ugrdEngineering']).to eq false
-      expect(subject[:historical]['ugrdEnvironmentalDesign']).to eq false
-      expect(subject[:historical]['ugrdHaasBusiness']).to eq false
-      expect(subject[:historical]['summerVisitor']).to eq false
-      expect(subject[:historical]['courseworkOnly']).to eq false
-      expect(subject[:historical]['lawJdCdp']).to eq false
+      expect(result).to be
+      expect(result[:historical]).to be
+      expect(result[:historical].keys.count).to eq 32
+      expect(result[:historical]['ugrd']).to eq true
+      expect(result[:historical]['grad']).to eq true
+      expect(result[:historical]['fpf']).to eq false
+      expect(result[:historical]['law']).to eq false
+      expect(result[:historical]['concurrent']).to eq false
+      expect(result[:historical]['degreeSeeking']).to eq true
+      expect(result[:historical]['doctorScienceLaw']).to eq false
+      expect(result[:historical]['lettersAndScience']).to eq false
+      expect(result[:historical]['haasBusinessAdminMasters']).to eq false
+      expect(result[:historical]['haasBusinessAdminPhD']).to eq false
+      expect(result[:historical]['haasFullTimeMba']).to eq false
+      expect(result[:historical]['haasEveningWeekendMba']).to eq false
+      expect(result[:historical]['haasExecMba']).to eq false
+      expect(result[:historical]['haasMastersFinEng']).to eq false
+      expect(result[:historical]['haasMbaPublicHealth']).to eq false
+      expect(result[:historical]['haasMbaJurisDoctor']).to eq false
+      expect(result[:historical]['jurisSocialPolicyMasters']).to eq false
+      expect(result[:historical]['jurisSocialPolicyPhC']).to eq false
+      expect(result[:historical]['jurisSocialPolicyPhD']).to eq false
+      expect(result[:historical]['lawJspJsd']).to eq false
+      expect(result[:historical]['lawJdLlm']).to eq false
+      expect(result[:historical]['lawJointDegree']).to eq false
+      expect(result[:historical]['lawVisiting']).to eq false
+      expect(result[:historical]['ugrdNonDegree']).to eq false
+      expect(result[:historical]['ugrdUrbanStudies']).to eq false
+      expect(result[:historical]['ugrdEngineering']).to eq false
+      expect(result[:historical]['ugrdEnvironmentalDesign']).to eq false
+      expect(result[:historical]['ugrdHaasBusiness']).to eq false
+      expect(result[:historical]['summerVisitor']).to eq false
+      expect(result[:historical]['courseworkOnly']).to eq false
+      expect(result[:historical]['lawJdCdp']).to eq false
     end
 
     context 'when student has only summer visitor plans under non-degree programs' do
@@ -96,8 +118,8 @@ describe MyAcademics::MyAcademicRoles do
         ]
       end
       it 'sets roles approrpriately' do
-        expect(subject[:historical]['summerVisitor']).to eq true
-        expect(subject[:historical]['degreeSeeking']).to eq false
+        expect(result[:historical]['summerVisitor']).to eq true
+        expect(result[:historical]['degreeSeeking']).to eq false
       end
     end
     context 'when student has summer visitor plans under degree-seeking programs, plus non-degree programs' do
@@ -111,8 +133,8 @@ describe MyAcademics::MyAcademicRoles do
         ]
       end
       it 'sets roles approrpriately' do
-        expect(subject[:historical]['summerVisitor']).to eq true
-        expect(subject[:historical]['degreeSeeking']).to eq true
+        expect(result[:historical]['summerVisitor']).to eq true
+        expect(result[:historical]['degreeSeeking']).to eq true
       end
     end
     context 'when student has only non-degree programs' do
@@ -122,9 +144,9 @@ describe MyAcademics::MyAcademicRoles do
           {'term_id'=>'2172', 'acad_career'=>'UCBX', 'acad_program'=>'XCCRT', 'acad_plan'=>'30XCECCENX'},
         ]
       end
-      it 'sets roles approrpriately' do
-        expect(subject[:historical]['summerVisitor']).to eq false
-        expect(subject[:historical]['degreeSeeking']).to eq false
+      it 'sets roles appropriately' do
+        expect(result[:historical]['summerVisitor']).to eq false
+        expect(result[:historical]['degreeSeeking']).to eq false
       end
     end
     context 'when student has only degree-seeking programs' do
@@ -136,9 +158,31 @@ describe MyAcademics::MyAcademicRoles do
         ]
       end
       it 'sets roles approrpriately' do
-        expect(subject[:historical]['summerVisitor']).to eq false
-        expect(subject[:historical]['degreeSeeking']).to eq true
+        expect(result[:historical]['summerVisitor']).to eq false
+        expect(result[:historical]['degreeSeeking']).to eq true
       end
+    end
+  end
+
+  describe '#term_cpp' do
+    it 'memoizes the term cpp data' do
+      expect(my_term_cpp).to receive(:get_feed).once.and_return(term_cpp)
+      result1 = subject.term_cpp
+      result2 = subject.term_cpp
+      expect(result1.count).to eq 4
+      expect(result2.count).to eq 4
+      expect(result1.first['term_id']).to eq '2158'
+      expect(result2.first['term_id']).to eq '2158'
+    end
+  end
+
+  describe '#student_group_codes' do
+    it 'memoizes the student group codes' do
+      expect(student_groups).to receive(:codes).once.and_return(group_codes)
+      result1 = subject.student_group_codes
+      result2 = subject.student_group_codes
+      expect(result1.first).to eq 'AHC'
+      expect(result2.first).to eq 'AHC'
     end
   end
 end
