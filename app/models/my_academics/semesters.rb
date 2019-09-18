@@ -154,7 +154,7 @@ module MyAcademics
 
     def process_enrollments(enrollment_term, term_id)
       filtered_enrollment_term = filter_enrollments(enrollment_term)
-      enrollment_term.map do |enrollment|
+      filtered_enrollment_term.map do |enrollment|
         mapped_enrollment = course_info enrollment
         if @filtered
           mapped_enrollment.delete :url

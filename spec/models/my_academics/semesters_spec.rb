@@ -139,17 +139,26 @@ describe MyAcademics::Semesters do
           name: 'Advanced Legal Writing',
           url: '/academics/semester/spring-2019/class/law-207_5-2019-B',
         },
+        {
+          academicCareer: 'UGRD',
+          course_code: 'PUBPOL 101',
+          name: 'Public Policy Introduction',
+          url: '/academics/semester/spring-2019/class/pubpol-101-2019-B',
+        },
       ]
+    end
+    let(:filtered_enrollment_term) do
+      enrollment_term.reject {|course| course[:academicCareer] == 'UGRD' }
     end
     let(:term_id) { '2198' }
     let(:result) { subject.process_enrollments(enrollment_term, term_id) }
     before do
-      allow(subject).to receive(:filter_enrollments).with(enrollment_term).and_return(enrollment_term)
+      allow(subject).to receive(:filter_enrollments).with(enrollment_term).and_return(filtered_enrollment_term)
       allow(subject).to receive(:course_info) {|enrollment| enrollment[:title] = enrollment[:name]; enrollment }
       allow(subject).to receive(:process_unfiltered_enrollment) {|enrollment| enrollment[:processed] = true; }
     end
     it 'filters enrollments' do
-      expect(subject).to receive(:filter_enrollments).with(enrollment_term).and_return(enrollment_term)
+      expect(subject).to receive(:filter_enrollments).with(enrollment_term).and_return(filtered_enrollment_term)
       expect(result.count).to eq 2
     end
     context 'when feed is filtered for delegates' do
