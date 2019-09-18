@@ -166,7 +166,7 @@ module MyAcademics
     end
 
     def filter_enrollments(enrollment_term)
-      enrollment_term.delete_if do |enrollment|
+      enrollment_term.reject do |enrollment|
         enrollment[:role] != 'Student' || exclude_enrollment_for_law?(enrollment)
       end
     end
