@@ -10,7 +10,9 @@ module User
       end
 
       def codes
-        all.collect {|group| group.code }
+        codes = all.collect {|group| group.code }
+        Rails.logger.debug "[SISRP-48320] #{self.class}#codes: #{codes.inspect}"
+        codes
       end
 
       def all
