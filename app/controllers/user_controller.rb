@@ -18,8 +18,10 @@ class UserController < ApplicationController
 
     if user_id
       status.merge! User::Api.from_session(session).get_feed
+      academic_roles = MyAcademics::MyAcademicRoles.from_session(session).get_feed
+      Rails.logger.debug "[SISRP-48320] #{self.class}#my_status academic_roles: #{academic_roles.inspect}"
       status.merge!({
-        :academicRoles => MyAcademics::MyAcademicRoles.from_session(session).get_feed
+        :academicRoles => academic_roles
       })
     end
 

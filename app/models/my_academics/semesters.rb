@@ -172,6 +172,7 @@ module MyAcademics
     end
 
     def exclude_enrollment_for_law?(enrollment)
+      Rails.logger.debug "[SISRP-48320] #{self.class}#exclude_enrollment_for_law? current_academic_roles: #{current_academic_roles.inspect}"
       return true if current_academic_roles['lawJointDegree'] && !['GRAD','LAW'].include?(enrollment[:academicCareer])
       return true if law_student? && !current_academic_roles['lawJointDegree'] && !academic_careers.include?(enrollment[:academicCareer])
       false
