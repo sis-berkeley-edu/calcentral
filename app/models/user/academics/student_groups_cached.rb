@@ -6,12 +6,11 @@ module User
 
       def initialize(user)
         @user = user
+        @uid = user.uid
       end
 
       def get_feed_internal
-        rows = Queries.student_groups(@user.campus_solutions_id)
-        Rails.logger.debug "[SISRP-48320] #{self.class}#get_feed_internal: #{rows.inspect}"
-        rows
+        Queries.student_groups(@user.campus_solutions_id)
       end
     end
   end
