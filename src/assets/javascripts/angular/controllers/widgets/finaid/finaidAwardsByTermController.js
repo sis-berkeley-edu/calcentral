@@ -16,7 +16,7 @@ angular.module('calcentral.controllers').controller('FinaidAwardsTermController'
     return showDecimals ? amount.toFixed(2) : amount;
   };
 
-  const notInteger = (value) => !Number.isInteger(value);
+  const notInteger = (value) => (!Number.isInteger(value) && (value !== null) && (value !== undefined));
 
   const awardIsNotInteger = (award) => {
     const { amounts = [] } = award;
