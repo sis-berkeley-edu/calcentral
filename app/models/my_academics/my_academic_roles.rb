@@ -5,10 +5,8 @@ module MyAcademics
     include Concerns::AcademicRoles
 
     def get_feed_internal
-      current_roles = get_current_roles
-      Rails.logger.debug "[SISRP-48320] #{self.class}#get_feed_internal current_roles: #{current_roles.inspect}"
       {
-        current: current_roles,
+        current: get_current_roles,
         historical: get_historical_roles,
       }
     end
@@ -17,7 +15,6 @@ module MyAcademics
       current_roles = role_defaults
       map_roles(current_roles, current_term_career_program_and_plan_roles)
       map_roles(current_roles, student_group_roles)
-      Rails.logger.debug "[SISRP-48320] #{self.class}#get_current_roles current_roles: #{current_roles.inspect}"
       current_roles
     end
 
@@ -26,10 +23,7 @@ module MyAcademics
       student_group_codes.each do |group_code|
         group_roles << Concerns::AcademicRoles.get_student_group_roles(group_code)
       end
-      Rails.logger.debug "[SISRP-48320] #{self.class}#student_group_roles group_roles: #{group_roles.inspect}"
-      flattened_uniq_group_roles = group_roles.flatten.uniq
-      Rails.logger.debug "[SISRP-48320] #{self.class}#student_group_roles flattened_uniq_group_roles: #{flattened_uniq_group_roles.inspect}"
-      flattened_uniq_group_roles
+      group_roles.flatten.uniq
     end
 
     def current_term_cpp
@@ -74,11 +68,7 @@ module MyAcademics
     end
 
     def student_group_codes
-      @student_group_codes ||= begin
-        codes = User::Current.new(@uid).student_groups.codes
-        Rails.logger.debug "[SISRP-48320] #{self.class}#student_group_codes: #{codes.inspect}"
-        codes
-      end
+      @student_group_codes ||= User::Current.new(@uid).student_groups.codes
     end
   end
 end
