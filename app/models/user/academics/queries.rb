@@ -12,10 +12,7 @@ module User
           FROM SISEDO.STUDENT_GROUPV01_VW
           WHERE STUDENT_ID = '#{student_id}'
         SQL
-        Rails.logger.debug "[SISRP-48320] #{self.class}#student_groups query: #{query.inspect}"
-        results = safe_query(query)
-        Rails.logger.debug "[SISRP-48320] #{self.class}#student_groups results: #{results.inspect}"
-        results
+        safe_query(query)
       end
     end
   end
