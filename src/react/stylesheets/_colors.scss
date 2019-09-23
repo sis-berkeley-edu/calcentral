@@ -9,6 +9,7 @@ $cc-color-alice-blue: #f2f9fe;
 $cc-color-berkeley-blue: #003262;
 $cc-color-blue-lagoon: #065a7d;
 $cc-color-curious-blue: #2683bc;
+$cc-color-curious-blue-2: #2c84bc;
 $cc-color-lochmara: #1f7099;
 
 // Shades of Blue/Gray
@@ -23,6 +24,7 @@ $cc-color-whisper: #eee;
 $cc-color-white: #fff;
 $cc-color-white-smoke: #f6f6f6;
 $cc-color-very-light-grey: #ccc;
+$cc-color-zambezi: #5e5d5d;
 
 // Shades of Red
 $cc-color-dark-tangerine: #f1a91e;
@@ -40,5 +42,5 @@ $button-secondary-default-gray: #f8f8f8;
 $button-secondary-hover-gray: #e8e8e8;
 $button-secondary-border: #cbcbcb;
 $button-font-disabled: #d0d0d0;
-$button-font-primary: #ffffff;
-$button-font-secondary: #5e5d5d;
+$button-font-primary: $cc-color-white;
+$button-font-secondary: $cc-color-zambezi;

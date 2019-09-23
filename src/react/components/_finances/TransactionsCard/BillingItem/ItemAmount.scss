@@ -1,5 +1,13 @@
+@import '../../../../stylesheets/variables';
+
 .ItemAmount {
   white-space: nowrap;
+}
+
+@media only screen and (min-width: $small-breakpoint) {
+  .ItemAmount {
+    padding-right: 12px;
+  }
 }
 
 .ItemAmount--payment {

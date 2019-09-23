@@ -8,7 +8,7 @@ import PaymentItem from './PaymentItem';
 
 import { chargeTypes, paymentTypes } from '../types';
 
-const BillingItem = ({ tab, item, expanded, onExpand }) => {
+const BillingItem = ({ tab, item, expanded, onExpand, setExpanded }) => {
   if (paymentTypes.has(item.type)) {
     return (
       <PaymentItem
@@ -16,6 +16,7 @@ const BillingItem = ({ tab, item, expanded, onExpand }) => {
         item={item}
         expanded={expanded}
         onExpand={onExpand}
+        setExpanded={setExpanded}
       />
     );
   }
@@ -26,6 +27,7 @@ const BillingItem = ({ tab, item, expanded, onExpand }) => {
         item={item}
         expanded={expanded}
         onExpand={onExpand}
+        setExpanded={setExpanded}
       />
     );
   }
@@ -37,6 +39,7 @@ const BillingItem = ({ tab, item, expanded, onExpand }) => {
         item={item}
         expanded={expanded}
         onExpand={onExpand}
+        setExpanded={setExpanded}
       />
     );
   } else if (item > 0) {
@@ -45,6 +48,7 @@ const BillingItem = ({ tab, item, expanded, onExpand }) => {
         item={item}
         expanded={expanded}
         onExpand={onExpand}
+        setExpanded={setExpanded}
       />
     );
   }
@@ -55,6 +59,7 @@ const BillingItem = ({ tab, item, expanded, onExpand }) => {
         item={item}
         expanded={expanded}
         onExpand={onExpand}
+        setExpanded={setExpanded}
       />
     );
   }
@@ -65,6 +70,7 @@ const BillingItem = ({ tab, item, expanded, onExpand }) => {
       item={item}
       expanded={expanded}
       onExpand={onExpand}
+      setExpanded={setExpanded}
     />
   );
 };
@@ -73,6 +79,7 @@ BillingItem.propTypes = {
   item: PropTypes.object,
   expanded: PropTypes.bool,
   onExpand: PropTypes.func,
+  setExpanded: PropTypes.func,
   tab: PropTypes.string
 };
 
