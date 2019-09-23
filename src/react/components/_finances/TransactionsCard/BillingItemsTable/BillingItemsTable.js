@@ -50,6 +50,7 @@ const BillingItemsTable = ({ items, tab, hasActiveFilters, expanded, setExpanded
         <BillingItem item={item} key={item.id}
           tab={tab}
           expanded={expanded === item.id}
+          setExpanded={setExpanded}
           onExpand={() => onExpand(item.id)}
         />
       ))}

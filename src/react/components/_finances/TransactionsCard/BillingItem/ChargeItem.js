@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 
 import formatDate from 'functions/formatDate';
@@ -18,14 +18,27 @@ const propTypes = {
   item: PropTypes.object,
   expanded: PropTypes.bool,
   onExpand: PropTypes.func,
-  tab: PropTypes.string
+  tab: PropTypes.string,
+  setExpanded: PropTypes.func
 };
 
 import dueLabel from './dueLabel';
+import addEventListenerIf from './addEventListenerIf';
 
-const MobileView = ({ item, expanded, onExpand }) => {
+const MobileView = ({ item, expanded, onExpand, setExpanded }) => {
+  const node = useRef();
+
+  const handleOutsideClick = (e) => {
+    if (!node.current.contains(e.target)) {
+      setExpanded(null);
+    }
+  };
+
+  useEffect(() => addEventListenerIf(expanded, handleOutsideClick), [expanded]);
+
   return (
-    <div className={`BillingItem BillingItem--charge BillingItem--mobile ${expanded ? 'BillingItem--expanded' : ''}`}
+    <div ref={node}
+      className={`BillingItem BillingItem--charge BillingItem--mobile ${expanded ? 'BillingItem--expanded' : ''}`}
       onClick={() => onExpand()}>
       <div className="BillingItem__posted">
         {formatDate(item.postedOn)}
@@ -61,9 +74,20 @@ const MobileView = ({ item, expanded, onExpand }) => {
 };
 MobileView.propTypes = propTypes;
 
-const DesktopView = ({ item, expanded, onExpand}) => {
+const DesktopView = ({ item, expanded, onExpand, setExpanded }) => {
+  const node = useRef();
+
+  const handleOutsideClick = (e) => {
+    if (!node.current.contains(e.target)) {
+      setExpanded(null);
+    }
+  };
+
+  useEffect(() => addEventListenerIf(expanded, handleOutsideClick), [expanded]);
+
   return (
-    <div className={`BillingItem BillingItem--charge BillingItem--desktop ${expanded ? 'BillingItem--expanded' : ''}`}
+    <div ref={node}
+      className={`BillingItem BillingItem--charge BillingItem--desktop ${expanded ? 'BillingItem--expanded' : ''}`}
       onClick={() => onExpand()}>
       <div className="TableColumn__posted">
         {formatDate(item.postedOn)}
@@ -94,11 +118,11 @@ const DesktopView = ({ item, expanded, onExpand}) => {
 };
 DesktopView.propTypes = propTypes;
 
-const ChargeItem = ({ item, expanded, onExpand}) => {
+const ChargeItem = (props) => {
   return (
     <Fragment>
-      <DesktopView item={item} expanded={expanded} onExpand={onExpand} />
-      <MobileView item={item} expanded={expanded} onExpand={onExpand} />
+      <DesktopView {...props} />
+      <MobileView {...props} />
     </Fragment>
   );
 };
