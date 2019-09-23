@@ -18,7 +18,7 @@
     width: auto;
 
     .ButtonGroup {
-      width: 360px;
+      width: 410px;
     }
 
     .TermDropdown {
@@ -28,6 +28,30 @@
       padding-left: 15px;
       padding-right: 15px;
       flex-grow: 1;
+    }
+  }
+}
+
+@media only screen and (min-width: $small-breakpoint) and (max-width: 1180px) {
+  .BillingItemFilters {
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+    grid-row-gap: 10px;
+    grid-column-gap: 10px;
+
+    .ButtonGroup {
+      width: 100%;
+      grid-column: 1/-1;
+    }
+
+    .TermDropdown {
+      margin: 0;
+      padding: 0;
+    }
+
+    .BillingItemSearch {
+      width: 100%;
     }
   }
 }

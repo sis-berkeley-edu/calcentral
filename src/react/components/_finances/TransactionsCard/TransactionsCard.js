@@ -17,6 +17,7 @@ import { chargeTypes, paymentTypes } from './types';
 import UnappliedPaymentsInfo from './UnappliedPaymentsInfo';
 import BillingItemFilters from './Filters/BillingItemFilters';
 import BillingItemsTable from './BillingItemsTable/BillingItemsTable';
+import DownloadButton from './DownloadButton';
 import LegacyDataLink from './LegacyDataLink';
 
 const billingItemForTab = tab => {
@@ -68,6 +69,7 @@ export const TransactionsCard = ({ dispatch, billingItems, carsData }) => {
     dispatch(fetchCarsData());
   }, []);
 
+  const [expanded, setExpanded] = useState(null);
   const [search, setSearch] = useState('');
   const [tab, setTab] = useState(BILLING_VIEW_UNPAID);
   const [termId, setTermId] = useState('all');
@@ -96,27 +98,6 @@ export const TransactionsCard = ({ dispatch, billingItems, carsData }) => {
   const error = billingItemsError || carsDataError
     ? { message: 'There is a problem displaying your billing information. Please try again soon.' }
     : false;
-  
-
-  const DownloadButton = () => {
-    const style = {
-      background: `#F8F8F8`,
-      border: `1px solid #CBCBCB`,
-      borderRadius: `5px`,
-      padding: `5px 15px`,
-      cursor: `pointer`
-    };
-
-    const onClick = () => {
-      document.location.pathname = '/api/my/finances/billing_items.csv';
-    };
-
-    return (
-      <div style={style} onClick={() => onClick()}>
-        Download
-      </div>
-    );
-  };
 
   return (
     <Card className="TransactionsCard"
@@ -133,12 +114,15 @@ export const TransactionsCard = ({ dispatch, billingItems, carsData }) => {
           setTermId={setTermId}
           search={search}
           setSearch={setSearch}
+          setExpanded={setExpanded}
         />
         <LegacyDataLink unappliedBalance={unappliedBalance} />
         <UnappliedPaymentsInfo tab={tab} unappliedBalance={unappliedBalance} />
       </div>
 
-      <BillingItemsTable items={filteredItems} tab={tab} hasActiveFilters={hasActiveFilters} />
+      <BillingItemsTable items={filteredItems} tab={tab} hasActiveFilters={hasActiveFilters}
+        expanded={expanded}
+        setExpanded={setExpanded} />
     </Card>
   );
 };

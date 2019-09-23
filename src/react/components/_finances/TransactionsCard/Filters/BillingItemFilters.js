@@ -29,19 +29,25 @@ ButtonForTab.propTypes = {
   setTab: PropTypes.func
 };
 
-const BillingItemFilters = ({ tab, setTab, termIds, termId, setTermId, search, setSearch }) => (
-  <div className='BillingItemFilters'>
-    <ButtonGroup>
-      <ButtonForTab tab={BILLING_VIEW_ALL} activeTab={tab} setTab={setTab} />
-      <ButtonForTab tab={BILLING_VIEW_UNPAID} activeTab={tab} setTab={setTab} />
-      <ButtonForTab tab={BILLING_VIEW_PAYMENTS_AID} activeTab={tab} setTab={setTab} />
-    </ButtonGroup>
+const BillingItemFilters = ({ tab, setTab, termIds, termId, setTermId, search, setSearch, setExpanded }) => {
+  const changeTab = (tab) => {
+    setTab(tab);
+    setExpanded(null);
+  };
 
-    <TermDropdown termIds={termIds} value={termId} onChange={setTermId} />
+  return (
+    <div className='BillingItemFilters'>
+      <ButtonGroup>
+        <ButtonForTab tab={BILLING_VIEW_ALL} activeTab={tab} setTab={changeTab} />
+        <ButtonForTab tab={BILLING_VIEW_UNPAID} activeTab={tab} setTab={changeTab} />
+        <ButtonForTab tab={BILLING_VIEW_PAYMENTS_AID} activeTab={tab} setTab={changeTab} />
+      </ButtonGroup>
 
-    <BillingItemSearch search={search} setSearch={setSearch} />
-  </div>
-);
+      <TermDropdown termIds={termIds} value={termId} onChange={setTermId} />
+      <BillingItemSearch search={search} setSearch={setSearch} />
+    </div>
+  );
+};
 
 BillingItemFilters.propTypes = {
   tab: PropTypes.string,
@@ -50,7 +56,8 @@ BillingItemFilters.propTypes = {
   termId: PropTypes.string,
   setTermId: PropTypes.func,
   search: PropTypes.string,
-  setSearch: PropTypes.func
+  setSearch: PropTypes.func,
+  setExpanded: PropTypes.func
 };
 
 export default BillingItemFilters;

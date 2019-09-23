@@ -1,5 +1,7 @@
+@import '../stylesheets/variables';
+
 .Tabs {
-  border-bottom: 1px solid #eee;
+  border-bottom: 1px solid $cc-color-whisper;
   margin-left: -10px;
   margin-right: -10px;
   margin-bottom: 10px;
@@ -8,8 +10,8 @@
 .Tab {
   display: inline-block;
   margin-bottom: -1px;
-  padding: 5px 15px;
-  color: #2C84BC;
+  padding: 2px 20px;
+  color: $cc-color-curious-blue-2;
 
   &:first-child {
     margin-left: 10px;
@@ -17,6 +19,6 @@
 }
 
 .Tab--active {
-  border-bottom: 1px solid #2C84BC;
+  border-bottom: 1px solid $cc-color-curious-blue-2;
   font-weight: bold;
 }
