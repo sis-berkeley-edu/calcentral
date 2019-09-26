@@ -6,7 +6,7 @@
   <table>
     <thead>
       <tr>
-        <th data-ng-bind="category.titleHeader" scope="col"></th>
+        <th data-ng-bind="category.title" scope="col"></th>
         <th data-ng-repeat="header in category.headers" class="cc-table-right cc-table-right-spacing" scope="col" width="15%">
           <span data-ng-bind="header"></span>
           <span data-ng-if="$last && category.change" data-cc-amount-change-symbol-directive="changeTags.blank"></span>
