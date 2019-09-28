@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useRef } from 'react';
+import React, { Fragment, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
@@ -13,29 +13,16 @@ import PaymentDetails from './PaymentDetails';
 import ItemUpdated from './ItemUpdated';
 import UnappliedBalanceBadge from '../Badges/UnappliedBalanceBadge';
 
-import addEventListenerIf from './addEventListenerIf';
-
 const propTypes = {
   item: PropTypes.object,
   expanded: PropTypes.bool,
   onExpand: PropTypes.func,
-  setExpanded: PropTypes.func,
   tab: PropTypes.string
 };
 
-const MobileView = ({ tab, item, expanded, onExpand, setExpanded }) => {
-  const node = useRef();
-
-  const handleOutsideClick = (e) => {
-    if (!node.current.contains(e.target)) {
-      setExpanded(null);
-    }
-  };
-
-  useEffect(() => addEventListenerIf(expanded, handleOutsideClick), [expanded]);
-
+const MobileView = ({ tab, item, expanded, onExpand }) => {
   return (
-    <div ref={node}
+    <div
       className={`BillingItem BillingItem--payment BillingItem--mobile ${expanded ? 'BillingItem--expanded' : ''}`}
       onClick={() => onExpand()}>
       <div className="BillingItem__posted">
@@ -67,20 +54,9 @@ const MobileView = ({ tab, item, expanded, onExpand, setExpanded }) => {
 
 MobileView.propTypes = propTypes;
 
-const DesktopView = ({ tab, item, expanded, onExpand, setExpanded }) => {
-  const node = useRef();
-
-  const handleOutsideClick = (e) => {
-    if (!node.current.contains(e.target)) {
-      setExpanded(null);
-    }
-  };
-
-  useEffect(() => addEventListenerIf(expanded, handleOutsideClick), [expanded]);
-
+const DesktopView = ({ tab, item, expanded, onExpand }) => {
   return (
     <div
-      ref={node}
       className={`BillingItem BillingItem--payment BillingItem--desktop ${expanded ? 'BillingItem--expanded' : ''}`}
       onClick={() => onExpand()}>
       <div className="TableColumn__posted">
