@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useRef } from 'react';
+import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 
 import formatDate from 'functions/formatDate';
@@ -18,26 +18,14 @@ const propTypes = {
   item: PropTypes.object,
   expanded: PropTypes.bool,
   onExpand: PropTypes.func,
-  tab: PropTypes.string,
-  setExpanded: PropTypes.func
+  tab: PropTypes.string
 };
 
 import dueLabel from './dueLabel';
-import addEventListenerIf from './addEventListenerIf';
 
-const MobileView = ({ item, expanded, onExpand, setExpanded }) => {
-  const node = useRef();
-
-  const handleOutsideClick = (e) => {
-    if (!node.current.contains(e.target)) {
-      setExpanded(null);
-    }
-  };
-
-  useEffect(() => addEventListenerIf(expanded, handleOutsideClick), [expanded]);
-
+const MobileView = ({ item, expanded, onExpand }) => {
   return (
-    <div ref={node}
+    <div
       className={`BillingItem BillingItem--charge BillingItem--mobile ${expanded ? 'BillingItem--expanded' : ''}`}
       onClick={() => onExpand()}>
       <div className="BillingItem__posted">
@@ -74,19 +62,9 @@ const MobileView = ({ item, expanded, onExpand, setExpanded }) => {
 };
 MobileView.propTypes = propTypes;
 
-const DesktopView = ({ item, expanded, onExpand, setExpanded }) => {
-  const node = useRef();
-
-  const handleOutsideClick = (e) => {
-    if (!node.current.contains(e.target)) {
-      setExpanded(null);
-    }
-  };
-
-  useEffect(() => addEventListenerIf(expanded, handleOutsideClick), [expanded]);
-
+const DesktopView = ({ item, expanded, onExpand }) => {
   return (
-    <div ref={node}
+    <div
       className={`BillingItem BillingItem--charge BillingItem--desktop ${expanded ? 'BillingItem--expanded' : ''}`}
       onClick={() => onExpand()}>
       <div className="TableColumn__posted">

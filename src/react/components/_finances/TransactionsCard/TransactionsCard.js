@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { fetchBillingItems } from 'Redux/actions/billingActions';
@@ -99,6 +99,18 @@ export const TransactionsCard = ({ dispatch, billingItems, carsData }) => {
     ? { message: 'There is a problem displaying your billing information. Please try again soon.' }
     : false;
 
+  const node = useRef();
+  const clickHandler = (e) => {
+    if (!node.current.contains(e.target)) {
+      setExpanded(null);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener('mousedown', clickHandler);
+    return () => removeEventListener('mousedown', clickHandler);
+  }, []);
+
   return (
     <Card className="TransactionsCard"
       title="Transactions"
@@ -106,23 +118,25 @@ export const TransactionsCard = ({ dispatch, billingItems, carsData }) => {
       error={error}
       secondaryContent={<DownloadButton />}
     >
-      <div className="TransactionCard__pretable">
-        <BillingItemFilters tab={tab}
-          setTab={setTab}
-          termIds={termIds}
-          termId={termId}
-          setTermId={setTermId}
-          search={search}
-          setSearch={setSearch}
-          setExpanded={setExpanded}
-        />
-        <LegacyDataLink unappliedBalance={unappliedBalance} />
-        <UnappliedPaymentsInfo tab={tab} unappliedBalance={unappliedBalance} />
-      </div>
+      <div ref={node}>
+        <div className="TransactionCard__pretable">
+          <BillingItemFilters tab={tab}
+            setTab={setTab}
+            termIds={termIds}
+            termId={termId}
+            setTermId={setTermId}
+            search={search}
+            setSearch={setSearch}
+            setExpanded={setExpanded}
+          />
+          <LegacyDataLink unappliedBalance={unappliedBalance} />
+          <UnappliedPaymentsInfo tab={tab} unappliedBalance={unappliedBalance} />
+        </div>
 
-      <BillingItemsTable items={filteredItems} tab={tab} hasActiveFilters={hasActiveFilters}
-        expanded={expanded}
-        setExpanded={setExpanded} />
+        <BillingItemsTable items={filteredItems} tab={tab} hasActiveFilters={hasActiveFilters}
+          expanded={expanded}
+          setExpanded={setExpanded} />
+      </div>
     </Card>
   );
 };
