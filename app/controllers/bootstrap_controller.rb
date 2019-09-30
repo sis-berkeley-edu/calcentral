@@ -6,11 +6,11 @@ class BootstrapController < ApplicationController
   before_filter :check_databases_alive, :check_cache_clear_flag
   layout false
 
-  # View code is public/index-main.html (compiled by webpack build).
-  # We don't want to serve index-main statically because that would skip the check_databases_alive and
+  # View code is public/index.html (compiled by webpack build).
+  # We don't want to serve index statically because that would skip the check_databases_alive and
   # check_reauthentication code.
   def index
-    render file: 'public/index-main.html', formats: [:html]
+    render file: 'public/index.html', formats: [:html]
   end
 
   # CalCentral cannot fully trust a user session which was initiated via an LTI embedded app,
