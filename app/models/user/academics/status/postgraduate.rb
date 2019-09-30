@@ -21,8 +21,8 @@ module User
         # students. In the generic case, this class can be used directly.
         def message
           return MSG_NOT_ENROLLED unless enrolled?
-          return MSG_LIMITED_ACCESS if twenty_percent_cnp_exception?
           return MSG_FULL_ACCESS if registered?
+          return MSG_LIMITED_ACCESS if twenty_percent_cnp_exception?
           MSG_FEES_UNPAID
         end
 
