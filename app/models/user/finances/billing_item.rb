@@ -90,6 +90,10 @@ module User
         (now - due_date).to_i
       end
 
+      def term_name
+        @term_name ||= ::User::Academics::Term.new(term_id).to_english
+      end
+
       private
 
       def charge_type?

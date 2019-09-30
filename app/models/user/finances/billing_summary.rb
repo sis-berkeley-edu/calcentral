@@ -26,7 +26,9 @@ module User
             "Type",
             "Status",
             "Due Amount",
-            "Due Date"
+            "Due Date",
+            "Term",
+            "Transaction Number"
           ]
 
           billing_items.reverse.each do |billing_item|
@@ -36,7 +38,9 @@ module User
               billing_item.type,
               billing_item.status,
               billing_item.amount_due,
-              billing_item.due_date
+              billing_item.due_date,
+              billing_item.term_name,
+              billing_item.transaction_number
             ]
           end
         end
