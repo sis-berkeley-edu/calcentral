@@ -24,6 +24,14 @@ RSpec.describe User::Academics::Status::Postgraduate, type: :model do
           allow(term_registration).to receive(:twenty_percent_cnp_exception?).and_return(true)
           expect(subject.message).to eq 'Limited access to campus services'
         end
+
+        describe "when registered" do
+          it 'is "You have access..."' do
+            allow(term_registration).to receive(:twenty_percent_cnp_exception?).and_return(true)
+            allow(term_registration).to receive(:registered?).and_return(true)
+            expect(subject.message).to eq "You have access to campus services"
+          end
+        end
       end
 
       describe "and registered" do

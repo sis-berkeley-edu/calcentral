@@ -16,7 +16,7 @@ export const fetchAdvisingStatusAndHoldsSuccess = data => ({
 export const fetchAdvisingStatusAndHoldsFailure = error => ({
   type: FETCH_ADVISING_STATUS_AND_HOLDS_FAILURE,
   value: error
-})
+});
 
 export const fetchAdvisingStatusAndHolds = (studentId) => {
   return (dispatch, getState) => {
