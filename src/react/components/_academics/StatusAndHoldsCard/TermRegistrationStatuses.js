@@ -1,25 +1,30 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { Provider, connect } from 'react-redux';
-import { react2angular } from 'react2angular';
-
-import store from 'Redux/store';
+import { connect } from 'react-redux';
 
 import { fetchStatusAndHolds } from 'Redux/actions/statusActions';
+import { fetchAdvisingStatusAndHolds } from 'Redux/actions/advisingStatusActions';
 
 import TermRegistrationStatus from './TermRegistrationStatus';
 
 const TermRegistrationStatuses = ({
-  dispatch,
-  termRegistrations
+  fetchStatusAndHolds,
+  termRegistrations,
+  advisingRegistrations,
+  studentId,
+  isAdvisor
 }) => {
   useEffect(() => {
-    dispatch(fetchStatusAndHolds());
-  });
+    fetchStatusAndHolds(studentId, isAdvisor);
+  }, [studentId, isAdvisor]);
+
+  const registrations = isAdvisor
+    ? advisingRegistrations
+    : termRegistrations;
 
   return (
     <div className="TermRegistrationStatuses" style={{ marginBottom: `15px` }}>
-      {termRegistrations.map(reg => (
+      {registrations.map(reg => (
         <TermRegistrationStatus
           key={reg.termId}
           termRegistration={reg}
@@ -30,29 +35,47 @@ const TermRegistrationStatuses = ({
 };
 
 TermRegistrationStatuses.propTypes = {
-  dispatch: PropTypes.func,
-  termRegistrations: PropTypes.array
+  fetchStatusAndHolds: PropTypes.func,
+  termRegistrations: PropTypes.array,
+  advisingRegistrations: PropTypes.array,
+  studentId: PropTypes.string,
+  isAdvisor: PropTypes.bool
 };
 
-const mapStateToProps = ({ myStatusAndHolds }) => {
+const mapState = ({
+  myStatusAndHolds,
+  advising
+}) => {
   const {
     termRegistrations = []
   } = myStatusAndHolds;
 
+  const {
+    userId: studentId,
+    statusAndHolds: {
+      termRegistrations: advisingRegistrations = [] 
+    } = {}
+  } = advising;
+
   return {
-    termRegistrations
+    termRegistrations,
+    advisingRegistrations,
+    studentId
   };
 };
 
-const ConnectedTermRegistrationStatuses = connect(mapStateToProps)(TermRegistrationStatuses);
+const mapDispatch = dispatch => {
+  return {
+    fetchStatusAndHolds: (studentId, isAdvisor) => {
+      if (isAdvisor) {
+        dispatch(fetchAdvisingStatusAndHolds(studentId));
+      } else {
+        dispatch(fetchStatusAndHolds());
+      }
+    }
+  };
+};
 
-angular
-.module('calcentral.react')
-.component(
-  'termRegistrationStatuses',
-  react2angular(() => (
-    <Provider store={store}>
-      <ConnectedTermRegistrationStatuses />
-    </Provider>
-  ))
-);
+const ConnectedTermRegistrationStatuses = connect(mapState, mapDispatch)(TermRegistrationStatuses);
+
+export default ConnectedTermRegistrationStatuses;
