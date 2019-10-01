@@ -18,6 +18,21 @@ RSpec.describe User::Academics::Status::Undergraduate, type: :model do
         expect(subject.message).to eq "Not Officially Registered"
       end
 
+      describe "with CNP Exception" do
+        it 'is "Not Officially Registered"' do
+          allow(term_registration).to receive(:twenty_percent_cnp_exception?).and_return(true)
+          expect(subject.message).to eq "Not Officially Registered"
+        end
+
+        describe "and registered" do
+          it 'is "Officially Registered..."' do
+            allow(term_registration).to receive(:cnp_exception?).and_return(true)
+            allow(term_registration).to receive(:registered?).and_return(true)
+            expect(subject.message).to eq "Officially Registered"
+          end
+        end
+      end
+
       describe "and registered" do
         it 'is "Officially Registered"' do
           allow(term_registration).to receive(:registered?).and_return(true)

@@ -1,4 +1,4 @@
-import './_academics/StatusAndHoldsCard/TermRegistrationStatuses';
+import './_academics/StatusAndHoldsCard/TermRegistrations';
 import './_header/RegistrationStatusItems';
 import './_academics/AcademicSummary/AcademicSummary';
 import './_academics/EnrollmentLinks/EnrollmentLinks';
