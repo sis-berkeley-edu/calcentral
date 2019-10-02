@@ -104,7 +104,7 @@ angular.module('calcentral.controllers').controller('UserOverviewController', fu
       function successCallback(response) {
         angular.extend($scope.targetUser, _.get(response, 'data.attributes'));
         angular.extend($scope.residency, _.get(response, 'data.residency.residency'));
-        setVisa(_.get(response, 'data.demographics.feed.student.usaCountry.visa'));
+        setVisa(_.get(response, 'data.demographics.feed.usaCountry.visa'));
         $scope.targetUser.academicRoles = _.get(response, 'data.academicRoles');
         $scope.targetUser.ldapUid = targetUserUid;
         $scope.targetUser.addresses = apiService.profile.fixFormattedAddresses(_.get(response, 'data.contacts.feed.student.addresses'));
