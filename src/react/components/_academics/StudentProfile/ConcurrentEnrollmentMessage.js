@@ -45,7 +45,9 @@ const ConcurrentEnrollmentMessage = ({
       <Fragment>
         <h3>Standing</h3>
         <div className="cc-widget-profile-message-text">
-          You are not currently considered an active student.
+          You are not currently considered an active student. If you are seeking information on your conferred degree,
+          we are in the process of updating this functionality.  In the meantime, please monitor your bMail for a
+          message regarding your completed degree.
         </div>
       </Fragment>
     );
