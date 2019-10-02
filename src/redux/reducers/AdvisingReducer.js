@@ -15,7 +15,7 @@ import {
 const AdvisingReducer = (state = { appointments: {}, academics: {}, statusAndHolds: {} }, action) => {
   switch (action.type) {
     case SET_TARGET_USER_ID:
-      return { ...state, userId: action.value };
+      return { userId: action.value, appointments: {}, academics: {}, statusAndHolds: {} };
     case FETCH_APPOINTMENTS_START:
       return { ...state, appointments: { ...state.appointments, isLoading: true, error: null } };
     case FETCH_APPOINTMENTS_SUCCESS:
