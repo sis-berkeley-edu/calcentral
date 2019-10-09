@@ -12,7 +12,13 @@ angular.module('calcentral.controllers').controller('HoldsController', function(
 
   var loadHolds = function() {
     return holdsFactory.getHolds().then(function(response) {
-      $scope.holds = _.get(response, 'data.feed.holds');
+      $scope.holds = _.get(response, 'data.feed.holds').map(hold => {
+        if (hold.contact && hold.contact.description === ' ') {
+          return { ...hold, contact: { ...hold.contact, description: '' } };
+        }
+
+        return hold;
+      });
     }).finally(function() {
       $scope.holdsInfo.isLoading = false;
     });

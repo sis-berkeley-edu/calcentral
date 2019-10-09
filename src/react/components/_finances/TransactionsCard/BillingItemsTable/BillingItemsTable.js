@@ -22,9 +22,8 @@ const limitIf = ({ shouldLimit, limit }) => {
 
 import './BillingItemsTable.scss';
 
-const BillingItemsTable = ({ items, tab, hasActiveFilters }) => {
+const BillingItemsTable = ({ items, tab, hasActiveFilters, expanded, setExpanded }) => {
   const [showAll, setShowAll] = useState(false);
-  const [expanded, setExpanded] = useState(null);
   const [sortBy, setSortBy] = useState('postedOn');
   const [sortOrder, setSortOrder] = useState('DESC');
   const onExpand = (id) => expanded === id ? setExpanded(null) : setExpanded(id);
@@ -51,6 +50,7 @@ const BillingItemsTable = ({ items, tab, hasActiveFilters }) => {
         <BillingItem item={item} key={item.id}
           tab={tab}
           expanded={expanded === item.id}
+          setExpanded={setExpanded}
           onExpand={() => onExpand(item.id)}
         />
       ))}
@@ -69,7 +69,9 @@ const BillingItemsTable = ({ items, tab, hasActiveFilters }) => {
 BillingItemsTable.propTypes = {
   items: PropTypes.array,
   tab: PropTypes.string,
-  hasActiveFilters: PropTypes.bool
+  hasActiveFilters: PropTypes.bool,
+  expanded: PropTypes.string,
+  setExpanded: PropTypes.func
 };
 
 export default BillingItemsTable;

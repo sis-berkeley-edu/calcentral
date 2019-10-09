@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
 import './Dropdown.scss';
-import 'icons/triangle.svg';
+import 'icons/triangle-up.svg';
+import 'icons/triangle-down.svg';
 import 'icons/blue-bullet.svg';
 import 'icons/white-bullet.svg';
 
@@ -31,8 +32,10 @@ const Dropdown = ({ value, onChange, options }) => {
   const [active, setActive] = useState(false);
   const selected = options.find(option => value === option.value);
 
+  const className = active ? 'Dropdown Dropdown--active' : 'Dropdown';
+
   return (
-    <div className="Dropdown" onClick={() => setActive(!active)}>
+    <div className={className} onClick={() => setActive(!active)}>
       { active &&
         <div className="Dropdown__overlay">
           {options.map(option => (

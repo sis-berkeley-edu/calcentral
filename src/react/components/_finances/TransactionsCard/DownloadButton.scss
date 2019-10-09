@@ -1,0 +1,11 @@
+@import '../../../stylesheets/variables';
+
+.DownloadButton {
+  color: $color-text-alt;
+  background: #F8F8F8;
+  border: 1px solid #CBCBCB;
+  border-radius: 5px;
+  padding: 5px 15px;
+  cursor: pointer;
+  font-weight: bold;
+}

@@ -8,10 +8,13 @@ $medium-spacing: 10px;
 $large-spacing: 15px;
 
 // Typography:
-$base-font-color: #333;
+$base-font-color: $cc-color-night-rider;
+$color-text-alt: $cc-color-dim-gray;
+$color-text-link: $cc-color-curious-blue-2;
+
 $base-font-family: Arial, sans-serif;
 
 $base-font-size: 13px;
 $title-font-size: 18px;
 
-$hairline-border: 1px solid #ccc;
+$hairline-border: 1px solid $very-light-gray;

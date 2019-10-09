@@ -25,7 +25,8 @@ import dueLabel from './dueLabel';
 
 const MobileView = ({ item, expanded, onExpand }) => {
   return (
-    <div className={`BillingItem BillingItem--charge BillingItem--mobile ${expanded ? 'BillingItem--expanded' : ''}`}
+    <div
+      className={`BillingItem BillingItem--charge BillingItem--mobile ${expanded ? 'BillingItem--expanded' : ''}`}
       onClick={() => onExpand()}>
       <div className="BillingItem__posted">
         {formatDate(item.postedOn)}
@@ -61,9 +62,10 @@ const MobileView = ({ item, expanded, onExpand }) => {
 };
 MobileView.propTypes = propTypes;
 
-const DesktopView = ({ item, expanded, onExpand}) => {
+const DesktopView = ({ item, expanded, onExpand }) => {
   return (
-    <div className={`BillingItem BillingItem--charge BillingItem--desktop ${expanded ? 'BillingItem--expanded' : ''}`}
+    <div
+      className={`BillingItem BillingItem--charge BillingItem--desktop ${expanded ? 'BillingItem--expanded' : ''}`}
       onClick={() => onExpand()}>
       <div className="TableColumn__posted">
         {formatDate(item.postedOn)}
@@ -94,11 +96,11 @@ const DesktopView = ({ item, expanded, onExpand}) => {
 };
 DesktopView.propTypes = propTypes;
 
-const ChargeItem = ({ item, expanded, onExpand}) => {
+const ChargeItem = (props) => {
   return (
     <Fragment>
-      <DesktopView item={item} expanded={expanded} onExpand={onExpand} />
-      <MobileView item={item} expanded={expanded} onExpand={onExpand} />
+      <DesktopView {...props} />
+      <MobileView {...props} />
     </Fragment>
   );
 };

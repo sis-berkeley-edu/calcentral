@@ -36,7 +36,7 @@ const ChargesPaidTab = ({ item }) => {
 
   return (
     <div className='ChargesPaid' onClick={(e) => e.stopPropagation()}>
-      <h3>Charges paid by this transactions</h3>
+      <h3>Charges paid by this transaction</h3>
 
       {payments.length > 0
         ? (

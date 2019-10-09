@@ -1,7 +1,7 @@
 @mixin billing-items-grid {
   display: grid;
-  grid-template-columns: 100px 300px 1fr 120px 10px;
-  column-gap: 30px;
+  grid-template-columns: 82px 3fr 1fr 120px 10px;
+  column-gap: 20px;
   padding: 10px;
 
   // The description/amount columns have labels that longer than the columns
@@ -10,10 +10,24 @@
   .TableColumn__description-amount {
     display: flex;
     justify-content: space-between;
+
+    .TableColumn__description {
+      margin-right: 20px;
+    }
   }
 
   .TableColumn__due {
     display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+
+    &.ChargeItem__due {
+      flex-direction: column;
+      align-items: flex-end;
+      justify-content: start;
+      color: #474747;
+      padding-right: 12px;
+    }
   }
 
   .TableColumn__chevron {

@@ -22,7 +22,8 @@ const propTypes = {
 
 const MobileView = ({ tab, item, expanded, onExpand }) => {
   return (
-    <div className={`BillingItem BillingItem--payment BillingItem--mobile ${expanded ? 'BillingItem--expanded' : ''}`}
+    <div
+      className={`BillingItem BillingItem--payment BillingItem--mobile ${expanded ? 'BillingItem--expanded' : ''}`}
       onClick={() => onExpand()}>
       <div className="BillingItem__posted">
         {formatDate(item.postedOn)}
