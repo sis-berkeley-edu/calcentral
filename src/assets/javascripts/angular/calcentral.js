@@ -56,7 +56,22 @@ var loadConfig = function() {
   var initInjector = angular.injector(['ng']);
   var $http = initInjector.get('$http');
 
-  return $http.get('/api/config');
+  const promise = $http.get('/api/config');
+
+  const onFailure = (response) => {
+    const {
+      status,
+      data: { url } = {}
+    } = response;
+
+    if (status === 401) {
+      window.location = url;
+    }
+  };
+
+  promise.then(null, onFailure);
+
+  return promise;
 };
 
 loadConfig().then(injectConfigConstant).then(bootstrap);
