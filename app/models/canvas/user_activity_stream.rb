@@ -14,7 +14,7 @@ module Canvas
     end
 
     def request_path
-      "users/self/activity_stream?as_user_id=sis_login_id:#{@uid}"
+      "users/self/activity_stream?as_user_id=sis_login_id:#{@uid}&only_active_courses=true"
     end
 
   end
