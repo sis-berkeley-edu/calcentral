@@ -19,12 +19,20 @@ module MyAcademics
       data[:collegeAndLevel] = college_and_level
     end
 
-    def current_user
-      @current_user ||= User::Current.new(@uid)
+    def user
+      @user ||= User::Current.new(@uid)
+    end
+
+    def latest_registrations
+      user.registrations.latest
     end
 
     def latest_registration_term
-      @latest_registration_term ||= current_user.registrations.latest.first.term
+      @latest_registration_term ||= latest_registrations.first.term
+    end
+
+    def career_descriptions
+      latest_registrations.collect {|r| r.career_description}
     end
 
     def hub_college_and_level
@@ -42,8 +50,8 @@ module MyAcademics
 
       statuses = hub_academic_statuses.academic_statuses
       if (status = statuses.first)
-        college_and_level[:careers] = parse_hub_careers statuses
-        college_and_level[:levels] = current_user.registrations.latest_academic_level_descriptions
+        college_and_level[:careers] = career_descriptions
+        college_and_level[:levels] = user.registrations.latest_academic_level_descriptions
         college_and_level[:termName] = latest_registration_term.to_english
         college_and_level[:termId] = latest_registration_term.campus_solutions_id
         college_and_level[:termsInAttendance] = status.try(:[], 'termsInAttendance').try(:to_s)
@@ -129,7 +137,8 @@ module MyAcademics
       if degrees.present?
         awarded_degrees = []
         degrees.each do |degree|
-          if degree.try(:[], 'status').try(:[], 'code') == 'Awarded'
+          # Process only awarded degrees
+          if degree.try(:[], 'status').try(:[], 'code') == 'A'
             plan_set = {
               majors: [],
               minors: [],
