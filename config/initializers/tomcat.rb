@@ -1,0 +1,1 @@
+Rails.logger.debug "THIS IS THE TOMCAT COMPARISON VERSION"

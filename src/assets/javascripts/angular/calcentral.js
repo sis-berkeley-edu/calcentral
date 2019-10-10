@@ -53,6 +53,8 @@ var bootstrap = function() {
 
 // Load the CalCentral config which includes: csrf tokens, uid, google analytics id, app version, hostname
 var loadConfig = function() {
+  console.log('This is the Tomcat comparison version');
+
   var initInjector = angular.injector(['ng']);
   var $http = initInjector.get('$http');
 
