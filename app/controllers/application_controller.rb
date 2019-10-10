@@ -33,10 +33,28 @@ class ApplicationController < ActionController::Base
   end
 
   def reauthenticate(opts = {})
-    delete_reauth_cookie
-    url = '/auth/cas?renew=true'
-    url << "&url=#{url_for_path opts[:redirect_path]}" if opts[:redirect_path]
-    redirect_to url_for_path url
+    respond_to do |format|
+      delete_reauth_cookie
+      redirect_url = url_for(reauthentication_path(opts[:redirect_path]))
+
+      format.html do
+        redirect_to redirect_url
+        return
+      end
+
+      format.json do
+        render json: { message: 'Reauthentication required', url: redirect_url }, status: :unauthorized
+        return
+      end
+    end
+  end
+
+  def reauthentication_path(redirect_path)
+    if redirect_path
+      "/auth/cas?renew=true&url=#{url_for_path(redirect_path)}"
+    else
+      '/auth/cas?renew=true'
+    end
   end
 
   # This method does not handle the reauthentication check for "ccadmin" authoring. That is
