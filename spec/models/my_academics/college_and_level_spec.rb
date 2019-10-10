@@ -143,21 +143,22 @@ describe MyAcademics::CollegeAndLevel do
       ],
       'honors' => {
         'honors' => [
-        {
-        'code' => 'C2',
-        'description' => 'High Distinction: CNR',
-        'formalDescription' => 'High Distinction: College of Natural Resources'
+          {
+            'code' => 'C2',
+            'description' => 'High Distinction: CNR',
+            'formalDescription' => 'High Distinction: College of Natural Resources'
+          },
+          {
+            'code' => 'P1',
+            'description' => 'Honors in Society and Environment',
+            'formalDescription' => 'Honors in Society and Environment'
+          }
+        ]
       },
-      {
-        'code' => 'P1',
-        'description' => 'Honors in Society and Environment',
-        'formalDescription' => 'Honors in Society and Environment'
-      }
-    ]
-    },
       'dateAwarded' => '2012-12-14',
       'status' => {
-        'code' => 'Awarded'
+        'code' => 'A',
+        'description' => 'Awarded',
       },
       'statusDate' => '2015-12-12'
     }
@@ -209,7 +210,8 @@ describe MyAcademics::CollegeAndLevel do
       'honors' => {},
       'dateAwarded' => '2010-05-14',
       'status' => {
-        'code' => 'Not Awarded'
+        'code' => 'N',
+        'description' => 'Not Awarded'
       },
       'statusDate' => '2015-12-12'
     }
@@ -378,14 +380,14 @@ describe MyAcademics::CollegeAndLevel do
   end
 
   # New User Models
-  let(:user_current) { double(registrations: user_registrations) }
+  let(:user_current) { double(registrations: user_registrations, uid: uid) }
   let(:user_registrations) do
     double({
       latest: [user_registration],
       latest_academic_level_descriptions: academic_level_descriptions
     })
   end
-  let(:user_registration) { double(term: user_registration_term) }
+  let(:user_registration) { double(term: user_registration_term, career_description: 'Graduate') }
   let(:user_registration_term) { double(to_english: 'Fall 2016', campus_solutions_id: '2168') }
   let(:academic_level_descriptions) { ['Graduate','Professional Year 3'] }
 
@@ -454,7 +456,7 @@ describe MyAcademics::CollegeAndLevel do
       end
 
       it 'translates careers' do
-        expect(feed[:collegeAndLevel][:careers]).to eq ['Undergraduate']
+        expect(feed[:collegeAndLevel][:careers]).to eq ['Graduate']
       end
 
       it 'uses v2 academic level' do
@@ -600,7 +602,6 @@ describe MyAcademics::CollegeAndLevel do
         expect(feed[:collegeAndLevel][:degrees][0]['academicPlans'][0]['academicProgram']['academicCareer']['formalDescription']).to eq 'Graduate'
         expect(feed[:collegeAndLevel][:degrees][0]['academicPlans'][0]['academicProgram']['academicCareer']['fromDate']).to eq '2012-08-16'
 
-
         expect(feed[:collegeAndLevel][:degrees][0]['honors']).to be
         expect(feed[:collegeAndLevel][:degrees][0]['honors']['honors']).to be
         expect(feed[:collegeAndLevel][:degrees][0]['honors']['honors'].count).to eq 2
@@ -611,7 +612,7 @@ describe MyAcademics::CollegeAndLevel do
 
         expect(feed[:collegeAndLevel][:degrees][0]['dateAwarded']).to eq '2012-12-14'
         expect(feed[:collegeAndLevel][:degrees][0]['status']).to be
-        expect(feed[:collegeAndLevel][:degrees][0]['status']['code']).to eq 'Awarded'
+        expect(feed[:collegeAndLevel][:degrees][0]['status']['code']).to eq 'A'
         expect(feed[:collegeAndLevel][:degrees][0]['statusDate']).to eq '2015-12-12'
 
         expect(feed[:collegeAndLevel][:degrees][0][:majors]).to be
@@ -656,7 +657,7 @@ describe MyAcademics::CollegeAndLevel do
       end
 
       it 'translates careers' do
-        expect(feed[:collegeAndLevel][:careers]).to eq ["Graduate", "Law"]
+        expect(feed[:collegeAndLevel][:careers]).to eq ['Graduate']
       end
 
       it 'uses v2 academic level' do
@@ -998,6 +999,12 @@ describe MyAcademics::CollegeAndLevel do
     context 'profile is empty' do
       let(:profile) { {empty: true} }
       it {should eq false}
+    end
+  end
+
+  describe '#user' do
+    it 'returns current user object' do
+      expect(subject.user.uid).to eq uid
     end
   end
 
