@@ -8,17 +8,29 @@ module User
       end
 
       def all
-        data_feed.map do |data|
+        @all ||= data_feed.collect do |data|
           ::User::Academics::Registration.new(data)
-        end
+        end.sort_by(&:term_id)
+      end
+
+      def latest
+        all.select { |reg| reg.term_id == latest_term_id }
+      end
+
+      def latest_term_id
+        all.last.term_id
       end
 
       def term_ids
-        all.map { |attr| attr.term_id }.compact.uniq
+        all.map { |reg| reg.term_id }.compact.uniq
       end
 
       def find_by_term_id(term_id)
-        all.select { |attr| attr.term_id == term_id }
+        all.select { |reg| reg.term_id == term_id }
+      end
+
+      def latest_academic_level_descriptions
+        latest.collect {|reg| reg.preferred_level.description }
       end
 
       def data_feed
