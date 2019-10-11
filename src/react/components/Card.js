@@ -18,10 +18,18 @@ const CardError = ({ message }) => {
   }
 };
 CardError.propTypes = {
-  message: PropTypes.string
+  message: PropTypes.string,
+  error: PropTypes.object,
 };
 
-const Card = ({ children, title, loading, error, className, secondaryContent }) => {
+const Card = ({
+  children,
+  title,
+  loading,
+  error,
+  className,
+  secondaryContent,
+}) => {
   const classNames = ['Card', className].join(' ');
 
   return (
@@ -31,12 +39,9 @@ const Card = ({ children, title, loading, error, className, secondaryContent }) 
         {secondaryContent}
       </div>
       <div className="Card__body">
-        { loading
-          ? <Spinner />
-          : <CardError {...error} />
-        }
+        {loading ? <Spinner /> : <CardError {...error} />}
 
-        { !loading && !error && children }
+        {!loading && !error && children}
       </div>
     </div>
   );
@@ -46,7 +51,8 @@ Card.propTypes = {
   children: PropTypes.node,
   loading: PropTypes.bool,
   className: PropTypes.string,
-  secondaryContent: PropTypes.object
+  secondaryContent: PropTypes.object,
+  error: PropTypes.object,
 };
 
 export default Card;

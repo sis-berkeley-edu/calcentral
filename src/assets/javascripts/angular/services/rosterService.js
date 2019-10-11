@@ -119,6 +119,7 @@ angular.module('calcentral.services').factory('rosterService', function($filter)
     var selectedSectionId = _.get(selectedSection, 'ccn');
     return _.reduce(sections, function(count, section) {
       if (!selectedSectionId || selectedSectionId === _.get(section, 'ccn')) {
+        // eslint-disable-next-line no-extra-boolean-cast
         count += !!useWaitlistCounts ? section.waitlist_open : section.enroll_open;
       }
       return count;

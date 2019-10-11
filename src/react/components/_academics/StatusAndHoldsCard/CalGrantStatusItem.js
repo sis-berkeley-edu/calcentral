@@ -19,6 +19,10 @@ const ExtendedMessageWithLink = ({ messageHTML, link}) => (
     { messageHTML } <APILink {...link} />
   </div>
 );
+ExtendedMessageWithLink.propTypes = {
+  messageHTML: PropTypes.string,
+  link: PropTypes.object
+}
 
 const CalGrantStatusItem = ({ status }) => {
   if (!status.message) {
@@ -50,7 +54,10 @@ const CalGrantStatusItem = ({ status }) => {
 
 CalGrantStatusItem.propTypes = {
   status: PropTypes.shape({
-    severity: PropTypes.string
+    severity: PropTypes.string,
+    message: PropTypes.string,
+    link: PropTypes.object,
+    detailedMessageHTML: PropTypes.string
   })
 };
 

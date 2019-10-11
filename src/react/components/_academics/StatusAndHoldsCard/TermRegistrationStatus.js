@@ -37,7 +37,9 @@ TermRegistrationStatus.propTypes = {
     termName: PropTypes.string,
     termId: PropTypes.string,
     registrationStatus: statusProps,
-    cnpStatus: statusProps
+    cnpStatus: statusProps,
+    isShown: PropTypes.bool,
+    calgrantStatus: statusProps
   })
 };
 
