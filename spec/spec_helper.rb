@@ -102,7 +102,7 @@ Spork.prefork do
     config.filter_run_excluding :ignore => true
 
     # Make sure the front-end assets are available when running the back-end tests
-    if !File.exist?("#{::Rails.root}/public/index-main.html")
+    if !File.exist?("#{::Rails.root}/public/index.html")
       puts 'Front-end build task - spec helper'
       system ("sh #{::Rails.root}/script/front-end-build.sh")
     end
