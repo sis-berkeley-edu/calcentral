@@ -55,8 +55,8 @@ module AdvisingResources
 
   def self.lookup_student_career(user_id)
     return nil if user_id.blank?
-    term_cpp = MyAcademics::MyTermCpp.new(user_id).get_feed
-    latest_career = term_cpp.first.try(:[], 'acad_career')
+    user = User::Current.new(user_id)
+    User::Academics::TermPlans::TermPlans.new(user).latest_career_code
   end
 
   def self.fetch_links(link_config)

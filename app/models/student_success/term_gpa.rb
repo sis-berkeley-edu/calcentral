@@ -3,8 +3,16 @@ module StudentSuccess
     include Concerns::AcademicsModule
 
     def initialize(opts={})
-      @student_uid_param = opts[:user_id]
+      @uid = opts[:user_id]
       @active_careers = get_active_careers
+    end
+
+    def user
+      User::Current.new(@uid)
+    end
+
+    def current_and_future_term_plans
+      @current_and_future_term_plans ||= User::Academics::TermPlans::TermPlans.new(user).current_and_future
     end
 
     def merge(data={})
@@ -18,7 +26,7 @@ module StudentSuccess
     end
 
     def get_term_gpas
-      response = CampusSolutions::StudentTermGpa.new(user_id: @student_uid_param).get
+      response = CampusSolutions::StudentTermGpa.new(user_id: @uid).get
       parse_term_gpa response
     end
 
@@ -41,11 +49,7 @@ module StudentSuccess
     end
 
     def get_active_careers
-      if term_cpp = MyAcademics::MyTermCpp.new(@student_uid_param).get_feed
-        current_cpp = term_cpp.select {|cpp| cpp.try(:[], 'term_id') >= current_term.to_s }
-        return current_cpp.collect {|c| c.try(:[], 'acad_career_descr') }.uniq
-      end
-      []
+      current_and_future_term_plans.collect {|p| p.try(:academic_career_description) }.uniq
     end
 
     def current_term

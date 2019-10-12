@@ -6,18 +6,13 @@ module DegreeProgress
     include Cache::CachedFeed
     include Cache::JsonifiedFeed
     include Cache::UserCacheExpiry
-    include MilestonesModule
 
     def get_feed_internal
       return {} unless is_feature_enabled?
-      response = CampusSolutions::DegreeProgress::GraduateMilestones.new(user_id: @uid).get
-      if response[:errored] || response[:noStudentId]
-        response[:feed] = {}
-      else
-        response[:feed] = {
-          degreeProgress: process(response),
-        }
-      end
+      user = User::Current.new(@uid)
+      degree_progress = User::Academics::DegreeProgress::Graduate::Milestones.new(user).as_json
+      response = {feed: {}}
+      response[:feed][:degreeProgress] = degree_progress if degree_progress.present?
       response
     end
 

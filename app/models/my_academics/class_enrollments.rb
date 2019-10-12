@@ -96,9 +96,10 @@ module MyAcademics
     end
 
     def get_current_and_future_cpp
-      term_cpp = MyAcademics::MyTermCpp.new(@uid).get_feed
+      user = User::Current.new(@uid)
+      term_plans = User::Academics::TermPlans::TermPlansCached.new(user).get_feed
       current_term = Berkeley::Terms.fetch.current.try(:campus_solutions_id)
-      term_cpp.select {|t| t['term_id'].to_s >= current_term.to_s }
+      term_plans.select {|t| t['term_id'].to_s >= current_term.to_s }
     end
 
     # Removes duplicate plan roles within the same term
