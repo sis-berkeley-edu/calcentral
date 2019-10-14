@@ -85,8 +85,16 @@ describe AdvisingStudentController do
 
   describe '#academics' do
     let(:session_user_id) { random_id }
+    let(:my_academics_filtered) do
+      double({
+        get_feed_as_json: {
+          'collegeAndLevel' => {}
+        }.to_json
+      })
+    end
     before do
       expect(MyAcademics::Merged).to receive(:new).never
+      allow(MyAcademics::FilteredForAdvisor).to receive(:new).and_return(my_academics_filtered)
     end
     subject { get :academics, student_uid: student_uid }
 

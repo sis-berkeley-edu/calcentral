@@ -80,7 +80,6 @@ describe MyAcademics::CollegeAndLevel do
     {
       "cumulativeGPA" => {},
       "cumulativeUnits" => [],
-      "currentRegistration" => current_registration,
       "studentCareer" => {
         "academicCareer"=> academic_career
       },
@@ -215,18 +214,6 @@ describe MyAcademics::CollegeAndLevel do
       'statusDate' => '2015-12-12'
     }
   end
-
-  # Hub Academic Status - Current Registrations
-  let(:current_registration) do
-    {
-      "academicCareer" => current_registration_academic_career,
-      "academicLevel" => current_registration_academic_level,
-      "term" => current_registration_term,
-    }
-  end
-  let(:current_registration_academic_career) { undergraduate_academic_career }
-  let(:current_registration_academic_level) { {"level" => { "code" => "30", "description" => "Junior" }} }
-  let(:current_registration_term) { {"id"=>"2168", "name"=>"2016 Fall"} }
 
   # Hub Academic Status - Student / Academic Careers
   let(:academic_career) { undergraduate_academic_career }
@@ -389,15 +376,24 @@ describe MyAcademics::CollegeAndLevel do
       max_terms_in_attendance: max_terms_in_attendance,
     })
   end
-  let(:academic_levels_model) do
-    double(:academic_levels, get_feed: {academic_levels: ["Graduate", "Professional Year 3"]})
+
+  # New User Models
+  let(:user_current) { double(registrations: user_registrations) }
+  let(:user_registrations) do
+    double({
+      latest: [user_registration],
+      latest_academic_level_descriptions: academic_level_descriptions
+    })
   end
+  let(:user_registration) { double(term: user_registration_term) }
+  let(:user_registration_term) { double(to_english: 'Fall 2016', campus_solutions_id: '2168') }
+  let(:academic_level_descriptions) { ['Graduate','Professional Year 3'] }
 
   before do
     allow_any_instance_of(CalnetCrosswalk::ByUid).to receive(:lookup_campus_solutions_id).and_return campus_solutions_id
     allow(MyAcademics::MyAcademicStatus).to receive(:new).and_return(my_academic_status)
     allow(MyAcademics::MyAcademicStatus).to receive(:has_holds?).and_return(has_holds)
-    allow(MyAcademics::AcademicLevels).to receive(:new).and_return(academic_levels_model)
+    allow(User::Current).to receive(:new).with(uid).and_return(user_current)
   end
 
   context 'data sourcing' do
@@ -638,26 +634,10 @@ describe MyAcademics::CollegeAndLevel do
         {
           "cumulativeGPA" => {},
           "cumulativeUnits" => [],
-          "currentRegistration" => current_registration_secondary,
           "studentCareer" => student_career_secondary,
           "studentPlans" => student_plans_secondary
         }
       end
-
-      # Graduate Statuses - Current Registrations
-      let(:current_registration_secondary) do
-        {
-          "academicCareer" => current_registration_academic_career_secondary,
-          "academicLevel" => current_registration_academic_level_secondary,
-          "term" => current_registration_term_secondary,
-        }
-      end
-      let(:current_registration_academic_career) { graduate_academic_career }
-      let(:current_registration_academic_level) { { "level" => { "code" => "GR", "description" => "Graduate" } } }
-      let(:current_registration_term) { {"id" => "2142", "name" => "2014 Spring"} }
-      let(:current_registration_academic_career_secondary) { law_academic_career }
-      let(:current_registration_academic_level_secondary) { { "level" => { "code" => "P2", "description" => "Professional Year 2" } } }
-      let(:current_registration_term_secondary) { {"id" => "2168", "name" => "2016 Fall"} }
 
       # Hub Academic Status - Student / Academic Careers
       let(:academic_career) { graduate_academic_career }
@@ -684,11 +664,11 @@ describe MyAcademics::CollegeAndLevel do
       end
 
       it 'specifies term name' do
-        expect(feed[:collegeAndLevel][:termName]).to eq 'Spring 2014'
+        expect(feed[:collegeAndLevel][:termName]).to eq 'Fall 2016'
       end
 
       it 'specifies term id' do
-        expect(feed[:collegeAndLevel][:termId]).to eq '2142'
+        expect(feed[:collegeAndLevel][:termId]).to eq '2168'
       end
 
       it 'translates majors' do
@@ -745,16 +725,6 @@ describe MyAcademics::CollegeAndLevel do
       let(:feed_error_body) { 'Bad Gateway' }
       it 'reports error' do
         expect(feed[:collegeAndLevel][:errored]).to eq true
-      end
-    end
-
-    context 'status feed lacking some data' do
-      let(:current_registration) { {} }
-      it 'returns what data it can' do
-        expect(feed[:collegeAndLevel][:careers]).to be_present
-        expect(feed[:collegeAndLevel][:majors]).to be_present
-        expect(feed[:collegeAndLevel][:termName]).to be nil
-        expect(feed[:collegeAndLevel][:termId]).to be nil
       end
     end
   end
