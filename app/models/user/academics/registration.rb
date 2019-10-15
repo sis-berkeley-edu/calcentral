@@ -36,8 +36,7 @@ module User
       end
 
       def preferred_level
-        career_preferred_type_code = career_code == 'LAW' ? 'EOT' : 'BOT'
-        academic_levels.all.find {|al| al.type_code == career_preferred_type_code }
+        academic_levels.preferred_for_career_code(career_code)
       end
 
       def career_code

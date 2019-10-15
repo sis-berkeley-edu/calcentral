@@ -7,16 +7,72 @@ describe User::Academics::Level do
   subject { described_class.new(data) }
 
   describe '#type_code' do
-    context 'when beginning of term type' do
-      let(:level_type) { bot_type }
-      it 'returns beginning of term type code' do
-        expect(subject.type_code).to eq 'BOT'
+    it 'returns type code' do
+      expect(subject.type_code).to eq 'BOT'
+    end
+  end
+
+  describe '#preferred_for_career_code?' do
+    let(:career_code) { 'GRAD' }
+    let(:result) { subject.preferred_for_career_code?(career_code) }
+    context 'when level is end of term type' do
+      let(:level_type) { eot_type }
+      context 'when career code is not LAW' do
+        let(:career_code) { 'GRAD' }
+        it 'returns false' do
+          expect(result).to eq false
+        end
+      end
+      context 'when career code is LAW' do
+        let(:career_code) { 'LAW' }
+        it 'returns true' do
+          expect(result).to eq true
+        end
       end
     end
-    context 'when end of term type' do
+    context 'when level is beginning of term type' do
+      let(:level_type) { bot_type }
+      context 'when career code is not LAW' do
+        let(:career_code) { 'GRAD' }
+        it 'returns true' do
+          expect(result).to eq true
+        end
+      end
+      context 'when career code is LAW' do
+        let(:career_code) { 'LAW' }
+        it 'returns false' do
+          expect(result).to eq false
+        end
+      end
+    end
+  end
+
+  describe '#end_of_term?' do
+    context 'when level is end of term type' do
       let(:level_type) { eot_type }
-      it 'returns end of term type code' do
-        expect(subject.type_code).to eq 'EOT'
+      it 'returns true' do
+        expect(subject.end_of_term?).to eq true
+      end
+    end
+    context 'when level is not end of term type' do
+      let(:level_type) { bot_type }
+      it 'returns false' do
+        expect(subject.end_of_term?).to eq false
+      end
+    end
+  end
+
+  describe '#beginning_of_term?' do
+    context 'when level is beginning of term type' do
+      let(:level_type) { bot_type }
+      it 'returns true' do
+        expect(subject.beginning_of_term?).to eq true
+      end
+    end
+    context 'when level is not beginning of term type' do
+      let(:level_type) { eot_type }
+      it 'returns false' do
+        expect(subject.beginning_of_term?).to eq false
       end
     end
   end

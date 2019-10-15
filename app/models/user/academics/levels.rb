@@ -8,7 +8,11 @@ module User
       end
 
       def all
-        data.collect {|level| ::User::Academics::Level.new(level) }
+        data.collect {|level| ::User::Academics::Level.new(level)}
+      end
+
+      def preferred_for_career_code(career_code)
+        all.find { |level| level.preferred_for_career_code?(career_code) }
       end
     end
   end
