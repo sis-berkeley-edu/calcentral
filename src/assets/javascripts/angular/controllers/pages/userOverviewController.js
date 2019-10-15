@@ -107,9 +107,9 @@ angular.module('calcentral.controllers').controller('UserOverviewController', fu
         setVisa(_.get(response, 'data.demographics.feed.usaCountry.visa'));
         $scope.targetUser.academicRoles = _.get(response, 'data.academicRoles');
         $scope.targetUser.ldapUid = targetUserUid;
-        $scope.targetUser.addresses = apiService.profile.fixFormattedAddresses(_.get(response, 'data.contacts.feed.student.addresses'));
-        $scope.targetUser.phones = _.get(response, 'data.contacts.feed.student.phones');
-        $scope.targetUser.emails = _.get(response, 'data.contacts.feed.student.emails');
+        $scope.targetUser.addresses = apiService.profile.fixFormattedAddresses(_.get(response, 'data.contacts.feed.addresses'));
+        $scope.targetUser.phones = _.get(response, 'data.contacts.feed.phones');
+        $scope.targetUser.emails = _.get(response, 'data.contacts.feed.emails');
         // 'student.fullName' is expected by shared code (e.g., photo unavailable widget)
         $scope.targetUser.fullName = $scope.targetUser.defaultName;
         apiService.util.setTitle($scope.targetUser.defaultName);
