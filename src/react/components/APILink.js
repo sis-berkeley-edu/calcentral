@@ -12,7 +12,7 @@ const propTypes = {
   ucFromLink: PropTypes.string,
   ucFromText: PropTypes.string,
   url: PropTypes.string,
-  urlId: PropTypes.string
+  urlId: PropTypes.string,
 };
 
 const APILink = ({ disabled, title, name, url, ucFrom, ucFromText }) => {
@@ -22,14 +22,19 @@ const APILink = ({ disabled, title, name, url, ucFrom, ucFromText }) => {
 
   const currentUrl = window.location.href;
   const queryStringPrefix = url.includes('?') ? '&' : true;
-  const href = url + qs.stringify({
-    ucFrom,
-    ucFromText,
-    ucFromLink: currentUrl
-  }, queryStringPrefix);
+  const href =
+    url +
+    qs.stringify(
+      {
+        ucFrom,
+        ucFromText,
+        ucFromLink: currentUrl,
+      },
+      queryStringPrefix
+    );
 
   return (
-    <a href={href} title={title} onClick={(e) => e.stopPropagation()}>
+    <a href={href} title={title} onClick={e => e.stopPropagation()}>
       {name}
     </a>
   );

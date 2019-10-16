@@ -103,6 +103,6 @@ const PaymentItem = ({ dispatch, ...props }) => {
   );
 };
 
-PaymentItem.propTypes = propTypes;
+PaymentItem.propTypes = { ...propTypes, dispatch: PropTypes.func };
 
 export default connect()(PaymentItem);

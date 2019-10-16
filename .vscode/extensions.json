@@ -1,0 +1,8 @@
+{
+  "recommendations": [
+    "EditorConfig.editorconfig",
+    "esbenp.prettier-vscode",
+    "formulahendry.auto-rename-tag",
+    "wayou.vscode-todo-highlight"
+  ]
+}
