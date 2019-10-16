@@ -50,14 +50,14 @@ const SemesterSections = ({ semester, transferCredit, isLawStudent }) => {
   const hasLawTransfer = lawTransferUnits().units > 0 || lawTransferUnits().lawUnits > 0;
 
   const primarySections = classes.map(klass => {
-    const primary = klass.sections.flat().find((section) => {
+    const primaries = klass.sections.flat().filter((section) => {
       return section.is_primary_section && !section.waitlisted;
     });
 
-    if (primary) {
+    return primaries.map(primary => {
       return {...primary, class: klass};
-    }
-  }).filter(e => e !== undefined);
+    });
+  }).flat().filter(e => e !== undefined);
 
   const showPoints = classes.find(klass => {
     return klass.sections.find(section => section.grading.gradePointsAdjusted);
