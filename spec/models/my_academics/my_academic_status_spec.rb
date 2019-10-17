@@ -1,29 +1,75 @@
 describe MyAcademics::MyAcademicStatus do
-
   subject { described_class.new(random_id) }
+  let(:academic_status_proxy) do
+    double({
+      get: academic_status_response_active,
+      get_active_only: academic_status_response_active,
+      get_inactive_completed: academic_status_response_inactive,
+    })
+  end
+
+  let(:academic_status_response_active) { {statusCode: 200, feed: academic_status_feed_active, studentNotFound: nil} }
+  let(:academic_status_response_inactive) { {statusCode: 200, feed: academic_status_feed_inactive, studentNotFound: nil} }
+  let(:academic_status_feed_active) { {'academicStatuses' => [:activeStatus]} }
+  let(:academic_status_feed_inactive) { {'academicStatuses' => [:inactiveStatus, :completedStatus]} }
+  before { allow(HubEdos::StudentApi::V2::AcademicStatuses).to receive(:new).and_return(academic_status_proxy) }
+
+  describe '#api_response' do
+    context 'when api response does not contain academic statuses' do
+      let(:academic_status_feed_active) { {'academicStatuses' => nil } }
+      it 'returns inactive and completed response' do
+        expect(subject.api_response[:feed]['academicStatuses']).to eq [:inactiveStatus, :completedStatus]
+      end
+    end
+    context 'when api response contains academic statuses' do
+      let(:academic_status_feed_active) { {'academicStatuses' => [:activeStatus]} }
+      it 'returns active-only response' do
+        expect(subject.api_response[:feed]['academicStatuses']).to eq [:activeStatus]
+      end
+    end
+  end
 
   describe '#get_feed_internal' do
     let(:result) { subject.get_feed_internal }
-    let(:academic_status_proxy) { double(:academic_status_proxy, :get => academic_status_response) }
-    let(:academic_status_response) { nil }
-    before { allow(HubEdos::StudentApi::V2::AcademicStatuses).to receive(:new).and_return(academic_status_proxy) }
+    let(:api_response) { nil }
+    before { allow(subject).to receive(:api_response).and_return(api_response) }
 
-    context 'when AcademicStatus response is nil' do
-      let(:academic_status_response) { nil }
+    context 'when api response is nil' do
+      let(:api_response) { nil }
       it 'returns nil' do
         expect(result).to be nil
       end
     end
-    context 'when AcademicStatus response is empty' do
-      let(:academic_status_response) { {} }
+    context 'when api response is empty' do
+      let(:api_response) { {} }
       it 'returns an empty response' do
         expect(result).to eq({})
       end
     end
-    context 'when AcademicStatus response is populated' do
-      let(:academic_status_proxy) { HubEdos::StudentApi::V2::AcademicStatuses.new(fake: true, user_id: '61889') }
+    context 'when api response is populated' do
+      let(:academic_status) do
+        {
+          'studentCareer' => {'academicCareer' => {'code' => 'UGRD'}},
+          'studentPlans' => [
+            {
+              'academicPlan' => {
+                'plan' => {'code' => '70141PHDG'},
+                'academicProgram' => {'program' => {'code' => 'UBUS'}}
+              },
+              'statusInPlan' => {'status' => {'code' => 'AC'}}
+            }
+          ]
+        }
+      end
+      let(:api_response) { {statusCode: 200, feed: {'academicStatuses' => [academic_status]}} }
       it 'should successfully return a response' do
         expect(result[:statusCode]).to eq 200
+        expect(result[:feed]['academicStatuses'].count).to eq 1
+      end
+      it 'should assign roles to careers and plans' do
+        expect(result[:feed]['academicStatuses'][0]['studentCareer'][:role]).to eq 'ugrd'
+        expect(result[:feed]['academicStatuses'][0]['studentPlans'][0][:role]).to eq ["haasBusinessAdminPhD"]
+        expect(result[:feed]['academicStatuses'][0]['studentPlans'][0]['academicPlan']['academicProgram'][:role]).to eq 'ugrdHaasBusiness'
       end
     end
   end
