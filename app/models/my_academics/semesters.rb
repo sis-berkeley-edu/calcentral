@@ -159,7 +159,7 @@ module MyAcademics
         if @filtered
           mapped_enrollment.delete :url
         else
-          process_unfiltered_enrollment(enrollment, term_id)
+          process_unfiltered_enrollment(mapped_enrollment, term_id)
         end
         mapped_enrollment
       end.compact
