@@ -7,7 +7,9 @@
           <div data-ng-repeat="plan in plans" class="cc-section-block">
             <div class="cc-text-light" data-ng-if="plan.college && type != 'minor'" data-ng-bind="plan.college"></div>
             <div data-ng-bind="plan.{{type}}"></div>
-            <div class="cc-widget-profile-indent" data-ng-bind="plan.subPlan"></div>
+            <div data-ng-repeat="subPlan in plan.subPlans">
+              <div data-ng-bind="subPlan"></div>
+            </div>
           </div>
         </td>
       </tr>
