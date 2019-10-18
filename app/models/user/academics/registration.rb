@@ -7,12 +7,16 @@ module User
       GRADUATE = 'GRAD'
       UNDERGRADUATE = 'UGRD'
 
-      def initialize(data)
-        @data = data
+      def initialize(registration_data)
+        @data = registration_data
       end
 
       def term_id
         data['term']['id']
+      end
+
+      def term
+        Berkeley::Terms.find_by_campus_solutions_id(term_id)
       end
 
       def undergraduate?
@@ -27,6 +31,14 @@ module User
         career_code == LAW
       end
 
+      def academic_levels
+        ::User::Academics::Levels.new(data['academicLevels'])
+      end
+
+      def preferred_level
+        academic_levels.preferred_for_career_code(career_code)
+      end
+
       def career_code
         data['academicCareer']['code']
       end
@@ -36,16 +48,16 @@ module User
       end
 
       def total_units_taken
-        unit_totals.fetch("unitsTaken") { 0 }
+        unit_totals.fetch('unitsTaken') { 0 }
       end
 
       def total_units_enrolled
-        unit_totals.fetch("unitsEnrolled") { 0 }
+        unit_totals.fetch('unitsEnrolled') { 0 }
       end
 
       def unit_totals
-        data["termUnits"].select do |term|
-          term["type"]["code"] == "Total"
+        data['termUnits'].select do |term|
+          term['type']['code'] == 'Total'
         end.first || {}
       end
 
