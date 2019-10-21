@@ -37,11 +37,18 @@ module DegreeProgress
         'ugrdEnvironmentalDesign',
         'ugrdHaasBusiness',
       ]
+      if ucnr_apr_link_enabled?
+        authorized_program_roles << 'ugrdNaturalResources'
+      end
       !!authorized_program_roles.find {|role_string| roles[:current][role_string] }
     end
 
     def is_feature_enabled?
       Settings.features.cs_degree_progress_ugrd_student
+    end
+
+    def ucnr_apr_link_enabled?
+      Settings.features.cs_degree_progress_ugrd_ucnr_apr_link
     end
   end
 end

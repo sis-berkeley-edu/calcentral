@@ -86,6 +86,7 @@ describe DegreeProgress::MyUndergradRequirements do
           'ugrdEngineering' => ugrd_eng_role_present,
           'ugrdEnvironmentalDesign' => ugrd_env_role_present,
           'ugrdHaasBusiness' => ugrd_haas_bus_role_present,
+          'ugrdNaturalResources' => ugrd_natural_resources_role_present,
         }
       }
     end
@@ -93,8 +94,13 @@ describe DegreeProgress::MyUndergradRequirements do
     let(:ugrd_eng_role_present) { false }
     let(:ugrd_env_role_present) { false }
     let(:ugrd_haas_bus_role_present) { false }
+    let(:ugrd_natural_resources_role_present) { false }
+    let(:ugrd_natural_resources_apr_feature_flag) { false}
     let(:my_academic_roles) { double(:get_feed => roles_feed) }
-    before { allow(MyAcademics::MyAcademicRoles).to receive(:new).and_return(my_academic_roles) }
+    before do
+      allow(MyAcademics::MyAcademicRoles).to receive(:new).and_return(my_academic_roles)
+      allow(Settings.features).to receive(:cs_degree_progress_ugrd_ucnr_apr_link).and_return(ugrd_natural_resources_apr_feature_flag)
+    end
     context 'when student has no matching role' do
       it 'returns false' do
         expect(result).to eq false
@@ -122,6 +128,21 @@ describe DegreeProgress::MyUndergradRequirements do
       let(:ugrd_haas_bus_role_present) { true }
       it 'returns true' do
         expect(result).to eq true
+      end
+    end
+    context 'when student is in undergraduate natural resources program' do
+      let(:ugrd_natural_resources_role_present) { true }
+      context 'when APR link for UCNR students feature flag is on' do
+        let(:ugrd_natural_resources_apr_feature_flag) { true }
+        it 'returns true' do
+          expect(result).to eq true
+        end
+      end
+      context 'when APR Link for UNCR students feature flag is off' do
+        let(:ugrd_natural_resources_apr_feature_flag) { false }
+        it 'returns false' do
+          expect(result).to eq false
+        end
       end
     end
   end
