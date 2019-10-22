@@ -439,14 +439,14 @@ module EdoOracle
       def self.get_awards_alert_details(person_id, aid_year, item_type)
         result = safe_query <<-SQL
         SELECT UC.DISBURSEMENT_ID AS DISBURSEMENTID,
-          UC.MESSAGE_TEXT AS ALERT_MESSAGE,
+          TO_CHAR(UC.DESCRLONG) AS ALERT_MESSAGE,
           UC.DESCR AS ALERT_TERM
          FROM SYSADM.PS_UCC_FA_AWRD_DSB UC
         WHERE UC.CAMPUS_ID   = '#{person_id}'
           AND UC.INSTITUTION = '#{UC_BERKELEY}'
           AND UC.AID_YEAR    = '#{aid_year}'
           AND UC.ITEM_TYPE   = '#{item_type}'
-          AND UC.MESSAGE_TEXT <> ' '
+          AND UC.DESCRLONG IS NOT NULL
         ORDER BY UC.DISBURSEMENT_ID
         SQL
       end
