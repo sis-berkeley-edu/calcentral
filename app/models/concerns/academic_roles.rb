@@ -53,6 +53,7 @@ module Concerns
       {role_code: 'lettersAndScience', match: ['UCLS']},
       {role_code: 'ugrdEngineering', match: ['UCOE']},
       {role_code: 'ugrdEnvironmentalDesign', match: ['UCED']},
+      {role_code: 'ugrdNaturalResources', match: ['UCNR']},
       {role_code: 'ugrdHaasBusiness', match: ['UBUS']},
       {role_code: 'degreeSeeking', match: [], exclude: ['GNODG', 'LNODG', 'UNODG', 'XCCRT', 'XFPF']},
       {role_code: 'ugrdNonDegree', match: ['UNODG']}
