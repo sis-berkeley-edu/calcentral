@@ -268,7 +268,7 @@ module EdoOracle
       end
 
       def self.get_finaid_profile_acad_careers(person_id, aid_year)
-        result = safe_query <<-SQL
+        safe_query <<-SQL
         SELECT
           UC.AID_YEAR             AS AID_YEAR,
           UC.STRM                 AS TERM_ID,
@@ -283,7 +283,7 @@ module EdoOracle
       end
 
       def self.get_finaid_profile_acad_level(person_id, aid_year)
-        result = safe_query <<-SQL
+        safe_query <<-SQL
         SELECT
           UC.AID_YEAR             AS AID_YEAR,
           UC.STRM                 AS TERM_ID,
@@ -298,7 +298,7 @@ module EdoOracle
       end
 
       def self.get_finaid_profile_enrollment(person_id, aid_year)
-        result = safe_query <<-SQL
+        safe_query <<-SQL
         SELECT
           UC.AID_YEAR                         AS AID_YEAR,
           UC.STRM                             AS TERM_ID,
@@ -314,7 +314,7 @@ module EdoOracle
       end
 
       def self.get_finaid_profile_residency(person_id, aid_year)
-        result = safe_query <<-SQL
+        safe_query <<-SQL
         SELECT
           UC.AID_YEAR             AS AID_YEAR,
           UC.STRM                 AS TERM_ID,
@@ -347,7 +347,7 @@ module EdoOracle
       end
 
       def self.get_awards(person_id, aid_year)
-        result = safe_query <<-SQL
+        safe_query <<-SQL
         SELECT UC.ITEM_TYPE       AS ITEM_TYPE,
           UC.DESCR                AS TITLE,
           UC.DESCRLONG            AS SUBTITLE,
@@ -366,7 +366,7 @@ module EdoOracle
       end
 
       def self.get_awards_by_type(person_id, aid_year, award_type)
-        result = safe_query <<-SQL
+        safe_query <<-SQL
         SELECT UC.ITEM_TYPE       AS ITEM_TYPE,
           UC.DESCR                AS TITLE,
           UC.DESCRLONG            AS SUBTITLE,
@@ -385,7 +385,7 @@ module EdoOracle
       end
 
       def self.get_awards_total_by_type(person_id, aid_year, award_type)
-        result = safe_query <<-SQL
+        safe_query <<-SQL
         SELECT SUM(UC.UC_AWARD_AMOUNT)  AS TOTAL
           FROM SYSADM.PS_UCC_FA_AWRD_SRC UC
          WHERE UC.CAMPUS_ID   = '#{person_id}'
@@ -396,7 +396,7 @@ module EdoOracle
       end
 
       def self.get_awards_total(person_id, aid_year)
-        result = safe_query <<-SQL
+        safe_query <<-SQL
         SELECT SUM(UC.UC_AWARD_AMOUNT)  AS TOTAL
           FROM SYSADM.PS_UCC_FA_AWRD_SRC UC
          WHERE UC.CAMPUS_ID   = '#{person_id}'
@@ -406,7 +406,7 @@ module EdoOracle
       end
 
       def self.get_awards_disbursements(person_id, aid_year, item_type)
-        result = safe_query <<-SQL
+        safe_query <<-SQL
         SELECT DISTINCT UC.DISBURSEMENT_ID AS DISBURSEMENTID,
           UC.DESCR                AS TERM,
           UC.OFFER_BALANCE        AS OFFERED,
@@ -421,7 +421,7 @@ module EdoOracle
       end
 
       def self.get_awards_disbursements_tuition_fee_remission(person_id, aid_year)
-        result = safe_query <<-SQL
+        safe_query <<-SQL
         SELECT DISTINCT UC.DISBURSEMENT_ID AS DISBURSEMENTID,
           UC.DESCR                  AS TERM,
           SUM(UC.OFFER_BALANCE)     AS OFFERED,
@@ -437,17 +437,17 @@ module EdoOracle
       end
 
       def self.get_awards_alert_details(person_id, aid_year, item_type)
-        result = safe_query <<-SQL
-        SELECT UC.DISBURSEMENT_ID AS DISBURSEMENTID,
-          TO_CHAR(UC.DESCRLONG) AS ALERT_MESSAGE,
-          UC.DESCR AS ALERT_TERM
-         FROM SYSADM.PS_UCC_FA_AWRD_DSB UC
-        WHERE UC.CAMPUS_ID   = '#{person_id}'
-          AND UC.INSTITUTION = '#{UC_BERKELEY}'
-          AND UC.AID_YEAR    = '#{aid_year}'
-          AND UC.ITEM_TYPE   = '#{item_type}'
-          AND UC.DESCRLONG IS NOT NULL
-        ORDER BY UC.DISBURSEMENT_ID
+        safe_query <<-SQL
+          SELECT UC.DISBURSEMENT_ID AS DISBURSEMENTID,
+            TO_CHAR(UC.DESCRLONG)   AS ALERT_MESSAGE,
+            UC.DESCR                AS ALERT_TERM
+            FROM SYSADM.PS_UCC_FA_AWRD_DSB UC
+           WHERE UC.CAMPUS_ID   = '#{person_id}'
+             AND UC.INSTITUTION = '#{UC_BERKELEY}'
+             AND UC.AID_YEAR    = '#{aid_year}'
+             AND UC.ITEM_TYPE   = '#{item_type}'
+             AND UC.DESCRLONG IS NOT NULL
+           ORDER BY UC.DISBURSEMENT_ID
         SQL
       end
 
@@ -531,7 +531,7 @@ module EdoOracle
       end
 
       def self.get_awards_by_term_types(person_id, aid_year)
-        result = safe_query <<-SQL
+        safe_query <<-SQL
         SELECT DISTINCT UC.UC_AWARD_TYPE AS AWARD_TYPE,
           CASE
             WHEN UC.UC_AWARD_TYPE = 'giftaid'           THEN 'Gift Aid'
@@ -560,7 +560,7 @@ module EdoOracle
       end
 
       def self.get_awards_by_term_by_type(person_id, aid_year, award_type)
-        result = safe_query <<-SQL
+        safe_query <<-SQL
         SELECT UC.ITEM_TYPE         AS ITEM_TYPE,
           UC.DESCR                  AS TITLE,
           UC.UC_AWARD_TYPE          AS AWARD_TYPE,
@@ -576,6 +576,13 @@ module EdoOracle
         SQL
       end
 
+      def self.get_financial_resources_links
+        safe_query <<-SQL
+         SELECT UC.URL_ID          AS URL_ID
+           FROM SYSADM.PS_UCC_LINKAPIURL UC
+          WHERE UC.URL_ID LIKE 'UC_FA_FINRES%'
+        SQL
+      end
     end
   end
 end

@@ -82,6 +82,9 @@ module CampusSolutions
           if property[:name] == 'LINK_DESCRIPTION_DISPLAY'
             link[:linkDescriptionDisplay] = property[:value] == 'Y'
           end
+          if property[:name] == 'CC_CACHE'
+            link[:ucUpdateCache] = property[:value]
+          end
         end
 
         # convert campus solutions property names to calcentral

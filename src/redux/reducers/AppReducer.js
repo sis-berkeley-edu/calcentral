@@ -7,16 +7,19 @@ import BillingItemsReducer from './BillingItemsReducer';
 import CarsDataReducer from './CarsDataReducer';
 import CalGrantsReducer from './CalGrantsReducer';
 import ConfigReducer from './ConfigReducer';
+import EftEnrollmentReducer from './EftEnrollmentReducer';
+import FinancialResourcesLinksReducer from './FinancialResourcesLinksReducer';
 import HoldsReducer from './HoldsReducer';
 import LawAwardsReducer from './LawAwardsReducer';
-import StatusReducer from './StatusReducer';
+import LinksReducer from './LinksReducer';
 import ProfileReducer from './ProfileReducer';
 import RegistrationsReducer from './RegistrationsReducer';
 import TransferCreditReducer from './TransferCreditReducer';
-import LinksReducer from './LinksReducer';
 import RouteReducer from './RouteReducer';
+import SirStatusReducer from './SirStatusReducer';
 import StandingsReducer from './StandingsReducer';
 import StatusAndHoldsReducer from './StatusAndHoldsReducer';
+import StatusReducer from './StatusReducer';
 
 const AppReducer = combineReducers({
   advising: AdvisingReducer,
@@ -24,10 +27,12 @@ const AppReducer = combineReducers({
   currentRoute: RouteReducer,
   billingItems: BillingItemsReducer,
   carsData: CarsDataReducer,
+  financialResourcesLinks: FinancialResourcesLinksReducer,
   links: LinksReducer,
   myAcademics: AcademicsReducer,
   myActivities: ActivitiesReducer,
   myCalGrants: CalGrantsReducer,
+  myEftEnrollment: EftEnrollmentReducer,
   myHolds: HoldsReducer,
   myLawAwards: LawAwardsReducer,
   myProfile: ProfileReducer,
@@ -35,7 +40,8 @@ const AppReducer = combineReducers({
   myStandings: StandingsReducer,
   myStatus: StatusReducer,
   myStatusAndHolds: StatusAndHoldsReducer,
-  myTransferCredit: TransferCreditReducer
+  myTransferCredit: TransferCreditReducer,
+  sirStatus: SirStatusReducer,
 });
 
 export default AppReducer;
