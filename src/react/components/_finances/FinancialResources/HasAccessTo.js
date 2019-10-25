@@ -15,7 +15,7 @@ const hasAccessToLink = (key, roles, careers, programs, delegate, summer) => {
   const linkAccess = {
     activateFPP: {
       roles: ['student'],
-      careers: ['UGRD', 'GRAD', 'LAW'],
+      excludedPrograms: ['GSSDP', 'LSSDPL'],
       allowsDelegateAccess: true,
       allowsSummerVisitor: false,
     },
@@ -57,16 +57,19 @@ const hasAccessToLink = (key, roles, careers, programs, delegate, summer) => {
     },
     directDeposit: {
       roles: ['student'],
+      careers: ['UGRD', 'GRAD', 'LAW'],
       allowsDelegateAccess: true,
       allowsSummerVisitor: false,
     },
     directDepositEnroll: {
       roles: ['student'],
+      careers: ['UGRD', 'GRAD', 'LAW'],
       allowsDelegateAccess: false,
       allowsSummerVisitor: false,
     },
     directDepositManage: {
       roles: ['student'],
+      careers: ['UGRD', 'GRAD', 'LAW'],
       allowsDelegateAccess: false,
       allowsSummerVisitor: false,
     },
@@ -212,6 +215,7 @@ const hasAccessToLink = (key, roles, careers, programs, delegate, summer) => {
       roles: ['student'],
       excludedPrograms: ['GSSDP', 'LSSDPL'],
       allowsDelegateAccess: true,
+      allowsSummerVisitor: false,
     },
     withdrawCancel: {
       roles: ['student', 'applicant', 'exStudent'],
