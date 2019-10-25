@@ -2,12 +2,12 @@
   <div
     class="cc-widget-title cc-flex cc-flex-space-between cc-flex-align-center"
   >
-    <h2 class="cc-left">Loan Summary by Aid Year</h2>
-    <h4 class="cc-right">
+    <h2 class="cc-left" style="padding-right: 0">Loan Summary by Aid Year</h2>
+    <div class="cc-right cc-widget-title-link cc-nowrap">
       <a class="title-link" href="/finances/cumulative_loan_debt">
         <strong>Cumulative Loan Debt </strong><i class="fa fa-arrow-right"></i>
       </a>
-    </h4>
+    </div>
   </div>
   <div data-cc-spinner-directive="loanHistory.isLoading">
     <div data-ng-include="'widgets/loan_history/aid_year_overview.html'"></div>
