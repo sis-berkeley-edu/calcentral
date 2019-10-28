@@ -14,7 +14,7 @@
   }
 
   &.ItemAdjustment--change {
-    color: #737373;
+    color: $cc-color-dim-gray;
 
     .ItemAdjustment__description {
       font-style: italic;
@@ -22,18 +22,18 @@
   }
 
   &.ItemAdjustment--last {
-    color: #737373;
+    color: $cc-color-dim-gray;
   }
 
   &.ItemAdjustment--show-more {
     background-image: url('/assets/images/timeline-center-blue.svg');
-    color: $cc-color-curious-blue-2;
+    color: $cc-color-curious-blue;
     cursor: pointer;
   }
 
   &.ItemAdjustment--too-many {
     background-image: url('/assets/images/timeline-empty.svg');
-    color: #737373;
+    color: $cc-color-dim-gray;
   }
 
   &:first-child {

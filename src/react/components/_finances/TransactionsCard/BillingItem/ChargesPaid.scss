@@ -1,3 +1,4 @@
+@import '../../../../stylesheets/variables';
 @import '../billing-items-grid.scss';
 
 .ChargesPaid {
@@ -30,5 +31,5 @@
 }
 
 .PartiallyPaid {
-  color: #737373;
+  color: $cc-color-dim-gray;
 }

@@ -43,12 +43,12 @@
   .GroupedButton.GroupedButton--active {
     font-weight: bold;
     color: $color-text-link;
-    border: 1px solid $cc-color-curious-blue-2;
+    border: 1px solid $cc-color-curious-blue;
     background: #F3F9FD;
   }
 
   .GroupedButton.GroupedButton--inactive {
-    color: #5E5D5D;
+    color: $cc-color-zambezi;
     background: #FBFAFA;
     border-color: $cc-color-very-light-grey;
 
