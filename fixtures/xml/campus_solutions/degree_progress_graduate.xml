@@ -5,6 +5,7 @@
     <PROGRESS>
       <ACAD_CAREER>LAW</ACAD_CAREER>
       <ACAD_PLAN>Doctor of Science of Law JSD</ACAD_PLAN>
+      <ACAD_PLAN_CODE>842C1JSDG</ACAD_PLAN_CODE>
       <ACAD_PROG_CODE>LACAD</ACAD_PROG_CODE>
       <ACAD_PROG>Law Academic Programs</ACAD_PROG>
       <REQUIREMENTS type="array">
@@ -34,6 +35,7 @@
     <PROGRESS>
       <ACAD_CAREER>LAW</ACAD_CAREER>
       <ACAD_PLAN>Doctor of Science of Law JSD</ACAD_PLAN>
+      <ACAD_PLAN_CODE>842C1JSDG</ACAD_PLAN_CODE>
       <ACAD_PROG_CODE>NONLACAD</ACAD_PROG_CODE>
       <ACAD_PROG>Not A LACAD Plan</ACAD_PROG>
       <REQUIREMENTS type="array"></REQUIREMENTS>
@@ -41,6 +43,7 @@
     <PROGRESS>
       <CAREER>GRAD</CAREER>
       <ACAD_PLAN>Physics MA</ACAD_PLAN>
+      <ACAD_PLAN_CODE>00666MAG</ACAD_PLAN_CODE>
       <ACAD_PROG_CODE>GACAD</ACAD_PROG_CODE>
       <ACAD_PROG>Graduate Academic Programs</ACAD_PROG>
       <REQUIREMENTS type="array">
@@ -70,6 +73,7 @@
     <PROGRESS>
       <CAREER>GRAD</CAREER>
       <ACAD_PLAN>Physics PhD</ACAD_PLAN>
+      <ACAD_PLAN_CODE>00666PHDG</ACAD_PLAN_CODE>
       <ACAD_PROG_CODE>GACAD</ACAD_PROG_CODE>
       <ACAD_PROG>Graduate Academic Programs</ACAD_PROG>
       <REQUIREMENTS type="array">
@@ -116,6 +120,7 @@
     <PROGRESS>
       <CAREER>GRAD</CAREER>
       <ACAD_PLAN>Physics PhD</ACAD_PLAN>
+      <ACAD_PLAN_CODE>00666PHDG</ACAD_PLAN_CODE>
       <ACAD_PROG_CODE>GACAD</ACAD_PROG_CODE>
       <ACAD_PROG>Graduate Academic Programs</ACAD_PROG>
       <REQUIREMENTS type="array">
@@ -143,6 +148,7 @@
     <PROGRESS>
       <CAREER>GRAD</CAREER>
       <ACAD_PLAN>Physics PhD</ACAD_PLAN>
+      <ACAD_PLAN_CODE>00666PHDG</ACAD_PLAN_CODE>
       <ACAD_PROG_CODE>GACAD</ACAD_PROG_CODE>
       <ACAD_PROG>Graduate Academic Programs</ACAD_PROG>
       <REQUIREMENTS type="array">

@@ -12,6 +12,8 @@ module Berkeley
     QE_APPROVAL_MILESTONE = 'AAGQEAPRV'
     QE_RESULTS_MILESTONE = 'AAGQERESLT'
 
+    ADVANCEMENT_TO_CANDIDACY = 'AAGADVPHD'
+
     def self.get_status(status_code, milestone_code = nil)
       status_code_standardized = status_code.strip.upcase unless status_code.blank?
 
@@ -58,7 +60,7 @@ module Berkeley
           :milestone => 'Qualifying Exam Results',
           :order => 2
         },
-        'AAGADVPHD' => {
+        ADVANCEMENT_TO_CANDIDACY => {
           :milestone => 'Advancement to Candidacy',
           :order => 3
         },

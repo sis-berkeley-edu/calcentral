@@ -821,23 +821,6 @@ module EdoOracle
       SQL
     end
 
-    def self.get_student_term_cpp(student_id)
-      result = safe_query <<-SQL
-        SELECT
-          TERM_ID as term_id,
-          ACAD_CAREER_CODE as acad_career,
-          ACAD_CAREER_DESCR as acad_career_descr,
-          ACAD_PROGRAM as acad_program,
-          ACAD_PLAN as acad_plan
-        FROM SISEDO.STUDENT_TERM_CPPV00_VW
-        WHERE
-          INSTITUTION = '#{UC_BERKELEY}' AND
-          STUDENT_ID = '#{student_id}'
-        ORDER BY TERM_ID DESC
-      SQL
-      return result
-    end
-
     def self.get_transfer_credit_detailed(person_id)
       safe_query <<-SQL
         SELECT TC.ACAD_CAREER as career,

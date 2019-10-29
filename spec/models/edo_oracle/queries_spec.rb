@@ -529,17 +529,6 @@ describe EdoOracle::Queries do
     end
   end
 
-  describe ".get_student_term_cpp" do
-    subject { EdoOracle::Queries.get_student_term_cpp(student_id) }
-    context "when valid uid" do
-      let(:student_id) { "10167763" }
-      it "should return term cpp records" do
-        expect(subject.count).to eq 8
-        expect(subject[0]).to have_keys(["term_id", "acad_career", "acad_career_descr", "acad_program", "acad_plan"])
-      end
-    end
-  end
-
   describe ".search_students" do
     subject { EdoOracle::Queries.search_students(search_string) }
     context "when matching name" do

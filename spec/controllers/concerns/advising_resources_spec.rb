@@ -31,11 +31,12 @@ describe AdvisingResources do
     ]
   end
 
+  let(:term_plans) { double(latest_career_code: 'UGRD') }
   before do
     allow(User::Identifiers).to receive(:lookup_campus_solutions_id).and_return empl_id
     allow_any_instance_of(MyAcademics::MyAcademicStatus).to receive(:get_feed).and_return({:feed=> { 'student'=> { 'academicStatuses'=> academic_statuses } } })
     allow(LinkFetcher).to receive(:fetch_link).and_return mock_link
-    allow(EdoOracle::Queries).to receive(:get_student_term_cpp).and_return term_cpp
+    allow(User::Academics::TermPlans::TermPlans).to receive(:new).and_return(term_plans)
   end
 
   describe '#empl_id' do
