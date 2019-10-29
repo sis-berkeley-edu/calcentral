@@ -124,7 +124,7 @@ const hasAccessToLink = (key, roles, careers, programs, delegate, summer) => {
       allowsSummerVisitor: false,
     },
     iGrad: {
-      roles: ['studentX', 'applicant', 'staff', 'faculty', 'exStudent'],
+      roles: ['student', 'applicant', 'staff', 'faculty', 'exStudent'],
       allowsDelegateAccess: true,
       allowsSummerVisitor: true,
     },
