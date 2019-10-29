@@ -1,7 +1,7 @@
 @import '../../../../stylesheets/variables';
 
-$borderColor: #CBCBCB;
-$backgroundColor: #F8F8F8;
+$borderColor: $cc-color-very-light-grey;
+$backgroundColor: $cc-color-white-smoke;
 
 .Dropdown {
   background-color: $backgroundColor;
@@ -46,13 +46,13 @@ $backgroundColor: #F8F8F8;
   white-space: nowrap;
 
   &:hover {
-    background-color: #2683BC;
+    background-color: $cc-color-curious-blue;
     color: white;
   }
 }
 
 .Dropdown__option--selected {
-  color: #2C84BC;
+  color: $cc-color-curious-blue;
   background-image: url('/assets/images/blue-bullet.svg');
   background-repeat: no-repeat;
   background-position-y: center;

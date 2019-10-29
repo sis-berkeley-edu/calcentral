@@ -1,6 +1,8 @@
+@import '../../../../stylesheets/variables';
+
 .TableColumn__due.ChargeItem__due {
   flex-direction: column;
   align-items: flex-end;
-  color: #474747;
+  color: $cc-color-charcoal;
   padding-right: 12px;
 }
