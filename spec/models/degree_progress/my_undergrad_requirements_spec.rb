@@ -19,12 +19,29 @@ describe DegreeProgress::MyUndergradRequirements do
 
     context 'when student is active in the Letters and Science program' do
       before do
-        allow_any_instance_of(MyAcademics::MyAcademicRoles).to receive(:get_feed).and_return(academic_roles)
+        allow(MyAcademics::MyAcademicStatus).to receive(:statuses_by_career_role).with(user_id, ['ugrd']).and_return(academic_statuses)
       end
-      let(:academic_roles) do
-        {
-          current: { 'lettersAndScience' => true }
-        }
+      let(:academic_statuses) do
+        [
+          {
+            'studentPlans' => [
+              {
+                'academicPlan'=> {
+                  'academicProgram'=> {
+                    'program'=> {
+                      'code'=> 'UCLS'
+                    }
+                  }
+                },
+                'statusInPlan'=> {
+                  'status'=> {
+                    'code'=> 'AC'
+                  }
+                }
+              }
+            ]
+          }
+        ]
       end
       it 'includes the Academic Progress Report link in the response' do
         expect(subject[:feed][:links]).to be
@@ -34,12 +51,29 @@ describe DegreeProgress::MyUndergradRequirements do
     end
     context 'when student is active in the Undergraduate College of Engineering' do
       before do
-        allow_any_instance_of(MyAcademics::MyAcademicRoles).to receive(:get_feed).and_return(academic_roles)
+        allow(MyAcademics::MyAcademicStatus).to receive(:statuses_by_career_role).with(user_id, ['ugrd']).and_return(academic_statuses)
       end
-      let(:academic_roles) do
-        {
-          current: { 'ugrdEngineering' => true }
-        }
+      let(:academic_statuses) do
+        [
+          {
+            'studentPlans' => [
+              {
+                'academicPlan'=> {
+                  'academicProgram'=> {
+                    'program'=> {
+                      'code'=> 'UCOE'
+                    }
+                  }
+                },
+                'statusInPlan'=> {
+                  'status'=> {
+                    'code'=> 'AC'
+                  }
+                }
+              }
+            ]
+          }
+        ]
       end
       it 'includes the Academic Progress Report link in the response' do
         expect(subject[:feed][:links]).to be
@@ -49,12 +83,29 @@ describe DegreeProgress::MyUndergradRequirements do
     end
     context 'when student is active in the Undergraduate Environmental Design program' do
       before do
-        allow_any_instance_of(MyAcademics::MyAcademicRoles).to receive(:get_feed).and_return(academic_roles)
+        allow(MyAcademics::MyAcademicStatus).to receive(:statuses_by_career_role).with(user_id, ['ugrd']).and_return(academic_statuses)
       end
-      let(:academic_roles) do
-        {
-          current: { 'ugrdEnvironmentalDesign' => true }
-        }
+      let(:academic_statuses) do
+        [
+          {
+            'studentPlans' => [
+              {
+                'academicPlan'=> {
+                  'academicProgram'=> {
+                    'program'=> {
+                      'code'=> 'UCED'
+                    }
+                  }
+                },
+                'statusInPlan'=> {
+                  'status'=> {
+                    'code'=> 'AC'
+                  }
+                }
+              }
+            ]
+          }
+        ]
       end
       it 'does includes the Academic Progress Report link in the response' do
         expect(subject[:feed][:links][:academicProgressReport]).to be
@@ -63,12 +114,29 @@ describe DegreeProgress::MyUndergradRequirements do
     end
     context 'when student is not active in the Letters and Science program' do
       before do
-        allow_any_instance_of(MyAcademics::MyAcademicRoles).to receive(:get_feed).and_return(academic_roles)
+        allow(MyAcademics::MyAcademicStatus).to receive(:statuses_by_career_role).with(user_id, ['ugrd']).and_return(academic_statuses)
       end
-      let(:academic_roles) do
-        {
-          current: { 'lettersAndScience' => false }
-        }
+      let(:academic_statuses) do
+        [
+          {
+            'studentPlans' => [
+              {
+                'academicPlan'=> {
+                  'academicProgram'=> {
+                    'program'=> {
+                      'code'=> 'XXXX'
+                    }
+                  }
+                },
+                'statusInPlan'=> {
+                  'status'=> {
+                    'code'=> 'AC'
+                  }
+                }
+              }
+            ]
+          }
+        ]
       end
       it 'does not include the Academic Progress Report link in the response' do
         expect(subject[:feed][:links]).not_to be
@@ -79,26 +147,35 @@ describe DegreeProgress::MyUndergradRequirements do
 
   describe '#should_see_links?' do
     let(:result) { subject.should_see_links? }
-    let(:roles_feed) do
-      {
-        current: {
-          'lettersAndScience' => ugrd_ls_role_present,
-          'ugrdEngineering' => ugrd_eng_role_present,
-          'ugrdEnvironmentalDesign' => ugrd_env_role_present,
-          'ugrdHaasBusiness' => ugrd_haas_bus_role_present,
-          'ugrdNaturalResources' => ugrd_natural_resources_role_present,
-        }
-      }
-    end
-    let(:ugrd_ls_role_present) { false }
-    let(:ugrd_eng_role_present) { false }
-    let(:ugrd_env_role_present) { false }
-    let(:ugrd_haas_bus_role_present) { false }
-    let(:ugrd_natural_resources_role_present) { false }
-    let(:ugrd_natural_resources_apr_feature_flag) { false}
-    let(:my_academic_roles) { double(:get_feed => roles_feed) }
     before do
-      allow(MyAcademics::MyAcademicRoles).to receive(:new).and_return(my_academic_roles)
+      allow(MyAcademics::MyAcademicStatus).to receive(:statuses_by_career_role).with(user_id, ['ugrd']).and_return(academic_statuses)
+    end
+    let(:academic_statuses) do
+      [
+        {
+          'studentPlans' => [
+            {
+              'academicPlan'=> {
+                'academicProgram'=> {
+                  'program'=> {
+                    'code'=> ugrd_role
+                  }
+                }
+              },
+              'statusInPlan'=> {
+                'status'=> {
+                  'code'=> ugrd_program_status_code
+                }
+              }
+            }
+          ]
+        }
+      ]
+    end
+    let(:ugrd_role) { 'XXXX' }
+    let(:ugrd_program_status_code) { 'CM' }
+    let(:ugrd_natural_resources_apr_feature_flag) { false }
+    before do
       allow(Settings.features).to receive(:cs_degree_progress_ugrd_ucnr_apr_link).and_return(ugrd_natural_resources_apr_feature_flag)
     end
     context 'when student has no matching role' do
@@ -106,32 +183,44 @@ describe DegreeProgress::MyUndergradRequirements do
         expect(result).to eq false
       end
     end
+    context 'when student has matching role but all completed programs' do
+      let(:ugrd_role) { 'UCLS' }
+      let(:ugrd_program_status_code) { 'CM' }
+      it 'returns false' do
+        expect(result).to eq false
+      end
+    end
     context 'when student is in undergraduate letters and science program' do
-      let(:ugrd_ls_role_present) { true }
+      let(:ugrd_role) { 'UCLS' }
+      let(:ugrd_program_status_code) { 'AC' }
       it 'returns true' do
         expect(result).to eq true
       end
     end
     context 'when student is in undergraduate engineering program' do
-      let(:ugrd_eng_role_present) { true }
+      let(:ugrd_role) { 'UCOE' }
+      let(:ugrd_program_status_code) { 'AC' }
       it 'returns true' do
         expect(result).to eq true
       end
     end
     context 'when student is in undergraduate environmental design program' do
-      let(:ugrd_env_role_present) { true }
+      let(:ugrd_role) { 'UCED' }
+      let(:ugrd_program_status_code) { 'AC' }
       it 'returns true' do
         expect(result).to eq true
       end
     end
     context 'when student is in undergraduate haas business program' do
-      let(:ugrd_haas_bus_role_present) { true }
+      let(:ugrd_role) { 'UBUS' }
+      let(:ugrd_program_status_code) { 'AC' }
       it 'returns true' do
         expect(result).to eq true
       end
     end
     context 'when student is in undergraduate natural resources program' do
-      let(:ugrd_natural_resources_role_present) { true }
+      let(:ugrd_role) { 'UCNR' }
+      let(:ugrd_program_status_code) { 'AC' }
       context 'when APR link for UCNR students feature flag is on' do
         let(:ugrd_natural_resources_apr_feature_flag) { true }
         it 'returns true' do
