@@ -45,7 +45,7 @@ const FinancialResources = ({
   const [isAccessReady, setIsAccessReady] = useState(false);
   const linksReady = financialResourcesLinks.loaded;
   const eftReady = myEftEnrollment.loaded;
-  const sirStatusReady = sirStatus.loaded;
+  const sirStatusReady = sirStatus.loaded || myStatus.delegateActingAsUid;
   const statusReady = myStatus.loaded;
 
   return (
