@@ -10,9 +10,11 @@ module DegreeProgress
     def get_feed_internal
       return {} unless is_feature_enabled?
       user = User::Current.new(@uid)
-      degree_progress = User::Academics::DegreeProgress::Graduate::Milestones.new(user).as_json
-      response = {feed: {}}
-      response[:feed][:degreeProgress] = degree_progress if degree_progress.present?
+      response = {
+        feed: {
+          degreeProgress: User::Academics::DegreeProgress::Graduate::Milestones.new(user).as_json
+        }
+      }
       response
     end
 
