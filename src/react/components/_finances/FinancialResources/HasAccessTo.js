@@ -180,7 +180,7 @@ const hasAccessToLink = (key, roles, careers, programs, delegate, summer) => {
       roles: ['student', 'applicant', 'staff', 'faculty', 'exStudent'],
       careers: ['UGRD', 'GRAD', 'LAW'],
       allowsDelegateAccess: true,
-      allowsSummerVisitor: true,
+      allowsSummerVisitor: false,
     },
     studentAdvocateOffice: {
       roles: ['student', 'applicant', 'exStudent'],
