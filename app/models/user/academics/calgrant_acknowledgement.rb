@@ -44,10 +44,6 @@ module User
         })
       end
 
-      def view_all_link
-        @view_all_link ||= LinkFetcher.fetch_link('UC_CX_ACTIVITY_GUIDE_VIEW_ALL')
-      end
-
       private
 
       def matching_hold

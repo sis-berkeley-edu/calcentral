@@ -262,9 +262,8 @@ angular.module('calcentral.controllers').controller('EnrollmentCardController', 
   };
 
   const loadCalGrantData = function() {
-    return calGrantsFactory.getCalGrants().then(({ data: { acknowledgements, viewAllLink } }) => {
+    return calGrantsFactory.getCalGrants().then(({ data: { acknowledgements } }) => {
       $scope.calgrantAcknowledgements = acknowledgements;
-      $scope.viewAllLink = viewAllLink;
     });
   };
 

@@ -29,11 +29,7 @@ module User
         end
 
         def link
-          if calgrant_acknowledgement.complete?
-            calgrant_acknowledgement.view_all_link
-          else
-            calgrant_acknowledgement.link
-          end
+          calgrant_acknowledgement.link unless calgrant_acknowledgement.complete?
         end
       end
     end
