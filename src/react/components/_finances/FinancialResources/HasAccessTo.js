@@ -21,11 +21,13 @@ const hasAccessToLink = (key, roles, careers, programs, delegate, summer) => {
     },
     bearsFinancialSuccess: {
       roles: ['student', 'applicant', 'exStudent'],
+      careers: ['UGRD', 'GRAD', 'LAW'],
       allowsDelegateAccess: true,
       allowsSummerVisitor: false,
     },
     berkeleyInternationalOffice: {
       roles: ['student', 'applicant', 'exStudent'],
+      careers: ['UGRD', 'GRAD', 'LAW'],
       allowsDelegateAccess: true,
       allowsSummerVisitor: false,
     },
@@ -36,6 +38,7 @@ const hasAccessToLink = (key, roles, careers, programs, delegate, summer) => {
     },
     calStudentCentral: {
       roles: ['student', 'applicant', 'exStudent'],
+      careers: ['UGRD', 'GRAD', 'LAW'],
       allowsDelegateAccess: true,
       allowsSummerVisitor: false,
     },
@@ -46,6 +49,7 @@ const hasAccessToLink = (key, roles, careers, programs, delegate, summer) => {
     },
     costOfAttendance: {
       roles: ['student', 'applicant', 'exStudent'],
+      careers: ['UGRD', 'GRAD', 'LAW'],
       allowsDelegateAccess: true,
       allowsSummerVisitor: false,
     },
@@ -75,66 +79,79 @@ const hasAccessToLink = (key, roles, careers, programs, delegate, summer) => {
     },
     dreamActApplication: {
       roles: ['student', 'applicant', 'exStudent'],
+      careers: ['UGRD', 'GRAD', 'LAW'],
       allowsDelegateAccess: true,
       allowsSummerVisitor: false,
     },
     emergencyLoan: {
       roles: ['student'],
+      careers: ['UGRD', 'GRAD', 'LAW'],
       allowsDelegateAccess: false,
       allowsSummerVisitor: false,
     },
     emergencyLoanApply: {
       roles: ['student'],
+      careers: ['UGRD', 'GRAD', 'LAW'],
       allowsDelegateAccess: false,
       allowsSummerVisitor: false,
     },
     fafsa: {
       roles: ['student', 'applicant', 'exStudent'],
+      careers: ['UGRD', 'GRAD', 'LAW'],
       allowsDelegateAccess: true,
       allowsSummerVisitor: false,
     },
     fafsaVerify: {
       roles: ['student', 'applicant', 'staff', 'faculty', 'exStudent'],
+      careers: ['UGRD', 'GRAD', 'LAW'],
       allowsDelegateAccess: true,
-      allowsSummerVisitor: true,
+      allowsSummerVisitor: false,
     },
     federalStudentLoans: {
       roles: ['student', 'applicant', 'exStudent'],
+      careers: ['UGRD', 'GRAD', 'LAW'],
       allowsDelegateAccess: true,
       allowsSummerVisitor: false,
     },
     finaidForms: {
       roles: ['student', 'applicant', 'staff', 'faculty', 'exStudent'],
+      careers: ['UGRD', 'GRAD', 'LAW'],
       allowsDelegateAccess: true,
-      allowsSummerVisitor: true,
+      allowsSummerVisitor: false,
     },
     finaidOffice: {
       roles: ['student', 'applicant', 'exStudent'],
+      careers: ['UGRD', 'GRAD', 'LAW'],
       allowsDelegateAccess: true,
       allowsSummerVisitor: false,
     },
     finaidSummary: {
       roles: ['student', 'exStudent'],
+      careers: ['UGRD', 'GRAD', 'LAW'],
       allowsDelegateAccess: true,
       allowsSummerVisitor: false,
     },
     gradFinancialSupport: {
       roles: ['student', 'applicant', 'exStudent'],
+      careers: ['UGRD', 'GRAD', 'LAW'],
       allowsDelegateAccess: true,
       allowsSummerVisitor: false,
     },
     iGrad: {
       roles: ['student', 'applicant', 'staff', 'faculty', 'exStudent'],
+      careers: ['UGRD', 'GRAD', 'LAW'],
       allowsDelegateAccess: true,
-      allowsSummerVisitor: true,
+      allowsSummerVisitor: false,
     },
     leavingCal: {
       roles: ['student', 'applicant', 'exStudent'],
+      careers: ['UGRD', 'GRAD', 'LAW'],
       allowsDelegateAccess: true,
       allowsSummerVisitor: false,
     },
     loanRepaymentCalculator: {
       roles: ['student', 'applicant', 'exStudent'],
+      careers: ['UGRD', 'GRAD', 'LAW'],
       allowsDelegateAccess: true,
       allowsSummerVisitor: false,
     },
@@ -150,6 +167,7 @@ const hasAccessToLink = (key, roles, careers, programs, delegate, summer) => {
     },
     nslds: {
       roles: ['student', 'applicant', 'exStudent'],
+      careers: ['UGRD', 'GRAD', 'LAW'],
       allowsDelegateAccess: true,
       allowsSummerVisitor: false,
     },
@@ -160,11 +178,13 @@ const hasAccessToLink = (key, roles, careers, programs, delegate, summer) => {
     },
     stateInstitutionalLoans: {
       roles: ['student', 'applicant', 'staff', 'faculty', 'exStudent'],
+      careers: ['UGRD', 'GRAD', 'LAW'],
       allowsDelegateAccess: true,
       allowsSummerVisitor: true,
     },
     studentAdvocateOffice: {
       roles: ['student', 'applicant', 'exStudent'],
+      careers: ['UGRD', 'GRAD', 'LAW'],
       allowsDelegateAccess: true,
       allowsSummerVisitor: false,
     },
@@ -219,11 +239,13 @@ const hasAccessToLink = (key, roles, careers, programs, delegate, summer) => {
     },
     withdrawCancel: {
       roles: ['student', 'applicant', 'exStudent'],
+      careers: ['UGRD', 'GRAD', 'LAW'],
       allowsDelegateAccess: true,
       allowsSummerVisitor: false,
     },
     workStudy: {
       roles: ['student', 'applicant', 'exStudent'],
+      careers: ['UGRD', 'GRAD', 'LAW'],
       allowsDelegateAccess: true,
       allowsSummerVisitor: false,
     },
