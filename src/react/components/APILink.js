@@ -61,8 +61,8 @@ const APILink = ({
         queryStringPrefix
       )
     : url;
-  const target = showNewWindow ? '_blank' : '_self';
-  const rel = showNewWindow ? 'noopener noreferrer' : null;
+  const target = showNewWindow || !isCsLink ? '_blank' : '_self';
+  const rel = showNewWindow || !isCsLink ? 'noopener noreferrer' : null;
 
   return (
     <a
