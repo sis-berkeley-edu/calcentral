@@ -17,5 +17,14 @@
   "rules": {
     "no-useless-escape": "off",
     "no-unused-vars": ["error", { "argsIgnorePattern": "^_" }]
-  }
+  },
+  "overrides": [
+    {
+      "files": ["*.test.js"],
+      "env": {
+        "jest/globals": true
+      }
+    }
+  ],
+  "plugins": ["jest"]
 }

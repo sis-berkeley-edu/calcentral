@@ -88,9 +88,8 @@ angular.module('calcentral.controllers').controller('AcademicsStatusHoldsBlocksC
 
   var getCalGrants = function() {
     calGrantsFactory.getCalGrants(refreshOptions)
-    .then(({ data: { acknowledgements, viewAllLink } }) => {
+    .then(({ data: { acknowledgements } }) => {
       $scope.calgrantAcknowledgements = acknowledgements;
-      $scope.viewAllLink = viewAllLink;
       $scope.calGrantsLoaded = true;
     });
   };
