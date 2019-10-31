@@ -236,4 +236,71 @@ describe DegreeProgress::MyUndergradRequirements do
     end
   end
 
+  describe '#get_incomplete_programs_roles' do
+    let(:result) { subject.get_incomplete_programs_roles }
+    before do
+      allow(MyAcademics::MyAcademicStatus).to receive(:statuses_by_career_role).with(user_id, ['ugrd']).and_return(academic_statuses)
+    end
+    let(:academic_statuses) do
+      [
+        {
+          'studentPlans' => [
+            {
+              'academicPlan'=> {
+                'academicProgram'=> {
+                  'program'=> {
+                    'code'=> ugrd_role
+                  }
+                }
+              },
+              'statusInPlan'=> {
+                'status'=> {
+                  'code'=> ugrd_program_status_code
+                }
+              }
+            }
+          ]
+        }
+      ]
+    end
+    let(:ugrd_role) { 'XXXX' }
+    let(:ugrd_program_status_code) { 'CM' }
+    context 'when no academic statuses are returned' do
+      let(:academic_statuses) { nil }
+      it 'returns []' do
+        expect(result).to eq []
+      end
+    end
+    context 'when academic statuses returns incomplete data' do
+      let(:academic_statuses) do
+        [
+          {
+            'studentPlans' => [
+              {
+                'primary'=> false
+              }
+            ]
+          }
+        ]
+      end
+      it 'returns []' do
+        expect(result).to eq []
+      end
+    end
+    context 'when academic statuses returned valid but completed program' do
+      let(:ugrd_role) { 'UCED' }
+      let(:ugrd_program_status_code) { 'CM' }
+      it 'returns []' do
+        expect(result).to eq []
+      end
+    end
+    context 'when academic statuses returned valid program' do
+      let(:ugrd_role) { 'UCED' }
+      let(:ugrd_program_status_code) { 'AC' }
+      it 'returns valid program role' do
+        expect(result).to eq ['UCED']
+      end
+    end
+  end
+
 end
