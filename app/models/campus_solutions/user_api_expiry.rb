@@ -5,6 +5,9 @@ module CampusSolutions
       HubEdos::MyStudent.expire uid
       HubEdos::StudentApi::V2::Contacts.expire uid
       HubEdos::StudentApi::V2::Demographics.expire uid
+      HubEdos::StudentApi::V2::Gender.expire uid
+      HubEdos::StudentApi::V2::StudentAttributes.expire uid
+      HubEdos::StudentApi::V2::WorkExperiences.expire uid
       User::Api.expire uid
     end
   end
