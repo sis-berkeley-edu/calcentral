@@ -14,10 +14,10 @@
 
     <div
       class="medium-6 large-4 columns cc-academics-row-margin"
-      data-ng-if="api.user.profile.hasStudentHistory || api.user.profile.roles.student || api.user.profile.roles.applicant ||  api.user.profile.roles.releasedAdmit">
-      <student-profile-card data-ng-if="api.user.profile.hasStudentHistory || api.user.profile.roles.student || api.user.profile.roles.applicant""></student-profile-card>
+      data-ng-if="api.user.profile.hasStudentHistory || api.user.profile.roles.student ||  api.user.profile.roles.releasedAdmit">
+      <student-profile-card data-ng-if="api.user.profile.hasStudentHistory || api.user.profile.roles.student"></student-profile-card>
       <div data-ng-include="'academics_status_holds_blocks.html'" data-ng-if="showStatusAndBlocks"></div>
-      <div data-ng-include="'widgets/academics/academic_records.html'" data-ng-if="api.user.profile.hasStudentHistory || api.user.profile.roles.student || api.user.profile.roles.applicant""></div>
+      <div data-ng-include="'widgets/academics/academic_records.html'" data-ng-if="api.user.profile.hasStudentHistory || api.user.profile.roles.student"></div>
     </div>
 
     <div
