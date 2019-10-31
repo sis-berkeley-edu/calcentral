@@ -33,6 +33,9 @@ class BackgroundJobsCheck < TorqueBox::Messaging::MessageProcessor
     @stopped = false
     Thread.new do
       run
+
+      # Rails takes care of this for foregrounded request threads, but background jobs must fend for themselves.
+      EdoOracle::Connection.clear_active_connections!
     end
   end
 
