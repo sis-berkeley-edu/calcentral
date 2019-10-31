@@ -18,7 +18,12 @@ class JmsWorker
   def start
     if Settings.ist_jms.enabled
       Rails.logger.warn "#{self.class.name} Starting up"
-      Thread.new { run }
+      Thread.new do
+        run
+
+        # Rails takes care of this for foregrounded request threads, but background jobs must fend for themselves.
+        EdoOracle::Connection.clear_active_connections!
+      end
     else
       Rails.logger.warn "#{self.class.name} is disabled, not starting thread"
     end
