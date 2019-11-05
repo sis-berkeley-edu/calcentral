@@ -256,7 +256,11 @@ const hasAccessToLink = (key, roles, careers, programs, delegate, summer) => {
     : true;
   const hasPermittedCareer = currentLinkAccess.careers
     ? careers.filter(value => currentLinkAccess.careers.includes(value))
-        .length > 0
+        .length > 0 ||
+      /* Applicants or exStudents will not have a current career and may need to have the link still displayed */
+      (careers.length === 0 &&
+        roles.filter(value => ['applicant', 'exStudent'].includes(value))
+          .length > 0)
     : true;
   const hasForbiddenProgram = currentLinkAccess.excludedPrograms
     ? programs.filter(value =>
