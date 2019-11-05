@@ -9,7 +9,7 @@ angular
      * when a single item is shown.
      */
     var toggleShow = function(event, items, item, widget) {
-      var ignoreTogglingTags = ['A', 'BUTTON', 'INPUT', 'TEXTAREA'];
+      var ignoreTogglingTags = ['A', 'BUTTON', 'I', 'INPUT', 'TEXTAREA'];
       var nodeName = event && event.target && event.target.nodeName;
       if (nodeName && ignoreTogglingTags.indexOf(nodeName) !== -1) {
         return;

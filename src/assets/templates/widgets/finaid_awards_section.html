@@ -154,6 +154,15 @@
                       <span
                         data-ng-bind="finaidAwardsInfo.checkForDisbursementDates(item.subItems.termDetails)"
                       ></span>
+                      <button
+                        class="cc-button-link cc-text-line-height"
+                        data-ng-show="!item.subItems.showEstDisbursementMessage"
+                        data-ng-click="item.subItems.showEstDisbursementMessage = true"
+                      >
+                        <i
+                          class="cc-icon fa fa-info-circle cc-icon-air-force-blue"
+                        ></i>
+                      </button>
                     </th>
                     <th scope="col" class="cc-table-right">Offered</th>
                     <th scope="col" class="cc-table-right">Disbursed</th>
@@ -191,18 +200,17 @@
               data-ng-show="finaidAwardsInfo.checkForDisbursementDates(item.subItems.termDetails) === 'Est. Disbursement'"
               style="padding-top:5px"
             >
-              <button
-                class="cc-button-link"
-                data-ng-if="!item.subItems.showEstDisbursementMessage"
-                data-ng-click="item.subItems.showEstDisbursementMessage = true"
-              >
-                <i class="fa fa-info-circle" aria-hidden="true"></i>
-                What is Est. Disbursement?
-              </button>
-              <p
-                data-ng-if="item.subItems.showEstDisbursementMessage"
-                data-ng-bind-html="finaidAwards.messages.messageEstDisbursements"
-              ></p>
+              <div data-ng-if="item.subItems.showEstDisbursementMessage">
+                <span
+                  data-ng-bind-html="finaidAwards.messages.messageEstDisbursements"
+                ></span>
+                <button
+                  class="cc-button-link cc-text-line-height"
+                  data-ng-click="item.subItems.showEstDisbursementMessage = false"
+                >
+                  Show Less
+                </button>
+              </div>
             </div>
             <div
               data-ng-if="item.subItems.awardMessage"
