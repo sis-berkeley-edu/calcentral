@@ -148,7 +148,7 @@
           >
             <div class="cc-table">
               <table>
-                <thead>
+                <thead style="height: 28px">
                   <tr>
                     <th scope="col">
                       <span
@@ -156,7 +156,7 @@
                       ></span>
                       <button
                         class="cc-button-link cc-text-line-height"
-                        data-ng-show="!item.subItems.showEstDisbursementMessage"
+                        data-ng-show="!item.subItems.showEstDisbursementMessage && finaidAwardsInfo.checkForDisbursementDates(item.subItems.termDetails) === 'Est. Disbursement'"
                         data-ng-click="item.subItems.showEstDisbursementMessage = true"
                       >
                         <i
