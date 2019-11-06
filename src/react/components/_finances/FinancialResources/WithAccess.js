@@ -8,6 +8,7 @@ const propTypes = {
   dispatch: PropTypes.func.isRequired,
   myAcademics: PropTypes.object,
   myStatus: PropTypes.object,
+  children: PropTypes.node,
 };
 
 const WithAccess = ({ dispatch, isReady, onReady, children }) => {
