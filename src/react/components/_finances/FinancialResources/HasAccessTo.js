@@ -323,7 +323,7 @@ const mapStateToProps = ({
     roles: activeRoles(myStatus.roles),
     careerCodes: careerCodes,
     programCodes: programCodes,
-    isDelegate: myStatus.isDelegateUser,
+    isDelegate: myStatus.delegateActingAsUid,
     isSummerVisitor:
       myStatus.academicRoles.current.summerVisitor ||
       myStatus.academicRoles.historical.summerVisitor,
