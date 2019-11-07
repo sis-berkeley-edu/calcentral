@@ -9,6 +9,9 @@ angular.module('calcentral.config').config(function($routeProvider) {
     templateUrl: 'splash.html',
     controller: 'SplashController',
     isPublic: true
+  }).when('/tasks', {
+    templateUrl: 'tasks.html',
+    pageName: 'My Tasks'
   }).when('/academics', {
     templateUrl: 'academics.html',
     controller: 'AcademicsController',

@@ -2,6 +2,8 @@ module User
   class Current
     attr_reader :uid
 
+    include User::Tasks::Concern
+
     def initialize(uid)
       @uid = uid
     end

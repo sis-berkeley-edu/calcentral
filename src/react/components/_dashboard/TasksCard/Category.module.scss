@@ -1,0 +1,9 @@
+@import 'src/react/stylesheets/variables';
+
+.category {
+  display: block;
+}
+
+.categoryWithBorder {
+  border-bottom: 1px solid $cc-color-very-light-grey;
+}

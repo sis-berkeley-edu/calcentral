@@ -1,0 +1,61 @@
+@import 'src/react/stylesheets/variables';
+@import 'src/react/stylesheets/mixins';
+
+$activeColor: $cc-color-alice-blue;
+
+.container {
+  @include hasDisclosureArrow();
+  @include disclosureArrowClosed();
+
+  padding: 10px 0;
+  border-bottom: 1px solid #eee;
+
+  &:hover {
+    background-color: $activeColor;
+  }
+}
+
+.active {
+  background-color: $activeColor;
+  @include hasDisclosureArrow();
+  @include disclosureArrowOpen();
+}
+
+.header {
+  display: flex;
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+.title {
+  font-weight: bold;
+}
+
+.icon {
+  font-size: 20px;
+  width: 30px;
+  color: $cc-color-spindle;
+}
+
+.detail {
+  margin-left: 30px;
+  margin-top: 15px;
+  margin-right: 15px;
+  font-size: 12px;
+}
+
+.html {
+  margin-bottom: 20px;
+}
+
+.link {
+  font-weight: bold;
+}
+
+.noFocus {
+  background-color: $cc-color-ivory;
+}
+
+.notifications {
+  margin-top: 15px;
+}

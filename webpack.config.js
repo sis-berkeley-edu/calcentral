@@ -11,9 +11,11 @@ const {
   babelLoaderRule,
   imageLoaderRule,
   fontLoaderRule,
+  cssModuleLoaderRuleForMode,
+  // scssModuleLoaderRuleForMode,
   scssLoaderRuleForMode,
   cssLoaderRuleForMode,
-  templateLoaderRule
+  templateLoaderRule,
 } = require('./webpack/loaders');
 
 const apiHost = process.env.API_HOST || 'http://localhost:3000';
@@ -36,7 +38,7 @@ const apiRoutes = [
   '/reauth',
   '/stop_act_as',
   '/stop_advisor_act_as',
-  '/stop_delegate_act_as'
+  '/stop_delegate_act_as',
 ];
 
 const config = {
@@ -49,12 +51,14 @@ const config = {
         if (req.headers.accept.indexOf('application/json') !== -1) {
           return true;
         } else {
-          return apiRoutes.find(routeString => pathname.match(`^${routeString}`));
+          return apiRoutes.find(routeString =>
+            pathname.match(`^${routeString}`)
+          );
         }
       },
       secure: false,
-      target: apiHost
-    }
+      target: apiHost,
+    },
   },
 
   module: {
@@ -62,19 +66,16 @@ const config = {
       babelLoaderRule,
       imageLoaderRule,
       fontLoaderRule,
-      templateLoaderRule
-    ]
+      templateLoaderRule,
+    ],
   },
 
   optimization: {
     minimize: true,
-    minimizer: [
-      new OptimizeCSSAssetsPlugin(),
-      new TerserPlugin()
-    ],
+    minimizer: [new OptimizeCSSAssetsPlugin(), new TerserPlugin()],
     splitChunks: {
-      chunks: 'all'
-    }
+      chunks: 'all',
+    },
   },
 
   plugins: [
@@ -85,22 +86,22 @@ const config = {
         '*.css',
         '*.js',
         '*.LICENSE',
-        'assets/**/*'
-      ]
+        'assets/**/*',
+      ],
     }),
     new HtmlWebpackPlugin({
       filename: `index.html`,
-      template: `src/index.html`
-    })
+      template: `src/index.html`,
+    }),
   ],
 
   resolve: {
     modules: ['node_modules', path.resolve(__dirname, './src')],
     alias: {
       React: path.resolve(__dirname, './src/react'),
-      Redux: path.resolve(__dirname, './src/redux')
-    }
-  }
+      Redux: path.resolve(__dirname, './src/redux'),
+    },
+  },
 };
 
 module.exports = (_env, argv) => {
@@ -115,22 +116,21 @@ module.exports = (_env, argv) => {
     mode: mode,
     module: {
       rules: [
+        cssModuleLoaderRuleForMode(mode),
         scssLoaderRuleForMode(mode),
-        cssLoaderRuleForMode(mode)
-      ]
+        cssLoaderRuleForMode(mode),
+        // scssModuleLoaderRuleForMode(mode),
+      ],
     },
     output: {
       filename: isProduction ? `[name].[chunkhash].js` : `[name].js`,
-      path: outputPath
+      path: outputPath,
     },
     plugins: [
       new MiniCssExtractPlugin({
-        filename: (
-          mode === `production`
-            ? `[name].[chunkhash].css`
-            : `[name].css`
-        )
-      })
-    ]
+        filename:
+          mode === `production` ? `[name].[chunkhash].css` : `[name].css`,
+      }),
+    ],
   });
 };

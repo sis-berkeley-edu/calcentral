@@ -1,0 +1,75 @@
+@import 'src/react/stylesheets/variables';
+@import 'src/react/stylesheets/mixins';
+
+$danger-color: $cc-color-harley-davidson-orange;
+
+.overdueItem {
+  @include hasDisclosureArrow();
+
+  &::after {
+    right: 7px;
+  }
+
+  &:last-child {
+    border-bottom: 1px solid #eee;
+  }
+
+  &:hover {
+    background: $cc-color-alice-blue;
+  }
+
+  &.notSelected {
+    @include disclosureArrowClosed();
+  }
+
+  &.selected {
+    background-color: $cc-color-alice-blue;
+    @include disclosureArrowOpen();
+  }
+
+  border-top: 1px solid #eee;
+  margin-right: 10px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+  padding-right: 20px;
+  // margin-right: 7px;
+}
+
+.icon {
+  font-size: 19px;
+  width: 30px;
+}
+
+.title {
+  flex: 1;
+  font-size: 13px;
+  color: $danger-color;
+  font-weight: bold;
+}
+
+.dueDate {
+  text-align: right;
+  color: $danger-color;
+}
+
+.detail {
+  margin-left: 40px;
+  margin-right: 20px;
+  padding-bottom: 20px;
+}
+
+.departmentName {
+  color: $cc-color-nobel;
+  font-size: 11px;
+  font-weight: normal;
+  text-transform: uppercase;
+}
+
+// when the user has clicked away from the card
+.withoutFocus.selected {
+  background-color: rgb(252, 252, 243);
+}

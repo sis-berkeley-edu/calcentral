@@ -31,3 +31,86 @@ $card-body-padding: $small-spacing $large-spacing;
 @mixin card-body {
   padding: $small-spacing $large-spacing;
 }
+
+@mixin disclosureBasics {
+  border-width: 4px;
+  border-color: transparent;
+  border-style: solid;
+  content: '';
+  height: 0px;
+  width: 0px;
+  position: absolute;
+}
+
+@mixin hasDisclosureArrow {
+  position: relative;
+
+  &::after {
+    @include disclosureBasics;
+    right: 0px;
+    top: $medium-spacing + 7px;
+  }
+}
+
+@mixin hasLeftDisclosureArrow {
+  position: relative;
+
+  &::before {
+    @include disclosureBasics;
+    left: 0px;
+    top: 11px;
+  }
+}
+
+@mixin disclosureArrowClosed {
+  &::after {
+    border-right-color: $cc-color-nobel;
+  }
+
+  &:hover {
+    &::after {
+      border-top-color: transparent;
+      border-right-color: $cc-color-charcoal;
+    }
+  }
+}
+
+@mixin disclosureArrowLeftClosed {
+  &::before {
+    border-left-color: $cc-color-nobel;
+  }
+
+  &:hover {
+    &::before {
+      border-top-color: transparent;
+      border-left-color: $cc-color-charcoal;
+    }
+  }
+}
+
+@mixin disclosureArrowOpen {
+  &::after {
+    border-top-color: $cc-color-charcoal;
+  }
+
+  &:hover {
+    &::after {
+      border-right-color: transparent;
+      border-top-color: $cc-color-charcoal;
+    }
+  }
+}
+
+@mixin disclosureArrowLeftOpen {
+  &::before {
+    border-top-color: $cc-color-charcoal;
+    top: 13px;
+  }
+
+  &:hover {
+    &::before {
+      border-left-color: transparent;
+      border-top-color: $cc-color-charcoal;
+    }
+  }
+}

@@ -1,0 +1,41 @@
+@import 'src/react/stylesheets/variables';
+@import 'src/react/stylesheets/mixins';
+
+$activeColor: $cc-color-alice-blue;
+
+.compactNotification {
+  border-top: 1px solid #eee;
+  margin-left: 30px;
+  padding-left: 11px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+
+  @include hasLeftDisclosureArrow;
+  @include disclosureArrowLeftClosed;
+}
+
+.active {
+  background-color: $activeColor;
+  @include hasLeftDisclosureArrow;
+  @include disclosureArrowLeftOpen;
+}
+
+.detail {
+  font-size: 12px;
+  margin-top: 5px;
+
+  .activityTime {
+    float: right;
+    font-size: 10px;
+    color: #999;
+  }
+
+  .description {
+    padding-top: 20px;
+  }
+
+  .actionLink {
+    margin-top: 20px;
+    margin-bottom: 5px;
+  }
+}

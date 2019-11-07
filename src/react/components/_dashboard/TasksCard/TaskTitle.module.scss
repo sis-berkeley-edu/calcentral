@@ -1,0 +1,16 @@
+@import 'src/react/stylesheets/variables';
+@import 'src/react/stylesheets/mixins';
+
+$danger-color: $cc-color-harley-davidson-orange;
+
+.taskTitle {
+  flex: 1;
+
+  &.overdue {
+    color: $danger-color;
+  }
+}
+
+.title {
+  font-weight: bold;
+}
