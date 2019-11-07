@@ -11,7 +11,7 @@ import './Degrees.scss';
 const college = (degree) => degree.plans[0].college;
 const description = (degree) => degree.academicDegree.type.description;
 const degreeMajors = (degree) => degree.majors.map(major => major.description).join(', ');
-const formattedAwardDate = (degree) => format(degree.dateAwarded, 'MMMM D, YYYY');
+const formattedAwardDate = (degree) => format(degree.dateAwarded, 'MMMM d, y');
 
 const propTypes = {
   degrees: PropTypes.array.isRequired

@@ -7,6 +7,7 @@ import './_academics/StatusAndHoldsCard/SemesterStatuses';
 import './_academics/StudentProfile/StudentProfileCard';
 import './_dashboard/StudentResources/StudentResourcesContainer';
 import './_dashboard/UpNext/UpNextContainer';
+import './_dashboard';
 import './_finances/BillingSummary/BillingSummaryContainer';
 import './_finances/FinancialResources/FinancialResources';
 import './_finances/TransactionsCard/TransactionsCardContainer';

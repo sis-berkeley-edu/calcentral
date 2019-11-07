@@ -2,7 +2,7 @@
 // TODO: change API to camelcase
 
 import parseDate from 'date-fns/parse';
-import differenceInCalendarDays from 'date-fns/difference_in_calendar_days';
+import differenceInCalendarDays from 'date-fns/differenceInCalendarDays';
 
 import {
   FETCH_BILLING_ITEMS_START,

@@ -1,0 +1,40 @@
+@import 'src/react/stylesheets/variables';
+@import 'src/react/stylesheets/mixins';
+
+.task {
+  border-top: 1px solid $cc-color-whisper;
+
+  &:last-child {
+    border-bottom: 1px solid $cc-color-whisper;
+  }
+
+  &:hover {
+    background: $cc-color-alice-blue;
+  }
+
+  &.noActionNecessary {
+    color: #999;
+  }
+}
+
+.header {
+  padding: 10px 20px 20px 10px;
+
+  display: flex;
+  justify-content: space-between;
+
+  .title {
+    flex: 1;
+    font-weight: bold;
+  }
+
+  .icon {
+    width: 30px;
+  }
+
+  .date {
+    width: 85px;
+    text-align: right;
+    margin-right: 10px;
+  }
+}
