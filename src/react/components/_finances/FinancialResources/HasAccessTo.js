@@ -84,13 +84,13 @@ const hasAccessToLink = (key, roles, careers, programs, delegate, summer) => {
       allowsSummerVisitor: false,
     },
     emergencyLoan: {
-      roles: ['student'],
+      roles: ['registered'],
       careers: ['UGRD', 'GRAD', 'LAW'],
       allowsDelegateAccess: false,
       allowsSummerVisitor: false,
     },
     emergencyLoanApply: {
-      roles: ['student'],
+      roles: ['registered'],
       careers: ['UGRD', 'GRAD', 'LAW'],
       allowsDelegateAccess: false,
       allowsSummerVisitor: false,
@@ -324,9 +324,7 @@ const mapStateToProps = ({
     careerCodes: careerCodes,
     programCodes: programCodes,
     isDelegate: myStatus.delegateActingAsUid,
-    isSummerVisitor:
-      myStatus.academicRoles.current.summerVisitor ||
-      myStatus.academicRoles.historical.summerVisitor,
+    isSummerVisitor: myStatus.academicRoles.current.summerVisitor,
   };
 };
 
