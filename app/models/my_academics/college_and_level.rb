@@ -194,7 +194,7 @@ module MyAcademics
 
     def filter_inactive_status_plans(statuses)
       statuses.each do |status|
-        status['studentPlans'].select! do |plan|
+        status['studentPlans'].to_a.select! do |plan|
           MyAcademics::MyAcademicStatus.active_plan?(plan)
         end
       end
