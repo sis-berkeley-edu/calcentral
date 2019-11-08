@@ -148,21 +148,22 @@
           >
             <div class="cc-table">
               <table>
-                <thead style="height: 28px">
+                <thead>
                   <tr>
                     <th scope="col">
                       <span
+                        id="estimatedDisbursement"
                         data-ng-bind="finaidAwardsInfo.checkForDisbursementDates(item.subItems.termDetails)"
                       ></span>
-                      <button
-                        class="cc-button-link cc-text-line-height"
+                      <a
+                        aria-label="What is Estimated Disbursement?"
+                        class="cc-button-link cc-icon-info"
                         data-ng-show="!item.subItems.showEstDisbursementMessage && finaidAwardsInfo.checkForDisbursementDates(item.subItems.termDetails) === 'Est. Disbursement'"
                         data-ng-click="item.subItems.showEstDisbursementMessage = true"
+                        role="button"
+                        tabindex="0"
                       >
-                        <i
-                          class="cc-icon fa fa-info-circle cc-icon-air-force-blue"
-                        ></i>
-                      </button>
+                      </a>
                     </th>
                     <th scope="col" class="cc-table-right">Offered</th>
                     <th scope="col" class="cc-table-right">Disbursed</th>
@@ -205,6 +206,7 @@
                   data-ng-bind-html="finaidAwards.messages.messageEstDisbursements"
                 ></span>
                 <button
+                  aria-label="Hide Estimated Disbursement definition"
                   class="cc-button-link cc-text-line-height"
                   data-ng-click="item.subItems.showEstDisbursementMessage = false"
                 >

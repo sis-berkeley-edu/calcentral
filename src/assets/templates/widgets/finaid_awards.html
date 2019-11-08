@@ -1,11 +1,19 @@
-<div class="cc-widget cc-widget-finaid-awards" data-ng-controller="FinaidAwardsController">
-  <div class="cc-widget-title cc-flex cc-flex-space-between cc-flex-align-center">
+<div
+  class="cc-widget cc-widget-finaid-awards"
+  data-ng-controller="FinaidAwardsController"
+>
+  <div
+    class="cc-widget-title cc-flex cc-flex-space-between cc-flex-align-center"
+  >
     <h2>Awards</h2>
-    <div class="cc-right cc-widget-title-link cc-nowrap" data-ng-if="finaidAwards.awards.grandtotal.total.amount">
-      <a data-ng-href="/finances/finaid/awards/{{finaidYear.id}}">
+    <div
+      class="cc-right cc-widget-title-link cc-nowrap"
+      data-ng-if="finaidAwards.awards.grandtotal.total.amount"
+    >
+      <a data-ng-href="/finances/finaid/awards/{{ finaidYear.id }}">
         <strong>View By Term </strong><i class="fa fa-arrow-right"></i>
       </a>
-  </div>
+    </div>
   </div>
   <div data-cc-spinner-directive="finaidAwardsInfo.isLoading">
     <div
@@ -17,21 +25,28 @@
       <div data-ng-if="finaidAwards.awards.grandtotal.total.amount">
         <div class="cc-widget-text cc-widget-finaid-awards-message">
           <div data-ng-bind="finaidAwards.messages.messageInfo"></div>
-          <div class="cc-widget-finaid-awards-padding-top" data-ng-if="finaidAwards.awards.grandtotal.total.amount">
+          <div
+            class="cc-widget-finaid-awards-padding-top"
+            data-ng-if="finaidAwards.awards.grandtotal.total.amount"
+          >
             <span data-ng-if="api.user.profile.features.csFinAidAwardCompare">
-              <a data-ng-href="/finances/finaid/compare/{{finaidYear.id}}">
+              <a data-ng-href="/finances/finaid/compare/{{ finaidYear.id }}">
                 Compare Packages
               </a>
             </span>
           </div>
         </div>
-        <div data-ng-if="finaidAwards.linkFinaidTranscript && isStudentOrExStudent"
-             class="cc-widget-finaid-awards-link">
-          <a data-ng-if="finaidAwards.linkFinaidTranscript"
+        <div
+          data-ng-if="finaidAwards.linkFinaidTranscript && isStudentOrExStudent"
+          class="cc-widget-finaid-awards-link"
+        >
+          <a
+            data-ng-if="finaidAwards.linkFinaidTranscript"
             data-cc-campus-solutions-link-directive="finaidAwards.linkFinaidTranscript"
             data-cc-campus-solutions-link-directive-cc-page-name="currentPage.name"
             data-cc-campus-solutions-link-directive-cc-page-url="currentPage.url"
-            class="cc-widget-finaid-awards-link-download-icon"></a>
+            class="cc-widget-finaid-awards-icon-download"
+          ></a>
         </div>
         <div
           data-ng-repeat="key in finaidAwardsInfo.keysGiftWork"
@@ -55,7 +70,10 @@
           data-ng-include="'widgets/finaid_awards_grandtotal.html'"
         ></div>
       </div>
-      <div class="cc-widget-text" data-ng-if="!finaidAwards.awards.grandtotal.total.amount">
+      <div
+        class="cc-widget-text"
+        data-ng-if="!finaidAwards.awards.grandtotal.total.amount"
+      >
         There is currently no awards information available for this aid year.
       </div>
     </div>
