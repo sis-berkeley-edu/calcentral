@@ -69,6 +69,31 @@ module Berkeley
       term.present? && term.legacy?
     end
 
+    def self.campus_solutions_id_to_name(campus_solutions_id)
+      century_num = "#{campus_solutions_id.to_s[0]}"
+      century = case century_num
+        when '1'
+          '19'
+        when '2'
+          '20'
+        else
+          raise ArgumentError, "Invalid century number for '#{campus_solutions_id}'. Must begin with '1' or '2'"
+      end
+      year = campus_solutions_id.to_s[1..2]
+      term_num = campus_solutions_id.to_s[3]
+      term_name = case term_num
+        when '2'
+          'Spring'
+        when '5'
+          'Summer'
+        when '8'
+          'Fall'
+        else
+          raise ArgumentError, "Invalid term number for '#{campus_solutions_id}'. Must end with '2', '5', or '8'"
+      end
+      "#{term_name} #{century}#{year}"
+    end
+
     def initialize(options)
       @current_date = options[:fake_now] || DateTime.now
       @oldest = options[:oldest]

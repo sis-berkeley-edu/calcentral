@@ -285,6 +285,24 @@ describe Berkeley::Terms do
     end
   end
 
+  describe '.campus_solutions_id_to_name' do
+    it 'converts term id for fall 2099 to name' do
+      expect(described_class.campus_solutions_id_to_name('2998')).to eq 'Fall 2099'
+    end
+    it 'converts term id for spring 1900 to name' do
+      expect(described_class.campus_solutions_id_to_name('1002')).to eq 'Spring 1900'
+    end
+    it 'converts term id for summer 2020 to name' do
+      expect(described_class.campus_solutions_id_to_name('2205')).to eq 'Summer 2020'
+    end
+    it 'raises error if term id begins with invalid century number' do
+      expect { described_class.campus_solutions_id_to_name('3001') }.to raise_error(ArgumentError, 'Invalid century number for \'3001\'. Must begin with \'1\' or \'2\'')
+    end
+    it 'raises error if term id ends with invalid term number' do
+      expect { described_class.campus_solutions_id_to_name('2204') }.to raise_error(ArgumentError, 'Invalid term number for \'2204\'. Must end with \'2\', \'5\', or \'8\'')
+    end
+  end
+
   describe '#fetch_terms_from_api' do
     context 'Hub Term API enabled' do
       before { allow(Settings.features).to receive(:hub_term_api).and_return true }

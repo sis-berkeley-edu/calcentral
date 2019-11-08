@@ -46,24 +46,9 @@ describe User::Academics::DegreeProgress::Graduate::CandidacyTermStatus do
     end
   end
 
-  describe '#end_term' do
-    it 'returns berkeley term object for end term' do
-      result = subject.end_term
-      expect(result.name).to eq 'Fall'
-      expect(result.year).to eq '2019'
-      expect(result.code).to eq 'B'
-    end
-  end
-
   describe '#end_term_description' do
     it 'returns description for end term' do
       expect(subject.end_term_description).to eq 'Fall 2019'
-    end
-    context 'when berkeley term object not available' do
-      before { allow(subject).to receive(:end_term).and_return(nil) }
-      it 'returns nil' do
-        expect(subject.end_term_description).to eq nil
-      end
     end
   end
 
