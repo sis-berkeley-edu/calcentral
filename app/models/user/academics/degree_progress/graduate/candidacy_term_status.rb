@@ -29,12 +29,8 @@ module User
             @data['acad_plan']
           end
 
-          def end_term
-            @end_term ||= Berkeley::Terms.find_by_campus_solutions_id(end_term_code)
-          end
-
           def end_term_description
-            end_term.try(:to_english)
+            Berkeley::Terms.campus_solutions_id_to_name(end_term_code)
           end
 
           def candidacy_status_description
