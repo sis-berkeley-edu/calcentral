@@ -32,7 +32,7 @@ angular
       showDecimals: false,
     };
     $scope.finaidAwards = {};
-    $scope.isStudentOrExStudent = false;
+    $scope.canSeeFinAidSummaryLink = false;
 
     var addColors = function(feed) {
       _.mapValues(feed.awards, function(value, key) {
@@ -127,6 +127,17 @@ angular
       });
     };
 
+    var canSeeFinAidSummaryLink = function() {
+      return (
+        (apiService.user.profile.roles.registered ||
+          apiService.user.profile.roles.exStudent) &&
+        (apiService.user.profile.academicRoles.current.ugrd ||
+          apiService.user.profile.academicRoles.current.grad ||
+          apiService.user.profile.academicRoles.current.law) &&
+        !apiService.user.profile.academicRoles.current.summerVisitor
+      );
+    };
+
     var loadAwards = function() {
       finaidAwardsFactory
         .getAwards({
@@ -141,13 +152,11 @@ angular
           $scope.finaidAwardsInfo.showDecimals = shouldShowDecimals(
             _.get(response, 'data')
           );
+          $scope.canSeeFinAidSummaryLink = canSeeFinAidSummaryLink();
         })
         .finally(function() {
           $scope.finaidAwardsInfo.checkForDisbursementDates = checkForDisbursementDates;
           $scope.finaidAwardsInfo.formatCurrency = formatCurrency;
-          $scope.isStudentOrExStudent =
-            apiService.user.profile.roles.student ||
-            apiService.user.profile.roles.exStudent;
           $scope.finaidAwardsInfo.isLoading = false;
         });
     };

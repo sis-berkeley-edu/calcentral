@@ -126,7 +126,7 @@ const hasAccessToLink = (key, roles, careers, programs, delegate, summer) => {
       allowsSummerVisitor: false,
     },
     finaidSummary: {
-      roles: ['student', 'exStudent'],
+      roles: ['registered', 'exStudent'],
       careers: ['UGRD', 'GRAD', 'LAW'],
       allowsDelegateAccess: true,
       allowsSummerVisitor: false,
