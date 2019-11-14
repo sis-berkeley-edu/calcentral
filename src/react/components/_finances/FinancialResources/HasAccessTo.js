@@ -14,7 +14,7 @@ const propTypes = {
 const hasAccessToLink = (key, roles, careers, programs, delegate, summer) => {
   const linkAccess = {
     activateFPP: {
-      roles: ['student'],
+      roles: ['registered'],
       excludedPrograms: ['GSSDP', 'LSSDPL'],
       allowsDelegateAccess: true,
       allowsSummerVisitor: false,
@@ -232,7 +232,7 @@ const hasAccessToLink = (key, roles, careers, programs, delegate, summer) => {
       allowsSummerVisitor: false,
     },
     tuitionAndFPP: {
-      roles: ['student'],
+      roles: ['registered'],
       excludedPrograms: ['GSSDP', 'LSSDPL'],
       allowsDelegateAccess: true,
       allowsSummerVisitor: false,
