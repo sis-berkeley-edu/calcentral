@@ -220,9 +220,9 @@ describe EdoOracle::FinancialAid::Queries do
 
     it 'returns the expected result' do
       expect(subject.count).to eq 3
-      expect(subject[0]).to have_keys(%w(aid_year term_id term_descr term_units ship_status))
-      expect(subject[1]).to have_keys(%w(aid_year term_id term_descr term_units ship_status))
-      expect(subject[2]).to have_keys(%w(aid_year term_id term_descr term_units ship_status))
+      expect(subject[0]).to have_keys(%w(aid_year term_id term_descr term_units))
+      expect(subject[1]).to have_keys(%w(aid_year term_id term_descr term_units))
+      expect(subject[2]).to have_keys(%w(aid_year term_id term_descr term_units))
     end
 
     it 'sorts the rows by term' do
@@ -231,6 +231,26 @@ describe EdoOracle::FinancialAid::Queries do
       expect(subject[2]['term_id']).to eq '2185'
     end
   end
+
+  describe '#get_finaid_profile_SHIP' do
+    subject { described_class.get_finaid_profile_SHIP(uid, aid_year) }
+
+    it_behaves_like 'a successful query'
+
+    it 'returns the expected result' do
+      expect(subject.count).to eq 3
+      expect(subject[0]).to have_keys(%w(aid_year term_id term_descr ship_status))
+      expect(subject[1]).to have_keys(%w(aid_year term_id term_descr ship_status))
+      expect(subject[2]).to have_keys(%w(aid_year term_id term_descr ship_status))
+    end
+
+    it 'sorts the rows by term' do
+      expect(subject[0]['term_id']).to eq '2178'
+      expect(subject[1]['term_id']).to eq '2182'
+      expect(subject[2]['term_id']).to eq '2185'
+    end
+  end
+
 
   describe '#get_finaid_profile_isir' do
     subject { described_class.get_finaid_profile_isir(uid, aid_year) }

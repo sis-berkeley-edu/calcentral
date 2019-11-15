@@ -303,9 +303,23 @@ module EdoOracle
           UC.AID_YEAR                         AS AID_YEAR,
           UC.STRM                             AS TERM_ID,
           UC.DESCR                            AS TERM_DESCR,
-          UC.DESCR2                           AS TERM_UNITS,
-          UC.DESCR3                           AS SHIP_STATUS
+          UC.DESCR2                           AS TERM_UNITS
           FROM SYSADM.PS_UCC_FA_PRFL_ENR UC
+        WHERE UC.CAMPUS_ID   = '#{person_id}'
+          AND UC.INSTITUTION = '#{UC_BERKELEY}'
+          AND UC.AID_YEAR    = '#{aid_year}'
+        ORDER BY UC.AID_YEAR, UC.STRM
+        SQL
+      end
+
+      def self.get_finaid_profile_SHIP(person_id, aid_year)
+        safe_query <<-SQL
+        SELECT
+          UC.AID_YEAR                         AS AID_YEAR,
+          UC.STRM                             AS TERM_ID,
+          UC.DESCR                            AS TERM_DESCR,
+          UC.DESCR2                           AS SHIP_STATUS
+          FROM SYSADM.PS_UCC_FA_PRFL_SHP UC
         WHERE UC.CAMPUS_ID   = '#{person_id}'
           AND UC.INSTITUTION = '#{UC_BERKELEY}'
           AND UC.AID_YEAR    = '#{aid_year}'
