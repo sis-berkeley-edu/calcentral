@@ -17,6 +17,7 @@ const TopResources = ({ links, eft, getLink, status, expanded }) => {
     status.delegateActingAsUid
       ? true
       : false;
+  const isDelegate = status.delegateActingAsUid ? true : false;
 
   return (
     <HasAccessTo
@@ -33,18 +34,18 @@ const TopResources = ({ links, eft, getLink, status, expanded }) => {
         'tenNinetyEightT',
         'tenNinetyEightTView',
         'finaidSummary',
+        'finaidSummaryDelegate',
         'iGrad',
       ]}
       links={links}
     >
-      <div
-        className="FinancialResources__categoryContainer"
-        onClick={() => setIsExpanded(!isExpanded)}
-      >
-        <FinancialResourcesCategoryHeader
-          title="Top Resources"
-          expanded={isExpanded}
-        />
+      <div className="FinancialResources__categoryContainer">
+        <div onClick={() => setIsExpanded(!isExpanded)}>
+          <FinancialResourcesCategoryHeader
+            title="Top Resources"
+            expanded={isExpanded}
+          />
+        </div>
         {isExpanded && (
           <ul className="FinancialResources">
             <HasAccessTo linkNames={['delegateAccess']} links={links}>
@@ -163,13 +164,23 @@ const TopResources = ({ links, eft, getLink, status, expanded }) => {
                 </li>
               )}
             </HasAccessTo>
-            <HasAccessTo linkNames={['finaidSummary']} links={links}>
-              {links && (
-                <li>
-                  <APILink {...getLink('finaidSummary', links)} />
-                </li>
-              )}
-            </HasAccessTo>
+            {isDelegate ? (
+              <HasAccessTo linkNames={['finaidSummaryDelegate']} links={links}>
+                {links && (
+                  <li>
+                    <APILink {...getLink('finaidSummaryDelegate', links)} />
+                  </li>
+                )}
+              </HasAccessTo>
+            ) : (
+              <HasAccessTo linkNames={['finaidSummary']} links={links}>
+                {links && (
+                  <li>
+                    <APILink {...getLink('finaidSummary', links)} />
+                  </li>
+                )}
+              </HasAccessTo>
+            )}
             <HasAccessTo linkNames={['iGrad']} links={links}>
               {links && (
                 <li>

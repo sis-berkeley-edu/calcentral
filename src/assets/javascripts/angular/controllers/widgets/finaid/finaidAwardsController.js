@@ -33,6 +33,7 @@ angular
     };
     $scope.finaidAwards = {};
     $scope.canSeeFinAidSummaryLink = false;
+    $scope.isDelegate = false;
 
     var addColors = function(feed) {
       _.mapValues(feed.awards, function(value, key) {
@@ -138,6 +139,10 @@ angular
       );
     };
 
+    var isDelegate = function() {
+      return apiService.user.profile.delegateActingAsUid ? true : false;
+    };
+
     var loadAwards = function() {
       finaidAwardsFactory
         .getAwards({
@@ -153,6 +158,7 @@ angular
             _.get(response, 'data')
           );
           $scope.canSeeFinAidSummaryLink = canSeeFinAidSummaryLink();
+          $scope.isDelegate = isDelegate();
         })
         .finally(function() {
           $scope.finaidAwardsInfo.checkForDisbursementDates = checkForDisbursementDates;
