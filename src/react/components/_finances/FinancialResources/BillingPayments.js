@@ -34,14 +34,13 @@ const BillingPayments = ({ links, eft, getLink, status, expanded }) => {
       ]}
       links={links}
     >
-      <div
-        className="FinancialResources__categoryContainer"
-        onClick={() => setIsExpanded(!isExpanded)}
-      >
-        <FinancialResourcesCategoryHeader
-          title="Billing and Payments"
-          expanded={isExpanded}
-        />
+      <div className="FinancialResources__categoryContainer">
+        <div onClick={() => setIsExpanded(!isExpanded)}>
+          <FinancialResourcesCategoryHeader
+            title="Billing and Payments"
+            expanded={isExpanded}
+          />
+        </div>
         {isExpanded && (
           <ul className="FinancialResources">
             <HasAccessTo linkNames={['delegateAccess']} links={links}>

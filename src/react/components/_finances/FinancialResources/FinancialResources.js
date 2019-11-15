@@ -43,13 +43,35 @@ const FinancialResources = ({
   }, []);
 
   const [isAccessReady, setIsAccessReady] = useState(false);
+  const [isAccessErrored, setIsAccessErrored] = useState(false);
   const linksReady = financialResourcesLinks.loaded;
   const eftReady = myEftEnrollment.loaded;
   const sirStatusReady = sirStatus.loaded || myStatus.delegateActingAsUid;
   const statusReady = myStatus.loaded;
+  const isErrored =
+    financialResourcesLinks.error ||
+    myEftEnrollment.error ||
+    sirStatus.error ||
+    myStatus.error ||
+    isAccessErrored;
+
+  if (isErrored) {
+    return (
+      <div className="FinancialResources__container">
+        <img
+          src="/assets/images/warning.svg"
+          style={{ marginBottom: '3px', marginRight: '5px' }}
+        />
+        There is a problem displaying this information. Please try again later.
+      </div>
+    );
+  }
 
   return (
-    <WithAccess onReady={() => setIsAccessReady(true)}>
+    <WithAccess
+      onReady={() => setIsAccessReady(true)}
+      onError={() => setIsAccessErrored(true)}
+    >
       {linksReady &&
       eftReady &&
       isAccessReady &&
@@ -74,6 +96,7 @@ const FinancialResources = ({
             expanded={false}
             getLink={getLink}
             links={financialResourcesLinks.links}
+            status={myStatus}
           />
           <FinaidLoans
             expanded={false}
