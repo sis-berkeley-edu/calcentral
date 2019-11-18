@@ -24,20 +24,7 @@ namespace :calcentral_dev do
 
     transaction do
       servers.each_with_index do |server, index|
-        # update source
-        #run "cd #{project_root}; ./script/update-build.sh", :hosts => server
         run "cd #{project_root}; ./script/update-build-tomcat.sh", :hosts => server
-
-        # start it up
-        #run "cd #{project_root}; ./script/init.d/calcentral start", :hosts => server
-        run "cd /home/app_calcentral/bin; ./tomcat9-calcentral.sh start", :hosts => server
-
-        if index < (servers.length - 1)
-          # Allow time for Torquebox to quiesce before adding a node to the cluster. This appears to
-          # be needed to ensure that message processing is properly spread across the cluster, although
-          # that constraint is undocumented. See CLC-4318.
-          sleep 120
-        end
       end
     end
   end
