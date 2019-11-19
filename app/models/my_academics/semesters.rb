@@ -266,13 +266,13 @@ module MyAcademics
       capacity_number.to_i < 0 ? 'N/A' : capacity_number.to_s
     end
 
-    def law_class_enrollment(course, section)
-      if law_class?(course) || law_student?
-        enrollment = EdoOracle::Queries.get_law_enrollment(@uid, course[:academicCareer], course[:term_id], section[:ccn], course[:requirementsDesignationCode])
+    def law_class_enrollment(enrollment, section)
+      if law_class?(enrollment) || law_student?
+        law_enrollment = EdoOracle::Queries.get_law_enrollment(@uid, enrollment[:academicCareer], enrollment[:term_id], section[:ccn], enrollment[:requirementsDesignationCode])
       end
       {
-        lawUnits: enrollment.try(:[], 'units_taken_law'),
-        requirementsDesignation: enrollment.try(:[], 'rqmnt_desg_descr')
+        lawUnits: law_enrollment.try(:[], 'units_taken_law'),
+        requirementsDesignation: law_enrollment.try(:[], 'rqmnt_desg_descr')
       }
     end
 
