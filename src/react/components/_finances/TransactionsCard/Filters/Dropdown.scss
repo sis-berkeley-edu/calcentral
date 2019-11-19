@@ -9,7 +9,6 @@ $backgroundColor: $cc-color-white-smoke;
   color: $color-text-alt;
   font-size: 13px;
   line-height: 18px;
-  margin-left: 15px;
   height: 32px;
   padding-left: 15px;
   padding-right: 25px;
@@ -40,7 +39,6 @@ $backgroundColor: $cc-color-white-smoke;
   }
 }
 
-
 .Dropdown__option {
   padding: 0 18px 0 18px;
   white-space: nowrap;
@@ -60,5 +58,11 @@ $backgroundColor: $cc-color-white-smoke;
 
   &:hover {
     background-image: url('/assets/images/white-bullet.svg');
+  }
+}
+
+@media only screen and (min-width: $small-breakpoint) {
+  .Dropdown {
+    margin-left: 15px;
   }
 }
