@@ -1,31 +1,38 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import VisuallyHidden from '../../VisuallyHidden';
 import format from 'date-fns/format';
-import { toggleMyUpNext } from 'Redux/actions/myUpNextActions';
 import { googleAnalytics } from 'functions/googleAnalytics';
 import './UpNextItem.scss';
 import '../../../stylesheets/useful.scss';
 import '../../../stylesheets/buttons.scss';
 
 const propTypes = {
-  dispatch: PropTypes.func,
+  applicationLayer: PropTypes.string,
+  expandedItemIndex: PropTypes.number,
   item: PropTypes.object.isRequired,
   index: PropTypes.number.isRequired,
-  applicationLayer: PropTypes.string,
+  setExpandedItemIndex: PropTypes.func,
 };
 
-const UpNextItem = ({ dispatch, item, index, applicationLayer }) => {
+const UpNextItem = ({
+  applicationLayer,
+  expandedItemIndex,
+  index,
+  item,
+  setExpandedItemIndex,
+}) => {
   const ga = new googleAnalytics(applicationLayer);
 
-  const expandItem = (index, dispatch) => {
-    dispatch(toggleMyUpNext(index));
-    ga.sendEvent('Detailed view', item.show ? 'Open' : 'Close', 'Up Next');
+  const expandItem = (index, setExpandedItemIndex) => {
+    setExpandedItemIndex(index);
+    ga.sendEvent('Detailed view', showItem ? 'Open' : 'Close', 'Up Next');
   };
 
   const onEnterExpandItem = event => {
     if (event.keyCode === 13) {
-      expandItem(index, dispatch);
+      expandItem(index, setExpandedItemIndex);
     }
   };
 
@@ -39,18 +46,20 @@ const UpNextItem = ({ dispatch, item, index, applicationLayer }) => {
     ga.trackExternalLink('Up Next', 'bCal', item.htmlLink);
   };
 
+  const showItem = index == expandedItemIndex;
+
   if (item) {
     return (
       <li className="UpNextItem ellipsis">
         <VisuallyHidden>
-          Show {item.show ? 'less' : 'more'} information about {item.summary}
+          Show {showItem ? 'less' : 'more'} information about {item.summary}
         </VisuallyHidden>
         <div
           className={
-            'list-hover ' + (item.show ? 'list-hover-opened list-selected' : '')
+            'list-hover ' + (showItem ? 'list-hover-opened list-selected' : '')
           }
           tabIndex="0"
-          onClick={() => expandItem(index, dispatch)}
+          onClick={() => expandItem(index, setExpandedItemIndex)}
           onKeyDown={e => onEnterExpandItem(e)}
         >
           <div className="date-list-time list-column-left">
@@ -79,7 +88,7 @@ const UpNextItem = ({ dispatch, item, index, applicationLayer }) => {
               </div>
             )}
           </div>
-          {item.show && (
+          {showItem && (
             <div className="date-item-more">
               <div className="clearfix-container">
                 {item.isAllDay && (
@@ -160,4 +169,12 @@ const UpNextItem = ({ dispatch, item, index, applicationLayer }) => {
 
 UpNextItem.propTypes = propTypes;
 
-export default UpNextItem;
+const mapStateToProps = ({ config }) => {
+  const { applicationLayer = 'development' } = config;
+
+  return {
+    applicationLayer,
+  };
+};
+
+export default connect(mapStateToProps)(UpNextItem);

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import NoBconnected from '../bConnected/NoBconnected';
 import UpNextItem from './UpNextItem';
@@ -8,6 +8,16 @@ import { fetchMyUpNext } from 'Redux/actions/myUpNextActions';
 import { fetchStatus } from 'Redux/actions/statusActions';
 import './UpNextCard.scss';
 
+const propTypes = {
+  dispatch: PropTypes.func,
+  date: PropTypes.object,
+  items: PropTypes.arrayOf(PropTypes.object),
+  isLoading: PropTypes.bool,
+  error: PropTypes.object,
+  hasGoogleAccessToken: PropTypes.bool,
+  officialBmailAddress: PropTypes.string,
+};
+
 export const UpNextCard = ({
   dispatch,
   date,
@@ -16,12 +26,13 @@ export const UpNextCard = ({
   error,
   hasGoogleAccessToken,
   officialBmailAddress,
-  applicationLayer,
 }) => {
   useEffect(() => {
     dispatch(fetchMyUpNext());
     dispatch(fetchStatus());
   }, []);
+
+  const [expandedItemIndex, setExpandedItemIndex] = useState(null);
 
   const hasItems = !!items.length;
 
@@ -44,8 +55,8 @@ export const UpNextCard = ({
                 item={item}
                 index={index}
                 key={index}
-                dispatch={dispatch}
-                applicationLayer={applicationLayer}
+                expandedItemIndex={expandedItemIndex}
+                setExpandedItemIndex={setExpandedItemIndex}
               />
             ))}
         </ul>
@@ -78,15 +89,13 @@ export const UpNextCard = ({
   );
 };
 
-const mapStateToProps = ({ myUpNext, myStatus, config }) => {
+const mapStateToProps = ({ myUpNext, myStatus }) => {
   const { date = null, items = [], isLoading, error = null } = myUpNext;
 
   const {
     hasGoogleAccessToken = false,
     officialBmailAddress = null,
   } = myStatus;
-
-  const { applicationLayer = 'development' } = config;
 
   return {
     date,
@@ -95,19 +104,9 @@ const mapStateToProps = ({ myUpNext, myStatus, config }) => {
     error,
     hasGoogleAccessToken,
     officialBmailAddress,
-    applicationLayer,
   };
 };
 
-UpNextCard.propTypes = {
-  dispatch: PropTypes.func,
-  date: PropTypes.object,
-  items: PropTypes.arrayOf(PropTypes.object),
-  isLoading: PropTypes.bool,
-  error: PropTypes.object,
-  hasGoogleAccessToken: PropTypes.bool,
-  officialBmailAddress: PropTypes.string,
-  applicationLayer: PropTypes.string,
-};
+UpNextCard.propTypes = propTypes;
 
 export default connect(mapStateToProps)(UpNextCard);
