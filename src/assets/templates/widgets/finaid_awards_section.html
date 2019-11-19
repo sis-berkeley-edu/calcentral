@@ -1,10 +1,17 @@
 <div class="cc-widget-finaid-awards-section cc-clearfix-container">
-  <div class="cc-page-finaid-header-container cc-flex cc-flex-space-between cc-flex-align-base">
+  <div
+    class="cc-page-finaid-header-container cc-flex cc-flex-space-between cc-flex-align-base"
+  >
     <div>
-      <h3 data-ng-bind="section.total.title" class="cc-page-finaid-header" data-ng-if="section.items.length || section.total.title === 'Gift Aid'"></h3>
+      <h3
+        data-ng-bind="section.total.title"
+        class="cc-page-finaid-header"
+        data-ng-if="section.items.length || section.total.title === 'Gift Aid'"
+      ></h3>
     </div>
     <div>
-      <a data-ng-repeat="link in section.links"
+      <a
+        data-ng-repeat="link in section.links"
         data-cc-campus-solutions-link-directive
         data-cc-campus-solutions-link-directive-name="link.title"
         data-cc-campus-solutions-link-directive-url="link.url"
@@ -21,33 +28,60 @@
     </div>
   </div>
 
-  <div data-ng-if="!section.items.length && section.total.title === 'Gift Aid'" class="cc-widget-finaid-awards-section-no-items">
+  <div
+    data-ng-if="!section.items.length && section.total.title === 'Gift Aid'"
+    class="cc-widget-finaid-awards-section-no-items"
+  >
     You currently do not have any gift aid.
   </div>
 
-  <ul class="cc-widget-list-color" data-ng-class="'cc-widget-list-color-' + section.color" data-ng-if="section.items.length">
+  <ul
+    class="cc-widget-list-color"
+    data-ng-class="'cc-widget-list-color-' + section.color"
+    data-ng-if="section.items.length"
+  >
     <li
       data-ng-repeat="item in section.items"
-      data-ng-class="{'cc-widget-list-selected': item.show}">
-
-      <div class="cc-widget-list-hover cc-widget-finaid-awards-section-item"
+      data-ng-class="{'cc-widget-list-selected': item.show}"
+    >
+      <div
+        class="cc-widget-list-hover cc-widget-finaid-awards-section-item"
         data-ng-class="{'cc-widget-list-hover-opened': (item.show)}"
         data-cc-accessible-focus-directive
-        data-ng-click="api.widget.toggleShow($event, section.items, item, 'Finaid Awards')">
-
+        data-ng-click="api.widget.toggleShow($event, section.items, item, 'Finaid Awards')"
+      >
         <div data-ng-bind="item.title"></div>
-        <div data-ng-bind="item.subtitle" class="cc-text-light cc-text-small"></div>
+        <div
+          data-ng-bind="item.subtitle"
+          class="cc-text-light cc-text-small"
+        ></div>
 
-        <div class="cc-flex cc-flex-space-between cc-widget-finaid-awards-section-item-margin-top">
+        <div
+          class="cc-flex cc-flex-space-between cc-widget-finaid-awards-section-item-margin-top"
+        >
           <div>
-            <div data-cc-amount-directive="finaidAwardsInfo.formatCurrency(item.leftColumn.amount)" data-cc-amount-directive-color="false" data-cc-amount-directive-initial-space="false"></div>
-            <div data-ng-bind="item.leftColumn.value" class="cc-text-light cc-text-small cc-text-uppercase"></div>
+            <div
+              data-cc-amount-directive="finaidAwardsInfo.formatCurrency(item.leftColumn.amount)"
+              data-cc-amount-directive-color="false"
+              data-cc-amount-directive-initial-space="false"
+            ></div>
+            <div
+              data-ng-bind="item.leftColumn.value"
+              class="cc-text-light cc-text-small cc-text-uppercase"
+            ></div>
           </div>
           <div class="cc-text-right">
             <div data-ng-if="!item.rightColumn.link.url">
-              <div data-cc-amount-directive="finaidAwardsInfo.formatCurrency(item.rightColumn.amount)" data-cc-amount-directive-color="false"></div>
+              <div
+                data-cc-amount-directive="finaidAwardsInfo.formatCurrency(item.rightColumn.amount)"
+                data-cc-amount-directive-color="false"
+              ></div>
               <div>
-                <i class="fa fa-exclamation-triangle cc-icon-gold" data-ng-if="item.subItems.alertDetails.length"></i>
+                <i
+                  class="fa fa-exclamation-triangle cc-icon-gold"
+                  data-ng-if="item.subItems.alertDetails.length"
+                  aria-hidden="true"
+                ></i>
                 <span
                   data-ng-bind="item.rightColumn.value"
                   class="cc-text-small cc-text-uppercase"
@@ -55,8 +89,12 @@
                 ></span>
               </div>
             </div>
-            <div data-ng-if="item.rightColumn.link.url" class="cc-widget-finaid-awards-section-item-action">
-              <a class="cc-button cc-button-blue"
+            <div
+              data-ng-if="item.rightColumn.link.url"
+              class="cc-widget-finaid-awards-section-item-action"
+            >
+              <a
+                class="cc-button cc-button-blue"
                 data-cc-campus-solutions-link-directive
                 data-cc-campus-solutions-link-directive-name="item.rightColumn.link.title"
                 data-cc-campus-solutions-link-directive-url="item.rightColumn.link.url"
@@ -66,30 +104,66 @@
                 data-cc-campus-solutions-link-directive-uc-from="true"
                 data-cc-campus-solutions-link-directive-uc-from-link="true"
                 data-cc-campus-solutions-link-directive-uc-from-text="true"
-                data-cc-outbound-enabled="{{!item.rightColumn.link.isCsLink}}"
+                data-cc-outbound-enabled="{{ !item.rightColumn.link.isCsLink }}"
                 data-ng-if="api.user.profile.actAsOptions.canSeeCSLinks"
               ></a>
             </div>
           </div>
         </div>
         <div data-ng-if="item.show">
-          <div data-ng-if="item.subItems.alertDetails.length" class="cc-widget-finaid-awards-section-item-margin-top">
-            <strong data-ng-pluralize count="item.subItems.alertDetails.length" when="{'1': 'Alert', 'other': 'Alerts'}"></strong>
-            <div data-ng-repeat="alert in item.subItems.alertDetails" data-ng-bind-template="{{alert.alertTerm}} - {{alert.alertMessage}}">
-            </div>
-            <div data-ng-bind-html="item.subItems.authFailedMessage" class="cc-widget-finaid-awards-section-item-margin-top"></div>
+          <div
+            data-ng-if="item.subItems.alertDetails.length"
+            class="cc-widget-finaid-awards-section-item-margin-top"
+          >
+            <strong
+              data-ng-pluralize
+              count="item.subItems.alertDetails.length"
+              when="{'1': 'Alert', 'other': 'Alerts'}"
+            ></strong>
+            <div
+              data-ng-repeat="alert in item.subItems.alertDetails"
+              data-ng-bind-template="{{ alert.alertTerm }} - {{
+                alert.alertMessage
+              }}"
+            ></div>
+            <div
+              data-ng-bind-html="item.subItems.authFailedMessage"
+              class="cc-widget-finaid-awards-section-item-margin-top"
+            ></div>
           </div>
-          <div data-ng-if="item.subItems.remainingAmount !== undefined" class="cc-widget-finaid-awards-section-item-margin-top">
+          <div
+            data-ng-if="item.subItems.remainingAmount !== undefined"
+            class="cc-widget-finaid-awards-section-item-margin-top"
+          >
             <strong>Remaining Work-Study:</strong>
-            <span data-cc-amount-directive="finaidAwardsInfo.formatCurrency(item.subItems.remainingAmount)" data-cc-amount-directive-color="false" data-cc-amount-directive-initial-space="false"></span>
+            <span
+              data-cc-amount-directive="finaidAwardsInfo.formatCurrency(item.subItems.remainingAmount)"
+              data-cc-amount-directive-color="false"
+              data-cc-amount-directive-initial-space="false"
+            ></span>
           </div>
-          <div data-ng-if="item.subItems.termDetails.length" class="cc-widget-finaid-awards-section-item-margin-top">
+          <div
+            data-ng-if="item.subItems.termDetails.length"
+            class="cc-widget-finaid-awards-section-item-margin-top"
+          >
             <div class="cc-table">
               <table>
                 <thead>
                   <tr>
                     <th scope="col">
-                      <span data-ng-bind="finaidAwardsInfo.checkForDisbursementDates(item.subItems.termDetails)"></span>
+                      <span
+                        id="estimatedDisbursement"
+                        data-ng-bind="finaidAwardsInfo.checkForDisbursementDates(item.subItems.termDetails)"
+                      ></span>
+                      <a
+                        aria-label="What is Estimated Disbursement?"
+                        class="cc-button-link cc-icon-info"
+                        data-ng-show="!item.subItems.showEstDisbursementMessage && finaidAwardsInfo.checkForDisbursementDates(item.subItems.termDetails) === 'Est. Disbursement'"
+                        data-ng-click="item.subItems.showEstDisbursementMessage = true"
+                        role="button"
+                        tabindex="0"
+                      >
+                      </a>
                     </th>
                     <th scope="col" class="cc-table-right">Offered</th>
                     <th scope="col" class="cc-table-right">Disbursed</th>
@@ -97,18 +171,53 @@
                 </thead>
                 <tbody>
                   <tr data-ng-repeat="termItem in item.subItems.termDetails">
-                    <td data-ng-if="!termItem.disbursementDate" data-ng-bind="termItem.term"></td>
-                    <td data-ng-if="termItem.disbursementDate" data-ng-bind="termItem.disbursementDate"></td>
-                    <td class="cc-table-right" data-cc-amount-directive="finaidAwardsInfo.formatCurrency(termItem.offered)" data-cc-amount-directive-color="false"></td>
-                    <td class="cc-table-right" data-cc-amount-directive="finaidAwardsInfo.formatCurrency(termItem.disbursed)" data-cc-amount-directive-color="false"></td>
+                    <td>
+                      <div class="cc-flex">
+                        <div
+                          data-ng-bind="termItem.term"
+                          style="flex: .75"
+                        ></div>
+                        <div
+                          data-ng-if="termItem.disbursementDate"
+                          data-ng-bind="termItem.disbursementDate"
+                        ></div>
+                      </div>
+                    </td>
+                    <td
+                      class="cc-table-right"
+                      data-cc-amount-directive="finaidAwardsInfo.formatCurrency(termItem.offered)"
+                      data-cc-amount-directive-color="false"
+                    ></td>
+                    <td
+                      class="cc-table-right"
+                      data-cc-amount-directive="finaidAwardsInfo.formatCurrency(termItem.disbursed)"
+                      data-cc-amount-directive-color="false"
+                    ></td>
                   </tr>
                 </tbody>
               </table>
             </div>
-            <p data-ng-show="finaidAwardsInfo.checkForDisbursementDates(item.subItems.termDetails) === 'Est. Disbursement'"
-              data-ng-bind-html="finaidAwards.messages.messageEstDisbursements"
-              style="margin-top:5px"></p>
-            <div data-ng-if="item.subItems.awardMessage" class="cc-widget-finaid-awards-section-item-margin-top">
+            <div
+              data-ng-show="finaidAwardsInfo.checkForDisbursementDates(item.subItems.termDetails) === 'Est. Disbursement'"
+              style="padding-top:5px"
+            >
+              <div data-ng-if="item.subItems.showEstDisbursementMessage">
+                <span
+                  data-ng-bind-html="finaidAwards.messages.messageEstDisbursements"
+                ></span>
+                <button
+                  aria-label="Hide Estimated Disbursement definition"
+                  class="cc-button-link cc-text-line-height"
+                  data-ng-click="item.subItems.showEstDisbursementMessage = false"
+                >
+                  Show Less
+                </button>
+              </div>
+            </div>
+            <div
+              data-ng-if="item.subItems.awardMessage"
+              class="cc-widget-finaid-awards-section-item-margin-top"
+            >
               <strong>Award Details</strong>
               <div data-ng-bind="item.subItems.awardMessage"></div>
             </div>
@@ -118,8 +227,18 @@
     </li>
   </ul>
 
-  <div data-ng-if="section.total.amount" class="cc-text-right cc-widget-finaid-awards-section-total">
-    <div class="cc-text-small cc-text-uppercase cc-text-light" data-ng-bind-template="{{section.total.title}} total"></div>
-    <div class="cc-text-big" data-cc-amount-directive="finaidAwardsInfo.formatCurrency(section.total.amount)" data-cc-amount-directive-color="false"></div>
+  <div
+    data-ng-if="section.total.amount"
+    class="cc-text-right cc-widget-finaid-awards-section-total"
+  >
+    <div
+      class="cc-text-small cc-text-uppercase cc-text-light"
+      data-ng-bind-template="{{ section.total.title }} total"
+    ></div>
+    <div
+      class="cc-text-big"
+      data-cc-amount-directive="finaidAwardsInfo.formatCurrency(section.total.amount)"
+      data-cc-amount-directive-color="false"
+    ></div>
   </div>
 </div>

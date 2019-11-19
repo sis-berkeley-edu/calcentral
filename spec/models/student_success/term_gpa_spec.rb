@@ -21,18 +21,24 @@ describe StudentSuccess::TermGpa do
     end
   end
 
+  let(:current_and_future_term_plans) do
+    [
+      double(academic_career_description: 'Graduate'),
+      double(academic_career_description: 'Law'),
+    ]
+  end
+  let(:term_plans) { double(current_and_future: current_and_future_term_plans) }
+
   context 'get_active_careers' do
     let(:subject) { StudentSuccess::TermGpa.new(user_id: user_id) }
     before do
-      allow_any_instance_of(MyAcademics::MyTermCpp).to receive(:get_feed).and_return(term_cpp)
+      allow(User::Academics::TermPlans::TermPlans).to receive(:new).and_return(term_plans)
     end
-    context 'when term cpp data is present' do
-      let(:term_cpp) do
+    context 'when current and future term plans are present' do
+      let(:current_and_future_term_plans) do
         [
-          {"term_id"=>"2135", "acad_career"=>"UGRD", "acad_career_descr"=>"Undergraduate", "acad_program"=>"UCLS", "acad_plan"=>"25000U"},
-          {"term_id"=>"2138", "acad_career"=>"GRAD", "acad_career_descr"=>"Graduate", "acad_program"=>"GPRFL", "acad_plan"=>"70141BAJDG"},
-          {"term_id"=>"2142", "acad_career"=>"GRAD", "acad_career_descr"=>"Graduate", "acad_program"=>"GPRFL", "acad_plan"=>"70141BAJDG"},
-          {"term_id"=>"2145", "acad_career"=>"LAW", "acad_career_descr"=>"Law", "acad_program"=>"LPRFL", "acad_plan"=>"84501JDBAG"},
+          double(academic_career_description: 'Graduate'),
+          double(academic_career_description: 'Law'),
         ]
       end
       it 'return unique career descriptions' do
@@ -40,7 +46,7 @@ describe StudentSuccess::TermGpa do
       end
     end
     context 'when term cpp data is not present' do
-      let(:term_cpp) { [] }
+      let(:current_and_future_term_plans) { [] }
       it 'returns empty array' do
         expect(subject.get_active_careers).to eq []
       end

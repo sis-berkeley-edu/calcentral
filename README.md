@@ -125,12 +125,31 @@ http://www.oracle.com/technetwork/java/javase/downloads/index.html
     # e.g. rake superuser:create UID=61889
     ```
 
+1. Install Node Version Manager (NVM)
+
+    ```bash
+    curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.1/install.sh | bash
+    ```
+
+  [Configure your shell to use the Node version](https://github.com/nvm-sh/nvm#deeper-shell-integration)
+  specified in `.nvmrc`.
+
+  Open a new terminal window to ensure that NVM is present. If you go into
+  the CalCentral folder it should recognize the `.nvmrc` file and install
+  the version of Node specified.
+
+  You can verify that it's using the right version using `which`:
+    ```bash
+    $ cat .nvmrc
+    10.15.3
+    $ which npm
+    /Users/janesmith/.nvm/versions/node/v10.15.3/bin/npm
+    ```
+
 1. Install the front-end tools:
 
     ```bash
-    brew install node
     npm install
-    npm install -g gulp
     ```
 
 1. Start the front-end development server, or kick off a Webpack build:

@@ -56,6 +56,14 @@
                 <span data-ng-bind="attempt.display"></span>
               </li>
             </ul>
+            <div data-ng-if="requirement.candidacyTermStatus">
+              <div>
+                Candidacy End Term: <span data-ng-bind="requirement.candidacyTermStatus.endTermDescription"></span>
+              </div>
+              <div>
+                Candidacy Status: <span data-ng-bind="requirement.candidacyTermStatus.statusDescription"></span>
+              </div>
+            </div>
           </div>
         </div>
       </li>

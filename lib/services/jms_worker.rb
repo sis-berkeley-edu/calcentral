@@ -18,7 +18,10 @@ class JmsWorker
     if Settings.ist_jms.enabled
       Rails.logger.warn "#{self.class.name} Starting up"
 
-      self.run_thread = Thread.new { run }
+      self.run_thread = Thread.new do
+        run
+        EdoOracle::Connection.clear_active_connections!
+      end
 
       %w(INT TERM EXIT).each do |signal|
         trap(signal) {

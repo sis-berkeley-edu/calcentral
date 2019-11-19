@@ -18,7 +18,7 @@
         padding: 0;
         font-size: 13px;
         font-weight: bold;
-        color: #222;
+        color: $cc-color-nero;
         text-align: left;
       }
     }
@@ -29,7 +29,7 @@
       td {
         padding: 0;
         font-size: 13px;
-        color: #222;
+        color: $cc-color-nero;
         text-align: left;
       }
     }
@@ -69,7 +69,7 @@ table.AppointmentsTable {
           border-width: 4px;
           border-color: transparent;
           border-style: solid;
-          border-top-color: #999;
+          border-top-color: $cc-color-nobel;
           content: "";
           height: 0px;
           width: 0px;
@@ -82,7 +82,7 @@ table.AppointmentsTable {
 
     tr + .AppointmentRow--disclosure-row {
       td {
-        border-top: 1px solid #999;
+        border-top: 1px solid $cc-color-nobel;
       }
     }
 

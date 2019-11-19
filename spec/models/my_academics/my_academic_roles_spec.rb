@@ -14,12 +14,7 @@ describe MyAcademics::MyAcademicRoles do
   end
   let(:group_codes) { ['AHC', 'AIC', 'VAC', 'LJD'] }
 
-  let(:my_term_cpp) do
-    instance_double('MyAcademics::MyTermCpp').tap do |mock|
-      allow(mock).to receive(:get_feed).and_return(term_cpp)
-    end
-  end
-  let(:term_cpp) do
+  let(:term_plans) do
     [
       {'term_id'=>'2158', 'acad_career'=>'UGRD', 'acad_program'=>'UCNR', 'acad_plan'=>'04606U'},
       {'term_id'=>'2162', 'acad_career'=>'UGRD', 'acad_program'=>'UCNR', 'acad_plan'=>'04606U'},
@@ -28,10 +23,16 @@ describe MyAcademics::MyAcademicRoles do
     ]
   end
 
+  let(:term_plans_cached) do
+    instance_double('User::Academics::TermPlans::TermPlansCached').tap do |mock|
+      allow(mock).to receive(:get_feed).and_return(term_plans)
+    end
+  end
+
   before do
     allow_any_instance_of(Berkeley::Term).to receive(:campus_solutions_id).and_return('2172')
     allow(User::Current).to receive(:new).with(uid).and_return(current_user)
-    allow(MyAcademics::MyTermCpp).to receive(:new).with(uid).and_return(my_term_cpp)
+    allow(User::Academics::TermPlans::TermPlansCached).to receive(:new).and_return(term_plans_cached)
   end
 
   describe '#get_feed_internal' do
@@ -39,7 +40,7 @@ describe MyAcademics::MyAcademicRoles do
     it 'provides a set of roles based on the user\'s current academic status' do
       expect(result).to be
       expect(result[:current]).to be
-      expect(result[:current].keys.count).to eq 32
+      expect(result[:current].keys.count).to eq 33
       expect(result[:current]['ugrd']).to eq false
       expect(result[:current]['grad']).to eq true
       expect(result[:current]['fpf']).to eq false
@@ -68,6 +69,7 @@ describe MyAcademics::MyAcademicRoles do
       expect(result[:current]['ugrdEngineering']).to eq false
       expect(result[:current]['ugrdEnvironmentalDesign']).to eq false
       expect(result[:current]['ugrdHaasBusiness']).to eq false
+      expect(result[:current]['ugrdNaturalResources']).to eq true
       expect(result[:current]['ugrdUrbanStudies']).to eq false
       expect(result[:current]['summerVisitor']).to eq false
       expect(result[:current]['courseworkOnly']).to eq false
@@ -76,7 +78,7 @@ describe MyAcademics::MyAcademicRoles do
     it 'provides a set of roles based on all of the user\'s past academic data' do
       expect(result).to be
       expect(result[:historical]).to be
-      expect(result[:historical].keys.count).to eq 32
+      expect(result[:historical].keys.count).to eq 33
       expect(result[:historical]['ugrd']).to eq true
       expect(result[:historical]['grad']).to eq true
       expect(result[:historical]['fpf']).to eq false
@@ -105,13 +107,14 @@ describe MyAcademics::MyAcademicRoles do
       expect(result[:historical]['ugrdEngineering']).to eq false
       expect(result[:historical]['ugrdEnvironmentalDesign']).to eq false
       expect(result[:historical]['ugrdHaasBusiness']).to eq false
+      expect(result[:historical]['ugrdNaturalResources']).to eq true
       expect(result[:historical]['summerVisitor']).to eq false
       expect(result[:historical]['courseworkOnly']).to eq false
       expect(result[:historical]['lawJdCdp']).to eq false
     end
 
     context 'when student has only summer visitor plans under non-degree programs' do
-      let(:term_cpp) do
+      let(:term_plans) do
         [
           {'term_id'=>'2125', 'acad_career'=>'UGRD', 'acad_program'=>'UNODG', 'acad_plan'=>'99000U'},
           {'term_id'=>'2135', 'acad_career'=>'UGRD', 'acad_program'=>'UNODG', 'acad_plan'=>'99000U'},
@@ -123,7 +126,7 @@ describe MyAcademics::MyAcademicRoles do
       end
     end
     context 'when student has summer visitor plans under degree-seeking programs, plus non-degree programs' do
-      let(:term_cpp) do
+      let(:term_plans) do
         [
           {'term_id'=>'2155', 'acad_career'=>'GRAD', 'acad_program'=>'UCLS', 'acad_plan'=>'99000G'},
           {'term_id'=>'2165', 'acad_career'=>'GRAD', 'acad_program'=>'UCLS', 'acad_plan'=>'99000G'},
@@ -138,7 +141,7 @@ describe MyAcademics::MyAcademicRoles do
       end
     end
     context 'when student has only non-degree programs' do
-      let(:term_cpp) do
+      let(:term_plans) do
         [
           {'term_id'=>'2168', 'acad_career'=>'UCBX', 'acad_program'=>'XCCRT', 'acad_plan'=>'30XCECCENX'},
           {'term_id'=>'2172', 'acad_career'=>'UCBX', 'acad_program'=>'XCCRT', 'acad_plan'=>'30XCECCENX'},
@@ -150,7 +153,7 @@ describe MyAcademics::MyAcademicRoles do
       end
     end
     context 'when student has only degree-seeking programs' do
-      let(:term_cpp) do
+      let(:term_plans) do
         [
           {'term_id'=>'2162', 'acad_career'=>'UGRD', 'acad_program'=>'UCNR', 'acad_plan'=>'04606U'},
           {'term_id'=>'2168', 'acad_career'=>'UGRD', 'acad_program'=>'UCNR', 'acad_plan'=>'04606U'},
@@ -164,11 +167,11 @@ describe MyAcademics::MyAcademicRoles do
     end
   end
 
-  describe '#term_cpp' do
-    it 'memoizes the term cpp data' do
-      expect(my_term_cpp).to receive(:get_feed).once.and_return(term_cpp)
-      result1 = subject.term_cpp
-      result2 = subject.term_cpp
+  describe '#term_roles' do
+    it 'memoizes the term plan data' do
+      expect(term_plans_cached).to receive(:get_feed).once.and_return(term_plans)
+      result1 = subject.term_plans
+      result2 = subject.term_plans
       expect(result1.count).to eq 4
       expect(result2.count).to eq 4
       expect(result1.first['term_id']).to eq '2158'

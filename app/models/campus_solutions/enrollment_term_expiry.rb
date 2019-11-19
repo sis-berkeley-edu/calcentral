@@ -5,6 +5,7 @@ module CampusSolutions
         CampusSolutions::MyEnrollmentTerm,
         CampusSolutions::MyEnrollmentTerms,
         EdoOracle::UserCourses::All,
+        EdoOracle::UserCourses::Base,
         MyAcademics::Merged,
         MyAcademics::ClassEnrollments,
         MyRegistrations::Statuses

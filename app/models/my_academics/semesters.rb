@@ -159,7 +159,7 @@ module MyAcademics
         if @filtered
           mapped_enrollment.delete :url
         else
-          process_unfiltered_enrollment(enrollment, term_id)
+          process_unfiltered_enrollment(mapped_enrollment, term_id)
         end
         mapped_enrollment
       end.compact
@@ -211,7 +211,7 @@ module MyAcademics
 
     def add_reserved_seating_rules_link(term_id, course, section)
       if section[:waitlisted] && section[:is_primary_section]
-        reserved_capacity_count = EdoOracle::Queries.section_reserved_capacity_count(term_id, section[:ccn]).first['reserved_seating_rules_count'].to_i
+        reserved_capacity_count = EdoOracle::Queries.section_reserved_capacity_count(term_id, section[:ccn]).first.try(:[],'reserved_seating_rules_count').to_i
         if reserved_capacity_count > 0
           term = Berkeley::Terms.find_by_campus_solutions_id(term_id)
           class_subject = course[:dept_code]

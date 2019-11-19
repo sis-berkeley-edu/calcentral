@@ -1,0 +1,94 @@
+@import '../../../stylesheets/_colors';
+
+.FinancialResources {
+  margin: 10px 10px 0 15px;
+
+  li::before {
+    color: $cc-color-air-force-blue;
+    content: '\25A0';
+    float: left;
+    margin-top: -2px;
+    padding-right: 8px;
+  }
+
+  .FinancialResources__seperator {
+    margin-right: 5px;
+    margin-left: 5px;
+  }
+
+  .FinancialResources__multipleLinksContainer {
+    display: flex;
+  }
+  .FinancialResources__secondaryLink {
+    font-weight: bold;
+  }
+
+  .FinancialResources__nestedDash {
+    display: block;
+    margin-left: 30x;
+    &::before {
+      content: '\2013';
+    }
+  }
+  .FinancialResources__linksText {
+    margin-left: 15px;
+    &::before {
+      float: left;
+      margin-top: -2px;
+      padding-right: 10px;
+    }
+  }
+  .FinancialResources__subText {
+    color: $cc-color-nobel;
+    line-height: 16px;
+    margin-bottom: 5px;
+    margin-left: 15px;
+    margin-top: 0;
+  }
+
+  .FinancialResources__greenText {
+    color: $cc-color-salem;
+  }
+}
+
+.FinancialResources__container {
+  padding-top: 5px;
+  padding-right: 15px;
+  padding-bottom: 15px;
+  padding-left: 15px;
+  h3 {
+    font-size: 13px;
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+}
+
+.FinancialResources__categoryContainer {
+  border-bottom: 1px solid $cc-color-whisper;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: $cc-color-alice-blue;
+  }
+}
+
+.FinancialResources__questionContainer {
+  padding-top: 10px;
+  padding-left: 15px;
+
+  h3 {
+    font-size: 13px;
+    display: inline;
+  }
+
+  p {
+    display: inline;
+    margin-left: 10px;
+  }
+}
+
+.FinancialResources__spinner {
+  padding: 0;
+}

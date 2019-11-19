@@ -42,13 +42,25 @@ module MyAcademics
       plan.try(:[], 'statusInPlan').try(:[], 'status').try(:[], 'code') == 'AC'
     end
 
+    def academic_statuses_proxy
+      HubEdos::StudentApi::V2::AcademicStatuses.new(user_id: @uid)
+    end
+
+    def api_response
+      response = academic_statuses_proxy.get_active_only
+      if response.try(:[], :feed).try(:[], 'academicStatuses').blank?
+        response = academic_statuses_proxy.get_inactive_completed
+      end
+      response
+    end
+
     def get_feed_internal
-      response = HubEdos::StudentApi::V2::AcademicStatuses.new(user_id: @uid).get
-      statuses = response.try(:[], :feed).try(:[], 'academicStatuses') || []
+      feed = api_response
+      statuses = feed.try(:[], :feed).try(:[], 'academicStatuses') || []
       if (statuses)
         assign_roles(statuses)
       end
-      response
+      feed
     end
 
     # Beware: roles may be used as a whitelist (to show certain info), a blacklist

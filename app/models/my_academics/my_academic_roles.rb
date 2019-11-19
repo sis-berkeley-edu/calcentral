@@ -26,14 +26,14 @@ module MyAcademics
       group_roles.flatten.uniq
     end
 
-    def current_term_cpp
+    def current_term_plans
       current_term = Berkeley::Terms.fetch.current.try(:campus_solutions_id)
-      term_cpp.select {|t| t['term_id'].to_s >= current_term.to_s }
+      term_plans.select {|t| t['term_id'].to_s >= current_term.to_s }
     end
 
     def current_term_career_program_and_plan_roles
       assigned_roles = []
-      current_term_cpp.each do |term|
+      current_term_plans.each do |term|
         assigned_roles << get_academic_career_roles(term['acad_career'])
         assigned_roles << get_academic_program_roles(term['acad_program'])
         assigned_roles << get_academic_plan_roles(term['acad_plan'])
@@ -45,7 +45,7 @@ module MyAcademics
       roles = role_defaults
       assigned_roles = []
 
-      term_cpp.each do |term|
+      term_plans.each do |term|
         assigned_roles << get_academic_career_roles(term['acad_career'])
         assigned_roles << get_academic_program_roles(term['acad_program'])
         assigned_roles << get_academic_plan_roles(term['acad_plan'])
@@ -63,8 +63,11 @@ module MyAcademics
       end
     end
 
-    def term_cpp
-      @term_cpp ||= MyAcademics::MyTermCpp.new(@uid).get_feed
+    def term_plans
+      @term_plans ||= begin
+        user = User::Current.new(@uid)
+        User::Academics::TermPlans::TermPlansCached.new(user).get_feed
+      end
     end
 
     def student_group_codes

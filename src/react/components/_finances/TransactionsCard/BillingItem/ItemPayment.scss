@@ -1,3 +1,5 @@
+@import '../../../../stylesheets/variables';
+
 .ItemPayment .flex {
   display: flex;
   justify-content: space-between;
@@ -8,7 +10,7 @@
 }
 
 .ItemPayment__paid-on {
-  color: #737373;
+  color: $cc-color-dim-gray;
 }
 
 .ItemPayment__amount {

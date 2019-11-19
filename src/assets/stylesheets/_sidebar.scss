@@ -5,8 +5,9 @@
   padding-right: 0;
   h3 {
     border-top: 1px solid $cc-color-spindle;
-    color: $cc-color-spindle;
+    color: $cc-color-white;
     font-size: 16px;
+    font-weight: normal;
     margin: 0;
     padding: 10px 15px 0;
   }
@@ -14,7 +15,9 @@
     margin: 10px 0;
   }
   li {
-    &.active a, a:hover, a:focus {
+    &.active a,
+    a:hover,
+    a:focus {
       background: $cc-color-air-force-blue;
       border-radius: 5px;
       color: $cc-color-white;
@@ -34,6 +37,7 @@
     }
   }
 }
+// prettier-ignore
 .cc-sidebar-content {
   padding: 15px 25px;
   h1 {
@@ -42,7 +46,8 @@
     margin-top: 0;
   }
 }
-.cc-sidebar, .cc-sidebar-content {
+.cc-sidebar,
+.cc-sidebar-content {
   @include cc-column-sameheight;
 }
 @media #{$small-only} {

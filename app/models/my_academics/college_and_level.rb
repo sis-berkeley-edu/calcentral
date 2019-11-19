@@ -19,6 +19,22 @@ module MyAcademics
       data[:collegeAndLevel] = college_and_level
     end
 
+    def user
+      @user ||= User::Current.new(@uid)
+    end
+
+    def latest_registrations
+      user.registrations.latest
+    end
+
+    def latest_registration_term
+      @latest_registration_term ||= latest_registrations.first.term
+    end
+
+    def career_descriptions
+      latest_registrations.collect {|r| r.career_description}
+    end
+
     def hub_college_and_level
       hub_academic_statuses = MyAcademics::MyAcademicStatus.new(@uid)
       college_and_level = {
@@ -34,11 +50,10 @@ module MyAcademics
 
       statuses = hub_academic_statuses.academic_statuses
       if (status = statuses.first)
-        registration_term = status.try(:[], 'currentRegistration').try(:[], 'term')
-        college_and_level[:careers] = parse_hub_careers statuses
-        college_and_level[:levels] = MyAcademics::AcademicLevels.new(@uid).get_feed[:academic_levels]
-        college_and_level[:termName] = parse_hub_term_name(registration_term).try(:[], 'name')
-        college_and_level[:termId] = registration_term.try(:[], 'id')
+        college_and_level[:careers] = career_descriptions
+        college_and_level[:levels] = user.registrations.latest_academic_level_descriptions
+        college_and_level[:termName] = latest_registration_term.to_english
+        college_and_level[:termId] = latest_registration_term.campus_solutions_id
         college_and_level[:termsInAttendance] = status.try(:[], 'termsInAttendance').try(:to_s)
         college_and_level.merge! parse_hub_plans statuses
       else
@@ -122,7 +137,8 @@ module MyAcademics
       if degrees.present?
         awarded_degrees = []
         degrees.each do |degree|
-          if degree.try(:[], 'status').try(:[], 'code') == 'Awarded'
+          # Process only awarded degrees
+          if degree.try(:[], 'status').try(:[], 'code') == 'A'
             plan_set = {
               majors: [],
               minors: [],
@@ -178,7 +194,7 @@ module MyAcademics
 
     def filter_inactive_status_plans(statuses)
       statuses.each do |status|
-        status['studentPlans'].select! do |plan|
+        status['studentPlans'].to_a.select! do |plan|
           MyAcademics::MyAcademicStatus.active_plan?(plan)
         end
       end

@@ -351,25 +351,6 @@
       ]
     },
     {
-      "name": "Bear Facts",
-      "description": "Academic record, grades \u0026 transcript, bill, degree audit, loans, SLR \u0026 personal info",
-      "url": "https://bearfacts.berkeley.edu",
-      "roles": {
-        "student": true,
-        "applicant": true,
-        "staff": true,
-        "faculty": true,
-        "exStudent": true,
-        "summerVisitor": true
-      },
-      "categories": [
-        {
-          "topcategory": "Academic Planning",
-          "subcategory": "Academic Record"
-        }
-      ]
-    },
-    {
       "name": "BearWALK Night safety services",
       "description": "Free safety night walks to and from a desired location with a Community Service Officer",
       "url": "http://ucpd.berkeley.edu/campus-safety/night-safety-tips",
@@ -617,9 +598,9 @@
       ]
     },
     {
-      "name": "Blu Card",
+      "name": "Procurement Card Program",
       "description": "A procurement card, issued to select employees, and used for purchasing work-related items and services",
-      "url": "http://supplychain.berkeley.edu/campus/card-programs/blucard-program",
+      "url": "https://controller.berkeley.edu/financial-operations/procurement-card-program",
       "roles": {
         "student": false,
         "applicant": false,
@@ -2017,25 +1998,6 @@
       ]
     },
     {
-      "name": "Finding Your Way (L\u0026S)",
-      "description": "Academic advising for students in the Residence Halls under the college of Letters and Science",
-      "url": "http://ls-yourway.berkeley.edu/",
-      "roles": {
-        "student": true,
-        "applicant": true,
-        "staff": false,
-        "faculty": false,
-        "exStudent": true,
-        "summerVisitor": true
-      },
-      "categories": [
-        {
-          "topcategory": "Academic Planning",
-          "subcategory": "Planning"
-        }
-      ]
-    },
-    {
       "name": "Gender Equity Resource Center",
       "description": "Community center for students, faculty, staff, \u0026 alumni",
       "url": "http://geneq.berkeley.edu/",
@@ -2525,7 +2487,7 @@
     {
       "name": "New Faculty Resources",
       "description": "Hints, resources, and guidelines on productive teaching",
-      "url": "http://teaching.berkeley.edu/new-faculty-resources",
+      "url": "https://teaching.berkeley.edu/resources/new-campus",
       "roles": {
         "student": false,
         "applicant": false,
@@ -3373,7 +3335,7 @@
     {
       "name": "Teaching Resources",
       "description": "Resources that promotes teaching and learning including consultation and program facilitation",
-      "url": "http://teaching.berkeley.edu/teaching.html",
+      "url": "https://teaching.berkeley.edu/resources",
       "roles": {
         "student": false,
         "applicant": false,
@@ -3466,9 +3428,28 @@
       ]
     },
     {
-      "name": "Transfer, Re-entry and Student Parent Center",
-      "description": "Resources specific to transfer, re-entering, and parent students",
-      "url": "http://trsp.berkeley.edu/",
+      "name": "Student Parent Center",
+      "description": "Resources specific to parent students",
+      "url": "https://studentparents.berkeley.edu/",
+      "roles": {
+        "student": true,
+        "applicant": true,
+        "staff": false,
+        "faculty": false,
+        "exStudent": true,
+        "summerVisitor": true
+      },
+      "categories": [
+        {
+          "topcategory": "Support Services",
+          "subcategory": "Students"
+        }
+      ]
+    },
+    {
+      "name": "Transfer Student Center",
+      "description": "Resources specific to transfer and re-entering students",
+      "url": "https://transfers.berkeley.edu/",
       "roles": {
         "student": true,
         "applicant": true,

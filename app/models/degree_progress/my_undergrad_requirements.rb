@@ -29,19 +29,55 @@ module DegreeProgress
       end
     end
 
+    def get_incomplete_programs_roles
+      ugrd_statuses = MyAcademics::MyAcademicStatus.statuses_by_career_role(@uid, ['ugrd'])
+      return [] if ugrd_statuses.blank?
+
+      plans = incomplete_plans_from_statuses(ugrd_statuses)
+      return [] if plans.blank?
+
+      plans.map do |plan|
+        program = plan.try(:[], 'academicPlan').try(:[], 'academicProgram').try(:[], 'program')
+        program.try(:[], 'code')
+      end.uniq.compact
+    end
+
     def should_see_links?
-      roles = MyAcademics::MyAcademicRoles.new(@uid).get_feed
+      incomplete_programs_roles = get_incomplete_programs_roles
       authorized_program_roles = [
-        'lettersAndScience',
-        'ugrdEngineering',
-        'ugrdEnvironmentalDesign',
-        'ugrdHaasBusiness',
+        'UCLS',
+        'UCOE',
+        'UCED',
+        'UBUS',
       ]
-      !!authorized_program_roles.find {|role_string| roles[:current][role_string] }
+      if ucnr_apr_link_enabled?
+        authorized_program_roles << 'UCNR'
+      end
+      !(authorized_program_roles & incomplete_programs_roles).empty?
     end
 
     def is_feature_enabled?
       Settings.features.cs_degree_progress_ugrd_student
+    end
+
+    def ucnr_apr_link_enabled?
+      Settings.features.cs_degree_progress_ugrd_ucnr_apr_link
+    end
+
+    def incomplete_plans_from_statuses(statuses)
+      [].tap do |plans|
+        statuses.try(:each) do |status|
+          status.try(:[], 'studentPlans').try(:each) do |plan|
+            if incomplete_plan? plan
+              plans.push(plan)
+            end
+          end
+        end
+      end
+    end
+
+    def incomplete_plan?(plan)
+      plan.try(:[], 'statusInPlan').try(:[], 'status').try(:[], 'code') != 'CM'
     end
   end
 end

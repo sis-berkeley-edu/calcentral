@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import GreenCheckCircle from 'React/components/Icon/GreenCheckCircle';
 import YellowWarningSign from 'React/components/Icon/YellowWarningSign';
@@ -15,6 +16,10 @@ const RegistrationStatusIcon = ({ severity }) => {
     default:
       return null;
   }
+};
+
+RegistrationStatusIcon.propTypes = {
+  severity: PropTypes.string,
 };
 
 export default RegistrationStatusIcon;

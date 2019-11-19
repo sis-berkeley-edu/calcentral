@@ -130,7 +130,7 @@ describe MyAcademics::ClassEnrollments do
       cs_enrollment_term_detail.merge({:term => term_id})
     end
     allow_any_instance_of(Berkeley::Term).to receive(:campus_solutions_id).and_return(term_id)
-    allow_any_instance_of(MyAcademics::MyTermCpp).to receive(:get_feed).and_return(term_cpp)
+    allow_any_instance_of(User::Academics::TermPlans::TermPlansCached).to receive(:get_feed).and_return(term_cpp)
   end
 
   context 'when providing the class enrollment instructions feed for a student' do

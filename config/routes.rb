@@ -210,6 +210,10 @@ Calcentral::Application.routes.draw do
   delete '/api/campus_solutions/language/:languageCode' => 'campus_solutions/language#delete', :defaults => { :format => 'json' }
   delete '/api/campus_solutions/work_experience/:sequenceNbr' => 'campus_solutions/work_experience#delete', :defaults => { :format => 'json' }
 
+  # Financial Aid endpoints
+  get '/api/financial_aid/financial_resources' => 'financial_resources#get_feed', :defaults => { :format => 'json' }
+
+
   # Redirect to College Scheduler
   get '/college_scheduler/student/:acad_career/:term_id' => 'campus_solutions/college_scheduler#get'
   get '/college_scheduler/advisor/:acad_career/:term_id/:student_user_id' => 'campus_solutions/college_scheduler#get_advisor'

@@ -6,19 +6,23 @@ import APILink from 'React/components/APILink';
 
 const MessageWithLink = ({ message, link }) => (
   <Fragment>
-    {message} <APILink {...link} name='Take action' />
+    {message} <APILink {...link} name="Take action" />
   </Fragment>
 );
 MessageWithLink.propTypes = {
   message: PropTypes.string,
-  link: PropTypes.object
+  link: PropTypes.object,
 };
 
-const ExtendedMessageWithLink = ({ messageHTML, link}) => (
+const ExtendedMessageWithLink = ({ messageHTML, link }) => (
   <div>
-    { messageHTML } <APILink {...link} />
+    {messageHTML} <APILink {...link} />
   </div>
 );
+ExtendedMessageWithLink.propTypes = {
+  messageHTML: PropTypes.string,
+  link: PropTypes.object,
+};
 
 const CalGrantStatusItem = ({ status }) => {
   if (!status.message) {
@@ -26,32 +30,30 @@ const CalGrantStatusItem = ({ status }) => {
   }
 
   if (status.severity === 'normal') {
-    const completeStatus = {
-      message: status.message,
-      severity: status.severity,
-      detailedMessageHTML: <APILink {...status.link} />
-    };
-
-    return (
-      <StatusItem status={completeStatus} />
-    );
+    return <StatusItem status={status} />;
   }
 
   const incompleteStatus = {
     message: <MessageWithLink message={status.message} link={status.link} />,
     severity: status.severity,
-    detailedMessageHTML: <ExtendedMessageWithLink messageHTML={status.detailedMessageHTML} link={status.link} />
+    detailedMessageHTML: (
+      <ExtendedMessageWithLink
+        messageHTML={status.detailedMessageHTML}
+        link={status.link}
+      />
+    ),
   };
 
-  return (
-    <StatusItem status={incompleteStatus} />
-  );
+  return <StatusItem status={incompleteStatus} />;
 };
 
 CalGrantStatusItem.propTypes = {
   status: PropTypes.shape({
-    severity: PropTypes.string
-  })
+    severity: PropTypes.string,
+    message: PropTypes.string,
+    link: PropTypes.object,
+    detailedMessageHTML: PropTypes.string,
+  }),
 };
 
 export default CalGrantStatusItem;
