@@ -36,7 +36,16 @@ module Concerns
     end
 
     def course_info(campus_course)
-      campus_course.slice(:role, :sections, :slug, :session_code, :academicCareer, :courseCareerCode).merge({
+      campus_course.slice(*[
+        :role,
+        :sections,
+        :slug,
+        :session_code,
+        :academicCareer,
+        :courseCareerCode,
+        :requirementsDesignationCode,
+        :term_id,
+      ]).merge({
         title: campus_course[:name],
         url: class_to_url(campus_course)
       }).merge course_listing(campus_course)
