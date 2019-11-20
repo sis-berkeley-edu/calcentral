@@ -49,6 +49,10 @@ module FinancialAid
       @enrollment ||= EdoOracle::FinancialAid::Queries.get_finaid_profile_enrollment(@uid, my_aid_year)
     end
 
+    def ship_status
+      @ship_status ||= EdoOracle::FinancialAid::Queries.get_finaid_profile_SHIP(@uid, my_aid_year)
+    end
+
     def residency
       @residency ||= EdoOracle::FinancialAid::Queries.get_finaid_profile_residency(@uid, my_aid_year)
     end
@@ -82,7 +86,7 @@ module FinancialAid
 
     def subvaluesLevel
       @subvaluesLevel ||= level.map.try(:each) do |item|
-         {
+        {
           subvalue: [
             item.try(:[], 'term_descr'),
             item.try(:[], 'acad_level')
@@ -93,7 +97,7 @@ module FinancialAid
 
     def subvaluesResidency
       @subvaluesResidency ||= residency.map.try(:each) do |item|
-         {
+        {
           subvalue: [
             item.try(:[], 'term_descr'),
             item.try(:[], 'residency')
@@ -104,7 +108,7 @@ module FinancialAid
 
     def subvaluesEnrollment
       @subvaluesEnrollment ||= enrollment.map.try(:each) do |item|
-         {
+        {
           subvalue: [
             item.try(:[], 'term_descr'),
             item.try(:[], 'term_units')
@@ -114,8 +118,8 @@ module FinancialAid
     end
 
     def subvaluesSHIP
-      @subvaluesSHIP ||= enrollment.map.try(:each) do |item|
-         {
+      @subvaluesSHIP ||= ship_status.map.try(:each) do |item|
+        {
           subvalue: [
             item.try(:[], 'term_descr'),
             item.try(:[], 'ship_status')
