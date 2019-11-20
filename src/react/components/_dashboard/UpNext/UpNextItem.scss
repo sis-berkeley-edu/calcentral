@@ -1,0 +1,165 @@
+@import '../../../stylesheets/variables';
+
+.UpNextItem {
+  border-bottom: 1px solid $cc-color-whisper;
+  &:last-child {
+    border-bottom: 0;
+  }
+  > a {
+    display: block;
+  }
+
+  .button {
+    background: linear-gradient($cc-color-white, $cc-color-whisper),
+      $cc-color-white;
+    color: $cc-color-night-rider;
+    font-size: 11px;
+    padding: 6px 10px;
+  }
+
+  .date-item-more {
+    clear: both;
+    font-size: 0.9em;
+    margin-top: 5px;
+    padding-left: 41px;
+    p {
+      margin-bottom: $medium-spacing;
+    }
+  }
+
+  .datelist-location {
+    font-size: 10px;
+    margin-top: 2px;
+    text-transform: uppercase;
+  }
+
+  .date-list-summary {
+    padding-right: 15px;
+  }
+
+  .date-list-time {
+    min-width: 32px;
+    text-align: right;
+  }
+
+  .date-list-time-range {
+    display: grid;
+    grid-template-columns: 15% 85%;
+    margin-bottom: $medium-spacing;
+  }
+
+  .date-list-time-all-day {
+    text-transform: uppercase;
+  }
+
+  .ellipsis {
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .hangout {
+    margin: 5px 0;
+  }
+
+  .indent {
+    line-height: 1.3;
+    margin-left: 5px;
+  }
+
+  .header {
+    color: $cc-color-night-rider;
+  }
+
+  .left {
+    float: left;
+  }
+
+  .list-attendees {
+    margin-bottom: $medium-spacing;
+  }
+
+  .list-column-left {
+    float: left;
+    margin-left: 4px;
+    margin-right: 5px;
+    min-height: 20px;
+    width: 20px;
+  }
+
+  .list-selected {
+    background: $cc-color-ivory;
+  }
+
+  .list-hover {
+    overflow: hidden;
+    padding: 10px 0;
+    position: relative;
+    &:hover,
+    &:focus {
+      background: #f2f9fe;
+      cursor: pointer;
+      outline: 0;
+      text-decoration: none;
+    }
+
+    &::before {
+      border-bottom: 4px solid transparent;
+      border-right: 4px solid $cc-color-nobel;
+      border-top: 4px solid transparent;
+      content: '';
+      height: 0;
+      position: absolute;
+      right: 7px;
+      top: 14px;
+      width: 0;
+    }
+    &:hover,
+    &:focus {
+      &::before {
+        border-bottom: 4px solid transparent;
+        border-right: 4px solid $body-font-color;
+        border-top: 4px solid transparent;
+        content: '';
+        height: 0;
+        position: absolute;
+        right: 7px;
+        top: 14px;
+        width: 0;
+      }
+    }
+  }
+
+  .list-hover-opened {
+    &::before {
+      border-left: 4px solid transparent;
+      border-right: 4px solid transparent;
+      border-top: 4px solid $cc-color-nobel;
+      content: '';
+      height: 0;
+      position: absolute;
+      right: 7px;
+      top: 17px;
+      width: 0;
+    }
+    &:hover,
+    &:focus {
+      &::before {
+        border-left: 4px solid transparent;
+        border-right: 4px solid transparent;
+        border-top: 4px solid $body-font-color;
+        content: '';
+        height: 0;
+        position: absolute;
+        right: 7px;
+        top: 17px;
+        width: 0;
+      }
+    }
+  }
+
+  .text-light {
+    color: $cc-color-nobel;
+  }
+}

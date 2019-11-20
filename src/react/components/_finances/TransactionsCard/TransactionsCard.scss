@@ -14,15 +14,13 @@
   padding-left: 15px;
   padding-right: 15px;
   padding-bottom: 25px;
-  margin-left: -15px;
-  margin-right: -15px;
-  margin-bottom: 0;
+  margin: 15px -15px 0;
   border-bottom: 1px solid #eee;
 }
 
 @media only screen and (min-width: $small-breakpoint) {
   .TransactionCard__pretable {
-    margin: 0;
+    margin: 15px 0;
     padding: 0;
     border-bottom-width: 0;
   }

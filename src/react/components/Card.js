@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-
 import Spinner from 'react/components/Spinner';
 import 'icons/warning.svg';
 import './Card.scss';

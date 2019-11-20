@@ -1,0 +1,15 @@
+@import '../../../stylesheets/variables';
+
+.UpNextCard {
+  user-select: none;
+
+  .list {
+    font-size: 12px;
+    margin: 0;
+    overflow-x: hidden;
+  }
+
+  .top-spacing {
+    margin-top: $medium-spacing;
+  }
+}
