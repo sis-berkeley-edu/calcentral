@@ -15,6 +15,7 @@ const linkLookup = {
   emergencyLoanApply: 'UC_FA_FINRES_EMERG_LOAN_APPLY',
   finaidForms: 'UC_FA_FINRES_FA_FORMS',
   finaidSummary: 'UC_FA_FINRES_FA_SUMMARY',
+  finaidSummaryDelegate: 'UC_FA_FINRES_FA_SUMMARY_DELEGA',
   fafsa: 'UC_FA_FINRES_FAFSA',
   fafsaVerify: 'UC_FA_FINRES_FAFSA_VERIFY',
   finaidOffice: 'UC_FA_FINRES_FASO',

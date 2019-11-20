@@ -25,14 +25,13 @@ const SummerSessions = ({ links, getLink, expanded, sirStatus }) => {
       ]}
       links={links}
     >
-      <div
-        className="FinancialResources__categoryContainer"
-        onClick={() => setIsExpanded(!isExpanded)}
-      >
-        <FinancialResourcesCategoryHeader
-          title="Summer Sessions"
-          expanded={isExpanded}
-        />
+      <div className="FinancialResources__categoryContainer">
+        <div onClick={() => setIsExpanded(!isExpanded)}>
+          <FinancialResourcesCategoryHeader
+            title="Summer Sessions"
+            expanded={isExpanded}
+          />
+        </div>
         {isExpanded && (
           <ul className="FinancialResources">
             <HasAccessTo linkNames={['summerFees']} links={links}>
@@ -63,9 +62,9 @@ const SummerSessions = ({ links, getLink, expanded, sirStatus }) => {
                 </li>
               )}
             </HasAccessTo>
-            {/* Summer Estimator is available to users who have an UGRD Sir, 
+            {/* Summer Estimator is available to users who have an UGRD Sir,
                 but may not have any other attributes required to access the link */}
-            {isUndergradSir && links && (
+            {isUndergradSir && links ? (
               <li>
                 <APILink {...getLink('summerEstimator', links)} />
                 <div className="FinancialResources__subText">
@@ -73,8 +72,7 @@ const SummerSessions = ({ links, getLink, expanded, sirStatus }) => {
                   Summer Abroad, or Global Internships
                 </div>
               </li>
-            )}
-            {!isUndergradSir && (
+            ) : (
               <HasAccessTo linkNames={['summerEstimator']} links={links}>
                 {links && (
                   <li>
