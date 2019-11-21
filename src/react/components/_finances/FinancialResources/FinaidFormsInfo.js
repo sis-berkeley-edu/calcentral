@@ -86,15 +86,6 @@ const FinaidFormsInfo = ({ links, getLink, status, expanded }) => {
               )}
             </HasAccessTo>
 
-            {!isDelegate && (
-              <HasAccessTo linkNames={['finaidSummary']} links={links}>
-                {links && (
-                  <li>
-                    <APILink {...getLink('finaidSummary', links)} />
-                  </li>
-                )}
-              </HasAccessTo>
-            )}
             {isDelegate ? (
               <HasAccessTo linkNames={['finaidSummaryDelegate']} links={links}>
                 {links && (
