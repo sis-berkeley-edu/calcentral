@@ -49,5 +49,15 @@ module User
     def student_groups
       @student_groups ||= User::Academics::StudentGroups.new(self)
     end
+
+    def matriculated?
+      !affiliations.matriculated_but_exluded? && affiliations.not_registered?
+    end
+
+    private
+
+    def affiliations
+      @affiliations ||= User::Affiliations.new(self)
+    end
   end
 end

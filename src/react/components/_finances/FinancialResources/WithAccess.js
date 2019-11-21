@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { fetchProfile } from 'Redux/actions/profileActions';
+import { fetchStatus } from 'Redux/actions/statusActions';
 import { fetchAcademics } from 'Redux/actions/academicsActions';
 
 const propTypes = {
@@ -11,11 +11,22 @@ const propTypes = {
   children: PropTypes.node,
 };
 
-const WithAccess = ({ dispatch, isReady, onReady, children }) => {
+const WithAccess = ({
+  dispatch,
+  isReady,
+  errored,
+  onReady,
+  onError,
+  children,
+}) => {
   useEffect(() => {
-    dispatch(fetchProfile());
+    dispatch(fetchStatus());
     dispatch(fetchAcademics());
   }, []);
+
+  if (errored) {
+    onError();
+  }
 
   if (isReady) {
     onReady();
@@ -27,6 +38,7 @@ WithAccess.propTypes = propTypes;
 
 const mapStateToProps = ({ myStatus = {}, myAcademics = {} }) => ({
   isReady: myStatus.loaded && myAcademics.loaded,
+  errored: myStatus.error || myAcademics.error,
 });
 
 export default connect(mapStateToProps)(WithAccess);

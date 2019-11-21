@@ -10,14 +10,13 @@ const FinancialPlanningLiteracy = ({ links, getLink, expanded }) => {
 
   return (
     <HasAccessTo linkNames={['bearsFinancialSuccess', 'iGrad']} links={links}>
-      <div
-        className="FinancialResources__categoryContainer"
-        onClick={() => setIsExpanded(!isExpanded)}
-      >
-        <FinancialResourcesCategoryHeader
-          title="Financial Planning and Literacy"
-          expanded={isExpanded}
-        />
+      <div className="FinancialResources__categoryContainer">
+        <div onClick={() => setIsExpanded(!isExpanded)}>
+          <FinancialResourcesCategoryHeader
+            title="Financial Planning and Literacy"
+            expanded={isExpanded}
+          />
+        </div>
         {isExpanded && (
           <ul className="FinancialResources">
             <HasAccessTo linkNames={['bearsFinancialSuccess']} links={links}>

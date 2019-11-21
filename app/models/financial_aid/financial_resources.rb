@@ -4,13 +4,7 @@ module FinancialAid
     include LinkFetcher
 
     def get_feed
-      get_financial_resources
-    end
-
-    def get_financial_resources
-      {
-        links: financial_resources_links
-      }
+      financial_resources_links
     end
 
     def financial_resources
