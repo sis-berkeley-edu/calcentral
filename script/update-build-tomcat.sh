@@ -46,14 +46,16 @@ echo "------------------------------------------" | ${LOGIT}
 echo "$(date): Stopping CalCentral..." | ${LOGIT}
 
 # Stop Tomcat
-##sudo /bin/systemctl stop tomcat9@calcentral
-##${CATALINA_BASE}/bin/tomcat9-calcentral.sh stop
-$HOME/bin/tomcat9-calcentral.sh stop | ${LOGIT}
+tomstatus | grep "is running"
 
-# Need to decide if we need a deploy directory, for now not necessary
-##rm -rf deploy
-##mkdir deploy
-##cd deploy
+tomreturn=$?
+
+if [ $tomreturn -eq 0 ] ; then
+   echo "$(date): Stopping CalCentral..." | ${LOGIT}
+   tomshut | ${LOGIT} 2>&1
+else
+   echo "WARNING: Tomcat not running. No shutdown attempted, will proceed with code deploy" | ${LOGIT}
+fi
 
 # New location were the war file will be downloaded to
 cd ${TOMCAT_DEPLOY} || exit 1
@@ -72,7 +74,7 @@ curl -k -s ${WAR_URL} > ROOT.war | ${LOGIT}
 ##jar xf calcentral.knob
 
 # Start Tomcat which deploys the war file
-$HOME/bin/tomcat9-calcentral.sh start | ${LOGIT}
+tomstart | ${LOGIT}
 
 # Wait for 20 seconds before running checks that it was deployed
 sleep 20

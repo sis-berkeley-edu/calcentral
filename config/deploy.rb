@@ -18,8 +18,6 @@ namespace :calcentral_dev do
   desc "Update and restart the calcentral_dev machine"
   task :update, :roles => :calcentral_dev_host do
     # Take everything offline first.
-    #run "cd #{project_root}; ./script/init.d/calcentral stop"
-    run "cd /home/app_calcentral/bin; ./tomcat9-calcentral.sh stop"
     servers = find_servers_for_task(current_task)
 
     transaction do
