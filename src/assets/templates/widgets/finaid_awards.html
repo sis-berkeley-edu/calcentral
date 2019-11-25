@@ -37,14 +37,24 @@
           </div>
         </div>
         <div
-          data-ng-if="finaidAwards.linkFinaidTranscript && canSeeFinAidSummaryLink"
+          data-ng-if="finaidAwards.linkFinaidSummary && canSeeFinAidSummaryLink && !isDelegate"
           class="cc-widget-finaid-awards-link"
         >
           <a
-            data-ng-if="finaidAwards.linkFinaidTranscript"
-            data-cc-campus-solutions-link-directive="finaidAwards.linkFinaidTranscript"
+            data-ng-if="finaidAwards.linkFinaidSummary"
+            data-cc-campus-solutions-link-directive="finaidAwards.linkFinaidSummary"
             data-cc-campus-solutions-link-directive-cc-page-name="currentPage.name"
             data-cc-campus-solutions-link-directive-cc-page-url="currentPage.url"
+            class="cc-widget-finaid-awards-icon-download"
+          ></a>
+        </div>
+        <div
+          data-ng-if="finaidAwards.linkFinaidSummaryDelegate && canSeeFinAidSummaryLink && isDelegate"
+          class="cc-widget-finaid-awards-link"
+        >
+          <a
+            data-ng-if="finaidAwards.linkFinaidSummaryDelegate"
+            data-cc-campus-solutions-link-directive="finaidAwards.linkFinaidSummaryDelegate"
             class="cc-widget-finaid-awards-icon-download"
           ></a>
         </div>

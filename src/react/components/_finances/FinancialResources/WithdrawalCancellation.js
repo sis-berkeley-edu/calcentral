@@ -10,14 +10,13 @@ const WithdrawalCancellation = ({ links, getLink, expanded }) => {
 
   return (
     <HasAccessTo linkNames={['leavingCal', 'withdrawCancel']} links={links}>
-      <div
-        className="FinancialResources__categoryContainer"
-        onClick={() => setIsExpanded(!isExpanded)}
-      >
-        <FinancialResourcesCategoryHeader
-          title="Withdrawal and Cancellation"
-          expanded={isExpanded}
-        />
+      <div className="FinancialResources__categoryContainer">
+        <div onClick={() => setIsExpanded(!isExpanded)}>
+          <FinancialResourcesCategoryHeader
+            title="Withdrawal and Cancellation"
+            expanded={isExpanded}
+          />
+        </div>
         {isExpanded && (
           <ul className="FinancialResources">
             <HasAccessTo linkNames={['leavingCal']} links={links}>

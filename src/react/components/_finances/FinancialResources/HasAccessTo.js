@@ -14,7 +14,7 @@ const propTypes = {
 const hasAccessToLink = (key, roles, careers, programs, delegate, summer) => {
   const linkAccess = {
     activateFPP: {
-      roles: ['registered'],
+      roles: ['matriculated', 'registered'],
       excludedPrograms: ['GSSDP', 'LSSDPL'],
       allowsDelegateAccess: true,
       allowsSummerVisitor: false,
@@ -78,19 +78,19 @@ const hasAccessToLink = (key, roles, careers, programs, delegate, summer) => {
       allowsSummerVisitor: false,
     },
     dreamActApplication: {
-      roles: ['student', 'applicant', 'exStudent'],
+      roles: ['student', 'applicant', 'staff', 'faculty', 'exStudent'],
       careers: ['UGRD', 'GRAD', 'LAW'],
       allowsDelegateAccess: true,
       allowsSummerVisitor: false,
     },
     emergencyLoan: {
-      roles: ['registered'],
+      roles: ['matriculated', 'registered'],
       careers: ['UGRD', 'GRAD', 'LAW'],
-      allowsDelegateAccess: false,
+      allowsDelegateAccess: true,
       allowsSummerVisitor: false,
     },
     emergencyLoanApply: {
-      roles: ['registered'],
+      roles: ['matriculated', 'registered'],
       careers: ['UGRD', 'GRAD', 'LAW'],
       allowsDelegateAccess: false,
       allowsSummerVisitor: false,
@@ -126,7 +126,13 @@ const hasAccessToLink = (key, roles, careers, programs, delegate, summer) => {
       allowsSummerVisitor: false,
     },
     finaidSummary: {
-      roles: ['registered', 'exStudent'],
+      roles: ['matriculated', 'registered', 'exStudent'],
+      careers: ['UGRD', 'GRAD', 'LAW'],
+      allowsDelegateAccess: false,
+      allowsSummerVisitor: false,
+    },
+    finaidSummaryDelegate: {
+      roles: ['matriculated', 'registered', 'exStudent'],
       careers: ['UGRD', 'GRAD', 'LAW'],
       allowsDelegateAccess: true,
       allowsSummerVisitor: false,
@@ -138,9 +144,9 @@ const hasAccessToLink = (key, roles, careers, programs, delegate, summer) => {
       allowsSummerVisitor: false,
     },
     iGrad: {
-      roles: ['student', 'applicant', 'staff', 'faculty', 'exStudent'],
+      roles: ['matriculated', 'registered', 'staff', 'faculty'],
       careers: ['UGRD', 'GRAD', 'LAW'],
-      allowsDelegateAccess: true,
+      allowsDelegateAccess: false,
       allowsSummerVisitor: false,
     },
     leavingCal: {
@@ -177,7 +183,7 @@ const hasAccessToLink = (key, roles, careers, programs, delegate, summer) => {
       allowsSummerVisitor: false,
     },
     stateInstitutionalLoans: {
-      roles: ['student', 'applicant', 'staff', 'faculty', 'exStudent'],
+      roles: ['student', 'applicant', 'exStudent'],
       careers: ['UGRD', 'GRAD', 'LAW'],
       allowsDelegateAccess: true,
       allowsSummerVisitor: false,
@@ -232,7 +238,7 @@ const hasAccessToLink = (key, roles, careers, programs, delegate, summer) => {
       allowsSummerVisitor: false,
     },
     tuitionAndFPP: {
-      roles: ['registered'],
+      roles: ['matriculated', 'registered'],
       excludedPrograms: ['GSSDP', 'LSSDPL'],
       allowsDelegateAccess: true,
       allowsSummerVisitor: false,
@@ -313,6 +319,7 @@ const HasAccessTo = ({
 HasAccessTo.propTypes = propTypes;
 
 const mapStateToProps = ({
+  financialResourcesLinks: { links = [], matriculated = false } = {},
   myStatus = {},
   myAcademics: { collegeAndLevel: { plans = [] } = {} } = {},
 }) => {
@@ -320,7 +327,8 @@ const mapStateToProps = ({
   const programCodes = plans.map(plan => plan.program.code);
 
   return {
-    roles: activeRoles(myStatus.roles),
+    links,
+    roles: activeRoles({ ...myStatus.roles, matriculated }),
     careerCodes: careerCodes,
     programCodes: programCodes,
     isDelegate: myStatus.delegateActingAsUid,
