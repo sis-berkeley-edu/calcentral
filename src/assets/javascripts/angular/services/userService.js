@@ -1,11 +1,9 @@
+import _ from 'lodash';
 import {
   fetchStatusStart,
   fetchStatusSuccess,
   fetchStatusFailure
 } from 'Redux/actions/statusActions';
-
-var _ = require('lodash');
-
 
 angular.module('calcentral.services').service('userService', function($http, $location, $route, analyticsService, httpService, utilService, calcentralConfig, $ngRedux) {
   var profile = {};
@@ -177,7 +175,7 @@ angular.module('calcentral.services').service('userService', function($http, $lo
       handleAccessToPage();
     }
   };
-  
+
   var signIn = function() {
     analyticsService.sendEvent('Authentication', 'Redirect to login');
     window.location = '/auth/cas';

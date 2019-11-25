@@ -20,6 +20,7 @@ import SirStatusReducer from './SirStatusReducer';
 import StandingsReducer from './StandingsReducer';
 import StatusAndHoldsReducer from './StatusAndHoldsReducer';
 import StatusReducer from './StatusReducer';
+import MyUpNextReducer from './MyUpNextReducer';
 
 const AppReducer = combineReducers({
   advising: AdvisingReducer,
@@ -42,6 +43,7 @@ const AppReducer = combineReducers({
   myStatusAndHolds: StatusAndHoldsReducer,
   myTransferCredit: TransferCreditReducer,
   sirStatus: SirStatusReducer,
+  myUpNext: MyUpNextReducer
 });
 
 export default AppReducer;

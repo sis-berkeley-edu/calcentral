@@ -1,18 +1,18 @@
 'use strict';
 
+import {
+  googleAnalytics
+} from 'functions/googleAnalytics'
+
 angular.module('calcentral.services').service('analyticsService', function(calcentralConfig, $rootScope, $location) {
-  /**
-   * Send an analytics event
-   * @param {String} category e.g. Video
-   * @param {String} action e.g. Play
-   * @param {String} label e.g. Flying to Belgium
-   * @return {undefined}
-   * More info on https://developers.google.com/analytics/devguides/collection/analyticsjs/events
-   */
+  const ga = new googleAnalytics(calcentralConfig.applicationLayer);
+
   var sendEvent = function(category, action, label) {
-    if (isProduction()) {
-      window.ga('send', 'event', category, action, label);
-    }
+    ga.sendEvent(category, action, label);
+  };
+
+  var trackExternalLink = function(section, website, url) {
+    ga.trackExternalLink(section, website, url);
   };
 
   /**
@@ -23,27 +23,6 @@ angular.module('calcentral.services').service('analyticsService', function(calce
   var setUserId = function(uid) {
     if (uid) {
       window.ga('set', '&uid', uid);
-    }
-  };
-
-  /**
-   * Track when there is an external link being clicked
-   * @param {String} section The section you're currently in (e.g. Up Next / My Classes / Activity)
-   * @param {String} website The website you're trying to access (Google Maps)
-   * @param {String} url The URL you're accessing
-   * @return {undefined}
-   */
-  var trackExternalLink = function(section, website, url) {
-    sendEvent('External link', url, 'section: ' + section + ' - website: ' + website);
-  };
-
-  /*
-   * This will track the the page that you're viewing
-   * e.g. /, /dashboard
-   */
-  var trackPageview = function() {
-    if (isProduction()) {
-      window.ga('send', 'pageview', $location.path());
     }
   };
 
@@ -59,16 +38,21 @@ angular.module('calcentral.services').service('analyticsService', function(calce
   /* eslint-enable */
 
   var load = function() {
-    if (isProduction()) {
+    if (ga.isProduction()) {
       injectAnalyticsCode(calcentralConfig.googleAnalyticsId);
       setUserId(calcentralConfig.uid);
     }
   };
 
-  var isProduction = function() {
-    return calcentralConfig.applicationLayer === 'production';
+  /*
+   * This will track the the page that you're viewing
+   * e.g. /, /dashboard
+   */
+  var trackPageview = function() {
+    if (ga.isProduction()) {
+      window.ga('send', 'pageview', $location.path());
+    }
   };
-
   // Whenever we're changing the content loaded, we need to track which page we're viewing.
   $rootScope.$on('$viewContentLoaded', trackPageview);
 

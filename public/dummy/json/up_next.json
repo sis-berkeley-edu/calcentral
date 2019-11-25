@@ -7,7 +7,7 @@
   "items": [
     {
       "status": "confirmed",
-      "html_link": "https://www.google.com/calendar/event?eid=aDFpZnJiNXFtN3ViZDZ1ZTcxM280NW05dDQgc2hhY2tlckBiZXJrZWxleS5lZHU",
+      "htmlLink": "https://www.google.com/calendar/event?eid=aDFpZnJiNXFtN3ViZDZ1ZTcxM280NW05dDQgc2hhY2tlckBiZXJrZWxleS5lZHU",
       "summary": "Scot out (Stone Soup)",
       "start": {
         "epoch": 1352073600,
@@ -22,7 +22,7 @@
     },
     {
       "status": "confirmed",
-      "html_link": "https://www.google.com/calendar/event?eid=ZjNvNnQ5bWdudWhqdmhqcmxlcjh2dGlpMW8gc2hhY2tlckBiZXJrZWxleS5lZHU",
+      "htmlLink": "https://www.google.com/calendar/event?eid=ZjNvNnQ5bWdudWhqdmhqcmxlcjh2dGlpMW8gc2hhY2tlckBiZXJrZWxleS5lZHU",
       "summary": "Breakfast at Tiffany's",
       "location": "Tiffany's",
       "start": {
@@ -34,11 +34,21 @@
         "dateTime": "2012-11-16T19:30:00-08:00"
       },
       "isAllDay": false,
-      "emitter": "Google Calendar"
+      "emitter": "Google Calendar",
+      "attendees": [
+        "naderk@berkeley.edu",
+        "Jason Miller",
+        "Marc Pechaitis",
+        "frankie.pun@berkeley.edu",
+        "brandonmwright@berkeley.edu"
+      ],
+      "hangoutLink": "https://meet.google.com/igh-ytdy-mzx",
+      "location": "",
+      "organizer": "Holly Golightly"
     },
     {
       "status": "confirmed",
-      "html_link": "https://www.google.com/calendar/event?eid=ZDluMmtsYmJsb2I3dWJiNXJ1b3YxdjRlMHMgc2hhY2tlckBiZXJrZWxleS5lZHU",
+      "htmlLink": "https://www.google.com/calendar/event?eid=ZDluMmtsYmJsb2I3dWJiNXJ1b3YxdjRlMHMgc2hhY2tlckBiZXJrZWxleS5lZHU",
       "summary": "Meet w/Study Group",
       "start": {
         "epoch": 1352142000,
@@ -53,7 +63,7 @@
     },
     {
       "status": "confirmed",
-      "html_link": "https://www.google.com/calendar/event?eid=aGk1MXBlNG1icDU5ajAzdDM5a3MwNHR0Ymsgc2hhY2tlckBiZXJrZWxleS5lZHU",
+      "htmlLink": "https://www.google.com/calendar/event?eid=aGk1MXBlNG1icDU5ajAzdDM5a3MwNHR0Ymsgc2hhY2tlckBiZXJrZWxleS5lZHU",
       "summary": "Renew journal subscription",
       "start": {
         "epoch": 1353052800,
@@ -68,7 +78,7 @@
     },
     {
       "status": "confirmed",
-      "html_link": "https://www.google.com/calendar/event?eid=Njh0OXJuaHVkdXJyNG5iZzg3bWg5cTl2bDAgc2hhY2tlckBiZXJrZWxleS5lZHU",
+      "htmlLink": "https://www.google.com/calendar/event?eid=Njh0OXJuaHVkdXJyNG5iZzg3bWg5cTl2bDAgc2hhY2tlckBiZXJrZWxleS5lZHU",
       "summary": "Bring back film and LPs",
       "start": {
         "epoch": 1353052800,

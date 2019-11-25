@@ -1,3 +1,5 @@
+@import '../stylesheets/variables';
+
 .Card {
   background-color: white;
   padding: 15px;
@@ -5,7 +7,7 @@
 }
 
 .Card__title {
-  margin: -15px -15px 15px;
+  margin: -15px -15px 0px;
   padding: 7px 15px;
   background: #eee;
 
@@ -23,6 +25,7 @@
 .Card__error {
   display: flex;
   align-items: center;
+  margin-top: $medium-spacing;
 
   img {
     margin-right: 5px;
