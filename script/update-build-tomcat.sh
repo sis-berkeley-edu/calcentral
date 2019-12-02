@@ -19,13 +19,6 @@ CC_LOG_DIR="$HOME/calcentral/log"
 LOG=$(date +"${CC_LOG_DIR}/update-build-tomcat_%Y-%m-%d.log")
 LOGIT="tee -a ${LOG}"
 
-# Until we decide final deploy location, hardcoding
-#TOMCAT_DEPLOY=${CATALINA_BASE}/webapps/ROOT
-#TOMCAT_DEPLOY=${CATALINA_BASE}/webapps/calcentral
-TOMCAT_DEPLOY=/home/app_calcentral/tomcat9/webapps
-
-CLC_HOME=$HOME/calcentral
-
 ## cd $( dirname "${BASH_SOURCE[0]}" )/..
 # The assets will not be anymore under the calcentral checked out code
 # they are brought in the WAR file so changing directories to the correct location
@@ -43,7 +36,6 @@ cd ${CLC_HOME} || exit 1
 
 echo | ${LOGIT}
 echo "------------------------------------------" | ${LOGIT}
-echo "$(date): Stopping CalCentral..." | ${LOGIT}
 
 # Stop Tomcat
 tomstatus | grep "is running"
