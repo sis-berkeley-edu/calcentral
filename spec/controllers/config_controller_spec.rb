@@ -7,7 +7,7 @@ describe ConfigController do
     }
     it 'should return a JSON feed' do
       assert_response :success
-      expect(response).to be_success
+      expect(response).to be_successful
       expect(subject).is_a? Hash
     end
     it 'should contain the correct properties' do

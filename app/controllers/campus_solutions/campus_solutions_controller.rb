@@ -3,7 +3,7 @@ module CampusSolutions
 
     include ClassLogger
 
-    before_filter :api_authenticate_401
+    before_action :api_authenticate_401
 
     def json_passthrough(classname, params={})
       render json: classname.new(params).get
@@ -23,7 +23,7 @@ module CampusSolutions
       return unless Settings.features.prevent_acting_as_users_from_posting
       unless current_user.directly_authenticated?
         logger.warn "ACT-AS: User #{current_user.real_user_id} attempted access to an endpoint which is forbidden while acting-as user #{current_user.user_id}"
-        render :nothing => true, :status => 403
+        head :forbidden
       end
     end
 

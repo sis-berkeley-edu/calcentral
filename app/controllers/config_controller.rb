@@ -1,6 +1,6 @@
 class ConfigController < ApplicationController
   include AllowDelegateViewAs
-  before_filter :get_settings, :initialize_calcentral_config
+  before_action :get_settings, :initialize_calcentral_config
 
   def get
     configs = @calcentral_config.merge(

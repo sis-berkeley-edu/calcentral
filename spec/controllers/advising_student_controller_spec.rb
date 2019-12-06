@@ -51,7 +51,7 @@ describe AdvisingStudentController do
   end
 
   describe '#profile' do
-    subject { get :profile, student_uid: student_uid }
+    subject { get :profile, params: { student_uid: student_uid } }
 
     context 'when no user in session' do
       it_behaves_like 'an endpoint receiving an unauthenticated request'
@@ -96,7 +96,7 @@ describe AdvisingStudentController do
       expect(MyAcademics::Merged).to receive(:new).never
       allow(MyAcademics::FilteredForAdvisor).to receive(:new).and_return(my_academics_filtered)
     end
-    subject { get :academics, student_uid: student_uid }
+    subject { get :academics, params: { student_uid: student_uid } }
 
     context 'when not advisor authorized' do
       it_behaves_like 'an endpoint refusing a request'
@@ -149,7 +149,7 @@ describe AdvisingStudentController do
   end
 
   describe '#degree_progress_graduate' do
-    subject { get :degree_progress_graduate, student_uid: student_uid }
+    subject { get :degree_progress_graduate, params: { student_uid: student_uid } }
     let(:session_user_id) { random_id }
 
     context 'when not advisor authorized' do
@@ -173,7 +173,7 @@ describe AdvisingStudentController do
   end
 
   describe '#degree_progress_undergrad' do
-    subject { get :degree_progress_undergrad, student_uid: student_uid }
+    subject { get :degree_progress_undergrad, params: { student_uid: student_uid } }
     let(:session_user_id) { random_id }
 
     context 'when not advisor authorized' do
@@ -197,7 +197,7 @@ describe AdvisingStudentController do
 
   describe '#holds' do
     let(:session_user_id) { random_id }
-    subject { get :holds, student_uid: student_uid }
+    subject { get :holds, params: { student_uid: student_uid } }
 
     context 'when not advisor authorized' do
       it_behaves_like 'an endpoint refusing a request'
@@ -244,7 +244,7 @@ describe AdvisingStudentController do
   describe "#transfer_credit" do
     let(:session_user_id) { random_id }
 
-    subject { get :transfer_credit, student_uid: student_uid }
+    subject { get :transfer_credit, params: { student_uid: student_uid } }
 
     context 'when not advisor authorized' do
       it_behaves_like 'an endpoint refusing a request'

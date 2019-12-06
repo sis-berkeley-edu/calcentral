@@ -11,7 +11,10 @@ module User
           end
 
           format.csv do
-            render text: billing_summary.as_csv
+            send_data billing_summary.as_csv, {
+              type: 'text/csv; charset=utf-8; header=present',
+              disposition: "attachment; filename=#{session['user_id']}-billing-summary.csv"
+            }
           end
         end
       end

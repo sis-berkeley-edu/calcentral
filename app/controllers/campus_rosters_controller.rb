@@ -2,8 +2,8 @@ class CampusRostersController < RostersController
   include ClassLogger
   include DisallowAdvisorViewAs
 
-  before_filter :api_authenticate
-  before_filter :authorize_viewing_rosters
+  before_action :api_authenticate
+  before_action :authorize_viewing_rosters
   rescue_from StandardError, with: :handle_api_exception
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
 
@@ -19,7 +19,7 @@ class CampusRostersController < RostersController
     render :json => feed.to_json
   end
 
-  # GET /api/academics/rosters/campus/csv/:canvas_course_id.csv
+  # GET /api/academics/rosters/campus/csv/:campus_course_id.csv
   def get_csv
     options = {
       campus_course_id: params['campus_course_id'],
@@ -30,7 +30,7 @@ class CampusRostersController < RostersController
     rosters_csv = Rosters::Csv.new(rosters_feed, options)
 
     respond_to do |format|
-      format.csv { render csv: rosters_csv.get_csv.to_s, filename: rosters_csv.get_filename }
+      format.csv { send_data rosters_csv.get_csv.to_s, filename: rosters_csv.get_filename }
     end
   end
 

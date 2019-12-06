@@ -3,11 +3,15 @@
 # every class, inheriting from the default Rails logger.
 module ClassLogger
   class LogWrapper
+
+    SUPPORTED_LEVELS = [:debug, :info, :warn, :error, :fatal]
+
     def self.decorate_outputters
-      [:debug, :info, :warn, :error, :fatal].each do |method_name|
+      SUPPORTED_LEVELS.each do |method_name|
         define_method method_name do |msg|
           Rails.logger.send(method_name, decorate_message(msg))
         end
+        define_method("#{method_name}?") { true }
       end
     end
     decorate_outputters

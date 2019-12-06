@@ -24,7 +24,41 @@ end
 
 require File.expand_path('../boot', __FILE__)
 
-require 'rails/all'
+require "rails"
+require "active_model/railtie"
+require "active_record/railtie"
+require "action_controller/railtie"
+require "action_view/railtie"
+require "action_mailer/railtie"
+
+# Rails support for an asset pipeline (alternative to Webpack)
+# https://guides.rubyonrails.org/asset_pipeline.html
+# require "sprockets/railtie"
+
+# Rails support for sending email (via services such as Mandrill, SendGrid, etc)
+# https://guides.rubyonrails.org/action_mailbox_basics.html
+# require "action_mailbox/engine"
+
+# Rails support for job queueing (such as sidekiq)
+# https://guides.rubyonrails.org/active_job_basics.html
+# require "active_job/railtie"
+
+# Rails support for attaching files to objects (similar to Paperclip gem)
+# https://guides.rubyonrails.org/active_storage_overview.html
+# require "active_storage/engine"
+
+# Rails support for the Trix WYSIWYG editor
+# https://guides.rubyonrails.org/action_text_overview.html
+# require "action_text/engine"
+
+# Rails support for WebSockets
+# https://guides.rubyonrails.org/action_cable_overview.html
+# require "action_cable/engine"
+
+# Rails support for Test Unit
+# https://guides.rubyonrails.org/testing.html
+# require "rails/test_unit/railtie"
+
 require 'log4r'
 include Log4r
 # Let configuration use Rails core extensions like "1.day" and "hash.deep_merge"
@@ -64,6 +98,12 @@ module Calcentral
 
     # Custom directories with classes and modules you want to be autoloadable.
     # config.autoload_paths += %W(#{config.root}/extras)
+
+    # Zeitwerk not compatible with jRuby - See comments in SISRP-49809
+    # https://github.com/jruby/jruby/issues/5638
+    # config.autoloader = :zeitwerk
+    config.autoloader = :classic
+
     config.autoload_paths += %W(#{config.root}/lib)
     config.autoload_paths += Dir["#{config.root}/lib/**/"]
 
@@ -98,23 +138,20 @@ module Calcentral
     # like if you have constraints or database-specific column types
     # config.active_record.schema_format = :sql
 
-    # Enforce whitelist mode for mass assignment.
-    # This will create an empty whitelist of attributes available for mass-assignment for all models
-    # in your app. As such, your models will need to explicitly whitelist or blacklist accessible
-    # parameters by using an attr_accessible or attr_protected declaration.
-    config.active_record.whitelist_attributes = true
-
-    # Enable the asset pipeline
-    config.assets.enabled = true
-
-    # Version of your assets, change this if you want to expire all your assets
-    config.assets.version = '1.0'
-
     # always be caching
     config.action_controller.perform_caching = true
 
     config.after_initialize do
       JmsWorker.new.start if Settings.ist_jms.node == ServerRuntime.get_settings['hostname']
     end
+
+    # TODO: Refactor sessions controller to store text based date string in cookies
+    #       to allow for use of :hybrid cookie serializer
+    # https://guides.rubyonrails.org/upgrading_ruby_on_rails.html#cookies-serializer
+    config.action_dispatch.cookies_serializer = :marshal
+
+    # TODO: Set to true, once Rails 6 upgrade in prod is stable
+    # https://guides.rubyonrails.org/upgrading_ruby_on_rails.html#purpose-in-signed-or-encrypted-cookie-is-now-embedded-within-cookies
+    config.action_dispatch.use_cookies_with_metadata = false
   end
 end

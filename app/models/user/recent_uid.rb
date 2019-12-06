@@ -1,5 +1,5 @@
 module User
-  class RecentUid < ActiveRecord::Base
+  class RecentUid < ApplicationRecord
     include ActiveRecordHelper, OraclePrimaryHelper
 
     MAX_PER_OWNER_ID = 30
@@ -9,7 +9,6 @@ module User
 
     belongs_to :data, :class_name => 'User::Data', :foreign_key => 'uc_clc_oid'
 
-    attr_accessible :uc_clc_stor_id, :uc_clc_id, :created_at, :updated_at
     alias_attribute :stored_uid, :uc_clc_stor_id
     alias_attribute :owner_id, :uc_clc_oid
 

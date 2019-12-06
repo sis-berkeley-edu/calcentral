@@ -1,5 +1,5 @@
 class PhotoController < ApplicationController
-  before_filter :api_authenticate_401
+  before_action :api_authenticate_401
 
   def my_photo
     send_photo get_photo(session['user_id'])
@@ -9,7 +9,7 @@ class PhotoController < ApplicationController
     if current_user.policy.can_view_other_user_photo?
       send_photo get_photo(uid_param)
     else
-      render :nothing => true, :status => 403
+      head :forbidden
     end
   end
 
@@ -20,18 +20,22 @@ class PhotoController < ApplicationController
 
   def send_photo(data)
     if data
-      send_data(
-        data,
-        type: 'image/jpeg',
-        disposition: 'inline'
-      )
+      respond_to do |format|
+        format.jpeg {
+          send_data(
+            data,
+            type: 'image/jpeg',
+            disposition: 'inline'
+          )
+        }
+      end
     else
-      render :nothing => true, :status => 200
+      head :ok
     end
   end
 
   def uid_param
-    params.require 'uid'
+    params.require(:uid)
   end
 
 end

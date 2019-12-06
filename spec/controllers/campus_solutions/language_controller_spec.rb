@@ -4,7 +4,7 @@ describe CampusSolutions::LanguageController do
 
   context 'updating language' do
     it 'should not let an unauthenticated user post' do
-      post :post, {format: 'json', uid: '100'}
+      post :post, params: { format: 'json', uid: '100' }
       expect(response.status).to eq 401
     end
 
@@ -14,17 +14,16 @@ describe CampusSolutions::LanguageController do
         User::Auth.stub(:where).and_return([User::Auth.new(uid: user_id, is_superuser: false, active: true)])
       end
       it 'should let an authenticated user post' do
-        post :post,
-             {
-               bogus_field: 'abc',
-               languageCode: 'LEN',
-               isNative: 'N',
-               isTranslateToNative: 'N',
-               isTeachLanguage: 'N',
-               speakProf: '1',
-               readProf: '2',
-               teachLang: '3'
-             }
+        post :post, params: {
+          bogus_field: 'abc',
+          languageCode: 'LEN',
+          isNative: 'N',
+          isTranslateToNative: 'N',
+          isTeachLanguage: 'N',
+          speakProf: '1',
+          readProf: '2',
+          teachLang: '3'
+        }
         expect(response.status).to eq 200
         json = JSON.parse(response.body)
         expect(json['statusCode']).to eq 200
@@ -36,7 +35,7 @@ describe CampusSolutions::LanguageController do
 
   context 'deleting language' do
     it 'should not let an unauthenticated user delete' do
-      delete :delete, {format: 'json', languageCode: '100'}
+      delete :delete, params: { format: 'json', languageCode: '100' }
       expect(response.status).to eq 401
     end
 
@@ -46,11 +45,10 @@ describe CampusSolutions::LanguageController do
         User::Auth.stub(:where).and_return([User::Auth.new(uid: user_id, is_superuser: false, active: true)])
       end
       it 'should let an authenticated user delete' do
-        delete :delete,
-               {
-                 bogus_field: 'abc',
-                 languageCode: 'LEN'
-               }
+        delete :delete, params: {
+          bogus_field: 'abc',
+          languageCode: 'LEN'
+        }
         expect(response.status).to eq 200
         json = JSON.parse(response.body)
         expect(json['statusCode']).to eq 200

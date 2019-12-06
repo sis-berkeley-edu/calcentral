@@ -1,5 +1,5 @@
 module User
-  class Data < ActiveRecord::Base
+  class Data < ApplicationRecord
     include ActiveRecordHelper, OraclePrimaryHelper
 
     self.table_name = 'PS_UC_USER_DATA'
@@ -9,8 +9,7 @@ module User
     has_many :recent_uids, :class_name => 'User::RecentUid', :foreign_key => 'uc_clc_oid'
 
     after_initialize :log_access
-    attr_accessible :uc_clc_prefnm, :uc_clc_ldap_uid, :uc_clc_fst_at, :uc_clc_id, :created_at, :updated_at
-    attr_accessible :uid
+
     alias_attribute :uid, :uc_clc_ldap_uid
     alias_attribute :first_login_at, :uc_clc_fst_at
     alias_attribute :preferred_name, :uc_clc_prefnm

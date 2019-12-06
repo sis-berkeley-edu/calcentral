@@ -2,16 +2,16 @@ describe DelegateActAsController do
 
   shared_examples 'successful view-as' do
     it 'succeeds' do
-      post :start, uid: target_uid
-      expect(response).to be_success
+      post :start, params: { uid: target_uid }
+      expect(response).to be_successful
       expect(session['user_id']).to eq target_uid
       expect(session[SessionKey.original_delegate_user_id]).to eq real_user_id
     end
   end
   shared_examples 'failed view-as' do
     it 'fails' do
-      post :start, uid: target_uid
-      expect(response).to_not be_success
+      post :start, params: { uid: target_uid }
+      expect(response).to_not be_successful
       expect(session['user_id']).to_not eq target_uid
       expect(session[SessionKey.original_delegate_user_id]).to be_nil
     end

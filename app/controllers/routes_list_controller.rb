@@ -1,11 +1,9 @@
 class RoutesListController < ApplicationController
   extend Cache::Cacheable
 
-  respond_to :json
-
   def smoke_test_routes
     authorize(current_user, :can_administrate?)
-    respond_with({routes: get_smoke_test_routes})
+    render :json => {routes: get_smoke_test_routes}.to_json
   end
 
   private

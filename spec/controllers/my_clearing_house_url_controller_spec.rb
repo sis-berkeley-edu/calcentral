@@ -6,7 +6,7 @@ describe MyClearingHouseUrlController do
   end
 
   context 'handling proxy errors' do
-    subject {get :redirect, user_id: session_user_id}
+    subject {get :redirect, params: { user_id: session_user_id } }
     it 'should rescue' do
       expect(subject).to redirect_to('/404')
     end

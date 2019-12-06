@@ -1,7 +1,7 @@
 module CampusSolutions
   class WorkExperienceController < CampusSolutionsController
 
-    before_filter :exclude_acting_as_users
+    before_action :exclude_acting_as_users
 
     def post
       post_passthrough CampusSolutions::MyWorkExperience

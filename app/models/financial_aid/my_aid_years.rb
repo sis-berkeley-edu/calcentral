@@ -31,14 +31,14 @@ module FinancialAid
         aid_year = {
           id: year['aid_year'],
           name: year['aid_year_descr'],
-          defaultAidYear: ActiveRecord::Type::Boolean.new.type_cast_from_database(year['default_aid_year']),
+          defaultAidYear: ActiveRecord::Type::Boolean.new.cast(year['default_aid_year']),
           availableSemesters: []
         }
 
         #convert string to boolean and then build the availableSemesters value
-        aid_year[:availableSemesters] << 'Fall' if ActiveRecord::Type::Boolean.new.type_cast_from_database(year['aid_received_fall'])
-        aid_year[:availableSemesters] << 'Spring' if ActiveRecord::Type::Boolean.new.type_cast_from_database(year['aid_received_spring'])
-        aid_year[:availableSemesters] << 'Summer' if ActiveRecord::Type::Boolean.new.type_cast_from_database(year['aid_received_summer'])
+        aid_year[:availableSemesters] << 'Fall' if ActiveRecord::Type::Boolean.new.cast(year['aid_received_fall'])
+        aid_year[:availableSemesters] << 'Spring' if ActiveRecord::Type::Boolean.new.cast(year['aid_received_spring'])
+        aid_year[:availableSemesters] << 'Summer' if ActiveRecord::Type::Boolean.new.cast(year['aid_received_summer'])
         aid_year
       end
     end

@@ -14,7 +14,7 @@ class PingController < ApplicationController
       }
       render json: feed.to_json
     else
-      render :nothing => true, :status => 503
+      head :service_unavailable
     end
   end
 

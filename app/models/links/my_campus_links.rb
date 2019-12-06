@@ -5,8 +5,6 @@ module Links
   # - A single Categories table serves all three purposes by being referred to thrice in the Sections model
   # - A Link can belong to multiple Sections; a Section consists of multiple links
   # - Links (or their URLs) are guaranteed unique
-  # - RailsAdmin is whitelisting only the Models we want to display (in rails_admin.rb)
-  # - RailsAdmin comes with an optional History feature to track who changed what, but it's disabled here.
   class MyCampusLinks
     def get_feed
       links_json = campus_links_json
