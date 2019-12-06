@@ -1,0 +1,2 @@
+module CampusSolutions
+end

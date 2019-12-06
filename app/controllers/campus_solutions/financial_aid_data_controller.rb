@@ -2,7 +2,7 @@ module CampusSolutions
   class FinancialAidDataController < CampusSolutionsController
     include AllowDelegateViewAs
 
-    before_filter :authorize_for_financial
+    before_action :authorize_for_financial
 
     def get
       if current_user.authenticated_as_advisor?

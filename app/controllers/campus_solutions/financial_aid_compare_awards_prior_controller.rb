@@ -2,7 +2,7 @@ module CampusSolutions
   class FinancialAidCompareAwardsPriorController < CampusSolutionsController
     include AllowDelegateViewAs
 
-    before_filter :authorize_for_financial
+    before_action :authorize_for_financial
 
     def get
       model = CampusSolutions::MyFinancialAidCompareAwardsPrior.from_session(session)

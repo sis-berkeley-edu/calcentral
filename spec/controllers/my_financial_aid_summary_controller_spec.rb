@@ -10,7 +10,7 @@ describe MyFinancialAidSummaryController do
   end
 
   describe '#get_feed' do
-    let(:make_request) { get :get_feed, params }
+    let(:make_request) { get :get_feed, params: params }
     it_behaves_like 'an authenticated endpoint'
 
     context 'when authenticated user exists' do

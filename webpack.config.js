@@ -29,7 +29,6 @@ const apiRoutes = [
   '/auth',
   '/basic_auth_login',
   '/canvas',
-  '/ccadmin',
   '/clearing_house',
   '/college_scheduler',
   '/delegate_act_as',

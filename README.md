@@ -10,10 +10,10 @@
 * [Git](https://help.github.com/articles/set-up-git)
 * [JDBC Oracle driver](http://www.oracle.com/technetwork/database/enterprise-edition/jdbc-112010-090769.html)
 * [Java 8 SDK](http://www.oracle.com/technetwork/java/javase/downloads/index.html)
-* [JRuby 9.1.14.0](http://jruby.org/)
+* [JRuby 9.2.9.0](http://jruby.org/)
 * [Node.js >=8.9.4](http://nodejs.org/)
 * [Rubygems 2.5.1](https://rubygems.org/pages/download)
-* [RVM](https://rvm.io/rvm/install/) - Ruby version managers
+* [RBEnv](https://github.com/rbenv/rbenv) - Ruby environment manager
 
 ## Installation
 
@@ -35,7 +35,22 @@
     brew update
     ```
 
-1. [Fork this repository](https://github.com/sis-berkeley-edu/calcentral/wiki/Workflow), then:
+    Upgrade Homebrew packages
+    ```bash
+    brew upgrade
+    ```
+
+    Cleanup Homebrew
+    ```bash
+    brew cleanup
+    ```
+
+    Check Homebrew for issues
+    ```bash
+    brew doctor
+    ```
+
+1. [Fork this repository], then:
 
     with ssh (see [Connecting to Github with SSH])
 
@@ -51,14 +66,13 @@
     # e.g. git clone https://github.com/johnsmith/calcentral.git
     ```
 
+[Fork this repository]: https://github.com/sis-berkeley-edu/calcentral/wiki/Workflow
 [Connecting to Github with SSH]: https://help.github.com/articles/connecting-to-github-with-ssh/
 [Caching Your Github Password in Git]: https://help.github.com/articles/caching-your-github-password-in-git/
 
 1. Install JRuby:
 
-    You have 2 options for installing and managing Ruby versions
-
-    a. Use [rbenv](https://github.com/rbenv/rbenv)
+    Use [rbenv](https://github.com/rbenv/rbenv)
 
     ```bash
     # install rbenv
@@ -77,35 +91,24 @@
 
     # install jruby version used by calcentral
     rbenv install
+
+    # update RBenv and RubyBuild
+    brew upgrade rbenv ruby-build
+
+    # display version of rbenv
+    rbenv --version
+
+    # display ruby versions installed (* indicating in use)
+    rbenv versions
+
+    # display all available versions
+    rbenv install --list-all
     ```
-
-    b. Use [rvm](https://rvm.io/rvm/install/).
-
-    ```bash
-    rvm get head
-    rvm install jruby-9.1.14.0
-    cd ..
-    cd calcentral
-    # Answer "yes" again if it asks you to trust a new .rvmrc file.
-    rvm list
-    # Make sure that everything looks fine
-    # If it mentions "broken", you'll need to reinstall
-    ```
-
-[rvm]: https://rvm.io/rvm/install/
 
 1. Make JRuby faster for local development by running this or put in your .bashrc:
 
     ``` bash
     export JRUBY_OPTS="--dev"
-    ```
-
-1. Configure Default JRuby and Gemset
-
-    ```bash
-    cd ~
-    rvm use jruby-9.1.14.0 --default # This may output 'Unknown ruby string (do not know how to handle): jruby-9.1.14.0.', which can be ignored.
-    rvm gemset use global
     ```
 
 1. Download the appropriate gems with [Bundler](http://gembundler.com/rails3.html):
@@ -114,17 +117,12 @@
     your calcentral directory before running `bundle install`.
 
     ```bash
-    rvm rubygems 2.5.1 --force
-    gem --version
-    # Should output '2.5.1'
-
-    gem uninstall bundler --force -x
-    gem install bundler --version="1.15.4"
+    gem install bundler
     bundle install
-
-    # if using rbenv, rehash your shims to make 'rails' available
     rbenv rehash
     ```
+
+[Bundler]: http://gembundler.com/rails3.html
 
 1. Set up a local settings directory:
 
@@ -148,12 +146,12 @@
 
 1. Install JDBC driver (for Oracle connection)
 
-    * Download [ojdbc7_g.jar]
-    * Note: You do not have to open the file.
-    * Rename the file to `ojdbc7.jar`
-    * Copy `ojdbc7.jar` to the applicable directory:
-      * RVM - `~/.rvm/rubies/jruby-9.1.14.0/lib/`
-      * rbenv - `~/.rbenv/versions/jruby-9.1.14.0/lib/`
+    * Download [ojdbc8.jar]
+    * Copy `ojdbc8.jar` to the applicable directory:
+      * RVM - `~/.rvm/rubies/jruby-9.2.9.0/lib/`
+      * rbenv - `~/.rbenv/versions/jruby-9.2.9.0/lib/`
+
+[ojdbc8.jar]: https://www.oracle.com/database/technologies/appdev/jdbc-ucp-19c-downloads.html
 
 1. Create local SQLite database
 
@@ -163,7 +161,9 @@
     # run rake task to create database
     require 'rake'
     Rails.application.load_tasks
+    Rake::Task['db:drop'].invoke
     Rake::Task['db:create'].invoke
+    Rake::Task['db:schema:load'].invoke
     ```
 
 [ojdbc7_g.jar]: http://www.oracle.com/technetwork/database/features/jdbc/jdbc-drivers-12c-download-1958347.html
@@ -181,8 +181,7 @@
     curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.1/install.sh | bash
     ```
 
-    [Configure your shell to use the Node version]
-    specified in `.nvmrc`.
+    [Configure your shell] to use the Node version specified in `.nvmrc`.
 
     Open a new terminal window to ensure that NVM is present. If you go into
     the CalCentral folder it should recognize the `.nvmrc` file and install
@@ -197,7 +196,7 @@
     /Users/janesmith/.nvm/versions/node/v10.15.3/bin/npm
     ```
 
-[Configure your shell to use the Node version]: https://github.com/nvm-sh/nvm#deeper-shell-integration
+[Configure your shell]: https://github.com/nvm-sh/nvm#deeper-shell-integration
 
 1. Install the front-end tools:
 
@@ -221,10 +220,11 @@
     rails s
     ```
 
-1. Access your rails server at [localhost:3000](http://localhost:3000/), or the
-Webpack development server at [localhost:3001](http://localhost:3001/).
-Do not use [127.0.0.1:3000](http://127.0.0.1:3000), as you will not be able to
-grant access to bApps.
+1. Access your rails server at [localhost:3000], or the Webpack development
+server at [localhost:8080].
+
+[localhost:3000]: http://localhost:3000/
+[localhost:8080]: http://localhost:8080/
 
 **Note**: Usually you won't have to do any of the following steps when you're
 developing on CalCentral.
@@ -243,7 +243,7 @@ To run the tests faster, use spork, which is a little server that keeps the
 Rails app initialized while you change code
 and run multiple tests against it. Command line:
 
-```bash
+```shell
 spork
 # (...wait a minute for startup...)
 rspec --drb spec/lib/my_spec.rb
@@ -278,7 +278,7 @@ student, append `/academics` to the URL to access My Academics.
 
 1. Make sure you have a separate production database:
 
-    ```bash
+    ```shell
     psql postgres
     create database calcentral_production;
     grant all privileges on database calcentral_production to calcentral_development;
@@ -296,7 +296,7 @@ student, append `/academics` to the URL to access My Academics.
 
 1. Populate the production db by invoking your production settings:
 
-    ```bash
+    ```shell
     RAILS_ENV="production" rake db:schema:load db:seed
     ```
 
@@ -322,8 +322,10 @@ student, append `/academics` to the URL to access My Academics.
 ### Test connection
 
 Make sure you are on the Berkeley network or connected through
-[VPN](https://security.berkeley.edu/services/bsecure/bsecure-remote-access-vpn)
-for the Oracle connection.
+[preconfigured VPN] for the Oracle connection. If you use a VPN, use group
+`1-Campus_VPN`.
+
+[preconfigured VPN]: https://kb.berkeley.edu/page.php?id=23065
 
 ### Enable basic authentication
 
@@ -361,9 +363,7 @@ assume the identity of another user, you must:
 
 Access the URL:
 
-```text
-https://[hostname]/act_as?uid=123456
-```
+`https://[hostname]/act_as?uid=123456`
 
 where 123456 is the UID of the user to emulate.
 
@@ -373,13 +373,11 @@ users. The following user uids have been configured as test users.
 
 * 11002820 - "Tammi Chang"
 * 61889 - "Oski Bear"
-* All IDs listed on the [Universal Calnet Test IDs](https://wikihub.berkeley.edu/display/calnet/Universal+Test+IDs) page
+* All IDs listed on the [Universal Calnet Test IDs] page
 
-To become yourself again, access:
+To become yourself again, access: `https://[hostname]/stop_act_as`
 
-```text
-https://[hostname]/stop_act_as
-```
+[Universal Calnet Test IDs]: https://wikihub.berkeley.edu/display/calnet/Universal+Test+IDs
 
 ### Logging
 
@@ -460,6 +458,7 @@ A few rake tasks to help monitor statistics and more:
 * All `memcached` tasks take the optional param of `hosts`. So, if say you
   weren't running these tasks on the cluster layers themselves, or only wanted
   to tinker with a certain subset of clusters:
+  
   `rake memcached:get_stats hosts="localhost:11212,localhost:11213,localhost:11214"`
 
 ## Using the feature toggle

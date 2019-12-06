@@ -14,7 +14,7 @@ class AlterWebcastPreferencesTable < ActiveRecord::Migration
   end
 
   def down
-    drop_table :webcast_course_site_log, force: :cascade if ActiveRecord::Base.connection.table_exists? :webcast_course_site_log
+    drop_table :webcast_course_site_log, force: :cascade if ApplicationRecord.connection.table_exists? :webcast_course_site_log
 
     create_table :webcast_preferences do |t|
       t.integer  :year,                      null: false

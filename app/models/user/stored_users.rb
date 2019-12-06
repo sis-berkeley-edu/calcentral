@@ -110,7 +110,7 @@ module User
 
     def self.store(model, uid, uid_to_store)
       if model.where(stored_uid: uid_to_store.to_s).size == 0
-        model.create({stored_uid: uid_to_store.to_s}, :without_protection => true)
+        model.create({stored_uid: uid_to_store.to_s})
         success_response
       else
         error_response("UID #{uid_to_store} is already stored.")

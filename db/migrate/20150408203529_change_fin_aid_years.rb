@@ -1,6 +1,6 @@
 class ChangeFinAidYears < ActiveRecord::Migration
 
-  class FinAidYearMigrationModel < ActiveRecord::Base
+  class FinAidYearMigrationModel < ApplicationRecord
     self.table_name = 'fin_aid_years'
   end
 
@@ -14,6 +14,5 @@ class ChangeFinAidYears < ActiveRecord::Migration
   end
 
   def down
-    # Downgrades should be managed through ccadmin.
   end
 end

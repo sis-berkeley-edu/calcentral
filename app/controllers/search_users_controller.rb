@@ -10,14 +10,14 @@ class SearchUsersController < ApplicationController
 
   def by_id
     opts = user_search_constraints
-    id = params.require 'id'
+    id = params.require(:id)
     users = User::SearchUsers.new(opts.merge id: id).search_users
     render json: { users: prepare_to_render(users) }.to_json
   end
 
   def by_id_or_name
     opts = user_search_constraints
-    id_or_name = params.require 'input'
+    id_or_name = params.require(:input)
     users = User::SearchUsersByName.new.search_by(id_or_name, opts)
     render json: { users: prepare_to_render(users.take(limit)) }.to_json
   end

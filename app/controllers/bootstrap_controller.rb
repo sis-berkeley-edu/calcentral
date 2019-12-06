@@ -1,9 +1,9 @@
 class BootstrapController < ApplicationController
   include ActiveRecordHelper
   include AllowDelegateViewAs
-  before_filter :get_settings, :initialize_calcentral_config
-  before_filter :check_lti_only
-  before_filter :check_databases_alive, :check_cache_clear_flag
+  before_action :get_settings, :initialize_calcentral_config
+  before_action :check_lti_only
+  before_action :check_databases_alive, :check_cache_clear_flag
   layout false
 
   # View code is public/index.html (compiled by webpack build).
@@ -27,7 +27,7 @@ class BootstrapController < ApplicationController
   private
 
   def check_databases_alive
-    # so that an error gets thrown if postgres is dead.
+    # so that an error gets thrown if Oracle server is dead.
     if !User::Data.database_alive?
       raise "CalCentral database is currently unavailable"
     end

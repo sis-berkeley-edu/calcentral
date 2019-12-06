@@ -1,5 +1,5 @@
 class ExamResultsController < ApplicationController
-  before_filter :api_authenticate
+  before_action :api_authenticate
 
   def get_exam_results
     render json: CampusSolutions::ExamResults.from_session(session).get_feed

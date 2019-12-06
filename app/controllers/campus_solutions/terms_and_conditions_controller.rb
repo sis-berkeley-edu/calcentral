@@ -2,7 +2,7 @@ module CampusSolutions
   class TermsAndConditionsController < CampusSolutionsController
     rescue_from Errors::ClientError, with: :handle_client_error
 
-    before_filter :exclude_acting_as_users
+    before_action :exclude_acting_as_users
 
     def post
       model = CampusSolutions::MyTermsAndConditions.from_session(session)

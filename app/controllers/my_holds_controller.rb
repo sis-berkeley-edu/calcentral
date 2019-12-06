@@ -1,6 +1,6 @@
 class MyHoldsController < ApplicationController
   include AllowDelegateViewAs
-  before_filter :api_authenticate_401
+  before_action :api_authenticate_401
 
   def get_feed
     if params[:expireCache]

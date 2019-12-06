@@ -8,8 +8,6 @@ module User
 
     after_initialize :log_access, :log_threads
 
-    attr_accessible :uid, :app_id, :access_token, :expiration_time, :refresh_token, :app_data
-
     serialize :access_token
     serialize :refresh_token
     serialize :app_data, Hash

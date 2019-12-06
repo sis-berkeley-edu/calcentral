@@ -3,19 +3,27 @@ class RostersController < ApplicationController
 
   def serve_photo
     if (@photo.nil?)
-      render :nothing => true, :status => 401
+      head :unauthorized
     elsif (data = @photo[:data])
-      send_data(
-          data,
-          type: 'image/jpeg',
-          disposition: 'inline'
-      )
+      respond_to do |format|
+        format.jpeg {
+          send_data(
+            data,
+            type: 'image/jpeg',
+            disposition: 'inline'
+          )
+        }
+      end
     else
-      send_file(
-          @photo[:filename],
-          type: 'image/jpeg',
-          disposition: 'inline'
-      )
+      respond_to do |format|
+        format.jpeg {
+          send_file(
+            @photo[:filename],
+            type: 'image/jpeg',
+            disposition: 'inline'
+          )
+        }
+      end
     end
   end
 

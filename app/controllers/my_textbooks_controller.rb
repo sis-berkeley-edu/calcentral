@@ -1,6 +1,6 @@
 class MyTextbooksController < ApplicationController
 
-  before_filter :api_authenticate
+  before_action :api_authenticate
 
   def get_feed
     render json: Textbooks::Proxy.new({

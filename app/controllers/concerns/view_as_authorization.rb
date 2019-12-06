@@ -5,7 +5,7 @@ module ViewAsAuthorization
     if error.respond_to? :message
       render json: { :error => error.message }.to_json, :status => 403
     else
-      render :nothing => true, :status => 403
+      head :forbidden
     end
   end
 

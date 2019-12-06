@@ -3,12 +3,12 @@ describe CampusSolutions::DelegateAccessController do
 
   context 'user not authenticated' do
     it 'should not get students' do
-      get :get_students,  {format: 'json', uid: '100'}
+      get :get_students,  params: { format: 'json', uid: '100' }
       expect(response.status).to eq 401
     end
 
     it 'should not permit post' do
-      post :post, {format: 'json', uid: '100'}
+      post :post, params: { format: 'json', uid: '100' }
       expect(response.status).to eq 401
     end
   end
@@ -23,7 +23,7 @@ describe CampusSolutions::DelegateAccessController do
         expect(User::Api).to receive(:expire).once.with user_id
       end
       it 'should link a claimed student' do
-        post :post, {
+        post :post, params: {
           proxyEmailAddress: 'squire.allworthy@gmail.com',
           securityKey: 'uy786XD'
         }

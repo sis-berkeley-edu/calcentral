@@ -2,168 +2,193 @@ source 'https://rubygems.org'
 
 # The core framework
 # https://github.com/rails/rails
-gem 'rails', '4.2.11.1'
+gem 'rails', '6.0.3.2'
 
+# https://github.com/ruby/rake
 gem 'rake'
 
-gem 'actionpack-action_caching', '~>1.1.1'
-gem 'actionpack-page_caching', '~>1.0.2'
-gem 'actionpack-xml_parser', '~>1.0.1'
-gem 'actionview-encoded_mail_to', '~>1.0.5'
-gem 'activerecord-session_store', '~>1.1.0'
-gem 'activeresource', '~>4.0.0'
-gem 'protected_attributes', '~> 1.0.8'
-gem 'rails-observers', '~>0.1.2'
-gem 'rails-perftest', '~>0.0.5'
-gem 'responders', '~> 2.0'
+# Connects business objects and REST web services
+# https://github.com/rails/activeresource
+gem 'activeresource', '~>5.1.1'
 
-gem 'activerecord-jdbc-adapter', '~> 1.3.16'
+# Benchmark and profile your Rails apps
+# https://github.com/rails/rails-perftest
+gem 'rails-perftest', '~>0.0.7'
 
-# Null Adapter
-gem 'activerecord-nulldb-adapter', '~> 0.3.7'
+# Oracle enhanced adapter for ActiveRecord
+# https://github.com/rsim/oracle-enhanced
+gem 'activerecord-oracle_enhanced-adapter', '~> 6.0.2', group: [:development, :production]
+
+# JRuby's ActiveRecord adapter using JDBC (Oracle and H2 support)
+# https://github.com/jruby/activerecord-jdbc-adapter
+gem 'activerecord-jdbc-adapter', '60.2'
+
+# An ActiveRecord null database adapter for greater speed and isolation in unit tests
+# https://github.com/nulldb/nulldb
+gem 'activerecord-nulldb-adapter', '~> 0.4.0'
+
+# SQLite adapter for activerecord
+# https://github.com/jruby/activerecord-jdbc-adapter
+gem 'activerecord-jdbcsqlite3-adapter', '60.2', group: [:development, :test]
 
 # A JSON implementation as a Ruby extension in C
 # http://flori.github.com/json/
-gem 'json', '~> 1.8.0'
+gem 'json', '~> 2.3.1'
 
 # CAS Strategy for OmniAuth. ETS maintains its own fork with SAML Ticket Validator capability,
 # provided by Steven Hansen.
-gem 'omniauth-cas', '~> 1.1.0', git: 'https://github.com/ets-berkeley-edu/omniauth-cas.git'
+gem 'omniauth-cas', '~> 1.1.1', git: 'https://github.com/sis-berkeley-edu/omniauth-cas.git'
 
 # LDAP
-gem 'net-ldap', '~> 0.16.0'
+# https://github.com/ruby-ldap/ruby-net-ldap
+gem 'net-ldap', '~> 0.16.3'
 
 # secure_headers provides x-frame, csp and other http headers
-gem 'secure_headers', '~> 1.4.0'
+# https://github.com/twitter/secure_headers
+gem 'secure_headers', '~> 6.3.1'
 
 # HTTP client library
 # https://github.com/jnunemaker/httparty
-gem 'httparty', '~> 0.13.3'
+gem 'httparty', '~> 0.18.1'
 
 # Google Auth Library for Ruby
 # https://github.com/googleapis/google-auth-library-ruby
-gem 'googleauth', '~> 0.7.0'
-
-# OAuth2 support
-# https://github.com/googleapis/signet
-gem 'signet', '~> 0.10.0'
+gem 'googleauth', '~> 0.9.0'
 
 # REST client for Google APIs
 # https://github.com/googleapis/google-api-ruby-client
 gem 'google-api-client', '~> 0.31.0'
 
-# LTI support
-gem 'ims-lti', :git => 'https://github.com/instructure/ims-lti.git'
+# Memcached client
+# https://github.com/petergoldstein/
+gem 'dalli', '~> 2.7.10'
 
-# for memcached connection
-gem 'dalli', '~> 2.7.2'
+# Provides telnet client functionality
+# https://github.com/ruby/net-telnet
+gem 'net-telnet', '~> 0.2.0'
 
 # smarter logging
-gem 'log4r', '~> 1.1'
+# https://rubygems.org/gems/log4r
+# https://github.com/colbygk/log4r
+gem 'log4r', '~> 1.1.10'
 
 # for easier non-DB-backed models
-gem 'active_attr', '~> 0.8.5'
+# https://github.com/cgriego/active_attr
+gem 'active_attr', '~> 0.15.0'
 
 # for production deployment
-gem 'jruby-activemq', '~> 5.13.0', git: 'https://github.com/ets-berkeley-edu/jruby-activemq.git'
+gem 'jruby-activemq', '~> 5.13.0', git: 'https://github.com/sis-berkeley-edu/jruby-activemq.git'
 
 # To support SSL TLSv1.2.
 # jruby-openssl versions 0.9.8 through 0.9.16 trigger runaway memory consumption in CalCentral.
 # Track progress at https://github.com/jruby/jruby-openssl/issues/86 and SISRP-18781.
-gem 'jruby-openssl', '0.9.19'
+gem 'jruby-openssl', '0.10.4'
 
 # Addressable is a replacement for the URI implementation that is part of Ruby's standard library.
 # https://github.com/sporkmonger/addressable
-gem 'addressable', '~> 2.5.1'
+gem 'addressable', '~> 2.7.0'
 
 # for parsing formatted html
-gem 'nokogiri', '~> 1.8.1', :platforms => :jruby
+# https://github.com/sparklemotion/nokogiri
+gem 'nokogiri', '~> 1.10.10', :platforms => :jruby
 
 # for parsing paged feeds
-gem 'link_header', '~> 0.0.7'
+# https://github.com/asplake/link_header
+gem 'link_header', '~> 0.0.8'
 
-# for simplified relational data management
-gem 'rails_admin', '1.3.0'
-
-# bootstrap-sass is used for rails_admin styling - limit to development and
-# because we precompile the assets.
-gem 'bootstrap-sass', '~> 3.4.1', group: :development
-
-gem 'concurrent-ruby', '~> 1.0.5'
+# Background jobs
+# https://github.com/ruby-concurrency/concurrent-ruby
+gem 'concurrent-ruby', '~> 1.1.7'
 
 # for building a WAR to deploy on Tomcat
+# https://github.com/jruby/warbler
 gem 'warbler', '~> 2.0.5'
-gem 'jruby-jars', '9.1.14.0'
 
+# https://github.com/jruby/jruby/tree/master/maven/jruby-jars
+gem 'jruby-jars', '9.2.13.0'
+
+# simple DSL to retry failed code blocks
 # for trying, and trying again, and then giving up.
-gem 'retriable', '~> 2.1.0'
+# https://github.com/kamui/retriable
+gem 'retriable', '~> 3.1.2'
 
 # authorization abstraction layer
+# https://github.com/varvet/pundit
 gem 'pundit', '~> 0.3.0'
 
+# https://github.com/ryanb/cancan
 gem 'cancan', '~> 1.6.10'
-gem 'net-ssh', '~>2.9.2' # v3 requires Ruby 2.0
 
-gem 'icalendar', '~> 2.2.2'
+# https://github.com/net-ssh/net-ssh
+# v3 requires Ruby 2.0
+gem 'net-ssh', '5.0.2'
 
-gem 'rubyzip', '~> 1.2.2'
+# Support for iCalendar files
+# https://github.com/icalendar/icalendar
+gem 'icalendar', '~> 2.6.1'
 
-##################################
-# Front-end Gems for Rails Admin #
-##################################
-
-
-# Closure Compiler Gem for JS compression
-# https://github.com/documentcloud/closure-compiler
-gem 'closure-compiler', '~> 1.1.11'
-
-# Oracle adapter
-# Purposely excluding this for test environments since folks have to install ojdbc6
 group :development, :production do
-  gem 'activerecord-oracle_enhanced-adapter', '~> 1.6.0'
-  gem 'rvm-capistrano', '~> 1.3.1'
-  gem 'capistrano', '~> 2.15.4'
+  # Remote automation tool used for deployment
+  # latest: v3.11.2
+  # https://github.com/capistrano/capistrano
+  # V3 is a total rewrite, see https://github.com/capistrano/capistrano/blob/3f8f6502/CHANGELOG.md#300
+  gem 'capistrano', '2.15.5'
+
+  # RVM support for Capistrano
+  # latest: v1.5.6
+  # https://github.com/rvm/rvm-capistrano
+  gem 'rvm-capistrano', '1.3.4', require: false
 end
 
 group :development, :test do
-  gem 'rspec-core', '~> 3.4.0'
-  gem 'rspec-rails', '~> 3.4.1'
-  gem 'rspec-mocks', '~> 3.4.0'
-  gem 'rspec-support', '~> 3.4.0'
-  gem 'rspec-its', '~> 1.1.0'
-  gem 'rspec-collection_matchers', '~> 1.1.2'
-  gem 'minitest-reporters', '~> 1.0.8'
+
+  # RSpec for Rails-3+
+  # https://github.com/rspec/rspec-rails
+  gem 'rspec-rails', '~> 4.0.1'
+
+  # `its` for RSpec 3 extracted from rspec-core 2.x
+  # https://github.com/rspec/rspec-its
+  gem 'rspec-its', '~> 1.3.0'
+
+  # Collection cardinality matchers, extracted from rspec-expectations
+  # https://github.com/rspec/rspec-collection_matchers
+  gem 'rspec-collection_matchers', '~> 1.2.0'
 
   # Code coverage for Ruby 1.9 with a powerful configuration library and automatic merging of coverage across test suites
   # https://rubygems.org/gems/simplecov
-  gem 'simplecov', '~> 0.14.0', require: false
-  gem 'simplecov-html', '~> 0.10.0', require: false
+  gem 'simplecov', '~> 0.19.0', require: false
+  gem 'simplecov-html', '~> 0.12.2', require: false
 
   # Webmock is not thread-safe and should never be enabled in production-like environments.
-  gem 'webmock', '~> 1.20.4'
+  gem 'webmock', '~> 3.8.3'
 
   # Currently needed by RubyMine.
+  # https://test-unit.github.io/
   gem 'test-unit'
 end
 
 group :development do
   # A better development webserver than WEBrick, especially on JRuby
+  # https://puma.io/
   gem 'puma'
 
-  # Automatically reloads your browser when 'view' files are modified.
-  # https://github.com/guard/guard-livereload
-  gem 'guard-livereload', '~> 2.4.0', require: false
+  # Debugging support for Eclipse and RubyMine
+  # https://github.com/ruby-debug/ruby-debug-ide
+  gem 'ruby-debug-ide', '~> 0.7.0'
 end
 
 group :test do
-  gem 'activerecord-jdbcsqlite3-adapter', '~> 1.3.16'
-  gem 'page-object', '~> 1.2.0'
+  # PageObject pattern for selenium-webdriver (browser based testing)
+  # https://github.com/cheezy/page-object
+  gem 'page-object', '~> 2.2.6'
 
-  # RSpec results that Hudson + Bamboo + xml happy CI servers can read. See https://rubygems.org/gems/rspec_junit_formatter
-  # TODO: Use gem 'rspec_junit_formatter', '~> 0.2.x' when deprecated concern of CLC-3565 is resolved.
-  gem 'rspec_junit_formatter', :git => 'https://github.com/sj26/rspec_junit_formatter.git'
+  # RSpec results that Hudson + Bamboo + xml happy CI servers can read.
+  # https://github.com/sj26/rspec_junit_formatter
+  gem 'rspec_junit_formatter', '~> 0.4.1'
 end
 
 group :shell_debug do
+  # Ruby debugging
+  # https://github.com/ruby-debug/ruby-debug
   gem 'ruby-debug', '>= 0.10.5.rc9'
 end

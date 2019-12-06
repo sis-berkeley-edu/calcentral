@@ -4,7 +4,7 @@ describe CampusSolutions::CollegeSchedulerController do
 
   context 'no authenticated user' do
     it 'returns 401' do
-      get :get, options
+      get :get, params: options
       expect(response.status).to eq 401
       expect(response.body.strip).to eq ''
     end
@@ -17,7 +17,7 @@ describe CampusSolutions::CollegeSchedulerController do
     context 'feature flag off' do
       before { allow(Settings.features).to receive(:cs_enrollment_card).and_return false }
       it 'should redirect to 404' do
-        get :get, options
+        get :get, params: options
         expect(response).to redirect_to '/404'
       end
     end
@@ -25,7 +25,7 @@ describe CampusSolutions::CollegeSchedulerController do
     context 'feature flag on' do
       before { allow(Settings.features).to receive(:cs_enrollment_card).and_return true }
       it 'should redirect to a College Scheduler URL' do
-        get :get, options
+        get :get, params: options
         expect(response).to redirect_to scheduler_url
       end
 
@@ -41,11 +41,11 @@ describe CampusSolutions::CollegeSchedulerController do
           before { allow(User::SearchUsersByUid).to receive(:new).with(id: user_id, roles: [:advisor]).and_return(mock_user_search_by_uid) }
           it 'should initialize proxy with student user id present' do
             expect(CampusSolutions::CollegeSchedulerUrl).to receive(:new).with(expected_options).and_return(mock_proxy)
-            get :get_advisor, options
+            get :get_advisor, params: options
           end
 
           it 'should redirect to a College Scheduler URL' do
-            get :get_advisor, options
+            get :get_advisor, params: options
             expect(response).to redirect_to scheduler_url
           end
         end
@@ -53,7 +53,7 @@ describe CampusSolutions::CollegeSchedulerController do
         context 'when user is not an advisor' do
           before { allow(User::SearchUsersByUid).to receive(:new).with(id: user_id, roles: [:advisor]).and_raise(Pundit::NotAuthorizedError, "User (UID: #{user_id}) is not an Advisor") }
           it 'should redirect to 404' do
-            get :get_advisor, options
+            get :get_advisor, params: options
             expect(response.status).to_not eq(302)
             expect(response.status).to eq(403)
             expect(response.body).to eq ''
@@ -64,7 +64,7 @@ describe CampusSolutions::CollegeSchedulerController do
       context 'when College Scheduler URL not found' do
         before { allow_any_instance_of(CampusSolutions::CollegeSchedulerUrl).to receive(:get_college_scheduler_url).and_return(nil) }
         it 'should redirect to 404' do
-          get :get, options
+          get :get, params: options
           expect(response).to redirect_to '/404'
         end
       end

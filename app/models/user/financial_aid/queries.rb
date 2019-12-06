@@ -9,14 +9,13 @@ module User
 
       def self.get_award_activity_dates(uid, aid_year:)
         query <<-SQL
-          SELECT DISTINCT
-          TO_CHAR(TO_DATE(SUBSTR(UC.ACTION_DTTM, 1,9),'DD-MON-YY'),'YYYY-MM-DD') AS activity_date
+          SELECT DISTINCT SUBSTR(UC.ACTION_DTTM, 1,10) AS activity_date
             FROM SYSADM.PS_UCC_FA_AWDCMPDT UC
            WHERE UC.CAMPUS_ID      = '#{uid}'
              AND UC.INSTITUTION    = '#{UC_BERKELEY}'
              AND UC.AID_YEAR       = '#{aid_year}'
-             AND TO_CHAR(TO_DATE(SUBSTR(UC.ACTION_DTTM, 1,9),'DD-MON-YY'),'YYYY-MM-DD')
-               <= (SELECT MAX(TO_CHAR(TO_DATE(SUBSTR(UC2.ACTION_DTTM, 1,9),'DD-MON-YY'),'YYYY-MM-DD'))
+             AND SUBSTR(UC.ACTION_DTTM, 1,10)
+               <= (SELECT MAX(SUBSTR(UC2.ACTION_DTTM, 1,10))
                      FROM SYSADM.PS_UCC_FA_AWDCMPDT UC2
                     WHERE UC2.CAMPUS_ID   = UC.CAMPUS_ID
                       AND UC2.INSTITUTION = UC.INSTITUTION
