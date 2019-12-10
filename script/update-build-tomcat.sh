@@ -38,13 +38,13 @@ echo | ${LOGIT}
 echo "------------------------------------------" | ${LOGIT}
 
 # Stop Tomcat
-tomstatus | grep "is running"
+~/bin/tomcat9-calcentral.sh status | grep "is running"
 
 tomreturn=$?
 
 if [ $tomreturn -eq 0 ] ; then
    echo "$(date): Stopping CalCentral..." | ${LOGIT}
-   tomshut | ${LOGIT} 2>&1
+   ~/bin/tomcat9-calcentral.sh stop | ${LOGIT} 2>&1
 else
    echo "WARNING: Tomcat not running. No shutdown attempted, will proceed with code deploy" | ${LOGIT}
 fi
@@ -66,7 +66,7 @@ curl -k -s ${WAR_URL} > ROOT.war | ${LOGIT}
 ##jar xf calcentral.knob
 
 # Start Tomcat which deploys the war file
-tomstart | ${LOGIT}
+~/bin/tomcat9-calcentral.sh start | ${LOGIT}
 
 # Wait for 20 seconds before running checks that it was deployed
 sleep 20
