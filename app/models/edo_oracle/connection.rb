@@ -24,13 +24,6 @@ module EdoOracle
       []
     end
 
-    def self.fallible_query(sql, opts={})
-      query(sql, opts)
-    rescue => e
-      logger.fatal "Query failed: #{e.class}: #{e.message}\n #{e.backtrace.join("\n ")}"
-      raise RuntimeError, "Fatal database failure"
-    end
-
     def self.stringified_columns
       %w(campus-uid meeting_num section_id ldap_uid student_id)
     end
