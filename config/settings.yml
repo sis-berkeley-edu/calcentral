@@ -2,9 +2,9 @@ application:
   # Set to true if testing production env without Apache/Nginx
   serve_static_assets: false
   # Set to "https://" if running behind Apache/Nginx + https
-  protocol: "http://"
+  protocol: 'http://'
   fake_cas: false
-  fake_cas_id: "1" # Change this to the UID you want to fake cas auth with.
+  fake_cas_id: '1' # Change this to the UID you want to fake cas auth with.
   # WebMock is not thread-safe, and so fake proxy support should
   # be disabled when no fakes are needed (e.g., in production).
   fake_proxies_enabled: true
@@ -76,7 +76,7 @@ campusdb:
   username: sa
   password: sa
   pool: 95
-  fake_user_id: "300939"
+  fake_user_id: '300939'
 
 terms:
   # Limit how far back our academic history goes.
@@ -99,15 +99,15 @@ test_sqlite:
 # MUST BE SET FOR DEVELOPMENT & PRODUCTION
 # Example generated with SecureRandom.base64(32)
 oauth2:
-  key: "IeGpe9iq27Glqujd8pGH1+xM8C/ofm97Lp74N+6cN0I="
-  encryption: "aes-256-cbc"
+  key: 'IeGpe9iq27Glqujd8pGH1+xM8C/ofm97Lp74N+6cN0I='
+  encryption: 'aes-256-cbc'
 
 # Proxy settings
 # Set "fake: true" for any inaccessible ones
 canvas_proxy:
-  admin_access_token: "someMumboJumbo"
+  admin_access_token: 'someMumboJumbo'
   # URL for Canvas server
-  url_root: "http://localhost:12345"
+  url_root: 'http://localhost:12345'
   fake: false
   account_id: '90242'
   admin_tools_account_id: '129607'
@@ -120,8 +120,8 @@ canvas_proxy:
   lti_key: 'someMumboJumbo'
   lti_secret: 'someMumboJumbo'
   # Only used for testing + recording responses
-  test_user_id: "300846"
-  test_user_access_token: "someMumboJumbo"
+  test_user_id: '300846'
+  test_user_access_token: 'someMumboJumbo'
   mixed_sis_user_id: true
   # Set to any string to make integration scripts create CSV files and log intended updates
   # without actually changing anything in Canvas.
@@ -150,21 +150,15 @@ google_proxy:
   scope: 'profile email https://www.googleapis.com/auth/calendar https://www.googleapis.com/auth/tasks https://www.googleapis.com/auth/drive.readonly.metadata https://mail.google.com/mail/feed/atom/'
   fake: false
   #Maps to tammi.chang.clc@gmail.com. Used for testing + recording responses
-  test_user_access_token: "bogusAccessToken"
-  test_user_refresh_token: "bogusRefreshToken"
-  atom_mail_feed_url: "https://mail.google.com/mail/feed/atom/"
+  test_user_access_token: 'bogusAccessToken'
+  test_user_refresh_token: 'bogusRefreshToken'
+  atom_mail_feed_url: 'https://mail.google.com/mail/feed/atom/'
 
 cal_link_proxy:
   fake: false
-  base_url: "https://callink.berkeley.edu"
+  base_url: 'https://callink.berkeley.edu'
   public_key: secret set in production
   private_key: secret set in production
-
-cal_groups_proxy:
-  fake: false
-  username: 'secret'
-  password: 'secret'
-  base_url: 'https://group-test.berkeley.edu/gws/servicesRest/json/v2_2_100'
 
 clearing_house_proxy:
   fake: false
@@ -198,7 +192,7 @@ hub_term_proxy:
 
 textbooks_proxy:
   fake: false
-  base_url: "https://calstudentstore.berkeley.edu"
+  base_url: 'https://calstudentstore.berkeley.edu'
   token: secret set per deployment layer
 
 webcast_proxy:
@@ -209,7 +203,7 @@ webcast_proxy:
 
 blog_latest_release_notes_feed_proxy:
   fake: false
-  base_url: "https://www.ets.berkeley.edu/news-archive/calcentral-release-notes/feed"
+  base_url: 'https://www.ets.berkeley.edu/news-archive/calcentral-release-notes/feed'
 
 cal1card_proxy:
   fake: false
@@ -223,7 +217,7 @@ google_analytics_id: UA-XXXXXX-X
 
 # Sentry URL
 # We use https://getsentry.com for our JavaScript Error logging
-sentry_url: "https://facf7ad7bd7047f0a356e9322107ce50@app.getsentry.com/7185"
+sentry_url: 'https://facf7ad7bd7047f0a356e9322107ce50@app.getsentry.com/7185'
 
 # Cache settings. 0 means never expire.
 # WARNING: memcached's upper limit is 30 days. Specifying longer expiration than that will
@@ -231,11 +225,11 @@ sentry_url: "https://facf7ad7bd7047f0a356e9322107ce50@app.getsentry.com/7185"
 cache:
   # Array of server addresses in cluster (for memcached). These must match the hostnames
   # of the application cluster for CalCentral's BackgroundJobsCheck to work correctly.
-  servers: ["localhost"]
+  servers: ['localhost']
   maximum_expires_in: <%= 29.days %>
   race_condition_ttl: <%= 10.seconds %>
   stale_connection_flush_interval: <%= 30.seconds %>
-  store: "memcached"
+  store: 'memcached'
   log_level: <%= Logger::WARN %>
   expiration:
     default: <%= 35.minutes %>
@@ -331,7 +325,7 @@ ist_jms:
   freshen_recording: false
   connections:
     - url: 'tcp://localhost:61616'
-      queues: [ 'testqueue' ]
+      queues: ['testqueue']
       #  username: USERNAME
       #  password: PASSWORD
 
@@ -343,7 +337,7 @@ developer_auth:
 background_threads:
   min: 2,
   max: 2,
-  max_queue: 0  # unbounded work queue
+  max_queue: 0 # unbounded work queue
 
 background_jobs_check:
   time_between_pings: <%= 5.minutes %>
