@@ -281,9 +281,6 @@ if [ "${APP_MODE}" == "calcentral" ] ; then
     "/UC_SF_BILLING_DETAILS.v1/Get?EMPLID=${CAMPUS_SOLUTIONS_ID}" \
     "/UC_SF_FPP_LINKS_GET.v1/Get"
 
-  verify_cs 'cs_advisor_student_lookup' "${yml_features_cs_advisor_student_lookup}" \
-    "/UC_CC_USER_LOOKUP.v1/lookup?NAME1=Wavy&NAME2=Gravy&AFFILIATIONS=STUDENT,UNDERGRAD"
-
   verify_cs 'cs_profile_emergency_contacts' "${yml_features_cs_profile_emergency_contacts}" \
     "/UcApiEmergencyContactGet.v1/?EMPLID=${CAMPUS_SOLUTIONS_ID}"
 
