@@ -44,12 +44,3 @@ edodb:
   password: <%=Settings.edodb.password %>
   pool: <%=Settings.edodb.pool %>
   timeout: <%=Settings.edodb.timeout %>
-
-edw_db:
-  adapter: <%= Settings.edw_db.adapter %>
-  driver: <%=Settings.edw_db.driver %>
-  url: <%=Settings.edw_db.url %>
-  username: <%=Settings.edw_db.username %>
-  password: <%=Settings.edw_db.password %>
-  pool: <%=Settings.edw_db.pool %>
-  timeout: <%=Settings.edw_db.timeout %>

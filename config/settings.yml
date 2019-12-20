@@ -110,11 +110,6 @@ canvas_proxy:
   url_root: 'http://localhost:12345'
   fake: false
   account_id: '90242'
-  admin_tools_account_id: '129607'
-  official_courses_account_id: '129410'
-  projects_account_id: '129407'
-  projects_term_id: '5494'
-  projects_template_id: '1283463'
   default_grading_scheme_id: '4068930'
   export_directory: 'tmp/canvas'
   lti_key: 'someMumboJumbo'
@@ -406,27 +401,6 @@ calnet_crosswalk_proxy:
   username: secret
   password: secret
   http_timeout_seconds: 30
-
-data_loch:
-  fake: true
-  staging_directory: 'tmp/data_loch'
-  advisees_key: 'calnet-data/sids/snapshot000'
-  targets:
-    - name: 's3_test'
-      aws_key: 'key'
-      aws_secret: 'secret'
-      aws_region: 'region'
-      bucket: 'bucket'
-      prefix: 'exports/go/here'
-
-edw_db:
-  fake: false
-  adapter: h2
-  driver: org.h2.Driver
-  url: jdbc:h2:mem:h2SisedoOracle::SisedoDataSource;DB_CLOSE_DELAY=-1;MODE=Oracle
-  username: sa
-  password: sa
-  pool: 5
 
 # A feature will be disabled if the corresponding feature-flag is false or nil.
 features:
