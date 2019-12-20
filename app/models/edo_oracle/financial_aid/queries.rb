@@ -244,7 +244,9 @@ module EdoOracle
         result.first
       end
 
-      def self.get_finaid_profile_status(person_id, aid_year)
+      def self.get_finaid_profile_status(person_id, aid_year, effective_date: Time.zone.today.in_time_zone.to_date)
+        effective_date_string = effective_date.to_s
+
         result = safe_query <<-SQL
         SELECT
           UC.AID_YEAR             AS AID_YEAR,
@@ -258,92 +260,192 @@ module EdoOracle
           UC.DESCR8               AS BERKELEY_PC,
           UC.TITLE                AS TITLE,
           UC.MESSAGE_TEXT_LONG    AS MESSAGE
-          FROM SYSADM.PS_UCC_FA_PRFL_FAT UC
+         FROM SYSADM.PS_UCC_FA_PRFL_FAT UC
         WHERE UC.CAMPUS_ID   = '#{person_id}'
           AND UC.INSTITUTION = '#{UC_BERKELEY}'
           AND UC.AID_YEAR    = '#{aid_year}'
+          AND UC.EFFDT  = (SELECT MAX(UC2.EFFDT) FROM SYSADM.PS_UCC_FA_PRFL_FAT UC2
+                           WHERE UC2.EMPLID      = UC.EMPLID
+                             AND UC2.INSTITUTION = UC.INSTITUTION
+                             AND UC2.AID_YEAR    = UC.AID_YEAR
+                             AND UC2.EFFDT      <= TO_DATE('#{effective_date_string}', 'YYYY-MM-DD'))
+          AND UC.EFFSEQ = (SELECT MAX(UC3.EFFSEQ) FROM SYSADM.PS_UCC_FA_PRFL_FAT UC3
+                           WHERE UC3.EMPLID      = UC.EMPLID
+                             AND UC3.INSTITUTION = UC.INSTITUTION
+                             AND UC3.AID_YEAR    = UC.AID_YEAR
+                             AND UC3.STRM        = UC.STRM
+                             AND UC3.EFFDT       = UC.EFFDT)
+          AND UC.EFF_STATUS = 'A'
+          AND (((UC.STRM NOT LIKE '%5') AND (UC.TERM_SRC <> 'N'))
+          OR ((UC.STRM LIKE '%5') AND (UC.TERM_SRC = 'T')))
         ORDER BY UC.AID_YEAR
         SQL
         result.first
       end
 
-      def self.get_finaid_profile_acad_careers(person_id, aid_year)
+      def self.get_finaid_profile_acad_careers(person_id, aid_year, effective_date: Time.zone.today.in_time_zone.to_date)
+        effective_date_string = effective_date.to_s
+
         safe_query <<-SQL
         SELECT
           UC.AID_YEAR             AS AID_YEAR,
           UC.STRM                 AS TERM_ID,
           UC.DESCR                AS TERM_DESCR,
           UC.DESCR2               AS ACAD_CAREER
-          FROM SYSADM.PS_UCC_FA_PRFL_CAR UC
+         FROM SYSADM.PS_UCC_FA_PRFL_CAR UC
         WHERE UC.CAMPUS_ID   = '#{person_id}'
           AND UC.INSTITUTION = '#{UC_BERKELEY}'
           AND UC.AID_YEAR    = '#{aid_year}'
-        ORDER BY UC.AID_YEAR, UC.STRM
+          AND UC.EFFDT = (SELECT MAX(UC2.EFFDT) FROM SYSADM.PS_UCC_FA_PRFL_CAR UC2
+                          WHERE UC2.EMPLID      = UC.EMPLID
+                            AND UC2.INSTITUTION = UC.INSTITUTION
+                            AND UC2.AID_YEAR    = UC.AID_YEAR
+                            AND UC2.STRM        = UC.STRM
+                            AND UC2.EFFDT      <= TO_DATE('#{effective_date_string}', 'YYYY-MM-DD'))
+          AND UC.EFFSEQ = (SELECT MAX(UC3.EFFSEQ) FROM SYSADM.PS_UCC_FA_PRFL_CAR UC3
+                          WHERE UC3.EMPLID      = UC.EMPLID
+                            AND UC3.INSTITUTION = UC.INSTITUTION
+                            AND UC3.AID_YEAR    = UC.AID_YEAR
+                            AND UC3.STRM        = UC.STRM
+                            AND UC3.EFFDT       = UC.EFFDT)
+          AND UC.EFF_STATUS = 'A'
+          AND (((UC.STRM NOT LIKE '%5') AND (UC.TERM_SRC <> 'N'))
+           OR ((UC.STRM LIKE '%5') AND (UC.TERM_SRC = 'T')))
+          ORDER BY UC.AID_YEAR, UC.STRM
         SQL
       end
 
-      def self.get_finaid_profile_acad_level(person_id, aid_year)
+      def self.get_finaid_profile_acad_level(person_id, aid_year, effective_date: Time.zone.today.in_time_zone.to_date)
+        effective_date_string = effective_date.to_s
+
         safe_query <<-SQL
         SELECT
           UC.AID_YEAR             AS AID_YEAR,
           UC.STRM                 AS TERM_ID,
           UC.DESCR                AS TERM_DESCR,
           UC.DESCR2               AS ACAD_LEVEL
-          FROM SYSADM.PS_UCC_FA_PRFL_LVL UC
+         FROM SYSADM.PS_UCC_FA_PRFL_LVL UC
         WHERE UC.CAMPUS_ID   = '#{person_id}'
           AND UC.INSTITUTION = '#{UC_BERKELEY}'
           AND UC.AID_YEAR    = '#{aid_year}'
+          AND UC.EFFDT = (SELECT MAX(UC2.EFFDT) FROM SYSADM.PS_UCC_FA_PRFL_LVL UC2
+                          WHERE UC2.EMPLID      = UC.EMPLID
+                            AND UC2.INSTITUTION = UC.INSTITUTION
+                            AND UC2.AID_YEAR    = UC.AID_YEAR
+                            AND UC2.STRM        = UC.STRM
+                            AND UC2.EFFDT      <= TO_DATE('#{effective_date_string}', 'YYYY-MM-DD'))
+          AND UC.EFFSEQ = (SELECT MAX(UC3.EFFSEQ) FROM SYSADM.PS_UCC_FA_PRFL_LVL UC3
+                          WHERE UC3.EMPLID      = UC.EMPLID
+                            AND UC3.INSTITUTION = UC.INSTITUTION
+                            AND UC3.AID_YEAR    = UC.AID_YEAR
+                            AND UC3.STRM        = UC.STRM
+                            AND UC3.EFFDT       = UC.EFFDT)
+          AND UC.EFF_STATUS = 'A'
+          AND (((UC.STRM NOT LIKE '%5') AND (UC.TERM_SRC <> 'N'))
+           OR ((UC.STRM LIKE '%5') AND (UC.TERM_SRC = 'T')))
         ORDER BY UC.AID_YEAR, UC.STRM
         SQL
       end
 
-      def self.get_finaid_profile_enrollment(person_id, aid_year)
+      def self.get_finaid_profile_enrollment(person_id, aid_year, effective_date: Time.zone.today.in_time_zone.to_date)
+        effective_date_string = effective_date.to_s
+
         safe_query <<-SQL
         SELECT
           UC.AID_YEAR                         AS AID_YEAR,
           UC.STRM                             AS TERM_ID,
           UC.DESCR                            AS TERM_DESCR,
           UC.DESCR2                           AS TERM_UNITS
-          FROM SYSADM.PS_UCC_FA_PRFL_ENR UC
+         FROM SYSADM.PS_UCC_FA_PRFL_ENR UC
         WHERE UC.CAMPUS_ID   = '#{person_id}'
           AND UC.INSTITUTION = '#{UC_BERKELEY}'
           AND UC.AID_YEAR    = '#{aid_year}'
+          AND UC.EFFDT       = (SELECT MAX(UC2.EFFDT) FROM SYSADM.PS_UCC_FA_PRFL_ENR UC2
+                                WHERE UC2.EMPLID      = UC.EMPLID
+                                  AND UC2.INSTITUTION = UC.INSTITUTION
+                                  AND UC2.AID_YEAR    = UC.AID_YEAR
+                                  AND UC2.STRM        = UC.STRM
+                                  AND UC2.EFFDT      <= TO_DATE('#{effective_date_string}', 'YYYY-MM-DD'))
+          AND UC.EFFSEQ      = (SELECT MAX(UC3.EFFSEQ) FROM SYSADM.PS_UCC_FA_PRFL_ENR UC3
+                                WHERE UC3.EMPLID      = UC.EMPLID
+                                  AND UC3.INSTITUTION = UC.INSTITUTION
+                                  AND UC3.AID_YEAR    = UC.AID_YEAR
+                                  AND UC3.STRM        = UC.STRM
+                                  AND UC3.EFFDT       = UC.EFFDT)
+          AND UC.EFF_STATUS = 'A'
+          AND UC.TERM_SRC IN ('T','M')
         ORDER BY UC.AID_YEAR, UC.STRM
         SQL
       end
 
-      def self.get_finaid_profile_SHIP(person_id, aid_year)
+      def self.get_finaid_profile_SHIP(person_id, aid_year, effective_date: Time.zone.today.in_time_zone.to_date)
+        effective_date_string = effective_date.to_s
+
         safe_query <<-SQL
         SELECT
           UC.AID_YEAR                         AS AID_YEAR,
           UC.STRM                             AS TERM_ID,
           UC.DESCR                            AS TERM_DESCR,
           UC.DESCR2                           AS SHIP_STATUS
-          FROM SYSADM.PS_UCC_FA_PRFL_SHP UC
+         FROM SYSADM.PS_UCC_FA_PRFL_SHP UC
         WHERE UC.CAMPUS_ID   = '#{person_id}'
           AND UC.INSTITUTION = '#{UC_BERKELEY}'
           AND UC.AID_YEAR    = '#{aid_year}'
+          AND UC.EFFDT       = (SELECT MAX(UC2.EFFDT) FROM SYSADM.PS_UCC_FA_PRFL_SHP UC2
+                                WHERE UC2.EMPLID      = UC.EMPLID
+                                  AND UC2.INSTITUTION = UC.INSTITUTION
+                                  AND UC2.AID_YEAR    = UC.AID_YEAR
+                                  AND UC2.STRM        = UC.STRM
+                                  AND UC2.EFFDT      <= TO_DATE('#{effective_date_string}', 'YYYY-MM-DD'))
+          AND UC.EFFSEQ      = (SELECT MAX(UC3.EFFSEQ) FROM SYSADM.PS_UCC_FA_PRFL_SHP UC3
+                                WHERE UC3.EMPLID      = UC.EMPLID
+                                  AND UC3.INSTITUTION = UC.INSTITUTION
+                                  AND UC3.AID_YEAR    = UC.AID_YEAR
+                                  AND UC3.STRM        = UC.STRM
+                                  AND UC3.EFFDT       = UC.EFFDT)
+          AND UC.EFF_STATUS = 'A'
+          AND (((UC.STRM NOT LIKE '%5') AND (UC.TERM_SRC <> 'N'))
+           OR ((UC.STRM LIKE '%5') AND (UC.TERM_SRC = 'T')))
         ORDER BY UC.AID_YEAR, UC.STRM
         SQL
       end
 
-      def self.get_finaid_profile_residency(person_id, aid_year)
+      def self.get_finaid_profile_residency(person_id, aid_year, effective_date: Time.zone.today.in_time_zone.to_date)
+        effective_date_string = effective_date.to_s
+
         safe_query <<-SQL
         SELECT
           UC.AID_YEAR             AS AID_YEAR,
           UC.STRM                 AS TERM_ID,
           UC.DESCR                AS TERM_DESCR,
           UC.DESCR100             AS RESIDENCY
-          FROM SYSADM.PS_UCC_FA_PRFL_RES UC
+         FROM SYSADM.PS_UCC_FA_PRFL_RES UC
         WHERE UC.CAMPUS_ID   = '#{person_id}'
           AND UC.INSTITUTION = '#{UC_BERKELEY}'
           AND UC.AID_YEAR    = '#{aid_year}'
+          AND UC.EFFDT       = (SELECT MAX(UC2.EFFDT) FROM SYSADM.PS_UCC_FA_PRFL_RES UC2
+                                WHERE UC2.EMPLID      = UC.EMPLID
+                                  AND UC2.INSTITUTION = UC.INSTITUTION
+                                  AND UC2.AID_YEAR    = UC.AID_YEAR
+                                  AND UC2.STRM        = UC.STRM
+                                  AND UC2.EFFDT      <= TO_DATE('#{effective_date_string}', 'YYYY-MM-DD'))
+          AND UC.EFFSEQ      = (SELECT MAX(UC3.EFFSEQ) FROM SYSADM.PS_UCC_FA_PRFL_RES UC3
+                                WHERE UC3.EMPLID      = UC.EMPLID
+                                  AND UC3.INSTITUTION = UC.INSTITUTION
+                                  AND UC3.AID_YEAR    = UC.AID_YEAR
+                                  AND UC3.STRM        = UC.STRM
+                                  AND UC3.EFFDT       = UC.EFFDT)
+          AND UC.EFF_STATUS = 'A'
+          AND (((UC.STRM NOT LIKE '%5') AND (UC.TERM_SRC <> 'N'))
+           OR ((UC.STRM LIKE '%5') AND (UC.TERM_SRC = 'T')))
           AND UC.DESCR100 IS NOT NULL
         ORDER BY UC.AID_YEAR, UC.STRM
         SQL
       end
 
-      def self.get_finaid_profile_isir(person_id, aid_year)
+      def self.get_finaid_profile_isir(person_id, aid_year, effective_date: Time.zone.today.in_time_zone.to_date)
+        effective_date_string = effective_date.to_s
+
         result = safe_query <<-SQL
         SELECT
           UC.AID_YEAR             AS AID_YEAR,
@@ -351,10 +453,20 @@ module EdoOracle
           UC.DESCR2               AS PRIMARY_EFC,
           UC.DESCR3               AS SUMMER_EFC,
           UC.DESCR4               AS FAMILY_IN_COLLEGE
-          FROM SYSADM.PS_UCC_FA_PRFL_ISR UC
+         FROM SYSADM.PS_UCC_FA_PRFL_ISR UC
         WHERE UC.CAMPUS_ID   = '#{person_id}'
           AND UC.INSTITUTION = '#{UC_BERKELEY}'
           AND UC.AID_YEAR    = '#{aid_year}'
+          AND UC.EFFDT       = (SELECT MAX(UC2.EFFDT) FROM SYSADM.PS_UCC_FA_PRFL_ISR UC2
+                                WHERE UC2.EMPLID      = UC.EMPLID
+                                  AND UC2.INSTITUTION = UC.INSTITUTION
+                                  AND UC2.AID_YEAR    = UC.AID_YEAR
+                                  AND UC2.EFFDT      <= TO_DATE('#{effective_date_string}', 'YYYY-MM-DD'))
+          AND UC.EFFSEQ      = (SELECT MAX(UC3.EFFSEQ) FROM SYSADM.PS_UCC_FA_PRFL_ISR UC3
+                                WHERE UC3.EMPLID      = UC.EMPLID
+                                  AND UC3.INSTITUTION = UC.INSTITUTION
+                                  AND UC3.AID_YEAR    = UC.AID_YEAR
+                                  AND UC3.EFFDT       = UC.EFFDT)
         ORDER BY UC.AID_YEAR
         SQL
         result.first
