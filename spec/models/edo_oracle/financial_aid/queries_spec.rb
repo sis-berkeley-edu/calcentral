@@ -2,6 +2,7 @@ describe EdoOracle::FinancialAid::Queries do
   let(:student_id) { 11667051 }
   let(:uid) { 61889 }
   let(:aid_year) { 2018 }
+  let(:today) { Time.zone.today.in_time_zone.to_date }
   shared_examples 'a successful query' do
     it 'returns a set of rows' do
       expect(subject).to be
@@ -167,7 +168,7 @@ describe EdoOracle::FinancialAid::Queries do
   end
 
   describe '#get_finaid_profile_status' do
-    subject { described_class.get_finaid_profile_status(uid, aid_year) }
+    subject { described_class.get_finaid_profile_status(uid, aid_year, effective_date: today) }
 
     it_behaves_like 'a successful query that returns one result'
 
@@ -178,7 +179,7 @@ describe EdoOracle::FinancialAid::Queries do
   end
 
   describe '#get_finaid_profile_acad_careers' do
-    subject { described_class.get_finaid_profile_acad_careers(uid, aid_year) }
+    subject { described_class.get_finaid_profile_acad_careers(uid, aid_year, effective_date: today) }
 
     it_behaves_like 'a successful query'
 
@@ -195,7 +196,7 @@ describe EdoOracle::FinancialAid::Queries do
   end
 
   describe '#get_finaid_profile_acad_level' do
-    subject { described_class.get_finaid_profile_acad_level(uid, aid_year) }
+    subject { described_class.get_finaid_profile_acad_level(uid, aid_year, effective_date: today) }
 
     it_behaves_like 'a successful query'
 
@@ -214,7 +215,7 @@ describe EdoOracle::FinancialAid::Queries do
   end
 
   describe '#get_finaid_profile_enrollment' do
-    subject { described_class.get_finaid_profile_enrollment(uid, aid_year) }
+    subject { described_class.get_finaid_profile_enrollment(uid, aid_year, effective_date: today) }
 
     it_behaves_like 'a successful query'
 
@@ -233,7 +234,7 @@ describe EdoOracle::FinancialAid::Queries do
   end
 
   describe '#get_finaid_profile_SHIP' do
-    subject { described_class.get_finaid_profile_SHIP(uid, aid_year) }
+    subject { described_class.get_finaid_profile_SHIP(uid, aid_year, effective_date: today) }
 
     it_behaves_like 'a successful query'
 
@@ -253,7 +254,7 @@ describe EdoOracle::FinancialAid::Queries do
 
 
   describe '#get_finaid_profile_isir' do
-    subject { described_class.get_finaid_profile_isir(uid, aid_year) }
+    subject { described_class.get_finaid_profile_isir(uid, aid_year, effective_date: today) }
 
     it_behaves_like 'a successful query that returns one result'
 
