@@ -11,11 +11,10 @@ const propTypes = {
   myStatus: PropTypes.object,
 };
 
-const hasAccessToLink = (key, roles, careers, programs, delegate, summer) => {
+const hasAccessToLink = (key, roles, careers, delegate, summer) => {
   const linkAccess = {
     activateFPP: {
       roles: ['matriculated', 'registered'],
-      excludedPrograms: ['GSSDP', 'LSSDPL'],
       allowsDelegateAccess: true,
       allowsSummerVisitor: false,
     },
@@ -239,7 +238,6 @@ const hasAccessToLink = (key, roles, careers, programs, delegate, summer) => {
     },
     tuitionAndFPP: {
       roles: ['matriculated', 'registered'],
-      excludedPrograms: ['GSSDP', 'LSSDPL'],
       allowsDelegateAccess: true,
       allowsSummerVisitor: false,
     },
@@ -268,11 +266,6 @@ const hasAccessToLink = (key, roles, careers, programs, delegate, summer) => {
         roles.filter(value => ['applicant', 'exStudent'].includes(value))
           .length > 0)
     : true;
-  const hasForbiddenProgram = currentLinkAccess.excludedPrograms
-    ? programs.filter(value =>
-        currentLinkAccess.excludedPrograms.includes(value)
-      ).length > 0
-    : false;
   const allowsDelegate =
     !delegate || (currentLinkAccess.allowsDelegateAccess && delegate)
       ? true
@@ -280,22 +273,17 @@ const hasAccessToLink = (key, roles, careers, programs, delegate, summer) => {
   const allowsSummer = currentLinkAccess.allowsSummerVisitor && summer;
 
   return (
-    (hasPermittedRole &&
-      hasPermittedCareer &&
-      !hasForbiddenProgram &&
-      allowsDelegate) ||
-    allowsSummer
+    (hasPermittedRole && hasPermittedCareer && allowsDelegate) || allowsSummer
   );
 };
 
 // HasAccessTo will only display links that are returned from Link API and accessible given
-// the specified roles, careers, programs, and delegate access.
+// the specified roles, careers and delegate access.
 const HasAccessTo = ({
   linkNames,
   links,
   roles,
   careerCodes,
-  programCodes,
   isDelegate,
   isSummerVisitor,
   children,
@@ -306,7 +294,6 @@ const HasAccessTo = ({
         linkName,
         roles,
         careerCodes,
-        programCodes,
         isDelegate,
         isSummerVisitor
       );
@@ -324,13 +311,11 @@ const mapStateToProps = ({
   myAcademics: { collegeAndLevel: { plans = [] } = {} } = {},
 }) => {
   const careerCodes = plans.map(plan => plan.career.code);
-  const programCodes = plans.map(plan => plan.program.code);
 
   return {
     links,
     roles: activeRoles({ ...myStatus.roles, matriculated }),
     careerCodes: careerCodes,
-    programCodes: programCodes,
     isDelegate: myStatus.delegateActingAsUid,
     isSummerVisitor: myStatus.academicRoles.current.summerVisitor,
   };
