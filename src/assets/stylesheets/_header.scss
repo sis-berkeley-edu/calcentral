@@ -48,7 +48,6 @@ body {
 
   .cc-popover-title {
     background: $cc-color-whisper;
-    border-bottom: 1px solid $cc-color-very-light-grey;
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
     padding: 5px 10px;
@@ -141,7 +140,7 @@ body {
       padding: 10px;
     }
     a, .cc-button-link {
-      border-bottom: 1px solid $cc-color-very-light-grey;
+      border-bottom: 1px solid $cc-color-whisper;
       color: $body-font-color;
       display: block;
       line-height: 1.1;
@@ -149,7 +148,7 @@ body {
       overflow: hidden;
       padding: 10px;
       &:hover, &:focus {
-        background: $cc-color-solitude;
+        background: $cc-color-alice-blue;
         text-decoration: none;
         i {
           color: $cc-color-prussian-blue;

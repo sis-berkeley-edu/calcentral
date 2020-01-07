@@ -33,7 +33,7 @@
       </div>
       <div data-ng-if="!statusLoading && !api.user.profile.delegateActingAsUid && (count !== 0 || hasBillingData || regStatus.hasData)">
         <div class="cc-popover-title">
-          <h4>Status</h4>
+          <span><strong>Student ID: </strong><span data-ng-bind="api.user.profile.campusSolutionsID"></span><span>
         </div>
         <div class="cc-popover-noitems" data-ng-if="count === 0">
           <i class="cc-left fa fa-check-circle cc-icon-green"></i>
