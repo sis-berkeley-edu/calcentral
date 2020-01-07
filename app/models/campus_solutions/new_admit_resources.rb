@@ -32,7 +32,10 @@ module CampusSolutions
       general: {
         admissionsFaq: 'UC_ADMT_ADMSSNS_FAQ',
         calStudentCentral: 'UC_ADMT_CAL_STDNT_CNTRL',
-        contactUgrdAdmissions: 'UC_ADMT_CNTCT_UGRD_ADMSSNS'
+        contactUgrdAdmissions: 'UC_ADMT_CNTCT_UGRD_ADMSSNS',
+        datesDeadlines: 'UC_ADMT_GOLDEN_BEAR_DATES',
+        gettingStarted: 'UC_ADMT_GETTING_STARTED'
+
       }
     }
 
