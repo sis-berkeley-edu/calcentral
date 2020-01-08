@@ -137,6 +137,8 @@ describe CampusSolutions::NewAdmitResources do
       expect(subject[:links][:general][:admissionsFaq][:url]).to be_truthy
       expect(subject[:links][:general][:calStudentCentral][:url]).to be_truthy
       expect(subject[:links][:general][:contactUgrdAdmissions][:url]).to be_truthy
+      expect(subject[:links][:general][:datesDeadlines][:url]).to be_truthy
+      expect(subject[:links][:general][:gettingStarted][:url]).to be_truthy
     end
   end
 
