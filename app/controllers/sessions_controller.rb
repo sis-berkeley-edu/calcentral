@@ -16,6 +16,7 @@ class SessionsController < ApplicationController
       logger.warn "Omniauth extra from SAML = #{auth.extra.inspect}"
       cs_id = auth.extra['berkeleyEduCSID']
       sid = auth.extra['berkeleyEduStuID']
+      cal_net_id = auth.extra['berkeleyEduKerberosPrincipleString']
       auth_handler = {
         client: auth.extra['clientName'],
         handler: auth.extra['successfulAuthenticationHandlers']
@@ -61,7 +62,7 @@ class SessionsController < ApplicationController
       # of clearing the LTI-authenticated-only flag if the user happened to visit bCourses first.
       reset_session
     end
-    continue_login_success(auth_uid, auth_handler)
+    continue_login_success(auth_uid, auth_handler, cal_net_id)
   end
 
   def create_reauth_cookie
@@ -112,14 +113,19 @@ class SessionsController < ApplicationController
     (params['url'].present?) ? params['url'] : url_for_path('/dashboard')
   end
 
-  def continue_login_success(uid, auth_handler=nil)
+  def continue_login_success(uid, auth_handler=nil, cal_net_id=nil)
     # Force a new CSRF token to be generated on login.
     # http://homakov.blogspot.com.es/2013/06/cookie-forcing-protection-made-easy.html
     session.try(:delete, :_csrf_token)
-    uid = User::AuthenticationValidator.new(uid, auth_handler).validated_user_id
+    auth_validator = User::AuthenticationValidator.new(uid, auth_handler)
+    uid = auth_validator.validated_user_id
     if (Integer(uid, 10) rescue nil).nil?
       logger.warn "FAILED login with CAS UID: #{uid}"
       redirect_to url_for_path('/uid_error')
+    elsif (auth_handler.present? && auth_validator.is_slate_auth_handler?(auth_handler) && cal_net_id.present?)
+      # User logged in using MAP(Slate) but should be using CalNet instead.
+      logger.warn "FAILED login, should use CalNet not MAP(Slate) with CAS UID: #{uid}"
+      redirect_to url_for_path('/uid_slate_error')
     else
       # Unless we're re-authenticating after view-as, initialize the session.
       session['user_id'] = uid unless get_original_viewer_uid
