@@ -15,7 +15,8 @@
   <div data-ng-if="item.isUndergraduate">
     <div class="cc-widget-text">
       <h3>Offer Accepted Confirmation</h3>
-      Welcome!  We're thrilled that you've chosen to join UC Berkeley! Thank you for accepting your Undergraduate Offer of Admission.
+      Welcome!  We're thrilled that you've chosen to join UC Berkeley! Thank you for accepting your Undergraduate Offer of
+      Admission<span data-ng-if="item.deposit.origDepositDue === '0'"> (as a reminder, your deposit requirement was waived)</span>.
       <br/>
       To view your Student ID, click your name on the top right corner of this page.
       <br/>
