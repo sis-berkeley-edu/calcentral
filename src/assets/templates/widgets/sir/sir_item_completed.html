@@ -15,7 +15,8 @@
   <div data-ng-if="item.isUndergraduate">
     <div class="cc-widget-text">
       <h3>Offer Accepted Confirmation</h3>
-      Welcome!  We're thrilled that you've chosen to join UC Berkeley! Thank you for accepting your Undergraduate Offer of Admission.
+      Welcome!  We're thrilled that you've chosen to join UC Berkeley! Thank you for accepting your Undergraduate Offer of
+      Admission<span data-ng-if="item.deposit.origDepositDue === '0'"> (as a reminder, your deposit requirement was waived)</span>.
       <br/>
       <h3>Next Steps</h3>
       <ul class="cc-list-bullets">
@@ -32,6 +33,6 @@
         <li>Create your CalNet ID (Required to access student services)</li>
         <li>Review your Notifications and Tasks</li>
       </ul>
-    </div>
+    </span>
   </div>
 </div>
