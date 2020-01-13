@@ -135,13 +135,12 @@ module CampusSolutions
       def add_deposit_info(sir_checklist_items)
         sir_checklist_items.each do |item|
           deposit = { required: false }
-          puts("Frankie7777")
-          #Frankie7777if is_incomplete? item
+          if is_incomplete? item
             application_nbr = item[:checkListMgmtAdmp].try(:[], :admApplNbr).try(:to_s)
             deposit_info = unpack_deposit_response MyDeposit.new(@uid, adm_appl_nbr: application_nbr).get_feed
             deposit.merge!(deposit_info)
             deposit[:required] = deposit_due? deposit[:dueAmt]
-          #Frankie7777end
+          end
           item[:deposit] = deposit
         end
         add_undergraduate_new_admit_attributes(sir_checklist_items)
