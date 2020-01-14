@@ -2,23 +2,26 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import StatusItem from './StatusItem';
-import CalGrantStatusItem from './CalGrantStatusItem';
 
-const TermRegistrationStatus = ({ termRegistration: {
-  termName,
-  termId,
-  isShown,
-  registrationStatus,
-  cnpStatus,
-  calgrantStatus
-} }) => {
+const TermRegistrationStatus = ({
+  termRegistration: {
+    termName,
+    termId,
+    isShown,
+    registrationStatus,
+    cnpStatus,
+  },
+}) => {
   if (isShown) {
     return (
-      <div className="TermRegistrationStatus" key={termId} style={{ marginBottom: `15px` }}>
+      <div
+        className="TermRegistrationStatus"
+        key={termId}
+        style={{ marginBottom: `15px` }}
+      >
         <h4>{termName}</h4>
-        { registrationStatus && <StatusItem status={registrationStatus} /> }
-        { cnpStatus && <StatusItem status={cnpStatus} /> }
-        { calgrantStatus && <CalGrantStatusItem status={calgrantStatus} /> }
+        {registrationStatus && <StatusItem status={registrationStatus} />}
+        {cnpStatus && <StatusItem status={cnpStatus} />}
       </div>
     );
   }
@@ -29,7 +32,7 @@ const TermRegistrationStatus = ({ termRegistration: {
 const statusProps = PropTypes.shape({
   message: PropTypes.string,
   severity: PropTypes.string,
-  detailedMessageHTML: PropTypes.string
+  detailedMessageHTML: PropTypes.string,
 });
 
 TermRegistrationStatus.propTypes = {
@@ -39,8 +42,7 @@ TermRegistrationStatus.propTypes = {
     registrationStatus: statusProps,
     cnpStatus: statusProps,
     isShown: PropTypes.bool,
-    calgrantStatus: statusProps
-  })
+  }),
 };
 
 export default TermRegistrationStatus;

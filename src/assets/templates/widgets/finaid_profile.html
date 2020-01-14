@@ -69,47 +69,6 @@
           </div>
         </div>
       </div>
-      <hr aria-hidden="true" />
-      <div class="cc-clearfix-container">
-        <h3 class="cc-page-finaid-header cc-left">
-          Financial Aid Agreements
-        </h3>
-      </div>
-      <div class="cc-widget-finaid-profile-itemgroup">
-        <div class="cc-clearfix-container">
-          <div class="cc-left">
-            <strong>Title IV</strong>
-            <a
-              ng-if="api.user.profile.actAsOptions.canSeeCSLinks"
-              href="/finances/finaid/t4/auth"
-            >
-              Update
-              <span class="cc-visuallyhidden"
-              >Update Title IV Authorization</span
-              >
-            </a>
-          </div>
-          <div data-ng-bind="title4Description" class="cc-right" ></div>
-        </div>
-        <div class="cc-clearfix-container">
-          <div class="cc-left">
-            <strong>Terms & Conditions</strong>
-            <a
-              data-ng-if="api.user.profile.actAsOptions.canSeeCSLinks"
-              ng-href="/finances/finaid/{{ finaidProfile.aidYear }}/tc"
-            >
-              <span data-ng-if="termsAndConditionsDescription === 'Accepted'"
-              >View</span
-              >
-              <span data-ng-if="termsAndConditionsDescription !== 'Accepted'"
-              >Update</span
-              >
-              <span class="cc-visuallyhidden">Terms and Conditions</span>
-            </a>
-          </div>
-          <div data-ng-bind="termsAndConditionsDescription" class="cc-right"></div>
-        </div>
-      </div>
     </div>
   </div>
 </div>

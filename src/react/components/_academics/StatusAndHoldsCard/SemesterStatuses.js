@@ -14,7 +14,7 @@ const byTermDescending = (a, b) => {
   return parseInt(b.termId) - parseInt(a.termId);
 };
 
-const statusForTerm = (registration) => {
+const statusForTerm = registration => {
   const { id: termId, year, semester } = termFromId(registration.term.id);
 
   const {
@@ -22,7 +22,7 @@ const statusForTerm = (registration) => {
     cnpStatus,
     regStatus,
     positiveIndicators,
-    termFlags
+    termFlags,
   } = registration;
 
   return {
@@ -33,19 +33,19 @@ const statusForTerm = (registration) => {
     cnpStatus,
     regStatus,
     positiveIndicators,
-    termFlags
+    termFlags,
   };
 };
 
 const propTypes = {
   registrations: PropTypes.array,
-  viewCompletedCalgrantLink: PropTypes.bool
+  viewCompletedCalgrantLink: PropTypes.bool,
 };
 
 const SemesterStatuses = ({ registrations }) => {
   return (
     <div className="SemesterStatuses">
-      { registrations.sort(byTermDescending).map((period, index) => (
+      {registrations.sort(byTermDescending).map((period, index) => (
         <RegistrationPeriod key={index} period={period} />
       ))}
     </div>
@@ -54,20 +54,10 @@ const SemesterStatuses = ({ registrations }) => {
 
 SemesterStatuses.propTypes = propTypes;
 
-const mapStateToProps = ({ myRegistrations = {}, myStatus = {}, myCalGrants = {} }) => {
-  const {
-    registrations
-  } = myRegistrations;
+const mapStateToProps = ({ myRegistrations = {}, myStatus = {} }) => {
+  const { registrations } = myRegistrations;
 
-  const {
-    features: {
-      regstatus: registrationStatusEnabled
-    } = {}
-  } = myStatus;
-
-  const {
-    acknowledgements: calGrantAcknowledgements
-  } = myCalGrants;
+  const { features: { regstatus: registrationStatusEnabled } = {} } = myStatus;
 
   const regArray = [];
 
@@ -77,28 +67,9 @@ const mapStateToProps = ({ myRegistrations = {}, myStatus = {}, myCalGrants = {}
     }
   }
 
-  (calGrantAcknowledgements || []).forEach(acknowledgement => {
-    const match = regArray.find((registration) => registration.termId === acknowledgement.termId);
-
-    if (match) {
-      match.calGrantAcknowledgement = acknowledgement;
-    } else {
-      const term = termFromId(acknowledgement.termId);
-
-      regArray.push({
-        termId: term.id,
-        year: term.year,
-        semester: term.semester,
-        calGrantAcknowledgement: acknowledgement,
-        positiveIndicators: [],
-        termFlags: {}
-      });
-    }
-  });
-
   return {
     registrations: regArray,
-    registrationStatusEnabled
+    registrationStatusEnabled,
   };
 };
 
@@ -110,4 +81,6 @@ const SemesterStatusesContainer = () => (
   </Provider>
 );
 
-angular.module('calcentral.react').component('semesterStatuses', react2angular(SemesterStatusesContainer));
+angular
+  .module('calcentral.react')
+  .component('semesterStatuses', react2angular(SemesterStatusesContainer));
