@@ -18,10 +18,6 @@ module User
       @billing_summary ||= User::Finances::BillingSummary.new(self)
     end
 
-    def calgrant_acknowledgements
-      @calgrant_acknowldgements ||= User::Academics::CalgrantAcknowledgements.new(self)
-    end
-
     def holds
       @holds ||= User::Academics::Holds.new(self)
     end
