@@ -18,7 +18,7 @@ const CategorySection = ({ categorySection, items, columns, children }) => {
       {categorySection === 'beingProcessed' && (
         <div className={styles.beingProcessedDivider}>
           <span>Being processed</span>{' '}
-          <span className={styles.countBadge}>{items.length}</span>
+          <span className={styles.Badge}>{items.length}</span>
         </div>
       )}
 

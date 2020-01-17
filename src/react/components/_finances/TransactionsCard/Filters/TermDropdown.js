@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import { termFromId } from 'React/helpers/terms';
 
-import Dropdown from './Dropdown';
+import Dropdown from '../../../../components/Dropdown';
 
 import './TermDropdown.scss';
 
@@ -13,8 +13,9 @@ const TermDropdown = ({ value, termIds, onChange }) => {
   const options = [
     { label: 'All Terms', value: 'all' },
     ...terms.map(term => ({
-      value: term.id, label: `${term.semester} ${term.year}`
-    }))
+      value: term.id,
+      label: `${term.semester} ${term.year}`,
+    })),
   ];
 
   return (
@@ -28,7 +29,7 @@ const TermDropdown = ({ value, termIds, onChange }) => {
 TermDropdown.propTypes = {
   value: PropTypes.string,
   termIds: PropTypes.array.isRequired,
-  onChange: PropTypes.func
+  onChange: PropTypes.func,
 };
 
 export default TermDropdown;

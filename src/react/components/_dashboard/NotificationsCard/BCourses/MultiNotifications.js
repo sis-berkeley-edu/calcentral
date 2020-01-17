@@ -6,7 +6,7 @@ import Linkify from 'react-linkify';
 import styles from './SourceAndTypeGroup.module.scss';
 
 import GradedLabel from './GradedLabel';
-import CountBadge from './CountBadge';
+import Badge from '../../../Badge';
 
 import Notification from './notification';
 
@@ -28,7 +28,9 @@ const MiniNotification = ({ notification, expanded, setExpanded }) => {
           <DisclosureChevron expanded={isExpanded} />
         </div>
         <div style={{ flex: `1` }}>
-          {notification.type === 'gradePosting' && <GradedLabel />}{' '}
+          {notification.type === 'gradePosting' && (
+            <GradedLabel style={{ marginRight: `5px` }} />
+          )}{' '}
           {notification.title}
         </div>
       </div>
@@ -89,7 +91,8 @@ const MultiNotifications = ({
       <div className={styles.header}>
         <div className={styles.sourceLabel}>{source}</div>
         <div className={styles.secondaryLabel}>
-          {Notification.labelForType(type)} <CountBadge count={count} />
+          {Notification.labelForType(type)}{' '}
+          <Badge count={count} style={{ marginLeft: `5px` }} />
         </div>
       </div>
 

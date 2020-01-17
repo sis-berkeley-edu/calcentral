@@ -91,8 +91,9 @@ angular.module('calcentral.config').config(function($routeProvider) {
     controller: 'MyFinancesController',
     pageName: 'Financial Aid and Scholarships'
   }).when('/finances/finaid/compare/:finaidYearId?', {
-    templateUrl: 'finaid_awards_compare.html',
-    controller: 'MyFinancesController'
+    templateUrl: 'award_comparison.html',
+    controller: 'MyFinancesController',
+    pageName: 'Award Comparison'
   }).when('/finances/cumulative_loan_debt', {
     templateUrl: 'cumulative_loan_debt_page.html',
     controller: 'LoanHistoryCumulativeController'

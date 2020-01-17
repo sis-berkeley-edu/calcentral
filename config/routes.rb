@@ -109,6 +109,13 @@ Calcentral::Application.routes.draw do
         resources :status_and_holds, only: [:index]
       end
 
+      scope '/financial_aid', module: 'financial_aid' do
+        resources :award_comparison, only: [:index]
+        get 'award_comparison/:aid_year/:effective_date' => 'award_comparison#show'
+
+
+      end
+
       scope '/finances', module: 'finances' do
         resources :billing_items, only: [:index, :show]
       end

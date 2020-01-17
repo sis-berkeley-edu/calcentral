@@ -12,6 +12,8 @@ import './_dashboard/StudentResources/StudentResourcesContainer';
 import './_dashboard/UpNext/UpNextContainer';
 import './_dashboard';
 
+import './_finances/AwardComparison/AwardComparison';
+import './_finances/AwardComparison/AwardComparisonLink';
 import './_finances/BillingSummary/BillingSummaryContainer';
 import './_finances/FinancialResources/FinancialResources';
 import './_finances/TransactionsCard/TransactionsCardContainer';

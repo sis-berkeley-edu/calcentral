@@ -25,16 +25,12 @@
       <div data-ng-if="finaidAwards.awards.grandtotal.total.amount">
         <div class="cc-widget-text cc-widget-finaid-awards-message">
           <div data-ng-bind-html="finaidAwards.messages.messageInfo"></div>
-          <div
-            class="cc-widget-finaid-awards-padding-top"
-            data-ng-if="finaidAwards.awards.grandtotal.total.amount"
-          >
-            <span data-ng-if="api.user.profile.features.csFinAidAwardCompare">
-              <a data-ng-href="/finances/finaid/compare/{{ finaidYear.id }}">
-                Compare Packages
-              </a>
-            </span>
-          </div>
+        </div>
+        <div
+          data-ng-if="finaidAwards.linkFinaidSummary && canSeeFinAidSummaryLink"
+          class="cc-widget-finaid-awards-link-title cc-widget-finaid-awards-icon-report"
+        >
+          Multi-Year Summary
         </div>
         <div
           data-ng-if="finaidAwards.linkFinaidSummary && canSeeFinAidSummaryLink && !isDelegate"
@@ -45,19 +41,24 @@
             data-cc-campus-solutions-link-directive="finaidAwards.linkFinaidSummary"
             data-cc-campus-solutions-link-directive-cc-page-name="currentPage.name"
             data-cc-campus-solutions-link-directive-cc-page-url="currentPage.url"
-            class="cc-widget-finaid-awards-icon-download"
           ></a>
         </div>
         <div
-          data-ng-if="finaidAwards.linkFinaidSummaryDelegate && canSeeFinAidSummaryLink && isDelegate"
+          data-ng-if="finaidAwards.linkFinaidSummary && canSeeFinAidSummaryLink && isDelegate"
           class="cc-widget-finaid-awards-link"
         >
           <a
-            data-ng-if="finaidAwards.linkFinaidSummaryDelegate"
+            data-ng-if="finaidAwards.linkFinaidSummary"
             data-cc-campus-solutions-link-directive="finaidAwards.linkFinaidSummaryDelegate"
-            class="cc-widget-finaid-awards-icon-download"
+            data-cc-campus-solutions-link-directive-cc-page-name="currentPage.name"
+            data-cc-campus-solutions-link-directive-cc-page-url="currentPage.url"
           ></a>
         </div>
+
+        <award-comparison-link
+          year="finaidAwardsInfo.aidYear"
+        ></award-comparison-link>
+
         <div
           data-ng-repeat="key in finaidAwardsInfo.keysGiftWork"
           data-ng-include="'widgets/finaid_awards_section.html'"

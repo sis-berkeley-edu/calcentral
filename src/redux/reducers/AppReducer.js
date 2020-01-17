@@ -1,6 +1,8 @@
 import { combineReducers } from 'redux';
 
 import advising from './AdvisingReducer';
+import awardComparison from './AwardComparisonReducer';
+import awardComparisonSnapshot from './AwardComparisonSnapshotReducer';
 import billingItems from './BillingItemsReducer';
 import config from './ConfigReducer';
 import currentRoute from './RouteReducer';
@@ -31,6 +33,8 @@ import {
 
 const AppReducer = combineReducers({
   advising,
+  awardComparison,
+  awardComparisonSnapshot,
   config,
   currentRoute,
   billingItems,

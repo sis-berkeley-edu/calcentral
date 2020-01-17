@@ -1,4 +1,4 @@
-@import '../../../../stylesheets/variables';
+@import '../stylesheets/variables';
 
 $borderColor: $cc-color-very-light-grey;
 $backgroundColor: $cc-color-white-smoke;
@@ -36,6 +36,7 @@ $backgroundColor: $cc-color-white-smoke;
     background-color: $backgroundColor;
     border: 1px solid $borderColor;
     box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.3);
+    z-index: 99;
   }
 }
 

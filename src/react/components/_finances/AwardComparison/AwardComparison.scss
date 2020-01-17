@@ -1,0 +1,243 @@
+@import '../../../stylesheets/colors';
+@import '../../../stylesheets/variables';
+
+.AwardComparison {
+  .container {
+    max-width: 600px;
+    margin: auto;
+    margin-bottom: $large-spacing;
+  }
+
+  .clickable {
+    cursor: pointer;
+
+    &:hover {
+      background-color: $cc-color-alice-blue;
+    }
+  }
+
+  .direction {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    white-space: pre;
+  }
+
+  .gap {
+    margin-bottom: 20px;
+  }
+
+  .headerContainer {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .headerIcon {
+    padding-left: $tiny-spacing;
+  }
+
+  .hideSmallFormFactor {
+    display: none;
+  }
+
+  .icon {
+    height: 10px;
+  }
+
+  .indicatesChangeColumn {
+    display: flex;
+    flex-direction: column;
+    padding-top: $small-spacing;
+    width: max-content;
+  }
+
+  .justifiedRightColumn {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+  }
+
+  .legendBorder {
+    border: none;
+    border-bottom: 1px solid $light-gray;
+  }
+
+  .textStrong {
+    font-weight: bold;
+  }
+
+  .valueCell {
+    text-align: right;
+  }
+
+  .noWrap {
+    white-space: nowrap;
+  }
+
+  .valueCellChanged {
+    background-color: #fef7d9;
+  }
+
+  .valueCellIcon {
+    text-align: right;
+  }
+
+  .subvalueData {
+    padding: 0.6923076923rem 0.7692307692rem;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    text-align: right;
+  }
+
+  .subvalueDescriptionAndTerm {
+    padding: 0;
+  }
+
+  .subvalueDescriptionAndTermDiv {
+    display: flex;
+    flex-direction: row;
+  }
+
+  .subvalueDescription {
+    padding: 0.6923076923rem 0.7692307692rem;
+    display: flex;
+    align-items: center;
+    width: 100%;
+  }
+
+  .subvalueRow {
+    display: flex;
+    flex-direction: row;
+  }
+
+  .subvalueTerm {
+    display: flex;
+    flex-direction: column;
+    width: 25%;
+    padding: 0.6923076923rem 0.7692307692rem;
+    padding-right: 5px;
+  }
+
+  .subvalueTermData {
+    padding-right: 0;
+  }
+
+  .typeTitle {
+    font-size: 11px;
+    font-weight: bold;
+    line-height: 13px;
+    padding-bottom: 0;
+    padding-top: 20px;
+  }
+
+  hr {
+    border-bottom: 1px solid $light-gray;
+    margin: 0;
+  }
+
+  table {
+    border-collapse: collapse;
+    border: none;
+    border-bottom: 1px solid $light-gray;
+    margin-bottom: 0;
+    width: 100%;
+
+    thead {
+      /* visually hidden, available to screenreaders */
+      height: 1px;
+      width: 1px;
+      position: absolute;
+      overflow: hidden;
+      top: -10px;
+    }
+
+    tbody {
+      tr {
+        border: 1px solid $light-gray;
+
+        th,
+        td {
+          border: none;
+          background-color: $white;
+          font-weight: normal;
+          &:nth-last-child(1):not(.typeTitle),
+          &:nth-last-child(2):not(.typeTitle) {
+            width: 25%;
+            float: none !important;
+          }
+        }
+
+        td.subvalue {
+          padding: 0;
+        }
+      }
+
+      tr.typeRow {
+        position: relative;
+        border-bottom: 0;
+      }
+
+      tr.awardRow {
+        background-color: $white;
+      }
+
+      tr.typeRow + .awardRow {
+        border-top: 0;
+      }
+
+      tr:last-child {
+        border: 1px solid $light-gray;
+        border-bottom: none;
+      }
+
+      tr.legendBorder {
+        border: none;
+        border-bottom: 1px solid $light-gray;
+      }
+    }
+
+    tfoot {
+      tr {
+        border: 1px solid $light-gray;
+        border-top: 1px solid $cc-color-nero;
+
+        th,
+        td {
+          border: none;
+          background-color: $white;
+          font-weight: normal;
+        }
+      }
+    }
+  }
+
+  table.subvalues {
+    border-bottom: 0;
+  }
+}
+@media only screen and (min-width: $small-breakpoint) {
+  .AwardComparison {
+    .direction {
+      display: flex;
+      flex-direction: row;
+      align-items: flex-end;
+    }
+
+    .hideSmallFormFactor {
+      display: flex;
+    }
+
+    .valueCellChanged {
+      background-color: $white;
+    }
+
+    .valueCellIcon > div {
+      flex: 1;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+  }
+}

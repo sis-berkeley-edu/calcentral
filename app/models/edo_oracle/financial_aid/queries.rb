@@ -5,21 +5,39 @@ module EdoOracle
       include ClassLogger
       include Concerns::QueryHelper
 
-      def self.get_housing(person_id, aid_year)
+      def self.get_housing(person_id, aid_year:, effective_date: Time.zone.today.in_time_zone.to_date)
+        effective_date_string = effective_date.to_s
+
         safe_query <<-SQL
         SELECT DISTINCT
-          HSG.TERM_ID,
-          HSG.TERM_DESCR,
-          HSG.HOUSING_OPTION,
-          HSG.HOUSING_STATUS,
-          HSG.HOUSING_END_DATE,
-          HSG.ACAD_CAREER
-        FROM SISEDO.CLC_FA_HOUSING_VW HSG
-        WHERE HSG.CAMPUS_UID = '#{person_id}'
-        AND HSG.AID_YEAR = '#{aid_year}'
-        ORDER BY HSG.TERM_ID
-        SQL
+          UC.STRM AS TERM_ID,
+          UC.UC_TERM_DESCR AS TERM_DESCR,
+          UC.DESCR100 AS HOUSING_OPTION,
+          UC.SSR_CONFIRM AS HOUSING_STATUS,
+          UC.END_DT AS HOUSING_END_DATE,
+          UC.ACAD_CAREER AS ACAD_CAREER
+          FROM SYSADM.PS_UCC_FA_HOUSNGVW UC
+         WHERE UC.CAMPUS_ID = '#{person_id}'
+           AND UC.INSTITUTION = '#{UC_BERKELEY}'
+           AND UC.AID_YEAR = '#{aid_year}'
+           AND UC.EFFDT       =  (SELECT MAX(UC2.EFFDT) FROM SYSADM.PS_UCC_FA_HOUSNGVW UC2
+                                    WHERE UC2.EMPLID      = UC.EMPLID
+                                      AND UC2.INSTITUTION = UC.INSTITUTION
+                                      AND UC2.AID_YEAR    = UC.AID_YEAR
+                                      AND UC2.STRM        = UC.STRM
+                                      AND UC2.EFFDT      <= TO_DATE('#{effective_date_string}', 'YYYY-MM-DD')
+                                      AND UC2.TERM_SRC IN ('A','P','T','M'))
+             AND UC.EFFSEQ      = (SELECT MAX(UC3.EFFSEQ) FROM SYSADM.PS_UCC_FA_HOUSNGVW UC3
+                                    WHERE UC3.EMPLID      = UC.EMPLID
+                                      AND UC3.INSTITUTION = UC.INSTITUTION
+                                      AND UC3.AID_YEAR    = UC.AID_YEAR
+                                      AND UC3.STRM        = UC.STRM
+                                      AND UC3.EFFDT       = UC.EFFDT)
+             AND UC.TERM_SRC IN ('A','P','T','M')
+        ORDER BY TERM_ID
+      SQL
       end
+
       def self.get_loan_history_status (student_id)
         result = safe_query <<-SQL
         SELECT
@@ -244,7 +262,7 @@ module EdoOracle
         result.first
       end
 
-      def self.get_finaid_profile_status(person_id, aid_year, effective_date: Time.zone.today.in_time_zone.to_date)
+      def self.get_finaid_profile_status(person_id, aid_year:, effective_date: Time.zone.today.in_time_zone.to_date)
         effective_date_string = effective_date.to_s
 
         result = safe_query <<-SQL
@@ -283,7 +301,7 @@ module EdoOracle
         result.first
       end
 
-      def self.get_finaid_profile_acad_careers(person_id, aid_year, effective_date: Time.zone.today.in_time_zone.to_date)
+      def self.get_finaid_profile_acad_careers(person_id, aid_year:, effective_date: Time.zone.today.in_time_zone.to_date)
         effective_date_string = effective_date.to_s
 
         safe_query <<-SQL
@@ -315,7 +333,7 @@ module EdoOracle
         SQL
       end
 
-      def self.get_finaid_profile_acad_level(person_id, aid_year, effective_date: Time.zone.today.in_time_zone.to_date)
+      def self.get_finaid_profile_acad_level(person_id, aid_year:, effective_date: Time.zone.today.in_time_zone.to_date)
         effective_date_string = effective_date.to_s
 
         safe_query <<-SQL
@@ -347,7 +365,7 @@ module EdoOracle
         SQL
       end
 
-      def self.get_finaid_profile_enrollment(person_id, aid_year, effective_date: Time.zone.today.in_time_zone.to_date)
+      def self.get_finaid_profile_enrollment(person_id, aid_year:, effective_date: Time.zone.today.in_time_zone.to_date)
         effective_date_string = effective_date.to_s
 
         safe_query <<-SQL
@@ -378,7 +396,7 @@ module EdoOracle
         SQL
       end
 
-      def self.get_finaid_profile_SHIP(person_id, aid_year, effective_date: Time.zone.today.in_time_zone.to_date)
+      def self.get_finaid_profile_SHIP(person_id, aid_year:, effective_date: Time.zone.today.in_time_zone.to_date)
         effective_date_string = effective_date.to_s
 
         safe_query <<-SQL
@@ -410,7 +428,7 @@ module EdoOracle
         SQL
       end
 
-      def self.get_finaid_profile_residency(person_id, aid_year, effective_date: Time.zone.today.in_time_zone.to_date)
+      def self.get_finaid_profile_residency(person_id, aid_year:, effective_date: Time.zone.today.in_time_zone.to_date)
         effective_date_string = effective_date.to_s
 
         safe_query <<-SQL
@@ -443,7 +461,7 @@ module EdoOracle
         SQL
       end
 
-      def self.get_finaid_profile_isir(person_id, aid_year, effective_date: Time.zone.today.in_time_zone.to_date)
+      def self.get_finaid_profile_isir(person_id, aid_year:, effective_date: Time.zone.today.in_time_zone.to_date)
         effective_date_string = effective_date.to_s
 
         result = safe_query <<-SQL
