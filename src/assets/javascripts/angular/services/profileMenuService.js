@@ -71,16 +71,6 @@ angular.module('calcentral.services').factory('profileMenuService', function(api
             student: true
           }
         },
-        {
-          id: 'title4',
-          name: 'Title IV Release',
-          featureFlag: 'csFinAid',
-          roles: {
-            applicant: true,
-            student: true,
-            summerVisitor: false
-          }
-        }
       ]
     },
     {

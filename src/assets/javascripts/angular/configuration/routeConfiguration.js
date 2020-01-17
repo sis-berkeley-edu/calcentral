@@ -89,14 +89,6 @@ angular.module('calcentral.config').config(function($routeProvider) {
     templateUrl: 'finaid.html',
     controller: 'MyFinancesController',
     pageName: 'Financial Aid and Scholarships'
-  }).when('/finances/finaid/:finaidYearId?/tc', {
-    templateUrl: 'finaid_tc.html',
-    controller: 'TermsAndConditionsController',
-    pageName: 'Financial Aid and Scholarships'
-  }).when('/finances/finaid/t4/auth', {
-    templateUrl: 'finaid_t4.html',
-    controller: 'MyFinancesController',
-    pageName: 'Financial Aid and Scholarships'
   }).when('/finances/finaid/awards/:finaidYearId?', {
     templateUrl: 'finaid_awards_term.html',
     controller: 'MyFinancesController',
