@@ -4,6 +4,7 @@ var _ = require('lodash');
 
 import 'icons/download.svg';
 import 'icons/info.svg';
+import shouldShowDecimals from './shouldShowDecimals';
 
 /**
  * Financial Aid - Awards controller
@@ -72,62 +73,6 @@ angular
       return $scope.finaidAwardsInfo.showDecimals ? amount.toFixed(2) : amount;
     };
 
-    const notInteger = value => !Number.isInteger(value);
-
-    var shouldShowDecimals = function({
-      awards: {
-        giftaid,
-        waiversAndOther,
-        workstudy,
-        subsidizedloans,
-        unsubsidizedloans,
-        plusloans,
-        alternativeloans,
-      },
-    }) {
-      const items = [
-        giftaid,
-        waiversAndOther,
-        workstudy,
-        subsidizedloans,
-        unsubsidizedloans,
-        plusloans,
-        alternativeloans,
-      ];
-
-      return !!items.find(data => {
-        const { total: { amount } = {}, items } = data;
-
-        if (notInteger(amount)) {
-          return true;
-        } else {
-          return items.find(item => {
-            const {
-              leftColumn: { amount: leftAmount } = {},
-              rightColumn: { amount: rightAmount } = {},
-              subItems: { remainingAmount, termDetails = [] } = {},
-            } = item;
-
-            const found = [leftAmount, rightAmount, remainingAmount].find(
-              notInteger
-            );
-
-            if (found) {
-              return true;
-            } else {
-              const foundTerm = termDetails.find(
-                term => notInteger(term.offered) || notInteger(term.disbursed)
-              );
-
-              if (foundTerm) {
-                return true;
-              }
-            }
-          });
-        }
-      });
-    };
-
     var canSeeFinAidSummaryLink = function() {
       return (
         (apiService.user.profile.roles.registered ||
@@ -149,14 +94,11 @@ angular
           finaidYearId: finaidService.options.finaidYear.id,
         })
         .then(function successCallback(response) {
-          angular.extend(
-            $scope.finaidAwards,
-            parseAwards(_.get(response, 'data'))
-          );
-          $scope.finaidAwardsInfo.errored = _.get(response, 'data.errored');
-          $scope.finaidAwardsInfo.showDecimals = shouldShowDecimals(
-            _.get(response, 'data')
-          );
+          const data = _.get(response, 'data');
+          const errored = _.get(response, 'data.errored');
+          angular.extend($scope.finaidAwards, parseAwards(data));
+          $scope.finaidAwardsInfo.errored = errored;
+          $scope.finaidAwardsInfo.showDecimals = shouldShowDecimals(data);
           $scope.canSeeFinAidSummaryLink = canSeeFinAidSummaryLink();
           $scope.isDelegate = isDelegate();
         })
