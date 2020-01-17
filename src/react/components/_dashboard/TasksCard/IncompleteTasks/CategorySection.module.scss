@@ -1,0 +1,25 @@
+@import 'src/react/stylesheets/variables';
+
+.categorySection {
+  .tasks {
+    margin-bottom: 10px;
+  }
+}
+
+.categorySection + .categorySection {
+  margin-top: -10px;
+}
+
+.beingProcessedDivider {
+  border-top: 1px solid $cc-color-whisper;
+  border-left: 4px solid $cc-color-very-light-grey;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 22px 30px 16px 10px;
+
+  .countBadge {
+    color: white;
+    background-color: $cc-color-very-light-grey;
+    padding: 2px 5px;
+  }
+}

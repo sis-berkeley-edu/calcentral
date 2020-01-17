@@ -19,6 +19,8 @@ module User
 
       def past?
         now > berkeley_term&.end
+      rescue ArgumentError
+        puts "ArgumentError term: #{term_id}"
       end
 
       def active?

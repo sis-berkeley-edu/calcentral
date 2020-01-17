@@ -1,0 +1,27 @@
+@import 'src/react/stylesheets/variables';
+
+.sectionHeader {
+  padding: 5px 10px 5px 6px;
+  display: flex;
+  justify-content: space-between;
+  color: $cc-color-nobel;
+  border-left: 4px solid transparent;
+
+  &.leftBorder {
+    border-left: 4px solid $cc-color-very-light-grey;
+  }
+}
+
+.columnLabel {
+  font-size: 12px;
+  font-weight: 700;
+
+  &:first-child {
+    margin-left: 34px;
+  }
+
+  &:last-child {
+    margin-right: 20px;
+    text-align: right;
+  }
+}

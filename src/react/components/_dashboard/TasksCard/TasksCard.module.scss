@@ -1,0 +1,22 @@
+.tasksCard {
+  margin-right: 15px;
+}
+
+.fullWidthContainer {
+  margin: 0 -15px -15px;
+}
+
+.textContainer {
+  padding: 15px;
+
+  p:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.buttonContainer {
+  overflow: hidden;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 15px;
+}

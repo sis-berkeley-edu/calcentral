@@ -1,0 +1,36 @@
+@import 'src/react/stylesheets/variables';
+@import 'src/react/stylesheets/mixins';
+
+$danger-color: $cc-color-harley-davidson-orange;
+
+.taskWrapper {
+  &.selected {
+    background-color: $cc-color-alice-blue;
+  }
+
+  &.selected.notFocused {
+    background: $cc-color-ivory;
+  }
+
+  &.hasDetail {
+    @include hasDisclosureArrow();
+
+    &.notSelected {
+      @include disclosureArrowClosed();
+    }
+    &.selected {
+      @include disclosureArrowOpen();
+    }
+  }
+
+  &::after {
+    right: 7px;
+  }
+
+  border-left: 4px solid $cc-color-very-light-grey;
+  margin-right: 10px;
+}
+
+.overdue {
+  border-left: 4px solid $danger-color;
+}
