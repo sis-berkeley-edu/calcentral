@@ -6,14 +6,28 @@ import APILink from 'react/components/APILink';
 import styles from './CompactNotification.module.scss';
 import { parseDate, formatTime } from 'functions/formatDate';
 
-const CompactNotification = ({ message, isExpanded, onClick }) => {
-  const className = [
+const CompactNotification = ({
+  index,
+  message,
+  expandedMessage,
+  setExpandedMessage,
+  hasFocus,
+}) => {
+  const isExpanded = expandedMessage === index;
+
+  const classNames = [
     styles.compactNotification,
     isExpanded ? styles.active : null,
-  ].join(' ');
+    hasFocus ? null : styles.notFocused,
+  ];
+
+  const expand = e => {
+    e.stopPropagation();
+    setExpandedMessage(isExpanded ? '' : index);
+  };
 
   return (
-    <div className={className} onClick={e => onClick(e)}>
+    <div className={classNames.join(' ')} onClick={expand}>
       <div>{message.title}</div>
 
       {isExpanded && (
@@ -39,9 +53,11 @@ const CompactNotification = ({ message, isExpanded, onClick }) => {
 };
 
 CompactNotification.propTypes = {
+  index: PropTypes.number,
   message: PropTypes.object,
-  isExpanded: PropTypes.bool,
-  onClick: PropTypes.func,
+  expandedMessage: PropTypes.any,
+  setExpandedMessage: PropTypes.func,
+  hasFocus: PropTypes.bool,
 };
 
 CompactNotification.displayName = 'CompactNotification';

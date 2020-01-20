@@ -33,7 +33,7 @@ module User
         end
 
         def notifications
-          @notifications ||= Notifications.new(self)
+          @notifications ||= Tasks::Notifications.new(self)
         end
 
         def pending_web_messages

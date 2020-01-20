@@ -18,6 +18,10 @@ $activeColor: $cc-color-alice-blue;
   background-color: $activeColor;
   @include hasLeftDisclosureArrow;
   @include disclosureArrowLeftOpen;
+
+  &.notFocused {
+    background-color: $cc-color-ivory;
+  }
 }
 
 .detail {
