@@ -11,7 +11,6 @@ import TaskHeader from '../TaskHeader';
 import TaskTitle from '../TaskTitle';
 
 import styles from './CategorySection.module.scss';
-import DueDate from './DueDate';
 
 const CategorySection = ({ categorySection, items, columns, children }) => {
   return (
@@ -46,7 +45,6 @@ const CategorySection = ({ categorySection, items, columns, children }) => {
                       parseDate(task.assignedDate)
                     )}`}
                   />
-                  {task.dueDate && <DueDate date={task.dueDate} />}
                 </TaskHeader>
               </Task>
             ))}

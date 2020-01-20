@@ -5,7 +5,7 @@ import { shortDateIfCurrentYear, parseDate } from 'functions/formatDate';
 
 const DueDate = ({ date }) => {
   if (date) {
-    return <span>{shortDateIfCurrentYear(parseDate(date))}</span>;
+    return <span>Due {shortDateIfCurrentYear(parseDate(date))}</span>;
   }
 
   return null;

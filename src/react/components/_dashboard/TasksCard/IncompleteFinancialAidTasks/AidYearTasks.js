@@ -20,8 +20,8 @@ const AidYear = ({ aidYear }) => {
   return (
     <div className={`${styles.aidYear}`}>
       <CategoryHeader
-        title="Financial Aid Tasks"
-        aidYear={items[0].aidYearName}
+        title="Finances Tasks"
+        aidYear={`${items[0].aidYearName} aid year`}
         incompleteCount={incompleteCount}
         inProcessCount={inProcessCount}
         expanded={expanded}

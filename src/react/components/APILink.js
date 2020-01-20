@@ -8,7 +8,7 @@ import './APILink.scss';
 const propTypes = {
   disabled: PropTypes.bool,
   isCsLink: PropTypes.bool,
-  name: PropTypes.string,
+  name: PropTypes.node,
   showNewWindow: PropTypes.bool,
   title: PropTypes.string,
   ucFrom: PropTypes.string,

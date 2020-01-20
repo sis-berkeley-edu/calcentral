@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 
 import {
   groupByAidYear,
-  checklistCategoryTitles,
+  completedTaskCategories,
   groupByCategory,
 } from '../tasks.module';
 
@@ -100,7 +100,7 @@ const mapStateToProps = ({
   myAgreements: { completedAgreements = [] },
 }) => {
   const groupedByCategory = completedItems.reduce(groupByCategory, {});
-  const orderedCategories = checklistCategoryTitles.map(category => {
+  const orderedCategories = completedTaskCategories.map(category => {
     const items = groupedByCategory[category.key] || [];
     const sortedItems = items.reverse().sort((a, b) => {
       return a.completedDate < b.completedDate ? 1 : -1;
