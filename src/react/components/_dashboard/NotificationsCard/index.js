@@ -1,1 +1,1 @@
-import './NotificationsCardContainer';
+import './NotificationsCard';
