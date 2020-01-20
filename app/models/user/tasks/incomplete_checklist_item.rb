@@ -21,6 +21,7 @@ module User
       def as_json(options={})
         {
           actionUrl: action_url_or_nil,
+          actionText: action_text,
           aidYear: aid_year,
           aidYearName: aid_year_name,
           assignedDate: assigned_on,

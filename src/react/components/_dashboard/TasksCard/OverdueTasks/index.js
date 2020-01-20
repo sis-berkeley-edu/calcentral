@@ -31,7 +31,7 @@ function OverdueTasks({ tasks }) {
               <TaskTitle
                 title={task.title}
                 subtitle={`Due ${shortDateIfCurrentYear(
-                  parseDate(task.assignedDate)
+                  parseDate(task.dueDate)
                 )}`}
                 overdue={true}
               />

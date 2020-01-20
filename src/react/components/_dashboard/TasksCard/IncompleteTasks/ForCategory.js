@@ -11,6 +11,7 @@ import Task from '../Task';
 import TaskHeader from '../TaskHeader';
 import TaskTitle from '../TaskTitle';
 import CampusSolutionsIcon from '../Icons/CampusSolutionsIcon';
+import DueDate from './DueDate';
 
 const ForCategory = ({ category }) => {
   const [expanded, setExpanded] = useState(false);
@@ -33,10 +34,12 @@ const ForCategory = ({ category }) => {
                 <CampusSolutionsIcon />
                 <TaskTitle
                   title={task.title}
-                  subtitle={`Due ${shortDateIfCurrentYear(
-                    parseDate(task.dueDate)
+                  subtitle={`${task.status} ${shortDateIfCurrentYear(
+                    parseDate(task.assignedDate)
                   )}`}
                 />
+
+                {task.dueDate && <DueDate date={task.dueDate} />}
               </TaskHeader>
             </Task>
           ))}

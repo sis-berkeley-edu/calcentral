@@ -1,8 +1,13 @@
 import format from 'date-fns/format';
 import parseISO from 'date-fns/parseISO';
-import { isThisYear, isFuture as datefnsIsFuture } from 'date-fns';
+import {
+  isThisYear,
+  isFuture as datefnsIsFuture,
+  isPast as datefnsIsPast,
+} from 'date-fns';
 
 export const isFuture = date => datefnsIsFuture(date);
+export const isPast = date => datefnsIsPast(date);
 export const parseDate = string => parseISO(string);
 
 export const formats = {

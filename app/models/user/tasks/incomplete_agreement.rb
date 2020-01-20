@@ -6,6 +6,8 @@ module User
       attr_accessor :admin_function,
         :aid_year,
         :aid_year_description,
+        :assigned_date,
+        :department_name,
         :description,
         :expires_on,
         :title,
@@ -15,21 +17,25 @@ module User
         {
           aidYear: aid_year,
           aidYearDescription: aid_year_description,
+          assignedDate: assigned_date,
+          departmentName: department_name,
           description: description,
-          expiration: expiration,
-          isExpired: expired?,
+          displayCategory: display_category,
+          dueDate: due_date,
+          isIncomplete: true,
+          status: 'Assigned',
           title: title,
           type: 'IncompleteAgreement',
           url: url
         }
       end
 
-      def expiration
-        expires_on&.to_date
+      def assigned_on
+        assigned_date&.to_date
       end
 
-      def expired?
-        expiration < Date.today
+      def due_date
+        expires_on&.to_date unless display_category == "financialAid"
       end
 
       def url
@@ -38,6 +44,10 @@ module User
         @url ||= LinkFetcher.fetch_link('UC_CC_AGRMNT_WEBMSG', {
           CCI_COMM_TRANS_ID: transaction_id
         })
+      end
+
+      def display_category
+        @display_category ||= ChecklistItem::DISPLAY_CATEGORIES.fetch(admin_function) { 'student' }
       end
     end
   end

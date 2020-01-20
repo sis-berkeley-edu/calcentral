@@ -6,12 +6,35 @@ export const keyForTask = (task, index, prefix) => {
   }
 };
 
-export const checklistCategoryTitles = [
-  { key: 'overdue', title: 'Overdue' },
+export const completedTaskCategories = [
   {
     key: 'agreements',
     title: 'Agreements and Opt-ins',
   },
+  {
+    key: 'admission',
+    title: 'Admission Tasks',
+  },
+  {
+    key: 'residency',
+    title: 'Residency Tasks',
+  },
+  {
+    key: 'financialAid',
+    title: 'Finances Tasks',
+  },
+  {
+    key: 'newStudent',
+    title: 'New Student Tasks',
+  },
+  {
+    key: 'student',
+    title: 'Student Tasks',
+  },
+];
+
+export const incompleteTaskCategories = [
+  { key: 'overdue', title: 'Overdue' },
   {
     key: 'admission',
     title: 'Admission Tasks',
