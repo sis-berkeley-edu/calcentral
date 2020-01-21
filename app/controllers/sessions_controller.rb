@@ -16,7 +16,7 @@ class SessionsController < ApplicationController
       logger.warn "Omniauth extra from SAML = #{auth.extra.inspect}"
       cs_id = auth.extra['berkeleyEduCSID']
       sid = auth.extra['berkeleyEduStuID']
-      cal_net_id = auth.extra['berkeleyEduKerberosPrincipleString']
+      cal_net_id = auth.extra['berkeleyEduKerberosPrincipalString']
       auth_handler = {
         client: auth.extra['clientName'],
         handler: auth.extra['successfulAuthenticationHandlers']
