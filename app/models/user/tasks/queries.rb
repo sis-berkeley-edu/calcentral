@@ -30,6 +30,7 @@ module User
           SELECT
             admin_function,
             cci_comm_deny_chng as updates_forbidden,
+            cci_comm_disable as disable_updates_after_expiration,
             cci_comm_display as visible_after_expiration,
             cci_comm_trans_id as transaction_id,
             datetime_created as response_date,
