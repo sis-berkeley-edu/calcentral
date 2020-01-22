@@ -116,6 +116,10 @@ angular.module('calcentral.config').config(function($routeProvider) {
     templateUrl: 'uid_error.html',
     controller: 'uidErrorController',
     isPublic: true
+  }).when('/uid_slate_error', {
+    templateUrl: 'uid_slate_error.html',
+    controller: 'uidErrorController',
+    isPublic: true
   }).when('/user/overview/:uid', {
     templateUrl: 'user_overview.html',
     controller: 'UserOverviewController',
