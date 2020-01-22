@@ -4,7 +4,7 @@ module User
       include ActiveModel::Model
 
       attr_accessor :admin_function,
-        :disabled_after_expiration,
+        :disable_updates_after_expiration,
         :expiration_date,
         :response,
         :response_date,
@@ -74,6 +74,10 @@ module User
 
       def visible_after_expiration?
         visible_after_expiration == 'Y'
+      end
+
+      def update_after_expiration?
+        disable_updates_after_expiration == 'N'
       end
     end
   end
