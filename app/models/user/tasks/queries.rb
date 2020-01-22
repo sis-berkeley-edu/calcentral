@@ -48,9 +48,11 @@ module User
             aid_year,
             aid_year_descr as aid_year_description,
             cci_comm_trans_id as transaction_id,
+            comm_dttm as assigned_date,
             descr as title,
             descr250 as description,
-            expire_dt as expires_on
+            expire_dt as expires_on,
+            uc_respbl_descr as department_name
           FROM SYSADM.PS_UCC_CC_ACTAGMTV
           WHERE CAMPUS_ID = '#{uid}'
         SQL

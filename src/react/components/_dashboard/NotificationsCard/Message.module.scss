@@ -1,0 +1,28 @@
+@import 'src/react/stylesheets/variables';
+@import 'src/react/stylesheets/mixins';
+
+$activeColor: $cc-color-alice-blue;
+
+.message {
+  padding: 10px 0;
+  border-bottom: 1px solid #eee;
+
+  @include hasDisclosureArrow();
+
+  &:hover {
+    background-color: $activeColor;
+  }
+
+  &.collapsed {
+    @include disclosureArrowClosed();
+  }
+
+  &.expanded {
+    @include disclosureArrowOpen();
+    background-color: $activeColor;
+
+    &.notFocused {
+      background-color: $cc-color-ivory;
+    }
+  }
+}

@@ -2,11 +2,11 @@ import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import { isFuture } from 'functions/formatDate';
+import { isPast, parseDate } from 'functions/formatDate';
 
 import {
   groupByAidYear,
-  checklistCategoryTitles,
+  incompleteTaskCategories,
   groupByCategory,
 } from '../tasks.module.js';
 
@@ -64,7 +64,7 @@ const OVERDUE_ENABLED = true;
 const filterOverdueTasksIf = enabled => shouldFilter => {
   if (enabled) {
     if (shouldFilter) {
-      return item => !isFuture(item.dueDate);
+      return item => !item.isOverdue;
     } else {
       return _item => true;
     }
@@ -78,7 +78,7 @@ const markOverdue = enabled => item => {
     if (item.displayCategory === 'financialAid') {
       return item;
     } else {
-      return { ...item, isOverdue: !isFuture(item.dueDate) };
+      return { ...item, isOverdue: isPast(parseDate(item.dueDate)) };
     }
   } else {
     return { ...item, isOverdue: false };
@@ -89,11 +89,11 @@ const mapStateToProps = ({
   myChecklistItems: { incompleteItems = [] },
   myAgreements: { incompleteAgreements = [] },
 }) => {
-  const groupedByCategory = incompleteItems
+  const groupedByCategory = [...incompleteItems, ...incompleteAgreements]
     .map(markOverdue(OVERDUE_ENABLED))
     .reduce(groupByCategory, {});
 
-  const orderedCategories = checklistCategoryTitles.map(category => {
+  const orderedCategories = incompleteTaskCategories.map(category => {
     const items = groupedByCategory[category.key] || [];
 
     const sortedItems = items
