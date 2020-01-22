@@ -16,6 +16,7 @@ module User
       def as_json(options={})
         {
           aidYear: aid_year,
+          aidYearName: aid_year_name,
           aidYearDescription: aid_year_description,
           assignedDate: assigned_date,
           departmentName: department_name,
@@ -28,6 +29,10 @@ module User
           type: 'IncompleteAgreement',
           url: url
         }
+      end
+
+      def aid_year_name
+        "#{aid_year.to_i - 1}-#{aid_year}" if aid_year
       end
 
       def assigned_on
