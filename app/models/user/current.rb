@@ -51,7 +51,7 @@ module User
     end
 
     def matriculated?
-      !affiliations.matriculated_but_exluded? && affiliations.not_registered?
+      !affiliations.matriculated_but_excluded? && affiliations.not_registered?
     end
 
     private

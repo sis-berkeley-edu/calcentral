@@ -6,8 +6,8 @@ module User
       @user = user
     end
 
-    def matriculated_but_exluded?
-      affiliations.find(&:matriculated_but_exluded?)
+    def matriculated_but_excluded?
+      affiliations.find(&:matriculated_but_excluded?)
     end
 
     def not_registered?
