@@ -13,8 +13,8 @@ const TaskDetail = ({ task }) => {
     hasUpload,
     uploadUrl,
     url,
+    organizationName,
   } = task;
-
   const descriptionStyles = `cc-break-word cc-clearfix cc-text-pre-line ${styles.description}`;
   const actionStyles = `cc-button cc-widget-tasks-button cc-outbound-link ${styles.actionLink}`;
 
@@ -27,6 +27,12 @@ const TaskDetail = ({ task }) => {
       )}
 
       <div className={descriptionStyles}>{description}</div>
+
+      {organizationName && (
+        <div style={{ marginTop: `15px` }}>
+          <strong>Organization:</strong> {organizationName}
+        </div>
+      )}
 
       {url && (
         <APILink
@@ -42,6 +48,8 @@ const TaskDetail = ({ task }) => {
           className={actionStyles}
           href={actionUrl}
           onClick={e => e.stopPropagation()}
+          target="_blank"
+          rel="noopener noreferrer"
         >
           {actionText}
         </a>
@@ -67,6 +75,7 @@ TaskDetail.propTypes = {
     description: PropTypes.string,
     dueDate: PropTypes.string,
     hasUpload: PropTypes.bool,
+    organizationName: PropTypes.string,
     uploadUrl: PropTypes.object,
     url: PropTypes.object,
   }),

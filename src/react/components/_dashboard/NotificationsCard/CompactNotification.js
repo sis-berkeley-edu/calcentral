@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import APILink from 'react/components/APILink';
 
 import styles from './CompactNotification.module.scss';
-import { parseDate, formatTime } from 'functions/formatDate';
 
 const CompactNotification = ({
   index,
@@ -32,9 +31,6 @@ const CompactNotification = ({
 
       {isExpanded && (
         <div className={styles.detail}>
-          <div className={styles.activityTime}>
-            at {formatTime(parseDate(message.statusDateTime))}
-          </div>
           <div
             className={styles.description}
             dangerouslySetInnerHTML={{ __html: message.description }}

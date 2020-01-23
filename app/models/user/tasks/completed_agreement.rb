@@ -16,11 +16,13 @@ module User
       DISPLAY_CATEGORIES = {
         "ADMA" => "newStudent",
         "ADMP" => "admissions",
-        "FINA" => "financialAid"
+        "FINA" => "financialAid",
+        "SFAC" => "financialAid"
       }
 
       def as_json(options={})
         {
+          displayCategory: display_category,
           expiration: expiration,
           response: response,
           responseDate: responded_at,
