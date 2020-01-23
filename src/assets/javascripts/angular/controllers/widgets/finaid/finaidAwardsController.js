@@ -75,7 +75,8 @@ angular
 
     var canSeeFinAidSummaryLink = function() {
       return (
-        (apiService.user.profile.roles.registered ||
+        ($scope.finaidAwards.matriculated ||
+          apiService.user.profile.roles.registered ||
           apiService.user.profile.roles.exStudent) &&
         (apiService.user.profile.academicRoles.current.ugrd ||
           apiService.user.profile.academicRoles.current.grad ||
