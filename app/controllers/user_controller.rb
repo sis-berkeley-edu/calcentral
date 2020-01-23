@@ -26,6 +26,7 @@ class UserController < ApplicationController
     status.merge!({
       :isBasicAuthEnabled => Settings.developer_auth.enabled,
       :isLoggedIn => !!user_id,
+      :isSlateUser => session[:is_slate_user],
       :features => features,
       :youtubeSplashId => Settings.youtube_splash_id
     })

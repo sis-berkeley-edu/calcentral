@@ -119,16 +119,18 @@ class SessionsController < ApplicationController
     session.try(:delete, :_csrf_token)
     auth_validator = User::AuthenticationValidator.new(uid, auth_handler)
     uid = auth_validator.validated_user_id
+    is_slate_auth = auth_handler.present? ? auth_validator.is_slate_auth_handler?(auth_handler) : false
     if (Integer(uid, 10) rescue nil).nil?
       logger.warn "FAILED login with CAS UID: #{uid}"
       redirect_to url_for_path('/uid_error')
-    elsif (auth_handler.present? && auth_validator.is_slate_auth_handler?(auth_handler) && cal_net_id.present?)
+    elsif (is_slate_auth && cal_net_id.present?)
       # User logged in using MAP(Slate) but should be using CalNet instead.
       logger.warn "FAILED login, should use CalNet not MAP(Slate) with CAS UID: #{uid}"
       redirect_to url_for_path('/uid_slate_error')
     else
       # Unless we're re-authenticating after view-as, initialize the session.
       session['user_id'] = uid unless get_original_viewer_uid
+      session['is_slate_user'] = is_slate_auth
       redirect_to smart_success_path, :notice => 'Signed in!'
     end
   end
