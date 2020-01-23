@@ -31,7 +31,7 @@ const ByCategory = ({ categories }) => {
                 return (
                   <div key={aidYear.year}>
                     <CategoryTitle>
-                      Financial Aid Tasks{' '}
+                      Finances Tasks{' '}
                       <span>
                         {aidYear.year - 1}-{aidYear.year}
                       </span>

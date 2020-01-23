@@ -6,6 +6,7 @@ import APILink from 'react/components/APILink';
 const ArchiveLink = ({ url }) => {
   const link = {
     url: url,
+    showNewWindow: false,
     name: 'Archive of Official Communications',
   };
 

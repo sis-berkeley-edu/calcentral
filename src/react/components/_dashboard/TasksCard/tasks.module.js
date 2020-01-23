@@ -12,7 +12,7 @@ export const completedTaskCategories = [
     title: 'Agreements and Opt-ins',
   },
   {
-    key: 'admission',
+    key: 'admissions',
     title: 'Admission Tasks',
   },
   {
@@ -36,7 +36,7 @@ export const completedTaskCategories = [
 export const incompleteTaskCategories = [
   { key: 'overdue', title: 'Overdue' },
   {
-    key: 'admission',
+    key: 'admissions',
     title: 'Admission Tasks',
   },
   {
