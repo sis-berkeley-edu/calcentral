@@ -12,7 +12,7 @@ module User
       @data = data
     end
 
-    def matriculated_but_exluded?
+    def matriculated_but_excluded?
       type_code == MATRICULATED_TYPE_CODE && MATRICULATED_DETAILS_TO_EXCLUDE.include?(detail)
     end
 
