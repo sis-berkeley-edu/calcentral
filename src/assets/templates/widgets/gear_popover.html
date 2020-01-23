@@ -31,10 +31,10 @@
         data-cc-loading-process="Loading..."
         data-ng-if="statusLoading">
       </div>
+      <div class="cc-popover-title">
+        <span><strong>Student ID: </strong><span data-ng-bind="api.user.profile.campusSolutionsID"></span><span>
+      </div>
       <div data-ng-if="!statusLoading && !api.user.profile.delegateActingAsUid && (count !== 0 || hasBillingData || regStatus.hasData)">
-        <div class="cc-popover-title">
-          <span><strong>Student ID: </strong><span data-ng-bind="api.user.profile.campusSolutionsID"></span><span>
-        </div>
         <div class="cc-popover-noitems" data-ng-if="count === 0">
           <i class="cc-left fa fa-check-circle cc-icon-green"></i>
           <strong>No Active Alerts</strong>
