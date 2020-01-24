@@ -72,7 +72,8 @@ module User
             descr as title,
             descrlong as description,
             due_dt as due_date,
-            uc_resp_dept_name as responsible_unit,
+            ext_org_name as organization_name,
+            uc_resp_dept_name as department_name,
             uc_resp_email as responsible_email,
             aid_year as aid_year,
             aid_year_descr as aid_year_description,
@@ -94,11 +95,20 @@ module User
             uc_resp_dept_name as department_name,
             descrlong as description,
             due_dt as due_date,
+            ext_org_name as organization_name,
             chklst_item_cd as item_code,
             item_status as status_code,
             descr as title,
             uc_upload_flag as has_upload_button,
-            url_id as upload_url_id
+            url_id as upload_url_id,
+            seq_3c: as sequence_id,
+            checklist_seq as checklist_id,
+            chklst_item_cd as checklist_item_code,
+            uc_strm_career as term_career_code,
+            strm as term_id,
+            adma_career as career,
+            adm_appl_nbr as admissions_application_number,
+            stdnt_car_nbr as career_number
           FROM SYSADM.PS_UCC_CC_CHKLITMV
           WHERE CAMPUS_ID = '#{uid}'
         SQL

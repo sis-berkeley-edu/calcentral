@@ -11,7 +11,8 @@ module User
         :title,
         :description,
         :due_date,
-        :responsible_unit,
+        :department_name,
+        :organization_name,
         :responsible_email,
         :aid_year,
         :aid_year_description,
@@ -24,6 +25,7 @@ module User
       end
 
       def display_category
+        return 'residency' if item_code[0, 2] == 'RR'
         DISPLAY_CATEGORIES.fetch(admin_function) { 'student' }
       end
 
@@ -35,12 +37,12 @@ module User
           completedDate: completed_on,
           checklistCode: checklist_code,
           checklistSequence: checklist_sequence,
+          departmentName: department_name,
           description: description,
           displayCategory: display_category,
           dueDate: due_on,
           itemCode: item_code,
-          responsibleUnit: responsible_unit,
-          responsibleEmail: responsible_email,
+          organizationName: organization_name,
           sequenceNumber: sequence_number,
           title: title,
           status: status,

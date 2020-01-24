@@ -4,7 +4,8 @@ module User
       DISPLAY_CATEGORIES = {
         "ADMA" => "newStudent",
         "ADMP" => "admissions",
-        "FINA" => "financialAid"
+        "FINA" => "financialAid",
+        "SFAC" => "financialAid"
       }
 
       IGNORED_STATUS_CODES = ['O', 'T', 'X'];
