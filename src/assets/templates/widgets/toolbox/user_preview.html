@@ -11,22 +11,39 @@
       <div class="cc-table cc-table-top-border cc-clearfix">
         <table class="cc-widget-profile-table">
           <tbody>
-          <tr>
-            <th>
-              <img data-cc-load-error-directive="profilePicture" data-ng-if="!profilePicture.loadError" class="cc-widget-profile-img" height="96" width="72"
-                   data-ng-attr-alt="{{ targetUser.fullName && targetUser.fullName.trim ? targetUser.fullName.trim() + '\'s photo' : 'profile photo' }}"
-                   data-ng-src="api/photo/{{ targetUser.ldapUid }}">
-              <div data-ng-if="profilePicture.loadError"  class="cc-widget-profile-picture-not-available">
-                <i class="fa fa-user"></i>
-              </div>
-            </th>
-            <td>
-              <div>
-                <strong data-ng-bind="targetUser.defaultName"></strong>
-                <span class="cc-inline-block">(<button class="cc-button-link" data-ng-click="targetUser.actAs()" data-ng-disabled="!api.user.profile.isDirectlyAuthenticated">view as</button>)</span>
-              </div>
-            </td>
-          </tr>
+            <tr>
+              <th>
+                <img
+                  data-cc-load-error-directive="profilePicture"
+                  data-ng-if="!profilePicture.loadError"
+                  class="cc-widget-profile-img"
+                  height="96"
+                  width="72"
+                  data-ng-attr-alt="{{ targetUser.fullName && targetUser.fullName.trim ? targetUser.fullName.trim() + '\'s photo' : 'profile photo' }}"
+                  data-ng-src="api/photo/{{ targetUser.ldapUid }}"
+                />
+                <div
+                  data-ng-if="profilePicture.loadError"
+                  class="cc-widget-profile-picture-not-available"
+                >
+                  <i class="fa fa-user"></i>
+                </div>
+              </th>
+              <td>
+                <div>
+                  <strong data-ng-bind="targetUser.defaultName"></strong>
+                  <span class="cc-inline-block"
+                    >(<button
+                      class="cc-button-link"
+                      data-ng-click="targetUser.actAs()"
+                      data-ng-disabled="!api.user.profile.isDirectlyAuthenticated"
+                    >
+                      view as</button
+                    >)</span
+                  >
+                </div>
+              </td>
+            </tr>
           </tbody>
         </table>
       </div>
@@ -34,58 +51,97 @@
       <div class="cc-table cc-table-top-border cc-clearfix">
         <table class="cc-widget-profile-table">
           <tbody>
-          <tr>
-            <th>SID</th>
-            <td><strong data-ng-bind="targetUser.studentId"></strong></td>
-          </tr>
+            <tr>
+              <th>SID</th>
+              <td>
+                <strong
+                  data-ng-bind="(targetUser.studentId || targetUser.campusSolutionsId)"
+                ></strong>
+              </td>
+            </tr>
           </tbody>
         </table>
       </div>
       <div data-ng-include="'widgets/academics/college_and_level.html'"></div>
-      <div data-ng-if="collegeAndLevel.degrees" data-ng-include="'widgets/academics/degrees_conferred.html'"></div>
-      <div class="cc-table cc-table-top-border cc-clearfix" data-ng-if="targetUser.addresses || targetUser.phones || targetUser.emails">
+      <div
+        data-ng-if="collegeAndLevel.degrees"
+        data-ng-include="'widgets/academics/degrees_conferred.html'"
+      ></div>
+      <div
+        class="cc-table cc-table-top-border cc-clearfix"
+        data-ng-if="targetUser.addresses || targetUser.phones || targetUser.emails"
+      >
         <table class="cc-widget-profile-table">
           <tbody>
-          <tr>
-            <th>Contact Information</th>
-            <td>
-              <div class="cc-widget-vertical-padding" data-ng-repeat="address in targetUser.addresses">
-                <div>
-                  <strong data-ng-bind-template="{{address.type.description}} Address"></strong>
+            <tr>
+              <th>Contact Information</th>
+              <td>
+                <div
+                  class="cc-widget-vertical-padding"
+                  data-ng-repeat="address in targetUser.addresses"
+                >
+                  <div>
+                    <strong
+                      data-ng-bind-template="{{address.type.description}} Address"
+                    ></strong>
+                  </div>
+                  <div>
+                    <div
+                      class="cc-text-pre-line"
+                      data-ng-bind="address.formattedAddress"
+                    ></div>
+                    <div
+                      data-ng-bind="address.countryCode"
+                      data-ng-if="address.countryCode !== 'USA'"
+                    ></div>
+                  </div>
                 </div>
-                <div>
-                  <div class="cc-text-pre-line" data-ng-bind="address.formattedAddress"></div>
-                  <div data-ng-bind="address.countryCode" data-ng-if="address.countryCode !== 'USA'"></div>
+                <br />
+                <div
+                  class="cc-widget-vertical-padding"
+                  data-ng-repeat="phone in targetUser.phones"
+                >
+                  <div>
+                    <strong
+                      data-ng-bind-template="{{phone.type.description}} Phone"
+                    ></strong>
+                    <span data-ng-if="phone.primary">(preferred)</span>
+                  </div>
+                  <div>
+                    <span data-ng-bind="phone.number"></span>
+                    <span
+                      data-ng-if="phone.extension"
+                      data-ng-bind-template="ext. {{phone.extension}}"
+                    ></span>
+                  </div>
                 </div>
-              </div>
-              <br>
-              <div class="cc-widget-vertical-padding" data-ng-repeat="phone in targetUser.phones">
-                <div>
-                  <strong data-ng-bind-template="{{phone.type.description}} Phone"></strong>
-                  <span data-ng-if="phone.primary">(preferred)</span>
+                <br />
+                <div
+                  class="cc-widget-vertical-padding"
+                  data-ng-repeat="email in targetUser.emails"
+                >
+                  <div>
+                    <strong
+                      data-ng-bind-template="{{email.type.description}} Email"
+                    ></strong>
+                    <span data-ng-if="email.primary">(preferred)</span>
+                  </div>
+                  <div class="cc-break-word">
+                    <a
+                      data-ng-href="mailto:{{email.emailAddress}}"
+                      data-ng-bind="email.emailAddress"
+                    ></a>
+                  </div>
                 </div>
-                <div>
-                  <span data-ng-bind="phone.number"></span>
-                  <span data-ng-if="phone.extension" data-ng-bind-template="ext. {{phone.extension}}"></span>
-                </div>
-              </div>
-              <br>
-              <div class="cc-widget-vertical-padding" data-ng-repeat="email in targetUser.emails">
-                <div>
-                  <strong data-ng-bind-template="{{email.type.description}} Email"></strong>
-                  <span data-ng-if="email.primary">(preferred)</span>
-                </div>
-                <div class="cc-break-word">
-                  <a data-ng-href="mailto:{{email.emailAddress}}" data-ng-bind="email.emailAddress"></a>
-                </div>
-              </div>
-            </td>
-          </tr>
+              </td>
+            </tr>
           </tbody>
         </table>
       </div>
-      <div class="cc-table cc-table-top-border cc-clearfix"
-      data-cc-spinner-directive="ucAdvisingResources.isLoading">
+      <div
+        class="cc-table cc-table-top-border cc-clearfix"
+        data-cc-spinner-directive="ucAdvisingResources.isLoading"
+      >
         <table class="cc-widget-profile-table">
           <tbody>
             <tr>
@@ -93,52 +149,76 @@
                 Advising Resources
               </th>
               <td>
-                <div data-ng-if="ucAdvisingResources.links.studentServiceIndicators.url">
-                  <a data-cc-campus-solutions-link-directive="ucAdvisingResources.links.studentServiceIndicators"
+                <div
+                  data-ng-if="ucAdvisingResources.links.studentServiceIndicators.url"
+                >
+                  <a
+                    data-cc-campus-solutions-link-directive="ucAdvisingResources.links.studentServiceIndicators"
                     data-cc-campus-solutions-link-directive-cc-page-name="currentPage.name"
                     data-cc-campus-solutions-link-directive-cc-page-url="currentPage.url"
                   ></a>
                 </div>
-                <div data-ng-if="ucAdvisingResources.links.studentAdvisingAssignments.url">
-                  <a data-cc-campus-solutions-link-directive="ucAdvisingResources.links.studentAdvisingAssignments"
+                <div
+                  data-ng-if="ucAdvisingResources.links.studentAdvisingAssignments.url"
+                >
+                  <a
+                    data-cc-campus-solutions-link-directive="ucAdvisingResources.links.studentAdvisingAssignments"
                     data-cc-campus-solutions-link-directive-cc-page-name="currentPage.name"
                     data-cc-campus-solutions-link-directive-cc-page-url="currentPage.url"
                   ></a>
                 </div>
-                <div data-ng-if="ucAdvisingResources.links.studentAdministrativeTranscripts.url">
-                  <a data-cc-campus-solutions-link-directive="ucAdvisingResources.links.studentAdministrativeTranscripts"
+                <div
+                  data-ng-if="ucAdvisingResources.links.studentAdministrativeTranscripts.url"
+                >
+                  <a
+                    data-cc-campus-solutions-link-directive="ucAdvisingResources.links.studentAdministrativeTranscripts"
                     data-cc-campus-solutions-link-directive-cc-page-name="currentPage.name"
                     data-cc-campus-solutions-link-directive-cc-page-url="currentPage.url"
                   ></a>
                 </div>
-                <div data-ng-if="ucAdvisingResources.links.studentAcademicProgressReport.url">
-                  <a data-cc-campus-solutions-link-directive="ucAdvisingResources.links.studentAcademicProgressReport"
+                <div
+                  data-ng-if="ucAdvisingResources.links.studentAcademicProgressReport.url"
+                >
+                  <a
+                    data-cc-campus-solutions-link-directive="ucAdvisingResources.links.studentAcademicProgressReport"
                     data-cc-campus-solutions-link-directive-cc-page-name="currentPage.name"
                     data-cc-campus-solutions-link-directive-cc-page-url="currentPage.url"
                   ></a>
                 </div>
-                <div data-ng-if="ucAdvisingResources.links.studentWhatIfReport.url">
-                  <a data-cc-campus-solutions-link-directive="ucAdvisingResources.links.studentWhatIfReport"
+                <div
+                  data-ng-if="ucAdvisingResources.links.studentWhatIfReport.url"
+                >
+                  <a
+                    data-cc-campus-solutions-link-directive="ucAdvisingResources.links.studentWhatIfReport"
                     data-cc-campus-solutions-link-directive-cc-page-name="currentPage.name"
                     data-cc-campus-solutions-link-directive-cc-page-url="currentPage.url"
                   ></a>
                 </div>
-                <div data-ng-if="ucAdvisingResources.links.studentManageMilestones.url">
-                  <a data-cc-campus-solutions-link-directive="ucAdvisingResources.links.studentManageMilestones"
+                <div
+                  data-ng-if="ucAdvisingResources.links.studentManageMilestones.url"
+                >
+                  <a
+                    data-cc-campus-solutions-link-directive="ucAdvisingResources.links.studentManageMilestones"
                     data-cc-campus-solutions-link-directive-cc-page-name="currentPage.name"
                     data-cc-campus-solutions-link-directive-cc-page-url="currentPage.url"
                   ></a>
                 </div>
-                <div data-ng-if="ucAdvisingResources.links.studentMultiYearAcademicPlanner.url">
-                  <a data-cc-campus-solutions-link-directive="ucAdvisingResources.links.studentMultiYearAcademicPlanner"
+                <div
+                  data-ng-if="ucAdvisingResources.links.studentMultiYearAcademicPlanner.url"
+                >
+                  <a
+                    data-cc-campus-solutions-link-directive="ucAdvisingResources.links.studentMultiYearAcademicPlanner"
                     data-cc-campus-solutions-link-directive-cc-page-name="currentPage.name"
                     data-cc-campus-solutions-link-directive-cc-page-url="currentPage.url"
                     data-cc-campus-solutions-link-directive-cc-cache="advisingAcademics"
                     data-ng-click="expireAcademicsCache()"
                   ></a>
                 </div>
-                <div data-ng-if="ucAdvisingResources.links.studentAdvisorNotes.url">
-                  <a data-cc-campus-solutions-link-directive="ucAdvisingResources.links.studentAdvisorNotes"
+                <div
+                  data-ng-if="ucAdvisingResources.links.studentAdvisorNotes.url"
+                >
+                  <a
+                    data-cc-campus-solutions-link-directive="ucAdvisingResources.links.studentAdvisorNotes"
                     data-cc-campus-solutions-link-directive-cc-page-name="currentPage.name"
                     data-cc-campus-solutions-link-directive-cc-page-url="currentPage.url"
                   ></a>
@@ -147,12 +227,16 @@
                   <a
                     data-ng-href="/college_scheduler/advisor/{{schedulePlanner.careerCode}}/{{schedulePlanner.termId}}/{{schedulePlanner.studentUid}}"
                     data-cc-outbound-enabled="true"
-                    title="View this student's planned schedule for this term.">
+                    title="View this student's planned schedule for this term."
+                  >
                     Schedule Planner
                   </a>
                 </div>
-                <div data-ng-if="ucAdvisingResources.links.studentWebnowDocuments.url">
-                  <a data-cc-campus-solutions-link-directive="ucAdvisingResources.links.studentWebnowDocuments"
+                <div
+                  data-ng-if="ucAdvisingResources.links.studentWebnowDocuments.url"
+                >
+                  <a
+                    data-cc-campus-solutions-link-directive="ucAdvisingResources.links.studentWebnowDocuments"
                     data-cc-campus-solutions-link-directive-cc-page-name="currentPage.name"
                     data-cc-campus-solutions-link-directive-cc-page-url="currentPage.url"
                   ></a>
