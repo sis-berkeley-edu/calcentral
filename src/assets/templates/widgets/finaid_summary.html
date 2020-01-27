@@ -22,6 +22,9 @@
       <div data-ng-if="financialAidSummary.aidYears.length">
         <div data-ng-include="'widgets/finaid_summary_aidyear.html'"></div>
         <div data-ng-include="'widgets/finaid_summary_semester.html'"></div>
+
+        <aid-year-task-count year="financialAidSummary.selected.finaidYear.id"></aid-year-task-count>
+        
         <div>
           <div data-ng-if="financialAidSummary.tasksCount > 0">
             <a data-ng-href="finances/finaid/{{financialAidSummary.selected.finaidYear.id}}" data-ng-disabled="isMainFinaid">
