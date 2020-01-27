@@ -48,12 +48,13 @@ const FinancialResources = ({
   const eftReady = myEftEnrollment.loaded;
   const sirStatusReady = sirStatus.loaded || myStatus.delegateActingAsUid;
   const statusReady = myStatus.loaded;
-  const isErrored =
+  const isErrored = !!(
     financialResourcesLinks.error ||
     myEftEnrollment.error ||
-    sirStatus.error ||
+    !!(sirStatus.error && !myStatus.delegateActingAsUid) ||
     myStatus.error ||
-    isAccessErrored;
+    isAccessErrored
+  );
 
   if (isErrored) {
     return (
