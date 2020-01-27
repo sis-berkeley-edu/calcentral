@@ -41,6 +41,17 @@ cal1card_proxy:
 webcast_proxy:
   fake: true
 
+oracle:
+  adapter: sqlite3
+  encoding: utf8
+  database: 'db/dev.sqlite3'
+  username:
+  password:
+  host:
+  port: 0
+  pool: 3
+  timeout: 5000
+
 postgres:
   database: <%= ENV['DB_ENV_POSTGRESQL_DB'] || 'calcentral_development' %>
   username: <%= ENV['DB_ENV_POSTGRESQL_USER'] || 'calcentral_development' %>
@@ -91,14 +102,3 @@ features:
   reauthentication: false
   textbooks: true
   videos: true
-
-oracle:
-  adapter: sqlite3
-  encoding: utf8
-  database: 'db/dev.sqlite3'
-  username:
-  password:
-  host:
-  port: 0
-  pool: 3
-  timeout: 5000
