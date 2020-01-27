@@ -101,12 +101,12 @@ module User
             descr as title,
             uc_upload_flag as has_upload_button,
             url_id as upload_url_id,
-            seq_3c: as sequence_id,
+            seq_3c as sequence_id,
             checklist_seq as checklist_id,
             chklst_item_cd as checklist_item_code,
             uc_strm_career as term_career_code,
             strm as term_id,
-            adma_career as career,
+            uc_adma_career as career,
             adm_appl_nbr as admissions_application_number,
             stdnt_car_nbr as career_number
           FROM SYSADM.PS_UCC_CC_CHKLITMV

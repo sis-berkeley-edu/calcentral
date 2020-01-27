@@ -73,16 +73,16 @@ module User
       def upload_url
         return if upload_url_id.blank?
         @upload_url ||= LinkFetcher.fetch_link(upload_url_id, {
-          ADMIN_FUNCTION: admin_functon,
-          SEQ_3C: sequence_id,
-          CHECKLIST_SEQ: checklist_id,
+          ADMIN_FUNCTION: admin_function,
+          SEQ_3C: sequence_id.to_s,
+          CHECKLIST_SEQ: checklist_id.to_s,
           CHKLST_ITEM_CD: checklist_item_code,
           FIN_YEAR: aid_year,
           STRM_CAREER: term_career_code,
           STRM: term_id,
           ADM_APPL_NBR: admissions_application_number,
           ADMA_CAREER: career,
-          STDNT_CAR_NBR: career_number,
+          STDNT_CAR_NBR: career_number.to_s,
         })
       end
 
