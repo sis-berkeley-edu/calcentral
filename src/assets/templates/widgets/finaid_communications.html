@@ -17,8 +17,40 @@
         <div class="cc-widget-subtitle">
           <h3>Tasks</h3>
         </div>
-        <div class="cc-widget-tasks">
-          <div data-ng-include="'widgets/finaid_communications_tasks.html'"></div>
+
+        <h3 class="cc-widget-tasks-section-label" data-ng-if="filteredTasks.length">
+          <span>Task</span>
+          <span class="cc-right">Status Date</span>
+        </h3>
+
+        <financial-aid-tasks year="communicationsInfo.aidYear.id"></financial-aid-tasks>
+
+        <div class="cc-widget-text">
+          <hr>
+          <ul class="cc-list-bullets">
+            <li>
+              Financial Aid
+              <a data-cc-campus-solutions-link-directive="communicationsInfo.csLinks.verificationAndAppeals"
+                data-cc-campus-solutions-link-directive-cc-page-name="currentPage.name"
+                data-cc-campus-solutions-link-directive-cc-page-url="currentPage.url"
+              ></a>
+            </li>
+            <li>
+              Financial Aid
+              <a data-cc-campus-solutions-link-directive="communicationsInfo.csLinks.optionalDocuments"
+                data-cc-campus-solutions-link-directive-cc-page-name="currentPage.name"
+                data-cc-campus-solutions-link-directive-cc-page-url="currentPage.url"
+              ></a>
+            </li>
+            <li data-ng-if="api.user.profile.actAsOptions.canSeeCSLinks">
+              Financial Aid
+              <a data-cc-campus-solutions-link-directive="communicationsInfo.csLinks.optionalDocumentsUpload"
+                data-cc-campus-solutions-link-directive-cc-page-name="currentPage.name"
+                data-cc-campus-solutions-link-directive-cc-page-url="currentPage.url"
+                data-cc-campus-solutions-link-directive-cc-cache="finaid"
+              >Optional Documents Upload</a>
+            </li>
+          </ul>
         </div>
       </div>
       <div>
