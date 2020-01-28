@@ -3,13 +3,13 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { react2angular } from 'react2angular';
 
+import APILink from 'react/components/APILink';
 import Card from 'react/components/Card';
 import Spinner from 'react/components/Spinner';
 import ReduxProvider from 'react/components/ReduxProvider';
 import useFocus from 'react/useFocus';
 import { fetchWebMessages } from 'redux/actions/webMessagesActions';
 
-import ArchiveLink from './ArchiveLink';
 import SourceFilter from './SourceFilter';
 import SourcedMessages from './SourcedMessages';
 
@@ -65,7 +65,14 @@ const NotificationsCard = ({
             })
           )}
 
-          {canSeeCSLinks && <ArchiveLink url={archiveUrl} />}
+          {canSeeCSLinks && (
+            <div
+              className="cc-text-center cc-widget-padding"
+              style={{ marginBottom: `-15px` }}
+            >
+              <APILink {...archiveUrl} />
+            </div>
+          )}
         </>
       ) : (
         <Spinner />
@@ -76,7 +83,7 @@ const NotificationsCard = ({
 
 NotificationsCard.displayName = 'NotificationsCard';
 NotificationsCard.propTypes = {
-  archiveUrl: PropTypes.string,
+  archiveUrl: PropTypes.object,
   canSeeCSLinks: PropTypes.bool,
   fetchNotifications: PropTypes.func.isRequired,
   groupedNotifications: PropTypes.array.isRequired,

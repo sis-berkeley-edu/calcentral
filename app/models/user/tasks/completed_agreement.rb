@@ -36,7 +36,7 @@ module User
       def url
         return if transaction_id.blank?
 
-        @url ||= LinkFetcher.fetch_link('UC_CC_AGRMNT_WEBMSG', {
+        @url ||= LinkFetcher.fetch_link('UC_CC_WEBMSG_AGRMNT', {
           CCI_COMM_TRANS_ID: transaction_id
         })
       end
