@@ -1,7 +1,7 @@
 module User
   module Tasks
     class IncompleteAgreements < ::User::Owned
-      LINK_API_KEY='UC_CC_AGRMNT_WEBMSG'
+      LINK_API_KEY='UC_CC_WEBMSG_AGRMNT'
 
       def as_json(options = {})
         all
