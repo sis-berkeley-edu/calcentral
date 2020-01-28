@@ -21,9 +21,7 @@ module User
       end
 
       def archive_url
-        return @archive_url if defined? @archive_url
-        feed = CampusSolutions::DashboardUrl.new.get
-        @archive_url = feed && feed[:feed] && feed[:feed][:url]
+        @archive_url ||= LinkFetcher.fetch_link('UC_CC_WEBMSG_ARCHIVE')
       end
     end
   end

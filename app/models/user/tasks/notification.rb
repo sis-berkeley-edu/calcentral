@@ -36,7 +36,7 @@ module User
       end
 
       def link
-        LinkFetcher.fetch_link('UC_CC_AGRMNT_WEBMSG', { 'CCI_COMM_TRANS_ID' => id })
+        LinkFetcher.fetch_link('UC_CC_WEBMSG_AGRMNT', { 'CCI_COMM_TRANS_ID' => id })
       end
 
       def status_date
