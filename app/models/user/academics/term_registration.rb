@@ -21,7 +21,12 @@ module User
           inPopover: in_popover?,
           registrationStatus: registration_status,
           cnpStatus: cnp_status,
+          requiresCalGrantAcknowledgement: requires_cal_grant_acknowledgement?,
         }
+      end
+
+      def requires_cal_grant_acknowledgement?
+        student_attributes.any?(&:requires_cal_grant_acknowledgement?)
       end
 
       def tuition_calculated?
