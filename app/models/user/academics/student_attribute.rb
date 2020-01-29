@@ -19,6 +19,10 @@ module User
         }
       end
 
+      def requires_cal_grant_acknowledgement?
+        type_code == '+F06'
+      end
+
       def is_cnp_exception?
         type_code == '+R99'
       end
