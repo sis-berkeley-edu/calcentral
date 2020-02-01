@@ -41,7 +41,7 @@ const CategorySection = ({ categorySection, items, columns, children }) => {
                   <CampusSolutionsIcon />
                   <TaskTitle
                     title={task.title}
-                    subtitle={`Assigned ${shortDateIfCurrentYear(
+                    subtitle={`${task.status} ${shortDateIfCurrentYear(
                       parseDate(task.assignedDate)
                     )}`}
                   />

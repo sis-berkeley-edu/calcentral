@@ -3,6 +3,7 @@ module User
     attr_reader :uid
 
     include User::Tasks::Concern
+    include User::BCourses::Concern
 
     def initialize(uid)
       @uid = uid

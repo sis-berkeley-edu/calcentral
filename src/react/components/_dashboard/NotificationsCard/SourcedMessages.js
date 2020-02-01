@@ -15,8 +15,9 @@ const SourcedMessages = ({
   expandedItem,
   setExpandedItem,
   hasFocus,
+  type,
 }) => {
-  const key = `${source}-${date}`;
+  const key = `${source}-${date}-${type}`;
   const isExpanded = expandedItem === key;
   const onClick = _event => {
     setExpandedItem(isExpanded ? '' : key);
@@ -30,7 +31,11 @@ const SourcedMessages = ({
   if (messages.length === 1) {
     return (
       <Message onClick={onClick} isExpanded={isExpanded} hasFocus={hasFocus}>
-        <MessageHeader title={message.title} subtitle={subtitle} />
+        <MessageHeader
+          title={message.title}
+          subtitle={subtitle}
+          type={message.type}
+        />
 
         {isExpanded && <MessageDetail message={message} />}
       </Message>
@@ -42,8 +47,11 @@ const SourcedMessages = ({
   return (
     <Message onClick={onClick} isExpanded={isExpanded} hasFocus={hasFocus}>
       <MessageHeader
-        title={`${messages.length} Notifications`}
+        title={`${messages.length} ${type[0].toUpperCase()}${type.substring(
+          1
+        )}s`}
         subtitle={subtitle}
+        type={type}
       />
 
       {expandedItem === key && (
@@ -71,6 +79,7 @@ SourcedMessages.propTypes = {
   expandedItem: PropTypes.string,
   setExpandedItem: PropTypes.func,
   hasFocus: PropTypes.bool,
+  type: PropTypes.string,
 };
 
 export default SourcedMessages;

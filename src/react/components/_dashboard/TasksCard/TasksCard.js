@@ -32,7 +32,7 @@ const TasksCard = ({ fetchData, loaded }) => {
   const [selectedItem, setSelectedItem] = useState('');
 
   return (
-    <Card title="Tasks Card" node={node} className={styles.tasksCard}>
+    <Card title="Tasks" node={node} className={styles.tasksCard}>
       {loaded ? (
         <TasksContext.Provider
           value={{ hasFocus, selectedItem, setSelectedItem }}
@@ -60,6 +60,7 @@ TasksCard.propTypes = {
 
 import { fetchAgreements } from 'redux/actions/agreementsActions';
 import { fetchChecklistItems } from 'redux/actions/checklistItemsActions';
+import { fetchBCoursesTodos } from 'redux/actions/bCoursesTodoActions';
 
 const mapStateToProps = ({
   myAgreements: {
@@ -72,11 +73,13 @@ const mapStateToProps = ({
     incompleteItems = [],
     loaded: checklistLoaded,
   },
+  myBCoursesTodos: { bCoursesTodos = [], loaded: bCoursesTodosLoaded },
 }) => {
-  const loaded = agreementsLoaded && checklistLoaded;
+  const loaded = agreementsLoaded && checklistLoaded && bCoursesTodosLoaded;
 
   return {
     activeAgreements,
+    bCoursesTodos,
     completedAgreements,
     completedItems,
     incompleteItems,
@@ -89,6 +92,7 @@ const mapDispatchToProps = dispatch => {
     fetchData: () => {
       dispatch(fetchAgreements());
       dispatch(fetchChecklistItems());
+      dispatch(fetchBCoursesTodos());
     },
   };
 };

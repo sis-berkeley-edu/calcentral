@@ -12,12 +12,36 @@ import TaskTitle from '../TaskTitle';
 
 import { shortDateIfCurrentYear, parseDate } from 'functions/formatDate';
 
+const BTaskSubtitle = ({ task }) => {
+  return (
+    <>
+      {task.courseCode}
+      <br />
+      Due {shortDateIfCurrentYear(parseDate(task.dueDate))}
+    </>
+  );
+};
+
+BTaskSubtitle.propTypes = {
+  task: PropTypes.shape({
+    courseCode: PropTypes.string,
+    dueDate: PropTypes.string,
+  }),
+};
+
 function OverdueTasks({ tasks }) {
   return (
     <Category>
       <OverdueTasksHeader>Overdue</OverdueTasksHeader>
 
       {tasks.map((task, index) => {
+        const subtitle =
+          task.displayCategory === 'bCourses' ? (
+            <BTaskSubtitle task={task} />
+          ) : (
+            `Due ${shortDateIfCurrentYear(parseDate(task.dueDate))}`
+          );
+
         return (
           <Task
             key={index}
@@ -30,9 +54,7 @@ function OverdueTasks({ tasks }) {
               <OverdueIcon />
               <TaskTitle
                 title={task.title}
-                subtitle={`Due ${shortDateIfCurrentYear(
-                  parseDate(task.dueDate)
-                )}`}
+                subtitle={subtitle}
                 overdue={true}
               />
             </TaskHeader>

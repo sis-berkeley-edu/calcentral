@@ -2,8 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import styles from './MessageDetail.module.scss';
-
-import APILink from 'react/components/APILink';
+import ActionLink from './ActionLink';
 
 const MessageDetail = ({ message }) => {
   return (
@@ -12,10 +11,7 @@ const MessageDetail = ({ message }) => {
         className={styles.html}
         dangerouslySetInnerHTML={{ __html: message.description }}
       />
-
-      <strong>
-        <APILink {...message.link} name={message.linkText} />
-      </strong>
+      <ActionLink message={message} />
     </div>
   );
 };

@@ -4,6 +4,7 @@ module User
       def as_json(options={})
         {
           notifications: all,
+          canvas_activities: user.b_courses.activities.filtered,
           archiveUrl: archive_url
         }
       end

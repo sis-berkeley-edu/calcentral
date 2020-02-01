@@ -19,6 +19,7 @@ const MessagesBySource = ({
               key={index}
               date={dateGroup.date}
               source={source.sourceName}
+              type={source.type}
               messages={source.messages}
               expandedItem={expandedItem}
               setExpandedItem={setExpandedItem}

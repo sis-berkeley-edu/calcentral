@@ -1,6 +1,7 @@
 module User
   module Tasks
     class ChecklistItemsController < ApplicationController
+      include AllowDelegateViewAs
       include CurrentUserConcern
 
       def index
