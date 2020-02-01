@@ -55,6 +55,10 @@ export const incompleteTaskCategories = [
     key: 'student',
     title: 'Student Tasks',
   },
+  {
+    key: 'bCourses',
+    title: 'bCourses Tasks',
+  },
 ];
 
 const byAirYearReducer = (accumulator, value) => {
@@ -86,3 +90,11 @@ export const groupByCategory = (accumulator, value) => {
 
   return accumulator;
 };
+
+import { isWithinInterval, parseISO, addDays, startOfToday } from 'date-fns';
+
+export const isDueWithinWeek = task =>
+  isWithinInterval(parseISO(task.dueDate), {
+    start: startOfToday(),
+    end: addDays(startOfToday(), 6),
+  });

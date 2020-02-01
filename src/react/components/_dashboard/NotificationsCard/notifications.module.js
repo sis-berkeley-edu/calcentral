@@ -10,13 +10,19 @@ export const groupByDate = (accumulator, message) => {
   return accumulator;
 };
 
-export const groupBySource = (accumulator, message) => {
-  const group = accumulator.find(group => group.sourceName === message.source);
+const groupBySourceAndType = (accumulator, message) => {
+  const group = accumulator.find(
+    group => group.sourceName === message.source && group.type === message.type
+  );
 
   if (group) {
     group.messages.push(message);
   } else {
-    accumulator.push({ sourceName: message.source, messages: [message] });
+    accumulator.push({
+      sourceName: message.source,
+      type: message.type,
+      messages: [message],
+    });
   }
 
   return accumulator;
@@ -26,10 +32,10 @@ export const byStatusDateTimeAsc = (a, b) => {
   return a.statusDateTime < b.statusDateTime ? 1 : -1;
 };
 
-export const dateSourcedMessages = group => {
+export const dateAndTypeSourcedMessages = group => {
   return {
     date: group.date,
-    messagesBySource: group.messages.reduce(groupBySource, []),
+    messagesBySource: group.messages.reduce(groupBySourceAndType, []),
   };
 };
 

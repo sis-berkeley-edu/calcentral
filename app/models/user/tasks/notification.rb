@@ -31,6 +31,7 @@ module User
           link: link,
           isFinaid: is_finaid?,
           aidYear: aid_year,
+          type: 'campusSolutions',
         }
       end
 

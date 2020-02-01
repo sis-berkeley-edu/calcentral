@@ -3,9 +3,12 @@ import PropTypes from 'prop-types';
 
 import styles from './CategoryHeader.module.scss';
 
-import IncompleteBadge from './IncompleteBadge';
+import IncompleteDueSoonBadges from './IncompleteDueSoonBadges';
+
+import { isDueWithinWeek } from '../tasks.module';
 
 const CategoryHeader = ({
+  tasks,
   title,
   aidYear,
   incompleteCount,
@@ -13,6 +16,8 @@ const CategoryHeader = ({
   expanded,
   setExpanded,
 }) => {
+  const dueWithinWeek = tasks.filter(isDueWithinWeek).length;
+
   return (
     <div className={styles.categoryHeader}>
       <div>
@@ -21,7 +26,10 @@ const CategoryHeader = ({
           {aidYear && <span className={styles.aidYearLabel}>{aidYear}</span>}
         </h4>
 
-        <IncompleteBadge count={incompleteCount} />
+        <IncompleteDueSoonBadges
+          incomplete={incompleteCount}
+          dueSoon={dueWithinWeek}
+        />
 
         {inProcessCount > 0 && (
           <div className={styles.beingProcessed}>
@@ -41,6 +49,7 @@ const CategoryHeader = ({
 };
 
 CategoryHeader.propTypes = {
+  tasks: PropTypes.array,
   title: PropTypes.string,
   aidYear: PropTypes.string,
   incompleteCount: PropTypes.number,

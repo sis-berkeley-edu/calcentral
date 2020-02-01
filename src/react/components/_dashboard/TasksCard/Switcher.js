@@ -48,8 +48,10 @@ Switcher.propTypes = {
 const mapStateToProps = ({
   myAgreements: { incompleteAgreements = [], completedAgreements = [] },
   myChecklistItems: { completedItems = [], incompleteItems = [] },
+  myBCoursesTodos: { bCoursesTodos = [] },
 }) => {
-  const incompleteCount = incompleteAgreements.length + incompleteItems.length;
+  const incompleteCount =
+    incompleteAgreements.length + incompleteItems.length + bCoursesTodos.length;
   const completeCount = completedAgreements.length + completedItems.length;
 
   return {

@@ -13,6 +13,7 @@ import {
 import Agreements from './Agreements';
 import OverdueTasks from '../OverdueTasks';
 import FinancialAidTasks from '../IncompleteFinancialAidTasks';
+import BCoursesTasks from './BCoursesTasks';
 import ForCategory from './ForCategory.js';
 
 import tasksStyles from '../TasksCard.module.scss';
@@ -25,33 +26,44 @@ const ByCategory = ({ categories }) => {
       </div>
 
       {categories.map(category => {
-        if (category.key === 'agreements' && category.tasks.length > 0) {
-          return (
-            <Agreements
-              key={category.key}
-              category={category}
-              tasks={category.tasks}
-            />
-          );
-        } else if (category.key === 'overdue' && category.tasks.length > 0) {
-          return <OverdueTasks key={category.key} tasks={category.tasks} />;
-        } else if (category.key === 'financialAid') {
-          return (
-            <FinancialAidTasks
-              key={category.key}
-              aidYears={category.aidYears}
-            />
-          );
-        } else if (category.tasks.length > 0) {
-          return <ForCategory key={category.key} category={category} />;
+        if (
+          (category.tasks && category.tasks.length > 0) ||
+          (category.aidYears && category.aidYears.length > 0)
+        ) {
+          switch (category.key) {
+            case 'agreements':
+              return (
+                <Agreements
+                  key={category.key}
+                  category={category}
+                  tasks={category.tasks}
+                />
+              );
+            case 'overdue':
+              return <OverdueTasks key={category.key} tasks={category.tasks} />;
+            case 'financialAid':
+              return (
+                <FinancialAidTasks
+                  key={category.key}
+                  aidYears={category.aidYears}
+                />
+              );
+            case 'bCourses':
+              return (
+                <BCoursesTasks key={category.key} tasks={category.tasks} />
+              );
+            default:
+              return <ForCategory key={category.key} category={category} />;
+          }
+        } else {
+          return null;
         }
-
-        return null;
       })}
     </Fragment>
   );
 };
 
+ByCategory.displayName = 'IncompleteTasksByCategory';
 ByCategory.propTypes = {
   categories: PropTypes.array,
 };
@@ -73,12 +85,14 @@ const filterOverdueTasksIf = enabled => shouldFilter => {
   }
 };
 
+import { endOfDay } from 'date-fns';
+
 const markOverdue = enabled => item => {
   if (enabled) {
     if (item.displayCategory === 'financialAid') {
       return item;
     } else {
-      return { ...item, isOverdue: isPast(parseDate(item.dueDate)) };
+      return { ...item, isOverdue: isPast(endOfDay(parseDate(item.dueDate))) };
     }
   } else {
     return { ...item, isOverdue: false };
@@ -88,8 +102,13 @@ const markOverdue = enabled => item => {
 const mapStateToProps = ({
   myChecklistItems: { incompleteItems = [] },
   myAgreements: { incompleteAgreements = [] },
+  myBCoursesTodos: { bCoursesTodos = [] },
 }) => {
-  const groupedByCategory = [...incompleteItems, ...incompleteAgreements]
+  const groupedByCategory = [
+    ...incompleteItems,
+    ...incompleteAgreements,
+    ...bCoursesTodos,
+  ]
     .map(markOverdue(OVERDUE_ENABLED))
     .reduce(groupByCategory, {});
 

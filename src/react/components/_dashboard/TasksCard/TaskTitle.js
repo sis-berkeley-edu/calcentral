@@ -16,7 +16,7 @@ const TaskTitle = ({ title, subtitle, overdue }) => {
 
 TaskTitle.propTypes = {
   title: PropTypes.string,
-  subtitle: PropTypes.string,
+  subtitle: PropTypes.node,
   overdue: PropTypes.bool,
 };
 

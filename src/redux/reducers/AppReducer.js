@@ -33,6 +33,9 @@ import {
   FETCH_WEB_MESSAGES_START,
   FETCH_WEB_MESSAGES_SUCCESS,
   FETCH_WEB_MESSAGES_FAILURE,
+  FETCH_BCOURSES_TODOS_START,
+  FETCH_BCOURSES_TODOS_SUCCESS,
+  FETCH_BCOURSES_TODOS_FAILURE,
 } from 'redux/action-types';
 
 const myChecklistItems = buildDataReducer(
@@ -53,6 +56,12 @@ const myAgreements = buildDataReducer(
   FETCH_AGREEMENTS_FAILURE
 );
 
+const myBCoursesTodos = buildDataReducer(
+  FETCH_BCOURSES_TODOS_START,
+  FETCH_BCOURSES_TODOS_SUCCESS,
+  FETCH_BCOURSES_TODOS_FAILURE
+);
+
 const AppReducer = combineReducers({
   advising: AdvisingReducer,
   config: ConfigReducer,
@@ -63,6 +72,7 @@ const AppReducer = combineReducers({
   links: LinksReducer,
   myAcademics: AcademicsReducer,
   myActivities: ActivitiesReducer,
+  myBCoursesTodos,
   myCalGrants: CalGrantsReducer,
   myEftEnrollment: EftEnrollmentReducer,
   myHolds: HoldsReducer,

@@ -57,6 +57,7 @@
     "raven-js": "~3.18.1",
     "react": "^16.11.0",
     "react-dom": "^16.11.0",
+    "react-linkify": "^1.0.0-alpha",
     "react-redux": "^6.0.1",
     "react2angular": "^4.0.4",
     "redux": "^4.0.1",

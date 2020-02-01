@@ -1,8 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import APILink from 'react/components/APILink';
-
+import ActionLink from './ActionLink';
 import styles from './CompactNotification.module.scss';
 
 const CompactNotification = ({
@@ -36,11 +35,7 @@ const CompactNotification = ({
             dangerouslySetInnerHTML={{ __html: message.description }}
           />
           <div className={styles.actionLink}>
-            {message.sourceUrl}
-
-            <strong>
-              <APILink {...message.link} name={message.linkText} />
-            </strong>
+            <ActionLink message={message} />
           </div>
         </div>
       )}

@@ -20,6 +20,7 @@ const ForCategory = ({ category }) => {
   return (
     <Category withBottomBorder={true}>
       <CategoryHeader
+        tasks={category.tasks}
         title={category.title}
         expanded={expanded}
         setExpanded={setExpanded}
@@ -35,7 +36,7 @@ const ForCategory = ({ category }) => {
                 <TaskTitle
                   title={task.title}
                   subtitle={`${task.status} ${shortDateIfCurrentYear(
-                    parseDate(task.assignedDate)
+                    parseDate(task.statusDate)
                   )}`}
                 />
 

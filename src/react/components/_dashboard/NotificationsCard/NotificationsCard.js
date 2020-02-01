@@ -79,21 +79,28 @@ NotificationsCard.propTypes = {
 import {
   groupByDate,
   byStatusDateTimeAsc,
-  dateSourcedMessages,
+  dateAndTypeSourcedMessages,
 } from './notifications.module';
 
 const mapStateToProps = ({
   myStatus: { canSeeCSLinks },
-  myWebMessages: { archiveUrl, notifications = [], loaded },
+  myWebMessages: {
+    archiveUrl,
+    notifications = [],
+    canvas_activities = [],
+    loaded,
+  },
 }) => {
+  const messages = [...notifications, ...canvas_activities];
+
   const sources = [
-    ...new Set(notifications.map(notification => notification.source)),
+    ...new Set(messages.map(notification => notification.source)),
   ].sort();
 
   const groupedNotifications = notifications
     .sort(byStatusDateTimeAsc)
     .reduce(groupByDate, [])
-    .map(dateSourcedMessages);
+    .map(dateAndTypeSourcedMessages);
 
   return {
     archiveUrl,
