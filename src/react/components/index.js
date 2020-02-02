@@ -13,5 +13,6 @@ import './_finances/FinancialResources/FinancialResources';
 import './_finances/TransactionsCard/TransactionsCardContainer';
 import './_finances/AidYearTaskCount';
 import './_finances/FinancialAidTasks';
+import './_finances/FinancialAidMessages';
 
 import './_user_overview/EmploymentAppointments/EmploymentAppointments';

@@ -126,7 +126,8 @@ module User
             uc_comm_btn_descr as action_description,
             uc_fixed_url as source_url,
             admin_function,
-            institution
+            institution,
+            aid_year
           FROM SYSADM.PS_UCC_CC_WEB_MSGV
           WHERE CAMPUS_ID = '#{uid}'
         SQL

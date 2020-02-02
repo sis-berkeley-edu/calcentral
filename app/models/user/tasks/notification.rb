@@ -14,7 +14,8 @@ module User
         :user,
         :source_url,
         :admin_function,
-        :institution
+        :institution,
+        :aid_year
 
       def as_json
         {
@@ -27,8 +28,14 @@ module User
           statusDateTime: status_datetime&.to_datetime,
           description: description,
           linkText: link_text,
-          link: link
+          link: link,
+          isFinaid: is_finaid?,
+          aidYear: aid_year,
         }
+      end
+
+      def is_finaid?
+        admin_function == 'FINA'
       end
 
       def link_text
