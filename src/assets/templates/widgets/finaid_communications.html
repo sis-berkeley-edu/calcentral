@@ -53,14 +53,9 @@
           </ul>
         </div>
       </div>
-      <div>
-        <div class="cc-widget-subtitle">
-          <h3>Messages</h3>
-        </div>
-        <div class="cc-widget-activities">
-          <div data-ng-include="'widgets/activity_list.html'" data-onload="aidYearName = communicationsInfo.aidYear.name"></div>
-        </div>
-      </div>
+
+      <financial-aid-messages year="communicationsInfo.aidYear.id"></financial-aid-messages>
+
       <div data-ng-if="archiveUrl.length">
         <div class="cc-widget-subtitle">
           <h3>Archive</h3>
