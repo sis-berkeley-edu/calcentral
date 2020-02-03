@@ -58,10 +58,10 @@ AidYearTasksCount.propTypes = {
 
 const mapStateToProps = ({
   currentRoute: { url: currentUrl },
-  myAgreements: { activeAgreements = [], loaded: agreementLoaded },
+  myAgreements: { incompleteAgreements = [], loaded: agreementLoaded },
   myChecklistItems: { incompleteItems = [], loaded: checklistLoaded },
 }) => {
-  const tasks = [...activeAgreements, ...incompleteItems].filter(task => {
+  const tasks = [...incompleteAgreements, ...incompleteItems].filter(task => {
     return task.displayCategory === 'financialAid' && !task.isBeingProcessed;
   });
 
