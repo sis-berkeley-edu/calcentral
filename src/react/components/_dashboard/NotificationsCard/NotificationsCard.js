@@ -11,7 +11,7 @@ import useFocus from 'react/useFocus';
 import { fetchWebMessages } from 'redux/actions/webMessagesActions';
 
 import SourceFilter from './SourceFilter';
-import SourcedMessages from './SourcedMessages';
+import MessagesBySource from './MessagesBySource';
 
 const NotificationsCard = ({
   archiveUrl,
@@ -42,28 +42,13 @@ const NotificationsCard = ({
     >
       {loaded ? (
         <>
-          {groupedNotifications.map(dateGroup =>
-            dateGroup.messagesBySource.map((source, index) => {
-              if (
-                selectedSource === '' ||
-                source.sourceName === selectedSource
-              ) {
-                return (
-                  <SourcedMessages
-                    key={index}
-                    date={dateGroup.date}
-                    source={source.sourceName}
-                    messages={source.messages}
-                    expandedItem={expandedItem}
-                    setExpandedItem={setExpandedItem}
-                    hasFocus={hasFocus}
-                  />
-                );
-              } else {
-                return null;
-              }
-            })
-          )}
+          <MessagesBySource
+            groupedNotifications={groupedNotifications}
+            selectedSource={selectedSource}
+            expandedItem={expandedItem}
+            setExpandedItem={setExpandedItem}
+            hasFocus={hasFocus}
+          />
 
           {canSeeCSLinks && (
             <div
@@ -91,29 +76,11 @@ NotificationsCard.propTypes = {
   sources: PropTypes.array.isRequired,
 };
 
-const groupByDate = (accumulator, message) => {
-  const group = accumulator.find(group => group.date === message.statusDate);
-
-  if (group) {
-    group.messages.unshift(message);
-  } else {
-    accumulator.push({ date: message.statusDate, messages: [message] });
-  }
-
-  return accumulator;
-};
-
-const groupBySource = (accumulator, message) => {
-  const group = accumulator.find(group => group.sourceName === message.source);
-
-  if (group) {
-    group.messages.push(message);
-  } else {
-    accumulator.push({ sourceName: message.source, messages: [message] });
-  }
-
-  return accumulator;
-};
+import {
+  groupByDate,
+  byStatusDateTimeAsc,
+  dateSourcedMessages,
+} from './notifications.module';
 
 const mapStateToProps = ({
   myStatus: { canSeeCSLinks },
@@ -124,16 +91,9 @@ const mapStateToProps = ({
   ].sort();
 
   const groupedNotifications = notifications
-    .sort((a, b) => {
-      return a.statusDateTime < b.statusDateTime ? 1 : -1;
-    })
+    .sort(byStatusDateTimeAsc)
     .reduce(groupByDate, [])
-    .map(group => {
-      return {
-        date: group.date,
-        messagesBySource: group.messages.reduce(groupBySource, []),
-      };
-    });
+    .map(dateSourcedMessages);
 
   return {
     archiveUrl,
