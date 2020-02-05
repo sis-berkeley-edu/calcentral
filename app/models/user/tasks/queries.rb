@@ -91,7 +91,7 @@ module User
             url as action_url,
             aid_year,
             aid_year_descr as aid_year_description,
-            status_dt as assigned_date,
+            status_dt as status_date,
             uc_resp_dept_name as department_name,
             descrlong as description,
             due_dt as due_date,
