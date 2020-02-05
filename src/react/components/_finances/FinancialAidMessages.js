@@ -13,7 +13,7 @@ import MessagesBySource from '../_dashboard/NotificationsCard/MessagesBySource';
 import {
   groupByDate,
   byStatusDateTimeAsc,
-  dateSourcedMessages,
+  dateAndTypeSourcedMessages,
   filterByAidYear,
 } from 'react/components/_dashboard/NotificationsCard/notifications.module';
 
@@ -37,7 +37,7 @@ const FinancialAidMessages = ({
     .filter(filterByAidYear(year))
     .sort(byStatusDateTimeAsc)
     .reduce(groupByDate, [])
-    .map(dateSourcedMessages);
+    .map(dateAndTypeSourcedMessages);
 
   if (loaded) {
     return (

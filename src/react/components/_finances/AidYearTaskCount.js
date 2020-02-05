@@ -62,7 +62,7 @@ const mapStateToProps = ({
   myChecklistItems: { incompleteItems = [], loaded: checklistLoaded },
 }) => {
   const tasks = [...incompleteAgreements, ...incompleteItems].filter(task => {
-    return task.displayCategory === 'financialAid' && !task.isBeingProcessed;
+    return task.displayCategory === 'financialAid';
   });
 
   const loaded = agreementLoaded && checklistLoaded;

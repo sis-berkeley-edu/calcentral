@@ -101,6 +101,8 @@ Calcentral::Application.routes.draw do
         resources :agreements, only: [:index]
         resources :checklist_items, only: [:index]
         resources :web_messages, only: [:index]
+        resources :b_courses_todos, only: [:index]
+        resources :b_courses_messages, only: [:index]
       end
 
       scope '/academics', module: 'academics' do

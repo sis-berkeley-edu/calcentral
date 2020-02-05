@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 import styles from './TaskDetail.module.scss';
 import APILink from 'react/components/APILink';
+import Linkify from 'react-linkify';
 
 const TaskDetail = ({ task }) => {
   const {
@@ -26,7 +27,11 @@ const TaskDetail = ({ task }) => {
         </p>
       )}
 
-      <div className={descriptionStyles}>{description}</div>
+      <div className={descriptionStyles}>
+        <Linkify properties={{ target: '_blank', rel: 'noopener noreferrer' }}>
+          {description}
+        </Linkify>
+      </div>
 
       {organizationName && (
         <div style={{ marginTop: `15px` }}>

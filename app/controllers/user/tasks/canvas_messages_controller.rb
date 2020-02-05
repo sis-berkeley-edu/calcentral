@@ -1,11 +1,11 @@
 module User
   module Tasks
-    class WebMessagesController < ApplicationController
+    class CanvasMessagesController < ApplicationController
       include AllowDelegateViewAs
       include CurrentUserConcern
 
       def index
-        render json: user.web_messages.get_feed
+        render json: user.b_courses.activities_feed
       end
     end
   end

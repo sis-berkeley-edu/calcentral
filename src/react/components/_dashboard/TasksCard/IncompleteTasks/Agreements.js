@@ -24,6 +24,7 @@ const Agreements = ({ category, tasks }) => {
   return (
     <Category withBottomBorder={true}>
       <CategoryHeader
+        tasks={tasks}
         title={category.title}
         expanded={expanded}
         setExpanded={setExpanded}
