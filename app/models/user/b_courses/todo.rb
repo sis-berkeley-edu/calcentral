@@ -29,7 +29,6 @@ module User
           actionText: 'View in bCourses',
           displayCategory: 'bCourses',
           source: 'bCourses',
-          type: 'assignment',
           id: id,
           type: type,
           name: name,

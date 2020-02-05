@@ -12,7 +12,7 @@ module User
         :item_code,
         :aid_year,
         :aid_year_description,
-        :assigned_date,
+        :status_date,
         :status_code,
         :description,
         :has_upload_button,
@@ -33,7 +33,7 @@ module User
           actionText: action_text,
           aidYear: aid_year,
           aidYearName: aid_year_name,
-          assignedDate: assigned_on,
+          assignedDate: status_on,
           description: description,
           departmentName: department_name,
           displayCategory: display_category,
@@ -42,6 +42,7 @@ module User
           isBeingProcessed: being_processed?,
           isIncomplete: incomplete?,
           status: status,
+          statusDate: status_on,
           title: title,
           uploadUrl: upload_url,
           organizationName: organization_name,
@@ -56,8 +57,8 @@ module User
         due_date&.to_date
       end
 
-      def assigned_on
-        assigned_date&.to_date
+      def status_on
+        status_date&.to_date
       end
 
       # Sometimes the action_url is " " (single space string), other times ""
