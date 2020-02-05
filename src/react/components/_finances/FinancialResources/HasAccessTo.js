@@ -196,7 +196,7 @@ const hasAccessToLink = (key, roles, careers, delegate, summer) => {
     summerEstimator: {
       roles: ['student', 'applicant'],
       careers: ['UGRD'],
-      allowsDelegateAccess: false,
+      allowsDelegateAccess: true,
       allowsSummerVisitor: false,
     },
     summerFees: {
