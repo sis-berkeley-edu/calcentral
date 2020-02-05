@@ -22,7 +22,7 @@ module CampusSolutions
         ugrdUpdateForm: 'UC_ADMT_UGRD_UPDATE',
         deferral: 'UC_ADMT_DEFER',
         withdrawBeforeMatric: 'UC_ADMT_WITHDR',
-        withdrawAfterMatric: 'UC_CX_SRWITHDRL_ADD'
+        withdrawAfterMatric: 'UC_CX_ADWITHDRL_ADD'
       },
       firstYearPathways: {
         pathwaysInfo: 'UC_ADMT_FYPATH',
