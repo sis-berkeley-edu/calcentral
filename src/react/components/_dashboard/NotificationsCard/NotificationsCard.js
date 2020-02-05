@@ -97,7 +97,7 @@ const mapStateToProps = ({
     ...new Set(messages.map(notification => notification.source)),
   ].sort();
 
-  const groupedNotifications = notifications
+  const groupedNotifications = messages
     .sort(byStatusDateTimeAsc)
     .reduce(groupByDate, [])
     .map(dateAndTypeSourcedMessages);
