@@ -25,6 +25,7 @@ module User
           dueDate: due_date,
           isIncomplete: true,
           status: 'Assigned',
+          statusDate: assigned_on,
           title: title,
           type: 'IncompleteAgreement',
           url: url
