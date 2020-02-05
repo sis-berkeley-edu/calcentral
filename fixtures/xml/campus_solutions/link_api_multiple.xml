@@ -1277,7 +1277,7 @@ This link should take an instructor to the Grade Roster in BCS of the identified
     <COMMENTS>Update a Withdrawal Request</COMMENTS>
   </Link>
   <Link>
-    <URL_ID>UC_CX_CSU_DA_TRN_CDT</URL_ID>
+    <URL_ID>UC_CX_XFER_CREDIT_REPORT</URL_ID>
     <Description>Transfer Credit Reports</Description>
     <HOVER_OVER_TEXT>Detailed report of student's transfer credit</HOVER_OVER_TEXT>
     <PROPERTIES type="array">
