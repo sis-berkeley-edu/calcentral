@@ -81,6 +81,8 @@ module User
 
     def unreleased_applicant?(cs_roles)
       is_applicant = cs_roles.delete(:applicant)
+      # Remove preSir since unreleased applicant can be sired or not.
+      cs_roles.delete(:preSir)
       !!is_applicant && !cs_roles.has_value?(true)
     end
 
