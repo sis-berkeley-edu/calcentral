@@ -33,14 +33,15 @@ module CampusSolutions
         { feed_key: :veterans_benefits_add, cs_link_key: 'UC_CX_GT_SRVAONCE_ADD' },
         { feed_key: :view_submitted_forms, cs_link_key: 'UC_CX_GT_STUDENT_VIEW'},
         { feed_key: :withdraw_from_semester_add, cs_link_key: 'UC_CX_SRWITHDRL_ADD' },
-        { feed_key: :dissertation_signature, cs_link_key: 'UC_CX_GT_GRADDISSIG_ADD' }
+        { feed_key: :dissertation_signature, cs_link_key: 'UC_CX_GT_GRADDISSIG_ADD' },
+        { feed_key: :expected_grad_term_add, cs_link_key: 'UC_CX_GT_GRADEGT_ADD' }
       ]
       link_configuration = [
         {
           section: 'Submit a Form',
           links: [:change_of_academic_plan_add, :emergency_loan_form_add, :veterans_benefits_add, :withdraw_from_semester_add,
                   :higher_degrees_committee_form, :special_enrollment_petition, :submit_degree_candidacy_form,
-                  :grad_change_of_academic_plan_add, :dissertation_signature],
+                  :grad_change_of_academic_plan_add, :dissertation_signature, :expected_grad_term_add],
         },
         {
           section: 'Manage your Forms',
@@ -116,6 +117,8 @@ module CampusSolutions
           true unless roles[:concurrentEnrollmentStudent]
         when :grad_change_of_academic_plan_add
           true unless roles[:graduate]
+        when :dissertation_signature, :expected_grad_term_add
+          true unless (roles[:graduate] || roles[:law])
         else
           false
         end
