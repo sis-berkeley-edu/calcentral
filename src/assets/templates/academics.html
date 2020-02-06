@@ -1,5 +1,5 @@
 <div class="cc-page-academics" data-cc-spinner-directive>
-  <div data-ng-if="canViewAcademics"
+  <div data-ng-if="canViewAcademics && !withdrawnAdmit"
     data-ng-class="{'cc-two-column-layout':(!(api.user.profile.roles.student || api.user.profile.roles.exStudent))}">
     <div class="column">
       <h1 class="cc-heading-page-title">My Academics</h1>
@@ -47,3 +47,4 @@
 </div>
 <div data-ng-include="'404.html'" data-ng-if="!canViewAcademics && !api.user.profile.delegateActingAsUid"></div>
 <div data-ng-include="'delegate_access_denied.html'" data-ng-if="!canViewAcademics && api.user.profile.delegateActingAsUid"></div>
+<div data-ng-include="'withdrawn_admit.html'" data-ng-if="withdrawnAdmit"></div>

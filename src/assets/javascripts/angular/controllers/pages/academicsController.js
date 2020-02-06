@@ -280,6 +280,7 @@ angular.module('calcentral.controllers').controller('AcademicsController', funct
   $scope.$on('calcentral.api.user.isAuthenticated', function(event, isAuthenticated) {
     if (isAuthenticated) {
       $scope.canViewAcademics = apiService.user.profile.hasAcademicsTab;
+      $scope.withdrawnAdmit = apiService.user.profile.roles.withdrawnAdmit;
       if (!$scope.canViewAcademics) {
         apiService.user.redirectToHome();
       }

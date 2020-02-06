@@ -18,7 +18,8 @@ module Berkeley
         releasedAdmit: false,
         staff: false,
         student: false,
-        undergrad: false
+        undergrad: false,
+        withdrawnAdmit: false
       }
     end
 
@@ -132,6 +133,9 @@ module Berkeley
       cs_affiliations.select { |a| a[:status][:code] == 'INA' }.each do |inactive_affiliation|
         if !result[:student] && %w(GRADUATE STUDENT UNDERGRAD).include?(inactive_affiliation[:type][:code])
           result[:exStudent] = true
+        end
+        if !result[:releasedAdmit] && inactive_affiliation[:type][:code] == 'APPLICANT' && inactive_affiliation[:type][:description] == 'Canceled'
+          result[:withdrawnAdmit] = true
         end
       end
       base_roles.merge(result)
