@@ -893,16 +893,19 @@ module EdoOracle
           TEST_DATE AS taken
         FROM SISEDO.CLC_SR_TEST_RSLTV00_VW
         WHERE STUDENT_ID = '#{student_id}'
+        AND TEST_ID != 'LAW BAR'
       SQL
       result
     end
 
     def self.has_exam_results?(student_id)
+      # this query should match .get_exam_results above
       result = safe_query <<-SQL
         SELECT TEST_ID
         FROM SISEDO.CLC_SR_TEST_RSLTV00_VW
-        WHERE STUDENT_ID = '#{student_id}' AND
-        rownum = 1
+        WHERE STUDENT_ID = '#{student_id}'
+        AND TEST_ID != 'LAW BAR'
+        AND rownum = 1
       SQL
       result.any?
     end

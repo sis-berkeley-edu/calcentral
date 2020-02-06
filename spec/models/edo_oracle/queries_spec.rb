@@ -541,4 +541,35 @@ describe EdoOracle::Queries do
       end
     end
   end
+
+  describe '.get_exam_results' do
+    let(:student_id) { '11667051' }
+    let(:results) { EdoOracle::Queries.get_exam_results(student_id) }
+    it 'should return matching exam results' do
+      expect(results.count).to eq 3
+      results.each do |exam_result|
+        expect(exam_result).to have_keys(['id','descr','score','taken'])
+      end
+    end
+    it 'should exclude law bar exams' do
+      results.each do |result|
+        expect(result['id']).to_not eq 'LAW BAR'
+      end
+    end
+  end
+
+  describe '.has_exam_results?' do
+    let(:student_id) { '11667051' }
+    let(:result) { EdoOracle::Queries.has_exam_results?(student_id) }
+    it 'should return true' do
+      expect(result).to eq true
+    end
+    context 'when only exam present is the LAW BAR exam' do
+      before { allow(described_class).to receive(:safe_query).and_return([]) }
+      it 'should return false' do
+        expect(result).to eq false
+      end
+    end
+  end
+
 end
