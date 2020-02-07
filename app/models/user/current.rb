@@ -4,6 +4,7 @@ module User
 
     include User::Tasks::Concern
     include User::BCourses::Concern
+    include User::Webcasts::Concern
 
     def initialize(uid)
       @uid = uid

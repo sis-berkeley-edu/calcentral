@@ -5,6 +5,7 @@ module User
         {
           notifications: all,
           canvas_activities: user.b_courses.activities.filtered,
+          webcasts: user.webcasts.all,
           archiveUrl: archive_url
         }
       end

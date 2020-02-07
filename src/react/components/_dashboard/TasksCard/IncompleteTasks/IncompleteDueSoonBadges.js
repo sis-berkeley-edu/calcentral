@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import styles from './IncompleteDueSoonBadges.module.scss';
+import { isDueWithinWeek } from '../tasks.module';
 
 const DueWithinWeekBadge = ({ count }) => {
   if (count > 0) {
@@ -41,12 +42,15 @@ IncompleteBadge.propTypes = {
   count: PropTypes.number,
 };
 
-const IncompleteDueSoonBadges = ({ incomplete, dueSoon }) => {
-  if (incomplete > 0 || dueSoon > 0) {
+const IncompleteDueSoonBadges = ({ incomplete, tasks }) => {
+  const notBCourses = tasks[0].displayCategory !== 'bCourses';
+  const dueWithinWeek = tasks.filter(isDueWithinWeek).length;
+
+  if (incomplete > 0 || dueWithinWeek > 0) {
     return (
       <div>
         <IncompleteBadge count={incomplete} />
-        <DueWithinWeekBadge count={dueSoon} />
+        {notBCourses && <DueWithinWeekBadge count={dueWithinWeek} />}
       </div>
     );
   }
@@ -56,7 +60,7 @@ const IncompleteDueSoonBadges = ({ incomplete, dueSoon }) => {
 
 IncompleteDueSoonBadges.propTypes = {
   incomplete: PropTypes.number,
-  dueSoon: PropTypes.number,
+  tasks: PropTypes.array,
 };
 
 export default IncompleteDueSoonBadges;

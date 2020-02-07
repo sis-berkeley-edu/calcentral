@@ -5,8 +5,6 @@ import styles from './CategoryHeader.module.scss';
 
 import IncompleteDueSoonBadges from './IncompleteDueSoonBadges';
 
-import { isDueWithinWeek } from '../tasks.module';
-
 const CategoryHeader = ({
   tasks,
   title,
@@ -16,8 +14,6 @@ const CategoryHeader = ({
   expanded,
   setExpanded,
 }) => {
-  const dueWithinWeek = tasks.filter(isDueWithinWeek).length;
-
   return (
     <div className={styles.categoryHeader}>
       <div>
@@ -26,10 +22,7 @@ const CategoryHeader = ({
           {aidYear && <span className={styles.aidYearLabel}>{aidYear}</span>}
         </h4>
 
-        <IncompleteDueSoonBadges
-          incomplete={incompleteCount}
-          dueSoon={dueWithinWeek}
-        />
+        <IncompleteDueSoonBadges incomplete={incompleteCount} tasks={tasks} />
 
         {inProcessCount > 0 && (
           <div className={styles.beingProcessed}>

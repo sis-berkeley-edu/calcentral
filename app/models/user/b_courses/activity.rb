@@ -127,7 +127,7 @@ module User
       # returns nil if dates are in any way incompatible for max comparison
       # e.g., ArgumentError: comparison of Time with nil failed
       def max_date
-        [created_at, updated_at].max
+        [created_at, updated_at].max.in_time_zone
       rescue
         nil
       end

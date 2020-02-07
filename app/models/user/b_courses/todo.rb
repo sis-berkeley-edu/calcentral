@@ -32,7 +32,7 @@ module User
           id: id,
           type: type,
           name: name,
-          dueDate: due_date,
+          dueDate: due_time.in_time_zone.to_date,
           dueTime: due_time.in_time_zone.to_datetime,
           courseCode: course_code,
           sourceUrl: assignment_url,
