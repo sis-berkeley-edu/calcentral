@@ -123,7 +123,7 @@ class SessionsController < ApplicationController
     if (Integer(uid, 10) rescue nil).nil?
       logger.warn "FAILED login with CAS UID: #{uid}"
       redirect_to url_for_path('/uid_error')
-    elsif (is_slate_auth && cal_net_id.present?)
+    elsif (is_slate_auth && cal_net_id.present? && !auth_validator.has_presir_role?)
       # User logged in using MAP(Slate) but should be using CalNet instead.
       logger.warn "FAILED login, should use CalNet not MAP(Slate) with CAS UID: #{uid}"
       redirect_to url_for_path('/uid_slate_error')

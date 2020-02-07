@@ -72,6 +72,10 @@ class ApplicationController < ActionController::Base
     render json: { error: 'User must be a released admit to view New Admit data.' }, status: 200 unless is_released_admit
   end
 
+  def has_presir_role?
+    HubEdos::UserAttributes.new(user_id: current_user.user_id).has_role?(:preSir)
+  end
+
   # Only a small subset of student API feeds are available to a delegate, and so
   # these methods filter controller endpoints by default.
   def allow_if_delegate_view_as?

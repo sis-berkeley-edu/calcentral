@@ -19,7 +19,8 @@ module Berkeley
         staff: false,
         student: false,
         undergrad: false,
-        withdrawnAdmit: false
+        withdrawnAdmit: false,
+        preSir: false
       }
     end
 
@@ -111,6 +112,7 @@ module Berkeley
             result[:releasedAdmit] = true
           when 'APPLICANT'
             result[:applicant] = true unless active_affiliation[:detail] == 'Applied'
+            result[:preSir] = true if active_affiliation[:detail] == 'Admitted'
           when 'GRADUATE'
             result[:student] = true
             result[:graduate] = true
