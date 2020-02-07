@@ -24,7 +24,7 @@
     <div data-ng-if="!finaidSummaryInfo.errored">
       <div data-ng-if="finaidAwards.awards.grandtotal.total.amount">
         <div class="cc-widget-text cc-widget-finaid-awards-message">
-          <div data-ng-bind="finaidAwards.messages.messageInfo"></div>
+          <div data-ng-bind-html="finaidAwards.messages.messageInfo"></div>
           <div
             class="cc-widget-finaid-awards-padding-top"
             data-ng-if="finaidAwards.awards.grandtotal.total.amount"
