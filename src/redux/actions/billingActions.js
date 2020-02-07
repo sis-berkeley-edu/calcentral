@@ -5,17 +5,17 @@ export const FETCH_BILLING_ITEMS_SUCCESS = 'FETCH_BILLING_ITEMS_SUCCESS';
 export const FETCH_BILLING_ITEMS_FAILURE = 'FETCH_BILLING_ITEMS_FAILURE';
 
 export const fetchBillingItemsStart = () => ({
-  type: FETCH_BILLING_ITEMS_START
+  type: FETCH_BILLING_ITEMS_START,
 });
 
 export const fetchBillingItemsSuccess = billingItems => ({
   type: FETCH_BILLING_ITEMS_SUCCESS,
-  value: billingItems
+  value: billingItems,
 });
 
-export const fetchBillingItemsFailure = (error) => ({
+export const fetchBillingItemsFailure = error => ({
   type: FETCH_BILLING_ITEMS_FAILURE,
-  value: error
+  value: error,
 });
 
 export const fetchBillingItems = () => {
@@ -26,13 +26,18 @@ export const fetchBillingItems = () => {
       return new Promise((resolve, _reject) => resolve(billingItems));
     } else {
       dispatch(fetchBillingItemsStart());
-      axios.get(`/api/my/finances/billing_items`)
+
+      axios
+        .get(`/api/my/finances/billing_items`)
         .then(response => {
           dispatch(fetchBillingItemsSuccess(response.data));
         })
         .catch(error => {
           if (error.response) {
-            const failure = { status: error.response.status, statusText: error.response.statusText };
+            const failure = {
+              status: error.response.status,
+              statusText: error.response.statusText,
+            };
             dispatch(fetchBillingItemsFailure(failure));
           }
         });
@@ -46,27 +51,23 @@ export const FETCH_BILLING_ITEM_FAILURE = 'FETCH_BILLING_ITEM_FAILURE';
 
 export const fetchBillingItemStart = id => ({
   type: FETCH_BILLING_ITEM_START,
-  value: id
+  value: id,
 });
 
 export const fetchBillingItemSuccess = billingItem => ({
   type: FETCH_BILLING_ITEM_SUCCESS,
-  value: billingItem
+  value: billingItem,
 });
 
 export const fetchBillingItemFailure = (id, error) => ({
   type: FETCH_BILLING_ITEM_FAILURE,
   id: id,
-  value: error
+  value: error,
 });
 
 export const fetchBillingItem = id => {
   return (dispatch, getState) => {
-    const {
-      billingItems: {
-        items
-      } = {}
-    } = getState();
+    const { billingItems: { items } = {} } = getState();
 
     const item = items.find(item => item.id === id);
 
@@ -74,13 +75,17 @@ export const fetchBillingItem = id => {
       return new Promise((resolve, _reject) => resolve(item));
     } else {
       dispatch(fetchBillingItemStart(id));
-      axios.get(`/api/my/finances/billing_items/${item.id}`)
+      axios
+        .get(`/api/my/finances/billing_items/${item.id}`)
         .then(response => {
           dispatch(fetchBillingItemSuccess(response.data));
         })
         .catch(error => {
           if (error.response) {
-            const failure = { status: error.response.status, statusText: error.response.statusText };
+            const failure = {
+              status: error.response.status,
+              statusText: error.response.statusText,
+            };
             dispatch(fetchBillingItemFailure(item.id, failure));
           }
         });

@@ -1,7 +1,7 @@
 import {
   FETCH_LAW_AWARDS_START,
   FETCH_LAW_AWARDS_SUCCESS,
-  FETCH_LAW_AWARDS_FAILURE
+  FETCH_LAW_AWARDS_FAILURE,
 } from '../actions/lawAwardsActions';
 
 const AcademicsReducer = (state = {}, action) => {
@@ -9,8 +9,15 @@ const AcademicsReducer = (state = {}, action) => {
     case FETCH_LAW_AWARDS_START:
       return { ...state, isLoading: true, error: null };
     case FETCH_LAW_AWARDS_SUCCESS:
-      return { ...state, ...action.value, loaded: true, isLoading: false, error: null };
+      return {
+        ...state,
+        ...action.value,
+        loaded: true,
+        isLoading: false,
+        error: null,
+      };
     case FETCH_LAW_AWARDS_FAILURE:
+      return { ...state, isLoading: false, error: action.value };
     default:
       return state;
   }

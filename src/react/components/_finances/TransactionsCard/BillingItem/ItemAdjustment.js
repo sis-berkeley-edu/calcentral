@@ -14,7 +14,7 @@ import './ItemAdjustment.scss';
 
 import { chargeTypes } from '../types';
 
-import parseDate from 'date-fns/parse';
+import { parseISO } from 'date-fns';
 
 const directionForAdjustment = (amount, itemType) => {
   if (chargeTypes.has(itemType)) {
@@ -27,32 +27,34 @@ const directionForAdjustment = (amount, itemType) => {
 export const GenericAdjustment = ({ className, description, date }) => {
   return (
     <div className={`ItemAdjustment ${className}`}>
-      <div className="ItemAdjustment__date">
-        { formatDate(date) }
-      </div>
-      <div className="ItemAdjustment__description">
-        {description}
-      </div>
+      <div className="ItemAdjustment__date">{formatDate(date)}</div>
+      <div className="ItemAdjustment__description">{description}</div>
     </div>
   );
 };
 GenericAdjustment.propTypes = {
   className: PropTypes.string,
   description: PropTypes.string.isRequired,
-  date: PropTypes.instanceOf(Date).isRequired
+  date: PropTypes.instanceOf(Date).isRequired,
 };
 
 const ItemAdjustment = ({ adjustment, itemType }) => {
-  const date = parseDate(adjustment.posted);
+  const date = parseISO(adjustment.posted);
   const direction = directionForAdjustment(adjustment.amount, itemType);
   const amount = Math.abs(adjustment.amount);
   const description = `${direction} ${formatCurrency(amount)}`;
 
-  return <GenericAdjustment className="ItemAdjustment--change" date={date} description={description} />;
+  return (
+    <GenericAdjustment
+      className="ItemAdjustment--change"
+      date={date}
+      description={description}
+    />
+  );
 };
 ItemAdjustment.propTypes = {
   adjustment: PropTypes.object,
-  itemType: PropTypes.string
+  itemType: PropTypes.string,
 };
 
 export default ItemAdjustment;

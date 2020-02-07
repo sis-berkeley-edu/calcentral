@@ -5,27 +5,27 @@ import formatCurrency from 'functions/formatCurrency';
 import formatDate from 'functions/formatDate';
 
 import './ItemPayment.scss';
-import parseDate from 'date-fns/parse';
+import { parseISO } from 'date-fns';
 
 const ItemPayment = ({ payment }) => {
   return (
     <li className="ItemPayment">
       <div className="flex">
         <div className="ItemPayment__description">
-          <div>{ payment.description }</div>
+          <div>{payment.description}</div>
           <div className="ItemPayment__paid-on">
-            Paid on { formatDate(parseDate(payment.effective_date)) }
+            Paid on {formatDate(parseISO(payment.effective_date))}
           </div>
         </div>
         <div className="ItemPayment__amount">
-          { formatCurrency(Math.abs(payment.amount_paid)) }
+          {formatCurrency(Math.abs(payment.amount_paid))}
         </div>
       </div>
     </li>
   );
 };
 ItemPayment.propTypes = {
-  payment: PropTypes.object
+  payment: PropTypes.object,
 };
 
 export default ItemPayment;

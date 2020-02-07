@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import parseDate from 'date-fns/parse';
+import { parseISO } from 'date-fns';
 
 import ItemAdjustment, { GenericAdjustment } from './ItemAdjustment';
 import formatCurrency from 'functions/formatCurrency';
 
 import './TransactionHistory.scss';
-const TransactionHistory = ({ item: { adjustments, amount: itemAmount, type: itemType } }) => {
+const TransactionHistory = ({
+  item: { adjustments, amount: itemAmount, type: itemType },
+}) => {
   const [showAll, setShowAll] = useState(false);
 
   const first = adjustments[0];
@@ -20,48 +22,64 @@ const TransactionHistory = ({ item: { adjustments, amount: itemAmount, type: ite
     <div className="TransactionHistory">
       <h3>Transaction Amount History</h3>
 
-      {adjustments.length > 1
-        ? (
-          <div className="ItemAdjustments">
-            <GenericAdjustment className="ItemAdjustment--first"
-              date={parseDate(first.posted)}
-              description={`Current Amount: ${formatCurrency(Math.abs(itemAmount))}`}
+      {adjustments.length > 1 ? (
+        <div className="ItemAdjustments">
+          <GenericAdjustment
+            className="ItemAdjustment--first"
+            date={parseISO(first.posted)}
+            description={`Current Amount: ${formatCurrency(
+              Math.abs(itemAmount)
+            )}`}
+          />
+
+          {firstFour.map((adjustment, index) => (
+            <ItemAdjustment
+              key={index}
+              adjustment={adjustment}
+              itemType={itemType}
             />
+          ))}
 
-            {firstFour.map((adjustment, index) => <ItemAdjustment key={index} adjustment={adjustment} itemType={itemType} />)}
+          {nextFour.length > 0 && (
+            <li
+              className="ItemAdjustment ItemAdjustment--show-more"
+              onClick={() => setShowAll(!showAll)}
+            >
+              {showAll ? 'Show Less' : 'Show More'}
+            </li>
+          )}
 
-            {nextFour.length > 0 &&
-              <li
-                className="ItemAdjustment ItemAdjustment--show-more"
-                onClick={() => setShowAll(!showAll)}>
-                { showAll ? 'Show Less' : 'Show More' }
-              </li>
-            }
+          {showAll &&
+            nextFour.map((adjustment, index) => (
+              <ItemAdjustment
+                key={index}
+                adjustment={adjustment}
+                itemType={itemType}
+              />
+            ))}
+          {showAll && tooMany && (
+            <li className="ItemAdjustment ItemAdjustment--too-many">
+              Too many earlier changes to show
+            </li>
+          )}
 
-            {showAll && nextFour.map((adjustment, index) => <ItemAdjustment key={index} adjustment={adjustment} itemType={itemType} />)}
-            {showAll && tooMany &&
-              <li
-                className="ItemAdjustment ItemAdjustment--too-many">
-                Too many earlier changes to show
-              </li>
-            }
-
-            <GenericAdjustment className="ItemAdjustment--last"
-              date={parseDate(original.posted)}
-              description={`Original Amount: ${formatCurrency(Math.abs(original.amount))}`}
-            />
-          </div>
-        )
-        : (
-          <span className="NoChanges">No changes to show</span>
-        )
-      }
+          <GenericAdjustment
+            className="ItemAdjustment--last"
+            date={parseISO(original.posted)}
+            description={`Original Amount: ${formatCurrency(
+              Math.abs(original.amount)
+            )}`}
+          />
+        </div>
+      ) : (
+        <span className="NoChanges">No changes to show</span>
+      )}
     </div>
   );
 };
 
 TransactionHistory.propTypes = {
-  item: PropTypes.object
+  item: PropTypes.object,
 };
 
 export default TransactionHistory;
