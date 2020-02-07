@@ -16,6 +16,7 @@ import Task from 'react/components/_dashboard/TasksCard/Task';
 import TaskHeader from 'react/components/_dashboard/TasksCard/TaskHeader';
 import TaskTitle from 'react/components/_dashboard/TasksCard/TaskTitle';
 import CampusSolutionsIcon from 'react/components/_dashboard/TasksCard/Icons/CampusSolutionsIcon';
+import Agreement from 'react/components/_dashboard/TasksCard/CompletedTasks/Agreement';
 
 import {
   TAB_COMPLETE,
@@ -128,19 +129,27 @@ const FinancialAidTasks = ({
 
           {tab === TAB_COMPLETE && (
             <>
-              {completedForAidYear.map((task, index) => (
-                <Task key={index} index={index} task={task} type="incomplete">
-                  <TaskHeader task={task}>
-                    <CampusSolutionsIcon />
-                    <TaskTitle
-                      title={task.title}
-                      subtitle={`Completed ${shortDateIfCurrentYear(
-                        parseDate(task.completedDate)
-                      )}`}
-                    />
-                  </TaskHeader>
-                </Task>
-              ))}
+              {completedForAidYear.map((task, index) => {
+                if (task.type === 'CompletedAgreement') {
+                  return (
+                    <Agreement key={index} index={index} agreement={task} />
+                  );
+                }
+
+                return (
+                  <Task key={index} index={index} task={task} type="incomplete">
+                    <TaskHeader task={task}>
+                      <CampusSolutionsIcon />
+                      <TaskTitle
+                        title={task.title}
+                        subtitle={`Completed ${shortDateIfCurrentYear(
+                          parseDate(task.completedDate)
+                        )}`}
+                      />
+                    </TaskHeader>
+                  </Task>
+                );
+              })}
 
               <div>
                 <ToggleSwitch toggleComplete={toggleComplete}>
