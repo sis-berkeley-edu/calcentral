@@ -10,12 +10,30 @@ import TaskTitle from '../TaskTitle';
 
 import CanvasIcon from '../Icons/CanvasIcon';
 
+const CourseCode = ({ courseCode }) => {
+  return (
+    <span
+      style={{ color: `#999`, fontSize: `11px`, textTransform: `uppercase` }}
+    >
+      {courseCode}
+    </span>
+  );
+};
+
+CourseCode.propTypes = {
+  courseCode: PropTypes.string,
+};
+
 const BCoursesTask = ({ task, index }) => {
   return (
     <Task task={task} index={index} type="bCourses">
       <TaskHeader task={task}>
         <CanvasIcon />
-        <TaskTitle task={task} title={task.name} subtitle={task.courseCode} />
+        <TaskTitle
+          task={task}
+          title={task.name}
+          subtitle={<CourseCode courseCode={task.courseCode} />}
+        />
         {task.dueTime && (
           <div style={{ textAlign: `right` }}>
             <div>Due {shortDateIfCurrentYear(parseDate(task.dueDate))}</div>
