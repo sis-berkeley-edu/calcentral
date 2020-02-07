@@ -36,7 +36,8 @@ module User
             datetime_created as response_date,
             descr as title,
             expire_dt as expiration_date,
-            uc_response_descr as response
+            uc_response_descr as response,
+            aid_year
           FROM SYSADM.PS_UCC_CC_CMPAGMTV
           WHERE CAMPUS_ID = '#{uid}'
         SQL

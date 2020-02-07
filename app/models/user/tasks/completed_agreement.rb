@@ -11,7 +11,8 @@ module User
         :transaction_id,
         :title,
         :updates_forbidden,
-        :visible_after_expiration
+        :visible_after_expiration,
+        :aid_year
 
       DISPLAY_CATEGORIES = {
         "ADMA" => "newStudent",
@@ -25,11 +26,12 @@ module User
           displayCategory: display_category,
           expiration: expiration,
           response: response,
-          responseDate: responded_at,
+          responseDate: responded_at.in_time_zone.to_datetime,
           title: title,
           type: 'CompletedAgreement',
           updatesAllowed: updates_allowed?,
           url: url,
+          aidYear: aid_year,
         }
       end
 
