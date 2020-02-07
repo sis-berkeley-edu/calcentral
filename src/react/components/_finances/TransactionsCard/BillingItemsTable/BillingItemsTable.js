@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
-import parseDate from 'date-fns/parse';
+import {parseISO} from 'date-fns';
 import BillingItem from '../BillingItem/BillingItem';
 import ShowMore from './ShowMore';
 import BillingItemsHeaders from './BillingItemsHeaders';
 import NoItems from './NoItems';
 
-const appendDate = items => items.map(item => ({ ...item, postedOn: parseDate(item.posted_on) }));
+const appendDate = items => items.map(item => ({ ...item, postedOn: parseISO(item.posted_on) }));
 const sortItemsBy = (sortOrder, sortBy) => items => items.sort((a, b) => {
   if (sortOrder === 'ASC') {
     return a[sortBy] - b[sortBy];
