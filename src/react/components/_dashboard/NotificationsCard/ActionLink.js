@@ -7,7 +7,12 @@ const ActionLink = ({ message }) => {
   if (message.emitter === 'bCourses') {
     return (
       <strong>
-        <a href={message.url} onClick={e => e.stopPropagation()}>
+        <a
+          href={message.url}
+          onClick={e => e.stopPropagation()}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
           More info
         </a>
       </strong>

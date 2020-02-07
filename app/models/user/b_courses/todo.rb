@@ -33,7 +33,7 @@ module User
           type: type,
           name: name,
           dueDate: due_date,
-          dueTime: due_time,
+          dueTime: due_time.in_time_zone.to_datetime,
           courseCode: course_code,
           sourceUrl: assignment_url,
           status: 'inprogress',

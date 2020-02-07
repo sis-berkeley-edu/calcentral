@@ -12,12 +12,26 @@ import TaskTitle from '../TaskTitle';
 
 import { shortDateIfCurrentYear, parseDate } from 'functions/formatDate';
 
+import { format, parseISO, isThisYear } from 'date-fns';
+
+const dateWithTimeAndMaybeYear = time => {
+  if (isThisYear(time)) {
+    return format(time, 'MMM d, h a');
+  } else {
+    return format(time, 'MMM d y, h a');
+  }
+};
+
 const BTaskSubtitle = ({ task }) => {
   return (
     <>
-      {task.courseCode}
+      <span
+        style={{ color: `#999`, fontSize: `11px`, textTransform: `uppercase` }}
+      >
+        {task.courseCode}
+      </span>
       <br />
-      Due {shortDateIfCurrentYear(parseDate(task.dueDate))}
+      Due {dateWithTimeAndMaybeYear(parseISO(task.dueTime))}
     </>
   );
 };
@@ -25,7 +39,7 @@ const BTaskSubtitle = ({ task }) => {
 BTaskSubtitle.propTypes = {
   task: PropTypes.shape({
     courseCode: PropTypes.string,
-    dueDate: PropTypes.string,
+    dueTime: PropTypes.string,
   }),
 };
 
