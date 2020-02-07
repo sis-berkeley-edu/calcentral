@@ -5,7 +5,7 @@
   <div class="cc-widget-text" data-cc-spinner-directive="coa.isLoading">
     <div data-ng-if="coa.errored" data-ng-include="'widgets/finaid_errored.html'"></div>
     <div data-ng-if="!coa.errored">
-      <div data-ng-bind="coa.message"></div>
+      <div data-ng-bind-html="coa.message"></div>
       <div data-ng-if="!coa[coa.currentView].data.length" class="cc-widget-finaid-coa-text-padding">
         Currently we don't have your data available for this aid year.
       </div>
