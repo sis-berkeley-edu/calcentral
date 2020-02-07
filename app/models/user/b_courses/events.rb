@@ -18,7 +18,7 @@ module User
       end
 
       def data
-        @data ||= ::Canvas::UpcomingEvents.new(user_id: user.uid).upcoming_events[:body]
+        @data ||= ::Canvas::UpcomingEvents.new(user_id: user.uid).upcoming_events.fetch(:body) { [] }
       end
     end
   end
