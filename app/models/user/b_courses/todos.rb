@@ -9,7 +9,7 @@ module User
 
       # Return all items where there is an assignment present
       def all
-        data[:body].collect do |item|
+        @all ||= data.collect do |item|
           todo = Todo.new(item.merge(user: user))
         end
       end
@@ -21,7 +21,7 @@ module User
       private
 
       def data
-        @data ||= ::Canvas::Todo.new(user_id: user.uid).todo
+        @data ||= ::Canvas::Todo.new(user_id: user.uid).todo.fetch(:body) { [] }
       end
     end
   end
