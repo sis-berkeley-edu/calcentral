@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 import ActionLink from './ActionLink';
 import styles from './CompactNotification.module.scss';
+import Linkify from 'react-linkify';
 
 const CompactNotification = ({
   index,
@@ -30,10 +31,14 @@ const CompactNotification = ({
 
       {isExpanded && (
         <div className={styles.detail}>
-          <div
-            className={styles.description}
-            dangerouslySetInnerHTML={{ __html: message.description }}
-          />
+          <div className={styles.description}>
+            <Linkify
+              properties={{ target: '_blank', rel: 'noopener noreferrer' }}
+            >
+              {message.description}
+            </Linkify>
+          </div>
+
           <div className={styles.actionLink}>
             <ActionLink message={message} />
           </div>

@@ -88,10 +88,11 @@ const mapStateToProps = ({
     archiveUrl,
     notifications = [],
     canvas_activities = [],
+    webcasts = [],
     loaded,
   },
 }) => {
-  const messages = [...notifications, ...canvas_activities];
+  const messages = [...notifications, ...canvas_activities, ...webcasts];
 
   const sources = [
     ...new Set(messages.map(notification => notification.source)),

@@ -13,7 +13,7 @@ const ActionLink = ({ message }) => {
           target="_blank"
           rel="noopener noreferrer"
         >
-          More info
+          {message.linkText || 'More Info'}
         </a>
       </strong>
     );
