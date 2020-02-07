@@ -101,12 +101,6 @@ Spork.prefork do
     # Nicer way to hide breaking tests.
     config.filter_run_excluding :ignore => true
 
-    # Make sure the front-end assets are available when running the back-end tests
-    if !File.exist?("#{::Rails.root}/public/index.html")
-      puts 'Front-end build task - spec helper'
-      system ("sh #{::Rails.root}/script/front-end-build.sh")
-    end
-
     # Run the UI tests (and only the UI tests) if UI_TEST is present in environment
     if ENV["UI_TEST"]
       config.filter_run_including :testui => true
