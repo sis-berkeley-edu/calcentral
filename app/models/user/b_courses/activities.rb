@@ -13,7 +13,7 @@ module User
       end
 
       def all
-        @all ||= data.map do |datum|
+        @all ||= data.collect do |datum|
           Activity.new(datum.merge(dashboard_sites: dashboard_sites))
         end
       end
@@ -22,8 +22,10 @@ module User
         all.select(&:has_processed_title?).select(&:has_max_date?)
       end
 
+      private
+
       def data
-        @data ||= ::Canvas::UserActivityStream.new(user_id: user.uid).user_activity[:body]
+        @data ||= ::Canvas::UserActivityStream.new(user_id: user.uid).user_activity.fetch(:body) { [] }
       end
     end
   end
