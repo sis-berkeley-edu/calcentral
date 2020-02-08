@@ -5,7 +5,7 @@ module User
       include CurrentUserConcern
 
       def index
-        render json: user.web_messages.get_feed
+        render json: user.notifications_feed.get_feed
       end
     end
   end

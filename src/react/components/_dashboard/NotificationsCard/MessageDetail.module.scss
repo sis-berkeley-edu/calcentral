@@ -39,8 +39,8 @@ $activeColor: $cc-color-alice-blue;
 
 .detail {
   margin-left: 30px;
-  margin-top: 15px;
-  margin-right: 15px;
+  margin-top: $large-spacing;
+  margin-right: $large-spacing;
   font-size: 12px;
 }
 
@@ -57,5 +57,5 @@ $activeColor: $cc-color-alice-blue;
 }
 
 .notifications {
-  margin-top: 15px;
+  margin-top: $large-spacing;
 }
