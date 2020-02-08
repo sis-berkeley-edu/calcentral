@@ -2,6 +2,10 @@ module User
   class Current
     attr_reader :uid
 
+    include User::Tasks::Concern
+    include User::BCourses::Concern
+    include User::Webcasts::Concern
+
     def initialize(uid)
       @uid = uid
     end
@@ -16,10 +20,6 @@ module User
 
     def billing_summary
       @billing_summary ||= User::Finances::BillingSummary.new(self)
-    end
-
-    def calgrant_acknowledgements
-      @calgrant_acknowldgements ||= User::Academics::CalgrantAcknowledgements.new(self)
     end
 
     def holds

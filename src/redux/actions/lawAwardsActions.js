@@ -5,17 +5,17 @@ export const FETCH_LAW_AWARDS_SUCCESS = 'FETCH_LAW_AWARDS_SUCCESS';
 export const FETCH_LAW_AWARDS_FAILURE = 'FETCH_LAW_AWARDS_FAILURE';
 
 export const fetchLawAwardsStart = () => ({
-  type: FETCH_LAW_AWARDS_START
+  type: FETCH_LAW_AWARDS_START,
 });
 
 export const fetchLawAwardsSuccess = lawAwards => ({
   type: FETCH_LAW_AWARDS_SUCCESS,
-  value: lawAwards
+  value: lawAwards,
 });
 
-export const fetchLawAwardsFailure = ({ response }) => ({
+export const fetchLawAwardsFailure = error => ({
   type: FETCH_LAW_AWARDS_FAILURE,
-  value: { status: response.status, statusText: response.statusText }
+  value: error,
 });
 
 export const fetchLawAwards = () => {
@@ -26,12 +26,20 @@ export const fetchLawAwards = () => {
       return new Promise((resolve, _reject) => resolve(myLawAwards));
     } else {
       dispatch(fetchLawAwardsStart());
-      return axios.get('/api/my/law_awards')
+
+      axios
+        .get('/api/my/law_awards')
         .then(({ data }) => {
           dispatch(fetchLawAwardsSuccess(data));
         })
         .catch(error => {
-          dispatch(fetchLawAwardsFailure(error));
+          if (error.response) {
+            const failure = {
+              status: error.response.status,
+              statusText: error.response.statusText,
+            };
+            dispatch(fetchLawAwardsFailure(failure));
+          }
         });
     }
   };

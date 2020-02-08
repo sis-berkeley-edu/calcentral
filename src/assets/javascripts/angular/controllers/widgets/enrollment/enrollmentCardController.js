@@ -2,14 +2,32 @@
 
 var _ = require('lodash');
 
+
+import { fetchStatusAndHolds } from 'redux/actions/statusActions'
+
 /**
  * Enrollment Card Controller
  * Main controller for the enrollment card on the My Academics and Student Overview pages
  */
-angular.module('calcentral.controllers').controller('EnrollmentCardController', function(apiService, enrollmentFactory, calGrantsFactory, linkService, $route, $scope, $routeParams) {
+angular.module('calcentral.controllers').controller('EnrollmentCardController', function(apiService, enrollmentFactory, linkService, $route, $scope, $routeParams, $ngRedux) {
+  $ngRedux.subscribe(() => {
+    if ($scope.enrollment.isLoading == false) {
+      const {
+        myStatusAndHolds: { loaded },
+      } = $ngRedux.getState();
+
+      if (loaded) {
+        $scope.enrollmentIsLoading = false;
+      }
+    }
+  });
+
+  $scope.enrollmentIsLoading = true;
+
   $scope.enrollment = {
-    isLoading: true
+    isLoading: true,
   };
+
   $scope.accessibilityAnnounce = apiService.util.accessibilityAnnounce;
   linkService.addCurrentRouteSettings($scope);
 
@@ -247,24 +265,19 @@ angular.module('calcentral.controllers').controller('EnrollmentCardController', 
   };
 
   var loadEnrollmentData = function() {
+    $ngRedux.dispatch(fetchStatusAndHolds())
+
     $scope.isAdvisingStudentLookup = $route.current.isAdvisingStudentLookup;
     $scope.isGrad = $scope.isAdvisingStudentLookup ? $scope.targetUser.academicRoles.current.grad : apiService.user.profile.academicRoles.current.grad;
 
     if ($scope.isAdvisingStudentLookup || apiService.user.profile.roles.student) {
       loadEnrollmentInstructionDecks()
-      .then(loadCalGrantData)
       .finally(function() {
         $scope.enrollment.isLoading = false;
       });
     } else {
       $scope.enrollment.isLoading = false;
     }
-  };
-
-  const loadCalGrantData = function() {
-    return calGrantsFactory.getCalGrants().then(({ data: { acknowledgements } }) => {
-      $scope.calgrantAcknowledgements = acknowledgements;
-    });
   };
 
   loadEnrollmentData();

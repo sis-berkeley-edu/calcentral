@@ -47,7 +47,7 @@ module Notifications
       'sis:student:ferpa' => nil,
       'sis:student:finaid' => CampusSolutions::FinancialAidExpiry,
       'sis:student:financials' => User::Finances::CacheExpiry,
-      'sis:student:messages' => MyActivities::Merged,
+      'sis:student:messages' => User::Tasks::MessageExpiry,
       'sis:student:serviceindicator' => MyAcademics::MyAcademicStatus,
       'sis:class:grade-roster' => CampusSolutions::SectionGradesExpiry
     }

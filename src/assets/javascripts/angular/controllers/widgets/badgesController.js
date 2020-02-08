@@ -37,17 +37,18 @@ angular.module('calcentral.controllers').controller('BadgesController', function
   var defaultOrder = ['bmail', 'bcal', 'bdrive'];
 
   var dateFormats = {
-    today: 'h:mm a',
+    today: 'h:mm aaaa',
     // No need for formatting due to the left calendar widget.
     todayAllDay: '',
-    notToday: '(MM/DD) h:mm a',
-    notTodayAllDay: 'MM/DD(ddd)'
+    notToday: '(MM/DD) h:mm aaaa',
+    notTodayAllDay: 'MM/DD(E)',
+    datestamp: 'yyyyMMDD'
   };
 
   var processDisplayRange = function(epoch, isAllDay, isStartRange) {
     var date = new Date(epoch * 1000);
-    var today = dateService.format(dateService.now, 'YYYYMMDD');
-    var dateIsToday = dateService.format(date, 'YYYYMMDD') === today;
+    var today = dateService.format(dateService.now, dateFormats.datestamp);
+    var dateIsToday = dateService.format(date, dateFormats.datestamp) === today;
 
     // not all day event, happening today.
     if (dateIsToday && !isAllDay) {
@@ -96,7 +97,7 @@ angular.module('calcentral.controllers').controller('BadgesController', function
   };
 
   var timeElapsed = function(time) {
-    return dateService.distanceInWords(new Date(), new Date(time * 1000), { addSuffix: true });
+    return dateService.formatDistance(new Date(), new Date(time * 1000), { addSuffix: true });
   };
 
   var processCalendarEvents = function(rawData) {
@@ -107,7 +108,7 @@ angular.module('calcentral.controllers').controller('BadgesController', function
           value.startTime.display = {
             'month': dateService.format(startTime, 'MMM'),
             'day': dateService.format(startTime, 'DD'),
-            'dayOfWeek': dateService.format(startTime, 'ddd'),
+            'dayOfWeek': dateService.format(startTime, 'EEE'),
             'rangeStart': processDisplayRange(value.startTime.epoch, value.allDayEvent, true)
           };
 

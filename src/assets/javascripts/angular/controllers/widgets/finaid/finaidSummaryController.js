@@ -4,6 +4,9 @@ var _ = require('lodash');
 
 import 'icons/info.svg';
 
+import { fetchAgreements } from 'redux/actions/agreementsActions';
+import { fetchChecklistItems } from 'redux/actions/checklistItemsActions';
+
 /**
  * Finaid Summary controller
  */
@@ -17,10 +20,25 @@ angular
     $q,
     $route,
     $routeParams,
-    $scope
+    $scope,
+    $ngRedux
   ) {
+    $ngRedux.subscribe(() => {
+      if (!$scope.financialAidSummary.factoriesLoading) {
+        const {
+          myAgreements: { loaded: agreementsLoaded },
+          myChecklistItems: { loaded: checklistsLoaded },
+        } = $ngRedux.getState();
+
+        if (agreementsLoaded && checklistsLoaded) {
+          $scope.financialAidSummary.isLoading = false;
+        }
+      }
+    });
+
     $scope.financialAidSummary = {
       isLoading: true,
+      factoriesLoading: true,
       selected: {},
       tasksCount: 0,
       giftAidDetail: {},
@@ -115,21 +133,6 @@ angular
       checkForDecimalValues($scope.financialAidSummary.selected);
     };
 
-    var loadTasksIncompleteCount = function() {
-      return tasksFactory
-        .getFinaidTasks({
-          finaidYearId: finaidService.options.finaidYear.id,
-        })
-        .then(function(response) {
-          var tasks = _.get(response, 'tasks') || [];
-          var completedTasksCount = _.filter(tasks, {
-            status: 'completed',
-          }).length;
-          $scope.financialAidSummary.tasksCount =
-            tasks.length - completedTasksCount;
-        });
-    };
-
     var parseFinancialAidSummary = function(response) {
       var feed = _.get(response, 'data');
       angular.extend(
@@ -142,14 +145,16 @@ angular
     };
 
     var loadFinancialAidSummary = function() {
+      $ngRedux.dispatch(fetchChecklistItems());
+      $ngRedux.dispatch(fetchAgreements());
+
       finaidFactory
         .getFinancialAidSummary()
         .then(parseFinancialAidSummary, function errorCallback() {
           $scope.financialAidSummary.errored = true;
         })
-        .then(loadTasksIncompleteCount)
         .finally(function() {
-          $scope.financialAidSummary.isLoading = false;
+          $scope.financialAidSummary.factoriesLoading = false;
           $scope.financialAidSummary.formatCurrency = formatCurrency;
           $scope.financialAidSummary.toggleTipGiftAid = toggleTipGiftAid;
           $scope.financialAidSummary.toggleTipNetCost = toggleTipNetCost;

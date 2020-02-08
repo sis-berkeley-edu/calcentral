@@ -1,0 +1,12 @@
+@import 'src/react/stylesheets/variables';
+
+.messageHeader {
+  display: flex;
+  font-size: 12px;
+
+  .icon {
+    font-size: 20px;
+    min-width: 30px;
+    color: $cc-color-spindle;
+  }
+}

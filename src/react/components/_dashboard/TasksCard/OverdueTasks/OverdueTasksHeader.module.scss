@@ -1,0 +1,24 @@
+@import 'src/react/stylesheets/variables';
+
+$danger-color: $cc-color-harley-davidson-orange;
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-left: 10px;
+  margin-right: 20px;
+  margin-bottom: 8px;
+
+  .title {
+    color: $danger-color;
+    font-size: 16px;
+  }
+
+  .label {
+    text-align: right;
+    color: $cc-color-nobel;
+    font-weight: 700;
+    font-size: 12px;
+  }
+}

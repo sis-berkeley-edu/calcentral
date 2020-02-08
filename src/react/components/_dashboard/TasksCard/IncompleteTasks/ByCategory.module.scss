@@ -1,0 +1,9 @@
+@import 'src/react/stylesheets/variables';
+
+.container {
+  margin-top: 10px;
+
+  & + .container {
+    margin-top: 0;
+  }
+}

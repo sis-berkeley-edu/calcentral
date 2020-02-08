@@ -21,8 +21,12 @@ module User
           inPopover: in_popover?,
           registrationStatus: registration_status,
           cnpStatus: cnp_status,
-          calgrantStatus: calgrant_status
+          requiresCalGrantAcknowledgement: requires_cal_grant_acknowledgement?,
         }
+      end
+
+      def requires_cal_grant_acknowledgement?
+        student_attributes.any?(&:requires_cal_grant_acknowledgement?)
       end
 
       def tuition_calculated?
@@ -93,15 +97,15 @@ module User
       end
 
       def shown?
-        ![registration_status, calgrant_status, cnp_status].all? { |status| status.message.nil? }
+        ![registration_status, cnp_status].all? { |status| status.message.nil? }
       end
 
       def in_popover?
-        [registration_status, calgrant_status, cnp_status].any?(&:in_popover?)
+        [registration_status, cnp_status].any?(&:in_popover?)
       end
 
       def badge_count
-        [registration_status, calgrant_status, cnp_status].sum(&:badge_count)
+        [registration_status, cnp_status].sum(&:badge_count)
       end
 
       def status_message
@@ -122,14 +126,6 @@ module User
         end
       end
 
-      def calgrant_status
-        @calgrant_status ||= if calgrant_acknowledgement
-          User::Academics::Status::CalgrantAcknowledgement.new(self)
-        else
-          null_status
-        end
-      end
-
       def cnp_status
         @cnp_status ||= if cnp_exception?
           User::Academics::Status::CancellationForNonPayment.new(self)
@@ -140,10 +136,6 @@ module User
 
       def null_status
         @null_status ||= User::Academics::Status::NullStatus.new
-      end
-
-      def calgrant_acknowledgement
-        @calgrant_acknowledgement ||= user.calgrant_acknowledgements.find_by_term_id(term_id)
       end
     end
   end

@@ -17,10 +17,13 @@ const CardError = ({ message }) => {
     return null;
   }
 };
+
 CardError.propTypes = {
   message: PropTypes.string,
   error: PropTypes.object,
 };
+
+CardError.displayName = 'CardError';
 
 const Card = ({
   children,
@@ -29,11 +32,12 @@ const Card = ({
   error,
   className,
   secondaryContent,
+  node,
 }) => {
   const classNames = ['Card', className].join(' ');
 
   return (
-    <div className={classNames}>
+    <div ref={node} className={classNames}>
       <div className="Card__title">
         <h2>{title}</h2>
         {secondaryContent}
@@ -46,6 +50,7 @@ const Card = ({
     </div>
   );
 };
+
 Card.propTypes = {
   title: PropTypes.string,
   children: PropTypes.node,
@@ -53,6 +58,9 @@ Card.propTypes = {
   className: PropTypes.string,
   secondaryContent: PropTypes.object,
   error: PropTypes.object,
+  node: PropTypes.any,
 };
+
+Card.displayName = 'Card';
 
 export default Card;

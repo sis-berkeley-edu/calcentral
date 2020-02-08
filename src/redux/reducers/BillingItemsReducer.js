@@ -1,8 +1,7 @@
 /* eslint camelcase: 0 */
 // TODO: change API to camelcase
 
-import parseDate from 'date-fns/parse';
-import differenceInCalendarDays from 'date-fns/difference_in_calendar_days';
+import { parseISO, differenceInCalendarDays, startOfToday } from 'date-fns';
 
 import {
   FETCH_BILLING_ITEMS_START,
@@ -10,7 +9,7 @@ import {
   FETCH_BILLING_ITEMS_FAILURE,
   FETCH_BILLING_ITEM_START,
   FETCH_BILLING_ITEM_SUCCESS,
-  FETCH_BILLING_ITEM_FAILURE
+  FETCH_BILLING_ITEM_FAILURE,
 } from '../actions/billingActions';
 
 import { chargeTypes } from '../../react/components/_finances/TransactionsCard/types';
@@ -19,10 +18,10 @@ import {
   CHARGE_OVERDUE,
   CHARGE_DUE,
   CHARGE_NOT_DUE,
-  CHARGE_PAID
+  CHARGE_PAID,
 } from 'react/components/_finances/TransactionsCard/chargeStatuses';
 
-const dueStatus = (item) => {
+const dueStatus = item => {
   if (!chargeTypes.has(item.type)) {
     return null;
   }
@@ -36,8 +35,8 @@ const dueStatus = (item) => {
   }
 
   const daysPastDue = differenceInCalendarDays(
-    new Date(),
-    item.due_date
+    startOfToday(),
+    parseISO(item.due_date)
   );
 
   if (daysPastDue > 0) {
@@ -48,20 +47,20 @@ const dueStatus = (item) => {
     return CHARGE_DUE;
   }
 
-  if (daysPastDue < -15 ) {
+  if (daysPastDue < -15) {
     return CHARGE_NOT_DUE;
   }
 };
 
-const setDate = (item) => {
+const setDate = item => {
   if (item.due_date === null) {
     return item;
   } else {
-    return { ...item, due_date: parseDate(item.due_date) };
+    return { ...item, due_date: parseISO(item.due_date) };
   }
 };
 
-const appendChargeStatus = (item) => ({ ...item, status: dueStatus(item) });
+const appendChargeStatus = item => ({ ...item, status: dueStatus(item) });
 
 const updateItemDetails = (state, newItem) => {
   const items = state.items.map(item => {
@@ -78,22 +77,35 @@ const updateItemDetails = (state, newItem) => {
 const BillingItemsReducer = (state = {}, action) => {
   switch (action.type) {
     case FETCH_BILLING_ITEMS_START:
-      return { ...state, isLoading: true, error: null};
+      return { ...state, isLoading: true, error: null };
     case FETCH_BILLING_ITEMS_FAILURE:
       return { ...state, isLoading: false, error: action.value };
     case FETCH_BILLING_ITEMS_SUCCESS:
-      return { ...state,
+      return {
+        ...state,
         items: action.value.map(setDate).map(appendChargeStatus),
-        isLoading: false, loaded: true, error: null
+        isLoading: false,
+        loaded: true,
+        error: null,
       };
     case FETCH_BILLING_ITEM_START:
-      return updateItemDetails(state, { id: action.value, isLoadingPayments: true, loadingPaymentsError: null });
+      return updateItemDetails(state, {
+        id: action.value,
+        isLoadingPayments: true,
+        loadingPaymentsError: null,
+      });
     case FETCH_BILLING_ITEM_SUCCESS:
-      return updateItemDetails(state, { ...action.value, isLoadingPayments: false, loadedPayments: true, loadingPaymentsError: null });
+      return updateItemDetails(state, {
+        ...action.value,
+        isLoadingPayments: false,
+        loadedPayments: true,
+        loadingPaymentsError: null,
+      });
     case FETCH_BILLING_ITEM_FAILURE:
       return updateItemDetails(state, {
         ...state.items.find(item => item.id === action.id),
-        isLoadingPayments: false, loadingPaymentsError: action.value
+        isLoadingPayments: false,
+        loadingPaymentsError: action.value,
       });
     default:
       return state;

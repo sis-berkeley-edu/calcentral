@@ -9,7 +9,7 @@ import Card from 'React/components/Card';
 import {
   BILLING_VIEW_ALL,
   BILLING_VIEW_UNPAID,
-  BILLING_VIEW_PAYMENTS_AID
+  BILLING_VIEW_PAYMENTS_AID,
 } from './billingItemViews';
 
 import { chargeTypes, paymentTypes } from './types';
@@ -21,7 +21,7 @@ import DownloadButton from './DownloadButton';
 import LegacyDataLink from './LegacyDataLink';
 
 const billingItemForTab = tab => {
-  return (billingItem) => {
+  return billingItem => {
     switch (tab) {
       case BILLING_VIEW_ALL:
         return true;
@@ -34,24 +34,24 @@ const billingItemForTab = tab => {
 };
 
 const billingItemForTermId = termId => {
-  return (billingItem) => {
+  return billingItem => {
     return termId === 'all' ? true : billingItem.term_id === termId;
   };
 };
 
-const billingItemTermIds = (billingItems) => {
+const billingItemTermIds = billingItems => {
   return [
     ...new Set(
       billingItems
-      .map(item => item.term_id)
-      .filter(item => item !== null)
-      .sort((a, b) => parseInt(b) - parseInt(a))
-    )
+        .map(item => item.term_id)
+        .filter(item => item !== null)
+        .sort((a, b) => parseInt(b) - parseInt(a))
+    ),
   ];
 };
 
-const billingItemsMatchingString = (search) => {
-  return (item) => {
+const billingItemsMatchingString = search => {
+  return item => {
     if (search === '') {
       return true;
     }
@@ -77,31 +77,36 @@ export const TransactionsCard = ({ dispatch, billingItems, carsData }) => {
   const {
     items = [],
     isLoading: isBillingLoading = true,
-    error: billingItemsError = false
+    error: billingItemsError = false,
   } = billingItems;
 
   const { isLoading: isCarsLoading = true, error: carsDataError } = carsData;
 
   const filteredItems = items
-  .filter(billingItemForTab(tab))
-  .filter(billingItemForTermId(termId))
-  .filter(billingItemsMatchingString(search));
+    .filter(billingItemForTab(tab))
+    .filter(billingItemForTermId(termId))
+    .filter(billingItemsMatchingString(search));
 
   const termIds = billingItemTermIds(items);
   const hasActiveFilters = termId !== 'all' || search !== '';
 
   const sum = (item, previous) => item + previous;
-  const unappliedBalance = tab === BILLING_VIEW_PAYMENTS_AID
-    ? Math.abs(filteredItems.map(item => item.balance).reduce(sum, 0))
-    : 0;
+  const unappliedBalance =
+    tab === BILLING_VIEW_PAYMENTS_AID
+      ? Math.abs(filteredItems.map(item => item.balance).reduce(sum, 0))
+      : 0;
 
-  const error = billingItemsError || carsDataError
-    ? { message: 'There is a problem displaying your billing information. Please try again soon.' }
-    : false;
+  const error =
+    billingItemsError || carsDataError
+      ? {
+          message:
+            'There is a problem displaying your billing information. Please try again soon.',
+        }
+      : false;
 
   const node = useRef();
-  const clickHandler = (e) => {
-    if (!node.current.contains(e.target)) {
+  const clickHandler = e => {
+    if (node.current && !node.current.contains(e.target)) {
       setExpanded(null);
     }
   };
@@ -112,7 +117,8 @@ export const TransactionsCard = ({ dispatch, billingItems, carsData }) => {
   }, []);
 
   return (
-    <Card className="TransactionsCard"
+    <Card
+      className="TransactionsCard"
       title="Transactions"
       loading={isBillingLoading || isCarsLoading}
       error={error}
@@ -120,7 +126,8 @@ export const TransactionsCard = ({ dispatch, billingItems, carsData }) => {
     >
       <div ref={node}>
         <div className="TransactionCard__pretable">
-          <BillingItemFilters tab={tab}
+          <BillingItemFilters
+            tab={tab}
             setTab={setTab}
             termIds={termIds}
             termId={termId}
@@ -130,12 +137,19 @@ export const TransactionsCard = ({ dispatch, billingItems, carsData }) => {
             setExpanded={setExpanded}
           />
           <LegacyDataLink unappliedBalance={unappliedBalance} />
-          <UnappliedPaymentsInfo tab={tab} unappliedBalance={unappliedBalance} />
+          <UnappliedPaymentsInfo
+            tab={tab}
+            unappliedBalance={unappliedBalance}
+          />
         </div>
 
-        <BillingItemsTable items={filteredItems} tab={tab} hasActiveFilters={hasActiveFilters}
+        <BillingItemsTable
+          items={filteredItems}
+          tab={tab}
+          hasActiveFilters={hasActiveFilters}
           expanded={expanded}
-          setExpanded={setExpanded} />
+          setExpanded={setExpanded}
+        />
       </div>
     </Card>
   );
@@ -144,9 +158,12 @@ export const TransactionsCard = ({ dispatch, billingItems, carsData }) => {
 TransactionsCard.propTypes = {
   dispatch: PropTypes.func,
   billingItems: PropTypes.object,
-  carsData: PropTypes.object
+  carsData: PropTypes.object,
 };
 
-const mapStateToProps = ({ billingItems, carsData }) => ({ billingItems, carsData });
+const mapStateToProps = ({ billingItems, carsData }) => ({
+  billingItems,
+  carsData,
+});
 
 export default connect(mapStateToProps)(TransactionsCard);

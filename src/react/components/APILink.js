@@ -8,7 +8,7 @@ import './APILink.scss';
 const propTypes = {
   disabled: PropTypes.bool,
   isCsLink: PropTypes.bool,
-  name: PropTypes.string,
+  name: PropTypes.node,
   showNewWindow: PropTypes.bool,
   title: PropTypes.string,
   ucFrom: PropTypes.string,
@@ -17,6 +17,8 @@ const propTypes = {
   ucUpdateCache: PropTypes.string,
   url: PropTypes.string,
   urlId: PropTypes.string,
+  className: PropTypes.string,
+  style: PropTypes.object,
 };
 
 const visuallyHiddenText = ', this link opens in new window';
@@ -41,6 +43,8 @@ const APILink = ({
   ucFromLink,
   ucFromText,
   ucUpdateCache,
+  style,
+  className,
 }) => {
   if (!url) {
     return null;
@@ -71,6 +75,8 @@ const APILink = ({
       target={target}
       rel={rel}
       onClick={e => e.stopPropagation()}
+      className={className}
+      style={style}
     >
       {name}
       {showNewWindow && <VisuallyHidden>{visuallyHiddenText}</VisuallyHidden>}
