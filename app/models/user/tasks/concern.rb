@@ -1,3 +1,5 @@
+# require 'active_support/concern'
+
 module User
   module Tasks
     module Concern
@@ -10,10 +12,6 @@ module User
 
         def checklist_items
           @checklist_items ||= ChecklistFeed.new(uid)
-        end
-
-        def web_messages
-          @web_messages ||= WebMessagesFeed.new(uid)
         end
 
         def completed_agreements
@@ -30,18 +28,6 @@ module User
 
         def incomplete_checklist_items
           @incomplete_checklist_items ||= IncompleteChecklistItems.new(self)
-        end
-
-        def notifications
-          @notifications ||= Tasks::Notifications.new(self)
-        end
-
-        def pending_web_messages
-          @pending_web_messages ||= PendingWebMessages.new(self)
-        end
-
-        def has_canvas_access?
-          @has_canvas_access ||= Canvas::Proxy.access_granted?(uid)
         end
 
         def has_google_apps_access?

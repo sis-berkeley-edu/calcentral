@@ -1,10 +1,22 @@
+import { formatISO } from 'date-fns';
+
+const toISODateString = date => {
+  return formatISO(date, { representation: 'date' });
+};
+
 export const groupByDate = (accumulator, message) => {
-  const group = accumulator.find(group => group.date === message.statusDate);
+  const group = accumulator.find(
+    group => group.dateString === toISODateString(message.statusDate)
+  );
 
   if (group) {
-    group.messages.unshift(message);
+    group.messages.push(message);
   } else {
-    accumulator.push({ date: message.statusDate, messages: [message] });
+    accumulator.push({
+      dateString: toISODateString(message.statusDate),
+      date: message.statusDate,
+      messages: [message],
+    });
   }
 
   return accumulator;

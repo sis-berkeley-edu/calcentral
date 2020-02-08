@@ -1,13 +1,20 @@
 module User
-  module Tasks
+  module Notifications
     class Notifications < ::User::Owned
       def as_json(options={})
         {
-          notifications: all,
+          universityNotifications: {
+            archiveUrl: archive_url,
+            displayAll: display_all?,
+            notifications: all,
+          },
           canvas_activities: user.b_courses.activities.filtered,
           webcasts: user.webcasts.all,
-          archiveUrl: archive_url
         }
+      end
+
+      def display_all?
+        user.display.display_all?
       end
 
       def all
@@ -19,7 +26,7 @@ module User
       private
 
       def data
-        @data ||= User::Tasks::Queries.notifications(uid) || []
+        @data ||= User::Notifications::Queries.notifications(uid) || []
       end
 
       def archive_url

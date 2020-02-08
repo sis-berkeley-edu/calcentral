@@ -23,6 +23,10 @@ module User
         safe_query(notifications_query(uid))
       end
 
+      def self.web_message_display(uid)
+        safe_query(web_message_display_query(uid))
+      end
+
       private
 
       def self.completed_agreements_query(uid)
@@ -124,7 +128,7 @@ module User
             comm_category as category,
             scc_letter_cd as code,
             uc_respbl_descr as source,
-            uc_comm_btn_descr as action_description,
+            uc_comm_btn_descr as action_text,
             uc_fixed_url as source_url,
             admin_function,
             institution,
@@ -136,9 +140,9 @@ module User
 
       def self.web_message_display_query(uid)
         <<-SQL
-          SELECT *
+          SELECT
             due_dt as cutoff_time,
-            msg_display as should_display
+            uc_msg_display as should_display
           FROM SYSADM.PS_UCC_CC_WBMSG_DV
           WHERE CAMPUS_ID = '#{uid}'
         SQL
