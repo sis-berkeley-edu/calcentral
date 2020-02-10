@@ -44,15 +44,14 @@ const SourcedMessages = ({
 
   const [expandedMessage, setExpandedMessage] = useState('');
 
+  const messageType = type === 'campusSolutions' ? 'notification' : type;
+  const title = `${
+    messages.length
+  } ${messageType[0].toUpperCase()}${messageType.substring(1)}s`;
+
   return (
     <Message onClick={onClick} isExpanded={isExpanded} hasFocus={hasFocus}>
-      <MessageHeader
-        title={`${messages.length} ${type[0].toUpperCase()}${type.substring(
-          1
-        )}s`}
-        subtitle={subtitle}
-        type={type}
-      />
+      <MessageHeader title={title} subtitle={subtitle} type={type} />
 
       {expandedItem === key && (
         <div style={{ marginTop: `15px` }}>
