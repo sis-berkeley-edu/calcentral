@@ -8,7 +8,7 @@ const NoMessages = ({ year }) => {
     <div style={style}>
       {year
         ? `You have no messages for ${parseInt(year) - 1}-${year}`
-        : `You have no year`}
+        : `You have no notifications at this time.`}
     </div>
   );
 };
