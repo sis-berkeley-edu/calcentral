@@ -63,16 +63,3 @@ Agreements.propTypes = {
 };
 
 export default Agreements;
-
-// subtitle={`Due ${shortDateIfCurrentYear(
-//   parseDate(task.dueDate)
-// )}`}
-
-/*
-<Task key={index} index={index} task={task} type="">
-
-    <CampusSolutionsIcon />
-    <TaskTitle title={task.title} />
-  </TaskHeader>
-</Task>
-*/

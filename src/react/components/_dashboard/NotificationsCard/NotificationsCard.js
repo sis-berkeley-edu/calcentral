@@ -13,6 +13,8 @@ import { fetchWebMessages } from 'redux/actions/webMessagesActions';
 import SourceFilter from './SourceFilter';
 import MessagesBySource from './MessagesBySource';
 
+import NoMessages from './NoMessages';
+
 const NotificationsCard = ({
   archiveUrl,
   canSeeCSLinks,
@@ -42,13 +44,17 @@ const NotificationsCard = ({
     >
       {loaded ? (
         <>
-          <MessagesBySource
-            groupedNotifications={groupedNotifications}
-            selectedSource={selectedSource}
-            expandedItem={expandedItem}
-            setExpandedItem={setExpandedItem}
-            hasFocus={hasFocus}
-          />
+          {groupedNotifications.length > 0 ? (
+            <MessagesBySource
+              groupedNotifications={groupedNotifications}
+              selectedSource={selectedSource}
+              expandedItem={expandedItem}
+              setExpandedItem={setExpandedItem}
+              hasFocus={hasFocus}
+            />
+          ) : (
+            <NoMessages />
+          )}
 
           {canSeeCSLinks && (
             <div
