@@ -11,7 +11,7 @@
     <div data-ng-if="finaidAwardsTerm.errored" class="cc-widget-text" data-ng-include="'widgets/finaid_errored.html'"></div>
     <div data-ng-if="!finaidAwardsTerm.errored">
       <div class="cc-widget-text cc-widget-finaid-awards-message">
-        <div data-ng-bind="finaidAwardsTerm.feed.message"></div>
+        <div data-ng-bind-html="finaidAwardsTerm.feed.message"></div>
       </div>
       <div data-ng-include="'widgets/finaid_awards_table_widget.html'" class="cc-widget-text"></div>
     </div>
