@@ -137,6 +137,8 @@ angular
         $scope.financialAidSummary,
         _.get(feed, 'financialAidSummary')
       );
+
+      checkLoading();
       $scope.financialAidSummary.isMainPage = $location.path() === '/finances';
       $scope.financialAidSummary.errored = _.get(feed, 'errored');
       setDefaultSelections(feed);
