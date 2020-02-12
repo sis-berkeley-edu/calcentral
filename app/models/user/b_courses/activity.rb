@@ -2,6 +2,7 @@ module User
   module BCourses
     class Activity
       include HtmlSanitizer
+      include HasAssignment
 
       attr_accessor :dashboard_sites
 
