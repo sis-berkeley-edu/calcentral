@@ -92,7 +92,7 @@ const UpNextItem = ({
             <div className="date-item-more">
               <div className="clearfix-container">
                 {item.isAllDay && (
-                  <p>{format(item.start.epoch * 1000, 'ddd, MMMM D')}</p>
+                  <p>{format(item.start.epoch * 1000, 'EEE, MMMM d')}</p>
                 )}
                 {!item.isAllDay && (
                   <div className="date-list-time-range">
@@ -100,14 +100,14 @@ const UpNextItem = ({
                     <div>
                       {format(
                         item.start.epoch * 1000,
-                        'M/D/YY h:mm a'
+                        'M/d/yy h:mm a'
                       ).toLowerCase()}
                     </div>
                     <div className="header">End:</div>
                     <div>
                       {format(
                         item.end.epoch * 1000,
-                        'M/D/YY h:mm a'
+                        'M/d/yy h:mm a'
                       ).toLowerCase()}
                     </div>
                   </div>
