@@ -23,18 +23,16 @@ angular
     $scope,
     $ngRedux
   ) {
-    $ngRedux.subscribe(() => {
-      if (!$scope.financialAidSummary.factoriesLoading) {
-        const {
-          myAgreements: { loaded: agreementsLoaded },
-          myChecklistItems: { loaded: checklistsLoaded },
-        } = $ngRedux.getState();
+    const checkLoading = () => {
+      const {
+        myAgreements: { loaded: agreementsLoaded },
+        myChecklistItems: { loaded: checklistsLoaded },
+      } = $ngRedux.getState();
 
-        if (agreementsLoaded && checklistsLoaded) {
-          $scope.financialAidSummary.isLoading = false;
-        }
+      if (agreementsLoaded && checklistsLoaded) {
+        $scope.financialAidSummary.isLoading = false;
       }
-    });
+    };
 
     $scope.financialAidSummary = {
       isLoading: true,
@@ -145,6 +143,7 @@ angular
     };
 
     var loadFinancialAidSummary = function() {
+      $ngRedux.subscribe(checkLoading);
       $ngRedux.dispatch(fetchChecklistItems());
       $ngRedux.dispatch(fetchAgreements());
 
