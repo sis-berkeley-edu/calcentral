@@ -7,8 +7,8 @@ $activeColor: $cc-color-alice-blue;
   border-top: 1px solid #eee;
   margin-left: 30px;
   padding-left: 11px;
-  padding-top: 5px;
-  padding-bottom: 5px;
+  padding-top: $small-spacing;
+  padding-bottom: $small-spacing;
 
   @include hasLeftDisclosureArrow;
   @include disclosureArrowLeftClosed;
@@ -40,6 +40,6 @@ $activeColor: $cc-color-alice-blue;
 
   .actionLink {
     margin-top: 20px;
-    margin-bottom: 5px;
+    margin-bottom: $small-spacing;
   }
 }

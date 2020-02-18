@@ -2,8 +2,9 @@ module User
   class Current
     attr_reader :uid
 
-    include User::Tasks::Concern
     include User::BCourses::Concern
+    include User::Notifications::Concern
+    include User::Tasks::Concern
     include User::Webcasts::Concern
 
     def initialize(uid)
