@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { differenceInDays, distanceInWordsStrict, parseISO } from 'date-fns';
+import { differenceInDays, formatDistanceStrict, parseISO } from 'date-fns';
 
 import './ItemUpdated.scss';
 const ItemUpdated = ({ item }) => {
@@ -17,7 +17,7 @@ const ItemUpdated = ({ item }) => {
   }
 
   if (diff > 0 && diff <= 30) {
-    const distance = distanceInWordsStrict(date, new Date(), { unit: 'd' });
+    const distance = formatDistanceStrict(new Date(), date, { unit: 'day' });
     return <div className="ItemUpdated">{`Updated ${distance} ago`}</div>;
   }
 
