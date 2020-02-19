@@ -13,7 +13,7 @@ scss-lint src/assets/stylesheets
 lint_exit_status=$?
 [[ ${lint_exit_status} -ne 0 ]] && echo "[ERROR] scss-lint returned non-zero status: ${lint_exit_status}" && exit 1 || echo '[INFO] scss-lint reported no problems'
 
-echo "Running ESLint"
-npm run lint || { echo "ERROR: eslint failed" ; exit 1 ; }
+echo "Running ESLint and Jest"
+npm run validate || { echo "ERROR: ESLint or Jest failed" ; exit 1 ; }
 
 exit 0
