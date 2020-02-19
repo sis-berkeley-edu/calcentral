@@ -17,7 +17,7 @@ const ItemUpdated = ({ item }) => {
   }
 
   if (diff > 0 && diff <= 30) {
-    const distance = formatDistanceStrict(new Date(), date, { unit: 'd' });
+    const distance = formatDistanceStrict(new Date(), date, { unit: 'day' });
     return <div className="ItemUpdated">{`Updated ${distance} ago`}</div>;
   }
 
