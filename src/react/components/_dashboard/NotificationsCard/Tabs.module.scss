@@ -30,4 +30,5 @@ $inactiveBorderColor: $cc-color-whisper;
 .inactiveTab {
   color: $inactiveColor;
   border-bottom: 2px solid $inactiveBorderColor;
+  cursor: pointer;
 }
