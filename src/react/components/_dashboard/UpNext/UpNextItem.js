@@ -25,14 +25,14 @@ const UpNextItem = ({
 }) => {
   const ga = new googleAnalytics(applicationLayer);
 
-  const expandItem = (index, setExpandedItemIndex) => {
-    setExpandedItemIndex(index);
+  const toggleItem = () => {
+    setExpandedItemIndex((index == expandedItemIndex) ? null : index)
     ga.sendEvent('Detailed view', showItem ? 'Open' : 'Close', 'Up Next');
   };
 
   const onEnterExpandItem = event => {
     if (event.keyCode === 13) {
-      expandItem(index, setExpandedItemIndex);
+      toggleItem(index, expandedItemIndex, setExpandedItemIndex);
     }
   };
 
@@ -59,7 +59,7 @@ const UpNextItem = ({
             'list-hover ' + (showItem ? 'list-hover-opened list-selected' : '')
           }
           tabIndex="0"
-          onClick={() => expandItem(index, setExpandedItemIndex)}
+          onClick={() => toggleItem(index, expandedItemIndex, setExpandedItemIndex)}
           onKeyDown={e => onEnterExpandItem(e)}
         >
           <div className="date-list-time list-column-left">
@@ -132,7 +132,7 @@ const UpNextItem = ({
                   <p className="indent">{item.organizer}</p>
                 </div>
               )}
-              {item.attendees && item.attendees.length && (
+              {item.attendees && item.attendees.length > 0 && (
                 <div>
                   <span className="header">Invitees:</span>
                   <ul className="list-attendees indent">

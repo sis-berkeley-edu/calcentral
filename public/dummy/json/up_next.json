@@ -90,6 +90,26 @@
       },
       "isAllDay": false,
       "emitter": "Google Calendar"
-    }
+    },
+    {
+			"attendees": [],
+			"organizer": "Jane Smith",
+			"htmlLink": "https://www.google.com/calendar/event?eid=N2duYmxnY201NzFsa2JkY2RnMWFjaTZyZjUgamFzb24uYy5taWxsZXJAYmVy",
+			"status": "confirmed",
+			"summary": "Meeting to Discuss Something",
+			"hangoutLink": "",
+			"location": "",
+			"start": {
+				"epoch": 1582234200,
+				"dateTime": "2020-02-20T13:30:00-08:00",
+				"dateString": "2/20"
+			},
+			"end": {
+				"epoch": 1582236000,
+				"dateTime": "2020-02-20T14:00:00-08:00",
+				"dateString": "2/20"
+			},
+			"isAllDay": false
+		}
   ]
 }
