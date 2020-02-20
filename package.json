@@ -28,7 +28,7 @@
     "prettier": "prettier \"**/*.+(js|scss)\"",
     "prettier:list": "npm run prettier -- --list-different",
     "test": "jest",
-    "validate": "npm run lint"
+    "validate": "npm run lint && npm run test"
   },
   "engines": {
     "node": ">=10.1.0"
