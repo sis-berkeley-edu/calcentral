@@ -51,7 +51,7 @@ module User
         when 'submission' then 'gradePosting'
         when 'webconference' then 'webconference'
         else
-          logger.warn "No match for entry type: #{type}"
+          Rails.logger.warn "No match for entry type: #{type}"
           'assignment'
         end
       end
