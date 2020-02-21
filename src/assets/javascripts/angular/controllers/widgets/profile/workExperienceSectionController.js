@@ -54,7 +54,7 @@ angular.module('calcentral.controllers').controller('WorkExperienceSectionContro
   var countryWatcher;
 
   var formatDate = function(date) {
-    return apiService.date.format(date, 'MM/DD/YYYY');
+    return apiService.date.format(apiService.date.parseISO(date), 'MM/dd/yyyy');
   };
 
   var formatDates = function(data) {
