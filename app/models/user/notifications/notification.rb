@@ -12,7 +12,6 @@ module User
         :status_datetime,
         :action_text,
         :user,
-        :source_url,
         :admin_function,
         :institution,
         :aid_year
@@ -25,7 +24,7 @@ module User
           category: category,
           title: title,
           source: source,
-          fixedUrl: fixed_url,
+          fixedUrl: use_fixed_url?,
           statusDate: status_date,
           statusDateTime: status_datetime&.to_datetime,
           link: link,
@@ -39,15 +38,20 @@ module User
       end
 
       def link
-        LinkFetcher.fetch_link('UC_CC_WEBMSG_AGRMNT', { 'CCI_COMM_TRANS_ID' => id })
+        if use_fixed_url?
+          LinkFetcher.fetch_link(fixed_url)
+        else
+          LinkFetcher.fetch_link('UC_CC_WEBMSG_AGRMNT', { 'CCI_COMM_TRANS_ID' => id })
+        end
       end
 
       def status_date
         status_datetime&.to_date
       end
 
-      # TODO: remove ::CampusSolutions::PendingMessages. That functionality is unnecessary because of this view-backed API.
-      # We used to get the description from the API view but don't need it anymore.
+      def use_fixed_url?
+        fixed_url.to_s.slice(0,5) == 'UC_CX'
+      end
     end
   end
 end

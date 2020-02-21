@@ -40,7 +40,11 @@ const MiniNotification = ({ notification, expanded, setExpanded }) => {
             paddingTop: `5px`,
           }}
         >
-          <Linkify>{notification.description}</Linkify>
+          <Linkify
+            properties={{ target: '_blank', rel: 'noopener noreferrer' }}
+          >
+            {notification.description}
+          </Linkify>
 
           <p style={{ paddingTop: `15px`, marginBottom: `5px` }}>
             <a
@@ -68,7 +72,7 @@ MiniNotification.propTypes = {
     url: PropTypes.string,
     description: PropTypes.string,
   }),
-  expanded: PropTypes.bool,
+  expanded: PropTypes.string,
   setExpanded: PropTypes.func,
 };
 
@@ -108,7 +112,7 @@ MultiNotifications.propTypes = {
   source: PropTypes.string,
   type: PropTypes.string,
   notifications: PropTypes.array,
-  expanded: PropTypes.bool,
+  expanded: PropTypes.string,
   setExpanded: PropTypes.func,
 };
 

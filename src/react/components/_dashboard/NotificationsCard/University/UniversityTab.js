@@ -24,8 +24,8 @@ const UniversityNotifications = ({
   if (notifications.length === 0) {
     return (
       <NoNotfications type="University notifications">
-        <APILink {...archiveUrl}>
-          {archiveUrl.name} <i className="fa fa-arrow-right" />
+        <APILink {...archiveUrl} title="View Past Notifications">
+          View Past Notifications <i className="fa fa-arrow-right" />
         </APILink>
       </NoNotfications>
     );
@@ -56,7 +56,7 @@ const UniversityNotifications = ({
         </div>
       ) : (
         <div style={{ padding: `15px 15px 0`, textAlign: `center` }}>
-          <APILink {...archiveUrl}>
+          <APILink {...archiveUrl} title="View Past Notifications">
             View Past Notifications <i className="fa fa-arrow-right" />
           </APILink>
         </div>
