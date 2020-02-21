@@ -23,7 +23,7 @@ module User
             scc_letter_cd as code,
             uc_respbl_descr as source,
             uc_comm_btn_descr as action_text,
-            uc_fixed_url as source_url,
+            uc_fixed_url as fixed_url,
             admin_function,
             institution,
             aid_year
