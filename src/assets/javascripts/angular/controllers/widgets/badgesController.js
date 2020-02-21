@@ -4,7 +4,7 @@
  * Badges controller
  */
 
-angular.module('calcentral.controllers').controller('BadgesController', function(apiService, badgesFactory, dateService, errorService, $scope) {
+angular.module('calcentral.controllers').controller('BadgesController', function(badgesFactory, dateService, errorService, $scope) {
   var defaults = {
     'bcal': {
       'count': '...',
@@ -40,9 +40,9 @@ angular.module('calcentral.controllers').controller('BadgesController', function
     today: 'h:mm aaaa',
     // No need for formatting due to the left calendar widget.
     todayAllDay: '',
-    notToday: '(MM/DD) h:mm aaaa',
-    notTodayAllDay: 'MM/DD(E)',
-    datestamp: 'yyyyMMDD'
+    notToday: '(MM/dd) h:mm aaaa',
+    notTodayAllDay: 'MM/dd(E)',
+    datestamp: 'yyyyMMdd'
   };
 
   var processDisplayRange = function(epoch, isAllDay, isStartRange) {
@@ -107,7 +107,7 @@ angular.module('calcentral.controllers').controller('BadgesController', function
           var startTime = new Date(value.startTime.epoch * 1000);
           value.startTime.display = {
             'month': dateService.format(startTime, 'MMM'),
-            'day': dateService.format(startTime, 'DD'),
+            'day': dateService.format(startTime, 'dd'),
             'dayOfWeek': dateService.format(startTime, 'EEE'),
             'rangeStart': processDisplayRange(value.startTime.epoch, value.allDayEvent, true)
           };
