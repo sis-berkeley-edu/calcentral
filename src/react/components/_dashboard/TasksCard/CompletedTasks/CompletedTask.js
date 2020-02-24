@@ -15,7 +15,7 @@ function CompletedTask({ task, index }) {
     <TasksContext.Consumer>
       {() => {
         const { title } = task;
-        const subtitle = `Completed ${shortDateIfCurrentYear(
+        const subtitle = `${task.status} ${shortDateIfCurrentYear(
           parseDate(task.completedDate)
         )}`;
 
@@ -33,7 +33,11 @@ function CompletedTask({ task, index }) {
 }
 
 CompletedTask.propTypes = {
-  task: PropTypes.object.isRequired,
+  task: PropTypes.shape({
+    status: PropTypes.string,
+    completedDate: PropTypes.string,
+    title: PropTypes.string,
+  }).isRequired,
   index: PropTypes.number,
 };
 
