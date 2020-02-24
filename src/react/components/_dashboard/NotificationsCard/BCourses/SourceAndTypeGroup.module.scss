@@ -22,7 +22,6 @@
 
       &:hover {
         background: $cc-color-alice-blue;
-        cursor: pointer;
       }
     }
   }
@@ -35,10 +34,8 @@
 
   &:hover {
     background-color: $cc-color-alice-blue;
-    cursor: pointer;
   }
 }
-
 .sourceLabel {
   font-size: 11px;
   line-height: 13px;
