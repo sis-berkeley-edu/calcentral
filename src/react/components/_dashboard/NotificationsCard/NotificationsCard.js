@@ -3,55 +3,66 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { react2angular } from 'react2angular';
 
+import APILink from 'react/components/APILink';
 import Card from 'react/components/Card';
 import Spinner from 'react/components/Spinner';
 import ReduxProvider from 'react/components/ReduxProvider';
+import useFocus from 'react/useFocus';
 import { fetchWebMessages } from 'redux/actions/webMessagesActions';
 
-import { TabSwitcher, Tab } from './Tabs';
-import BCoursesTab from './BCourses/BCoursesTab';
-import UniversityTab from './University/UniversityTab';
+import SourceFilter from './SourceFilter';
+import MessagesBySource from './MessagesBySource';
 
-import useShowMore from './useShowMore';
+import NoMessages from './NoMessages';
 
-const NotificationsCard = ({ fetchNotifications, loaded }) => {
-  const [shownNotificationsCount, showMoreNotifications] = useShowMore(5);
-  const [shownCoursesCount, showMoreCourses] = useShowMore(5);
+const NotificationsCard = ({
+  archiveUrl,
+  canSeeCSLinks,
+  fetchNotifications,
+  groupedNotifications,
+  loaded,
+  sources,
+}) => {
+  const [expandedItem, setExpandedItem] = useState('');
+  const [selectedSource, setSelectedSource] = useState('');
 
-  const tabs = ['University', 'bCourses'];
-  const [currentTab, setCurrentTab] = useState(tabs[0]);
+  // useFocus is used to track whether the user is interacting with the card or
+  // has clicked somewhere else on the page
+  const [node, hasFocus] = useFocus();
 
   useEffect(() => {
     fetchNotifications();
   }, []);
 
   return (
-    <Card title="Notifications">
+    <Card
+      node={node}
+      title="Notifications"
+      secondaryContent={
+        <SourceFilter sources={sources} setSelectedSource={setSelectedSource} />
+      }
+    >
       {loaded ? (
         <>
-          <TabSwitcher>
-            {tabs.map(tab => (
-              <Tab
-                tab={tab}
-                key={tab}
-                current={currentTab}
-                setCurrent={setCurrentTab}
-              />
-            ))}
-          </TabSwitcher>
-
-          {currentTab === 'University' && (
-            <UniversityTab
-              shownCount={shownNotificationsCount}
-              showMore={showMoreNotifications}
+          {groupedNotifications.length > 0 ? (
+            <MessagesBySource
+              groupedNotifications={groupedNotifications}
+              selectedSource={selectedSource}
+              expandedItem={expandedItem}
+              setExpandedItem={setExpandedItem}
+              hasFocus={hasFocus}
             />
+          ) : (
+            <NoMessages />
           )}
 
-          {currentTab === 'bCourses' && (
-            <BCoursesTab
-              shownCount={shownCoursesCount}
-              showMore={showMoreCourses}
-            />
+          {canSeeCSLinks && (
+            <div
+              className="cc-text-center cc-widget-padding"
+              style={{ marginBottom: `-15px` }}
+            >
+              <APILink {...archiveUrl} />
+            </div>
           )}
         </>
       ) : (
@@ -63,14 +74,47 @@ const NotificationsCard = ({ fetchNotifications, loaded }) => {
 
 NotificationsCard.displayName = 'NotificationsCard';
 NotificationsCard.propTypes = {
+  archiveUrl: PropTypes.object,
   canSeeCSLinks: PropTypes.bool,
   fetchNotifications: PropTypes.func.isRequired,
+  groupedNotifications: PropTypes.array.isRequired,
   loaded: PropTypes.bool,
+  sources: PropTypes.array.isRequired,
 };
 
-const mapStateToProps = ({ myWebMessages: { loaded } }) => {
-  return {
+import {
+  groupByDate,
+  byStatusDateTimeAsc,
+  dateAndTypeSourcedMessages,
+} from './notifications.module';
+
+const mapStateToProps = ({
+  myStatus: { canSeeCSLinks },
+  myWebMessages: {
+    archiveUrl,
+    notifications = [],
+    canvas_activities = [],
+    webcasts = [],
     loaded,
+  },
+}) => {
+  const messages = [...notifications, ...canvas_activities, ...webcasts];
+
+  const sources = [
+    ...new Set(messages.map(notification => notification.source)),
+  ].sort();
+
+  const groupedNotifications = messages
+    .sort(byStatusDateTimeAsc)
+    .reduce(groupByDate, [])
+    .map(dateAndTypeSourcedMessages);
+
+  return {
+    archiveUrl,
+    canSeeCSLinks,
+    loaded,
+    sources,
+    groupedNotifications,
   };
 };
 
