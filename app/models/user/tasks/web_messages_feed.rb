@@ -1,6 +1,6 @@
 module User
-  module Notifications
-    class CachedFeed < UserSpecificModel
+  module Tasks
+    class WebMessagesFeed < UserSpecificModel
       include Cache::CachedFeed
       include Cache::JsonifiedFeed
       include Cache::UserCacheExpiry

@@ -1,5 +1,5 @@
 module User
-  module Notifications
+  module Tasks
     class Notification
       include ActiveModel::Model
 
@@ -10,7 +10,7 @@ module User
         :source,
         :fixed_url,
         :status_datetime,
-        :action_text,
+        :action_description,
         :user,
         :source_url,
         :admin_function,
@@ -20,22 +20,27 @@ module User
       def as_json
         {
           id: id,
-          type: 'UniversityNotification',
-          actionText: action_text,
           category: category,
           title: title,
           source: source,
           fixedUrl: fixed_url,
           statusDate: status_date,
           statusDateTime: status_datetime&.to_datetime,
+          description: description,
+          linkText: link_text,
           link: link,
           isFinaid: is_finaid?,
           aidYear: aid_year,
+          type: 'campusSolutions',
         }
       end
 
       def is_finaid?
         admin_function == 'FINA'
+      end
+
+      def link_text
+        'Read more'
       end
 
       def link
@@ -46,8 +51,15 @@ module User
         status_datetime&.to_date
       end
 
-      # TODO: remove ::CampusSolutions::PendingMessages. That functionality is unnecessary because of this view-backed API.
-      # We used to get the description from the API view but don't need it anymore.
+      def description
+        corresponding_cs_api_message&.description
+      end
+
+      private
+
+      def corresponding_cs_api_message
+        @cs_api_message ||= user.pending_web_messages.find_by_transaction_id(id)
+      end
     end
   end
 end

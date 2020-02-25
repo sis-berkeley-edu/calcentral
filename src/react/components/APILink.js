@@ -6,7 +6,6 @@ import VisuallyHidden from './VisuallyHidden';
 import './APILink.scss';
 
 const propTypes = {
-  children: PropTypes.node,
   disabled: PropTypes.bool,
   isCsLink: PropTypes.bool,
   name: PropTypes.node,
@@ -35,7 +34,6 @@ const returnURL = (url, updateCache) => {
 };
 
 const APILink = ({
-  children,
   disabled,
   isCsLink,
   name,
@@ -80,7 +78,7 @@ const APILink = ({
       className={className}
       style={style}
     >
-      {children || name}
+      {name}
       {showNewWindow && <VisuallyHidden>{visuallyHiddenText}</VisuallyHidden>}
     </a>
   );
