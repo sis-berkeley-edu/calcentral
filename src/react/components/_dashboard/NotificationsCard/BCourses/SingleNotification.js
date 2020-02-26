@@ -67,7 +67,7 @@ SingleNotification.propTypes = {
     type: PropTypes.string,
     url: PropTypes.string,
   }),
-  expanded: PropTypes.bool,
+  expanded: PropTypes.string,
   setExpanded: PropTypes.func,
 };
 

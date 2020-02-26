@@ -15,10 +15,7 @@ const Messages = ({ messages }) => {
           <div className={styles.title}>{title}</div>
 
           {fixedUrl ? (
-            <APILink
-              {...fixedUrl}
-              style={{ display: `flex`, marginTop: `10px` }}
-            />
+            <APILink {...link} style={{ display: `flex`, marginTop: `10px` }} />
           ) : (
             <APILink {...link} style={{ display: `flex`, marginTop: `10px` }}>
               <img src="/assets/images/review.svg" width="15" />

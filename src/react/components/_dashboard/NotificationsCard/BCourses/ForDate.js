@@ -25,7 +25,7 @@ const ForDate = ({ notifications, expanded, setExpanded }) => {
   const groups = notifications.reduce(groupBySourceAndType, []);
 
   return (
-    <div style={{ flex: `1` }}>
+    <div style={{ flex: `1`, overflow: `hidden`, textOverflow: `ellipsis` }}>
       {groups.map((group, index) => (
         <SourceAndTypeGroup
           key={index}
@@ -43,7 +43,7 @@ const ForDate = ({ notifications, expanded, setExpanded }) => {
 ForDate.displayName = 'BCoursesNotificationsForDate';
 ForDate.propTypes = {
   notifications: PropTypes.array,
-  expanded: PropTypes.bool,
+  expanded: PropTypes.string,
   setExpanded: PropTypes.func,
 };
 

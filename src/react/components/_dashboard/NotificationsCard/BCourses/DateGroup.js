@@ -27,10 +27,10 @@ const DateGroup = ({
 
 DateGroup.propTypes = {
   dateGroup: PropTypes.shape({
-    date: PropTypes.string,
+    date: PropTypes.instanceOf(Date),
     messages: PropTypes.array,
   }),
-  expanded: PropTypes.bool,
+  expanded: PropTypes.string,
   setExpanded: PropTypes.func,
 };
 
