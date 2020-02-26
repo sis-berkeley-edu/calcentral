@@ -47,6 +47,10 @@ module User
       is_held
     end
 
+    def has_presir_role?
+      HubEdos::UserAttributes.new(user_id: @auth_uid).has_role?(:preSir)
+    end
+
     def held_applicant?
       cs_feed = HubEdos::PersonApi::V1::SisPerson.new(user_id: @auth_uid).get
       if affiliations = cs_feed.try(:[], :feed).try(:[], 'affiliations')
