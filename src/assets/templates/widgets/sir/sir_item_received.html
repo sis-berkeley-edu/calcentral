@@ -7,10 +7,10 @@
           <div data-ng-if="!item.isUndergraduate">
             Thank you for submitting your Statement of Intent to Register (SIR).
             Your program requires a deposit of <strong data-ng-bind="item.deposit.dueAmt | currency"></strong>
-            by <span data-ng-bind="api.date.format(item.deposit.dueDt, 'MMMM Do, YYYY')"></span>. Your payment will need time to process and may not be reflected immediately in your account.
+            by <span data-ng-bind="api.date.format(item.deposit.dueDt, api.date.formats.long)"></span>. Your payment will need time to process and may not be reflected immediately in your account.
           </div>
           <div data-ng-if="item.isUndergraduate">
-            To save your seat, you must pay a non-refundable deposit of <strong data-ng-bind="item.deposit.dueAmt | currency"></strong> by <strong data-ng-bind="api.date.format(item.deposit.dueDt, 'MMMM Do, YYYY')"></strong> (11:59pm PST).
+            To save your seat, you must pay a non-refundable deposit of <strong data-ng-bind="item.deposit.dueAmt | currency"></strong> by <strong data-ng-bind="api.date.format(item.deposit.dueDt, api.date.formats.long)"></strong> (11:59pm PST).
             <br/>
             <br/>
             Your payment may need time to process and may not be reflected immediately in your account.
