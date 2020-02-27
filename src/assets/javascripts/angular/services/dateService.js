@@ -10,6 +10,9 @@ angular.module('calcentral.services').service('dateService', [
         return format(parseISO(string), formatString);
       },
       formatDistance,
+      formats: {
+        long: 'MMMM do, yyyy',
+      },
     };
 
     return dateService;

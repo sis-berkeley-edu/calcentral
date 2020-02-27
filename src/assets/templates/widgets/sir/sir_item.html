@@ -1,88 +1,167 @@
 <div class="cc-widget cc-widget-sir" data-ng-controller="SirItemController">
   <div data-ng-include="'widgets/sir/sir_item_header.html'"></div>
   <div class="cc-widget-text cc-widget-sir-error" data-ng-if="sirItem.hasError">
-    <i class="fa fa-exclamation-triangle cc-icon-red cc-widget-sir-error-icon"></i>There was an error in submitting your admissions response. Please try again later.
+    <i
+      class="fa fa-exclamation-triangle cc-icon-red cc-widget-sir-error-icon"
+    ></i
+    >There was an error in submitting your admissions response. Please try again
+    later.
   </div>
   <div class="cc-widget-text" data-ng-if="!sirItem.hasError">
     <div data-ng-if="item.studentResponse">
       <h3 data-ng-bind="item.config.descrProgramLong"></h3>
-      <div data-ng-bind-html="item.studentResponse.option.messageText | linky"></div>
+      <div
+        data-ng-bind-html="item.studentResponse.option.messageText | linky"
+      ></div>
     </div>
     <div data-ng-if="!item.studentResponse">
-      <div data-ng-if="item.config.descrProgramLong" class="cc-widget-sir-program-description">
-          <strong data-ng-bind="item.config.descrProgramLong"></strong>
+      <div
+        data-ng-if="item.config.descrProgramLong"
+        class="cc-widget-sir-program-description"
+      >
+        <strong data-ng-bind="item.config.descrProgramLong"></strong>
+      </div>
+      <div data-ng-bind="item.config.descrLong"></div>
+      <div data-ng-if="!item.isUndergraduate">
+        <hr aria-hidden="true" />
+        <h3>Next Steps</h3>
+        <div>
+          The next step for you to take is formal acceptance of our admission
+          offer. Let us know your decision by
+          <span
+            data-ng-bind="api.date.format(item.dueDt, api.date.formats.long)"
+          ></span
+          >.
         </div>
-        <div data-ng-bind="item.config.descrLong"></div>
-        <div data-ng-if="!item.isUndergraduate">
-          <hr aria-hidden="true">
-          <h3>Next Steps</h3>
+      </div>
+      <div data-ng-if="item.isUndergraduate">
+        <br />
+        <div>
+          To reserve your seat, accept your Undergraduate Offer of
+          Admission<span data-ng-if="item.deposit.required">
+            and pay a non-refundable deposit of
+            <strong data-ng-bind="item.deposit.dueAmt | currency"></strong
+          ></span>
+          by
+          <span
+            data-ng-bind="api.date.format(item.dueDt, api.date.formats.long)"
+          ></span>
+          (11:59pm PST) and you'll be on your way to becoming a Golden Bear!
+        </div>
+        <div data-ng-if="!item.deposit.required">
+          <br />
           <div>
-            The next step for you to take is formal acceptance of our admission offer. Let us know your decision by <span data-ng-bind="api.date.format(item.dueDt, 'MMMM Do, yyyy')"></span>.
+            You are not required to pay a deposit.
           </div>
         </div>
-        <div data-ng-if="item.isUndergraduate">
-          <br/>
-          <div>
-            To reserve your seat, accept your Undergraduate Offer of Admission<span data-ng-if="item.deposit.required"> and pay a non-refundable deposit of <strong data-ng-bind="item.deposit.dueAmt | currency"></strong></span> by <span data-ng-bind="api.date.format(item.dueDt, 'MMMM Do, yyyy')"></span>
-            (11:59pm PST) and you'll be on your way to becoming a Golden Bear!
-          </div>
-          <div data-ng-if="!item.deposit.required">
-            <br/>
-            <div>
-              You are not required to pay a deposit.
-            </div>
-          </div>
-        </div>
-        <!-- SIR Options -->
-        <form class="cc-widget-sir-form" data-ng-submit="submitSirReponse()">
-          <fieldset class="cc-widget-sir-form-fieldset" data-ng-disabled="sirItem.isSubmitting">
-            <div data-ng-repeat="sirOption in item.config.sirOptions">
-              <label class="cc-widget-sir-form-label">
-                <input class="cc-widget-sir-form-radio" type="radio" data-ng-model="sirItem.form.option" data-ng-value="sirOption">
-                <div class="cc-widget-sir-form-description" data-ng-bind="sirOption.descrLong"></div>
-              </label>
-              <!-- Show conditions when the user accepts SIR -->
-              <div data-ng-if="sirOption.progAction === 'DEIN' && sirItem.form.option.progAction === 'DEIN' && sirItem.form.option === sirOption" class="cc-widget-sir-form-subcontainer">
-                <div data-ng-repeat="sirCondition in item.config.sirConditions">
-                  <label class="cc-widget-sir-form-label">
-                    <input class="cc-widget-sir-form-check" type="checkbox" data-ng-model="sirItem.form.check[sirCondition.seqnum].valid" data-ng-attr-id="cc-widget-sir-form-check-{{$index}}">
-                    <label class="cc-widget-sir-form-description cc-widget-sir-form-label" data-ng-bind="sirCondition.messageText" data-ng-attr-for="cc-widget-sir-form-check-{{$index}}"></label>
-                  </label>
-                </div>
-              </div>
-              <div data-ng-if="sirOption.progAction === 'WAPP' && sirItem.form.option.progAction === 'WAPP' && sirItem.form.option === sirOption" class="cc-widget-sir-form-subcontainer">
-                <div class="cc-widget-sir-form-decline-explanation">
-                  You have indicated that you wish to <strong>decline</strong> our offer of admission. We understand that your decision is an important one and we'd appreciate your reason for doing so.
-                </div>
-                <label for="cc-widget-sir-form-reasons" class="cc-visuallyhidden">Select your reason:</label>
-                <div class="cc-select">
-                  <select id="cc-widget-sir-form-reasons" data-ng-model="sirItem.form.decline.reasonCode" data-ng-options="r.responseReason as r.descr for r in item.responseReasons">
-                  </select>
-                </div>
-                <div class="cc-widget-sir-form-reason-description">
-                  <label for="cc-widget-sir-form-reason-description" class="cc-visuallyhidden">Specify:</label>
-                  <input type="text" id="cc-widget-sir-form-reason-description" placeholder="Specify" data-ng-model="sirItem.form.decline.reasonDescription" maxlength="30">
-                </div>
-                <hr aria-hidden="true">
-                <div class="cc-text-small">
-                  To confirm this decision, please select the <strong>I Decline This Offer</strong> button.
-                </div>
+      </div>
+      <!-- SIR Options -->
+      <form class="cc-widget-sir-form" data-ng-submit="submitSirReponse()">
+        <fieldset
+          class="cc-widget-sir-form-fieldset"
+          data-ng-disabled="sirItem.isSubmitting"
+        >
+          <div data-ng-repeat="sirOption in item.config.sirOptions">
+            <label class="cc-widget-sir-form-label">
+              <input
+                class="cc-widget-sir-form-radio"
+                type="radio"
+                data-ng-model="sirItem.form.option"
+                data-ng-value="sirOption"
+              />
+              <div
+                class="cc-widget-sir-form-description"
+                data-ng-bind="sirOption.descrLong"
+              ></div>
+            </label>
+            <!-- Show conditions when the user accepts SIR -->
+            <div
+              data-ng-if="sirOption.progAction === 'DEIN' && sirItem.form.option.progAction === 'DEIN' && sirItem.form.option === sirOption"
+              class="cc-widget-sir-form-subcontainer"
+            >
+              <div data-ng-repeat="sirCondition in item.config.sirConditions">
+                <label class="cc-widget-sir-form-label">
+                  <input
+                    class="cc-widget-sir-form-check"
+                    type="checkbox"
+                    data-ng-model="sirItem.form.check[sirCondition.seqnum].valid"
+                    data-ng-attr-id="cc-widget-sir-form-check-{{$index}}"
+                  />
+                  <label
+                    class="cc-widget-sir-form-description cc-widget-sir-form-label"
+                    data-ng-bind="sirCondition.messageText"
+                    data-ng-attr-for="cc-widget-sir-form-check-{{$index}}"
+                  ></label>
+                </label>
               </div>
             </div>
-            <div class="cc-widget-sir-button-container">
-              <button class="cc-button cc-button-blue" type="submit" data-ng-disabled="!api.user.profile.actAsOptions.canPost || !sirItem.isFormValid || sirItem.isSubmitting">
-                <span data-ng-if="!sirItem.isSubmitting">
-                  <span data-ng-if="sirItem.form.option.progAction !== 'WAPP' && (item.isUndergraduate && item.deposit.required)">Continue to Payment</span>
-                  <span data-ng-if="sirItem.form.option.progAction !== 'WAPP' && (!item.isUndergraduate || !item.deposit.required)">Confirm</span>
-                  <span data-ng-if="sirItem.form.option.progAction === 'WAPP'">I Decline This Offer</span>
-                </span>
-                <span data-ng-if="sirItem.isSubmitting">
-                  Submitting...
-                </span>
-              </button>
+            <div
+              data-ng-if="sirOption.progAction === 'WAPP' && sirItem.form.option.progAction === 'WAPP' && sirItem.form.option === sirOption"
+              class="cc-widget-sir-form-subcontainer"
+            >
+              <div class="cc-widget-sir-form-decline-explanation">
+                You have indicated that you wish to <strong>decline</strong> our
+                offer of admission. We understand that your decision is an
+                important one and we'd appreciate your reason for doing so.
+              </div>
+              <label for="cc-widget-sir-form-reasons" class="cc-visuallyhidden"
+                >Select your reason:</label
+              >
+              <div class="cc-select">
+                <select
+                  id="cc-widget-sir-form-reasons"
+                  data-ng-model="sirItem.form.decline.reasonCode"
+                  data-ng-options="r.responseReason as r.descr for r in item.responseReasons"
+                >
+                </select>
+              </div>
+              <div class="cc-widget-sir-form-reason-description">
+                <label
+                  for="cc-widget-sir-form-reason-description"
+                  class="cc-visuallyhidden"
+                  >Specify:</label
+                >
+                <input
+                  type="text"
+                  id="cc-widget-sir-form-reason-description"
+                  placeholder="Specify"
+                  data-ng-model="sirItem.form.decline.reasonDescription"
+                  maxlength="30"
+                />
+              </div>
+              <hr aria-hidden="true" />
+              <div class="cc-text-small">
+                To confirm this decision, please select the
+                <strong>I Decline This Offer</strong> button.
+              </div>
             </div>
-          </fieldset>
-        </form>
+          </div>
+          <div class="cc-widget-sir-button-container">
+            <button
+              class="cc-button cc-button-blue"
+              type="submit"
+              data-ng-disabled="!api.user.profile.actAsOptions.canPost || !sirItem.isFormValid || sirItem.isSubmitting"
+            >
+              <span data-ng-if="!sirItem.isSubmitting">
+                <span
+                  data-ng-if="sirItem.form.option.progAction !== 'WAPP' && (item.isUndergraduate && item.deposit.required)"
+                  >Continue to Payment</span
+                >
+                <span
+                  data-ng-if="sirItem.form.option.progAction !== 'WAPP' && (!item.isUndergraduate || !item.deposit.required)"
+                  >Confirm</span
+                >
+                <span data-ng-if="sirItem.form.option.progAction === 'WAPP'"
+                  >I Decline This Offer</span
+                >
+              </span>
+              <span data-ng-if="sirItem.isSubmitting">
+                Submitting...
+              </span>
+            </button>
+          </div>
+        </fieldset>
+      </form>
     </div>
   </div>
 </div>
