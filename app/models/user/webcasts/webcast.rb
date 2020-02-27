@@ -16,7 +16,7 @@ module User
           source: source,
           sourceName: source,
           source_url: url,
-          title: title,
+          title: "Course Capture Available",
           description: summary,
           type: type,
           url: url
