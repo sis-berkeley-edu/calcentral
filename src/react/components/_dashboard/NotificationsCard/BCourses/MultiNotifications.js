@@ -28,7 +28,7 @@ const MiniNotification = ({ notification, expanded, setExpanded }) => {
           <DisclosureChevron expanded={isExpanded} />
         </div>
         <div style={{ flex: `1` }}>
-          {notification.type === 'gradeposting' && <GradedLabel />}{' '}
+          {notification.type === 'gradePosting' && <GradedLabel />}{' '}
           {notification.title}
         </div>
       </div>
