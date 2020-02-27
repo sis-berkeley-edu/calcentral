@@ -22,7 +22,7 @@ module User
           title: processed_title,
           description: summary,
           type: processed_type,
-          url: html_url
+          url: html_url,
         }
       end
 

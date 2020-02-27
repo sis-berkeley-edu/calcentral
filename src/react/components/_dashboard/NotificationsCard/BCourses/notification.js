@@ -4,7 +4,7 @@ const labels = {
   announcement: 'New Announcements',
   webconference: 'New Conferences',
   webcast: 'New Course Captures',
-  gradeposting: 'Graded Assignments',
+  gradePosting: 'Graded Assignments',
 };
 
 const Notification = {
