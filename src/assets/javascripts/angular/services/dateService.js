@@ -1,6 +1,6 @@
 'use strict';
 
-import { format, parseISO } from 'date-fns';
+import { format, parseISO, formatDistance } from 'date-fns';
 
 angular.module('calcentral.services').service('dateService', [
   function() {
@@ -9,6 +9,7 @@ angular.module('calcentral.services').service('dateService', [
       format: (string, formatString) => {
         return format(parseISO(string), formatString);
       },
+      formatDistance,
     };
 
     return dateService;
