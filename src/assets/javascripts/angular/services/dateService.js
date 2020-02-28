@@ -1,9 +1,20 @@
 'use strict';
 
-angular.module('calcentral.services').service('dateService', [function() {
-  var dateService = {
-    now: Date.now()
-  };
-  angular.extend(dateService, require('date-fns'));
-  return dateService;
-}]);
+import { format, parseISO, formatDistance } from 'date-fns';
+
+angular.module('calcentral.services').service('dateService', [
+  function() {
+    var dateService = {
+      now: Date.now(),
+      format: (string, formatString) => {
+        return format(parseISO(string), formatString);
+      },
+      formatDistance,
+      formats: {
+        long: 'MMMM do, yyyy',
+      },
+    };
+
+    return dateService;
+  },
+]);
