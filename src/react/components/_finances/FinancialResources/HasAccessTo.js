@@ -110,7 +110,7 @@ const hasAccessToLink = (key, roles, careers, delegate, summer) => {
     fafsaVerify: {
       roles: ['student', 'applicant', 'staff', 'faculty', 'exStudent'],
       careers: nonConcurrentCareers,
-      allowsDelegateAccess: true,
+      allowsDelegateAccess: false,
       allowsSummerVisitor: false,
     },
     federalStudentLoans: {
