@@ -17,13 +17,12 @@ angular.module('calcentral.controllers').controller('EnrollmentCardController', 
       } = $ngRedux.getState();
 
       if (loaded) {
-        $scope.enrollmentIsLoading = false;
+        $scope.statusAndHoldsIsLoading = false;
       }
     }
   });
 
-  $scope.enrollmentIsLoading = true;
-
+  $scope.statusAndHoldsIsLoading = true;
   $scope.enrollment = {
     isLoading: true,
   };
