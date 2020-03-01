@@ -1,4 +1,4 @@
-<div data-ng-if="api.user.profile.hasDashboardTab">
+<div data-ng-if="api.user.profile.hasDashboardTab && !api.user.profile.roles.withdrawnAdmit">
   <div class="medium-5 large-3 columns">
     <div
       data-ng-include="'widgets/sir/sir.html'"
@@ -52,3 +52,4 @@
   data-ng-include="'delegate_access_denied.html'"
   data-ng-if="!api.user.profile.profile.hasDashboardTab && api.user.profile.delegateActingAsUid"
 ></div>
+<div data-ng-include="'withdrawn_admit.html'" data-ng-if="api.user.profile.roles.withdrawnAdmit"></div>

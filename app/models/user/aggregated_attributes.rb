@@ -40,6 +40,7 @@ module User
       base_roles = Berkeley::UserRoles.base_roles
       ldap_roles = (@ldap_attributes && @ldap_attributes[:roles]) || {}
       campus_roles = base_roles.merge ldap_roles
+      campus_roles[:withdrawnAdmit] = is_withdrawn_admit?
       if @sis_profile_visible
         edo_roles = (@edo_attributes && @edo_attributes[:roles]) || {}
         # Do not introduce conflicts if CS is more up-to-date on active student status.
@@ -49,6 +50,10 @@ module User
       else
         campus_roles
       end
+    end
+
+    def is_withdrawn_admit?
+      EdoOracle::Queries.is_withdrawn_admit?(@uid)
     end
 
     # Split brain three ways until some subset of the brain proves more trustworthy.

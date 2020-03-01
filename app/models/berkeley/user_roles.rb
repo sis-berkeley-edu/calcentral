@@ -136,9 +136,6 @@ module Berkeley
         if !result[:student] && %w(GRADUATE STUDENT UNDERGRAD).include?(inactive_affiliation[:type][:code])
           result[:exStudent] = true
         end
-        if !result[:releasedAdmit] && inactive_affiliation[:type][:code] == 'APPLICANT' && inactive_affiliation[:type][:description] == 'Canceled'
-          result[:withdrawnAdmit] = true
-        end
       end
       base_roles.merge(result)
     end
