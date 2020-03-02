@@ -910,6 +910,15 @@ module EdoOracle
       result.any?
     end
 
+    def self.is_withdrawn_admit?(person_id)
+      result = safe_query <<-SQL
+        SELECT CAMPUS_ID
+        FROM SYSADM.PS_UCC_AD_WITHDRWN
+        WHERE CAMPUS_ID = '#{person_id}'
+      SQL
+      result.any?
+    end
+
     def self.get_pnp_calculator_values(student_id)
       result = safe_query <<-SQL
         SELECT TOTAL_GPA_UNITS,
