@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { enableOAuth } from 'functions/user';
-import { react2angular } from 'react2angular';
 
 import './NoBconnected.scss';
 
@@ -26,9 +25,14 @@ const NoBconnected = ({
 
   return (
     <div className={className}>
-      {mode === 'upnext' && (
+      {(mode === 'upnext' || mode === 'tasks') && (
         <div>
-          <span>Want to see events from your bCal calendar?&nbsp;</span>
+          {mode === 'tasks' && (
+            <span>Want to create your own personal bTasks?</span>
+          )}
+          {mode === 'upnext' && (
+            <span>Want to see events from your bCal calendar?&nbsp;</span>
+          )}
           {!actingAsAnotherUser && (
             <button
               className="cc-button-link"
@@ -39,7 +43,7 @@ const NoBconnected = ({
           )}
           {actingAsAnotherUser && <span>Connect</span>} CalCentral to your
           bConnected Google calendar account, then Accept.
-          {!showReminder && (
+          {!showReminder && mode !== 'tasks' && (
             <span>
               {' '}
               <button
@@ -113,9 +117,5 @@ NoBconnected.propTypes = {
   mode: PropTypes.string,
   applicationLayer: PropTypes.string,
 };
-
-angular
-  .module('calcentral.react')
-  .component('noBconnected', react2angular(NoBconnected));
 
 export default connect(mapStateToProps)(NoBconnected);
