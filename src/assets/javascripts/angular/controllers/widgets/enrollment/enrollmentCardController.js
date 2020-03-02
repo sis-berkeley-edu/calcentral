@@ -11,14 +11,12 @@ import { fetchStatusAndHolds } from 'redux/actions/statusActions'
  */
 angular.module('calcentral.controllers').controller('EnrollmentCardController', function(apiService, enrollmentFactory, linkService, $route, $scope, $routeParams, $ngRedux) {
   $ngRedux.subscribe(() => {
-    if ($scope.enrollment.isLoading == false) {
-      const {
-        myStatusAndHolds: { loaded },
-      } = $ngRedux.getState();
+    const {
+      myStatusAndHolds: { loaded },
+    } = $ngRedux.getState();
 
-      if (loaded) {
-        $scope.statusAndHoldsIsLoading = false;
-      }
+    if (loaded) {
+      $scope.statusAndHoldsIsLoading = false;
     }
   });
 
