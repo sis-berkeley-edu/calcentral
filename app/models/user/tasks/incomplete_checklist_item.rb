@@ -1,19 +1,12 @@
 module User
   module Tasks
     class IncompleteChecklistItem < ChecklistItem
-      include ActiveModel::Model
 
       attr_accessor :action_url,
         :action_text,
-        :admin_function,
         :department_name,
-        :due_date,
         :title,
         :item_code,
-        :aid_year,
-        :aid_year_description,
-        :status_date,
-        :status_code,
         :description,
         :has_upload_button,
         :upload_url_id,
@@ -41,24 +34,13 @@ module User
           hasUpload: has_upload?,
           isBeingProcessed: being_processed?,
           isIncomplete: incomplete?,
+          isSir: sir?,
           status: status,
           statusDate: status_on,
           title: title,
           uploadUrl: upload_url,
           organizationName: organization_name,
         }
-      end
-
-      def aid_year_name
-        "#{aid_year.to_i - 1}-#{aid_year}" if aid_year
-      end
-
-      def due_on
-        due_date&.to_date
-      end
-
-      def status_on
-        status_date&.to_date
       end
 
       # Sometimes the action_url is " " (single space string), other times ""
@@ -87,10 +69,6 @@ module User
         })
       end
 
-      def display_category
-        return 'residency' if item_code[0, 2] == 'RR'
-        DISPLAY_CATEGORIES.fetch(admin_function) { 'student' }
-      end
 
       def being_processed?
         ['Processing', 'Received'].include?(status)
