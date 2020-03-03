@@ -12,7 +12,7 @@ module User
         :item_status_xlt
 
       def as_json(options={})
-        {
+        super.merge({
           aidYear: aid_year,
           aidYearName: aid_year_name,
           aidYearDescription: aid_year_description,
@@ -21,14 +21,13 @@ module User
           checklistSequence: checklist_sequence,
           departmentName: department_name,
           description: description,
-          displayCategory: display_category,
           dueDate: due_on,
           itemCode: item_code,
           organizationName: organization_name,
           sequenceNumber: sequence_number,
           title: title,
           status: status,
-        }
+        })
       end
 
       def status

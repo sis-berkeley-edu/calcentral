@@ -1,5 +1,14 @@
 describe User::Tasks::ChecklistItem do
   describe "#display_category" do
+    it "is 'finances' if admin_function is BDGT" do
+      subject = described_class.new({
+        admin_function: 'BDGT',
+        item_code: 'FVERA'
+      })
+
+      expect(subject.display_category).to eq('financialAid')
+    end
+
     it "is 'residency' if item_code starts with 'RR'" do
       subject = described_class.new({ item_code: 'RR_RESIDENCY', admin_function: "ADMA" })
       expect(subject.display_category).to eq 'residency'
