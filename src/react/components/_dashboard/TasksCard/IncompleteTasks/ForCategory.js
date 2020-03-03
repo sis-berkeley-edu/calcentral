@@ -62,9 +62,9 @@ const ForCategory = ({ category }) => {
 
       {expanded && (
         <>
-          {itemsIncomplete > 0 && (
+          {incompleteCount > 0 && (
             <CategorySection items={tasks}>
-              {tasks.map((task, index) => (
+              {itemsIncomplete.map((task, index) => (
                 <CategoryItem key={index} task={task} index={index} />
               ))}
             </CategorySection>
@@ -76,7 +76,7 @@ const ForCategory = ({ category }) => {
               categorySection="beingProcessed"
               columns={['Title']}
             >
-              {tasks.map((task, index) => (
+              {itemsBeingProcessed.map((task, index) => (
                 <CategoryItem key={index} task={task} index={index} />
               ))}
             </CategorySection>
