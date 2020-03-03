@@ -25,7 +25,7 @@ echo_usage() {
 LOG_RELATIVE_PATH="log/sis_api_test_$(date +"%Y-%m-%d_%H%M%S")"
 LOG_DIRECTORY="${PWD}/${LOG_RELATIVE_PATH}"
 CURL_STDOUT_LOG_FILE="${LOG_DIRECTORY}/curl_stdout.log"
-API_ERROR_INDICATORS="error\|unable to find\|not authorized\|no service\|not available"
+API_ERROR_INDICATORS="unable to find\|not authorized\|no service\|not available"
 
 parse_yaml() {
   # --------------------------------------------
