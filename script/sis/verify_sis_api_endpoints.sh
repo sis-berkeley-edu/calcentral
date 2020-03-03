@@ -25,7 +25,7 @@ echo_usage() {
 LOG_RELATIVE_PATH="log/sis_api_test_$(date +"%Y-%m-%d_%H%M%S")"
 LOG_DIRECTORY="${PWD}/${LOG_RELATIVE_PATH}"
 CURL_STDOUT_LOG_FILE="${LOG_DIRECTORY}/curl_stdout.log"
-API_ERROR_INDICATORS="error\|unable to find\|not authorized\|no service\|not available"
+API_ERROR_INDICATORS="unable to find\|not authorized\|no service\|not available"
 
 parse_yaml() {
   # --------------------------------------------
@@ -298,16 +298,17 @@ if [ "${APP_MODE}" == "calcentral" ] ; then
     "/UC_SR_FACULTY_COMMITTEE.v1/UC_SR_FACULTY_COMMITTEE_GET?EMPLID=${CAMPUS_SOLUTIONS_ID}"
 fi
 
+verify_hub 'hub_sis_person_api' true \
+  "${yml_hub_person_proxy_base_url//\'}/v1/sis-person/${CAMPUS_SOLUTIONS_ID}"
+
 verify_hub 'profile' true \
-  "/v1/students/${CAMPUS_SOLUTIONS_ID}/academic-status" \
-  "/v1/students/${CAMPUS_SOLUTIONS_ID}/affiliation" \
-  "/v1/students/${CAMPUS_SOLUTIONS_ID}/contacts" \
-  "/v1/students/${CAMPUS_SOLUTIONS_ID}/gender" \
-  "/v1/students/${CAMPUS_SOLUTIONS_ID}/all" \
-  "/v1/students/${CAMPUS_SOLUTIONS_ID}/demographic" \
-  "/v1/students/${CAMPUS_SOLUTIONS_ID}/registrations" \
-  "/v1/students/${CAMPUS_SOLUTIONS_ID}/work-experiences" \
-  "/v2/students/${CAMPUS_SOLUTIONS_ID}?inc-acad=true&inc-regs=true"
+  "/v2/students/${CAMPUS_SOLUTIONS_ID}?inc-acad=true&inc-inactive-programs=true&inc-completed-programs=true" \
+  "/v2/students/${CAMPUS_SOLUTIONS_ID}?inc-cntc=true" \
+  "/v2/students/${CAMPUS_SOLUTIONS_ID}?inc-dmgr=true" \
+  "/v2/students/${CAMPUS_SOLUTIONS_ID}?inc-gndr=true" \
+  "/v2/students/${CAMPUS_SOLUTIONS_ID}?inc-regs=true" \
+  "/v2/students/${CAMPUS_SOLUTIONS_ID}?inc-attr=true" \
+  "/v2/students/${CAMPUS_SOLUTIONS_ID}?inc-work=true"
 
 # Custom credentials are needed for the Hub's Term API
 export HUB_APP_ID="${yml_hub_term_proxy_app_id//\'}"
