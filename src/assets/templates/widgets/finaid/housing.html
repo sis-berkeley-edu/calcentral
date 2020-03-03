@@ -2,7 +2,7 @@
   <div class="cc-widget-title">
     <h2 class="cc-left" data-ng-bind="housing.isFallPathway ? 'Housing or Pathway' : 'Housing'"></h2>
     <a
-      data-ng-if="housing.links.updateHousing.url && !housing.errored"
+      data-ng-if="housing.links.updateHousing.url && !housing.errored && api.user.profile.actAsOptions.canSeeCSLinks"
       class="cc-right cc-widget-title-link"
       data-cc-campus-solutions-link-directive="housing.links.updateHousing"
       data-cc-campus-solutions-link-directive-cc-page-name="currentPage.name"
