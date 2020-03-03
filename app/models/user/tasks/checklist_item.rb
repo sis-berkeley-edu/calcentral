@@ -1,12 +1,6 @@
 module User
   module Tasks
     class ChecklistItem
-      def initialize(attrs={})
-        attrs.each do |key, value|
-          send("#{key}=", value) if respond_to?("#{key}=")
-        end
-      end
-
       attr_accessor :admin_function,
         :aid_year,
         :aid_year_description,
@@ -16,14 +10,20 @@ module User
         :status_code,
         :status_date
 
-      DISPLAY_CATEGORIES = {
-        "ADMA" => "newStudent",
-        "ADMP" => "admissions",
-        "FINA" => "financialAid",
-        "SFAC" => "financialAid"
-      }
+      def initialize(attrs={})
+        attrs.each do |key, value|
+          send("#{key}=", value) if respond_to?("#{key}=")
+        end
+      end
 
-      IGNORED_STATUS_CODES = ['O', 'T', 'X'];
+      def as_json(options={})
+        {
+          displayCategory: display_category,
+          isFinancialAid: financial_aid?,
+        }
+      end
+
+      IGNORED_STATUS_CODES = ['O', 'T', 'X']
 
       # SIR -> Statement of Intent to Register
       SIR_CHECKLIST_CODES = ["AUSIR", "AGSIR1", "AGHSIR", "AGPSIR", "ALSIR1"]
@@ -50,13 +50,16 @@ module User
         STATUS_INCOMPLETE => 'Incomplete',
       }
 
+      def financial_aid?
+        admin_function == 'FINA'
+      end
+
       def status
         STATUSES[status_code]
       end
 
       def display_category
-        return 'residency' if item_code[0, 2] == 'RR'
-        DISPLAY_CATEGORIES.fetch(admin_function) { 'student' }
+        @display_category ||= DisplayCategory.new(admin_function, item_code).to_s
       end
 
       def aid_year_name

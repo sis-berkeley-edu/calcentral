@@ -21,7 +21,7 @@ module User
         :career_number
 
       def as_json(options={})
-        {
+        super.merge({
           actionUrl: action_url_or_nil,
           actionText: action_text,
           aidYear: aid_year,
@@ -29,7 +29,6 @@ module User
           assignedDate: status_on,
           description: description,
           departmentName: department_name,
-          displayCategory: display_category,
           dueDate: due_on,
           hasUpload: has_upload?,
           isBeingProcessed: being_processed?,
@@ -40,7 +39,7 @@ module User
           title: title,
           uploadUrl: upload_url,
           organizationName: organization_name,
-        }
+        })
       end
 
       # Sometimes the action_url is " " (single space string), other times ""
