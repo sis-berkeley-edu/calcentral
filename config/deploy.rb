@@ -27,6 +27,18 @@ namespace :calcentral_dev do
     end
   end
 
+  desc "Update and restart the calcentral_dev machine"
+  task :colddeploy, :roles => :calcentral_dev_host do
+    # Take everything offline first.
+    servers = find_servers_for_task(current_task)
+
+    transaction do
+      servers.each_with_index do |server, index|
+        run "cd #{project_root}; ./script/update-build-tomcat-test.sh -o offline", :hosts => server
+      end
+    end
+  end
+
   desc "Update CalCentral warfile w/o resting tomcat server"
   task :hotdeploy, :roles => :calcentral_dev_host do
     servers = find_servers_for_task(current_task)
