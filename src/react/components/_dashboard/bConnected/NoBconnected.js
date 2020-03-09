@@ -28,7 +28,8 @@ const NoBconnected = ({
     <div className={className}>
       {mode === 'upnext' && (
         <div>
-          <span>Want to see events from your bCal calendar?&nbsp;</span>
+          <span>Want to see events from your bCal calendar?</span>
+          {' '}
           {!actingAsAnotherUser && (
             <button
               className="cc-button-link"
@@ -55,20 +56,13 @@ const NoBconnected = ({
       {mode === 'main' && (
         <div>
           <p>
-            Connect CalCentral to your campus bConnected <em>email</em>,{' '}
-            <em>calendar</em> and <em>drive</em> account.
+            Connect your bConnected account to display bConnected mail, calendar,
+            tasks, and drive information in CalCentral.
           </p>
+          <p>Please log out of any personal Google accounts before you connect.</p>
           <p>
-            Click Connect to go to a Google page, then Accept to complete the
-            setup with CalCentral.{' '}
-            {!showReminder && (
-              <button
-                className="cc-button-link"
-                onClick={() => setShowReminder(!showReminder)}
-              >
-                Show more
-              </button>
-            )}
+          Not ready? You can connect later on CalCentral&lsquo;s{' '}
+          <a href="/profile/bconnected">bConnected page</a>.
           </p>
         </div>
       )}
