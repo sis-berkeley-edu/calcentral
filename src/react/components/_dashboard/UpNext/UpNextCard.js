@@ -36,57 +36,58 @@ export const UpNextCard = ({
 
   const hasItems = !!items.length;
 
-  hasGoogleAccessToken = false;
-  officialBmailAddress = true;
-
-  return (
-    <Card
-      className="UpNextCard cc-react-widget"
-      title="Up Next"
-      loading={isLoading}
-      error={error}
-    >
-      {hasItems && (
-        <ul className="list">
-          {items &&
-            items.map((item, index) => (
-              <UpNextItem
-                date={date}
-                item={item}
-                index={index}
-                key={index}
-                expandedItemIndex={expandedItemIndex}
-                setExpandedItemIndex={setExpandedItemIndex}
-              />
-            ))}
-        </ul>
-      )}
-      {!hasItems && hasGoogleAccessToken && (
-        <div className="top-spacing">
-          You have no events scheduled for the rest of the day.
-        </div>
-      )}
-      {!hasItems && !hasGoogleAccessToken && officialBmailAddress && (
-        <div className="top-spacing">
-          <NoBconnected mode="upnext" />
-        </div>
-      )}
-      {!hasItems && !hasGoogleAccessToken && !officialBmailAddress && (
-        <div className="top-spacing">
-          Our records indicate that you do not currently have a bConnected
-          account (UC Berkeley email and calendar). Visit{' '}
-          <a
-            target="_blank"
-            rel="noopener noreferrer"
-            href="https://mybconnected.berkeley.edu/manage/account/create_account"
-          >
-            bConnected
-          </a>{' '}
-          to create your bConnected account.
-        </div>
-      )}
-    </Card>
-  );
+  if (!officialBmailAddress) {
+    return null;
+  } else {
+    return (
+      <Card
+        className="UpNextCard cc-react-widget"
+        title="Up Next"
+        loading={isLoading}
+        error={error}
+      >
+        {hasItems && (
+          <ul className="list">
+            {items &&
+              items.map((item, index) => (
+                <UpNextItem
+                  date={date}
+                  item={item}
+                  index={index}
+                  key={index}
+                  expandedItemIndex={expandedItemIndex}
+                  setExpandedItemIndex={setExpandedItemIndex}
+                />
+              ))}
+          </ul>
+        )}
+        {!hasItems && hasGoogleAccessToken && (
+          <div className="top-spacing">
+            You have no events scheduled for the rest of the day.
+          </div>
+        )}
+        {!hasItems && !hasGoogleAccessToken && officialBmailAddress && (
+          <div className="top-spacing">
+            <NoBconnected mode="upnext" />
+          </div>
+        )}
+        {!hasItems && !hasGoogleAccessToken && !officialBmailAddress && (
+          <div className="top-spacing">
+            Our records indicate that you do not currently have a bConnected
+            account (UC Berkeley email and calendar). Visit{' '}
+            <a
+              target="_blank"
+              rel="noopener noreferrer"
+              href="https://mybconnected.berkeley.edu/manage/account/create_account"
+            >
+              bConnected
+            </a>{' '}
+            to create your bConnected account.
+          </div>
+        )}
+      </Card>
+    );
+  }
 };
 
 const mapStateToProps = ({ myUpNext, myStatus }) => {
