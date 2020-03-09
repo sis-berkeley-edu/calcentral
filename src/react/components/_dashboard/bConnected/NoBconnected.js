@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { enableOAuth } from 'functions/user';
+import { react2angular } from 'react2angular';
 
 import './NoBconnected.scss';
 
@@ -25,14 +26,10 @@ const NoBconnected = ({
 
   return (
     <div className={className}>
-      {(mode === 'upnext' || mode === 'tasks') && (
+      {mode === 'upnext' && (
         <div>
-          {mode === 'tasks' && (
-            <span>Want to create your own personal bTasks?</span>
-          )}
-          {mode === 'upnext' && (
-            <span>Want to see events from your bCal calendar?&nbsp;</span>
-          )}
+          <span>Want to see events from your bCal calendar?</span>
+          {' '}
           {!actingAsAnotherUser && (
             <button
               className="cc-button-link"
@@ -43,7 +40,7 @@ const NoBconnected = ({
           )}
           {actingAsAnotherUser && <span>Connect</span>} CalCentral to your
           bConnected Google calendar account, then Accept.
-          {!showReminder && mode !== 'tasks' && (
+          {!showReminder && (
             <span>
               {' '}
               <button
@@ -59,20 +56,13 @@ const NoBconnected = ({
       {mode === 'main' && (
         <div>
           <p>
-            Connect CalCentral to your campus bConnected <em>email</em>,{' '}
-            <em>calendar</em> and <em>drive</em> account.
+            Connect your bConnected account to display bConnected mail, calendar,
+            tasks, and drive information in CalCentral.
           </p>
+          <p>Please log out of any personal Google accounts before you connect.</p>
           <p>
-            Click Connect to go to a Google page, then Accept to complete the
-            setup with CalCentral.{' '}
-            {!showReminder && (
-              <button
-                className="cc-button-link"
-                onClick={() => setShowReminder(!showReminder)}
-              >
-                Show more
-              </button>
-            )}
+          Not ready? You can connect later on CalCentral&lsquo;s{' '}
+          <a href="/profile/bconnected">bConnected page</a>.
           </p>
         </div>
       )}
@@ -117,5 +107,9 @@ NoBconnected.propTypes = {
   mode: PropTypes.string,
   applicationLayer: PropTypes.string,
 };
+
+angular
+  .module('calcentral.react')
+  .component('noBconnected', react2angular(NoBconnected));
 
 export default connect(mapStateToProps)(NoBconnected);
