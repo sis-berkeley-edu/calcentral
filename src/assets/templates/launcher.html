@@ -1,15 +1,31 @@
 <header class="cc-masthead">
-  <div class="cc-offcanvas-icon cc-left" data-ng-show="api.user.events.isAuthenticated">
-    <button data-ng-click="offCanvasMenu.show=!offCanvasMenu.show"><i class="fa fa-bars"></i></button>
+  <div
+    class="cc-offcanvas-icon cc-left"
+    data-ng-show="api.user.events.isAuthenticated"
+  >
+    <button data-ng-click="offCanvasMenu.show=!offCanvasMenu.show">
+      <i class="fa fa-bars"></i>
+    </button>
   </div>
-  <div class="cc-header-logo cc-print-show" data-ng-class="{'hide-for-small':(api.user.events.isAuthenticated)}">
+  <div
+    class="cc-header-logo cc-print-show"
+    data-ng-class="{'hide-for-small':(api.user.events.isAuthenticated)}"
+  >
     <a href="/dashboard">
       <span class="cc-visuallyhidden">Return to dashboard</span>
       <div data-ng-include="'svg/calcentral_logo.html'"></div>
     </a>
   </div>
-  <nav class="cc-header-icons" data-ng-cloak data-ng-show="api.user.events.isAuthenticated">
-    <div class="cc-left" data-ng-include="'widgets/badges_popover.html'" data-ng-if="api.user.profile.hasBadges"></div>
+  <nav
+    class="cc-header-icons"
+    data-ng-cloak
+    data-ng-show="api.user.events.isAuthenticated"
+  >
+    <div
+      class="cc-left"
+      data-ng-include="'widgets/badges_popover.html'"
+      data-ng-if="api.user.profile.hasBadges && !api.user.profile.isSlateUser"
+    ></div>
     <div class="cc-left" data-ng-include="'widgets/gear_popover.html'"></div>
   </nav>
 </header>
