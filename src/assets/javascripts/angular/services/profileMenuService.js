@@ -222,18 +222,18 @@ angular
       return defer(navigation, filterEmptyInNavigation);
     };
 
-    var filterSlateUsers = function(navigation) {
-      return defer(navigation, filterSlateUserInNavigation);
+    var filterBConnectedUsers = function(navigation) {
+      return defer(navigation, filterBConnectedUserInNavigation);
     };
 
-    var filterSlateUserInNavigation = function(navigation) {
-      return filterCategories(navigation, filterSlateUserInCategory);
+    var filterBConnectedUserInNavigation = function(navigation) {
+      return filterCategories(navigation, filterBConnectedUserInCategory);
     };
 
-    var filterSlateUserInCategory = function(categories) {
-      var isSlateUser = apiService.user.profile.isSlateUser;
+    var filterBConnectedUserInCategory = function(categories) {
+      var hasBConnectedAccount = !!apiService.user.profile.officialBmailAddress;
       return _.filter(categories, function(category) {
-        if (!isSlateUser) {
+        if (hasBConnectedAccount) {
           return true;
         } else {
           return category.id != 'bconnected';
@@ -254,7 +254,7 @@ angular
         .then(filterRoles)
         .then(filterFeatureFlags)
         .then(filterActAs)
-        .then(filterSlateUsers)
+        .then(filterBConnectedUsers)
         .then(filterEmpty);
     };
 
