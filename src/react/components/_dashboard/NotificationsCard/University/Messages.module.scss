@@ -1,0 +1,26 @@
+@import 'src/react/stylesheets/variables';
+
+.messages {
+  flex: 1;
+}
+
+.message {
+  padding-top: 15px;
+  padding-bottom: 15px;
+
+  &:hover {
+    background-color: $cc-color-alice-blue;
+  }
+
+  .source {
+    color: #666;
+    font-size: 11px;
+    line-height: 13px;
+  }
+
+  .title {
+    color: #333;
+    font-size: 13px;
+    line-height: 15px;
+  }
+}

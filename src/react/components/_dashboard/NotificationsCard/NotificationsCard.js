@@ -3,66 +3,70 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { react2angular } from 'react2angular';
 
-import APILink from 'react/components/APILink';
 import Card from 'react/components/Card';
 import Spinner from 'react/components/Spinner';
 import ReduxProvider from 'react/components/ReduxProvider';
-import useFocus from 'react/useFocus';
 import { fetchWebMessages } from 'redux/actions/webMessagesActions';
 
-import SourceFilter from './SourceFilter';
-import MessagesBySource from './MessagesBySource';
+import { TabSwitcher, Tab } from './Tabs';
+import BCoursesTab from './BCourses/BCoursesTab';
+import UniversityTab from './University/UniversityTab';
 
-import NoMessages from './NoMessages';
+import useShowMore from './useShowMore';
 
 const NotificationsCard = ({
-  archiveUrl,
-  canSeeCSLinks,
   fetchNotifications,
-  groupedNotifications,
   loaded,
-  sources,
+  notificationsCount,
 }) => {
-  const [expandedItem, setExpandedItem] = useState('');
-  const [selectedSource, setSelectedSource] = useState('');
-
-  // useFocus is used to track whether the user is interacting with the card or
-  // has clicked somewhere else on the page
-  const [node, hasFocus] = useFocus();
-
   useEffect(() => {
     fetchNotifications();
   }, []);
+  const tabs = ['University', 'bCourses'];
+  const [UNIVERSITY_TAB, BCOURSES_TAB] = tabs;
+  const [isLoaded, setIsLoaded] = useState(loaded);
+  const [shownNotificationsCount, showMoreNotifications] = useShowMore(5);
+  const [shownCoursesCount, showMoreCourses] = useShowMore(10);
+  const [currentTab, setCurrentTab] = useState(UNIVERSITY_TAB);
+
+  // Use local state to determine when the data loads, which allows checking
+  // the notifications count and change the default tab if the university
+  // notifications count is zero
+  if (!isLoaded && loaded) {
+    if (notificationsCount === 0) {
+      setCurrentTab(BCOURSES_TAB);
+    }
+
+    setIsLoaded(true);
+  }
 
   return (
-    <Card
-      node={node}
-      title="Notifications"
-      secondaryContent={
-        <SourceFilter sources={sources} setSelectedSource={setSelectedSource} />
-      }
-    >
-      {loaded ? (
+    <Card title="Notifications">
+      {isLoaded ? (
         <>
-          {groupedNotifications.length > 0 ? (
-            <MessagesBySource
-              groupedNotifications={groupedNotifications}
-              selectedSource={selectedSource}
-              expandedItem={expandedItem}
-              setExpandedItem={setExpandedItem}
-              hasFocus={hasFocus}
+          <TabSwitcher>
+            {tabs.map(tab => (
+              <Tab
+                tab={tab}
+                key={tab}
+                current={currentTab}
+                setCurrent={setCurrentTab}
+              />
+            ))}
+          </TabSwitcher>
+
+          {currentTab === 'University' && (
+            <UniversityTab
+              shownCount={shownNotificationsCount}
+              showMore={showMoreNotifications}
             />
-          ) : (
-            <NoMessages />
           )}
 
-          {canSeeCSLinks && (
-            <div
-              className="cc-text-center cc-widget-padding"
-              style={{ marginBottom: `-15px` }}
-            >
-              <APILink {...archiveUrl} />
-            </div>
+          {currentTab === 'bCourses' && (
+            <BCoursesTab
+              shownCount={shownCoursesCount}
+              showMore={showMoreCourses}
+            />
           )}
         </>
       ) : (
@@ -74,47 +78,21 @@ const NotificationsCard = ({
 
 NotificationsCard.displayName = 'NotificationsCard';
 NotificationsCard.propTypes = {
-  archiveUrl: PropTypes.object,
+  notificationsCount: PropTypes.number,
   canSeeCSLinks: PropTypes.bool,
   fetchNotifications: PropTypes.func.isRequired,
-  groupedNotifications: PropTypes.array.isRequired,
   loaded: PropTypes.bool,
-  sources: PropTypes.array.isRequired,
 };
 
-import {
-  groupByDate,
-  byStatusDateTimeAsc,
-  dateAndTypeSourcedMessages,
-} from './notifications.module';
-
 const mapStateToProps = ({
-  myStatus: { canSeeCSLinks },
   myWebMessages: {
-    archiveUrl,
-    notifications = [],
-    canvas_activities = [],
-    webcasts = [],
     loaded,
+    universityNotifications: { notifications = [] } = {},
   },
 }) => {
-  const messages = [...notifications, ...canvas_activities, ...webcasts];
-
-  const sources = [
-    ...new Set(messages.map(notification => notification.source)),
-  ].sort();
-
-  const groupedNotifications = messages
-    .sort(byStatusDateTimeAsc)
-    .reduce(groupByDate, [])
-    .map(dateAndTypeSourcedMessages);
-
   return {
-    archiveUrl,
-    canSeeCSLinks,
     loaded,
-    sources,
-    groupedNotifications,
+    notificationsCount: notifications.length,
   };
 };
 

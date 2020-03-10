@@ -33,14 +33,12 @@ describe MyActivitiesController do
       end
       it 'returns a varied feed' do
         session['user_id'] = uid
-        expect(subject['activities'].index {|c| c['emitter'] == 'Campus Solutions'}).to_not be_nil
         expect(subject['activities'].index {|c| c['emitter'] == 'bCourses'}).to_not be_nil
       end
 
       context 'advisor view-as' do
         include_context 'advisor view-as'
         it 'filters bCourses activities' do
-          expect(subject['activities'].index {|c| c['emitter'] == 'Campus Solutions'}).to_not be_nil
           expect(subject['activities'].index {|c| c['emitter'] == 'bCourses'}).to be_nil
         end
       end
@@ -61,24 +59,6 @@ describe MyActivitiesController do
           expect(response.body).to eq ''
         end
       end
-      context 'financial access' do
-        let(:privileges) do
-          {
-            financial: true
-          }
-        end
-        it 'allows access only to Financial Aid tasks' do
-          get :get_feed
-          assert_response :success
-          json_response = JSON.parse(response.body)
-          json_response.should be_present
-          cs_finaid_activities = json_response['activities'].select {|t| (t['emitter'] == 'Campus Solutions') && t['cs']['isFinaid']}
-          expect(cs_finaid_activities).to be_present
-          expect(json_response['activities']).to eq cs_finaid_activities
-        end
-      end
     end
-
   end
-
 end

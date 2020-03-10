@@ -1,5 +1,5 @@
 module User
-  module Tasks
+  module Notifications
     class Notification
       include ActiveModel::Model
 
@@ -10,9 +10,8 @@ module User
         :source,
         :fixed_url,
         :status_datetime,
-        :action_description,
+        :action_text,
         :user,
-        :source_url,
         :admin_function,
         :institution,
         :aid_year
@@ -20,18 +19,17 @@ module User
       def as_json
         {
           id: id,
+          type: 'UniversityNotification',
+          actionText: action_text,
           category: category,
           title: title,
           source: source,
-          fixedUrl: fixed_url,
+          fixedUrl: use_fixed_url?,
           statusDate: status_date,
           statusDateTime: status_datetime&.to_datetime,
-          description: description,
-          linkText: link_text,
           link: link,
           isFinaid: is_finaid?,
           aidYear: aid_year,
-          type: 'campusSolutions',
         }
       end
 
@@ -39,26 +37,20 @@ module User
         admin_function == 'FINA'
       end
 
-      def link_text
-        'Read more'
-      end
-
       def link
-        LinkFetcher.fetch_link('UC_CC_WEBMSG_AGRMNT', { 'CCI_COMM_TRANS_ID' => id })
+        if use_fixed_url?
+          LinkFetcher.fetch_link(fixed_url)
+        else
+          LinkFetcher.fetch_link('UC_CC_WEBMSG_AGRMNT', { 'CCI_COMM_TRANS_ID' => id })
+        end
       end
 
       def status_date
         status_datetime&.to_date
       end
 
-      def description
-        corresponding_cs_api_message&.description
-      end
-
-      private
-
-      def corresponding_cs_api_message
-        @cs_api_message ||= user.pending_web_messages.find_by_transaction_id(id)
+      def use_fixed_url?
+        fixed_url.to_s.slice(0,5) == 'UC_CX'
       end
     end
   end

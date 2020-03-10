@@ -1,0 +1,22 @@
+@import 'src/react/stylesheets/variables';
+
+.dateLabel {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  width: 40px;
+  margin-right: $large-spacing;
+  padding-top: $large-spacing;
+}
+
+.month,
+.year {
+  font-size: 11px;
+  line-height: 13px;
+  color: $cc-color-dim-gray;
+}
+
+.day {
+  font-size: 15px;
+  color: $cc-color-dim-gray;
+}

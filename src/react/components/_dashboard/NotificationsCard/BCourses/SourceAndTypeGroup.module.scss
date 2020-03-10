@@ -1,0 +1,53 @@
+@import 'src/react/stylesheets/variables';
+
+.singleNotificationGroup {
+  border-bottom: 1px solid #eee;
+
+  &:last-child {
+    border-bottom-width: 0;
+  }
+}
+
+.multiNotificationGroup {
+  .header {
+    padding-top: $large-spacing;
+    padding-bottom: 10px;
+  }
+
+  .miniNotifications {
+    padding-bottom: $large-spacing;
+
+    .miniNotificationHeader {
+      padding: $small-spacing 0;
+
+      &:hover {
+        background: $cc-color-alice-blue;
+        cursor: pointer;
+      }
+    }
+  }
+}
+
+.singleNotificationGroup .expandHeader {
+  padding-top: $large-spacing;
+  padding-bottom: $large-spacing;
+  display: flex;
+
+  &:hover {
+    background-color: $cc-color-alice-blue;
+    cursor: pointer;
+  }
+}
+
+.sourceLabel {
+  font-size: 11px;
+  line-height: 13px;
+  color: $cc-color-dim-gray;
+}
+
+.secondaryLabel {
+  font-size: 13px;
+  line-height: 15px;
+  color: $cc-color-night-rider;
+  padding-top: $small-spacing;
+}
