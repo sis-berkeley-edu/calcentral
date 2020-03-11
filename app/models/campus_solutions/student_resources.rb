@@ -107,7 +107,7 @@ module CampusSolutions
           true unless !roles[:law]
         when :higher_degrees_committee_form, :special_enrollment_petition
           true unless ((roles[:graduate] || roles[:law]) && !(is_jd_llm_only? || is_law_visiting?))
-        when :submit_degree_candidacy_form
+        when :submit_degree_candidacy_form, :dissertation_signature, :expected_grad_term_add
           true unless (roles[:graduate] || current_academic_roles["lawJspJsd"])
         when :view_submitted_forms, :update_pending_forms
           true unless !(is_jd_llm_only? || is_law_visiting?)
@@ -117,8 +117,6 @@ module CampusSolutions
           true unless roles[:concurrentEnrollmentStudent]
         when :grad_change_of_academic_plan_add
           true unless roles[:graduate]
-        when :dissertation_signature, :expected_grad_term_add
-          true unless (roles[:graduate] || roles[:law])
         else
           false
         end
