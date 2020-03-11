@@ -89,7 +89,10 @@ import { endOfDay } from 'date-fns';
 
 const markOverdue = enabled => item => {
   if (enabled) {
-    if (item.displayCategory === 'financialAid') {
+    if (
+      item.displayCategory === 'financialAid' ||
+      (item.isBeingProcessed && !item.isSir)
+    ) {
       return item;
     } else {
       return { ...item, isOverdue: isPast(endOfDay(parseDate(item.dueDate))) };
@@ -99,10 +102,10 @@ const markOverdue = enabled => item => {
   }
 };
 
-const mapStateToProps = ({
-  myChecklistItems: { incompleteItems = [] },
-  myAgreements: { incompleteAgreements = [] },
-  myBCoursesTodos: { bCoursesTodos = [] },
+export const mapStateToProps = ({
+  myChecklistItems: { incompleteItems = [] } = {},
+  myAgreements: { incompleteAgreements = [] } = {},
+  myBCoursesTodos: { bCoursesTodos = [] } = {},
 }) => {
   const groupedByCategory = [
     ...incompleteItems,
