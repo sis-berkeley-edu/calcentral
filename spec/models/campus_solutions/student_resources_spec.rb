@@ -130,7 +130,35 @@ describe CampusSolutions::StudentResources do
     end
     it 'returns the expected number of sections/links' do
       expect(subject[:feed][:resources]).to have(4).items
-      expect(subject[:feed][:resources][0][:links]).to have(8).items
+      expect(subject[:feed][:resources][0][:links]).to have(6).items
+      expect(subject[:feed][:resources][1][:links]).to have(3).items
+      expect(subject[:feed][:resources][2][:links]).to have(2).items
+      expect(subject[:feed][:resources][3][:links]).to have(2).items
+    end
+  end
+
+  context 'as a lawJspJsd law student' do
+    before do
+      current_academic_roles.merge!({"doctorScienceLaw" => true})
+      roles.merge!({student: true, law: true})
+    end
+    it 'returns the expected number of sections/links' do
+      expect(subject[:feed][:resources]).to have(4).items
+      expect(subject[:feed][:resources][0][:links]).to have(6).items
+      expect(subject[:feed][:resources][1][:links]).to have(3).items
+      expect(subject[:feed][:resources][2][:links]).to have(2).items
+      expect(subject[:feed][:resources][3][:links]).to have(2).items
+    end
+  end
+
+  context 'as a lawJspJsd law student' do
+    before do
+      current_academic_roles.merge!({"jurisSocialPolicyPhD" => true})
+      roles.merge!({student: true, law: true})
+    end
+    it 'returns the expected number of sections/links' do
+      expect(subject[:feed][:resources]).to have(4).items
+      expect(subject[:feed][:resources][0][:links]).to have(7).items
       expect(subject[:feed][:resources][1][:links]).to have(3).items
       expect(subject[:feed][:resources][2][:links]).to have(2).items
       expect(subject[:feed][:resources][3][:links]).to have(2).items
