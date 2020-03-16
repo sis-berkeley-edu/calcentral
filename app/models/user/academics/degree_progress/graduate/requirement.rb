@@ -59,7 +59,8 @@ module User
           end
 
           def qualifying_exam_attempted?
-            milestone.qualifying_exam_results_requirement.attempts.present?
+            exam_resutls_reqs = milestone.qualifying_exam_results_requirement
+            exam_resutls_reqs.present? && exam_resutls_reqs.attempts.present?
           end
 
           def qualifying_exam_results?
