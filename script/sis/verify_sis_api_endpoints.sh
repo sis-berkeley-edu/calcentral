@@ -298,9 +298,6 @@ if [ "${APP_MODE}" == "calcentral" ] ; then
     "/UC_SR_FACULTY_COMMITTEE.v1/UC_SR_FACULTY_COMMITTEE_GET?EMPLID=${CAMPUS_SOLUTIONS_ID}"
 fi
 
-verify_hub 'hub_sis_person_api' true \
-  "${yml_hub_person_proxy_base_url//\'}/v1/sis-person/${CAMPUS_SOLUTIONS_ID}"
-
 verify_hub 'profile' true \
   "/v2/students/${CAMPUS_SOLUTIONS_ID}?inc-acad=true&inc-inactive-programs=true&inc-completed-programs=true" \
   "/v2/students/${CAMPUS_SOLUTIONS_ID}?inc-cntc=true" \
@@ -324,6 +321,13 @@ if [ "${APP_MODE}" == "calcentral" ] ; then
 
   verify_hub 'hub_enrollments_api' true \
     "${yml_hub_enrollments_proxy_base_url//\'}/${CAMPUS_SOLUTIONS_ID}?page-size=1"
+
+  # Custom credentials are needed for the Hub's SIS Person API
+  export HUB_APP_ID="${yml_hub_person_proxy_app_id//\'}"
+  export HUB_APP_KEY="${yml_hub_person_proxy_app_key//\'}"
+
+  verify_hub 'hub_sis_person_api' true \
+  "${yml_hub_person_proxy_base_url//\'}/v1/sis-person/${CAMPUS_SOLUTIONS_ID}"
 fi
 
 echo; echo "----------------------------------------------------------------------------------------------------"; echo
