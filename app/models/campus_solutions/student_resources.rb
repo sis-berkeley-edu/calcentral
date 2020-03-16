@@ -109,6 +109,10 @@ module CampusSolutions
           true unless ((roles[:graduate] || roles[:law]) && !(is_jd_llm_only? || is_law_visiting?))
         when :submit_degree_candidacy_form
           true unless (roles[:graduate] || current_academic_roles["lawJspJsd"])
+        when :expected_grad_term_add
+          true unless (roles[:graduate] || current_academic_roles["jurisSocialPolicyPhD"])
+        when :dissertation_signature
+          true unless (roles[:graduate] || current_academic_roles["jurisSocialPolicyPhD"] || current_academic_roles["doctorScienceLaw"])
         when :view_submitted_forms, :update_pending_forms
           true unless !(is_jd_llm_only? || is_law_visiting?)
         when :disabled_students_program_services, :scarab_login
@@ -117,8 +121,6 @@ module CampusSolutions
           true unless roles[:concurrentEnrollmentStudent]
         when :grad_change_of_academic_plan_add
           true unless roles[:graduate]
-        when :dissertation_signature, :expected_grad_term_add
-          true unless (roles[:graduate] || roles[:law])
         else
           false
         end
