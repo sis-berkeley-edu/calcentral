@@ -39,7 +39,6 @@ module Notifications
       'sis:student:academic-progress-report' => CampusSolutions::DegreeProgress::UndergradRequirementsExpiry,
       'sis:student:activityguide-ucfa0001' => CalGrant::AcknowledgementExpiry,
       'sis:student:affiliation' => CampusSolutions::UserApiExpiry,
-      'sis:student:checklist' => CampusSolutions::ChecklistDataExpiry,
       'sis:student:delegate' => CampusSolutions::DelegateStudentsExpiry,
       'sis:student:deposit' => CampusSolutions::Sir::SirStatuses,
       'sis:student:enrollment' => CampusSolutions::EnrollmentTermExpiry,
@@ -47,7 +46,6 @@ module Notifications
       'sis:student:ferpa' => nil,
       'sis:student:finaid' => CampusSolutions::FinancialAidExpiry,
       'sis:student:financials' => User::Finances::CacheExpiry,
-      'sis:student:messages' => User::Tasks::MessageExpiry,
       'sis:student:serviceindicator' => MyAcademics::MyAcademicStatus,
       'sis:class:grade-roster' => CampusSolutions::SectionGradesExpiry
     }
