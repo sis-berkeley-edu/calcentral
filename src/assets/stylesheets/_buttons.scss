@@ -119,11 +119,22 @@ button {
   }
 }
 .cc-button-blue[disabled] {
-  background: $cc-color-bali-hai !important;
+  background: $cc-color-white-smoke !important;
   &:focus, &:hover {
-    background: $cc-color-bali-hai !important;
+    background: $cc-color-white-smoke !important;
   }
 }
+
+.cc-button-grey {
+  background: $cc-color-white-smoke !important;
+  border: 1px solid transparent;
+  color: $cc-color-very-light-grey;
+  &:focus, &:hover {
+    background: $cc-color-white-smoke !important;
+    color: $cc-color-very-light-grey;
+  }
+}
+
 
 // Button Sizes
 //
