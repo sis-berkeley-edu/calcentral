@@ -19,7 +19,10 @@ const AidYearTasksCount = ({ currentUrl, fetchData, loaded, tasks, year }) => {
   const onYearDetailPage = !currentUrl.match(/finances$/);
 
   if (loaded) {
-    const tasksForYear = tasks.filter(task => task.aidYear === year);
+    const isFinancialAidForYear = year => task =>
+      task.isFinancialAid && task.aidYear === year;
+
+    const tasksForYear = tasks.filter(isFinancialAidForYear(year));
 
     if (tasksForYear.length === 0) {
       return null;
@@ -29,7 +32,8 @@ const AidYearTasksCount = ({ currentUrl, fetchData, loaded, tasks, year }) => {
       return (
         <div>
           <i className="fa fa-bell cc-icon cc-non-anchored-link cc-icon-gold"></i>
-          {tasksForYear.length} incomplete financial aid tasks
+          {tasksForYear.length} incomplete financial aid
+          {tasksForYear.length === 1 ? ' task' : ' tasks'}
         </div>
       );
     }
