@@ -1,7 +1,6 @@
 module User
   module Tasks
     class IncompleteChecklistItem < ChecklistItem
-
       attr_accessor :action_url,
         :action_text,
         :department_name,
@@ -18,7 +17,8 @@ module User
         :term_id,
         :career,
         :admissions_application_number,
-        :career_number
+        :career_number,
+        :student_career_code
 
       def as_json(options={})
         {
@@ -66,9 +66,9 @@ module User
           ADM_APPL_NBR: admissions_application_number,
           ADMA_CAREER: career,
           STDNT_CAR_NBR: career_number.to_s,
+          ACAD_CAREER: student_career_code,
         })
       end
-
 
       def being_processed?
         ['Processing', 'Received'].include?(status)
