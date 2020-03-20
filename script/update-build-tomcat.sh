@@ -76,7 +76,7 @@ if [ -n "${OFFLINE}" ] ; then
    TOMRETURN=$?
 
    # Stop Tomcat
-   if [ $tomreturn -eq 0 ] ; then
+   if [ $TOMRETURN -eq 0 ] ; then
       echo "$(date): Stopping CalCentral..." | ${LOGIT}
       ~/bin/tomcat9-calcentral.sh stop | ${LOGIT} 2>&1
    else
