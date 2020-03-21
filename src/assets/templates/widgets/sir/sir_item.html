@@ -56,7 +56,7 @@
         </div>
       </div>
       <!-- SIR Options -->
-      <form class="cc-widget-sir-form" data-ng-submit="submitSirReponse()">
+      <form class="cc-widget-sir-form">
         <fieldset
           class="cc-widget-sir-form-fieldset"
           data-ng-disabled="sirItem.isSubmitting"
@@ -138,9 +138,9 @@
           </div>
           <div class="cc-widget-sir-button-container">
             <button
-              class="cc-button cc-button-blue"
-              type="submit"
-              data-ng-disabled="!api.user.profile.actAsOptions.canPost || !sirItem.isFormValid || sirItem.isSubmitting"
+              ng-class="setButtonClass()"
+              data-ng-disabled="!api.user.profile.actAsOptions.canPost || !sirItem.form.option || sirItem.isSubmitting"
+              ng-click="checkAndSubmit()"
             >
               <span data-ng-if="!sirItem.isSubmitting">
                 <span
@@ -160,6 +160,8 @@
               </span>
             </button>
           </div>
+          <div class="cc-text-red" data-ng-if="sirItem.showErrorMessage" aria-expanded="{{sirItem.showErrorMessage}}">
+            Please agree to all the conditions above before proceeding</div>
         </fieldset>
       </form>
     </div>
