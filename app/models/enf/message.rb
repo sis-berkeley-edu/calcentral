@@ -6,6 +6,10 @@ module ENF
     attr_accessor :text
 
     def student_uid
+      @student_uid ||= User::Current.from_campus_solutions_id(student_campus_solutions_id).uid
+    end
+
+    def student_campus_solutions_id
       student['StudentId']
     rescue NoMethodError
     end
