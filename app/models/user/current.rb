@@ -11,6 +11,11 @@ module User
       @uid = uid
     end
 
+    def self.from_campus_solutions_id(campus_solutions_id)
+      uid = User::Identifiers.lookup_ldap_uid(campus_solutions_id)
+      new(uid)
+    end
+
     def campus_solutions_id
       @campus_solutions_id ||= User::Identifiers.lookup_campus_solutions_id(uid)
     end
