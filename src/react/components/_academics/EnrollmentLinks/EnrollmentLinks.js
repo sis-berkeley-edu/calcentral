@@ -53,11 +53,11 @@ const EnrollmentLinks = ({ currentRole, instruction, termRegistrations }) => {
 
       {disabled && (
         <p style={{ marginTop: `15px` }}>
-          Complete the CA Enrollment Acknowledgement to enable enrollment. To
-          complete this requirement, see the{' '}
-          <a href="/dashboard">Tasks section</a> of your Dashboard to complete
-          this requirement. Look for the task titled &quot;CA Enrollment
-          Acknowledgment&quot; under your Finances tasks.
+          Complete the California Enrollment Acknowledgment to enable
+          enrollment. To complete this requirement, see the{' '}
+          <a href="/dashboard">Tasks section</a> of your Dashboard. Look for the
+          task titled &quot;CA Enrollment Acknowledgment&quot; under your
+          Finances tasks.
         </p>
       )}
     </div>
