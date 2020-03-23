@@ -46,7 +46,11 @@ class JmsWorker
       Rails.logger.warn "#{self.class.name} Reading fake messages"
       open_fake_connection { |msg| @handler.handle(msg) }
     else
-      open_jms_connections(Settings.ist_jms.connections) { |msg| @handler.handle(msg) }
+      open_jms_connections(Settings.ist_jms.connections) do |msg|
+        @handler.handle(msg)
+
+        ENF::Processor.instance.handle(msg)
+      end
     end
   end
 
