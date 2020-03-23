@@ -1,10 +1,7 @@
 module User
   module Tasks
-    class CompletedAgreement
-      include ActiveModel::Model
-
-      attr_accessor :admin_function,
-        :disable_updates_after_expiration,
+    class CompletedAgreement < Agreement
+      attr_accessor :disable_updates_after_expiration,
         :expiration_date,
         :response,
         :response_date,
@@ -14,16 +11,8 @@ module User
         :visible_after_expiration,
         :aid_year
 
-      DISPLAY_CATEGORIES = {
-        "ADMA" => "newStudent",
-        "ADMP" => "admissions",
-        "FINA" => "financialAid",
-        "SFAC" => "financialAid"
-      }
-
       def as_json(options={})
-        {
-          displayCategory: display_category,
+        super.merge({
           expiration: expiration,
           response: response,
           responseDate: responded_at.in_time_zone.to_datetime,
@@ -32,7 +21,7 @@ module User
           updatesAllowed: updates_allowed?,
           url: url,
           aidYear: aid_year,
-        }
+        })
       end
 
       def url
@@ -41,11 +30,6 @@ module User
         @url ||= LinkFetcher.fetch_link('UC_CC_WEBMSG_AGRMNT', {
           CCI_COMM_TRANS_ID: transaction_id
         })
-      end
-
-      def display_category
-        return 'residency' if admin_function[0, 2] == 'RR'
-        DISPLAY_CATEGORIES.fetch(admin_function) { 'student' }
       end
 
       def updates_allowed?

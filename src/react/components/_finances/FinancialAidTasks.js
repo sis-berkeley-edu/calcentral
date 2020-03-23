@@ -50,6 +50,9 @@ ToggleSwitch.propTypes = {
   toggleComplete: PropTypes.func,
 };
 
+const isFinancialAidForYear = year => task =>
+  task.isFinancialAid && task.aidYear === year;
+
 const FinancialAidTasks = ({
   fetchData,
   loaded,
@@ -63,12 +66,13 @@ const FinancialAidTasks = ({
   const [selectedItem, setSelectedItem] = useState('');
   const [tab, setTab] = useState(TAB_INCOMPLETE);
 
-  const aidYearTasks = tasks.filter(task => task.aidYear === year);
+  const aidYearTasks = tasks.filter(isFinancialAidForYear(year));
+
   const beingProcessed = aidYearTasks.filter(task => task.isBeingProcessed);
   const incompleteTasks = aidYearTasks.filter(task => task.isIncomplete);
 
   const completedForAidYear = completedTasks.filter(
-    task => task.aidYear === year
+    isFinancialAidForYear(year)
   );
 
   const incompleteCount = aidYearTasks.length;
@@ -114,7 +118,12 @@ const FinancialAidTasks = ({
                 >
                   <TaskHeader task={task}>
                     <CampusSolutionsIcon />
-                    <TaskTitle title={task.title} subtitle={`Assigned`} />
+                    <TaskTitle
+                      title={task.title}
+                      subtitle={`${task.status} ${shortDateIfCurrentYear(
+                        parseDate(task.statusDate)
+                      )}`}
+                    />
                   </TaskHeader>
                 </Task>
               ))}
