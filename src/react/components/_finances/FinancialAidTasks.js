@@ -118,7 +118,12 @@ const FinancialAidTasks = ({
                 >
                   <TaskHeader task={task}>
                     <CampusSolutionsIcon />
-                    <TaskTitle title={task.title} subtitle={`Assigned`} />
+                    <TaskTitle
+                      title={task.title}
+                      subtitle={`${task.status} ${shortDateIfCurrentYear(
+                        parseDate(task.statusDate)
+                      )}`}
+                    />
                   </TaskHeader>
                 </Task>
               ))}
