@@ -114,7 +114,8 @@ module User
             strm as term_id,
             uc_adma_career as career,
             adm_appl_nbr as admissions_application_number,
-            stdnt_car_nbr as career_number
+            stdnt_car_nbr as career_number,
+            uc_sprg_career as student_career_code
           FROM SYSADM.PS_UCC_CC_CHKLITMV
           WHERE CAMPUS_ID = '#{uid}'
         SQL
