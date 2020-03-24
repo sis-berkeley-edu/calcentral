@@ -1,7 +1,11 @@
-import { formatISO } from 'date-fns';
+import { formatISO, parseISO, isDate } from 'date-fns';
 
 const toISODateString = date => {
-  return formatISO(date, { representation: 'date' });
+  if (isDate(date)) {
+    return formatISO(date, { representation: 'date' });
+  } else {
+    return formatISO(parseISO(date), { representation: 'date' });
+  }
 };
 
 export const groupByDate = (accumulator, message) => {
