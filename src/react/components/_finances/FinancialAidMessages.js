@@ -73,7 +73,10 @@ FinancialAidMessages.propTypes = {
 };
 
 const mapStateToProps = ({
-  myWebMessages: { archiveUrl, notifications = [], loaded },
+  myWebMessages: {
+    universityNotifications: { archiveUrl, notifications = [] } = {},
+    loaded,
+  },
 }) => {
   return {
     archiveUrl,
