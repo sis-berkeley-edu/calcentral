@@ -12,9 +12,15 @@ class CacheController < ApplicationController
 
   def delete
     key = params['key']
-    deleted = Rails.cache.delete(key)
-    logger.warn "Deleted cache_key #{key} at request of #{current_user.real_user_id}"
-    render json: {deleted: deleted}
+    deleted = !!Rails.cache.delete(key)
+
+    if deleted
+      logger.warn "Deleted cache_key #{key} at request of #{current_user.real_user_id}"
+    else
+      logger.warn "Attempted to delete cache_key #{key} at request of #{current_user.real_user_id}, but cache_key not present"
+    end
+
+    render json: { deleted: deleted }
   end
 
   private
