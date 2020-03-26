@@ -1,12 +1,14 @@
 module User
   module Tasks
-    class Expiry
+    class Expiry < ::ENF::Handler
       ENF::Processor.instance.register("sis:student:checklist", self)
       ENF::Processor.instance.register("sis:student:messages", self)
 
       def self.call(message)
-        uid = message.student_uid
+        self.new(message).expire
+      end
 
+      def expire
         ::CampusSolutions::MyChecklist.expire(uid)
         ::MyTasks::Merged.expire(uid)
         ::CampusSolutions::Sir::SirStatuses.expire(uid)
