@@ -303,6 +303,7 @@ cache:
     CampusSolutions::DashboardUrl: <%= 29.days %>
 
     CalnetCrosswalk::ByUid: <%= 4.hours %>
+    CalnetCrosswalk::ByCsId: <%= 4.hours %>
     User::Identifiers::Cached: <%= 4.hours %>
 
     # Merge of independently cached feeds.
