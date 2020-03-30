@@ -55,6 +55,9 @@ const Semester = ({ semester, isLawStudent }) => {
             <SemesterSections semester={semester} />
           }
         </div>
+        {slug == 'spring-2020' && isLawStudent &&
+          <div><strong>*Due to COVID-19, law school classes were graded as credit/no pass in spring 2020.</strong></div>
+        }
       </div>
     );
   }
