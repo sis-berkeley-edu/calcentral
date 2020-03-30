@@ -53,6 +53,9 @@ module DegreeProgress
       if ucnr_apr_link_enabled?
         authorized_program_roles << 'UCNR'
       end
+      if ucch_apr_link_enabled?
+        authorized_program_roles << 'UCCH'
+      end
       !(authorized_program_roles & incomplete_programs_roles).empty?
     end
 
@@ -62,6 +65,10 @@ module DegreeProgress
 
     def ucnr_apr_link_enabled?
       Settings.features.cs_degree_progress_ugrd_ucnr_apr_link
+    end
+
+    def ucch_apr_link_enabled?
+      Settings.features.cs_degree_progress_ugrd_ucch_apr_link
     end
 
     def incomplete_plans_from_statuses(statuses)
