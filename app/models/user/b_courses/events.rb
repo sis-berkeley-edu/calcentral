@@ -9,7 +9,7 @@ module User
 
       def all
         data.collect do |datum|
-          Event.new(datum)
+          Event.new(datum.merge(user: user))
         end
       end
 
