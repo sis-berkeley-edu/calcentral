@@ -139,16 +139,6 @@ describe Berkeley::CoursePolicy do
   end
 
   describe '#can_view_webcast_sign_up?' do
-    context 'when webcast content is served to a non-superuser' do
-      before do
-        allow_any_instance_of(User::Auth).to receive(:active?).and_return true
-        allow_any_instance_of(User::Auth).to receive(:is_author?).and_return true
-      end
-      it 'returns false' do
-        expect(subject.can_view_webcast_sign_up?).to be false
-      end
-    end
-
     context 'when webcast content is served to a superuser' do
       before do
         allow_any_instance_of(User::Auth).to receive(:is_superuser?).and_return true

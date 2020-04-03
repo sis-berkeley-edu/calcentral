@@ -8,7 +8,21 @@ describe CampusSolutions::PnpCalculator::CalculatorValues do
     subject { proxy.new(uid).get_feed }
 
     context 'as an undergraduate with data' do
-      before { allow(User::Identifiers).to receive(:lookup_campus_solutions_id).and_return ugrd_sid }
+      let(:pnp_calculator_values) do
+        {
+          "total_gpa_units" => BigDecimal.new('45.0'),
+          "total_no_gpa_units" => BigDecimal.new('7.0'),
+          "total_transfer_units" => BigDecimal.new('69.0'),
+          "max_ratio_base_units" => BigDecimal.new('51.0'),
+          "gpa_ratio_units" => BigDecimal.new('45.0'),
+          "no_gpa_ratio_units" => BigDecimal.new('6.0'),
+          "pnp_ratio" => BigDecimal.new('0.12'),
+        }
+      end
+      before do
+        allow(User::Identifiers).to receive(:lookup_campus_solutions_id).and_return ugrd_sid
+        allow(EdoOracle::Queries).to receive(:get_pnp_calculator_values).and_return pnp_calculator_values
+      end
       it 'returns the expected structure and values' do
         expect(subject[:totalGpaUnits]).to eql(45)
         expect(subject[:totalNoGpaUnits]).to eql(7)

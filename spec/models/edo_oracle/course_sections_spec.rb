@@ -178,16 +178,4 @@ describe EdoOracle::CourseSections do
     end
   end
 
-  context 'EDO DB errors' do
-    before do
-      allow(Settings.edodb).to receive(:fake).and_return false
-      allow_any_instance_of(ActiveRecord::ConnectionAdapters::JdbcAdapter).to receive(:select_all)
-        .and_raise ActiveRecord::JDBCError, 'Primary key swiped by highwaymen'
-    end
-    it_behaves_like 'an empty result set'
-    it 'logs errors' do
-      expect(Rails.logger).to receive(:error).with(/JDBCError/).at_least :once
-      subject
-    end
-  end
 end
