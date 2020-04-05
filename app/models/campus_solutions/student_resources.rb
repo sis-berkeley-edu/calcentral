@@ -120,7 +120,7 @@ module CampusSolutions
         when :disabled_student_services
           true unless roles[:concurrentEnrollmentStudent]
         when :grad_change_of_academic_plan_add
-          true unless roles[:graduate]
+          true unless roles[:graduate] || current_academic_roles["jurisSocialPolicyPhD"] || current_academic_roles["jurisSocialPolicyPhC"] || current_academic_roles["jurisSocialPolicyMasters"]
         else
           false
         end
