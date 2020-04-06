@@ -224,34 +224,4 @@ describe AuthenticationStatePolicy do
     end
   end
 
-  describe '#can_view_webcast_sign_up?' do
-    subject { AuthenticationState.new(session_state).policy.can_view_webcast_sign_up? }
-    context 'when feature flag is true' do
-      context 'when superuser is authorized' do
-        let(:user_id) {superuser_uid}
-        it { is_expected.to be true }
-      end
-      context 'when user is currently teaching course' do
-        let(:user_id) {average_joe_uid}
-        before do
-          allow_any_instance_of(Canvas::CurrentTeacher).to receive(:user_currently_teaching?).and_return true
-        end
-        it { is_expected.to be true }
-      end
-      context 'when user can view-as' do
-        let(:user_id) {viewer_uid}
-        it { is_expected.to be true }
-      end
-      context 'when user is inactive superuser' do
-        let(:user_id) {inactive_superuser_uid}
-        it { is_expected.to be false }
-      end
-    end
-    context 'when feature flag is false' do
-      let(:user_id) {author_uid}
-      before { allow(Settings.features).to receive(:webcast_sign_up_on_calcentral).and_return false }
-      it { is_expected.to be false }
-    end
-  end
-
 end

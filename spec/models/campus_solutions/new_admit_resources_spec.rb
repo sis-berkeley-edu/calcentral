@@ -146,9 +146,11 @@ describe CampusSolutions::NewAdmitResources do
 
     context 'as an incomplete new admit' do
       context 'as a pre-matriculated non-first-year pathway freshman with an admissions evaluator' do
+        let(:evaluator_data) { {"evaluator_name"=>"James P. Sullivan", "evaluator_email"=>"sully@monsters.inc"} }
         before do
           sir_statuses_incomplete_base_response[:sirStatuses][0].merge!(new_admit_attributes_freshman)
           CampusSolutions::Sir::SirStatuses.stub_chain(:new, :get_feed).and_return sir_statuses_incomplete_base_response
+          allow(EdoOracle::Queries).to receive(:get_new_admit_evaluator).with('11667051', '00157689').and_return(evaluator_data)
         end
         subject { proxy.new(uid).get_feed }
         it_behaves_like 'a general response'

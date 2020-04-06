@@ -44,10 +44,12 @@ describe Canvas::CurrentTeacher do
     let(:spring_2012_instructor_uid) { '238382' }
     let(:summer_2014_instructor_uid) { '904715' }
 
+    let(:has_instructor_history) { false }
+    let(:instructor_history_model) { double('User::HasInstructorHistory', :has_instructor_history? => has_instructor_history)}
+
     before do
       allow(Canvas::Terms).to receive(:current_terms).and_return(current_terms)
-      # TODO: Update spec with EDO test cases instead of defaulting to false
-      allow(EdoOracle::Queries).to receive(:has_instructor_history?).and_return(false)
+      allow(User::HasInstructorHistory).to receive(:new).and_return(instructor_history_model)
     end
 
     context 'when uid is unavailable' do
@@ -55,23 +57,24 @@ describe Canvas::CurrentTeacher do
       its(:user_currently_teaching?) { should eq false }
     end
 
-    context 'when user is instructing in current canvas terms', if: CampusOracle::Queries.test_data? do
+    context 'when user is instructing in current canvas terms' do
+      let(:has_instructor_history) { true }
       subject { Canvas::CurrentTeacher.new(summer_2014_instructor_uid) }
       its(:user_currently_teaching?) { should eq true }
     end
 
-    context 'when user is not instructing in current canvas terms', if: CampusOracle::Queries.test_data? do
+    context 'when user is not instructing in current canvas terms' do
+      let(:has_instructor_history) { false }
       subject { Canvas::CurrentTeacher.new(spring_2012_instructor_uid) }
       its(:user_currently_teaching?) { should eq false }
     end
 
-    context 'when response is cached', if: CampusOracle::Queries.test_data? do
+    context 'when response is cached' do
       subject { Canvas::CurrentTeacher.new(summer_2014_instructor_uid) }
       it 'does not make calls to dependent objects' do
-        expect(subject.user_currently_teaching?).to eq true
+        expect(subject.user_currently_teaching?).to eq false
         expect(Canvas::Terms).to_not receive(:current_terms)
-        expect(CampusOracle::Queries).to_not receive(:has_instructor_history?)
-        expect(subject.user_currently_teaching?).to eq true
+        expect(subject.user_currently_teaching?).to eq false
       end
     end
   end
