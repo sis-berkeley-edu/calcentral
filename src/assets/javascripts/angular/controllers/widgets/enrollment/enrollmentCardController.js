@@ -234,15 +234,8 @@ angular.module('calcentral.controllers').controller('EnrollmentCardController', 
   };
 
   var loadEnrollmentInstructionDecks = function() {
-    // When returning from CalGrant Activity Guide, refresh data with holds
-    // See academicsStatusHoldsBlocksController for more.
-    let refreshOptions = {};
 
-    if ($routeParams.refresh) {
-      refreshOptions = { refreshCache: true, params: { expireCache: true } };
-    }
-
-    return enrollmentFactory.getEnrollmentInstructionDecks(refreshOptions).then(parseEnrollmentInstructionDecks);
+    return enrollmentFactory.getEnrollmentInstructionDecks().then(parseEnrollmentInstructionDecks);
   };
 
   $scope.switchTerm = function(index, enrollmentDeck) {
