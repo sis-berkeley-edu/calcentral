@@ -2,22 +2,24 @@ import axios from 'axios';
 
 // var urlTransferCredit = '/dummy/json/edodb_transfer_credits.json';
 
-export const FETCH_TRANSFER_CREDIT_START = 'FETCH_TRANSFER_CREDIT_START';
-export const FETCH_TRANSFER_CREDIT_SUCCESS = 'FETCH_TRANSFER_CREDIT_SUCCESS';
-export const FETCH_TRANSFER_CREDIT_FAILURE = 'FETCH_TRANSFER_CREDIT_FAILURE';
+import {
+  FETCH_TRANSFER_CREDIT_START,
+  FETCH_TRANSFER_CREDIT_SUCCESS,
+  FETCH_TRANSFER_CREDIT_FAILURE,
+} from '../action-types';
 
 export const fetchTransferCreditStart = () => ({
-  type: FETCH_TRANSFER_CREDIT_START
+  type: FETCH_TRANSFER_CREDIT_START,
 });
 
 export const fetchTransferCreditSuccess = transferCredit => ({
   type: FETCH_TRANSFER_CREDIT_SUCCESS,
-  value: transferCredit
+  value: transferCredit,
 });
 
 export const fetchTransferCreditFailure = error => ({
   type: FETCH_TRANSFER_CREDIT_FAILURE,
-  value: error
+  value: error,
 });
 
 export const fetchTransferCredit = () => {
@@ -29,13 +31,17 @@ export const fetchTransferCredit = () => {
     } else {
       dispatch(fetchTransferCreditStart());
 
-      return axios.get('/api/academics/transfer_credits')
+      return axios
+        .get('/api/academics/transfer_credits')
         .then(response => {
           dispatch(fetchTransferCreditSuccess(response.data));
         })
         .catch(error => {
           if (error.response) {
-            const failure = { status: error.response.status, statusText: error.response.statusText };
+            const failure = {
+              status: error.response.status,
+              statusText: error.response.statusText,
+            };
             dispatch(fetchTransferCreditFailure(failure));
           }
         });

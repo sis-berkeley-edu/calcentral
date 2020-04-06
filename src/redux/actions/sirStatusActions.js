@@ -1,8 +1,10 @@
 import axios from 'axios';
 
-export const FETCH_SIR_STATUS_START = 'FETCH_SIR_STATUS_START';
-export const FETCH_SIR_STATUS_SUCCESS = 'FETCH_SIR_STATUS_SUCCESS';
-export const FETCH_SIR_STATUS_FAILURE = 'FETCH_SIR_STATUS_FAILURE';
+import {
+  FETCH_SIR_STATUS_START,
+  FETCH_SIR_STATUS_SUCCESS,
+  FETCH_SIR_STATUS_FAILURE,
+} from '../action-types';
 
 export const fetchSirStatusStart = () => ({
   type: FETCH_SIR_STATUS_START,

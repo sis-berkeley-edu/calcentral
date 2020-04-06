@@ -1,4 +1,4 @@
-import { SET_CURRENT_ROUTE_PROPERTIES } from '../actions/routeActions';
+import { SET_CURRENT_ROUTE_PROPERTIES } from '../action-types';
 
 const RouteReducer = (state = {}, action) => {
   switch (action.type) {

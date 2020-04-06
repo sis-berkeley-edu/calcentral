@@ -1,6 +1,6 @@
-export const SET_CURRENT_ROUTE_PROPERTIES = 'SET_CURRENT_ROUTE_PROPERTIES';
+import { SET_CURRENT_ROUTE_PROPERTIES } from '../action-types';
 
 export const setCurrentRouteProperties = props => ({
   type: SET_CURRENT_ROUTE_PROPERTIES,
-  value: props
+  value: props,
 });

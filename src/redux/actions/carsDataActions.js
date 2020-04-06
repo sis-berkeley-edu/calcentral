@@ -1,20 +1,22 @@
 import axios from 'axios';
 
-export const FETCH_CARS_DATA_START = 'FETCH_CARS_DATA_START';
-export const FETCH_CARS_DATA_SUCCESS = 'FETCH_CARS_DATA_SUCCESS';
-export const FETCH_CARS_DATA_FAILURE = 'FETCH_CARS_DATA_FAILURE';
+import {
+  FETCH_CARS_DATA_START,
+  FETCH_CARS_DATA_SUCCESS,
+  FETCH_CARS_DATA_FAILURE,
+} from '../action-types';
 
 export const fetchCarsDataStart = () => ({
-  type: FETCH_CARS_DATA_START
+  type: FETCH_CARS_DATA_START,
 });
 
 export const fetchCarsDataSuccess = data => ({
   type: FETCH_CARS_DATA_SUCCESS,
-  value: data
+  value: data,
 });
 
 export const fetchCarsDataFailure = () => ({
-  type: FETCH_CARS_DATA_FAILURE
+  type: FETCH_CARS_DATA_FAILURE,
 });
 
 export const fetchCarsData = () => {
@@ -25,10 +27,9 @@ export const fetchCarsData = () => {
       return new Promise((resolve, _reject) => resolve(carsData));
     } else {
       dispatch(fetchCarsDataStart());
-      axios.get(`/api/my/financials`)
-        .then(response => {
-          dispatch(fetchCarsDataSuccess(response.data));
-        });
+      axios.get(`/api/my/financials`).then(response => {
+        dispatch(fetchCarsDataSuccess(response.data));
+      });
     }
   };
 };

@@ -10,7 +10,7 @@ import {
   FETCH_BILLING_ITEM_START,
   FETCH_BILLING_ITEM_SUCCESS,
   FETCH_BILLING_ITEM_FAILURE,
-} from '../actions/billingActions';
+} from '../action-types';
 
 import { chargeTypes } from '../../react/components/_finances/TransactionsCard/types';
 
