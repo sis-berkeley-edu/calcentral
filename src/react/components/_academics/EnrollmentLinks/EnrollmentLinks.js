@@ -17,22 +17,13 @@ import Options from './Options';
 import OptionsGradingEnd from './OptionsGradingEnd';
 import Withdraw from './Withdraw';
 
-// An "EnrollmentInstruction" is a data structure that represents all the data
-// about registration for a particular academics term.
-//
-// A TermRegistration is a similar data structure, with status information about
-// the student.
-//
-// In order to disable certain enrollment links if the student is required to
-// complete the Calgrant Acknowledgement, we match the EnrollmentInstruction to
-// its matching TermRegistration by termId.
-const EnrollmentLinks = ({ currentRole, instruction, termRegistrations }) => {
-  const currentTermRegistration = termRegistrations.find(
+const EnrollmentLinks = ({ currentRole, instruction, enrollmentTerms }) => {
+  const enrollmentTerm = enrollmentTerms.find(
     reg => reg.termId === instruction.termId
   );
 
-  const { requiresCalGrantAcknowledgement: disabled = false } =
-    currentTermRegistration || {};
+  const { requiresCalgrantAcknowledgement: disabled = false } =
+    enrollmentTerm || {};
 
   return (
     <div className="EnrollmentLinks">
@@ -50,7 +41,6 @@ const EnrollmentLinks = ({ currentRole, instruction, termRegistrations }) => {
         <ConcurrentDrop instruction={instruction} disabled={disabled} />
         <ConcurrentOptions instruction={instruction} disabled={disabled} />
       </div>
-
       {disabled && (
         <p style={{ marginTop: `15px` }}>
           Complete the California Enrollment Acknowledgment to enable
@@ -68,11 +58,11 @@ EnrollmentLinks.propTypes = {
   instruction: PropTypes.object,
   fromPage: PropTypes.object,
   currentRole: PropTypes.object,
-  termRegistrations: PropTypes.array,
+  enrollmentTerms: PropTypes.array,
 };
 
-const mapStateToProps = ({ myStatusAndHolds: { termRegistrations = [] } }) => {
-  return { termRegistrations };
+const mapStateToProps = ({ myEnrollments: { enrollmentTerms = [] } = {} }) => {
+  return { enrollmentTerms };
 };
 
 const ConnectedEnrollmentLinks = connect(mapStateToProps)(EnrollmentLinks);

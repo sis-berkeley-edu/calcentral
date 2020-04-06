@@ -1,22 +1,23 @@
 import axios from 'axios';
-import { FETCH_HOLDS_START } from './holdsActions';
 
-export const FETCH_STANDINGS_START = 'FETCH_STANDINGS_START';
-export const FETCH_STANDINGS_SUCCESS = 'FETCH_STANDINGS_SUCCESS';
-export const FETCH_STANDINGS_FAILURE = 'FETCH_STANDINGS_FAILURE';
+import {
+  FETCH_STANDINGS_START,
+  FETCH_STANDINGS_SUCCESS,
+  FETCH_STANDINGS_FAILURE,
+} from '../action-types';
 
 export const fetchStandingsStart = () => ({
-  type: FETCH_HOLDS_START
+  type: FETCH_STANDINGS_START,
 });
 
 export const fetchStandingsSuccess = standings => ({
   type: FETCH_STANDINGS_SUCCESS,
-  value: standings
+  value: standings,
 });
 
 export const fetchStandingsFailure = error => ({
   type: FETCH_STANDINGS_FAILURE,
-  value: error
+  value: error,
 });
 
 export const fetchStandings = () => {
@@ -28,13 +29,17 @@ export const fetchStandings = () => {
     if (myStandings.loaded || myStandings.isLoading) {
       return new Promise((resolve, _reject) => resolve(myStandings));
     } else {
-      axios.get('/api/my/standings')
+      axios
+        .get('/api/my/standings')
         .then(({ data }) => {
           dispatch(fetchStandingsSuccess(data.feed));
         })
-        .catch((error) => {
+        .catch(error => {
           if (error.response) {
-            const failure = { status: error.response.status, statusText: error.response.statusText };
+            const failure = {
+              status: error.response.status,
+              statusText: error.response.statusText,
+            };
             dispatch(fetchStandingsFailure(failure));
           }
         });
