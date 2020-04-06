@@ -1,8 +1,10 @@
 import axios from 'axios';
 
-export const FETCH_MY_UP_NEXT_START = 'FETCH_MY_UP_NEXT_START';
-export const FETCH_MY_UP_NEXT_SUCCESS = 'FETCH_MY_UP_NEXT_SUCCESS';
-export const FETCH_MY_UP_NEXT_FAILURE = 'FETCH_MY_UP_NEXT_FAILURE';
+import {
+  FETCH_MY_UP_NEXT_START,
+  FETCH_MY_UP_NEXT_SUCCESS,
+  FETCH_MY_UP_NEXT_FAILURE,
+} from '../action-types';
 
 export const fetchMyUpNextStart = () => ({
   type: FETCH_MY_UP_NEXT_START,

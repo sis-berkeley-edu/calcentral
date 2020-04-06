@@ -1,21 +1,23 @@
 import axios from 'axios';
 
-export const FETCH_CAL_GRANTS_START = 'FETCH_CAL_GRANTS_START';
-export const FETCH_CAL_GRANTS_SUCCESS = 'FETCH_CAL_GRANTS_SUCCESS';
-export const FETCH_CAL_GRANTS_FAILURE = 'FETCH_CAL_GRANTS_FAILURE';
+import {
+  FETCH_CAL_GRANTS_START,
+  FETCH_CAL_GRANTS_SUCCESS,
+  FETCH_CAL_GRANTS_FAILURE,
+} from '../action-types';
 
 export const fetchCalGrantsStart = () => ({
-  type: FETCH_CAL_GRANTS_START
+  type: FETCH_CAL_GRANTS_START,
 });
 
 export const fetchCalGrantsSuccess = calGrants => ({
   type: FETCH_CAL_GRANTS_SUCCESS,
-  value: calGrants
+  value: calGrants,
 });
 
 export const fetchCalGrantsFailure = error => ({
   type: FETCH_CAL_GRANTS_FAILURE,
-  value: error
+  value: error,
 });
 
 export const fetchCalGrants = () => {
@@ -27,13 +29,17 @@ export const fetchCalGrants = () => {
     } else {
       dispatch(fetchCalGrantsStart());
 
-      axios.get('/api/my/calgrant_acknowledgements')
-        .then((response) => {
+      axios
+        .get('/api/my/calgrant_acknowledgements')
+        .then(response => {
           dispatch(fetchCalGrantsSuccess(response.data));
         })
-        .catch((error) => {
+        .catch(error => {
           if (error.response) {
-            const failure = { status: error.response.status, statusText: error.response.statusText };
+            const failure = {
+              status: error.response.status,
+              statusText: error.response.statusText,
+            };
             dispatch(fetchCalGrantsFailure(failure));
           }
         });

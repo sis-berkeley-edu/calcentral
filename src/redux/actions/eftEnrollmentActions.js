@@ -1,21 +1,23 @@
 import axios from 'axios';
 
-export const FETCH_EFT_ENROLLMENT_START = 'FETCH_EFT_ENROLLMENT_START';
-export const FETCH_EFT_ENROLLMENT_SUCCESS = 'FETCH_EFT_ENROLLMENT_SUCCESS';
-export const FETCH_EFT_ENROLLMENT_FAILURE = 'FETCH_EFT_ENROLLMENT_FAILURE';
+import {
+  FETCH_EFT_ENROLLMENT_START,
+  FETCH_EFT_ENROLLMENT_SUCCESS,
+  FETCH_EFT_ENROLLMENT_FAILURE,
+} from '../action-types';
 
 export const fetchEftEnrollmentStart = () => ({
-  type: FETCH_EFT_ENROLLMENT_START
+  type: FETCH_EFT_ENROLLMENT_START,
 });
 
 export const fetchEftEnrollmentSuccess = links => ({
   type: FETCH_EFT_ENROLLMENT_SUCCESS,
-  value: links
+  value: links,
 });
 
 export const fetchEftEnrollmentFailure = error => ({
   type: FETCH_EFT_ENROLLMENT_FAILURE,
-  value: error
+  value: error,
 });
 
 export const fetchEftEnrollment = () => {
@@ -27,13 +29,17 @@ export const fetchEftEnrollment = () => {
     } else {
       dispatch(fetchEftEnrollmentStart());
 
-      return axios.get(`/api/my/eft_enrollment`)
+      return axios
+        .get(`/api/my/eft_enrollment`)
         .then(response => {
           dispatch(fetchEftEnrollmentSuccess(response.data));
         })
         .catch(error => {
           if (error.response) {
-            const failure = { status: error.response.status, statusText: error.response.statusText };
+            const failure = {
+              status: error.response.status,
+              statusText: error.response.statusText,
+            };
             dispatch(fetchEftEnrollmentFailure(failure));
           }
         });

@@ -1,4 +1,4 @@
-import { SET_CONFIG } from '../actions/configActions';
+import { SET_CONFIG } from '../action-types';
 
 const ConfigReducer = (state = {}, action) => {
   if (action.type === SET_CONFIG) {

@@ -1,8 +1,13 @@
 import axios from 'axios';
 
-export const FETCH_BILLING_ITEMS_START = 'FETCH_BILLING_ITEMS_START';
-export const FETCH_BILLING_ITEMS_SUCCESS = 'FETCH_BILLING_ITEMS_SUCCESS';
-export const FETCH_BILLING_ITEMS_FAILURE = 'FETCH_BILLING_ITEMS_FAILURE';
+import {
+  FETCH_BILLING_ITEMS_START,
+  FETCH_BILLING_ITEMS_SUCCESS,
+  FETCH_BILLING_ITEMS_FAILURE,
+  FETCH_BILLING_ITEM_START,
+  FETCH_BILLING_ITEM_SUCCESS,
+  FETCH_BILLING_ITEM_FAILURE,
+} from '../action-types';
 
 export const fetchBillingItemsStart = () => ({
   type: FETCH_BILLING_ITEMS_START,
@@ -44,10 +49,6 @@ export const fetchBillingItems = () => {
     }
   };
 };
-
-export const FETCH_BILLING_ITEM_START = 'FETCH_BILLING_ITEM_START';
-export const FETCH_BILLING_ITEM_SUCCESS = 'FETCH_BILLING_ITEM_SUCCESS';
-export const FETCH_BILLING_ITEM_FAILURE = 'FETCH_BILLING_ITEM_FAILURE';
 
 export const fetchBillingItemStart = id => ({
   type: FETCH_BILLING_ITEM_START,
