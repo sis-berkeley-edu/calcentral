@@ -20,7 +20,6 @@
           <thead><tr>
             <th scope="col">Type</th>
             <th scope="col" class="cc-table-right">Law Units</th>
-            <th scope="col" class="cc-table-right">Units</th>
           </tr></thead>
           <tbody class="cc-widget-table-hover"
                  data-ng-class="{'cc-widget-table-hover-opened':(transferCredits.law.show)}"
@@ -29,7 +28,6 @@
             <tr class="cc-transfer-credit-section-header">
               <td>{{transferCredits.law.summary.careerDescr}} Transfer Course Units</td>
               <td class="cc-text-right" data-ng-bind="transferCredits.law.summary.totalTransferUnitsLaw | number:3"></td>
-              <td class="cc-text-right cc-toggle-triangle" data-ng-bind="transferCredits.law.summary.totalTransferUnits | number:3"></td>
             </tr>
             <tr data-ng-show="transferCredits.law.show" data-ng-repeat="detail in transferCredits.law.detailed">
               <td>
@@ -37,7 +35,6 @@
                 <div class="cc-requirements-designation" data-ng-if="detail.requirementDesignation"><span data-ng-bind="detail.requirementDesignation"></span></div>
               </td>
               <td class="cc-text-right" data-ng-bind="detail.lawUnits | number:3"></td>
-              <td class="cc-text-right" data-ng-bind="detail.units | number:3"></td>
             </tr>
           </tbody>
         </table>

@@ -29,7 +29,6 @@ const LawTransferCredit = (props) => {
               <thead>
                 <tr>
                   <th>Institution</th>
-                  <th className="cc-table-right">Units</th>
                   <th className="cc-table-right">Law Units</th>
                 </tr>
               </thead>
@@ -49,7 +48,6 @@ const LawTransferCredit = (props) => {
                         Posted {transfer.termDescription}
                       </div>
                     </td>
-                    <td className="TranferCredit__unit-count">{transfer.units.toFixed(3)}</td>
                     <td className="TranferCredit__unit-count">{transfer.lawUnits.toFixed(3)}</td>
                   </tr>
                 ))}
@@ -57,9 +55,6 @@ const LawTransferCredit = (props) => {
                 {props.summary &&
                   <tr>
                     <td className="cc-text-right">Totals:</td>
-                    <td className="TranferCredit__unit-total">
-                      {props.summary.totalTransferUnits.toFixed(3)}
-                    </td>
                     <td className="TranferCredit__unit-total">
                       {props.summary.totalTransferUnitsLaw.toFixed(3)}
                     </td>
