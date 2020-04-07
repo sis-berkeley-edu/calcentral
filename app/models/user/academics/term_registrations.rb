@@ -8,11 +8,11 @@ module User
       end
 
       def as_json(options={})
-        return all
+        return active
       end
 
       def all
-        user.registrations.term_ids.map do |term_id|
+        @all ||= user.registrations.term_ids.map do |term_id|
           ::User::Academics::TermRegistration.new(user, User::Academics::Term.new(term_id))
         end
       end
