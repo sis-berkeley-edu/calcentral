@@ -3,117 +3,111 @@ var _ = require('lodash');
 /**
  * Academics status, holds & blocks controller
  */
-angular.module('calcentral.controllers').controller('AcademicsStatusHoldsBlocksController', function(apiService, academicsFactory, linkService, slrDeeplinkFactory, registrationsFactory, statusHoldsService, holdsFactory, calGrantsFactory, $scope, $routeParams) {
-  linkService.addCurrentRouteSettings($scope);
+angular
+  .module('calcentral.controllers')
+  .controller('AcademicsStatusHoldsBlocksController', function(
+    apiService,
+    academicsFactory,
+    linkService,
+    slrDeeplinkFactory,
+    registrationsFactory,
+    statusHoldsService,
+    holdsFactory,
+    $scope
+  ) {
+    linkService.addCurrentRouteSettings($scope);
 
-  $scope.holdsLoaded = false;
-  $scope.calGrantsLoaded = false;
+    $scope.holdsLoaded = false;
 
-  $scope.statusHolds = {
-    isLoading: true
-  };
-  $scope.regStatus = {
-    registrations: [],
-    show: false
-  };
+    $scope.statusHolds = {
+      isLoading: true,
+    };
+    $scope.regStatus = {
+      registrations: [],
+      show: false,
+    };
 
-  // Request-and-parse sequence for the Statement of Legal Residency deeplink
-  var fetchSlrDeeplink = slrDeeplinkFactory.getUrl;
+    // Request-and-parse sequence for the Statement of Legal Residency deeplink
+    var fetchSlrDeeplink = slrDeeplinkFactory.getUrl;
 
-  var parseSlrDeeplink = function(response) {
-    $scope.slr.deeplink = _.get(response, 'data.feed.root.ucSrSlrResources.ucSlrLinks.ucSlrLink');
-    $scope.slr.isErrored = _.get(response, 'data.errored');
-    $scope.slr.isLoading = false;
-  };
+    var parseSlrDeeplink = function(response) {
+      $scope.slr.deeplink = _.get(
+        response,
+        'data.feed.root.ucSrSlrResources.ucSlrLinks.ucSlrLink'
+      );
+      $scope.slr.isErrored = _.get(response, 'data.errored');
+      $scope.slr.isLoading = false;
+    };
 
-  var getRegistrations = function() {
-    registrationsFactory.getRegistrations()
-    .then(parseRegistrations);
-  };
-  var parseRegistrations = function(response) {
-    var registrations = _.get(response, 'data.registrations');
-    _.forEach(registrations, function(registration) {
-      if (_.get(registration, 'showRegStatus')) {
-        $scope.regStatus.registrations.push(registration);
+    var getRegistrations = function() {
+      registrationsFactory.getRegistrations().then(parseRegistrations);
+    };
+    var parseRegistrations = function(response) {
+      var registrations = _.get(response, 'data.registrations');
+      _.forEach(registrations, function(registration) {
+        if (_.get(registration, 'showRegStatus')) {
+          $scope.regStatus.registrations.push(registration);
+        }
+      });
+      if ($scope.regStatus.registrations.length) {
+        $scope.regStatus.show = true;
       }
-    });
-    if ($scope.regStatus.registrations.length) {
-      $scope.regStatus.show = true;
-    }
-    $scope.registrationsLoaded = true;
-  };
+      $scope.registrationsLoaded = true;
+    };
 
-  var getSlrDeeplink = function() {
-    // Users in 'view-as' mode are not allowed to access the student's SLR link.
-    // Guard here to keep this function self-contained.
-    if (apiService.user.profile.actingAsUid || !apiService.user.profile.canSeeCSLinks) {
-      return;
-    }
+    var getSlrDeeplink = function() {
+      // Users in 'view-as' mode are not allowed to access the student's SLR link.
+      // Guard here to keep this function self-contained.
+      if (
+        apiService.user.profile.actingAsUid ||
+        !apiService.user.profile.canSeeCSLinks
+      ) {
+        return;
+      }
 
+      angular.extend($scope, {
+        slr: {
+          deeplink: false,
+          isErrored: false,
+          isLoading: true,
+        },
+      });
+
+      fetchSlrDeeplink().then(parseSlrDeeplink);
+    };
+
+    // Request-and-parse sequence on the student feed for California Residency status.
     angular.extend($scope, {
-      slr: {
-        deeplink: false,
-        isErrored: false,
-        isLoading: true
-      }
+      residency: {
+        message: {},
+      },
     });
 
-    fetchSlrDeeplink().then(parseSlrDeeplink);
-  };
+    var getCalResidency = academicsFactory.getResidency;
+    var parseCalResidency = function(response) {
+      var residency = _.get(response, 'data.residency');
+      angular.merge($scope.residency, residency);
+    };
 
-  // Request-and-parse sequence on the student feed for California Residency status.
-  angular.extend($scope, {
-    residency: {
-      message: {}
-    }
+    var getHolds = function() {
+      return holdsFactory.getHolds().then(function(response) {
+        $scope.holds = _.get(response, 'data.feed.holds');
+        $scope.holdsLoaded = true;
+      });
+    };
+
+    var loadStatusInformation = function() {
+      getCalResidency()
+        .then(parseCalResidency)
+        .then(getSlrDeeplink)
+        .then(getRegistrations)
+        .then(getHolds)
+        .finally(function() {
+          $scope.statusHolds.isLoading = false;
+        });
+    };
+
+    loadStatusInformation();
+    $scope.cnpStatusIcon = statusHoldsService.cnpStatusIcon;
+    $scope.regStatusIcon = statusHoldsService.regStatusIcon;
   });
-
-  var getCalResidency = academicsFactory.getResidency;
-  var parseCalResidency = function(response) {
-    var residency = _.get(response, 'data.residency');
-    angular.merge($scope.residency, residency);
-  };
-
-  // When returning from the CalGrant Activity Guide the querystring will
-  // contain refresh=true. We need to request fresh data, not using the browser
-  // cache. Also, passing expireCache=true to the server to clear memcached and
-  // ensure we receive the latest data immediately.
-  //
-  // Otherwise, pass empty options and use existing caches as usual.
-  let refreshOptions = {};
-
-  if ($routeParams.refresh) {
-    refreshOptions = { refreshCache: true, params: { expireCache: true } };
-  }
-
-  var getCalGrants = function() {
-    calGrantsFactory.getCalGrants(refreshOptions)
-    .then(({ data: { acknowledgements } }) => {
-      $scope.calgrantAcknowledgements = acknowledgements;
-      $scope.calGrantsLoaded = true;
-    });
-  };
-
-  var getHolds = function() {
-    return holdsFactory.getHolds(refreshOptions).then(function(response) {
-      $scope.holds = _.get(response, 'data.feed.holds');
-      $scope.holdsLoaded = true;
-    });
-  };
-
-  var loadStatusInformation = function() {
-    getCalResidency()
-    .then(parseCalResidency)
-    .then(getSlrDeeplink)
-    .then(getRegistrations)
-    .then(getCalGrants)
-    .then(getHolds)
-    .finally(function() {
-      $scope.statusHolds.isLoading = false;
-    });
-  };
-
-  loadStatusInformation();
-  $scope.cnpStatusIcon = statusHoldsService.cnpStatusIcon;
-  $scope.regStatusIcon = statusHoldsService.regStatusIcon;
-});

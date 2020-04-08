@@ -1,21 +1,26 @@
 import axios from 'axios';
 
-export const FETCH_STATUS_START = 'FETCH_STATUS_START';
-export const FETCH_STATUS_SUCCESS = 'FETCH_STATUS_SUCCESS';
-export const FETCH_STATUS_FAILURE = 'FETCH_STATUS_FAILURE';
+import {
+  FETCH_STATUS_START,
+  FETCH_STATUS_SUCCESS,
+  FETCH_STATUS_FAILURE,
+  FETCH_STATUS_AND_HOLDS_START,
+  FETCH_STATUS_AND_HOLDS_SUCCESS,
+  FETCH_STATUS_AND_HOLDS_FAILURE,
+} from '../action-types';
 
 export const fetchStatusStart = () => ({
-  type: FETCH_STATUS_START
+  type: FETCH_STATUS_START,
 });
 
 export const fetchStatusSuccess = status => ({
   type: FETCH_STATUS_SUCCESS,
-  value: status
+  value: status,
 });
 
 export const fetchStatusFailure = error => ({
   type: FETCH_STATUS_FAILURE,
-  value: error
+  value: error,
 });
 
 export const fetchStatus = () => {
@@ -27,13 +32,17 @@ export const fetchStatus = () => {
     } else {
       dispatch(fetchStatusStart());
 
-      return axios.get('/api/my/status')
+      return axios
+        .get('/api/my/status')
         .then(response => {
           dispatch(fetchStatusSuccess(response.data));
         })
         .catch(error => {
           if (error.response) {
-            const failure = { status: error.response.status, statusText: error.response.statusText };
+            const failure = {
+              status: error.response.status,
+              statusText: error.response.statusText,
+            };
             dispatch(fetchStatusFailure(failure));
           }
         });
@@ -41,22 +50,18 @@ export const fetchStatus = () => {
   };
 };
 
-export const FETCH_STATUS_AND_HOLDS_START = 'FETCH_STATUS_AND_HOLDS_START';
-export const FETCH_STATUS_AND_HOLDS_SUCCESS = 'FETCH_STATUS_AND_HOLDS_SUCCESS';
-export const FETCH_STATUS_AND_HOLDS_FAILURE = 'FETCH_STATUS_AND_HOLDS_FAILURE';
-
 export const fetchStatusAndHoldsStart = () => ({
-  type: FETCH_STATUS_AND_HOLDS_START
+  type: FETCH_STATUS_AND_HOLDS_START,
 });
 
 export const fetchStatusAndHoldsSuccess = data => ({
   type: FETCH_STATUS_AND_HOLDS_SUCCESS,
-  value: data
+  value: data,
 });
 
 export const fetchStatusAndHoldsFailure = error => ({
   type: FETCH_STATUS_AND_HOLDS_FAILURE,
-  value: error
+  value: error,
 });
 
 export const fetchStatusAndHolds = () => {
@@ -68,13 +73,17 @@ export const fetchStatusAndHolds = () => {
     } else {
       dispatch(fetchStatusAndHoldsStart());
 
-      axios.get('/api/my/academics/status_and_holds')
+      axios
+        .get('/api/my/academics/status_and_holds')
         .then(response => {
           dispatch(fetchStatusAndHoldsSuccess(response.data));
         })
         .catch(error => {
           if (error.response) {
-            const failure = { status: error.response.status, statusText: error.response.statusText };
+            const failure = {
+              status: error.response.status,
+              statusText: error.response.statusText,
+            };
             dispatch(fetchStatusAndHoldsFailure(failure));
           }
         });

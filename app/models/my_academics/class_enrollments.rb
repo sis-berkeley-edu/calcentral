@@ -18,6 +18,7 @@ module MyAcademics
         hasHolds: MyAcademics::MyAcademicStatus.has_holds?(@uid),
         links: get_links,
         messages: get_messages,
+        enrollmentTerms: user.enrollment_terms.as_json
       })
     end
 
@@ -209,6 +210,10 @@ module MyAcademics
 
     def user_is_student?
       HubEdos::UserAttributes.new(user_id: @uid).has_role?(:student)
+    end
+
+    def user
+      @user ||= User::Current.new(@uid)
     end
   end
 end
