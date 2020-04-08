@@ -49,12 +49,6 @@ postgres:
   port: <%= ENV['DB_PORT_5432_TCP_PORT'] || '5432' %>
   pool: 3
 
-campusdb:
-  fake: true
-
-edodb:
-  fake: true
-
 ist_jms:
   fake: true
   enabled: false

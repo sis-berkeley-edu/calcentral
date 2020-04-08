@@ -12,9 +12,7 @@ describe MyRegistrations::Messages do
   end
   let(:enrollment_verification_messages_feed) { {feed: {root: {getMessageCatDefn: enrollment_verification_messages}}} }
   let(:enrollment_verification_messages_model) { double(:enrollment_verification_messages, get: enrollment_verification_messages_feed) }
-  before do
-    allow(CampusSolutions::EnrollmentVerificationMessages).to receive(:new).and_return(enrollment_verification_messages_model)
-  end
+  before { allow(described_class).to receive(:registration_messages).and_return(enrollment_verification_messages) }
 
   describe '.regstatus_messages' do
     let(:result) { described_class.regstatus_messages }

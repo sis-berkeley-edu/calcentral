@@ -418,7 +418,7 @@ describe MyAcademics::CollegeAndLevel do
           expect(feed[:collegeAndLevel][:statusCode]).to eq 200
           expect(feed[:collegeAndLevel][:empty]).to eq true
           expect(feed[:collegeAndLevel][:isCurrent]).to eq true
-          expect(feed[:collegeAndLevel][:termName]).to eq 'Fall 2013'
+          expect(feed[:collegeAndLevel][:termName]).to eq 'Fall 2016'
           expect(feed[:collegeAndLevel][:termId]).to eq nil
         end
       end
@@ -427,7 +427,7 @@ describe MyAcademics::CollegeAndLevel do
         it 'sources from empty EDO Hub response' do
           expect(feed[:collegeAndLevel][:empty]).to eq true
           expect(feed[:collegeAndLevel][:isCurrent]).to eq true
-          expect(feed[:collegeAndLevel][:termName]).to eq 'Fall 2013'
+          expect(feed[:collegeAndLevel][:termName]).to eq 'Fall 2016'
           expect(feed[:collegeAndLevel][:termId]).to eq nil
         end
       end
@@ -991,10 +991,6 @@ describe MyAcademics::CollegeAndLevel do
     context 'profile is for the next CalCentral term' do
       let(:term_name) { Berkeley::Terms.fetch.next.to_english }
       it {should eq false}
-    end
-    context 'profile is for the previous CalCentral term' do
-      let(:term_name) { Berkeley::Terms.fetch.previous.to_english }
-      it {should eq true}
     end
     context 'profile is empty' do
       let(:profile) { {empty: true} }

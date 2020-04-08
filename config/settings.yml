@@ -38,17 +38,6 @@ cas_logout_url: 'https://auth.berkeley.edu/cas/logout'
 cas_use_name_identifier: false
 
 # Database settings
-postgres:
-  database: <%= ENV['DB_ENV_POSTGRESQL_DB'] || 'calcentral_production' %>
-  username: <%= ENV['DB_ENV_POSTGRESQL_USER'] || 'calcentral_production' %>
-  password: <%= ENV['DB_ENV_POSTGRESQL_PASS'] || 'secret' %>
-  host: <%= ENV['DB_PORT_5432_TCP_ADDR'] || 'localhost' %>
-  port: <%= ENV['DB_PORT_5432_TCP_PORT'] || '5432' %>
-  pool: 95
-  sslmode: <%= ENV['DB_ENV_POSTGRESQL_SSLMODE'] || 'disable' %>
-  sslcert: <%= ENV['DB_ENV_POSTGRESQL_SSLCERT'] || nil %>
-  sslkey: <%= ENV['DB_ENV_POSTGRESQL_SSLKEY'] || nil %>
-
 oracle:
   adapter: oracle_enhanced
   database: <%= ENV['DB_ENV_ORACLE_DB'] || 'bcsdev' %>
@@ -60,23 +49,10 @@ oracle:
   timeout: 5000
 
 edodb:
-  fake: false
-  adapter: h2
-  driver: org.h2.Driver
-  url: jdbc:h2:mem:h2SisedoOracle::SisedoDataSource;DB_CLOSE_DELAY=-1;MODE=Oracle
-  username: sa
-  password: sa
-  pool: 95
+  adapter: nulldb
 
 campusdb:
-  fake: false
-  adapter: h2
-  driver: org.h2.Driver
-  url: jdbc:h2:mem:h2CampusOracle::CampusDataSource;DB_CLOSE_DELAY=-1;MODE=Oracle
-  username: sa
-  password: sa
-  pool: 95
-  fake_user_id: '300939'
+  adapter: nulldb
 
 terms:
   # Limit how far back our academic history goes.
