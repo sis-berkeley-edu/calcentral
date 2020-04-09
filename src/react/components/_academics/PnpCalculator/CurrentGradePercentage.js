@@ -36,6 +36,7 @@ const CurrentGradePercentage = (props) => {
       {renderExcessUnitsMessage(props.hasExcessNoGpaUnits)}
       <p className='cc-react-text--small cc-react--no-margin'>
         This percentage includes all in progress classes and assumes you will earn units for these classes.
+        Note: Spring 2020 Passed (P) units are exempt.
       </p>
       <p>
         Note: Spring 2020 Passed (P) units are exempt.
