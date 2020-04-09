@@ -62,14 +62,23 @@ module MyAcademics
     end
 
     def get_cumulative_units
-      careers = active_or_all EdoOracle::Career.new(user_id: @uid).get_cumulative_units
+      careers_include_inactive = EdoOracle::Career.new(user_id: @uid).get_cumulative_units
+      careers = active_or_all careers_include_inactive
       result = {
         totalUnits: 0,
-        totalLawUnits: 0
+        totalLawUnits: 0,
+        totalPreviousCareerCumUnits: 0,
+        totalPreviousCareerLawUnits: 0
       }
       careers.each do |career|
         result[:totalUnits] += (career['total_cumulative_units']).to_f
         result[:totalLawUnits] += (career['total_cumulative_law_units']).to_f
+      end
+      careers_include_inactive.each do |career|
+        if (!career['program_status'] && (career['acad_career']=='GRAD' || career['acad_career']=='LAW'))
+          result[:totalPreviousCareerCumUnits] = (career['total_cumulative_units']).to_f
+          result[:totalPreviousCareerLawUnits] = (career['total_cumulative_law_units']).to_f
+        end
       end
       result
     end

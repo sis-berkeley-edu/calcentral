@@ -4,7 +4,8 @@ import { connect } from 'react-redux';
 
 const propTypes = {
   gpa: PropTypes.array,
-  currentlySummerVisitor: PropTypes.bool
+  currentlySummerVisitor: PropTypes.bool,
+  myStatus: PropTypes.object
 };
 
 const formatGpaCumulative = (gpa) => {
@@ -15,10 +16,12 @@ const formatGpaCumulative = (gpa) => {
   }
 };
 
-const GPA = ({ gpa, currentlySummerVisitor }) => {
+const GPA = ({ gpa, currentlySummerVisitor, myStatus}) => {
   const nonLawGpaRole = gpa.find(item => item.role !== 'law');
+  const isLawStudent = myStatus.roles.law;
+  const isJointLawStudent = myStatus.academicRoles.current.lawJointDegree;
 
-  if (gpa.length && !currentlySummerVisitor && nonLawGpaRole) {
+  if (gpa.length && !currentlySummerVisitor && nonLawGpaRole && !isLawStudent && !isJointLawStudent) {
     return (
       <tr>
         <th>Cumulative GPA</th>
@@ -63,7 +66,7 @@ const mapStateToProps = ({ myAcademics, myStatus }) => {
     }
   } = myStatus;
 
-  return { gpa, currentlySummerVisitor };
+  return { gpa, currentlySummerVisitor, myStatus };
 };
 
 export default connect(mapStateToProps)(GPA);

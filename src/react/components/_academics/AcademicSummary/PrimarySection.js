@@ -20,10 +20,9 @@ let SingleSection = ({
   units,
   lawUnits,
   grading,
-  sectionLabel,
-  isLawStudent
+  sectionLabel
 }) => {
-  if (lawUnits > 0) {
+  if (!showPoints) {
     return (
       <LawSection
         klass={klass}
@@ -33,9 +32,13 @@ let SingleSection = ({
         grading={grading}
         units={units}
         canViewGrades={canViewGrades}
+        showPoints={showPoints}
       />
     );
   }
+
+
+  const formattedlawUnits = lawUnits || '0.0';
 
   return (
     <Fragment>
@@ -66,9 +69,9 @@ let SingleSection = ({
         <td className="cc-text-right cc-academic-summary-table-units">
           <ValueOrDash value={units} />
         </td>
-        {lawUnits &&
+        {!showPoints &&
           <td className="cc-text-right cc-academic-summary-table-units">
-            <ValueOrDash value={lawUnits} />
+            <ValueOrDash value={formattedlawUnits} />
           </td>
         }
         <td>
@@ -77,7 +80,7 @@ let SingleSection = ({
           }
         </td>
         <td>
-          {!isLawStudent && canViewGrades && showPoints && grading &&
+          {canViewGrades && showPoints && grading &&
             <ValueOrDash value={grading.gradePointsAdjusted} />
           }
         </td>
@@ -100,17 +103,10 @@ SingleSection.propTypes = {
   units: PropTypes.string,
   lawUnits: PropTypes.string,
   grading: PropTypes.object,
-  sectionLabel: PropTypes.string,
-  isLawStudent: PropTypes.bool
+  sectionLabel: PropTypes.string
 };
 
-const mapSectionStateToProps = ({
-  myStatus: {
-    roles: {
-      law: isLawStudent
-    } = {}
-  } = {}
-}) => ({ isLawStudent });
+const mapSectionStateToProps = () => {return {}};
 
 SingleSection = connect(mapSectionStateToProps)(SingleSection);
 
