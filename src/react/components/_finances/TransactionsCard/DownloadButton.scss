@@ -1,9 +1,9 @@
 @import '../../../stylesheets/variables';
 
 .DownloadButton {
-  color: $color-text-alt;
-  background: #F8F8F8;
-  border: 1px solid #CBCBCB;
+  color: $cc-color-dim-gray;
+  background: $cc-color-white-smoke;
+  border: 1px solid $cc-color-very-light-grey;
   border-radius: 5px;
   padding: 5px 15px;
   cursor: pointer;
