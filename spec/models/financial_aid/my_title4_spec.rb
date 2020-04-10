@@ -2,7 +2,21 @@ describe FinancialAid::MyTitle4 do
 
   describe '#get_feed' do
     subject { described_class.new(uid).get_feed }
+    before { allow(EdoOracle::FinancialAid::Queries).to receive(:get_title4).and_return(title4) }
     let(:uid) { 61889 }
+
+    let(:title4) do
+      {
+        "approved" => "true",
+        "response_descr" => "Accepted",
+        "main_header" => "main_header",
+        "main_body" => "main_body",
+        "dynamic_header" => "dynamic_header",
+        "dynamic_body" => "dynamic_body",
+        "dynamic_label" => "dynamic_label",
+        "contact_text" => "contact_text"
+      }
+    end
 
     it_behaves_like 'a proxy that properly observes the financial_aid feature flag'
 

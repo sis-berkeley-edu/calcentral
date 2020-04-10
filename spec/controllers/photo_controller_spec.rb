@@ -13,6 +13,9 @@ describe PhotoController do
   shared_examples 'a controller with a photo' do
     it 'renders raw image' do
       make_request
+      puts "Settings.edodb.adapter: #{Settings.edodb.adapter.inspect}"
+      puts "User::Auth.connection.class: #{User::Auth.connection.class.inspect}"
+      User::Auth.where(:uid => uid.to_s).first
       expect(response.status).to eq 200
       expect(response.body).to eq 'photo_binary_content'
     end

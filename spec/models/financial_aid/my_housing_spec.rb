@@ -17,7 +17,30 @@ describe FinancialAid::MyHousing do
           {descrlong: 'spring pathway message'}
       end
     end
+    allow(EdoOracle::FinancialAid::Queries).to receive(:get_housing).and_return(housing)
   end
+  let(:housing_status) { 'N' }
+  let(:housing) do
+    [
+      {
+        "term_id" => "2188",
+        "term_descr" => "Fall 2018",
+        "housing_option" => "Living Off Campus",
+        "housing_status" => housing_status,
+        "housing_end_date" => Date.parse('Mon, 01 Oct 2018'),
+        "acad_career" => "UGRD"
+      },
+      {
+        "term_id" => "2192",
+        "term_descr" => "Spring 2019",
+        "housing_option" => "Residence Hall",
+        "housing_status" => housing_status,
+        "housing_end_date" => Date.parse('Wed, 01 May 2019'),
+        "acad_career" => "UGRD"
+      }
+    ]
+  end
+
   let(:during_spring_housing_period) { Concerns::DatesAndTimes.cast_utc_to_pacific(DateTime.parse('2019-04-30')) }
   let(:after_spring_housing_period) { Concerns::DatesAndTimes.cast_utc_to_pacific(DateTime.parse('2019-05-01')) }
   let(:new_admit_status) { nil }
@@ -60,6 +83,7 @@ describe FinancialAid::MyHousing do
     end
 
     context 'when no housing data exists for aid year' do
+      let(:housing) { [] }
       let(:uid) { 61889 }
       let(:aid_year) { '2016' }
       it 'returns an empty terms list' do
@@ -152,6 +176,7 @@ describe FinancialAid::MyHousing do
     end
 
     context 'when student is an undergrad who has already selected their housing options' do
+      let(:housing_status) { 'Y' }
       let(:uid) { 799934 }
       let(:new_admit_status) { nil }
       context 'while the window for changing housing is still open' do

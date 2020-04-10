@@ -1022,8 +1022,10 @@ describe MyAcademics::Semesters do
     end
     context 'when student is in a concurrent (GRAD+LAW) program' do
       before do
+        allow(EdoOracle::Student).to receive(:new).and_return(edo_student)
         allow(User::Identifiers).to receive(:lookup_campus_solutions_id).and_return '95727964'
       end
+      let(:edo_student) { double(:edo_student, :concurrent? => true) }
       context 'and class is for Undergrad' do
         let(:class_career) { 'UGRD' }
         it 'returns false' do

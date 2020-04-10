@@ -19,11 +19,8 @@ gem 'responders', '~> 2.0'
 
 gem 'activerecord-jdbc-adapter', '~> 1.3.16'
 
-# Postgresql adapter
-gem 'activerecord-jdbcpostgresql-adapter', '~> 1.3.16'
-
-# H2 adapter
-gem 'activerecord-jdbch2-adapter', '~> 1.3.16'
+# Null Adapter
+gem 'activerecord-nulldb-adapter', '~> 0.3.7'
 
 # A JSON implementation as a Ruby extension in C
 # http://flori.github.com/json/
@@ -130,27 +127,10 @@ group :development, :test do
   gem 'rspec-collection_matchers', '~> 1.1.2'
   gem 'minitest-reporters', '~> 1.0.8'
 
-  # We need to specify the latest webdriver here, to support the latest firefox
-  gem 'selenium-webdriver', '~> 2.53.4'
-
   # Code coverage for Ruby 1.9 with a powerful configuration library and automatic merging of coverage across test suites
   # https://rubygems.org/gems/simplecov
   gem 'simplecov', '~> 0.14.0', require: false
   gem 'simplecov-html', '~> 0.10.0', require: false
-
-  # Capybara is an integration testing tool for rack based web applications.
-  # It simulates how a user would interact with a website
-  # https://rubygems.org/gems/capybara
-  gem 'capybara', '~> 2.4.4'
-
-  # Headless is a Ruby interface for Xvfb. It allows you to create a headless display straight
-  # from Ruby code, hiding some low-level action.
-  gem 'headless', '~> 1.0.2'
-
-  # Spork can speed up multiple test runs.
-  gem 'spork','1.0.0rc0'
-  gem 'guard-spork'
-  gem 'spork-rails'
 
   # Webmock is not thread-safe and should never be enabled in production-like environments.
   gem 'webmock', '~> 1.20.4'
