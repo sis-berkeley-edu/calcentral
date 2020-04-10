@@ -5,7 +5,7 @@ var _ = require('lodash');
 /**
  * SIR (Statement of Intent to Register) item controller
  */
-angular.module('calcentral.controllers').controller('SirItemController', function(sirFactory, $rootScope, $scope) {
+angular.module('calcentral.controllers').controller('SirItemController', function(apiService, sirFactory, $rootScope, $scope) {
   $scope.sirItem = {
     form: {
       option: false,
@@ -14,7 +14,8 @@ angular.module('calcentral.controllers').controller('SirItemController', functio
     },
     isFormValid: false,
     isSubmitting: false,
-    hasError: false
+    hasError: false,
+    showErrorMessage: false,
   };
 
   var getResponseObject = function() {
@@ -38,6 +39,28 @@ angular.module('calcentral.controllers').controller('SirItemController', functio
     }
 
     return response;
+  };
+
+  $scope.setButtonClass = function() {
+    if (
+      (apiService.user.profile.actAsOptions.canPost &&
+      $scope.sirItem.isFormValid &&
+      !$scope.sirItem.isSubmitting) ||
+      !$scope.sirItem.form.option
+    ) {
+      $scope.sirItem.showErrorMessage = false;
+      return 'cc-button cc-button-blue';
+    } else {
+      return 'cc-button cc-button-grey';
+    }
+  };
+
+  $scope.checkAndSubmit = function() {
+    if ($scope.sirItem.isFormValid) {
+      $scope.submitSirReponse();
+    } else {
+      $scope.sirItem.showErrorMessage = true;
+    }
   };
 
   $scope.submitSirReponse = function() {
@@ -76,7 +99,7 @@ angular.module('calcentral.controllers').controller('SirItemController', functio
         });
       }
     }
-
+    $scope.sirItem.showErrorMessage = false;
     return true;
   };
 
