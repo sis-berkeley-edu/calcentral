@@ -22,6 +22,10 @@ const COVIDEnrollmentNotice = ({ termId, enrollmentTerms }) => {
 
   const message = enrollmentTerm.message.descrlong;
 
+  if (message === null || message === '') {
+    return null;
+  }
+
   return (
     <div className={styles.COVIDEnrollmentNotice}>
       <div
