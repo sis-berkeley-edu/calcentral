@@ -37,7 +37,7 @@ const CurrentGradePercentage = (props) => {
       <p className='cc-react-text--small cc-react--no-margin'>
         This percentage includes all in progress classes and assumes you will earn units for these classes.
       </p>
-      <p>
+      <p className='cc-react-text--small cc-react--no-margin'>
         Note: Spring 2020 Passed (P) units are exempt.
       </p>
     </div>
