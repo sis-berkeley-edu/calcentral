@@ -3,6 +3,7 @@ describe MyClassEnrollmentsController do
   before do
     allow(Settings.features).to receive(:cs_enrollment_card).and_return true
     allow_any_instance_of(HubEdos::UserAttributes).to receive(:has_role?).with(:student).and_return true
+    allow_any_instance_of(HubEdos::UserAttributes).to receive(:has_role?).with(:undergrad).and_return true
   end
 
   context 'enrollment terms feed' do

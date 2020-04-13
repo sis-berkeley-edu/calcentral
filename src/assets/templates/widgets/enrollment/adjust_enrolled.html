@@ -20,6 +20,16 @@
   <span data-ng-bind="enrollmentInstruction.termDescr"></span>.
 </div>
 
+<!-- TODO: Temp for Spring 2020 only, should be removed after Spring 2020  -->
+<div data-ng-if="enrollmentInstruction.termId == '2202' && enrollmentInstruction.csLinks.spring2020Drop">
+  <span>
+    <a data-cc-campus-solutions-link-directive="enrollmentInstruction.csLinks.spring2020Drop"
+      data-cc-campus-solutions-link-directive-cc-page-name="currentPage.name"
+      data-cc-campus-solutions-link-directive-cc-page-url="currentPage.url"
+      data-ng-click="api.analytics.sendEvent('Open eform page', 'Click', 'Request Spring 2020 Drop')"></a>: L&S students may use this form to drop a Spring 2020 class. This form closes May 6, 11:59pm.
+  </span>
+</div><br/>
+
 <div data-ng-if="enrollmentInstruction.enrolledClasses.length">
   <div
     class="cc-table"
