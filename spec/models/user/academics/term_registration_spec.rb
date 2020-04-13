@@ -48,6 +48,15 @@ RSpec.describe User::Academics::TermRegistration, type: :model do
       expect(subject.registration_status).to be_an_instance_of(User::Academics::Status::NullStatus)
     end
 
+    it "is a NullStatus when not an UGRD, GRAD or LAW student (UCBX)" do
+      allow(subject).to receive(:summer?).and_return(false)
+      allow(subject).to receive(:tuition_calculated?).and_return(true)
+      allow(subject).to receive(:undergraduate?).and_return(false)
+      allow(subject).to receive(:graduate?).and_return(false)
+      allow(subject).to receive(:law?).and_return(false)
+      expect(subject.registration_status).to be_an_instance_of(User::Academics::Status::NullStatus)
+    end
+
     it "is an Academics::Status::Undergraduate when #undergraduate?" do
       allow(subject).to receive(:summer?).and_return(false)
       allow(subject).to receive(:tuition_calculated?).and_return(true)
