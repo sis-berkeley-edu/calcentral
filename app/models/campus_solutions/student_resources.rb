@@ -34,14 +34,16 @@ module CampusSolutions
         { feed_key: :view_submitted_forms, cs_link_key: 'UC_CX_GT_STUDENT_VIEW'},
         { feed_key: :withdraw_from_semester_add, cs_link_key: 'UC_CX_SRWITHDRL_ADD' },
         { feed_key: :dissertation_signature, cs_link_key: 'UC_CX_GT_GRADDISSIG_ADD' },
-        { feed_key: :expected_grad_term_add, cs_link_key: 'UC_CX_GT_GRADEGT_ADD' }
+        { feed_key: :expected_grad_term_add, cs_link_key: 'UC_CX_GT_GRADEGT_ADD' },
+        # Temp for Spring 2020 only, should be removed after Spring 2020
+        { feed_key: :spring_2020_drop, cs_link_key: 'UC_CX_GT_SRLATEDROP_ADD' }
       ]
       link_configuration = [
         {
           section: 'Submit a Form',
           links: [:change_of_academic_plan_add, :emergency_loan_form_add, :veterans_benefits_add, :withdraw_from_semester_add,
                   :higher_degrees_committee_form, :special_enrollment_petition, :submit_degree_candidacy_form,
-                  :grad_change_of_academic_plan_add, :dissertation_signature, :expected_grad_term_add],
+                  :grad_change_of_academic_plan_add, :dissertation_signature, :expected_grad_term_add, :spring_2020_drop],
         },
         {
           section: 'Manage your Forms',
@@ -124,6 +126,17 @@ module CampusSolutions
                       current_academic_roles["jurisSocialPolicyPhD"] ||
                       current_academic_roles["jurisSocialPolicyPhC"] ||
                       current_academic_roles["jurisSocialPolicyMasters"]
+        # TODO: Temp for Spring 2020 only, should be removed after Spring 2020
+        when :spring_2020_drop
+          true unless roles[:undergrad] &&
+                      (
+                        current_academic_roles["lettersAndScience"] ||
+                        current_academic_roles["ugrdEngineering"] ||
+                        current_academic_roles["ugrdEnvironmentalDesign"] ||
+                        current_academic_roles["ugrdNaturalResources"] ||
+                        current_academic_roles["ugrdHaasBusiness"] ||
+                        current_academic_roles["degreeSeeking"]
+                      )
         else
           false
         end

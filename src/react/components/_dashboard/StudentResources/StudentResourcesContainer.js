@@ -95,7 +95,7 @@ class StudentResourcesContainer extends React.Component {
   render() {
     return (
       <div>
-        <StudentResources resources={[...this.state.resources]} widgetConfig={{...this.state.widgetConfig}} />
+        <StudentResources resources={[...this.state.resources]} widgetConfig={{...this.state.widgetConfig}} analyticsObj={this.props.apiService.analytics}/>
       </div>
     );
   }
