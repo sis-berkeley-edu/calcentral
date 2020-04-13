@@ -8,7 +8,8 @@ import CampusSolutionsOutboundLink from './CampusSolutionsOutboundLink';
 
 const propTypes = {
   linkObj: PropTypes.object.isRequired,
-  children: PropTypes.any.isRequired
+  children: PropTypes.any,
+  onClickHandler: PropTypes.func
 };
 
 class CampusSolutionsLinkContainer extends React.Component {
@@ -68,9 +69,9 @@ class CampusSolutionsLinkContainer extends React.Component {
       linkConfig.linkBody = this.props.children;
     }
     if (linkConfig.showNewWindow) {
-      return (<CampusSolutionsOutboundLink linkConfig={linkConfig} />);
+      return (<CampusSolutionsOutboundLink linkConfig={linkConfig} onClickHandler={this.props.onClickHandler} />);
     } else {
-      return (<CampusSolutionsLink linkConfig={linkConfig} />);
+      return (<CampusSolutionsLink linkConfig={linkConfig} onClickHandler={this.props.onClickHandler} />);
     }
   }
 }
