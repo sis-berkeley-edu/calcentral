@@ -123,6 +123,8 @@ module User
           User::Academics::Status::Concurrent.new(self)
         elsif graduate? || law?
           User::Academics::Status::Postgraduate.new(self)
+        else
+          null_status
         end
       end
 
