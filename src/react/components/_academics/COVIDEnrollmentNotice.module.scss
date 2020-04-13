@@ -1,0 +1,22 @@
+.COVIDEnrollmentNotice {
+  padding: 10px;
+  background-color: #fef7db;
+  margin-bottom: 15px;
+}
+
+.messageContainer {
+  background-image: url('/assets/images/bullhorn-solid.svg');
+  background-repeat: no-repeat;
+  background-size: 14px 12px;
+  background-position-y: 4px;
+
+  padding-left: 24px;
+
+  p {
+    margin-bottom: 10px;
+  }
+
+  > *:last-child {
+    margin-bottom: 0;
+  }
+}

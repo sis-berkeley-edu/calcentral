@@ -44,7 +44,27 @@ module CampusSolutions
       status_grad_or_law_fees_unpaid: {
         message_set_nbr: '32500',
         message_nbr: '102'
-      }
+      },
+
+      covid_pnp_notice_ugrd_2202: {
+        message_set_nbr: '28000',
+        message_nbr: '221'
+      },
+
+      covid_pnp_notice_ugrd_2205: {
+        message_set_nbr: '28000',
+        message_nbr: '223'
+      },
+
+      covid_pnp_notice_grad_2202:{
+        message_set_nbr: '28000',
+        message_nbr: '222'
+      },
+
+      covid_pnp_notice_grad_2205: {
+        message_set_nbr: '28000',
+        message_nbr: '224'
+      },
     }
 
     def self.get_message(message_key)
