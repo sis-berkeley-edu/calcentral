@@ -1,10 +1,13 @@
 import './_academics/StatusAndHoldsCard/TermRegistrations';
 import './_header/RegistrationStatusItems';
+
 import './_academics/AcademicSummary/AcademicSummary';
 import './_academics/EnrollmentLinks/EnrollmentLinks';
 import './_academics/PnpCalculator/PnpCalculatorContainer';
 import './_academics/StatusAndHoldsCard/SemesterStatuses';
 import './_academics/StudentProfile/StudentProfileCard';
+import './_academics/COVIDEnrollmentNotice';
+
 import './_dashboard/StudentResources/StudentResourcesContainer';
 import './_dashboard/UpNext/UpNextContainer';
 import './_dashboard';
