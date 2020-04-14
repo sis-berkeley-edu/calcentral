@@ -32,14 +32,25 @@
               <td>
                 <div>
                   <strong data-ng-bind="targetUser.defaultName"></strong>
-                  <span class="cc-inline-block"
-                    >(<button
-                      class="cc-button-link"
-                      data-ng-click="targetUser.actAs()"
-                      data-ng-disabled="!api.user.profile.isDirectlyAuthenticated"
-                    >
-                      view as</button
-                    >)</span
+                </div>
+                <div>
+                  <i class="far fa-eye"></i>
+                  <button
+                    class="cc-button-link cc-profile-view-link-indent"
+                    data-ng-click="targetUser.actAs()"
+                    data-ng-disabled="!api.user.profile.isDirectlyAuthenticated"
+                  >
+                    View As
+                  </button>
+                </div>
+                <div class="cc-profile-view-link-top-margin">
+                  <i class="fas cc-icon fa-user"></i>
+                  <a
+                    class="cc-profile-view-link-indent"
+                    data-ng-href="https://boa.berkeley.edu/student/{{targetUser.campusSolutionsId}}"
+                    data-ng-click="api.analytics.trackExternalLink('Link to BOA', 'Personal Summary',
+                     'https://boa.berkeley.edu/student/{{targetUser.campusSolutionsId}}')"
+                    >View in BOA</a
                   >
                 </div>
               </td>
