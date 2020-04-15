@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { enableOAuth } from 'functions/user';
+import { authorizeGoogleAccess } from 'functions/user';
 import { react2angular } from 'react2angular';
 
 import './NoBconnected.scss';
@@ -33,7 +33,7 @@ const NoBconnected = ({
           {!actingAsAnotherUser && (
             <button
               className="cc-button-link"
-              onClick={() => enableOAuth('Google', applicationLayer)}
+              onClick={() => authorizeGoogleAccess(applicationLayer)}
             >
               Connect
             </button>

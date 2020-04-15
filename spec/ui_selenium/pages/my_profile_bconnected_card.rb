@@ -12,7 +12,7 @@ module CalCentralPages
     button(:disconnect_button, :xpath => '//button[contains(.,"Disconnect")]')
     button(:disconnect_yes_button, :xpath => '//button[@data-ng-click="api.user.removeOAuth(service)"]')
     button(:disconnect_no_button, :xpath => '//button[@data-ng-click="showValidation = false"]')
-    button(:connect_button, :xpath => '//button[@data-ng-click="api.user.enableOAuth(service)"]')
+    button(:connect_button, :xpath => '//button[@data-ng-click="api.user.authorizeGoogleAccess()"]')
 
     def load_page
       logger.debug 'Loading bConnected page'

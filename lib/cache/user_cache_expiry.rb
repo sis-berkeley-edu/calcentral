@@ -2,7 +2,7 @@ module Cache
   module UserCacheExpiry
 
     def self.notify(uid)
-      (Cache::UserCacheExpiry.classes).each do |klass|
+      (Cache::UserCacheExpiry.classes.to_a).each do |klass|
         klass.expire uid
       end
     end

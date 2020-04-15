@@ -36,14 +36,21 @@ gem 'net-ldap', '~> 0.16.0'
 # secure_headers provides x-frame, csp and other http headers
 gem 'secure_headers', '~> 1.4.0'
 
-gem 'faraday', '~> 0.9.0'
-gem 'faraday_middleware', '~> 0.9.1'
+# HTTP client library
+# https://github.com/jnunemaker/httparty
 gem 'httparty', '~> 0.13.3'
 
+# Google Auth Library for Ruby
+# https://github.com/googleapis/google-auth-library-ruby
+gem 'googleauth', '~> 0.7.0'
+
 # OAuth2 support
-gem 'signet', '~> 0.7.2'
-gem 'google-api-client', '~> 0.8.6'
-gem 'google_drive', '~> 1.0.6'
+# https://github.com/googleapis/signet
+gem 'signet', '~> 0.10.0'
+
+# REST client for Google APIs
+# https://github.com/googleapis/google-api-ruby-client
+gem 'google-api-client', '~> 0.31.0'
 
 # LTI support
 gem 'ims-lti', :git => 'https://github.com/instructure/ims-lti.git'
@@ -67,7 +74,7 @@ gem 'jruby-openssl', '0.9.19'
 
 # Addressable is a replacement for the URI implementation that is part of Ruby's standard library.
 # https://github.com/sporkmonger/addressable
-gem 'addressable', '~> 2.3.4'
+gem 'addressable', '~> 2.5.1'
 
 # for parsing formatted html
 gem 'nokogiri', '~> 1.8.1', :platforms => :jruby
@@ -89,7 +96,7 @@ gem 'warbler', '~> 2.0.5'
 gem 'jruby-jars', '9.1.14.0'
 
 # for trying, and trying again, and then giving up.
-gem 'retriable', '~> 1.4'
+gem 'retriable', '~> 2.1.0'
 
 # authorization abstraction layer
 gem 'pundit', '~> 0.3.0'
