@@ -1,14 +1,12 @@
 module GoogleApps
-  class EventsGet < Events
+  class EventsGet < Proxy
+    require 'google/apis/calendar_v3'
 
     def get_event(event_id)
       request(
-        api: 'calendar',
-        api_version: 'v3',
-        params: {'calendarId' => 'primary', 'eventId' => event_id},
-        resource: 'events',
-        method: 'get',
-        headers: {'Content-Type' => 'application/json'}
+        service_class: Google::Apis::CalendarV3::CalendarService,
+        method_name: 'delete_event',
+        method_args: ['primary', event_id],
       ).first
     end
   end

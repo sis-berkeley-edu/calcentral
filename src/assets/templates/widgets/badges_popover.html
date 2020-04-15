@@ -210,12 +210,13 @@
                 data-ng-href="{{item.link}}"
               >
                 <i
-                  data-ng-hide="item.icon_class"
+                  data-ng-hide="item.icon_url"
                   class="fa fa-hdd-o cc-left"
                 ></i>
                 <div
-                  class="cc-icon bdrive-icon {{item.icon_class}}"
-                  data-ng-show="item.icon_class"
+                  data-ng-show="item.icon_url"
+                  class="cc-icon bdrive-icon"
+                  style="background-image: url('{{item.icon_url}}')"
                 ></div>
                 <div class="cc-badgepopover-item-details-title cc-ellipsis">
                   <span

@@ -1,5 +1,6 @@
 module GoogleApps
   class Userinfo < Proxy
+    require 'google/apis/people_v1'
 
     def initialize(options = {})
       super options
@@ -13,42 +14,13 @@ module GoogleApps
       )
     end
 
-    def self.api
-      'userinfo'
-    end
-
     def user_info
       request(
-        api: 'people',
-        api_version: 'v1',
-        resource: 'people',
-        method: 'get',
-        headers: {
-          'Content-Type' => 'application/json'
-        },
-        params: {
-          'resourceName' => 'people/me',
-          'personFields' => 'emailAddresses'
-        }
+        service_class: Google::Apis::PeopleV1::PeopleServiceService,
+        method_name: 'get_person',
+        method_args: ['people/me', {person_fields: 'emailAddresses'}],
+        page_limiter: 1
       ).first
     end
-
-    def current_scope
-      # Google API call for 'self' to update tokens of current user.
-      info = user_info
-      access_granted = info.response && info.response.status == 200
-      return [] unless access_granted
-
-      # Ask Google for scope associated with token
-      access_token = authorization.access_token
-      request_options = {
-        query: {
-          access_token: access_token
-        }
-      }
-      response = get_response('https://www.googleapis.com/oauth2/v1/tokeninfo', request_options)
-      response['scope'].present? ? response['scope'].split : []
-    end
-
   end
 end

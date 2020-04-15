@@ -60,7 +60,7 @@
       <button
         data-ng-disabled="api.user.profile['actingAsUid'] || api.user.profile['delegateActingAsUid'] || api.user.profile['advisorActingAsUid']"
         class="cc-button cc-button-blue"
-        data-ng-click="api.user.enableOAuth(service)"
+        data-ng-click="api.user.authorizeGoogleAccess()"
       >
         Connect <span class="cc-visuallyhidden">Google Access</span>
       </button>
