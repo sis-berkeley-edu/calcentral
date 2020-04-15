@@ -1,18 +1,20 @@
-<div class="cc-student-success-subtitle">
-  <h3>
-    Finances
-  </h3>
-</div>
-<div class="cc-table cc-student-success-subsection">
-  <table>
-    <tbody>
-      <tr>
-        <td>Amount Due Now</td>
-        <td class="cc-table-right" colspan="2">
-          <span data-ng-if="!studentSuccess.outstandingBalance">&mdash;</span>
-          <span data-ng-if="studentSuccess.outstandingBalance" data-ng-bind="studentSuccess.outstandingBalance | currency:'$':2"></span>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+<div id="cc-student-success-finances-section">
+  <div class="cc-student-success-subtitle">
+    <h3>
+      Finances
+    </h3>
+  </div>
+  <div class="cc-table cc-student-success-subsection">
+    <table>
+      <tbody>
+        <tr>
+          <td>Amount Due Now</td>
+          <td id="cc-student-success-finances-section-outstanding-balance" class="cc-table-right" colspan="2">
+            <span data-ng-if="!studentSuccess.outstandingBalance">&mdash;</span>
+            <span data-ng-if="studentSuccess.outstandingBalance" data-ng-bind="studentSuccess.outstandingBalance | currency:'$':2"></span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </div>
