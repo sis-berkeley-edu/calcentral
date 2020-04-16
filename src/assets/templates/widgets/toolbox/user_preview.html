@@ -34,7 +34,7 @@
                   <strong data-ng-bind="targetUser.defaultName"></strong>
                 </div>
                 <div>
-                  <i class="far fa-eye"></i>
+                  <i class="fa fa-eye cc-icon-curious-blue"></i>
                   <button
                     class="cc-button-link cc-profile-view-link-indent"
                     data-ng-click="targetUser.actAs()"
@@ -43,13 +43,14 @@
                     View As
                   </button>
                 </div>
-                <div class="cc-profile-view-link-top-margin">
-                  <i class="fas cc-icon fa-user"></i>
+                <div>
+                  <i class="fa fa-user cc-icon-curious-blue cc-profile-view-link-left-margin"></i>
                   <a
-                    class="cc-profile-view-link-indent"
+                    class="cc-profile-view-link-indent cc-profile-view-link-left-margin"
                     data-ng-href="https://boa.berkeley.edu/student/{{targetUser.campusSolutionsId}}"
-                    data-ng-click="api.analytics.trackExternalLink('Link to BOA', 'Personal Summary',
+                    data-ng-click="api.analytics.trackExternalLink('Personal Summary', 'Link to BOA',
                      'https://boa.berkeley.edu/student/{{targetUser.campusSolutionsId}}')"
+                    title="View Student in BOA"
                     >View in BOA</a
                   >
                 </div>
