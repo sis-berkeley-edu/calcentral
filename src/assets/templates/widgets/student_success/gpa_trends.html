@@ -1,16 +1,16 @@
-<div data-ng-if="studentSuccess.termGpa.length">
+<div id="cc-student-success-gpa-section" data-ng-if="studentSuccess.termGpa.length">
   <div class="cc-student-success-subtitle">
-    <h3 data-ng-if="studentSuccess.termGpa.length === 1">GPA</h3>
+    <h3 id="cc-student-success-header" data-ng-if="studentSuccess.termGpa.length === 1">GPA</h3>
     <div data-ng-if="studentSuccess.termGpa.length >= 2">
-      <h3>
+      <h3 id="cc-student-success-gpa-section-header">
         GPA Trends
-        <span data-ng-if="gpaUnits.gpa[0].cumulativeGpa" data-ng-bind-template="(Cumulative {{gpaUnits.gpa[0].cumulativeGpa | number:3}})"></span>
+        <span id="cc-student-success-cumulative-gpa" data-ng-if="gpaUnits.gpa[0].cumulativeGpa" data-ng-bind-template="(Cumulative {{gpaUnits.gpa[0].cumulativeGpa | number:3}})"></span>
       </h3>
       <data-cc-line-chart-directive data-ng-if="studentSuccess.showChart" class="cc-student-success-chart-container" data-options="studentSuccess.gpaChart" data-data="highCharts.dataSeries"></data-cc-line-chart-directive>
     </div>
   </div>
   <div class="cc-table cc-student-success-subsection">
-    <table>
+    <table id="cc-student-success-gpa-section-term-table">
       <thead>
         <tr>
           <th scope="col">Term</th>
@@ -18,9 +18,9 @@
         </tr>
       </thead>
       <tbody data-ng-repeat="term in studentSuccess.termGpaWithZero">
-        <tr>
-          <td data-ng-bind="term.termName"></td>
-          <td class="cc-table-right" colspan="2">
+        <tr class="cc-student-success-gpa-section-term-row" data-ng-attr-id="{{ 'cc-student-success-term-row-' + $index }}">
+          <td class="cc-student-success-gpa-section-term-row-name" data-ng-bind="term.termName"></td>
+          <td class="cc-student-success-term-row-gpa cc-table-right" colspan="2">
             <i data-ng-if="term.termGpa && term.termGpa < 2" class="fa fa-exclamation-circle cc-icon-red"></i>
             <span data-ng-if="!term.termGpa">&mdash;</span>
             <span data-ng-if="term.termGpa" data-ng-class="{'cc-student-success-sub-gpa': (term.termGpa < 2)}" data-ng-bind="term.termGpa | number:3"></span>

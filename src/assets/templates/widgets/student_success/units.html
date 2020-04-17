@@ -1,13 +1,13 @@
-<div class="cc-student-success-subtitle">
+<div id="cc-student-success-units-section" class="cc-student-success-subtitle">
   <h3>
     Units
     <span data-ng-if="!gpaUnits.isLegacy && gpaUnits.totalUnits" data-ng-bind-template="(Cumulative {{gpaUnits.totalUnits | number:1}})"></span>
   </h3>
 </div>
 <div class="cc-table cc-student-success-subsection">
-  <table>
+  <table id="cc-student-success-units-section-table">
     <tbody data-ng-if="!gpaUnits.isLegacy">
-      <tr data-ng-if="gpaUnits.totalLawUnits">
+      <tr id="cc-student-success-units-section-law-units-row" data-ng-if="gpaUnits.totalLawUnits">
         <td>Law Units</td>
         <td class="cc-table-right" colspan="2">
           <span data-ng-bind="gpaUnits.totalLawUnits | number:1"></span>
@@ -15,20 +15,20 @@
       </tr>
       <tr>
         <td>Units for GPA</td>
-        <td class="cc-table-right" colspan="2">
+        <td id="cc-student-success-units-section-units-for-gpa" class="cc-table-right" colspan="2">
           <span data-ng-if="!gpaUnits.totalUnitsForGpa">&mdash;</span>
           <span data-ng-if="gpaUnits.totalUnitsForGpa" data-ng-bind="gpaUnits.totalUnitsForGpa | number:1"></span>
         </td>
       </tr>
       <tr data-ng-if="gpaUnits.totalUnitsPassedNotForGpa">
         <td>Units not for GPA</td>
-        <td class="cc-table-right" colspan="2">
+        <td id="cc-student-success-units-section-units-not-for-gpa" class="cc-table-right" colspan="2">
           <span data-ng-bind="gpaUnits.totalUnitsPassedNotForGpa | number:1"></span>
         </td>
       </tr>
       <tr data-ng-if="gpaUnits.totalTransferAndTestingUnits">
         <td>Transfer Units</td>
-        <td class="cc-table-right" colspan="2">
+        <td id="cc-student-success-units-section-transfer-units" class="cc-table-right" colspan="2">
           <span data-ng-bind="gpaUnits.totalTransferAndTestingUnits | number:1"></span>
         </td>
       </tr>
@@ -36,7 +36,7 @@
     <tbody data-ng-if="gpaUnits.isLegacy">
       <tr>
         <td>Cumulative Units</td>
-        <td class="cc-table-right">
+        <td id="cc-student-success-units-section-cumulative-units" class="cc-table-right">
           <span data-ng-if="!gpaUnits.totalUnits">&mdash;</span>
           <span data-ng-if="gpaUnits.totalUnits" data-ng-bind="gpaUnits.totalUnits | number:1"></span>
         </td>
