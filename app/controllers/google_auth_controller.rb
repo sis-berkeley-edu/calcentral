@@ -41,15 +41,11 @@ class GoogleAuthController < ApplicationController
   private
 
   def google
-    @google ||= GoogleApps::Oauth2TokensGrant.new(user_id, app_id, client_redirect_uri)
+    @google ||= GoogleApps::Oauth2TokensGrant.new(user_id, client_redirect_uri)
   end
 
   def user_id
     session['user_id']
-  end
-
-  def app_id
-    GoogleApps::Proxy::APP_ID
   end
 
   def opts

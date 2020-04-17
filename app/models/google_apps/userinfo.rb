@@ -34,13 +34,9 @@ module GoogleApps
     end
 
     def current_scope
-      access_granted = case @app_id
-                         when GoogleApps::Proxy::APP_ID
-                           # Google API call for 'self' to update tokens of current user.
-                           (info = user_info) && info.response && info.response.status == 200
-                         else
-                           false
-                       end
+      # Google API call for 'self' to update tokens of current user.
+      info = user_info
+      access_granted = info.response && info.response.status == 200
       return [] unless access_granted
 
       # Ask Google for scope associated with token

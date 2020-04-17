@@ -4,15 +4,14 @@ module GoogleApps
   class Oauth2TokensGrant
     include ClassLogger
 
-    def initialize(user_id, app_id, client_redirect_uri)
+    def initialize(user_id, client_redirect_uri)
       @user_id = user_id
-      @app_id = app_id
       @client_redirect_uri = client_redirect_uri
     end
 
     def refresh_oauth2_tokens_url(params)
       expire
-      settings = GoogleApps::CredentialStore.settings_of @app_id
+      settings = GoogleApps::CredentialStore.settings
       scope = settings[:scope]
       if (scope_override = params['scope']).present?
         additional_scope = scope_override.is_a?(Array) ? scope_override.join(' ') : scope_override
@@ -38,35 +37,33 @@ module GoogleApps
         client = get_client modified_opts
         client.code = params['code']
         client.fetch_access_token!
-        logger.warn "Saving #{@app_id} access token for user #{@user_id}"
+        logger.warn "Saving Google access token for user #{@user_id}"
         credentials = {
           expiration_time: client.expires_in.blank? ? 0 : (client.issued_at.to_i + client.expires_in),
           access_token: client.access_token.to_s,
           refresh_token: client.refresh_token
         }
-        store = GoogleApps::CredentialStore.new(@app_id, @user_id, @opts)
+        store = GoogleApps::CredentialStore.new(@user_id, @opts)
         store.write_credentials credentials
-        if @app_id == GoogleApps::Proxy::APP_ID
-          User::Oauth2Data.update_google_email! @user_id
-        end
+        User::Oauth2Data.update_google_email! @user_id
       else
-        logger.warn "Deleting the Google OAuth2 tokens of user #{@user_id} (app_id: #{@app_id}) because callback reported an error: #{params['error']}"
-        User::Oauth2Data.remove(@user_id, @app_id)
+        logger.warn "Deleting the Google OAuth2 tokens of user #{@user_id} (because callback reported an error: #{params['error']}"
+        User::Oauth2Data.remove(@user_id)
       end
 
       expire
     end
 
     def remove_user_authorization
-      logger.warn "Deleting Google OAuth2 tokens of user #{@user_id} (app_id: #{@app_id}) per user request"
+      logger.warn "Deleting Google OAuth2 tokens of user #{@user_id} per user request"
       GoogleApps::Revoke.new(user_id: @user_id).revoke
-      User::Oauth2Data.remove(@user_id, @app_id)
+      User::Oauth2Data.remove(@user_id)
       expire
     end
 
     def scope_granted
-      return [] unless GoogleApps::Proxy.access_granted?(@user_id, @app_id)
-      GoogleApps::Userinfo.new(user_id: @user_id, app_id: @app_id).current_scope
+      return [] unless GoogleApps::Proxy.access_granted?(@user_id)
+      GoogleApps::Userinfo.new(user_id: @user_id).current_scope
     end
 
     def expire
@@ -83,7 +80,7 @@ module GoogleApps
       unless opts[:omit_domain_restriction]
         client.authorization_uri = URI 'https://accounts.google.com/o/oauth2/auth?hd=berkeley.edu'
       end
-      settings = GoogleApps::CredentialStore.settings_of @app_id
+      settings = GoogleApps::CredentialStore.settings
       client.client_id = settings[:client_id]
       client.client_secret = settings[:client_secret]
       client.redirect_uri = @client_redirect_uri
