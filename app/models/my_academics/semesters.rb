@@ -69,8 +69,8 @@ module MyAcademics
       total_law_units = unit_totals[:grading_complete] ? unit_totals[:total_earned_law_units] : unit_totals[:total_enrolled_law_units]
       {
         totalUnits: unit_totals[:grading_complete] ? unit_totals[:total_earned_units] : unit_totals[:total_enrolled_units],
-        totalLawUnits: law_student? || academic_careers.include?(:LAW) ? total_law_units : nil,
-        isGradingComplete: unit_totals[:grading_complete]
+        totalLawUnits: law_student? || law_joint_degree_student? || academic_careers.include?(:LAW) ? total_law_units : nil,
+        isGradingComplete: unit_totals[:grading_complete],
       }
     end
 
@@ -267,7 +267,7 @@ module MyAcademics
     end
 
     def law_class_enrollment(enrollment, section)
-      if law_class?(enrollment) || law_student?
+      if law_class?(enrollment) || law_student? || law_joint_degree_student?
         law_enrollment = EdoOracle::Queries.get_law_enrollment(@uid, enrollment[:academicCareer], enrollment[:term_id], section[:ccn], enrollment[:requirementsDesignationCode])
       end
       {
@@ -314,6 +314,13 @@ module MyAcademics
       @is_law_student ||= begin
         roles = MyAcademics::MyAcademicRoles.new(@uid).get_feed
         !!roles[:current]['law']
+      end
+    end
+
+    def law_joint_degree_student?
+      @is_law_joint_degree_student ||= begin
+        roles = MyAcademics::MyAcademicRoles.new(@uid).get_feed
+        !!roles[:current]['lawJointDegree']
       end
     end
 

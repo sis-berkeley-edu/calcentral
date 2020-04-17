@@ -12,7 +12,9 @@ const propTypes = {
   totalLawUnits: PropTypes.number,
   totalTransferAndTestingUnits: PropTypes.number,
   totalUnitsTakenNotForGpa: PropTypes.number,
-  totalUnitsPassedNotForGpa: PropTypes.number
+  totalUnitsPassedNotForGpa: PropTypes.number,
+  totalPreviousCareerCumUnits: PropTypes.number,
+  totalPreviousCareerLawUnits: PropTypes.number
 };
 
 const CumulativeUnits = ({
@@ -21,30 +23,42 @@ const CumulativeUnits = ({
   totalLawUnits,
   totalTransferAndTestingUnits,
   totalUnitsTakenNotForGpa,
-  totalUnitsPassedNotForGpa
+  totalUnitsPassedNotForGpa,
+  totalPreviousCareerCumUnits,
+  totalPreviousCareerLawUnits
 }) => {
   if (!isCurrentSummerVisitor && (totalUnits > 0 || totalLawUnits > 0)) {
+
+    let summaryTotalLawUnits = totalLawUnits;
+    let summaryTotalUnits = totalUnits;
+    let showPNP = true;
+    if (totalLawUnits > 0 || totalPreviousCareerLawUnits > 0) {
+      summaryTotalLawUnits = totalLawUnits + totalPreviousCareerLawUnits;
+      summaryTotalUnits = totalUnits + totalPreviousCareerCumUnits;
+      showPNP = false;
+    }
+
     return (
       <tr>
         <th>Cumulative Units</th>
         <td>
           <table className="student-profile__subtable">
             <tbody>
-              <UnitsRow name="Total Units" value={totalUnits} />
+              <UnitsRow name="Total Units" value={summaryTotalUnits} />
 
               {unitsPresent(totalLawUnits) &&
-                <UnitsRow name="Law Units" value={totalLawUnits} />
+                <UnitsRow name="Law Units" value={summaryTotalLawUnits} />
               }
 
               {unitsPresent(totalTransferAndTestingUnits) &&
                 <UnitsRow name="Transfer Units" value={totalTransferAndTestingUnits} />
               }
 
-              {unitsPresent(totalUnitsTakenNotForGpa) &&
+              {unitsPresent(totalUnitsTakenNotForGpa) && showPNP &&
                 <UnitsRow name="P/NP Total" value={totalUnitsTakenNotForGpa} />
               }
 
-              {unitsPresent(totalUnitsPassedNotForGpa) &&
+              {unitsPresent(totalUnitsPassedNotForGpa) && showPNP &&
                 <UnitsRow name="P/NP Passed" value={totalUnitsPassedNotForGpa} />
               }
             </tbody>
@@ -63,7 +77,7 @@ const mapStateToProps = ({ myAcademics, myStatus }) => {
   const {
     academicRoles: {
       current: {
-        summerVisitor: isCurrentSummerVisitor
+        summerVisitor: isCurrentSummerVisitor,
       } = {}
     } = {}
   } = myStatus;
@@ -74,7 +88,9 @@ const mapStateToProps = ({ myAcademics, myStatus }) => {
       totalLawUnits,
       totalTransferAndTestingUnits,
       totalUnitsTakenNotForGpa,
-      totalUnitsPassedNotForGpa
+      totalUnitsPassedNotForGpa,
+      totalPreviousCareerCumUnits,
+      totalPreviousCareerLawUnits
     } = {}
   } = myAcademics;
 
@@ -84,7 +100,9 @@ const mapStateToProps = ({ myAcademics, myStatus }) => {
     totalLawUnits,
     totalTransferAndTestingUnits,
     totalUnitsTakenNotForGpa,
-    totalUnitsPassedNotForGpa
+    totalUnitsPassedNotForGpa,
+    totalPreviousCareerCumUnits,
+    totalPreviousCareerLawUnits
   };
 };
 

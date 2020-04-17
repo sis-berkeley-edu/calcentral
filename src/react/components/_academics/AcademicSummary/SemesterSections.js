@@ -7,15 +7,17 @@ import PrimarySection from './PrimarySection';
 const propTypes = {
   semester: PropTypes.object.isRequired,
   transferCredit: PropTypes.object.isRequired,
-  isLawStudent: PropTypes.bool
+  isLawStudent: PropTypes.bool,
+  totalCurrentCumUnits: PropTypes.number,
+  totalCurrentLawUnits: PropTypes.number,
+  totalPreviousCareerCumUnits: PropTypes.number,
+  totalPreviousCareerLawUnits: PropTypes.number
 };
 
-const SemesterSections = ({ semester, transferCredit, isLawStudent }) => {
+const SemesterSections = ({ semester, transferCredit, isLawStudent, totalCurrentLawUnits,
+                            totalPreviousCareerLawUnits}) => {
   const { totalUnits, totalLawUnits, isGradingComplete, classes, termId } = semester;
 
-  const showUnitTotals = classes.map(klass => klass.academicCareer).find((career) => {
-    return (career === 'GRAD' || career === 'LAW');
-  });
 
   const lawTransferUnits = () => {
     if (transferCredit) {
@@ -59,9 +61,7 @@ const SemesterSections = ({ semester, transferCredit, isLawStudent }) => {
     }
   }).filter(e => e !== undefined);
 
-  const showPoints = classes.find(klass => {
-    return klass.sections.find(section => section.grading.gradePointsAdjusted);
-  }) ? true : false;
+  const hasLawUnits = (totalCurrentLawUnits > 0 || totalPreviousCareerLawUnits > 0)
 
   return (
     <table className="cc-class-enrollments">
@@ -70,24 +70,23 @@ const SemesterSections = ({ semester, transferCredit, isLawStudent }) => {
           <th>Class</th>
           <th>Title</th>
           <th className="cc-table-right cc-academic-summary-table-units">Un.</th>
-          {totalLawUnits && <th className="cc-table-right cc-academic-summary-table-units">Law Un.</th>}
+          {hasLawUnits && <th className="cc-table-right cc-academic-summary-table-units">Law Un.</th>}
           <th>Gr.</th>
-          <th>{!isLawStudent && showPoints && <Fragment>Pts.</Fragment>}</th>
+          <th>{!hasLawUnits && <Fragment>Pts.</Fragment>}</th>
         </tr>
       </thead>
       <tbody>
         {primarySections.map((section, index) => (
           <PrimarySection
             key={index}
-            showPoints={showPoints}
-            totalLawUnits={totalLawUnits}
+            showPoints={!hasLawUnits}
             section={section}
             isLawStudent={isLawStudent}
           />
         ))}
       </tbody>
 
-      {showUnitTotals &&
+      {hasLawUnits &&
         <tfoot>
           {hasLawTransfer &&
             <tr>
@@ -120,14 +119,22 @@ const SemesterSections = ({ semester, transferCredit, isLawStudent }) => {
 
 SemesterSections.propTypes = propTypes;
 
-const mapStateToProps = ({ myStatus, myTransferCredit: transferCredit }) => {
+const mapStateToProps = ({ myStatus, myAcademics, myTransferCredit: transferCredit }) => {
   const {
     roles: {
       law: isLawStudent
     }
-  } = myStatus;
+  }= myStatus;
 
-  return { isLawStudent, transferCredit };
+  const {
+    gpaUnits: {
+      totalLawUnits: totalCurrentLawUnits,
+      totalPreviousCareerLawUnits
+    } = {}
+  } = myAcademics;
+
+
+  return { isLawStudent, totalCurrentLawUnits, totalPreviousCareerLawUnits, transferCredit };
 };
 
 export default connect(mapStateToProps)(SemesterSections);

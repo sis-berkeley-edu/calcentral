@@ -8,11 +8,22 @@ const propTypes = {
   semesters: PropTypes.array.isRequired,
   totalUnits: PropTypes.number,
   totalLawUnits: PropTypes.number,
-  hasStudentHistory: PropTypes.bool
+  hasStudentHistory: PropTypes.bool,
+  hasLawJointDegree: PropTypes.bool,
+  totalPreviousCareerCumUnits: PropTypes.number,
+  totalPreviousCareerLawUnits: PropTypes.number
 };
 
-const SemestersSummary = ({ semesters, totalUnits, totalLawUnits, hasStudentHistory, hasLawRole }) => {
-  const showSummary = semesters.length && hasStudentHistory && (hasLawRole || totalLawUnits > 0);
+const SemestersSummary = ({ semesters, totalUnits, totalLawUnits, hasStudentHistory, hasLawRole,
+                            hasLawJointDegree, totalPreviousCareerCumUnits, totalPreviousCareerLawUnits }) => {
+  const showSummary = semesters.length && hasStudentHistory && (hasLawRole || totalLawUnits > 0 || hasLawJointDegree);
+
+  let summaryTotalLawUnits = totalLawUnits;
+  let summaryTotalUnits = totalUnits;
+  if (hasLawJointDegree || hasLawRole) {
+    summaryTotalLawUnits = totalLawUnits + totalPreviousCareerLawUnits;
+    summaryTotalUnits = totalUnits + totalPreviousCareerCumUnits;
+  }
 
   if (showSummary) {
     return (
@@ -38,10 +49,10 @@ const SemestersSummary = ({ semesters, totalUnits, totalLawUnits, hasStudentHist
                   Earned Total:
                 </td>
                 <td className="cc-table-right cc-academic-summary-table-units">
-                  {totalUnits && <strong>{parseFloat(totalUnits).toFixed(1)}</strong>}
+                  {summaryTotalUnits && <strong>{parseFloat(summaryTotalUnits).toFixed(1)}</strong>}
                 </td>
                 <td className="cc-table-right cc-academic-summary-table-units">
-                  {totalLawUnits && <strong>{parseFloat(totalLawUnits).toFixed(1)}</strong>}
+                  {summaryTotalLawUnits && <strong>{parseFloat(summaryTotalLawUnits).toFixed(1)}</strong>}
                 </td>
                 <td></td>
                 <td></td>
@@ -63,19 +74,27 @@ const mapPropsToState = ({ myAcademics, myStatus }) => {
     hasStudentHistory,
     roles: {
       law: hasLawRole
+    },
+    academicRoles: {
+      current: {
+        lawJointDegree: hasLawJointDegree
+      }
     }
   } = myStatus;
 
   const {
     gpaUnits: {
       totalUnits,
-      totalLawUnits
+      totalLawUnits,
+      totalPreviousCareerCumUnits,
+      totalPreviousCareerLawUnits
     },
     semesters
   } = myAcademics;
 
   return {
-    hasLawRole, hasStudentHistory, totalUnits, totalLawUnits, semesters
+    hasLawRole, hasStudentHistory, totalUnits, totalLawUnits, semesters, hasLawJointDegree,
+    totalPreviousCareerCumUnits, totalPreviousCareerLawUnits
   };
 };
 
