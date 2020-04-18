@@ -9,16 +9,12 @@ module GoogleApps
 
     APP_ID = 'Google'
 
-    def self.config_of(app_id = nil)
-      case app_id
-        when APP_ID then Settings.google_proxy
-        else nil
-      end
+    def self.settings
+      Settings.google_proxy
     end
 
     def initialize(options = {})
-      @app_id = options[:app_id] || APP_ID
-      super(Proxy.config_of(@app_id), options)
+      super(Proxy.settings, options)
 
       @authorization = load_authorization options
       @fake_options = options[:fake_options] || {}
@@ -100,14 +96,14 @@ module GoogleApps
 
     def load_authorization(options={})
       if @fake
-        GoogleApps::Client.new_fake_auth @app_id
+        GoogleApps::Client.new_fake_auth
       elsif options[:user_id]
-        token_settings = User::Oauth2Data.get(@uid, @app_id)
-        GoogleApps::Client.new_client_auth(@app_id, token_settings || { access_token: '' })
+        token_settings = User::Oauth2Data.get(@uid)
+        GoogleApps::Client.new_client_auth(token_settings || { access_token: '' })
       else
         auth_related_entries = [:access_token, :refresh_token, :expiration_time]
         token_settings = options.select { |k, v| auth_related_entries.include? k }.symbolize_keys!
-        GoogleApps::Client.new_client_auth(@app_id, token_settings)
+        GoogleApps::Client.new_client_auth(token_settings)
       end
     end
 
@@ -144,7 +140,7 @@ module GoogleApps
     def revoke_invalid_token!(response)
       if @uid && response.response.status == 401 && response.error_message == 'Invalid Credentials'
         logger.warn "Deleting Google access token for #{@uid} due to 401 Unauthorized (Invalid Credentials) from Google"
-        User::Oauth2Data.remove(@uid, @app_id)
+        User::Oauth2Data.remove(@uid)
       end
     end
 
@@ -164,8 +160,8 @@ module GoogleApps
       }
     end
 
-    def self.access_granted?(user_id, app_id = APP_ID)
-      Proxy.config_of(app_id).fake || User::Oauth2Data.get(user_id, app_id)[:access_token].present?
+    def self.access_granted?(user_id)
+      Proxy.settings.fake || User::Oauth2Data.get(user_id)[:access_token].present?
     end
 
     def update_access_tokens!
@@ -173,7 +169,6 @@ module GoogleApps
         logger.info "Will update token for #{@uid} from #{@current_token} => #{@authorization.access_token}"
         User::Oauth2Data.new_or_update(
           @uid,
-          @app_id,
           @authorization.access_token,
           @authorization.refresh_token,
           @authorization.expires_at.to_i)

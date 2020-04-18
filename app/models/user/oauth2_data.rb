@@ -21,16 +21,15 @@ module User
     @@encryption_key = Settings.oauth2.key
 
     alias_attribute :uid, :uc_clc_ldap_uid
-    alias_attribute :app_id, :uc_clc_app_id
 
     def self.attributeDefaults
       {refresh_token:'', app_data:{'clc_null' => true}, expiration_time:0}
     end
 
-    def self.get(user_id, app_id)
+    def self.get(user_id)
       hash = {}
       use_pooled_connection {
-        oauth2_data = self.where(uid: user_id, app_id: app_id).first
+        oauth2_data = self.where(uid: user_id).first
 
         if oauth2_data
           oauth2_data.attributes.each { |key, value| hash[key] = value }
@@ -39,29 +38,25 @@ module User
       hash.symbolize_keys
     end
 
-    def self.remove(uid, app_id)
+    def self.remove(uid)
       use_pooled_connection {
-        self.destroy_all(uid: uid, app_id: app_id)
+        self.destroy_all(uid: uid)
       }
       Cache::UserCacheExpiry.notify uid
     end
 
     def self.get_google_email(user_id)
-      get_appdata_field(GoogleApps::Proxy::APP_ID, user_id, 'email')
-    end
-
-    def self.get_canvas_email(user_id)
-      get_appdata_field(Canvas::Proxy::APP_ID, user_id, 'email')
+      get_appdata_field(user_id, 'email')
     end
 
     def self.is_google_reminder_dismissed(user_id)
-      get_appdata_field(GoogleApps::Proxy::APP_ID, user_id, 'is_reminder_dismissed')
+      get_appdata_field(user_id, 'is_reminder_dismissed')
     end
 
     def self.update_google_email!(user_id)
       #will be a noop if user hasn't granted google access
       use_pooled_connection {
-        authenticated_entry = self.where(uid: user_id, app_id: GoogleApps::Proxy::APP_ID).first
+        authenticated_entry = self.where(uid: user_id).first
         return unless authenticated_entry
         userinfo = GoogleApps::Userinfo.new(user_id: user_id).user_info
         return unless userinfo && userinfo.response.status == 200 && userinfo.data["emailAddresses"].present? && userinfo.data["emailAddresses"].length > 0
@@ -71,24 +66,10 @@ module User
       }
     end
 
-    def self.update_canvas_email!(user_id)
-      #will be a noop if user hasn't granted canvas access
-      use_pooled_connection {
-        authenticated_entry = self.where(uid: user_id, app_id: Canvas::Proxy::APP_ID).first
-        return unless authenticated_entry
-        login_info = Canvas::SisUserProfile.new(user_id: user_id).get
-        if login_info && login_info["primary_email"]
-          authenticated_entry.app_data_will_change!
-          authenticated_entry.app_data["email"] = login_info["primary_email"]
-          authenticated_entry.save
-        end
-      }
-    end
-
-    def self.new_or_update(user_id, app_id, access_token, refresh_token=nil, expiration_time=nil, options={})
+    def self.new_or_update(user_id, access_token, refresh_token=nil, expiration_time=nil, options={})
       use_pooled_connection {
         Retriable.retriable(:on => ActiveRecord::RecordNotUnique, :tries => 5) do
-          entry = self.where(:uid => user_id, :app_id => app_id).first_or_initialize
+          entry = self.where(:uid => user_id).first_or_initialize
           entry.access_token = access_token
           entry.refresh_token = refresh_token
           entry.expiration_time = expiration_time
@@ -108,10 +89,8 @@ module User
     end
 
     def self.dismiss_google_reminder(user_id)
-      new_or_update(user_id, GoogleApps::Proxy::APP_ID, '', '', 0, {
-        app_data: {
-          'is_reminder_dismissed' => true
-        }
+      new_or_update(user_id, '', '', 0, {
+        app_data: {'is_reminder_dismissed' => true}
       })
     end
 
@@ -154,10 +133,10 @@ module User
 
     private
 
-    def self.get_appdata_field(app_id, uid, field)
+    def self.get_appdata_field(uid, field)
       oauth2_data = false
       use_pooled_connection {
-        oauth2_data = self.where(uid: uid, app_id: app_id).first
+        oauth2_data = self.where(uid: uid).first
       }
       if oauth2_data && oauth2_data.app_data && oauth2_data.app_data[field]
         oauth2_data.app_data[field]

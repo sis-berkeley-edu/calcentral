@@ -1,8 +1,6 @@
 describe GoogleApps::CredentialStore do
-
-  let(:app_id) { GoogleApps::Proxy::APP_ID }
   let(:uid) { random_id }
-  let(:settings) { GoogleApps::CredentialStore.settings_of app_id }
+  let(:settings) { GoogleApps::CredentialStore.settings }
   let(:access_token) { random_string 10 }
   let(:refresh_token) { random_string 10 }
   let(:oauth2_tokens) {
@@ -17,10 +15,10 @@ describe GoogleApps::CredentialStore do
     let(:client_secret) { settings[:client_secret] }
     let(:scope) { settings[:scope] }
     let(:oauth2_data) { oauth2_tokens.merge expiration_time: 1 }
-    let(:store) { GoogleApps::CredentialStore.new(app_id, uid, opts) }
+    let(:store) { GoogleApps::CredentialStore.new(uid, opts) }
 
     before {
-      allow(User::Oauth2Data).to receive(:get).with(uid, app_id).and_return oauth2_data
+      allow(User::Oauth2Data).to receive(:get).with(uid).and_return oauth2_data
     }
 
     context 'uid has access and refresh token in the database' do
@@ -49,7 +47,7 @@ describe GoogleApps::CredentialStore do
       }
 
       before {
-        expect(User::Oauth2Data).to receive(:new_or_update).with(uid, app_id, access_token, refresh_token, kind_of(Numeric), anything)
+        expect(User::Oauth2Data).to receive(:new_or_update).with(uid, access_token, refresh_token, kind_of(Numeric), anything)
       }
       it 'should compute expiration_time on the fly' do
         c = store.load_credentials
@@ -61,7 +59,7 @@ describe GoogleApps::CredentialStore do
 
     context 'errors' do
       it 'should raise error if uid is blank' do
-        expect{ GoogleApps::CredentialStore.new(app_id, '  ') }.to raise_error ArgumentError
+        expect{ GoogleApps::CredentialStore.new('  ') }.to raise_error ArgumentError
       end
 
       context 'no such user' do

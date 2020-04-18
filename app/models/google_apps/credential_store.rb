@@ -2,18 +2,17 @@ module GoogleApps
   class CredentialStore
     include ClassLogger
 
-    def initialize(app_id, uid, opts={})
-      raise ArgumentError, 'Credential store lookup requires both app_id and user_id' if app_id.blank? || uid.blank?
-      @app_id = app_id
+    def initialize(uid, opts={})
+      raise ArgumentError, 'Credential store lookup requires user_id' if uid.blank?
       @uid = uid
       @opts = opts || {}
     end
 
     # Do not change the signature of this method because it is invoked by Google::APIClient
     def load_credentials
-      oauth2_data = User::Oauth2Data.get(@uid, @app_id)
+      oauth2_data = User::Oauth2Data.get(@uid)
       return nil if oauth2_data.empty?
-      credentials = CredentialStore.settings_of @app_id
+      credentials = CredentialStore.settings
       credentials.merge! oauth2_data
       # Infer times
       unless credentials[:expires_in] && credentials[:issued_at]
@@ -29,11 +28,11 @@ module GoogleApps
       return nil if auth.nil?
       if auth.is_a? Hash
         auth.symbolize_keys!
-        logger.debug "OAuth tokens in hash (app_id: #{@app_id}; uid: #{@uid})"
+        logger.debug "OAuth tokens in hash (uid: #{@uid})"
         opts = @opts.merge auth.symbolize_keys
         write(auth[:access_token], auth[:refresh_token], opts)
       elsif auth.is_a?(Signet::OAuth2::Client) && auth.access_token && auth.refresh_token
-        logger.debug "OAuth tokens in #{auth.class} (app_id: #{@app_id}; uid: #{@uid})"
+        logger.debug "OAuth tokens in #{auth.class} (uid: #{@uid})"
         opts = @opts.merge({
           issued_at: auth.issued_at,
           expires_in: auth.expires_in
@@ -54,15 +53,14 @@ module GoogleApps
       end
       User::Oauth2Data.new_or_update(
         @uid,
-        @app_id,
         access_token,
         refresh_token,
         expiration_time,
         opts)
     end
 
-    def self.settings_of(app_id)
-      return nil unless (settings = Proxy.config_of app_id)
+    def self.settings
+      return nil unless (settings = Proxy.settings)
       {
         client_id: settings.client_id,
         client_secret: settings.client_secret,

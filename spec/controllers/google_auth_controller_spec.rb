@@ -8,7 +8,6 @@ describe GoogleAuthController do
       scope: Settings.google_proxy.scope
     }
   }
-  let(:app_id) { GoogleApps::Proxy::APP_ID }
   let(:params) { {} }
 
   before do
@@ -88,7 +87,6 @@ describe GoogleAuthController do
           expect(client).to receive(:refresh_token).and_return refresh_token
           expect(User::Oauth2Data).to receive(:new_or_update).with(
             user_id,
-            app_id,
             access_token,
             refresh_token,
             0,
@@ -108,7 +106,7 @@ describe GoogleAuthController do
     context 'Google reports an error' do
       before do
         expect(Google::APIClient).to receive(:new).never
-        expect(User::Oauth2Data).to receive(:remove).with(user_id, app_id)
+        expect(User::Oauth2Data).to receive(:remove).with(user_id)
       end
 
       it 'should not record client_id and client_secret' do
@@ -139,7 +137,7 @@ describe GoogleAuthController do
   describe '#current_scope' do
     let(:access_granted) { true }
     before do
-      expect(GoogleApps::Proxy).to receive(:access_granted?).with(user_id, GoogleApps::Proxy::APP_ID).and_return access_granted
+      expect(GoogleApps::Proxy).to receive(:access_granted?).with(user_id).and_return access_granted
     end
     subject {
       post :current_scope, { format: 'json' }
@@ -151,7 +149,7 @@ describe GoogleAuthController do
     context 'access granted' do
       let(:current_scope) { [ random_string(5), random_string(5) ] }
       before do
-        expect(GoogleApps::Userinfo).to receive(:new).with(user_id: user_id, app_id: GoogleApps::Proxy::APP_ID).and_return (user_info = double)
+        expect(GoogleApps::Userinfo).to receive(:new).with(user_id: user_id).and_return (user_info = double)
         expect(user_info).to receive(:current_scope).and_return current_scope
       end
 
@@ -171,7 +169,7 @@ describe GoogleAuthController do
     before do
       expect(GoogleApps::Revoke).to receive(:new).with(user_id: user_id).and_return(google = double)
       expect(google).to receive :revoke
-      expect(User::Oauth2Data).to receive(:remove).with(user_id, app_id)
+      expect(User::Oauth2Data).to receive(:remove).with(user_id)
       expect(Cache::UserCacheExpiry).to receive :notify
     end
 

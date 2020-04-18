@@ -2,8 +2,8 @@ class CreatePsUcSavedUids < ActiveRecord::Migration
   def up
     if ActiveRecord::Base.connection.class.name == 'ActiveRecord::ConnectionAdapters::SQLite3Adapter'
       create_table "ps_uc_clc_oauth", {force: :cascade, primary_key:'uc_clc_id'} do |t|
-        t.string  "uc_clc_ldap_uid",             limit: 255
-        t.string  "uc_clc_app_id",          limit: 255
+        t.string  "uc_clc_ldap_uid", limit: 255
+        t.string  "uc_clc_app_id", limit: 255
         t.text    "access_token"
         t.text    "refresh_token"
         t.integer "expiration_time", limit: 8
@@ -13,7 +13,7 @@ class CreatePsUcSavedUids < ActiveRecord::Migration
       add_index "ps_uc_clc_oauth", ["uc_clc_ldap_uid", "uc_clc_app_id"], name: "index_ps_uc_clc_oauth_on_uid_app_id", unique: true, using: :btree
 
       create_table "ps_uc_recent_uids", {force: :cascade, primary_key:'uc_clc_id'} do |t|
-        t.string   "uc_clc_oid",   limit: 255
+        t.string   "uc_clc_oid", limit: 255
         t.string   "uc_clc_stor_id", limit: 255
         t.datetime "created_at"
         t.datetime "updated_at"
@@ -80,7 +80,6 @@ class CreatePsUcSavedUids < ActiveRecord::Migration
       drop_table :service_alerts
       drop_table :user_auths
       drop_table :user_data
-
     end
   end
 

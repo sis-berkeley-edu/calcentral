@@ -24,12 +24,12 @@ module GoogleApps
         end
       end
 
-      def new_fake_auth(app_id)
-        new_auth(app_id, 'fake_access_token')
+      def new_fake_auth
+        new_auth('fake_access_token')
       end
 
-      def new_client_auth(app_id, options={})
-        new_auth(app_id, options[:access_token], options)
+      def new_client_auth(options={})
+        new_auth(options[:access_token], options)
       end
 
       def generate_request_hash(page_params)
@@ -52,8 +52,8 @@ module GoogleApps
 
       private
 
-      def new_auth(app_id, access_token, options={})
-        settings = GoogleApps::Proxy.config_of app_id
+      def new_auth(access_token, options={})
+        settings = GoogleApps::Proxy.settings
         authorization = client.authorization.dup
         authorization.client_id = settings.client_id
         authorization.client_secret = settings.client_secret
