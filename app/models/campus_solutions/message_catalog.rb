@@ -9,6 +9,7 @@ module CampusSolutions
       financial_aid_gift_aid_more_info: { message_set_nbr: '26400', message_nbr: '1' },
       financial_aid_net_cost_more_info: { message_set_nbr: '26400', message_nbr: '3' },
       financial_aid_third_party_more_info: { message_set_nbr: '26400', message_nbr: '2' },
+      financial_aid_award_comparison_card_info: { message_set_nbr: '26400', message_nbr: '8' },
       financial_aid_awards_card_info: { message_set_nbr: '26500', message_nbr: '115' },
       financial_aid_awards_card_info_est_disbursements: { message_set_nbr: '26400', message_nbr: '5'},
       financial_aid_awards_card_auth_failed: { message_set_nbr: '26400', message_nbr: '6'},

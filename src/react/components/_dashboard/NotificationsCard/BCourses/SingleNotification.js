@@ -28,7 +28,9 @@ const SingleNotification = ({
         <div style={{ flex: `1` }}>
           <div className={styles.sourceLabel}>{source}</div>
           <div className={styles.secondaryLabel}>
-            {notification.type === 'gradePosting' && <GradedLabel />}{' '}
+            {notification.type === 'gradePosting' && (
+              <GradedLabel style={{ marginRight: `5px` }} />
+            )}{' '}
             {notification.type === 'webcast' && 'New '}
             {notification.title}
           </div>

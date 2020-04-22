@@ -34,31 +34,31 @@ module FinancialAid
     end
 
     def status
-      @status ||= EdoOracle::FinancialAid::Queries.get_finaid_profile_status(@uid, my_aid_year, effective_date: today)
+      @status ||= EdoOracle::FinancialAid::Queries.get_finaid_profile_status(@uid, aid_year: my_aid_year, effective_date: today)
     end
 
     def careers
-      @careers ||= EdoOracle::FinancialAid::Queries.get_finaid_profile_acad_careers(@uid, my_aid_year, effective_date: today)
+      @careers ||= EdoOracle::FinancialAid::Queries.get_finaid_profile_acad_careers(@uid, aid_year: my_aid_year, effective_date: today)
     end
 
     def level
-      @level ||= EdoOracle::FinancialAid::Queries.get_finaid_profile_acad_level(@uid, my_aid_year, effective_date: today)
+      @level ||= EdoOracle::FinancialAid::Queries.get_finaid_profile_acad_level(@uid, aid_year: my_aid_year, effective_date: today)
     end
 
     def enrollment
-      @enrollment ||= EdoOracle::FinancialAid::Queries.get_finaid_profile_enrollment(@uid, my_aid_year, effective_date: today)
+      @enrollment ||= EdoOracle::FinancialAid::Queries.get_finaid_profile_enrollment(@uid, aid_year: my_aid_year, effective_date: today)
     end
 
     def ship_status
-      @ship_status ||= EdoOracle::FinancialAid::Queries.get_finaid_profile_SHIP(@uid, my_aid_year, effective_date: today)
+      @ship_status ||= EdoOracle::FinancialAid::Queries.get_finaid_profile_SHIP(@uid, aid_year: my_aid_year, effective_date: today)
     end
 
     def residency
-      @residency ||= EdoOracle::FinancialAid::Queries.get_finaid_profile_residency(@uid, my_aid_year, effective_date: today)
+      @residency ||= EdoOracle::FinancialAid::Queries.get_finaid_profile_residency(@uid, aid_year: my_aid_year, effective_date: today)
     end
 
     def isir
-      @isir ||= EdoOracle::FinancialAid::Queries.get_finaid_profile_isir(@uid, my_aid_year, effective_date: today)
+      @isir ||= EdoOracle::FinancialAid::Queries.get_finaid_profile_isir(@uid, aid_year: my_aid_year, effective_date: today)
     end
 
     def title4

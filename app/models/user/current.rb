@@ -21,6 +21,18 @@ module User
       @campus_solutions_id ||= User::Identifiers.lookup_campus_solutions_id(uid)
     end
 
+    def aid_years
+      @aid_years ||= User::FinancialAid::AidYears.new(self)
+    end
+
+    def award_comparison
+      @award_comparison ||= User::FinancialAid::AwardComparison.new(self)
+    end
+
+    def award_comparison_for_aid_year_and_date(aid_year, effective_date)
+      @award_comparison_data ||= User::FinancialAid::AwardComparisonData.new(self, aid_year, effective_date)
+    end
+
     def billing_items
       @billing_items ||= User::Finances::BillingItems.new(self)
     end

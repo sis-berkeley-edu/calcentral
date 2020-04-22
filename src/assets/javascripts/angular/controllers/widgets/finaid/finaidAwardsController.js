@@ -2,8 +2,11 @@
 
 var _ = require('lodash');
 
-import 'icons/download.svg';
+import 'icons/changed-orange.svg';
+import 'icons/changed-white.svg';
+import 'icons/compare.svg';
 import 'icons/info.svg';
+import 'icons/report.svg';
 import shouldShowDecimals from './shouldShowDecimals';
 
 /**
@@ -26,6 +29,7 @@ angular
     ];
 
     $scope.finaidAwardsInfo = {
+      aidYear: null,
       isLoading: true,
       keysGiftWork: keysGiftWork,
       keysLoans: keysLoans,
@@ -107,6 +111,7 @@ angular
           $scope.finaidAwardsInfo.checkForDisbursementDates = checkForDisbursementDates;
           $scope.finaidAwardsInfo.formatCurrency = formatCurrency;
           $scope.finaidAwardsInfo.isLoading = false;
+          $scope.finaidAwardsInfo.aidYear = finaidService.options.finaidYear.id;
         });
     };
 

@@ -17,7 +17,7 @@ module FinancialAid
 
     def get_feed_internal
       return {} unless is_feature_enabled
-      @feed = EdoOracle::FinancialAid::Queries.get_housing(@uid, my_aid_year)
+      @feed = EdoOracle::FinancialAid::Queries.get_housing(@uid, aid_year: my_aid_year, effective_date: today)
       {
         housing: {
           terms: HashConverter.downcase_and_camelize(@feed),
@@ -97,6 +97,10 @@ module FinancialAid
 
     def my_aid_year
       @my_aid_year ||= (@options[:aid_year] || FinancialAid::MyAidYears.new(@uid).default_aid_year).to_i.to_s
+    end
+
+    def today
+      @today ||= Time.zone.today.in_time_zone.to_date
     end
   end
 end

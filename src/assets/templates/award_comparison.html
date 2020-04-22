@@ -1,0 +1,24 @@
+<div
+  class="cc-page-finaid"
+  data-ng-controller="FinaidController"
+  data-ng-if="api.user.profile.features.csFinAid"
+>
+  <h1 class="cc-heading-page-title cc-print-hide">
+    <a href="/finances">My Finances</a> &raquo;
+    <a data-ng-href="/finances/finaid/{{finaidYear.id}}">Financial Aid</a>
+    &raquo; Award Comparison
+  </h1>
+  <h1 class="cc-heading-page-title cc-hidden cc-print-show">
+    Financial aid award comparison for
+    <span data-ng-bind="api.user.profile.fullName">
+      (<span data-ng-bind="finaidYear.id"></span>)</span
+    >
+  </h1>
+  <div class="row collapse">
+    <div
+      class="medium-10 large-8 medium-centered columns cc-column-3 cc-clearfix-container"
+    >
+      <award-comparison></award-comparison>
+    </div>
+  </div>
+</div>

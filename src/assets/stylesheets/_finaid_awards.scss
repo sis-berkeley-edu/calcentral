@@ -1,3 +1,5 @@
+@import '../stylesheets/colors';
+
 .cc-widget-finaid-awards {
   .cc-widget-finaid-awards-message {
     padding-bottom: 0;
@@ -5,16 +7,42 @@
   .cc-widget-finaid-awards-padding-top {
     margin-top: 10px;
   }
-  .cc-widget-finaid-awards-link {
+  .cc-widget-finaid-awards-link-title {
+    color: $cc-color-dim-gray;
     display: flex;
-    margin: 10px 15px;
+    font-size: 13px;
+    font-weight: bold;
+    margin-left: 15px;
+    margin-top: 10px;
   }
-  .cc-widget-finaid-awards-icon-download {
-    background-image: url('/assets/images/download.svg');
+  .cc-widget-finaid-awards-icon-report {
+    background-image: url('/assets/images/report.svg');
     background-position-y: center;
     background-repeat: no-repeat;
     background-size: 12px 11px;
+    color: $cc-color-dim-gray;
     padding-left: 18px;
+  }
+  .cc-widget-finaid-awards-icon-changed {
+    background-image: url('/assets/images/changed.svg');
+    background-position-y: center;
+    background-repeat: no-repeat;
+    background-size: 12px 11px;
+    color: $cc-color-dark-tangerine;
+    padding-left: 18px;
+  }
+  .cc-widget-finaid-awards-icon-compare {
+    background-image: url('/assets/images/compare.svg');
+    background-position-y: center;
+    background-repeat: no-repeat;
+    background-size: 12px 11px;
+    color: $cc-color-dim-gray;
+    padding-left: 18px;
+  }
+  .cc-widget-finaid-awards-link {
+    display: flex;
+    margin-left: 35px;
+    margin-top: 0;
   }
   .cc-widget-finaid-awards-section {
     margin-top: 15px;
