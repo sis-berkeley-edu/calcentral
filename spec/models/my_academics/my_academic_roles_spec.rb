@@ -40,7 +40,7 @@ describe MyAcademics::MyAcademicRoles do
     it 'provides a set of roles based on the user\'s current academic status' do
       expect(result).to be
       expect(result[:current]).to be
-      expect(result[:current].keys.count).to eq 33
+      expect(result[:current].keys.count).to eq 34
       expect(result[:current]['ugrd']).to eq false
       expect(result[:current]['grad']).to eq true
       expect(result[:current]['fpf']).to eq false
@@ -78,7 +78,7 @@ describe MyAcademics::MyAcademicRoles do
     it 'provides a set of roles based on all of the user\'s past academic data' do
       expect(result).to be
       expect(result[:historical]).to be
-      expect(result[:historical].keys.count).to eq 33
+      expect(result[:historical].keys.count).to eq 34
       expect(result[:historical]['ugrd']).to eq true
       expect(result[:historical]['grad']).to eq true
       expect(result[:historical]['fpf']).to eq false
