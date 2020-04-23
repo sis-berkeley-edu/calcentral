@@ -69,6 +69,7 @@ module Concerns
 
     STUDENT_GROUP_ROLES = [
       {role_code: 'lawJointDegree', match: ['LJD']},
+      {role_code: 'activeVeteran', match: ['RB3','RB3Y','RB4','RB5','RB6','RB7','RB7T','RBV']}
     ]
 
     def get_academic_plan_roles(plan_code)
