@@ -76,7 +76,7 @@
   }
 
   .valueCellChanged {
-    background-color: #fef7d9;
+    background-color: $corn-silk;
   }
 
   .valueCellIcon {
@@ -116,8 +116,10 @@
     display: flex;
     flex-direction: column;
     width: 25%;
-    padding: 0.6923076923rem 0.7692307692rem;
+    padding-top: 0;
     padding-right: 5px;
+    padding-left: 0.7692307692rem;
+    padding-bottom: 0;
   }
 
   .subvalueTermData {
@@ -156,6 +158,7 @@
     tbody {
       tr {
         border: 1px solid $light-gray;
+        cursor: default;
 
         th,
         td {
