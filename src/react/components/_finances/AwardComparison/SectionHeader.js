@@ -9,7 +9,7 @@ const SectionHeader = ({ expanded, label, numberOfChanges }) => {
   return (
     <h3>
       <div className="headerContainer">
-        <div className="headerLabel">
+        <div>
           <DisclosureChevron
             style={{ marginRight: '10px' }}
             expanded={expanded}
@@ -21,7 +21,7 @@ const SectionHeader = ({ expanded, label, numberOfChanges }) => {
             count={numberOfChanges}
             backgroundColor="#F1A91E"
             color="#FFFFFF"
-            style={{ marginLeft: `5px` }}
+            style={{ marginLeft: `10px` }}
           >
             <WhiteChangedIcon className="headerIcon" />
           </Badge>

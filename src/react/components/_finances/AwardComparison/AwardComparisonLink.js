@@ -23,10 +23,10 @@ const AwardComparisonLink = ({ fetchData, awardComparison, year }) => {
     return (
       <>
         <div className="cc-widget-finaid-awards-link-title cc-widget-finaid-awards-icon-compare">
-          Changes to Current Awards
+          Award Comparison
         </div>
         <div className="cc-widget-finaid-awards-link">
-          <a href={awardComparisonHref}>View Award Comparison</a>
+          <a href={awardComparisonHref}>View Changes to Current Awards</a>
         </div>
       </>
     );

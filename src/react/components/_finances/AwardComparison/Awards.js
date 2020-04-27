@@ -148,6 +148,8 @@ const Awards = ({
                           <th className="typeTitle" scope="row">
                             {awardType.description}
                           </th>
+                          <td></td>
+                          <td></td>
                         </tr>
                       </>
                       <>

@@ -12,7 +12,7 @@ const Badge = ({
     backgroundColor: backgroundColor,
     color: color,
     borderRadius: `10px`,
-    fontSize: `10px`,
+    fontSize: `12px`,
     padding: `2px 8px`,
     fontWeight: `normal`,
     height: `15px`,
