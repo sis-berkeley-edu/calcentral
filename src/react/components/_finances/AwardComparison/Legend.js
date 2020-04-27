@@ -28,8 +28,11 @@ const Legend = ({ asOfCurrentDate, selectedDate }) => {
                     </>
                   ) : (
                     <>
-                      <div>As of</div>
-                      <div> {format(parseISO(selectedDate), 'MMM d, y')}</div>
+                      <div className="dimGrey">As of</div>
+                      <div className="dimGrey">
+                        {' '}
+                        {format(parseISO(selectedDate), 'MMM d, y')}
+                      </div>
                     </>
                   )}
                 </div>
@@ -39,8 +42,11 @@ const Legend = ({ asOfCurrentDate, selectedDate }) => {
               <div className="justifiedRightColumn">
                 <div className="textStrong">Current</div>
                 <div className="direction">
-                  <div>As of</div>
-                  <div> {format(parseISO(asOfCurrentDate), 'MMM d, y')}</div>
+                  <div className="dimGrey">As of</div>
+                  <div className="dimGrey">
+                    {' '}
+                    {format(parseISO(asOfCurrentDate), 'MMM d, y')}
+                  </div>
                 </div>
               </div>
             </th>

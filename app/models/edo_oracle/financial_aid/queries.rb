@@ -467,10 +467,18 @@ module EdoOracle
         result = safe_query <<-SQL
         SELECT
           UC.AID_YEAR             AS AID_YEAR,
-          UC.DESCR                AS DEPENDENCY_STATUS,
+          CASE
+            WHEN UC.DESCR = ' '
+              THEN NULL
+            ELSE UC.DESCR
+          END                     AS DEPENDENCY_STATUS,
           UC.DESCR2               AS PRIMARY_EFC,
           UC.DESCR3               AS SUMMER_EFC,
-          UC.DESCR4               AS FAMILY_IN_COLLEGE
+          CASE
+            WHEN UC.DESCR4 = ' '
+              THEN NULL
+            ELSE UC.DESCR4
+          END                     AS FAMILY_IN_COLLEGE
          FROM SYSADM.PS_UCC_FA_PRFL_ISR UC
         WHERE UC.CAMPUS_ID   = '#{person_id}'
           AND UC.INSTITUTION = '#{UC_BERKELEY}'
