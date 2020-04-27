@@ -35,6 +35,7 @@ module CampusSolutions
         { feed_key: :withdraw_from_semester_add, cs_link_key: 'UC_CX_SRWITHDRL_ADD' },
         { feed_key: :dissertation_signature, cs_link_key: 'UC_CX_GT_GRADDISSIG_ADD' },
         { feed_key: :expected_grad_term_add, cs_link_key: 'UC_CX_GT_GRADEGT_ADD' },
+        { feed_key: :veterans_benefits_renew_add, cs_link_key: 'UC_CX_GT_VBRENEWAL_ADD' },
         # Temp for Spring 2020 only, should be removed after Spring 2020
         { feed_key: :spring_2020_drop, cs_link_key: 'UC_CX_GT_SRLATEDROP_ADD' }
       ]
@@ -43,7 +44,7 @@ module CampusSolutions
           section: 'Submit a Form',
           links: [:change_of_academic_plan_add, :emergency_loan_form_add, :veterans_benefits_add, :withdraw_from_semester_add,
                   :higher_degrees_committee_form, :special_enrollment_petition, :submit_degree_candidacy_form,
-                  :grad_change_of_academic_plan_add, :dissertation_signature, :expected_grad_term_add, :spring_2020_drop],
+                  :grad_change_of_academic_plan_add, :dissertation_signature, :expected_grad_term_add, :spring_2020_drop, :veterans_benefits_renew_add],
         },
         {
           section: 'Manage your Forms',
@@ -137,6 +138,8 @@ module CampusSolutions
                         current_academic_roles["ugrdHaasBusiness"] ||
                         current_academic_roles["degreeSeeking"]
                       )
+        when :veterans_benefits_renew_add
+          true unless current_academic_roles["activeVeteran"]
         else
           false
         end
