@@ -61,7 +61,15 @@ const SemesterSections = ({ semester, transferCredit, isLawStudent, totalCurrent
     }
   }).filter(e => e !== undefined);
 
-  const hasLawUnits = (totalCurrentLawUnits > 0 || totalPreviousCareerLawUnits > 0)
+  const hasLawUnits = (totalCurrentLawUnits > 0 || totalPreviousCareerLawUnits > 0);
+
+  const calcTotalUnits = () => {
+    if (hasLawUnits && lawTransferUnits().units > 0) {
+      return (totalUnits - lawTransferUnits().units).toFixed(1)
+    } else {
+      return totalUnits;
+    }
+  };
 
   return (
     <table className="cc-class-enrollments">
@@ -93,7 +101,7 @@ const SemesterSections = ({ semester, transferCredit, isLawStudent, totalCurrent
               <td colSpan="2" className="cc-table-right cc-academic-summary-table-units">
                 Transfer Units:
               </td>
-              <td className="cc-text-right cc-academic-summary-table-units">{lawTransferUnits().units.toFixed(1)}</td>
+              <td className="cc-text-right cc-academic-summary-table-units"></td>
               <td className="cc-text-right cc-academic-summary-table-units">{lawTransferUnits().lawUnits.toFixed(1)}</td>
               <td>CR</td>
               <td className="cc-text-right"></td>
@@ -103,7 +111,7 @@ const SemesterSections = ({ semester, transferCredit, isLawStudent, totalCurrent
             <td colSpan="2" className="cc-table-right cc-academic-summary-table-units">
               {isGradingComplete ? 'Earned Total:' : 'Enrolled Total:'}
             </td>
-            <td className="cc-text-right cc-academic-summary-table-units"><strong>{totalUnits}</strong></td>
+            <td className="cc-text-right cc-academic-summary-table-units"><strong>{calcTotalUnits()}</strong></td>
 
             {totalLawUnits &&
               <td className="cc-text-right cc-academic-summary-table-units"><strong>{totalLawUnits}</strong></td>

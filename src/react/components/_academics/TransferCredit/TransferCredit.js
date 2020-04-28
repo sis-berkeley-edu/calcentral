@@ -33,10 +33,11 @@ const TransferCredit = ({
 
   return (
     <Fragment>
-      <GenericTransferCredit {...careers.undergraduate}
+      {!careers.law.detailed && !careers.law.summary && <GenericTransferCredit {...careers.undergraduate}
         isStudent={isStudent}
         reportLink={reportLink()}
-      />
+        />
+      }
       <GenericTransferCredit {...careers.graduate}
         isStudent={isStudent}
         reportLink={reportLink()}
