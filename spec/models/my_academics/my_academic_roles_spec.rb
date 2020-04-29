@@ -40,7 +40,7 @@ describe MyAcademics::MyAcademicRoles do
     it 'provides a set of roles based on the user\'s current academic status' do
       expect(result).to be
       expect(result[:current]).to be
-      expect(result[:current].keys.count).to eq 34
+      expect(result[:current].keys.count).to eq 35
       expect(result[:current]['ugrd']).to eq false
       expect(result[:current]['grad']).to eq true
       expect(result[:current]['fpf']).to eq false
@@ -74,11 +74,12 @@ describe MyAcademics::MyAcademicRoles do
       expect(result[:current]['summerVisitor']).to eq false
       expect(result[:current]['courseworkOnly']).to eq false
       expect(result[:current]['lawJdCdp']).to eq false
+      expect(result[:current]['lawDegreeAudit']).to eq false
     end
     it 'provides a set of roles based on all of the user\'s past academic data' do
       expect(result).to be
       expect(result[:historical]).to be
-      expect(result[:historical].keys.count).to eq 34
+      expect(result[:historical].keys.count).to eq 35
       expect(result[:historical]['ugrd']).to eq true
       expect(result[:historical]['grad']).to eq true
       expect(result[:historical]['fpf']).to eq false
@@ -111,6 +112,7 @@ describe MyAcademics::MyAcademicRoles do
       expect(result[:historical]['summerVisitor']).to eq false
       expect(result[:historical]['courseworkOnly']).to eq false
       expect(result[:historical]['lawJdCdp']).to eq false
+      expect(result[:historical]['lawDegreeAudit']).to eq false
     end
 
     context 'when student has only summer visitor plans under non-degree programs' do
@@ -163,6 +165,24 @@ describe MyAcademics::MyAcademicRoles do
       it 'sets roles approrpriately' do
         expect(result[:historical]['summerVisitor']).to eq false
         expect(result[:historical]['degreeSeeking']).to eq true
+      end
+    end
+    context 'when student has plan that matches dynamic plan code for law degree audit' do
+      let(:term_plans) do
+        [
+          {'term_id'=>'2125', 'acad_career'=>'GRAD', 'acad_program'=>'UCLS', 'acad_plan'=>'84501JDG'},
+        ]
+      end
+      let(:law_audit_paln_rows) do
+        [
+          {"acad_plan"=>"84501JDG"}
+        ]
+      end
+      before do
+        allow(MyAcademics::Law::Queries).to receive(:law_degree_audit_plans).and_return(law_audit_paln_rows)
+      end
+      it 'sets roles approrpriately' do
+        expect(result[:historical]['lawDegreeAudit']).to eq true
       end
     end
   end

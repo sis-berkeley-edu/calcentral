@@ -49,10 +49,19 @@ module MyAcademics
         assigned_roles << get_academic_career_roles(term['acad_career'])
         assigned_roles << get_academic_program_roles(term['acad_program'])
         assigned_roles << get_academic_plan_roles(term['acad_plan'])
+        assigned_roles << get_matched_roles(dynamic_plan_roles, term['acad_plan'])
       end
 
       map_roles(roles, assigned_roles.flatten.uniq)
       roles
+    end
+
+    def dynamic_plan_roles
+      [{role_code: 'lawDegreeAudit', match: law_degree_audit_roles}]
+    end
+
+    def law_degree_audit_roles
+      MyAcademics::Law::Queries.law_degree_audit_plans.map{|row| row["acad_plan"]}
     end
 
     def map_roles(default_roles, assigned_roles)

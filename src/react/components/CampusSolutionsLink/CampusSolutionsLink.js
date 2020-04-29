@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 const CampusSolutionsLink = (props) => {
   return (
-    <a href={props.linkConfig.linkUrl} title={props.linkConfig.linkHoverText} onClick={props.onClickHandler}>
+    <a href={props.linkConfig.linkUrl} title={props.linkConfig.linkHoverText.toString()} onClick={props.onClickHandler}>
       {props.linkConfig.linkBody}
     </a>
   );
