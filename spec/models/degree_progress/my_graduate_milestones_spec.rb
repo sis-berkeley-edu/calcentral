@@ -8,14 +8,6 @@ describe DegreeProgress::MyGraduateMilestones do
       expect(subject[:feed][:links][:academicProgressReportGrad][:url]).to eq 'https://bcswebqat.is.berkeley.edu/psp/bcsqat/EMPLOYEE/PSFT_CS/c/SA_LEARNER_SERVICES.SAA_SS_DPR_ADB.GBL?EMPLID=25738808'
     end
   end
-  shared_examples 'a proxy that returns a link to the Haas Academic Progress Report' do
-    it 'includes said link in the response' do
-      expect(subject[:feed][:links]).to be
-      expect(subject[:feed][:links][:academicProgressReportHaas]).to be
-      expect(subject[:feed][:links][:academicProgressReportHaas][:urlId]).to eq 'UC_CX_APR_RPT_GRD_STDNT_HAAS'
-      expect(subject[:feed][:links][:academicProgressReportHaas][:url]).to eq 'https://bcswebqat.is.berkeley.edu/psp/bcsqat/EMPLOYEE/PSFT_CS/c/SA_LEARNER_SERVICES.SAA_SS_DPR_ADB.GBL?EMPLID=25738808'
-    end
-  end
   shared_examples 'a proxy that returns a link to the Law Academic Progress Report' do
     it 'includes said link in the response' do
       expect(subject[:feed][:links]).to be
@@ -53,22 +45,45 @@ describe DegreeProgress::MyGraduateMilestones do
       current: {
         'jurisSocialPolicyMasters' => whitelisted_law_student,
         'haasBusinessAdminMasters' => whitelisted_haas_student,
-        'haasExecMba' => blacklisted_haas_student,
         'grad' => graduate_student,
         'law' => law_student,
       }
     }
   end
+  let(:incomplete_grad_statuses) do
+    [
+      {
+        'studentPlans' => [
+          {
+            'academicPlan'=> {
+              'academicProgram'=> {
+                'program'=> {
+                  'code'=> 'GRAD'
+                }
+              }
+            },
+            'statusInPlan'=> {
+              'status'=> {
+                'code'=> 'AC'
+              }
+            }
+          }
+        ]
+      }
+    ]
+  end
   let(:graduate_student) { false }
   let(:law_student) { false }
   let(:whitelisted_law_student) { false }
   let(:whitelisted_haas_student) { false }
-  let(:blacklisted_haas_student) { false }
+  let(:academic_statuses) { [] }
+
 
   before do
     allow(User::AggregatedAttributes).to receive(:new).with(user_id).and_return double(get_feed: user_attributes)
     allow(CampusSolutions::Link).to receive(:new).and_return link_proxy
     allow_any_instance_of(MyAcademics::MyAcademicRoles).to receive(:get_feed).and_return(academic_roles)
+    allow(MyAcademics::MyAcademicStatus).to receive(:statuses_by_career_role).and_return(academic_statuses)
   end
 
   describe '#get_feed_internal' do
@@ -76,6 +91,7 @@ describe DegreeProgress::MyGraduateMilestones do
 
     context 'when user is a graduate student' do
       let(:graduate_student) { true }
+      let(:academic_statuses) { incomplete_grad_statuses }
 
       it_behaves_like 'a proxy that returns graduate milestone data'
       it_behaves_like 'a proxy that properly observes the graduate degree progress for student feature flag'
@@ -88,15 +104,7 @@ describe DegreeProgress::MyGraduateMilestones do
         it_behaves_like 'a proxy that returns graduate milestone data'
         it_behaves_like 'a proxy that properly observes the graduate degree progress for student feature flag'
         it_behaves_like 'a proxy that returns one link'
-        it_behaves_like 'a proxy that returns a link to the Haas Academic Progress Report'
-      end
-
-      context 'when student is active in a Haas plan that doesn\t use the APR' do
-        let(:blacklisted_haas_student) { true }
-
-        it_behaves_like 'a proxy that returns graduate milestone data'
-        it_behaves_like 'a proxy that properly observes the graduate degree progress for student feature flag'
-        it_behaves_like 'a proxy that does not return links'
+        it_behaves_like 'a proxy that returns a link to the Grad Academic Progress Report'
       end
     end
 
@@ -119,6 +127,7 @@ describe DegreeProgress::MyGraduateMilestones do
 
     context 'when user has both Graduate and Law careers' do
       let(:graduate_student) { true }
+      let(:academic_statuses) { incomplete_grad_statuses }
       let(:law_student) { true }
 
       it_behaves_like 'a proxy that returns graduate milestone data'
