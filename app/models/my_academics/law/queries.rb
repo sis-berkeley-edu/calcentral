@@ -28,6 +28,13 @@ module MyAcademics
           WHERE CAMPUS_ID = '#{uid}'
         SQL
       end
+
+      def self.law_degree_audit_plans
+        safe_query <<-SQL
+          SELECT ACAD_PLAN
+          FROM SYSADM.PS_UCC_AA_LAWDGRVW
+        SQL
+      end
     end
   end
 end

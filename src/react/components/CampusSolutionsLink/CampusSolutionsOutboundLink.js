@@ -5,7 +5,7 @@ import '../../stylesheets/box_model.scss';
 
 const CampusSolutionsOutboundLink = (props) => {
   return (
-    <a href={props.linkConfig.linkUrl} title={props.linkConfig.linkHoverText} onClick={props.onClickHandler} target="_blank" rel="noopener noreferrer ">
+    <a href={props.linkConfig.linkUrl} title={props.linkConfig.linkHoverText.toString()} onClick={props.onClickHandler} target="_blank" rel="noopener noreferrer ">
       {props.linkConfig.linkBody}
       <span className="cc-react--visually-hidden cc-react-print-hide">Opens in new window</span>
     </a>

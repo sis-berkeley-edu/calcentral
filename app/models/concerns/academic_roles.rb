@@ -48,6 +48,11 @@ module Concerns
       }
     ]
 
+    # Roles that are not hardcoded to plan codes but are dynamiclly sourced from DB
+    DYNAMIC_ACADEMIC_PLAN_ROLES = [
+      {role_code: 'lawDegreeAudit', match: []}
+    ]
+
     # Role(s) assigned to a user if they are in a program associated with that role.
     ACADEMIC_PROGRAM_ROLES = [
       {role_code: 'lettersAndScience', match: ['UCLS']},
@@ -109,7 +114,7 @@ module Concerns
     end
 
     def role_codes
-      (ACADEMIC_PLAN_ROLES | ACADEMIC_CAREER_ROLES | ACADEMIC_PROGRAM_ROLES | STUDENT_GROUP_ROLES).collect do |matcher|
+      (ACADEMIC_PLAN_ROLES | ACADEMIC_CAREER_ROLES | ACADEMIC_PROGRAM_ROLES | STUDENT_GROUP_ROLES | DYNAMIC_ACADEMIC_PLAN_ROLES).collect do |matcher|
         matcher[:role_code]
       end
     end
