@@ -8,9 +8,10 @@ module User
       end
 
       def all
-        enrollments_data.collect do |data|
+        @all ||= enrollments_data.collect do |data|
           EnrollmentTerm.new(data.merge({
-            student_attributes: user.student_attributes
+            student_attributes: user.student_attributes,
+            enrollment_instructions: user.enrollment_term_instructions
           }))
         end
       end
@@ -22,7 +23,7 @@ module User
       private
 
       def enrollments_data
-        @data = CampusSolutions::EnrollmentTerms
+        @enrollments_data = CampusSolutions::EnrollmentTerms
           .new({ user_id: user.uid }).get[:feed][:enrollmentTerms]
       rescue NoMethodError
         []

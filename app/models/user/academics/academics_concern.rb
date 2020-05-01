@@ -8,6 +8,10 @@ module User
           @enrollment_terms ||= ::User::Academics::EnrollmentTerms.new(self)
         end
 
+        def enrollment_term_instructions
+          @enrollment_term_instructions ||= ::User::Academics::EnrollmentTermInstructions.new(self)
+        end
+
         def holds
           @holds ||= ::User::Academics::Holds.new(self)
         end
