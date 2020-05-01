@@ -13,6 +13,8 @@ module Berkeley
           'Law'
         when 'EPN', 'PNP'
           'P/NP'
+        when 'DPN'
+          'Default P/NP'
         when 'ESU', 'SUS'
           'S/U'
         when 'CNC'
