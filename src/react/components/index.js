@@ -7,6 +7,7 @@ import './_academics/PnpCalculator/PnpCalculatorContainer';
 import './_academics/StatusAndHoldsCard/SemesterStatuses';
 import './_academics/StudentProfile/StudentProfileCard';
 import './_academics/COVIDEnrollmentNotice';
+import './_academics/EnrollmentAppointments/EnrollmentAppointments';
 
 import './_dashboard/StudentResources/StudentResourcesContainer';
 import './_dashboard/UpNext/UpNextContainer';

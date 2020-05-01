@@ -2,6 +2,8 @@ module User
   module Academics
     class EnrollmentTerm
       attr_accessor :student_attributes
+      attr_accessor :enrollment_instructions
+
       attr_accessor :term_id
       attr_accessor :term_descr
       attr_accessor :acad_career
@@ -15,9 +17,12 @@ module User
 
       def as_json(options={})
         {
+          career: career,
           termId: term_id,
           requiresCalgrantAcknowledgement: requires_cal_grant_acknowledgement?,
           message: message,
+          enrollmentPeriods: enrollment_periods,
+          constraints: enrollment_career,
         }
       end
 
@@ -44,6 +49,18 @@ module User
 
       def career
         acad_career.downcase
+      end
+
+      def enrollment_instruction
+        @enrollment_instruction ||= enrollment_instructions.find_by_term_id(term_id)
+      end
+
+      def enrollment_periods
+        @enrollment_periods ||= enrollment_instruction.enrollment_periods.for_career(career)
+      end
+
+      def enrollment_career
+        @enrollment_career ||= enrollment_instruction.enrollment_careers.find_by_career_code(career)
       end
     end
   end

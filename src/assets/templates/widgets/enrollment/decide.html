@@ -52,36 +52,10 @@
   </div>
 
   <div data-ng-if="enrollmentInstruction.enrollmentPeriod.length">
-    <div data-ng-if="isInstructionType(enrollmentInstruction, ['law'])"
-      class="cc-enrollment-card-margin-bottom">
-      Below are your enrollment appointment start times. You will have continuous access to the system until the semester's add/drop deadline:
-    </div>
-    <h4 class="cc-enrollment-card-headersub-title">Enrollment Period <span>(Pacific Time Zone)</span></h4>
-    <div class="cc-table">
-      <table>
-        <thead class="cc-visuallyhidden">
-          <th scope="col">Phase</th>
-          <th scope="col">Day of the week</th>
-          <th scope="col">Date and time</th>
-        </thead>
-        <tr data-ng-repeat="period in enrollmentInstruction.enrollmentPeriod">
-          <th scope="row">
-            <span data-ng-bind="period.name" class="cc-text-light"></span>
-          </th>
-          <td>
-            <strong data-ng-bind="period.date.epoch * 1000 | date:'EEE':period.date.offset"></strong>
-          </td>
-          <td>
-            <strong data-ng-bind="period.date.epoch * 1000 | date:'MMM d':period.date.offset"></strong>
-            <span aria-hidden>|</span>
-            <span class="cc-visuallyhidden">at</span>
-            <span data-ng-bind="period.date.epoch * 1000 | date:'h:mm a':period.date.offset"></span>
-          </td>
-        </tr>
-      </table>
-    </div>
+    <enrollment-appointments instruction="enrollmentInstruction">
+    </enrollment-appointments>
   </div>
-  <br/>
+
   <p data-ng-bind="enrollmentInstruction.csMessages.waitlistedUnitsWarning.descrlong"></p>
 
 </div>
