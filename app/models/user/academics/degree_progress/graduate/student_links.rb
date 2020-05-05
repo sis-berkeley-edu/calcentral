@@ -43,7 +43,7 @@ module User
           end
 
           def get_incomplete_programs_roles
-            grad_statuses = MyAcademics::MyAcademicStatus.statuses_by_career_role(user.campus_solutions_id, ['grad'])
+            grad_statuses = MyAcademics::MyAcademicStatus.statuses_by_career_role(user.uid, ['grad'])
             return [] if grad_statuses.blank?
 
             plans = incomplete_plans_from_statuses(grad_statuses)
