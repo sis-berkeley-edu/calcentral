@@ -37,6 +37,7 @@ module MyAcademics
         assigned_roles << get_academic_career_roles(term['acad_career'])
         assigned_roles << get_academic_program_roles(term['acad_program'])
         assigned_roles << get_academic_plan_roles(term['acad_plan'])
+        assigned_roles << get_matched_roles(dynamic_plan_roles, term['acad_plan'])
       end
       assigned_roles.flatten.uniq
     end
