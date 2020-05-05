@@ -3,8 +3,9 @@ import { react2angular } from 'react2angular';
 import Widget from '../../Widget/Widget';
 import _ from 'lodash';
 import CampusSolutionsLinkContainer from '../../CampusSolutionsLink/CampusSolutionsLinkContainer';
+import PropTypes from 'prop-types';
 
-const LawDegreeAudit = (prop) => {
+const LawDegreeAudit = (props) => {
 
   const [errored, setErrored] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
@@ -20,10 +21,13 @@ const LawDegreeAudit = (prop) => {
   };
 
   let fetchLawAuditLink = () => {
-    prop.csLinkFactory.getLink({
+    props.csLinkFactory.getLink({
       urlId: 'UC_AA_LAW_DEGREE_AUDIT'
     }).then(function(response) {
       const linkObj = _.get(response, 'data.link');
+      linkObj.ccPageName = props.$route.current.pageName;
+      linkObj.ccPageUrl = props.$location.absUrl();
+
       setLinkObj(linkObj);
       if (!linkObj) {
         setErrored(true);
@@ -48,6 +52,12 @@ const LawDegreeAudit = (prop) => {
   );
 }
 
-angular.module('calcentral.react').component('lawDegreeAudit', react2angular(LawDegreeAudit,  [], ['csLinkFactory']));
+LawDegreeAudit.propTypes = {
+  csLinkFactory: PropTypes.object.isRequired,
+  $location: PropTypes.object.isRequired,
+  $route:  PropTypes.object.isRequired
+};
+
+angular.module('calcentral.react').component('lawDegreeAudit', react2angular(LawDegreeAudit,  [], ['$route','$location','csLinkFactory']));
 
 
