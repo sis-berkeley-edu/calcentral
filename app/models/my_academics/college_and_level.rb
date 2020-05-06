@@ -153,11 +153,18 @@ module MyAcademics
             end
 
             degree.merge! plan_set
-            degree[:isUndergrad] = :UGRD == degree[:plans].try(:first).try(:[], :career).try(:[], :code).try(:intern)
+            degree[:isUndergrad] = :UGRD == filter_plans_for_major(degree[:plans]).try(:[], :career).try(:[], :code).try(:intern)
             awarded_degrees << degree
           end
         end
         awarded_degrees unless awarded_degrees.empty?
+      end
+    end
+
+    def filter_plans_for_major(plans)
+      plans.detect do |plan|
+        code = plan.try(:[], :type).try(:[], :code)
+        ['MAJ', 'SS', 'SP', 'HS', 'CRT'].include?(code)
       end
     end
 
@@ -263,7 +270,7 @@ module MyAcademics
     end
 
     def categorize_plan_type(type)
-      case (code = type.try(:[], 'code'))
+      case (code = type.try(:[], 'code').to_s.strip)
         when 'MAJ', 'SS', 'SP', 'HS', 'CRT'
           category = 'Major'
         when 'MIN'
