@@ -11,7 +11,8 @@ module User
         @all ||= enrollments_data.collect do |data|
           EnrollmentTerm.new(data.merge({
             student_attributes: user.student_attributes,
-            enrollment_instructions: user.enrollment_term_instructions
+            enrollment_instructions: user.enrollment_term_instructions,
+            term_plans: user.term_plans,
           }))
         end
       end

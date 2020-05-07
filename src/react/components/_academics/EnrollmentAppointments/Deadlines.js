@@ -4,8 +4,11 @@ import PropTypes from 'prop-types';
 import { parseISO } from 'date-fns';
 import TimeCell from './TimeCell';
 
-const Deadlines = ({ constraints: { deadlines = [] } = {} }) => {
+const Deadlines = ({ constraints: { deadlines = [] } = {}, programCode }) => {
   if (deadlines.length > 0) {
+    const programIsEngineeringOrChem =
+      programCode == 'UCOE' || programCode == 'UCCH';
+
     return (
       <>
         <h4
@@ -33,14 +36,23 @@ const Deadlines = ({ constraints: { deadlines = [] } = {} }) => {
                       </td>
                       <td style={{ width: `33% ` }}></td>
                     </tr>
-                    {optionDeadline && (
+                    {programIsEngineeringOrChem ? (
                       <tr>
                         <td style={{ width: `33% ` }}>Grading option</td>
-                        <td style={{ width: `33% ` }}>
-                          <TimeCell time={optionDeadline} />
+                        <td colSpan="2" style={{ fontSize: `12px` }}>
+                          *Please refer to your college’s policy
                         </td>
-                        <td style={{ width: `33% ` }}></td>
                       </tr>
+                    ) : (
+                      optionDeadline && (
+                        <tr>
+                          <td style={{ width: `33% ` }}>Grading option</td>
+                          <td style={{ width: `33% ` }}>
+                            <TimeCell time={optionDeadline} />
+                          </td>
+                          <td style={{ width: `33% ` }}></td>
+                        </tr>
+                      )
                     )}
                   </React.Fragment>
                 );
@@ -57,6 +69,7 @@ const Deadlines = ({ constraints: { deadlines = [] } = {} }) => {
 
 Deadlines.propTypes = {
   constraints: PropTypes.object,
+  programCode: PropTypes.string,
 };
 
 export default Deadlines;

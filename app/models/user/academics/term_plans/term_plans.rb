@@ -16,6 +16,13 @@ module User
           end.sort_by(&:term_id).reverse
         end
 
+        def find_by_term_id_and_career_code(term_id, career_code)
+          all.find do |plan|
+            plan.term_id == term_id &&
+              plan.academic_career_code == career_code
+          end
+        end
+
         def latest_career_code
           all.first.academic_career_code
         end

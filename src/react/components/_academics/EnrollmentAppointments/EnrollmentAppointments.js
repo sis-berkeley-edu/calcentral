@@ -46,9 +46,17 @@ const EnrollmentAppointments = ({ instruction, enrollmentTerms }) => {
           <table>
             <thead>
               <tr>
-                <th style={style.th}>Period</th>
-                <th style={style.th}>Start</th>
-                {!termIsSummer && <th style={style.th}>End</th>}
+                <th scope="col" style={style.th}>
+                  Period
+                </th>
+                <th scope="col" style={style.th}>
+                  Start
+                </th>
+                {!termIsSummer && (
+                  <th scope="col" style={style.th}>
+                    End
+                  </th>
+                )}
               </tr>
             </thead>
             <tbody>
@@ -70,7 +78,10 @@ const EnrollmentAppointments = ({ instruction, enrollmentTerms }) => {
         </div>
 
         {!termIsSummer && appointmentTerm.constraints && (
-          <Deadlines constraints={appointmentTerm.constraints} />
+          <Deadlines
+            constraints={appointmentTerm.constraints}
+            programCode={appointmentTerm.programCode}
+          />
         )}
       </div>
     );

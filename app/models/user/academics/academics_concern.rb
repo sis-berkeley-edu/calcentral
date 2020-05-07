@@ -35,6 +35,10 @@ module User
         def term_registrations
           @term_registrations ||= ::User::Academics::TermRegistrations.new(self)
         end
+
+        def term_plans
+          @term_plans ||= ::User::Academics::TermPlans::TermPlans.new(self)
+        end
       end
     end
   end

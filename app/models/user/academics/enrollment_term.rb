@@ -3,6 +3,7 @@ module User
     class EnrollmentTerm
       attr_accessor :student_attributes
       attr_accessor :enrollment_instructions
+      attr_accessor :term_plans
 
       attr_accessor :term_id
       attr_accessor :term_descr
@@ -17,12 +18,13 @@ module User
 
       def as_json(options={})
         {
-          career: career,
+          career: career_code,
           termId: term_id,
           requiresCalgrantAcknowledgement: requires_cal_grant_acknowledgement?,
           message: message,
           enrollmentPeriods: enrollment_periods,
           constraints: enrollment_career,
+          programCode: term_plan&.academic_program_code
         }
       end
 
@@ -39,16 +41,20 @@ module User
 
       private
 
+      def term_plan
+        term_plans.find_by_term_id_and_career_code(term_id, career_code)
+      end
+
       def has_message_key?
         @message_key ||= CampusSolutions::MessageCatalog::CATALOG.fetch(message_key) { false }
       end
 
       def message_key
-        "covid_pnp_notice_#{career}_#{term_id}".to_sym
+        "covid_pnp_notice_#{career_code}_#{term_id}".to_sym
       end
 
-      def career
-        acad_career.downcase
+      def career_code
+        acad_career
       end
 
       def enrollment_instruction
@@ -56,11 +62,11 @@ module User
       end
 
       def enrollment_periods
-        @enrollment_periods ||= enrollment_instruction.enrollment_periods.for_career(career)
+        @enrollment_periods ||= enrollment_instruction.enrollment_periods.for_career(career_code)
       end
 
       def enrollment_career
-        @enrollment_career ||= enrollment_instruction.enrollment_careers.find_by_career_code(career)
+        @enrollment_career ||= enrollment_instruction.enrollment_careers.find_by_career_code(career_code)
       end
     end
   end
