@@ -74,10 +74,12 @@ module MyAcademics
         result[:totalUnits] += (career['total_cumulative_units']).to_f
         result[:totalLawUnits] += (career['total_cumulative_law_units']).to_f
       end
-      careers_include_inactive.each do |career|
-        if (!career['program_status'] && (career['acad_career']=='GRAD' || career['acad_career']=='LAW'))
-          result[:totalPreviousCareerCumUnits] = (career['total_cumulative_units']).to_f
-          result[:totalPreviousCareerLawUnits] = (career['total_cumulative_law_units']).to_f
+      if careers_include_inactive.length() > careers.length()
+        careers_include_inactive.each do |career|
+          if (!career['program_status'] && (career['acad_career']=='GRAD' || career['acad_career']=='LAW'))
+            result[:totalPreviousCareerCumUnits] = (career['total_cumulative_units']).to_f
+            result[:totalPreviousCareerLawUnits] = (career['total_cumulative_law_units']).to_f
+          end
         end
       end
       result
