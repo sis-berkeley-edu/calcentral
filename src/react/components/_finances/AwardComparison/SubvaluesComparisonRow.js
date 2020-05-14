@@ -60,32 +60,48 @@ const SubvaluesComparisonRow = ({ description, current, snapshot }) => {
           </div>
         </div>
       </th>
-      <td className="subvalue">
-        {mergedData(current, snapshot).map(item => (
-          <div
-            key={item.term}
-            className={cellStyle(item.snapshotValue, item.currentValue)}
-          >
-            {item.snapshotValue}
-          </div>
-        ))}
-      </td>
-      <td className="subvalue">
-        {mergedData(current, snapshot).map(item => (
-          <div
-            key={item.term}
-            className={cellWithIconStyle(item.snapshotValue, item.currentValue)}
-          >
-            <div>
-              {selectedDate !== 'X' &&
-                item.snapshotValue !== item.currentValue && (
-                  <OrangeChangedIcon className="hideSmallFormFactor icon" />
-                )}
-              {item.currentValue}
+      {(snapshot && snapshot.length > 0 && selectedDate !== 'X') ||
+      selectedDate === 'X' ? (
+        <td className="subvalue">
+          {mergedData(current, snapshot).map(item => (
+            <div
+              key={item.term}
+              className={cellStyle(item.snapshotValue, item.currentValue)}
+            >
+              {item.snapshotValue}
             </div>
-          </div>
-        ))}
-      </td>
+          ))}
+        </td>
+      ) : (
+        <td className="subvalue">
+          <div className="subvalueData">N/A</div>
+        </td>
+      )}
+      {current.length > 0 ? (
+        <td className="subvalue">
+          {mergedData(current, snapshot).map(item => (
+            <div
+              key={item.term}
+              className={cellWithIconStyle(
+                item.snapshotValue,
+                item.currentValue
+              )}
+            >
+              <div>
+                {selectedDate !== 'X' &&
+                  item.snapshotValue !== item.currentValue && (
+                    <OrangeChangedIcon className="hideSmallFormFactor icon" />
+                  )}
+                {item.currentValue}
+              </div>
+            </div>
+          ))}
+        </td>
+      ) : (
+        <td className="subvalue">
+          <div className="subvalueData">N/A</div>
+        </td>
+      )}
     </tr>
   );
 };

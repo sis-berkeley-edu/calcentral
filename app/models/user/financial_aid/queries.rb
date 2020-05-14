@@ -44,7 +44,16 @@ module User
                                   AND UC2.ACTION_DTTM <= TO_TIMESTAMP('#{effective_date_string}23:59:59.99999','YYYY-MM-DDHH24:MI:SS.FF')
                                   AND UC2.ITEM_TYPE = UC.ITEM_TYPE)
             AND UC.OFFER_AMOUNT > 0
-          ORDER BY UC.UC_AWARD_TYPE
+          ORDER BY (CASE UC.UC_AWARD_TYPE
+                      WHEN 'giftaid' THEN 1
+                      WHEN 'waiversAndOther' THEN 2
+                      WHEN 'workstudy' THEN 3
+                      WHEN 'subsidizedloans' THEN 4
+                      WHEN 'unsubsidizedloans' THEN 5
+                      WHEN 'plusloans' THEN 6
+                      WHEN 'alternativeloans' THEN 7
+                      ELSE 8
+                    END)
         SQL
       end
 
