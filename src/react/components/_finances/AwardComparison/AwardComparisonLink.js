@@ -18,7 +18,7 @@ const AwardComparisonLink = ({ fetchData, awardComparison, year }) => {
     !awardComparison.errored &&
     /* We want to return the component only if there are activityDates for the user to select for the aid year */
     awardComparison.aidYears.filter(award => award.id === year)[0].activityDates
-      .length > 0
+      .length > 1
   ) {
     return (
       <>
