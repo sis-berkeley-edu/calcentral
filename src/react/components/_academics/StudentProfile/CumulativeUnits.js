@@ -14,7 +14,8 @@ const propTypes = {
   totalUnitsTakenNotForGpa: PropTypes.number,
   totalUnitsPassedNotForGpa: PropTypes.number,
   totalPreviousCareerCumUnits: PropTypes.number,
-  totalPreviousCareerLawUnits: PropTypes.number
+  totalPreviousCareerLawUnits: PropTypes.number,
+  transferUnitsAccepted: PropTypes.number
 };
 
 const CumulativeUnits = ({
@@ -25,16 +26,19 @@ const CumulativeUnits = ({
   totalUnitsTakenNotForGpa,
   totalUnitsPassedNotForGpa,
   totalPreviousCareerCumUnits,
-  totalPreviousCareerLawUnits
+  totalPreviousCareerLawUnits,
+  transferUnitsAccepted
 }) => {
   if (!isCurrentSummerVisitor && (totalUnits > 0 || totalLawUnits > 0)) {
 
     let summaryTotalLawUnits = totalLawUnits;
     let summaryTotalUnits = totalUnits;
+    let summaryTotalTransferUnits = totalTransferAndTestingUnits;
     let showPNP = true;
     if (totalLawUnits > 0 || totalPreviousCareerLawUnits > 0) {
       summaryTotalLawUnits = totalLawUnits + totalPreviousCareerLawUnits;
       summaryTotalUnits = totalUnits + totalPreviousCareerCumUnits;
+      summaryTotalTransferUnits = totalTransferAndTestingUnits + transferUnitsAccepted;
       showPNP = false;
     }
 
@@ -51,7 +55,7 @@ const CumulativeUnits = ({
               }
 
               {unitsPresent(totalTransferAndTestingUnits) &&
-                <UnitsRow name="Transfer Units" value={totalTransferAndTestingUnits} />
+                <UnitsRow name="Transfer Units" value={summaryTotalTransferUnits} />
               }
 
               {unitsPresent(totalUnitsTakenNotForGpa) && showPNP &&
@@ -90,7 +94,8 @@ const mapStateToProps = ({ myAcademics, myStatus }) => {
       totalUnitsTakenNotForGpa,
       totalUnitsPassedNotForGpa,
       totalPreviousCareerCumUnits,
-      totalPreviousCareerLawUnits
+      totalPreviousCareerLawUnits,
+      transferUnitsAccepted
     } = {}
   } = myAcademics;
 
@@ -102,7 +107,8 @@ const mapStateToProps = ({ myAcademics, myStatus }) => {
     totalUnitsTakenNotForGpa,
     totalUnitsPassedNotForGpa,
     totalPreviousCareerCumUnits,
-    totalPreviousCareerLawUnits
+    totalPreviousCareerLawUnits,
+    transferUnitsAccepted
   };
 };
 
