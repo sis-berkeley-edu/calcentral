@@ -16,13 +16,25 @@ set :project_root, settings.common.root
 # and 1 elasticsearch server.
 namespace :calcentral_dev do
   desc "Update and restart the calcentral_dev machine"
+  task :update, :roles => :calcentral_dev_host do
+    # Take everything offline first.
+    servers = find_servers_for_task(current_task)
+
+    transaction do
+      servers.each_with_index do |server, index|
+        run "cd #{project_root}; ./script/update-build-tomcat.sh", :hosts => server
+      end
+    end
+  end
+
+  desc "Update and restart the calcentral_dev machine"
   task :colddeploy, :roles => :calcentral_dev_host do
     # Take everything offline first.
     servers = find_servers_for_task(current_task)
 
     transaction do
       servers.each_with_index do |server, index|
-        run "cd #{project_root}; ./script/update-build-tomcat.sh -o offline", :hosts => server
+        run "cd #{project_root}; ./script/update-build-tomcat-test.sh -o offline", :hosts => server
       end
     end
   end
@@ -33,7 +45,7 @@ namespace :calcentral_dev do
 
     transaction do
       servers.each_with_index do |server, index|
-        run "cd #{project_root}; ./script/update-build-tomcat.sh", :hosts => server
+        run "cd #{project_root}; ./script/update-build-tomcat-test.sh", :hosts => server
       end
     end
   end
