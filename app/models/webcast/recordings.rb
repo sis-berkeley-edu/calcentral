@@ -11,7 +11,7 @@ module Webcast
       recordings = {
         courses: {}
       }
-      response = get_json_data['courses']
+      response = get_webcast_json['courses']
       migrated_response = handle_legacy_ccns response
       migrated_response.each do |course|
         year = course['year']
@@ -29,6 +29,42 @@ module Webcast
         end
       end
       recordings
+    end
+
+    def webcast_json_filepath
+      configured_filepath = Settings.webcast_proxy.feed_file_path
+      default_filepath = CalcentralConfig.local_dir + '/webcast.json'
+      if configured_filepath.present? && File.exists?(configured_filepath)
+        logger.info "Legacy Webcast data loading from configured path: #{configured_filepath}"
+        configured_filepath
+      elsif File.exists?(default_filepath)
+        logger.info "Legacy Webcast data loading from default path: #{default_filepath}"
+        default_filepath
+      else
+        raise RuntimeError, "Legacy Webcast data file not found"
+      end
+    end
+
+    def get_fake_webcast_json
+      path = Rails.root.join('fixtures', 'webcast', get_json_path).to_s
+      logger.info "Fake = #{@fake}. Get JSON from fixture file #{path}. Cache expires in: #{self.class.expires_in}"
+      json_data = safe_json File.read(path)
+    end
+
+    def get_webcast_json
+      return get_fake_webcast_json if @fake
+
+      filepath = webcast_json_filepath
+      if filepath.present? && File.exists?(filepath)
+        begin
+          file = File.open(filepath)
+          contents = File.read(file)
+          json = JSON.parse(contents)
+        ensure
+          file.try(:close) if file.present?
+        end
+        json
+      end
     end
 
     # Which "ccn" value we need to match depends on whether the application is using the CS-era DB (which is missing

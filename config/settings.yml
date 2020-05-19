@@ -168,9 +168,7 @@ textbooks_proxy:
 
 webcast_proxy:
   fake: false
-  base_url: 'https://webcast-cc-staging.ets.berkeley.edu'
-  username: ''
-  password: ''
+  feed_file_path: ''
 
 blog_latest_release_notes_feed_proxy:
   fake: false
@@ -432,5 +430,4 @@ features:
   textbooks: false
   transcript_request_link_cred_solutions: false
   videos: false
-  webcast_sign_up_on_calcentral: false
   view_completed_calgrant_link: true

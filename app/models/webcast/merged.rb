@@ -14,79 +14,21 @@ module Webcast
     def get_feed_internal
       logger.warn "Webcast merged feed where year=#{@term_yr}, term=#{@term_cd}, ccn_list=#{@ccn_list.to_s}, course_policy=#{@course_policy.to_s}"
       @academics = MyAcademics::Teaching.new(@uid)
-      feed = { :system_status => Webcast::SystemStatus.new(@options).get }
-      feed.merge get_media_feed
+      get_media_feed
     end
 
     private
 
     def get_media_feed
       media = get_media
-      feed = get_eligible_for_sign_up media
       if media.any?
         media_hash = {
           :media => media,
           :videos => merge(media, :videos)
         }
-        feed.merge! media_hash
+      else
+        {}
       end
-      feed
-    end
-
-    def get_eligible_for_sign_up(media)
-      eligible_for_sign_up = []
-      can_sign_up_one_or_more = false
-      is_sign_up_active = Webcast::SystemStatus.new(@options).get[:isSignUpActive]
-      can_view_webcast_sign_up = @course_policy.can_view_webcast_sign_up?
-      logger.warn "Course policy for user #{@uid} says can_view_webcast_sign_up = #{can_view_webcast_sign_up}"
-      if is_sign_up_active && @term_yr && @term_cd && can_view_webcast_sign_up
-        slug = Berkeley::TermCodes.to_slug(@term_yr, @term_cd)
-        all_eligible = Webcast::SignUpEligible.new(@options).get[slug]
-        unless all_eligible.nil?
-          all_eligible = @ccn_list & all_eligible
-          eligible_sections = []
-          ccn_with_media = media.map { |entry| entry[:ccn] }
-          all_eligible.each do |eligible_ccn|
-            ccn_padded = sprintf('%05d', eligible_ccn)
-            unless ccn_with_media.include? ccn_padded
-              eligible_sections << ccn_padded
-            end
-          end
-          if eligible_sections.any?
-            courses = @academics.courses_list_from_ccns(@term_yr, @term_cd, eligible_sections.map { |ccn| ccn.to_i })
-            courses.each do |course|
-              if course[:classes].present?
-                webcast_base_url = Settings.webcast_proxy.base_url.sub('https://', 'http://')
-                course[:classes].each do |next_class|
-                  next_class[:sections].each do |section|
-                    instructors = HashConverter.camelize extract_authorized(section[:instructors])
-                    logger.info "Eligibility check on user #{@uid.to_s} where instructors=#{instructors.to_s} and section=#{section.to_s}"
-                    user_can_sign_up = instructors.map { |instructor| instructor[:uid].to_i }.include? @uid
-                    ccn = section[:ccn]
-                    eligible_for_sign_up << {
-                      :termYr => @term_yr,
-                      :termCd => @term_cd,
-                      :ccn => ccn,
-                      :signUpURL => "#{webcast_base_url}/signUp.html?id=#{@term_yr}#{@term_cd.upcase}#{ccn.to_i}",
-                      :webcastAuthorizedInstructors => instructors,
-                      :userCanSignUp => user_can_sign_up,
-                      :deptName => next_class[:dept],
-                      :catalogId => next_class[:courseCatalog],
-                      :instructionFormat => section[:instruction_format],
-                      :sectionNumber => section[:section_number]
-                    }
-                    can_sign_up_one_or_more ||= user_can_sign_up
-                  end
-                end
-              end
-            end
-          end
-        end
-      end
-      {
-        :userCanSignUpOneOrMore => can_sign_up_one_or_more,
-        :eligibleForSignUp => eligible_for_sign_up
-      }
     end
 
     def get_media
@@ -116,10 +58,6 @@ module Webcast
         end
       end
       feed
-    end
-
-    def extract_authorized(instructors)
-      instructors ? instructors.select { |i| %w(1 2 3 5).include? i[:instructor_func] } : []
     end
 
     def instance_key

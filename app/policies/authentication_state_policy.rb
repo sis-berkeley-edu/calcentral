@@ -67,12 +67,6 @@ class AuthenticationStatePolicy
     @user.real_user_auth.is_superuser? && @user.real_user_auth.active?
   end
 
-  def can_view_webcast_sign_up?
-    # Remove feature-flag when Webcast sign-up is supported on CalCentral
-    feature_flag = Settings.features.webcast_sign_up_on_calcentral
-    feature_flag.present? && feature_flag && (can_administrate? || can_view_as? || can_add_current_official_sections?)
-  end
-
   def can_view_other_user_photo?
     real_auth = @user.real_user_auth
     if real_auth.is_superuser? && real_auth.active?
