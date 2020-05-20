@@ -24,7 +24,7 @@
       data-ng-class="{'medium-6':(api.user.profile.roles.student || api.user.profile.roles.exStudent), 'medium-4':(!(api.user.profile.roles.student || api.user.profile.roles.exStudent))}"
       class="large-4 columns cc-column-2 cc-academics-row-margin">
       <div data-ng-include="'academics_semesters.html'" data-ng-if="api.user.profile.hasStudentHistory && semesters.length"></div>
-      <law-degree-audit data-ng-if="api.user.profile.academicRoles.current.lawDegreeAudit"></law-degree-audit>
+      <law-degree-audit data-ng-if="api.user.profile.academicRoles.current.lawDegreeAudit || api.user.profile.academicRoles.historical.lawDegreeAudit"></law-degree-audit>
       <div data-ng-include="'widgets/academics/degree_progress_undergrad.html'" data-ng-controller="UndergraduateDegreeProgressController"></div>
       <pnp-calculator-container></pnp-calculator-container>
       <div data-ng-include="'widgets/academics/degree_progress_graduate.html'" data-ng-controller="GraduateDegreeProgressController"></div>
