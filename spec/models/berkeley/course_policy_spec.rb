@@ -138,15 +138,4 @@ describe Berkeley::CoursePolicy do
     end
   end
 
-  describe '#can_view_webcast_sign_up?' do
-    context 'when webcast content is served to a superuser' do
-      before do
-        allow_any_instance_of(User::Auth).to receive(:is_superuser?).and_return true
-      end
-      it 'only shows sign-up information to superusers in non-prod environments' do
-        expect(subject.can_view_webcast_sign_up?).to be true
-      end
-    end
-  end
-
 end
