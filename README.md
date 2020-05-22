@@ -17,9 +17,9 @@
 
 ## Installation
 
-1. Install Java 8 JDK ([8u172]):
+1. Install Java 8 JDK:
 
-[8u172]: http://www.oracle.com/technetwork/java/javase/downloads/index.html
+    Install [Java SE Development Kit 8u241)](https://www.oracle.com/technetwork/java/javase/downloads/index.html)
 
 1. Install Homebrew:
 
@@ -54,16 +54,32 @@
 [Connecting to Github with SSH]: https://help.github.com/articles/connecting-to-github-with-ssh/
 [Caching Your Github Password in Git]: https://help.github.com/articles/caching-your-github-password-in-git/
 
-1. Go inside the `calcentral` repository:
+1. Install JRuby:
+
+    You have 2 options for installing and managing Ruby versions
+
+    a. Use [rbenv](https://github.com/rbenv/rbenv)
 
     ```bash
+    # install rbenv
+    brew install rbenv
+
+    # initialize your rbenv environment in ~/.rbenv
+    rbenv init
+
+    # modify your ~/.bash_profile (or equivalent config)
+    # to run:
+    # eval "$(command rbenv init -)"
+
+    # open a new terminal to init rbenv, go into calcentral
+    # directory
     cd calcentral
-    # Answer "yes" if it asks you to trust a new .rvmrc file.
+
+    # install jruby version used by calcentral
+    rbenv install
     ```
 
-1. Install JRuby (requires ):
-
-     **Note**: To install JRuby, you must first install [rvm].
+    b. Use [rvm](https://rvm.io/rvm/install/).
 
     ```bash
     rvm get head
@@ -105,6 +121,9 @@
     gem uninstall bundler --force -x
     gem install bundler --version="1.15.4"
     bundle install
+
+    # if using rbenv, rehash your shims to make 'rails' available
+    rbenv rehash
     ```
 
 1. Set up a local settings directory:
@@ -132,7 +151,20 @@
     * Download [ojdbc7_g.jar]
     * Note: You do not have to open the file.
     * Rename the file to `ojdbc7.jar`
-    * Copy `ojdbc7.jar` to `~/.rvm/rubies/jruby-9.1.14.0/lib/`
+    * Copy `ojdbc7.jar` to the applicable directory:
+      * RVM - `~/.rvm/rubies/jruby-9.1.14.0/lib/`
+      * rbenv - `~/.rbenv/versions/jruby-9.1.14.0/lib/`
+
+1. Create local SQLite database
+
+    Run rails console
+
+    ```shell
+    # run rake task to create database
+    require 'rake'
+    Rails.application.load_tasks
+    Rake::Task['db:create'].invoke
+    ```
 
 [ojdbc7_g.jar]: http://www.oracle.com/technetwork/database/features/jdbc/jdbc-drivers-12c-download-1958347.html
 
