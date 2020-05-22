@@ -121,13 +121,21 @@ const Awards = ({
 
   return (
     <div>
-      <div className="clickable" onClick={() => onExpand(setExpand, expanded)}>
+      <section
+        aria-expanded={expanded}
+        aria-label="Awards"
+        className="clickable"
+        role="button"
+        tabIndex="0"
+        onClick={() => onExpand(setExpand, expanded)}
+        onKeyPress={() => onExpand(setExpand, expanded)}
+      >
         <SectionHeader
           expanded={expanded}
           label="Awards"
           numberOfChanges={numberOfChanges}
         />
-      </div>
+      </section>
       {expanded ? (
         <div>
           <div className="container">

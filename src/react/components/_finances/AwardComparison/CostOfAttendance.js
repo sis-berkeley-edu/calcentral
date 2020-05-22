@@ -50,13 +50,21 @@ const CostOfAttendance = ({
 
   return (
     <div>
-      <div className="clickable" onClick={() => onExpand(setExpand, expanded)}>
+      <section
+        aria-expanded={expanded}
+        aria-label="Estimated Cost of Attendance"
+        className="clickable"
+        role="button"
+        tabIndex="0"
+        onClick={() => onExpand(setExpand, expanded)}
+        onKeyPress={() => onExpand(setExpand, expanded)}
+      >
         <SectionHeader
           expanded={expanded}
           label="Estimated Cost of Attendance"
           numberOfChanges={numberOfChanges}
         />
-      </div>
+      </section>
       {expanded ? (
         <div>
           <div className="container">
