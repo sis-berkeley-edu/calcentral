@@ -6,8 +6,7 @@ import './AwardComparison.scss';
 
 const Legend = ({ asOfCurrentDate, selectedDate }) => {
   return (
-    <div className="legend container">
-      {/* <div className="container"> */}
+    <div role="region" tabIndex="0">
       <table>
         <tbody>
           <tr className="legendBorder">
