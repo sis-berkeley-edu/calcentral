@@ -31,6 +31,7 @@ module User
       STATUS_PROCESSING = 'A' # for "Active"
       STATUS_COMPLETE = 'C'
       STATUS_ASSIGNED = 'I' # for "Initiated"
+      STATUS_NOTIFIED = 'N'
       STATUS_ORDERED = 'O'
       STATUS_RECEIVED = 'R'
       STATUS_RETURNED = 'T'
@@ -42,6 +43,7 @@ module User
         STATUS_PROCESSING => 'Processing',
         STATUS_COMPLETE => 'Completed',
         STATUS_ASSIGNED => 'Assigned',
+        STATUS_NOTIFIED => 'Notified',
         STATUS_ORDERED => 'Ordered',
         STATUS_RECEIVED => 'Received',
         STATUS_RETURNED => 'Returned',

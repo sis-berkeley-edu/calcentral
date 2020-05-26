@@ -70,7 +70,7 @@ module User
       end
 
       def being_processed?
-        ['Processing', 'Received'].include?(status)
+        ['Processing', 'Received', 'Notified'].include?(status)
       end
 
       def completed?
