@@ -38,7 +38,7 @@ const Card = ({
   return (
     <div ref={node} className={classNames}>
       <div className="Card__title">
-        <h2>{title}</h2>
+        <h2 tabIndex="0">{title}</h2>
         {secondaryContent}
       </div>
       <div className="Card__body">
