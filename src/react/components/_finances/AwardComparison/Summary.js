@@ -48,16 +48,24 @@ const Summary = ({
 
   return (
     <div>
-      <div className="clickable" onClick={() => onExpand(setExpand, expanded)}>
+      <section
+        aria-expanded={expanded}
+        aria-label="Summary"
+        className="clickable"
+        role="button"
+        tabIndex="0"
+        onClick={() => onExpand(setExpand, expanded)}
+        onKeyPress={() => onExpand(setExpand, expanded)}
+      >
         <SectionHeader
           expanded={expanded}
           label="Summary"
           numberOfChanges={numberOfChanges}
         />
-      </div>
+      </section>
       {expanded ? (
         <div>
-          <div className="container">
+          <section className="container">
             <table>
               <thead>
                 <tr>
@@ -85,7 +93,7 @@ const Summary = ({
                 />
               </tbody>
             </table>
-          </div>
+          </section>
         </div>
       ) : (
         <hr />
