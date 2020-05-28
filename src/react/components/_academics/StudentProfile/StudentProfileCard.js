@@ -29,13 +29,8 @@ import CumulativeUnits from './CumulativeUnits';
 import Degrees from './Degrees';
 import LawAwards from './LawAwards';
 
-// const propTypes = {
-//   names: PropTypes.array,
-//   sid: PropTypes.string
-// };
-
 const propTypes = {
-  dispatch: PropTypes.func.isRequired
+  dispatch: PropTypes.func.isRequired,
 };
 
 const StudentProfileCard = ({ dispatch }) => {
@@ -49,7 +44,7 @@ const StudentProfileCard = ({ dispatch }) => {
   return (
     <section className="StudentProfileCard">
       <header>
-        <h2>Profiles</h2>
+        <h2>Profile</h2>
       </header>
       <div className="StudentProfileCard--body">
         <CollegeAndLevelError />
@@ -64,8 +59,14 @@ const StudentProfileCard = ({ dispatch }) => {
             <Emphases />
             <Careers />
             <Levels />
-            <UndergraduateGraduation isAdvisingStudentLookup={false} showCheckListLink={true} />
-            <GraduateGraduation isAdvisingStudentLookup={false} showCheckListLink={true} />
+            <UndergraduateGraduation
+              isAdvisingStudentLookup={false}
+              showCheckListLink={true}
+            />
+            <GraduateGraduation
+              isAdvisingStudentLookup={false}
+              showCheckListLink={true}
+            />
             <LawGraduation isAdvisingStudentLookup={false} />
             <CumulativeUnits />
             <GPAToggle />
@@ -84,7 +85,9 @@ const mapStateToProps = ({ myProfile: { names }, myStatus: { sid } }) => {
   return { names, sid };
 };
 
-const ConnectedStudentProfileCard = connect(mapStateToProps)(StudentProfileCard);
+const ConnectedStudentProfileCard = connect(mapStateToProps)(
+  StudentProfileCard
+);
 
 const StudentProfileContainer = () => {
   return (
@@ -94,4 +97,6 @@ const StudentProfileContainer = () => {
   );
 };
 
-angular.module('calcentral.react').component('studentProfileCard', react2angular(StudentProfileContainer));
+angular
+  .module('calcentral.react')
+  .component('studentProfileCard', react2angular(StudentProfileContainer));
