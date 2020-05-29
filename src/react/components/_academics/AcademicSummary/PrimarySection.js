@@ -100,8 +100,8 @@ SingleSection.propTypes = {
   canViewGrades: PropTypes.bool,
   showPoints: PropTypes.bool,
   requirementsDesignation: PropTypes.string,
-  units: PropTypes.string,
-  lawUnits: PropTypes.string,
+  units: PropTypes.number,
+  lawUnits: PropTypes.number,
   grading: PropTypes.object,
   sectionLabel: PropTypes.string
 };
