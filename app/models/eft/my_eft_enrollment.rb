@@ -3,7 +3,6 @@ module Eft
     include Cache::CachedFeed
     include Cache::JsonifiedFeed
     include Cache::FeedExceptionsHandled
-    include Cache::UserCacheExpiry
     include CampusSolutions::CampusSolutionsIdRequired
     include Proxies::HttpClient
     include Proxies::Mockable
