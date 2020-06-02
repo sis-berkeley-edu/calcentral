@@ -18,7 +18,8 @@ const formattedAwardDate = degree => {
 };
 
 const Degree = ({ degree, index }) => {
-  const honors = degree => (degree.honors && degree.honors.honors) || [];
+  const honors = degree.honors || [];
+
   return (
     <div className="Degree" key={index}>
       <div className="Degree__icon-container">
@@ -49,7 +50,7 @@ const Degree = ({ degree, index }) => {
           <Fragment>
             <div>{college(degree)}</div>
 
-            {honors(degree).map((honor, index) => (
+            {honors.map((honor, index) => (
               <div key={index}>{honor.formalDescription}</div>
             ))}
 
