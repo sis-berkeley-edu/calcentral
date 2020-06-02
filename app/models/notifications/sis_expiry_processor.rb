@@ -33,7 +33,6 @@ module Notifications
       EXPIRY_BY_TOPIC[event['topic']]
     end
 
-    #TODO Mapping of event topics to expiry modules is incomplete.
     EXPIRY_BY_TOPIC = {
       'sis:staff:advisor' => CampusSolutions::AdvisingExpiry,
       'sis:student:academic-progress-report' => CampusSolutions::DegreeProgress::UndergradRequirementsExpiry,
@@ -41,8 +40,6 @@ module Notifications
       'sis:student:delegate' => CampusSolutions::DelegateStudentsExpiry,
       'sis:student:deposit' => CampusSolutions::Sir::SirStatuses,
       'sis:student:enrollment' => CampusSolutions::EnrollmentTermExpiry,
-      'sis:student:eft' => Eft::MyEftEnrollment,
-      'sis:student:ferpa' => nil,
       'sis:student:finaid' => CampusSolutions::FinancialAidExpiry,
       'sis:student:financials' => User::Finances::CacheExpiry,
       'sis:student:serviceindicator' => MyAcademics::MyAcademicStatus,
