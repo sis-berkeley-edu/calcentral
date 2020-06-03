@@ -19,7 +19,7 @@
             <td data-ng-bind="exam.id"></td>
             <td data-ng-bind="exam.descr"></td>
             <td data-ng-bind="exam.score | number:2" class="cc-table-right"></td>
-            <td data-ng-bind="exam.taken | date:'MMM yyyy'" class="cc-table-right"></td>
+            <td data-ng-bind="exam.taken | date:'MMM yyyy':'UTC'" class="cc-table-right"></td>
           </tr>
         </tbody>
       </table>
