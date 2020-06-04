@@ -21,6 +21,7 @@ angular.module('calcentral.controllers').controller('AdvisingResourcesController
         'ucEformsActionCenter',
         'ucEformsWorkCenter',
         'ucReportingCenter',
+        'acadAccomodationsHubAdvisor',
         'ucCrossCampusEnrollApproval'
       ],
       links: []
