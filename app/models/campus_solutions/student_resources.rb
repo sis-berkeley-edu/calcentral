@@ -16,6 +16,7 @@ module CampusSolutions
       cs_links = {}
 
       campus_solutions_link_settings = [
+        { feed_key: :acad_accomodations_hub_student, cs_link_key: 'UC_CC_ACCOMM_HUB_STUDENT' },
         { feed_key: :grad_change_of_academic_plan_add, cs_link_key: 'UC_CX_GT_GRADCPP_ADD' },
         { feed_key: :change_of_academic_plan_add, cs_link_key: 'UC_CX_GT_CPPSTACK_ADD' },
         { feed_key: :change_of_academic_plan_view, cs_link_key: 'UC_CX_GT_CPPSTACK_VIEW' },
@@ -52,7 +53,7 @@ module CampusSolutions
         },
         {
           section: 'Campus Services',
-          links: [:disabled_students_program_services, :scarab_login, :disabled_student_services],
+          links: [:acad_accomodations_hub_student, :disabled_students_program_services, :scarab_login, :disabled_student_services],
         },
         {
           section: 'Co-Curricular',

@@ -12,6 +12,7 @@ module CampusSolutions
       cs_links = {}
 
       campus_solutions_link_settings = [
+        { feed_key: :acad_accomodations_hub_faculty, cs_link_key: 'UC_CC_ACCOMM_HUB_FACULTY'},
         { feed_key: :eforms_review_center, cs_link_key: 'UC_CX_GT_ACTION_CENTER' },
         { feed_key: :work_center, cs_link_key: 'UC_CX_GT_WORK_CENTER'},
         { feed_key: :scarab_login, cs_link_key: 'UC_CX_DSP_FACULTY_LOGIN' }

@@ -10,10 +10,8 @@
   }
 }
 .cc-list-links {
-  margin: 10px 0;
+  margin: 10px 15px;
   a {
-    display: block;
-    margin-left: 16px;
     &::before {
       color: $cc-color-air-force-blue;
       content: '\25A0';
