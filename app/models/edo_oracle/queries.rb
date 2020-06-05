@@ -276,7 +276,7 @@ module EdoOracle
           AND enr."STDNT_ENRL_STATUS_CODE" != 'D'
           #{where_course_term}
           #{where_course_term_updated_date}
-        ORDER BY term_id DESC, #{CANONICAL_SECTION_ORDERING}
+        ORDER BY term_id DESC, session_id DESC, #{CANONICAL_SECTION_ORDERING}
       SQL
     end
 
