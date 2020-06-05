@@ -14,8 +14,8 @@ const propTypes = {
   semesters: PropTypes.array,
   isStudent: PropTypes.bool,
   reportLink: PropTypes.object,
-  studentLinks: PropTypes.array,
-  advisorLinks: PropTypes.array
+  studentLinks: PropTypes.object,
+  advisorLinks: PropTypes.object
 };
 
 const TransferCredit = ({
