@@ -95,7 +95,7 @@ describe AdvisingResources do
     subject { described_class.generic_links }
 
     it 'uses the generic link config to fetch links and return them in a list' do
-      expect(subject[:feed].count).to eq 18
+      expect(subject[:feed].count).to eq 20
       expect(subject[:feed][:ucAcademicProgressReport]).to eq mock_link
       expect(subject[:feed][:webNowDocuments]).to eq mock_link
       expect(subject[:feed][:ucAdministrativeTranscript]).to eq mock_link
@@ -105,6 +105,7 @@ describe AdvisingResources do
       expect(subject[:feed][:ucClassSearch]).to eq mock_link
       expect(subject[:feed][:ucEformsActionCenter]).to eq mock_link
       expect(subject[:feed][:ucEformsWorkCenter]).to eq mock_link
+      expect(subject[:feed][:ucDegreePlanner]).to eq mock_link
       expect(subject[:feed][:ucMilestones]).to eq mock_link
       expect(subject[:feed][:ucMultiYearAcademicPlannerGeneric]).to eq mock_link
       expect(subject[:feed][:ucReportingCenter]).to eq mock_link
@@ -129,12 +130,13 @@ describe AdvisingResources do
     context 'when user id is provided' do
       let(:user_id) { random_id }
       it 'uses the student-specific link config to fetch links and return them in a list' do
-        expect(subject[:feed].count).to eq 9
+        expect(subject[:feed].count).to eq 10
         expect(subject[:feed][:studentAcademicProgressReport]).to eq mock_link
         expect(subject[:feed][:studentAdministrativeTranscripts]).to eq mock_link
         expect(subject[:feed][:studentAdvisingAssignments]).to eq mock_link
         expect(subject[:feed][:studentAdvisorNotes]).to eq mock_link
         expect(subject[:feed][:studentManageMilestones]).to eq mock_link
+        expect(subject[:feed][:studentDegreePlanner]).to eq mock_link
         expect(subject[:feed][:studentMultiYearAcademicPlanner]).to eq mock_link
         expect(subject[:feed][:studentServiceIndicators]).to eq mock_link
         expect(subject[:feed][:studentWebnowDocuments]).to eq mock_link

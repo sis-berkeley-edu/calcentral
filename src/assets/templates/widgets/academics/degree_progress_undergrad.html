@@ -45,42 +45,11 @@
         </ul>
       </div>
     </div>
-    <div data-ng-class="{'cc-degree-progress-section': degreeProgress.undergraduate.transferCreditReviewDeadline,
-                         'cc-degree-progress-footer': !degreeProgress.undergraduate.transferCreditReviewDeadline}">
-      <div data-ng-if="api.user.profile.roles.advisor" class="cc-degree-progress-section">
-        <div>Run the
-          <a data-ng-if="degreeProgress.undergraduate.links.academicProgressReport.url"
-            data-cc-campus-solutions-link-directive="degreeProgress.undergraduate.links.academicProgressReport"
-            data-cc-campus-solutions-link-directive-cc-page-name="currentPage.name"
-            data-cc-campus-solutions-link-directive-cc-page-url="currentPage.url"
-          ></a>
-          <span data-ng-if="!degreeProgress.undergraduate.links.academicProgressReport.url">Academic Progress Report</span>
-          to generate degree progress data.
-        </div>
-        <div>Note: Data is only available for active students.</div>
-      </div>
-      <div data-ng-if="!api.user.profile.roles.advisor" class="cc-degree-progress-footer">
-        <div data-ng-if="degreeProgress.undergraduate.links.academicProgressReport.url" class="cc-degree-progress-section">
-          <p>Run your
-            <a data-cc-campus-solutions-link-directive="degreeProgress.undergraduate.links.academicProgressReport"
-              data-cc-campus-solutions-link-directive-cc-page-name="currentPage.name"
-              data-cc-campus-solutions-link-directive-cc-page-url="currentPage.url"
-              data-ng-click="api.analytics.trackExternalLink('Undergraduate Degree Progress', 'Academic Progress Report', degreeProgress.undergraduate.links.academicProgressReport.url)"
-            ></a> to view your college and major requirements.
-            If information in the APR is incorrect, please contact your advisor.
-          </p>
-        </div>
-        <div data-ng-if="!degreeProgress.undergraduate.links.academicProgressReport.url">If this information is out of date, please contact your advisor.</div>
-      </div>
-    </div>
-    <div data-ng-if="degreeProgress.undergraduate.transferCreditReviewDeadline" class="cc-degree-progress-footer">
-      <button data-ng-click="degreeProgress.undergraduate.showTip();" class="cc-button-link cc-text-line-height"><i class="cc-icon fa fa-info-circle cc-icon-air-force-blue"></i><span>What is "Under Review"?</span></button>
-      <p data-ng-show="degreeProgress.undergraduate.tipVisible">Coursework is being reviewed for all new students. Review will finish by mid&hyphen;<span data-ng-bind="degreeProgress.undergraduate.transferCreditReviewDeadline"></span>.</p>
-    </div>
-    <div data-ng-if="!degreeProgress.undergraduate.showPnpCalculator">
-      </br>
-      <button data-ng-click="showPnpCalculator()" class="cc-button-link" data-ng-disabled="isAdvisingStudentLookup">1/3 Passed (P) Grade Limit Estimator</button>
-      <div data-ng-if="isAdvisingStudentLookup">Use View-As to see this student's Passed(P) Grade Limit and use the estimator.</div>
-    </div>
+    <degree-progress-links
+      apr-link="degreeProgress.undergraduate.links.academicProgressReport"
+      degree-planner-link="degreeProgress.undergraduate.links.degreePlanner"
+      show-pnp-calculator="showPnpCalculator"
+      show-pnp-calculator-link="!degreeProgress.undergraduate.showPnpCalculator"
+      is-advising-student-lookup="isAdvisingStudentLookup" />
   </div>
 </div>
