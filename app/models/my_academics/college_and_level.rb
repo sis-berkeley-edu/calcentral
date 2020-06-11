@@ -49,7 +49,7 @@ module MyAcademics
       }
 
       statuses = hub_academic_statuses.academic_statuses
-      if (status = statuses.first)
+      if (statuses && status = statuses.first)
         college_and_level[:careers] = career_descriptions
         college_and_level[:levels] = user.registrations.latest_academic_level_descriptions
         college_and_level[:termName] = latest_registration_term.to_english
