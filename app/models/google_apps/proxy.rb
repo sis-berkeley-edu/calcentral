@@ -1,7 +1,8 @@
 module GoogleApps
-  require 'google/api_client'
   include ClassLogger
 
+  # Super-class for all Google Apps (G-Suite / bConnected) proxies.
+  # See https://wikihub.berkeley.edu/display/SIS/CalCentral+bConnected+Integration
   class Proxy < BaseProxy
     include Proxies::Mockable
 
@@ -43,7 +44,7 @@ module GoogleApps
           yielder << result_page
           num_requests += 1
 
-          if result_page.nil? || result_page.error?
+          if result_page.blank?
             logger.warn "request stopped on error: #{result_page ? result_page.response.inspect : 'nil'}"
             break
           end
@@ -52,59 +53,15 @@ module GoogleApps
       result_pages
     end
 
-    def simple_request(request_params)
-      @params = request_params
-      initialize_mocks if @fake
-
-      ActiveSupport::Notifications.instrument('proxy', {url: request_params[:uri], class: self.class}) do
-        begin
-          logger.info "Fake = #{@fake}; Making request to #{request_params[:uri]} on behalf of user #{@uid}; cache expiration #{self.class.expires_in}"
-          client = GoogleApps::Client.client.dup
-          if request_params[:authenticated]
-            client.authorization = @authorization
-          end
-          response = client.execute(
-            :http_method => request_params[:http_method],
-            :uri => request_params[:uri],
-            :authenticated => request_params[:authenticated]
-          )
-          if response.blank?
-            logger.error "Got a blank response from Google: #{response.inspect}"
-          elsif response.status >= 400
-            logger.error "Got an error response from Google. Status #{response.status}, Body #{response.body}"
-          end
-          response
-        rescue => e
-          logger.fatal "#{e.to_s} - Unable to send request transaction"
-          nil
-        end
-      end
-    end
-
-    protected
-
-    def stringify_body(body_param)
-      if body_param.is_a?(Hash)
-        parsed_body = body_param.to_json.to_s
-      else
-        parsed_body = body_param.to_s
-      end
-      parsed_body
-    end
-
     private
 
     def load_authorization(options={})
       if @fake
-        GoogleApps::Client.new_fake_auth
+        user_token_data = {}
       elsif options[:user_id]
-        token_settings = User::Oauth2Data.get(@uid)
-        GoogleApps::Client.new_client_auth(token_settings || { access_token: '' })
-      else
-        auth_related_entries = [:access_token, :refresh_token, :expiration_time]
-        token_settings = options.select { |k, v| auth_related_entries.include? k }.symbolize_keys!
-        GoogleApps::Client.new_client_auth(token_settings)
+        user_token_data = User::Oauth2Data.get(@uid)
       end
+      GoogleApps::Auth::Authorization.refresh_credential(user_token_data)
     end
 
     def request_transaction(page_params, num_requests)
@@ -113,44 +70,38 @@ module GoogleApps
 
       result_page = ActiveSupport::Notifications.instrument('proxy', {class: self.class}) do
         begin
-          GoogleApps::Client.request_page(@authorization, page_params)
+          resource_method = @params[:resource_method]
+          service_class = resource_method.fetch(:service_class)
+          method_name = resource_method.fetch(:method_name)
+          method_args = resource_method.fetch(:method_args)
+
+          service = service_class.new
+          service.authorization = @authorization
+
+          if method_args.class == Hash
+            service.send(method_name.to_sym, method_args)
+          elsif method_args.class == Array
+            service.send(method_name.to_sym, *method_args)
+          else
+            raise ArgumentError, "'method_args' must be a Hash or Array"
+          end
         rescue => e
           logger.fatal "#{e.to_s} - Unable to send request transaction"
           nil
         end
       end
-
-      if result_page.blank?
-        logger.error "Got a blank response from Google: #{result_page.inspect}"
-      elsif result_page.status >= 400
-        logger.error "Got an error response from Google. Status #{result_page.status}, Body #{result_page.body}"
-      end
-      page_token = result_page ? get_next_page_token(result_page) : nil
+      page_token = result_page.try(:next_page_token)
       under_page_limit_ceiling = under_page_limit?(num_requests+1, page_params[:page_limiter])
-
-      if result_page && result_page.error?
-        revoke_invalid_token! result_page
-      else
-        update_access_tokens!
-      end
 
       [page_token, under_page_limit_ceiling, result_page]
     end
 
-    def revoke_invalid_token!(response)
-      if @uid && response.response.status == 401 && response.error_message == 'Invalid Credentials'
-        logger.warn "Deleting Google access token for #{@uid} due to 401 Unauthorized (Invalid Credentials) from Google"
-        User::Oauth2Data.remove(@uid)
-      end
-    end
-
     def setup_page_params(request_params)
-      resource_method = GoogleApps::Client.discover_resource_method(
-        request_params[:api],
-        request_params[:api_version],
-        request_params[:resource],
-        request_params[:method]
-      )
+      resource_method = {
+        service_class: request_params[:service_class],
+        method_name: request_params[:method_name],
+        method_args: request_params[:method_args]
+      }
       {
         params: request_params[:params],
         body: request_params[:body],
@@ -164,17 +115,6 @@ module GoogleApps
       Proxy.settings.fake || User::Oauth2Data.get(user_id)[:access_token].present?
     end
 
-    def update_access_tokens!
-      if @current_token && @uid && @authorization.access_token != @current_token
-        logger.info "Will update token for #{@uid} from #{@current_token} => #{@authorization.access_token}"
-        User::Oauth2Data.new_or_update(
-          @uid,
-          @authorization.access_token,
-          @authorization.refresh_token,
-          @authorization.expires_at.to_i)
-      end
-    end
-
     def under_page_limit?(current_pages, page_limit)
       if page_limit && page_limit.is_a?(Integer)
         current_pages < page_limit
@@ -183,17 +123,8 @@ module GoogleApps
       end
     end
 
-    def get_next_page_token(result_page)
-      if result_page.data.respond_to?("next_page_token")
-        result_page.data.next_page_token
-      else
-        nil
-      end
-    end
-
     def mock_json
       read_file('fixtures', 'json', json_filename)
     end
-
   end
 end

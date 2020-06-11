@@ -1,5 +1,6 @@
 module GoogleApps
-  class EventsDelete < Events
+  class EventsDelete < Proxy
+    require 'google/apis/calendar_v3'
 
     def initialize(options = {})
       super options
@@ -8,7 +9,7 @@ module GoogleApps
 
     def mock_request
       super.merge(method: :delete,
-                  uri_matching: 'https://www.googleapis.com/calendar/v3/calendars/primary/events')
+        uri_matching: 'https://www.googleapis.com/calendar/v3/calendars/primary/events')
     end
 
     def mock_response
@@ -17,14 +18,10 @@ module GoogleApps
 
     def delete_event(event_id)
       request(
-        api: 'calendar',
-        api_version: 'v3',
-        params: {'calendarId' => 'primary', 'eventId' => event_id},
-        resource: 'events',
-        method: 'delete',
-        body: '',
-        headers: {'Content-Type' => 'application/json'}
-      ).first
+        service_class: Google::Apis::CalendarV3::CalendarService,
+        method_name: 'delete_event',
+        method_args: ['primary', event_id],
+      )
     end
   end
 end

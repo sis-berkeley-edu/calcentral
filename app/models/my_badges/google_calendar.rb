@@ -41,69 +41,59 @@ module MyBadges
       modified_entries[:items] = []
       modified_entries[:count] = 0
 
-      google_calendar_results.each do |response_page|
-        next unless response_page && response_page.response.status == 200
-        response_page.data['items'].each do |entry|
-          next if entry['summary'].blank?
-          next unless is_unconfirmed_event? entry
+      google_calendar_results.items.each do |event|
+        next if event.summary.blank?
+        next unless is_unconfirmed_event? event
 
-          if modified_entries[:count] < @count_limiter
-            begin
-              event = {
-                :link => handle_url(entry['htmlLink']),
-                :title => entry['summary'],
-                :startTime => verify_and_format_date(entry['start']),
-                :endTime => verify_and_format_date(entry['end']),
-                :modifiedTime => format_date(entry['updated'].to_datetime),
-                :allDayEvent => false
-              }
-              consolidate_all_day_event_key!(event)
-              event.merge! event_state_fields(entry)
-              modified_entries[:items] << event
-            rescue => e
-              logger.warn "could not process entry: #{entry} - #{e}"
-              next
-            end
+        if modified_entries[:count] < @count_limiter
+          begin
+            entry = {
+              :link => handle_url(event.html_link),
+              :title => event.summary,
+              :startTime => verify_and_format_date_time(event.start),
+              :endTime => verify_and_format_date_time(event.end),
+              :modifiedTime => format_date(event.updated.to_datetime),
+              :allDayEvent => is_all_day_event?(event),
+            }
+            entry.merge! event_state_fields(event)
+            modified_entries[:items] << entry
+          rescue => e
+            logger.warn "could not process entry: #{entry} - #{e}"
+            next
           end
-          modified_entries[:count] += 1
         end
+        modified_entries[:count] += 1
       end
 
       modified_entries
     end
 
-    def consolidate_all_day_event_key!(event)
-      if (event[:startTime][:allDayEvent] &&
-        event[:endTime][:allDayEvent] &&
-        event[:startTime][:allDayEvent] == event[:endTime][:allDayEvent])
-        all_day_event_flag = event[:startTime][:allDayEvent]
-        %w(startTime endTime).each do |key|
-          event[key.to_sym].reject! {|all_day_key| all_day_key == :allDayEvent}
-        end
-        event[:allDayEvent] = all_day_event_flag
-      end
+    def is_all_day_event?(event)
+      # Should be present if an all day event
+      # https://github.com/googleapis/google-api-ruby-client/blob/0.24.1/generated/google/apis/calendar_v3/classes.rb#L1741,L1744
+      event.start.date.present?
     end
 
-    def verify_and_format_date(date_field)
-      return {} unless date_field && (date_field["dateTime"] || date_field["date"])
-      if date_field["dateTime"]
-        return format_date(date_field["dateTime"].to_datetime)
+    def verify_and_format_date_time(date_obj)
+      return {} unless date_obj && (date_obj.date_time || date_obj.date)
+      if date_obj.date_time
+        return format_date(date_obj.date_time.to_datetime)
       else
         return {
           :allDayEvent => true
-        }.merge format_date(date_field["date"].to_datetime)
+        }.merge format_date(date_obj.date.to_datetime)
       end
     end
 
-    def event_state_fields(entry)
+    def event_state_fields(event)
       # Ignore fractional second precision
-      if entry["created"].to_i == entry["updated"].to_i
+      if event.created.to_i == event.updated.to_i
         new_entry_hash = {}
         #only use new if the author != self
-        if (entry['creator'] && entry['creator']['email'] &&
-          entry['creator']['displayName'] && entry['creator']['email'] != @google_mail)
+        if (event.creator && event.creator.email &&
+          event.creator.display_name && event.creator.email != @google_mail)
           new_entry_hash[:changeState] = 'new'
-          new_entry_hash[:editor] = entry['creator']['displayName'] if entry['creator']['displayName']
+          new_entry_hash[:editor] = event.creator.display_name if event.creator.display_name
         else
           new_entry_hash[:changeState] = 'created'
         end
@@ -113,10 +103,10 @@ module MyBadges
       end
     end
 
-    def is_unconfirmed_event?(entry)
-      entry && entry['attendees'] &&
-        (entry['attendees'].select {|attendee|
-          attendee['self'] == true && attendee['responseStatus'] == 'needsAction'
+    def is_unconfirmed_event?(event)
+      event && event.attendees &&
+        (event.attendees.select {|attendee|
+          attendee.self? && attendee.response_status == 'needsAction'
         }).present?
     end
   end

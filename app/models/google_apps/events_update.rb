@@ -1,15 +1,11 @@
 module GoogleApps
-  class EventsUpdate < Events
+  class EventsUpdate < Proxy
 
-    def update_event(event_id, body)
+    def update_event(event_id, event_body)
       request(
-        api: 'calendar',
-        api_version: 'v3',
-        resource: 'events',
-        params: {'calendarId' => 'primary', 'eventId' => event_id, 'sendNotifications' => false},
-        method: 'update',
-        body: stringify_body(body),
-        headers: {'Content-Type' => 'application/json'}
+        service_class: Google::Apis::CalendarV3::CalendarService,
+        method_name: 'update_event',
+        method_args: ['primary', event_id, event_body, nil, nil, nil, false],
       ).first
     end
   end

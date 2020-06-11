@@ -32,31 +32,32 @@ module MyBadges
 
       response = {
         count: 0,
-        items: []
+        items: [],
       }
       processed_pages = 0
       google_drive_results.each_with_index do |response_page, index|
         logger.info "Processing page ##{index} of drive_list results"
-        next unless response_page && response_page.response.status == 200
-        response_page.data["items"].each do |entry|
+        next unless response_page.present?
+        response_page.items.each do |drive_file|
           begin
-            if is_recent_message?(entry)
+            if is_recent_message?(drive_file)
               if response[:count] < @count_limiter
-                next unless !entry["title"].blank?
+                next unless !drive_file.title.blank?
+
                 item = {
-                  title: entry["title"],
-                  link: entry["alternateLink"],
-                  icon_class: process_icon(entry['iconLink']).gsub('_', '-'),
-                  modifiedTime: format_date(entry["modifiedDate"].to_datetime), #is_recent_message guards against bad dates.
-                  editor: entry["lastModifyingUserName"],
-                  changeState: handle_change_state(entry)
+                  title: drive_file.title,
+                  link: drive_file.alternate_link,
+                  icon_url: drive_file.icon_link,
+                  modifiedTime: format_date(drive_file.modified_date.to_datetime),
+                  editor: drive_file.last_modifying_user.display_name,
+                  changeState: handle_change_state(drive_file),
                 }
                 response[:items] << item
               end
               response[:count] += 1
             end
           rescue => e
-            logger.warn "#{e}: #{e.message}: #{entry["createdDate"]}, #{entry["modifiedDate"]}, #{entry["labels"].to_hash}"
+            logger.warn "#{e}: #{e.message}: file id: #{drive_file.id}, #{drive_file.title}, created: #{drive_file.created_date}, modified: #{drive_file.modified_date}"
             next
           end
         end
@@ -70,39 +71,21 @@ module MyBadges
       response
     end
 
-    def process_icon(icon_link)
-      return '' unless icon_link.present?
-      begin
-        file_baseclass = File.basename(URI.parse(icon_link).path, '.png')
-        raise TypeError, 'Not a png file' if file_baseclass.index('.').present?
-        drive_icons_list = Rails.cache.fetch('drive_icons', expires_in: Settings.cache.maximum_expires_in) {
-          raw_list = Dir.glob(File.join(Rails.root, 'src/assets/images/drive_icons/', '*.png'))
-          raw_list.select! {|filename| File.basename(filename).rindex('.png').present? }
-          raw_list.map {|filename| File.basename(filename, ".png")}
-        }
-        raise ArgumentError, 'icon does not exist in drive_icons' unless drive_icons_list.include?(file_baseclass)
-        file_baseclass
-      rescue => e
-        logger.warn "could not parse icon basename from link #{icon_link}: #{e}"
-        ''
-      end
-    end
-
-    def handle_change_state(entry)
-      if entry["createdDate"] == entry["modifiedDate"]
+    def handle_change_state(file)
+      if file.created_date == file.modified_date
         return "new"
       else
         return "modified"
       end
     end
 
-    def is_recent_message?(entry)
-      return false unless entry["createdDate"] && entry["modifiedDate"]
+    def is_recent_message?(file)
+      return false unless file.created_date && file.modified_date
       begin
-        date_fields = [entry["createdDate"].to_s, entry["modifiedDate"].to_s]
+        date_fields = [file.created_date.to_s, file.modified_date.to_s]
         date_fields.map! {|x| Time.zone.parse(x).to_i }
       rescue => e
-        logger.warn "Problems parsing createdDate: #{entry["createdDate"]} modifiedDate: #{entry["modifiedDate"]}"
+        logger.warn "Problems parsing created_date: #{file.created_date} modified_time: #{file.modified_date}"
         return false
       end
       @one_month_ago.to_i <= date_fields.max

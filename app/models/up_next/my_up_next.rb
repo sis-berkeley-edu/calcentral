@@ -35,11 +35,11 @@ module UpNext
 
     private
 
-    def parse_date(hash)
-      if hash["date"]
-        date = Date.parse(hash["date"].to_s).in_time_zone.to_datetime
+    def parse_date(event_date_time)
+      if event_date_time.date
+        date = Date.parse(event_date_time.date.to_s).in_time_zone.to_datetime
       else
-        date = DateTime.parse(hash["dateTime"].to_s)
+        date = DateTime.parse(event_date_time.date_time.to_s)
       end
     end
 
@@ -47,11 +47,11 @@ module UpNext
       google_proxy = GoogleApps::EventsList.new(user_id: uid)
       # Using the PoC window of beginning of today(midnight, inclusive) - tomorrow(midnight, exclusive)
       google_proxy.events_list({
-                                 "singleEvents" => true,
-                                 "orderBy" => "startTime",
-                                 "timeMin" => begin_today.to_formatted_s,
-                                 "timeMax" => next_day.to_formatted_s
-                               })
+        single_events: true,
+        order_by: 'startTime',
+        time_min: begin_today.to_formatted_s,
+        time_max: next_day.to_formatted_s
+      })
     end
 
     def is_current_all_day_event?(start)
@@ -82,7 +82,7 @@ module UpNext
       begin
         result[:start] = format_date(parse_date(start_date))
         result[:end] = format_date(parse_date(end_date))
-        if start_date["date"] && end_date["date"]
+        if start_date.date && end_date.date
           result[:isAllDay] = true
         else
           result[:isAllDay] = false
@@ -100,24 +100,24 @@ module UpNext
       timed_events = []
 
       proxy_response_pages.each do |response_page|
-        next unless response_page && response_page.response.status == 200
+        next unless response_page
 
-        response_page.data["items"].each do |entry|
-          next unless is_current_all_day_event?(entry["start"])
-          next unless entry["summary"] && entry["summary"].kind_of?(String)
-          next if is_declined_event?(entry)
+        response_page.items.each do |event|
+          next unless is_current_all_day_event?(event.start)
+          next unless event.summary && event.summary.kind_of?(String)
+          next if is_declined_event?(event)
 
           formatted_entry = {
-            :attendees => handle_contacts(entry['attendees']) || [],
-            :organizer => handle_contact(entry['organizer']) || '',
-            :htmlLink => entry['htmlLink'] || '',
-            :status => entry['status'] || '',
-            :summary => entry['summary'] || '',
-            :hangoutLink => entry['hangoutLink'] || ''
+            :attendees => handle_contacts(event.attendees) || [],
+            :organizer => handle_contact(event.organizer) || '',
+            :htmlLink => event.html_link || '',
+            :status => event.status || '',
+            :summary => event.summary || '',
+            :hangoutLink => event.hangout_link || ''
           }
 
-          formatted_entry.merge! handle_location(entry["location"])
-          formatted_entry.merge! handle_start_end_all_day(entry["start"], entry["end"])
+          formatted_entry.merge! handle_location(event.location)
+          formatted_entry.merge! handle_start_end_all_day(event.start, event.end)
 
           if formatted_entry[:isAllDay]
             day_events.push(formatted_entry)
@@ -133,10 +133,10 @@ module UpNext
     end
 
     def handle_contact(contact)
-      if contact.try(:[], 'displayName').present?
-        contact['displayName']
-      elsif contact.try(:[], 'email').present?
-        contact['email']
+      if contact.try(:display_name).present?
+        contact.display_name
+      elsif contact.try(:email).present?
+        contact.email
       end
     end
 
@@ -145,10 +145,10 @@ module UpNext
       contacts.map { |contact| handle_contact(contact) }.compact
     end
 
-    def is_declined_event?(entry)
-      entry && entry['attendees'] &&
-        (entry['attendees'].index { |attendee|
-          attendee['self'] == true && attendee['responseStatus'] == 'declined'
+    def is_declined_event?(event)
+      event && event.attendees &&
+        (event.attendees.index { |attendee|
+          attendee.self? == true && attendee.response_status == 'declined'
         })
     end
 

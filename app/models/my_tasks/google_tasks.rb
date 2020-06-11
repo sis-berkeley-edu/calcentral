@@ -15,11 +15,8 @@ module MyTasks
       tasks = []
 
       google_proxy = GoogleApps::TasksList.new(user_id: @uid)
-      google_proxy.tasks_list.each do |response_page|
-        next unless response_page && response_page.response.status == 200
-        response_page.data['items'].each do |entry|
-          tasks << format_google_task_response(entry) unless entry['title'].blank?
-        end
+      google_proxy.tasks_list.items.each do |task|
+        tasks << format_google_task_response(task) unless task.title.blank?
       end
       tasks.sort_by { |task| task['dueDate'].nil? ? 0 : task['dueDate']['epoch'] }
     end
@@ -88,27 +85,27 @@ module MyTasks
       formatted_entry
     end
 
-    def format_google_task_response(entry)
+    def format_google_task_response(task)
       formatted_entry = {
         emitter: GoogleApps::Proxy::APP_ID,
-        id: entry['id'],
-        sourceUrl: entry['selfLink'] || '',
-        title: entry['title'] || '',
+        id: task.id,
+        sourceUrl: task.self_link || '',
+        title: task.title || '',
         type: 'task'
       }
 
-      formatted_entry[:notes] = entry['notes'] if entry['notes']
-      formatted_entry[:status] = entry['status'] == 'needsAction' ? 'needsAction' : 'completed'
+      formatted_entry[:notes] = task.notes if task.notes
+      formatted_entry[:status] = task.status == 'needsAction' ? 'needsAction' : 'completed'
 
-      if entry['completed']
-        format_date_into_entry!(convert_date(entry['completed']), formatted_entry, :completedDate)
+      if task.completed
+        format_date_into_entry!(convert_date(task.completed), formatted_entry, :completedDate)
       end
 
-      due_date = if entry['due']
+      due_date = if task.due
         # Google task datetimes have misleading datetime accuracy. There is no way to record a specific due time
         # for tasks (through the UI), thus the reported time+tz is always 00:00:00+0000. Calling convert_datetime_or_date
         # will strip off the false accuracy and return a plain old Date.
-        parsed_date = convert_datetime_or_date entry['due']
+        parsed_date = convert_datetime_or_date task.due
         # Tasks are not overdue until the end of the day. Advance forward one day and back one second to cover
         # the possibility of daylight savings transitions.
         Time.at((parsed_date + 1).in_time_zone.to_datetime.to_i - 1).to_datetime
@@ -119,7 +116,7 @@ module MyTasks
       logger.debug "Putting Google task with dueDate: #{formatted_entry[:dueDate]} in bucket: #{formatted_entry[:bucket]}"
 
       if formatted_entry[:bucket] == 'Unscheduled'
-        format_date_into_entry!(convert_date(entry['updated']), formatted_entry, :updatedDate)
+        format_date_into_entry!(convert_date(task.updated), formatted_entry, :updatedDate)
       end
       formatted_entry
     end
