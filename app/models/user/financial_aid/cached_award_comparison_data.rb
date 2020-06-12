@@ -67,7 +67,7 @@ module User
               },
               {
                 description: 'Expected Family Contribution (EFC)',
-                value: isir.try(:[], 'primary_efc').partition('$ ')[1].to_f
+                value: expected_family_contribution(isir)
               },
               {
                 description: 'Berkeley Parent Contribution',
@@ -76,6 +76,12 @@ module User
             ]
           }
         }
+      end
+
+      def expected_family_contribution(isir)
+        isir['primary_efc'].partition('$ ')[1].to_f
+      rescue NoMethodError
+        nil
       end
 
       def items_with_floats(data)
