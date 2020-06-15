@@ -1954,29 +1954,6 @@
       ]
     },
     {
-      "name": "Counseling \u0026 Psychological Services",
-      "hoverText": "Individual, group, \u0026 self-help from Tang Center",
-      "url": "http://uhs.berkeley.edu/students/counseling/cps.shtml",
-      "roles": {
-        "student": true,
-        "applicant": true,
-        "staff": true,
-        "faculty": true,
-        "exStudent": true,
-        "summerVisitor": true
-      },
-      "categories": [
-        {
-          "topcategory": "Support Services",
-          "subcategory": "Student Resources"
-        },
-        {
-          "topcategory": "Wellness",
-          "subcategory": "University Health Services - Students"
-        }
-      ]
-    },
-    {
       "name": "Course Capture Support",
       "hoverText": "Help with video recordings of class lectures and discussions",
       "url": "https://www.ets.berkeley.edu/discover-services/course-capture",
