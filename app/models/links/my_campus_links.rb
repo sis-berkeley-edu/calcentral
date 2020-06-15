@@ -9,6 +9,28 @@ module Links
   # - RailsAdmin comes with an optional History feature to track who changed what, but it's disabled here.
   class MyCampusLinks
     def get_feed
+      links_json = campus_links_json
+      load_cs_link_api_entries(links_json)
+    end
+
+    def load_cs_link_api_entries(links_json)
+      links_json['links'].each do |link|
+        if link_id = link.try(:[], 'cs_link_id')
+          if cs_link = LinkFetcher.fetch_link(link_id)
+            link['name'] = cs_link[:name]
+            link['hoverText'] = cs_link[:title]
+            link['url'] = cs_link[:url]
+            if cs_link[:linkDescriptionDisplay]
+              link['description'] = cs_link[:linkDescription]
+            end
+            link.merge!(cs_link)
+          end
+        end
+      end
+      links_json
+    end
+
+    def campus_links_json
       file = File.open("#{Rails.root}/public/json/campuslinks.json")
       contents = File.read(file)
       JSON.parse(contents)
