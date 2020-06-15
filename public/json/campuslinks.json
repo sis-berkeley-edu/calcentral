@@ -397,6 +397,10 @@
       },
       "categories": [
         {
+          "topcategory": "Support Services",
+          "subcategory": "Student Resources"
+        },
+        {
           "topcategory": "Wellness",
           "subcategory": "University Health Services - Students"
         }
