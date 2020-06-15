@@ -574,17 +574,29 @@ module EdoOracle
 
       def self.get_awards_disbursements_tuition_fee_remission(person_id, aid_year)
         safe_query <<-SQL
-        SELECT DISTINCT UC.DISBURSEMENT_ID AS DISBURSEMENTID,
-          UC.DESCR                  AS TERM,
-          SUM(UC.OFFER_BALANCE)     AS OFFERED,
-          SUM(UC.DISBURSED_BALANCE) AS DISBURSED,
-          NULL                      AS DISBURSEMENT_DATE
-          FROM SYSADM.PS_UCC_FA_AWRD_DSB UC
-         WHERE UC.CAMPUS_ID   = '#{person_id}'
-           AND UC.INSTITUTION = '#{UC_BERKELEY}'
-           AND UC.AID_YEAR    = '#{aid_year}'
-           AND UC.ITEM_TYPE BETWEEN '992000000010' AND '995999999999'
-         GROUP BY UC.DISBURSEMENT_ID, UC.DESCR
+         SELECT DISTINCT UC.DISBURSEMENT_ID AS DISBURSEMENTID,
+           UC.DESCR                  AS TERM,
+           SUM(UC.OFFER_BALANCE)     AS OFFERED,
+           SUM(UC.DISBURSED_BALANCE) AS DISBURSED,
+           CASE
+             WHEN SUM(UC.DISBURSED_BALANCE) > 0
+               THEN NULL
+            ELSE UC2.DESCR1
+           END                       AS DISBURSEMENT_DATE
+           FROM SYSADM.PS_UCC_FA_AWRD_DSB UC, SYSADM.PS_UCC_FA_AWRD_DSB UC2
+          WHERE UC.CAMPUS_ID   = '#{person_id}'
+            AND UC.CAMPUS_ID   = UC2.CAMPUS_ID
+            AND UC.INSTITUTION = '#{UC_BERKELEY}'
+            AND UC.INSTITUTION = UC2.INSTITUTION
+            AND UC.AID_YEAR    = '#{aid_year}'
+            AND UC.ITEM_TYPE = UC2.ITEM_TYPE
+            AND UC.ITEM_TYPE BETWEEN '992000000010' AND '995999999999'
+            AND UC2.DISBURSEMENT_DATE = (SELECT MIN(UC3.DISBURSEMENT_DATE) FROM SYSADM.PS_UCC_FA_AWRD_DSB UC3
+                                          WHERE UC3.EMPLID = UC2.EMPLID
+                                            AND UC3.INSTITUTION = UC2.INSTITUTION
+                                            AND UC3.AID_YEAR = UC2.AID_YEAR
+                                            AND UC3.ITEM_TYPE BETWEEN '992000000010' AND '995999999999')
+          GROUP BY UC.DISBURSEMENT_ID, UC.DESCR, UC2.DESCR1
         SQL
       end
 
