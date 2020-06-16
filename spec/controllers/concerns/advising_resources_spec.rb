@@ -115,6 +115,7 @@ describe AdvisingResources do
       expect(subject[:feed][:ucArchivedTranscripts]).to eq mock_link
       expect(subject[:feed][:ucChangeCourseLoad]).to eq mock_link
       expect(subject[:feed][:ucCrossCampusEnrollApproval]).to eq mock_link
+      expect(subject[:feed][:acadAccomodationsHubAdvisor]).to eq mock_link
     end
   end
 

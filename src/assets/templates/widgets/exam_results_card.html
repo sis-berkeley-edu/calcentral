@@ -19,7 +19,7 @@
             <td data-ng-bind="exam.id"></td>
             <td data-ng-bind="exam.descr"></td>
             <td data-ng-bind="exam.score | number:2" class="cc-table-right"></td>
-            <td data-ng-bind="exam.taken | date:'MMM yyyy'" class="cc-table-right"></td>
+            <td data-ng-bind="exam.taken | date:'MMM yyyy':'UTC'" class="cc-table-right"></td>
           </tr>
         </tbody>
       </table>
@@ -27,7 +27,6 @@
     <p>&#42; For ALEVEL exams: A Grades = Score 1.00, B Grades = 2.00, C Grades = Score 3.00</p>
     <p>
       Transfer Course and Test Credit are posted to your Transfer Credit Report.
-      <span data-ng-if="examResults.review.isPending">This report is updated for new incoming students by mid-<span data-ng-bind="examResults.review.displayMonth"></span>.</span>
     </p>
   </div>
 </div>

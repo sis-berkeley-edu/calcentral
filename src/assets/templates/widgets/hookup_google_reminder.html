@@ -22,7 +22,7 @@
         <button
           class="cc-button cc-button-blue"
           data-ng-disabled="api.user.profile['actingAsUid'] || api.user.profile['delegateActingAsUid'] || api.user.profile['advisorActingAsUid']"
-          data-ng-click="api.user.enableOAuth('Google')"
+          data-ng-click="api.user.authorizeGoogleAccess()"
         >
           Connect
         </button>

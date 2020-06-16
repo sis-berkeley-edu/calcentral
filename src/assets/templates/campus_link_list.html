@@ -4,8 +4,10 @@
   <ul class="cc-list-links">
     <li data-ng-repeat="link in links | orderBy:'name' | campusLinksSubcategoryFilter:subcategory">
       <a data-ng-href="{{link.url}}"
+        data-ng-if="link.url && link.name"
         data-ng-click="api.analytics.trackExternalLink('Campus links', subcategory, link.url)"
-        data-ng-attr-title="{{link.description}}">{{link.name}}</a>
+        data-ng-attr-title="{{link.hoverText}}">{{link.name}}</a>
+      <span data-ng-if="link.description" data-ng-bind-template=" {{link.description}}"></span>
     </li>
   </ul>
 </div>

@@ -1,5 +1,6 @@
 module GoogleApps
-  class DriveList < Drive
+  class DriveList < Proxy
+    require 'google/apis/drive_v2'
 
     def initialize(options = {})
       super options
@@ -8,11 +9,9 @@ module GoogleApps
 
     def drive_list(optional_params = {}, page_limiter = nil)
       request(
-        api: 'drive',
-        api_version: 'v2',
-        resource: 'files',
-        method: 'list',
-        params: optional_params,
+        service_class: Google::Apis::DriveV2::DriveService,
+        method_name: 'list_files',
+        method_args: optional_params,
         page_limiter: page_limiter
       )
     end
@@ -20,6 +19,5 @@ module GoogleApps
     def mock_request
       super.merge(uri_matching: 'https://www.googleapis.com/drive/v2/files')
     end
-
   end
 end

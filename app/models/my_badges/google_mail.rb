@@ -25,8 +25,8 @@ module MyBadges
       count = 0
       items = []
       begin
-        if google_mail_results && google_mail_results.response && google_mail_results.response.status == 200
-          feed = FeedWrapper.new MultiXml.parse(google_mail_results.response.body)
+        if google_mail_results.present?
+          feed = FeedWrapper.new MultiXml.parse(google_mail_results)
           count = feed['feed']['fullcount'].to_i
           items = feed['feed']['entry'].as_collection.each_with_index.map do |entry, index|
             break if index == @max_entries

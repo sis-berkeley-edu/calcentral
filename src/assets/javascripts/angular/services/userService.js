@@ -163,9 +163,9 @@ angular.module('calcentral.services').service('userService', function($http, $lo
     });
   };
 
-  var enableOAuth = function(authorizationService) {
-    analyticsService.sendEvent('OAuth', 'Enable', 'service: ' + authorizationService);
-    window.location = '/api/' + authorizationService.toLowerCase() + '/request_authorization';
+  var authorizeGoogleAccess = function() {
+    analyticsService.sendEvent('OAuth', 'Enable', 'service: Google');
+    window.location = '/api/google/request_authorization';
   };
 
   var handleRouteChange = function() {
@@ -216,7 +216,7 @@ angular.module('calcentral.services').service('userService', function($http, $lo
 
   // Expose methods
   return {
-    enableOAuth: enableOAuth,
+    authorizeGoogleAccess: authorizeGoogleAccess,
     events: events,
     fetch: fetch,
     handleAccessToPage: handleAccessToPage,

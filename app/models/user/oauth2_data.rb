@@ -1,5 +1,6 @@
 module User
   class Oauth2Data < ActiveRecord::Base
+    include ClassLogger
     include ActiveRecordHelper, SafeJsonParser, OraclePrimaryHelper
 
     self.table_name = 'PS_UC_CLC_OAUTH'
@@ -40,7 +41,7 @@ module User
 
     def self.remove(uid)
       use_pooled_connection {
-        self.destroy_all(uid: uid)
+        self.where(uc_clc_ldap_uid: uid).destroy_all
       }
       Cache::UserCacheExpiry.notify uid
     end
@@ -59,9 +60,9 @@ module User
         authenticated_entry = self.where(uid: user_id).first
         return unless authenticated_entry
         userinfo = GoogleApps::Userinfo.new(user_id: user_id).user_info
-        return unless userinfo && userinfo.response.status == 200 && userinfo.data["emailAddresses"].present? && userinfo.data["emailAddresses"].length > 0
+        return unless userinfo && userinfo.email_addresses.present? && userinfo.email_addresses.length > 0
         authenticated_entry.app_data_will_change!
-        authenticated_entry.app_data["email"] = userinfo.data["emailAddresses"].first["value"]
+        authenticated_entry.app_data["email"] = userinfo.email_addresses.first.value
         authenticated_entry.save
       }
     end
@@ -107,7 +108,7 @@ module User
     end
 
     def expire_user
-      Cache::UserCacheExpiry.notify @uid
+      Cache::UserCacheExpiry.notify uid
     end
 
     def self.encrypt_with_iv(value)
