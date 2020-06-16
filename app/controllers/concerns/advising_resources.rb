@@ -20,6 +20,7 @@ module AdvisingResources
     { feed_key: :uc_archived_transcripts, cs_link_key: 'UC_CX_ARCH_TSCRPT_ADVISOR'},
     { feed_key: :uc_change_course_load, cs_link_key: 'UC_CX_ADV_CHG_CRS_LOAD'},
     { feed_key: :uc_cross_campus_enroll_approval, cs_link_key: 'UC_CX_ADV_CRSCAMPENR_APRV'},
+    { feed_key: :uc_degree_planner, cs_link_key: 'UC_AA_DEGREE_PLANNER_SEARCH'},
   ]
 
   def self.generic_links
@@ -39,6 +40,7 @@ module AdvisingResources
       { feed_key: :student_advising_assignments, cs_link_key: 'UC_CX_STUDENT_ADVISOR_STDNT', cs_link_params: { :EMPLID => student_empl_id } },
       { feed_key: :student_advisor_notes, cs_link_key: 'UC_CX_SCI_NOTE_FLU', cs_link_params: { :EMPLID => student_empl_id } },
       { feed_key: :student_manage_milestones, cs_link_key: 'UC_CX_AA_MILESTONE_STDNT', cs_link_params: { :EMPLID => student_empl_id } },
+      { feed_key: :student_degree_planner, cs_link_key: 'UC_AA_DEGREE_PLANNER_STDNT', cs_link_params: { :EMPLID => student_empl_id } },
       { feed_key: :student_multi_year_academic_planner, cs_link_key: 'UC_CX_PLANNER_ADV_STDNT', cs_link_params: { :EMPLID => student_empl_id } },
       { feed_key: :student_service_indicators, cs_link_key: 'UC_CX_SERVICE_IND_STDNT', cs_link_params: { :EMPLID => student_empl_id, :ACAD_CAREER => student_career} },
       { feed_key: :student_webnow_documents, cs_link_key: 'UC_CX_WEBNOW_STUDENT_URI', cs_link_params: { :EMPLID => student_empl_id } },

@@ -10,8 +10,8 @@ module MyAcademics
 
     def get_plan_semesters(semesters)
       plan_semesters = []
-      plans = CampusSolutions::AdvisingAcademicPlan.new(user_id: @uid).get
-      all_terms = parse_all_possible_terms(plans, semesters)
+      plans = []
+      all_terms = parse_all_possible_terms(semesters)
       all_terms.each do |term_id|
         plan_semesters << build_term_plan_semester(term_id, plans, semesters)
       end
@@ -29,7 +29,6 @@ module MyAcademics
         termYear: term_codes[:term_yr],
         timeBucket: Concerns::AcademicsModule.time_bucket(term_codes[:term_yr], term_codes[:term_cd]),
       }
-      semester.merge! parse_planned_classes(term_id, plans)
       semester.merge parse_enrolled_classes(slug, semesters)
     end
 
@@ -39,43 +38,6 @@ module MyAcademics
         semester[:timeBucket] = 'previous' if i < plan_semesters.count - 1 && plan_semesters[i+1][:timeBucket] == 'current'
       end
       plan_semesters
-    end
-
-    def parse_planned_classes(term_id, plans)
-      planned_classes = []
-      plans[:feed].try(:[], :acadPlans).try(:each) do |plan|
-        planned_classes << find_classes_in_plan(term_id, plan)
-      end
-      planned_classes = planned_classes.flatten.uniq
-      {
-        plannedClasses: planned_classes,
-        plannedUnits: calc_planned_units(planned_classes)
-      }
-    end
-
-    def calc_planned_units(planned_classes)
-      planned_classes.map {|cls| cls[:units].to_f}.sum.to_f.to_s
-    end
-
-    def find_classes_in_plan(term_id, plan)
-      terms_array = plan.try(:[],:terms).try(:[],:term)
-      terms_array =  terms_array.blank? || terms_array.kind_of?(Array) ? terms_array : [] << terms_array
-      plan_term = terms_array.try(:find) do |plan_term|
-        plan_term[:termId] == term_id
-      end
-      parse_plan_term_classes(plan_term)
-    end
-
-    def parse_plan_term_classes(plan_term)
-      planned_classes = []
-      plan_term.try(:[], :plannedClasses).try(:each) do |planned_class|
-        planned_classes << {
-          subjectArea: planned_class[:subjectArea],
-          catalogNumber: planned_class[:catalogNumber],
-          units: planned_class[:units]
-        }
-      end
-      planned_classes
     end
 
     def parse_enrolled_classes(slug, semesters)
@@ -123,9 +85,8 @@ module MyAcademics
       end
     end
 
-    def parse_all_possible_terms(plans, semesters)
+    def parse_all_possible_terms(semesters)
       term_codes = []
-      term_codes << parse_all_plan_terms(plans)
       term_codes << parse_all_semester_terms(semesters)
       term_codes.flatten.compact.uniq.sort
     end
@@ -137,18 +98,5 @@ module MyAcademics
       end
       semester_term_codes
     end
-
-    def parse_all_plan_terms(plans)
-      plan_term_codes = []
-      plans[:feed].try(:[], :acadPlans).try(:each) do |plan|
-        terms_array = plan.try(:[],:terms).try(:[],:term)
-        terms_array =  terms_array.blank? || terms_array.kind_of?(Array) ? terms_array : [] << terms_array
-        terms_array.try(:each) do |plan_term|
-          plan_term_codes << plan_term[:termId]
-        end
-      end
-      plan_term_codes
-    end
-
   end
 end
