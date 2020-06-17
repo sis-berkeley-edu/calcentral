@@ -24,7 +24,7 @@ angular.module('calcentral.factories').factory('campusLinksFactory', function(ap
   var hasWhitelistedRole = function(linkRoles) {
     var userRoles = apiService.user.profile.roles;
     return _.some(linkRoles, function(value, key) {
-      return userRoles[key] === value;
+      return userRoles[key] && (userRoles[key] === value);
     });
   };
 

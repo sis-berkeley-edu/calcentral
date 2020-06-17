@@ -1,6 +1,7 @@
 module AdvisingResources
 
   GENERIC_LINK_CONFIG = [
+    { feed_key: :acad_accomodations_hub_advisor, cs_link_key: 'UC_CC_ACCOMM_HUB_ADVISOR'},
     { feed_key: :uc_academic_progress_report, cs_link_key: 'UC_CX_APR_RPT'},
     { feed_key: :web_now_documents, cs_link_key: 'UC_CX_WEBNOW_ADVISOR_URI' },
     { feed_key: :uc_administrative_transcript, cs_link_key: 'UC_CX_ADM_TRANSCRIPT' },
