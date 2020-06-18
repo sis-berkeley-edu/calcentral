@@ -12,7 +12,6 @@ module GoogleApps
       #  The loaded token data in JSON string format.
       def load(user_id)
         if user_oauth_data = User::Oauth2Data.get(user_id)
-          puts "user_oauth_data: #{user_oauth_data.inspect}"
           token_data = {
             client_id: Settings.google_proxy.client_id,
             scope: Settings.google_proxy.scope,
@@ -20,7 +19,6 @@ module GoogleApps
             refresh_token: user_oauth_data[:refresh_token],
             expiration_time_millis: user_oauth_data[:expiration_time].to_i * 1000,
           }
-          puts "loading token data: #{token_data.inspect}"
           return token_data.to_json
         end
       end

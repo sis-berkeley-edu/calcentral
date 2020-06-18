@@ -13,8 +13,7 @@ class GoogleAuthController < ApplicationController
   end
 
   def handle_callback
-    target_url = google_authorization.process_callback
-    redirect_to target_url
+    redirect_to google_authorization.process_callback
   end
 
   def remove_authorization
