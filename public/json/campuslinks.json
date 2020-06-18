@@ -192,6 +192,10 @@
         {
           "topcategory": "Support Services",
           "subcategory": "Student Resources"
+        },
+        {
+          "topcategory": "Support Services",
+          "subcategory": "Staff and Faculty Resources"
         }
       ]
     },
@@ -327,6 +331,10 @@
         {
           "topcategory": "Support Services",
           "subcategory": "Student Resources"
+        },
+        {
+          "topcategory": "Support Services",
+          "subcategory": "Staff and Faculty Resources"
         },
         {
           "topcategory": "Wellness",
