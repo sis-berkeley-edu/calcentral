@@ -31,10 +31,12 @@ const DegreeProgressLinks = ({
           <div className="linksTitle icon iconApr">
             Academic Progress Report
           </div>
-          <div className="linksSubTitle">
+          <div className="linksSubTitle linksSubText">
             Confirm completion of requirements to date
           </div>
-          <APILink {...aprLink} />
+          <div className="linksSubText">
+            <APILink {...aprLink} />
+          </div>
         </>
       )}
       {degreePlannerLink && (
@@ -42,8 +44,12 @@ const DegreeProgressLinks = ({
           <div className="linksTitle icon iconDegreePlanner">
             Degree Planner
           </div>
-          <div className="linksSubTitle">Create a long-term program plan</div>
-          <APILink {...degreePlannerLink} />
+          <div className="linksSubTitle linksSubText">
+            Create a long-term program plan
+          </div>
+          <div className="linksSubText">
+            <APILink {...degreePlannerLink} />
+          </div>
         </>
       )}
       {showPnpCalculatorLink && (
@@ -51,7 +57,7 @@ const DegreeProgressLinks = ({
           <div className="linksTitle icon iconGradeEstimator">
             1/3 Passed Grade Estimator
           </div>
-          <div>
+          <div className="linksSubText">
             <button
               className="cc-button-link"
               onClick={() => showPnpCalculator()}

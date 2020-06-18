@@ -6,7 +6,7 @@
   display: flex;
   font-size: 13px;
   font-weight: bold;
-  margin-top: 5px;
+  margin-top: 15px;
 }
 
 .linksSubTitle {
@@ -15,12 +15,16 @@
   font-weight: normal;
 }
 
+.linksSubText {
+  padding-left: 20px;
+}
+
 .icon {
   background-position-y: center;
   background-repeat: no-repeat;
   background-size: 12px 11px;
   color: $cc-color-dim-gray;
-  padding-left: 18px;
+  padding-left: 20px;
 }
 
 .iconApr {
