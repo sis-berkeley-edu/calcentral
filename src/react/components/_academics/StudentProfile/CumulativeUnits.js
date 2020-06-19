@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 
 import UnitsRow from './UnitsRow';
 
-const unitsPresent = (units) => units !== null && units > 0;
+const unitsPresent = units => units !== null && units > 0;
 
 const propTypes = {
   isCurrentSummerVisitor: PropTypes.bool,
@@ -15,7 +15,7 @@ const propTypes = {
   totalUnitsPassedNotForGpa: PropTypes.number,
   totalPreviousCareerCumUnits: PropTypes.number,
   totalPreviousCareerLawUnits: PropTypes.number,
-  transferUnitsAccepted: PropTypes.number
+  transferUnitsAccepted: PropTypes.number,
 };
 
 const CumulativeUnits = ({
@@ -27,10 +27,9 @@ const CumulativeUnits = ({
   totalUnitsPassedNotForGpa,
   totalPreviousCareerCumUnits,
   totalPreviousCareerLawUnits,
-  transferUnitsAccepted
+  transferUnitsAccepted,
 }) => {
   if (!isCurrentSummerVisitor && (totalUnits > 0 || totalLawUnits > 0)) {
-
     let summaryTotalLawUnits = totalLawUnits;
     let summaryTotalUnits = totalUnits;
     let summaryTotalTransferUnits = totalTransferAndTestingUnits;
@@ -38,7 +37,8 @@ const CumulativeUnits = ({
     if (totalLawUnits > 0 || totalPreviousCareerLawUnits > 0) {
       summaryTotalLawUnits = totalLawUnits + totalPreviousCareerLawUnits;
       summaryTotalUnits = totalUnits + totalPreviousCareerCumUnits;
-      summaryTotalTransferUnits = totalTransferAndTestingUnits + transferUnitsAccepted;
+      summaryTotalTransferUnits =
+        totalTransferAndTestingUnits + transferUnitsAccepted;
       showPNP = false;
     }
 
@@ -50,21 +50,27 @@ const CumulativeUnits = ({
             <tbody>
               <UnitsRow name="Total Units" value={summaryTotalUnits} />
 
-              {unitsPresent(totalLawUnits) &&
+              {unitsPresent(totalLawUnits) && (
                 <UnitsRow name="Law Units" value={summaryTotalLawUnits} />
-              }
+              )}
 
-              {unitsPresent(totalTransferAndTestingUnits) &&
-                <UnitsRow name="Transfer Units" value={summaryTotalTransferUnits} />
-              }
+              {unitsPresent(totalTransferAndTestingUnits) && (
+                <UnitsRow
+                  name="Transfer Units"
+                  value={summaryTotalTransferUnits.toFixed(3)}
+                />
+              )}
 
-              {unitsPresent(totalUnitsTakenNotForGpa) && showPNP &&
+              {unitsPresent(totalUnitsTakenNotForGpa) && showPNP && (
                 <UnitsRow name="P/NP Total" value={totalUnitsTakenNotForGpa} />
-              }
+              )}
 
-              {unitsPresent(totalUnitsPassedNotForGpa) && showPNP &&
-                <UnitsRow name="P/NP Passed" value={totalUnitsPassedNotForGpa} />
-              }
+              {unitsPresent(totalUnitsPassedNotForGpa) && showPNP && (
+                <UnitsRow
+                  name="P/NP Passed"
+                  value={totalUnitsPassedNotForGpa}
+                />
+              )}
             </tbody>
           </table>
         </td>
@@ -80,10 +86,8 @@ CumulativeUnits.propTypes = propTypes;
 const mapStateToProps = ({ myAcademics, myStatus }) => {
   const {
     academicRoles: {
-      current: {
-        summerVisitor: isCurrentSummerVisitor,
-      } = {}
-    } = {}
+      current: { summerVisitor: isCurrentSummerVisitor } = {},
+    } = {},
   } = myStatus;
 
   const {
@@ -95,12 +99,12 @@ const mapStateToProps = ({ myAcademics, myStatus }) => {
       totalUnitsPassedNotForGpa,
       totalPreviousCareerCumUnits,
       totalPreviousCareerLawUnits,
-      transferUnitsAccepted
-    } = {}
+      transferUnitsAccepted,
+    } = {},
   } = myAcademics;
 
   return {
-    isCurrentSummerVisitor, 
+    isCurrentSummerVisitor,
     totalUnits,
     totalLawUnits,
     totalTransferAndTestingUnits,
@@ -108,7 +112,7 @@ const mapStateToProps = ({ myAcademics, myStatus }) => {
     totalUnitsPassedNotForGpa,
     totalPreviousCareerCumUnits,
     totalPreviousCareerLawUnits,
-    transferUnitsAccepted
+    transferUnitsAccepted,
   };
 };
 
