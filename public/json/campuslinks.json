@@ -618,7 +618,7 @@
     {
       "name": "AirBears",
       "hoverText": "Berkeley's free internet wifi for Berkeley affiliates with a calnet and passphrase",
-      "url": "http://ist.berkeley.edu/airbears/",
+      "url": "https://technology.berkeley.edu/wi-fi",
       "roles": {
         "student": true,
         "applicant": true,
@@ -816,7 +816,7 @@
     {
       "name": "BearBuy",
       "hoverText": "Campus procurement system with online catalog shopping and electronically-enabled workflows",
-      "url": "http://supplychain.berkeley.edu/bearbuy/",
+      "url": "https://supplychain.berkeley.edu/bearbuy/",
       "roles": {
         "student": false,
         "applicant": false,
@@ -892,7 +892,7 @@
     {
       "name": "Berkeley International Office",
       "hoverText": "Providing advising, immigration services, and advocacy to international students",
-      "url": "http://internationaloffice.berkeley.edu/",
+      "url": "https://internationaloffice.berkeley.edu/",
       "roles": {
         "student": true,
         "applicant": true,
@@ -911,7 +911,7 @@
     {
       "name": "Berkeley Jobs",
       "hoverText": "Start here to learn about job openings on campus, student, staff and academic positions",
-      "url": "http://jobs.berkeley.edu/",
+      "url": "https://jobs.berkeley.edu/",
       "roles": {
         "student": false,
         "applicant": false,
@@ -949,7 +949,7 @@
     {
       "name": "Berkeley Self-Guided Tours",
       "hoverText": "Mobile, podcast, cell phone, and other tours of the Berkeley campus",
-      "url": "http://visitors.berkeley.edu/tour/self.shtml",
+      "url": "https://visit.berkeley.edu/category/campus-tours/",
       "roles": {
         "student": true,
         "applicant": true,
@@ -987,7 +987,7 @@
     {
       "name": "Berkeley Student Cooperative",
       "hoverText": "Berkeley's co-operative student housing option, and an alternative to living in student dorms",
-      "url": "http://www.bsc.coop/",
+      "url": "https://bsc.coop/",
       "roles": {
         "student": true,
         "applicant": true,
@@ -1025,7 +1025,7 @@
     {
       "name": "BFS",
       "hoverText": "Berkeley Financial System",
-      "url": "http://www.bai.berkeley.edu/BFS/index.htm",
+      "url": "https://controller.berkeley.edu/bfs-business-systems",
       "roles": {
         "student": false,
         "applicant": false,
@@ -1044,7 +1044,7 @@
     {
       "name": "Billing FAQ",
       "hoverText": "Frequently asked questions about billing, payments, financial aid, registration, and enrollment",
-      "url": "http://studentcentral.berkeley.edu/faqs#/faq3",
+      "url": "https://studentcentral.berkeley.edu/faqs#/faq3",
       "roles": {
         "student": true,
         "applicant": true,
@@ -1063,7 +1063,7 @@
     {
       "name": "Blu",
       "hoverText": "Berkeley's employee portal: work-related tools and information",
-      "url": "http://blu.berkeley.edu",
+      "url": "https://blu.is.berkeley.edu/psp/blupd91/EMPLOYEE/EMPL/h/?tab=PAPP_GUEST",
       "roles": {
         "student": false,
         "applicant": false,
@@ -1158,7 +1158,7 @@
     {
       "name": "Cal 1 Card",
       "hoverText": "The campus identification, and optional, debit and meal points card.",
-      "url": "http://services.housing.berkeley.edu/c1c/static/index.htm",
+      "url": "https://cal1card.berkeley.edu/",
       "roles": {
         "student": true,
         "applicant": true,
@@ -1181,7 +1181,7 @@
     {
       "name": "Cal Answers",
       "hoverText": "Provides reliable and consistent answers to critical campus questions",
-      "url": "http://calanswers.berkeley.edu/",
+      "url": "https://calanswers.berkeley.edu/",
       "roles": {
         "student": false,
         "applicant": false,
@@ -1219,7 +1219,7 @@
     {
       "name": "CalBears Intercollegiate Athletics",
       "hoverText": "Berkeley's official sport teams",
-      "url": "http://www.calbears.com/",
+      "url": "https://calbears.com/",
       "roles": {
         "student": true,
         "applicant": true,
@@ -1238,7 +1238,7 @@
     {
       "name": "Cal Dining",
       "hoverText": "Campus dining facilities",
-      "url": "http://caldining.berkeley.edu/",
+      "url": "https://caldining.berkeley.edu/",
       "roles": {
         "student": true,
         "applicant": true,
@@ -1257,7 +1257,7 @@
     {
       "name": "CalGreeks",
       "hoverText": "Fraternities, Sororities, and professional fraternities among the Greek Family",
-      "url": "http://www.calgreeks.com/",
+      "url": "https://www.calgreeks.com/",
       "roles": {
         "student": true,
         "applicant": true,
@@ -1280,7 +1280,7 @@
     {
       "name": "CalLink (Campus Activities Link)",
       "hoverText": "Official campus student groups",
-      "url": "http://callink.berkeley.edu/",
+      "url": "https://callink.berkeley.edu/",
       "roles": {
         "student": true,
         "applicant": true,
@@ -1299,7 +1299,7 @@
     {
       "name": "Callisto \u0026 CalJobs",
       "hoverText": "Official Berkeley website for all things job-related",
-      "url": "https://career.berkeley.edu/CareerApps/Callisto/CallistoLogin.aspx",
+      "url": "https://saservices.berkeley.edu/CCApps/Callisto/CallistoLogin.aspx",
       "roles": {
         "student": true,
         "applicant": true,
@@ -1337,7 +1337,7 @@
     {
       "name": "Cal Marketplace",
       "hoverText": "Everything at Cal you may want to buy, discover or visit",
-      "url": "http://calmarketplace.berkeley.edu/",
+      "url": "https://bcbp.berkeley.edu/",
       "roles": {
         "student": true,
         "applicant": true,
@@ -1375,7 +1375,7 @@
     {
       "name": "CalNet",
       "hoverText": "An online identity username that all Berkeley affiliates have to log into Berkeley websites",
-      "url": "https://calnet.berkeley.edu/",
+      "url": "https://calnetweb.berkeley.edu/",
       "roles": {
         "student": true,
         "applicant": true,
@@ -1413,7 +1413,7 @@
     {
       "name": "CalPlanning",
       "hoverText": "UC Berkeley's financial planning and analysis tool",
-      "url": "http://budget.berkeley.edu/systems/calplanning",
+      "url": "https://calplanning.berkeley.edu/",
       "roles": {
         "student": false,
         "applicant": false,
@@ -1489,7 +1489,7 @@
     {
       "name": "Cal Student Central",
       "hoverText": "Providing support to your questions concerning financial aid, fees and billing, payments, disbursements, registration, and enrollment",
-      "url": "http://studentcentral.berkeley.edu/open-case",
+      "url": "https://studentcentral.berkeley.edu/open-case",
       "roles": {
         "student": true,
         "applicant": true,
@@ -1531,7 +1531,7 @@
     {
       "name": "CalTime",
       "hoverText": "Tracking and reporting work and time leave-timekeeping",
-      "url": "http://caltime.berkeley.edu",
+      "url": "https://caltime.berkeley.edu",
       "roles": {
         "student": false,
         "applicant": false,
@@ -1550,7 +1550,7 @@
     {
       "name": "Campaign for Berkeley",
       "hoverText": "The campaign to raise money to help Berkeley's programs and affiliates",
-      "url": "http://campaign.berkeley.edu/",
+      "url": "https://light.berkeley.edu/",
       "roles": {
         "student": true,
         "applicant": true,
@@ -1645,7 +1645,7 @@
     {
       "name": "Campus Map",
       "hoverText": "Locate campus buildings",
-      "url": "http://www.berkeley.edu/map/3dmap/3dmap.shtml",
+      "url": "https://www.berkeley.edu/map",
       "roles": {
         "student": true,
         "applicant": true,
@@ -1683,7 +1683,7 @@
     {
       "name": "Campus Shuttles",
       "hoverText": "Bus routes around the Berkeley campus (most are free)",
-      "url": "http://pt.berkeley.edu/campus-transportation-options/campus-shuttle",
+      "url": "https://pt.berkeley.edu/transportation-mobility/bear-transit-campus-shuttles",
       "roles": {
         "student": true,
         "applicant": true,
@@ -1702,7 +1702,7 @@
     {
       "name": "Career Center",
       "hoverText": "Cal jobs, internships \u0026 career counseling",
-      "url": "http://career.berkeley.edu/",
+      "url": "https://career.berkeley.edu/",
       "roles": {
         "student": true,
         "applicant": true,
@@ -1778,7 +1778,7 @@
     {
       "name": "Career Development Office - Berkeley Law",
       "hoverText": "Berkeley Law career development office",
-      "url": "http://www.law.berkeley.edu/careers.htm",
+      "url": "https://www.law.berkeley.edu/careers/",
       "roles": {
         "student": true,
         "applicant": true,
@@ -1816,7 +1816,7 @@
     {
       "name": "Class Pass",
       "hoverText": "AC Transit Pass to bus for free",
-      "url": "http://pt.berkeley.edu/campus-transportation-options/public-transportation-passes/student-class-pass",
+      "url": "https://pt.berkeley.edu/StudentEasypass",
       "roles": {
         "student": true,
         "applicant": true,
@@ -1949,7 +1949,7 @@
     {
       "name": "Cost of Attendance",
       "hoverText": "An estimated cost of completing an academic year at UC Berkeley",
-      "url": "http://financialaid.berkeley.edu/cost-attendance",
+      "url": "https://financialaid.berkeley.edu/cost-attendance",
       "roles": {
         "student": true,
         "applicant": true,
@@ -2048,7 +2048,7 @@
     {
       "name": "Disabled Students Program",
       "hoverText": "Resources specific to disabled students",
-      "url": "http://dsp.berkeley.edu/",
+      "url": "https://dsp.berkeley.edu/",
       "roles": {
         "student": true,
         "applicant": true,
@@ -2147,7 +2147,7 @@
     {
       "name": "Emergency information",
       "hoverText": "Go-to site for emergency response information",
-      "url": "http://emergency.berkeley.edu/",
+      "url": "https://emergency.berkeley.edu/",
       "roles": {
         "student": true,
         "applicant": true,
@@ -2166,7 +2166,7 @@
     {
       "name": "Emergency Preparedness",
       "hoverText": "How to be prepared and ready for emergencies",
-      "url": "http://oem.berkeley.edu/get-prepared",
+      "url": "https://oem.berkeley.edu/get-prepared",
       "roles": {
         "student": true,
         "applicant": true,
@@ -2242,7 +2242,7 @@
     {
       "name": "Events.Berkeley",
       "hoverText": "Campus events calendar",
-      "url": "http://events.berkeley.edu",
+      "url": "https://events.berkeley.edu/index.php",
       "roles": {
         "student": true,
         "applicant": true,
@@ -2318,7 +2318,7 @@
     {
       "name": "FAFSA",
       "hoverText": "Free Application for Federal Student Aid (FAFSA),annual form submission required to receive financial aid",
-      "url": "https://fafsa.ed.gov/",
+      "url": "https://studentaid.gov/h/apply-for-aid/fafsa",
       "roles": {
         "student": true,
         "applicant": true,
@@ -2337,7 +2337,7 @@
     {
       "name": "Federal Student Loans",
       "hoverText": "Federal loan application, counseling, and repayment site",
-      "url": "https://studentloans.gov/myDirectLoan/index.action",
+      "url": "https://studentaid.gov/",
       "roles": {
         "student": true,
         "applicant": true,
@@ -2356,7 +2356,7 @@
     {
       "name": "Financial Aid \u0026 Scholarships Office",
       "hoverText": "Learn about Financial Aid and receive step-by-step guidance about financial aid and select scholarships",
-      "url": "http://financialaid.berkeley.edu",
+      "url": "https://financialaid.berkeley.edu",
       "roles": {
         "student": true,
         "applicant": true,
@@ -2375,7 +2375,7 @@
     {
       "name": "Financial Literacy",
       "hoverText": "A peer-to-peer financial wellness program",
-      "url": "http://financialaid.berkeley.edu/bears-financial-success",
+      "url": "https://financialaid.berkeley.edu/bears-financial-success",
       "roles": {
         "student": true,
         "applicant": true,
@@ -2394,7 +2394,7 @@
     {
       "name": "Give to Berkeley",
       "hoverText": "Help donate to further student's education",
-      "url": "http://givetocal.berkeley.edu/",
+      "url": "https://give.berkeley.edu/",
       "roles": {
         "student": true,
         "applicant": true,
@@ -2451,7 +2451,7 @@
     {
       "name": "Graduate Financial Support",
       "hoverText": "Resources to provide financial support for graduate students",
-      "url": "http://www.grad.berkeley.edu/financial/",
+      "url": "https://grad.berkeley.edu/financial/",
       "roles": {
         "student": true,
         "applicant": true,
@@ -2470,7 +2470,7 @@
     {
       "name": "GSI, Reader, Tutor, and GSR Positions",
       "hoverText": "Graduate Student Instructor (GSI), Researcher (GSR), Reader, and Tutor appointments at Berkeley",
-      "url": "http://grad.berkeley.edu/professional-development/appointments/",
+      "url": "https://grad.berkeley.edu/financial/appointments/",
       "roles": {
         "student": true,
         "applicant": true,
@@ -2489,7 +2489,7 @@
     {
       "name": "Have a loan?",
       "hoverText": "Getting ready to graduate? Learn about your responsibilities for paying back your loans through the Exit Loan Counseling requirement",
-      "url": "http://studentbilling.berkeley.edu/exitDirect.htm",
+      "url": "https://studentbilling.berkeley.edu/loan-services-and-repayment/federal-perkins-hpsl-loan-entrance-and-exit-counseling",
       "roles": {
         "student": true,
         "applicant": true,
@@ -2508,7 +2508,7 @@
     {
       "name": "HR System",
       "hoverText": "Recording personal information and action for the Berkeley community",
-      "url": "http://hrweb.berkeley.edu/hcm",
+      "url": "https://hr.berkeley.edu/hr-network/hr-systems",
       "roles": {
         "student": false,
         "applicant": false,
@@ -2527,7 +2527,7 @@
     {
       "name": "HR Web",
       "hoverText": "Human Resources at Berkeley",
-      "url": "http://hrweb.berkeley.edu/",
+      "url": "https://hr.berkeley.edu/",
       "roles": {
         "student": false,
         "applicant": false,
@@ -2546,7 +2546,7 @@
     {
       "name": "Imagine Services",
       "hoverText": "Custom electronic document workflows",
-      "url": "https://technology.berkeley.edu/services/enterprise-applications/imagine-document-imaging-processing-and-workflow-management",
+      "url": "https://technology.berkeley.edu/services/enterprise-applications/imagine-document-management-workflow",
       "roles": {
         "student": false,
         "applicant": false,
@@ -2565,7 +2565,7 @@
     {
       "name": "International House",
       "hoverText": "On-campus dormitory with a dining common for international students",
-      "url": "http://ihouse.berkeley.edu/",
+      "url": "https://ihouse.berkeley.edu/",
       "roles": {
         "student": true,
         "applicant": true,
@@ -2603,7 +2603,7 @@
     {
       "name": "IST Support",
       "hoverText": "Information Technology support for services and systems",
-      "url": "http://ist.berkeley.edu/support/",
+      "url": "https://technology.berkeley.edu/contact-us",
       "roles": {
         "student": true,
         "applicant": true,
@@ -2622,7 +2622,7 @@
     {
       "name": "KALX",
       "hoverText": "90.7 MHz. Berkeley's campus radio station",
-      "url": "http://kalx.berkeley.edu/",
+      "url": "https://kalx.berkeley.edu/",
       "roles": {
         "student": true,
         "applicant": true,
@@ -2683,7 +2683,7 @@
     {
       "name": "LEAD Center",
       "hoverText": "Student leadership programs and workshops",
-      "url": "http://lead.berkeley.edu/",
+      "url": "https://lead.berkeley.edu/",
       "roles": {
         "student": true,
         "applicant": true,
@@ -2782,7 +2782,7 @@
     {
       "name": "Mail Services",
       "hoverText": "United States Postal Service-incoming and outgoing mail",
-      "url": "http://mailservices.berkeley.edu/",
+      "url": "https://mailservices.berkeley.edu/",
       "roles": {
         "student": false,
         "applicant": false,
@@ -2801,7 +2801,7 @@
     {
       "name": "Meal Plan Balance",
       "hoverText": "",
-      "url": "https://cal1card.berkeley.edu/cdlogin",
+      "url": "http://services.housing.berkeley.edu/c1c/dyn/login.asp",
       "roles": {
         "student": true,
         "applicant": true,
@@ -2856,9 +2856,9 @@
       ]
     },
     {
-      "name": "Newscenter",
-      "hoverText": "News affiliated with UC Berkeley",
-      "url": "http://newscenter.berkeley.edu",
+      "name": "Berkeley News",
+      "hoverText": "News from the University of California, Berkeley",
+      "url": "https://news.berkeley.edu/",
       "roles": {
         "student": true,
         "applicant": true,
@@ -2878,7 +2878,7 @@
       "name": "New Student Services",
       "hoverText": "Helping new undergrads get the most out of Cal",
       "description": "(includes Golden Bear Orientation)",
-      "url": "http://orientation.berkeley.edu/",
+      "url": "https://orientation.berkeley.edu/",
       "roles": {
         "student": true,
         "applicant": true,
@@ -2954,7 +2954,7 @@
     {
       "name": "Open Computing Facility",
       "hoverText": "Free computing such as printing for Berkeley affiliates",
-      "url": "http://www.ocf.berkeley.edu/",
+      "url": "https://www.ocf.berkeley.edu/",
       "roles": {
         "student": true,
         "applicant": true,
@@ -2992,7 +2992,7 @@
     {
       "name": "Parking \u0026 Transportation",
       "hoverText": "Parking lots, transportation, car sharing, etc.",
-      "url": "http://pt.berkeley.edu/",
+      "url": "https://pt.berkeley.edu/home",
       "roles": {
         "student": true,
         "applicant": true,
@@ -3011,7 +3011,7 @@
     {
       "name": "Payment Options",
       "hoverText": "Learn more about the options for making payments either electronically or by check to your CARS account",
-      "url": "http://studentbilling.berkeley.edu/carsPaymentOptions.htm",
+      "url": "https://studentbilling.berkeley.edu/payments-and-refunds",
       "roles": {
         "student": true,
         "applicant": true,
@@ -3030,7 +3030,7 @@
     {
       "name": "Payroll",
       "hoverText": "Providing accurate paychecks to Berkeley employees",
-      "url": "http://controller.berkeley.edu/payroll/",
+      "url": "https://controller.berkeley.edu/central-payroll",
       "roles": {
         "student": false,
         "applicant": false,
@@ -3106,7 +3106,7 @@
     {
       "name": "Physical Education Program",
       "hoverText": "Physical education instructional courses for units",
-      "url": "http://pe.berkeley.edu/",
+      "url": "https://pe.berkeley.edu/",
       "roles": {
         "student": true,
         "applicant": true,
@@ -3125,7 +3125,7 @@
     {
       "name": "Police \u0026 Safety",
       "hoverText": "Campus police and safety",
-      "url": "http://police.berkeley.edu",
+      "url": "https://ucpd.berkeley.edu/",
       "roles": {
         "student": true,
         "applicant": true,
@@ -3163,7 +3163,7 @@
     {
       "name": "Public Service Center",
       "hoverText": "On and off campus community service engagement",
-      "url": "http://publicservice.berkeley.edu",
+      "url": "https://publicservice.berkeley.edu",
       "roles": {
         "student": true,
         "applicant": true,
@@ -3182,7 +3182,7 @@
     {
       "name": "Purchasing",
       "hoverText": "Services that can be purchased by individuals with a CalNet ID and passphrase",
-      "url": "http://supplychain.berkeley.edu/campus/how-purchase",
+      "url": "https://supplychain.berkeley.edu/procurement",
       "roles": {
         "student": false,
         "applicant": false,
@@ -3201,7 +3201,7 @@
     {
       "name": "Recreational Sports Facility",
       "hoverText": "Sports and fitness programs",
-      "url": "http://recsports.berkeley.edu/ ",
+      "url": "https://recsports.berkeley.edu/ ",
       "roles": {
         "student": true,
         "applicant": true,
@@ -3258,7 +3258,7 @@
     {
       "name": "Residence Halls \u0026 Housing Options",
       "hoverText": "UC Berkeley housing options",
-      "url": "http://reslife.berkeley.edu/",
+      "url": "https://reslife.berkeley.edu/",
       "roles": {
         "student": true,
         "applicant": true,
@@ -3277,7 +3277,7 @@
     {
       "name": "Residential Computing (Student Tech Services)",
       "hoverText": "Computer and network services for students living in campus housing",
-      "url": "http://studenttech.berkeley.edu/",
+      "url": "https://studenttech.berkeley.edu/",
       "roles": {
         "student": true,
         "applicant": true,
@@ -3338,7 +3338,7 @@
     {
       "name": "Safety",
       "hoverText": "Safety information and programs",
-      "url": "http://ucpd.berkeley.edu/campus-safety/major-campus-emergency",
+      "url": "https://ucpd.berkeley.edu/campus-safety/major-campus-emergency",
       "roles": {
         "student": true,
         "applicant": true,
@@ -3418,7 +3418,7 @@
     {
       "name": "Software Central",
       "hoverText": "Free software for Berkeley affiliates (ex. Adobe, Word, etc.)",
-      "url": "http://ist.berkeley.edu/software-central/",
+      "url": "https://technology.berkeley.edu/software-central/",
       "roles": {
         "student": false,
         "applicant": false,
@@ -3437,7 +3437,7 @@
     {
       "name": "Staff Ombuds Office",
       "hoverText": "An independent department that provides staff with strictly confidential and informal conflict resolution and problem-solving services",
-      "url": "http://staffombuds.berkeley.edu/ ",
+      "url": "https://staffombuds.berkeley.edu/",
       "roles": {
         "student": false,
         "applicant": false,
@@ -3688,7 +3688,7 @@
     {
       "name": "The Berkeley Blog",
       "hoverText": "Issues that are being discussed by members of Berkeley's academic community ",
-      "url": "http://blogs.berkeley.edu",
+      "url": "https://blogs.berkeley.edu",
       "roles": {
         "student": true,
         "applicant": true,
@@ -3726,7 +3726,7 @@
     {
       "name": "The Daily Californian (The DailyCal)",
       "hoverText": "Independent student newspaper",
-      "url": "http://www.dailycal.org/",
+      "url": "https://www.dailycal.org/",
       "roles": {
         "student": true,
         "applicant": true,
@@ -3802,7 +3802,7 @@
     {
       "name": "Travel \u0026 Entertainment",
       "hoverText": "Travel services including airfare and Berkeley's Direct Bill ID system",
-      "url": "http://travel.berkeley.edu/book-trip",
+      "url": "https://travel.berkeley.edu/book-trip",
       "roles": {
         "student": false,
         "applicant": false,
@@ -3821,7 +3821,7 @@
     {
       "name": "Tuition and Fees",
       "hoverText": "Estimated fee schedule",
-      "url": "http://registrar.berkeley.edu/Registration/feesched.html",
+      "url": "https://registrar.berkeley.edu/tuition-fees-residency/tuition-fees/fee-schedule",
       "roles": {
         "student": true,
         "applicant": true,
@@ -3963,7 +3963,7 @@
       "name": "Berkeley SHIP",
       "hoverText": "UC Student Health Insurance Plan",
       "description": "(Student Health Insurance Plan)",
-      "url": "http://www.uhs.berkeley.edu/students/insurance/",
+      "url": "https://uhs.berkeley.edu/ship",
       "roles": {
         "student": true,
         "applicant": true,
@@ -4001,7 +4001,7 @@
     {
       "name": "Undocumented Students Program",
       "hoverText": "Personalized services for undocumented undergraduates",
-      "url": "http://undocu.berkeley.edu/",
+      "url": "https://undocu.berkeley.edu/",
       "roles": {
         "student": true,
         "applicant": true,
@@ -4058,7 +4058,7 @@
     {
       "name": "Withdrawing or Canceling?",
       "hoverText": "Learn more about what you need to do if you are planning to cancel, withdraw and readmit to UC Berkeley",
-      "url": "http://studentcentral.berkeley.edu/withdraw",
+      "url": "https://studentcentral.berkeley.edu/withdraw",
       "roles": {
         "student": true,
         "applicant": true,
@@ -4077,7 +4077,7 @@
     {
       "name": "Work-Study",
       "hoverText": "A program that can help you lower your federal loan debt amount through work-study eligible jobs on campus",
-      "url": "http://financialaid.berkeley.edu/work-study",
+      "url": "https://financialaid.berkeley.edu/work-study",
       "roles": {
         "student": true,
         "applicant": true,
