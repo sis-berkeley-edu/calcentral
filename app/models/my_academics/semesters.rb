@@ -272,7 +272,6 @@ module MyAcademics
       end
       {
         lawUnits: law_enrollment.try(:[], 'units_taken_law'),
-        requirementsDesignation: law_enrollment.try(:[], 'rqmnt_desg_descr')
       }
     end
 

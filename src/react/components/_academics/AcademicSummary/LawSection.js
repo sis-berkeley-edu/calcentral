@@ -11,7 +11,7 @@ const LawSection = ({
   lawUnits,
   grading,
   units,
-  canViewGrades
+  canViewGrades,
 }) => {
   const formattedlawUnits = lawUnits || '0.0';
   return (
@@ -20,25 +20,19 @@ const LawSection = ({
         <td>
           <a href={klass.url}>
             {klass.course_code}&nbsp;
-            {sectionLabel &&
-              <Fragment>
-                {sectionLabel}&nbsp;
-              </Fragment>
-            }
-            {klass.session_code &&
-              <Fragment>
-                (Session {klass.session_code})
-              </Fragment>
-            }
+            {sectionLabel && <Fragment>{sectionLabel}&nbsp;</Fragment>}
+            {klass.session_code && (
+              <Fragment>(Session {klass.session_code})</Fragment>
+            )}
           </a>
         </td>
         <td>
           {klass.title}&nbsp;
-          {requirementsDesignation &&
+          {requirementsDesignation && (
             <div className="cc-requirements-designation">
               {requirementsDesignation}
             </div>
-          }
+          )}
         </td>
         <td className="cc-text-right cc-academic-summary-table-units">
           <ValueOrDash value={units} />
@@ -47,16 +41,15 @@ const LawSection = ({
           <ValueOrDash value={formattedlawUnits} />
         </td>
         <td>
-          {canViewGrades && grading &&
-            <ValueOrDash value={grading.grade} />
-          }
+          {canViewGrades && grading && <ValueOrDash value={grading.grade} />}
         </td>
         <td></td>
       </tr>
       <SectionIncompleteGradingStatus
         gradingLapseDeadlineDisplay={grading.gradingLapseDeadlineDisplay}
         gradingLapseDeadline={grading.gradingLapseDeadline}
-        gradingBasis={grading.gradingBasis}/>
+        gradingBasis={grading.gradingBasis}
+      />
     </Fragment>
   );
 };
@@ -65,10 +58,10 @@ LawSection.propTypes = {
   canViewGrades: PropTypes.bool,
   showPoints: PropTypes.bool,
   requirementsDesignation: PropTypes.string,
-  units: PropTypes.string,
-  lawUnits: PropTypes.string,
+  units: PropTypes.number,
+  lawUnits: PropTypes.number,
   grading: PropTypes.object,
-  sectionLabel: PropTypes.string
+  sectionLabel: PropTypes.string,
 };
 
 export default LawSection;
