@@ -1,29 +1,23 @@
 class GoogleAuthController < ApplicationController
+  before_action :check_google_access
+  before_action :authenticate
 
-  before_filter :check_google_access
-  before_filter :authenticate
-  respond_to :json
-
-  def refresh_tokens
-    url = google.refresh_oauth2_tokens_url params
-    redirect_to url
+  def request_authorization
+    return_url = refresh_params[:return_url] || url_for_path('/')
+    url = google_authorization.refresh_authorization_url(refresh_params, return_url)
+    if url.present?
+      redirect_to url
+    else
+      redirect_to '/'
+    end
   end
 
   def handle_callback
-    google.process_callback(params, opts)
-    final_redirect = params['state']
-    url = final_redirect ? Base64.decode64(final_redirect) : url_for_path('/')
-    redirect_to url
-  end
-
-  def current_scope
-    render json: {
-      currentScope: google.scope_granted
-    }
+    redirect_to google_authorization.process_callback
   end
 
   def remove_authorization
-    google.remove_user_authorization
+    google_authorization.remove_user_authorization
     render nothing: true, status: 204
   end
 
@@ -40,8 +34,12 @@ class GoogleAuthController < ApplicationController
 
   private
 
-  def google
-    @google ||= GoogleApps::Oauth2TokensGrant.new(user_id, client_redirect_uri)
+  def refresh_params
+    params.permit(:return_url)
+  end
+
+  def google_authorization
+    @google_apps_auth ||= GoogleApps::Auth::Authorization.new(user_id, request, client_redirect_uri)
   end
 
   def user_id

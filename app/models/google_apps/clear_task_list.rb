@@ -1,5 +1,6 @@
 module GoogleApps
-  class ClearTaskList < Tasks
+  class ClearTaskList < Proxy
+    require 'google/apis/tasks_v1'
 
     def mock_request
       super.merge(method: :post,
@@ -14,21 +15,13 @@ module GoogleApps
       '{}'
     end
 
-    def clear_task_list(task_list_id)
-      proxy_response = request(
-        api: 'tasks',
-        api_version: 'v1',
-        resource: 'tasks',
-        method: 'clear',
-        params: {tasklist: task_list_id}
+    def clear_task_list(task_list_id = nil, opts={})
+      task_list_id ||= '@default'
+      request(
+        service_class: Google::Apis::TasksV1::TasksService,
+        method_name: 'clear_task',
+        method_args: [task_list_id, opts],
       ).first
-      # According to the API, empty response body == successful
-      response_state = proxy_response && proxy_response.data.blank? && proxy_response.response.status == 204
-      response_state ||= false
-      if !response_state
-        Rails.logger.warn "#{self.class.name} failed to clear task list: #{proxy_response}"
-      end
-      response_state
     end
 
   end

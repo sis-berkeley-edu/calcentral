@@ -1,5 +1,6 @@
 module GoogleApps
-  class DeleteTask < Tasks
+  class DeleteTask < Proxy
+    require 'google/apis/tasks_v1'
 
     def mock_request
       super.merge(method: :delete,
@@ -14,20 +15,13 @@ module GoogleApps
       '{}'
     end
 
-    def delete_task(task_list_id, task_id)
+    def delete_task(task_id, opts={})
+      opts.reverse_merge!(:task_list_id => '@default')
       proxy_response = request(
-        api: 'tasks',
-        api_version: 'v1',
-        resource: 'tasks',
-        method: 'delete',
-        params: {tasklist: task_list_id, task: task_id}
+        service_class: Google::Apis::TasksV1::TasksService,
+        method_name: 'delete_task',
+        method_args: [opts[:task_list_id], task_id],
       ).first
-      response_state = proxy_response && proxy_response.data.blank? && proxy_response.response.status == 204
-      response_state ||= false
-      if !response_state
-        Rails.logger.warn "#{self.class.name} failed to clear tasklist: #{proxy_response}"
-      end
-      response_state
     end
 
   end

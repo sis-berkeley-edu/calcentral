@@ -22,9 +22,8 @@ Calcentral::Application.routes.draw do
   get '/api/smoke_test_routes' => 'routes_list#smoke_test_routes', :as => :all_routes, :defaults => { :format => 'json' }
 
   # Oauth endpoints: Google
-  get '/api/google/request_authorization'=> 'google_auth#refresh_tokens'
+  get '/api/google/request_authorization'=> 'google_auth#request_authorization'
   get '/api/google/handle_callback' => 'google_auth#handle_callback'
-  get '/api/google/current_scope' => 'google_auth#current_scope'
   post '/api/google/remove_authorization' => 'google_auth#remove_authorization'
   post '/api/google/dismiss_reminder' => 'google_auth#dismiss_reminder', :defaults => { :format => 'json'}
 
@@ -144,7 +143,6 @@ Calcentral::Application.routes.draw do
   get '/campus/:campus_course_id/photo/:person_id' => 'campus_rosters#photo', :defaults => { :format => 'jpeg' }, :action => 'show'
 
   # Google API writing endpoints
-  post '/api/my/event' => 'my_events#create', defaults: { format: 'json' }
   post '/api/my/tasks' => 'my_tasks#update_task', :as => :update_task, :defaults => { :format => 'json' }
   post '/api/my/tasks/create' => 'my_tasks#insert_task', :as => :insert_task, :defaults => { :format => 'json' }
   post '/api/my/tasks/clear_completed' => 'my_tasks#clear_completed_tasks', :as => :clear_completed_tasks, :defaults => { :format => 'json' }
