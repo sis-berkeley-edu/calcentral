@@ -6,11 +6,7 @@
 
     <div class="cc-widget-padding" data-ng-if="advisorLinks.degreePlannerLink.url">
       <h3>
-        <a data-cc-campus-solutions-link-directive="advisorLinks.degreePlannerLink"
-          data-cc-campus-solutions-link-directive-cc-page-name="currentPage.name"
-          data-cc-campus-solutions-link-directive-cc-page-url="currentPage.url"
-          data-cc-campus-solutions-link-directive-cc-cache="advisingAcademics"
-          data-ng-click="expireAcademicsCache()"
+        <a ng-href="{{advisorLinks.degreePlannerLink.url}}"
         >Update Degree Planner <i class="fa fa-arrow-right" aria-hidden="true"></i></a>
       </h3>
     </div>
