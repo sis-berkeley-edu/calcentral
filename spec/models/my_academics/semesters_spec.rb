@@ -816,18 +816,11 @@ describe MyAcademics::Semesters do
           expect(EdoOracle::Queries).to receive(:get_law_enrollment).and_return(law_enrollment)
           expect(result[:lawUnits]).to eq 5
         end
-        it 'returns requirements designation description' do
-          expect(EdoOracle::Queries).to receive(:get_law_enrollment).and_return(law_enrollment)
-          expect(result[:requirementsDesignation]).to eq 'requirements designation description'
-        end
       end
       context 'when user is not a law student' do
         let(:is_law_student) { false }
         it 'returns nil law units count' do
           expect(result[:lawUnits]).to eq nil
-        end
-        it 'returns nil requirements designation description' do
-          expect(result[:requirementsDesignation]).to eq nil
         end
       end
     end
@@ -836,10 +829,6 @@ describe MyAcademics::Semesters do
       it 'returns law units count' do
         expect(EdoOracle::Queries).to receive(:get_law_enrollment).and_return(law_enrollment)
         expect(result[:lawUnits]).to eq 5
-      end
-      it 'returns requirements designation description' do
-        expect(EdoOracle::Queries).to receive(:get_law_enrollment).and_return(law_enrollment)
-        expect(result[:requirementsDesignation]).to eq 'requirements designation description'
       end
     end
   end

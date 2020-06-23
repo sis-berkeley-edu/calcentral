@@ -3,6 +3,8 @@ module EdoOracle
     class Base < BaseProxy
       include Cache::UserCacheExpiry
 
+      attr_reader :uid
+
       def self.expire(id = nil)
         super(id)
         super("summary-#{id}")
@@ -185,42 +187,7 @@ module EdoOracle
       end
 
       def row_to_section_data(row, cross_listing_tracker=nil)
-        section_data = {
-          ccn: row['section_id'].to_s,
-          instruction_format: row['instruction_format'],
-          is_primary_section: to_boolean(row['primary']),
-          section_label: "#{row['instruction_format']} #{row['section_num']}",
-          section_number: row['section_num'],
-          topic_description: row['topic_description'],
-         }
-        if section_data[:is_primary_section]
-          # section_data[:units] = row['units_taken']
-          section_data[:start_date] = row['start_date'] if row['start_date']
-          section_data[:end_date] = row['end_date'] if row['end_date']
-          section_data[:session_id] = row['session_id'] if row['session_id']
-        else
-          section_data[:associated_primary_id] = row['primary_associated_section_id']
-        end
-
-        if row.include? 'enroll_status'
-          # Waitlist data relevant to students.
-          if row['enroll_status'] == 'W'
-            section_data[:waitlisted] = true
-            section_data[:waitlistPosition] = row['waitlist_position'].to_i
-            section_data[:enroll_limit] = row['enroll_limit'].to_i
-            section_data[:drop_class_if_enrl] = row['drop_class_if_enrl']
-            section_data[:last_enrl_dt_stmp] = row['last_enrl_dt_stmp']
-            section_data[:message_nbr] = row['message_nbr']
-            section_data[:error_message_txt] = row['error_message_txt']
-            section_data[:uc_reason_desc] = row['uc_reason_desc']
-            section_data[:uc_enrl_lastattmpt_date] = row['uc_enrl_lastattmpt_date']
-            section_data[:uc_enrl_lastattmpt_time] = row['uc_enrl_lastattmpt_time']
-          end
-        else
-          # Enrollment and waitlist data relevant to instructors.
-          section_data[:enroll_limit] = row['enroll_limit'].to_i
-          section_data[:waitlist_limit] = row['waitlist_limit'].to_i
-        end
+        section_data = ::EdoOracle::UserCourses::Section.new(user, row).as_json
 
         # Cross-listed primaries are tracked only when merging instructed sections.
         if cross_listing_tracker && section_data[:is_primary_section]
@@ -299,6 +266,11 @@ module EdoOracle
         [subject_area, class_subject_area, catalog_number]
       end
 
+      private
+
+      def user
+        @user ||= ::User::Current.new(uid)
+      end
     end
   end
 end
