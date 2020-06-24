@@ -20,7 +20,7 @@ const SemestersSummary = ({ semesters, totalUnits, totalLawUnits, hasStudentHist
 
   let summaryTotalLawUnits = totalLawUnits;
   let summaryTotalUnits = totalUnits;
-  if (hasLawJointDegree || hasLawRole) {
+  if (hasLawJointDegree) {
     summaryTotalLawUnits = totalLawUnits + totalPreviousCareerLawUnits;
     summaryTotalUnits = totalUnits + totalPreviousCareerCumUnits;
   }

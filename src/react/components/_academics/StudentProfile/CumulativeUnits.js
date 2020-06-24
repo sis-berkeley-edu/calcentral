@@ -16,6 +16,7 @@ const propTypes = {
   totalPreviousCareerCumUnits: PropTypes.number,
   totalPreviousCareerLawUnits: PropTypes.number,
   transferUnitsAccepted: PropTypes.number,
+  hasLawJointDegree: PropTypes.bool,
 };
 
 const CumulativeUnits = ({
@@ -28,13 +29,14 @@ const CumulativeUnits = ({
   totalPreviousCareerCumUnits,
   totalPreviousCareerLawUnits,
   transferUnitsAccepted,
+  hasLawJointDegree,
 }) => {
   if (!isCurrentSummerVisitor && (totalUnits > 0 || totalLawUnits > 0)) {
     let summaryTotalLawUnits = totalLawUnits;
     let summaryTotalUnits = totalUnits;
     let summaryTotalTransferUnits = totalTransferAndTestingUnits;
     let showPNP = true;
-    if (totalLawUnits > 0 || totalPreviousCareerLawUnits > 0) {
+    if (hasLawJointDegree && (totalLawUnits > 0 || totalPreviousCareerLawUnits > 0)) {
       summaryTotalLawUnits = totalLawUnits + totalPreviousCareerLawUnits;
       summaryTotalUnits = totalUnits + totalPreviousCareerCumUnits;
       summaryTotalTransferUnits =
@@ -86,7 +88,7 @@ CumulativeUnits.propTypes = propTypes;
 const mapStateToProps = ({ myAcademics, myStatus }) => {
   const {
     academicRoles: {
-      current: { summerVisitor: isCurrentSummerVisitor } = {},
+      current: { summerVisitor: isCurrentSummerVisitor, lawJointDegree: hasLawJointDegree, } = {},
     } = {},
   } = myStatus;
 
@@ -113,6 +115,7 @@ const mapStateToProps = ({ myAcademics, myStatus }) => {
     totalPreviousCareerCumUnits,
     totalPreviousCareerLawUnits,
     transferUnitsAccepted,
+    hasLawJointDegree,
   };
 };
 
