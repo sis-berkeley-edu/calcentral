@@ -1,8 +1,8 @@
 describe MyCommitteesController do
 
   let(:uid) {'12345'}
-  let(:student_id) {'12345' }
-  let(:member_id) {'12345' }
+  let(:student_id) {'12345'}
+  let(:member_id) {'1012345'}
 
   let(:photo_file) { {:data => '\xFF\xD8\xFF\xE0\x00\x10JFIF\x00\x01\x01'} }
 
