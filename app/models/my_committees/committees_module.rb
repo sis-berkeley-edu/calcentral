@@ -83,13 +83,12 @@ module MyCommittees::CommitteesModule
   def committee_member_photo_url (cs_committee_member)
     empl_id = cs_committee_member[:memberEmplid]
     return nil if is_non_berkeley_committee_member? empl_id
-    user_id = CalnetCrosswalk::ByCsId.new(user_id: empl_id).lookup_ldap_uid
+    user_id = cs_committee_member[:memberUid]
     "/api/my/committees/photo/member/#{user_id}"
   end
 
   def committee_student_photo_url (cs_committee)
-    empl_id = cs_committee[:studentEmplid]
-    user_id = CalnetCrosswalk::ByCsId.new(user_id: empl_id).lookup_ldap_uid
+    user_id = cs_committee[:studentUid]
     "/api/my/committees/photo/student/#{user_id}"
   end
 
