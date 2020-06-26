@@ -7,7 +7,8 @@ module DegreeProgress
     include Cache::UserCacheExpiry
     include RequirementsModule
 
-    LINK_ID = 'UC_CX_APR_RPT_FOR_STDNT'
+    APR_LINK_ID = 'UC_CX_APR_RPT_FOR_STDNT'
+    DEGREE_PLANNER_LINK_ID = 'UC_AA_DEGREE_PLANNER'
 
     def get_feed_internal
       return {} unless is_feature_enabled?
@@ -18,14 +19,16 @@ module DegreeProgress
         response[:feed] = {
           degree_progress: process(response)
         }
-        add_links response
+
+        response[:feed][:links] = links
       end
       HashConverter.camelize response
     end
 
-    def add_links(response)
-      if should_see_links?
-        response[:feed][:links] = get_links
+    def links
+      Hash.new.tap do |hash|
+        hash[:academic_progress_report] = (fetch_link(APR_LINK_ID, { :EMPLID => student_empl_id } ) if should_see_apr_links?)
+        hash[:degree_planner] = fetch_link(DEGREE_PLANNER_LINK_ID)
       end
     end
 
@@ -42,7 +45,7 @@ module DegreeProgress
       end.uniq.compact
     end
 
-    def should_see_links?
+    def should_see_apr_links?
       incomplete_programs_roles = get_incomplete_programs_roles
       authorized_program_roles = [
         'UCLS',

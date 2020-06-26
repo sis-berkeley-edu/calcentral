@@ -24,43 +24,6 @@
         data-cc-campus-solutions-link-directive-cc-page-url="currentPage.url"
       >academic plan</a>
     </div>
-
-    <div data-ng-if="enrollmentInstruction.updatePlannerLink && enrollmentInstruction.academicPlanner.classes.length">
-      <div class="cc-flex cc-flex-space-between">
-        <div>
-          <strong>Current Academic Plan for <span data-ng-bind="enrollmentInstruction.termDescr"></span></strong>
-        </div>
-        <div>
-          <a
-            data-cc-campus-solutions-link-directive
-            data-cc-campus-solutions-link-directive-name="enrollmentInstruction.updatePlannerLink.name"
-            data-cc-campus-solutions-link-directive-url="enrollmentInstruction.updatePlannerLink.url"
-            data-cc-campus-solutions-link-directive-uc-from="true"
-            data-cc-campus-solutions-link-directive-uc-from-link="true"
-            data-cc-campus-solutions-link-directive-uc-from-text="true"
-            data-cc-campus-solutions-link-directive-cc-page-name="currentPage.name"
-            data-cc-campus-solutions-link-directive-cc-page-url="currentPage.url"
-          >Update</a>
-        </div>
-      </div>
-
-      <div class="cc-table cc-enrollment-card-margin-top">
-        <table>
-          <thead>
-            <th scope="col">Class</th>
-            <th scope="col">Title</th>
-            <th scope="col" class="cc-table-right">Units</th>
-          </thead>
-          <tbody>
-            <tr data-ng-repeat="class in enrollmentInstruction.academicPlanner.classes">
-              <td data-ng-bind="class.subjectCatalog"></td>
-              <td data-ng-bind="class.title"></td>
-              <td data-ng-bind="class.units" class="cc-table-right"></td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
   </div>
 
   <div

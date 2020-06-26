@@ -35,6 +35,7 @@ angular.module('calcentral.controllers').controller('AdvisingResourcesController
         'ucAdvisingAssignments',
         'ucArchivedTranscripts',
         'ucChangeCourseLoad',
+        'ucDegreePlanner',
         'ucMilestones',
         'ucMultiYearAcademicPlannerGeneric',
         'ucServiceIndicators',

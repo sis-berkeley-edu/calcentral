@@ -4,15 +4,18 @@
   </div>
   <div data-cc-spinner-directive="planSemestersInfo.isLoading">
 
-    <div class="cc-widget-padding" data-ng-if="advisorLinks.updatePlanUrl.url">
+    <div class="cc-widget-padding" data-ng-if="advisorLinks.degreePlannerLink.url">
       <h3>
-        <a data-cc-campus-solutions-link-directive="advisorLinks.updatePlanUrl"
+        <a data-cc-campus-solutions-link-directive="advisorLinks.degreePlannerLink"
           data-cc-campus-solutions-link-directive-cc-page-name="currentPage.name"
           data-cc-campus-solutions-link-directive-cc-page-url="currentPage.url"
           data-cc-campus-solutions-link-directive-cc-cache="advisingAcademics"
           data-ng-click="expireAcademicsCache()"
-        >Update Multi-Year Planner</a>
+        >Update Degree Planner <i class="fa fa-arrow-right" aria-hidden="true"></i></a>
       </h3>
+    </div>
+    <div class="cc-widget-padding" data-ng-if="!advisorLinks.degreePlannerLink.url">
+      <div><i class="fa fa-exclamation-triangle cc-icon-gold" aria-hidden="true"></i> There is a problem reaching Degree Planner. Please try again soon.</div>
     </div>
 
     <div class="cc-academic-plan-card-oldest-terms-note" data-ng-if="api.user.profile.features.hubTermApi">
@@ -27,6 +30,7 @@
           class="cc-widget-list-hover cc-table"
           data-ng-class="{'cc-widget-list-hover-opened':(semester.show)}"
           data-cc-accessible-focus-directive
+          data-ng-if="semester.hasEnrolledClasses || semester.hasWithdrawalData || semester.hasStudyProgData"
           data-ng-click="api.widget.toggleShow($event,  null, semester, 'Student Overview - Academic Plan')">
             <h3 class="cc-left">
               <span data-ng-bind="semester.name"></span> <span data-ng-bind="semester.notation" class="cc-text-red"></span>
@@ -39,7 +43,7 @@
                     <td></td>
                     <td>
                       <span data-ng-bind="semester.withdrawalStatus.withcnclTypeDescr"></span>
-                      <span data-ng-bind="semester.withdrawalStatus.withcnclFromDate"></span> (Reason:<span data-ng-bind="semester.withdrawalStatus.withcnclReasonDescr">)</span>
+                      <span data-ng-bind="semester.withdrawalStatus.withcnclFromDate"></span> (Reason: <span data-ng-bind="semester.withdrawalStatus.withcnclReasonDescr"></span>)
                     </td>
                   </tr>
                   <tr data-ng-if="!semester.show && semester.hasStandingData && semester.standing.acadStandingStatus !== 'GST'">
@@ -62,38 +66,8 @@
               </table>
             </div>
             <div data-ng-show="semester.show">
-              <div class="cc-widget-text" data-ng-if="!semester.plannedClasses.length && !semester.hasEnrolledClasses && !semester.hasWithdrawalData && !semester.hasStudyProgData">
-                No Plan Provided
-                <span data-ng-bind="semester.name"></span>.
-              </div>
               <div class="cc-widget-text" data-ng-if="semester.hasStudyProgData">
                 <span data-ng-bind="semester.studyProg.studyprogTypeDescr"></span>
-              </div>
-              <div data-ng-if="semester.plannedClasses.length">
-                <table>
-                  <thead>
-                    <tr>
-                      <th width="70%" scope="col">Planned</th>
-                      <th class="cc-table-right cc-academic-plan-card-units" width="15%" scope="col" title="Units">Units</th>
-                      <th width="15%" scope="col"></th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr data-ng-repeat="class in semester.plannedClasses">
-                      <td data-ng-bind-template="{{class.subjectArea.code}} {{class.catalogNumber.formatted}}"></td>
-                      <td class="cc-table-right cc-academic-plan-card-units" data-ng-bind="class.units | number:1"></td>
-                      <td></td>
-                    </tr>
-                  </tbody>
-                </table>
-                <table>
-                  <tr>
-                      <td class="cc-table-right" width="70%" scope="col">Total Units: </td>
-                      <td class="cc-table-right cc-academic-plan-card-units" width="15%" scope="col"><strong><span data-ng-bind="semester.plannedUnits | number:1"></span></strong></td>
-                      <td width="15%" scope="col"></td>
-                  </tr>
-                </table>
-                <br>
               </div>
               <div data-ng-if="semester.hasEnrolledClasses">
                 <table>
