@@ -44,7 +44,9 @@
                   </button>
                 </div>
                 <div>
-                  <i class="fa fa-user cc-icon-curious-blue cc-profile-view-link-left-margin"></i>
+                  <i
+                    class="fa fa-user cc-icon-curious-blue cc-profile-view-link-left-margin"
+                  ></i>
                   <a
                     class="cc-profile-view-link-indent cc-profile-view-link-left-margin"
                     data-ng-href="https://boa.berkeley.edu/student/{{targetUser.ldapUid}}"
@@ -211,6 +213,15 @@
                 >
                   <a
                     data-cc-campus-solutions-link-directive="ucAdvisingResources.links.studentManageMilestones"
+                    data-cc-campus-solutions-link-directive-cc-page-name="currentPage.name"
+                    data-cc-campus-solutions-link-directive-cc-page-url="currentPage.url"
+                  ></a>
+                </div>
+                <div
+                  data-ng-if="ucAdvisingResources.links.studentDegreePlanner.url"
+                >
+                  <a
+                    data-cc-campus-solutions-link-directive="ucAdvisingResources.links.studentDegreePlanner"
                     data-cc-campus-solutions-link-directive-cc-page-name="currentPage.name"
                     data-cc-campus-solutions-link-directive-cc-page-url="currentPage.url"
                   ></a>

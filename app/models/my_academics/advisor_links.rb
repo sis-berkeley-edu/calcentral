@@ -10,7 +10,7 @@ module MyAcademics
     def links
       {
         tcReportLink: LinkFetcher.fetch_link('UC_CX_XFER_CREDIT_REPORT_ADVSR', { :EMPLID => campus_solutions_id }),
-        updatePlanUrl: LinkFetcher.fetch_link('UC_CX_PLANNER_ADV_STDNT', {:EMPLID => campus_solutions_id}),
+        degreePlannerLink: LinkFetcher.fetch_link('UC_AA_DEGREE_PLANNER_STDNT', {:EMPLID => campus_solutions_id}),
       }
     end
 

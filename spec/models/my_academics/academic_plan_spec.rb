@@ -84,46 +84,29 @@ describe MyAcademics::AcademicPlan do
   context 'when grading returns statuses for a teaching semester' do
 
     it 'it should combine the planned and enrolled semesters sorted' do
-      expect(subject[:planSemesters].length).to eq 3
+      expect(subject[:planSemesters].length).to eq 2
       expect(subject[:planSemesters][0][:edoId]).to eq '2168'
-      expect(subject[:planSemesters][1][:edoId]).to eq '2172'
-      expect(subject[:planSemesters][2][:edoId]).to eq '2178'
+      expect(subject[:planSemesters][1][:edoId]).to eq '2178'
     end
 
     it 'it should parse enrolled semesters correctly' do
       expect(subject[:planSemesters][0][:enrolledClasses].length).to eq 1
-      expect(subject[:planSemesters][1][:enrolledClasses]).to be_nil
-      expect(subject[:planSemesters][2][:enrolledClasses].length).to eq 2
-    end
-
-    it 'it should parse planned semesters correctly' do
-      expect(subject[:planSemesters][0][:plannedClasses].length).to eq 1
-      expect(subject[:planSemesters][1][:plannedClasses].length).to eq 2
-      expect(subject[:planSemesters][2][:plannedClasses].length).to eq 0
+      expect(subject[:planSemesters][1][:enrolledClasses].length).to eq 2
     end
 
     it 'it should parse hasWaitlisted flag correctly' do
       expect(subject[:planSemesters][0][:hasWaitlisted]).to eq false
-      expect(subject[:planSemesters][1][:hasWaitlisted]).to eq false
-      expect(subject[:planSemesters][2][:hasWaitlisted]).to eq true
-    end
-
-    it 'it should calc plannedUnits correctly' do
-      expect(subject[:planSemesters][0][:plannedUnits]).to eq '3.0'
-      expect(subject[:planSemesters][1][:plannedUnits]).to eq '7.0'
-      expect(subject[:planSemesters][2][:plannedUnits]).to eq '0.0'
+      expect(subject[:planSemesters][1][:hasWaitlisted]).to eq true
     end
 
     it 'it should calc enrolledUnits correctly' do
       expect(subject[:planSemesters][0][:enrolledUnits]).to eq '3.0'
-      expect(subject[:planSemesters][1][:enrolledUnits]).to eq '0.0'
-      expect(subject[:planSemesters][2][:enrolledUnits]).to eq '5.0'
+      expect(subject[:planSemesters][1][:enrolledUnits]).to eq '5.0'
     end
 
     it 'it should calc waitlistedunits correctly' do
       expect(subject[:planSemesters][0][:waitlistedUnits]).to eq '0.0'
-      expect(subject[:planSemesters][1][:waitlistedUnits]).to eq '0.0'
-      expect(subject[:planSemesters][2][:waitlistedUnits]).to eq '4.0'
+      expect(subject[:planSemesters][1][:waitlistedUnits]).to eq '4.0'
     end
 
   end

@@ -12,8 +12,8 @@ describe MyAcademics::AdvisorLinks do
   let(:updatePlanLink) do
     {
       link: {
-        name: 'Update Multi-Year Planner',
-        url: "https://bcswebqat.is.berkeley.edu/psp/bcsqat/EMPLOYEE/HRMS/c/SCI_PLNR_ADMIN.SCI_PLNR_FL.GBL?&EMPLID=#{user_cs_id}"
+        name: 'Update Degree Planner',
+        url: "https://bcswebqat.is.berkeley.edu/psp/bcsqat/EMPLOYEE/SA/c/H_DP_SP_ADVISOR.H_DP_SP_TRANSFER.GBL?&EMPLID=#{user_cs_id}"
       }
     }
   end
@@ -22,7 +22,7 @@ describe MyAcademics::AdvisorLinks do
   let(:cs_link_proxy) do
     fake_cs_link_proxy = double
     allow(fake_cs_link_proxy).to receive(:get_url).with('UC_CX_XFER_CREDIT_REPORT_ADVSR').and_return(tcReportLink)
-    allow(fake_cs_link_proxy).to receive(:get_url).with('UC_CX_PLANNER_ADV_STDNT').and_return(updatePlanLink)
+    allow(fake_cs_link_proxy).to receive(:get_url).with('UC_AA_DEGREE_PLANNER_STDNT').and_return(updatePlanLink)
     fake_cs_link_proxy
   end
   before do
@@ -39,8 +39,8 @@ describe MyAcademics::AdvisorLinks do
     expect(subject[:advisorLinks][:tcReportLink]).to be
     expect(subject[:advisorLinks][:tcReportLink][:name]).to eq 'Transfer Credit Report'
     expect(subject[:advisorLinks][:tcReportLink][:url]).to eq "https://bcswebqat.is.berkeley.edu/psp/bcsqat/EMPLOYEE/HRMS/c/SSR_ADVISEE_OVRD.CSU_DA_TRN_CDT.GBL?EMPLID=#{user_cs_id}"
-    expect(subject[:advisorLinks][:updatePlanUrl]).to be
-    expect(subject[:advisorLinks][:updatePlanUrl][:name]).to eq 'Update Multi-Year Planner'
-    expect(subject[:advisorLinks][:updatePlanUrl][:url]).to eq "https://bcswebqat.is.berkeley.edu/psp/bcsqat/EMPLOYEE/HRMS/c/SCI_PLNR_ADMIN.SCI_PLNR_FL.GBL?&EMPLID=#{user_cs_id}"
+    expect(subject[:advisorLinks][:degreePlannerLink]).to be
+    expect(subject[:advisorLinks][:degreePlannerLink][:name]).to eq 'Update Degree Planner'
+    expect(subject[:advisorLinks][:degreePlannerLink][:url]).to eq "https://bcswebqat.is.berkeley.edu/psp/bcsqat/EMPLOYEE/SA/c/H_DP_SP_ADVISOR.H_DP_SP_TRANSFER.GBL?&EMPLID=#{user_cs_id}"
   end
 end
