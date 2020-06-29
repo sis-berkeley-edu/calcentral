@@ -36,7 +36,10 @@ const COVIDEnrollmentNotice = ({ termId, enrollmentTerms }) => {
       <div className={styles.messageContainer}>
         {message.length > threshold ? (
           <>
-            <div dangerouslySetInnerHTML={{ __html: shownMessage }} />
+            <div
+              dangerouslySetInnerHTML={{ __html: shownMessage }}
+              aria-expanded={expanded}
+            />
             <button
               className="cc-button-link"
               onClick={() => setExpanded(!expanded)}
