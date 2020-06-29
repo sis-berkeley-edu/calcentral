@@ -41,6 +41,12 @@ module User
 
       private
 
+      delegate :semester_name, to: :term
+
+      def term
+        @term ||= ::User::Academics::Term.new(term_id)
+      end
+
       def term_plan
         term_plans.find_by_term_id_and_career_code(term_id, career_code)
       end
@@ -50,11 +56,11 @@ module User
       end
 
       def message_key
-        "covid_pnp_notice_#{career_code}_#{term_id}".to_sym
+        "enrollment_message_#{career_code}_#{semester_name.downcase}".to_sym
       end
 
       def career_code
-        acad_career
+        acad_career.downcase
       end
 
       def enrollment_instruction

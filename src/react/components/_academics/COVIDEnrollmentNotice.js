@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { react2angular } from 'react2angular';
@@ -14,24 +14,43 @@ const propTypes = {
 };
 
 const COVIDEnrollmentNotice = ({ termId, enrollmentTerms }) => {
+  const threshold = 140;
+  const [expanded, setExpanded] = useState(false);
   const enrollmentTerm = enrollmentTerms.find(et => et.termId === termId);
 
   if (enrollmentTerm.message === null) {
     return null;
   }
 
-  const message = enrollmentTerm.message.descrlong;
+  const message =
+    enrollmentTerm.message.descrlong || enrollmentTerm.message.messageText;
 
   if (message === null || message === '') {
     return null;
   }
 
+  const shownMessage = expanded ? message : message.substring(0, threshold);
+
   return (
     <div className={styles.COVIDEnrollmentNotice}>
-      <div
-        className={styles.messageContainer}
-        dangerouslySetInnerHTML={{ __html: message }}
-      />
+      <div className={styles.messageContainer}>
+        {message.length > threshold ? (
+          <>
+            <div
+              dangerouslySetInnerHTML={{ __html: shownMessage }}
+              aria-expanded={expanded}
+            />
+            <button
+              className="cc-button-link"
+              onClick={() => setExpanded(!expanded)}
+            >
+              {expanded ? 'Read less' : 'Read more'}
+            </button>
+          </>
+        ) : (
+          <div dangerouslySetInnerHTML={{ __html: message }} />
+        )}
+      </div>
     </div>
   );
 };

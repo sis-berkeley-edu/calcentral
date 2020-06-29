@@ -47,24 +47,60 @@ module CampusSolutions
         message_nbr: '102'
       },
 
-      covid_pnp_notice_ugrd_2202: {
+      # Undergrad Enrollment messages
+      enrollment_message_ugrd_fall: {
         message_set_nbr: '28000',
-        message_nbr: '221'
+         message_nbr: '230'
+      },
+      enrollment_message_ugrd_spring: {
+        message_set_nbr: '28000',
+        message_nbr: '231'
+      },
+      enrollment_message_ugrd_summer: {
+        message_set_nbr: '28000',
+        message_nbr: '232'
       },
 
-      covid_pnp_notice_ugrd_2205: {
+      # Grad Enrollment messages
+      enrollment_message_grad_fall: {
         message_set_nbr: '28000',
-        message_nbr: '223'
+        message_nbr: '233'
+      },
+      enrollment_message_grad_spring: {
+        message_set_nbr: '28000',
+        message_nbr: '234'
+      },
+      enrollment_message_grad_summer: {
+        message_set_nbr: '28000',
+        message_nbr: '235'
       },
 
-      covid_pnp_notice_grad_2202:{
+      # Law Enrollment messages
+      enrollment_message_law_fall: {
         message_set_nbr: '28000',
-        message_nbr: '222'
+          message_nbr: '236'
+      },
+      enrollment_message_law_spring: {
+        message_set_nbr: '28000',
+        message_nbr: '237'
+      },
+      enrollment_message_law_summer: {
+        message_set_nbr: '28000',
+        message_nbr: '238'
       },
 
-      covid_pnp_notice_grad_2205: {
+      # UCBX Enrollment messages
+      enrollment_message_ucbx_fall: {
         message_set_nbr: '28000',
-        message_nbr: '224'
+          message_nbr: '239'
+      },
+      enrollment_message_ucbx_spring: {
+        message_set_nbr: '28000',
+        message_nbr: '240'
+      },
+      enrollment_message_ucbx_summer: {
+        message_set_nbr: '28000',
+        message_nbr: '241'
       },
     }
 
