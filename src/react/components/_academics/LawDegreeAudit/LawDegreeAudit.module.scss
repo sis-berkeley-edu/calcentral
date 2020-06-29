@@ -1,0 +1,29 @@
+@import 'src/react/stylesheets/variables';
+
+.textContainer {
+  background-image: url('/assets/images/clipboard-list.svg');
+  background-repeat: no-repeat;
+  background-position-y: 2px;
+  padding-left: 20px;
+
+  h1 {
+    color: $cc-color-dim-gray;
+    font-size: 13px;
+    font-weight: bold;
+    line-height: 1.5;
+    margin: 0;
+  }
+
+  p {
+    line-height: 1.5;
+    margin-bottom: 10px;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+}
+
+.helpText {
+  font-size: 11px;
+}
