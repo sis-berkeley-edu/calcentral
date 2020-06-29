@@ -1,6 +1,12 @@
 module User
   module Academics
     class Term
+      TERM_CODES = {
+        "B" => "Spring",
+        "C" => "Summer",
+        "D" => "Fall"
+      }
+
       attr_reader :term_id
 
       def initialize(term_id)
@@ -11,7 +17,11 @@ module User
         Settings.terms.fake_now || DateTime.now
       end
 
-      delegate :to_english, to: :berkeley_term
+      def semester_name
+        TERM_CODES.fetch(code) { "" }
+      end
+
+      delegate :to_english, :code, to: :berkeley_term
 
       def summer?
         berkeley_term.is_summer
