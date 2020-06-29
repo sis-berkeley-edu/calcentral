@@ -6,7 +6,7 @@ import 'icons/changed-orange.svg';
 import 'icons/changed-white.svg';
 import 'icons/compare.svg';
 import 'icons/info.svg';
-import 'icons/report.svg';
+import 'icons/clipboard-list.svg';
 import shouldShowDecimals from './shouldShowDecimals';
 
 /**
