@@ -1,63 +1,81 @@
 import React, { useState, useEffect } from 'react';
+
 import { react2angular } from 'react2angular';
-import Widget from '../../Widget/Widget';
-import _ from 'lodash';
-import CampusSolutionsLinkContainer from '../../CampusSolutionsLink/CampusSolutionsLinkContainer';
-import PropTypes from 'prop-types';
+import Widget from 'react/components/Widget/Widget';
 
-const LawDegreeAudit = (props) => {
+import axios from 'axios';
 
+import 'icons/clipboard-list.svg';
+import ReduxProvider from 'react/components/ReduxProvider';
+import APILink from 'react/components/APILink';
+
+import styles from './LawDegreeAudit.module.scss';
+
+const LawDegreeAudit = () => {
   const [errored, setErrored] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [linkObj, setLinkObj] = useState({});
+  const [faqLink, setFaqLink] = useState({});
 
-  const widgetConfig =  {
+  const widgetConfig = {
     errored: errored,
-    errorMessage: "The Law Degree Audit is not available right now.",
+    errorMessage: 'The Law Degree Audit is not available right now.',
     isLoading: isLoading,
     padding: true,
     title: 'Law Degree Audit',
-    visible: true
+    visible: true,
   };
 
-  let fetchLawAuditLink = () => {
-    props.csLinkFactory.getLink({
-      urlId: 'UC_AA_LAW_DEGREE_AUDIT'
-    }).then(function(response) {
-      const linkObj = _.get(response, 'data.link');
-      linkObj.ccPageName = props.$route.current.pageName;
-      linkObj.ccPageUrl = props.$location.absUrl();
+  const fetchLinks = () => {
+    const auditLink = axios.get(
+      '/api/campus_solutions/link?urlId=UC_AA_LAW_DEGREE_AUDIT'
+    );
+    const faqLink = axios.get(
+      '/api/campus_solutions/link?urlId=UC_AA_LAW_DEGREE_AUDIT_FAQ'
+    );
 
-      setLinkObj(linkObj);
-      if (!linkObj) {
+    Promise.all([auditLink, faqLink])
+      .then(responses => {
+        setLinkObj(responses[0].data.link);
+        setFaqLink(responses[1].data.link);
+        setIsLoading(false);
+      })
+      .catch(_err => {
         setErrored(true);
-      }
-    }).catch(function() {
-      setErrored(true);
-      setIsLoading(false);
-    }).finally(function() {
-      setIsLoading(false);
-    });
+        setIsLoading(false);
+      });
   };
 
   useEffect(() => {
-    fetchLawAuditLink();
+    fetchLinks();
   }, []);
 
   return (
-    <Widget config={{...widgetConfig}}>
-      <p>The Law Degree Audit shows your progress in meeting degree requirements.</p>
-      { linkObj && <CampusSolutionsLinkContainer linkObj={linkObj} /> }
+    <Widget config={{ ...widgetConfig }}>
+      <div className={styles.textContainer}>
+        <h1>Law Degree Audit</h1>
+        <p className={styles.helpText}>
+          Review your progress in meeting degree requirements.
+        </p>
+
+        <p>
+          <APILink {...linkObj} />
+        </p>
+
+        <p>
+          Learn more at <APILink {...faqLink} />
+        </p>
+      </div>
     </Widget>
   );
-}
-
-LawDegreeAudit.propTypes = {
-  csLinkFactory: PropTypes.object.isRequired,
-  $location: PropTypes.object.isRequired,
-  $route:  PropTypes.object.isRequired
 };
 
-angular.module('calcentral.react').component('lawDegreeAudit', react2angular(LawDegreeAudit,  [], ['$route','$location','csLinkFactory']));
+const LawDegreeAuditContainer = () => (
+  <ReduxProvider>
+    <LawDegreeAudit />
+  </ReduxProvider>
+);
 
-
+angular
+  .module('calcentral.react')
+  .component('lawDegreeAudit', react2angular(LawDegreeAuditContainer));
