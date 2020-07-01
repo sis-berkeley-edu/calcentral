@@ -6,6 +6,7 @@ import 'icons/academicprogressreport.svg';
 import 'icons/calculator.svg';
 import 'icons/tools.svg';
 import 'icons/question-solid.svg';
+import 'icons/exclamation-circle-solid.svg';
 
 angular.module('calcentral.controllers').controller('UndergraduateDegreeProgressController', function(academicsService, degreeProgressFactory, apiService, $rootScope, $scope) {
   $scope.degreeProgress = {
@@ -33,7 +34,7 @@ angular.module('calcentral.controllers').controller('UndergraduateDegreeProgress
         $scope.degreeProgress.undergraduate.links = _.get(response, 'data.feed.links');
         $scope.degreeProgress.undergraduate.aprLinkEnabled = _.get(response, 'data.feed.aprLinkEnabled');
         $scope.degreeProgress.undergraduate.errored = _.get(response, 'data.errored');
-        $scope.degreeProgress.undergraduate.showCard = apiService.user.profile.features.csDegreeProgressUgrdStudent && apiService.user.profile.roles.undergrad && !academicsService.isNonDegreeSeekingSummerVisitor(apiService.user.profile.academicRoles);
+        $scope.degreeProgress.undergraduate.showCard = apiService.user.profile.features.csDegreeProgressUgrdStudent && apiService.user.profile.roles.undergrad && apiService.user.profile.academicRoles.historical.degreeSeeking;
         $scope.degreeProgress.undergraduate.showTip = showTip;
       }
     );
