@@ -1,11 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { format } from 'date-fns';
+import { format, utcToZonedTime } from 'date-fns-tz';
 
 const TimeCell = ({ time }) => {
   if (time) {
-    const formattedDate = format(time, 'MMM d');
-    const formattedTime = format(time, 'h:mma');
+    const zonedTime = utcToZonedTime(time, 'America/Los_Angeles');
+    const formattedDate = format(zonedTime, 'MMM d');
+    const formattedTime = format(zonedTime, 'h:mma');
 
     return (
       <div
