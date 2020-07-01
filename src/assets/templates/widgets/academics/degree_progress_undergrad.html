@@ -53,7 +53,7 @@
           </li>
         </ul>
 
-        <div class="cc-degree-progress-footer">If this information is out of date, please contact your advisor.</div>
+        <div class="cc-degree-progress-footer" data-ng-if="!api.user.profile.roles.advisor">If this information is out of date, please contact your advisor.</div>
 
         <div data-ng-if="degreeProgress.undergraduate.transferCreditReviewDeadline" class="cc-degree-progress-footer">
           <button data-ng-click="degreeProgress.undergraduate.showTip();" class="cc-button-link cc-text-line-height"><i class="cc-icon fa fa-info-circle cc-icon-air-force-blue"></i><span>What is "Under Review"?</span></button>
