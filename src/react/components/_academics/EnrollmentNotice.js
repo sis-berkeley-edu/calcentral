@@ -5,7 +5,7 @@ import { react2angular } from 'react2angular';
 
 import ReduxProvider from 'react/components/ReduxProvider';
 
-import styles from './COVIDEnrollmentNotice.module.scss';
+import styles from './EnrollmentNotice.module.scss';
 import 'icons/bullhorn-solid.svg';
 
 const propTypes = {
@@ -13,31 +13,41 @@ const propTypes = {
   enrollmentTerms: PropTypes.array,
 };
 
-const COVIDEnrollmentNotice = ({ termId, enrollmentTerms }) => {
-  const threshold = 140;
+function renderMessage(preview, more, expanded) {
+  if (expanded) {
+    return [preview, more].join('');
+  } else {
+    return preview;
+  }
+}
+
+const EnrollmentNotice = ({ termId, enrollmentTerms }) => {
+  // if found in the message <read-more>, the component will show everything
+  // before that message, and show a "Read more" button
+  const cutDelimiter = '<read-more>';
   const [expanded, setExpanded] = useState(false);
+  const [preview, more] = message.split(cutDelimiter);
   const enrollmentTerm = enrollmentTerms.find(et => et.termId === termId);
 
   if (enrollmentTerm.message === null) {
     return null;
   }
 
-  const message =
-    enrollmentTerm.message.descrlong || enrollmentTerm.message.messageText;
+  const message = enrollmentTerm.message.descrlong;
 
   if (message === null || message === '') {
     return null;
   }
 
-  const shownMessage = expanded ? message : message.substring(0, threshold);
-
   return (
     <div className={styles.COVIDEnrollmentNotice}>
       <div className={styles.messageContainer}>
-        {message.length > threshold ? (
+        {more ? (
           <>
             <div
-              dangerouslySetInnerHTML={{ __html: shownMessage }}
+              dangerouslySetInnerHTML={{
+                __html: renderMessage(preview, more, expanded),
+              }}
               aria-expanded={expanded}
             />
             <button
@@ -48,36 +58,31 @@ const COVIDEnrollmentNotice = ({ termId, enrollmentTerms }) => {
             </button>
           </>
         ) : (
-          <div dangerouslySetInnerHTML={{ __html: message }} />
+          <div dangerouslySetInnerHTML={{ __html: preview }} />
         )}
       </div>
     </div>
   );
 };
 
-COVIDEnrollmentNotice.propTypes = propTypes;
+EnrollmentNotice.propTypes = propTypes;
 
 const mapStateToProps = ({ myEnrollments: { enrollmentTerms = [] } = {} }) => {
   return { enrollmentTerms };
 };
 
-const ConnectedCOVIDEnrollmentNotice = connect(mapStateToProps)(
-  COVIDEnrollmentNotice
-);
+const ConnectedEnrollmentNotice = connect(mapStateToProps)(EnrollmentNotice);
 
-const COVIDEnrollmentNoticeContainer = ({ termId }) => (
+const EnrollmentNoticeContainer = ({ termId }) => (
   <ReduxProvider>
-    <ConnectedCOVIDEnrollmentNotice termId={termId} />
+    <ConnectedEnrollmentNotice termId={termId} />
   </ReduxProvider>
 );
 
-COVIDEnrollmentNoticeContainer.propTypes = {
+EnrollmentNoticeContainer.propTypes = {
   termId: PropTypes.string.isRequired,
 };
 
 angular
   .module('calcentral.react')
-  .component(
-    'covidEnrollmentNotice',
-    react2angular(COVIDEnrollmentNoticeContainer)
-  );
+  .component('enrollmentNotice', react2angular(EnrollmentNoticeContainer));
