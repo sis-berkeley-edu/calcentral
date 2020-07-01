@@ -14,8 +14,9 @@
     </div>
 
     <div class="cc-degree-progress-section cc-degree-progress-info-container" data-ng-if="!degreeProgress.undergraduate.errored && degreeProgress.undergraduate.transferCreditReviewDeadline">
-      <i class="cc-icon fa fa-exclamation-circle cc-icon-grey"></i>
-      Transfer course work for newly admitted students is currently under review. All eligible credit will be posted by the end of your first semester.
+      <div class="cc-degree-progress-info-message">
+        Transfer course work for newly admitted students is currently under review. All eligible credit will be posted by the end of your first semester.
+      </div>
     </div>
 
     <div class="cc-degree-progress-section" data-ng-if="!degreeProgress.undergraduate.errored && !degreeProgress.undergraduate.aprLinkEnabled">
@@ -51,7 +52,15 @@
             </div>
           </li>
         </ul>
+
+        <div class="cc-degree-progress-footer">If this information is out of date, please contact your advisor.</div>
+
+        <div data-ng-if="degreeProgress.undergraduate.transferCreditReviewDeadline" class="cc-degree-progress-footer">
+          <button data-ng-click="degreeProgress.undergraduate.showTip();" class="cc-button-link cc-text-line-height"><i class="cc-icon fa fa-info-circle cc-icon-air-force-blue"></i><span>What is "Under Review"?</span></button>
+          <p data-ng-show="degreeProgress.undergraduate.tipVisible">Coursework is being reviewed for all new students. Review will finish by mid&hyphen;<span data-ng-bind="degreeProgress.undergraduate.transferCreditReviewDeadline"></span>.</p>
+        </div>
       </div>
+
     </div>
     <degree-progress-links
       apr-link="degreeProgress.undergraduate.links.academicProgressReport"
