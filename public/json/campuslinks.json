@@ -835,7 +835,7 @@
     {
       "name": "BearWALK Night safety services",
       "hoverText": "Free safety night walks to and from a desired location with a Community Service Officer",
-      "url": "http://ucpd.berkeley.edu/campus-safety/night-safety-tips",
+      "url": "https://ucpd.berkeley.edu/campus-safety/night-safety-tips",
       "roles": {
         "student": true,
         "applicant": true,
@@ -1432,7 +1432,7 @@
     {
       "name": "Cal Rentals",
       "hoverText": "Listings of housing opportunities for the Berkeley community",
-      "url": "http://calrentals.housing.berkeley.edu/",
+      "url": "https://calrentals.housing.berkeley.edu/",
       "roles": {
         "student": true,
         "applicant": true,
@@ -2622,7 +2622,7 @@
     {
       "name": "KALX",
       "hoverText": "90.7 MHz. Berkeley's campus radio station",
-      "url": "https://kalx.berkeley.edu/",
+      "url": "https://www.kalx.berkeley.edu/",
       "roles": {
         "student": true,
         "applicant": true,
@@ -2763,7 +2763,7 @@
     {
       "name": "Loan Repayment Calculator",
       "hoverText": "Estimate the repayment costs of federal student loans",
-      "url": "https://studentloans.gov/myDirectLoan/whatYouNeed.action?page=repayEst",
+      "url": "https://studentaid.gov/help-center?page=repayEst",
       "roles": {
         "student": true,
         "applicant": true,
