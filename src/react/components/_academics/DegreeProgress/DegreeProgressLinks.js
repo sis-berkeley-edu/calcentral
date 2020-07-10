@@ -45,7 +45,7 @@ const DegreeProgressLinks = ({
             </div>
           )}
           <div className="linkSubText">
-            <APILink {...aprLink} />
+            <APILink gaSection="Degree Progress" {...aprLink} />
           </div>
         </div>
       )}
@@ -75,7 +75,7 @@ const DegreeProgressLinks = ({
             </div>
           )}
           <div className="linkSubText">
-            <APILink {...aprWhatIfLink} />
+            <APILink gaSection="Degree Progress" {...aprWhatIfLink} />
           </div>
         </div>
       )}
