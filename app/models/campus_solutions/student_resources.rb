@@ -33,7 +33,7 @@ module CampusSolutions
         { feed_key: :update_pending_forms, cs_link_key: 'UC_CX_GT_STUDENT_UPDATE' },
         { feed_key: :veterans_benefits_add, cs_link_key: 'UC_CX_GT_SRVAONCE_ADD' },
         { feed_key: :view_submitted_forms, cs_link_key: 'UC_CX_GT_STUDENT_VIEW'},
-        { feed_key: :withdraw_from_semester_add, cs_link_key: 'UC_CX_SRWITHDRL_ADD' },
+        { feed_key: :withdraw_from_semester_add, cs_link_key: 'UC_CX_GT_SRWITHDRL_ADD' },
         { feed_key: :dissertation_signature, cs_link_key: 'UC_CX_GT_GRADDISSIG_ADD' },
         { feed_key: :expected_grad_term_add, cs_link_key: 'UC_CX_GT_GRADEGT_ADD' },
         { feed_key: :veterans_benefits_renew_add, cs_link_key: 'UC_CX_GT_VBRENEWAL_ADD' },
