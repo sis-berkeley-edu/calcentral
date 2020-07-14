@@ -5,6 +5,10 @@
  * The analyticsService initializes Google Analytics and sends the page view
  * event with each AngularJS routed page change. Thus this class expects
  * 'window.ga' to be present already.
+ *
+ * Please refer to https://wikihub.berkeley.edu/display/SIS/CalCentral+Google+Analytics+Implementation
+ * for guidance on the event category or actions to use.
+ *
  * @param {String} applicationLayer Rails application mode (e.g. 'production', 'development')
  */
 export class googleAnalytics {
@@ -37,10 +41,10 @@ export class googleAnalytics {
    * @param {String} url The URL you're accessing
    * @return {undefined}
    */
-  trackExternalLink(section, website, url) {
+  trackExternalLink(section, website) {
     this.sendEvent(
       'External link',
-      url,
+      'Click',
       'section: ' + section + ' - website: ' + website
     );
   }

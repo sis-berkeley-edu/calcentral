@@ -106,7 +106,7 @@
       <div class="cc-clearfix">
         <a class="cc-button cc-widget-tasks-button"
         data-ng-if="task.linkDescription && task.linkUrl"
-        data-ng-click="api.util.preventBubble($event);api.analytics.trackExternalLink('Tasks', task.emitter, task.linkUrl)"
+        data-ng-click="api.util.preventBubble($event);api.analytics.trackExternalLink('Tasks', task.emitter)"
         data-ng-href="{{task.linkUrl}}">
           <span data-ng-bind="task.linkDescription">
           <span class="cc-visuallyhidden" data-ng-bind-template="- {{ task.title }}"></span>
@@ -117,7 +117,7 @@
           class="cc-widget-tasks-upload"
         >
           <a class="cc-button"
-            data-ng-click="api.util.preventBubble($event);api.analytics.trackExternalLink('Tasks', 'Upload CS Document', task.uploadUrl)"
+            data-ng-click="api.util.preventBubble($event);api.analytics.trackExternalLink('Tasks', 'Upload CS Document')"
             data-cc-campus-solutions-link-directive
             data-cc-campus-solutions-link-directive-url="task.uploadUrl"
             data-cc-campus-solutions-link-directive-uc-from="true"

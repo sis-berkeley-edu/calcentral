@@ -19,6 +19,7 @@ angular.module('calcentral.controllers').controller('UndergraduateDegreeProgress
   $scope.showPnpCalculator = function() {
     $scope.degreeProgress.undergraduate.showPnpCalculator = true;
     $rootScope.$broadcast('calcentral.custom.api.showPnpCalculator');
+    apiService.analytics.sendEvent('Content Expansion', 'Click', '⅓ Passed Grade Estimator');
   };
 
   var showTip = function() {
