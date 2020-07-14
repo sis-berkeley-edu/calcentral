@@ -79,7 +79,7 @@ module User
       end
 
       def expected_family_contribution(isir)
-        isir['primary_efc'].partition('$ ')[1].to_f
+        isir['primary_efc'].split('$ ').last.to_f
       rescue NoMethodError
         nil
       end
