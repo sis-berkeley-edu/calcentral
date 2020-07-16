@@ -25,15 +25,13 @@ module EdoOracle
                                       AND UC2.INSTITUTION = UC.INSTITUTION
                                       AND UC2.AID_YEAR    = UC.AID_YEAR
                                       AND UC2.STRM        = UC.STRM
-                                      AND UC2.EFFDT      <= TO_DATE('#{effective_date_string}', 'YYYY-MM-DD')
-                                      AND UC2.TERM_SRC IN ('A','P','T','M'))
+                                      AND UC2.EFFDT      <= TO_DATE('#{effective_date_string}', 'YYYY-MM-DD'))
              AND UC.EFFSEQ      = (SELECT MAX(UC3.EFFSEQ) FROM SYSADM.PS_UCC_FA_HOUSNGVW UC3
                                     WHERE UC3.EMPLID      = UC.EMPLID
                                       AND UC3.INSTITUTION = UC.INSTITUTION
                                       AND UC3.AID_YEAR    = UC.AID_YEAR
                                       AND UC3.STRM        = UC.STRM
                                       AND UC3.EFFDT       = UC.EFFDT)
-             AND UC.TERM_SRC IN ('A','P','T','M')
         ORDER BY TERM_ID
       SQL
       end
