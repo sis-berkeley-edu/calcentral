@@ -14,11 +14,12 @@ const Card = ({
   className,
   secondaryContent,
   node,
+  style,
 }) => {
   const classNames = ['Card', className].join(' ');
 
   return (
-    <div ref={node} className={classNames}>
+    <div ref={node} className={classNames} style={style}>
       <div className="Card__title">
         <h2 tabIndex="0">{title}</h2>
         {secondaryContent}
@@ -40,6 +41,7 @@ Card.propTypes = {
   secondaryContent: PropTypes.object,
   error: PropTypes.object,
   node: PropTypes.any,
+  style: PropTypes.object,
 };
 
 Card.displayName = 'Card';

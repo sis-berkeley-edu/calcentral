@@ -1,0 +1,13 @@
+@import 'src/react/stylesheets/variables';
+
+@mixin title2 {
+  font-size: 15px;
+  line-height: 17px;
+}
+
+.crossListings {
+  margin-bottom: 20px;
+}
+.title {
+  @include title2;
+}
