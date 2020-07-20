@@ -7,9 +7,9 @@ const mapStateToProps = ({
     enrollmentTerms = [],
   } = {},
 }) => {
-  return { enrollmentsLoaded, enrollmentTerms, messageKey: 'message' };
+  return { enrollmentsLoaded, enrollmentTerms, messageKey: 'classInfoMessage' };
 };
 
-const EnrollmentNotice = connect(mapStateToProps)(NoticeBox);
+const ClassInfoMessage = connect(mapStateToProps)(NoticeBox);
 
-export default EnrollmentNotice;
+export default ClassInfoMessage;

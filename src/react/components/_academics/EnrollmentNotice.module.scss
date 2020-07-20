@@ -12,11 +12,13 @@
 
   padding-left: 24px;
 
-  p {
-    margin-bottom: 10px;
-  }
+  div {
+    p {
+      margin-bottom: 10px;
+    }
 
-  > *:last-child {
-    margin-bottom: 0;
+    > *:last-child {
+      margin-bottom: 0;
+    }
   }
 }

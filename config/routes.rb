@@ -111,8 +111,6 @@ Calcentral::Application.routes.draw do
       scope '/financial_aid', module: 'financial_aid' do
         resources :award_comparison, only: [:index]
         get 'award_comparison/:aid_year/:effective_date' => 'award_comparison#show'
-
-
       end
 
       scope '/finances', module: 'finances' do

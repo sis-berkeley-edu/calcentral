@@ -1,0 +1,57 @@
+# Each of these keys in this file represents a pair of:
+#   1) Message set number
+#   2) Message number
+# from the Campus Solutions Message Catalog
+#
+# Loaded by app/modle/campus_solutions/message_catalog.rb
+#
+academic_standings_learn_more: [28000, 213]
+final_exams_term_begin: [32500, 110]
+financial_aid_gift_aid_more_info: [26400, 1]
+financial_aid_net_cost_more_info: [26400, 3]
+financial_aid_third_party_more_info: [26400, 2]
+financial_aid_award_comparison_card_info: [26400, 8]
+financial_aid_awards_card_info: [26500, 115]
+financial_aid_awards_card_info_est_disbursements: [26400, 5]
+financial_aid_awards_card_auth_failed: [26400, 6]
+financial_aid_housing_instruction_generic: [26500, 117]
+financial_aid_housing_instruction_fall_pathways: [26500, 116]
+financial_aid_housing_instruction_spring_pathways: [26500, 118]
+graduation_recommended: [28000, 212]
+graduation_required: [28000, 210]
+graduation_with_loans: [28000, 211]
+pnp_calculator_ratio: [32000, 17]
+waitlisted_units_warning: [28000, 216]
+status_not_officially_registered: [32500, 100]
+status_cnp_exception_before_disbursement: [32500, 101]
+status_cnp_exception_after_disbursement: [32500, 103]
+status_grad_or_law_not_enrolled: [32500, 106]
+status_grad_or_law_fees_unpaid: [32500, 102]
+
+# Enrollment messages
+enrollment_message_ugrd_fall: [28000, 230]
+enrollment_message_ugrd_spring: [28000, 231]
+enrollment_message_ugrd_summer: [28000, 232]
+enrollment_message_grad_fall: [28000, 233]
+enrollment_message_grad_spring: [28000, 234]
+enrollment_message_grad_summer: [28000, 235]
+enrollment_message_law_fall: [28000, 236]
+enrollment_message_law_spring: [28000, 237]
+enrollment_message_law_summer: [28000, 238]
+enrollment_message_ucbx_fall: [28000, 239]
+enrollment_message_ucbx_spring: [28000, 240]
+enrollment_message_ucbx_summer: [28000, 241]
+
+# Class information messages
+class_info_message_ugrd_fall: [28000, 242]
+class_info_message_ugrd_spring: [28000, 243]
+class_info_message_ugrd_summer: [28000, 244]
+class_info_message_grad_fall: [28000, 245]
+class_info_message_grad_spring: [28000, 246]
+class_info_message_grad_summer: [28000, 247]
+class_info_message_law_fall: [28000, 248]
+class_info_message_law_spring: [28000, 249]
+class_info_message_law_summer: [28000, 250]
+class_info_message_ubx_fall: [28000, 251]
+class_info_message_ubx_spring: [28000, 252]
+class_info_message_ubx_summer: [28000, 253]
