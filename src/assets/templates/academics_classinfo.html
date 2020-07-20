@@ -43,7 +43,9 @@
         <div class="cc-widget-title">
           <h2>Class Information</h2>
         </div>
-        <div class="cc-widget-padding">
+        <div class="cc-widget-padding" data-cc-spinner-directive="!enrollmentsLoaded">
+          <class-info-notice term-id="selectedCourse.term_id"></class-info-notice>
+
           <h3>Class Title</h3>
           <div data-ng-bind="selectedCourse.title"></div>
 

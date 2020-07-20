@@ -2,121 +2,18 @@ module CampusSolutions
   class MessageCatalog < GlobalCachedProxy
     include ClassLogger
 
-    # We want to keep an inventory of messages used by CalCentral here
-    CATALOG = {
-      academic_standings_learn_more: { message_set_nbr: '28000', message_nbr: '213' },
-      final_exams_term_begin: { message_set_nbr: '32500', message_nbr: '110' },
-      financial_aid_gift_aid_more_info: { message_set_nbr: '26400', message_nbr: '1' },
-      financial_aid_net_cost_more_info: { message_set_nbr: '26400', message_nbr: '3' },
-      financial_aid_third_party_more_info: { message_set_nbr: '26400', message_nbr: '2' },
-      financial_aid_award_comparison_card_info: { message_set_nbr: '26400', message_nbr: '8' },
-      financial_aid_awards_card_info: { message_set_nbr: '26500', message_nbr: '115' },
-      financial_aid_awards_card_info_est_disbursements: { message_set_nbr: '26400', message_nbr: '5'},
-      financial_aid_awards_card_auth_failed: { message_set_nbr: '26400', message_nbr: '6'},
-      financial_aid_housing_instruction_generic: { message_set_nbr: '26500', message_nbr: '117' },
-      financial_aid_housing_instruction_fall_pathways: { message_set_nbr: '26500', message_nbr: '116' },
-      financial_aid_housing_instruction_spring_pathways: { message_set_nbr: '26500', message_nbr: '118' },
-      graduation_recommended: { message_set_nbr: '28000', message_nbr: '212' },
-      graduation_required: { message_set_nbr: '28000', message_nbr: '210' },
-      graduation_with_loans: { message_set_nbr: '28000', message_nbr: '211' },
-      pnp_calculator_ratio: { message_set_nbr: '32000', message_nbr: '17' },
-      waitlisted_units_warning: { message_set_nbr: '28000', message_nbr: '216' },
-
-      status_not_officially_registered: {
-        message_set_nbr: '32500',
-        message_nbr: '100'
-      },
-
-      status_cnp_exception_before_disbursement: {
-        message_set_nbr: '32500',
-        message_nbr: '101'
-      },
-
-      status_cnp_exception_after_disbursement: {
-        message_set_nbr: '32500',
-        message_nbr: '103'
-      },
-
-      status_grad_or_law_not_enrolled: {
-        message_set_nbr: '32500',
-        message_nbr: '106'
-      },
-
-      status_grad_or_law_fees_unpaid: {
-        message_set_nbr: '32500',
-        message_nbr: '102'
-      },
-
-      # Undergrad Enrollment messages
-      enrollment_message_ugrd_fall: {
-        message_set_nbr: '28000',
-         message_nbr: '230'
-      },
-      enrollment_message_ugrd_spring: {
-        message_set_nbr: '28000',
-        message_nbr: '231'
-      },
-      enrollment_message_ugrd_summer: {
-        message_set_nbr: '28000',
-        message_nbr: '232'
-      },
-
-      # Grad Enrollment messages
-      enrollment_message_grad_fall: {
-        message_set_nbr: '28000',
-        message_nbr: '233'
-      },
-      enrollment_message_grad_spring: {
-        message_set_nbr: '28000',
-        message_nbr: '234'
-      },
-      enrollment_message_grad_summer: {
-        message_set_nbr: '28000',
-        message_nbr: '235'
-      },
-
-      # Law Enrollment messages
-      enrollment_message_law_fall: {
-        message_set_nbr: '28000',
-          message_nbr: '236'
-      },
-      enrollment_message_law_spring: {
-        message_set_nbr: '28000',
-        message_nbr: '237'
-      },
-      enrollment_message_law_summer: {
-        message_set_nbr: '28000',
-        message_nbr: '238'
-      },
-
-      # UCBX Enrollment messages
-      enrollment_message_ucbx_fall: {
-        message_set_nbr: '28000',
-          message_nbr: '239'
-      },
-      enrollment_message_ucbx_spring: {
-        message_set_nbr: '28000',
-        message_nbr: '240'
-      },
-      enrollment_message_ucbx_summer: {
-        message_set_nbr: '28000',
-        message_nbr: '241'
-      },
-    }
+    CATALOG = YAML.load_file(Rails.root.join("config", "message_catalog.yml"))
+                  .with_indifferent_access
 
     def self.get_message(message_key)
-      if message_id = CATALOG[message_key]
-        message_set_nbr = message_id[:message_set_nbr]
-        message_nbr = message_id[:message_nbr]
-        instance = self.new({message_set_nbr: message_set_nbr, message_nbr: message_nbr})
-        response = instance.get
-        if response.try(:[], :statusCode) == 200
-          return response.try(:[], :feed).try(:[], :root).try(:[], :getMessageCatDefn)
-        else
-          logger.warn "Failed to obtain message catalog definition: message_set_nbr: #{message_set_nbr}; message_nbr: #{message_nbr}"
-        end
-      end
-      nil
+      message_id = CATALOG[message_key]
+      return nil unless message_id
+      self.get_message_by(set: message_id.first, number: message_id.last)
+    end
+
+    def self.get_message_by(set: , number:)
+      instance = self.new({ message_set_nbr: set, message_nbr: number})
+      instance.message_definition
     end
 
     def self.get_message_collection(message_keys)
@@ -128,11 +25,27 @@ module CampusSolutions
       messages
     end
 
+    attr_reader :message_set_nbr, :message_nbr
+
     def initialize(options = {})
       super options
       @message_set_nbr = options[:message_set_nbr]
       @message_nbr = options[:message_nbr]
       initialize_mocks if @fake
+    end
+
+    def message_definition
+      return @message_definition if defined? @message_definition
+
+      response = get
+
+      if response.try(:[], :statusCode) == 200
+        @message_definition = response.try(:[], :feed).try(:[], :root).try(:[], :getMessageCatDefn)
+        return @message_definition
+      end
+
+      logger.warn "Failed to obtain message catalog definition: message_set_nbr: #{message_set_nbr}; message_nbr: #{message_nbr}"
+      return nil
     end
 
     def xml_filename
