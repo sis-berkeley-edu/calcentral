@@ -6,12 +6,12 @@
 ></div>
 
 <div class="cc-enrollment-card-section-content" data-ng-if="section.show">
-  <div data-ng-if="!enrollmentInstruction.updatePlannerLink && !enrollmentInstruction.academicPlanner.classes.length">
+  <div data-ng-if="!enrollmentInstruction.updatePlannerLink">
     Multi-year academic planner is unavailable at this time.
   </div>
 
   <div data-ng-if="api.user.profile.actAsOptions.canSeeCSLinks">
-    <div data-ng-if="enrollmentInstruction.updatePlannerLink && !enrollmentInstruction.academicPlanner.classes.length">
+    <div data-ng-if="enrollmentInstruction.updatePlannerLink">
       Build your multi-year
       <a
         data-cc-campus-solutions-link-directive
