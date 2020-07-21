@@ -6,7 +6,7 @@
     <ul class="cc-widget-list">
       <li data-ng-repeat="group in groups">
         <a data-ng-href="{{group.site_url}}"
-           data-ng-click="api.analytics.trackExternalLink('My Groups', group.emitter)">
+           data-ng-click="api.analytics.trackExternalLink('My Groups', group.emitter, group.site_url)">
           <div class="cc-widget-list-column-left">
             <div
             class="cc-icon"
