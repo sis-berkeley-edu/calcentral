@@ -37,7 +37,7 @@ div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, form, p, blockquote, t
 }
 
 h1, h2, h3, h4, h5, h6 {
-  color: $cc-color-night-rider;
+  color: $color-mine-shaft;
   font-family: $header-font-family;
   font-style: normal;
   font-weight: 500;
@@ -70,7 +70,7 @@ h1 {
   font-size: 22px;
 }
 .cc-heading-page-title {
-  color: $cc-color-night-rider;
+  color: $color-mine-shaft;
   font-weight: normal;
   margin: 10px 0 0 10px;
   @media #{$small-only} {

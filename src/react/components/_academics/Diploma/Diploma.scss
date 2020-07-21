@@ -1,0 +1,42 @@
+@import '../../../stylesheets/_colors.scss';
+
+.header-text {
+  color: #999;
+}
+
+.content-entry {
+  margin-bottom: 10px;
+}
+
+.download-button-container {
+  margin-top: 10px;
+}
+
+.download-button {
+  background-color: $very-light-gray;
+  border: 1px solid $light-gray;
+  border-radius: 5px;
+  color: $color-mine-shaft;
+  cursor: pointer;
+  display: inline;
+  font-size: 11px;
+  font-weight: bold;
+  line-height: 1;
+  padding: 6px 10px;
+    &:focus, &:hover {
+    color: $color-mine-shaft;
+    text-decoration: none;
+  }
+}
+
+.electronic-diploma-info {
+  margin: 10px 0;
+}
+
+.icon-info {
+  background-image: url('/assets/images/info.svg');
+  background-position-y: center;
+  background-repeat: no-repeat;
+  margin-left: 5px;
+  padding-left: 12px;
+}

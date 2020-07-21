@@ -48,7 +48,7 @@ describe MyRegistrations::PositiveServiceIndicators do
     }
   end
   before do
-    allow(HubEdos::StudentApi::V2::StudentAttributes).to receive(:new).and_return(student_attributes_proxy)
+    allow(HubEdos::StudentApi::V2::Feeds::StudentAttributes).to receive(:new).and_return(student_attributes_proxy)
   end
 
   describe '#get' do
@@ -75,7 +75,7 @@ describe MyRegistrations::PositiveServiceIndicators do
       expect(result.first['toTerm']['id']).to eq '2172'
     end
     it 'memoizes student attributes' do
-      expect(HubEdos::StudentApi::V2::StudentAttributes).to receive(:new).once.and_return(student_attributes_proxy)
+      expect(HubEdos::StudentApi::V2::Feeds::StudentAttributes).to receive(:new).once.and_return(student_attributes_proxy)
       result1 = subject.student_attributes
       result2 = subject.student_attributes
       expect(result1.count).to eq 1

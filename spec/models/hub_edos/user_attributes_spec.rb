@@ -8,8 +8,8 @@ describe HubEdos::UserAttributes do
   let(:fake_person_proxy) { HubEdos::PersonApi::V1::SisPerson.new(fake: true, user_id: user_id) }
   before { allow(HubEdos::PersonApi::V1::SisPerson).to receive(:new).and_return(fake_person_proxy) }
 
-  let(:fake_student_attributes_proxy) { HubEdos::StudentApi::V2::StudentAttributes.new(fake: true, user_id: user_id) }
-  before { allow(HubEdos::StudentApi::V2::StudentAttributes).to receive(:new).and_return(fake_student_attributes_proxy) }
+  let(:fake_student_attributes_proxy) { HubEdos::StudentApi::V2::Feeds::StudentAttributes.new(fake: true, user_id: user_id) }
+  before { allow(HubEdos::StudentApi::V2::Feeds::StudentAttributes).to receive(:new).and_return(fake_student_attributes_proxy) }
 
   subject { HubEdos::UserAttributes.new(user_id: user_id) }
   let(:feed) { subject.get }
@@ -152,7 +152,7 @@ describe HubEdos::UserAttributes do
     end
     context 'when api returns 404 error' do
       let(:error_404_response) { {statusCode: 404, feed: {}, studentNotFound: true} }
-      before { allow_any_instance_of(HubEdos::StudentApi::V2::StudentAttributes).to receive(:get).and_return(error_404_response) }
+      before { allow_any_instance_of(HubEdos::StudentApi::V2::Feeds::StudentAttributes).to receive(:get).and_return(error_404_response) }
       it 'logs error' do
         logger_object = double(:logger)
         expect(logger_object).to receive(:warn).with("Student Attributes request failed for UID #{user_id}")

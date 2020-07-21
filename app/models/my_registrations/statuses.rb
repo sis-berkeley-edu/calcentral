@@ -91,7 +91,7 @@ module MyRegistrations
     end
 
     def registrations
-      @registrations ||= HubEdos::StudentApi::V2::Registrations.new(user_id: @uid).get
+      @registrations ||= HubEdos::StudentApi::V2::Feeds::Registrations.new(user_id: @uid).get
       @registrations.try(:[], :feed).try(:[], 'registrations') || []
     end
   end

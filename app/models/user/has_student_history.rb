@@ -1,6 +1,5 @@
 module User
   class HasStudentHistory < UserSpecificModel
-
     extend Cache::Cacheable
     include Cache::UserCacheExpiry
 

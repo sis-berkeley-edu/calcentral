@@ -136,7 +136,7 @@ $cc-spinner-uneven: 17px;
     box-shadow: 0 (-$cc-spinner-uneven) $cc-color-very-light-grey, // Top
       $cc-spinner-even (-$cc-spinner-even $cc-color-very-light-grey), // Top right
       $cc-spinner-uneven 0 $cc-color-nobel, // Right
-      $cc-spinner-even $cc-spinner-even $cc-color-night-rider, // Bottom right
+      $cc-spinner-even $cc-spinner-even $color-mine-shaft, // Bottom right
       0 $cc-spinner-uneven $cc-color-black, // Bottom
       (-$cc-spinner-even) $cc-spinner-even $cc-color-very-light-grey, // Bottom left
       (-$cc-spinner-uneven) 0 $cc-color-very-light-grey, // Left

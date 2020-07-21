@@ -71,9 +71,9 @@ describe HubEdos::MyStudent do
   subject { HubEdos::MyStudent.new(uid, options) }
   before do
     allow(HubEdos::PersonApi::V1::SisPerson).to receive(:new).and_return(sis_person_proxy)
-    allow(HubEdos::StudentApi::V2::Contacts).to receive(:new).and_return(sis_student_contacts_proxy)
-    allow(HubEdos::StudentApi::V2::Demographics).to receive(:new).and_return(sis_student_demographics_proxy)
-    allow(HubEdos::StudentApi::V2::Gender).to receive(:new).and_return(sis_student_gender_proxy)
+    allow(HubEdos::StudentApi::V2::Feeds::Contacts).to receive(:new).and_return(sis_student_contacts_proxy)
+    allow(HubEdos::StudentApi::V2::Feeds::Demographics).to receive(:new).and_return(sis_student_demographics_proxy)
+    allow(HubEdos::StudentApi::V2::Feeds::Gender).to receive(:new).and_return(sis_student_gender_proxy)
     MyProfile::EditLink.stub_chain(:new, :get_feed).and_return({:feed => edit_link})
   end
 
@@ -98,9 +98,9 @@ describe HubEdos::MyStudent do
       let(:options) { { include_fields: fields } }
       it 'should pass include_fields option to proxies' do
         allow(HubEdos::PersonApi::V1::SisPerson).to receive(:new).with({user_id: uid, include_fields: fields}).and_return(sis_person_proxy)
-        allow(HubEdos::StudentApi::V2::Contacts).to receive(:new).with({user_id: uid, include_fields: fields}).and_return(sis_person_proxy)
-        allow(HubEdos::StudentApi::V2::Demographics).to receive(:new).with({user_id: uid, include_fields: fields}).and_return(sis_person_proxy)
-        allow(HubEdos::StudentApi::V2::Gender).to receive(:new).with({user_id: uid, include_fields: fields}).and_return(sis_person_proxy)
+        allow(HubEdos::StudentApi::V2::Feeds::Contacts).to receive(:new).with({user_id: uid, include_fields: fields}).and_return(sis_person_proxy)
+        allow(HubEdos::StudentApi::V2::Feeds::Demographics).to receive(:new).with({user_id: uid, include_fields: fields}).and_return(sis_person_proxy)
+        allow(HubEdos::StudentApi::V2::Feeds::Gender).to receive(:new).with({user_id: uid, include_fields: fields}).and_return(sis_person_proxy)
         expect(response[:statusCode]).to eq 200
         student = response[:feed]
       end
@@ -118,9 +118,9 @@ describe HubEdos::MyStudent do
     let(:result) { subject.merge_proxy_feeds(feed_hash, proxy_options) }
     before do
       HubEdos::PersonApi::V1::SisPerson.stub_chain(:new, :get).and_return(sis_person_api_response)
-      HubEdos::StudentApi::V2::Contacts.stub_chain(:new, :get).and_return(student_api_contacts_response)
-      HubEdos::StudentApi::V2::Demographics.stub_chain(:new, :get).and_return(student_api_demographics_response)
-      HubEdos::StudentApi::V2::Gender.stub_chain(:new, :get).and_return(student_api_gender_response)
+      HubEdos::StudentApi::V2::Feeds::Contacts.stub_chain(:new, :get).and_return(student_api_contacts_response)
+      HubEdos::StudentApi::V2::Feeds::Demographics.stub_chain(:new, :get).and_return(student_api_demographics_response)
+      HubEdos::StudentApi::V2::Feeds::Gender.stub_chain(:new, :get).and_return(student_api_gender_response)
     end
     context 'when proxy response has an error' do
       let(:student_api_demographics_response) do
@@ -131,7 +131,7 @@ describe HubEdos::MyStudent do
         }
       end
       it 'logs error' do
-        expected_error_msg = "Got errors in merged student feed on HubEdos::StudentApi::V2::Demographics for uid #{uid} with response #{student_api_demographics_response.to_s}"
+        expected_error_msg = "Got errors in merged student feed on HubEdos::StudentApi::V2::Feeds::Demographics for uid #{uid} with response #{student_api_demographics_response.to_s}"
         expect(subject).to receive_message_chain(:logger, :error).with(expected_error_msg)
         expect(result[:statusCode]).to eq 500
       end

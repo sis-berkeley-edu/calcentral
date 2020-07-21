@@ -12,7 +12,7 @@ describe MyAcademics::MyAcademicStatus do
   let(:academic_status_response_inactive) { {statusCode: 200, feed: academic_status_feed_inactive, studentNotFound: nil} }
   let(:academic_status_feed_active) { {'academicStatuses' => [:activeStatus]} }
   let(:academic_status_feed_inactive) { {'academicStatuses' => [:inactiveStatus, :completedStatus]} }
-  before { allow(HubEdos::StudentApi::V2::AcademicStatuses).to receive(:new).and_return(academic_status_proxy) }
+  before { allow(HubEdos::StudentApi::V2::Feeds::AcademicStatuses).to receive(:new).and_return(academic_status_proxy) }
 
   describe '#api_response' do
     context 'when api response does not contain academic statuses' do
