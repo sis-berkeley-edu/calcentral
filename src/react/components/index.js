@@ -8,7 +8,7 @@ import './_academics/LawDegreeAudit/LawDegreeAudit';
 import './_academics/PnpCalculator/PnpCalculatorContainer';
 import './_academics/StatusAndHoldsCard/SemesterStatuses';
 import './_academics/StudentProfile/StudentProfileCard';
-import './_academics/COVIDEnrollmentNotice';
+import './angularWrappers/enrollmentNotice';
 import './_academics/EnrollmentAppointments/EnrollmentAppointments';
 
 import './_dashboard/StudentResources/StudentResourcesContainer';
