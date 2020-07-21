@@ -1,24 +1,4 @@
 .cc-undergrad-degree-progress-card {
-
-  .cc-degree-progress-info-container {
-    background-color: $cc-color-whisper;
-    padding: 10px;
-  }
-
-  // TODO: Replace this and COVIDEnrollmentNotice with all-purpose notice/alert component - SISRP-52662
-  .cc-degree-progress-info-message {
-    background-image: url('/assets/images/exclamation-circle-solid.svg');
-    background-position-y: 4px;
-    background-repeat: no-repeat;
-    background-size: 14px 12px;
-
-    padding-left: 24px;
-
-    > *:last-child {
-      margin-bottom: 0;
-    }
-  }
-
   .cc-degree-progress-section {
     margin-bottom: 10px;
   }

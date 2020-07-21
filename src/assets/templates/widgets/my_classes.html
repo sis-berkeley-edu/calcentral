@@ -12,7 +12,7 @@
         <li class="cc-widget-icon-container" data-ng-repeat="class in category.data">
           <div data-ng-switch="category.categoryId">
             <a data-ng-switch-when="other" class="cc-widget-list-link" data-ng-href="{{class.site_url}}"
-               data-ng-click="api.analytics.trackExternalLink('My Other Site Memberships', class.emitter)">
+               data-ng-click="api.analytics.trackExternalLink('My Other Site Memberships', class.emitter, class.site_url)">
               <div class="cc-widget-list-column-left">
                 <div class="cc-icon cc-widget-icon" data-ng-class="'cc-icon-{{ class.emitter|lowercase }}'"></div>
               </div>
@@ -23,7 +23,7 @@
             </a>
             <div data-ng-switch-default>
               <div class="cc-ellipsis cc-widget-classes-title" data-ng-repeat="listing in class.listings">
-                <a data-ng-click="api.analytics.trackExternalLink('My Classes', class.emitter)"
+                <a data-ng-click="api.analytics.trackExternalLink('My Classes', class.emitter, class.site_url)"
                    data-ng-href="{{class.site_url}}">
                   <strong data-ng-bind="listing.course_code" data-ng-class="{'cc-italic': class.waitlisted}"></strong>
                   <strong data-ng-bind="listing.courseCodeSection" data-ng-class="{'cc-italic': class.waitlisted}"></strong>

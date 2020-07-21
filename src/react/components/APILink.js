@@ -2,14 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import qs from 'querystringify';
 import { connect } from 'react-redux';
-import { googleAnalytics } from 'functions/googleAnalytics';
 import VisuallyHidden from './VisuallyHidden';
 import './APILink.scss';
 
 const propTypes = {
   children: PropTypes.node,
   disabled: PropTypes.bool,
-  isCampusSolutionsLink: PropTypes.bool,
   isCsLink: PropTypes.bool,
   name: PropTypes.node,
   showNewWindow: PropTypes.bool,
@@ -22,8 +20,6 @@ const propTypes = {
   urlId: PropTypes.string,
   className: PropTypes.string,
   style: PropTypes.object,
-  applicationLayer: PropTypes.string,
-  gaSection: PropTypes.string,
 };
 
 const visuallyHiddenText = ', this link opens in new window';
@@ -41,20 +37,16 @@ const returnURL = (url, updateCache) => {
 const APILink = ({
   children,
   disabled,
-  isCampusSolutionsLink,
   isCsLink,
   name,
   showNewWindow,
   title,
   url,
-  urlId,
   ucFromLink,
   ucFromText,
   ucUpdateCache,
   style,
   className,
-  applicationLayer,
-  gaSection = '',
 }) => {
   if (!url) {
     return null;
@@ -62,20 +54,6 @@ const APILink = ({
   if (disabled) {
     return <span className="APILink APILink--disabled">{name}</span>;
   }
-
-  const ga = new googleAnalytics(applicationLayer);
-  const trackLinkEvent = event => {
-    event.stopPropagation();
-    if (isCampusSolutionsLink) {
-      ga.sendEvent(
-        'Open BCS page',
-        'Click',
-        'section: ' + gaSection + ' - csLinkId: ' + urlId
-      );
-    } else {
-      ga.trackExternalLink(gaSection, title);
-    }
-  };
 
   const queryStringPrefix = url.includes('?') ? '&' : true;
   const href = isCsLink
@@ -98,7 +76,7 @@ const APILink = ({
       title={title}
       target={target}
       rel={rel}
-      onClick={e => trackLinkEvent(e)}
+      onClick={e => e.stopPropagation()}
       className={className}
       style={style}
     >
@@ -111,10 +89,9 @@ const APILink = ({
 APILink.propTypes = propTypes;
 
 const mapStateToProps = ({
-  config: { applicationLayer },
   currentRoute: { name: ucFromText, url: ucFromLink },
 }) => {
-  return { applicationLayer, ucFromText, ucFromLink };
+  return { ucFromText, ucFromLink };
 };
 
 export default connect(mapStateToProps)(APILink);

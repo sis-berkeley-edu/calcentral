@@ -5,8 +5,6 @@ module DegreeProgress
     include DatedFeed
     include LinkFetcher
 
-    APR_FAQS_LINK_ID = 'UC_AA_SAA_SS_APRFAQS'
-
     def process(response)
       degree_progress = response.try(:[], :feed).try(:[], :ucAaProgress)
       degree_progress[:progresses] = massage_progresses(degree_progress.try(:[], :progresses))
@@ -73,6 +71,18 @@ module DegreeProgress
 
     def student_empl_id
       User::Identifiers.lookup_campus_solutions_id @uid
+    end
+
+    def get_links
+      links = {}
+      links_config = [
+        { feed_key: :academic_progress_report, cs_link_key: self.class::LINK_ID, cs_link_params: { :EMPLID => student_empl_id } }
+      ]
+      links_config.each do |setting|
+        link = fetch_link setting[:cs_link_key], setting[:cs_link_params]
+        links[setting[:feed_key]] = link unless link.blank?
+      end
+      links
     end
   end
 end
