@@ -38,12 +38,12 @@ const UpNextItem = ({
 
   const trackHangoutLink = event => {
     event.stopPropagation();
-    ga.trackExternalLink('Up Next', 'Hangout');
+    ga.trackExternalLink('Up Next', 'Hangout', item.hangoutLink);
   };
 
   const trackBcalLink = event => {
     event.stopPropagation();
-    ga.trackExternalLink('Up Next', 'bCal');
+    ga.trackExternalLink('Up Next', 'bCal', item.htmlLink);
   };
 
   const showItem = index == expandedItemIndex;
