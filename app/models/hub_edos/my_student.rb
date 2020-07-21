@@ -13,9 +13,9 @@ module HubEdos
 
     PROXIES = [
       HubEdos::PersonApi::V1::SisPerson,
-      HubEdos::StudentApi::V2::Contacts,
-      HubEdos::StudentApi::V2::Demographics,
-      HubEdos::StudentApi::V2::Gender,
+      HubEdos::StudentApi::V2::Feeds::Contacts,
+      HubEdos::StudentApi::V2::Feeds::Demographics,
+      HubEdos::StudentApi::V2::Feeds::Gender,
     ]
 
     def get_feed_internal

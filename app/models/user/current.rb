@@ -3,6 +3,7 @@ module User
     attr_reader :uid
 
     include User::Academics::AcademicsConcern
+    include User::Profile::ProfileConcern
     include User::BCourses::Concern
     include User::Notifications::Concern
     include User::Tasks::Concern
@@ -43,16 +44,6 @@ module User
 
     def user_attributes
       @user_attributes ||= User::UserAttributes.new(self)
-    end
-
-    def matriculated?
-      !affiliations.matriculated_but_excluded? && affiliations.not_registered?
-    end
-
-    private
-
-    def affiliations
-      @affiliations ||= User::Affiliations.new(self)
     end
   end
 end

@@ -25,7 +25,7 @@ module MyAcademics
     end
 
     def get_hub_residency
-      cs_demographics = HubEdos::StudentApi::V2::Demographics.new(user_id: @uid).get
+      cs_demographics = HubEdos::StudentApi::V2::Feeds::Demographics.new(user_id: @uid).get
       residency = cs_demographics.try(:[], :feed).try(:[], 'residency')
       return {} if residency.blank? || residency['fromTerm'].blank?
       residency = HashConverter.symbolize residency

@@ -294,6 +294,9 @@ cache_warmer:
   # Number to decrement db pool to limit the number of warmer threads
   fudge_factor: 1
 
+ce_diploma:
+  supported_terms: []
+
 # Bearfacts JMS event queue
 ist_jms:
   fake: true

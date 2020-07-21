@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 const propTypes = {
   name: PropTypes.string,
-  value: PropTypes.number
+  value: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
 };
 
 const UnitsRow = (props) => (

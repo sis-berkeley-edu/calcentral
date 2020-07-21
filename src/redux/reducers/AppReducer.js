@@ -1,5 +1,6 @@
 import { combineReducers } from 'redux';
 
+import academics from './AcademicsReducer';
 import advising from './AdvisingReducer';
 import awardComparison from './AwardComparisonReducer';
 import awardComparisonSnapshot from './AwardComparisonSnapshotReducer';
@@ -13,7 +14,6 @@ import {
   CovidResponseReducer as covidResponse,
   FinancialResourcesLinksReducer as financialResourcesLinks,
   LinksReducer as links,
-  AcademicsReducer as myAcademics,
   ActivitiesReducer as myActivities,
   AgreementsReducer as myAgreements,
   BCoursesReducer as myBCoursesTodos,
@@ -21,6 +21,7 @@ import {
   EftEnrollmentReducer as myEftEnrollment,
   EnrollmentsReducer as myEnrollments,
   LawAwardsReducer as myLawAwards,
+  MyAcademicsReducer as myAcademics,
   ProfileReducer as myProfile,
   RegistrationsReducer as myRegistrations,
   StandingsReducer as myStandings,
@@ -33,6 +34,7 @@ import {
 } from './DataReducers';
 
 const AppReducer = combineReducers({
+  academics,
   advising,
   awardComparison,
   awardComparisonSnapshot,

@@ -18,7 +18,7 @@ module MyRegistrations
     end
 
     def student_attributes
-      @student_attributes ||= HubEdos::StudentApi::V2::StudentAttributes.new(user_id: @uid).get
+      @student_attributes ||= HubEdos::StudentApi::V2::Feeds::StudentAttributes.new(user_id: @uid).get
       @student_attributes.try(:[], :feed).try(:[], 'studentAttributes') || []
     end
 

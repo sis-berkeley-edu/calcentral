@@ -4,7 +4,7 @@ import { Provider, connect } from 'react-redux';
 import { react2angular } from 'react2angular';
 
 import store from 'Redux/store';
-import { fetchAcademics } from 'Redux/actions/academicsActions';
+import { fetchMyAcademics } from 'Redux/actions/myAcademicsActions';
 import { fetchLawAwards } from 'Redux/actions/lawAwardsActions';
 import { fetchProfile } from 'Redux/actions/profileActions';
 import { fetchTransferCredit } from 'Redux/actions/transferCreditActions';
@@ -34,7 +34,7 @@ const AcademicSummary = ({
   lawAwardsLoaded
 }) => {
   useEffect(() => {
-    dispatch(fetchAcademics());
+    dispatch(fetchMyAcademics());
     dispatch(fetchProfile());
     dispatch(fetchTransferCredit());
     dispatch(fetchLawAwards());

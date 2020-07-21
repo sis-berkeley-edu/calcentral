@@ -22,7 +22,7 @@ module User
       private
 
       def feed_data
-        @feed_data ||= HubEdos::StudentApi::V2::AcademicStatuses.new({ user_id: user.uid }).get[:feed]['holds'] || []
+        @feed_data ||= HubEdos::StudentApi::V2::Feeds::AcademicStatuses.new({ user_id: user.uid }).get[:feed]['holds'] || []
       rescue NoMethodError
         []
       end

@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import axios from 'axios';
 
 const buildDataActions = ({
@@ -23,7 +24,7 @@ const buildDataActions = ({
 
   const loadData = () => {
     return (dispatch, getState) => {
-      const state = getState()[key];
+      const state = _.get(getState(), key);
 
       if (state.loaded || state.isLoading) {
         return new Promise((resolve, _reject) => resolve(state));
