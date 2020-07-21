@@ -8,7 +8,6 @@ module DegreeProgress
     include RequirementsModule
 
     APR_LINK_ID = 'UC_CX_APR_RPT_FOR_STDNT'
-    WHAT_IF_APR_LINK_ID = 'UC_AA_WHATIF_REPORT'
     DEGREE_PLANNER_LINK_ID = 'UC_AA_DEGREE_PLANNER'
 
     def get_feed_internal
@@ -18,10 +17,10 @@ module DegreeProgress
         response[:feed] = {}
       else
         response[:feed] = {
-          degree_progress: process(response),
-          apr_link_enabled: should_see_apr_links?,
-          links: links
+          degree_progress: process(response)
         }
+
+        response[:feed][:links] = links
       end
       HashConverter.camelize response
     end
@@ -29,25 +28,21 @@ module DegreeProgress
     def links
       Hash.new.tap do |hash|
         hash[:academic_progress_report] = (fetch_link(APR_LINK_ID, { :EMPLID => student_empl_id } ) if should_see_apr_links?)
-        hash[:academic_progress_report_faqs] = fetch_link(APR_FAQS_LINK_ID)
-        hash[:academic_progress_report_what_if] = fetch_link(WHAT_IF_APR_LINK_ID)
         hash[:degree_planner] = fetch_link(DEGREE_PLANNER_LINK_ID)
       end
     end
 
     def get_incomplete_programs_roles
-      @incomplete_program_roles ||= begin
-        ugrd_statuses = MyAcademics::MyAcademicStatus.statuses_by_career_role(@uid, ['ugrd'])
-        return [] if ugrd_statuses.blank?
+      ugrd_statuses = MyAcademics::MyAcademicStatus.statuses_by_career_role(@uid, ['ugrd'])
+      return [] if ugrd_statuses.blank?
 
-        plans = incomplete_plans_from_statuses(ugrd_statuses)
-        return [] if plans.blank?
+      plans = incomplete_plans_from_statuses(ugrd_statuses)
+      return [] if plans.blank?
 
-        plans.map do |plan|
-          program = plan.try(:[], 'academicPlan').try(:[], 'academicProgram').try(:[], 'program')
-          program.try(:[], 'code')
-        end.uniq.compact
-      end
+      plans.map do |plan|
+        program = plan.try(:[], 'academicPlan').try(:[], 'academicProgram').try(:[], 'program')
+        program.try(:[], 'code')
+      end.uniq.compact
     end
 
     def should_see_apr_links?
