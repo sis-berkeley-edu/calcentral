@@ -146,9 +146,8 @@ module Textbooks
           }
         )
       end
-
-      uri = Addressable::URI.encode(params.to_json)
-      "#{Settings.textbooks_proxy.base_url}/course-info?courses=#{uri}"
+      encoded_query = Addressable::URI.encode_component(params.to_json, Addressable::URI::CharacterClasses::QUERY)
+      "#{Settings.textbooks_proxy.base_url}/course-info?courses=#{encoded_query}"
     end
 
     def request_bookstore_list(section_numbers)
