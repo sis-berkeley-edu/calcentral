@@ -1,20 +1,22 @@
 <div class="cc-popover-container cc-popover-gear cc-popover-status" data-ng-controller="StatusController">
-  <button class="cc-header-icon"
-  data-ng-click="api.util.preventBubble($event);api.popover.toggle('cc-popover-menu')"
-  data-ng-class="{true:'cc-header-icon-selected'}[api.popover.status('cc-popover-menu')]"
-  title="Settings">
+  <button class="cc-header-icon" data-ng-click="api.util.preventBubble($event);api.popover.toggle('cc-popover-menu')"
+    data-ng-class="{true:'cc-header-icon-selected'}[api.popover.status('cc-popover-menu')]" title="Settings">
     <div class="cc-flex cc-flex-align-center">
-      <span data-ng-if="!photo.loadError && api.user.events.isAuthenticated" class="cc-popover-gear-round-profile cc-popover-gear-round-profile-has-photo">
+      <span data-ng-if="!photo.loadError && api.user.events.isAuthenticated"
+        class="cc-popover-gear-round-profile cc-popover-gear-round-profile-has-photo">
         <img data-cc-load-error-directive="photo" class="cc-visuallyhidden" data-ng-src="/api/my/photo">
       </span>
-      <span data-ng-if="photo.loadError" class="cc-popover-gear-round-profile cc-popover-gear-round-profile-bear-photo"></span>
-      <span data-ng-bind="api.user.profile.firstName" class="cc-popover-gear-first-name" data-ng-class="{'cc-popover-gear-has-alerts': hasAlerts && !api.user.profile.delegateActingAsUid}"></span>
+      <span data-ng-if="photo.loadError"
+        class="cc-popover-gear-round-profile cc-popover-gear-round-profile-bear-photo"></span>
+      <span data-ng-bind="api.user.profile.firstName" class="cc-popover-gear-first-name"
+        data-ng-class="{'cc-popover-gear-has-alerts': hasAlerts && !api.user.profile.delegateActingAsUid}"></span>
       <span data-ng-if="!api.user.profile.delegateActingAsUid">
         <span class="cc-visuallyhidden">.</span>
         <span data-ng-if="hasAlerts" class="cc-icon-status-person-layover cc-icon-status-person-layover-red">
           <span data-ng-bind="badgeCount"></span><span class="cc-visuallyhidden"> active alerts.</span>
         </span>
-        <span data-ng-if="!hasAlerts && hasWarnings" class="cc-icon-status-person-layover cc-icon-status-person-layover-white">
+        <span data-ng-if="!hasAlerts && hasWarnings"
+          class="cc-icon-status-person-layover cc-icon-status-person-layover-white">
           <span data-ng-bind="badgeCount"></span><span class="cc-visuallyhidden"> warnings.</span>
         </span>
       </span>
@@ -26,20 +28,19 @@
 
   <div class="cc-popover cc-dropdown cc-launcher-dropdown-menu" data-ng-show="api.popover.status('cc-popover-menu')">
     <div>
-      <div class="cc-launcher-status-loading"
-        data-cc-loading-directive="statusLoading"
-        data-cc-loading-process="Loading..."
-        data-ng-if="statusLoading">
+      <div class="cc-launcher-status-loading" data-cc-loading-directive="statusLoading"
+        data-cc-loading-process="Loading..." data-ng-if="statusLoading">
       </div>
       <div class="cc-popover-title">
         <span><strong>Student ID: </strong><span data-ng-bind="api.user.profile.campusSolutionsID"></span><span>
       </div>
-      <div data-ng-if="!statusLoading && !api.user.profile.delegateActingAsUid && (count !== 0 || hasBillingData || regStatus.hasData)">
-        <div class="cc-popover-noitems" data-ng-if="count === 0">
+      <div
+        data-ng-if="!statusLoading && !api.user.profile.delegateActingAsUid && (badgeCount !== 0 || hasBillingData || regStatus.hasData)">
+        <div class="cc-popover-noitems" data-ng-if="badgeCount === 0">
           <i class="cc-left fa fa-check-circle cc-icon-green"></i>
           <strong>No Active Alerts</strong>
         </div>
-        <div data-ng-include="'widgets/status_popover.html'" data-ng-if="count !== 0"></div>
+        <div data-ng-include="'widgets/status_popover.html'" data-ng-if="badgeCount !== 0"></div>
       </div>
       <div data-ng-include="'widgets/profile_popover.html'"></div>
     </div>
