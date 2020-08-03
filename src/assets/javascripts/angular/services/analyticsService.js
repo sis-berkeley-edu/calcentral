@@ -11,8 +11,8 @@ angular.module('calcentral.services').service('analyticsService', function(calce
     ga.sendEvent(category, action, label);
   };
 
-  var trackExternalLink = function(section, website, url) {
-    ga.trackExternalLink(section, website, url);
+  var trackExternalLink = function(section, website) {
+    ga.trackExternalLink(section, website);
   };
 
   /**
