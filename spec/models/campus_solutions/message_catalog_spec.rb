@@ -23,7 +23,7 @@ describe CampusSolutions::MessageCatalog do
   end
   let(:message_catalog_constant) do
     {
-      max_cancel_amount: { message_set_nbr: '26500', message_nbr: '112' }
+      max_cancel_amount: [26500, 112]
     }
   end
   before { stub_const("CampusSolutions::MessageCatalog::CATALOG", message_catalog_constant) }

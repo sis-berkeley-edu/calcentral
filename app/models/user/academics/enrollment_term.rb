@@ -21,7 +21,8 @@ module User
           career: career_code,
           termId: term_id,
           requiresCalgrantAcknowledgement: requires_cal_grant_acknowledgement?,
-          message: message,
+          message: enrollment_message,
+          classInfoMessage: class_info_message,
           enrollmentPeriods: enrollment_periods,
           constraints: enrollment_career,
           programCode: term_plan&.academic_program_code
@@ -34,9 +35,18 @@ module User
           .any?(&:requires_cal_grant_acknowledgement?)
       end
 
-      def message
-        return unless has_message_key?
-        @message ||= CampusSolutions::MessageCatalog.get_message(message_key)
+      def class_info_message
+        ClassInfoMessage.new({
+          career_code: career_code,
+          semester_name: semester_name
+        }).message
+      end
+
+      def enrollment_message
+        EnrollmentMessage.new({
+          career_code: career_code,
+          semester_name: semester_name
+        }).message
       end
 
       private
@@ -49,14 +59,6 @@ module User
 
       def term_plan
         term_plans.find_by_term_id_and_career_code(term_id, career_code)
-      end
-
-      def has_message_key?
-        @message_key ||= CampusSolutions::MessageCatalog::CATALOG.fetch(message_key) { false }
-      end
-
-      def message_key
-        "enrollment_message_#{career_code}_#{semester_name.downcase}".to_sym
       end
 
       def career_code

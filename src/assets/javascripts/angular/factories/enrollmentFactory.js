@@ -124,6 +124,7 @@ angular
       var url = $route.current.isAdvisingStudentLookup
         ? urlAdvisingEnrollmentInstructions + $routeParams.uid
         : urlEnrollmentInstructions;
+
       return apiService.http.request(options, url).then(function(response) {
         $ngRedux.dispatch({
           type: 'FETCH_ENROLLMENTS_SUCCESS',
