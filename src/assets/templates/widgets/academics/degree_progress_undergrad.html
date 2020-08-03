@@ -1,9 +1,9 @@
 <div data-ng-if="degreeProgress.undergraduate.showCard" class="cc-widget cc-undergrad-degree-progress-card">
   <div class="cc-widget-title">
-    <h2>Degree Progress</h2>
+    <h2>Degree Requirements</h2>
   </div>
   <div class="cc-widget-padding">
-    <div class="cc-degree-progress-section">
+    <div class="cc-degree-progress-section" data-ng-if="degreeProgress.undergraduate.errored">
       <div data-ng-if="degreeProgress.undergraduate.errored">There was an error retrieving undergraduate degree progress data.</div>
       <div data-ng-if="!degreeProgress.undergraduate.errored && !degreeProgress.undergraduate.progresses.length && !api.user.profile.roles.advisor">
         You do not have degree progress report data. Please contact your advisor for assistance.
@@ -11,7 +11,16 @@
       <div data-ng-if="!degreeProgress.undergraduate.errored && !degreeProgress.undergraduate.progresses.length && api.user.profile.roles.advisor">
         <p>This student has no degree progress data.</p>
       </div>
-      <div data-ng-if="!degreeProgress.undergraduate.errored && degreeProgress.undergraduate.progresses.length">
+    </div>
+
+    <div class="cc-degree-progress-section cc-degree-progress-info-container" data-ng-if="!degreeProgress.undergraduate.errored && degreeProgress.undergraduate.transferCreditReviewDeadline">
+      <div class="cc-degree-progress-info-message">
+        Transfer course work for newly admitted students is currently under review. All eligible credit will be posted by the end of your first semester.
+      </div>
+    </div>
+
+    <div class="cc-degree-progress-section" data-ng-if="!degreeProgress.undergraduate.errored && !degreeProgress.undergraduate.aprLinkEnabled">
+      <div data-ng-if="degreeProgress.undergraduate.progresses.length">
         <ul>
           <li data-ng-repeat="plan in degreeProgress.undergraduate.progresses">
             <div data-ng-if="plan.reportDate" class="cc-degree-progress-section cc-degree-progress-report-date">
@@ -43,10 +52,20 @@
             </div>
           </li>
         </ul>
+
+        <div class="cc-degree-progress-footer" data-ng-if="!api.user.profile.roles.advisor">If this information is out of date, please contact your advisor.</div>
+
+        <div data-ng-if="degreeProgress.undergraduate.transferCreditReviewDeadline" class="cc-degree-progress-footer">
+          <button data-ng-click="degreeProgress.undergraduate.showTip();" class="cc-button-link cc-text-line-height"><i class="cc-icon fa fa-info-circle cc-icon-air-force-blue"></i><span>What is "Under Review"?</span></button>
+          <p data-ng-show="degreeProgress.undergraduate.tipVisible">Coursework is being reviewed for all new students. Review will finish by mid&hyphen;<span data-ng-bind="degreeProgress.undergraduate.transferCreditReviewDeadline"></span>.</p>
+        </div>
       </div>
+
     </div>
     <degree-progress-links
       apr-link="degreeProgress.undergraduate.links.academicProgressReport"
+      apr-faqs-link="degreeProgress.undergraduate.links.academicProgressReportFaqs"
+      apr-what-if-link="degreeProgress.undergraduate.links.academicProgressReportWhatIf"
       degree-planner-link="degreeProgress.undergraduate.links.degreePlanner"
       show-pnp-calculator="showPnpCalculator"
       show-pnp-calculator-link="!degreeProgress.undergraduate.showPnpCalculator"
