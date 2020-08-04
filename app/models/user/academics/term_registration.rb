@@ -129,11 +129,7 @@ module User
       end
 
       def cnp_status
-        @cnp_status ||= if cnp_exception?
-          User::Academics::Status::CancellationForNonPayment.new(self)
-        else
-          null_status
-        end
+        @cnp_status ||=  User::Academics::Status::CancellationForNonPayment.new(self)
       end
 
       def null_status

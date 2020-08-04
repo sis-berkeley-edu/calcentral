@@ -208,7 +208,7 @@ module MyRegistrations
 
     def enrolled?(term)
       term_units = term.try(:[], 'termUnits').find do |units|
-        units.try(:[], 'type').try(:[], 'description') == 'Total'
+        units.try(:[], 'type').try(:[], 'code') == 'Total'
       end
       enrolled_units = term_units.try(:[], 'unitsEnrolled')
       taken_units = term_units.try(:[], 'unitsTaken')
