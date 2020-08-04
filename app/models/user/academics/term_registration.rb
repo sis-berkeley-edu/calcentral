@@ -22,6 +22,7 @@ module User
           registrationStatus: registration_status,
           cnpStatus: cnp_status,
           requiresCalGrantAcknowledgement: requires_cal_grant_acknowledgement?,
+          showCNP: show_cnp?
         }
       end
 
@@ -128,8 +129,17 @@ module User
         end
       end
 
+      def show_cnp?
+        # This needs to use the same logic for showCNP flag used for semester
+        # CNP statuses. We need to call RegistrationsModule.show_cnp?(term)
+        # TODO: merge semesters CNP logic with status and hold card
+          JSON.parse(MyRegistrations::Statuses.new(user.uid).get_feed)['registrations'][term_id]['showCnp']
+      rescue NoMethodError
+          false
+      end
+
       def cnp_status
-        @cnp_status ||= if cnp_exception?
+       @cnp_status ||= if show_cnp?
           User::Academics::Status::CancellationForNonPayment.new(self)
         else
           null_status
