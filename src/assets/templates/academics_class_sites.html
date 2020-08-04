@@ -8,7 +8,7 @@
         <i class="cc-left cc-icon" data-ng-class="'cc-icon-{{site.emitter|lowercase}}'"></i>
         <div class="cc-class-site">
           <a data-ng-href="{{site.site_url}}"
-             data-ng-click="api.analytics.trackExternalLink('Class Sites', group.emitter, site.site_url)">
+             data-ng-click="api.analytics.trackExternalLink('Class Sites', group.emitter)">
             <strong class="cc-ellipsis" data-ng-bind="site.name"></strong>
           </a>
           <div data-ng-if="site.shortDescription != site.name && site.shortDescription != selectedCourse.title" data-ng-bind="site.shortDescription" class="cc-ellipsis cc-text-light"></div>

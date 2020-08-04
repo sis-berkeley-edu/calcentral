@@ -82,6 +82,7 @@ describe CampusSolutions::Link do
         expect(link_get_url_for_properties_response[:link][:ucFrom]).to eq 'CalCentral'
         expect(link_get_url_for_properties_response[:link][:ucFromLink]).to eq 'https://calcentral-sis-dev-01.ist.berkeley.edu/'
         expect(link_get_url_for_properties_response[:link][:ucFromText]).to eq 'CalCentral'
+        expect(link_get_url_for_properties_response[:link][:isCampusSolutionsLink]).to eq true
         expect(link_get_url_for_properties_response[:link][:linkDescription]).to eq 'May your hats fly as high as your dreams'
         expect(link_get_url_for_properties_response[:link][:linkDescriptionDisplay]).to eq true
       end

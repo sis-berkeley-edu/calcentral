@@ -6,7 +6,8 @@ module DegreeProgress
     include Cache::UserCacheExpiry
     include RequirementsModule
 
-    LINK_ID = 'UC_CX_APR_RPT_STDNT'
+    APR_LINK_ID = 'UC_CX_APR_RPT_STDNT'
+    WHAT_IF_APR_LINK_ID = 'UC_CX_WHIF_RPT'
 
     def get_feed_internal
       return {} unless is_feature_enabled?
@@ -16,10 +17,18 @@ module DegreeProgress
       else
         response[:feed] = HashConverter.camelize({
           degree_progress: process(response),
-          links: get_links
+          links: links
         })
       end
       response
+    end
+
+    def links
+      Hash.new.tap do |hash|
+        hash[:academic_progress_report] = fetch_link(APR_LINK_ID, { :EMPLID => student_empl_id })
+        hash[:academic_progress_report_faqs] = fetch_link(APR_FAQS_LINK_ID)
+        hash[:academic_progress_report_what_if] = fetch_link(WHAT_IF_APR_LINK_ID)
+      end
     end
 
     def is_feature_enabled?
