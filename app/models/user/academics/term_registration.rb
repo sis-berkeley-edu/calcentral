@@ -22,6 +22,7 @@ module User
           registrationStatus: registration_status,
           cnpStatus: cnp_status,
           requiresCalGrantAcknowledgement: requires_cal_grant_acknowledgement?,
+          showCNP: show_cnp?
         }
       end
 
@@ -126,6 +127,13 @@ module User
         else
           null_status
         end
+      end
+
+      def show_cnp?
+        # This needs to use the same logic for showCNP flag used for semester
+        # CNP statuses. We need to call RegistrationsModule.show_cnp?(term)
+        # TODO: merge semesters CNP logic with status and hold card
+         MyRegistrations::RegistrationsModule.show_cnp?(@term)
       end
 
       def cnp_status
