@@ -12,6 +12,7 @@ import './angularWrappers/classInfoNotice';
 import './angularWrappers/enrollmentNotice';
 import './_academics/EnrollmentAppointments/EnrollmentAppointments';
 
+import './angularWrappers/covidResponseCard';
 import './_dashboard/StudentResources/StudentResourcesContainer';
 import './_dashboard/UpNext/UpNextContainer';
 import './_dashboard';

@@ -21,13 +21,3 @@
   justify-content: space-between;
   align-items: center;
 }
-
-.Card__error {
-  display: flex;
-  align-items: center;
-  margin-top: $medium-spacing;
-
-  img {
-    margin-right: 5px;
-  }
-}

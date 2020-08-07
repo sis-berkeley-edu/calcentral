@@ -93,6 +93,10 @@ Calcentral::Application.routes.draw do
   get '/api/my/housing/:aid_year' => 'my_housing#get_feed', :defaults => { :format => 'json' }
 
   with_options defaults: { format: :json } do
+    scope '/api' do
+      resources :covid_response, only: :index
+    end
+
     get '/api/my/law_awards' => 'my_law_awards#get_feed'
 
     scope '/api/my', module: 'user' do
