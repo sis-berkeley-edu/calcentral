@@ -4,25 +4,7 @@ import Spinner from 'react/components/Spinner';
 import 'icons/warning.svg';
 import './Card.scss';
 
-const CardError = ({ message }) => {
-  if (message) {
-    return (
-      <div className="Card__error">
-        <img src="/assets/images/warning.svg" />
-        {message}
-      </div>
-    );
-  } else {
-    return null;
-  }
-};
-
-CardError.propTypes = {
-  message: PropTypes.string,
-  error: PropTypes.object,
-};
-
-CardError.displayName = 'CardError';
+import ErrorMessage from './ErrorMessage';
 
 const Card = ({
   children,
@@ -42,7 +24,7 @@ const Card = ({
         {secondaryContent}
       </div>
       <div className="Card__body">
-        {loading ? <Spinner /> : <CardError {...error} />}
+        {loading ? <Spinner /> : <ErrorMessage {...error} />}
 
         {!loading && !error && children}
       </div>

@@ -1,0 +1,12 @@
+@import 'src/react/stylesheets/variables';
+
+.errorMessage {
+  display: flex;
+  align-items: flex-start;
+  margin-top: $medium-spacing;
+
+  img {
+    margin-right: 5px;
+    padding-top: 3px;
+  }
+}
