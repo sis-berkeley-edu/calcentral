@@ -133,7 +133,9 @@ module User
         # This needs to use the same logic for showCNP flag used for semester
         # CNP statuses. We need to call RegistrationsModule.show_cnp?(term)
         # TODO: merge semesters CNP logic with status and hold card
-         MyRegistrations::RegistrationsModule.show_cnp?(@term)
+          JSON.parse(MyRegistrations::Statuses.new(user.uid).get_feed)['registrations'][term_id]['showCnp']
+      rescue NoMethodError
+          false
       end
 
       def cnp_status
