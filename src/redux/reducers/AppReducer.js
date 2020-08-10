@@ -10,6 +10,7 @@ import myHolds from './HoldsReducer';
 
 import {
   CarsDataReducer as carsData,
+  CovidResponseReducer as covidResponse,
   FinancialResourcesLinksReducer as financialResourcesLinks,
   LinksReducer as links,
   AcademicsReducer as myAcademics,
@@ -39,6 +40,7 @@ const AppReducer = combineReducers({
   currentRoute,
   billingItems,
   carsData,
+  covidResponse,
   financialResourcesLinks,
   links,
   myAcademics,
