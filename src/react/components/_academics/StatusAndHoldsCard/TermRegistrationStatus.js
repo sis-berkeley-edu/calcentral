@@ -10,6 +10,7 @@ const TermRegistrationStatus = ({
     isShown,
     registrationStatus,
     cnpStatus,
+    showCNP,
   },
 }) => {
   if (isShown) {
@@ -21,7 +22,7 @@ const TermRegistrationStatus = ({
       >
         <h4>{termName}</h4>
         {registrationStatus && <StatusItem status={registrationStatus} />}
-        {cnpStatus && <StatusItem status={cnpStatus} />}
+        {showCNP && cnpStatus && <StatusItem status={cnpStatus} />}
       </div>
     );
   }
@@ -41,6 +42,7 @@ TermRegistrationStatus.propTypes = {
     termId: PropTypes.string,
     registrationStatus: statusProps,
     cnpStatus: statusProps,
+    showCNP: PropTypes.bool,
     isShown: PropTypes.bool,
   }),
 };
