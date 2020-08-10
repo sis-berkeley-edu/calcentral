@@ -84,12 +84,7 @@ $curve-position: 8px;
   }
 
   a {
-    background-color: $color-cerulean;
-    color: white;
     display: block;
-    border-radius: $small-border-radius;
-    padding: 8px 20px 7px;
-    font-weight: bold;
   }
 }
 
@@ -97,6 +92,10 @@ $curve-position: 8px;
   h2 {
     @include title2;
     margin-top: $large-spacing;
+    margin-bottom: $medium-spacing;
+  }
+
+  p {
     margin-bottom: $medium-spacing;
   }
 
@@ -110,6 +109,7 @@ $curve-position: 8px;
 
   h2 {
     @include title2;
+    margin-bottom: $medium-spacing;
   }
 
   ul {

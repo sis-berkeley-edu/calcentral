@@ -65,7 +65,11 @@ const COVIDResponseCard = ({ covidResponse, fetchData }) => {
                 <div className={styles.dailyScreener}>
                   <h2>{screener.message.messageText}</h2>
                   <p>{screener.message.descrlong}</p>
-                  <APILink {...screener.link} gaSection="COVID Response Card" />
+                  <APILink
+                    {...screener.link}
+                    gaSection="COVID Response Card"
+                    className="cc-react-button cc-react-button--blue"
+                  />
                 </div>
               )}
               {html && (
