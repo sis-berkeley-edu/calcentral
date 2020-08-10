@@ -11,7 +11,7 @@
   display: inline-block;
   margin-bottom: -1px;
   padding: 2px 20px;
-  color: $cc-color-curious-blue;
+  color: $cc-color-cerulean;
 
   &:first-child {
     margin-left: 10px;
@@ -19,6 +19,6 @@
 }
 
 .Tab--active {
-  border-bottom: 1px solid $cc-color-curious-blue;
+  border-bottom: 1px solid $cc-color-cerulean;
   font-weight: bold;
 }
