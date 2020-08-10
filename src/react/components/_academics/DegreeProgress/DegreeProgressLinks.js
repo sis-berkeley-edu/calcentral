@@ -11,6 +11,8 @@ import './DegreeProgressLinks.scss';
 
 const commonPropTypes = {
   aprLink: PropTypes.object,
+  aprFaqsLink: PropTypes.object,
+  aprWhatIfLink: PropTypes.object,
   degreePlannerLink: PropTypes.object,
   showPnpCalculator: PropTypes.func,
   showPnpCalculatorLink: PropTypes.bool,
@@ -19,6 +21,8 @@ const commonPropTypes = {
 
 const DegreeProgressLinks = ({
   aprLink,
+  aprFaqsLink,
+  aprWhatIfLink,
   degreePlannerLink,
   showPnpCalculator,
   showPnpCalculatorLink,
@@ -27,37 +31,60 @@ const DegreeProgressLinks = ({
   return (
     <>
       {aprLink && (
-        <>
-          <div className="linksTitle icon iconApr">
+        <div className="linkContainer">
+          <div className="linkTitle icon iconApr">
             Academic Progress Report
           </div>
-          <div className="linksSubTitle linksSubText">
-            Confirm completion of requirements to date
+
+          {aprLink.linkDescriptionDisplay && (
+            <div className="linkSubTitle linkSubText">
+              {aprLink.linkDescription + ' '}
+              {aprFaqsLink && (
+                <APILink {...aprFaqsLink} />
+              )}
+            </div>
+          )}
+          <div className="linkSubText">
+            <APILink gaSection="Degree Progress" {...aprLink} />
           </div>
-          <div className="linksSubText">
-            <APILink {...aprLink} />
-          </div>
-        </>
+        </div>
       )}
       {degreePlannerLink && (
-        <>
-          <div className="linksTitle icon iconDegreePlanner">
+        <div className="linkContainer">
+          <div className="linkTitle icon iconDegreePlanner">
             Degree Planner
           </div>
-          <div className="linksSubTitle linksSubText">
-            Create a long-term program plan
-          </div>
-          <div className="linksSubText">
+          {degreePlannerLink.linkDescriptionDisplay && (
+            <div className="linkSubTitle linkSubText">
+              {degreePlannerLink.linkDescription}
+            </div>
+          )}
+          <div className="linkSubText">
             <APILink {...degreePlannerLink} />
           </div>
-        </>
+        </div>
+      )}
+      {aprWhatIfLink && (
+        <div className="linkContainer">
+          <div className="linkTitle icon iconAprWhatIf">
+            What-if Academic Progress Report
+          </div>
+          {aprWhatIfLink.linkDescriptionDisplay && (
+            <div className="linkSubTitle linkSubText">
+              {aprWhatIfLink.linkDescription}
+            </div>
+          )}
+          <div className="linkSubText">
+            <APILink gaSection="Degree Progress" {...aprWhatIfLink} />
+          </div>
+        </div>
       )}
       {showPnpCalculatorLink && (
         <>
-          <div className="linksTitle icon iconGradeEstimator">
+          <div className="linkTitle icon iconGradeEstimator">
             1/3 Passed Grade Estimator
           </div>
-          <div className="linksSubText">
+          <div className="linkSubText">
             <button
               className="cc-button-link"
               onClick={() => showPnpCalculator()}

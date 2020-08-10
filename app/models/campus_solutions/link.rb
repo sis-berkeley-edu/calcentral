@@ -85,12 +85,17 @@ module CampusSolutions
           if property[:name] == 'CC_CACHE'
             link[:ucUpdateCache] = property[:value]
           end
+          if property[:name] == 'URI_TYPE' && property[:value] == 'PL'
+            link[:isCampusSolutionsLink] = true
+          end
         end
 
         # convert campus solutions property names to calcentral
         link[:name] = link.delete(:description)
         link[:title] = link.delete(:hoverOverText) || ''
         if !link[:showNewWindow]
+          # TODO: Replace or remove this boolean that pre-dates the CS Link API
+          # and was used to determine if the hyperlink opens in a new tab (when false)
           link[:isCsLink] = true
         end
       end
