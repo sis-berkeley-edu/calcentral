@@ -9,9 +9,12 @@ import { ICON_GRADUATION, ICON_CERTIFICATE } from '../../Icon/IconTypes';
 import './Degrees.scss';
 
 const college = degree => degree.plans[0].college;
-const description = degree => degree.academicDegree.type.description;
+const LAW_LLM = "28";
+const LAW_JSD = "69";
+const description = degree => (degree.academicDegree.type.code == LAW_LLM) ? "" : degree.academicDegree.type.description;
+const inWord = degree => (degree.academicDegree.type.code == LAW_LLM || degree.academicDegree.type.code == LAW_JSD) ? "" : "in";
 const degreeMajors = degree =>
-  degree.majors.map(major => major.description).join(', ');
+  (degree.academicDegree.type.code == 'LAW_JSD') ? "" : (degree.majors.map(major => major.description).join(', '));
 
 const formattedAwardDate = degree => {
   return format(parseISO(degree.dateAwarded), 'MMMM d, y');
@@ -31,7 +34,7 @@ const Degree = ({ degree, index }) => {
       </div>
       <div className="Degree__body">
         <div className="Degree__description">
-          {description(degree)} <span>in</span> {degreeMajors(degree)}
+          {description(degree)} <span>{inWord(degree)}</span> {degreeMajors(degree)}
         </div>
 
         {degree.designatedEmphases.length > 0 && (
