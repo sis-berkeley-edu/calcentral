@@ -104,7 +104,7 @@ button {
 //
 // Styleguide 2.4.1
 .cc-button-blue {
-  background: $cc-color-curious-blue;
+  background: $cc-color-cerulean;
   border: 1px solid transparent;
   color: $cc-color-white;
   &:focus, &:hover {
@@ -112,9 +112,9 @@ button {
     color: $cc-color-white;
   }
   &.cc-button-large {
-    background: linear-gradient($cc-color-curious-blue, $cc-color-lochmara), $cc-color-lochmara;
+    background: linear-gradient($cc-color-cerulean, $cc-color-lochmara), $cc-color-lochmara;
     &:focus, &:hover {
-      background: linear-gradient($cc-color-curious-blue, $cc-color-blue-lagoon);
+      background: linear-gradient($cc-color-cerulean, $cc-color-blue-lagoon);
     }
   }
 }
@@ -175,7 +175,7 @@ button {
 //
 // Styleguide 2.6.1
 .cc-button-plus-icon {
-  color: $cc-color-salem;
+  color: $cc-color-dark-spring-green;
 }
 
 // Button Links
