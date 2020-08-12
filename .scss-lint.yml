@@ -11,11 +11,13 @@ linters:
     enabled: false
   ImportantRule:
     enabled: false
+  LeadingZero:
+    enabled: false
   NestingDepth:
     max_depth: 5
   PropertySpelling:
     extra_properties:
-     - text-size-adjust
+      - text-size-adjust
   SelectorDepth:
     enabled: false
   SingleLinePerSelector:

@@ -1,3 +1,5 @@
+@import 'src/react/stylesheets/colors';
+
 // Colors
 //
 // Colors used throughout the entire calcentral portal.
@@ -39,9 +41,9 @@ $cc-color-white: #fff;
 // <div style="background: $cc-color-white-transparent; padding: 1rem;">&#36;cc-color-white-transparent: rgba(255, 255, 255, 0);</div>
 //
 // Styleguide 1.2
-$cc-color-black-transparent: rgba(0, 0, 0, .2);
-$cc-color-ironside-grey-transparent: rgba(113, 112, 107, .1);
-$cc-color-white-translucent: rgba(255, 255, 255, .5);
+$cc-color-black-transparent: rgba(0, 0, 0, 0.2);
+$cc-color-ironside-grey-transparent: rgba(113, 112, 107, 0.1);
+$cc-color-white-translucent: rgba(255, 255, 255, 0.5);
 $cc-color-white-transparent: rgba(255, 255, 255, 0);
 
 // Blue / Grey Shades
@@ -121,7 +123,6 @@ $cc-color-yellow: #ff0;
 $cc-color-dark-orange: #f79400;
 $cc-color-dark-tangerine: #f1a91e;
 $cc-color-lucky: #a79526;
-$cc-color-salem: #0d863d;
 $cc-color-zanah: #b3c8b4;
 
 // Berkeley Branding Colors

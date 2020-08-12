@@ -1,7 +1,7 @@
 @import 'src/react/stylesheets/variables';
 @import 'src/react/stylesheets/mixins';
 
-$header-bg-color: $color-zanah;
+$header-bg-color: $color-jewel;
 $curve-position: 8px;
 
 // TODO: move these to the mixins file, once they have been updated to use REMs
@@ -30,17 +30,19 @@ $curve-position: 8px;
 }
 
 .wrapper {
-  background-color: white;
+  background-color: $white;
   margin-right: $large-spacing;
   margin-top: $large-spacing;
 }
 
 .header {
   background-color: $header-bg-color;
+  color: $white;
   padding-top: $medium-spacing;
 
   h1 {
     @include title1;
+    color: inherit;
     line-height: 1;
     text-align: center;
   }
@@ -51,7 +53,7 @@ $curve-position: 8px;
   background-image: linear-gradient(
     $header-bg-color,
     $header-bg-color $curve-position,
-    white ($curve-position + 1px)
+    $white ($curve-position + 1px)
   );
 }
 
@@ -60,7 +62,7 @@ $curve-position: 8px;
   background-repeat: no-repeat;
   background-position-y: $curve-position;
   background-position-x: center;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 284 23.28'%3E%3Cg id='Layer_2' data-name='Layer 2'%3E%3Cg id='Layer_1-2' data-name='Layer 1'%3E%3Cpath fill='%23b9d3b6' d='M284,7.47a233.73,233.73,0,0,1-63.53,15c-53.81,4.83-81.33-12.13-145.73-15A405.89,405.89,0,0,0,0,11.21V0H284Z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 284 23.28'%3E%3Cg id='Layer_2' data-name='Layer 2'%3E%3Cg id='Layer_1-2' data-name='Layer 1'%3E%3Cpath fill='%23137e3e' d='M284,7.47a233.73,233.73,0,0,1-63.53,15c-53.81,4.83-81.33-12.13-145.73-15A405.89,405.89,0,0,0,0,11.21V0H284Z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
   text-align: center;
 }
 
@@ -69,7 +71,7 @@ $curve-position: 8px;
 }
 
 .dailyScreener {
-  background-color: $color-aero-blue;
+  background-color: $color-skeptic;
   border-radius: $small-border-radius;
   text-align: center;
   padding: $medium-spacing;

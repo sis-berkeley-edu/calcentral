@@ -99,7 +99,7 @@
   }
   .cc-page-myfinances-green {
     &, td {
-      color: $cc-color-salem;
+      color: $color-salem;
     }
   }
   .cc-page-myfinances-light {
@@ -142,7 +142,7 @@
   }
   .cc-page-myfinances-unapplied-award {
     font-weight: bold;
-    opacity: .6;
+    opacity: 0.6;
   }
   @media print {
     .cc-page-myfinances-account-activity-search input {

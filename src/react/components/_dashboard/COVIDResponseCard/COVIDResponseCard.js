@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import APILink from 'react/components/APILink';
 import ReadMore from 'react/components/ReadMore';
 
-import 'react/../assets/images/bear_with_mask.png';
+import 'react/../assets/images/bear-with-mask.png';
 import 'icons/blue-bullet.svg';
 
 import ErrorMessage from 'react/components/ErrorMessage';
@@ -21,9 +21,9 @@ const COVIDCardWrapper = ({ children }) => (
       <div className={styles.headerDecorationWrapper}>
         <div className={styles.headerDecoration}>
           <img
-            src="/assets/images/bear_with_mask.png"
-            width="96"
-            height="60"
+            src="/assets/images/bear-with-mask.png"
+            width="60"
+            height="64"
             alt="Bear wearing mask"
           />
         </div>
