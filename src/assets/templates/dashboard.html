@@ -1,4 +1,6 @@
-<div data-ng-if="api.user.profile.hasDashboardTab && !api.user.profile.roles.withdrawnAdmit">
+<div
+  data-ng-if="api.user.profile.hasDashboardTab && !api.user.profile.roles.withdrawnAdmit"
+>
   <div class="medium-5 large-3 columns">
     <div
       data-ng-include="'widgets/sir/sir.html'"
@@ -8,6 +10,8 @@
       data-ng-include="'widgets/new_admit_resources.html'"
       data-ng-if="!api.user.profile.delegateActingAsUid && api.user.profile.roles.releasedAdmit"
     ></div>
+
+    <covid-response-card></covid-response-card>
     <up-next-card data-ng-if="!api.user.profile.isApplicantOnly"></up-next-card>
     <div
       data-ng-include="'widgets/my_classes.html'"
@@ -52,4 +56,7 @@
   data-ng-include="'delegate_access_denied.html'"
   data-ng-if="!api.user.profile.profile.hasDashboardTab && api.user.profile.delegateActingAsUid"
 ></div>
-<div data-ng-include="'withdrawn_admit.html'" data-ng-if="api.user.profile.roles.withdrawnAdmit"></div>
+<div
+  data-ng-include="'withdrawn_admit.html'"
+  data-ng-if="api.user.profile.roles.withdrawnAdmit"
+></div>
