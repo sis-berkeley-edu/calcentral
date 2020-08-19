@@ -23,7 +23,7 @@ const VerticalClassAttributes = ({
       {units && (
         <tr>
           <th>Units</th>
-          <td>{units.toFixed(1)}</td>
+          <td>{units}</td>
         </tr>
       )}
 

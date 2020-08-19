@@ -23,7 +23,7 @@ const HorizontalClassAttributes = ({
     <tbody>
       <tr>
         {role && <td>{role}</td>}
-        {units && <td>{units.toFixed(1)}</td>}
+        {units && <td>{units}</td>}
         {gradingBasis && <td>{gradingBasis}</td>}
         {!isLaw && (
           <td>
