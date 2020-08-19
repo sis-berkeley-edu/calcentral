@@ -375,6 +375,12 @@ hub_enrollments_proxy:
   password: secret
   http_timeout_seconds: 30
 
+hub_classes_proxy:
+  base_url: 'https://sis-integration.berkeley.edu/dev/apis/sis/'
+  username: secret
+  password: secret
+  http_timeout_seconds: 30
+
 calnet_crosswalk_proxy:
   fake: true
   enabled: true
