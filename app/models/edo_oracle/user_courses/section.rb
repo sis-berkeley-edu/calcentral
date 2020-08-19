@@ -42,7 +42,7 @@ module EdoOracle
       end
 
       def as_json(options={})
-        base_json.merge(waitlist_json).merge(law_json)
+        base_json.merge(primary_section_json).merge(waitlist_json).merge(law_json)
       end
 
       def academic_career
@@ -140,7 +140,6 @@ module EdoOracle
 
       def law_json
         return {} unless law?
-
         {
           lawUnits: units_taken_law,
           requirementsDesignation: requirements_designation,
