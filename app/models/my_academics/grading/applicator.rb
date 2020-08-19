@@ -156,7 +156,7 @@ module MyAcademics
               gradingPeriodEndDateFormatted: format_period_end_summer(end_date).to_s
             })
           else
-            logger.warn "No grading periods found for term: #{term_id}, career: #{acad_career_code}, session: #{grading_session}"
+            logger.error "No grading periods found for term: #{term_id}, career: #{acad_career_code}, session: #{grading_session}"
           end
         else
           logger.error "No session ID found for section #{section[:ccn]}, course ID #{semester_class[:course_id]}"
