@@ -24,7 +24,7 @@ export default function NoticeBox({
     return null;
   }
 
-  const { descrlong: html } = enrollmentTerm[messageKey] || {};
+  const { descrlong: html } = enrollmentTerm ? enrollmentTerm[messageKey] : {};
 
   if (html) {
     return (

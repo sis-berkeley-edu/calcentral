@@ -110,6 +110,12 @@ Calcentral::Application.routes.draw do
 
       scope '/academics', module: 'academics' do
         resources :status_and_holds, only: [:index]
+
+        resources :terms, only: [] do
+          resources :courses, only: [] do
+            resources :sections
+          end
+        end
       end
 
       scope '/financial_aid', module: 'financial_aid' do

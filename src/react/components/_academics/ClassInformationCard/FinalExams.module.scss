@@ -1,0 +1,26 @@
+@import 'src/react/stylesheets/variables';
+
+@mixin title2 {
+  font-size: 15px;
+  line-height: 17px;
+}
+
+.finalExams {
+  margin-top: 20px;
+}
+
+.title {
+  @include title2;
+}
+
+.finalsTable {
+  tbody {
+    tr th {
+      white-space: nowrap;
+      padding-right: 15px;
+      vertical-align: top;
+      font-weight: normal;
+      color: $cc-color-dim-gray;
+    }
+  }
+}

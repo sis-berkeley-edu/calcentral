@@ -1,6 +1,47 @@
 @import 'colors';
 @import 'foundation_overrides';
 
+// Resets foundation.css table styles
+table.table {
+  background: inherit;
+  border: inherit;
+  margin: 0;
+
+  tr.even,
+  tr.alt,
+  tr:nth-of-type(2n) {
+    background: inherit;
+  }
+
+  thead {
+    background: inherit;
+  }
+
+  thead tr th,
+  tfoot tr th,
+  tfoot tr td,
+  tbody tr th,
+  tbody tr td,
+  tr td {
+    line-height: inherit;
+  }
+
+  thead tr th,
+  thead tr td {
+    padding: inherit;
+    font-size: inherit;
+    font-weight: inherit;
+    color: inherit;
+  }
+
+  tr th,
+  tr td {
+    padding: inherit;
+    font-size: inherit;
+    color: inherit;
+  }
+}
+
 // Blocks
 .cc-react-table {
   overflow-x: auto;
@@ -19,7 +60,8 @@
       &:nth-of-type(even) {
         background: transparent;
       }
-      td, th {
+      td,
+      th {
         color: $body-font-color;
         padding: 2px 2px 2px 0;
         vertical-align: top;

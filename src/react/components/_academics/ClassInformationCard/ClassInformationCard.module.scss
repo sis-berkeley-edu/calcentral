@@ -1,0 +1,12 @@
+@mixin title2 {
+  font-size: 15px;
+  line-height: 17px;
+}
+
+.title {
+  @include title2;
+}
+
+.catalogNumber {
+  font-weight: normal;
+}
