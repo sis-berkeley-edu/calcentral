@@ -12,3 +12,15 @@
 .title {
   @include title2;
 }
+
+.finalsTable {
+  tbody {
+    tr th {
+      white-space: nowrap;
+      padding-right: 15px;
+      vertical-align: top;
+      font-weight: normal;
+      color: $cc-color-dim-gray;
+    }
+  }
+}
