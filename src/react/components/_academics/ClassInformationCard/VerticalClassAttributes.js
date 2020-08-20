@@ -2,7 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import 'react/stylesheets/tables.scss';
-import styles from './ClassInformationCard.module.scss';
+import styles from './ClassAttributesTable.module.scss';
+import ClassNotesLink from './ClassNotesLink';
 
 const VerticalClassAttributes = ({
   role,
@@ -11,11 +12,11 @@ const VerticalClassAttributes = ({
   academicGuide,
   isLaw,
 }) => (
-  <table className={`table ${styles.table}`} style={{ width: `100%` }}>
+  <table className={`table ${styles.classAttributesTable}`}>
     <tbody>
       {role && (
         <tr>
-          <th>Role</th>
+          <th>My Role</th>
           <td>{role}</td>
         </tr>
       )}
@@ -29,7 +30,7 @@ const VerticalClassAttributes = ({
 
       {gradingBasis && (
         <tr>
-          <th>Units</th>
+          <th>Grading</th>
           <td>{gradingBasis}</td>
         </tr>
       )}
@@ -38,7 +39,7 @@ const VerticalClassAttributes = ({
         <tr>
           <th>Academic Guide</th>
           <td>
-            <a href={academicGuide}>View Class Notes</a>
+            <ClassNotesLink href={academicGuide} />
           </td>
         </tr>
       )}

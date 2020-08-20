@@ -31,7 +31,7 @@ export default function ClassInformationCard({
 }) {
   return (
     <Card
-      title="Class Information Card"
+      title="Class Information"
       loading={!loaded}
       style={{ marginRight: `15px` }}
     >
@@ -49,7 +49,7 @@ export default function ClassInformationCard({
         semesterSlug={semesterSlug}
         slug={slug}
         isInstructor={isInstructor}
-        primarySection={sections.find(section => section.is_primary_section)}
+        sections={sections}
       />
 
       <hr />
