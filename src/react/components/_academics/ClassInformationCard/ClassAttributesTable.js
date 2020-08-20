@@ -53,9 +53,10 @@ export default function ClassAttributesTable({
   slug,
   sections,
   isInstructor,
+  isLaw,
 }) {
   const primarySection = sections.find(section => section.is_primary_section);
-  const { grading: { gradingBasis } = {}, isLaw } = primarySection;
+  const { grading: { gradingBasis } = {} } = primarySection;
   const academicGuide = classNotesLink(semesterSlug, slug, primarySection);
 
   const orientation = tableOrientation({
