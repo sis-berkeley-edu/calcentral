@@ -13,7 +13,7 @@ const propTypes = {
   isLaw: PropTypes.bool,
   semesterSlug: PropTypes.string,
   slug: PropTypes.string,
-  primarySection: PropTypes.object,
+  sections: PropTypes.array,
   isInstructor: PropTypes.bool,
 };
 
@@ -49,13 +49,13 @@ function tableOrientation({ role, isInstructor, isLaw, units, gradingBasis }) {
 export default function ClassAttributesTable({
   role,
   units,
-  isLaw,
   semesterSlug,
   slug,
-  primarySection,
+  sections,
   isInstructor,
 }) {
-  const { grading: { gradingBasis } = {} } = primarySection;
+  const primarySection = sections.find(section => section.is_primary_section);
+  const { grading: { gradingBasis } = {}, isLaw } = primarySection;
   const academicGuide = classNotesLink(semesterSlug, slug, primarySection);
 
   const orientation = tableOrientation({
@@ -74,6 +74,7 @@ export default function ClassAttributesTable({
         gradingBasis={gradingBasis}
         semesterSlug={semesterSlug}
         academicGuide={academicGuide}
+        isLaw={isLaw}
       />
     );
   }
@@ -85,6 +86,7 @@ export default function ClassAttributesTable({
       gradingBasis={gradingBasis}
       semesterSlug={semesterSlug}
       academicGuide={academicGuide}
+      isLaw={isLaw}
     />
   );
 }

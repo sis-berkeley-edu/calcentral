@@ -1,0 +1,15 @@
+@import 'src/react/stylesheets/variables';
+
+table.classAttributesTable {
+  width: 100%;
+
+  thead,
+  tbody {
+    tr {
+      th {
+        color: $cc-color-dim-gray;
+        font-weight: normal;
+      }
+    }
+  }
+}

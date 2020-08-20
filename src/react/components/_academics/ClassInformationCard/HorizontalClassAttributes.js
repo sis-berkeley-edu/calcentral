@@ -2,7 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import 'react/stylesheets/tables.scss';
-import styles from './ClassInformationCard.module.scss';
+import styles from './ClassAttributesTable.module.scss';
+import ClassNotesLink from './ClassNotesLink';
 
 const HorizontalClassAttributes = ({
   role,
@@ -11,10 +12,10 @@ const HorizontalClassAttributes = ({
   academicGuide,
   isLaw,
 }) => (
-  <table className={`table ${styles.table}`} style={{ width: `100%` }}>
+  <table className={`table ${styles.classAttributesTable}`}>
     <thead>
       <tr>
-        {role && <th>Role</th>}
+        {role && <th>My Role</th>}
         {units && <th>Units</th>}
         {gradingBasis && <th>Grading</th>}
         {!isLaw && <th>Academic Guide</th>}
@@ -27,7 +28,7 @@ const HorizontalClassAttributes = ({
         {gradingBasis && <td>{gradingBasis}</td>}
         {!isLaw && (
           <td>
-            <a href={academicGuide}>View Class Notes</a>
+            <ClassNotesLink href={academicGuide} />
           </td>
         )}
       </tr>
