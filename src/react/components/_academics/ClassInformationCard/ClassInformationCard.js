@@ -19,7 +19,6 @@ export default function ClassInformationCard({
   course: {
     title,
     units,
-    isLaw,
     role,
     gradingBasis,
     classNotesLink,
@@ -27,6 +26,7 @@ export default function ClassInformationCard({
     semesterSlug,
     slug,
     listings,
+    courseCareerCode,
   },
 }) {
   return (
@@ -45,7 +45,7 @@ export default function ClassInformationCard({
         units={units}
         gradingBasis={gradingBasis}
         classNotesLink={classNotesLink}
-        isLaw={isLaw}
+        isLaw={courseCareerCode === 'LAW'}
         semesterSlug={semesterSlug}
         slug={slug}
         isInstructor={isInstructor}
@@ -86,5 +86,6 @@ ClassInformationCard.propTypes = {
     semesterSlug: PropTypes.string,
     slug: PropTypes.string,
     listings: PropTypes.array,
+    courseCareerCode: PropTypes.string,
   }),
 };
