@@ -1,8 +1,8 @@
 import {
-  fetchAcademicsStart,
-  fetchAcademicsSuccess,
-  fetchAcademicsFailure
-} from 'Redux/actions/academicsActions';
+  fetchMyAcademicsStart,
+  fetchMyAcademicsSuccess,
+  fetchMyAcademicsFailure
+} from 'Redux/actions/myAcademicsActions';
 
 angular.module('calcentral.factories').factory('academicsFactory', function(apiService, $ngRedux) {
   var urlResidency = '/api/my/residency';
@@ -18,14 +18,14 @@ angular.module('calcentral.factories').factory('academicsFactory', function(apiS
     if (myAcademics.loaded || myAcademics.isLoading) {
       return apiService.http.request(options, url);
     } else {
-      $ngRedux.dispatch(fetchAcademicsStart());
+      $ngRedux.dispatch(fetchMyAcademicsStart());
 
       const promise = apiService.http.request(options, url);
 
       promise.then(({ data }) => {
-        $ngRedux.dispatch(fetchAcademicsSuccess(data));
+        $ngRedux.dispatch(fetchMyAcademicsSuccess(data));
       }).catch(error => {
-        $ngRedux.dispatch(fetchAcademicsFailure({ status: error.status, statusText: error.statusText }));
+        $ngRedux.dispatch(fetchMyAcademicsFailure({ status: error.status, statusText: error.statusText }));
       });
 
       return promise;

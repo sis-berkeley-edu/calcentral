@@ -64,7 +64,7 @@ describe MyRegistrations::Statuses do
   let(:registrations_feed) { {statusCode: 200, feed: {'registrations' => registrations}, studentNotFound: nil} }
   let(:registrations_proxy) { double(:registrations_proxy, get: registrations_feed) }
   before do
-    allow(HubEdos::StudentApi::V2::Registrations).to receive(:new).and_return(registrations_proxy)
+    allow(HubEdos::StudentApi::V2::Feeds::Registrations).to receive(:new).and_return(registrations_proxy)
   end
 
   # ----------------------------
@@ -418,7 +418,7 @@ describe MyRegistrations::Statuses do
       end
     end
     it 'memoizes users registrations' do
-      expect(HubEdos::StudentApi::V2::Registrations).to receive(:new).with({user_id: uid}).once.and_return(registrations_proxy)
+      expect(HubEdos::StudentApi::V2::Feeds::Registrations).to receive(:new).with({user_id: uid}).once.and_return(registrations_proxy)
       result2 = subject.instance_eval { registrations }
       [result, result2].each do |result|
         expect(result.count).to eq 2

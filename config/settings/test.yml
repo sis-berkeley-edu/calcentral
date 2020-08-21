@@ -73,6 +73,11 @@ cache:
     UpNext::MyUpNext: <%= 1.day %>
     User::Api: <%= 1.day %>
 
+ce_diploma:
+  supported_terms:
+    - '2202'
+    - '2205'
+
 grading_period:
   links:
     final: '#'

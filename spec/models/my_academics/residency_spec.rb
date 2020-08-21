@@ -112,7 +112,7 @@ describe MyAcademics::Residency do
     end
     let(:residency_from_term) { {'id' => '2172', 'name' => '2017 Spring'} }
     before do
-      allow(HubEdos::StudentApi::V2::Demographics).to receive(:new).with(user_id: uid).and_return(demographics_proxy)
+      allow(HubEdos::StudentApi::V2::Feeds::Demographics).to receive(:new).with(user_id: uid).and_return(demographics_proxy)
       allow(Berkeley::TermCodes).to receive(:normalized_english).with('2017 Spring').and_return('Spring 2017')
     end
     context 'when residency is blank' do

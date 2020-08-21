@@ -34,7 +34,7 @@ module User
       end
 
       def data_feed
-        @registrations ||= HubEdos::StudentApi::V2::Registrations.new(user_id: user.uid).get[:feed]['registrations'] || []
+        @registrations ||= HubEdos::StudentApi::V2::Feeds::Registrations.new(user_id: user.uid).get[:feed]['registrations'] || []
       rescue NoMethodError
         []
       end
