@@ -12,7 +12,7 @@ const Legend = ({ asOfCurrentDate, selectedDate }) => {
           <tr className="legendBorder">
             <th scope="col">
               <div className="indicatesChangeColumn">
-                <OrangeChangedIcon className="hideSmallFormFactor icon" />
+                <OrangeChangedIcon className="hideSmallFormFactor icon noPaddingLeft" />
                 <div className="hideSmallFormFactor">Indicates Change</div>
               </div>
             </th>
