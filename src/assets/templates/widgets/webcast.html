@@ -3,54 +3,11 @@
   <div data-ng-bind="proxyErrorMessage"></div>
   <div data-ng-if="!proxyErrorMessage">
     <h1 class="cc-visuallyhidden" data-ng-if="isEmbedded">Course Captures</h1>
-    <div data-ng-if="eligibleForSignUp && eligibleForSignUp.length" class="bc-tab-navigation">
-      <ul data-ng-if="videos" class="bc-tab-group cc-clearfix-container" role="tablist">
-        <li class="bc-tab"
-            data-ng-class="{'bc-tab-active':(currentTabSelection === tabOption)}"
-            data-ng-repeat="tabOption in outerTabOptions">
-          <a data-ng-click="switchTabOption(tabOption)"
-            ng-attr-aria-selected="{{currentTabSelection === tabOption}}"
-            role="tab"
-            data-ng-bind="tabOption">
-          </a>
-        </li>
-      </ul>
-      <div data-ng-if="currentTabSelection === 'Course Capture Sign-up'">
-        <h1 class="cc-visuallyhidden" data-ng-if="isEmbedded">Course Capture Sign-up</h1>
-        <div data-ng-if="userCanSignUpOneOrMore">
-          <p>
-            The following classes are eligible for Course Capture.
-            <a href="http://www.ets.berkeley.edu/discover-services/course-capture">Find out more about Course Capture</a>.
-          </p>
-          <p>
-            If you wish to record any class below, please use the adjacent link(s) to schedule recordings. Please sign
-            up before the semester starts to avoid missing recordings. Deadline for sign-ups is 4th week of classes. If
-            you do not intend to record, you can hide this tool by going to <i>Settings &gt; Navigation</i> and
-            dragging the Course Captures tool out of the list.
-          </p>
-        </div>
-        <div data-ng-if="!userCanSignUpOneOrMore">
-          Classes in this course site that you teach are eligible for Course Capture but have not been signed up yet.
-          <a href="http://www.ets.berkeley.edu/discover-services/course-capture">Find out more about Course Capture</a>.
-          Only instructors of record can sign up. If you wish to record any class below, please talk to the instructor
-          of record for the classes you wish to record.
-        </div>
-        <div data-ng-repeat="eligible in eligibleForSignUp">
-          <span data-ng-bind-template="{{eligible.deptName}} {{eligible.catalogId}} {{eligible.instructionFormat}} {{eligible.sectionNumber}}"></span>
-          <span data-ng-if="eligible.userCanSignUp">
-              | <a data-ng-href="{{eligible.signUpURL}}">Sign up</a>
-          </span><br>
-          <span data-ng-if="eligible.webcastAuthorizedInstructors && eligible.webcastAuthorizedInstructors.length > 1">
-            This class has co-instructors. All qualified instructors must sign up before classes are recorded.
-          </span>
-        </div>
-      </div>
-    </div>
     <div data-ng-if="currentTabSelection === 'Course Captures'">
       <div data-ng-if="(!eligibleForSignUp || !eligibleForSignUp.length) && !videos">
         There are no recordings available.
       </div>
-      <div data-ng-if="videos" class="bc-tab-navigation">
+      <div data-ng-if="videos">
         <div data-ng-if="media.length">
           <div class="cc-table cc-webcast-table" data-ng-repeat="section in media">
             <h3 data-ng-class="{'cc-widget-section-header': !$first}" data-ng-bind-template="{{section.deptName + ' ' + section.catalogId + ' ' + section.instructionFormat + ' ' + section.sectionNumber}}" data-ng-if="media.length > 1"></h3>

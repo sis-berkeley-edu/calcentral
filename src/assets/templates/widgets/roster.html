@@ -11,14 +11,14 @@
         <div>
           <div class="cc-left cc-roster-search-option">
             <label for="roster-search" class="cc-visuallyhidden">Filter by Text</label>
-            <input id="roster-search" class="cc-roster-input bc-canvas-embedded-roster-input" placeholder="Search People"
+            <input id="roster-search" class="cc-roster-input" placeholder="Search People"
               data-ng-model="searchOptions.text"
               data-ng-change="sectionChangeActions('text')">
           </div>
 
           <div class="cc-left cc-roster-search-option">
             <label for="section-select" class="cc-visuallyhidden">Filter by Section</label>
-            <select id="section-select" class="cc-inline-select bc-canvas-embedded-roster-select"
+            <select id="section-select" class="cc-inline-select"
               data-ng-options="section as section.name for section in sections track by section.ccn"
               data-ng-model="searchOptions.section"
               data-ng-change="sectionChangeActions('section')">

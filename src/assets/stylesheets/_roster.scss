@@ -1,24 +1,3 @@
-// Canvas Application Overrides
-.bc-canvas-application {
-  .cc-page-roster .cc-roster-search .cc-right {
-    margin-top: 8px;
-  }
-  .cc-page-roster .cc-inline-select {
-    height: auto;
-  }
-  .cc-page-roster .cc-page-roster-photos-list {
-    li {
-      height: auto;
-    }
-  }
-  .cc-page-roster div.cc-roster-view-mode {
-    display: none;
-  }
-  .cc-page-roster div.cc-roster-search-enroll-status {
-    display: none;
-  }
-}
-
 .cc-roster-input {
   background: $cc-color-white;
   border: 1px solid $cc-color-very-light-grey;
