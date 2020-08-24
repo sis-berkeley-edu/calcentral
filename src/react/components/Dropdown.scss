@@ -45,13 +45,13 @@ $backgroundColor: $cc-color-white-smoke;
   white-space: nowrap;
 
   &:hover {
-    background-color: $cc-color-cerulean;
+    background-color: $color-denim;
     color: white;
   }
 }
 
 .Dropdown__option--selected {
-  color: $cc-color-cerulean;
+  color: $color-denim;
   background-image: url('/assets/images/blue-bullet.svg');
   background-repeat: no-repeat;
   background-position-y: center;
