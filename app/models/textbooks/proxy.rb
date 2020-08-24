@@ -63,6 +63,7 @@ module Textbooks
         title: material['title'],
         isbn: isbn,
         # Links
+        calStudentStoreLink: material['redirctUrl'],
         amazonLink: amazon_url + isbn,
         cheggLink: chegg_url + isbn,
         oskicatLink: oskicat_url + isbn,
@@ -147,16 +148,13 @@ module Textbooks
         )
       end
       encoded_query = Addressable::URI.encode_component(params.to_json, Addressable::URI::CharacterClasses::QUERY)
-      "#{Settings.textbooks_proxy.base_url}/course-info?courses=#{encoded_query}"
+      "#{Settings.textbooks_proxy.base_url}/course-info?school-code=calstudentstore&courses=#{encoded_query}"
     end
 
     def request_bookstore_list(section_numbers)
       url = bookstore_link(section_numbers)
       logger.info "Fake = #{@fake}; Making request to #{url}; cache expiration #{self.class.expires_in}"
       response = get_response(url,
-        headers: {
-          "Authorization" => "Token token=#{Settings.textbooks_proxy.token}"
-        },
         ssl_version: 'TLSv1_2'
       )
       logger.debug "Remote server status #{response.code}, Body = #{response.body}"
