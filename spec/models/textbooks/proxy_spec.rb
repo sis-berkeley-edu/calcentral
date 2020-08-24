@@ -48,7 +48,7 @@ describe Textbooks::Proxy do
   describe '#bookstore_link' do
     it 'returns formatted course catalog' do
       result = subject.bookstore_link(section_numbers)
-      expect(result).to eq 'https://calstudentstore.berkeley.edu/course-info?courses=%5B%7B%22dept%22:%22KOREAN%22,%22course%22:%221AX%22,%22section%22:%2222117%22,%22term%22:%22FALL%202020%22%7D%5D'
+      expect(result).to eq 'https://api.studentstore.com/webcomm-rest/course-info?school-code=calstudentstore&courses=%5B%7B%22dept%22:%22KOREAN%22,%22course%22:%221AX%22,%22section%22:%2222117%22,%22term%22:%22FALL%202020%22%7D%5D'
     end
 
     it 'encodes section json properly' do
