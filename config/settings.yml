@@ -169,8 +169,7 @@ hub_term_proxy:
 
 textbooks_proxy:
   fake: false
-  base_url: 'https://calstudentstore.berkeley.edu'
-  token: secret set per deployment layer
+  base_url: 'https://api.studentstore.com/webcomm-rest'
 
 webcast_proxy:
   fake: false
@@ -443,6 +442,7 @@ features:
   reserved_capacity_link: false
   standings: true
   textbooks: false
+  textbooks_new_store: false
   transcript_request_link_cred_solutions: false
   videos: false
   view_completed_calgrant_link: true
