@@ -85,13 +85,6 @@
 // Campus
 @import "campus";
 
-// Canvas external apps
-// See also 'roster' above for shared CalCentral/Canvas Roster
-@import "canvas_colors";
-@import "canvas_base";
-@import "canvas_embedded";
-@import "canvas_buttons";
-
 // My Finances
 @import "myfinances";
 
@@ -145,6 +138,3 @@
 
 // Print Styles
 @import "print";
-
-// ETS-only services
-@import "junction";

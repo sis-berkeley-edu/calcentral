@@ -1529,7 +1529,7 @@ button, .button {
   padding-bottom: 1.3076923077rem;
   padding-left: 2.4615384615rem;
   font-size: 1.2307692308rem;
-  background-color: #2683bc;
+  background-color: #117cbe;
   border-color: #1e6996;
   color: white;
   -webkit-transition: background-color 300ms ease-out;
@@ -1637,7 +1637,7 @@ button.round, .button.round {
   border-radius: 1000px;
 }
 button.disabled, button[disabled], .button.disabled, .button[disabled] {
-  background-color: #2683bc;
+  background-color: #117cbe;
   border-color: #1e6996;
   color: white;
   cursor: default;
@@ -1651,7 +1651,7 @@ button.disabled:hover, button.disabled:focus, button[disabled]:hover, button[dis
   color: white;
 }
 button.disabled:hover, button.disabled:focus, button[disabled]:hover, button[disabled]:focus, .button.disabled:hover, .button.disabled:focus, .button[disabled]:hover, .button[disabled]:focus {
-  background-color: #2683bc;
+  background-color: #117cbe;
 }
 button.disabled.secondary, button[disabled].secondary, .button.disabled.secondary, .button[disabled].secondary {
   background-color: #e7e7e7;
