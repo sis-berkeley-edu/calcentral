@@ -100,7 +100,7 @@ const Diploma = ({
                 __html: electronicDiplomaReadyMessage.descrlong,
               }} />
               <div className="download-button-container">
-                <a className="download-button" href={ssoUrl}>Proceed to Download</a>
+                <a className="download-button" href={ssoUrl} target="_blank" rel="noopener noreferrer">Proceed to Download</a>
               </div>
             </div>
           }
