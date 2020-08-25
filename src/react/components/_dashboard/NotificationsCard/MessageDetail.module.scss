@@ -1,7 +1,7 @@
 @import 'src/react/stylesheets/variables';
 @import 'src/react/stylesheets/mixins';
 
-$activeColor: $cc-color-alice-blue;
+$activeColor: $color-foam;
 
 .container {
   @include hasDisclosureArrow();
@@ -34,7 +34,7 @@ $activeColor: $cc-color-alice-blue;
 .icon {
   font-size: 20px;
   width: 30px;
-  color: $cc-color-spindle;
+  color: $color-casper;
 }
 
 .detail {
@@ -53,7 +53,7 @@ $activeColor: $cc-color-alice-blue;
 }
 
 .noFocus {
-  background-color: $cc-color-ivory;
+  background-color: $color-bianca;
 }
 
 .notifications {

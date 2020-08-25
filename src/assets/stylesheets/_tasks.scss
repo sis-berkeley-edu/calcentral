@@ -71,7 +71,7 @@
     margin-top: 5px;
   }
   .cc-widget-tasks-item-no-action-needed {
-    color: $cc-color-nobel;
+    color: $color-dusty-gray;
   }
   .cc-widget-tasks-item-completed-date {
     font-size: 11px;
@@ -94,20 +94,20 @@
       font-size: 11px;
     }
     .cc-widget-tasks-title-sub {
-      color: $cc-color-nobel;
+      color: $color-dusty-gray;
       font-size: 11px;
       text-transform: uppercase;
     }
   }
   .cc-widget-tasks-list-header {
-    color: $cc-color-nobel;
+    color: $color-dusty-gray;
     font-size: 12px;
     font-weight: bold;
     margin-left: 4px;
     padding: 10px;
   }
   .cc-widget-tasks-list-header-special {
-    color: $cc-color-nobel;
+    color: $color-dusty-gray;
     font-size: 12px;
     font-weight: bold;
     margin-top: 20px;
@@ -119,11 +119,11 @@
       padding-right: 30px;
     }
     .cc-widget-tasks-list-header-overdue-title {
-      color: $cc-color-harley-davidson-orange;
+      color: $color-thunderbird;
     }
   }
   .cc-widget-tasks-list-subsection-header {
-    color: $cc-color-nobel;
+    color: $color-dusty-gray;
     font-size: 12px;
     font-weight: bold;
     margin: 0 0 38px 10px;
@@ -149,16 +149,16 @@
     padding-top: 12px;
   }
   .cc-widget-task-section-being-processed-count {
-    color: $cc-color-nobel;
+    color: $color-dusty-gray;
     padding: 3px;
   }
   .cc-widget-task-section-due-within-week-count {
-    color: $cc-color-dark-orange;
+    color: $color-pizazz;
     padding: 3px;
   }
   .cc-widget-task-section-incomplete-count {
-    background: $cc-color-azure;
-    color: $cc-color-chathams-blue;
+    background: $color-dew;
+    color: $color-san-juan;
     padding: 3px;
   }
   .cc-widget-tasks-section-bottom-margin {
@@ -173,33 +173,33 @@
   }
   .cc-widget-tasks-section-label {
     clear: both;
-    color: $cc-color-dim-gray;
+    color: $color-dove-gray;
     font-size: 14px;
     margin: 10px 30px 0 10px;
     overflow: hidden;
   }
   .cc-widget-tasks-section-label-count {
-    background: $cc-color-very-light-grey;
-    color: $cc-color-white;
+    background: $color-silver;
+    color: $color-white;
     font-size: 13px;
     font-weight: bold;
     padding: 5px;
   }
   .cc-widget-tasks-section-label-red {
-    color: $cc-color-harley-davidson-orange;
+    color: $color-thunderbird;
   }
   .cc-widget-tasks-section-wrapper {
-    border-bottom: 1px solid $cc-color-very-light-grey;
+    border-bottom: 1px solid $color-silver;
   }
   .cc-widget-tasks-section-wrapper-no-bottom-border {
     border-bottom: 0;
   }
   .cc-widget-tasks-section-wrapper-top-border {
-    border-top: 1px solid $cc-color-very-light-grey;
+    border-top: 1px solid $color-silver;
   }
   .cc-widget-tasks-subsection-label {
     clear: both;
-    color: $cc-color-dim-gray;
+    color: $color-dove-gray;
     font-size: 14px;
     margin: 22px 30px 16px 10px;
     overflow: hidden;

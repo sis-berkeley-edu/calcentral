@@ -1,7 +1,7 @@
 @import '../../../stylesheets/_colors.scss';
 
 .MissingPhoto {
-  background: $light-gray;
+  background: $color-silver;
   display: block;
   font-size: 80px;
   height: 96px;
@@ -11,6 +11,6 @@
   line-height: 1.5;
 
   i {
-    color: $white;
+    color: $color-white;
   }
 }

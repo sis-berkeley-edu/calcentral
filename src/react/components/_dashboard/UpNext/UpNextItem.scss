@@ -1,7 +1,7 @@
 @import '../../../stylesheets/variables';
 
 .UpNextItem {
-  border-bottom: 1px solid $cc-color-whisper;
+  border-bottom: 1px solid $color-gallery;
   &:last-child {
     border-bottom: 0;
   }
@@ -10,8 +10,8 @@
   }
 
   .button {
-    background: linear-gradient($cc-color-white, $cc-color-whisper),
-      $cc-color-white;
+    background: linear-gradient($color-white, $color-gallery),
+      $color-white;
     color: $color-mine-shaft;
     font-size: 11px;
     padding: 6px 10px;
@@ -89,7 +89,7 @@
   }
 
   .list-selected {
-    background: $cc-color-ivory;
+    background: $color-bianca;
   }
 
   .list-hover {
@@ -106,7 +106,7 @@
 
     &::before {
       border-bottom: 4px solid transparent;
-      border-right: 4px solid $cc-color-nobel;
+      border-right: 4px solid $color-dusty-gray;
       border-top: 4px solid transparent;
       content: '';
       height: 0;
@@ -135,7 +135,7 @@
     &::before {
       border-left: 4px solid transparent;
       border-right: 4px solid transparent;
-      border-top: 4px solid $cc-color-nobel;
+      border-top: 4px solid $color-dusty-gray;
       content: '';
       height: 0;
       position: absolute;
@@ -160,6 +160,6 @@
   }
 
   .text-light {
-    color: $cc-color-nobel;
+    color: $color-dusty-gray;
   }
 }

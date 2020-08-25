@@ -10,7 +10,7 @@
   * {
     background: transparent !important;
     box-shadow: none !important;
-    color: $cc-color-black !important;
+    color: $color-black !important;
     text-shadow: none !important;
   }
   a {
@@ -38,7 +38,7 @@
     display: none !important;
   }
   pre, blockquote {
-    border: 1px solid $cc-color-nobel;
+    border: 1px solid $color-dusty-gray;
     page-break-inside: avoid;
   }
   thead {
@@ -60,7 +60,7 @@
 
   // Fontawesome icons
   .cc-react-icon-green, .cc-react-icon--red, .fa-stop, .fa-exclamation-circle, .fa-exclamation-triangle {
-    color: $cc-color-black !important;
+    color: $color-black !important;
   }
 
   .cc-react-print-clear {

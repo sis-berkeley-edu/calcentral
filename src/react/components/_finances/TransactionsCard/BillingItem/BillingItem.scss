@@ -27,11 +27,11 @@
   grid-gap: 0 10px;
 
   .BillingItem__posted {
-    color: $cc-color-dim-gray;
+    color: $color-dove-gray;
   }
 
   .BillingItem__type {
-    color: $cc-color-dim-gray;
+    color: $color-dove-gray;
     text-align: right;
   }
 
@@ -112,7 +112,7 @@
 }
 
 .BillingItem__type {
-  color: $cc-color-dim-gray;
+  color: $color-dove-gray;
 }
 
 .Transaction__column-labels {
@@ -141,5 +141,5 @@
 }
 
 .BillingItem__type {
-  color: $cc-color-dim-gray;
+  color: $color-dove-gray;
 }

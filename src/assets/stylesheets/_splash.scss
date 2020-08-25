@@ -4,7 +4,7 @@
   background-repeat: no-repeat;
   background-size: cover;
   h1 {
-    color: $cc-color-dark-cerulean;
+    color: $color-orient;
     font-family: Arial;
     font-size: 23px;
     font-weight: bold;
@@ -17,7 +17,7 @@
     height: 66px;
   }
   .cc-splash-page-note-title {
-    color: $cc-color-dim-gray;
+    color: $color-dove-gray;
     font-size: 14px;
     margin-bottom: 5px;
   }
@@ -30,7 +30,7 @@
     padding: 30px;
   }
   .cc-page-splash-card {
-    background: $cc-color-white;
+    background: $color-white;
     border-radius: 5px;
     margin: auto;
     margin-bottom: 30px;
@@ -45,7 +45,7 @@
     .cc-page-splash-blog-date {
       padding: 0;
       p {
-        color: $cc-color-dark-cerulean;
+        color: $color-orient;
         font-size: 15px;
         font-weight: bold;
       }
@@ -84,7 +84,7 @@
     }
   }
   .cc-page-splash-container-left {
-    border-right: 2px solid $cc-color-whisper;
+    border-right: 2px solid $color-gallery;
     height: 100%;
     padding-top: 10px;
   }
@@ -99,7 +99,7 @@
       padding-bottom: 100px;
     }
     &::before {
-      background: linear-gradient($cc-color-white, $cc-color-white-transparent);
+      background: linear-gradient($color-white, $color-white-transparent);
       content: " ";
       height: 40px;
       left: 0;
@@ -108,7 +108,7 @@
       width: 100%;
     }
     &::after {
-      background: linear-gradient($cc-color-white-transparent, $cc-color-white);
+      background: linear-gradient($color-white-transparent, $color-white);
       bottom: 0;
       content: " ";
       height: 100px;
@@ -121,8 +121,8 @@
     margin: 20px 10px 0;
   }
   .cc-page-splash-info-image, .cc-page-splash-video>button, .cc-page-splash-video>div {
-    border: 1px solid $cc-color-very-light-grey;
-    box-shadow: 3px 3px 5px $cc-color-nobel;
+    border: 1px solid $color-silver;
+    box-shadow: 3px 3px 5px $color-dusty-gray;
     margin-bottom: 20px;
   }
   .cc-page-splash-info-image {

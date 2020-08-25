@@ -1,7 +1,7 @@
 @import '../stylesheets/variables';
 
-$disclosure-triangle-hover-color: $cc-color-charcoal;
-$disclosure-triangle-color: $cc-color-nobel;
+$disclosure-triangle-hover-color: $color-tundora;
+$disclosure-triangle-color: $color-dusty-gray;
 
 .DisclosureItem {
   outline: 0;
@@ -23,7 +23,7 @@ $disclosure-triangle-color: $cc-color-nobel;
   border-width: 4px;
   border-color: transparent;
   border-style: solid;
-  border-right-color: $cc-color-nobel;
+  border-right-color: $color-dusty-gray;
   content: "";
   height: 0px;
   width: 0px;
@@ -34,7 +34,7 @@ $disclosure-triangle-color: $cc-color-nobel;
 
 .DisclosureItem--open {
   &::before {
-    border-top-color: $cc-color-nobel;
+    border-top-color: $color-dusty-gray;
     border-right-color: transparent;
   }
 

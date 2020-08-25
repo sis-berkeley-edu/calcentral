@@ -1,17 +1,17 @@
 @import './variables';
 
 // Cards
-$card-title-bg: $very-light-gray;
+$card-title-bg: $color-gallery;
 $card-title-padding: $small-spacing $large-spacing;
 
-$card-body-bg: $white;
+$card-body-bg: $color-white;
 $card-body-padding: $small-spacing $large-spacing;
 
 @mixin card {
-  background-color: $white;
+  background-color: $color-white;
 
   > header {
-    background-color: $very-light-gray;
+    background-color: $color-gallery;
     padding: $small-spacing $large-spacing;
 
     h2 {
@@ -64,53 +64,53 @@ $card-body-padding: $small-spacing $large-spacing;
 
 @mixin disclosureArrowClosed {
   &::after {
-    border-right-color: $cc-color-nobel;
+    border-right-color: $color-dusty-gray;
   }
 
   &:hover {
     &::after {
       border-top-color: transparent;
-      border-right-color: $cc-color-charcoal;
+      border-right-color: $color-tundora;
     }
   }
 }
 
 @mixin disclosureArrowLeftClosed {
   &::before {
-    border-left-color: $cc-color-nobel;
+    border-left-color: $color-dusty-gray;
   }
 
   &:hover {
     &::before {
       border-top-color: transparent;
-      border-left-color: $cc-color-charcoal;
+      border-left-color: $color-tundora;
     }
   }
 }
 
 @mixin disclosureArrowOpen {
   &::after {
-    border-top-color: $cc-color-charcoal;
+    border-top-color: $color-tundora;
   }
 
   &:hover {
     &::after {
       border-right-color: transparent;
-      border-top-color: $cc-color-charcoal;
+      border-top-color: $color-tundora;
     }
   }
 }
 
 @mixin disclosureArrowLeftOpen {
   &::before {
-    border-top-color: $cc-color-charcoal;
+    border-top-color: $color-tundora;
     top: 13px;
   }
 
   &:hover {
     &::before {
       border-left-color: transparent;
-      border-top-color: $cc-color-charcoal;
+      border-top-color: $color-tundora;
     }
   }
 }

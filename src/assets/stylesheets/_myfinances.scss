@@ -33,7 +33,7 @@
       padding: 8px 20px 8px 15px;
     }
     .cc-page-myfinances-account-summary-item-disabled {
-      color: $cc-color-dim-gray;
+      color: $color-dove-gray;
     }
     .cc-page-myfinances-account-summary-subtitle {
       font-size: 11px;
@@ -48,7 +48,7 @@
     width: auto;
   }
   .cc-page-myfinances-dpp {
-    background: $cc-color-white-smoke;
+    background: $color-wild-sand;
   }
   .cc-page-myfinances-dpp-amounts {
     font-size: 12px;
@@ -83,7 +83,7 @@
     width: 45px;
   }
   .cc-page-myfinances-footer {
-    border-top: 2px solid $cc-color-whisper;
+    border-top: 2px solid $color-gallery;
     margin-top: 20px;
     padding: 10px 15px;
     ul li {
@@ -91,7 +91,7 @@
       margin-right: 10px;
     }
     .cc-page-myfinances-footer-updated {
-      color: $cc-color-nobel;
+      color: $color-dusty-gray;
       float: right;
       font-size: 10px;
       margin-top: 3px;
@@ -103,18 +103,18 @@
     }
   }
   .cc-page-myfinances-light {
-    color: $cc-color-dim-gray;
+    color: $color-dove-gray;
     font-size: 11px;
   }
   .cc-page-myfinances-lighter {
-    color: $cc-color-nobel;
+    color: $color-dusty-gray;
   }
   .cc-page-myfinances-not-amount-due-dpp {
     font-size: 11px;
   }
   .cc-page-myfinances-red {
     &, td {
-      color: $cc-color-harley-davidson-orange;
+      color: $color-thunderbird;
     }
   }
   .cc-page-myfinances-resources-more {

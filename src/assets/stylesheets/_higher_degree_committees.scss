@@ -12,7 +12,7 @@
   }
 
   .cc-higher-degree-committee-subtitle {
-    color: $cc-color-white;
+    color: $color-white;
     font-size: 12px;
     font-weight: normal;
     margin: 0;
@@ -47,7 +47,7 @@
 
   .cc-higher-degree-committees-list {
     >li {
-      border-bottom: 1px solid $cc-color-whisper;
+      border-bottom: 1px solid $color-gallery;
 
       ul.cc-milestone-attempts {
         margin-left: 0;

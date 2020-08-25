@@ -6,7 +6,7 @@
   font-size: $base-font-size;
   line-height: 18px;
   height: 18px;
-  background-color: $cc-color-whisper;
+  background-color: $color-gallery;
   white-space: nowrap;
   padding-left: 7px;
   padding-right: 7px;
@@ -37,7 +37,7 @@
 
 .Badge--overdue {
   background-color: rgba(206, 23, 22, 0.15);
-  
+
   &.Badge--icon {
     background-image: url('/assets/images/overdue.svg');
   }

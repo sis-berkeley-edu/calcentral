@@ -3,8 +3,7 @@
 // Colors
 //
 // Colors used throughout the entire calcentral portal.
-// Hex to color naming can previously obtained from http://www.htmlcsscolor.com/
-// We are transitioning to http://chir.ag/projects/name-that-color (see SISRP-53198)
+// Hex to color naming obtained from http://chir.ag/projects/name-that-color
 //
 // sg-wrapper:
 // <div style="border: #000 solid 2px; color: #000;"><sg-wrapper-content/></div>
@@ -14,139 +13,115 @@
 // Shades of Grey
 //
 // markup:
-// <div style="background: $cc-color-black; color:#fff; padding: 1rem;">&#36;cc-color-black: #000;</div>
+// <div style="background: $color-black; color:#fff; padding: 1rem;">&#36;color-black: #000;</div>
 // <div style="background: $color-mine-shaft; color:#fff; padding: 1rem;">&#36;color-mine-shaft: #333;</div>
-// <div style="background: $cc-color-dim-gray; color:#fff; padding: 1rem;">&#36;cc-color-dim-gray: #666;</div>
-// <div style="background: $cc-color-nobel; color:#fff; padding: 1rem;">&#36;cc-color-nobel: #999;</div>
-// <div style="background: $cc-color-very-light-grey; color:#fff; padding: 1rem;">&#36;cc-color-very-light-grey: #ccc;</div>
-// <div style="background: $cc-color-whisper; padding: 1rem;">&#36;cc-color-whisper: #eee;</div>
-// <div style="background: $cc-color-white-smoke; padding: 1rem;">&#36;cc-color-white-smoke: #f6f6f6;</div>
-// <div style="background: $cc-color-white; padding: 1rem;">&#36;cc-color-white: #fff;</div>
+// <div style="background: $color-dove-gray; color:#fff; padding: 1rem;">&#36;color-dove-gray: #666;</div>
+// <div style="background: $color-dusty-gray; color:#fff; padding: 1rem;">&#36;color-dusty-gray: #999;</div>
+// <div style="background: $color-silver; color:#fff; padding: 1rem;">&#36;color-silver: #ccc;</div>
+// <div style="background: $color-gallery; padding: 1rem;">&#36;color-gallery: #eee;</div>
+// <div style="background: $color-wild-sand; padding: 1rem;">&#36;color-wild-sand: #f6f6f6;</div>
+// <div style="background: $color-white; padding: 1rem;">&#36;color-white: #fff;</div>
 //
 // Styleguide 1.1
-$cc-color-black: #000;
+$color-black: #000;
 $color-mine-shaft: #333;
-$cc-color-dim-gray: #666;
-$cc-color-nobel: #999;
-$cc-color-very-light-grey: #ccc;
-$cc-color-whisper: #eee;
-$cc-color-white-smoke: #f6f6f6;
-$cc-color-white: #fff;
+$color-dove-gray: #666;
+$color-dusty-gray: #999;
+$color-silver: #ccc;
+$color-gallery: #eee;
+$color-wild-sand: #f6f6f6;
+$color-white: #fff;
 
 // Transparent Greys
 //
 // markup:
-// <div style="background: $cc-color-black-transparent; padding: 1rem;">&#36;cc-color-black-transparent: rgba(0, 0, 0, .2);</div>
-// <div style="background: $cc-color-ironside-grey-transparent; padding: 1rem;">&#36;cc-color-ironside-grey-transparent: rgba(113, 112, 107, .1);</div>
-// <div style="background: $cc-color-white-translucent; padding: 1rem;">&#36;cc-color-white-translucent: rgba(255, 255, 255, .5);</div>
-// <div style="background: $cc-color-white-transparent; padding: 1rem;">&#36;cc-color-white-transparent: rgba(255, 255, 255, 0);</div>
+// <div style="background: $color-black-transparent; padding: 1rem;">&#36;color-black-transparent: rgba(0, 0, 0, .2);</div>
+// <div style="background: $color-ironside-grey-transparent; padding: 1rem;">&#36;color-ironside-grey-transparent: rgba(113, 112, 107, .1);</div>
+// <div style="background: $color-white-translucent; padding: 1rem;">&#36;color-white-translucent: rgba(255, 255, 255, .5);</div>
+// <div style="background: $color-white-transparent; padding: 1rem;">&#36;color-white-transparent: rgba(255, 255, 255, 0);</div>
 //
 // Styleguide 1.2
-$cc-color-black-transparent: rgba(0, 0, 0, 0.2);
-$cc-color-ironside-grey-transparent: rgba(113, 112, 107, 0.1);
-$cc-color-white-translucent: rgba(255, 255, 255, 0.5);
-$cc-color-white-transparent: rgba(255, 255, 255, 0);
+$color-black-transparent: rgba(0, 0, 0, 0.2);
+$color-ironside-grey-transparent: rgba(113, 112, 107, 0.1);
+$color-white-translucent: rgba(255, 255, 255, 0.5);
+$color-white-transparent: rgba(255, 255, 255, 0);
 
 // Blue / Grey Shades
 //
 // markup:
-// <div style="background: $cc-color-chathams-blue; color: #fff; padding: 1rem;">&#36;cc-color-chathams-blue: #2a4f6a;</div>
-// <div style="background: $cc-color-wedgewood; color: #fff; padding: 1rem;">&#36;cc-color-wedgewood: #4a6a8a;</div>
-// <div style="background: $cc-color-jellybean; color: #fff; padding: 1rem;">&#36;cc-color-jellybean: #427694;</div>
-// <div style="background: $cc-color-air-force-blue; color: #fff; padding: 1rem;">&#36;cc-color-air-force-blue: #61889e;</div>
-// <div style="background: $cc-color-bali-hai; color: #fff; padding: 1rem;">&#36;cc-color-bali-hai: #8098a5;</div>
-// <div style="background: $cc-color-spindle; color: #000; padding: 1rem;">&#36;cc-color-spindle: #afc5d2;</div>
-// <div style="background: $cc-color-azure; color: #000; padding: 1rem;">&#36;cc-color-azure: #efffff;</div>
-// <div style="background: $cc-color-solitude; color: #000; padding: 1rem;">&#36;cc-color-solitude: #e6ebef;</div>
-// <div style="background: $cc-color-lynch; color: #fff; padding: 1rem;">&#36;cc-color-lynch: #6e7a83;</div>
-// <div style="background: $cc-color-trout; color: #fff; padding: 1rem;">&#36;cc-color-trout: #474f56;</div>
+// <div style="background: $color-san-juan; color: #fff; padding: 1rem;">&#36;color-san-juan: #2a4f6a;</div>
+// <div style="background: $color-bismark; color: #fff; padding: 1rem;">&#36;color-bismark: #4a6a8a;</div>
+// <div style="background: $color-wedgewood; color: #fff; padding: 1rem;">&#36;color-wedgewood: #427694;</div>
+// <div style="background: $color-hoki; color: #fff; padding: 1rem;">&#36;color-hoki: #61889e;</div>
+// <div style="background: $color-gumbo; color: #fff; padding: 1rem;">&#36;color-gumbo: #8098a5;</div>
+// <div style="background: $color-casper; color: #000; padding: 1rem;">&#36;color-casper: #afc5d2;</div>
+// <div style="background: $color-dew; color: #000; padding: 1rem;">&#36;color-dew: #efffff;</div>
+// <div style="background: $color-mystic; color: #000; padding: 1rem;">&#36;color-mystic: #e6ebef;</div>
+// <div style="background: $color-pale-sky; color: #fff; padding: 1rem;">&#36;color-pale-sky: #6e7a83;</div>
+// <div style="background: $color-mako; color: #fff; padding: 1rem;">&#36;color-mako: #474f56;</div>
 //
 // Styleguide 1.3
-$cc-color-chathams-blue: #2a4f6a;
-$cc-color-wedgewood: #4a6a8a;
-$cc-color-jellybean: #427694;
-$cc-color-air-force-blue: #61889e;
-$cc-color-bali-hai: #8098a5;
-$cc-color-spindle: #afc5d2;
-$cc-color-azure: #efffff;
-$cc-color-solitude: #e6ebef;
-$cc-color-lynch: #6e7a83;
-$cc-color-trout: #474f56;
+$color-san-juan: #2a4f6a;
+$color-bismark: #4a6a8a;
+$color-wedgewood: #427694;
+$color-hoki: #61889e;
+$color-gumbo: #8098a5;
+$color-casper: #afc5d2;
+$color-dew: #efffff;
+$color-mystic: #e6ebef;
+$color-pale-sky: #6e7a83;
+$color-mako: #474f56;
 
 // Blue Shades
 //
 // markup:
-// <div style="background: $cc-color-prussian-blue; color: #fff; padding: 1rem;">&#36;cc-color-prussian-blue: #002e5b;</div>
-// <div style="background: $cc-color-blue-lagoon; color: #fff; padding: 1rem;">&#36;cc-color-blue-lagoon: #065a7d;</div>
-// <div style="background: $cc-color-dark-cerulean; color: #fff; padding: 1rem;">&#36;cc-color-dark-cerulean: #025a86;</div>
-// <div style="background: $cc-color-bahama-blue; color: #fff; padding: 1rem;">&#36;cc-color-bahama-blue: #2b6281;</div>
-// <div style="background: $cc-color-lochmara; color: #fff; padding: 1rem;">&#36;cc-color-lochmara: #1f7099;</div>
-// <div style="background: $color-denim; color: #fff; padding: 1rem;">&#36;color-denim: #117cbe;</div>
-// <div style="background: $cc-color-havelock-blue; color: #fff; padding: 1rem;">&#36;cc-color-havelock-blue: #4d88c4;</div>
-// <div style="background: $cc-color-spray; color: #000; padding: 1rem;">&#36;cc-color-spray: #80c7de;</div>
-// <div style="background: $cc-color-french-pass; color: #000; padding: 1rem;">&#36;cc-color-french-pass: #a0d3e8;</div>
-// <div style="background: $cc-color-alice-blue; color: #000; padding: 1rem;">&#36;cc-color-alice-blue: #f2f9fe;</div>
+// <div style="background: $color-midnight-blue; color: #fff; padding: 1rem;">&#36;color-midnight-blue: #003262;</div>
+// <div style="background: $color-prussian-blue; color: #fff; padding: 1rem;">&#36;color-prussian-blue: #002e5b;</div>
+// <div style="background: $color-venice-blue; color: #fff; padding: 1rem;">&#36;color-venice-blue: #065a7d;</div>
+// <div style="background: $color-orient; color: #fff; padding: 1rem;">&#36;color-orient: #025a86;</div>
+// <div style="background: $color-calypso; color: #fff; padding: 1rem;">&#36;color-calypso: #2b6281;</div>
+// <div style="background: $color-matisse; color: #fff; padding: 1rem;">&#36;color-matisse: #1f7099;</div>
+// <div style="background: $color-denim; color: #fff; padding: 1rem;">&#36;color-denim: #117CBE;</div>
+// <div style="background: $color-steel-blue; color: #fff; padding: 1rem;">&#36;color-steel-blue: #4d88c4;</div>
+// <div style="background: $color-aquamarine-blue; color: #000; padding: 1rem;">&#36;color-aquamarine-blue: #80c7de;</div>
+// <div style="background: $color-regent-st-blue; color: #000; padding: 1rem;">&#36;color-regent-st-blue: #a0d3e8;</div>
+// <div style="background: $color-foam; color: #000; padding: 1rem;">&#36;color-foam: #f2f9fe;</div>
 //
 // Styleguide 1.4
-$cc-color-prussian-blue: #002e5b;
-$cc-color-blue-lagoon: #065a7d;
-$cc-color-dark-cerulean: #025a86;
-$cc-color-bahama-blue: #2b6281;
-$cc-color-lochmara: #1f7099;
+$color-midnight-blue: #003262;
+$color-prussian-blue: #002e5b;
+$color-venice-blue: #065a7d;
+$color-orient: #025a86;
+$color-calypso: #2b6281;
+$color-matisse: #1f7099;
 $color-denim: #117cbe;
-
-$cc-color-havelock-blue: #4d88c4;
-$cc-color-spray: #80c7de;
-$cc-color-french-pass: #a0d3e8;
-$cc-color-alice-blue: #f2f9fe;
+$color-steel-blue: #4d88c4;
+$color-aquamarine-blue: #80c7de;
+$color-regent-st-blue: #a0d3e8;
+$color-foam: #f2f9fe;
 
 // Alert Colors
 //
 // Foreground and background colors (red, yellow, green)
 //
 // markup:
-// <div style="background: $cc-color-venetian-red; color: #000; padding: 1rem;">&#36;cc-color-venetian-red: #c10006;</div>
-// <div style="background: $cc-color-harley-davidson-orange; color: #000; padding: 1rem;">&#36;cc-color-harley-davidson-orange: #cf1715;</div>
-// <div style="background: $cc-color-pale-pink; color: #000; padding: 1rem;">&#36;cc-color-pale-pink: #fce3e5;</div>
-// <div style="background: $cc-color-ivory; color: #000; padding: 1rem;">&#36;cc-color-ivory: #fcfcf3;</div>
-// <div style="background: $cc-color-yellow; color: #000; padding: 1rem;">&#36;cc-color-yellow: #ff0;</div>
-// <div style="background: $cc-color-dark-orange; color: #000; padding: 1rem;">&#36;cc-color-dark-orange: #f79400;</div>
-// <div style="background: $cc-color-dark-tangerine; color: #000; padding: 1rem;">&#36;cc-color-dark-tangerine: #f1a91e;</div>
-// <div style="background: $cc-color-lucky; color: #000; padding: 1rem;">&#36;cc-color-lucky: #a79526;</div>
-// <div style="background: $cc-color-dark-spring-green; color: #000; padding: 1rem;">&#36;cc-color-dark-spring-green: #137e3e;</div>
-// <div style="background: $cc-color-zanah; color: #000; padding: 1rem;">&#36;cc-color-zanah: #b3c8b4;</div>
+// <div style="background: $color-guardsman-red; color: #000; padding: 1rem;">&#36;color-guardsman-red: #c10006;</div>
+// <div style="background: $color-thunderbird; color: #000; padding: 1rem;">&#36;color-thunderbird: #cf1715;</div>
+// <div style="background: $color-cinderella; color: #000; padding: 1rem;">&#36;color-cinderella: #fce3e5;</div>
+// <div style="background: $color-bianca; color: #000; padding: 1rem;">&#36;color-bianca: #fcfcf3;</div>
+// <div style="background: $color-yellow; color: #000; padding: 1rem;">&#36;color-yellow: #ff0;</div>
+// <div style="background: $color-pizazz; color: #000; padding: 1rem;">&#36;color-pizazz: #f79400;</div>
+// <div style="background: $color-buttercup; color: #000; padding: 1rem;">&#36;color-buttercup: #f1a91e;</div>
+// <div style="background: $color-lemon-ginger; color: #000; padding: 1rem;">&#36;color-lemon-ginger: #a79526;</div>
+// <div style="background: $color-spring-rain; color: #000; padding: 1rem;">&#36;color-spring-rain: #b3c8b4;</div>
 //
 // Styleguide 1.5
-$cc-color-venetian-red: #c10006;
-$cc-color-harley-davidson-orange: #cf1715;
-$cc-color-pale-pink: #fce3e5;
-$cc-color-ivory: #fcfcf3;
-$cc-color-yellow: #ff0;
-$cc-color-dark-orange: #f79400;
-$cc-color-dark-tangerine: #f1a91e;
-$cc-color-lucky: #a79526;
-$cc-color-zanah: #b3c8b4;
-
-// Berkeley Branding Colors
-//
-// See http://brand.berkeley.edu/colors/
-//
-// markup:
-// <div style="background: $cc-color-berkeley-blue; color: #fff; padding: 1rem;">&#36;cc-color-berkeley-blue: #003262;</div>
-// <div style="background: $cc-color-berkeley-south-hall; color: #fff; padding: 1rem;">&#36;cc-color-berkeley-south-hall: #6c3302;</div>
-//
-// Styleguide 1.6
-$cc-color-berkeley-blue: #003262;
-$cc-color-berkeley-south-hall: #6c3302;
-
-// 3rd Party Icons
-//
-// Facebook and Twitter
-//
-// markup:
-// <div style="background: $cc-color-facebook-icon-splash; color: #000; padding: 1rem;">&#36;cc-color-facebook-icon-splash: #3c599b;</div>
-// <div style="background: $cc-color-twitter-icon-splash; color: #000; padding: 1rem;">&#36;cc-color-twitter-icon-splash: #69bcf0;</div>
-//
-// Styleguide 1.7
-$cc-color-facebook-icon-splash: #3c599b;
-$cc-color-twitter-icon-splash: #69bcf0;
+$color-guardsman-red: #c10006;
+$color-thunderbird: #cf1715;
+$color-cinderella: #fce3e5;
+$color-bianca: #fcfcf3;
+$color-yellow: #ff0;
+$color-pizazz: #f79400;
+$color-buttercup: #f1a91e;
+$color-lemon-ginger: #a79526;
+$color-spring-rain: #b3c8b4;

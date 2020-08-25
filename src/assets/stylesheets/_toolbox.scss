@@ -5,7 +5,7 @@
       color: $color-mine-shaft;
     }
     .cc-toolbox-apitest-failed {
-      color: $cc-color-harley-davidson-orange;
+      color: $color-thunderbird;
     }
     .cc-toolbox-apitest-success {
       color: $color-jewel;
@@ -23,7 +23,7 @@
   .cc-toolbox-table {
     margin-top: 20px;
     td, th {
-      border-bottom: 1px solid $cc-color-whisper;
+      border-bottom: 1px solid $color-gallery;
       font-size: 12px;
       padding: 4px;
     }
@@ -32,7 +32,7 @@
     margin-top: 10px;
   }
   .cc-toolbox-widget {
-    background: $cc-color-white;
+    background: $color-white;
     form {
       background: transparent;
       border: 0;
@@ -47,7 +47,7 @@
     .cc-toolbox-widget-delegate-student-profile {
       margin: 0 0 10px;
       .cc-toolbox-widget-delegate-student-profile-img {
-        border: 1px solid $cc-color-nobel;
+        border: 1px solid $color-dusty-gray;
         height: 96px;
         width: 72px;
       }

@@ -25,14 +25,14 @@ $cc-react-spinner-uneven: 17px;
   &::before {
     animation: spin-normal 1s infinite steps(8);
     border-radius: 50%;
-    box-shadow: 0 (-$cc-react-spinner-uneven) $cc-color-very-light-grey, // Top
-      $cc-react-spinner-even (-$cc-react-spinner-even $cc-color-very-light-grey), // Top right
-      $cc-react-spinner-uneven 0 $cc-color-nobel, // Right
+    box-shadow: 0 (-$cc-react-spinner-uneven) $color-silver, // Top
+      $cc-react-spinner-even (-$cc-react-spinner-even $color-silver), // Top right
+      $cc-react-spinner-uneven 0 $color-dusty-gray, // Right
       $cc-react-spinner-even $cc-react-spinner-even $color-mine-shaft, // Bottom right
-      0 $cc-react-spinner-uneven $cc-color-black, // Bottom
-      (-$cc-react-spinner-even) $cc-react-spinner-even $cc-color-very-light-grey, // Bottom left
-      (-$cc-react-spinner-uneven) 0 $cc-color-very-light-grey, // Left
-      (-$cc-react-spinner-even) (-$cc-react-spinner-even) $cc-color-very-light-grey; // Top left
+      0 $cc-react-spinner-uneven $color-black, // Bottom
+      (-$cc-react-spinner-even) $cc-react-spinner-even $color-silver, // Bottom left
+      (-$cc-react-spinner-uneven) 0 $color-silver, // Left
+      (-$cc-react-spinner-even) (-$cc-react-spinner-even) $color-silver; // Top left
     content: "";
     display: inline-block;
     height: 10px;

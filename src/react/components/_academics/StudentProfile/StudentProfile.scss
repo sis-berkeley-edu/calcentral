@@ -7,7 +7,7 @@ table.student-profile {
 
   tr {
     th {
-      color: $cc-color-dim-gray;
+      color: $color-dove-gray;
     }
 
     td {
@@ -16,7 +16,7 @@ table.student-profile {
 
     th, td {
       background: white;
-      border-bottom: 1px solid $cc-color-very-light-grey;
+      border-bottom: 1px solid $color-silver;
       padding: 10px 0;
       vertical-align: top;
     }
@@ -37,7 +37,7 @@ table.student-profile table.student-profile__subtable {
 
   tr {
     th {
-      color: $cc-color-dim-gray;
+      color: $color-dove-gray;
     }
 
     td {

@@ -6,8 +6,8 @@
 }
 
 .cc-finaid-compare-awards-current-prior-headers > div {
-  background: $cc-color-lynch;
-  color: $cc-color-white;
+  background: $color-pale-sky;
+  color: $color-white;
   flex-basis: 50%;
   padding: 10px 15px;
 }
@@ -47,12 +47,12 @@
 
 .cc-finaid-compare-change-icons {
   &.cc-amount-deleted-icon {
-    color: $cc-color-venetian-red;
+    color: $color-guardsman-red;
   }
   &.cc-amount-added-icon {
     color: $color-jewel;
   }
   &.cc-amount-changed-icon {
-    color: $cc-color-lucky;
+    color: $color-lemon-ginger;
   }
 }

@@ -8,7 +8,7 @@
 @media only screen and (min-width: $small-breakpoint) {
   .BillingItemsHeaders {
     @include billing-items-grid;
-    color: $cc-color-dim-gray;
+    color: $color-dove-gray;
     border-bottom: 1px solid #eee;
   }
 }

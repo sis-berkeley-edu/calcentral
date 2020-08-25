@@ -1,7 +1,7 @@
 .cc-list-bullets {
   margin: 10px 10px 0 15px;
   li::before {
-    color: $cc-color-air-force-blue;
+    color: $color-hoki;
     content: '\25A0';
     float: left;
     margin-left: -16px;
@@ -13,7 +13,7 @@
   margin: 10px 15px;
   a {
     &::before {
-      color: $cc-color-air-force-blue;
+      color: $color-hoki;
       content: '\25A0';
       float: left;
       margin-left: -16px;
@@ -37,7 +37,7 @@
     }
   }
   .cc-list-links-sub-text {
-    color: $cc-color-nobel;
+    color: $color-dusty-gray;
     line-height: 16px;
     margin-bottom: 5px;
     margin-left: 15px;

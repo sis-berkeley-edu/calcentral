@@ -22,7 +22,7 @@
       padding: 0 10px 10px;
     }
     .cc-page-widget-profile-section {
-      border-top: 1px solid $cc-color-very-light-grey;
+      border-top: 1px solid $color-silver;
     }
   }
   .cc-page-widget-profile-section {
@@ -52,29 +52,29 @@
       width: 100%;
     }
     .cc-page-widget-profile-section-content-error {
-      background-color: $cc-color-pale-pink;
-      border-bottom: 1px solid $cc-color-harley-davidson-orange;
+      background-color: $color-cinderella;
+      border-bottom: 1px solid $color-thunderbird;
       margin: -10px -10px 10px;
       padding: 10px;
     }
     .cc-page-widget-profile-section-error {
-      background-color: $cc-color-pale-pink;
-      border-bottom: 1px solid $cc-color-harley-davidson-orange;
-      border-top: 1px solid $cc-color-harley-davidson-orange;
-      color: $cc-color-harley-davidson-orange;
+      background-color: $color-cinderella;
+      border-bottom: 1px solid $color-thunderbird;
+      border-top: 1px solid $color-thunderbird;
+      color: $color-thunderbird;
       margin: 10px -10px;
       padding: 10px;
     }
     .cc-page-widget-profile-section-input-error {
-      background-color: $cc-color-harley-davidson-orange;
-      border: 1px solid $cc-color-harley-davidson-orange;
-      color: $cc-color-white;
+      background-color: $color-thunderbird;
+      border: 1px solid $color-thunderbird;
+      color: $color-white;
       margin-bottom: 10px;
     }
     .cc-page-widget-profile-section-input-error-message {
-      background-color: $cc-color-pale-pink;
-      border-bottom: 1px solid $cc-color-harley-davidson-orange;
-      border-top: 1px solid $cc-color-harley-davidson-orange;
+      background-color: $color-cinderella;
+      border-bottom: 1px solid $color-thunderbird;
+      border-top: 1px solid $color-thunderbird;
       margin: 0 -10px;
       padding: 10px;
     }
@@ -82,7 +82,7 @@
       margin-bottom: 15px;
     }
     .cc-page-widget-profile-section-content-item-editing {
-      background: $cc-color-alice-blue;
+      background: $color-foam;
       margin: -10px -10px -10px 0;
       padding: 10px;
       form {

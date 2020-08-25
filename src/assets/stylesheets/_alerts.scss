@@ -1,9 +1,9 @@
 .cc-alerts-bar {
-  background: $cc-color-white;
-  border-color: $cc-color-very-light-grey;
+  background: $color-white;
+  border-color: $color-silver;
   border-style: solid;
   border-width: 1px;
-  color: $cc-color-dim-gray;
+  color: $color-dove-gray;
   overflow: hidden;
   padding: 10px 15px;
   width: 100%;
@@ -31,8 +31,8 @@
 }
 
 .cc-alerts-law {
-  background: $cc-color-whisper;
-  border: 1px $cc-color-very-light-grey solid;
+  background: $color-gallery;
+  border: 1px $color-silver solid;
   margin-bottom: 20px;
   padding: 15px;
   h3 {

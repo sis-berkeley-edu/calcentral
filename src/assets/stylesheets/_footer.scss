@@ -1,7 +1,7 @@
 // Footer
 body {
   footer {
-    background: $cc-color-white-smoke;
+    background: $color-wild-sand;
     clear: both;
     line-height: 1.5;
     overflow: hidden;
@@ -43,7 +43,7 @@ body {
       margin-top: 10px;
       text-align: right;
       a {
-        border-left: 1px solid $cc-color-black;
+        border-left: 1px solid $color-black;
         padding-left: 7px;
         padding-right: 5px;
       }
@@ -59,13 +59,13 @@ body {
     }
 
     @media #{$small-only} {
-      background: $cc-color-trout;
-      color: $cc-color-whisper;
+      background: $color-mako;
+      color: $color-gallery;
       a {
-        color: $cc-color-french-pass;
+        color: $color-regent-st-blue;
       }
       .cc-footer-copyright {
-        color: $cc-color-whisper;
+        color: $color-gallery;
         float: right;
         margin: 0;
       }
@@ -74,7 +74,7 @@ body {
         float: left;
         a {
           border-left: 0;
-          border-right: 1px solid $cc-color-nobel;
+          border-right: 1px solid $color-dusty-gray;
           font-weight: normal;
           padding-left: 2px;
           padding-right: 5px;
@@ -96,11 +96,11 @@ body {
       }
       .cc-footer-form {
         h3 {
-          color: $cc-color-white;
+          color: $color-white;
         }
       }
       .fa-facebook-square {
-        color: $cc-color-white !important;
+        color: $color-white !important;
       }
     }
   }

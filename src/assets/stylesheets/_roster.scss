@@ -1,6 +1,6 @@
 .cc-roster-input {
-  background: $cc-color-white;
-  border: 1px solid $cc-color-very-light-grey;
+  background: $color-white;
+  border: 1px solid $color-silver;
   border-radius: 5px;
   font-size: 12px;
   padding: 4px 10px 5px 8px;
@@ -8,14 +8,14 @@
 }
 
 .cc-page-roster {
-  background: $cc-color-white;
+  background: $color-white;
   overflow: hidden;
   padding: 20px;
 
   .cc-roster-search {
     background: transparent;
     border: 0;
-    border-bottom: 1px solid $cc-color-very-light-grey;
+    border-bottom: 1px solid $color-silver;
     margin: 0 0 15px;
     overflow: hidden;
     padding: 7px 0 5px;

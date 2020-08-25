@@ -18,7 +18,7 @@
         padding: 0;
         font-size: 13px;
         font-weight: bold;
-        color: $cc-color-nero;
+        color: $color-mine-shaft;
         text-align: left;
       }
     }
@@ -29,7 +29,7 @@
       td {
         padding: 0;
         font-size: 13px;
-        color: $cc-color-nero;
+        color: $color-mine-shaft;
         text-align: left;
       }
     }
@@ -44,14 +44,14 @@ table.AppointmentsTable {
   tbody {
     tr.AppointmentRow--disclosure-row:hover, tr.AppointmentRow--disclosure-row:focus {
       td {
-        background: $sky-blue;
+        background: $color-foam;
       }
     }
 
     tr.AppointmentRow--disclosure-row:hover + tr.AppointmentRow--disclosed-row,
     tr.AppointmentRow--disclosure-row:focus + tr.AppointmentRow--disclosed-row {
       td {
-        background: $sky-blue;
+        background: $color-foam;
       }
     }
 
@@ -69,7 +69,7 @@ table.AppointmentsTable {
           border-width: 4px;
           border-color: transparent;
           border-style: solid;
-          border-top-color: $cc-color-nobel;
+          border-top-color: $color-dusty-gray;
           content: "";
           height: 0px;
           width: 0px;
@@ -82,7 +82,7 @@ table.AppointmentsTable {
 
     tr + .AppointmentRow--disclosure-row {
       td {
-        border-top: 1px solid $cc-color-nobel;
+        border-top: 1px solid $color-dusty-gray;
       }
     }
 
