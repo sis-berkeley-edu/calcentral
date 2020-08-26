@@ -3,7 +3,7 @@
 
 // Blocks
 .cc-react-widget {
-  background: $cc-color-white;
+  background: $color-white;
   margin: 15px 15px 0 0;
 
   // See https://git.io/vITBH
@@ -33,7 +33,7 @@
 
 // Elements
 .cc-react-widget__highlighted-section {
-  background-color: $cc-color-white-smoke;
+  background-color: $color-wild-sand;
   margin: 12px 0;
   padding: 4px 8px;
 }
@@ -46,9 +46,9 @@
 }
 
 .cc-react-widget__section-title {
-  background-color: $cc-color-dim-gray;
+  background-color: $color-dove-gray;
   h2 {
-    color: $cc-color-white;
+    color: $color-white;
     font-size: 16px;
     padding: 2px 15px;
     @media print {
@@ -59,7 +59,7 @@
 
 .cc-react-widget__title {
   align-items: center;
-  background: $cc-color-whisper;
+  background: $color-gallery;
   display: flex;
   overflow: hidden;
 

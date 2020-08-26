@@ -34,7 +34,7 @@ button {
 //
 // Styleguide 2.2
 .button {
-  background-color: $cc-color-spray;
+  background-color: $color-aquamarine-blue;
   &.medium {
     font-size: 13px;
     font-weight: normal;
@@ -61,8 +61,8 @@ button {
 //
 // Styleguide 2.3
 .cc-button {
-  background: linear-gradient($cc-color-white, $cc-color-whisper), $cc-color-white;
-  border: 2px solid $cc-color-very-light-grey;
+  background: linear-gradient($color-white, $color-gallery), $color-white;
+  border: 2px solid $color-silver;
   border-radius: 5px;
   color: $color-mine-shaft;
   cursor: pointer;
@@ -72,20 +72,20 @@ button {
   line-height: 1;
   padding: 6px 10px;
   &:focus, &:hover {
-    background: linear-gradient($cc-color-white, $cc-color-very-light-grey), $cc-color-very-light-grey;
+    background: linear-gradient($color-white, $color-silver), $color-silver;
     color: $color-mine-shaft;
     text-decoration: none;
   }
 }
 .cc-button[disabled] {
-  background: $cc-color-white-smoke !important;
-  border: 1px solid $cc-color-very-light-grey !important;
-  color: $cc-color-very-light-grey !important;
+  background: $color-wild-sand !important;
+  border: 1px solid $color-silver !important;
+  color: $color-silver !important;
   cursor: auto !important;
   opacity: 1 !important;
   &:focus, &:hover {
-    background: $cc-color-white-smoke !important;
-    color: $cc-color-very-light-grey !important;
+    background: $color-wild-sand !important;
+    color: $color-silver !important;
   }
 }
 
@@ -106,32 +106,32 @@ button {
 .cc-button-blue {
   background: $color-denim;
   border: 1px solid transparent;
-  color: $cc-color-white;
+  color: $color-white;
   &:focus, &:hover {
-    background: $cc-color-lochmara;
-    color: $cc-color-white;
+    background: $color-matisse;
+    color: $color-white;
   }
   &.cc-button-large {
-    background: linear-gradient($color-denim, $cc-color-lochmara), $cc-color-lochmara;
+    background: linear-gradient($color-denim, $color-matisse), $color-matisse;
     &:focus, &:hover {
-      background: linear-gradient($color-denim, $cc-color-blue-lagoon);
+      background: linear-gradient($color-denim, $color-venice-blue);
     }
   }
 }
 .cc-button-blue[disabled] {
-  background: $cc-color-white-smoke !important;
+  background: $color-wild-sand !important;
   &:focus, &:hover {
-    background: $cc-color-white-smoke !important;
+    background: $color-wild-sand !important;
   }
 }
 
 .cc-button-grey {
-  background: $cc-color-white-smoke !important;
+  background: $color-wild-sand !important;
   border: 1px solid transparent;
-  color: $cc-color-very-light-grey;
+  color: $color-silver;
   &:focus, &:hover {
-    background: $cc-color-white-smoke !important;
-    color: $cc-color-very-light-grey;
+    background: $color-wild-sand !important;
+    color: $color-silver;
   }
 }
 
@@ -205,7 +205,7 @@ button {
   }
   &:disabled {
     background-color: inherit;
-    color: $cc-color-nobel;
+    color: $color-dusty-gray;
     pointer-events: none;
   }
 }
@@ -224,7 +224,7 @@ button {
   &:focus, &:hover {
     background: transparent;
     i {
-      color: $cc-color-nobel !important;
+      color: $color-dusty-gray !important;
     }
   }
 }
@@ -237,15 +237,15 @@ button {
 //
 // Styleguide 2.8
 .cc-button-selected {
-  background: linear-gradient($cc-color-very-light-grey, $cc-color-nobel), $cc-color-nobel;
-  color: $cc-color-white;
+  background: linear-gradient($color-silver, $color-dusty-gray), $color-dusty-gray;
+  color: $color-white;
   z-index: 1;
   &:focus, &:hover {
-    background: linear-gradient($cc-color-very-light-grey, $cc-color-nobel), $cc-color-nobel;
-    color: $cc-color-white;
+    background: linear-gradient($color-silver, $color-dusty-gray), $color-dusty-gray;
+    color: $color-white;
   }
   i {
-    color: $cc-color-white;
+    color: $color-white;
   }
 }
 
@@ -295,38 +295,38 @@ button {
   &:active {
     background: transparent;
     .cc-button-star-icon-outer {
-      color: $cc-color-black;
+      color: $color-black;
     }
   }
   &:focus {
     background: transparent;
     .cc-button-star-icon-outer {
-      color: $cc-color-black;
+      color: $color-black;
     }
   }
   &:hover {
     background: transparent;
     .cc-button-star-icon-outer {
-      color: $cc-color-black;
+      color: $color-black;
     }
   }
 }
 
 .cc-button-star-icon {
-  color: $cc-color-white;
+  color: $color-white;
   font-size: 20px;
   &.cc-button-star-saved {
-    color: $cc-color-yellow;
+    color: $color-yellow;
   }
 }
 
 .cc-button-star-icon-outer {
-  color: $cc-color-dim-gray;
+  color: $color-dove-gray;
   &:hover {
-    color: $cc-color-black;
+    color: $color-black;
   }
   &.cc-button-star-saved {
-    color: $cc-color-dim-gray;
+    color: $color-dove-gray;
   }
 }
 

@@ -2,14 +2,14 @@
 @import 'src/react/stylesheets/mixins';
 
 .task {
-  border-top: 1px solid $cc-color-whisper;
+  border-top: 1px solid $color-gallery;
 
   &:last-child {
-    border-bottom: 1px solid $cc-color-whisper;
+    border-bottom: 1px solid $color-gallery;
   }
 
   &:hover {
-    background: $cc-color-alice-blue;
+    background: $color-foam;
   }
 
   &.noActionNecessary {

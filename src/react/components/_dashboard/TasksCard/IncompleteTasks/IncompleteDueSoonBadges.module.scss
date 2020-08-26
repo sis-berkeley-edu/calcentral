@@ -1,5 +1,6 @@
+@import '../../../../../assets/stylesheets/colors.scss';
 .badge {
-  color: #2a4f6a;
-  background-color: #efffff;
+  color: $color-san-juan;
+  background-color: $color-mystic;
   padding: 3px;
 }

@@ -4,7 +4,7 @@
   margin: 10px 10px 0 15px;
 
   li::before {
-    color: $cc-color-air-force-blue;
+    color: $color-hoki;
     content: '\25A0';
     float: left;
     margin-top: -2px;
@@ -39,7 +39,7 @@
     }
   }
   .FinancialResources__subText {
-    color: $cc-color-nobel;
+    color: $color-dusty-gray;
     line-height: 16px;
     margin-bottom: 5px;
     margin-left: 15px;
@@ -64,13 +64,13 @@
 }
 
 .FinancialResources__categoryContainer {
-  border-bottom: 1px solid $cc-color-whisper;
+  border-bottom: 1px solid $color-gallery;
   padding-top: 10px;
   padding-bottom: 10px;
   cursor: pointer;
 
   &:hover {
-    background-color: $cc-color-alice-blue;
+    background-color: $color-foam;
   }
 }
 

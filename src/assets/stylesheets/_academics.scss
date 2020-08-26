@@ -18,7 +18,7 @@
     }
   }
   .cc-academics-advisor-message {
-    color: $cc-color-black;
+    color: $color-black;
     font-size: 13px;
     margin-left: 10px;
     overflow: hidden;
@@ -95,7 +95,7 @@
     font-weight: normal;
   }
   .cc-academics-class-enrollment-header-separator {
-    border-left: 1px solid $cc-color-whisper;
+    border-left: 1px solid $color-gallery;
   }
   .cc-academics-class-enrollment-mobile-button-spacer {
     margin-bottom: 5px;
@@ -110,14 +110,14 @@
     }
   }
   .cc-academics-class-enrollment-table {
-    border: 2px solid $cc-color-whisper;
+    border: 2px solid $color-gallery;
     margin: 10px 0;
   }
   .cc-academics-class-enrollment-table-head {
-    background-color: $cc-color-dim-gray;
+    background-color: $color-dove-gray;
     margin: 5px;
     th {
-      color: $cc-color-white;
+      color: $color-white;
       padding: 5px;
       vertical-align: bottom;
     }
@@ -145,7 +145,7 @@
     text-align: center;
   }
   .cc-academics-class-info-grading {
-    border-top: 1px solid $cc-color-whisper;
+    border-top: 1px solid $color-gallery;
   }
   .cc-academics-class-info-grading-button-text {
     font-size: 16px;
@@ -172,23 +172,23 @@
   }
   .cc-academics-class-textbooks {
     &:not(:first-of-type) {
-      border-top: 1px solid $cc-color-very-light-grey;
+      border-top: 1px solid $color-silver;
       margin-top: 15px;
       padding-top: 15px;
     }
   }
   .cc-academics-column-labels {
-    color: $cc-color-dim-gray;
+    color: $color-dove-gray;
     font-weight: bold;
   }
   .cc-academics-course-grading-centered {
     text-align: center;
   }
   .cc-academics-course-grading-footer {
-    border-top: 1px solid $cc-color-whisper;
+    border-top: 1px solid $color-gallery;
   }
   .cc-academics-course-grading-header {
-    border-bottom: 1px solid $cc-color-whisper;
+    border-bottom: 1px solid $color-gallery;
   }
   .cc-academics-course-grading-header-period {
     float: right;
@@ -205,14 +205,14 @@
     padding-right: 8px;
   }
   .cc-academics-instructors {
-    color: $cc-color-jellybean;
+    color: $color-wedgewood;
     list-style-type: square;
     li {
       margin-left: 20px;
     }
   }
   .cc-academics-instructors-grading-header {
-    border-top: 1px solid $cc-color-whisper;
+    border-top: 1px solid $color-gallery;
     margin-top: 15px;
     padding-top: 10px;
   }
@@ -227,13 +227,13 @@
     padding-top: 5px;
   }
   .cc-academics-link-disabled {
-    color: $cc-color-dim-gray;
+    color: $color-dove-gray;
   }
   .cc-academics-nocontent-container {
     margin-top: 15px;
   }
   .cc-academics-even {
-    background: $cc-color-whisper;
+    background: $color-gallery;
   }
   .cc-academics-page-left {
     .row {
@@ -268,15 +268,15 @@
       }
     }
     .cc-academics-prev-next-disabled {
-      color: $cc-color-nobel;
+      color: $color-dusty-gray;
       &.cc-academics-next {
         &::before {
-          border-left: 4px solid $cc-color-nobel;
+          border-left: 4px solid $color-dusty-gray;
         }
       }
       &.cc-academics-prev {
         &::before {
-          border-right: 4px solid $cc-color-nobel;
+          border-right: 4px solid $color-dusty-gray;
         }
       }
     }
@@ -294,7 +294,7 @@
   .cc-academics-semester {
     width: 100%;
     > div {
-      border: 1px solid $cc-color-very-light-grey;
+      border: 1px solid $color-silver;
       padding: 10px;
     }
     h3 {
@@ -315,7 +315,7 @@
   .cc-academics-semester-current {
     font-size: 100%;
     > div {
-      background: $cc-color-alice-blue;
+      background: $color-foam;
     }
     h3 {
       font-size: 18px;
@@ -332,7 +332,7 @@
   }
   .cc-academics-semester-future {
     > div {
-      background: $cc-color-white-smoke;
+      background: $color-wild-sand;
     }
   }
   .cc-academics-semester-list {
@@ -367,14 +367,14 @@
     margin: 12px 15px 0;
   }
   .cc-academics-no-block-history {
-    color: $cc-color-dim-gray;
+    color: $color-dove-gray;
     font-size: 14px;
     margin-top: 10px;
   }
   .cc-academics-subtitle {
-    background: $cc-color-lynch;
+    background: $color-pale-sky;
     h3 {
-      color: $cc-color-white;
+      color: $color-white;
       font-size: 13px;
       font-weight: normal;
       margin: 0;

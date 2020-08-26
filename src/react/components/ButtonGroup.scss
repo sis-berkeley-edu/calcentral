@@ -15,7 +15,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    border: 1px solid $light-gray;
+    border: 1px solid $color-silver;
     border-left-width: 0;
     border-right-width: 0;
 
@@ -44,13 +44,13 @@
     font-weight: bold;
     color: $color-text-link;
     border: 1px solid $color-denim;
-    background: $cc-color-alice-blue;
+    background: $color-foam;
   }
 
   .GroupedButton.GroupedButton--inactive {
-    color: $cc-color-dim-gray;
-    background: $cc-color-white-smoke;
-    border-color: $cc-color-very-light-grey;
+    color: $color-dove-gray;
+    background: $color-wild-sand;
+    border-color: $color-silver;
 
     &:hover {
       color: $color-text-link;

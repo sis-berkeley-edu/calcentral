@@ -2,7 +2,7 @@
 .cc-loan-history-page {
   .cc-loan-history-aid-year, .cc-loan-history-cumulative {
     .cc-icon {
-      color: $cc-color-lochmara;
+      color: $color-matisse;
     }
     .cc-loan-category-description {
       margin-bottom: 10px;
@@ -13,7 +13,7 @@
         padding: 0 15px;
         table-layout: fixed;
         td, th {
-          border-bottom: 1px solid $cc-color-whisper;
+          border-bottom: 1px solid $color-gallery;
           font-size: 12px;
           padding: 8px;
         }
@@ -69,7 +69,7 @@
       }
       td {
         &:first-child {
-          color: $cc-color-dim-gray;
+          color: $color-dove-gray;
           font-weight: bold;
           width: 40%;
         }
@@ -87,10 +87,10 @@
       table {
         td {
           &:first-child {
-            border-left: 1px solid $cc-color-whisper;
+            border-left: 1px solid $color-gallery;
           }
           &:last-child {
-            border-right: 1px solid $cc-color-whisper;
+            border-right: 1px solid $color-gallery;
           }
         }
         th {

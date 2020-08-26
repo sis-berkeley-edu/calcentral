@@ -16,16 +16,16 @@
     background-color: transparent;
   }
   &::-webkit-scrollbar-track:enabled {
-    background-color: $cc-color-ironside-grey-transparent;
+    background-color: $color-ironside-grey-transparent;
     border-radius: 5px;
   }
   &::-webkit-scrollbar-thumb:vertical {
-    background-color: $cc-color-black-transparent;
+    background-color: $color-black-transparent;
     border-radius: 5px;
     height: 50px;
   }
   &::-webkit-scrollbar-thumb:horizontal {
-    background-color: $cc-color-black-transparent;
+    background-color: $color-black-transparent;
     border-radius: 5px;
     width: 50px;
   }

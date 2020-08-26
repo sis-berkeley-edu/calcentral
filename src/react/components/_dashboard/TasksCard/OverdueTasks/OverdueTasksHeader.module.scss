@@ -1,6 +1,6 @@
 @import 'src/react/stylesheets/variables';
 
-$danger-color: $cc-color-harley-davidson-orange;
+$danger-color: $color-thunderbird;
 
 .header {
   display: flex;
@@ -17,7 +17,7 @@ $danger-color: $cc-color-harley-davidson-orange;
 
   .label {
     text-align: right;
-    color: $cc-color-nobel;
+    color: $color-dusty-gray;
     font-weight: 700;
     font-size: 12px;
   }

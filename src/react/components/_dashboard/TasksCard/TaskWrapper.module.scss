@@ -1,15 +1,15 @@
 @import 'src/react/stylesheets/variables';
 @import 'src/react/stylesheets/mixins';
 
-$danger-color: $cc-color-harley-davidson-orange;
+$danger-color: $color-thunderbird;
 
 .taskWrapper {
   &.selected {
-    background-color: $cc-color-alice-blue;
+    background-color: $color-foam;
   }
 
   &.selected.notFocused {
-    background: $cc-color-ivory;
+    background: $color-bianca;
   }
 
   &.hasDetail {
@@ -27,7 +27,7 @@ $danger-color: $cc-color-harley-davidson-orange;
     right: 7px;
   }
 
-  border-left: 4px solid $cc-color-very-light-grey;
+  border-left: 4px solid $color-silver;
   margin-right: 10px;
 }
 

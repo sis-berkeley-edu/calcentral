@@ -10,11 +10,11 @@
 
 // Useful classes
 .cc-alert {
-  color: $cc-color-harley-davidson-orange !important;
+  color: $color-thunderbird !important;
 }
 .cc-alert-box {
-  background-color: $cc-color-harley-davidson-orange;
-  color: $cc-color-white;
+  background-color: $color-thunderbird;
+  color: $color-white;
   padding: 15px;
 }
 .cc-break-word {
@@ -92,13 +92,13 @@
   white-space: nowrap;
 }
 .cc-required-field-indicator {
-  color: $cc-color-harley-davidson-orange;
+  color: $color-thunderbird;
 }
 .cc-right {
   float: right;
 }
 .cc-strikethrough {
-  color: $cc-color-very-light-grey !important;
+  color: $color-silver !important;
   text-decoration: line-through !important;
 }
 .cc-strong {
@@ -133,14 +133,14 @@ $cc-spinner-uneven: 17px;
   &::before {
     animation: spin-normal 1s infinite steps(8);
     border-radius: 50%;
-    box-shadow: 0 (-$cc-spinner-uneven) $cc-color-very-light-grey, // Top
-      $cc-spinner-even (-$cc-spinner-even $cc-color-very-light-grey), // Top right
-      $cc-spinner-uneven 0 $cc-color-nobel, // Right
+    box-shadow: 0 (-$cc-spinner-uneven) $color-silver, // Top
+      $cc-spinner-even (-$cc-spinner-even $color-silver), // Top right
+      $cc-spinner-uneven 0 $color-dusty-gray, // Right
       $cc-spinner-even $cc-spinner-even $color-mine-shaft, // Bottom right
-      0 $cc-spinner-uneven $cc-color-black, // Bottom
-      (-$cc-spinner-even) $cc-spinner-even $cc-color-very-light-grey, // Bottom left
-      (-$cc-spinner-uneven) 0 $cc-color-very-light-grey, // Left
-      (-$cc-spinner-even) (-$cc-spinner-even) $cc-color-very-light-grey; // Top left
+      0 $cc-spinner-uneven $color-black, // Bottom
+      (-$cc-spinner-even) $cc-spinner-even $color-silver, // Bottom left
+      (-$cc-spinner-uneven) 0 $color-silver, // Left
+      (-$cc-spinner-even) (-$cc-spinner-even) $color-silver; // Top left
     content: "";
     display: inline-block;
     height: 10px;
@@ -158,9 +158,9 @@ $cc-spinner-uneven: 17px;
 
 // Popover
 .cc-popover {
-  background: $cc-color-whisper;
+  background: $color-gallery;
   border-radius: 5px;
-  box-shadow: 0 5px 10px $cc-color-black-transparent;
+  box-shadow: 0 5px 10px $color-black-transparent;
   padding: 0;
   position: absolute;
   z-index: 100;
@@ -187,13 +187,13 @@ $cc-spinner-uneven: 17px;
   // This allows us to create an arrow for the popover
   // We also add a border by painting another arrow behind the first one
   &::after {
-    border-bottom: 10px solid $cc-color-whisper;
+    border-bottom: 10px solid $color-gallery;
     border-left: 10px solid transparent;
     border-right: 10px solid transparent;
     margin-left: -10px;
   }
   &::before {
-    border-bottom: 11px solid $cc-color-very-light-grey;
+    border-bottom: 11px solid $color-silver;
     border-left: 11px solid transparent;
     border-right: 11px solid transparent;
     margin-left: -11px;

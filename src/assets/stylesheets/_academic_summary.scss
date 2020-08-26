@@ -1,6 +1,6 @@
 .cc-academic-summary {
   .cc-academic-summary-border-wrapper {
-    border: 1px solid $cc-color-very-light-grey;
+    border: 1px solid $color-silver;
     margin: 15px;
     &:first-child {
       margin-top: 0;
@@ -17,11 +17,11 @@
     margin-bottom: 15px;
   }
   .cc-academic-summary-row-header {
-    color: $cc-color-dim-gray;
+    color: $color-dove-gray;
     vertical-align: bottom;
   }
   .cc-academic-summary-subhead {
-    color: $cc-color-dim-gray;
+    color: $color-dove-gray;
     padding: 0;
     vertical-align: bottom;
     width: 20%;

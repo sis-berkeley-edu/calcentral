@@ -1,7 +1,7 @@
 .cc-delegate-welcome {
   padding-left: 0;
   .cc-delegate-linking-widget {
-    background: $cc-color-white;
+    background: $color-white;
     form {
       background: transparent;
       border: 0;
@@ -17,8 +17,8 @@
       }
     }
     .cc-delegate-linking-error {
-      background-color: $cc-color-pale-pink;
-      border-bottom: 1px solid $cc-color-harley-davidson-orange;
+      background-color: $color-cinderella;
+      border-bottom: 1px solid $color-thunderbird;
       margin: -10px -10px 10px;
       padding: 10px;
       white-space: pre-line;
@@ -27,10 +27,10 @@
       width: 100%;
     }
     .cc-delegate-linking-agreement {
-      background: $cc-color-whisper;
+      background: $color-gallery;
     }
     .cc-delegate-linking-footer {
-      color: $cc-color-nobel;
+      color: $color-dusty-gray;
     }
     .cc-delegate-linking-footnote {
       width: 5%;

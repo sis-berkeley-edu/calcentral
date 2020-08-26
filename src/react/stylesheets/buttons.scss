@@ -50,7 +50,7 @@ button {
   color: $button-font-primary;
   &:focus, &:hover {
     background: $button-primary-hover-blue;
-    color: $cc-color-white;
+    color: $color-white;
   }
 }
 .cc-react-button--link {
@@ -67,7 +67,7 @@ button {
   }
   &:disabled {
     background-color: inherit;
-    color: $cc-color-nobel;
+    color: $color-dusty-gray;
     pointer-events: none;
   }
 }

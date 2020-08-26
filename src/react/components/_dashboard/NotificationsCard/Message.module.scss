@@ -1,7 +1,7 @@
 @import 'src/react/stylesheets/variables';
 @import 'src/react/stylesheets/mixins';
 
-$activeColor: $cc-color-alice-blue;
+$activeColor: $color-foam;
 
 .message {
   padding: 10px 0;
@@ -22,7 +22,7 @@ $activeColor: $cc-color-alice-blue;
     background-color: $activeColor;
 
     &.notFocused {
-      background-color: $cc-color-ivory;
+      background-color: $color-bianca;
     }
   }
 }

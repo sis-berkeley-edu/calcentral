@@ -11,15 +11,15 @@
 }
 
 .beingProcessedDivider {
-  border-top: 1px solid $cc-color-whisper;
-  border-left: 4px solid $cc-color-very-light-grey;
+  border-top: 1px solid $color-gallery;
+  border-left: 4px solid $color-silver;
   font-size: 14px;
   font-weight: 600;
   padding: 22px 30px 16px 10px;
 
   .Badge {
     color: white;
-    background-color: $cc-color-very-light-grey;
+    background-color: $color-silver;
     padding: 2px 5px;
   }
 }

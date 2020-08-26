@@ -3,15 +3,15 @@
 // Based on http://jsbin.com/maxufesi/1
 // TODO: Replace usage of this with cc-inline-select below
 .cc-select {
-  background: linear-gradient($cc-color-white, $cc-color-whisper), $cc-color-white;
-  border: 1px solid $cc-color-very-light-grey;
+  background: linear-gradient($color-white, $color-gallery), $color-white;
+  border: 1px solid $color-silver;
   border-radius: 5px;
   overflow: hidden;
   position: relative;
   width: 100%;
   z-index: 1;
   &::before {
-    background: url('../images/svg/select_arrow_20x28.svg') no-repeat right center, linear-gradient($cc-color-white, $cc-color-whisper);
+    background: url('../images/svg/select_arrow_20x28.svg') no-repeat right center, linear-gradient($color-white, $color-gallery);
     content: '';
     display: block;
     height: 100%;
@@ -38,7 +38,7 @@
   }
 }
 :-moz-any(.cc-select)::before {
-  background-color: $cc-color-white;
+  background-color: $color-white;
   pointer-events: none;
   z-index: 1;
 }
@@ -47,8 +47,8 @@
 .cc-inline-select {
   -moz-appearance: none !important;
   -webkit-appearance: none !important;
-  background: url('../images/svg/select_arrow_20x28.svg') no-repeat right center, linear-gradient($cc-color-white, $cc-color-whisper);
-  border: 1px solid $cc-color-very-light-grey;
+  background: url('../images/svg/select_arrow_20x28.svg') no-repeat right center, linear-gradient($color-white, $color-gallery);
+  border: 1px solid $color-silver;
   border-radius: 5px;
   cursor: pointer;
   display: inline;
@@ -59,7 +59,7 @@
 }
 
 .cc-inline-multiselect {
-  border: 1px solid $cc-color-very-light-grey;
+  border: 1px solid $color-silver;
   border-radius: 5px;
   cursor: pointer;
   display: inline;
@@ -71,7 +71,7 @@
   .cc-select {
     border-radius: 0;
     &::before {
-      background: $cc-color-white;
+      background: $color-white;
     }
   }
 }

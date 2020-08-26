@@ -40,10 +40,10 @@
     padding: 0;
 
     > li {
-      border-bottom: 1px solid $cc-color-whisper;
+      border-bottom: 1px solid $color-gallery;
       padding-right: 14px;
       &:last-child {
-        border-bottom: 1px solid $cc-color-whisper;
+        border-bottom: 1px solid $color-gallery;
       }
     }
     .cc-status-holds-expanded-text {
@@ -73,7 +73,7 @@
   }
 
   .cc-standing-history-bg {
-    background-color: $cc-color-white-smoke;
+    background-color: $color-wild-sand;
   }
 
   .cc-standing-history-row {

@@ -1,7 +1,7 @@
 @import 'src/react/stylesheets/variables';
 @import 'src/react/stylesheets/mixins';
 
-$danger-color: $cc-color-harley-davidson-orange;
+$danger-color: $color-thunderbird;
 
 .overdueItem {
   @include hasDisclosureArrow();
@@ -15,7 +15,7 @@ $danger-color: $cc-color-harley-davidson-orange;
   }
 
   &:hover {
-    background: $cc-color-alice-blue;
+    background: $color-foam;
   }
 
   &.notSelected {
@@ -23,7 +23,7 @@ $danger-color: $cc-color-harley-davidson-orange;
   }
 
   &.selected {
-    background-color: $cc-color-alice-blue;
+    background-color: $color-foam;
     @include disclosureArrowOpen();
   }
 
@@ -62,7 +62,7 @@ $danger-color: $cc-color-harley-davidson-orange;
 }
 
 .departmentName {
-  color: $cc-color-nobel;
+  color: $color-dusty-gray;
   font-size: 11px;
   font-weight: normal;
   text-transform: uppercase;

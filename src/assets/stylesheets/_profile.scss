@@ -4,7 +4,7 @@
       margin: 0;
       width: 92px;
       th {
-        color: $cc-color-dim-gray;
+        color: $color-dove-gray;
       }
     }
   }
@@ -58,7 +58,7 @@
     font-size: 16px;
   }
   .cc-widget-profile-picture-not-available {
-    background: $cc-color-very-light-grey;
+    background: $color-silver;
     display: block;
     font-size: 80px;
     height: 96px;
@@ -66,7 +66,7 @@
     text-align: center;
     width: 72px;
     i {
-      color: $cc-color-white;
+      color: $color-white;
     }
   }
   .cc-widget-profile-section {

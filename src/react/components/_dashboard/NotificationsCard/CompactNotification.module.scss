@@ -1,7 +1,7 @@
 @import 'src/react/stylesheets/variables';
 @import 'src/react/stylesheets/mixins';
 
-$activeColor: $cc-color-alice-blue;
+$activeColor: $color-foam;
 
 .compactNotification {
   border-top: 1px solid #eee;
@@ -20,7 +20,7 @@ $activeColor: $cc-color-alice-blue;
   @include disclosureArrowLeftOpen;
 
   &.notFocused {
-    background-color: $cc-color-ivory;
+    background-color: $color-bianca;
   }
 }
 

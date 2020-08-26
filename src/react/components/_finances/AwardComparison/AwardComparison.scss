@@ -12,12 +12,12 @@
     cursor: pointer;
 
     &:hover {
-      background-color: $cc-color-alice-blue;
+      background-color: $color-foam;
     }
   }
 
   .dimGrey {
-    color: $dim-grey;
+    color: $color-dove-gray;
   }
 
   .direction {
@@ -64,7 +64,7 @@
 
   .legendBorder {
     border: none;
-    border-bottom: 1px solid $light-gray;
+    border-bottom: 1px solid $color-silver;
   }
 
   .textStrong {
@@ -140,14 +140,14 @@
   }
 
   hr {
-    border-bottom: 1px solid $light-gray;
+    border-bottom: 1px solid $color-silver;
     margin: 0;
   }
 
   table {
     border-collapse: collapse;
     border: none;
-    border-bottom: 1px solid $light-gray;
+    border-bottom: 1px solid $color-silver;
     margin-bottom: 0;
     width: 100%;
 
@@ -162,13 +162,13 @@
 
     tbody {
       tr {
-        border: 1px solid $light-gray;
+        border: 1px solid $color-silver;
         cursor: default;
 
         th,
         td {
           border: none;
-          background-color: $white;
+          background-color: $color-white;
           font-weight: normal;
           &:nth-last-child(1):not(.typeTitle),
           &:nth-last-child(2):not(.typeTitle) {
@@ -188,7 +188,7 @@
       }
 
       tr.awardRow {
-        background-color: $white;
+        background-color: $color-white;
       }
 
       tr.typeRow + .awardRow {
@@ -196,25 +196,25 @@
       }
 
       tr:last-child {
-        border: 1px solid $light-gray;
+        border: 1px solid $color-silver;
         border-bottom: none;
       }
 
       tr.legendBorder {
         border: none;
-        border-bottom: 1px solid $light-gray;
+        border-bottom: 1px solid $color-silver;
       }
     }
 
     tfoot {
       tr {
-        border: 1px solid $light-gray;
-        border-top: 1px solid $cc-color-nero;
+        border: 1px solid $color-silver;
+        border-top: 1px solid $color-mine-shaft;
 
         th,
         td {
           border: none;
-          background-color: $white;
+          background-color: $color-white;
           font-weight: normal;
         }
       }
@@ -238,7 +238,7 @@
     }
 
     .valueCellChanged {
-      background-color: $white;
+      background-color: $color-white;
     }
 
     .valueCellIcon > div {

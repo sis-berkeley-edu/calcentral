@@ -1,7 +1,7 @@
 @import 'colors';
 
 .summary-section {
-  background-color: $cc-color-alice-blue;
+  background-color: $color-foam;
 }
 
 .billing-summary-table {
@@ -17,14 +17,14 @@
   }
 
   .total-unpaid-balance-value {
-    border-top: 1px solid $cc-color-whisper;
+    border-top: 1px solid $color-gallery;
   }
 }
 
 .higher-one {
   align-items: center;
   display: flex;
-  border-bottom: 1px solid $cc-color-whisper;
+  border-bottom: 1px solid $color-gallery;
   padding-bottom: 12px;
 
   a:first-child {
@@ -32,7 +32,7 @@
   }
 
   .pdf-statements[disabled] {
-    color: $cc-color-dim-gray;
+    color: $color-dove-gray;
   }
 }
 

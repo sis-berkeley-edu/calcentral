@@ -30,14 +30,14 @@ $curve-position: 8px;
 }
 
 .wrapper {
-  background-color: $white;
+  background-color: $color-white;
   margin-right: $large-spacing;
   margin-top: $large-spacing;
 }
 
 .header {
   background-color: $header-bg-color;
-  color: $white;
+  color: $color-white;
   padding-top: $medium-spacing;
 
   h1 {
@@ -53,7 +53,7 @@ $curve-position: 8px;
   background-image: linear-gradient(
     $header-bg-color,
     $header-bg-color $curve-position,
-    $white ($curve-position + 1px)
+    $color-white ($curve-position + 1px)
   );
 }
 

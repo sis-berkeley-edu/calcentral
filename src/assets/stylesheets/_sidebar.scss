@@ -1,11 +1,11 @@
 .cc-sidebar {
-  background: $cc-color-jellybean;
+  background: $color-wedgewood;
   margin-top: 1px;
   padding-left: 0;
   padding-right: 0;
   h3 {
-    border-top: 1px solid $cc-color-spindle;
-    color: $cc-color-white;
+    border-top: 1px solid $color-casper;
+    color: $color-white;
     font-size: 16px;
     font-weight: normal;
     margin: 0;
@@ -18,15 +18,15 @@
     &.active a,
     a:hover,
     a:focus {
-      background: $cc-color-air-force-blue;
+      background: $color-hoki;
       border-radius: 5px;
-      color: $cc-color-white;
+      color: $color-white;
     }
     &.active a {
       font-weight: bold;
     }
     > a {
-      color: $cc-color-whisper;
+      color: $color-gallery;
       display: block;
       margin: 1px 10px 0;
       padding: 2px 5px;

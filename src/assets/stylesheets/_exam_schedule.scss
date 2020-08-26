@@ -9,19 +9,19 @@
     width: 38%;
   }
   .cc-widget-exam-schedule-conflicts {
-    background-color: $cc-color-ivory;
-    border-left: 5px solid $cc-color-dark-tangerine;
+    background-color: $color-bianca;
+    border-left: 5px solid $color-buttercup;
     margin-left: -5px;
   }
   .cc-widget-exam-schedule-conflicts-notice-instructor {
-    color: $cc-color-dim-gray;
+    color: $color-dove-gray;
   }
   .cc-widget-exam-schedule-conflicts-notice-student {
     font-weight: bold;
   }
   .cc-widget-exam-schedule-conflicts-notice-container {
-    background-color: $cc-color-ivory;
-    border-left: 5px solid $cc-color-dark-tangerine;
+    background-color: $color-bianca;
+    border-left: 5px solid $color-buttercup;
   }
   .cc-widget-exam-schedule-course-identifier {
     font-weight: bold;
@@ -30,7 +30,7 @@
     font-style: italic;
   }
   .cc-widget-exam-schedule-graduate-notice {
-    color: $cc-color-dim-gray;
+    color: $color-dove-gray;
     padding: 0 15px 15px;
   }
   .cc-widget-exam-schedule-header {
@@ -38,7 +38,7 @@
     padding: 0 15px;
   }
   .cc-widget-exam-schedule-header-grey {
-    color: $cc-color-nobel !important;
+    color: $color-dusty-gray !important;
     font-weight: normal;
   }
   .cc-widget-exam-schedule-list {
@@ -52,7 +52,7 @@
     font-style: italic;
   }
   .cc-widget-exam-schedule-no-location-instructors {
-    color: $cc-color-nobel;
+    color: $color-dusty-gray;
     font-style: italic;
   }
   .cc-widget-exam-schedule-notice {
@@ -65,7 +65,7 @@
     padding: 15px 15px 5px;
   }
   .cc-widget-exam-schedule-time-location {
-    color: $cc-color-dim-gray;
+    color: $color-dove-gray;
     font-size: 12px;
   }
 }

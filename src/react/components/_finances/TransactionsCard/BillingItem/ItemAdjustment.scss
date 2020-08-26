@@ -14,7 +14,7 @@
   }
 
   &.ItemAdjustment--change {
-    color: $cc-color-dim-gray;
+    color: $color-dove-gray;
 
     .ItemAdjustment__description {
       font-style: italic;
@@ -22,7 +22,7 @@
   }
 
   &.ItemAdjustment--last {
-    color: $cc-color-dim-gray;
+    color: $color-dove-gray;
   }
 
   &.ItemAdjustment--show-more {
@@ -33,7 +33,7 @@
 
   &.ItemAdjustment--too-many {
     background-image: url('/assets/images/timeline-empty.svg');
-    color: $cc-color-dim-gray;
+    color: $color-dove-gray;
   }
 
   &:first-child {
