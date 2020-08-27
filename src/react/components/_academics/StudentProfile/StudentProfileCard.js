@@ -6,7 +6,7 @@ import { react2angular } from 'react2angular';
 import './StudentProfileCard.scss';
 
 import store from 'Redux/store';
-import { fetchAcademics } from 'Redux/actions/academicsActions';
+import { fetchMyAcademics } from 'Redux/actions/myAcademicsActions';
 import { fetchLawAwards } from 'Redux/actions/lawAwardsActions';
 import { fetchProfile } from 'Redux/actions/profileActions';
 import { fetchTransferCredit } from 'Redux/actions/transferCreditActions';
@@ -25,9 +25,9 @@ import UndergraduateGraduation from './UndergraduateGraduation';
 import GraduateGraduation from './GraduateGraduation';
 import GPAToggle from './GPAToggle';
 import CumulativeUnits from './CumulativeUnits';
-
 import Degrees from './Degrees';
 import LawAwards from './LawAwards';
+import Diploma from './Diploma.js';
 
 const propTypes = {
   dispatch: PropTypes.func.isRequired,
@@ -35,7 +35,7 @@ const propTypes = {
 
 const StudentProfileCard = ({ dispatch }) => {
   useEffect(() => {
-    dispatch(fetchAcademics());
+    dispatch(fetchMyAcademics());
     dispatch(fetchProfile());
     dispatch(fetchTransferCredit());
     dispatch(fetchLawAwards());
@@ -72,6 +72,7 @@ const StudentProfileCard = ({ dispatch }) => {
             <GPAToggle />
             <Degrees />
             <LawAwards showLink={true} />
+            <Diploma />
           </tbody>
         </table>
       </div>

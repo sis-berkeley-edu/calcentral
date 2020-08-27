@@ -62,9 +62,9 @@ button {
 // Styleguide 2.3
 .cc-button {
   background: linear-gradient($cc-color-white, $cc-color-whisper), $cc-color-white;
-  border: 1px solid $cc-color-very-light-grey;
+  border: 2px solid $cc-color-very-light-grey;
   border-radius: 5px;
-  color: $cc-color-night-rider;
+  color: $color-mine-shaft;
   cursor: pointer;
   display: inline;
   font-size: 11px;
@@ -73,7 +73,7 @@ button {
   padding: 6px 10px;
   &:focus, &:hover {
     background: linear-gradient($cc-color-white, $cc-color-very-light-grey), $cc-color-very-light-grey;
-    color: $cc-color-night-rider;
+    color: $color-mine-shaft;
     text-decoration: none;
   }
 }

@@ -43,7 +43,7 @@ module MyAcademics
     end
 
     def academic_statuses_proxy
-      HubEdos::StudentApi::V2::AcademicStatuses.new(user_id: @uid)
+      HubEdos::StudentApi::V2::Feeds::AcademicStatuses.new(user_id: @uid)
     end
 
     def api_response

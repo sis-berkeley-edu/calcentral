@@ -31,7 +31,7 @@ module HubEdos
 
     def get_student_attributes
       @student_attributes ||= begin
-        student_attributes = HubEdos::StudentApi::V2::StudentAttributes.new(user_id: @uid).get
+        student_attributes = HubEdos::StudentApi::V2::Feeds::StudentAttributes.new(user_id: @uid).get
         if student_attributes[:studentNotFound]
           logger.warn "Student Attributes request failed for UID #{@uid}"
           return {}

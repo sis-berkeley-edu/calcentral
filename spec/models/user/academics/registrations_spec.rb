@@ -14,7 +14,7 @@ describe User::Academics::Registrations do
   end
   let(:registrations_proxy) { double(:registrations_proxy, get: registrations_feed) }
   let(:user) { User::Current.new(uid) }
-  before { allow(HubEdos::StudentApi::V2::Registrations).to receive(:new).and_return(registrations_proxy) }
+  before { allow(HubEdos::StudentApi::V2::Feeds::Registrations).to receive(:new).and_return(registrations_proxy) }
   subject { described_class.new(user) }
 
   describe '#all' do
@@ -89,7 +89,7 @@ describe User::Academics::Registrations do
       expect(result.count).to eq 3
     end
     it 'memoizes registration proxy data' do
-      expect(HubEdos::StudentApi::V2::Registrations).to receive(:new).once.and_return(registrations_proxy)
+      expect(HubEdos::StudentApi::V2::Feeds::Registrations).to receive(:new).once.and_return(registrations_proxy)
       result1 = subject.data_feed
       result2 = subject.data_feed
       expect(result1.count).to eq 3

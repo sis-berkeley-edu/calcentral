@@ -4,6 +4,10 @@ module User
       extend ActiveSupport::Concern
 
       included do
+        def diploma
+          @diploma ||= ::User::Academics::Diploma.new(self)
+        end
+
         def enrollment_terms
           @enrollment_terms ||= ::User::Academics::EnrollmentTerms.new(self)
         end

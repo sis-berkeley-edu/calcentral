@@ -1,14 +1,13 @@
 module HubEdos
   module StudentApi
     module V2
-      class Student < ::HubEdos::Proxy
-        def url
-          # Contact information not currently needed and thus excluded ('&inc-cntc=true')
-          "#{@settings.base_url}/v2/students/#{@campus_solutions_id}?inc-acad=true&inc-regs=true"
+      module Student
+        def academic_statuses(user)
+          @academic_statuses ||= ::HubEdo::StudentApi::V2::Student::AcademicStatuses.new(user)
         end
 
-        def json_filename
-          'hub_v2_student.json'
+        def attributes(user)
+          @attributes ||= ::HubEdos::StudentApi::V2::Student::StudentAttributes.new(user)
         end
       end
     end

@@ -3,7 +3,8 @@
 // Colors
 //
 // Colors used throughout the entire calcentral portal.
-// Hex to color naming can be obtained from http://www.htmlcsscolor.com/
+// Hex to color naming can previously obtained from http://www.htmlcsscolor.com/
+// We are transitioning to http://chir.ag/projects/name-that-color (see SISRP-53198)
 //
 // sg-wrapper:
 // <div style="border: #000 solid 2px; color: #000;"><sg-wrapper-content/></div>
@@ -14,7 +15,7 @@
 //
 // markup:
 // <div style="background: $cc-color-black; color:#fff; padding: 1rem;">&#36;cc-color-black: #000;</div>
-// <div style="background: $cc-color-night-rider; color:#fff; padding: 1rem;">&#36;cc-color-night-rider: #333;</div>
+// <div style="background: $color-mine-shaft; color:#fff; padding: 1rem;">&#36;color-mine-shaft: #333;</div>
 // <div style="background: $cc-color-dim-gray; color:#fff; padding: 1rem;">&#36;cc-color-dim-gray: #666;</div>
 // <div style="background: $cc-color-nobel; color:#fff; padding: 1rem;">&#36;cc-color-nobel: #999;</div>
 // <div style="background: $cc-color-very-light-grey; color:#fff; padding: 1rem;">&#36;cc-color-very-light-grey: #ccc;</div>
@@ -24,7 +25,7 @@
 //
 // Styleguide 1.1
 $cc-color-black: #000;
-$cc-color-night-rider: #333;
+$color-mine-shaft: #333;
 $cc-color-dim-gray: #666;
 $cc-color-nobel: #999;
 $cc-color-very-light-grey: #ccc;

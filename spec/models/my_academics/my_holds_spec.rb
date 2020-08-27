@@ -5,7 +5,7 @@ describe MyAcademics::MyHolds do
     describe '#get_feed_internal' do
       let(:academic_status_proxy) { double(:academic_status_proxy, get: academic_status_response) }
       let(:academic_status_response) { nil }
-      before { allow(HubEdos::StudentApi::V2::AcademicStatuses).to receive(:new).and_return(academic_status_proxy) }
+      before { allow(HubEdos::StudentApi::V2::Feeds::AcademicStatuses).to receive(:new).and_return(academic_status_proxy) }
 
       context 'when AcademicStatus response is nil' do
         let(:academic_status_response) { nil }
@@ -43,7 +43,7 @@ describe MyAcademics::MyHolds do
       end
 
       context 'when AcademicStatus response is populated' do
-        let(:academic_status_proxy) { HubEdos::StudentApi::V2::AcademicStatuses.new(fake: true, user_id: '61889') }
+        let(:academic_status_proxy) { HubEdos::StudentApi::V2::Feeds::AcademicStatuses.new(fake: true, user_id: '61889') }
         it 'should successfully return a response' do
           expect(subject[:errored]).to eq nil
           expect(subject[:statusCode]).to eq 200

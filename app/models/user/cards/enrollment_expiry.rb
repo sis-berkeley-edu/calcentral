@@ -13,9 +13,9 @@ module User
         ::MyAcademics::MyHolds.expire(uid)
         ::MyAcademics::MyAcademicStatus.expire(uid)
 
-        ::HubEdos::StudentApi::V2::Registrations.expire(uid)
-        ::HubEdos::StudentApi::V2::StudentAttributes.expire(uid)
-        ::HubEdos::StudentApi::V2::AcademicStatuses.expire(uid)
+        ::HubEdos::StudentApi::V2::Feeds::Registrations.expire(uid)
+        ::HubEdos::StudentApi::V2::Feeds::StudentAttributes.expire(uid)
+        ::HubEdos::StudentApi::V2::Feeds::AcademicStatuses.expire(uid)
       end
     end
   end

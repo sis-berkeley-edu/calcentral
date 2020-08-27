@@ -28,7 +28,7 @@ $cc-react-spinner-uneven: 17px;
     box-shadow: 0 (-$cc-react-spinner-uneven) $cc-color-very-light-grey, // Top
       $cc-react-spinner-even (-$cc-react-spinner-even $cc-color-very-light-grey), // Top right
       $cc-react-spinner-uneven 0 $cc-color-nobel, // Right
-      $cc-react-spinner-even $cc-react-spinner-even $cc-color-night-rider, // Bottom right
+      $cc-react-spinner-even $cc-react-spinner-even $color-mine-shaft, // Bottom right
       0 $cc-react-spinner-uneven $cc-color-black, // Bottom
       (-$cc-react-spinner-even) $cc-react-spinner-even $cc-color-very-light-grey, // Bottom left
       (-$cc-react-spinner-uneven) 0 $cc-color-very-light-grey, // Left

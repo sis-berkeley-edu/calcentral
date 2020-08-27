@@ -1,9 +1,6 @@
 import buildDataReducer from '../build-data-reducer';
 
 import {
-  FETCH_ACADEMICS_START,
-  FETCH_ACADEMICS_SUCCESS,
-  FETCH_ACADEMICS_FAILURE,
   FETCH_ACTIVITIES_START,
   FETCH_ACTIVITIES_SUCCESS,
   FETCH_ACTIVITIES_FAILURE,
@@ -37,6 +34,9 @@ import {
   FETCH_LINK_START,
   FETCH_LINK_SUCCESS,
   FETCH_LINK_FAILURE,
+  FETCH_MY_ACADEMICS_START,
+  FETCH_MY_ACADEMICS_SUCCESS,
+  FETCH_MY_ACADEMICS_FAILURE,
   FETCH_MY_UP_NEXT_START,
   FETCH_MY_UP_NEXT_SUCCESS,
   FETCH_MY_UP_NEXT_FAILURE,
@@ -65,12 +65,6 @@ import {
   FETCH_WEB_MESSAGES_SUCCESS,
   FETCH_WEB_MESSAGES_FAILURE,
 } from '../action-types';
-
-export const AcademicsReducer = buildDataReducer(
-  FETCH_ACADEMICS_START,
-  FETCH_ACADEMICS_SUCCESS,
-  FETCH_ACADEMICS_FAILURE
-);
 
 export const ActivitiesReducer = buildDataReducer(
   FETCH_ACTIVITIES_START,
@@ -136,6 +130,12 @@ export const LinksReducer = buildDataReducer(
   FETCH_LINK_START,
   FETCH_LINK_SUCCESS,
   FETCH_LINK_FAILURE
+);
+
+export const MyAcademicsReducer = buildDataReducer(
+  FETCH_MY_ACADEMICS_START,
+  FETCH_MY_ACADEMICS_SUCCESS,
+  FETCH_MY_ACADEMICS_FAILURE
 );
 
 export const MyUpNextReducer = buildDataReducer(
