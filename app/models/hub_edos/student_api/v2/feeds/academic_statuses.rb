@@ -3,6 +3,9 @@ module HubEdos
     module V2
       module Feeds
         class AcademicStatuses < ::HubEdos::StudentApi::V2::Feeds::Proxy
+          include HubEdos::CachedProxy
+          include Cache::UserCacheExpiry
+
           attr_reader :include_inactive_programs, :include_completed_programs
 
           def initialize(options={})
