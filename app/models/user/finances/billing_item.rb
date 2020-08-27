@@ -28,6 +28,7 @@ module User
           type_code: data['type_code'],
           posted_on: posted_on,
           updated_on: updated_on,
+          status: status
         }
 
         return json unless options[:include_payments]
