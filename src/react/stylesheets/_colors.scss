@@ -1,24 +1,11 @@
 // Color variable names obtained from: http://chir.ag/projects/name-that-color
 
+// Neutrals
 $color-black: #000;
 $color-white: #fff;
 $color-bianca: #fcfcf3;
 
-$color-oasis: #fff2bd;
-
-// Shades of Blue
-$color-hoki: #61889e;
-$color-foam: #f2f9fe;
-$color-midnight-blue: #003262;
-$color-venice-blue: #065a7d;
-$color-denim: #117cbe;
-$color-matisse: #1f7099;
-
-// Shades of Blue/Gray
-$color-gumbo: #8098a5;
-$color-casper: #afc5d2;
-
-// Shades of Gray
+// Grays
 $color-black: #000;
 $color-mine-shaft: #333;
 $color-dove-gray: #666;
@@ -30,14 +17,33 @@ $color-silver: #ccc;
 $color-tundora: #474747;
 $color-mine-shaft: #222;
 
-// Shades of Red
-$color-buttercup: #f1a91e;
+// Reds
 $color-thunderbird: #cf1715;
 $color-guardsman-red: #c10006;
+$color-cinderella: #fce3e5;
+
+// Oranges
+$color-buttercup: #f1a91e;
+$color-karry: #ffe9d9;
+
+// Yellows
+$color-colonial-white: #fff2bd;
 
 // Greens
 $color-jewel: #137e3e;
 $color-skeptic: #c8ead6;
+
+// Blues
+$color-hoki: #61889e;
+$color-foam: #f2f9fe;
+$color-midnight-blue: #003262;
+$color-venice-blue: #065a7d;
+$color-denim: #117cbe;
+$color-matisse: #1f7099;
+
+// Blue-Grays
+$color-gumbo: #8098a5;
+$color-casper: #afc5d2;
 
 // Buttons
 $button-disabled-gray: $color-wild-sand;

@@ -18,7 +18,7 @@ const propTypes = {
   item: PropTypes.object,
   expanded: PropTypes.bool,
   onExpand: PropTypes.func,
-  tab: PropTypes.string
+  tab: PropTypes.string,
 };
 
 import dueLabel from './dueLabel';
@@ -26,36 +26,30 @@ import dueLabel from './dueLabel';
 const MobileView = ({ item, expanded, onExpand }) => {
   return (
     <div
-      className={`BillingItem BillingItem--charge BillingItem--mobile ${expanded ? 'BillingItem--expanded' : ''}`}
-      onClick={() => onExpand()}>
-      <div className="BillingItem__posted">
-        {formatDate(item.postedOn)}
-      </div>
-      <div className="BillingItem__type">
-        {item.type}
-      </div>
-      <div className="BillingItem__description">
-        {item.description}
-      </div>
+      className={`BillingItem BillingItem--charge BillingItem--mobile ${
+        expanded ? 'BillingItem--expanded' : ''
+      }`}
+      onClick={() => onExpand()}
+    >
+      <div className="BillingItem__posted">{formatDate(item.postedOn)}</div>
+      <div className="BillingItem__type">{item.type}</div>
+      <div className="BillingItem__description">{item.description}</div>
       <div className="BillingItem__amount">
         <ItemAmount amount={item.amount} />
       </div>
       <div className="BillingItem__status">
-        { item.status !== CHARGE_PAID &&
+        {item.status !== CHARGE_PAID && (
           <ChargeStatus item={item} icon={true} />
-        }
+        )}
       </div>
       <div className="BillingItem__due">
-        { item.status === CHARGE_PAID
-          ? CHARGE_PAID
-          : dueLabel(item.due_date)
-        }
+        {item.status === CHARGE_PAID ? CHARGE_PAID : dueLabel(item.due_date)}
       </div>
 
-      { expanded && <ItemDetails item={item} /> }
+      {expanded && <ItemDetails item={item} />}
 
       <div className="TableColumn__chevron">
-        <DisclosureChevron expanded={expanded}/>
+        <DisclosureChevron expanded={expanded} />
       </div>
     </div>
   );
@@ -65,11 +59,12 @@ MobileView.propTypes = propTypes;
 const DesktopView = ({ item, expanded, onExpand }) => {
   return (
     <div
-      className={`BillingItem BillingItem--charge BillingItem--desktop ${expanded ? 'BillingItem--expanded' : ''}`}
-      onClick={() => onExpand()}>
-      <div className="TableColumn__posted">
-        {formatDate(item.postedOn)}
-      </div>
+      className={`BillingItem BillingItem--charge BillingItem--desktop ${
+        expanded ? 'BillingItem--expanded' : ''
+      }`}
+      onClick={() => onExpand()}
+    >
+      <div className="TableColumn__posted">{formatDate(item.postedOn)}</div>
       <div className="TableColumn__description-amount">
         <div className="TableColumn__description">
           <div className="BillingItem__description">{item.description}</div>
@@ -90,13 +85,13 @@ const DesktopView = ({ item, expanded, onExpand }) => {
         <DisclosureChevron expanded={expanded} />
       </div>
 
-      { expanded && <ItemDetails item={item} /> }
+      {expanded && <ItemDetails item={item} />}
     </div>
   );
 };
 DesktopView.propTypes = propTypes;
 
-const ChargeItem = (props) => {
+const ChargeItem = props => {
   return (
     <Fragment>
       <DesktopView {...props} />
