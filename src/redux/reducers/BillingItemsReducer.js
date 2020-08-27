@@ -1,7 +1,7 @@
 /* eslint camelcase: 0 */
 // TODO: change API to camelcase
 
-import { parseISO, differenceInCalendarDays, startOfToday } from 'date-fns';
+import { parseISO } from 'date-fns';
 
 import {
   FETCH_BILLING_ITEMS_START,
@@ -12,46 +12,6 @@ import {
   FETCH_BILLING_ITEM_FAILURE,
 } from '../action-types';
 
-import { chargeTypes } from '../../react/components/_finances/TransactionsCard/types';
-
-import {
-  CHARGE_OVERDUE,
-  CHARGE_DUE,
-  CHARGE_NOT_DUE,
-  CHARGE_PAID,
-} from 'react/components/_finances/TransactionsCard/chargeStatuses';
-
-const dueStatus = item => {
-  if (!chargeTypes.has(item.type)) {
-    return null;
-  }
-
-  if (item.amount_due <= 0) {
-    return CHARGE_PAID;
-  }
-
-  if (item.due_date === null) {
-    return CHARGE_NOT_DUE;
-  }
-
-  const daysPastDue = differenceInCalendarDays(
-    startOfToday(),
-    parseISO(item.due_date)
-  );
-
-  if (daysPastDue > 0) {
-    return CHARGE_OVERDUE;
-  }
-
-  if (daysPastDue >= -15) {
-    return CHARGE_DUE;
-  }
-
-  if (daysPastDue < -15) {
-    return CHARGE_NOT_DUE;
-  }
-};
-
 const setDate = item => {
   if (item.due_date === null) {
     return item;
@@ -59,8 +19,6 @@ const setDate = item => {
     return { ...item, due_date: parseISO(item.due_date) };
   }
 };
-
-const appendChargeStatus = item => ({ ...item, status: dueStatus(item) });
 
 const updateItemDetails = (state, newItem) => {
   const items = state.items.map(item => {
@@ -83,7 +41,7 @@ const BillingItemsReducer = (state = {}, action) => {
     case FETCH_BILLING_ITEMS_SUCCESS:
       return {
         ...state,
-        items: action.value.map(setDate).map(appendChargeStatus),
+        items: action.value.map(setDate),
         isLoading: false,
         loaded: true,
         error: null,

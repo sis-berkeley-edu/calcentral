@@ -1,45 +1,52 @@
 @import '../../../../stylesheets/variables';
 
+$color-colonial-white: #fff2bd;
+$color-karry: #ffe9d9;
+
 .Badge {
+  color: #333;
   border-radius: 3px;
   display: inline-block;
-  font-size: $base-font-size;
-  line-height: 18px;
-  height: 18px;
-  background-color: $cc-color-whisper;
+  font-size: 11px;
+  font-weight: bold;
+  line-height: 21px;
+  height: 20px;
+  background-color: $color-gallery;
   white-space: nowrap;
-  padding-left: 7px;
-  padding-right: 7px;
+  padding-left: 4px;
+  padding-right: 4px;
 }
 
 .Badge--icon {
-  padding-left: 22px;
+  padding-left: 20px;
   background-repeat: no-repeat;
   background-position: left;
-  background-position-x: 7px;
+  background-position-x: 4px;
 }
 
 .Badge--not-due {
-  background-color: rgba(247, 199, 0, 0.15);
+  background-color: $color-colonial-white;
 
   &.Badge--icon {
-    background-image: url('/assets/images/not-due.svg');
+    // icon #F1A91E
+    background-image: url('/assets/images/not-yet-due.svg');
+    background-size: 13px;
   }
 }
 
 .Badge--due {
-  background-color: rgba(255, 108, 0, 0.15);
+  background-color: $color-karry;
 
   &.Badge--icon {
-    background-image: url('/assets/images/due.svg');
+    background-image: url('/assets/images/due-now.svg');
+    background-size: 13px;
   }
 }
 
 .Badge--overdue {
-  background-color: rgba(206, 23, 22, 0.15);
-  
+  background-color: $color-cinderella;
   &.Badge--icon {
-    background-image: url('/assets/images/overdue.svg');
+    background-image: url('/assets/images/exclamation-circle.svg');
+    background-size: 13px;
   }
 }
-
