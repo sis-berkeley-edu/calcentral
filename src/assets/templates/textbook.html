@@ -15,11 +15,15 @@
     </ul>
     <ul class="cc-textbooks-links cc-print-hide">
       <li data-ng-if="book.bookstoreInfo">
-        <form class="cc-textbooks-bookstore-form" method="post" action="https://calstudentstore.berkeley.edu/courselisting/index/loadMaterials">
+        <form data-ng-if="!api.user.profile.features.textbooksNewStore" class="cc-textbooks-bookstore-form" method="post" action="https://calstudentstore.berkeley.edu/courselisting/index/loadMaterials">
           <span class="cc-icon cc-icon-inline cc-icon-calstudentstore"></span>
           <input name="courses" type="hidden" value="{{book.bookstoreInfo}}">
           <button type="submit" class="cc-button-link"><strong>Purchase</strong></button>
         </form>
+        <span data-ng-if="api.user.profile.features.textbooksNewStore">
+          <span class="cc-icon cc-icon-inline cc-icon-calstudentstore"></span>
+          <a data-ng-href="{{book.calStudentStoreLink}}"><strong>Purchase</strong></a>
+        </span>
       </li>
       <li data-ng-if="book.amazonLink">
         <span class="cc-icon cc-icon-inline cc-icon-amazon"></span>
