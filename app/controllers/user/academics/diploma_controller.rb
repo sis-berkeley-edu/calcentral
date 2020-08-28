@@ -5,7 +5,7 @@ module User
 
       # GET /api/my/academics/diploma(.:format)
       def index
-        render json: user.diploma
+        render json: user.diploma.get_feed.to_json
       end
 
       def user

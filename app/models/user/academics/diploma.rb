@@ -1,9 +1,20 @@
 # Provides diploma data related to students
 class User::Academics::Diploma
+  include Cache::CachedFeed
+  include Cache::UserCacheExpiry
+
   attr_accessor :user
 
   def initialize(user)
     @user = user
+  end
+
+  def instance_key
+    user.uid
+  end
+
+  def get_feed_internal
+    as_json
   end
 
   def as_json(options = {})
