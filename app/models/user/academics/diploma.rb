@@ -1,12 +1,19 @@
 # Provides diploma data related to students
 class User::Academics::Diploma
+  include Cache::CachedFeed
+  include Cache::UserCacheExpiry
+
   attr_accessor :user
 
   def initialize(user)
     @user = user
   end
 
-  def as_json(options = {})
+  def instance_key
+    user.uid
+  end
+
+  def get_feed_internal
     {
       diplomaEligible: show_diploma_eligibility?,
       diplomaReady: user_ready_for_diploma?,
@@ -16,6 +23,10 @@ class User::Academics::Diploma
       electronicDiplomaReadyMessage: messages.electronic_diploma_ready_message,
       electronicDiplomaHelpMessage: messages.electronic_diploma_help_message,
     }
+  end
+
+  def as_json(options = {})
+    get_feed
   end
 
   def sso_url
