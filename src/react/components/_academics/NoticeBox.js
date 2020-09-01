@@ -1,9 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import StyledNotice from 'react/components/StyledNotice';
 import ReadMore from 'react/components/ReadMore';
-import styles from './EnrollmentNotice.module.scss';
-import 'icons/bullhorn-solid.svg';
 
 const propTypes = {
   termId: PropTypes.string.isRequired,
@@ -28,11 +27,9 @@ export default function NoticeBox({
 
   if (html) {
     return (
-      <div className={styles.enrollmentNotice}>
-        <div className={styles.messageContainer}>
-          <ReadMore html={html} />
-        </div>
-      </div>
+      <StyledNotice background="yellow" icon="bullhorn">
+        <ReadMore html={html} />
+      </StyledNotice>
     );
   }
 
