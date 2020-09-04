@@ -192,9 +192,8 @@ module MyAcademics
         { feed_key: :request_late_class_changes, cs_link_key: 'UC_CX_GT_GRADEOPT_ADD', cs_link_params: {} },
         { feed_key: :cross_campus_enroll, cs_link_key: 'UC_CX_STDNT_CRSCAMPENR', cs_link_params: {} },
       ]
-      # TODO: Temp for Spring 2020 only, should be removed after Spring 2020
-      spring_2020_drop_link = { feed_key: :spring_2020_drop, cs_link_key: 'UC_CX_GT_SRLATEDROP_ADD' }
-      campus_solutions_link_settings.append(spring_2020_drop_link) if can_see_spring_2020_drop_link?
+      late_ugrd_enroll_action_link = { feed_key: :late_ugrd_enroll_action, cs_link_key: 'UC_CX_GT_SRLATEDROP_ADD' }
+      campus_solutions_link_settings.append(late_ugrd_enroll_action_link) if can_see_late_ugrd_enroll_action_link?
 
       campus_solutions_link_settings.each do |setting|
         link = fetch_link(setting[:cs_link_key], setting[:cs_link_params])
@@ -215,12 +214,12 @@ module MyAcademics
       HubEdos::UserAttributes.new(user_id: @uid).has_role?(:student)
     end
 
-    # TODO: Temp for Spring 2020 only, should be removed after Spring 2020
     def user_is_undergrad?
       HubEdos::UserAttributes.new(user_id: @uid).has_role?(:undergrad)
     end
-    def can_see_spring_2020_drop_link?
-      current_academic_roles = MyAcademicRoles.new(@uid).get_feed.try(:[], :current)
+
+    def can_see_late_ugrd_enroll_action_link?
+      current_academic_roles = MyAcademics::MyAcademicRoles.new(@uid).get_feed.try(:[], :current)
       user_is_undergrad? && (
         current_academic_roles["lettersAndScience"] ||
         current_academic_roles["ugrdEngineering"] ||
@@ -230,7 +229,6 @@ module MyAcademics
         current_academic_roles["degreeSeeking"]
       )
     end
-    # END TODO
 
     def user
       @user ||= User::Current.new(@uid)
