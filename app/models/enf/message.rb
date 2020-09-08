@@ -5,13 +5,10 @@ module ENF
     attr_accessor :timestamp
     attr_accessor :text
 
-    def student_uid
-      @student_uid ||= User::Current.from_campus_solutions_id(student_campus_solutions_id).uid
-    end
-
-    def student_campus_solutions_id
-      student['StudentId']
-    rescue NoMethodError
+    def student_uids
+      student_ids.collect do |id|
+        User::Current.from_campus_solutions_id(id).uid
+      end
     end
 
     def topic
@@ -38,6 +35,19 @@ module ENF
     def student
       payload['student']
     rescue NoMethodError
+    end
+
+    def students
+      payload['students']
+    rescue NoMethodError
+    end
+
+    def student_ids
+      if students
+        Array(students['id'])
+      elsif student
+        Array(student['StudentId'])
+      end
     end
   end
 end
