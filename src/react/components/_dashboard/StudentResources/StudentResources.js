@@ -15,13 +15,12 @@ const propTypes = {
 };
 
 const renderLinkSectionList = (linkObj, analyticsObj) => {
-  // TODO: Temp for Spring 2020 only, should be removed after Spring 2020
   var link = '';
   if (linkObj.urlId == 'UC_CX_GT_SRLATEDROP_ADD')
     link = <span><CampusSolutionsLinkContainer
                     linkObj={{...linkObj}}
-                    onClickHandler={() => analyticsObj.sendEvent('Open eform page', 'Click', 'Request Spring 2020 Drop')}
-                    />: L&S students may use this form to drop a Spring 2020 class. This form closes May 6, 11:59pm.</span>
+                    onClickHandler={() => analyticsObj.sendEvent('Open eform page', 'Click', 'Request UGRD Late Enrollment Action')}
+                    />: {linkObj.linkDescriptionDisplay && linkObj.linkDescription}</span>
   else
     link = <CampusSolutionsLinkContainer linkObj={{...linkObj}}/>
 
