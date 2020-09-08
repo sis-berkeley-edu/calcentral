@@ -1,10 +1,16 @@
 module User
   module Notifications
-    class Expiry
+    class Expiry < ::ENF::Handler
       ENF::Processor.instance.register("sis:student:messages", self)
 
       def self.call(message)
-        ::User::Notifications::CachedFeed.expire(message.student_uid)
+        self.new(message).expire
+      end
+
+      def expire
+        uids.each do |uid|
+          ::User::Notifications::CachedFeed.expire(uid)
+        end
       end
     end
   end
