@@ -74,11 +74,17 @@
                   <span data-ng-if="section.isLaw || api.user.profile.roles.law || !section.grading.gradingBasis">&mdash;</span>
                 </td>
               </tr>
-              <tr data-ng-if="section.is_primary_section && ((section.grading.gradingLapseDeadlineDisplay && section.grading.gradingLapseDeadline) || section.grading.gradingBasis === 'FRZ')">
-                <td colspan="4" class="cc-text-right cc-academics-semester-incomplete-notice">
-                  <div cc-academic-section-incomplete-grading-status section="section" academic-guide-grades-policy-link="studentLinks.academicGuideGradesPolicy"></div>
-                </td>
-              </tr>
+
+              <tr
+                data-ng-if="section.is_primary_section && ((section.grading.gradingLapseDeadlineDisplay && section.grading.gradingLapseDeadline) || section.grading.gradingBasis === 'FRZ')"
+                cc-academic-section-incomplete-grading-status
+                section="section"
+                academic-guide-grades-policy-link="academicGuideGradesPolicyLink"
+                total-columns="4"
+                lapse-date-display-column-index="0"
+                frozen-display-column-index="3"
+              ></tr>
+
               <tr data-ng-repeat-end data-ng-if="section.is_primary_section && !section.waitlisted && section.grading.midpointGrade && section.show">
                 <td></td>
                 <td colspan="3">

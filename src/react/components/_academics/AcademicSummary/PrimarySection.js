@@ -81,6 +81,9 @@ let SingleSection = ({
           gradingLapseDeadlineDisplay={grading.gradingLapseDeadlineDisplay}
           gradingLapseDeadline={grading.gradingLapseDeadline}
           gradingBasis={grading.gradingBasis}
+          frozenDisplayColumnIndex={3}
+          lapseDateDisplayColumnIndex={3}
+          totalColumns={5}
           klass={klass}
         />
       )}
@@ -92,7 +95,7 @@ SingleSection.propTypes = {
   canViewGrades: PropTypes.bool,
   showPoints: PropTypes.bool,
   requirementsDesignation: PropTypes.string,
-  units: PropTypes.number,
+  units: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   lawUnits: PropTypes.number,
   grading: PropTypes.object,
   sectionLabel: PropTypes.string,
