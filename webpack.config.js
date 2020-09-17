@@ -134,5 +134,6 @@ module.exports = (_env, argv) => {
           mode === `production` ? `[name].[chunkhash].css` : `[name].css`,
       }),
     ],
+    devtool: "source-map"
   });
 };
