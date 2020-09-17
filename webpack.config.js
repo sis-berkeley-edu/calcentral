@@ -73,7 +73,7 @@ const config = {
   },
 
   optimization: {
-    minimize: true,
+    minimize: !process.env.WEBPACK_DEV_SERVER,
     minimizer: [new OptimizeCSSAssetsPlugin(), new TerserPlugin()],
     splitChunks: {
       chunks: 'all',

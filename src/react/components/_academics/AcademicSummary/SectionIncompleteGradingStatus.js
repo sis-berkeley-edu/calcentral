@@ -6,35 +6,72 @@ import CampusSolutionsLinkContainer from '../../CampusSolutionsLink/CampusSoluti
 import './SectionIncompleteGradingStatus.scss';
 
 const propTypes = {
-  gradingLapseDeadlineDisplay: PropTypes.bool.isRequired,
-  gradingLapseDeadline: PropTypes.string,
   academicGuideGradesPolicyLink: PropTypes.object.isRequired,
-  gradingBasis: PropTypes.string.isRequired
+  gradingBasis: PropTypes.string.isRequired,
+  gradingLapseDeadline: PropTypes.string,
+  gradingLapseDeadlineDisplay: PropTypes.bool.isRequired,
+  lapseDateDisplayColumnIndex: PropTypes.number.isRequired,
+  frozenDisplayColumnIndex: PropTypes.number.isRequired,
+  totalColumns: PropTypes.number,
 };
 
+/**
+ * Component for displaying a sections incomplete grading status
+ *
+ * Note: When updating this component, please also update academicSectionIncompleteGradingStatus
+ * which shares this functionality.
+ *
+ * React2Angular components do not work properly within ng-repeat-start and ng-repeat-end loops,
+ * so an AngularJS directive was needed.
+ *
+ * TODO: Replace with this component once all cards using academicSectionIncompleteGradingStatus
+ * have been refactored into React components.
+ */
 const SectionIncompleteGradingStatus = ({
-  gradingLapseDeadlineDisplay,
-  gradingLapseDeadline,
+  academicGuideGradesPolicyLink,
   gradingBasis,
-  academicGuideGradesPolicyLink}) => {
+  gradingLapseDeadline,
+  gradingLapseDeadlineDisplay,
+  lapseDateDisplayColumnIndex,
+  frozenDisplayColumnIndex,
+  totalColumns}) => {
+
   const showGradingLapseDeadline = (gradingLapseDeadlineDisplay && gradingLapseDeadline);
   const gradingBasisIsFrozen = (gradingBasis === 'FRZ');
+  const columnIndexes = [...Array(totalColumns).keys()];
+  const showSingleColumn = (showGradingLapseDeadline && lapseDateDisplayColumnIndex === 0) || (gradingBasisIsFrozen && frozenDisplayColumnIndex === 0);
+  const displayColumnIndex = (showGradingLapseDeadline && lapseDateDisplayColumnIndex) || (gradingBasisIsFrozen && frozenDisplayColumnIndex);
+
+  const showStatus = () => {
+    return (
+      <>
+        {showGradingLapseDeadline &&
+          <>
+            <CampusSolutionsLinkContainer linkObj={academicGuideGradesPolicyLink}>Student Completion Deadline is 30 days before</CampusSolutionsLinkContainer>
+            {': ' + gradingLapseDeadline}
+          </>
+        }
+        {gradingBasisIsFrozen &&
+          <CampusSolutionsLinkContainer linkObj={academicGuideGradesPolicyLink}>Frozen</CampusSolutionsLinkContainer>
+        }
+      </>
+    )
+  };
+
   if (showGradingLapseDeadline || gradingBasisIsFrozen) {
     return (
       <tr>
-        <td colSpan={3}>&nbsp;</td>
-        <td className="SectionIncompleteGradingStatus__table_cell">
-          {showGradingLapseDeadline &&
-            <CampusSolutionsLinkContainer linkObj={academicGuideGradesPolicyLink}>Lapse Date</CampusSolutionsLinkContainer>
-          }
-          {showGradingLapseDeadline &&
-            ': ' + gradingLapseDeadline
-          }
-          {gradingBasisIsFrozen &&
-            <CampusSolutionsLinkContainer linkObj={academicGuideGradesPolicyLink}>Frozen</CampusSolutionsLinkContainer>
-          }
-        </td>
-        <td>&nbsp;</td>
+        {showSingleColumn &&
+          <td className="SectionIncompleteGradingStatus__table_cell" colSpan={totalColumns}>
+            {showStatus()}
+          </td>
+        }
+        {!showSingleColumn && columnIndexes.map(index => (
+          <td className="SectionIncompleteGradingStatus__table_cell" key={index}>
+            {(displayColumnIndex == index) && showStatus()}
+            {(displayColumnIndex !== index) && '\u00A0'}
+          </td>
+        ))}
       </tr>
     );
   } else {
