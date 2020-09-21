@@ -49,6 +49,9 @@ const LawSection = ({
         gradingLapseDeadlineDisplay={grading.gradingLapseDeadlineDisplay}
         gradingLapseDeadline={grading.gradingLapseDeadline}
         gradingBasis={grading.gradingBasis}
+        frozenDisplayColumnIndex={3}
+        lapseDateDisplayColumnIndex={3}
+        totalColumns={5}
       />
     </Fragment>
   );

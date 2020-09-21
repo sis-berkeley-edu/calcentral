@@ -22,11 +22,16 @@
                   <span data-ng-bind="section.grading.grade"></span>
                 </td>
               </tr>
-              <tr data-ng-repeat-end data-ng-if="section.is_primary_section && ((section.grading.gradingLapseDeadlineDisplay && section.grading.gradingLapseDeadline) || section.grading.gradingBasis === 'FRZ')">
-                <td colspan="3" class="cc-text-right">
-                  <div cc-academic-section-incomplete-grading-status section="section" academic-guide-grades-policy-link="studentLinks.academicGuideGradesPolicy"></div>
-                </td>
-              </tr>
+              <tr
+                data-ng-repeat-end
+                data-ng-if="section.is_primary_section && ((section.grading.gradingLapseDeadlineDisplay && section.grading.gradingLapseDeadline) || section.grading.gradingBasis === 'FRZ')"
+                cc-academic-section-incomplete-grading-status
+                section="section"
+                academic-guide-grades-policy-link="academicGuideGradesPolicyLink"
+                lapse-date-display-column-index="0"
+                frozen-display-column-index="2"
+                total-columns="3"
+              ></tr>
             </tbody>
           </table>
         </div>
