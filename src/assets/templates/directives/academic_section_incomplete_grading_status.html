@@ -1,7 +1,16 @@
-<div data-ng-if="section.grading.gradingLapseDeadlineDisplay && section.grading.gradingLapseDeadline">
-  <a data-cc-campus-solutions-link-directive="academicGuideGradesPolicyLink">Lapse Date</a>
-  <span data-ng-bind="section.grading.gradingLapseDeadline"></span>
-</div>
-<div data-ng-if="section.grading.gradingBasis === 'FRZ'">
-  <a data-cc-campus-solutions-link-directive="academicGuideGradesPolicyLink">Frozen</a>
-</div>
+<td class="cc-academics-semester-incomplete-notice" colspan="{{totalColumns}}" data-ng-if="showSingleColumn && (showGradingLapseDeadline || gradingBasisIsFrozen)">
+  <span data-ng-if="showGradingLapseDeadline">
+    <a data-cc-campus-solutions-link-directive="academicGuideGradesPolicyLink">Student Completion Deadline is 30 days before</a>
+    <span data-ng-bind="section.grading.gradingLapseDeadline"></span>
+  </span>
+  <a data-ng-if="gradingBasisIsFrozen" data-cc-campus-solutions-link-directive="academicGuideGradesPolicyLink">Frozen</a>
+</td>
+
+<td class="cc-academics-semester-incomplete-notice" data-ng-repeat="col in columnIndexes" data-ng-if="!showSingleColumn && (showGradingLapseDeadline || gradingBasisIsFrozen)">
+  <span data-ng-if="showGradingLapseDeadline && (col === displayColumnIndex)">
+    <a data-cc-campus-solutions-link-directive="academicGuideGradesPolicyLink">Student Completion Deadline is 30 days before</a>
+    <span data-ng-bind="section.grading.gradingLapseDeadline"></span>
+  </span>
+  <a data-ng-if="gradingBasisIsFrozen && (col === displayColumnIndex)" data-cc-campus-solutions-link-directive="academicGuideGradesPolicyLink">Frozen</a>
+  <span data-ng-if="col !== displayColumnIndex">&nbsp;</span>
+</td>

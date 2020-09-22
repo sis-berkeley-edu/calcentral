@@ -49,8 +49,8 @@ const GenericTransferCredit = (props) => {
                   </tr>
                 </thead>
                 <tbody>
-                  {details.map(transfer => (
-                    <tr key={transfer.school}>
+                  {details.map((transfer, index) => (
+                    <tr key={transfer.school + index}>
                       <td>{transfer.school}</td>
                       <td className="cc-table-right">{transfer.units.toFixed(3)}</td>
                       {showPointsColumn &&
@@ -76,7 +76,7 @@ const GenericTransferCredit = (props) => {
               </table>
             </div>
           }
-  
+
           <ExamTransferCredit summary={props.summary} />
         </div>
       </div>
