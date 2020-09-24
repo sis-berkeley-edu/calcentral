@@ -4,6 +4,7 @@
   padding: 10px;
   margin-bottom: 15px;
   border-radius: 5px;
+  display: flex;
 
   &.yellow {
     background-color: $color-half-dutch-white;
@@ -14,20 +15,13 @@
   }
 }
 
+.iconContainer {
+  width: 24px;
+  margin-top: 2px;
+  flex-shrink: 0;
+}
+
 .messageContainer {
-  background-repeat: no-repeat;
-  background-size: 14px 12px;
-  background-position-y: 4px;
-  padding-left: 24px;
-
-  &.bullhorn {
-    background-image: url('/assets/images/bullhorn-solid.svg');
-  }
-
-  &.info {
-    background-image: url('/assets/images/exclamation-circle-solid.svg');
-  }
-
   div {
     p {
       margin-bottom: 10px;
