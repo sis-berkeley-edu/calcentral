@@ -2,12 +2,6 @@
 
 var _ = require('lodash');
 
-import 'icons/academicprogressreport.svg';
-import 'icons/calculator.svg';
-import 'icons/tools.svg';
-import 'icons/question-solid.svg';
-import 'icons/exclamation-circle-solid.svg';
-
 angular.module('calcentral.controllers').controller('UndergraduateDegreeProgressController', function(academicsService, degreeProgressFactory, apiService, $rootScope, $scope) {
   $scope.degreeProgress = {
     undergraduate: {

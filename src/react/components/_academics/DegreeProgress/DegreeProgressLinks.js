@@ -7,6 +7,11 @@ import { react2angular } from 'react2angular';
 import { connect } from 'react-redux';
 import ReduxProvider from 'React/components/ReduxProvider';
 
+import 'icons/academicprogressreport.svg';
+import 'icons/calculator.svg';
+import 'icons/question-solid.svg';
+import 'icons/tools.svg';
+
 import './DegreeProgressLinks.scss';
 
 const commonPropTypes = {
