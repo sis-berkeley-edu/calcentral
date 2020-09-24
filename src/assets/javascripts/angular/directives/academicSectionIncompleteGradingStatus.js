@@ -13,16 +13,17 @@ angular.module('calcentral.directives').directive('ccAcademicSectionIncompleteGr
   return {
     templateUrl: 'directives/academic_section_incomplete_grading_status.html',
     scope: {
-      section: '=',
-      academicGuideGradesPolicyLink: '=',
-      lapseDateDisplayColumnIndex: '=',
-      frozenDisplayColumnIndex: '=',
-      totalColumns: '=',
+      section: '@',
+      academicGuideGradesPolicyLink: '@',
+      lapseDateDisplayColumnIndex: '@',
+      frozenDisplayColumnIndex: '@',
+      totalColumns: '@',
     },
     link: function(scope, elem, attrs) {
+      let section = scope.$eval(attrs.section);
+      let academicGuideGradesPolicyLink = scope.$eval(attrs.academicGuideGradesPolicyLink);
       let frozenDisplayColumnIndex = scope.$eval(attrs.frozenDisplayColumnIndex);
       let lapseDateDisplayColumnIndex = scope.$eval(attrs.lapseDateDisplayColumnIndex);
-      let section = scope.$eval(attrs.section);
       let totalColumns = scope.$eval(attrs.totalColumns);
 
       if (totalColumns) {
@@ -32,7 +33,7 @@ angular.module('calcentral.directives').directive('ccAcademicSectionIncompleteGr
         scope.totalColumns = 0;
         scope.columnIndexes = [];
       }
-
+      scope.academicGuideGradesPolicyLink = academicGuideGradesPolicyLink;
       scope.showGradingLapseDeadline = (section.grading && section.grading.gradingLapseDeadlineDisplay && section.grading.gradingLapseDeadline);
       scope.gradingBasisIsFrozen = (section.grading && section.grading.gradingBasis === 'FRZ');
       scope.showSingleColumn = (scope.showGradingLapseDeadline && lapseDateDisplayColumnIndex === 0) || (scope.gradingBasisIsFrozen && frozenDisplayColumnIndex === 0);
