@@ -26,10 +26,12 @@
                 data-ng-repeat-end
                 data-ng-if="section.is_primary_section && ((section.grading.gradingLapseDeadlineDisplay && section.grading.gradingLapseDeadline) || section.grading.gradingBasis === 'FRZ')"
                 cc-academic-section-incomplete-grading-status
-                section="{{section}}"
                 academic-guide-grades-policy-link="{{studentLinks.academicGuideGradesPolicy}}"
-                lapse-date-display-column-index="0"
                 frozen-display-column-index="2"
+                grading-lapse-deadline="{{section.grading.gradingLapseDeadline}}"
+                grading-lapse-deadline-display="{{section.grading.gradingLapseDeadlineDisplay}}"
+                grading-basis={{section.grading.gradingBasis}}
+                lapse-date-display-column-index="0"
                 total-columns="3"
               ></tr>
             </tbody>
