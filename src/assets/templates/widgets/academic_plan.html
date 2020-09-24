@@ -96,8 +96,8 @@
                     <tr
                       data-ng-if="section.is_primary_section && ((section.grading.gradingLapseDeadlineDisplay && section.grading.gradingLapseDeadline) || section.grading.gradingBasis === 'FRZ')"
                       cc-academic-section-incomplete-grading-status
-                      section="section"
-                      academic-guide-grades-policy-link="academicGuideGradesPolicyLink"
+                      section="{{section}}"
+                      academic-guide-grades-policy-link="{{studentLinks.academicGuideGradesPolicy}}"
                       frozen-display-column-index="2"
                       lapse-date-display-column-index="0"
                       total-columns="3"
