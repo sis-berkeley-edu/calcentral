@@ -27,7 +27,7 @@ module HubEdos::ClassesApi::V1
     private
 
     def data
-      @data ||= ::HubEdos::ClassesApi::V1::Feeds::SectionsProxy.new(term_id, course_id).get[:feed]["classSections"]
+      @data ||= ::HubEdos::ClassesApi::V1::Feeds::SectionsProxy.new(term_id, course_id).get[:feed].fetch('classSections') { [] }
     rescue NoMethodError
       []
     end
