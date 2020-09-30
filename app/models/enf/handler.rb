@@ -10,8 +10,8 @@ module ENF
       self.message = message
     end
 
-    def uid
-      message.student_uid
+    def uids
+      message.student_uids
     end
   end
 end
