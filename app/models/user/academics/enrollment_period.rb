@@ -1,6 +1,8 @@
 module User
   module Academics
     class EnrollmentPeriod
+      include BerkeleyTime
+
       attr_accessor :id
       attr_accessor :acadCareer
       attr_accessor :enddatetime
@@ -19,7 +21,7 @@ module User
         {
           id: id,
           acadCareer: acadCareer,
-          enddatetime: enddatetime,
+          enddatetime: zoned(enddatetime),
           name: name,
           date: date
         }
