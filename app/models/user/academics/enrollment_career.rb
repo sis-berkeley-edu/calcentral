@@ -1,6 +1,8 @@
 module User
   module Academics
     class EnrollmentCareer
+      include BerkeleyTime
+
       attr_accessor :acadCareer
       attr_accessor :termMaxUnits
       attr_accessor :sessionDeadlines
@@ -18,7 +20,13 @@ module User
       def as_json(options={})
         {
           maxUnits: term_max_units,
-          deadlines: session_deadlines
+          deadlines: session_deadlines.collect do |deadline|
+            {
+              session: deadline[:session],
+              addDeadlineDatetime: zoned(deadline[:addDeadlineDatetime]),
+              optionDeadlineDatetime: zoned(deadline[:optionDeadlineDatetime]),
+            }
+          end
         }
       end
     end
