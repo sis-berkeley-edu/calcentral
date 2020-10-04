@@ -77,7 +77,7 @@ module MyClasses
         end
         # Fallback if we can't find anything nested
         primary ||= primary_sections.first
-        primary_in_class_list = class_list.find { |course| course[:sections].first[:ccn] == primary[:ccn]}
+        primary_in_class_list = class_list.find { |course| course[:sections].first.try(:[],:ccn) == primary.try(:[],:ccn)}
         primary_in_class_list[:sections] << sec
       end
     end
