@@ -1,44 +1,10 @@
-<div class="cc-widget-text cc-page-widget-profile-delegate"
-  data-ng-controller="DelegateController"
-  data-cc-spinner-directive="delegate.isLoading"
->
-  <h2 data-ng-if="delegatedAccessUrl.url">Manage Delegates</h2>
-  <p data-ng-if="!delegatedAccessUrl.url">
-    <i class="fa fa-exclamation-triangle cc-icon-red"></i> The link to "Manage Delegates" is currently unavailable. Please try again later.
-  </p>
-  <p class="cc-page-widget-profile-margin-bottom">
-    Delegates are individuals who can act on a student's behalf by paying bills, viewing academic information, etc.
-    They are often parents or guardians of students. Students choose which privileges to delegate, and can change
-    those privileges at any time.
-  </p>
+<div class="cc-widget-text cc-page-widget-profile-delegate" data-ng-controller="DelegateController"
+  data-cc-spinner-directive="delegate.isLoading">
   <p data-ng-if="delegatedAccessUrl.url">
-    <a data-cc-campus-solutions-link-directive
-      data-cc-campus-solutions-link-directive-url="delegatedAccessUrl.url"
+    <a data-cc-campus-solutions-link-directive data-cc-campus-solutions-link-directive-url="delegatedAccessUrl.url"
       data-cc-campus-solutions-link-directive-cc-page-name="currentPage.name"
       data-cc-campus-solutions-link-directive-cc-page-url="currentPage.url"
-      data-cc-campus-solutions-link-directive-uc-from="true"
-      data-cc-campus-solutions-link-directive-uc-from-link="true"
-      data-cc-campus-solutions-link-directive-uc-from-text="true"
-    >Create or manage delegates</a>
-  </p>
-  <h3>Other information:</h3>
-  <ul>
-    <li>
-      <strong>Setup Guide:</strong>
-      For setup instructions, view the
-      <a href="https://sis.berkeley.edu/delegate-access" title="View Delegate Access Setup Guide and FAQs">Delegate Access Guide</a>
-    </li>
-    <li>
-      <strong>Free/busy:</strong> To give a delegate a free/busy view of your bCal calendar, follow
-      the <a href="https://support.google.com/calendar/answer/37082?hl=en">bCal instructions</a>.
-    </li>
-    <li>
-      <strong>Profile and bConnected content:</strong> Delegates can view neither profile information nor bConnected
-      content: mail, calendar, etc.
-    </li>
-    <li>
-      <strong>Advisors:</strong> Advisors can view all financial and academic information shown in CalCentral but cannot
-      see Profile or bConnected content.
-    </li>
-  </ul>
+      data-cc-campus-solutions-link-directive-uc-from="true" data-cc-campus-solutions-link-directive-uc-from-link="true"
+      data-cc-campus-solutions-link-directive-uc-from-text="true">Create or manage delegates</a>
+
 </div>
