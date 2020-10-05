@@ -38,13 +38,15 @@ module CampusSolutions
         { feed_key: :expected_grad_term_add, cs_link_key: 'UC_CX_GT_GRADEGT_ADD' },
         { feed_key: :veterans_benefits_renew_add, cs_link_key: 'UC_CX_GT_VBRENEWAL_ADD' },
         { feed_key: :late_ugrd_enroll_action, cs_link_key: 'UC_CX_GT_SRLATEDROP_ADD' },
+        { feed_key: :change_class_schedule_petition, cs_link_key: 'UC_CX_GT_GRADSCHED_ADD' },
       ]
       link_configuration = [
         {
           section: 'Submit a Form',
           links: [:change_of_academic_plan_add, :emergency_loan_form_add, :veterans_benefits_add, :withdraw_from_semester_add,
                   :higher_degrees_committee_form, :special_enrollment_petition, :submit_degree_candidacy_form,
-                  :grad_change_of_academic_plan_add, :dissertation_signature, :expected_grad_term_add, :late_ugrd_enroll_action, :veterans_benefits_renew_add],
+                  :grad_change_of_academic_plan_add, :dissertation_signature, :expected_grad_term_add, :late_ugrd_enroll_action, :veterans_benefits_renew_add,
+                  :change_class_schedule_petition],
         },
         {
           section: 'Manage your Forms',
@@ -122,7 +124,7 @@ module CampusSolutions
           true unless is_general_student?
         when :disabled_student_services
           true unless roles[:concurrentEnrollmentStudent]
-        when :grad_change_of_academic_plan_add
+        when :grad_change_of_academic_plan_add, :change_class_schedule_petition
           true unless roles[:graduate] ||
                       current_academic_roles["jurisSocialPolicyPhD"] ||
                       current_academic_roles["jurisSocialPolicyPhC"] ||
