@@ -1,7 +1,7 @@
 import React from 'react';
 import { react2angular } from 'react2angular';
 
-import ReduxProvider from 'react/components/ReduxProvider';
+import ReduxProvider from 'components/ReduxProvider';
 import COVIDResponseCard from 'react/components/_dashboard/COVIDResponseCard/COVIDResponseCard';
 
 const COVIDResponseCardContainer = () => (

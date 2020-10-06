@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import ReduxProvider from 'react/components/ReduxProvider';
+import ReduxProvider from 'components/ReduxProvider';
 import { react2angular } from 'react2angular';
 
 import EnrollmentNotice from 'react/components/_academics/EnrollmentNotice';

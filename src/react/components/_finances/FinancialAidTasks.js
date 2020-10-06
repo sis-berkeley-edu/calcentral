@@ -8,7 +8,7 @@ import { fetchAgreements } from 'redux/actions/agreementsActions';
 import { fetchChecklistItems } from 'redux/actions/checklistItemsActions';
 import { shortDateIfCurrentYear, parseDate } from 'functions/formatDate';
 
-import ReduxProvider from 'react/components/ReduxProvider';
+import ReduxProvider from 'components/ReduxProvider';
 
 import useFocus from 'react/useFocus';
 import TasksContext from 'react/components/_dashboard/TasksCard/TasksContext';

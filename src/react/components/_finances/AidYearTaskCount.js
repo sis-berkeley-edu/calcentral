@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
 import { fetchAgreements } from 'redux/actions/agreementsActions';
 import { fetchChecklistItems } from 'redux/actions/checklistItemsActions';
 
-import ReduxProvider from 'react/components/ReduxProvider';
+import ReduxProvider from 'components/ReduxProvider';
 
 const AidYearTasksCount = ({ currentUrl, fetchData, loaded, tasks, year }) => {
   useEffect(() => fetchData(), []);

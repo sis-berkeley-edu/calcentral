@@ -1,0 +1,43 @@
+@mixin cell-style {
+  line-height: inherit;
+  background: none;
+  padding: 0;
+}
+
+.table {
+  background: none;
+  margin: 0;
+  border: none;
+  border-spacing: 0;
+  width: 100%;
+
+  thead {
+    background: none;
+  }
+
+  tr:nth-of-type(2n) {
+    background: none;
+  }
+
+  tr td,
+  tr th {
+    @include cell-style;
+  }
+
+  thead,
+  tfoot,
+  tbody {
+    tr td,
+    tr th {
+      @include cell-style;
+    }
+  }
+
+  tbody tr {
+    th,
+    td {
+      padding: 5px 0;
+      border-bottom: 1px solid #ccc;
+    }
+  }
+}

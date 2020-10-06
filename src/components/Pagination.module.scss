@@ -1,0 +1,11 @@
+@import '../react/stylesheets/variables';
+
+.Pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.currentState {
+  margin: 0 $large-spacing;
+}

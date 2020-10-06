@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import ReduxProvider from 'react/components/ReduxProvider';
+import ReduxProvider from 'components/ReduxProvider';
 import { react2angular } from 'react2angular';
 import { parseISO } from 'date-fns';
 
