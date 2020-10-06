@@ -10,15 +10,15 @@ module HubEdos
 
           # A Student Plan describes a plan of study (and corresponding program) the student is pursuing
           def student_plans
-            ::HubEdos::StudentApi::V2::Student::StudentPlans.new(@data['studentPlans']) if @data['studentPlans']
+            ::HubEdos::StudentApi::V2::Student::StudentPlans.new(@data['studentPlans'])
           end
 
           def active_student_plans
-            student_plans.active
+            student_plans&.active || []
           end
 
           def completed_student_plans
-            student_plans.completed
+            student_plans&.completed || []
           end
 
           # A Student Career describes a high level grouping of academic policy, such as "Undergraduate" or "Law," the student is pursuing
