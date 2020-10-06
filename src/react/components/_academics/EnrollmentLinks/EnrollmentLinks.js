@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { react2angular } from 'react2angular';
 import { connect } from 'react-redux';
-import ReduxProvider from 'React/components/ReduxProvider';
+import ReduxProvider from 'components/ReduxProvider';
 
 import { activeRoles } from '../../../helpers/roles';
 

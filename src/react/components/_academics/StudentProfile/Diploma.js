@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import ReduxProvider from 'React/components/ReduxProvider';
+import ReduxProvider from 'components/ReduxProvider';
 
 import DiplomaContent from '../Diploma/Diploma'
 

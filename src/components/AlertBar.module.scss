@@ -1,0 +1,44 @@
+@import 'src/react/stylesheets/variables';
+@import 'src/react/stylesheets/mixins';
+
+.AlertBar {
+  background: $color-white;
+  border-color: $color-silver;
+  border-style: solid;
+  border-width: 1px;
+  color: $color-dove-gray;
+  overflow: hidden;
+  padding: 10px 15px;
+  width: 100%;
+
+  display: flex;
+  justify-content: space-between;
+
+  .title {
+    margin-right: 15px;
+  }
+
+  .content {
+    display: flex;
+  }
+
+  @media print {
+    display: none !important;
+  }
+
+  @media #{$small-only} {
+    flex-direction: column;
+
+    .title {
+      display: block;
+    }
+
+    .content {
+      flex-direction: column;
+    }
+
+    .linkContainer {
+      text-align: right;
+    }
+  }
+}

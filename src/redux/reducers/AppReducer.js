@@ -9,6 +9,7 @@ import config from './ConfigReducer';
 import currentRoute from './RouteReducer';
 import financialAid from './FinancialAidReducer';
 import myHolds from './HoldsReducer';
+import serviceAlerts from './ServiceAlertsReducer';
 
 import {
   CarsDataReducer as carsData,
@@ -33,6 +34,9 @@ import {
   WebMessagesReducer as myWebMessages,
   SirStatusReducer as sirStatus,
 } from './DataReducers';
+
+import currentUID from './currentUID';
+import users from './users';
 
 const AppReducer = combineReducers({
   academics,
@@ -64,7 +68,10 @@ const AppReducer = combineReducers({
   myTransferCredit,
   myUpNext,
   myWebMessages,
+  serviceAlerts,
   sirStatus,
+  users,
+  currentUID,
 });
 
 export default AppReducer;

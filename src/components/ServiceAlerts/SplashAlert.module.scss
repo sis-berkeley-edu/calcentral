@@ -1,0 +1,34 @@
+@import '../../react/stylesheets/variables';
+
+.SplashAlert {
+  display: flex;
+  flex-direction: row;
+  margin-top: 15px;
+
+  .DateColumn {
+    flex: 1;
+
+    @media screen and (max-width: $small-breakpoint) {
+      display: none;
+    }
+  }
+}
+
+.date {
+  color: #025a86;
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.title {
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.4;
+  margin-bottom: 0;
+}
+
+.body {
+  p {
+    margin: 15px 0 0;
+  }
+}

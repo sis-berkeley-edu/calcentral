@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { fetchWebMessages } from 'redux/actions/webMessagesActions';
 
 import useFocus from 'react/useFocus';
-import ReduxProvider from 'react/components/ReduxProvider';
+import ReduxProvider from 'components/ReduxProvider';
 import NoMessages from '../_dashboard/NotificationsCard/NoMessages';
 import WidgetSubtitle from 'react/components/WidgetSubtitle';
 import MessagesBySource from '../_dashboard/NotificationsCard/MessagesBySource';
