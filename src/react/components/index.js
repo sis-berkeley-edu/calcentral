@@ -2,6 +2,7 @@ import './_header/RegistrationStatusItems';
 
 import './_academics/AcademicSummary/AcademicSummary';
 import './_academics/DegreeProgress/DegreeProgressLinks';
+import './angularWrappers/degreeProgressNotice';
 import './_academics/EnrollmentLinks/EnrollmentLinks';
 import './_academics/LawDegreeAudit/LawDegreeAudit';
 import './_academics/PnpCalculator/PnpCalculatorContainer';
