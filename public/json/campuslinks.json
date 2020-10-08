@@ -692,25 +692,6 @@
       ]
     },
     {
-      "name": "BAIRS",
-      "hoverText": "Berkeley Administrative Initiative Reporting System",
-      "url": "http://www.bai.berkeley.edu/BAIRS/index.htm",
-      "roles": {
-        "student": false,
-        "applicant": false,
-        "staff": true,
-        "faculty": true,
-        "exStudent": false,
-        "summerVisitor": false
-      },
-      "categories": [
-        {
-          "topcategory": "Tools \u0026 Resources",
-          "subcategory": "Financial"
-        }
-      ]
-    },
-    {
       "name": "bCal",
       "hoverText": "Your campus calendar",
       "url": "http://bcal.berkeley.edu",
@@ -835,7 +816,7 @@
     {
       "name": "BearWALK Night safety services",
       "hoverText": "Free safety night walks to and from a desired location with a Community Service Officer",
-      "url": "https://ucpd.berkeley.edu/campus-safety/night-safety-tips",
+      "url": "https://nightsafety.berkeley.edu/nightsafety/escort",
       "roles": {
         "student": true,
         "applicant": true,
@@ -2584,7 +2565,7 @@
     {
       "name": "IST Knowledge Base",
       "hoverText": "Contains answers to Berkeley computing and IT questions",
-      "url": "https://technology.berkeley.edu/news/improved-ist-knowledge-base-coming-soon",
+      "url": "https://berkeley.service-now.com/kb/",
       "roles": {
         "student": true,
         "applicant": true,
@@ -2763,7 +2744,7 @@
     {
       "name": "Loan Repayment Calculator",
       "hoverText": "Estimate the repayment costs of federal student loans",
-      "url": "https://studentaid.gov/help-center?page=repayEst",
+      "url": "https://studentaid.gov/loan-simulator/",
       "roles": {
         "student": true,
         "applicant": true,
@@ -3357,7 +3338,7 @@
     {
       "name": "SARA - Request System Access",
       "hoverText": "Form that grants access to different systems for employees",
-      "url": "http://www.bai.berkeley.edu/BFS/systems/systemAccess.htm",
+      "url": "https://technology.berkeley.edu/services/accounts-and-access-enterprise-applications/sara-enterprise-system-access-request",
       "roles": {
         "student": false,
         "applicant": false,
