@@ -7,6 +7,7 @@ import awardComparisonSnapshot from './AwardComparisonSnapshotReducer';
 import billingItems from './BillingItemsReducer';
 import config from './ConfigReducer';
 import currentRoute from './RouteReducer';
+import financialAid from './FinancialAidReducer';
 import myHolds from './HoldsReducer';
 
 import {
@@ -43,6 +44,7 @@ const AppReducer = combineReducers({
   billingItems,
   carsData,
   covidResponse,
+  financialAid,
   financialResourcesLinks,
   links,
   myAcademics,

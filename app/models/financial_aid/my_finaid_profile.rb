@@ -61,14 +61,6 @@ module FinancialAid
       @isir ||= EdoOracle::FinancialAid::Queries.get_finaid_profile_isir(@uid, aid_year: my_aid_year, effective_date: today)
     end
 
-    def title4
-      @title4 ||= EdoOracle::FinancialAid::Queries.get_title4(@uid)
-    end
-
-    def terms_and_conditions
-      @terms_and_conditions ||= EdoOracle::FinancialAid::Queries.get_terms_and_conditions(@uid, my_aid_year)
-    end
-
     def success?
       my_aid_year.present? && status.present? ? true : false
     end
