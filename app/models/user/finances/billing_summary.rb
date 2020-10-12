@@ -28,7 +28,8 @@ module User
             "Due Amount",
             "Due Date",
             "Term",
-            "Transaction Number"
+            "Transaction Number",
+            "Transaction Amount"
           ]
 
           billing_items.reverse.each do |billing_item|
@@ -37,10 +38,11 @@ module User
               billing_item.description,
               billing_item.type,
               billing_item.status,
-              billing_item.amount_due,
+              billing_item.amount_due.to_f < 0.0 ? 0: billing_item.amount_due,
               billing_item.due_date,
               billing_item.term_name,
-              billing_item.transaction_number
+              billing_item.transaction_number,
+              billing_item.amount
             ]
           end
         end
