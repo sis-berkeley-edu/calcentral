@@ -3,10 +3,10 @@ module Concerns
     extend self
 
     def calculate_estimated_monthly_payment(annual_interest_rate, principal_value, repayment_period)
-      return nil unless annual_interest_rate && principal_value && repayment_period && (annual_interest_rate > 0)
-      annual_interest = (annual_interest_rate / 100)
+      return nil unless annual_interest_rate && principal_value && repayment_period && (annual_interest_rate > 0) && (principal_value > 0)
+      annual_interest = (annual_interest_rate.to_f / 100)
       monthly_interest = annual_interest / 12
-      (monthly_interest * principal_value) / (1 - (1 + monthly_interest)**(-repayment_period))
+      (monthly_interest * principal_value.to_f) / (1 - (1 + monthly_interest)**(-repayment_period.to_f))
     end
 
     def choose_monthly_payment(estimated, minimum, total_amount_owed)
