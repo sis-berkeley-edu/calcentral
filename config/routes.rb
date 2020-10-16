@@ -142,9 +142,7 @@ Calcentral::Application.routes.draw do
   get '/api/my/sir_statuses' => 'sir_statuses#get_feed', :defaults => { :format => 'json' }
   get '/api/my/standings' => 'my_standings#get_feed', :as => :my_standings, :defaults => { :format => 'json' }
   get '/api/my/tasks' => 'my_tasks#get_feed', :as => :my_tasks, :defaults => { :format => 'json' }
-  get '/api/my/terms_and_conditions/:aid_year' => 'my_terms_and_conditions#get_feed', :defaults => { :format => 'json' }
   get '/api/my/textbooks_details' => 'my_textbooks#get_feed', :as => :my_textbooks, :defaults => { :format => 'json' }
-  get '/api/my/title4' => 'my_title4#get_feed', :defaults => { :format => 'json' }
   get '/api/my/up_next' => 'my_up_next#get_feed', :as => :my_up_next, :defaults => { :format => 'json' }
   get '/api/photo/:uid' => 'photo#photo', :as => :photo, :defaults => {:format => 'jpeg' }
   get '/api/service_alerts' => 'service_alerts#get_feed', :as => :service_alerts, :defaults => { :format => 'json' }
@@ -223,8 +221,6 @@ Calcentral::Application.routes.draw do
   post '/api/campus_solutions/ethnicity' => 'campus_solutions/ethnicity#post', :defaults => { :format => 'json' }
   post '/api/campus_solutions/language' => 'campus_solutions/language#post', :defaults => { :format => 'json' }
   post '/api/campus_solutions/sir_response' => 'campus_solutions/sir_response#post', :defaults => { :format => 'json' }
-  post '/api/campus_solutions/terms_and_conditions' => 'campus_solutions/terms_and_conditions#post', :defaults => { :format => 'json' }
-  post '/api/campus_solutions/title4' => 'campus_solutions/title4#post', :defaults => { :format => 'json' }
   post '/api/campus_solutions/work_experience' => 'campus_solutions/work_experience#post', :defaults => { :format => 'json' }
   delete '/api/campus_solutions/ethnicity/:ethnicGroupCode/:regRegion' => 'campus_solutions/ethnicity#delete', :defaults => { :format => 'json' }
   delete '/api/campus_solutions/language/:languageCode' => 'campus_solutions/language#delete', :defaults => { :format => 'json' }

@@ -1,47 +1,24 @@
 'use strict';
 
+import { fetchFinancialAidProfile } from 'Redux/actions/financialAid/financialAidProfileActions';
+
 angular
 .module('calcentral.controllers')
-.controller('FinaidProfileController', function(finaidProfileFactory, title4Factory, termsAndConditionsFactory, $scope, $routeParams, $q) {
-  $scope.finaidProfile = {
-    isLoading: true
-  };
+.controller('FinaidProfileController', function($scope, $ngRedux, $routeParams) {
+  $scope.finaidProfile = {};
 
-  const getFinaidProfile = function(options) {
-    return finaidProfileFactory.getFinaidProfile(options)
-    .then(
-      function(response) {
-        $scope.finaidProfile = response.data.finaidProfile;
+  $ngRedux.subscribe(() => {
+    const {
+      financialAid: {
+        profile: {
+          [$routeParams.finaidYearId]: finaidYearProfile = {}
+        }
       }
-    );
-  };
+    } = $ngRedux.getState();
 
-  const getTitle4 = function(options) {
-    return title4Factory.getTitle4(options).then(
-      function(response) {
-        $scope.title4Description = response.data.title4.responseDescr;
-      }
-    );
-  };
+    $scope.finaidProfile = finaidYearProfile;
+    $scope.finaidProfile.isLoading = finaidYearProfile.isLoading;
+  });
 
-  const getTermsAndConditions = function(options) {
-    return termsAndConditionsFactory.getTermsAndConditions(options).then(
-      function(response) {
-        $scope.termsAndConditionsDescription = response.data.termsAndConditions.responseDescr;
-      }
-    );
-  };
-
-  const loadFAProfile = function() {
-    $q.all([
-      getFinaidProfile({ finaidYear: $routeParams.finaidYearId }),
-      getTitle4(),
-      getTermsAndConditions( {finaidYear: $routeParams.finaidYearId} )
-    ])
-    .finally(function() {
-      $scope.finaidProfile.isLoading = false;
-    });
-  };
-
-  loadFAProfile();
+  $ngRedux.dispatch(fetchFinancialAidProfile($routeParams.finaidYearId || ''));
 });
