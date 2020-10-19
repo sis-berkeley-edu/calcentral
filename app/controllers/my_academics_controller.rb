@@ -1,7 +1,7 @@
 class MyAcademicsController < ApplicationController
   include AllowDelegateViewAs
-  before_filter :api_authenticate
-  before_filter :authorize_for_enrollments
+  before_action :api_authenticate
+  before_action :authorize_for_enrollments
 
   def get_feed
     if current_user.authenticated_as_delegate?

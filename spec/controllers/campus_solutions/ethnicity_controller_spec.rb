@@ -4,7 +4,7 @@ describe CampusSolutions::EthnicityController do
 
   context 'updating ethnicity' do
     it 'should not let an unauthenticated user post' do
-      post :post, {format: 'json', uid: '100'}
+      post :post, params: { format: 'json', uid: '100' }
       expect(response.status).to eq 401
     end
 
@@ -14,20 +14,19 @@ describe CampusSolutions::EthnicityController do
         User::Auth.stub(:where).and_return([User::Auth.new(uid: user_id, is_superuser: false, active: true)])
       end
       it 'should let an authenticated user post' do
-        post :post,
-             {
-               bogus_field: 'abc',
-               regRegion: 'USA',
-               ethnicGroupCode: 'ASIANIND',
-               isPrimary: 'N',
-               isHispanicLatino: 'ab',
-               isAmiAln: 'N',
-               isAsian: 'N',
-               isBlackAfAm: 'N',
-               isHawPac: 'N',
-               isWhite: 'Y',
-               isEthnicityValidated: 'N'
-             }
+        post :post, params: {
+          bogus_field: 'abc',
+          regRegion: 'USA',
+          ethnicGroupCode: 'ASIANIND',
+          isPrimary: 'N',
+          isHispanicLatino: 'ab',
+          isAmiAln: 'N',
+          isAsian: 'N',
+          isBlackAfAm: 'N',
+          isHawPac: 'N',
+          isWhite: 'Y',
+          isEthnicityValidated: 'N'
+        }
         expect(response.status).to eq 200
         json = JSON.parse(response.body)
         expect(json['statusCode']).to eq 200
@@ -38,7 +37,7 @@ describe CampusSolutions::EthnicityController do
   end
   context 'deleting ethnicity' do
     it 'should not let an unauthenticated user delete' do
-      delete :delete, {format: 'json', regRegion: '100', ethnicGroupCode: 'foo'}
+      delete :delete, params: { format: 'json', regRegion: '100', ethnicGroupCode: 'foo' }
       expect(response.status).to eq 401
     end
 
@@ -48,12 +47,11 @@ describe CampusSolutions::EthnicityController do
         User::Auth.stub(:where).and_return([User::Auth.new(uid: user_id, is_superuser: false, active: true)])
       end
       it 'should let an authenticated user delete' do
-        delete :delete,
-               {
-                 bogus_field: 'abc',
-                 regRegion: 'USA',
-                 ethnicGroupCode: 'ASIANIND'
-               }
+        delete :delete, params: {
+          bogus_field: 'abc',
+          regRegion: 'USA',
+          ethnicGroupCode: 'ASIANIND'
+        }
         expect(response.status).to eq 200
         json = JSON.parse(response.body)
         expect(json['statusCode']).to eq 200

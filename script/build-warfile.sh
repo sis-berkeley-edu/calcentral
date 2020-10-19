@@ -15,7 +15,6 @@ main() {
   initRuby
   bundleGems
   buildFrontEnd
-  compileAssets
   getJar
   gitVersion
   buildWarfile
@@ -40,12 +39,6 @@ bundleGems() {
 buildFrontEnd() {
   echo "`date`: Rebuilding static assets with npm..." | $LOGIT
   ./script/front-end-build.sh || { echo "ERROR: front-end build failed" ; exit 1 ; }
-}
-
-compileAssets() {
-  echo "`date`: Rebuilding static assets with rake..." | $LOGIT
-  bundle exec rake assets:precompile || { echo "ERROR: asset compilation failed" ; exit 1 ; }
-  bundle exec rake fix_assets || { echo "ERROR: asset fix failed" ; exit 1 ; }
 }
 
 # copy Oracle jar into ./lib

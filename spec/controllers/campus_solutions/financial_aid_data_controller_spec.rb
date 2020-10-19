@@ -7,21 +7,21 @@ describe CampusSolutions::FinancialAidDataController do
 
     context 'unauthenticated user' do
       it 'returns 401' do
-        get feed, options
+        get feed, params: options
         expect(response.status).to eq 401
       end
     end
     context 'authenticated user' do
       before { session['user_id'] = user_id }
       it 'has some field mapping info' do
-        get feed, options
+        get feed, params: options
         json = JSON.parse response.body
         expect(json['feed']['coa']['title']).to eq 'Estimated Cost of Attendance'
       end
       context 'no aid year provided' do
         let(:options) { {format: 'json'} }
         it 'returns empty' do
-          get feed, options
+          get feed, params: options
           json = JSON.parse response.body
           expect(json).not_to include 'feed'
         end
@@ -36,7 +36,7 @@ describe CampusSolutions::FinancialAidDataController do
           expect(CampusSolutions::MyFinancialAidData).to_not receive :from_session
         }
         subject {
-          response = get feed, options
+          response = get feed, params: options
           JSON.parse response.body
         }
         context 'advisor' do
@@ -55,7 +55,7 @@ describe CampusSolutions::FinancialAidDataController do
           expect(CampusSolutions::MyFinancialAidData).to_not receive :from_session
         }
         subject {
-          response = get feed, options
+          response = get feed, params: options
           JSON.parse response.body
         }
         let(:uid) {user_id}

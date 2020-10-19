@@ -3,6 +3,8 @@
     "EditorConfig.editorconfig",
     "esbenp.prettier-vscode",
     "formulahendry.auto-rename-tag",
-    "wayou.vscode-todo-highlight"
+    "wayou.vscode-todo-highlight",
+    "shd101wyy.markdown-preview-enhanced",
+    "DavidAnson.vscode-markdownlint",
   ]
 }

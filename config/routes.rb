@@ -1,7 +1,5 @@
 Calcentral::Application.routes.draw do
 
-  mount RailsAdmin::Engine => '/ccadmin', :as => 'rails_admin'
-
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
@@ -30,8 +28,6 @@ Calcentral::Application.routes.draw do
   # Authentication endpoints
   get '/auth/cas/callback' => 'sessions#lookup'
   get '/auth/failure' => 'sessions#failure'
-  get '/reauth/admin' => 'sessions#reauth_admin', :as => :reauth_admin
-  delete '/logout' => 'sessions#destroy', :as => :logout_ccadmin
   if Settings.developer_auth.enabled
     # the backdoor for http basic auth (bypasses CAS) only on development environments.
     get '/basic_auth_login' => 'sessions#basic_lookup'
@@ -83,9 +79,11 @@ Calcentral::Application.routes.draw do
   get '/api/my/finaid_profile/:aid_year' => 'my_finaid_profile#get_feed', :defaults => { :format => 'json' }
   get '/api/my/class_enrollments' => 'my_class_enrollments#get_feed', :defaults => { :format => 'json' }
   get '/api/my/classes' => 'my_classes#get_feed', :as => :my_classes, :defaults => { :format => 'json' }
+
   get '/api/my/committees' => 'my_committees#get_feed', :defaults => { :format => 'json' }
   get '/api/my/committees/photo/member/:member_id' => 'my_committees#member_photo', :defaults => { :format => 'jpeg' }
   get '/api/my/committees/photo/student/:student_id' => 'my_committees#student_photo', :defaults => { :format => 'jpeg' }
+
   get '/api/my/eft_enrollment' => 'my_eft_enrollment#get_feed', :as => :my_eft_enrollment, :defaults => { :format => 'json' }
   get '/api/my/financials' => 'my_financials#get_feed', :as => :my_financials, :defaults => {:format => 'json'}
   get '/api/my/groups' => 'my_groups#get_feed', :as => :my_groups, :defaults => { :format => 'json' }
@@ -134,7 +132,7 @@ Calcentral::Application.routes.draw do
   get '/api/my/loan_history_inactive' => 'loan_history#get_inactive_feed', :defaults => { :format => 'json' }
   get '/api/my/loan_history_summary' => 'loan_history#get_summary_feed', :defaults => { :format => 'json' }
   get '/api/my/new_admit_resources' =>'new_admit_resources#get_feed', :defaults => { :format => 'json' }
-  get '/api/my/photo' => 'photo#my_photo', :as => :my_photo, :defaults => {:format => 'jpeg' }
+  get '/api/my/photo' => 'photo#my_photo', :as => :my_photo, :defaults => { :format => 'jpeg' }
   get '/api/my/profile' => 'my_profile#get_feed', :defaults => { :format => 'json' }
   get '/api/my/profile/link' => 'my_profile#get_edit_link', :defaults => { :format => 'json' }
   get '/api/my/registrations' => 'my_registrations#get_feed', :defaults => { :format => 'json' }

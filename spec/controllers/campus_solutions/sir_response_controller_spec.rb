@@ -24,7 +24,7 @@ describe CampusSolutions::SirResponseController do
 
   context 'updating sir response' do
     it 'should not let an unauthenticated user post' do
-      post :post, {format: 'json', uid: '100'}
+      post :post, params: { format: 'json', uid: '100' }
       expect(response.status).to eq 401
     end
 
@@ -36,11 +36,10 @@ describe CampusSolutions::SirResponseController do
         CampusSolutions::Proxy.stub(:get).and_return post_response
       end
       it 'should let an authenticated user post' do
-        post :post,
-             {
-               'chklstItemCd' => 'AUSIRF',
-               'admApplNbr' => '00123456'
-             }
+        post :post, params: {
+          'chklstItemCd' => 'AUSIRF',
+          'admApplNbr' => '00123456'
+        }
         expect(response.status).to eq 200
         json = JSON.parse(response.body)
         expect(json['statusCode']).to eq 200
@@ -48,12 +47,11 @@ describe CampusSolutions::SirResponseController do
         expect(json['feed']['status']).to be
       end
       it 'should reject a post that fails validation' do
-        post :post,
-             {
-               'studentCarNbr' => '1234',
-               'admApplNbr' => '12345678',
-               'chklstItemCd' => 'let-me-in-please'
-             }
+        post :post, params: {
+          'studentCarNbr' => '1234',
+          'admApplNbr' => '12345678',
+          'chklstItemCd' => 'let-me-in-please'
+        }
         expect(response.status).to eq 400
         json = JSON.parse(response.body)
         expect(json['feed']).not_to be

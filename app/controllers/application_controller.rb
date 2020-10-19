@@ -1,16 +1,10 @@
 class ApplicationController < ActionController::Base
   include Pundit
   protect_from_forgery
-  before_filter :check_reauthentication
-  before_filter :deny_if_filtered
-  after_filter :access_log
+  before_action :check_reauthentication
+  before_action :deny_if_filtered
+  after_action :access_log
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
-
-  # Disable most of the default headers provided by secure_headers gem, leaving just x-frame for now
-  # http://rubydoc.info/gems/secure_headers/0.5.0/frames
-  # Rails 4 will DENY X-Frame by default
-  ensure_security_headers
-  skip_before_filter :set_csp_header, :set_hsts_header, :set_x_content_type_options_header, :set_x_xss_protection_header
 
   def authenticate(force = false)
     redirect_to url_for_path('/auth/cas') unless !force && session['user_id']
@@ -28,7 +22,7 @@ class ApplicationController < ActionController::Base
   def api_authenticate_401
     if session['user_id'].blank?
       Rails.logger.warn "Authenticated user absent in request to #{controller_name}\##{action_name}"
-      render :nothing => true, :status => 401
+      head :unauthorized
     end
   end
 
@@ -57,8 +51,6 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  # This method does not handle the reauthentication check for "ccadmin" authoring. That is
-  # enforced by "config/initializers/rails_admin.rb".
   def check_reauthentication
     unless !!session['user_id']
       delete_reauth_cookie
@@ -110,7 +102,7 @@ class ApplicationController < ActionController::Base
   # reset session AND return 401 when CSRF token validation fails
   def handle_unverified_request
     reset_session
-    render :nothing => true, :status => 401
+    head :unauthorized
   end
 
   # Rails url_for defaults the protocol to "request.protocol". But if SSL is being
@@ -163,7 +155,7 @@ class ApplicationController < ActionController::Base
 
   def render_403(error)
     # Subclasses might render JSON including error message.
-    render :nothing => true, :status => 403
+    head :forbidden
   end
 
   def handle_api_exception(error)
@@ -254,7 +246,7 @@ class ApplicationController < ActionController::Base
   # first to "http:" and then to "https:". This method makes relative paths safer to use.
   def url_for_path(path)
     if (protocol = default_url_options[:protocol])
-      protocol + ApplicationController.correct_port(request.host_with_port, env['HTTP_REFERER']) + path
+      protocol + ApplicationController.correct_port(request.host_with_port, ENV['HTTP_REFERER']) + path
     else
       path
     end

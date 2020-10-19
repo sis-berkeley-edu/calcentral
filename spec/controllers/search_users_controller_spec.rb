@@ -22,8 +22,8 @@ describe SearchUsersController do
         ))
       end
       it 'finds one matching user' do
-        get :by_id, id: id
-        expect(response).to be_success
+        get :by_id, params: { id: id }
+        expect(response).to be_successful
         users = JSON.parse(response.body)['users']
         expect(users).to have(1).item
         expect(users[0]['studentId']).to eq '11667051'
@@ -38,8 +38,8 @@ describe SearchUsersController do
         expect(search).to receive(:search_users).and_return Set.new
       end
       it 'returns empty set' do
-        get :by_id, id: id
-        expect(response).to be_success
+        get :by_id, params: { id: id }
+        expect(response).to be_successful
         users = JSON.parse(response.body)['users']
         expect(users).to be_empty
       end
@@ -61,7 +61,7 @@ describe SearchUsersController do
       let(:is_advisor) { false }
       let(:is_student) { true }
       it 'should raise exception' do
-        get :by_id, id: id
+        get :by_id, params: { id: id }
         expect(response.status).to eq 403
         expect(JSON.parse(response.body)['users']).to be_nil
       end
@@ -71,7 +71,7 @@ describe SearchUsersController do
       context 'advisor finds a student' do
         let(:is_student) { true }
         it 'finds one matching user' do
-          get :by_id, id: id
+          get :by_id, params: { id: id }
           users = JSON.parse(response.body)['users']
           expect(users).to have(1).item
         end
@@ -79,7 +79,7 @@ describe SearchUsersController do
       context 'advisor finds a non-student' do
         let(:is_student) { false }
         it 'should return nothing' do
-          get :by_id, id: id
+          get :by_id, params: { id: id }
           users = JSON.parse(response.body)['users']
           expect(users).to be_blank
         end

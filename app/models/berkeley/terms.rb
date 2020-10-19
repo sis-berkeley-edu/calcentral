@@ -48,11 +48,13 @@ module Berkeley
     attr_reader :campus
 
     def self.fetch(options = {})
+      Rails.logger.debug "fetching terms"
       options.reverse_merge!(
         fake_now: Settings.terms.fake_now,
         oldest: Settings.terms.oldest,
         hub_api_disabled: !Settings.features.hub_term_api
       )
+      Rails.logger.debug "options: #{options.inspect}"
       smart_fetch_from_cache(force_write: options[:force]) do
         terms = Terms.new(options)
         terms.init
@@ -109,6 +111,7 @@ module Berkeley
 
       # Do initial term parsing.
       terms_array = fetch_terms_from_api
+
       merge_terms_from_legacy_db terms_array if Settings.features.allow_legacy_fallback
 
       # Classify and map terms.

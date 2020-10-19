@@ -504,14 +504,6 @@ describe 'Delegated access', :testui => true do
                   end
                   it ("prevents delegate UID #{uid} from hitting the delegate welcome page for UID #{student_uid}") { expect(blocks_delegate).to be true }
 
-                  # CCAdmin
-
-                  blocks_ccadmin = WebDriverUtils.verify_block do
-                    @driver.get "#{WebDriverUtils.base_url}/ccadmin"
-                    wait.until { @driver.find_element(:xpath => '//pre').text == ' ' }
-                  end
-                  it ("prevents UID #{uid} from reaching CCAdmin for UID #{student_uid}") { expect(blocks_ccadmin).to be true }
-
                   # TODO: Canvas
 
                 end

@@ -1,6 +1,6 @@
 class SeedCanvasSynchronization < ActiveRecord::Migration
 
-  class CanvasSynchronizationMigrationModel < ActiveRecord::Base
+  class CanvasSynchronizationMigrationModel < ApplicationRecord
     self.table_name = 'canvas_synchronization'
   end
 

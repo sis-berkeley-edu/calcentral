@@ -2,14 +2,14 @@ class ActAsController < ApplicationController
   include ViewAsAuthorization
   include ClassLogger
 
-  skip_before_filter :check_reauthentication, :only => [:stop_act_as]
+  skip_before_action :check_reauthentication, :only => [:stop_act_as]
 
   def initialize(options = {})
     @act_as_session_key = options[:act_as_session_key] || SessionKey.original_user_id
   end
 
   def start
-    uid_param = params['uid']
+    uid_param = permitted_params['uid']
     return redirect_to root_path unless valid_params? uid_param
     act_as_authorization uid_param
     logger.warn "Start: #{current_user.real_user_id} act as #{uid_param}"
@@ -18,8 +18,8 @@ class ActAsController < ApplicationController
     # TODO Mimic '/uid_error' redirect for nulled session user IDs.
 
     # Post-processing
-    after_successful_start(session, params)
-    render :nothing => true, :status => 204
+    after_successful_start(session, permitted_params)
+    head :no_content
   end
 
   def stop
@@ -32,10 +32,14 @@ class ActAsController < ApplicationController
     session[@act_as_session_key] = nil
 
     after_successful_stop session
-    render :nothing => true, :status => 204
+    head :no_content
   end
 
   private
+
+  def permitted_params
+    params.permit(:uid)
+  end
 
   def act_as_authorization(uid_param)
     authorize current_user, :can_view_as?

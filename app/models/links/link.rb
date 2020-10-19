@@ -1,8 +1,5 @@
 module Links
-  class Link < ActiveRecord::Base
-
-    attr_accessible :description, :name, :published, :url, :link_section_ids, :user_role_ids
-
+  class Link < ApplicationRecord
     has_and_belongs_to_many :link_sections
     has_and_belongs_to_many :user_roles
 

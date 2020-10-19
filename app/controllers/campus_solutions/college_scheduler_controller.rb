@@ -2,7 +2,7 @@ module CampusSolutions
   class CollegeSchedulerController < CampusSolutionsController
     include AdvisorAuthorization
 
-    before_filter :check_directly_authenticated
+    before_action :check_directly_authenticated
     before_action :authorize_advisor_access, only: [:get_advisor]
 
     # GET /college_scheduler/student/:acad_career/:term_id
@@ -30,7 +30,7 @@ module CampusSolutions
     end
 
     def college_scheduler_proxy(is_advisor = false)
-      proxy_params = is_advisor ? params.permit(:term_id, :acad_career, :student_user_id) : params.permit(:term_id, :acad_career)
+      proxy_params = is_advisor ? advisor_proxy_params : non_advisor_proxy_params
       proxy_arguments = {
         user_id: session['user_id'],
         term_id: proxy_params['term_id'],
@@ -38,6 +38,16 @@ module CampusSolutions
       }
       proxy_arguments.merge!({student_user_id: proxy_params['student_user_id']}) if is_advisor
       CampusSolutions::CollegeSchedulerUrl.new(proxy_arguments)
+    end
+
+    private
+
+    def advisor_proxy_params
+      params.permit(:term_id, :acad_career, :student_user_id)
+    end
+
+    def non_advisor_proxy_params
+      params.permit(:term_id, :acad_career)
     end
   end
 end

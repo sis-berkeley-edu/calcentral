@@ -1,6 +1,6 @@
 class MediacastsController < ApplicationController
 
-  before_filter :api_authenticate
+  before_action :api_authenticate
 
   def initialize(options = {})
     @options = options

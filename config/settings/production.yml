@@ -10,8 +10,7 @@ logger:
   level: <%= ENV['LOGGER_LEVEL'] || WARN %>
 
 edodb:
-  adapter: jdbc
-  driver: oracle.jdbc.OracleDriver
+  adapter: oracle_enhanced
   url: jdbc:oracle:thin:@<yer_host>:<yer_port>:<yer_sid>
   username: <yer_username>
   password: <yer_password>

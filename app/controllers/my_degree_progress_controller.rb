@@ -1,5 +1,5 @@
 class MyDegreeProgressController < ApplicationController
-  before_filter :api_authenticate_401
+  before_action :api_authenticate_401
   include AllowDelegateViewAs
 
   def get_undergraduate_requirements

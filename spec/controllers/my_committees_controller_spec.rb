@@ -32,17 +32,17 @@ describe MyCommitteesController do
   context 'when serving committee student photo' do
     it_should_behave_like 'an api endpoint' do
       before { allow_any_instance_of(MyCommittees::Merged).to receive(:get_feed_as_json).and_raise(RuntimeError, 'Something went wrong') }
-      let(:make_request) { get :student_photo, student_id: student_id }
+      let(:make_request) { get :student_photo, params: { student_id: student_id }, as: :jpeg }
     end
 
     it_should_behave_like 'a user authenticated api endpoint' do
-      let(:make_request) { get :student_photo, student_id: student_id }
+      let(:make_request) { get :student_photo, params: { student_id: student_id }, as: :jpeg }
     end
 
     context 'user is not authorized to view photo' do
       it 'should return 403 response' do
         allow_any_instance_of(MyCommittees::Merged).to receive(:get_feed_as_json).and_return('')
-        get :student_photo, student_id: student_id
+        get :student_photo, params: { student_id: student_id }, as: :jpeg
         expect(response).to have_http_status(403)
       end
     end
@@ -50,7 +50,7 @@ describe MyCommitteesController do
     context 'if photo path returned ' do
       before { allow_any_instance_of(MyCommittees::Merged).to receive(:photo_data_or_file).and_return(photo_file) }
       it 'should return photo' do
-        get :student_photo, student_id: student_id
+        get :student_photo, params: { student_id: student_id }, as: :jpeg
         assert_response :success
       end
     end
@@ -59,17 +59,17 @@ describe MyCommitteesController do
   context 'when serving committee member photo' do
     it_should_behave_like 'an api endpoint' do
       before { allow_any_instance_of(MyCommittees::Merged).to receive(:get_feed_as_json).and_raise(RuntimeError, 'Something went wrong') }
-      let(:make_request) { get :member_photo, member_id: member_id }
+      let(:make_request) { get :member_photo, params: { member_id: member_id }, as: :jpeg }
     end
 
     it_should_behave_like 'a user authenticated api endpoint' do
-      let(:make_request) { get :member_photo, member_id: member_id }
+      let(:make_request) { get :member_photo, params: { member_id: member_id }, as: :jpeg }
     end
 
     context 'user is not authorized to view photo' do
       it 'should return 403 response' do
         allow_any_instance_of(MyCommittees::Merged).to receive(:get_feed_as_json).and_return('')
-        get :member_photo, member_id: member_id
+        get :member_photo, params: { member_id: member_id }, as: :jpeg
         expect(response).to have_http_status(403)
       end
     end
@@ -77,7 +77,7 @@ describe MyCommitteesController do
     context 'if photo path returned ' do
       before { allow_any_instance_of(MyCommittees::Merged).to receive(:photo_data_or_file).and_return(photo_file) }
       it 'should return photo' do
-        get :member_photo, member_id: member_id
+        get :member_photo, params: { member_id: member_id }, as: :jpeg
         assert_response :success
       end
     end

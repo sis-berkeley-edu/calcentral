@@ -1,10 +1,5 @@
 module Links
-  class LinkSection < ActiveRecord::Base
-
-    attr_accessible :link_root_cat_id
-    attr_accessible :link_top_cat_id
-    attr_accessible :link_sub_cat_id
-
+  class LinkSection < ApplicationRecord
     has_and_belongs_to_many :links
 
     # This class is related to another class via three different names

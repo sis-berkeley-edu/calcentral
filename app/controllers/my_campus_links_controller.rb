@@ -2,7 +2,7 @@ class MyCampusLinksController < ApplicationController
   extend Cache::Cacheable
   include AllowDelegateViewAs
 
-  before_filter :api_authenticate
+  before_action :api_authenticate
 
   def get_feed
     json = self.class.fetch_from_cache {
