@@ -225,41 +225,6 @@ module EdoOracle
         SQL
       end
 
-      def self.get_title4(person_id)
-        result = safe_query <<-SQL
-        SELECT UC.APPROVED,
-          UC.RESPONSE_DESCR,
-          UC.MAIN_HEADER,
-          UC.MAIN_BODY,
-          UC.DYNAMIC_HEADER,
-          UC.DYNAMIC_BODY,
-          UC.DYNAMIC_LABEL,
-          UC.CONTACT_TEXT
-        FROM SISEDO.CLC_FA_TITLE_IV_V00_VW UC
-        WHERE UC.CAMPUS_ID   = '#{person_id}'
-          AND UC.INSTITUTION = '#{UC_BERKELEY}'
-        SQL
-        result.first
-      end
-
-      def self.get_terms_and_conditions(person_id, aid_year)
-        result = safe_query <<-SQL
-        SELECT UC.AID_YEAR,
-          UC.APPROVED,
-          UC.RESPONSE_DESCR,
-          UC.MAIN_HEADER,
-          UC.MAIN_BODY,
-          UC.DYNAMIC_HEADER,
-          UC.DYNAMIC_BODY
-        FROM SISEDO.CLC_FA_T_C_V00_VW UC
-        WHERE UC.CAMPUS_ID   = '#{person_id}'
-          AND UC.INSTITUTION = '#{UC_BERKELEY}'
-          AND UC.AID_YEAR    = '#{aid_year}'
-        ORDER BY UC.AID_YEAR
-        SQL
-        result.first
-      end
-
       def self.get_finaid_profile_status(person_id, aid_year:, effective_date: Time.zone.today.in_time_zone.to_date)
         effective_date_string = effective_date.to_s
 

@@ -9,8 +9,6 @@ module CampusSolutions
         FinancialAid::MyFinaidProfile,
         FinancialAid::MyFinancialAidSummary,
         FinancialAid::MyHousing,
-        FinancialAid::MyTermsAndConditions,
-        FinancialAid::MyTitle4
       ].each do |klass|
         klass.expire uid
       end
