@@ -6,10 +6,9 @@
 
 JRUBY_LIB="${HOME}/.rvm/rubies/${RUBY_VERSION}/lib"
 
-# Some support libraries (e.g., OracleEnhancedJDBCConnection) do not recognize "_g" driver JARs.
-TARGET="${PWD}/lib/ojdbc7.jar"
+TARGET="${PWD}/lib/ojdbc8.jar"
 
-for f in "ojdbc7_g.jar" "ojdbc7.jar"
+for f in "ojdbc8.jar" "ojdbc7.jar"
 do
   CANDIDATE="${JRUBY_LIB}/${f}"
   if [[ -f ${CANDIDATE} ]] ; then
@@ -19,6 +18,6 @@ do
   fi
 done
 
-echo "`date`: Did not find ojdbc7.jar; Oracle DB will not be available"
+echo "`date`: Did not find ojdbc8.jar; Oracle DB will not be available"
 
 exit 1
