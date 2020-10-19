@@ -41,6 +41,9 @@ cal1card_proxy:
 webcast_proxy:
   fake: true
 
+edodb:
+  adapter: oracle_enhanced
+
 oracle:
   adapter: sqlite3
   encoding: utf8
