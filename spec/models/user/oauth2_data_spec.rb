@@ -89,7 +89,7 @@ describe User::Oauth2Data do
       access_token: access_token)
     expect(Cache::UserCacheExpiry).to receive(:notify).exactly(2).times
     expect(oauth2.save).to be true
-    User::Oauth2Data.destroy_all(uid: user_id)
+    User::Oauth2Data.where(uid: user_id).destroy_all
     access_token = User::Oauth2Data.get(user_id)[:access_token]
     expect(access_token).to be_nil
   end

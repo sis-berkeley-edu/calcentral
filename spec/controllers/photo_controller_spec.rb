@@ -57,12 +57,12 @@ describe PhotoController do
   end
 
   describe '#my_photo' do
-    let(:make_request) { get :my_photo }
+    let(:make_request) { get :my_photo, as: :jpeg }
     it_should_behave_like 'an endpoint that returns a response'
   end
 
   describe '#photo' do
-    let(:make_request) { get :photo, uid: random_id }
+    let(:make_request) { get :photo, params: { uid: random_id }, as: :jpeg }
     let(:user_attributes) {
       {
         roles: {

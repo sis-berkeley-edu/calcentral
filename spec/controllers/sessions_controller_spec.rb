@@ -24,7 +24,7 @@ describe SessionsController do
         session[SessionKey.original_user_id] = different_user_id
         session['user_id'] = different_user_id
 
-        get :lookup, renew: 'true'
+        get :lookup, params: { renew: 'true' }
 
         expect(@response.status).to eq 302
         expect(cookie_hash[:reauthenticated]).to be_nil
@@ -35,7 +35,7 @@ describe SessionsController do
         expect(controller).to receive(:cookies).and_return cookie_hash
         session['user_id'] = user_id
 
-        get :lookup, renew: 'true'
+        get :lookup, params: { renew: 'true' }
 
         cookie_hash[:reauthenticated].should_not be_nil
         reauth_cookie = cookie_hash[:reauthenticated]
@@ -50,7 +50,7 @@ describe SessionsController do
         session[SessionKey.original_user_id] = user_id
         session['user_id'] = user_id
 
-        get :lookup, renew: 'true'
+        get :lookup, params: { renew: 'true' }
 
         reauth_cookie = cookie_hash[:reauthenticated]
         expect(reauth_cookie).to_not be_nil
@@ -89,13 +89,6 @@ describe SessionsController do
         expect(User::Identifiers).to receive(:cache).with(user_id, cs_id)
         get :lookup
       end
-    end
-  end
-
-  describe '#reauth_admin' do
-    it 'will redirect to designated reauth path' do
-      # The after hook below will make the appropriate assertions
-      get :reauth_admin
     end
   end
 

@@ -3,7 +3,7 @@ module CampusSolutions
     include AllowDelegateViewAs
     include DisallowAdvisorViewAs
     include DisallowClassicViewAs
-    before_filter :authorize_for_financial
+    before_action :authorize_for_financial
 
     def get
       model = model_from_session

@@ -1,6 +1,6 @@
 class HubEdoController < ApplicationController
   include AllowDelegateViewAs
-  before_filter :api_authenticate_401, :authorize_for_enrollments
+  before_action :api_authenticate_401, :authorize_for_enrollments
 
   def work_experience
     # Delegates get an empty feed.
@@ -8,11 +8,6 @@ class HubEdoController < ApplicationController
       return render json: {filteredForDelegate: true}
     end
     json_proxy_passthrough HubEdos::StudentApi::V2::Feeds::WorkExperiences
-  end
-
-  def json_passthrough(classname, options={})
-    model = classname.from_session session, options
-    render json: model.get_feed_as_json
   end
 
   def json_proxy_passthrough(classname, options={})

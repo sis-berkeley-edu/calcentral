@@ -1,6 +1,6 @@
 class CreatePsUcSavedUids < ActiveRecord::Migration
   def up
-    if ActiveRecord::Base.connection.class.name == 'ActiveRecord::ConnectionAdapters::SQLite3Adapter'
+    if ApplicationRecord.connection.class.name == 'ActiveRecord::ConnectionAdapters::SQLite3Adapter'
       create_table "ps_uc_clc_oauth", {force: :cascade, primary_key:'uc_clc_id'} do |t|
         t.string  "uc_clc_ldap_uid", limit: 255
         t.string  "uc_clc_app_id", limit: 255
@@ -84,7 +84,7 @@ class CreatePsUcSavedUids < ActiveRecord::Migration
   end
 
   def down
-    if ActiveRecord::Base.connection.class.name == 'ActiveRecord::ConnectionAdapters::SQLite3Adapter'
+    if ApplicationRecord.connection.class.name == 'ActiveRecord::ConnectionAdapters::SQLite3Adapter'
       drop_table :ps_uc_saved_uids
       drop_table :ps_uc_clc_oauth
       drop_table :ps_uc_recent_uids

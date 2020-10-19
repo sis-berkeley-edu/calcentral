@@ -1,7 +1,7 @@
 class FinancialResourcesController < ApplicationController
   include AllowDelegateViewAs
-  before_filter :api_authenticate_401
-  before_filter :authorize_for_financial
+  before_action :api_authenticate_401
+  before_action :authorize_for_financial
 
   def get_feed
     render json: {

@@ -105,7 +105,7 @@ describe User::StoredUsers do
       expect(User::StoredUsers).to receive(:get_user).with(owner_uid).and_return stub_model
       expect(stub_model).to receive(:saved_uids).and_return stub_model
       expect(stub_model).to receive(:where).with({ stored_uid: uid_to_store }).and_return []
-      expect(stub_model).to receive(:create).with({ stored_uid: uid_to_store}, without_protection:true )
+      expect(stub_model).to receive(:create).with({ stored_uid: uid_to_store})
 
       response = User::StoredUsers.store_saved_uid(owner_uid, uid_to_store)
       expect(response).to eq success_response
@@ -135,7 +135,7 @@ describe User::StoredUsers do
       expect(User::StoredUsers).to receive(:get_user).with(owner_uid).and_return stub_model
       expect(stub_model).to receive(:recent_uids).and_return stub_model
       expect(stub_model).to receive(:where).with({ stored_uid: uid_to_store }).and_return []
-      expect(stub_model).to receive(:create).with({ stored_uid: uid_to_store }, without_protection:true )
+      expect(stub_model).to receive(:create).with({ stored_uid: uid_to_store })
 
       response = User::StoredUsers.store_recent_uid(owner_uid, uid_to_store)
       expect(response).to eq success_response

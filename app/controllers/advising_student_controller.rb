@@ -15,7 +15,7 @@ class AdvisingStudentController < ApplicationController
 
   def academics_cache_expiry
     MyAcademics::FilteredForAdvisor.expire student_uid_param
-    render :nothing => true
+    head :ok
   end
 
   def advising

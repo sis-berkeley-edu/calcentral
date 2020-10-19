@@ -1,9 +1,8 @@
 class StoredUsersController < ApplicationController
   include ViewAsAuthorization
 
-  before_filter :authenticate
-  before_filter :numeric_uid?, except: [:get, :delete_all_recent, :delete_all_saved]
-  respond_to :json
+  before_action :authenticate
+  before_action :numeric_uid?, except: [:get, :delete_all_recent, :delete_all_saved]
 
   def get
     authorize_query_stored_users current_user
@@ -48,7 +47,7 @@ class StoredUsersController < ApplicationController
 
   def error_response
    result = { success: false, message: 'Please provide a numeric UID.' }
-    respond_with(result) do |format|
+    respond_to do |format|
       format.json { render json: result.to_json, status: :bad_request }
     end
   end

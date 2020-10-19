@@ -66,18 +66,8 @@ RSpec.configure do |config|
   # Nicer way to hide breaking tests.
   config.filter_run_excluding :ignore => true
 
-  # Run the UI tests (and only the UI tests) if UI_TEST is present in environment
-  if ENV["UI_TEST"]
-    config.filter_run_including :testui => true
-  else
-    config.filter_run_excluding :testui => true
-  end
-
   # Include custom matchers
   config.include CustomMatchers, :type => :model
-
-  # Include Auth helper:
-  config.include IntegrationSpecHelper, :type => :feature
 
   # Clear out cache at the beginning of each test.
   config.before :each do

@@ -1,13 +1,11 @@
 module User
-  class Auth < ActiveRecord::Base
+  class Auth < ApplicationRecord
     include ActiveRecordHelper, OraclePrimaryHelper
 
     self.table_name = 'PS_UC_USER_AUTHS'
     self.primary_key = 'uc_clc_id'
 
     after_initialize :log_access
-    attr_accessible :uid, :is_superuser, :is_author, :is_viewer, :active
-    attr_accessible :uc_clc_id, :uc_clc_is_su, :uc_clc_is_au, :uc_clc_is_vw, :uc_clc_active
 
     alias_attribute :active, :uc_clc_active
     alias_attribute :is_viewer, :uc_clc_is_vw
@@ -16,7 +14,11 @@ module User
     alias_attribute :is_author, :uc_clc_is_au
 
     if self.primary_database_is_oracle?
-      set_boolean_columns :uc_clc_is_su, :uc_clc_is_au, :uc_clc_is_vw, :uc_clc_active
+      # set_boolean_columns :uc_clc_is_su, :uc_clc_is_au, :uc_clc_is_vw, :uc_clc_active
+      attribute :uc_clc_is_su, :boolean
+      attribute :uc_clc_is_au, :boolean
+      attribute :uc_clc_is_vw, :boolean
+      attribute :uc_clc_active, :boolean
     end
 
     before_save :set_default_values

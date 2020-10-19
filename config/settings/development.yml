@@ -52,14 +52,6 @@ oracle:
   pool: 3
   timeout: 5000
 
-postgres:
-  database: <%= ENV['DB_ENV_POSTGRESQL_DB'] || 'calcentral_development' %>
-  username: <%= ENV['DB_ENV_POSTGRESQL_USER'] || 'calcentral_development' %>
-  password: <%= ENV['DB_ENV_POSTGRESQL_PASS'] || 'secret' %>
-  host: <%= ENV['DB_PORT_5432_TCP_ADDR'] || 'localhost' %>
-  port: <%= ENV['DB_PORT_5432_TCP_PORT'] || '5432' %>
-  pool: 3
-
 ist_jms:
   fake: true
   enabled: false

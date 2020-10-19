@@ -1,6 +1,6 @@
 class MyCommitteesController < ApplicationController
 
-  before_filter :api_authenticate
+  before_action :api_authenticate
   rescue_from StandardError, with: :handle_api_exception
 
   def get_feed
@@ -15,7 +15,7 @@ class MyCommitteesController < ApplicationController
       student_photo = my_committees.photo_data_or_file(student_id)
       serve_photo(student_photo)
     else
-      render :nothing => true, :status => 403
+      head :forbidden
     end
   end
 
@@ -27,25 +27,33 @@ class MyCommitteesController < ApplicationController
       member_photo = my_committees.photo_data_or_file(member_id)
       serve_photo(member_photo)
     else
-      render :nothing => true, :status => 403
+      head :forbidden
     end
   end
 
   def serve_photo (person_photo)
     if person_photo.nil?
-      render :nothing => true, :status => 200
+      head :ok
     elsif (data = person_photo[:data])
-      send_data(
-        data,
-        type: 'image/jpeg',
-        disposition: 'inline'
-      )
+      respond_to do |format|
+        format.jpeg {
+          send_data(
+            data,
+            type: 'image/jpeg',
+            disposition: 'inline'
+          )
+        }
+      end
     else
-      send_file(
-        person_photo[:filename],
-        type: 'image/jpeg',
-        disposition: 'inline'
-      )
+      respond_to do |format|
+        format.jpeg {
+          send_file(
+            person_photo[:filename],
+            type: 'image/jpeg',
+            disposition: 'inline'
+          )
+        }
+      end
     end
   end
 

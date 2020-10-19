@@ -29,21 +29,21 @@ describe CampusRostersController do
   context "when serving course rosters feed" do
     it_should_behave_like "an api endpoint" do
       before { allow_any_instance_of(Rosters::Campus).to receive(:get_feed).and_raise(RuntimeError, "Something went wrong") }
-      let(:make_request) { get :get_feed, campus_course_id: campus_course_id }
+      let(:make_request) { get :get_feed, params: { campus_course_id: campus_course_id } }
     end
 
     it_should_behave_like "a user authenticated api endpoint" do
-      let(:make_request) { get :get_feed, campus_course_id: campus_course_id }
+      let(:make_request) { get :get_feed, params: { campus_course_id: campus_course_id } }
     end
 
     it "should return error if user is not authorized" do
       allow_any_instance_of(Berkeley::CoursePolicy).to receive(:can_view_roster_photos?).and_return(false)
-      get :get_feed, campus_course_id: campus_course_id
+      get :get_feed, params: { campus_course_id: campus_course_id }
       assert_response(403)
     end
 
     it "should return json when user is authorized" do
-      get :get_feed, campus_course_id: campus_course_id
+      get :get_feed, params: { campus_course_id: campus_course_id }
       assert_response :success
       response_json = JSON.parse(response.body)
       expect(response_json.has_key?('campus_course')).to be_truthy
@@ -55,21 +55,21 @@ describe CampusRostersController do
   context 'when serving course rosters csv download' do
     it_should_behave_like "an api endpoint" do
       before { allow_any_instance_of(Rosters::Csv).to receive(:get_csv).and_raise(RuntimeError, "Something went wrong") }
-      let(:make_request) { get :get_csv, campus_course_id: campus_course_id, format: :csv }
+      let(:make_request) { get :get_csv, params: { campus_course_id: campus_course_id }, as: :csv }
     end
 
     it_should_behave_like "a user authenticated api endpoint" do
-      let(:make_request) { get :get_csv, campus_course_id: campus_course_id, format: :csv }
+      let(:make_request) { get :get_csv, params: { campus_course_id: campus_course_id }, as: :csv  }
     end
 
     it "should return error if user is not authorized" do
       allow_any_instance_of(Berkeley::CoursePolicy).to receive(:can_view_roster_photos?).and_return(false)
-      get :get_csv, campus_course_id: campus_course_id, format: :csv
+      get :get_csv, params: { campus_course_id: campus_course_id }, as: :csv
       assert_response(403)
     end
 
     it "should return csv file when user is authorized" do
-      get :get_csv, campus_course_id: campus_course_id, format: :csv
+      get :get_csv, params: { campus_course_id: campus_course_id }, as: :csv
       assert_response :success
       response_csv = CSV.parse(response.body, {headers: true})
       expect(response_csv.count).to eq 3
@@ -92,23 +92,23 @@ describe CampusRostersController do
   context "when serving course enrollee photo" do
     it_should_behave_like "an api endpoint" do
       before { allow_any_instance_of(Rosters::Campus).to receive(:photo_data_or_file).and_raise(RuntimeError, "Something went wrong") }
-      let(:make_request) { get :photo, campus_course_id: campus_course_id, person_id: student_id }
+      let(:make_request) { get :photo, params: { campus_course_id: campus_course_id, person_id: student_id } }
     end
 
     it_should_behave_like "a user authenticated api endpoint" do
-      let(:make_request) { get :photo, campus_course_id: campus_course_id, person_id: student_id }
+      let(:make_request) { get :photo, params: { campus_course_id: campus_course_id, person_id: student_id } }
     end
 
     it "should return error if user is not authorized" do
       allow_any_instance_of(Berkeley::CoursePolicy).to receive(:can_view_roster_photos?).and_return(false)
-      get :photo, campus_course_id: campus_course_id, person_id: student_id
+      get :photo, params: { campus_course_id: campus_course_id, person_id: student_id }
       assert_response(403)
     end
 
     context "if photo path returned for enrollee" do
       before { allow_any_instance_of(Rosters::Campus).to receive(:photo_data_or_file).and_return(photo_file) }
       it "should return photo" do
-        get :photo, campus_course_id: campus_course_id, person_id: student_id
+        get :photo, params: { campus_course_id: campus_course_id, person_id: student_id, format: :jpg }
         assert_response :success
       end
     end

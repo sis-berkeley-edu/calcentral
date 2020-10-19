@@ -2,7 +2,7 @@ class SessionsController < ApplicationController
   include ActiveRecordHelper, ClassLogger
   include AllowDelegateViewAs
 
-  skip_before_filter :check_reauthentication, :only => [:lookup, :destroy]
+  skip_before_action :check_reauthentication, :only => [:lookup, :destroy]
 
   def lookup
     auth = request.env['omniauth.auth']
@@ -67,10 +67,6 @@ class SessionsController < ApplicationController
 
   def create_reauth_cookie
     cookies[:reauthenticated] = {:value => true, :expires => 8.hours.from_now}
-  end
-
-  def reauth_admin
-    redirect_to url_for_path '/auth/cas?renew=true&url=/ccadmin'
   end
 
   def basic_lookup
@@ -145,7 +141,7 @@ class SessionsController < ApplicationController
       delete_reauth_cookie
       reset_session
     ensure
-      ActiveRecord::Base.clear_active_connections!
+      ApplicationRecord.clear_active_connections!
     end
   end
 

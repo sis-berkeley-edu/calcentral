@@ -1,6 +1,6 @@
 class MyProfileController < ApplicationController
   include AllowDelegateViewAs
-  before_filter :api_authenticate_401, :authorize_for_enrollments
+  before_action :api_authenticate_401, :authorize_for_enrollments
 
   def get_feed
     options = case

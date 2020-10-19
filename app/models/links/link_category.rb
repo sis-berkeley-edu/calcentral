@@ -1,7 +1,6 @@
 module Links
-  class LinkCategory < ActiveRecord::Base
+  class LinkCategory < ApplicationRecord
 
-    attr_accessible :name, :slug, :root_level
     has_and_belongs_to_many :link_sections
 
     validates :name, :presence => true

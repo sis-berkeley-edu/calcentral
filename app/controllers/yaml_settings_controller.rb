@@ -1,8 +1,6 @@
 class YamlSettingsController < ApplicationController
   include ClassLogger
 
-  respond_to :json
-
   def reload
     authorize(current_user, :can_reload_yaml_settings?)
     begin

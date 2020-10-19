@@ -1,5 +1,5 @@
 module ServiceAlerts
-  class Alert < ActiveRecord::Base
+  class Alert < ApplicationRecord
     include DatedFeed
     include HtmlSanitizer
     include OraclePrimaryHelper
@@ -10,10 +10,6 @@ module ServiceAlerts
     def self.attributeDefaults
       {uc_alrt_title:' ', uc_alrt_snippt:' ', uc_alrt_body:' ', uc_alrt_display:false, uc_alrt_splash:false, uc_alrt_pubdt:Time.zone.today.in_time_zone.to_datetime}
     end
-
-    attr_accessible :uc_clc_id, :uc_alrt_title, :uc_alrt_snippt, :uc_alrt_pubdt, :uc_alrt_display
-    attr_accessible :uc_alrt_splash, :uc_alrt_body, :created_at, :updated_at
-    attr_accessible :title, :display, :body, :publication_date, :snippet
 
     alias_attribute :title, :uc_alrt_title
     alias_attribute :display, :uc_alrt_display
@@ -28,7 +24,8 @@ module ServiceAlerts
     before_create :set_id
 
     if self.primary_database_is_oracle?
-      set_boolean_columns :uc_alrt_display, :uc_alrt_splash
+      attribute :uc_alrt_display, :boolean
+      attribute :uc_alrt_splash, :boolean
     end
 
     def self.get_latest

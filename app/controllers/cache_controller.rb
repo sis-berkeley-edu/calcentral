@@ -1,7 +1,7 @@
 class CacheController < ApplicationController
   include ClassLogger
 
-  before_filter :check_permission
+  before_action :check_permission
   rescue_from Errors::ClientError, with: :handle_client_error
 
   def clear

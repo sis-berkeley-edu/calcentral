@@ -1,7 +1,7 @@
 class MyClassEnrollmentsController < ApplicationController
   include AllowDelegateViewAs
-  before_filter :api_authenticate_401
-  before_filter :authorize_for_enrollments
+  before_action :api_authenticate_401
+  before_action :authorize_for_enrollments
 
   def get_feed
     if params[:expireCache]

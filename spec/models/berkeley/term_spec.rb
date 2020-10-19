@@ -14,11 +14,11 @@ describe Berkeley::Term do
         expect(subject.campus_solutions_id).to eq '2165'
         expect(subject.is_summer).to eq true
         expect(subject.classes_start).to eq Time.zone.parse('2016-05-23 00:00:00').to_datetime
-        expect(subject.classes_end).to eq Time.zone.parse('2016-08-12 23:59:59').to_datetime
-        expect(subject.instruction_end).to eq Time.zone.parse('2016-08-12 23:59:59').to_datetime
-        expect(subject.grades_entered).to eq Time.zone.parse('2016-09-09 23:59:59').to_datetime
+        expect(subject.classes_end).to eq Time.zone.parse('2016-08-12 23:59:59').to_datetime.end_of_day
+        expect(subject.instruction_end).to eq Time.zone.parse('2016-08-12 23:59:59').to_datetime.end_of_day
+        expect(subject.grades_entered).to eq Time.zone.parse('2016-09-09 23:59:59').to_datetime.end_of_day
         expect(subject.start).to eq Time.zone.parse('2016-05-23 00:00:00').to_datetime
-        expect(subject.end).to eq Time.zone.parse('2016-08-12 23:59:59').to_datetime
+        expect(subject.end).to eq Time.zone.parse('2016-08-12 23:59:59').to_datetime.end_of_day
         expect(subject.to_english).to eq 'Summer 2016'
         expect(subject.legacy?).to be_truthy
         expect(subject.sis_current_term?).to be_truthy
@@ -37,11 +37,11 @@ describe Berkeley::Term do
         expect(subject.campus_solutions_id).to eq '2168'
         expect(subject.is_summer).to eq false
         expect(subject.classes_start).to eq Time.zone.parse('2016-08-24 00:00:00').to_datetime
-        expect(subject.classes_end).to eq Time.zone.parse('2016-12-02 23:59:59').to_datetime
-        expect(subject.instruction_end).to eq Time.zone.parse('2016-12-09 23:59:59').to_datetime
-        expect(subject.grades_entered).to eq Time.zone.parse('2017-01-13 23:59:59').to_datetime
+        expect(subject.classes_end).to eq Time.zone.parse('2016-12-02 23:59:59').to_datetime.end_of_day
+        expect(subject.instruction_end).to eq Time.zone.parse('2016-12-09 23:59:59').to_datetime.end_of_day
+        expect(subject.grades_entered).to eq Time.zone.parse('2017-01-13 23:59:59').to_datetime.end_of_day
         expect(subject.start).to eq Time.zone.parse('2016-08-17 00:00:00').to_datetime
-        expect(subject.end).to eq Time.zone.parse('2016-12-16 23:59:59').to_datetime
+        expect(subject.end).to eq Time.zone.parse('2016-12-16 23:59:59').to_datetime.end_of_day
         expect(subject.to_english).to eq 'Fall 2016'
         expect(subject.legacy?).to be_falsey
         expect(subject.sis_current_term?).to be_falsey
@@ -78,11 +78,11 @@ describe Berkeley::Term do
         expect(subject.to_h[:slug]).to eq 'summer-2016'
         expect(subject.to_h[:to_english]).to eq 'Summer 2016'
         expect(subject.to_h[:start]).to eq Time.zone.parse('2016-05-23 00:00:00').to_datetime
-        expect(subject.to_h[:end]).to eq Time.zone.parse('2016-08-12 23:59:59').to_datetime
+        expect(subject.to_h[:end]).to eq Time.zone.parse('2016-08-12 23:59:59').to_datetime.end_of_day
         expect(subject.to_h[:classes_start]).to eq Time.zone.parse('2016-05-23 00:00:00').to_datetime
-        expect(subject.to_h[:classes_end]).to eq Time.zone.parse('2016-08-12 23:59:59').to_datetime
-        expect(subject.to_h[:instruction_end]).to eq Time.zone.parse('2016-08-12 23:59:59').to_datetime
-        expect(subject.to_h[:grades_entered]).to eq Time.zone.parse('2016-09-09 23:59:59').to_datetime
+        expect(subject.to_h[:classes_end]).to eq Time.zone.parse('2016-08-12 23:59:59').to_datetime.end_of_day
+        expect(subject.to_h[:instruction_end]).to eq Time.zone.parse('2016-08-12 23:59:59').to_datetime.end_of_day
+        expect(subject.to_h[:grades_entered]).to eq Time.zone.parse('2016-09-09 23:59:59').to_datetime.end_of_day
         expect(subject.to_h[:is_summer]).to eq true
         expect(subject.to_h[:legacy?]).to eq true
         expect(subject.to_h[:end_drop_add]).to eq false
@@ -109,19 +109,19 @@ describe Berkeley::Term do
         'term_start_date' => Time.gm(2014, 5, 27),
         'term_end_date' => Time.gm(2014, 8, 15)
       }}
-      its(:slug) {should eq 'summer-2014'}
-      its(:year) {should eq 2014}
-      its(:code) {should eq 'C'}
-      its(:name) {should eq 'Summer'}
-      its(:campus_solutions_id) {should eq '2145'}
-      its(:is_summer) {should eq true}
-      its(:legacy_sis_term_status) {should eq 'CS'}
-      its(:classes_start) {should eq Time.zone.parse('2014-05-27 00:00:00').to_datetime}
-      its(:classes_end) {should eq Time.zone.parse('2014-08-15 23:59:59').to_datetime}
-      its(:instruction_end) {should eq Time.zone.parse('2014-08-15 23:59:59').to_datetime}
-      its(:start) {should eq Time.zone.parse('2014-05-27 00:00:00').to_datetime}
-      its(:end) {should eq Time.zone.parse('2014-08-15 23:59:59').to_datetime}
-      its(:to_english) {should eq 'Summer 2014'}
+      its(:slug) { should eq 'summer-2014' }
+      its(:year) { should eq 2014 }
+      its(:code) { should eq 'C' }
+      its(:name) { should eq 'Summer' }
+      its(:campus_solutions_id) { should eq '2145' }
+      its(:is_summer) { should eq true }
+      its(:legacy_sis_term_status) { should eq 'CS' }
+      its(:classes_start) { should eq Time.zone.parse('2014-05-27 00:00:00').to_datetime }
+      its(:classes_end) { should eq Time.zone.parse('2014-08-15 23:59:59').to_datetime.end_of_day }
+      its(:instruction_end) { should eq Time.zone.parse('2014-08-15 23:59:59').to_datetime.end_of_day }
+      its(:start) { should eq Time.zone.parse('2014-05-27 00:00:00').to_datetime }
+      its(:end) { should eq Time.zone.parse('2014-08-15 23:59:59').to_datetime.end_of_day }
+      its(:to_english) { should eq 'Summer 2014'}
     end
     context 'Fall' do
       let(:db_row) {{
@@ -133,19 +133,19 @@ describe Berkeley::Term do
         'term_start_date' => Time.gm(2014, 8, 28),
         'term_end_date' => Time.gm(2014, 12, 12)
       }}
-      its(:slug) {should eq 'fall-2014'}
-      its(:year) {should eq 2014}
-      its(:code) {should eq 'D'}
-      its(:name) {should eq 'Fall'}
-      its(:campus_solutions_id) {should eq '2148'}
-      its(:is_summer) {should eq false}
-      its(:legacy_sis_term_status) {should eq 'FT'}
-      its(:classes_start) {should eq Time.zone.parse('2014-08-28 00:00:00').to_datetime}
-      its(:classes_end) {should eq Time.zone.parse('2014-12-05 23:59:59').to_datetime}
-      its(:instruction_end) {should eq Time.zone.parse('2014-12-12 23:59:59').to_datetime}
-      its(:start) {should eq Time.zone.parse('2014-08-21 00:00:00').to_datetime}
-      its(:end) {should eq Time.zone.parse('2014-12-19 23:59:59').to_datetime}
-      its(:to_english) {should eq 'Fall 2014'}
+      its(:slug) { should eq 'fall-2014' }
+      its(:year) { should eq 2014 }
+      its(:code) { should eq 'D' }
+      its(:name) { should eq 'Fall' }
+      its(:campus_solutions_id) { should eq '2148' }
+      its(:is_summer) { should eq false }
+      its(:legacy_sis_term_status) { should eq 'FT' }
+      its(:classes_start) { should eq Time.zone.parse('2014-08-28 00:00:00').to_datetime }
+      its(:classes_end) { should eq Time.zone.parse('2014-12-05 23:59:59').to_datetime.end_of_day }
+      its(:instruction_end) { should eq Time.zone.parse('2014-12-12 23:59:59').to_datetime.end_of_day }
+      its(:start) { should eq Time.zone.parse('2014-08-21 00:00:00').to_datetime }
+      its(:end) { should eq Time.zone.parse('2014-12-19 23:59:59').to_datetime.end_of_day }
+      its(:to_english) { should eq 'Fall 2014' }
     end
     context 'Spring' do
       let(:db_row) {{
@@ -157,19 +157,19 @@ describe Berkeley::Term do
         'term_start_date' => Time.gm(2014, 1, 21),
         'term_end_date' => Time.gm(2014, 5, 9)
       }}
-      its(:slug) {should eq 'spring-2014'}
-      its(:year) {should eq 2014}
-      its(:code) {should eq 'B'}
-      its(:name) {should eq 'Spring'}
-      its(:campus_solutions_id) {should eq '2142'}
-      its(:is_summer) {should eq false}
-      its(:legacy_sis_term_status) {should eq 'CT'}
-      its(:classes_start) {should eq Time.zone.parse('2014-01-21 00:00:00').to_datetime}
-      its(:classes_end) {should eq Time.zone.parse('2014-05-02 23:59:59').to_datetime}
-      its(:instruction_end) {should eq Time.zone.parse('2014-05-09 23:59:59').to_datetime}
-      its(:start) {should eq Time.zone.parse('2014-01-14 00:00:00').to_datetime}
-      its(:end) {should eq Time.zone.parse('2014-05-16 23:59:59').to_datetime}
-      its(:to_english) {should eq 'Spring 2014'}
+      its(:slug) { should eq 'spring-2014' }
+      its(:year) { should eq 2014 }
+      its(:code) { should eq 'B' }
+      its(:name) { should eq 'Spring' }
+      its(:campus_solutions_id) { should eq '2142' }
+      its(:is_summer) { should eq false }
+      its(:legacy_sis_term_status) { should eq 'CT' }
+      its(:classes_start) { should eq Time.zone.parse('2014-01-21 00:00:00').to_datetime }
+      its(:classes_end) { should eq Time.zone.parse('2014-05-02 23:59:59').to_datetime.end_of_day }
+      its(:instruction_end) { should eq Time.zone.parse('2014-05-09 23:59:59').to_datetime.end_of_day }
+      its(:start) { should eq Time.zone.parse('2014-01-14 00:00:00').to_datetime }
+      its(:end) { should eq Time.zone.parse('2014-05-16 23:59:59').to_datetime.end_of_day }
+      its(:to_english) { should eq 'Spring 2014' }
     end
   end
 end

@@ -15,7 +15,7 @@ describe CampusSolutions::LinkController do
       before { session['user_id'] = user_id }
 
       it 'returns empty feed when urlId param not specified' do
-        get feed, {:format => 'json'}
+        get feed, as: :json
         expect(response.status).to eq 200
 
         json_response = JSON.parse(response.body)
@@ -23,7 +23,7 @@ describe CampusSolutions::LinkController do
       end
 
       it 'returns link feed with matching urlId' do
-        get feed, {:urlId => url_id, :format => 'json'}
+        get feed, params: {:urlId => url_id }, as: :json
         expect(response.status).to eq 200
 
         json_response = JSON.parse(response.body)
@@ -33,7 +33,7 @@ describe CampusSolutions::LinkController do
       end
 
       it 'returns link feed with matching urlId and replaced "placeholder[name]" values' do
-        get feed, {:urlId => url_id, :placeholders => placeholders, :format => 'json'}
+        get feed, params: {:urlId => url_id, :placeholders => placeholders }, as: :json
         expect(response.status).to eq 200
 
         json_response = JSON.parse(response.body)
