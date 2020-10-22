@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 # The core framework
 # https://github.com/rails/rails
-gem 'rails', '6.0.3.2'
+gem 'rails', '6.0.3.4'
 
 # https://github.com/ruby/rake
 gem 'rake'
