@@ -202,6 +202,7 @@ cache:
   servers: ['localhost']
   maximum_expires_in: <%= 29.days %>
   race_condition_ttl: <%= 10.seconds %>
+  pool: 20
   stale_connection_flush_interval: <%= 30.seconds %>
   store: 'memcached'
   log_level: <%= Logger::WARN %>
