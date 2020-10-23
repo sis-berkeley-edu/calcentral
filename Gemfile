@@ -61,7 +61,12 @@ gem 'google-api-client', '~> 0.31.0'
 
 # Memcached client
 # https://github.com/petergoldstein/
-gem 'dalli', '~> 2.7.10'
+gem 'dalli', '~> 2.7.11'
+
+# Connection Pool
+# Used to pool connections to memcached via dalli
+# https://github.com/mperham/connection_pool
+gem 'connection_pool', '~> 2.2.3'
 
 # Provides telnet client functionality
 # https://github.com/ruby/net-telnet
