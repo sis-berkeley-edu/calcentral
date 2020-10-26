@@ -1,5 +1,7 @@
 import './_header/RegistrationStatusItems';
 
+import './_alumni/AlumniOverlay/AlumniOverlay';
+
 import './_academics/AcademicSummary/AcademicSummary';
 import './_academics/DegreeProgress/DegreeProgressLinks';
 import './angularWrappers/degreeProgressNotice';
@@ -17,6 +19,7 @@ import './angularWrappers/covidResponseCard';
 import './angularWrappers/classInformationCard';
 import './_dashboard/StudentResources/StudentResourcesContainer';
 import './_dashboard/UpNext/UpNextContainer';
+import './_dashboard/AlumniHomepage/AlumniHomepage';
 import './_dashboard';
 
 import './_finances/AwardComparison/AwardComparison';

@@ -227,6 +227,10 @@ Calcentral::Application.routes.draw do
   # Financial Aid endpoints
   get '/api/financial_aid/financial_resources' => 'financial_resources#get_feed', :defaults => { :format => 'json' }
 
+  # Alumni Profile endpoints 
+  get '/api/alumni/alumni_profiles' => 'alumni_profiles#get_feed', :defaults => { :format => 'json' }
+  get '/api/alumni/set_skip_landing_page' => 'alumni_profiles#set_skip_landing_page', :defaults => { :format => 'json' }
+
 
   # Redirect to College Scheduler
   get '/college_scheduler/student/:acad_career/:term_id' => 'campus_solutions/college_scheduler#get'
