@@ -31,16 +31,18 @@ const propTypes = {
     padding: PropTypes.bool,
     title: PropTypes.string.isRequired,
     visible: PropTypes.bool
-  })
+  }),
+  hideHeader: PropTypes.bool,
+  cardStyle: PropTypes.object
 };
 
 const Widget = (props) => {
-  const {config: widgetConfig, children} = props;
+  const { config: widgetConfig, children } = props;
   if (widgetConfig.visible) {
     return (
       // class "cc-widget" is necessary for now for 2-column and 3-column margins. See _widgets.scss
-      <div className="cc-react-widget cc-widget">
-        <WidgetHeader title={widgetConfig.title} link={widgetConfig.link} />
+      <div className="cc-react-widget cc-widget" style={props.cardStyle}>
+        {!props.hideHeader && <WidgetHeader title={widgetConfig.title} link={widgetConfig.link} />}
         <WidgetBody widgetConfig={widgetConfig}>
           {children}
         </WidgetBody>

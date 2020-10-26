@@ -59,3 +59,7 @@ class_info_message_ucbx_summer: [28000, 253]
 # COVID Messaging
 covid_campus_updates: [20100, 1]
 covid_screener: [20100, 2]
+
+# Alumni Homepage
+alumni_landing_page_message: [32540, 2]
+alumni_landing_page_sub_title: [32540, 1]

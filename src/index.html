@@ -57,6 +57,9 @@
       data-ng-class="{'collapse':(controllerName === 'DashboardController' || controllerName === 'AcademicsController')}"
       id="cc-main-content"
       role="main">
+        <alumni-overlay data-ng-if="api.user.profile.roles.alumniFormer &&
+          !api.user.profile.academicRoles.historical.law &&
+          !api.user.profile.roles.faculty && !api.user.profile.roles.staff"></alumni-overlay>
         <div data-ng-include="'alerts.html'" data-ng-if="controllerName !== 'CalCentralUpdateController'"></div>
         <div class="cc-clearfix-container" data-ng-view></div>
       </div>
