@@ -14,15 +14,11 @@ class  Api::AlumniProfiles < UserSpecificModel
 
 
   def set_skip_landing_page
-    # TODO: verify table and uncomment
-    # AlumniProfile.create(uid: @uid) unless skip_landing_page?
-    {}
+    AlumniProfile.create(uid: @uid) unless skip_landing_page?
   end
 
   def skip_landing_page?
-    # TODO: verify table and uncomment
-    # AlumniProfile.find_by(uid: @uid).present?
-    false
+    AlumniProfile.find_by(uid: @uid).present?
   end
 
   def self.landing_page_sub_title

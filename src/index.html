@@ -60,8 +60,12 @@
         <alumni-overlay data-ng-if="api.user.profile.roles.alumniFormer &&
           !api.user.profile.academicRoles.historical.law &&
           !api.user.profile.roles.faculty && !api.user.profile.roles.staff"></alumni-overlay>
-        <div data-ng-include="'alerts.html'" data-ng-if="controllerName !== 'CalCentralUpdateController'"></div>
-        <div class="cc-clearfix-container" data-ng-view></div>
+        <div data-ng-if="!(api.user.profile.roles.alumniFormer &&
+          !api.user.profile.academicRoles.historical.law &&
+          !api.user.profile.roles.faculty && !api.user.profile.roles.staff)">
+          <div data-ng-include="'alerts.html'" data-ng-if="controllerName !== 'CalCentralUpdateController'"></div>
+          <div class="cc-clearfix-container" data-ng-view></div>
+        </div>
       </div>
       <div data-ng-if="(controllerName !== 'SplashController')" data-ng-include="'footer.html'"></div>
     </div>

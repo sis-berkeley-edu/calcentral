@@ -7,7 +7,7 @@ describe Api::AlumniProfiles do
       landing_page_sub_title: 'card title',
       landing_page_message:  'overlay msg',
       homepage_link: 'link',
-      skip_landing_page: false
+      skip_landing_page: true
     }
   end
 
