@@ -5,7 +5,7 @@ import APILink from '../../APILink';
 import { react2angular } from 'react2angular';
 
 import { connect } from 'react-redux';
-import ReduxProvider from 'React/components/ReduxProvider';
+import ReduxProvider from 'components/ReduxProvider';
 
 import 'icons/academicprogressreport.svg';
 import 'icons/calculator.svg';

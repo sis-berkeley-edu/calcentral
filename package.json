@@ -47,6 +47,7 @@
     "date-fns-tz": "^1.0.10",
     "del": "~3.0.0",
     "font-awesome": "~4.7.0",
+    "formik": "^2.2.0",
     "highcharts": "~6.1.0",
     "immutability-helper": "^2.8.1",
     "js-natural-sort": "~0.8.1",
@@ -58,13 +59,15 @@
     "raven-js": "~3.18.1",
     "react": "^16.11.0",
     "react-dom": "^16.11.0",
+    "react-helmet": "^6.1.0",
     "react-linkify": "^0.2.2",
     "react-redux": "^6.0.1",
     "react-router-dom": "^5.2.0",
     "react2angular": "^4.0.4",
     "redux": "^4.0.1",
     "redux-devtools": "^3.5.0",
-    "redux-thunk": "^2.3.0"
+    "redux-thunk": "^2.3.0",
+    "yup": "^0.29.3"
   },
   "devDependencies": {
     "@babel/core": "^7.6.4",

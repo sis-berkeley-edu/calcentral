@@ -1,0 +1,20 @@
+@import 'src/react/stylesheets/variables';
+
+form.Form {
+  padding: 0;
+  background: none;
+  border: none;
+
+  input,
+  textarea {
+    margin: 0;
+  }
+
+  .field + .field {
+    margin-top: 15px;
+  }
+
+  .actions {
+    margin-top: 15px;
+  }
+}

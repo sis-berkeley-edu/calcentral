@@ -53,9 +53,6 @@ angular.module('calcentral.config').config(function($routeProvider) {
     templateUrl: 'academics_classinfo.html',
     controller: 'AcademicsController',
     pageName: 'My Academics'
-  }).when('/calcentral_update', {
-    templateUrl: 'calcentral_update.html',
-    controller: 'CalCentralUpdateController'
   }).when('/campus/:category?', {
     templateUrl: 'campus.html',
     controller: 'CampusController'
@@ -124,6 +121,21 @@ angular.module('calcentral.config').config(function($routeProvider) {
     isAdvisingStudentLookup: true,
     pageName: 'Student Overview'
   });
+
+  const reactPaths = [
+    '/calcentral_update',
+    '/service_alerts',
+    '/service_alerts/new',
+    '/service_alerts/:id/edit',
+    '/user_auths',
+    '/user_auths/new',
+    '/user_auths/:id/edit',
+  ]
+
+  reactPaths.forEach(path => $routeProvider.when(path, {
+    templateUrl: 'react.html',
+    controller: 'ReactController'
+  }))
 
   // Redirect to a 404 page
   $routeProvider.otherwise({

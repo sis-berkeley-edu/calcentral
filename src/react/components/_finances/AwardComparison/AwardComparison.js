@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import store from 'Redux/store';
-import { Provider, connect } from 'react-redux';
-import { react2angular } from 'react2angular';
+import { connect } from 'react-redux';
 import {
   fetchAwardComparison,
   fetchAwardComparisonSnapshot,
@@ -182,16 +180,4 @@ const mapStateToProps = ({
   };
 };
 
-const ConnectedAwardComparison = connect(mapStateToProps)(AwardComparison);
-
-const AwardComparisonContainer = () => {
-  return (
-    <Provider store={store}>
-      <ConnectedAwardComparison />
-    </Provider>
-  );
-};
-
-angular
-  .module('calcentral.react')
-  .component('awardComparison', react2angular(AwardComparisonContainer));
+export default connect(mapStateToProps)(AwardComparison);

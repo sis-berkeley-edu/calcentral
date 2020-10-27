@@ -12,6 +12,8 @@
       <div data-ng-include="'widgets/toolbox/uid_lookup.html'" data-ng-if="api.user.profile.isViewer || api.user.profile.isSuperuser || api.user.profile.roles.advisor"></div>
     </div>
     <div class="medium-6 large-4 columns cc-column-3">
+      <active-service-alerts></active-service-alerts>
+      <find-user-auth></find-user-auth>
       <div data-ng-include="'widgets/toolbox/api_test.html'" data-ng-if="api.user.profile.isSuperuser"></div>
       <div data-ng-include="'widgets/toolbox/academic_dates.html'" data-ng-if="api.user.profile.isDelegateUser"></div>
       <div data-ng-include="'widgets/toolbox/delegate_quick_links.html'" data-ng-if="api.user.profile.isDelegateUser"></div>

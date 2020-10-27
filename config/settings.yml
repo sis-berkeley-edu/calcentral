@@ -257,7 +257,7 @@ cache:
 
     Textbooks::Proxy: <%= 24.hours %>
 
-    ServiceAlerts::Merged: <%= 24.hours %>
+    Api::ServiceAlerts: <%= 24.hours %>
 
     CampusSolutions::AddressLabel: <%= 29.days %>
     CampusSolutions::AddressType: <%= 29.days %>

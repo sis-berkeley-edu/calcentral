@@ -6,7 +6,7 @@ import Widget from 'react/components/Widget/Widget';
 import axios from 'axios';
 
 import 'icons/clipboard-list.svg';
-import ReduxProvider from 'react/components/ReduxProvider';
+import ReduxProvider from 'components/ReduxProvider';
 
 import styles from './AlumniOverlay.module.scss';
 import '../../../../assets/images/svg/calcentral_logo_whitebg.svg';

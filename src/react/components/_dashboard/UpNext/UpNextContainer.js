@@ -1,5 +1,5 @@
 import React from 'react';
-import ReduxProvider from 'react/components/ReduxProvider';
+import ReduxProvider from 'components/ReduxProvider';
 import UpNextCard from './UpNextCard';
 import { react2angular } from 'react2angular';
 

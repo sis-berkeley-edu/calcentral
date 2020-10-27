@@ -42,6 +42,18 @@ const apiRoutes = [
   '/stop_delegate_act_as',
 ];
 
+const resolve = {
+  modules: ['node_modules', path.resolve(__dirname, './src')],
+  alias: {
+    React: path.resolve(__dirname, './src/react'),
+    Redux: path.resolve(__dirname, './src/redux'),
+    cards: path.resolve(__dirname, './src/cards'),
+    components: path.resolve(__dirname, './src/components'),
+    pages: path.resolve(__dirname, './src/pages'),
+    actions: path.resolve(__dirname, './src/redux/actions'),
+  },
+};
+
 const config = {
   devServer: {
     contentBase: path.resolve(__dirname, './dist'),
@@ -96,13 +108,7 @@ const config = {
     }),
   ],
 
-  resolve: {
-    modules: ['node_modules', path.resolve(__dirname, './src')],
-    alias: {
-      React: path.resolve(__dirname, './src/react'),
-      Redux: path.resolve(__dirname, './src/redux'),
-    },
-  },
+  resolve: resolve,
 };
 
 module.exports = (_env, argv) => {
@@ -133,6 +139,6 @@ module.exports = (_env, argv) => {
           mode === `production` ? `[name].[chunkhash].css` : `[name].css`,
       }),
     ],
-    devtool: "source-map"
+    devtool: 'source-map',
   });
 };

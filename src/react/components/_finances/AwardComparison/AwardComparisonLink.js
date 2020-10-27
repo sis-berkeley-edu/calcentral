@@ -1,12 +1,9 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 
-import { react2angular } from 'react2angular';
 import { connect } from 'react-redux';
 
 import { fetchAwardComparison } from 'Redux/actions/awardComparisonActions';
-
-import ReduxProvider from 'react/components/ReduxProvider';
 
 const AwardComparisonLink = ({ fetchData, awardComparison, year }) => {
   useEffect(() => fetchData(), []);
@@ -53,24 +50,7 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-const ConnectedAwardComparisonLink = connect(
+export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(AwardComparisonLink);
-
-const AwardComparisonLinkContainer = ({ year }) => (
-  <ReduxProvider>
-    <ConnectedAwardComparisonLink year={year} />
-  </ReduxProvider>
-);
-
-AwardComparisonLinkContainer.propTypes = {
-  year: PropTypes.string,
-};
-
-angular
-  .module('calcentral.react')
-  .component(
-    'awardComparisonLink',
-    react2angular(AwardComparisonLinkContainer)
-  );
