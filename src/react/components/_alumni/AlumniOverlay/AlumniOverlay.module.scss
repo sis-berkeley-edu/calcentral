@@ -1,7 +1,7 @@
 @import 'src/react/stylesheets/variables';
 
 .messageText {
-  font-size: 11px;
+  font-size: 13px;
   text-align: center;
   padding-left: 30px;
   padding-right: 30px;
@@ -19,7 +19,7 @@
 
 .showCheck {
   margin-top: 20px;
-  font-size: 11px;
+  font-size: 13px;
 
   .showCheckbox {
     padding-top: 20px;
@@ -27,7 +27,7 @@
 }
 
 .lightbox {
-  background: #4D6D8C;
+  background: #4d6d8c;
   background-image: url('/assets/images/alum_landing_bg.png');
   background-repeat: no-repeat;
   background-size: cover;
