@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { react2angular } from 'react2angular';
 
-import ReduxProvider from 'react/components/ReduxProvider';
+import ReduxProvider from 'components/ReduxProvider';
 
 import useFocus from 'react/useFocus';
 import Card from 'react/components/Card';

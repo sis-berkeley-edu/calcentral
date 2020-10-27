@@ -95,6 +95,16 @@ Calcentral::Application.routes.draw do
       resources :covid_response, only: :index
     end
 
+    scope '/api', module: 'api' do
+      get 'service_alerts/feed' => 'service_alerts#public_feed', as: :service_alerts
+      resources :service_alerts, controller: 'service_alerts'
+      resources :user_auths
+
+      scope ':uid' do
+        get 'user_auth' => 'user_auths#show'
+      end
+    end
+
     get '/api/my/law_awards' => 'my_law_awards#get_feed'
 
     scope '/api/my', module: 'user' do
@@ -143,7 +153,6 @@ Calcentral::Application.routes.draw do
   get '/api/my/textbooks_details' => 'my_textbooks#get_feed', :as => :my_textbooks, :defaults => { :format => 'json' }
   get '/api/my/up_next' => 'my_up_next#get_feed', :as => :my_up_next, :defaults => { :format => 'json' }
   get '/api/photo/:uid' => 'photo#photo', :as => :photo, :defaults => {:format => 'jpeg' }
-  get '/api/service_alerts' => 'service_alerts#get_feed', :as => :service_alerts, :defaults => { :format => 'json' }
   get '/campus/:campus_course_id/photo/:person_id' => 'campus_rosters#photo', :defaults => { :format => 'jpeg' }, :action => 'show'
 
   # Google API writing endpoints

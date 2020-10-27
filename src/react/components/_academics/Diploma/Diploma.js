@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import ReduxProvider from 'React/components/ReduxProvider';
 import { fetchAcademicsDiploma } from 'Redux/actions/academics/diplomaActions';
 
 import './Diploma.scss';
@@ -138,16 +137,6 @@ const mapStateToProps = ({
   };
 };
 
-const ConnectedDiploma = connect(mapStateToProps)(
+export default connect(mapStateToProps)(
   Diploma
 );
-
-const DiplomaContainer = () => {
-  return (
-    <ReduxProvider>
-      <ConnectedDiploma />
-    </ReduxProvider>
-  );
-};
-
-export default DiplomaContainer;

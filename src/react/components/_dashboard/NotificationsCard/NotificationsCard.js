@@ -5,7 +5,7 @@ import { react2angular } from 'react2angular';
 
 import Card from 'react/components/Card';
 import Spinner from 'react/components/Spinner';
-import ReduxProvider from 'react/components/ReduxProvider';
+import ReduxProvider from 'components/ReduxProvider';
 import { fetchWebMessages } from 'redux/actions/webMessagesActions';
 
 import { TabSwitcher, Tab } from './Tabs';

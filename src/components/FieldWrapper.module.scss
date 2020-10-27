@@ -1,0 +1,25 @@
+@import 'src/react/stylesheets/variables';
+
+@mixin fieldWrapper {
+  margin-top: $large-spacing;
+
+  label {
+    text-align: left;
+    font-size: 13px;
+  }
+}
+
+.FieldWrapper {
+  @include fieldWrapper();
+}
+
+.CheckboxFieldWrapper {
+  @include fieldWrapper();
+
+  display: flex;
+  align-items: center;
+
+  label {
+    margin: 0 0 0 $small-spacing;
+  }
+}

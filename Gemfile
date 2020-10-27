@@ -128,6 +128,10 @@ gem 'cancan', '~> 1.6.10'
 # v3 requires Ruby 2.0
 gem 'net-ssh', '5.0.2'
 
+# pagination
+# https://github.com/kaminari/kaminari
+gem 'kaminari', '~> 1.2.1'
+
 # Support for iCalendar files
 # https://github.com/icalendar/icalendar
 gem 'icalendar', '~> 2.6.1'
@@ -170,6 +174,8 @@ group :development, :test do
   # Currently needed by RubyMine.
   # https://test-unit.github.io/
   gem 'test-unit'
+
+  gem 'factory_bot_rails'
 end
 
 group :development do

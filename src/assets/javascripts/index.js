@@ -55,4 +55,3 @@ require('../stylesheets/colors.scss');
 
 require('../../../node_modules/font-awesome/scss/font-awesome.scss');
 require('./fonts.scss');
-require('../../react/components');

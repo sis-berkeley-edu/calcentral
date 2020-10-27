@@ -34,27 +34,8 @@
       </div>
     </div>
   </div>
-  <div class="cc-page-splash-card">
-    <div class="cc-splash-page-note-title">CalCentral News</div>
-    <div class="row collapse cc-page-splash-blog-panel" data-ng-if="splashNote.title">
-      <div class="medium-2 columns hide-for-small cc-page-splash-blog-date">
-        <p>{{splashNote.timestamp.dateString}}</p>
-      </div>
-      <div class="medium-10 columns small-12">
-        <p class="cc-page-splash-blog-title">
-          <a data-ng-if="splashNote.link" data-ng-href="{{splashNote.link}}" data-ng-bind="splashNote.title"></a>
-          <span data-ng-if="!splashNote.link" data-ng-bind="splashNote.title"></span>
-        </p>
-        <div data-ng-show="splashNote.snippet && !showFullBody">
-          <div class="cc-page-splash-blog-summary" data-ng-bind-html="splashNote.snippet"></div>
-          <button class="cc-button-link" data-ng-show="splashNote.body" data-ng-click="showFullBody=!showFullBody">Show more</button>
-        </div>
-        <div data-ng-show="!splashNote.snippet || showFullBody">
-          <div class="cc-page-splash-blog-summary" data-ng-bind-html="splashNote.body"></div>
-        </div>
-      </div>
-    </div>
-  </div>
+
+  <service-alert></service-alert>
 </div>
 <div class="cc-splash-page-push"></div>
 

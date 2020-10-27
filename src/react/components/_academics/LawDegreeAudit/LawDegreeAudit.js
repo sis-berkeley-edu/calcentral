@@ -6,7 +6,7 @@ import Widget from 'react/components/Widget/Widget';
 import axios from 'axios';
 
 import 'icons/clipboard-list.svg';
-import ReduxProvider from 'react/components/ReduxProvider';
+import ReduxProvider from 'components/ReduxProvider';
 import APILink from 'react/components/APILink';
 
 import styles from './LawDegreeAudit.module.scss';

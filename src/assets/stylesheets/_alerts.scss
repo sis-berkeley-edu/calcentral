@@ -1,35 +1,3 @@
-.cc-alerts-bar {
-  background: $color-white;
-  border-color: $color-silver;
-  border-style: solid;
-  border-width: 1px;
-  color: $color-dove-gray;
-  overflow: hidden;
-  padding: 10px 15px;
-  width: 100%;
-
-  .cc-alerts-bar-more {
-    color: $color-denim;
-    margin-left: 10px;
-  }
-  .cc-alerts-bar-more-container {
-    text-align: right;
-  }
-  .cc-alerts-bar-notification {
-    margin-left: 15px;
-  }
-  p {
-    margin-bottom: 0;
-  }
-  @media #{$small-only} {
-    .cc-alerts-bar-notification {
-      clear: both;
-      display: block;
-      margin: 0;
-    }
-  }
-}
-
 .cc-alerts-law {
   background: $color-gallery;
   border: 1px $color-silver solid;
