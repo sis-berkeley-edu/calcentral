@@ -6,7 +6,8 @@ class Api::ServiceAlerts
     ServiceAlert.public_feed
   end
 
+  # Instance key needs to be defined, but return nil for single "class instance"
+  # cache to expire properly.
   def instance_key
-    'service_alerts'
   end
 end
