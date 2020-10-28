@@ -15,6 +15,7 @@ class  Api::AlumniProfiles < UserSpecificModel
 
   def set_skip_landing_page
     AlumniProfile.create(uid: @uid) unless skip_landing_page?
+    Api::AlumniProfiles.expire(@uid)
   end
 
   def skip_landing_page?
