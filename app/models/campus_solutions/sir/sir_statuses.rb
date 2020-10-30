@@ -226,7 +226,7 @@ module CampusSolutions
 
       def active_application_nbrs
         @active_applications ||= [].tap do |active_applications|
-          current_date = Settings.terms.fake_now || DateTime.now
+          current_date = Settings.terms.fake_now || Cache::CacheableDateTime.new(DateTime.now)
           applications.each do |application_nbr, application|
             expiration_date = application[:expirationDate]
             expiration_date = cast_utc_to_pacific(expiration_date) if expiration_date.present?

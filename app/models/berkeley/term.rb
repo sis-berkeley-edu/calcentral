@@ -58,8 +58,9 @@ module Berkeley
       @year = term_yr.to_i
       @slug = TermCodes.to_slug(@year, @code)
       @name = Berkeley::TermCodes.codes[@code.to_sym]
-      @start = term_feed['beginDate'].to_date.in_time_zone.to_datetime
-      @end = term_feed['endDate'].to_date.in_time_zone.to_datetime.end_of_day
+      @start = parse_date(term_feed['beginDate'])
+      @end = parse_date(term_feed['endDate']).end_of_day
+
       @is_sis_current_term = term_feed['temporalPosition'] == 'Current'
       if @code == 'C'
         @is_summer = true
@@ -70,8 +71,8 @@ module Berkeley
       else
         @is_summer = false
         session = term_feed['sessions'].first
-        @classes_start = session['beginDate'].to_date.in_time_zone.to_datetime
-        @instruction_end = session['endDate'].to_date.in_time_zone.to_datetime.end_of_day
+        @classes_start = parse_date(session['beginDate'])
+        @instruction_end = parse_date(session['endDate']).end_of_day
         @classes_end = @instruction_end.advance(days: -7)
         if (timePeriods = session['timePeriods']).present?
           timePeriods.each do |timePeriod|
@@ -89,8 +90,9 @@ module Berkeley
       @year = term['year'].to_i
       @slug = term['slug']
       @name = term['name']
-      @start = term['start'].to_date.in_time_zone.to_datetime
-      @end = term['end'].to_date.in_time_zone.to_datetime
+      @start = parse_date(term['start'])
+      @end = parse_date(term['end'])
+
       (_, @code) = TermCodes.from_edo_id(@campus_solutions_id).values
       if @code == 'C'
         @is_summer = true
@@ -100,10 +102,10 @@ module Berkeley
         @end_drop_add = false
       else
         @is_summer = false
-        @classes_start = term['classes_start'].to_date.in_time_zone.to_datetime
-        @instruction_end = term['instruction_end'].to_date.in_time_zone.to_datetime
-        @classes_end = term['classes_end'].to_date.in_time_zone.to_datetime
-        @end_drop_add =term['end_drop_add'] if term['end_drop_add'].present?
+        @classes_start = parse_date(term['classes_start'])
+        @instruction_end = parse_date(term['instruction_end'])
+        @classes_end = parse_date(term['classes_end'])
+        @end_drop_add = term['end_drop_add'] if term['end_drop_add'].present?
       end
       self
     end
@@ -114,8 +116,8 @@ module Berkeley
       @year = db_row['term_year'].to_i
       @slug = TermCodes.to_slug(@year, @code)
       @name = db_row['term_type']
-      @start = db_row['term_begin_date'].to_date.in_time_zone.to_datetime
-      @end = db_row['term_end_date'].to_date.in_time_zone.to_datetime
+      @start = parse_date(db_row['term_begin_date'])
+      @end = parse_date(db_row['term_end_date'])
       if @code == 'C'
         @is_summer = true
         @classes_start = @start
@@ -124,10 +126,10 @@ module Berkeley
         @end_drop_add = false
       else
         @is_summer = false
-        @classes_start = db_row['class_begin_date'].to_date.in_time_zone.to_datetime  if db_row['class_begin_date'].present?
-        @instruction_end = db_row['instruction_end_date'].to_date.in_time_zone.to_datetime if db_row['instruction_end_date'].present?
-        @classes_end = db_row['class_end_date'].to_date.in_time_zone.to_datetime if db_row['class_end_date'].present?
-        @end_drop_add =db_row['end_drop_add_date'] if db_row['end_drop_add_date'].present?
+        @classes_start = parse_date(db_row['class_begin_date']) if db_row['class_begin_date'].present?
+        @instruction_end = parse_date(db_row['instruction_end_date']) if db_row['instruction_end_date'].present?
+        @classes_end = parse_date(db_row['class_end_date']) if db_row['class_end_date'].present?
+        @end_drop_add = db_row['end_drop_add_date'] if db_row['end_drop_add_date'].present?
       end
       self
     end
@@ -144,8 +146,8 @@ module Berkeley
       # TODO Remove this embarrassment as soon as we switch to Campus Solutions for source of record on term dates.
       db_row.merge! FALL_2016_DATES if @slug == 'fall-2016'
 
-      @classes_start = db_row['term_start_date'].to_date.in_time_zone.to_datetime
-      @instruction_end = db_row['term_end_date'].to_date.in_time_zone.to_datetime.end_of_day
+      @classes_start = parse_date(db_row['term_start_date'])
+      @instruction_end = parse_date(db_row['term_end_date']).end_of_day
       @legacy_sis_term_status = db_row['term_status']
       if term_cd == 'C'
         @start = @classes_start
@@ -191,6 +193,10 @@ module Berkeley
 
     def to_s
       "#<Berkeley::Term> #{to_h}"
+    end
+
+    def parse_date(str)
+      Cache::CacheableDateTime.new(str.to_date.in_time_zone.to_datetime)
     end
   end
 end
