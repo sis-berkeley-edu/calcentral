@@ -14,7 +14,7 @@ module GoogleApps
         opts.reverse_merge!({
           access_token: 'fake_access_token',
           refresh_token: 'fake_refresh_token',
-          expiration_time: (DateTime.now + 2.hours).to_i
+          expiration_time: (Cache::CacheableDateTime.new(DateTime.now) + 2.hours).to_i
         })
         Google::Auth::UserRefreshCredentials.new(
           client_id:     Settings.google_proxy.client_id,

@@ -69,7 +69,7 @@ module User
 
     def record_first_login
       init
-      @first_login_at = DateTime.now
+      @first_login_at = Cache::CacheableDateTime.new(DateTime.now)
       save
     end
 

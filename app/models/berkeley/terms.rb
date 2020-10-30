@@ -97,7 +97,7 @@ module Berkeley
     end
 
     def initialize(options)
-      @current_date = options[:fake_now] || DateTime.now
+      @current_date = options[:fake_now] || Cache::CacheableDateTime.new(DateTime.now)
       @oldest = options[:oldest]
       @hub_api_disabled = options[:hub_api_disabled]
     end
