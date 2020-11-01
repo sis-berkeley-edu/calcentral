@@ -13,9 +13,9 @@ function AlertBar({ fetchServiceAlerts, loadState, serviceAlerts }) {
   }, []);
 
   if (loadState === 'success') {
-    const { title, splash } = serviceAlerts[0];
+    const { title, splash_only } = serviceAlerts[0];
 
-    if (splash) {
+    if (splash_only) {
       return null;
     }
 
