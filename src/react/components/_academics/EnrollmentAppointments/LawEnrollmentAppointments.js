@@ -1,12 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { format, parseISO } from 'date-fns';
+import { parseISO } from 'date-fns';
+import { format, utcToZonedTime } from 'date-fns-tz';
+
+const berkeleyZonedTime = (time) => {
+  return utcToZonedTime(time, 'America/Los_Angeles');
+};
 
 const LawTimeCell = ({ time }) => {
   if (time) {
-    const formattedDate = format(time, 'MMM d');
-    const formattedTime = format(time, 'h:mma');
+    const zonedTime = berkeleyZonedTime(time);
+    const formattedDate = format(zonedTime, 'MMM d');
+    const formattedTime = format(zonedTime, 'h:mma');
 
     return (
       <>
@@ -35,6 +41,7 @@ const LawEnrollmentAppointments = ({
   if (termIsSummer) {
     const period = enrollmentPeriods[0];
     const time = parseISO(period.date.datetime);
+    const zonedTime = berkeleyZonedTime(time);
 
     return (
       <div style={{ marginBottom: `15px`, marginTop: `15px` }}>
@@ -53,7 +60,7 @@ const LawEnrollmentAppointments = ({
                 </td>
                 <td>{maxUnits} Units Max</td>
                 <td>
-                  <strong>{format(time, 'E')}</strong>
+                  <strong>{format(zonedTime, 'E')}</strong>
                 </td>
                 <td>
                   <LawTimeCell time={time} />
@@ -72,7 +79,7 @@ const LawEnrollmentAppointments = ({
             <tbody>
               {deadlines.map(deadline => {
                 const time = parseISO(deadline.addDeadlineDatetime);
-
+                const zonedTime = berkeleyZonedTime(time);
                 return (
                   <tr key={deadline.session}>
                     <td>
@@ -83,7 +90,7 @@ const LawEnrollmentAppointments = ({
                       </span>
                     </td>
                     <td>
-                      <strong>{format(time, 'E')}</strong>
+                      <strong>{format(zonedTime, 'E')}</strong>
                     </td>
                     <td>
                       <LawTimeCell time={time} />
@@ -115,6 +122,7 @@ const LawEnrollmentAppointments = ({
             <tbody>
               {enrollmentPeriods.map(period => {
                 const time = parseISO(period.date.datetime);
+                const zonedTime = berkeleyZonedTime(time);
 
                 return (
                   <tr key={period.id}>
@@ -124,7 +132,7 @@ const LawEnrollmentAppointments = ({
                       </span>
                     </td>
                     <td>
-                      <strong>{format(time, 'E')}</strong>
+                      <strong>{format(zonedTime, 'E')}</strong>
                     </td>
                     <td>
                       <LawTimeCell time={time} />
@@ -135,6 +143,7 @@ const LawEnrollmentAppointments = ({
 
               {deadlines.map(deadline => {
                 const time = parseISO(deadline.addDeadlineDatetime);
+                const zonedTime = berkeleyZonedTime(time);
 
                 return (
                   <tr key={deadline.session}>
@@ -144,7 +153,7 @@ const LawEnrollmentAppointments = ({
                       </span>
                     </td>
                     <td>
-                      <strong>{format(time, 'E')}</strong>
+                      <strong>{format(zonedTime, 'E')}</strong>
                     </td>
                     <td>
                       <LawTimeCell time={time} />
