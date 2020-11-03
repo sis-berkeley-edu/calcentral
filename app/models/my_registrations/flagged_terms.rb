@@ -29,7 +29,7 @@ module MyRegistrations
     private
 
     def set_term_flags(term)
-      current_date = Settings.terms.fake_now || DateTime.now
+      current_date = Settings.terms.fake_now || Cache::CacheableDateTime.new(DateTime.now)
       term.merge({
         # CNP logic dictates that grad/law students are dropped one day AFTER the add/drop deadline.
         pastAddDrop: term[:endDropAdd] ? current_date > term[:endDropAdd] : nil,

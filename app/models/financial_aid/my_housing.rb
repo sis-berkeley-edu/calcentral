@@ -91,7 +91,7 @@ module FinancialAid
     def housing_period_open?
       max_term = @feed.try(:last)
       if (housing_period_end_date = max_term.try(:[], 'housing_end_date'))
-        (Settings.terms.fake_now || DateTime.now) < cast_utc_to_pacific(housing_period_end_date)
+        (Settings.terms.fake_now || Cache::CacheableDateTime.new(DateTime.now)) < cast_utc_to_pacific(housing_period_end_date)
       end
     end
 

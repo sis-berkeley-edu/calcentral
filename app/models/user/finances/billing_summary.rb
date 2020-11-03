@@ -93,7 +93,7 @@ module User
       end
 
       def now
-        Settings.terms.fake_now || DateTime.now
+        Settings.terms.fake_now || Cache::CacheableDateTime.new(DateTime.now)
       end
     end
   end

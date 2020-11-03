@@ -14,7 +14,7 @@ module MyAcademics
       end
 
       def formatted_date(date)
-        current_date = Settings.terms.fake_now || DateTime.now
+        current_date = Settings.terms.fake_now || Cache::CacheableDateTime.new(DateTime.now)
         return nil if date.blank?
         return date.to_date.strftime('%b %d') if current_date.year == date.to_date.year
         date.to_date.strftime('%b %d, %Y')
