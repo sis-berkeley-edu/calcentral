@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" data-ng-controller="CalcentralController">
+
 <head>
   <meta charset="utf-8">
 
@@ -29,40 +30,40 @@
   <link href="/assets/images/favicon_16x16.png" rel="icon" sizes="16x16" type="image/png">
   <link href="/assets/images/favicon_32x32.png" rel="icon" sizes="32x32" type="image/png">
 
-  <noscript><meta http-equiv="Refresh" content="0; URL=/enable-javascript.html"></noscript>
-
+  <noscript>
+    <meta http-equiv="Refresh" content="0; URL=/enable-javascript.html"></noscript>
   <base href="/">
-
-  <link href="https://fonts.googleapis.com/css?family=Lato:300,300i,400&amp;subset=latin-ext"
-        rel="stylesheet"
-        data-ng-if="isBcourses">
 </head>
 
-<body
-  data-ng-class="{'cc-page-splash':(controllerName==='SplashController'),'cc-offcanvas-show':(offCanvasMenu.show)}"
-  data-ng-show="api.user.events.isLoaded"
-  data-cc-iosfix-directive>
+<body data-ng-class="{'cc-page-splash':(controllerName==='SplashController'),'cc-offcanvas-show':(offCanvasMenu.show)}"
+  data-ng-show="api.user.events.isLoaded" data-cc-iosfix-directive>
 
   <div data-ng-include="'accessibility.html'"></div>
   <div data-ng-include="'ieold.html'"></div>
-  <div data-ng-include="'launcher.html'"></div>
 
-  <div data-ng-class="{'cc-off-canvas-container':(controllerName !== 'SplashController'), 'cc-offcanvas-footer-offset':(controllerName === 'SplashController')}" data-ng-swipe-left="offCanvasMenu.show=false">
-    <alumni-overlay data-ng-if="api.user.profile.roles.alumniFormer &&
-              !api.user.profile.academicRoles.historical.law &&
-              !api.user.profile.roles.faculty && !api.user.profile.roles.staff && 
-               !api.user.profile.actingAsUid"></alumni-overlay>
-    <div data-ng-if="!(api.user.profile.roles.alumniFormer &&
-              !api.user.profile.academicRoles.historical.law &&
-              !api.user.profile.roles.faculty && !api.user.profile.roles.staff && !api.user.profile.actingAsUid)">
+  <alumni-overlay data-ng-if="api.user.profile.roles.alumniFormer &&
+    !api.user.profile.academicRoles.historical.law &&
+    !api.user.profile.roles.faculty && !api.user.profile.roles.staff &&
+    !api.user.profile.actingAsUid"></alumni-overlay>
+  <div data-ng-if="!(api.user.profile.roles.alumniFormer &&
+                !api.user.profile.academicRoles.historical.law &&
+                !api.user.profile.roles.faculty && !api.user.profile.roles.staff && 
+                !api.user.profile.actingAsUid)">
+    <div data-ng-include="'launcher.html'"></div>
+
+    <div
+      data-ng-class="{'cc-off-canvas-container':(controllerName !== 'SplashController'), 'cc-offcanvas-footer-offset':(controllerName === 'SplashController')}"
+      data-ng-swipe-left="offCanvasMenu.show=false">
+
+
       <div class="cc-offcanvas-left cc-print-hide" id="cc-navigation">
         <div data-ng-include="'navigation.html'"></div>
       </div>
-      <div data-ng-class="{'cc-offcanvas-right':(controllerName !== 'SplashController'), 'cc-offcanvas-footer-offset':(controllerName === 'SplashController')}">
+      <div
+        data-ng-class="{'cc-offcanvas-right':(controllerName !== 'SplashController'), 'cc-offcanvas-footer-offset':(controllerName === 'SplashController')}">
         <div class="row cc-container-main"
           data-ng-class="{'collapse':(controllerName === 'DashboardController' || controllerName === 'AcademicsController')}"
-          id="cc-main-content"
-          role="main">
+          id="cc-main-content" role="main">
           <alert-bar data-ng-if="controllerName !== 'SplashController'">
           </alert-bar>
           <div class="cc-clearfix-container" data-ng-view></div>
@@ -71,9 +72,12 @@
       </div>
     </div>
   </div>
-  <div class="footer-sticky-container" data-ng-if="(controllerName === 'SplashController')" data-ng-include="'footer.html'"></div>
+
+  <div class="footer-sticky-container" data-ng-if="(controllerName === 'SplashController')"
+    data-ng-include="'footer.html'"></div>
   <div data-ng-include="'acting_as.html'"></div>
   <div data-ng-include="'advisor_acting_as.html'"></div>
   <div data-ng-include="'delegate_acting_as.html'"></div>
 </body>
+
 </html>
