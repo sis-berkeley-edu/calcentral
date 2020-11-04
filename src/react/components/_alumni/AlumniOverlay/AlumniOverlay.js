@@ -66,14 +66,16 @@ const AlumniOverlay = (props) => {
   };
 
   const navigateToLandingPage = (saveDontShowAgain, homepageURL) => {
-    const setSkipFlag = axios.get(
-      '/api/alumni/set_skip_landing_page'
-    );
     const callLogout = axios.post(
       '/logout'
     );
     let promiseList = [callLogout];
-    if (saveDontShowAgain) promiseList = [setSkipFlag, callLogout];
+    if (saveDontShowAgain) {
+      const setSkipFlag = axios.get(
+        '/api/alumni/set_skip_landing_page'
+      );
+      promiseList = [setSkipFlag, callLogout];
+    }
     setIsLoading(true);
     Promise.all(promiseList)
       .then((_res) => {

@@ -45,31 +45,29 @@
     !api.user.profile.academicRoles.historical.law &&
     !api.user.profile.roles.faculty && !api.user.profile.roles.staff &&
     !api.user.profile.actingAsUid"></alumni-overlay>
-  <div data-ng-if="!(api.user.profile.roles.alumniFormer &&
+  <div data-ng-include="'launcher.html'"></div>
+
+  <div data-ng-if=" !(api.user.profile.roles.alumniFormer &&
                 !api.user.profile.academicRoles.historical.law &&
                 !api.user.profile.roles.faculty && !api.user.profile.roles.staff && 
-                !api.user.profile.actingAsUid)">
-    <div data-ng-include="'launcher.html'"></div>
+                !api.user.profile.actingAsUid)"
+    data-ng-class="{'cc-off-canvas-container':(controllerName !== 'SplashController'), 'cc-offcanvas-footer-offset':(controllerName === 'SplashController')}"
+    data-ng-swipe-left="offCanvasMenu.show=false">
 
+
+    <div class="cc-offcanvas-left cc-print-hide" id="cc-navigation">
+      <div data-ng-include="'navigation.html'"></div>
+    </div>
     <div
-      data-ng-class="{'cc-off-canvas-container':(controllerName !== 'SplashController'), 'cc-offcanvas-footer-offset':(controllerName === 'SplashController')}"
-      data-ng-swipe-left="offCanvasMenu.show=false">
-
-
-      <div class="cc-offcanvas-left cc-print-hide" id="cc-navigation">
-        <div data-ng-include="'navigation.html'"></div>
+      data-ng-class="{'cc-offcanvas-right':(controllerName !== 'SplashController'), 'cc-offcanvas-footer-offset':(controllerName === 'SplashController')}">
+      <div class="row cc-container-main"
+        data-ng-class="{'collapse':(controllerName === 'DashboardController' || controllerName === 'AcademicsController')}"
+        id="cc-main-content" role="main">
+        <alert-bar data-ng-if="controllerName !== 'SplashController'">
+        </alert-bar>
+        <div class="cc-clearfix-container" data-ng-view></div>
       </div>
-      <div
-        data-ng-class="{'cc-offcanvas-right':(controllerName !== 'SplashController'), 'cc-offcanvas-footer-offset':(controllerName === 'SplashController')}">
-        <div class="row cc-container-main"
-          data-ng-class="{'collapse':(controllerName === 'DashboardController' || controllerName === 'AcademicsController')}"
-          id="cc-main-content" role="main">
-          <alert-bar data-ng-if="controllerName !== 'SplashController'">
-          </alert-bar>
-          <div class="cc-clearfix-container" data-ng-view></div>
-        </div>
-        <div data-ng-if="(controllerName !== 'SplashController')" data-ng-include="'footer.html'"></div>
-      </div>
+      <div data-ng-if="(controllerName !== 'SplashController')" data-ng-include="'footer.html'"></div>
     </div>
   </div>
 
