@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
-
+import { connect } from 'react-redux';
 import { react2angular } from 'react2angular';
-import Widget from 'react/components/Widget/Widget';
-
 import axios from 'axios';
+import PropTypes from 'prop-types';
 
+import Widget from 'react/components/Widget/Widget';
 import 'icons/clipboard-list.svg';
 import ReduxProvider from 'components/ReduxProvider';
 
@@ -18,11 +18,16 @@ const defaultAlumData = {
   skipLandingPage: false
 }
 
-const AlumniOverlay = () => {
+const AlumniOverlay = (props) => {
   const [errored, setErrored] = useState(false);
   const [dontShowAgain, setDontShowAgain] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [alumData, setAlumData] = useState(defaultAlumData);
+
+  axios.defaults.headers.common = {
+    'X-Requested-With': 'XMLHttpRequest',
+    'X-CSRF-TOKEN': props.csrfToken
+  };
 
   const widgetConfig = {
     errored: errored,
@@ -39,16 +44,20 @@ const AlumniOverlay = () => {
     );
 
     Promise.all([alumData])
-      .then(responses => {
+      .then(_res => {
         setAlumData(
           {
-            homepageLinkObj: responses[0].data.homepageLink,
-            landingPageMessage: responses[0].data.landingPageMessage.descrlong,
-            landingPageSubTitle: responses[0].data.landingPageSubTitle.descrlong,
-            skipLandingPage: responses[0].data.skipLandingPage
+            homepageLinkObj: _res[0].data.homepageLink,
+            landingPageMessage: _res[0].data.landingPageMessage.descrlong,
+            landingPageSubTitle: _res[0].data.landingPageSubTitle.descrlong,
+            skipLandingPage: _res[0].data.skipLandingPage
           }
         );
-        setIsLoading(false);
+        if (_res[0].data.skipLandingPage) {
+          navigateToLandingPage(false, _res[0].data.homepageLink);
+        } else {
+          setIsLoading(false);
+        }
       })
       .catch(_err => {
         setErrored(true);
@@ -56,14 +65,19 @@ const AlumniOverlay = () => {
       });
   };
 
-  const setSkipLandingPage = () => {
+  const navigateToLandingPage = (saveDontShowAgain, homepageURL) => {
     const setSkipFlag = axios.get(
       '/api/alumni/set_skip_landing_page'
     );
+    const callLogout = axios.post(
+      '/logout'
+    );
+    let promiseList = [callLogout];
+    if (saveDontShowAgain) promiseList = [setSkipFlag, callLogout];
     setIsLoading(true);
-    Promise.all([setSkipFlag])
-      .then(() => {
-        window.location.href = alumData.homepageLinkObj.url;
+    Promise.all(promiseList)
+      .then((_res) => {
+        window.location.href = homepageURL;
       })
       .catch(_err => {
         setErrored(true);
@@ -80,11 +94,7 @@ const AlumniOverlay = () => {
   }
 
   const handleOnClick = () => {
-    if (dontShowAgain) {
-      setSkipLandingPage();
-    } else {
-      window.location.href = alumData.homepageLinkObj.url;
-    }
+    navigateToLandingPage(dontShowAgain, alumData.homepageLinkObj);
   }
 
   const landingPage = <div className={styles.lightbox}>
@@ -115,13 +125,24 @@ const AlumniOverlay = () => {
     </Widget>
   </div>
 
-  if (!alumData.skipLandingPage) return landingPage;
-  if (alumData.skipLandingPage) window.location.href = alumData.homepageLinkObj.url;
+  return landingPage;
 };
+
+AlumniOverlay.propTypes = {
+  csrfToken: PropTypes.string
+};
+
+const mapStateToProps = ({
+  config: { csrfToken }
+}) => {
+  return { csrfToken };
+};
+
+const ConnectedAlumniOverlay = connect(mapStateToProps)(AlumniOverlay);
 
 const AlumniOverlayContainer = () => (
   <ReduxProvider>
-    <AlumniOverlay />
+    <ConnectedAlumniOverlay />
   </ReduxProvider>
 );
 
