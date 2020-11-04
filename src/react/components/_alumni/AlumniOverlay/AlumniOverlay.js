@@ -94,7 +94,7 @@ const AlumniOverlay = (props) => {
   }
 
   const handleOnClick = () => {
-    navigateToLandingPage(dontShowAgain, alumData.homepageLinkObj);
+    navigateToLandingPage(dontShowAgain, alumData.homepageLinkObj.url);
   }
 
   const landingPage = <div className={styles.lightbox}>
