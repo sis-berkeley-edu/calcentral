@@ -5,7 +5,7 @@ module Concerns
     def is_pending_transfer_credit_review_deadline(student_id)
       review_deadline = transfer_credit_review_deadline(student_id)
       compare_dates = Proc.new do
-        current_date = Settings.terms.fake_now || DateTime.now
+        current_date = Settings.terms.fake_now || Cache::CacheableDateTime.new(DateTime.now)
         review_deadline && current_date <= review_deadline + 1.days
       end
       @is_pending_transfer_credit_review_deadline ||= compare_dates.call

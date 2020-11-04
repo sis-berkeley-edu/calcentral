@@ -105,7 +105,7 @@ module MyAcademics
       end
 
       def format_period_end_summer(end_date)
-        return end_date.to_date.strftime('%m/%d') if DateTime.now.year == end_date.to_date.year
+        return end_date.to_date.strftime('%m/%d') if Cache::CacheableDateTime.new(DateTime.now).year == end_date.to_date.year
         end_date.to_date.strftime('%m/%d/%Y')
       end
 

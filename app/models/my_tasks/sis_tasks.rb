@@ -38,7 +38,7 @@ module MyTasks
       else
         # Campus Solutions has a setting where they don't send over any date (due / status)
         # in that case, set it to today since the front-end needs it for sorting
-        status_date = DateTime.now.midnight
+        status_date = Cache::CacheableDateTime.new(DateTime.now.midnight)
       end
       status_date
     end

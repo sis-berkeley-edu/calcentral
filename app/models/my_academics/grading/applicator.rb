@@ -378,7 +378,7 @@ module MyAcademics
           begin_date = grading_session.final_period.try(:start_date).try(:in_time_zone).try(:to_datetime)
           end_date = grading_session.final_period.try(:due_date).try(:end_of_day).try(:to_datetime)
         end
-        current_date = Settings.terms.fake_now || DateTime.now
+        current_date = Settings.terms.fake_now || Cache::CacheableDateTime.new(DateTime.now)
         return :gradingPeriodNotSet if begin_date.blank? || end_date.blank?
         return :beforeGradingPeriod if current_date < DateTime.parse(begin_date.to_s)
         return :afterGradingPeriod if current_date > DateTime.parse(end_date.to_s)

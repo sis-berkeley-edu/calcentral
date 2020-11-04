@@ -7,7 +7,7 @@ class CsvExport
     end
   end
 
-  def output_filename(basename = "export", timestamp = DateTime.now.strftime('%F'))
+  def output_filename(basename = "export", timestamp = Cache::CacheableDateTime.new(DateTime.now).strftime('%F'))
     "#{@export_dir}/#{basename}-#{timestamp}.csv"
   end
 

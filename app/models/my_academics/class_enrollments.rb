@@ -159,7 +159,7 @@ module MyAcademics
     def get_timezone_offset(cs_date_object)
       return nil unless cs_date_object.present?
       if datetime_string = cs_date_object.try(:[], :datetime)
-        datetime = DateTime.parse(datetime_string)
+        datetime = Cache::CacheableDateTime.new(DateTime.parse(datetime_string))
         return datetime.strftime('%z')
       end
       nil

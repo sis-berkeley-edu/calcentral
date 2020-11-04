@@ -50,7 +50,7 @@ module MyTasks
       if !date.blank?
         formatted_date = format_date(date)
         if includeWithinOneWeek
-          formatted_date[:withinOneWeek] = (DateTime.now + 1.week >= date && DateTime.now <= date)
+          formatted_date[:withinOneWeek] = (Cache::CacheableDateTime.new(DateTime.now) + 1.week >= date && Cache::CacheableDateTime.new(DateTime.now) <= date)
         end
         formatted_entry[field_name] = formatted_date
       end
