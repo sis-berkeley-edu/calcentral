@@ -54,7 +54,7 @@ const AlumniOverlay = (props) => {
           }
         );
         if (_res[0].data.skipLandingPage) {
-          navigateToLandingPage(false, _res[0].data.homepageLink);
+          navigateToLandingPage(false, _res[0].data.homepageLink.url);
         } else {
           setIsLoading(false);
         }
