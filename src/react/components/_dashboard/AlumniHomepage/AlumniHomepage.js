@@ -1,14 +1,13 @@
 import React, { useState, useEffect } from 'react';
-
 import { react2angular } from 'react2angular';
-import Widget from 'react/components/Widget/Widget';
-
 import axios from 'axios';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 
+
+import Widget from 'react/components/Widget/Widget';
 import 'icons/clipboard-list.svg';
 import ReduxProvider from 'components/ReduxProvider';
-import APILink from 'react/components/APILink';
-
 import styles from './AlumniHomepage.module.scss';
 
 const defaultAlumData = {
@@ -16,11 +15,15 @@ const defaultAlumData = {
   landingPageMessage: '',
 }
 
-const AlumniHomepage = () => {
+const AlumniHomepage = (props) => {
   const [errored, setErrored] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [alumData, setAlumData] = useState(defaultAlumData);
 
+  axios.defaults.headers.common = {
+    'X-Requested-With': 'XMLHttpRequest',
+    'X-CSRF-TOKEN': props.csrfToken
+  };
 
   const widgetConfig = {
     errored: errored,
@@ -52,10 +55,29 @@ const AlumniHomepage = () => {
       });
   };
 
+  const navigateToLandingPage = (homepageURL) => {
+    const callLogout = axios.post(
+      '/logout'
+    );
+    let promiseList = [callLogout];
+    setIsLoading(true);
+    Promise.all(promiseList)
+      .then((_res) => {
+        window.location.href = homepageURL;
+      })
+      .catch(_err => {
+        setErrored(true);
+        setIsLoading(false);
+      });
+  };
 
   useEffect(() => {
     fetchData();
   }, []);
+
+  const handleOnClick = () => {
+    navigateToLandingPage(alumData.homepageLinkObj.url);
+  }
 
   return (
     <Widget config={{ ...widgetConfig }}>
@@ -63,15 +85,35 @@ const AlumniHomepage = () => {
         {alumData.landingPageMessage}
       </p>
       <div className={styles.buttonDiv}>
-        <APILink {...alumData.homepageLinkObj} style={{ display: 'block' }} className="cc-react-button cc-react-button--blue" />
+        <a
+          title={alumData.homepageLinkObj.title}
+          target="_self"
+          className="cc-react-button cc-react-button--blue"
+          onClick={handleOnClick}
+        >
+          {alumData.homepageLinkObj.name}
+        </a>
       </div>
+      <br />
     </Widget>
   );
 };
 
+AlumniHomepage.propTypes = {
+  csrfToken: PropTypes.string
+};
+
+const mapStateToProps = ({
+  config: { csrfToken }
+}) => {
+  return { csrfToken };
+};
+
+const ConnectedAlumniHomepage = connect(mapStateToProps)(AlumniHomepage);
+
 const AlumniHomepageContainer = () => (
   <ReduxProvider>
-    <AlumniHomepage />
+    <ConnectedAlumniHomepage />
   </ReduxProvider>
 );
 
