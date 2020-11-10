@@ -41,13 +41,13 @@
   <div data-ng-include="'accessibility.html'"></div>
   <div data-ng-include="'ieold.html'"></div>
 
-  <alumni-overlay data-ng-if="api.user.profile.roles.alumniFormer &&
+  <alumni-overlay data-ng-if="api.user.profile.features.alumniHomepage && api.user.profile.roles.alumniFormer &&
     !api.user.profile.academicRoles.historical.law &&
     !api.user.profile.roles.faculty && !api.user.profile.roles.staff &&
     !api.user.profile.actingAsUid"></alumni-overlay>
   <div data-ng-include="'launcher.html'"></div>
 
-  <div data-ng-if=" !(api.user.profile.roles.alumniFormer &&
+  <div data-ng-if="!(api.user.profile.features.alumniHomepage && api.user.profile.roles.alumniFormer &&
                 !api.user.profile.academicRoles.historical.law &&
                 !api.user.profile.roles.faculty && !api.user.profile.roles.staff && 
                 !api.user.profile.actingAsUid)"
