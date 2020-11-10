@@ -447,3 +447,4 @@ features:
   transcript_request_link_cred_solutions: false
   videos: false
   view_completed_calgrant_link: true
+  alumni_homepage: true
