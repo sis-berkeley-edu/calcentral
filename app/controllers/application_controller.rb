@@ -251,9 +251,4 @@ class ApplicationController < ActionController::Base
       path
     end
   end
-
-  def disable_xframe_options
-    response.headers.except! 'X-Frame-Options'
-  end
-
 end
