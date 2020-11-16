@@ -191,12 +191,12 @@ describe Rosters::Csv do
     context 'when section id is present' do
       let(:section_id) { '22050' }
       it 'returns filename with section label' do
-        expect(filename).to eq 'econ-100b-2019-B_LEC-001_rosters'
+        expect(filename).to eq 'econ-100b-2019-B_LEC-001_rosters.csv'
       end
       context 'when section label contains multiple spaces' do
         let(:primary_section_label) { 'LEC   001' }
         it 'returns filename with underscores in section label' do
-          expect(filename).to eq 'econ-100b-2019-B_LEC-001_rosters'
+          expect(filename).to eq 'econ-100b-2019-B_LEC-001_rosters.csv'
         end
       end
     end
@@ -204,20 +204,20 @@ describe Rosters::Csv do
     context 'when section id is not present' do
       let(:section_id) { nil }
       it 'returns filename without section label' do
-        expect(filename).to eq 'econ-100b-2019-B_rosters'
+        expect(filename).to eq 'econ-100b-2019-B_rosters.csv'
       end
     end
     context 'when enroll option is present' do
       let(:section_id) { '24291' }
       let(:enroll_option) { 'waitlisted' }
       it 'returns filename with enroll type' do
-        expect(filename).to eq 'econ-100b-2019-B_LEC-001_waitlisted_rosters'
+        expect(filename).to eq 'econ-100b-2019-B_LEC-001_waitlisted_rosters.csv'
       end
     end
     context 'when enroll option is not present' do
       let(:enroll_option) { nil }
       it 'returns filename with enroll type' do
-        expect(filename).to eq 'econ-100b-2019-B_rosters'
+        expect(filename).to eq 'econ-100b-2019-B_rosters.csv'
       end
     end
   end
