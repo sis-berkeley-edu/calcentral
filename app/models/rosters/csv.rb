@@ -16,7 +16,7 @@ module Rosters
     def get_filename
       section_string = "_#{section_label}" if @section_id.present?
       enroll_option_string = "_#{@enroll_option}" if @enroll_option.present? && @enroll_option != 'all'
-      "#{@campus_course_id}#{section_string}#{enroll_option_string}_rosters"
+      "#{@campus_course_id}#{section_string}#{enroll_option_string}_rosters.csv"
     end
 
     def section_label
